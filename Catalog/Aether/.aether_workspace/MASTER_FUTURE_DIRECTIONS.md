@@ -1,6 +1,32 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-05 10:01*
+*Last updated: 2026-05-05 10:07*
+
+## 5. Statistical-Mechanical Extension: Partition Functions and Zero-Temperature Limits
+
+**Problem:** Introduce the partition function `Z(β) = Σ_p exp(−β · eval(p, y) + β · eval(p, x))` and prove that the zero-temperature (β → ∞) limit selects the canonical extremal prime.
+
+**Approach:** Define the "thermodynamic free energy"
+```
+F(β) = −(1/β) · log Z(β)
+```
+and prove:
+1. `lim_{β → ∞} F(β) = max_p (eval(p, y) − eval(p, x))`
+2. The Gibbs measure concentrates on the canonical countermodel as β → ∞
+3. For finite β, the partition function provides a "soft" version of the compression theorem
+
+**Significance:** This connects proof theory to statistical mechanics: the canonical countermodel is the ground state of a "proof Hamiltonian," and the partition function provides a smooth interpolation between the thermodynamic and algebraic views.
+
+**Expected formalization:**
+```
+theorem zero_temperature_limit_selects_canonical
+    [Fintype (PrimeSpectrum S)] [Nonempty (PrimeSpectrum S)]
+    (eval : PrimeSpectrum S → S → ℝ) (x y : S) :
+    Filter.Tendsto (fun β => freeEnergy eval x y β)
+      Filter.atTop
+      (nhds (eval (canonicalCountermodel eval x y) y -
+             eval (canonicalCountermodel eval x y) x))
+```
 
 ## Key Open Problem
 
@@ -44,61 +70,19 @@ that, given a non-derivable pair `(x, y)`, returns the thermodynamic state `(p*,
 
 ---
 
-## 5. Comparison with Stone/Localic Duality for Proof Semirings
+## 1. Infinite-Spectrum Extension via Compactness
 
-**Target**: Establish a formal comparison between nucleus-sheaf reconstruction and Stone duality for distributive lattices, mediated by the proof semiring interpretation.
+**Problem:** Extend the finite extremal reconstruction theorem to infinite prime spectra using topological compactness or upper semicontinuity of the gap functional.
 
+**Approach:** When the prime spectrum carries the Zariski topology, the evaluation gap `p ↦ eval(p, y) − eval(p, x)` should be upper semicontinuous. By compactness of the spectrum (which holds for commutative rings), the supremum is attained. This replaces `Finset.exists_max_image` with `IsCompact.exists_isMaxOn`.
+
+**Key challenge:** Formalizing the topology on the prime spectrum and the continuity/semicontinuity of the evaluation in Lean, building on `PrimeSpectrum.zariskiTopology` from Mathlib.
+
+**Expected result:**
 ```
-theorem nucleus_sheaf_vs_stone_duality
-    (S : Type*) [CoherentIdemCommSemiring S] :
-    Nonempty (NucleusSpectrum S ≃ₜ StoneSpectrum (IdealLattice S))
-```
-
-In a proof semiring (where elements represent derivations), the nucleus spectrum should be homeomorphic to the Stone spectrum of the lattice of theories. The sheaf reconstruction then corresponds to the Stone representation of the lattice as clopen sets of a spectral space. This comparison would unify the algebraic-geometric viewpoint (sheaves on spectra) with the order-theoretic viewpoint (Stone duality) and the proof-theoretic viewpoint (completeness of derivation systems). Establishing this triangle of equivalences would be a major structural result connecting algebra, topology, and logic in the idempotent setting.
-
-## 5. Algorithm Extraction: Certified Decision Procedure
-
-**Target artifact.** Extract from the Lean proofs a certified
-executable algorithm for congruence membership testing via
-evaluation elimination.
-
-```lean
-def eliminationOracle
-    [Fintype τ] [DecidableEq S] [Fintype S]
-    (C : RingCon (MvPolynomial (σ ⊕ τ) S))
-    (generators : Finset (MvPolynomial (σ ⊕ τ) S × MvPolynomial (σ ⊕ τ) S))
-    (hgen : C = ringConGen (fun f g => (f, g) ∈ generators))
-    (f g : MvPolynomial σ S) :
-    Decidable (eliminationCong C f g) := ...
-```
-
-The algorithm proceeds by:
-1. Enumerating evaluation witnesses up to the computed degree bound
-2. Testing each contraction membership (reduces to ideal membership
-   in the finitely generated case)
-3. Returning a certificate of membership or a separating evaluation
-
-This would be the first formally verified elimination algorithm for
-the congruence setting, directly applicable to tropical constraint
-satisfaction and optimization verification.
-
----
-
-## 4. Algorithmic Countermodel Extraction from Subcritical Coding
-
-The spectral witness lemma (`exists_prime_above_subcritical_rate`) is existential.
-Make it constructive for coherent proof semirings:
-
-- Given a code C with rate below the optimum, extract a concrete prime witness.
-- Bound the computational complexity of the extraction procedure.
-- Connect to countermodel-guided proof search (CEGIS for proofs).
-
-**Formal target:**
-```lean
-def extractPrimeWitness
-  [DecidableEq S] [Fintype (PrimeSpectrum S)]
-  (C : CoherentSpectrum.ProofCode (S := S)) (δ : ℝ)
-  (hC : CoherentSpectrum.codeRate C < proofRateDistortionAt S δ) :
-  { p : PrimeSpectrum S // CoherentSpectrum.primeSepDist p ≤ δ ∧
-    CoherentSpectrum.codeRate C < CoherentSpectrum.primeEnergy p }
+theorem compact_spectrum_countermodel_extraction
+    [TopologicalSpace (PrimeSpectrum S)] [CompactSpace (PrimeSpectrum S)]
+    (hcont : UpperSemicontinuous (fun p => eval p y - eval p x))
+    (hex : ∃ p, 0 < eval p y - eval p x) :
+    ∃ p, (∀ q, eval q y - eval q x ≤ eval p y - eval p x) ∧ 0 < eval p y - eval p x
 ```

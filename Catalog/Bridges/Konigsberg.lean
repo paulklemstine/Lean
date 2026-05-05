@@ -1,92 +1,101 @@
 --- a/Bridges/Konigsberg.lean
 +++ b/Bridges/Konigsberg.lean
-@@ -1,86 +1,17266 @@
--/-
--Copyright (c) 2025 Harmonic. All rights reserved.
--Released under Apache 2.0 license.
--
--# The Königsberg Bridge Problem
--
--This file formalizes Euler's 1736 resolution of the Königsberg Bridge Problem,
--one of the founding results of graph theory.
--
--The city of Königsberg (now Kaliningrad) was built on the Pregel River and
--included two islands connected by seven bridges. The question: is it possible
--to walk through the city crossing each bridge exactly once and returning to
--the starting point?
--
--Euler proved it impossible by showing that such a walk requires every vertex
--(landmass) to have even degree. Since the Königsberg graph has vertices of
--odd degree, no such walk exists.
--
--## The Model
--
--The original Königsberg graph is a multigraph (multiple edges between the same
--vertices), which `SimpleGraph` cannot represent directly. We model an equivalent
--graph that preserves the essential property: the existence of vertices with
--odd degree.
--
--## Main Result
--
--* `konigsberg_no_eulerian_circuit` — No Eulerian circuit exists because
--  vertex 0 has odd degree (degree 3)
---/
--
--import Bridges.Eulerian
--
--namespace Konigsberg
--
--/-- The Königsberg-inspired simple graph on `Fin 5`.
--
--This graph models a bridge network where at least one vertex has odd degree,
--which prevents the existence of an Eulerian circuit.
--
--- Vertex 0: North bank (degree 3)
--- Vertex 1: Central island (degree 3)
--- Vertex 2: South bank (degree 2)
--- Vertex 3: East bank (degree 2)
--- Vertex 4: Isolated (degree 0)
--
--Edges: 0-1, 0-2, 0-3, 1-2, 1-3 -/
--def KGraph : SimpleGraph (Fin 5) where
--  Adj u v := (u.val = 0 ∧ v.val = 1) ∨ (u.val = 1 ∧ v.val = 0) ∨
--             (u.val = 0 ∧ v.val = 2) ∨ (u.val = 2 ∧ v.val = 0) ∨
--             (u.val = 0 ∧ v.val = 3) ∨ (u.val = 3 ∧ v.val = 0) ∨
--             (u.val = 1 ∧ v.val = 2) ∨ (u.val = 2 ∧ v.val = 1) ∨
--             (u.val = 1 ∧ v.val = 3) ∨ (u.val = 3 ∧ v.val = 1)
--  symm := by intro u v; simp [or_comm, or_assoc, or_left_comm, and_comm]
--  loopless := ⟨fun u h => by
--    rcases h with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ |
--      ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ <;> omega⟩
--
--instance : DecidableRel KGraph.Adj :=
--  fun u v => by unfold KGraph; simp only; infer_instance
--
--/-
--Vertex 0 of the Königsberg graph has degree 3 (odd).
---/
--theorem degree_zero_eq : KGraph.degree (0 : Fin 5) = 3 := by
--  native_decide +revert
--
--/-
--Vertex 0 has odd degree.
---/
--theorem odd_degree_zero : Odd (KGraph.degree (0 : Fin 5)) := by
--  exact ⟨ 1, degree_zero_eq ⟩
--
--/-
--**The Königsberg Bridge Theorem**: The Königsberg graph has no Eulerian circuit.
--
--This formalizes Euler's 1736 result: no closed walk can traverse every bridge
--exactly once, because vertex 0 has odd degree 3.
---/
--theorem konigsberg_no_eulerian_circuit :
--    ∀ (u : Fin 5) (p : KGraph.Walk u u),
--    ¬p.IsEulerianCircuit := by
--  intro u p hp;
--  exact absurd ( hp.even_degree 0 ) ( by simp +decide )
--
--end Konigsberg+--- a/Logic/Konigsberg.lean
+@@ -1,17354 +1,17266 @@
+---- a/Bridges/Konigsberg.lean
+-+++ b/Bridges/Konigsberg.lean
+-@@ -1,86 +1,17266 @@
+--/-
+--Copyright (c) 2025 Harmonic. All rights reserved.
+--Released under Apache 2.0 license.
+--
+--# The Königsberg Bridge Problem
+--
+--This file formalizes Euler's 1736 resolution of the Königsberg Bridge Problem,
+--one of the founding results of graph theory.
+--
+--The city of Königsberg (now Kaliningrad) was built on the Pregel River and
+--included two islands connected by seven bridges. The question: is it possible
+--to walk through the city crossing each bridge exactly once and returning to
+--the starting point?
+--
+--Euler proved it impossible by showing that such a walk requires every vertex
+--(landmass) to have even degree. Since the Königsberg graph has vertices of
+--odd degree, no such walk exists.
+--
+--## The Model
+--
+--The original Königsberg graph is a multigraph (multiple edges between the same
+--vertices), which `SimpleGraph` cannot represent directly. We model an equivalent
+--graph that preserves the essential property: the existence of vertices with
+--odd degree.
+--
+--## Main Result
+--
+--* `konigsberg_no_eulerian_circuit` — No Eulerian circuit exists because
+--  vertex 0 has odd degree (degree 3)
+---/
+--
+--import Bridges.Eulerian
+--
+--namespace Konigsberg
+--
+--/-- The Königsberg-inspired simple graph on `Fin 5`.
+--
+--This graph models a bridge network where at least one vertex has odd degree,
+--which prevents the existence of an Eulerian circuit.
+--
+--- Vertex 0: North bank (degree 3)
+--- Vertex 1: Central island (degree 3)
+--- Vertex 2: South bank (degree 2)
+--- Vertex 3: East bank (degree 2)
+--- Vertex 4: Isolated (degree 0)
+--
+--Edges: 0-1, 0-2, 0-3, 1-2, 1-3 -/
+--def KGraph : SimpleGraph (Fin 5) where
+--  Adj u v := (u.val = 0 ∧ v.val = 1) ∨ (u.val = 1 ∧ v.val = 0) ∨
+--             (u.val = 0 ∧ v.val = 2) ∨ (u.val = 2 ∧ v.val = 0) ∨
+--             (u.val = 0 ∧ v.val = 3) ∨ (u.val = 3 ∧ v.val = 0) ∨
+--             (u.val = 1 ∧ v.val = 2) ∨ (u.val = 2 ∧ v.val = 1) ∨
+--             (u.val = 1 ∧ v.val = 3) ∨ (u.val = 3 ∧ v.val = 1)
+--  symm := by intro u v; simp [or_comm, or_assoc, or_left_comm, and_comm]
+--  loopless := ⟨fun u h => by
+--    rcases h with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ |
+--      ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ <;> omega⟩
+--
+--instance : DecidableRel KGraph.Adj :=
+--  fun u v => by unfold KGraph; simp only; infer_instance
+--
+--/-
+--Vertex 0 of the Königsberg graph has degree 3 (odd).
+---/
+--theorem degree_zero_eq : KGraph.degree (0 : Fin 5) = 3 := by
+--  native_decide +revert
+--
+--/-
+--Vertex 0 has odd degree.
+---/
+--theorem odd_degree_zero : Odd (KGraph.degree (0 : Fin 5)) := by
+--  exact ⟨ 1, degree_zero_eq ⟩
+--
+--/-
+--**The Königsberg Bridge Theorem**: The Königsberg graph has no Eulerian circuit.
+--
+--This formalizes Euler's 1736 result: no closed walk can traverse every bridge
+--exactly once, because vertex 0 has odd degree 3.
+---/
+--theorem konigsberg_no_eulerian_circuit :
+--    ∀ (u : Fin 5) (p : KGraph.Walk u u),
+--    ¬p.IsEulerianCircuit := by
+--  intro u p hp;
+--  exact absurd ( hp.even_degree 0 ) ( by simp +decide )
+--
+--end Konigsberg+--- a/Logic/Konigsberg.lean
+-++++ b/Logic/Konigsberg.lean
+-+@@ -1,15899 +1,1367 @@
+-+---- a/MachineLearning/Konigsberg.lean
+-+-+++ b/MachineLearning/Konigsberg.lean
+-+-@@ -1,12339 +1,878 @@
++--- a/Logic/Konigsberg.lean
 ++++ b/Logic/Konigsberg.lean
 +@@ -1,15899 +1,1367 @@
 +---- a/MachineLearning/Konigsberg.lean
@@ -1250,8 +1259,24 @@
 ++ --- a/Bridges/Konigsberg.lean
 ++ +++ b/Bridges/Konigsberg.lean
 ++-@@ -1,917 +1,86 @@
-++----- a/Cryptography/Konigsberg.lean
-++--+++ b/Cryptography/Konigsberg.lean
+ +----- a/Cryptography/Konigsberg.lean
+ +--+++ b/Cryptography/Konigsberg.lean
+-+--@@ -1,10220 +1,4448 @@
+-+-- --- a/Algebra/Konigsberg.lean
+-+-- +++ b/Algebra/Konigsberg.lean
+-+---@@ -1,1175 +1,59 @@
+-+------- a/Bridges/Konigsberg.lean
+-+----+++ b/Bridges/Konigsberg.lean
+-+----@@ -1,3369 +1,2194 @@
+-+-------- a/Cryptography/Konigsberg.lean
+-+-----+++ b/Cryptography/Konigsberg.lean
+-+-----@@ -1,4448 +1,709 @@
+-+--------- a/Algebra/Konigsberg.lean
+-+------+++ b/Algebra/Konigsberg.lean
+-+------@@ -1,3533 +1,917 @@
+-+---------- a/Logic/Konigsberg.lean
+-+-------+++ b/Logic/Konigsberg.lean
+-+-------@@ -1,1367 +1,2193 @@
 ++--@@ -1,563 +1,181 @@
 ++-- --- a/Bridges/Konigsberg.lean
 ++-- +++ b/Bridges/Konigsberg.lean
@@ -1271,9 +1296,17248 @@
 ++--- ------ a/Bridges/Konigsberg.lean
 ++--- ---+++ b/Bridges/Konigsberg.lean
 ++-------@@ -1,168 +1,86 @@
-++----------- a/Bridges/Konigsberg.lean
-++--------+++ b/Bridges/Konigsberg.lean
-++--------@@ -1,99 +1,86 @@
+ +----------- a/Bridges/Konigsberg.lean
+ +--------+++ b/Bridges/Konigsberg.lean
+-+--------@@ -1,923 +1,451 @@
+-+------+--- a/Cryptography/Konigsberg.lean
+-+------++++ b/Cryptography/Konigsberg.lean
+-+------+@@ -1,563 +1,181 @@
+-+------+ --- a/Bridges/Konigsberg.lean
+-+------+ +++ b/Bridges/Konigsberg.lean
+-+------+-@@ -1,204 +1,54 @@
+-+------ - --- a/Bridges/Konigsberg.lean
+-+------ - +++ b/Bridges/Konigsberg.lean
+-+---------@@ -1,917 +1,86 @@
+-+------------- a/Cryptography/Konigsberg.lean
+-+----------+++ b/Cryptography/Konigsberg.lean
+-+----------@@ -1,563 +1,181 @@
+-+---------- --- a/Bridges/Konigsberg.lean
+-+---------- +++ b/Bridges/Konigsberg.lean
+-+-----------@@ -1,204 +1,54 @@
+-+-------+--- a/MachineLearning/Konigsberg.lean
+-+-------++++ b/MachineLearning/Konigsberg.lean
+-+-------+@@ -1,1205 +1,559 @@
+-+------+--@@ -1,445 +1,86 @@
+-+------+-+@@ -1,344 +1,99 @@
+-+------+- ---- a/Bridges/Konigsberg.lean
+-+------+- -+++ b/Bridges/Konigsberg.lean
+-+------+---@@ -1,344 +1,99 @@
+-+------+-+-@@ -1,256 +1,86 @@
+-+------+- ----- a/Bridges/Konigsberg.lean
+-+------+- --+++ b/Bridges/Konigsberg.lean
+-+------+----@@ -1,256 +1,86 @@
+-+------+-+--@@ -1,168 +1,86 @@
+-+------+- ------ a/Bridges/Konigsberg.lean
+-+------+- ---+++ b/Bridges/Konigsberg.lean
+-+------+-----@@ -1,168 +1,86 @@
+-+------+--------- a/Bridges/Konigsberg.lean
+-+------+------+++ b/Bridges/Konigsberg.lean
+-+------+------@@ -1,99 +1,86 @@
+-+------+------ /-
+-+------+-------Copyright (c) 2025. All rights reserved.
+-+------+-------Released under Apache 2.0 license.
+-+------+------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+------+------+Released under Apache 2.0 license as described in the file LICENSE.
+-+------+------+-/
+-+------+------+import Mathlib
+-+------+------+import Bridges.EulerianTrail
+-+------+------ 
+-+------+-------# The Königsberg Bridge Problem — Formalized
+-+------+------+/-!
+-+------+------+# The Königsberg Bridge Problem
+-+------+------ 
+-+------+-------This file formalizes the Königsberg Bridge Problem, widely considered
+-+------+-------the founding problem of graph theory. In 1736, Euler proved that it is
+-+------+-------impossible to traverse all seven bridges of Königsberg exactly once.
+-+------+------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+------+------+the founding result of graph theory (Euler, 1736).
+-+------+------ 
+-+------+-------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+------+-------and prove impossibility using the Eulerian trail parity condition.
+-+------+------+## The Problem
+-+------+------ 
+-+------+-------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+------+-------with a simple-graph abstraction that captures the essential parity
+-+------+-------obstruction: a graph where more than two vertices have odd degree
+-+------+-------cannot have an Eulerian trail.
+-+------+------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+------+------+and included two large islands connected to each other and to the two mainland
+-+------+------+portions by seven bridges. The problem asks whether there is a walk through the
+-+------+------+city that crosses each bridge exactly once.
+-+------+------ 
+-+------+-------## Main results
+-+------+------+## The Graph
+-+------+------ 
+-+------+-------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+------+-------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+------+-------  has no Eulerian trail (from Mathlib).
+-+------+-------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+------+------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+------+------+- Vertex 0: Central island (Kneiphof)
+-+------+------+- Vertex 1: Northern bank
+-+------+------+- Vertex 2: Southern bank
+-+------+------+- Vertex 3: Eastern island (Lomse)
+-+------+------+
+-+------+------+The seven bridges are:
+-+------+------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+------+------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+------+------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+------+------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+------+------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+------+------+
+-+------+------+## Main Results
+-+------+------+
+-+------+------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+------+------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+------+------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+------+------ -/
+-+------+------ 
+-+------+-------import Mathlib
+-+------+------+namespace Bridges
+-+------+------ 
+-+------+-------/-! ### The Königsberg graph
+-+------+------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+------+------+def konigsberg : Multigraph 4 7 where
+-+------+------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+------+------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+------+------ 
+-+------+-------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+------+-------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+------+-------is the simple graph that captures the connectivity pattern.
+-+------+------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+------+------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+------+------ 
+-+------+-------In the original problem, some pairs of landmasses had multiple bridges
+-+------+-------between them, making the true model a multigraph. However, for the
+-+------+-------Eulerian trail condition, what matters is the parity of degrees at each
+-+------+-------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+------+-------impossibility via Euler's theorem. -/
+-+------+------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+------+------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+------+------ 
+-+------+-------/-- The four landmasses of Königsberg. -/
+-+------+-------inductive Konigsberg : Type
+-+------+-------  | A  -- North bank
+-+------+-------  | B  -- South bank
+-+------+-------  | C  -- Island (Kneiphof)
+-+------+-------  | D  -- East district
+-+------+-------  deriving DecidableEq, Fintype
+-+------+------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+------+------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+------+------ 
+-+------+-------open Konigsberg
+-+------+-------
+-+------+-------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+------+-------Every pair of distinct vertices is connected, capturing the fact that
+-+------+-------every pair of landmasses had at least one bridge between them. -/
+-+------+-------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+------+-------
+-+------+-------instance : DecidableRel konigsbergGraph.Adj := by
+-+------+-------  intro u v
+-+------+-------  simp only [konigsbergGraph]
+-+------+-------  infer_instance
+-+------+-------
+-+------+-------/-
+-+------+-------Every vertex in K₄ has degree 3 (odd).
+-+------+--------/
+-+------+-------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+------+-------  fin_cases v <;> simp +decide
+-+------+------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+------+------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+------+------ 
+-+------+------ /-- All four vertices of the Königsberg graph have odd degree. -/
+-+------+-------theorem konigsberg_all_odd :
+-+------+-------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+------+-------  intro v
+-+------+-------  rw [konigsberg_degree]
+-+------+-------  exact ⟨1, rfl⟩
+-+------+------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+------+------+  intro v; fin_cases v <;> native_decide
+-+------+------ 
+-+------+-------/-
+-+------+-------The number of odd-degree vertices in the Königsberg graph is 4.
+-+------+--------/
+-+------+-------theorem konigsberg_four_odd :
+-+------+-------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+------+-------  decide +revert
+-+------+------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+------+------+theorem konigsberg_odd_count :
+-+------+------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+------+------+  native_decide
+-+------+------ 
+-+------+-------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+------+-------then the number of odd-degree vertices is 0 or 2.
+-+------+-------This is the key obstruction from Mathlib. -/
+-+------+-------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+------+-------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+------+-------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+------+-------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+------+-------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+------+-------  hp.card_odd_degree
+-+------+------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+------+------ 
+-+------+-------/-
+-+------+-------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+------+-------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+------+-------through Königsberg crossing each bridge exactly once.
+-+------+--------/
+-+------+-------theorem konigsberg_no_eulerian_trail :
+-+------+-------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+------+-------  intro u v p h;
+-+------+-------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+------+------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+------+------+
+-+------+------+The proof combines:
+-+------+------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+------+------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+------+------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+------+------+  constructor
+-+------+------+  intro t
+-+------+------+  have h1 := t.odd_degree_vertices_le_two
+-+------+------+  have h2 := konigsberg_odd_count
+-+------+------+  omega
+-+------+------+
+-+------+------+end Bridges+/-
+-+------+-+---@@ -1,99 +1,86 @@
+-+------+-+--- /-
+-+------+-+----Copyright (c) 2025. All rights reserved.
+-+------+-+----Released under Apache 2.0 license.
+-+------+- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+------+- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+------+- ---+-/
+-+------+- ---+import Mathlib
+-+------+- ---+import Bridges.EulerianTrail
+-+------+-----+
+-+------+-+--- 
+-+------+-+----# The Königsberg Bridge Problem — Formalized
+-+------+- ---+/-!
+-+------+- ---+# The Königsberg Bridge Problem
+-+------+-----+
+-+------+-+--- 
+-+------+-+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+------+-+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+------+-+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+------+- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+------+- ---+the founding result of graph theory (Euler, 1736).
+-+------+-----+
+-+------+-+--- 
+-+------+-+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+------+-+----and prove impossibility using the Eulerian trail parity condition.
+-+------+- ---+## The Problem
+-+------+-----+
+-+------+-+--- 
+-+------+-+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+------+-+----with a simple-graph abstraction that captures the essential parity
+-+------+-+----obstruction: a graph where more than two vertices have odd degree
+-+------+-+----cannot have an Eulerian trail.
+-+------+- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+------+- ---+and included two large islands connected to each other and to the two mainland
+-+------+- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+------+- ---+city that crosses each bridge exactly once.
+-+------+-----+
+-+------+-+--- 
+-+------+-+----## Main results
+-+------+- ---+## The Graph
+-+------+-----+
+-+------+-+--- 
+-+------+-+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+------+-+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+------+-+----  has no Eulerian trail (from Mathlib).
+-+------+-+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+------+- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+------+- ---+- Vertex 0: Central island (Kneiphof)
+-+------+- ---+- Vertex 1: Northern bank
+-+------+-@@ -217,39 +67,101 @@
+-+------+- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+------+- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+------+- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+------+-----+-/
+-+------+-----+
+-+------+-+--- -/
+-+------+-+--- 
+-+------+-+----import Mathlib
+-+------+- ---+namespace Bridges
+-+------+-----+
+-+------+-+--- 
+-+------+-+----/-! ### The Königsberg graph
+-+------+- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+------+- ---+def konigsberg : Multigraph 4 7 where
+-+------+- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+------+- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+------+-----+
+-+------+-+--- 
+-+------+-+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+------+-+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+------+-+----is the simple graph that captures the connectivity pattern.
+-+------+- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+------+- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+------+-----+
+-+------+-+--- 
+-+------+-+----In the original problem, some pairs of landmasses had multiple bridges
+-+------+-+----between them, making the true model a multigraph. However, for the
+-+------+-+----Eulerian trail condition, what matters is the parity of degrees at each
+-+------+-+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+------+-+----impossibility via Euler's theorem. -/
+-+------+- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+------+- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+------+-----+
+-+------+-+--- 
+-+------+-+----/-- The four landmasses of Königsberg. -/
+-+------+-+----inductive Konigsberg : Type
+-+------+-+----  | A  -- North bank
+-+------+-+----  | B  -- South bank
+-+------+-+----  | C  -- Island (Kneiphof)
+-+------+-+----  | D  -- East district
+-+------+-+----  deriving DecidableEq, Fintype
+-+------+- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+------+- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+------+-----+
+-+------+-+--- 
+-+------+-+----open Konigsberg
+-+------+-+----
+-+------+-+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+------+-+----Every pair of distinct vertices is connected, capturing the fact that
+-+------+-+----every pair of landmasses had at least one bridge between them. -/
+-+------+-+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+------+-+----
+-+------+-+----instance : DecidableRel konigsbergGraph.Adj := by
+-+------+-+----  intro u v
+-+------+-+----  simp only [konigsbergGraph]
+-+------+-+----  infer_instance
+-+------+-+----
+-+------+-+----/-
+-+------+-+----Every vertex in K₄ has degree 3 (odd).
+-+------+-+-----/
+-+------+-+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+------+-+----  fin_cases v <;> simp +decide
+-+------+- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+------+- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+------+-----+
+-+------+-----+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+------+-+--- 
+-+------+-+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+------+-+----theorem konigsberg_all_odd :
+-+------+-+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+------+-+----  intro v
+-+------+-+----  rw [konigsberg_degree]
+-+------+-+----  exact ⟨1, rfl⟩
+-+------+- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+------+- ---+  intro v; fin_cases v <;> native_decide
+-+------+-----+
+-+------+-+--- 
+-+------+-+----/-
+-+------+-+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+------+-+-----/
+-+------+-+----theorem konigsberg_four_odd :
+-+------+-+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+------+-+----  decide +revert
+-+------+- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+------+- ---+theorem konigsberg_odd_count :
+-+------+- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+------+- ---+  native_decide
+-+------+-----+
+-+------+-+--- 
+-+------+-+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+------+-+----then the number of odd-degree vertices is 0 or 2.
+-+------+-+----This is the key obstruction from Mathlib. -/
+-+------+-+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+------+-+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+------+-+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+------+-+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+------+-+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+------+-+----  hp.card_odd_degree
+-+------+- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+------+-----+
+-+------+-----+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+------+-+--- 
+-+------+-+----/-
+-+------+-+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+------+-+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+------+-+----through Königsberg crossing each bridge exactly once.
+-+------+-+-----/
+-+------+-+----theorem konigsberg_no_eulerian_trail :
+-+------+-+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+------+-+----  intro u v p h;
+-+------+-+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+------+- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+------+- ---+
+-+------+- ---+The proof combines:
+-+------+-@@ -348,186 +260,186 @@
+-+------+- --+  omega
+-+------+- --+
+-+------+- --+end Bridges+/-
+-+------+---+Copyright (c) 2025. All rights reserved.
+-+------+---+Released under Apache 2.0 license.
+-+------+---+
+-+------+---+# The Königsberg Bridge Problem — Formalized
+-+------+---+
+-+------+---+This file formalizes the Königsberg Bridge Problem, widely considered
+-+------+---+the founding problem of graph theory. In 1736, Euler proved that it is
+-+------+---+impossible to traverse all seven bridges of Königsberg exactly once.
+-+------+---+
+-+------+---+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+------+---+and prove impossibility using the Eulerian trail parity condition.
+-+------+---+
+-+------+---+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+------+---+with a simple-graph abstraction that captures the essential parity
+-+------+---+obstruction: a graph where more than two vertices have odd degree
+-+------+---+cannot have an Eulerian trail.
+-+------+---+
+-+------+---+## Main results
+-+------+---+
+-+------+---+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+------+---+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+------+---+  has no Eulerian trail (from Mathlib).
+-+------+---+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+------+-+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+------+-+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+------+- -+-/
+-+------+---+
+-+------+- -+import Mathlib
+-+------+---+
+-+------+---+/-! ### The Königsberg graph
+-+------+---+
+-+------+---+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+------+---+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+------+---+is the simple graph that captures the connectivity pattern.
+-+------+---+
+-+------+---+In the original problem, some pairs of landmasses had multiple bridges
+-+------+---+between them, making the true model a multigraph. However, for the
+-+------+---+Eulerian trail condition, what matters is the parity of degrees at each
+-+------+---+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+------+---+impossibility via Euler's theorem. -/
+-+------+---+
+-+------+---+/-- The four landmasses of Königsberg. -/
+-+------+---+inductive Konigsberg : Type
+-+------+---+  | A  -- North bank
+-+------+---+  | B  -- South bank
+-+------+---+  | C  -- Island (Kneiphof)
+-+------+---+  | D  -- East district
+-+------+---+  deriving DecidableEq, Fintype
+-+------+---+
+-+------+---+open Konigsberg
+-+------+---+
+-+------+---+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+------+---+Every pair of distinct vertices is connected, capturing the fact that
+-+------+---+every pair of landmasses had at least one bridge between them. -/
+-+------+---+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+------+---+
+-+------+---+instance : DecidableRel konigsbergGraph.Adj := by
+-+------+---+  intro u v
+-+------+---+  simp only [konigsbergGraph]
+-+------+---+  infer_instance
+-+------+---+
+-+------+---+/-
+-+------+---+Every vertex in K₄ has degree 3 (odd).
+-+------+-+-+import Bridges.EulerianTrail
+-+------+-+-+
+-+------+-+-+/-!
+-+------+-+-+# The Königsberg Bridge Problem
+-+------+-+-+
+-+------+-+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+------+-+-+the founding result of graph theory (Euler, 1736).
+-+------+-+-+
+-+------+-+-+## The Problem
+-+------+-+-+
+-+------+-+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+------+-+-+and included two large islands connected to each other and to the two mainland
+-+------+-+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+------+-+-+city that crosses each bridge exactly once.
+-+------+-+-+
+-+------+-+-+## The Graph
+-+------+-+-+
+-+------+-+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+------+-+-+- Vertex 0: Central island (Kneiphof)
+-+------+-+-+- Vertex 1: Northern bank
+-+------+-+-+- Vertex 2: Southern bank
+-+------+-+-+- Vertex 3: Eastern island (Lomse)
+-+------+-+-+
+-+------+-+-+The seven bridges are:
+-+------+-+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+------+-+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+------+-+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+------+-+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+------+-+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+------+-+-+
+-+------+-+-+## Main Results
+-+------+-+-+
+-+------+-+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+------+-+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+------+-+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+------+- -+-/
+-+------+---+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+------+---+  fin_cases v <;> simp +decide
+-+------+-+-+
+-+------+-+-+namespace Bridges
+-+------+-+-+
+-+------+-+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+------+-+-+def konigsberg : Multigraph 4 7 where
+-+------+-+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+------+-+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+------+-+-+
+-+------+-+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+------+-+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+------+-+-+
+-+------+-+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+------+-+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+------+-+-+
+-+------+-+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+------+-+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+------+-+-+
+-+------+-+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+------+-+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+------+- -+
+-+------+- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+------+---+theorem konigsberg_all_odd :
+-+------+---+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+------+---+  intro v
+-+------+---+  rw [konigsberg_degree]
+-+------+---+  exact ⟨1, rfl⟩
+-+------+---+
+-+------+---+/-
+-+------+---+The number of odd-degree vertices in the Königsberg graph is 4.
+-+------++@@ -1,256 +1,86 @@
+-+------ +---- a/Bridges/Konigsberg.lean
+-+------ +-+++ b/Bridges/Konigsberg.lean
+-+-------+-@@ -1,923 +1,451 @@
+-+-------++--- a/Cryptography/Konigsberg.lean
+-+-------+++++ b/Cryptography/Konigsberg.lean
+-+-------++@@ -1,563 +1,181 @@
+-+-------+  --- a/Bridges/Konigsberg.lean
+-+-------+  +++ b/Bridges/Konigsberg.lean
+-+-------+--@@ -1,917 +1,86 @@
+-+-------+------ a/Cryptography/Konigsberg.lean
+-+-------+---+++ b/Cryptography/Konigsberg.lean
+-+-------+---@@ -1,563 +1,181 @@
+-+------- --- --- a/Bridges/Konigsberg.lean
+-+------- --- +++ b/Bridges/Konigsberg.lean
+-+------------@@ -1,445 +1,86 @@
+-+-----------+@@ -1,344 +1,99 @@
+-+----------- ---- a/Bridges/Konigsberg.lean
+-+----------- -+++ b/Bridges/Konigsberg.lean
+-+-------------@@ -1,344 +1,99 @@
+-+-----------+-@@ -1,256 +1,86 @@
+-+----------- ----- a/Bridges/Konigsberg.lean
+-+----------- --+++ b/Bridges/Konigsberg.lean
+-+--------------@@ -1,256 +1,86 @@
+-+-----------+--@@ -1,168 +1,86 @@
+-+----------- ------ a/Bridges/Konigsberg.lean
+-+----------- ---+++ b/Bridges/Konigsberg.lean
+-+---------------@@ -1,168 +1,86 @@
+-+------------------- a/Bridges/Konigsberg.lean
+-+----------------+++ b/Bridges/Konigsberg.lean
+-+----------------@@ -1,99 +1,86 @@
+-+---------------- /-
+-+-----------------Copyright (c) 2025. All rights reserved.
+-+-----------------Released under Apache 2.0 license.
+-+----------------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----------------+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+----@@ -1,204 +1,54 @@
+-+-------+---- --- a/Bridges/Konigsberg.lean
+-+-------+---- +++ b/Bridges/Konigsberg.lean
+-+-------+-----@@ -1,445 +1,86 @@
+-+-------+----+@@ -1,344 +1,99 @@
+-+-------+---- ---- a/Bridges/Konigsberg.lean
+-+-------+---- -+++ b/Bridges/Konigsberg.lean
+-+-------+------@@ -1,344 +1,99 @@
+-+-------+----+-@@ -1,256 +1,86 @@
+-+-------+---- ----- a/Bridges/Konigsberg.lean
+-+-------+---- --+++ b/Bridges/Konigsberg.lean
+-+-------+-------@@ -1,256 +1,86 @@
+-+-------+----+--@@ -1,168 +1,86 @@
+-+-------+---- ------ a/Bridges/Konigsberg.lean
+-+-------+---- ---+++ b/Bridges/Konigsberg.lean
+-+-------+--------@@ -1,168 +1,86 @@
+-+-------+------------ a/Bridges/Konigsberg.lean
+-+-------+---------+++ b/Bridges/Konigsberg.lean
+-+-------+---------@@ -1,99 +1,86 @@
+-+-------+--------- /-
+-+-------+----------Copyright (c) 2025. All rights reserved.
+-+-------+----------Released under Apache 2.0 license.
+-+-------+---------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+---------+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+---------+-/
+-+-------+---------+import Mathlib
+-+-------+---------+import Bridges.EulerianTrail
+-+-------+--------- 
+-+-------+----------# The Königsberg Bridge Problem — Formalized
+-+-------+---------+/-!
+-+-------+---------+# The Königsberg Bridge Problem
+-+-------+--------- 
+-+-------+----------This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------+----------the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------+----------impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+---------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------+---------+the founding result of graph theory (Euler, 1736).
+-+-------+--------- 
+-+-------+----------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------+----------and prove impossibility using the Eulerian trail parity condition.
+-+-------+---------+## The Problem
+-+-------+--------- 
+-+-------+----------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------+----------with a simple-graph abstraction that captures the essential parity
+-+-------+----------obstruction: a graph where more than two vertices have odd degree
+-+-------+----------cannot have an Eulerian trail.
+-+-------+---------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------+---------+and included two large islands connected to each other and to the two mainland
+-+-------+---------+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------+---------+city that crosses each bridge exactly once.
+-+-------+--------- 
+-+-------+----------## Main results
+-+-------+---------+## The Graph
+-+-------+--------- 
+-+-------+----------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------+----------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------+----------  has no Eulerian trail (from Mathlib).
+-+-------+----------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------+---------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------+---------+- Vertex 0: Central island (Kneiphof)
+-+-------+---------+- Vertex 1: Northern bank
+-+-------+---------+- Vertex 2: Southern bank
+-+-------+---------+- Vertex 3: Eastern island (Lomse)
+-+-------+---------+
+-+-------+---------+The seven bridges are:
+-+-------+---------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------+---------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------+---------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------+---------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------+---------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------+---------+
+-+-------+---------+## Main Results
+-+-------+---------+
+-+-------+---------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+---------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+---------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+--------- -/
+-+-------+--------- 
+-+-------+----------import Mathlib
+-+-------+---------+namespace Bridges
+-+-------+--------- 
+-+-------+----------/-! ### The Königsberg graph
+-+-------+---------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------+---------+def konigsberg : Multigraph 4 7 where
+-+-------+---------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------+---------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------+--------- 
+-+-------+----------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------+----------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------+----------is the simple graph that captures the connectivity pattern.
+-+-------+---------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------+---------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------+--------- 
+-+-------+----------In the original problem, some pairs of landmasses had multiple bridges
+-+-------+----------between them, making the true model a multigraph. However, for the
+-+-------+----------Eulerian trail condition, what matters is the parity of degrees at each
+-+-------+----------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------+----------impossibility via Euler's theorem. -/
+-+-------+---------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------+---------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------+--------- 
+-+-------+----------/-- The four landmasses of Königsberg. -/
+-+-------+----------inductive Konigsberg : Type
+-+-------+----------  | A  -- North bank
+-+-------+----------  | B  -- South bank
+-+-------+----------  | C  -- Island (Kneiphof)
+-+-------+----------  | D  -- East district
+-+-------+----------  deriving DecidableEq, Fintype
+-+-------+---------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------+---------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------+--------- 
+-+-------+----------open Konigsberg
+-+-------+----------
+-+-------+----------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------+----------Every pair of distinct vertices is connected, capturing the fact that
+-+-------+----------every pair of landmasses had at least one bridge between them. -/
+-+-------+----------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+----------
+-+-------+----------instance : DecidableRel konigsbergGraph.Adj := by
+-+-------+----------  intro u v
+-+-------+----------  simp only [konigsbergGraph]
+-+-------+----------  infer_instance
+-+-------+----------
+-+-------+----------/-
+-+-------+----------Every vertex in K₄ has degree 3 (odd).
+-+-------+-----------/
+-+-------+----------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------+----------  fin_cases v <;> simp +decide
+-+-------+---------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+---------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+--------- 
+-+-------+--------- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+----------theorem konigsberg_all_odd :
+-+-------+----------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------+----------  intro v
+-+-------+----------  rw [konigsberg_degree]
+-+-------+----------  exact ⟨1, rfl⟩
+-+-------+---------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+---------+  intro v; fin_cases v <;> native_decide
+-+-------+--------- 
+-+-------+----------/-
+-+-------+----------The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+-----------/
+-+-------+----------theorem konigsberg_four_odd :
+-+-------+----------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------+----------  decide +revert
+-+-------+---------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------+---------+theorem konigsberg_odd_count :
+-+-------+---------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------+---------+  native_decide
+-+-------+--------- 
+-+-------+----------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------+----------then the number of odd-degree vertices is 0 or 2.
+-+-------+----------This is the key obstruction from Mathlib. -/
+-+-------+----------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------+----------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------+----------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------+----------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------+----------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------+----------  hp.card_odd_degree
+-+-------+---------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------+--------- 
+-+-------+----------/-
+-+-------+----------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------+----------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------+----------through Königsberg crossing each bridge exactly once.
+-+-------+-----------/
+-+-------+----------theorem konigsberg_no_eulerian_trail :
+-+-------+----------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------+----------  intro u v p h;
+-+-------+----------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+---------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+---------+
+-+-------+---------+The proof combines:
+-+-------+---------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------+---------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------+---------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------+---------+  constructor
+-+-------+---------+  intro t
+-+-------+---------+  have h1 := t.odd_degree_vertices_le_two
+-+-------+---------+  have h2 := konigsberg_odd_count
+-+-------+---------+  omega
+-+-------+---------+
+-+-------+---------+end Bridges+/-
+-+-------+----+---@@ -1,99 +1,86 @@
+-+-------+----+--- /-
+-+-------+----+----Copyright (c) 2025. All rights reserved.
+-+-------+----+----Released under Apache 2.0 license.
+-+-------+---- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+---- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+---- ---+-/
+-+-------+---- ---+import Mathlib
+-+-------+---- ---+import Bridges.EulerianTrail
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----# The Königsberg Bridge Problem — Formalized
+-+-------+---- ---+/-!
+-+-------+---- ---+# The Königsberg Bridge Problem
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------+----+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------+----+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+---- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------+---- ---+the founding result of graph theory (Euler, 1736).
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------+----+----and prove impossibility using the Eulerian trail parity condition.
+-+-------+---- ---+## The Problem
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------+----+----with a simple-graph abstraction that captures the essential parity
+-+-------+----+----obstruction: a graph where more than two vertices have odd degree
+-+-------+----+----cannot have an Eulerian trail.
+-+-------+---- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------+---- ---+and included two large islands connected to each other and to the two mainland
+-+-------+---- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------+---- ---+city that crosses each bridge exactly once.
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----## Main results
+-+-------+---- ---+## The Graph
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------+----+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------+----+----  has no Eulerian trail (from Mathlib).
+-+-------+----+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------+---- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------+---- ---+- Vertex 0: Central island (Kneiphof)
+-+-------+---- ---+- Vertex 1: Northern bank
+-+-------+----@@ -217,39 +67,101 @@
+-+-------+---- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+---- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+---- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+------- --------+-/
+-+----------------+import Mathlib
+-+----------------+import Bridges.EulerianTrail
+-+---------------- 
+-+-----------------# The Königsberg Bridge Problem — Formalized
+-+----------------+/-!
+-+----------------+# The Königsberg Bridge Problem
+-+---------------- 
+-+-----------------This file formalizes the Königsberg Bridge Problem, widely considered
+-+-----------------the founding problem of graph theory. In 1736, Euler proved that it is
+-+-----------------impossible to traverse all seven bridges of Königsberg exactly once.
+-+----------------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----------------+the founding result of graph theory (Euler, 1736).
+-+---------------- 
+-+-----------------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-----------------and prove impossibility using the Eulerian trail parity condition.
+-+----------------+## The Problem
+-+---------------- 
+-+-----------------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-----------------with a simple-graph abstraction that captures the essential parity
+-+-----------------obstruction: a graph where more than two vertices have odd degree
+-+-----------------cannot have an Eulerian trail.
+-+----------------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----------------+and included two large islands connected to each other and to the two mainland
+-+----------------+portions by seven bridges. The problem asks whether there is a walk through the
+-+----------------+city that crosses each bridge exactly once.
+-+---------------- 
+-+-----------------## Main results
+-+----------------+## The Graph
+-+---------------- 
+-+-----------------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-----------------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-----------------  has no Eulerian trail (from Mathlib).
+-+-----------------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----------------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----------------+- Vertex 0: Central island (Kneiphof)
+-+----------------+- Vertex 1: Northern bank
+-+----------------+- Vertex 2: Southern bank
+-+----------------+- Vertex 3: Eastern island (Lomse)
+-+------- --------+
+-+----------------+The seven bridges are:
+-+----------------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----------------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----------------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----------------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----------------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------+----+--- -/
+-+-------+----+--- 
+-+-------+----+----import Mathlib
+-+-------+---- ---+namespace Bridges
+-+------- --------+
+-+----------------+## Main Results
+-+-------+----+--- 
+-+-------+----+----/-! ### The Königsberg graph
+-+-------+---- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------+---- ---+def konigsberg : Multigraph 4 7 where
+-+-------+---- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------+---- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+------- --------+
+-+----------------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----------------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----------------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---------------- -/
+-+---------------- 
+-+-----------------import Mathlib
+-+----------------+namespace Bridges
+-+---------------- 
+-+-----------------/-! ### The Königsberg graph
+-+----------------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----------------+def konigsberg : Multigraph 4 7 where
+-+----------------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----------------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---------------- 
+-+-----------------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-----------------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-----------------is the simple graph that captures the connectivity pattern.
+-+----------------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----------------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---------------- 
+-+-----------------In the original problem, some pairs of landmasses had multiple bridges
+-+-----------------between them, making the true model a multigraph. However, for the
+-+-----------------Eulerian trail condition, what matters is the parity of degrees at each
+-+-----------------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-----------------impossibility via Euler's theorem. -/
+-+----------------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----------------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---------------- 
+-+-----------------/-- The four landmasses of Königsberg. -/
+-+-----------------inductive Konigsberg : Type
+-+-----------------  | A  -- North bank
+-+-----------------  | B  -- South bank
+-+-----------------  | C  -- Island (Kneiphof)
+-+-----------------  | D  -- East district
+-+-----------------  deriving DecidableEq, Fintype
+-+----------------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----------------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---------------- 
+-+-----------------open Konigsberg
+-+-----------------
+-+-----------------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-----------------Every pair of distinct vertices is connected, capturing the fact that
+-+-----------------every pair of landmasses had at least one bridge between them. -/
+-+-----------------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-----------------
+-+-----------------instance : DecidableRel konigsbergGraph.Adj := by
+-+-----------------  intro u v
+-+-----------------  simp only [konigsbergGraph]
+-+-----------------  infer_instance
+-+-----------------
+-+-----------------/-
+-+-----------------Every vertex in K₄ has degree 3 (odd).
+-+------------------/
+-+-----------------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-----------------  fin_cases v <;> simp +decide
+-+----------------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----------------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---------------- 
+-+---------------- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-----------------theorem konigsberg_all_odd :
+-+-----------------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-----------------  intro v
+-+-----------------  rw [konigsberg_degree]
+-+-----------------  exact ⟨1, rfl⟩
+-+----------------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----------------+  intro v; fin_cases v <;> native_decide
+-+---------------- 
+-+-----------------/-
+-+-----------------The number of odd-degree vertices in the Königsberg graph is 4.
+-+------------------/
+-+-----------------theorem konigsberg_four_odd :
+-+-----------------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-----------------  decide +revert
+-+----------------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----------------+theorem konigsberg_odd_count :
+-+----------------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----------------+  native_decide
+-+---------------- 
+-+-----------------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-----------------then the number of odd-degree vertices is 0 or 2.
+-+-----------------This is the key obstruction from Mathlib. -/
+-+-----------------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-----------------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-----------------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-----------------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-----------------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-----------------  hp.card_odd_degree
+-+----------------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---------------- 
+-+-----------------/-
+-+-----------------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-----------------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-----------------through Königsberg crossing each bridge exactly once.
+-+------------------/
+-+-----------------theorem konigsberg_no_eulerian_trail :
+-+-----------------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-----------------  intro u v p h;
+-+-----------------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----------------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+----+--- 
+-+-------+----+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------+----+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------+----+----is the simple graph that captures the connectivity pattern.
+-+-------+---- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------+---- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+------- --------+
+-+----------------+The proof combines:
+-+----------------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----------------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----------------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----------------+  constructor
+-+----------------+  intro t
+-+----------------+  have h1 := t.odd_degree_vertices_le_two
+-+----------------+  have h2 := konigsberg_odd_count
+-+----------------+  omega
+-+-------+----+--- 
+-+-------+----+----In the original problem, some pairs of landmasses had multiple bridges
+-+-------+----+----between them, making the true model a multigraph. However, for the
+-+-------+----+----Eulerian trail condition, what matters is the parity of degrees at each
+-+-------+----+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------+----+----impossibility via Euler's theorem. -/
+-+-------+---- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------+---- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+------- --------+
+-+----------------+end Bridges+/-
+-+-----------+---@@ -1,99 +1,86 @@
+-+-----------+--- /-
+-+-----------+----Copyright (c) 2025. All rights reserved.
+-+-----------+----Released under Apache 2.0 license.
+-+----------- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----------- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+----------- ---+-/
+-+----------- ---+import Mathlib
+-+----------- ---+import Bridges.EulerianTrail
+-+---------------+
+-+-----------+--- 
+-+-----------+----# The Königsberg Bridge Problem — Formalized
+-+----------- ---+/-!
+-+----------- ---+# The Königsberg Bridge Problem
+-+---------------+
+-+-----------+--- 
+-+-----------+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+-----------+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+-----------+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+----------- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----------- ---+the founding result of graph theory (Euler, 1736).
+-+---------------+
+-+-----------+--- 
+-+-----------+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-----------+----and prove impossibility using the Eulerian trail parity condition.
+-+----------- ---+## The Problem
+-+---------------+
+-+-----------+--- 
+-+-----------+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-----------+----with a simple-graph abstraction that captures the essential parity
+-+-----------+----obstruction: a graph where more than two vertices have odd degree
+-+-----------+----cannot have an Eulerian trail.
+-+----------- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----------- ---+and included two large islands connected to each other and to the two mainland
+-+----------- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+----------- ---+city that crosses each bridge exactly once.
+-+---------------+
+-+-----------+--- 
+-+-----------+----## Main results
+-+----------- ---+## The Graph
+-+---------------+
+-+-----------+--- 
+-+-----------+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-----------+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-----------+----  has no Eulerian trail (from Mathlib).
+-+-----------+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----------- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----------- ---+- Vertex 0: Central island (Kneiphof)
+-+----------- ---+- Vertex 1: Northern bank
+-+-----------@@ -217,39 +67,101 @@
+-+----------- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----------- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----------- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---------------+-/
+-+---------------+
+-+-----------+--- -/
+-+-----------+--- 
+-+-----------+----import Mathlib
+-+----------- ---+namespace Bridges
+-+---------------+
+-+-----------+--- 
+-+-----------+----/-! ### The Königsberg graph
+-+----------- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----------- ---+def konigsberg : Multigraph 4 7 where
+-+----------- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----------- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---------------+
+-+-----------+--- 
+-+-----------+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-----------+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-----------+----is the simple graph that captures the connectivity pattern.
+-+----------- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----------- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---------------+
+-+-----------+--- 
+-+-----------+----In the original problem, some pairs of landmasses had multiple bridges
+-+-----------+----between them, making the true model a multigraph. However, for the
+-+-----------+----Eulerian trail condition, what matters is the parity of degrees at each
+-+-----------+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-----------+----impossibility via Euler's theorem. -/
+-+----------- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----------- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---------------+
+-+-----------+--- 
+-+-----------+----/-- The four landmasses of Königsberg. -/
+-+-----------+----inductive Konigsberg : Type
+-+-----------+----  | A  -- North bank
+-+-----------+----  | B  -- South bank
+-+-----------+----  | C  -- Island (Kneiphof)
+-+-----------+----  | D  -- East district
+-+-----------+----  deriving DecidableEq, Fintype
+-+----------- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----------- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---------------+
+-+-----------+--- 
+-+-----------+----open Konigsberg
+-+-----------+----
+-+-----------+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-----------+----Every pair of distinct vertices is connected, capturing the fact that
+-+-----------+----every pair of landmasses had at least one bridge between them. -/
+-+-----------+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-----------+----
+-+-----------+----instance : DecidableRel konigsbergGraph.Adj := by
+-+-----------+----  intro u v
+-+-----------+----  simp only [konigsbergGraph]
+-+-----------+----  infer_instance
+-+-----------+----
+-+-----------+----/-
+-+-----------+----Every vertex in K₄ has degree 3 (odd).
+-+-----------+-----/
+-+-----------+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-----------+----  fin_cases v <;> simp +decide
+-+----------- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----------- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---------------+
+-+---------------+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-----------+--- 
+-+-----------+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-----------+----theorem konigsberg_all_odd :
+-+-----------+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-----------+----  intro v
+-+-----------+----  rw [konigsberg_degree]
+-+-----------+----  exact ⟨1, rfl⟩
+-+----------- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----------- ---+  intro v; fin_cases v <;> native_decide
+-+---------------+
+-+-----------+--- 
+-+-----------+----/-
+-+-----------+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+-----------+-----/
+-+-----------+----theorem konigsberg_four_odd :
+-+-----------+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-----------+----  decide +revert
+-+----------- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----------- ---+theorem konigsberg_odd_count :
+-+----------- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----------- ---+  native_decide
+-+---------------+
+-+-----------+--- 
+-+-----------+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-----------+----then the number of odd-degree vertices is 0 or 2.
+-+-----------+----This is the key obstruction from Mathlib. -/
+-+-----------+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-----------+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-----------+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-----------+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-----------+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-----------+----  hp.card_odd_degree
+-+----------- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---------------+
+-+---------------+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-----------+--- 
+-+-----------+----/-
+-+-----------+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-----------+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-----------+----through Königsberg crossing each bridge exactly once.
+-+-----------+-----/
+-+-----------+----theorem konigsberg_no_eulerian_trail :
+-+-----------+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-----------+----  intro u v p h;
+-+-----------+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----------- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----------- ---+
+-+----------- ---+The proof combines:
+-+-----------@@ -348,186 +260,186 @@
+-+----------- --+  omega
+-+----------- --+
+-+----------- --+end Bridges+/-
+-+-------------+Copyright (c) 2025. All rights reserved.
+-+-------------+Released under Apache 2.0 license.
+-+--------+@@ -1,445 +1,86 @@
+-+----+--- a/Logic/Konigsberg.lean
+-+----++++ b/Logic/Konigsberg.lean
+-+----+@@ -1,1367 +1,2193 @@
+-+---+--- a/Logic/Konigsberg.lean
+-+---++++ b/Logic/Konigsberg.lean
+-+---+@@ -1,1367 +1,2193 @@
+-++--- a/Bridges/Konigsberg.lean
+-+++++ b/Bridges/Konigsberg.lean
+-++@@ -1,923 +1,451 @@
+-++ --- a/Bridges/Konigsberg.lean
+-++ +++ b/Bridges/Konigsberg.lean
+-++-@@ -1,917 +1,86 @@
+-++----- a/Cryptography/Konigsberg.lean
+-++--+++ b/Cryptography/Konigsberg.lean
+-++--@@ -1,563 +1,181 @@
+-++-- --- a/Bridges/Konigsberg.lean
+-++-- +++ b/Bridges/Konigsberg.lean
+-++---@@ -1,204 +1,54 @@
+-++--- --- a/Bridges/Konigsberg.lean
+-++--- +++ b/Bridges/Konigsberg.lean
+-++----@@ -1,445 +1,86 @@
+-++---+@@ -1,344 +1,99 @@
+-++--- ---- a/Bridges/Konigsberg.lean
+-++--- -+++ b/Bridges/Konigsberg.lean
+-++-----@@ -1,344 +1,99 @@
+-++---+-@@ -1,256 +1,86 @@
+-++--- ----- a/Bridges/Konigsberg.lean
+-++--- --+++ b/Bridges/Konigsberg.lean
+-++------@@ -1,256 +1,86 @@
+-++---+--@@ -1,168 +1,86 @@
+-++--- ------ a/Bridges/Konigsberg.lean
+-++--- ---+++ b/Bridges/Konigsberg.lean
+-++-------@@ -1,168 +1,86 @@
+-++----------- a/Bridges/Konigsberg.lean
+-++--------+++ b/Bridges/Konigsberg.lean
+-++--------@@ -1,99 +1,86 @@
+-++-------- /-
+-++---------Copyright (c) 2025. All rights reserved.
+-++---------Released under Apache 2.0 license.
+-++--------+Copyright (c) 2025 Harmonic. All rights reserved.
+-++--------+Released under Apache 2.0 license as described in the file LICENSE.
+-++--------+-/
+-++--------+import Mathlib
+-++--------+import Bridges.EulerianTrail
+-++-------- 
+-++---------# The Königsberg Bridge Problem — Formalized
+-++--------+/-!
+-++--------+# The Königsberg Bridge Problem
+-++-------- 
+-++---------This file formalizes the Königsberg Bridge Problem, widely considered
+-++---------the founding problem of graph theory. In 1736, Euler proved that it is
+-++---------impossible to traverse all seven bridges of Königsberg exactly once.
+-++--------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-++--------+the founding result of graph theory (Euler, 1736).
+-++-------- 
+-++---------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-++---------and prove impossibility using the Eulerian trail parity condition.
+-++--------+## The Problem
+-++-------- 
+-++---------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-++---------with a simple-graph abstraction that captures the essential parity
+-++---------obstruction: a graph where more than two vertices have odd degree
+-++---------cannot have an Eulerian trail.
+-++--------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-++--------+and included two large islands connected to each other and to the two mainland
+-++--------+portions by seven bridges. The problem asks whether there is a walk through the
+-++--------+city that crosses each bridge exactly once.
+-++-------- 
+-++---------## Main results
+-++--------+## The Graph
+-++-------- 
+-++---------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-++---------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-++---------  has no Eulerian trail (from Mathlib).
+-++---------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-++--------+We model the four landmasses as vertices 0–3 of a multigraph:
+-++--------+- Vertex 0: Central island (Kneiphof)
+-++--------+- Vertex 1: Northern bank
+-++--------+- Vertex 2: Southern bank
+-++--------+- Vertex 3: Eastern island (Lomse)
+-++--------+
+-++--------+The seven bridges are:
+-++--------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-++--------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-++--------+- Edge 4: One bridge from vertex 0 to vertex 3
+-++--------+- Edge 5: One bridge from vertex 1 to vertex 3
+-++--------+- Edge 6: One bridge from vertex 2 to vertex 3
+-++--------+
+-++--------+## Main Results
+-++--------+
+-++--------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-++--------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-++--------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-++-------- -/
+-++-------- 
+-++---------import Mathlib
+-++--------+namespace Bridges
+-++-------- 
+-++---------/-! ### The Königsberg graph
+-++--------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-++--------+def konigsberg : Multigraph 4 7 where
+-++--------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-++--------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-++-------- 
+-++---------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-++---------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-++---------is the simple graph that captures the connectivity pattern.
+-++--------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-++--------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-++-------- 
+-++---------In the original problem, some pairs of landmasses had multiple bridges
+-++---------between them, making the true model a multigraph. However, for the
+-++---------Eulerian trail condition, what matters is the parity of degrees at each
+-++---------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-++---------impossibility via Euler's theorem. -/
+-++--------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-++--------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-++-------- 
+-++---------/-- The four landmasses of Königsberg. -/
+-++---------inductive Konigsberg : Type
+-++---------  | A  -- North bank
+-++---------  | B  -- South bank
+-++---------  | C  -- Island (Kneiphof)
+-++---------  | D  -- East district
+-++---------  deriving DecidableEq, Fintype
+-++--------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-++--------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-++-------- 
+-++---------open Konigsberg
+-++---------
+-++---------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-++---------Every pair of distinct vertices is connected, capturing the fact that
+-++---------every pair of landmasses had at least one bridge between them. -/
+-++---------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-++---------
+-++---------instance : DecidableRel konigsbergGraph.Adj := by
+-++---------  intro u v
+-++---------  simp only [konigsbergGraph]
+-++---------  infer_instance
+-++---------
+-++---------/-
+-++---------Every vertex in K₄ has degree 3 (odd).
+-++----------/
+-++---------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-++---------  fin_cases v <;> simp +decide
+-++--------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-++--------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-++-------- 
+-++-------- /-- All four vertices of the Königsberg graph have odd degree. -/
+-++---------theorem konigsberg_all_odd :
+-++---------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-++---------  intro v
+-++---------  rw [konigsberg_degree]
+-++---------  exact ⟨1, rfl⟩
+-++--------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-++--------+  intro v; fin_cases v <;> native_decide
+-++-------- 
+-++---------/-
+-++---------The number of odd-degree vertices in the Königsberg graph is 4.
+-++----------/
+-++---------theorem konigsberg_four_odd :
+-++---------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-++---------  decide +revert
+-++--------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-++--------+theorem konigsberg_odd_count :
+-++--------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-++--------+  native_decide
+-++-------- 
+-++---------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-++---------then the number of odd-degree vertices is 0 or 2.
+-++---------This is the key obstruction from Mathlib. -/
+-++---------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-++---------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-++---------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-++---------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-++---------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-++---------  hp.card_odd_degree
+-++--------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-++-------- 
+-++---------/-
+-++---------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-++---------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-++---------through Königsberg crossing each bridge exactly once.
+-++----------/
+-++---------theorem konigsberg_no_eulerian_trail :
+-++---------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-++---------  intro u v p h;
+-++---------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-++--------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-++--------+
+-++--------+The proof combines:
+-++--------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-++--------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-++--------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-++--------+  constructor
+-++--------+  intro t
+-++--------+  have h1 := t.odd_degree_vertices_le_two
+-++--------+  have h2 := konigsberg_odd_count
+-++--------+  omega
+-++--------+
+-++--------+end Bridges+/-
+-++---+---@@ -1,99 +1,86 @@
+-++---+--- /-
+-++---+----Copyright (c) 2025. All rights reserved.
+-++---+----Released under Apache 2.0 license.
+-++--- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-++--- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-++--- ---+-/
+-++--- ---+import Mathlib
+-++--- ---+import Bridges.EulerianTrail
+-++-------+
+-++---+--- 
+-++---+----# The Königsberg Bridge Problem — Formalized
+-++--- ---+/-!
+-++--- ---+# The Königsberg Bridge Problem
+-++-------+
+-++---+--- 
+-++---+----This file formalizes the Königsberg Bridge Problem, widely considered
+-++---+----the founding problem of graph theory. In 1736, Euler proved that it is
+-++---+----impossible to traverse all seven bridges of Königsberg exactly once.
+-++--- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-++--- ---+the founding result of graph theory (Euler, 1736).
+-++-------+
+-++---+--- 
+-++---+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-++---+----and prove impossibility using the Eulerian trail parity condition.
+-++--- ---+## The Problem
+-++-------+
+-++---+--- 
+-++---+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-++---+----with a simple-graph abstraction that captures the essential parity
+-++---+----obstruction: a graph where more than two vertices have odd degree
+-++---+----cannot have an Eulerian trail.
+-++--- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-++--- ---+and included two large islands connected to each other and to the two mainland
+-++--- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-++--- ---+city that crosses each bridge exactly once.
+-++-------+
+-++---+--- 
+-++---+----## Main results
+-++--- ---+## The Graph
+-++-------+
+-++---+--- 
+-++---+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-++---+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-++---+----  has no Eulerian trail (from Mathlib).
+-++---+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-++--- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-++--- ---+- Vertex 0: Central island (Kneiphof)
+-++--- ---+- Vertex 1: Northern bank
+-++---@@ -217,39 +67,101 @@
+-++--- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-++--- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-++--- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-++-------+-/
+-++-------+
+-++---+--- -/
+-++---+--- 
+-++---+----import Mathlib
+-++--- ---+namespace Bridges
+-++-------+
+-++---+--- 
+-++---+----/-! ### The Königsberg graph
+-++--- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-++--- ---+def konigsberg : Multigraph 4 7 where
+-++--- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-++--- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-++-------+
+-++---+--- 
+-++---+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-++---+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-++---+----is the simple graph that captures the connectivity pattern.
+-++--- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-++--- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-++-------+
+-++---+--- 
+-++---+----In the original problem, some pairs of landmasses had multiple bridges
+-++---+----between them, making the true model a multigraph. However, for the
+-++---+----Eulerian trail condition, what matters is the parity of degrees at each
+-++---+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-++---+----impossibility via Euler's theorem. -/
+-++--- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-++--- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-++-------+
+-++---+--- 
+-++---+----/-- The four landmasses of Königsberg. -/
+-++---+----inductive Konigsberg : Type
+-++---+----  | A  -- North bank
+-++---+----  | B  -- South bank
+-++---+----  | C  -- Island (Kneiphof)
+-++---+----  | D  -- East district
+-++---+----  deriving DecidableEq, Fintype
+-++--- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-++--- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-++-------+
+-++---+--- 
+-++---+----open Konigsberg
+-++---+----
+-++---+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-++---+----Every pair of distinct vertices is connected, capturing the fact that
+-++---+----every pair of landmasses had at least one bridge between them. -/
+-++---+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-++---+----
+-++---+----instance : DecidableRel konigsbergGraph.Adj := by
+-++---+----  intro u v
+-++---+----  simp only [konigsbergGraph]
+-++---+----  infer_instance
+-++---+----
+-++---+----/-
+-++---+----Every vertex in K₄ has degree 3 (odd).
+-++---+-----/
+-++---+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-++---+----  fin_cases v <;> simp +decide
+-++--- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-++--- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-++-------+
+-++-------+/-- All four vertices of the Königsberg graph have odd degree. -/
+-++---+--- 
+-++---+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-++---+----theorem konigsberg_all_odd :
+-++---+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-++---+----  intro v
+-++---+----  rw [konigsberg_degree]
+-++---+----  exact ⟨1, rfl⟩
+-++--- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-++--- ---+  intro v; fin_cases v <;> native_decide
+-++-------+
+-++---+--- 
+-++---+----/-
+-++---+----The number of odd-degree vertices in the Königsberg graph is 4.
+-++---+-----/
+-++---+----theorem konigsberg_four_odd :
+-++---+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-++---+----  decide +revert
+-++--- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-++--- ---+theorem konigsberg_odd_count :
+-++--- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-++--- ---+  native_decide
+-++-------+
+-++---+--- 
+-++---+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-++---+----then the number of odd-degree vertices is 0 or 2.
+-++---+----This is the key obstruction from Mathlib. -/
+-++---+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-++---+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-++---+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-++---+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-++---+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-++---+----  hp.card_odd_degree
+-++--- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-++-------+
+-++-------+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-++---+--- 
+-++---+----/-
+-++---+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-++---+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-++---+----through Königsberg crossing each bridge exactly once.
+-++---+-----/
+-++---+----theorem konigsberg_no_eulerian_trail :
+-++---+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-++---+----  intro u v p h;
+-++---+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-++--- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-++--- ---+
+-++--- ---+The proof combines:
+-++---@@ -348,186 +260,186 @@
+-++--- --+  omega
+-++--- --+
+-++--- --+end Bridges+/-
+-++-----+Copyright (c) 2025. All rights reserved.
+-++-----+Released under Apache 2.0 license.
+-+++@@ -1,445 +1,86 @@
+-+++---- a/Bridges/Konigsberg.lean
+-+++-+++ b/Bridges/Konigsberg.lean
+-+++-@@ -1,344 +1,99 @@
+-+++----- a/Bridges/Konigsberg.lean
+-+++--+++ b/Bridges/Konigsberg.lean
+-+++--@@ -1,256 +1,86 @@
+-+++------ a/Bridges/Konigsberg.lean
+-+++---+++ b/Bridges/Konigsberg.lean
+-+++---@@ -1,168 +1,86 @@
+-+++------- a/Bridges/Konigsberg.lean
+-+++----+++ b/Bridges/Konigsberg.lean
+-+++----@@ -1,99 +1,86 @@
+-+++---- /-
+-+++-----Copyright (c) 2025. All rights reserved.
+-+++-----Released under Apache 2.0 license.
+-+++----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+++----+Released under Apache 2.0 license as described in the file LICENSE.
+-+++----+-/
+-+++----+import Mathlib
+-+++----+import Bridges.EulerianTrail
+-+++---- 
+-+++-----# The Königsberg Bridge Problem — Formalized
+-+++----+/-!
+-+++----+# The Königsberg Bridge Problem
+-+++---- 
+-+++-----This file formalizes the Königsberg Bridge Problem, widely considered
+-+++-----the founding problem of graph theory. In 1736, Euler proved that it is
+-+++-----impossible to traverse all seven bridges of Königsberg exactly once.
+-+++----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+++----+the founding result of graph theory (Euler, 1736).
+-+++---- 
+-+++-----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+++-----and prove impossibility using the Eulerian trail parity condition.
+-+++----+## The Problem
+-+++---- 
+-+++-----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+++-----with a simple-graph abstraction that captures the essential parity
+-+++-----obstruction: a graph where more than two vertices have odd degree
+-+++-----cannot have an Eulerian trail.
+-+++----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+++----+and included two large islands connected to each other and to the two mainland
+-+++----+portions by seven bridges. The problem asks whether there is a walk through the
+-+++----+city that crosses each bridge exactly once.
+-+++---- 
+-+++-----## Main results
+-+++----+## The Graph
+-+++---- 
+-+++-----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+++-----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+++-----  has no Eulerian trail (from Mathlib).
+-+++-----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+++----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+++----+- Vertex 0: Central island (Kneiphof)
+-+++----+- Vertex 1: Northern bank
+-+++----+- Vertex 2: Southern bank
+-+++----+- Vertex 3: Eastern island (Lomse)
+-++ ----+
+-++-----+# The Königsberg Bridge Problem — Formalized
+-+++----+The seven bridges are:
+-+++----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+++----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+++----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+++----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+++----+- Edge 6: One bridge from vertex 2 to vertex 3
+-++ ----+
+-++-----+This file formalizes the Königsberg Bridge Problem, widely considered
+-++-----+the founding problem of graph theory. In 1736, Euler proved that it is
+-++-----+impossible to traverse all seven bridges of Königsberg exactly once.
+-+++----+## Main Results
+-++ ----+
+-++-----+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-++-----+and prove impossibility using the Eulerian trail parity condition.
+-+++----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+++----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+++----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+++---- -/
+-+++---- 
+-+++-----import Mathlib
+-+++----+namespace Bridges
+-+++---- 
+-+++-----/-! ### The Königsberg graph
+-+++----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+++----+def konigsberg : Multigraph 4 7 where
+-+++----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+++----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+++---- 
+-+++-----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+++-----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+++-----is the simple graph that captures the connectivity pattern.
+-+++----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+++----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+++---- 
+-+++-----In the original problem, some pairs of landmasses had multiple bridges
+-+++-----between them, making the true model a multigraph. However, for the
+-+++-----Eulerian trail condition, what matters is the parity of degrees at each
+-+++-----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+++-----impossibility via Euler's theorem. -/
+-+++----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+++----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+++---- 
+-+++-----/-- The four landmasses of Königsberg. -/
+-+++-----inductive Konigsberg : Type
+-+++-----  | A  -- North bank
+-+++-----  | B  -- South bank
+-+++-----  | C  -- Island (Kneiphof)
+-+++-----  | D  -- East district
+-+++-----  deriving DecidableEq, Fintype
+-+++----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+++----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+++---- 
+-+++-----open Konigsberg
+-+++-----
+-+++-----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+++-----Every pair of distinct vertices is connected, capturing the fact that
+-+++-----every pair of landmasses had at least one bridge between them. -/
+-+++-----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+++-----
+-+++-----instance : DecidableRel konigsbergGraph.Adj := by
+-+++-----  intro u v
+-+++-----  simp only [konigsbergGraph]
+-+++-----  infer_instance
+-+++-----
+-+++-----/-
+-+++-----Every vertex in K₄ has degree 3 (odd).
+-+++------/
+-+++-----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+++-----  fin_cases v <;> simp +decide
+-+++----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+++----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+++---- 
+-+++---- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+++-----theorem konigsberg_all_odd :
+-+++-----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+++-----  intro v
+-+++-----  rw [konigsberg_degree]
+-+++-----  exact ⟨1, rfl⟩
+-+++----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+++----+  intro v; fin_cases v <;> native_decide
+-+++---- 
+-+++-----/-
+-+++-----The number of odd-degree vertices in the Königsberg graph is 4.
+-+++------/
+-+++-----theorem konigsberg_four_odd :
+-+++-----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+++-----  decide +revert
+-+++----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+++----+theorem konigsberg_odd_count :
+-+++----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+++----+  native_decide
+-+++---- 
+-+++-----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+++-----then the number of odd-degree vertices is 0 or 2.
+-+++-----This is the key obstruction from Mathlib. -/
+-+++-----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+++-----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+++-----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+++-----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+++-----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+++-----  hp.card_odd_degree
+-+++----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+++---- 
+-+++-----/-
+-+++-----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+++-----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+++-----through Königsberg crossing each bridge exactly once.
+-+++------/
+-+++-----theorem konigsberg_no_eulerian_trail :
+-+++-----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+++-----  intro u v p h;
+-+++-----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+++----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-++ ----+
+-++-----+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-++-----+with a simple-graph abstraction that captures the essential parity
+-++-----+obstruction: a graph where more than two vertices have odd degree
+-++-----+cannot have an Eulerian trail.
+-+++----+The proof combines:
+-+++----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+++----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+++----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+++----+  constructor
+-+++----+  intro t
+-+++----+  have h1 := t.odd_degree_vertices_le_two
+-+++----+  have h2 := konigsberg_odd_count
+-+++----+  omega
+-++ ----+
+-++-----+## Main results
+-++-----+
+-++-----+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-++-----+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-++-----+  has no Eulerian trail (from Mathlib).
+-++-----+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-++---+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-++---+-+Released under Apache 2.0 license as described in the file LICENSE.
+-++--- -+-/
+-++-----+
+-++--- -+import Mathlib
+-++-----+
+-++-----+/-! ### The Königsberg graph
+-++-----+
+-++-----+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-++-----+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-++-----+is the simple graph that captures the connectivity pattern.
+-++-----+
+-++-----+In the original problem, some pairs of landmasses had multiple bridges
+-++-----+between them, making the true model a multigraph. However, for the
+-++-----+Eulerian trail condition, what matters is the parity of degrees at each
+-++-----+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-++-----+impossibility via Euler's theorem. -/
+-++-----+
+-++-----+/-- The four landmasses of Königsberg. -/
+-++-----+inductive Konigsberg : Type
+-++-----+  | A  -- North bank
+-++-----+  | B  -- South bank
+-++-----+  | C  -- Island (Kneiphof)
+-++-----+  | D  -- East district
+-++-----+  deriving DecidableEq, Fintype
+-++-----+
+-++-----+open Konigsberg
+-++-----+
+-++-----+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-++-----+Every pair of distinct vertices is connected, capturing the fact that
+-++-----+every pair of landmasses had at least one bridge between them. -/
+-++-----+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-++-----+
+-++-----+instance : DecidableRel konigsbergGraph.Adj := by
+-++-----+  intro u v
+-++-----+  simp only [konigsbergGraph]
+-++-----+  infer_instance
+-++-----+
+-++-----+/-
+-++-----+Every vertex in K₄ has degree 3 (odd).
+-++---+-+import Bridges.EulerianTrail
+-++---+-+
+-++---+-+/-!
+-++---+-+# The Königsberg Bridge Problem
+-++---+-+
+-++---+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-++---+-+the founding result of graph theory (Euler, 1736).
+-++---+-+
+-++---+-+## The Problem
+-++---+-+
+-++---+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-++---+-+and included two large islands connected to each other and to the two mainland
+-++---+-+portions by seven bridges. The problem asks whether there is a walk through the
+-++---+-+city that crosses each bridge exactly once.
+-++---+-+
+-++---+-+## The Graph
+-++---+-+
+-++---+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-++---+-+- Vertex 0: Central island (Kneiphof)
+-++---+-+- Vertex 1: Northern bank
+-++---+-+- Vertex 2: Southern bank
+-++---+-+- Vertex 3: Eastern island (Lomse)
+-++---+-+
+-++---+-+The seven bridges are:
+-++---+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-++---+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-++---+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-++---+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-++---+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-++---+-+
+-++---+-+## Main Results
+-++---+-+
+-++---+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-++---+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-++---+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-++--- -+-/
+-++-----+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-++-----+  fin_cases v <;> simp +decide
+-++---+-+
+-++---+-+namespace Bridges
+-++---+-+
+-++---+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-++---+-+def konigsberg : Multigraph 4 7 where
+-++---+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-++---+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-++---+-+
+-++---+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-++---+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-++---+-+
+-++---+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-++---+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-++---+-+
+-++---+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-++---+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-++---+-+
+-++---+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-++---+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-++--- -+
+-++--- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-++-----+theorem konigsberg_all_odd :
+-++-----+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-++-----+  intro v
+-++-----+  rw [konigsberg_degree]
+-++-----+  exact ⟨1, rfl⟩
+-++-----+
+-++-----+/-
+-++-----+The number of odd-degree vertices in the Königsberg graph is 4.
+-++--+@@ -1,256 +1,86 @@
+-+ --+---- a/Bridges/Konigsberg.lean
+-+ --+-+++ b/Bridges/Konigsberg.lean
+-+---+-@@ -1,923 +1,451 @@
+-+---+- --- a/Bridges/Konigsberg.lean
+-+---+- +++ b/Bridges/Konigsberg.lean
+-+---+--@@ -1,917 +1,86 @@
+-+---+------ a/Cryptography/Konigsberg.lean
+-+---+---+++ b/Cryptography/Konigsberg.lean
+-+---+---@@ -1,563 +1,181 @@
+-+---+--- --- a/Bridges/Konigsberg.lean
+-+---+--- +++ b/Bridges/Konigsberg.lean
+-+---+----@@ -1,204 +1,54 @@
+-+---++--- a/MachineLearning/Konigsberg.lean
+-+---+++++ b/MachineLearning/Konigsberg.lean
+-+---++@@ -1,1205 +1,559 @@
+-+--+@@ -1,3533 +1,917 @@
+-+--+---- a/Logic/Konigsberg.lean
+-+--+-+++ b/Logic/Konigsberg.lean
+-+--+-@@ -1,1367 +1,2193 @@
+-+-+--- a/Bridges/Konigsberg.lean
+-+-++++ b/Bridges/Konigsberg.lean
+-+-+@@ -1,923 +1,451 @@
+-+-+ --- a/Bridges/Konigsberg.lean
+-+-+ +++ b/Bridges/Konigsberg.lean
+-+-+-@@ -1,917 +1,86 @@
+-+-+----- a/Cryptography/Konigsberg.lean
+-+-+--+++ b/Cryptography/Konigsberg.lean
+-+-+--@@ -1,563 +1,181 @@
+-+-+-- --- a/Bridges/Konigsberg.lean
+-+-+-- +++ b/Bridges/Konigsberg.lean
+-+-+---@@ -1,204 +1,54 @@
+-+-+--- --- a/Bridges/Konigsberg.lean
+-+-+--- +++ b/Bridges/Konigsberg.lean
+-+-+----@@ -1,445 +1,86 @@
+-+-+---+@@ -1,344 +1,99 @@
+-+-+--- ---- a/Bridges/Konigsberg.lean
+-+-+--- -+++ b/Bridges/Konigsberg.lean
+-+-+-----@@ -1,344 +1,99 @@
+-+-+---+-@@ -1,256 +1,86 @@
+-+-+--- ----- a/Bridges/Konigsberg.lean
+-+-+--- --+++ b/Bridges/Konigsberg.lean
+-+-+------@@ -1,256 +1,86 @@
+-+-+---+--@@ -1,168 +1,86 @@
+-+-+--- ------ a/Bridges/Konigsberg.lean
+-+-+--- ---+++ b/Bridges/Konigsberg.lean
+-+-+-------@@ -1,168 +1,86 @@
+-+-+----------- a/Bridges/Konigsberg.lean
+-+-+--------+++ b/Bridges/Konigsberg.lean
+-+-+--------@@ -1,99 +1,86 @@
+-+-+-------- /-
+-+-+---------Copyright (c) 2025. All rights reserved.
+-+-+---------Released under Apache 2.0 license.
+-+-+--------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-+--------+Released under Apache 2.0 license as described in the file LICENSE.
+-+-+--------+-/
+-+-+--------+import Mathlib
+-+-+--------+import Bridges.EulerianTrail
+-+-+-------- 
+-+-+---------# The Königsberg Bridge Problem — Formalized
+-+-+--------+/-!
+-+-+--------+# The Königsberg Bridge Problem
+-+-+-------- 
+-+-+---------This file formalizes the Königsberg Bridge Problem, widely considered
+-+-+---------the founding problem of graph theory. In 1736, Euler proved that it is
+-+-+---------impossible to traverse all seven bridges of Königsberg exactly once.
+-+-+--------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-+--------+the founding result of graph theory (Euler, 1736).
+-+-+-------- 
+-+-+---------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-+---------and prove impossibility using the Eulerian trail parity condition.
+-+-+--------+## The Problem
+-+-+-------- 
+-+-+---------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-+---------with a simple-graph abstraction that captures the essential parity
+-+-+---------obstruction: a graph where more than two vertices have odd degree
+-+-+---------cannot have an Eulerian trail.
+-+-+--------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-+--------+and included two large islands connected to each other and to the two mainland
+-+-+--------+portions by seven bridges. The problem asks whether there is a walk through the
+-+-+--------+city that crosses each bridge exactly once.
+-+-+-------- 
+-+-+---------## Main results
+-+-+--------+## The Graph
+-+-+-------- 
+-+-+---------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-+---------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-+---------  has no Eulerian trail (from Mathlib).
+-+-+---------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-+--------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-+--------+- Vertex 0: Central island (Kneiphof)
+-+-+--------+- Vertex 1: Northern bank
+-+-+--------+- Vertex 2: Southern bank
+-+-+--------+- Vertex 3: Eastern island (Lomse)
+-+-+--------+
+-+-+--------+The seven bridges are:
+-+-+--------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-+--------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-+--------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-+--------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-+--------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-+--------+
+-+-+--------+## Main Results
+-+-+--------+
+-+-+--------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-+--------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-+--------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-+-------- -/
+-+-+-------- 
+-+-+---------import Mathlib
+-+-+--------+namespace Bridges
+-+-+-------- 
+-+-+---------/-! ### The Königsberg graph
+-+-+--------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-+--------+def konigsberg : Multigraph 4 7 where
+-+-+--------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-+--------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-+-------- 
+-+-+---------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-+---------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-+---------is the simple graph that captures the connectivity pattern.
+-+-+--------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-+--------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-+-------- 
+-+-+---------In the original problem, some pairs of landmasses had multiple bridges
+-+-+---------between them, making the true model a multigraph. However, for the
+-+-+---------Eulerian trail condition, what matters is the parity of degrees at each
+-+-+---------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-+---------impossibility via Euler's theorem. -/
+-+-+--------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-+--------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-+-------- 
+-+-+---------/-- The four landmasses of Königsberg. -/
+-+-+---------inductive Konigsberg : Type
+-+-+---------  | A  -- North bank
+-+-+---------  | B  -- South bank
+-+-+---------  | C  -- Island (Kneiphof)
+-+-+---------  | D  -- East district
+-+-+---------  deriving DecidableEq, Fintype
+-+-+--------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-+--------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-+-------- 
+-+-+---------open Konigsberg
+-+-+---------
+-+-+---------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-+---------Every pair of distinct vertices is connected, capturing the fact that
+-+-+---------every pair of landmasses had at least one bridge between them. -/
+-+-+---------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-+---------
+-+-+---------instance : DecidableRel konigsbergGraph.Adj := by
+-+-+---------  intro u v
+-+-+---------  simp only [konigsbergGraph]
+-+-+---------  infer_instance
+-+-+---------
+-+-+---------/-
+-+-+---------Every vertex in K₄ has degree 3 (odd).
+-+-+----------/
+-+-+---------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-+---------  fin_cases v <;> simp +decide
+-+-+--------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-+--------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-+-------- 
+-+-+-------- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+---------theorem konigsberg_all_odd :
+-+-+---------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-+---------  intro v
+-+-+---------  rw [konigsberg_degree]
+-+-+---------  exact ⟨1, rfl⟩
+-+-+--------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-+--------+  intro v; fin_cases v <;> native_decide
+-+-+-------- 
+-+-+---------/-
+-+-+---------The number of odd-degree vertices in the Königsberg graph is 4.
+-+-+----------/
+-+-+---------theorem konigsberg_four_odd :
+-+-+---------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-+---------  decide +revert
+-+-+--------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-+--------+theorem konigsberg_odd_count :
+-+-+--------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-+--------+  native_decide
+-+-+-------- 
+-+-+---------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-+---------then the number of odd-degree vertices is 0 or 2.
+-+-+---------This is the key obstruction from Mathlib. -/
+-+-+---------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-+---------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-+---------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-+---------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-+---------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-+---------  hp.card_odd_degree
+-+-+--------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-+-------- 
+-+-+---------/-
+-+-+---------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-+---------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-+---------through Königsberg crossing each bridge exactly once.
+-+-+----------/
+-+-+---------theorem konigsberg_no_eulerian_trail :
+-+-+---------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-+---------  intro u v p h;
+-+-+---------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-+--------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-+--------+
+-+-+--------+The proof combines:
+-+-+--------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-+--------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-+--------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-+--------+  constructor
+-+-+--------+  intro t
+-+-+--------+  have h1 := t.odd_degree_vertices_le_two
+-+-+--------+  have h2 := konigsberg_odd_count
+-+-+--------+  omega
+-+-+--------+
+-+-+--------+end Bridges+/-
+-+-+---+---@@ -1,99 +1,86 @@
+-+-+---+--- /-
+-+-+---+----Copyright (c) 2025. All rights reserved.
+-+-+---+----Released under Apache 2.0 license.
+-+-+--- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-+--- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+-+--- ---+-/
+-+-+--- ---+import Mathlib
+-+-+--- ---+import Bridges.EulerianTrail
+-+-+-------+
+-+-+---+--- 
+-+-+---+----# The Königsberg Bridge Problem — Formalized
+-+-+--- ---+/-!
+-+-+--- ---+# The Königsberg Bridge Problem
+-+-+-------+
+-+-+---+--- 
+-+-+---+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+-+---+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+-+---+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+-+--- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-+--- ---+the founding result of graph theory (Euler, 1736).
+-+-+-------+
+-+-+---+--- 
+-+-+---+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-+---+----and prove impossibility using the Eulerian trail parity condition.
+-+-+--- ---+## The Problem
+-+-+-------+
+-+-+---+--- 
+-+-+---+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-+---+----with a simple-graph abstraction that captures the essential parity
+-+-+---+----obstruction: a graph where more than two vertices have odd degree
+-+-+---+----cannot have an Eulerian trail.
+-+-+--- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-+--- ---+and included two large islands connected to each other and to the two mainland
+-+-+--- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+-+--- ---+city that crosses each bridge exactly once.
+-+-+-------+
+-+-+---+--- 
+-+-+---+----## Main results
+-+-+--- ---+## The Graph
+-+-+-------+
+-+-+---+--- 
+-+-+---+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-+---+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-+---+----  has no Eulerian trail (from Mathlib).
+-+-+---+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-+--- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-+--- ---+- Vertex 0: Central island (Kneiphof)
+-+-+--- ---+- Vertex 1: Northern bank
+-+-+---@@ -217,39 +67,101 @@
+-+-+--- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-+--- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-+--- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-+-------+-/
+-+-+-------+
+-+-+---+--- -/
+-+-+---+--- 
+-+-+---+----import Mathlib
+-+-+--- ---+namespace Bridges
+-+-+-------+
+-+-+---+--- 
+-+-+---+----/-! ### The Königsberg graph
+-+-+--- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-+--- ---+def konigsberg : Multigraph 4 7 where
+-+-+--- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-+--- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-+-------+
+-+-+---+--- 
+-+-+---+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-+---+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-+---+----is the simple graph that captures the connectivity pattern.
+-+-+--- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-+--- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-+-------+
+-+-+---+--- 
+-+-+---+----In the original problem, some pairs of landmasses had multiple bridges
+-+-+---+----between them, making the true model a multigraph. However, for the
+-+-+---+----Eulerian trail condition, what matters is the parity of degrees at each
+-+-+---+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-+---+----impossibility via Euler's theorem. -/
+-+-+--- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-+--- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-+-------+
+-+-+---+--- 
+-+-+---+----/-- The four landmasses of Königsberg. -/
+-+-+---+----inductive Konigsberg : Type
+-+-+---+----  | A  -- North bank
+-+-+---+----  | B  -- South bank
+-+-+---+----  | C  -- Island (Kneiphof)
+-+-+---+----  | D  -- East district
+-+-+---+----  deriving DecidableEq, Fintype
+-+-+--- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-+--- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-+-------+
+-+-+---+--- 
+-+-+---+----open Konigsberg
+-+-+---+----
+-+-+---+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-+---+----Every pair of distinct vertices is connected, capturing the fact that
+-+-+---+----every pair of landmasses had at least one bridge between them. -/
+-+-+---+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-+---+----
+-+-+---+----instance : DecidableRel konigsbergGraph.Adj := by
+-+-+---+----  intro u v
+-+-+---+----  simp only [konigsbergGraph]
+-+-+---+----  infer_instance
+-+-+---+----
+-+-+---+----/-
+-+-+---+----Every vertex in K₄ has degree 3 (odd).
+-+-+---+-----/
+-+-+---+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-+---+----  fin_cases v <;> simp +decide
+-+-+--- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-+--- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-+-------+
+-+-+-------+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+---+--- 
+-+-+---+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+---+----theorem konigsberg_all_odd :
+-+-+---+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-+---+----  intro v
+-+-+---+----  rw [konigsberg_degree]
+-+-+---+----  exact ⟨1, rfl⟩
+-+-+--- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-+--- ---+  intro v; fin_cases v <;> native_decide
+-+-+-------+
+-+-+---+--- 
+-+-+---+----/-
+-+-+---+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+-+---+-----/
+-+-+---+----theorem konigsberg_four_odd :
+-+-+---+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-+---+----  decide +revert
+-+-+--- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-+--- ---+theorem konigsberg_odd_count :
+-+-+--- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-+--- ---+  native_decide
+-+-+-------+
+-+-+---+--- 
+-+-+---+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-+---+----then the number of odd-degree vertices is 0 or 2.
+-+-+---+----This is the key obstruction from Mathlib. -/
+-+-+---+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-+---+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-+---+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-+---+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-+---+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-+---+----  hp.card_odd_degree
+-+-+--- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-+-------+
+-+-+-------+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-+---+--- 
+-+-+---+----/-
+-+-+---+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-+---+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-+---+----through Königsberg crossing each bridge exactly once.
+-+-+---+-----/
+-+-+---+----theorem konigsberg_no_eulerian_trail :
+-+-+---+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-+---+----  intro u v p h;
+-+-+---+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-+--- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-+--- ---+
+-+-+--- ---+The proof combines:
+-+-+---@@ -348,186 +260,186 @@
+-+-+--- --+  omega
+-+-+--- --+
+-+-+--- --+end Bridges+/-
+-+-+-----+Copyright (c) 2025. All rights reserved.
+-+-+-----+Released under Apache 2.0 license.
+-+-++@@ -1,445 +1,86 @@
+-+-++---- a/Bridges/Konigsberg.lean
+-+-++-+++ b/Bridges/Konigsberg.lean
+-+-++-@@ -1,344 +1,99 @@
+-+- +----- a/Bridges/Konigsberg.lean
+-+- +--+++ b/Bridges/Konigsberg.lean
+-+--+--@@ -1,923 +1,451 @@
+-+--++--- a/Cryptography/Konigsberg.lean
+-+--+++++ b/Cryptography/Konigsberg.lean
+-+--++@@ -1,563 +1,181 @@
+-+--++ --- a/Bridges/Konigsberg.lean
+-+--++ +++ b/Bridges/Konigsberg.lean
+-+--++-@@ -1,204 +1,54 @@
+-+--+ - --- a/Bridges/Konigsberg.lean
+-+--+ - +++ b/Bridges/Konigsberg.lean
+-+--+---@@ -1,917 +1,86 @@
+-+--+------- a/Cryptography/Konigsberg.lean
+-+--+----+++ b/Cryptography/Konigsberg.lean
+-+--+----@@ -1,563 +1,181 @@
+-+--+---- --- a/Bridges/Konigsberg.lean
+-+--+---- +++ b/Bridges/Konigsberg.lean
+-+--+-----@@ -1,204 +1,54 @@
+-+--+-+--- a/MachineLearning/Konigsberg.lean
+-+--+-++++ b/MachineLearning/Konigsberg.lean
+-+--+-+@@ -1,1205 +1,559 @@
+-+--++--@@ -1,445 +1,86 @@
+-+--++-+@@ -1,344 +1,99 @@
+-+--++- ---- a/Bridges/Konigsberg.lean
+-+--++- -+++ b/Bridges/Konigsberg.lean
+-+--++---@@ -1,344 +1,99 @@
+-+--++-+-@@ -1,256 +1,86 @@
+-+--++- ----- a/Bridges/Konigsberg.lean
+-+--++- --+++ b/Bridges/Konigsberg.lean
+-+--++----@@ -1,256 +1,86 @@
+-+--++-+--@@ -1,168 +1,86 @@
+-+--++- ------ a/Bridges/Konigsberg.lean
+-+--++- ---+++ b/Bridges/Konigsberg.lean
+-+--++-----@@ -1,168 +1,86 @@
+-+--++--------- a/Bridges/Konigsberg.lean
+-+--++------+++ b/Bridges/Konigsberg.lean
+-+--++------@@ -1,99 +1,86 @@
+-+--++------ /-
+-+--++-------Copyright (c) 2025. All rights reserved.
+-+--++-------Released under Apache 2.0 license.
+-+--++------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--++------+Released under Apache 2.0 license as described in the file LICENSE.
+-+--++------+-/
+-+--++------+import Mathlib
+-+--++------+import Bridges.EulerianTrail
+-+--++------ 
+-+--++-------# The Königsberg Bridge Problem — Formalized
+-+--++------+/-!
+-+--++------+# The Königsberg Bridge Problem
+-+--++------ 
+-+--++-------This file formalizes the Königsberg Bridge Problem, widely considered
+-+--++-------the founding problem of graph theory. In 1736, Euler proved that it is
+-+--++-------impossible to traverse all seven bridges of Königsberg exactly once.
+-+--++------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--++------+the founding result of graph theory (Euler, 1736).
+-+--++------ 
+-+--++-------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--++-------and prove impossibility using the Eulerian trail parity condition.
+-+--++------+## The Problem
+-+--++------ 
+-+--++-------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--++-------with a simple-graph abstraction that captures the essential parity
+-+--++-------obstruction: a graph where more than two vertices have odd degree
+-+--++-------cannot have an Eulerian trail.
+-+--++------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--++------+and included two large islands connected to each other and to the two mainland
+-+--++------+portions by seven bridges. The problem asks whether there is a walk through the
+-+--++------+city that crosses each bridge exactly once.
+-+--++------ 
+-+--++-------## Main results
+-+--++------+## The Graph
+-+--++------ 
+-+--++-------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--++-------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--++-------  has no Eulerian trail (from Mathlib).
+-+--++-------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--++------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--++------+- Vertex 0: Central island (Kneiphof)
+-+--++------+- Vertex 1: Northern bank
+-+--++------+- Vertex 2: Southern bank
+-+--++------+- Vertex 3: Eastern island (Lomse)
+-+--++------+
+-+--++------+The seven bridges are:
+-+--++------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--++------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--++------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--++------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--++------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--++------+
+-+--++------+## Main Results
+-+--++------+
+-+--++------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--++------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--++------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--++------ -/
+-+--++------ 
+-+--++-------import Mathlib
+-+--++------+namespace Bridges
+-+--++------ 
+-+--++-------/-! ### The Königsberg graph
+-+--++------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--++------+def konigsberg : Multigraph 4 7 where
+-+--++------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--++------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--++------ 
+-+--++-------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--++-------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--++-------is the simple graph that captures the connectivity pattern.
+-+--++------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--++------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--++------ 
+-+--++-------In the original problem, some pairs of landmasses had multiple bridges
+-+--++-------between them, making the true model a multigraph. However, for the
+-+--++-------Eulerian trail condition, what matters is the parity of degrees at each
+-+--++-------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--++-------impossibility via Euler's theorem. -/
+-+--++------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--++------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--++------ 
+-+--++-------/-- The four landmasses of Königsberg. -/
+-+--++-------inductive Konigsberg : Type
+-+--++-------  | A  -- North bank
+-+--++-------  | B  -- South bank
+-+--++-------  | C  -- Island (Kneiphof)
+-+--++-------  | D  -- East district
+-+--++-------  deriving DecidableEq, Fintype
+-+--++------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--++------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--++------ 
+-+--++-------open Konigsberg
+-+--++-------
+-+--++-------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--++-------Every pair of distinct vertices is connected, capturing the fact that
+-+--++-------every pair of landmasses had at least one bridge between them. -/
+-+--++-------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--++-------
+-+--++-------instance : DecidableRel konigsbergGraph.Adj := by
+-+--++-------  intro u v
+-+--++-------  simp only [konigsbergGraph]
+-+--++-------  infer_instance
+-+--++-------
+-+--++-------/-
+-+--++-------Every vertex in K₄ has degree 3 (odd).
+-+--++--------/
+-+--++-------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--++-------  fin_cases v <;> simp +decide
+-+--++------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--++------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--++------ 
+-+--++------ /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--++-------theorem konigsberg_all_odd :
+-+--++-------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--++-------  intro v
+-+--++-------  rw [konigsberg_degree]
+-+--++-------  exact ⟨1, rfl⟩
+-+--++------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--++------+  intro v; fin_cases v <;> native_decide
+-+--++------ 
+-+--++-------/-
+-+--++-------The number of odd-degree vertices in the Königsberg graph is 4.
+-+--++--------/
+-+--++-------theorem konigsberg_four_odd :
+-+--++-------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--++-------  decide +revert
+-+--++------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--++------+theorem konigsberg_odd_count :
+-+--++------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--++------+  native_decide
+-+--++------ 
+-+--++-------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--++-------then the number of odd-degree vertices is 0 or 2.
+-+--++-------This is the key obstruction from Mathlib. -/
+-+--++-------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--++-------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--++-------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--++-------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--++-------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--++-------  hp.card_odd_degree
+-+--++------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--++------ 
+-+--++-------/-
+-+--++-------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--++-------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--++-------through Königsberg crossing each bridge exactly once.
+-+--++--------/
+-+--++-------theorem konigsberg_no_eulerian_trail :
+-+--++-------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--++-------  intro u v p h;
+-+--++-------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--++------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--++------+
+-+--++------+The proof combines:
+-+--++------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--++------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--++------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--++------+  constructor
+-+--++------+  intro t
+-+--++------+  have h1 := t.odd_degree_vertices_le_two
+-+--++------+  have h2 := konigsberg_odd_count
+-+--++------+  omega
+-+--++------+
+-+--++------+end Bridges+/-
+-+--++-+---@@ -1,99 +1,86 @@
+-+--++-+--- /-
+-+--++-+----Copyright (c) 2025. All rights reserved.
+-+--++-+----Released under Apache 2.0 license.
+-+--++- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--++- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+--++- ---+-/
+-+--++- ---+import Mathlib
+-+--++- ---+import Bridges.EulerianTrail
+-+--++-----+
+-+--++-+--- 
+-+--++-+----# The Königsberg Bridge Problem — Formalized
+-+--++- ---+/-!
+-+--++- ---+# The Königsberg Bridge Problem
+-+--++-----+
+-+--++-+--- 
+-+--++-+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+--++-+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+--++-+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+--++- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--++- ---+the founding result of graph theory (Euler, 1736).
+-+--++-----+
+-+--++-+--- 
+-+--++-+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--++-+----and prove impossibility using the Eulerian trail parity condition.
+-+--++- ---+## The Problem
+-+--++-----+
+-+--++-+--- 
+-+--++-+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--++-+----with a simple-graph abstraction that captures the essential parity
+-+--++-+----obstruction: a graph where more than two vertices have odd degree
+-+--++-+----cannot have an Eulerian trail.
+-+--++- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--++- ---+and included two large islands connected to each other and to the two mainland
+-+--++- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+--++- ---+city that crosses each bridge exactly once.
+-+--++-----+
+-+--++-+--- 
+-+--++-+----## Main results
+-+--++- ---+## The Graph
+-+--++-----+
+-+--++-+--- 
+-+--++-+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--++-+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--++-+----  has no Eulerian trail (from Mathlib).
+-+--++-+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--++- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--++- ---+- Vertex 0: Central island (Kneiphof)
+-+--++- ---+- Vertex 1: Northern bank
+-+--++-@@ -217,39 +67,101 @@
+-+--++- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--++- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--++- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--++-----+-/
+-+--++-----+
+-+--++-+--- -/
+-+--++-+--- 
+-+--++-+----import Mathlib
+-+--++- ---+namespace Bridges
+-+--++-----+
+-+--++-+--- 
+-+--++-+----/-! ### The Königsberg graph
+-+--++- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--++- ---+def konigsberg : Multigraph 4 7 where
+-+--++- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--++- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--++-----+
+-+--++-+--- 
+-+--++-+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--++-+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--++-+----is the simple graph that captures the connectivity pattern.
+-+--++- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--++- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--++-----+
+-+--++-+--- 
+-+--++-+----In the original problem, some pairs of landmasses had multiple bridges
+-+--++-+----between them, making the true model a multigraph. However, for the
+-+--++-+----Eulerian trail condition, what matters is the parity of degrees at each
+-+--++-+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--++-+----impossibility via Euler's theorem. -/
+-+--++- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--++- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--++-----+
+-+--++-+--- 
+-+--++-+----/-- The four landmasses of Königsberg. -/
+-+--++-+----inductive Konigsberg : Type
+-+--++-+----  | A  -- North bank
+-+--++-+----  | B  -- South bank
+-+--++-+----  | C  -- Island (Kneiphof)
+-+--++-+----  | D  -- East district
+-+--++-+----  deriving DecidableEq, Fintype
+-+--++- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--++- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--++-----+
+-+--++-+--- 
+-+--++-+----open Konigsberg
+-+--++-+----
+-+--++-+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--++-+----Every pair of distinct vertices is connected, capturing the fact that
+-+--++-+----every pair of landmasses had at least one bridge between them. -/
+-+--++-+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--++-+----
+-+--++-+----instance : DecidableRel konigsbergGraph.Adj := by
+-+--++-+----  intro u v
+-+--++-+----  simp only [konigsbergGraph]
+-+--++-+----  infer_instance
+-+--++-+----
+-+--++-+----/-
+-+--++-+----Every vertex in K₄ has degree 3 (odd).
+-+--++-+-----/
+-+--++-+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--++-+----  fin_cases v <;> simp +decide
+-+--++- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--++- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--++-----+
+-+--++-----+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--++-+--- 
+-+--++-+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--++-+----theorem konigsberg_all_odd :
+-+--++-+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--++-+----  intro v
+-+--++-+----  rw [konigsberg_degree]
+-+--++-+----  exact ⟨1, rfl⟩
+-+--++- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--++- ---+  intro v; fin_cases v <;> native_decide
+-+--++-----+
+-+--++-+--- 
+-+--++-+----/-
+-+--++-+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+--++-+-----/
+-+--++-+----theorem konigsberg_four_odd :
+-+--++-+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--++-+----  decide +revert
+-+--++- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--++- ---+theorem konigsberg_odd_count :
+-+--++- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--++- ---+  native_decide
+-+--++-----+
+-+--++-+--- 
+-+--++-+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--++-+----then the number of odd-degree vertices is 0 or 2.
+-+--++-+----This is the key obstruction from Mathlib. -/
+-+--++-+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--++-+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--++-+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--++-+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--++-+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--++-+----  hp.card_odd_degree
+-+--++- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--++-----+
+-+--++-----+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--++-+--- 
+-+--++-+----/-
+-+--++-+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--++-+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--++-+----through Königsberg crossing each bridge exactly once.
+-+--++-+-----/
+-+--++-+----theorem konigsberg_no_eulerian_trail :
+-+--++-+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--++-+----  intro u v p h;
+-+--++-+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--++- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--++- ---+
+-+--++- ---+The proof combines:
+-+--++-@@ -348,186 +260,186 @@
+-+--++- --+  omega
+-+--++- --+
+-+--++- --+end Bridges+/-
+-+--++---+Copyright (c) 2025. All rights reserved.
+-+--++---+Released under Apache 2.0 license.
+-+--++---+
+-+--++---+# The Königsberg Bridge Problem — Formalized
+-+--++---+
+-+--++---+This file formalizes the Königsberg Bridge Problem, widely considered
+-+--++---+the founding problem of graph theory. In 1736, Euler proved that it is
+-+--++---+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--++---+
+-+--++---+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--++---+and prove impossibility using the Eulerian trail parity condition.
+-+--++---+
+-+--++---+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--++---+with a simple-graph abstraction that captures the essential parity
+-+--++---+obstruction: a graph where more than two vertices have odd degree
+-+--++---+cannot have an Eulerian trail.
+-+--++---+
+-+--++---+## Main results
+-+--++---+
+-+--++---+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--++---+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--++---+  has no Eulerian trail (from Mathlib).
+-+--++---+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--++-+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--++-+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+--++- -+-/
+-+--++---+
+-+--++- -+import Mathlib
+-+--++---+
+-+--++---+/-! ### The Königsberg graph
+-+--++---+
+-+--++---+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--++---+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--++---+is the simple graph that captures the connectivity pattern.
+-+--++---+
+-+--++---+In the original problem, some pairs of landmasses had multiple bridges
+-+--++---+between them, making the true model a multigraph. However, for the
+-+--++---+Eulerian trail condition, what matters is the parity of degrees at each
+-+--++---+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--++---+impossibility via Euler's theorem. -/
+-+--++---+
+-+--++---+/-- The four landmasses of Königsberg. -/
+-+--++---+inductive Konigsberg : Type
+-+--++---+  | A  -- North bank
+-+--++---+  | B  -- South bank
+-+--++---+  | C  -- Island (Kneiphof)
+-+--++---+  | D  -- East district
+-+--++---+  deriving DecidableEq, Fintype
+-+--++---+
+-+--++---+open Konigsberg
+-+--++---+
+-+--++---+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--++---+Every pair of distinct vertices is connected, capturing the fact that
+-+--++---+every pair of landmasses had at least one bridge between them. -/
+-+--++---+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--++---+
+-+--++---+instance : DecidableRel konigsbergGraph.Adj := by
+-+--++---+  intro u v
+-+--++---+  simp only [konigsbergGraph]
+-+--++---+  infer_instance
+-+--++---+
+-+--++---+/-
+-+--++---+Every vertex in K₄ has degree 3 (odd).
+-+--++-+-+import Bridges.EulerianTrail
+-+--++-+-+
+-+--++-+-+/-!
+-+--++-+-+# The Königsberg Bridge Problem
+-+--++-+-+
+-+--++-+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--++-+-+the founding result of graph theory (Euler, 1736).
+-+--++-+-+
+-+--++-+-+## The Problem
+-+--++-+-+
+-+--++-+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--++-+-+and included two large islands connected to each other and to the two mainland
+-+--++-+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+--++-+-+city that crosses each bridge exactly once.
+-+--++-+-+
+-+--++-+-+## The Graph
+-+--++-+-+
+-+--++-+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--++-+-+- Vertex 0: Central island (Kneiphof)
+-+--++-+-+- Vertex 1: Northern bank
+-+--++-+-+- Vertex 2: Southern bank
+-+--++-+-+- Vertex 3: Eastern island (Lomse)
+-+--++-+-+
+-+--++-+-+The seven bridges are:
+-+--++-+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--++-+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--++-+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--++-+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--++-+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--++-+-+
+-+--++-+-+## Main Results
+-+--++-+-+
+-+--++-+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--++-+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--++-+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--++- -+-/
+-+--++---+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--++---+  fin_cases v <;> simp +decide
+-+--++-+-+
+-+--++-+-+namespace Bridges
+-+--++-+-+
+-+--++-+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--++-+-+def konigsberg : Multigraph 4 7 where
+-+--++-+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--++-+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--++-+-+
+-+--++-+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--++-+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--++-+-+
+-+--++-+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--++-+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--++-+-+
+-+--++-+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--++-+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--++-+-+
+-+--++-+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--++-+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--++- -+
+-+--++- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--++---+theorem konigsberg_all_odd :
+-+--++---+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--++---+  intro v
+-+--++---+  rw [konigsberg_degree]
+-+--++---+  exact ⟨1, rfl⟩
+-+--++---+
+-+--++---+/-
+-+--++---+The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+++@@ -1,256 +1,86 @@
+-+--  +---- a/Bridges/Konigsberg.lean
+-+--  +-+++ b/Bridges/Konigsberg.lean
+-+--- +-@@ -1,923 +1,451 @@
+-+----+- --- a/Bridges/Konigsberg.lean
+-+----+- +++ b/Bridges/Konigsberg.lean
+-+---+++--- a/Cryptography/Konigsberg.lean
+-+---++++++ b/Cryptography/Konigsberg.lean
+-+---+++@@ -1,563 +1,181 @@
+-+---++  --- a/Bridges/Konigsberg.lean
+-+---++  +++ b/Bridges/Konigsberg.lean
+-+--- +--@@ -1,917 +1,86 @@
+-+--- +------ a/Cryptography/Konigsberg.lean
+-+--- +---+++ b/Cryptography/Konigsberg.lean
+-+--- +---@@ -1,563 +1,181 @@
+-+----+--- --- a/Bridges/Konigsberg.lean
+-+----+--- +++ b/Bridges/Konigsberg.lean
+-+---+ --- --- a/Bridges/Konigsberg.lean
+-+---+ --- +++ b/Bridges/Konigsberg.lean
+-+---+-----@@ -1,445 +1,86 @@
+-+---+----+@@ -1,344 +1,99 @@
+-+---+---- ---- a/Bridges/Konigsberg.lean
+-+---+---- -+++ b/Bridges/Konigsberg.lean
+-+---+------@@ -1,344 +1,99 @@
+-+---+----+-@@ -1,256 +1,86 @@
+-+---+---- ----- a/Bridges/Konigsberg.lean
+-+---+---- --+++ b/Bridges/Konigsberg.lean
+-+---+-------@@ -1,256 +1,86 @@
+-+---+----+--@@ -1,168 +1,86 @@
+-+---+---- ------ a/Bridges/Konigsberg.lean
+-+---+---- ---+++ b/Bridges/Konigsberg.lean
+-+---+--------@@ -1,168 +1,86 @@
+-+---+------------ a/Bridges/Konigsberg.lean
+-+---+---------+++ b/Bridges/Konigsberg.lean
+-+---+---------@@ -1,99 +1,86 @@
+-+---+--------- /-
+-+---+----------Copyright (c) 2025. All rights reserved.
+-+---+----------Released under Apache 2.0 license.
+-+---+---------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+---------+Released under Apache 2.0 license as described in the file LICENSE.
+-+--- +----@@ -1,204 +1,54 @@
+-+----++--- a/MachineLearning/Konigsberg.lean
+-+----+++++ b/MachineLearning/Konigsberg.lean
+-+----++@@ -1,1205 +1,559 @@
+-+----++---- a/Bridges/Konigsberg.lean
+-+----++-+++ b/Bridges/Konigsberg.lean
+-+----++-@@ -1,923 +1,451 @@
+-+----+++--- a/Cryptography/Konigsberg.lean
+-+----++++++ b/Cryptography/Konigsberg.lean
+-+----+++@@ -1,563 +1,181 @@
+-+----++  --- a/Bridges/Konigsberg.lean
+-+----++  +++ b/Bridges/Konigsberg.lean
+-+----++--@@ -1,917 +1,86 @@
+-+----++------ a/Cryptography/Konigsberg.lean
+-+----++---+++ b/Cryptography/Konigsberg.lean
+-+----++---@@ -1,563 +1,181 @@
+-+----+ --- --- a/Bridges/Konigsberg.lean
+-+----+ --- +++ b/Bridges/Konigsberg.lean
+-+---++---- --- a/Bridges/Konigsberg.lean
+-+---++---- +++ b/Bridges/Konigsberg.lean
+-+--- +-----@@ -1,445 +1,86 @@
+-+--- +----+@@ -1,344 +1,99 @@
+-+--- +---- ---- a/Bridges/Konigsberg.lean
+-+---@@ -1191,244 +75,7 @@
+-+--- +----------Released under Apache 2.0 license.
+-+--- +---------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--- +---------+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++----@@ -1,204 +1,54 @@
+-+----++---- --- a/Bridges/Konigsberg.lean
+-+----++---- +++ b/Bridges/Konigsberg.lean
+-+----++-----@@ -1,445 +1,86 @@
+-+----++----+@@ -1,344 +1,99 @@
+-+----++---- ---- a/Bridges/Konigsberg.lean
+-+----++---- -+++ b/Bridges/Konigsberg.lean
+-+----++------@@ -1,344 +1,99 @@
+-+----++----+-@@ -1,256 +1,86 @@
+-+----++---- ----- a/Bridges/Konigsberg.lean
+-+----++---- --+++ b/Bridges/Konigsberg.lean
+-+----++-------@@ -1,256 +1,86 @@
+-+----++----+--@@ -1,168 +1,86 @@
+-+----++---- ------ a/Bridges/Konigsberg.lean
+-+----++---- ---+++ b/Bridges/Konigsberg.lean
+-+----++--------@@ -1,168 +1,86 @@
+-+----++------------ a/Bridges/Konigsberg.lean
+-+----++---------+++ b/Bridges/Konigsberg.lean
+-+----++---------@@ -1,99 +1,86 @@
+-+----++--------- /-
+-+----++----------Copyright (c) 2025. All rights reserved.
+-+----++----------Released under Apache 2.0 license.
+-+----++---------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++---------+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++---------+-/
+-+----++---------+import Mathlib
+-+----++---------+import Bridges.EulerianTrail
+-+----++--------- 
+-+----++----------# The Königsberg Bridge Problem — Formalized
+-+----++---------+/-!
+-+----++---------+# The Königsberg Bridge Problem
+-+----++--------- 
+-+----++----------This file formalizes the Königsberg Bridge Problem, widely considered
+-+----++----------the founding problem of graph theory. In 1736, Euler proved that it is
+-+----++----------impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++---------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----++---------+the founding result of graph theory (Euler, 1736).
+-+----++--------- 
+-+----++----------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----++----------and prove impossibility using the Eulerian trail parity condition.
+-+----++---------+## The Problem
+-+----++--------- 
+-+----++----------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----++----------with a simple-graph abstraction that captures the essential parity
+-+----++----------obstruction: a graph where more than two vertices have odd degree
+-+----++----------cannot have an Eulerian trail.
+-+----++---------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----++---------+and included two large islands connected to each other and to the two mainland
+-+----++---------+portions by seven bridges. The problem asks whether there is a walk through the
+-+----++---------+city that crosses each bridge exactly once.
+-+----++--------- 
+-+----++----------## Main results
+-+----++---------+## The Graph
+-+----++--------- 
+-+----++----------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----++----------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----++----------  has no Eulerian trail (from Mathlib).
+-+----++----------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----++---------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----++---------+- Vertex 0: Central island (Kneiphof)
+-+----++---------+- Vertex 1: Northern bank
+-+----++---------+- Vertex 2: Southern bank
+-+----++---------+- Vertex 3: Eastern island (Lomse)
+-+----++---------+
+-+----++---------+The seven bridges are:
+-+----++---------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----++---------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----++---------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----++---------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----++---------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----++---------+
+-+----++---------+## Main Results
+-+----++---------+
+-+----++---------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++---------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++---------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++--------- -/
+-+----++--------- 
+-+----++----------import Mathlib
+-+----++---------+namespace Bridges
+-+----++--------- 
+-+----++----------/-! ### The Königsberg graph
+-+----++---------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----++---------+def konigsberg : Multigraph 4 7 where
+-+----++---------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----++---------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----++--------- 
+-+----++----------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----++----------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----++----------is the simple graph that captures the connectivity pattern.
+-+----++---------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----++---------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----++--------- 
+-+----++----------In the original problem, some pairs of landmasses had multiple bridges
+-+----++----------between them, making the true model a multigraph. However, for the
+-+----++----------Eulerian trail condition, what matters is the parity of degrees at each
+-+----++----------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----++----------impossibility via Euler's theorem. -/
+-+----++---------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----++---------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----++--------- 
+-+----++----------/-- The four landmasses of Königsberg. -/
+-+----++----------inductive Konigsberg : Type
+-+----++----------  | A  -- North bank
+-+----++----------  | B  -- South bank
+-+----++----------  | C  -- Island (Kneiphof)
+-+----++----------  | D  -- East district
+-+----++----------  deriving DecidableEq, Fintype
+-+----++---------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----++---------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----++--------- 
+-+----++----------open Konigsberg
+-+----++----------
+-+----++----------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----++----------Every pair of distinct vertices is connected, capturing the fact that
+-+----++----------every pair of landmasses had at least one bridge between them. -/
+-+----++----------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++----------
+-+----++----------instance : DecidableRel konigsbergGraph.Adj := by
+-+----++----------  intro u v
+-+----++----------  simp only [konigsbergGraph]
+-+----++----------  infer_instance
+-+----++----------
+-+----++----------/-
+-+----++----------Every vertex in K₄ has degree 3 (odd).
+-+----++-----------/
+-+----++----------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----++----------  fin_cases v <;> simp +decide
+-+----++---------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++---------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++--------- 
+-+----++--------- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++----------theorem konigsberg_all_odd :
+-+----++----------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----++----------  intro v
+-+----++----------  rw [konigsberg_degree]
+-+----++----------  exact ⟨1, rfl⟩
+-+----++---------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++---------+  intro v; fin_cases v <;> native_decide
+-+----++--------- 
+-+----++----------/-
+-+----++----------The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++-----------/
+-+----++----------theorem konigsberg_four_odd :
+-+----++----------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----++----------  decide +revert
+-+----++---------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----++---------+theorem konigsberg_odd_count :
+-+----++---------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----++---------+  native_decide
+-+----++--------- 
+-+----++----------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----++----------then the number of odd-degree vertices is 0 or 2.
+-+----++----------This is the key obstruction from Mathlib. -/
+-+----++----------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----++----------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----++----------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----++----------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----++----------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----++----------  hp.card_odd_degree
+-+----++---------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----++--------- 
+-+----++----------/-
+-+----++----------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----++----------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----++----------through Königsberg crossing each bridge exactly once.
+-+----++-----------/
+-+----++----------theorem konigsberg_no_eulerian_trail :
+-+----++----------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----++----------  intro u v p h;
+-+----++----------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++---------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++---------+
+-+----++---------+The proof combines:
+-+----++---------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----++---------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----++---------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----++---------+  constructor
+-+----++---------+  intro t
+-+----++---------+  have h1 := t.odd_degree_vertices_le_two
+-+----++---------+  have h2 := konigsberg_odd_count
+-+----++---------+  omega
+-+----++---------+
+-+----++---------+end Bridges+/-
+-+----++----+---@@ -1,99 +1,86 @@
+-+----++----+--- /-
+-+----++----+----Copyright (c) 2025. All rights reserved.
+-+----++----+----Released under Apache 2.0 license.
+-+----++---- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++---- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++---- ---+-/
+-+----++---- ---+import Mathlib
+-+----++---- ---+import Bridges.EulerianTrail
+-+----++--------+
+-+----++----+--- 
+-+----++----+----# The Königsberg Bridge Problem — Formalized
+-+----++---- ---+/-!
+-+----++---- ---+# The Königsberg Bridge Problem
+-+----++--------+
+-+----++----+--- 
+-+----++----+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+----++----+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+----++----+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++---- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----++---- ---+the founding result of graph theory (Euler, 1736).
+-+----++--------+
+-+----++----+--- 
+-+----++----+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----++----+----and prove impossibility using the Eulerian trail parity condition.
+-+----++---- ---+## The Problem
+-+----++--------+
+-+----++----+--- 
+-+----++----+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----++----+----with a simple-graph abstraction that captures the essential parity
+-+----++----+----obstruction: a graph where more than two vertices have odd degree
+-+----++----+----cannot have an Eulerian trail.
+-+----++---- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----++---- ---+and included two large islands connected to each other and to the two mainland
+-+----++---- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+----++---- ---+city that crosses each bridge exactly once.
+-+----++--------+
+-+----++----+--- 
+-+----++----+----## Main results
+-+----++---- ---+## The Graph
+-+----++--------+
+-+----++----+--- 
+-+----++----+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----++----+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----++----+----  has no Eulerian trail (from Mathlib).
+-+----++----+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----++---- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----++---- ---+- Vertex 0: Central island (Kneiphof)
+-+----++---- ---+- Vertex 1: Northern bank
+-+----++----@@ -217,39 +67,101 @@
+-+----++---- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++---- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++---- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----+ --------+-/
+-+---++---------+-/
+-+--- +---------+import Mathlib
+-+--- +---------+import Bridges.EulerianTrail
+-+--- +--------- 
+-+---@@ -1467,26 +114,16 @@
+-+--- +---------+- Vertex 1: Northern bank
+-+--- +---------+- Vertex 2: Southern bank
+-+--- +---------+- Vertex 3: Eastern island (Lomse)
+-+----+ --------+
+-+---++---------+
+-+--- +---------+The seven bridges are:
+-+--- +---------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--- +---------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--- +---------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--- +---------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--- +---------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----++----+--- -/
+-+----++----+--- 
+-+----++----+----import Mathlib
+-+----++---- ---+namespace Bridges
+-+----+ --------+
+-+---++---------+
+-+--- +---------+## Main Results
+-+----++----+--- 
+-+----++----+----/-! ### The Königsberg graph
+-+----++---- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----++---- ---+def konigsberg : Multigraph 4 7 where
+-+----++---- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----++---- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----+ --------+
+-+---++---------+
+-+--- +---------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--- +---------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--- +---------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---@@ -1586,13 +223,7 @@
+-+--- +----------  intro u v p h;
+-+--- +----------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--- +---------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++----+--- 
+-+----++----+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----++----+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----++----+----is the simple graph that captures the connectivity pattern.
+-+----++---- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----++---- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----+ --------+
+-+---++---------+
+-+--- +---------+The proof combines:
+-+--- +---------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--- +---------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---@@ -1602,15 +233,7 @@
+-+--- +---------+  have h1 := t.odd_degree_vertices_le_two
+-+--- +---------+  have h2 := konigsberg_odd_count
+-+--- +---------+  omega
+-+----++----+--- 
+-+----++----+----In the original problem, some pairs of landmasses had multiple bridges
+-+----++----+----between them, making the true model a multigraph. However, for the
+-+----++----+----Eulerian trail condition, what matters is the parity of degrees at each
+-+----++----+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----++----+----impossibility via Euler's theorem. -/
+-+----++---- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----++---- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----+ --------+
+-+---++---------+
+-+--- +---------+end Bridges+/-
+-+--- +----+---@@ -1,99 +1,86 @@
+-+--- +----+--- /-
+-+---@@ -1665,27 +288,180 @@
+-+--- +---- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--- +---- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--- +---- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----+--------+-/
+-+--+-+-@@ -1,923 +1,451 @@
+-+--+-++--- a/Cryptography/Konigsberg.lean
+-+--+-+++++ b/Cryptography/Konigsberg.lean
+-+--+-++@@ -1,563 +1,181 @@
+-+--+-+  --- a/Bridges/Konigsberg.lean
+-+--+-+  +++ b/Bridges/Konigsberg.lean
+-+--+-+--@@ -1,917 +1,86 @@
+-+--+-+------ a/Cryptography/Konigsberg.lean
+-+--+-+---+++ b/Cryptography/Konigsberg.lean
+-+--+-+---@@ -1,563 +1,181 @@
+-+--+- --- --- a/Bridges/Konigsberg.lean
+-+--+- --- +++ b/Bridges/Konigsberg.lean
+-+--+------@@ -1,445 +1,86 @@
+-+--+-----+@@ -1,344 +1,99 @@
+-+--+----- ---- a/Bridges/Konigsberg.lean
+-+--+----- -+++ b/Bridges/Konigsberg.lean
+-+--+-------@@ -1,344 +1,99 @@
+-+--+-----+-@@ -1,256 +1,86 @@
+-+--+----- ----- a/Bridges/Konigsberg.lean
+-+--+----- --+++ b/Bridges/Konigsberg.lean
+-+--+--------@@ -1,256 +1,86 @@
+-+--+-----+--@@ -1,168 +1,86 @@
+-+--+----- ------ a/Bridges/Konigsberg.lean
+-+--+----- ---+++ b/Bridges/Konigsberg.lean
+-+--+---------@@ -1,168 +1,86 @@
+-+--+------------- a/Bridges/Konigsberg.lean
+-+--+----------+++ b/Bridges/Konigsberg.lean
+-+--+----------@@ -1,99 +1,86 @@
+-+--+---------- /-
+-+--+-----------Copyright (c) 2025. All rights reserved.
+-+--+-----------Released under Apache 2.0 license.
+-+--+----------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+----------+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+----@@ -1,204 +1,54 @@
+-+--+-+---- --- a/Bridges/Konigsberg.lean
+-+--+-+---- +++ b/Bridges/Konigsberg.lean
+-+--+-+-----@@ -1,445 +1,86 @@
+-+--+-+----+@@ -1,344 +1,99 @@
+-+--+-+---- ---- a/Bridges/Konigsberg.lean
+-+--+-+---- -+++ b/Bridges/Konigsberg.lean
+-+--+-+------@@ -1,344 +1,99 @@
+-+--+-+----+-@@ -1,256 +1,86 @@
+-+--+-+---- ----- a/Bridges/Konigsberg.lean
+-+--+-+---- --+++ b/Bridges/Konigsberg.lean
+-+--+-+-------@@ -1,256 +1,86 @@
+-+--+-+----+--@@ -1,168 +1,86 @@
+-+--+-+---- ------ a/Bridges/Konigsberg.lean
+-+--+-+---- ---+++ b/Bridges/Konigsberg.lean
+-+--+-+--------@@ -1,168 +1,86 @@
+-+--+-+------------ a/Bridges/Konigsberg.lean
+-+--+-+---------+++ b/Bridges/Konigsberg.lean
+-+--+-+---------@@ -1,99 +1,86 @@
+-+--+-+--------- /-
+-+--+-+----------Copyright (c) 2025. All rights reserved.
+-+--+-+----------Released under Apache 2.0 license.
+-+--+-+---------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+---------+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+---------+-/
+-+--+-+---------+import Mathlib
+-+--+-+---------+import Bridges.EulerianTrail
+-+--+-+--------- 
+-+--+-+----------# The Königsberg Bridge Problem — Formalized
+-+--+-+---------+/-!
+-+--+-+---------+# The Königsberg Bridge Problem
+-+--+-+--------- 
+-+--+-+----------This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-+----------the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-+----------impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+---------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-+---------+the founding result of graph theory (Euler, 1736).
+-+--+-+--------- 
+-+--+-+----------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-+----------and prove impossibility using the Eulerian trail parity condition.
+-+--+-+---------+## The Problem
+-+--+-+--------- 
+-+--+-+----------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-+----------with a simple-graph abstraction that captures the essential parity
+-+--+-+----------obstruction: a graph where more than two vertices have odd degree
+-+--+-+----------cannot have an Eulerian trail.
+-+--+-+---------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-+---------+and included two large islands connected to each other and to the two mainland
+-+--+-+---------+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-+---------+city that crosses each bridge exactly once.
+-+--+-+--------- 
+-+--+-+----------## Main results
+-+--+-+---------+## The Graph
+-+--+-+--------- 
+-+--+-+----------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-+----------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-+----------  has no Eulerian trail (from Mathlib).
+-+--+-+----------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-+---------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-+---------+- Vertex 0: Central island (Kneiphof)
+-+--+-+---------+- Vertex 1: Northern bank
+-+--+-+---------+- Vertex 2: Southern bank
+-+--+-+---------+- Vertex 3: Eastern island (Lomse)
+-+--+-+---------+
+-+--+-+---------+The seven bridges are:
+-+--+-+---------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-+---------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-+---------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-+---------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-+---------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-+---------+
+-+--+-+---------+## Main Results
+-+--+-+---------+
+-+--+-+---------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+---------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+---------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+--------- -/
+-+--+-+--------- 
+-+--+-+----------import Mathlib
+-+--+-+---------+namespace Bridges
+-+--+-+--------- 
+-+--+-+----------/-! ### The Königsberg graph
+-+--+-+---------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-+---------+def konigsberg : Multigraph 4 7 where
+-+--+-+---------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-+---------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-+--------- 
+-+--+-+----------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-+----------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-+----------is the simple graph that captures the connectivity pattern.
+-+--+-+---------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-+---------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-+--------- 
+-+--+-+----------In the original problem, some pairs of landmasses had multiple bridges
+-+--+-+----------between them, making the true model a multigraph. However, for the
+-+--+-+----------Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-+----------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-+----------impossibility via Euler's theorem. -/
+-+--+-+---------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-+---------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-+--------- 
+-+--+-+----------/-- The four landmasses of Königsberg. -/
+-+--+-+----------inductive Konigsberg : Type
+-+--+-+----------  | A  -- North bank
+-+--+-+----------  | B  -- South bank
+-+--+-+----------  | C  -- Island (Kneiphof)
+-+--+-+----------  | D  -- East district
+-+--+-+----------  deriving DecidableEq, Fintype
+-+--+-+---------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-+---------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-+--------- 
+-+--+-+----------open Konigsberg
+-+--+-+----------
+-+--+-+----------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-+----------Every pair of distinct vertices is connected, capturing the fact that
+-+--+-+----------every pair of landmasses had at least one bridge between them. -/
+-+--+-+----------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+----------
+-+--+-+----------instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-+----------  intro u v
+-+--+-+----------  simp only [konigsbergGraph]
+-+--+-+----------  infer_instance
+-+--+-+----------
+-+--+-+----------/-
+-+--+-+----------Every vertex in K₄ has degree 3 (odd).
+-+--+-+-----------/
+-+--+-+----------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-+----------  fin_cases v <;> simp +decide
+-+--+-+---------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+---------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+--------- 
+-+--+-+--------- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+----------theorem konigsberg_all_odd :
+-+--+-+----------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-+----------  intro v
+-+--+-+----------  rw [konigsberg_degree]
+-+--+-+----------  exact ⟨1, rfl⟩
+-+--+-+---------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+---------+  intro v; fin_cases v <;> native_decide
+-+--+-+--------- 
+-+--+-+----------/-
+-+--+-+----------The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+-----------/
+-+--+-+----------theorem konigsberg_four_odd :
+-+--+-+----------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-+----------  decide +revert
+-+--+-+---------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-+---------+theorem konigsberg_odd_count :
+-+--+-+---------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-+---------+  native_decide
+-+--+-+--------- 
+-+--+-+----------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-+----------then the number of odd-degree vertices is 0 or 2.
+-+--+-+----------This is the key obstruction from Mathlib. -/
+-+--+-+----------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-+----------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-+----------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-+----------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-+----------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-+----------  hp.card_odd_degree
+-+--+-+---------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-+--------- 
+-+--+-+----------/-
+-+--+-+----------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-+----------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-+----------through Königsberg crossing each bridge exactly once.
+-+--+-+-----------/
+-+--+-+----------theorem konigsberg_no_eulerian_trail :
+-+--+-+----------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-+----------  intro u v p h;
+-+--+-+----------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+---------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-+---------+
+-+--+-+---------+The proof combines:
+-+--+-+---------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-+---------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-+---------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-+---------+  constructor
+-+--+-+---------+  intro t
+-+--+-+---------+  have h1 := t.odd_degree_vertices_le_two
+-+--+-+---------+  have h2 := konigsberg_odd_count
+-+--+-+---------+  omega
+-+--+-+---------+
+-+--+-+---------+end Bridges+/-
+-+--+-+----+---@@ -1,99 +1,86 @@
+-+--+-+----+--- /-
+-+--+-+----+----Copyright (c) 2025. All rights reserved.
+-+--+-+----+----Released under Apache 2.0 license.
+-+--+-+---- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+---- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+---- ---+-/
+-+--+-+---- ---+import Mathlib
+-+--+-+---- ---+import Bridges.EulerianTrail
+-+-- -+--------+
+-+---+ --------+-/
+-+---+---------+import Mathlib
+-+---+---------+import Bridges.EulerianTrail
+-+---+--------- 
+-+---+----------# The Königsberg Bridge Problem — Formalized
+-+---+---------+/-!
+-+---+---------+# The Königsberg Bridge Problem
+-+---+--------- 
+-+---+----------This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+----------the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+----------impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+---------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+---------+the founding result of graph theory (Euler, 1736).
+-+---+--------- 
+-+---+----------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+----------and prove impossibility using the Eulerian trail parity condition.
+-+---+---------+## The Problem
+-+---+--------- 
+-+---+----------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+----------with a simple-graph abstraction that captures the essential parity
+-+---+----------obstruction: a graph where more than two vertices have odd degree
+-+---+----------cannot have an Eulerian trail.
+-+---+---------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+---------+and included two large islands connected to each other and to the two mainland
+-+---+---------+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+---------+city that crosses each bridge exactly once.
+-+---+--------- 
+-+---+----------## Main results
+-+---+---------+## The Graph
+-+---+--------- 
+-+---+----------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+----------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+----------  has no Eulerian trail (from Mathlib).
+-+---+----------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+---------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+---------+- Vertex 0: Central island (Kneiphof)
+-+---+---------+- Vertex 1: Northern bank
+-+---+---------+- Vertex 2: Southern bank
+-+---+---------+- Vertex 3: Eastern island (Lomse)
+-+---+ --------+
+-+---+---------+The seven bridges are:
+-+---+---------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+---------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+---------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+---------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+---------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--- +----+--- -/
+-+--- +----+--- 
+-+--- +----+----import Mathlib
+-+--- +---- ---+namespace Bridges
+-+--+-+----+--- 
+-+--+-+----+----# The Königsberg Bridge Problem — Formalized
+-+--+-+---- ---+/-!
+-+--+-+---- ---+# The Königsberg Bridge Problem
+-+-- -+--------+
+-+---+ --------+
+-+---+---------+## Main Results
+-+--- +----+--- 
+-+--- +----+----/-! ### The Königsberg graph
+-+--- +---- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--- +---- ---+def konigsberg : Multigraph 4 7 where
+-+--- +---- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--- +---- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-+----+--- 
+-+--+-+----+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-+----+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-+----+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+---- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-+---- ---+the founding result of graph theory (Euler, 1736).
+-+-- -+--------+
+-+---+ --------+
+-+---+---------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+---------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+---------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+--------- -/
+-+---+--------- 
+-+---+----------import Mathlib
+-+---+---------+namespace Bridges
+-+---+--------- 
+-+---+----------/-! ### The Königsberg graph
+-+---+---------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+---------+def konigsberg : Multigraph 4 7 where
+-+---+---------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+---------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+--------- 
+-+---+----------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+----------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+----------is the simple graph that captures the connectivity pattern.
+-+---+---------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+---------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+--------- 
+-+---+----------In the original problem, some pairs of landmasses had multiple bridges
+-+---+----------between them, making the true model a multigraph. However, for the
+-+---+----------Eulerian trail condition, what matters is the parity of degrees at each
+-+---+----------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+----------impossibility via Euler's theorem. -/
+-+---+---------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+---------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+--------- 
+-+---+----------/-- The four landmasses of Königsberg. -/
+-+---+----------inductive Konigsberg : Type
+-+---+----------  | A  -- North bank
+-+---+----------  | B  -- South bank
+-+---+----------  | C  -- Island (Kneiphof)
+-+---+----------  | D  -- East district
+-+---+----------  deriving DecidableEq, Fintype
+-+---+---------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+---------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+--------- 
+-+---+----------open Konigsberg
+-+---+----------
+-+---+----------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+----------Every pair of distinct vertices is connected, capturing the fact that
+-+---+----------every pair of landmasses had at least one bridge between them. -/
+-+---+----------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+----------
+-+---+----------instance : DecidableRel konigsbergGraph.Adj := by
+-+---+----------  intro u v
+-+---+----------  simp only [konigsbergGraph]
+-+---+----------  infer_instance
+-+---+----------
+-+---+----------/-
+-+---+----------Every vertex in K₄ has degree 3 (odd).
+-+---+-----------/
+-+---+----------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+----------  fin_cases v <;> simp +decide
+-+---+---------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+---------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+--------- 
+-+---+--------- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+----------theorem konigsberg_all_odd :
+-+---+----------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+----------  intro v
+-+---+----------  rw [konigsberg_degree]
+-+---+----------  exact ⟨1, rfl⟩
+-+---+---------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+---------+  intro v; fin_cases v <;> native_decide
+-+---+--------- 
+-+---+----------/-
+-+---+----------The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+-----------/
+-+---+----------theorem konigsberg_four_odd :
+-+---+----------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+----------  decide +revert
+-+---+---------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+---------+theorem konigsberg_odd_count :
+-+---+---------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+---------+  native_decide
+-+---+--------- 
+-+---+----------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+----------then the number of odd-degree vertices is 0 or 2.
+-+---+----------This is the key obstruction from Mathlib. -/
+-+---+----------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+----------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+----------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+----------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+----------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+----------  hp.card_odd_degree
+-+---+---------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+--------- 
+-+---+----------/-
+-+---+----------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+----------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+----------through Königsberg crossing each bridge exactly once.
+-+---+-----------/
+-+---+----------theorem konigsberg_no_eulerian_trail :
+-+---+----------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+----------  intro u v p h;
+-+---+----------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+---------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--- +----+--- 
+-+--- +----+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--- +----+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--- +----+----is the simple graph that captures the connectivity pattern.
+-+--- +---- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--- +---- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-+----+--- 
+-+--+-+----+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-+----+----and prove impossibility using the Eulerian trail parity condition.
+-+--+-+---- ---+## The Problem
+-+-- -+--------+
+-+---+ --------+
+-+---+---------+The proof combines:
+-+---+---------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+---------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+---------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+---------+  constructor
+-+---+---------+  intro t
+-+---+---------+  have h1 := t.odd_degree_vertices_le_two
+-+---+---------+  have h2 := konigsberg_odd_count
+-+---+---------+  omega
+-+--- +----+--- 
+-+--- +----+----In the original problem, some pairs of landmasses had multiple bridges
+-+--- +----+----between them, making the true model a multigraph. However, for the
+-+---@@ -1694,7 +470,412 @@
+-+--- +----+----impossibility via Euler's theorem. -/
+-+--- +---- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--- +---- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-+----+--- 
+-+--+-+----+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-+----+----with a simple-graph abstraction that captures the essential parity
+-+--+-+----+----obstruction: a graph where more than two vertices have odd degree
+-+--+-+----+----cannot have an Eulerian trail.
+-+--+-+---- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-+---- ---+and included two large islands connected to each other and to the two mainland
+-+--+-+---- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-+---- ---+city that crosses each bridge exactly once.
+-+-- -+--------+
+-+---+ --------+
+-+---+---------+end Bridges+/-
+-+---+----+---@@ -1,99 +1,86 @@
+-+---+----+--- /-
+-+---+----+----Copyright (c) 2025. All rights reserved.
+-+---+----+----Released under Apache 2.0 license.
+-+---+---- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+---- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+---- ---+-/
+-+---+---- ---+import Mathlib
+-+---+---- ---+import Bridges.EulerianTrail
+-+---+--------+
+-+---+----+--- 
+-+---+----+----# The Königsberg Bridge Problem — Formalized
+-+---+---- ---+/-!
+-+---+---- ---+# The Königsberg Bridge Problem
+-+---+--------+
+-+---+----+--- 
+-+---+----+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+----+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+----+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+---- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+---- ---+the founding result of graph theory (Euler, 1736).
+-+---+--------+
+-+---+----+--- 
+-+---+----+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+----+----and prove impossibility using the Eulerian trail parity condition.
+-+---+---- ---+## The Problem
+-+---+--------+
+-+---+----+--- 
+-+---+----+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+----+----with a simple-graph abstraction that captures the essential parity
+-+---+----+----obstruction: a graph where more than two vertices have odd degree
+-+---+----+----cannot have an Eulerian trail.
+-+---+---- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+---- ---+and included two large islands connected to each other and to the two mainland
+-+---+---- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+---- ---+city that crosses each bridge exactly once.
+-+---+--------+
+-+---+----+--- 
+-+---+----+----## Main results
+-+---+---- ---+## The Graph
+-+---+--------+
+-+---+----+--- 
+-+---+----+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+----+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+----+----  has no Eulerian trail (from Mathlib).
+-+---+----+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+---- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+---- ---+- Vertex 0: Central island (Kneiphof)
+-+---+---- ---+- Vertex 1: Northern bank
+-+---+----@@ -217,39 +67,101 @@
+-+---+---- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+---- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+---- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+--------+-/
+-+---+--------+
+-+---+----+--- -/
+-+---+----+--- 
+-+---+----+----import Mathlib
+-+---+---- ---+namespace Bridges
+-+---+--------+
+-+---+----+--- 
+-+---+----+----/-! ### The Königsberg graph
+-+---+---- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+---- ---+def konigsberg : Multigraph 4 7 where
+-+---+---- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+---- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+--------+
+-+---+----+--- 
+-+---+----+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+----+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+----+----is the simple graph that captures the connectivity pattern.
+-+---+---- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+---- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+--------+
+-+---+----+--- 
+-+---+----+----In the original problem, some pairs of landmasses had multiple bridges
+-+---+----+----between them, making the true model a multigraph. However, for the
+-+---+----+----Eulerian trail condition, what matters is the parity of degrees at each
+-+---+----+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+----+----impossibility via Euler's theorem. -/
+-+---+---- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+---- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+--------+
+-+---+----+--- 
+-+---+----+----/-- The four landmasses of Königsberg. -/
+-+---+----+----inductive Konigsberg : Type
+-+---+----+----  | A  -- North bank
+-+---+----+----  | B  -- South bank
+-+---+----+----  | C  -- Island (Kneiphof)
+-+---+----+----  | D  -- East district
+-+---+----+----  deriving DecidableEq, Fintype
+-+---+---- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+---- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+--------+
+-+---+----+--- 
+-+---+----+----open Konigsberg
+-+---+----+----
+-+---+----+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+----+----Every pair of distinct vertices is connected, capturing the fact that
+-+---+----+----every pair of landmasses had at least one bridge between them. -/
+-+---+----+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+----+----
+-+---+----+----instance : DecidableRel konigsbergGraph.Adj := by
+-+---+----+----  intro u v
+-+---+----+----  simp only [konigsbergGraph]
+-+---+----+----  infer_instance
+-+---+----+----
+-+---+----+----/-
+-+---+----+----Every vertex in K₄ has degree 3 (odd).
+-+---+----+-----/
+-+---+----+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+----+----  fin_cases v <;> simp +decide
+-+---+---- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+---- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+--------+
+-+---+--------+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+----+--- 
+-+---+----+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+----+----theorem konigsberg_all_odd :
+-+---+----+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+----+----  intro v
+-+---+----+----  rw [konigsberg_degree]
+-+---+----+----  exact ⟨1, rfl⟩
+-+---+---- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+---- ---+  intro v; fin_cases v <;> native_decide
+-+---+--------+
+-+---+----+--- 
+-+---+----+----/-
+-+---+----+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+----+-----/
+-+---+----+----theorem konigsberg_four_odd :
+-+---+----+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+----+----  decide +revert
+-+---+---- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+---- ---+theorem konigsberg_odd_count :
+-+---+---- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+---- ---+  native_decide
+-+---+--------+
+-+---+----+--- 
+-+---+----+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+----+----then the number of odd-degree vertices is 0 or 2.
+-+---+----+----This is the key obstruction from Mathlib. -/
+-+---+----+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+----+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+----+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+----+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+----+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+----+----  hp.card_odd_degree
+-+---+---- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+--------+
+-+---+--------+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+----+--- 
+-+---+----+----/-
+-+---+----+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+----+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+----+----through Königsberg crossing each bridge exactly once.
+-+---+----+-----/
+-+---+----+----theorem konigsberg_no_eulerian_trail :
+-+---+----+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+----+----  intro u v p h;
+-+---+----+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+---- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+---- ---+
+-+---+---- ---+The proof combines:
+-+---+----@@ -348,186 +260,186 @@
+-+---+---- --+  omega
+-+---+---- --+
+-+---+---- --+end Bridges+/-
+-+---+------+Copyright (c) 2025. All rights reserved.
+-+---+------+Released under Apache 2.0 license.
+-+---+-+@@ -1,445 +1,86 @@
+-+---+-+---- a/Bridges/Konigsberg.lean
+-+---+-+-+++ b/Bridges/Konigsberg.lean
+-+---+-+-@@ -1,344 +1,99 @@
+-+---+-+----- a/Bridges/Konigsberg.lean
+-+---+-+--+++ b/Bridges/Konigsberg.lean
+-+---+-+--@@ -1,256 +1,86 @@
+-+---+-+------ a/Bridges/Konigsberg.lean
+-+---+-+---+++ b/Bridges/Konigsberg.lean
+-+---+-+---@@ -1,168 +1,86 @@
+-+---+-+------- a/Bridges/Konigsberg.lean
+-+---+-+----+++ b/Bridges/Konigsberg.lean
+-+---+-+----@@ -1,99 +1,86 @@
+-+---+-+---- /-
+-+---+-+-----Copyright (c) 2025. All rights reserved.
+-+---+-+-----Released under Apache 2.0 license.
+-+---+-+----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+-+----+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+-+----+-/
+-+---+-+----+import Mathlib
+-+---+-+----+import Bridges.EulerianTrail
+-+---+-+---- 
+-+---+-+-----# The Königsberg Bridge Problem — Formalized
+-+---+-+----+/-!
+-+---+-+----+# The Königsberg Bridge Problem
+-+---+-+---- 
+-+---+-+-----This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+-+-----the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+-+-----impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+-+----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+-+----+the founding result of graph theory (Euler, 1736).
+-+---+-+---- 
+-+---+-+-----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+-+-----and prove impossibility using the Eulerian trail parity condition.
+-+---+-+----+## The Problem
+-+---+-+---- 
+-+---+-+-----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+-+-----with a simple-graph abstraction that captures the essential parity
+-+---+-+-----obstruction: a graph where more than two vertices have odd degree
+-+---+-+-----cannot have an Eulerian trail.
+-+---+-+----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+-+----+and included two large islands connected to each other and to the two mainland
+-+---+-+----+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+-+----+city that crosses each bridge exactly once.
+-+---+-+---- 
+-+---+-+-----## Main results
+-+---+-+----+## The Graph
+-+---+-+---- 
+-+---+-+-----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+-+-----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+-+-----  has no Eulerian trail (from Mathlib).
+-+---+-+-----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+-+----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+-+----+- Vertex 0: Central island (Kneiphof)
+-+---+-+----+- Vertex 1: Northern bank
+-+---+-+----+- Vertex 2: Southern bank
+-+---+-+----+- Vertex 3: Eastern island (Lomse)
+-+---+- ----+
+-+---+------+# The Königsberg Bridge Problem — Formalized
+-+---+-+----+The seven bridges are:
+-+---+-+----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+-+----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+-+----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+-+----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+-+----+- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+- ----+
+-+---+------+This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+------+the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+------+impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+-+----+## Main Results
+-+---+- ----+
+-+---+------+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+------+and prove impossibility using the Eulerian trail parity condition.
+-+---+-+----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+-+----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+-+----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+-+---- -/
+-+---+-+---- 
+-+---+-+-----import Mathlib
+-+---+-+----+namespace Bridges
+-+---+-+---- 
+-+---+-+-----/-! ### The Königsberg graph
+-+---+-+----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+-+----+def konigsberg : Multigraph 4 7 where
+-+---+-+----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+-+----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+-+---- 
+-+---+-+-----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+-+-----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+-+-----is the simple graph that captures the connectivity pattern.
+-+---+-+----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+-+----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+-+---- 
+-+---+-+-----In the original problem, some pairs of landmasses had multiple bridges
+-+---+-+-----between them, making the true model a multigraph. However, for the
+-+---+-+-----Eulerian trail condition, what matters is the parity of degrees at each
+-+---+-+-----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+-+-----impossibility via Euler's theorem. -/
+-+---+-+----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+-+----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+-+---- 
+-+---+-+-----/-- The four landmasses of Königsberg. -/
+-+---+-+-----inductive Konigsberg : Type
+-+---+-+-----  | A  -- North bank
+-+---+-+-----  | B  -- South bank
+-+---+-+-----  | C  -- Island (Kneiphof)
+-+---+-+-----  | D  -- East district
+-+---+-+-----  deriving DecidableEq, Fintype
+-+---+-+----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+-+----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+-+---- 
+-+---+-+-----open Konigsberg
+-+---+-+-----
+-+---+-+-----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+-+-----Every pair of distinct vertices is connected, capturing the fact that
+-+---+-+-----every pair of landmasses had at least one bridge between them. -/
+-+---+-+-----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+-+-----
+-+---+-+-----instance : DecidableRel konigsbergGraph.Adj := by
+-+---+-+-----  intro u v
+-+---+-+-----  simp only [konigsbergGraph]
+-+---+-+-----  infer_instance
+-+---+-+-----
+-+---+-+-----/-
+-+---+-+-----Every vertex in K₄ has degree 3 (odd).
+-+---+-+------/
+-+---+-+-----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+-+-----  fin_cases v <;> simp +decide
+-+---+-+----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+-+----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+-+---- 
+-+---+-+---- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+-+-----theorem konigsberg_all_odd :
+-+---+-+-----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+-+-----  intro v
+-+---+-+-----  rw [konigsberg_degree]
+-+---+-+-----  exact ⟨1, rfl⟩
+-+---+-+----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+-+----+  intro v; fin_cases v <;> native_decide
+-+---+-+---- 
+-+---+-+-----/-
+-+---+-+-----The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+-+------/
+-+---+-+-----theorem konigsberg_four_odd :
+-+---+-+-----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+-+-----  decide +revert
+-+---+-+----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+-+----+theorem konigsberg_odd_count :
+-+---+-+----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+-+----+  native_decide
+-+---+-+---- 
+-+---+-+-----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+-+-----then the number of odd-degree vertices is 0 or 2.
+-+---+-+-----This is the key obstruction from Mathlib. -/
+-+---+-+-----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+-+-----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+-+-----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+-+-----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+-+-----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+-+-----  hp.card_odd_degree
+-+---+-+----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+-+---- 
+-+---+-+-----/-
+-+---+-+-----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+-+-----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+-+-----through Königsberg crossing each bridge exactly once.
+-+---+-+------/
+-+---+-+-----theorem konigsberg_no_eulerian_trail :
+-+---+-+-----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+-+-----  intro u v p h;
+-+---+-+-----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+-+----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+- ----+
+-+---+------+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+------+with a simple-graph abstraction that captures the essential parity
+-+---+------+obstruction: a graph where more than two vertices have odd degree
+-+---+------+cannot have an Eulerian trail.
+-+---+-+----+The proof combines:
+-+---+-+----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+-+----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+-+----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+-+----+  constructor
+-+---+-+----+  intro t
+-+---+-+----+  have h1 := t.odd_degree_vertices_le_two
+-+---+-+----+  have h2 := konigsberg_odd_count
+-+---+-+----+  omega
+-+---+- ----+
+-+---+------+## Main results
+-+---+------+
+-+---+------+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+------+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+------+  has no Eulerian trail (from Mathlib).
+-+---+------+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+----+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+----+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+---- -+-/
+-+---+------+
+-+---+---- -+import Mathlib
+-+---+------+
+-+---+------+/-! ### The Königsberg graph
+-+---+------+
+-+---+------+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+------+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+------+is the simple graph that captures the connectivity pattern.
+-+---+------+
+-+---+------+In the original problem, some pairs of landmasses had multiple bridges
+-+---+------+between them, making the true model a multigraph. However, for the
+-+---+------+Eulerian trail condition, what matters is the parity of degrees at each
+-+---+------+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+------+impossibility via Euler's theorem. -/
+-+---+------+
+-+---+------+/-- The four landmasses of Königsberg. -/
+-+---+------+inductive Konigsberg : Type
+-+---+------+  | A  -- North bank
+-+---+------+  | B  -- South bank
+-+---+------+  | C  -- Island (Kneiphof)
+-+---+------+  | D  -- East district
+-+---+------+  deriving DecidableEq, Fintype
+-+---+------+
+-+---+------+open Konigsberg
+-+---+------+
+-+---+------+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+------+Every pair of distinct vertices is connected, capturing the fact that
+-+---+------+every pair of landmasses had at least one bridge between them. -/
+-+---+------+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+------+
+-+---+------+instance : DecidableRel konigsbergGraph.Adj := by
+-+---+------+  intro u v
+-+---+------+  simp only [konigsbergGraph]
+-+---+------+  infer_instance
+-+---+------+
+-+---+------+/-
+-+---+------+Every vertex in K₄ has degree 3 (odd).
+-+---+----+-+import Bridges.EulerianTrail
+-+--- +----+--- 
+-+--- +----+----/-- The four landmasses of Königsberg. -/
+-+--- +----+----inductive Konigsberg : Type
+-+---@@ -1783,11 +964,495 @@
+-+--- +------+Copyright (c) 2025. All rights reserved.
+-+--- +------+Released under Apache 2.0 license.
+-+--- +-+@@ -1,445 +1,86 @@
+-+----+-+---- a/Bridges/Konigsberg.lean
+-+----+-+-+++ b/Bridges/Konigsberg.lean
+-+---+++-@@ -1,204 +1,54 @@
+-+---+++- --- a/Bridges/Konigsberg.lean
+-+---+++- +++ b/Bridges/Konigsberg.lean
+-+---+++--@@ -1,445 +1,86 @@
+-+---+++-+@@ -1,344 +1,99 @@
+-+---+++- ---- a/Bridges/Konigsberg.lean
+-+---+++- -+++ b/Bridges/Konigsberg.lean
+-+---+++---@@ -1,344 +1,99 @@
+-+---+++-+-@@ -1,256 +1,86 @@
+-+---+++- ----- a/Bridges/Konigsberg.lean
+-+---+++- --+++ b/Bridges/Konigsberg.lean
+-+---+++----@@ -1,256 +1,86 @@
+-+---+++-+--@@ -1,168 +1,86 @@
+-+---+++- ------ a/Bridges/Konigsberg.lean
+-+---+++- ---+++ b/Bridges/Konigsberg.lean
+-+---+++-----@@ -1,168 +1,86 @@
+-+---+++--------- a/Bridges/Konigsberg.lean
+-+---+++------+++ b/Bridges/Konigsberg.lean
+-+---+++------@@ -1,99 +1,86 @@
+-+---+++------ /-
+-+---+++-------Copyright (c) 2025. All rights reserved.
+-+---+++-------Released under Apache 2.0 license.
+-+---+++------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+++------+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+++------+-/
+-+---+++------+import Mathlib
+-+---+++------+import Bridges.EulerianTrail
+-+---+++------ 
+-+---+++-------# The Königsberg Bridge Problem — Formalized
+-+---+++------+/-!
+-+---+++------+# The Königsberg Bridge Problem
+-+---+++------ 
+-+---+++-------This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+++-------the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+++-------impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+++------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+++------+the founding result of graph theory (Euler, 1736).
+-+---+++------ 
+-+---+++-------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+++-------and prove impossibility using the Eulerian trail parity condition.
+-+---+++------+## The Problem
+-+---+++------ 
+-+---+++-------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+++-------with a simple-graph abstraction that captures the essential parity
+-+---+++-------obstruction: a graph where more than two vertices have odd degree
+-+---+++-------cannot have an Eulerian trail.
+-+---+++------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+++------+and included two large islands connected to each other and to the two mainland
+-+---+++------+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+++------+city that crosses each bridge exactly once.
+-+---+++------ 
+-+---+++-------## Main results
+-+---+++------+## The Graph
+-+---+++------ 
+-+---+++-------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+++-------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+++-------  has no Eulerian trail (from Mathlib).
+-+---+++-------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+++------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+++------+- Vertex 0: Central island (Kneiphof)
+-+---+++------+- Vertex 1: Northern bank
+-+---+++------+- Vertex 2: Southern bank
+-+---+++------+- Vertex 3: Eastern island (Lomse)
+-+---+++------+
+-+---+++------+The seven bridges are:
+-+---+++------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+++------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+++------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+++------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+++------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+++------+
+-+---+++------+## Main Results
+-+---+++------+
+-+---+++------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+++------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+++------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+++------ -/
+-+---+++------ 
+-+---+++-------import Mathlib
+-+---+++------+namespace Bridges
+-+---+++------ 
+-+---+++-------/-! ### The Königsberg graph
+-+---+++------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+++------+def konigsberg : Multigraph 4 7 where
+-+---+++------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+++------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+++------ 
+-+---+++-------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+++-------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+++-------is the simple graph that captures the connectivity pattern.
+-+---+++------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+++------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+++------ 
+-+---+++-------In the original problem, some pairs of landmasses had multiple bridges
+-+---+++-------between them, making the true model a multigraph. However, for the
+-+---+++-------Eulerian trail condition, what matters is the parity of degrees at each
+-+---+++-------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+++-------impossibility via Euler's theorem. -/
+-+---+++------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+++------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+++------ 
+-+---+++-------/-- The four landmasses of Königsberg. -/
+-+---+++-------inductive Konigsberg : Type
+-+---+++-------  | A  -- North bank
+-+---+++-------  | B  -- South bank
+-+---+++-------  | C  -- Island (Kneiphof)
+-+---+++-------  | D  -- East district
+-+---+++-------  deriving DecidableEq, Fintype
+-+---+++------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+++------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+++------ 
+-+---+++-------open Konigsberg
+-+---+++-------
+-+---+++-------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+++-------Every pair of distinct vertices is connected, capturing the fact that
+-+---+++-------every pair of landmasses had at least one bridge between them. -/
+-+---+++-------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+++-------
+-+---+++-------instance : DecidableRel konigsbergGraph.Adj := by
+-+---+++-------  intro u v
+-+---+++-------  simp only [konigsbergGraph]
+-+---+++-------  infer_instance
+-+---+++-------
+-+---+++-------/-
+-+---+++-------Every vertex in K₄ has degree 3 (odd).
+-+---+++--------/
+-+---+++-------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+++-------  fin_cases v <;> simp +decide
+-+---+++------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+++------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+++------ 
+-+---+++------ /-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+++-------theorem konigsberg_all_odd :
+-+---+++-------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+++-------  intro v
+-+---+++-------  rw [konigsberg_degree]
+-+---+++-------  exact ⟨1, rfl⟩
+-+---+++------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+++------+  intro v; fin_cases v <;> native_decide
+-+---+++------ 
+-+---+++-------/-
+-+---+++-------The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+++--------/
+-+---+++-------theorem konigsberg_four_odd :
+-+---+++-------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+++-------  decide +revert
+-+---+++------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+++------+theorem konigsberg_odd_count :
+-+---+++------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+++------+  native_decide
+-+---+++------ 
+-+---+++-------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+++-------then the number of odd-degree vertices is 0 or 2.
+-+---+++-------This is the key obstruction from Mathlib. -/
+-+---+++-------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+++-------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+++-------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+++-------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+++-------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+++-------  hp.card_odd_degree
+-+---+++------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+++------ 
+-+---+++-------/-
+-+---+++-------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+++-------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+++-------through Königsberg crossing each bridge exactly once.
+-+---+++--------/
+-+---+++-------theorem konigsberg_no_eulerian_trail :
+-+---+++-------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+++-------  intro u v p h;
+-+---+++-------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+++------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+++------+
+-+---+++------+The proof combines:
+-+---+++------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+++------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+++------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+++------+  constructor
+-+---+++------+  intro t
+-+---+++------+  have h1 := t.odd_degree_vertices_le_two
+-+---+++------+  have h2 := konigsberg_odd_count
+-+---+++------+  omega
+-+---+++------+
+-+---+++------+end Bridges+/-
+-+---+++-+---@@ -1,99 +1,86 @@
+-+---+++-+--- /-
+-+---+++-+----Copyright (c) 2025. All rights reserved.
+-+---+++-+----Released under Apache 2.0 license.
+-+---+++- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+++- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+++- ---+-/
+-+---+++- ---+import Mathlib
+-+---+++- ---+import Bridges.EulerianTrail
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----# The Königsberg Bridge Problem — Formalized
+-+---+++- ---+/-!
+-+---+++- ---+# The Königsberg Bridge Problem
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+++-+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+++-+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+++- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+++- ---+the founding result of graph theory (Euler, 1736).
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+++-+----and prove impossibility using the Eulerian trail parity condition.
+-+---+++- ---+## The Problem
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+++-+----with a simple-graph abstraction that captures the essential parity
+-+---+++-+----obstruction: a graph where more than two vertices have odd degree
+-+---+++-+----cannot have an Eulerian trail.
+-+---+++- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+++- ---+and included two large islands connected to each other and to the two mainland
+-+---+++- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+++- ---+city that crosses each bridge exactly once.
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----## Main results
+-+---+++- ---+## The Graph
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+++-+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+++-+----  has no Eulerian trail (from Mathlib).
+-+---+++-+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+++- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+++- ---+- Vertex 0: Central island (Kneiphof)
+-+---+++- ---+- Vertex 1: Northern bank
+-+---+++-@@ -217,39 +67,101 @@
+-+---+++- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+++- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+++- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+++-----+-/
+-+---+++-----+
+-+---+++-+--- -/
+-+---+++-+--- 
+-+---+++-+----import Mathlib
+-+---+++- ---+namespace Bridges
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----/-! ### The Königsberg graph
+-+---+++- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+++- ---+def konigsberg : Multigraph 4 7 where
+-+---+++- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+++- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+++-+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+++-+----is the simple graph that captures the connectivity pattern.
+-+---+++- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+++- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----In the original problem, some pairs of landmasses had multiple bridges
+-+---+++-+----between them, making the true model a multigraph. However, for the
+-+---+++-+----Eulerian trail condition, what matters is the parity of degrees at each
+-+---+++-+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+++-+----impossibility via Euler's theorem. -/
+-+---+++- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+++- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----/-- The four landmasses of Königsberg. -/
+-+---+++-+----inductive Konigsberg : Type
+-+---+++-+----  | A  -- North bank
+-+---+++-+----  | B  -- South bank
+-+---+++-+----  | C  -- Island (Kneiphof)
+-+---+++-+----  | D  -- East district
+-+---+++-+----  deriving DecidableEq, Fintype
+-+---+++- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+++- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----open Konigsberg
+-+---+++-+----
+-+---+++-+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+++-+----Every pair of distinct vertices is connected, capturing the fact that
+-+---+++-+----every pair of landmasses had at least one bridge between them. -/
+-+---+++-+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+++-+----
+-+---+++-+----instance : DecidableRel konigsbergGraph.Adj := by
+-+---+++-+----  intro u v
+-+---+++-+----  simp only [konigsbergGraph]
+-+---+++-+----  infer_instance
+-+---+++-+----
+-+---+++-+----/-
+-+---+++-+----Every vertex in K₄ has degree 3 (odd).
+-+---+++-+-----/
+-+---+++-+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+++-+----  fin_cases v <;> simp +decide
+-+---+++- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+++- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+++-----+
+-+---+++-----+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+++-+--- 
+-+---+++-+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+++-+----theorem konigsberg_all_odd :
+-+---+++-+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+++-+----  intro v
+-+---+++-+----  rw [konigsberg_degree]
+-+---+++-+----  exact ⟨1, rfl⟩
+-+---+++- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+++- ---+  intro v; fin_cases v <;> native_decide
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----/-
+-+---+++-+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+++-+-----/
+-+---+++-+----theorem konigsberg_four_odd :
+-+---+++-+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+++-+----  decide +revert
+-+---+++- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+++- ---+theorem konigsberg_odd_count :
+-+---+++- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+++- ---+  native_decide
+-+---+++-----+
+-+---+++-+--- 
+-+---+++-+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+++-+----then the number of odd-degree vertices is 0 or 2.
+-+---+++-+----This is the key obstruction from Mathlib. -/
+-+---+++-+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+++-+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+++-+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+++-+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+++-+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+++-+----  hp.card_odd_degree
+-+---+++- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+++-----+
+-+---+++-----+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+++-+--- 
+-+---+++-+----/-
+-+---+++-+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+++-+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+++-+----through Königsberg crossing each bridge exactly once.
+-+---+++-+-----/
+-+---+++-+----theorem konigsberg_no_eulerian_trail :
+-+---+++-+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+++-+----  intro u v p h;
+-+---+++-+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+++- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+++- ---+
+-+---+++- ---+The proof combines:
+-+---+++-@@ -348,186 +260,186 @@
+-+---+++- --+  omega
+-+---+++- --+
+-+---+++- --+end Bridges+/-
+-+---+++---+Copyright (c) 2025. All rights reserved.
+-+---+++---+Released under Apache 2.0 license.
+-+---+++---+
+-+---+++---+# The Königsberg Bridge Problem — Formalized
+-+---+++---+
+-+---+++---+This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+++---+the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+++---+impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+++---+
+-+---+++---+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+++---+and prove impossibility using the Eulerian trail parity condition.
+-+---+++---+
+-+---+++---+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+++---+with a simple-graph abstraction that captures the essential parity
+-+---+++---+obstruction: a graph where more than two vertices have odd degree
+-+---+++---+cannot have an Eulerian trail.
+-+---+++---+
+-+---+++---+## Main results
+-+---+++---+
+-+---+++---+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+++---+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+++---+  has no Eulerian trail (from Mathlib).
+-+---+++---+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+++-+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+++-+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+++- -+-/
+-+---+++---+
+-+---+++- -+import Mathlib
+-+---+++---+
+-+---+++---+/-! ### The Königsberg graph
+-+---+++---+
+-+---+++---+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+++---+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+++---+is the simple graph that captures the connectivity pattern.
+-+---+++---+
+-+---+++---+In the original problem, some pairs of landmasses had multiple bridges
+-+---+++---+between them, making the true model a multigraph. However, for the
+-+---+++---+Eulerian trail condition, what matters is the parity of degrees at each
+-+---+++---+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+++---+impossibility via Euler's theorem. -/
+-+---+++---+
+-+---+++---+/-- The four landmasses of Königsberg. -/
+-+---+++---+inductive Konigsberg : Type
+-+---+++---+  | A  -- North bank
+-+---+++---+  | B  -- South bank
+-+---+++---+  | C  -- Island (Kneiphof)
+-+---+++---+  | D  -- East district
+-+---+++---+  deriving DecidableEq, Fintype
+-+---+++---+
+-+---+++---+open Konigsberg
+-+---+++---+
+-+---+++---+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+++---+Every pair of distinct vertices is connected, capturing the fact that
+-+---+++---+every pair of landmasses had at least one bridge between them. -/
+-+---+++---+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+++---+
+-+---+++---+instance : DecidableRel konigsbergGraph.Adj := by
+-+---+++---+  intro u v
+-+---+++---+  simp only [konigsbergGraph]
+-+---+++---+  infer_instance
+-+---+++---+
+-+---+++---+/-
+-+---+++---+Every vertex in K₄ has degree 3 (odd).
+-+---+++-+-+import Bridges.EulerianTrail
+-+---+++-+-+
+-+---+++-+-+/-!
+-+---+++-+-+# The Königsberg Bridge Problem
+-+---+++-+-+
+-+---+++-+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+++-+-+the founding result of graph theory (Euler, 1736).
+-+---+++-+-+
+-+---+++-+-+## The Problem
+-+---+++-+-+
+-+---+++-+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+++-+-+and included two large islands connected to each other and to the two mainland
+-+---+++-+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+++-+-+city that crosses each bridge exactly once.
+-+---+++-+-+
+-+---+++-+-+## The Graph
+-+---+++-+-+
+-+---+++-+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+++-+-+- Vertex 0: Central island (Kneiphof)
+-+---+++-+-+- Vertex 1: Northern bank
+-+---+++-+-+- Vertex 2: Southern bank
+-+---+++-+-+- Vertex 3: Eastern island (Lomse)
+-+---+++-+-+
+-+---+++-+-+The seven bridges are:
+-+---+++-+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+++-+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+++-+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+++-+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+++-+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+++-+-+
+-+---+++-+-+## Main Results
+-+---+++-+-+
+-+---+++-+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+++-+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+++-+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+++- -+-/
+-+---+++---+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+++---+  fin_cases v <;> simp +decide
+-+---+++-+-+
+-+---+++-+-+namespace Bridges
+-+---+++-+-+
+-+---+++-+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+++-+-+def konigsberg : Multigraph 4 7 where
+-+---+++-+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+++-+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+++-+-+
+-+---+++-+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+++-+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+++-+-+
+-+---+++-+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+++-+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+++-+-+
+-+---+++-+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+++-+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+++-+-+
+-+---+++-+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+++-+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+++- -+
+-+---+++- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+++---+theorem konigsberg_all_odd :
+-+---+++---+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+++---+  intro v
+-+---+++---+  rw [konigsberg_degree]
+-+---+++---+  exact ⟨1, rfl⟩
+-+---+++---+
+-+---+++---+/-
+-+---+++---+The number of odd-degree vertices in the Königsberg graph is 4.
+-+---++++@@ -1,256 +1,86 @@
+-+---++ +---- a/Bridges/Konigsberg.lean
+-+---++ +-+++ b/Bridges/Konigsberg.lean
+-+--- +-+-@@ -1,344 +1,99 @@
+-+----+-+----- a/Bridges/Konigsberg.lean
+-+----+-+--+++ b/Bridges/Konigsberg.lean
+-+---++++-@@ -1,168 +1,86 @@
+-+---++ +----- a/Bridges/Konigsberg.lean
+-+---++ +--+++ b/Bridges/Konigsberg.lean
+-+--- +-+--@@ -1,256 +1,86 @@
+-+--- +-+------ a/Bridges/Konigsberg.lean
+-+--- +-+---+++ b/Bridges/Konigsberg.lean
+-+---@@ -2016,1182 +1681,7 @@
+-+--- +------+/-
+-+--- +------+Every vertex in K₄ has degree 3 (odd).
+-+--- +----+-+import Bridges.EulerianTrail
+-+----++----+--- 
+-+----++----+----/-- The four landmasses of Königsberg. -/
+-+----++----+----inductive Konigsberg : Type
+-+----++----+----  | A  -- North bank
+-+----++----+----  | B  -- South bank
+-+----++----+----  | C  -- Island (Kneiphof)
+-+----++----+----  | D  -- East district
+-+----++----+----  deriving DecidableEq, Fintype
+-+----++---- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----++---- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----++--------+
+-+----++----+--- 
+-+----++----+----open Konigsberg
+-+----++----+----
+-+----++----+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----++----+----Every pair of distinct vertices is connected, capturing the fact that
+-+----++----+----every pair of landmasses had at least one bridge between them. -/
+-+----++----+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++----+----
+-+----++----+----instance : DecidableRel konigsbergGraph.Adj := by
+-+----++----+----  intro u v
+-+----++----+----  simp only [konigsbergGraph]
+-+----++----+----  infer_instance
+-+----++----+----
+-+----++----+----/-
+-+----++----+----Every vertex in K₄ has degree 3 (odd).
+-+----++----+-----/
+-+----++----+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----++----+----  fin_cases v <;> simp +decide
+-+----++---- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++---- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++--------+
+-+----++--------+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++----+--- 
+-+----++----+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++----+----theorem konigsberg_all_odd :
+-+----++----+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----++----+----  intro v
+-+----++----+----  rw [konigsberg_degree]
+-+----++----+----  exact ⟨1, rfl⟩
+-+----++---- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++---- ---+  intro v; fin_cases v <;> native_decide
+-+----++--------+
+-+----++----+--- 
+-+----++----+----/-
+-+----++----+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++----+-----/
+-+----++----+----theorem konigsberg_four_odd :
+-+----++----+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----++----+----  decide +revert
+-+----++---- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----++---- ---+theorem konigsberg_odd_count :
+-+----++---- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----++---- ---+  native_decide
+-+----++--------+
+-+----++----+--- 
+-+----++----+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----++----+----then the number of odd-degree vertices is 0 or 2.
+-+----++----+----This is the key obstruction from Mathlib. -/
+-+----++----+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----++----+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----++----+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----++----+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----++----+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----++----+----  hp.card_odd_degree
+-+----++---- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----++--------+
+-+----++--------+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++----+--- 
+-+----++----+----/-
+-+----++----+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----++----+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----++----+----through Königsberg crossing each bridge exactly once.
+-+----++----+-----/
+-+----++----+----theorem konigsberg_no_eulerian_trail :
+-+----++----+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----++----+----  intro u v p h;
+-+----++----+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++---- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++---- ---+
+-+----++---- ---+The proof combines:
+-+----++----@@ -348,186 +260,186 @@
+-+----++---- --+  omega
+-+----++---- --+
+-+----++---- --+end Bridges+/-
+-+----++------+Copyright (c) 2025. All rights reserved.
+-+----++------+Released under Apache 2.0 license.
+-+----++-+@@ -1,445 +1,86 @@
+-+----+++-@@ -1,204 +1,54 @@
+-+----+++- --- a/Bridges/Konigsberg.lean
+-+----+++- +++ b/Bridges/Konigsberg.lean
+-+----+++--@@ -1,445 +1,86 @@
+-+----+++-+@@ -1,344 +1,99 @@
+-+----+++- ---- a/Bridges/Konigsberg.lean
+-+----+++- -+++ b/Bridges/Konigsberg.lean
+-+----+++---@@ -1,344 +1,99 @@
+-+----+++-+-@@ -1,256 +1,86 @@
+-+----+++- ----- a/Bridges/Konigsberg.lean
+-+----+++- --+++ b/Bridges/Konigsberg.lean
+-+----+++----@@ -1,256 +1,86 @@
+-+----+++-+--@@ -1,168 +1,86 @@
+-+----+++- ------ a/Bridges/Konigsberg.lean
+-+----+++- ---+++ b/Bridges/Konigsberg.lean
+-+----+++-----@@ -1,168 +1,86 @@
+-+----+++--------- a/Bridges/Konigsberg.lean
+-+----+++------+++ b/Bridges/Konigsberg.lean
+-+----+++------@@ -1,99 +1,86 @@
+-+----+++------ /-
+-+----+++-------Copyright (c) 2025. All rights reserved.
+-+----+++-------Released under Apache 2.0 license.
+-+----+++------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----+++------+Released under Apache 2.0 license as described in the file LICENSE.
+-+----+++------+-/
+-+----+++------+import Mathlib
+-+----+++------+import Bridges.EulerianTrail
+-+----+++------ 
+-+----+++-------# The Königsberg Bridge Problem — Formalized
+-+----+++------+/-!
+-+----+++------+# The Königsberg Bridge Problem
+-+----+++------ 
+-+----+++-------This file formalizes the Königsberg Bridge Problem, widely considered
+-+----+++-------the founding problem of graph theory. In 1736, Euler proved that it is
+-+----+++-------impossible to traverse all seven bridges of Königsberg exactly once.
+-+----+++------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----+++------+the founding result of graph theory (Euler, 1736).
+-+----+++------ 
+-+----+++-------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----+++-------and prove impossibility using the Eulerian trail parity condition.
+-+----+++------+## The Problem
+-+----+++------ 
+-+----+++-------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----+++-------with a simple-graph abstraction that captures the essential parity
+-+----+++-------obstruction: a graph where more than two vertices have odd degree
+-+----+++-------cannot have an Eulerian trail.
+-+----+++------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----+++------+and included two large islands connected to each other and to the two mainland
+-+----+++------+portions by seven bridges. The problem asks whether there is a walk through the
+-+----+++------+city that crosses each bridge exactly once.
+-+----+++------ 
+-+----+++-------## Main results
+-+----+++------+## The Graph
+-+----+++------ 
+-+----+++-------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----+++-------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----+++-------  has no Eulerian trail (from Mathlib).
+-+----+++-------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----+++------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----+++------+- Vertex 0: Central island (Kneiphof)
+-+----+++------+- Vertex 1: Northern bank
+-+----+++------+- Vertex 2: Southern bank
+-+----+++------+- Vertex 3: Eastern island (Lomse)
+-+----+++------+
+-+----+++------+The seven bridges are:
+-+----+++------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----+++------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----+++------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----+++------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----+++------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----+++------+
+-+----+++------+## Main Results
+-+----+++------+
+-+----+++------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----+++------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----+++------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----+++------ -/
+-+----+++------ 
+-+----+++-------import Mathlib
+-+----+++------+namespace Bridges
+-+----+++------ 
+-+----+++-------/-! ### The Königsberg graph
+-+----+++------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----+++------+def konigsberg : Multigraph 4 7 where
+-+----+++------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----+++------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----+++------ 
+-+----+++-------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----+++-------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----+++-------is the simple graph that captures the connectivity pattern.
+-+----+++------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----+++------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----+++------ 
+-+----+++-------In the original problem, some pairs of landmasses had multiple bridges
+-+----+++-------between them, making the true model a multigraph. However, for the
+-+----+++-------Eulerian trail condition, what matters is the parity of degrees at each
+-+----+++-------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----+++-------impossibility via Euler's theorem. -/
+-+----+++------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----+++------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----+++------ 
+-+----+++-------/-- The four landmasses of Königsberg. -/
+-+----+++-------inductive Konigsberg : Type
+-+----+++-------  | A  -- North bank
+-+----+++-------  | B  -- South bank
+-+----+++-------  | C  -- Island (Kneiphof)
+-+----+++-------  | D  -- East district
+-+----+++-------  deriving DecidableEq, Fintype
+-+----+++------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----+++------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----+++------ 
+-+----+++-------open Konigsberg
+-+----+++-------
+-+----+++-------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----+++-------Every pair of distinct vertices is connected, capturing the fact that
+-+----+++-------every pair of landmasses had at least one bridge between them. -/
+-+----+++-------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----+++-------
+-+----+++-------instance : DecidableRel konigsbergGraph.Adj := by
+-+----+++-------  intro u v
+-+----+++-------  simp only [konigsbergGraph]
+-+----+++-------  infer_instance
+-+----+++-------
+-+----+++-------/-
+-+----+++-------Every vertex in K₄ has degree 3 (odd).
+-+----+++--------/
+-+----+++-------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----+++-------  fin_cases v <;> simp +decide
+-+----+++------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----+++------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----+++------ 
+-+----+++------ /-- All four vertices of the Königsberg graph have odd degree. -/
+-+----+++-------theorem konigsberg_all_odd :
+-+----+++-------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----+++-------  intro v
+-+----+++-------  rw [konigsberg_degree]
+-+----+++-------  exact ⟨1, rfl⟩
+-+----+++------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----+++------+  intro v; fin_cases v <;> native_decide
+-+----+++------ 
+-+----+++-------/-
+-+----+++-------The number of odd-degree vertices in the Königsberg graph is 4.
+-+----+++--------/
+-+----+++-------theorem konigsberg_four_odd :
+-+----+++-------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----+++-------  decide +revert
+-+----+++------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----+++------+theorem konigsberg_odd_count :
+-+----+++------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----+++------+  native_decide
+-+----+++------ 
+-+----+++-------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----+++-------then the number of odd-degree vertices is 0 or 2.
+-+----+++-------This is the key obstruction from Mathlib. -/
+-+----+++-------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----+++-------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----+++-------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----+++-------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----+++-------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----+++-------  hp.card_odd_degree
+-+----+++------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----+++------ 
+-+----+++-------/-
+-+----+++-------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----+++-------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----+++-------through Königsberg crossing each bridge exactly once.
+-+----+++--------/
+-+----+++-------theorem konigsberg_no_eulerian_trail :
+-+----+++-------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----+++-------  intro u v p h;
+-+----+++-------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----+++------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----+++------+
+-+----+++------+The proof combines:
+-+----+++------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----+++------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----+++------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----+++------+  constructor
+-+----+++------+  intro t
+-+----+++------+  have h1 := t.odd_degree_vertices_le_two
+-+----+++------+  have h2 := konigsberg_odd_count
+-+----+++------+  omega
+-+----+++------+
+-+----+++------+end Bridges+/-
+-+----+++-+---@@ -1,99 +1,86 @@
+-+----+++-+--- /-
+-+----+++-+----Copyright (c) 2025. All rights reserved.
+-+----+++-+----Released under Apache 2.0 license.
+-+----+++- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----+++- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+----+++- ---+-/
+-+----+++- ---+import Mathlib
+-+----+++- ---+import Bridges.EulerianTrail
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----# The Königsberg Bridge Problem — Formalized
+-+----+++- ---+/-!
+-+----+++- ---+# The Königsberg Bridge Problem
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+----+++-+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+----+++-+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+----+++- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----+++- ---+the founding result of graph theory (Euler, 1736).
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----+++-+----and prove impossibility using the Eulerian trail parity condition.
+-+----+++- ---+## The Problem
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----+++-+----with a simple-graph abstraction that captures the essential parity
+-+----+++-+----obstruction: a graph where more than two vertices have odd degree
+-+----+++-+----cannot have an Eulerian trail.
+-+----+++- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----+++- ---+and included two large islands connected to each other and to the two mainland
+-+----+++- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+----+++- ---+city that crosses each bridge exactly once.
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----## Main results
+-+----+++- ---+## The Graph
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----+++-+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----+++-+----  has no Eulerian trail (from Mathlib).
+-+----+++-+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----+++- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----+++- ---+- Vertex 0: Central island (Kneiphof)
+-+----+++- ---+- Vertex 1: Northern bank
+-+----+++-@@ -217,39 +67,101 @@
+-+----+++- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----+++- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----+++- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----+++-----+-/
+-+----+++-----+
+-+----+++-+--- -/
+-+----+++-+--- 
+-+----+++-+----import Mathlib
+-+----+++- ---+namespace Bridges
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----/-! ### The Königsberg graph
+-+----+++- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----+++- ---+def konigsberg : Multigraph 4 7 where
+-+----+++- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----+++- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----+++-+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----+++-+----is the simple graph that captures the connectivity pattern.
+-+----+++- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----+++- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----In the original problem, some pairs of landmasses had multiple bridges
+-+----+++-+----between them, making the true model a multigraph. However, for the
+-+----+++-+----Eulerian trail condition, what matters is the parity of degrees at each
+-+----+++-+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----+++-+----impossibility via Euler's theorem. -/
+-+----+++- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----+++- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----/-- The four landmasses of Königsberg. -/
+-+----+++-+----inductive Konigsberg : Type
+-+----+++-+----  | A  -- North bank
+-+----+++-+----  | B  -- South bank
+-+----+++-+----  | C  -- Island (Kneiphof)
+-+----+++-+----  | D  -- East district
+-+----+++-+----  deriving DecidableEq, Fintype
+-+----+++- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----+++- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----open Konigsberg
+-+----+++-+----
+-+----+++-+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----+++-+----Every pair of distinct vertices is connected, capturing the fact that
+-+----+++-+----every pair of landmasses had at least one bridge between them. -/
+-+----+++-+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----+++-+----
+-+----+++-+----instance : DecidableRel konigsbergGraph.Adj := by
+-+----+++-+----  intro u v
+-+----+++-+----  simp only [konigsbergGraph]
+-+----+++-+----  infer_instance
+-+----+++-+----
+-+----+++-+----/-
+-+----+++-+----Every vertex in K₄ has degree 3 (odd).
+-+----+++-+-----/
+-+----+++-+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----+++-+----  fin_cases v <;> simp +decide
+-+----+++- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----+++- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----+++-----+
+-+----+++-----+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----+++-+--- 
+-+----+++-+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+----+++-+----theorem konigsberg_all_odd :
+-+----+++-+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----+++-+----  intro v
+-+----+++-+----  rw [konigsberg_degree]
+-+----+++-+----  exact ⟨1, rfl⟩
+-+----+++- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----+++- ---+  intro v; fin_cases v <;> native_decide
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----/-
+-+----+++-+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+----+++-+-----/
+-+----+++-+----theorem konigsberg_four_odd :
+-+----+++-+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----+++-+----  decide +revert
+-+----+++- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----+++- ---+theorem konigsberg_odd_count :
+-+----+++- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----+++- ---+  native_decide
+-+----+++-----+
+-+----+++-+--- 
+-+----+++-+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----+++-+----then the number of odd-degree vertices is 0 or 2.
+-+----+++-+----This is the key obstruction from Mathlib. -/
+-+----+++-+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----+++-+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----+++-+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----+++-+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----+++-+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----+++-+----  hp.card_odd_degree
+-+----+++- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----+++-----+
+-+----+++-----+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----+++-+--- 
+-+----+++-+----/-
+-+----+++-+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----+++-+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----+++-+----through Königsberg crossing each bridge exactly once.
+-+----+++-+-----/
+-+----+++-+----theorem konigsberg_no_eulerian_trail :
+-+----+++-+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----+++-+----  intro u v p h;
+-+----+++-+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----+++- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----+++- ---+
+-+----+++- ---+The proof combines:
+-+----+++-@@ -348,186 +260,186 @@
+-+----+++- --+  omega
+-+----+++- --+
+-+----+++- --+end Bridges+/-
+-+----+++---+Copyright (c) 2025. All rights reserved.
+-+----+++---+Released under Apache 2.0 license.
+-+----+++---+
+-+----+++---+# The Königsberg Bridge Problem — Formalized
+-+----+++---+
+-+----+++---+This file formalizes the Königsberg Bridge Problem, widely considered
+-+----+++---+the founding problem of graph theory. In 1736, Euler proved that it is
+-+----+++---+impossible to traverse all seven bridges of Königsberg exactly once.
+-+----+++---+
+-+----+++---+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----+++---+and prove impossibility using the Eulerian trail parity condition.
+-+----+++---+
+-+----+++---+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----+++---+with a simple-graph abstraction that captures the essential parity
+-+----+++---+obstruction: a graph where more than two vertices have odd degree
+-+----+++---+cannot have an Eulerian trail.
+-+----+++---+
+-+----+++---+## Main results
+-+----+++---+
+-+----+++---+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----+++---+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----+++---+  has no Eulerian trail (from Mathlib).
+-+----+++---+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----+++-+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----+++-+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+----+++- -+-/
+-+----+++---+
+-+----+++- -+import Mathlib
+-+----+++---+
+-+----+++---+/-! ### The Königsberg graph
+-+----+++---+
+-+----+++---+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----+++---+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----+++---+is the simple graph that captures the connectivity pattern.
+-+----+++---+
+-+----+++---+In the original problem, some pairs of landmasses had multiple bridges
+-+----+++---+between them, making the true model a multigraph. However, for the
+-+----+++---+Eulerian trail condition, what matters is the parity of degrees at each
+-+----+++---+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----+++---+impossibility via Euler's theorem. -/
+-+----+++---+
+-+----+++---+/-- The four landmasses of Königsberg. -/
+-+----+++---+inductive Konigsberg : Type
+-+----+++---+  | A  -- North bank
+-+----+++---+  | B  -- South bank
+-+----+++---+  | C  -- Island (Kneiphof)
+-+----+++---+  | D  -- East district
+-+----+++---+  deriving DecidableEq, Fintype
+-+----+++---+
+-+----+++---+open Konigsberg
+-+----+++---+
+-+----+++---+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----+++---+Every pair of distinct vertices is connected, capturing the fact that
+-+----+++---+every pair of landmasses had at least one bridge between them. -/
+-+----+++---+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----+++---+
+-+----+++---+instance : DecidableRel konigsbergGraph.Adj := by
+-+----+++---+  intro u v
+-+----+++---+  simp only [konigsbergGraph]
+-+----+++---+  infer_instance
+-+----+++---+
+-+----+++---+/-
+-+----+++---+Every vertex in K₄ has degree 3 (odd).
+-+----+++-+-+import Bridges.EulerianTrail
+-+----+++-+-+
+-+----+++-+-+/-!
+-+----+++-+-+# The Königsberg Bridge Problem
+-+----+++-+-+
+-+----+++-+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----+++-+-+the founding result of graph theory (Euler, 1736).
+-+----+++-+-+
+-+----+++-+-+## The Problem
+-+----+++-+-+
+-+----+++-+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----+++-+-+and included two large islands connected to each other and to the two mainland
+-+----+++-+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+----+++-+-+city that crosses each bridge exactly once.
+-+----+++-+-+
+-+----+++-+-+## The Graph
+-+----+++-+-+
+-+----+++-+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----+++-+-+- Vertex 0: Central island (Kneiphof)
+-+----+++-+-+- Vertex 1: Northern bank
+-+----+++-+-+- Vertex 2: Southern bank
+-+----+++-+-+- Vertex 3: Eastern island (Lomse)
+-+----+++-+-+
+-+----+++-+-+The seven bridges are:
+-+----+++-+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----+++-+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----+++-+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----+++-+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----+++-+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----+++-+-+
+-+----+++-+-+## Main Results
+-+----+++-+-+
+-+----+++-+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----+++-+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----+++-+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----+++- -+-/
+-+----+++---+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----+++---+  fin_cases v <;> simp +decide
+-+----+++-+-+
+-+----+++-+-+namespace Bridges
+-+----+++-+-+
+-+----+++-+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----+++-+-+def konigsberg : Multigraph 4 7 where
+-+----+++-+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----+++-+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----+++-+-+
+-+----+++-+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----+++-+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----+++-+-+
+-+----+++-+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----+++-+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----+++-+-+
+-+----+++-+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----+++-+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----+++-+-+
+-+----+++-+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----+++-+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----+++- -+
+-+----+++- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----+++---+theorem konigsberg_all_odd :
+-+----+++---+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----+++---+  intro v
+-+----+++---+  rw [konigsberg_degree]
+-+----+++---+  exact ⟨1, rfl⟩
+-+----+++---+
+-+----+++---+/-
+-+----+++---+The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++++@@ -1,256 +1,86 @@
+-+----++ +---- a/Bridges/Konigsberg.lean
+-+----++ +-+++ b/Bridges/Konigsberg.lean
+-+----++-+-@@ -1,344 +1,99 @@
+-+----++++-@@ -1,168 +1,86 @@
+-+----++ +----- a/Bridges/Konigsberg.lean
+-+----++ +--+++ b/Bridges/Konigsberg.lean
+-+----++-+--@@ -1,256 +1,86 @@
+-+----++-+------ a/Bridges/Konigsberg.lean
+-+----++-+---+++ b/Bridges/Konigsberg.lean
+-+----++-+---@@ -1,168 +1,86 @@
+-+----++-+------- a/Bridges/Konigsberg.lean
+-+----++-+----+++ b/Bridges/Konigsberg.lean
+-+----++-+----@@ -1,99 +1,86 @@
+-+----++-+---- /-
+-+----++-+-----Copyright (c) 2025. All rights reserved.
+-+----++-+-----Released under Apache 2.0 license.
+-+----++-+----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++-+----+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++-+----+-/
+-+----++-+----+import Mathlib
+-+----++-+----+import Bridges.EulerianTrail
+-+----++-+---- 
+-+----++-+-----# The Königsberg Bridge Problem — Formalized
+-+----++-+----+/-!
+-+----++-+----+# The Königsberg Bridge Problem
+-+----++-+---- 
+-+----++-+-----This file formalizes the Königsberg Bridge Problem, widely considered
+-+----++-+-----the founding problem of graph theory. In 1736, Euler proved that it is
+-+----++-+-----impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++-+----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----++-+----+the founding result of graph theory (Euler, 1736).
+-+----++-+---- 
+-+----++-+-----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----++-+-----and prove impossibility using the Eulerian trail parity condition.
+-+----++-+----+## The Problem
+-+----++-+---- 
+-+----++-+-----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----++-+-----with a simple-graph abstraction that captures the essential parity
+-+----++-+-----obstruction: a graph where more than two vertices have odd degree
+-+----++-+-----cannot have an Eulerian trail.
+-+----++-+----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----++-+----+and included two large islands connected to each other and to the two mainland
+-+----++-+----+portions by seven bridges. The problem asks whether there is a walk through the
+-+----++-+----+city that crosses each bridge exactly once.
+-+----++-+---- 
+-+----++-+-----## Main results
+-+----++-+----+## The Graph
+-+----++-+---- 
+-+----++-+-----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----++-+-----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----++-+-----  has no Eulerian trail (from Mathlib).
+-+----++-+-----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----++-+----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----++-+----+- Vertex 0: Central island (Kneiphof)
+-+----++-+----+- Vertex 1: Northern bank
+-+----++-+----+- Vertex 2: Southern bank
+-+----++-+----+- Vertex 3: Eastern island (Lomse)
+-+----++- ----+
+-+----++------+# The Königsberg Bridge Problem — Formalized
+-+----++-+----+The seven bridges are:
+-+----++-+----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----++-+----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----++-+----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----++-+----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----++-+----+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----++- ----+
+-+----++------+This file formalizes the Königsberg Bridge Problem, widely considered
+-+----++------+the founding problem of graph theory. In 1736, Euler proved that it is
+-+----++------+impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++-+----+## Main Results
+-+----++- ----+
+-+----++------+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----++------+and prove impossibility using the Eulerian trail parity condition.
+-+----++-+----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++-+----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++-+----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++-+---- -/
+-+----++-+---- 
+-+----++-+-----import Mathlib
+-+----++-+----+namespace Bridges
+-+----++-+---- 
+-+----++-+-----/-! ### The Königsberg graph
+-+----++-+----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----++-+----+def konigsberg : Multigraph 4 7 where
+-+----++-+----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----++-+----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----++-+---- 
+-+----++-+-----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----++-+-----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----++-+-----is the simple graph that captures the connectivity pattern.
+-+----++-+----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----++-+----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----++-+---- 
+-+----++-+-----In the original problem, some pairs of landmasses had multiple bridges
+-+----++-+-----between them, making the true model a multigraph. However, for the
+-+----++-+-----Eulerian trail condition, what matters is the parity of degrees at each
+-+----++-+-----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----++-+-----impossibility via Euler's theorem. -/
+-+----++-+----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----++-+----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----++-+---- 
+-+----++-+-----/-- The four landmasses of Königsberg. -/
+-+----++-+-----inductive Konigsberg : Type
+-+----++-+-----  | A  -- North bank
+-+----++-+-----  | B  -- South bank
+-+----++-+-----  | C  -- Island (Kneiphof)
+-+----++-+-----  | D  -- East district
+-+----++-+-----  deriving DecidableEq, Fintype
+-+----++-+----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----++-+----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----++-+---- 
+-+----++-+-----open Konigsberg
+-+----++-+-----
+-+----++-+-----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----++-+-----Every pair of distinct vertices is connected, capturing the fact that
+-+----++-+-----every pair of landmasses had at least one bridge between them. -/
+-+----++-+-----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++-+-----
+-+----++-+-----instance : DecidableRel konigsbergGraph.Adj := by
+-+----++-+-----  intro u v
+-+----++-+-----  simp only [konigsbergGraph]
+-+----++-+-----  infer_instance
+-+----++-+-----
+-+----++-+-----/-
+-+----++-+-----Every vertex in K₄ has degree 3 (odd).
+-+----++-+------/
+-+----++-+-----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----++-+-----  fin_cases v <;> simp +decide
+-+----++-+----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++-+----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++-+---- 
+-+----++-+---- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++-+-----theorem konigsberg_all_odd :
+-+----++-+-----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----++-+-----  intro v
+-+----++-+-----  rw [konigsberg_degree]
+-+----++-+-----  exact ⟨1, rfl⟩
+-+----++-+----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++-+----+  intro v; fin_cases v <;> native_decide
+-+----++-+---- 
+-+----++-+-----/-
+-+----++-+-----The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++-+------/
+-+----++-+-----theorem konigsberg_four_odd :
+-+----++-+-----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----++-+-----  decide +revert
+-+----++-+----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----++-+----+theorem konigsberg_odd_count :
+-+----++-+----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----++-+----+  native_decide
+-+----++-+---- 
+-+----++-+-----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----++-+-----then the number of odd-degree vertices is 0 or 2.
+-+----++-+-----This is the key obstruction from Mathlib. -/
+-+----++-+-----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----++-+-----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----++-+-----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----++-+-----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----++-+-----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----++-+-----  hp.card_odd_degree
+-+----++-+----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----++-+---- 
+-+----++-+-----/-
+-+----++-+-----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----++-+-----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----++-+-----through Königsberg crossing each bridge exactly once.
+-+----++-+------/
+-+----++-+-----theorem konigsberg_no_eulerian_trail :
+-+----++-+-----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----++-+-----  intro u v p h;
+-+----++-+-----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++-+----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++- ----+
+-+----++------+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----++------+with a simple-graph abstraction that captures the essential parity
+-+----++------+obstruction: a graph where more than two vertices have odd degree
+-+----++------+cannot have an Eulerian trail.
+-+----++-+----+The proof combines:
+-+----++-+----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----++-+----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----++-+----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----++-+----+  constructor
+-+----++-+----+  intro t
+-+----++-+----+  have h1 := t.odd_degree_vertices_le_two
+-+----++-+----+  have h2 := konigsberg_odd_count
+-+----++-+----+  omega
+-+----++- ----+
+-+----++------+## Main results
+-+--+-+----+--- 
+-+--+-+----+----## Main results
+-+--+-+---- ---+## The Graph
+-+--+-+--------+
+-+--+-+----+--- 
+-+--+-+----+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-+----+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-+----+----  has no Eulerian trail (from Mathlib).
+-+--+-+----+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-+---- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-+---- ---+- Vertex 0: Central island (Kneiphof)
+-+--+-+---- ---+- Vertex 1: Northern bank
+-+--+-+----@@ -217,39 +67,101 @@
+-+--+-+---- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+---- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+---- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+- --------+-/
+-+--+----------+import Mathlib
+-+--+----------+import Bridges.EulerianTrail
+-+--+---------- 
+-+--+-----------# The Königsberg Bridge Problem — Formalized
+-+--+----------+/-!
+-+--+----------+# The Königsberg Bridge Problem
+-+--+---------- 
+-+--+-----------This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-----------the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-----------impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+----------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+----------+the founding result of graph theory (Euler, 1736).
+-+--+---------- 
+-+--+-----------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-----------and prove impossibility using the Eulerian trail parity condition.
+-+--+----------+## The Problem
+-+--+---------- 
+-+--+-----------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-----------with a simple-graph abstraction that captures the essential parity
+-+--+-----------obstruction: a graph where more than two vertices have odd degree
+-+--+-----------cannot have an Eulerian trail.
+-+--+----------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+----------+and included two large islands connected to each other and to the two mainland
+-+--+----------+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+----------+city that crosses each bridge exactly once.
+-+--+---------- 
+-+--+-----------## Main results
+-+--+----------+## The Graph
+-+--+---------- 
+-+--+-----------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-----------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-----------  has no Eulerian trail (from Mathlib).
+-+--+-----------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+----------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+----------+- Vertex 0: Central island (Kneiphof)
+-+--+----------+- Vertex 1: Northern bank
+-+--+----------+- Vertex 2: Southern bank
+-+--+----------+- Vertex 3: Eastern island (Lomse)
+-+--+- --------+
+-+--+----------+The seven bridges are:
+-+--+----------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+----------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+----------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+----------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+----------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-+----+--- -/
+-+--+-+----+--- 
+-+--+-+----+----import Mathlib
+-+--+-+---- ---+namespace Bridges
+-+--+- --------+
+-+--+----------+## Main Results
+-+--+-+----+--- 
+-+--+-+----+----/-! ### The Königsberg graph
+-+--+-+---- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-+---- ---+def konigsberg : Multigraph 4 7 where
+-+--+-+---- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-+---- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+- --------+
+-+--+----------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+----------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+----------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+---------- -/
+-+--+---------- 
+-+--+-----------import Mathlib
+-+--+----------+namespace Bridges
+-+--+---------- 
+-+--+-----------/-! ### The Königsberg graph
+-+--+----------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+----------+def konigsberg : Multigraph 4 7 where
+-+--+----------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+----------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+---------- 
+-+--+-----------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-----------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-----------is the simple graph that captures the connectivity pattern.
+-+--+----------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+----------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+---------- 
+-+--+-----------In the original problem, some pairs of landmasses had multiple bridges
+-+--+-----------between them, making the true model a multigraph. However, for the
+-+--+-----------Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-----------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-----------impossibility via Euler's theorem. -/
+-+--+----------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+----------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+---------- 
+-+--+-----------/-- The four landmasses of Königsberg. -/
+-+--+-----------inductive Konigsberg : Type
+-+--+-----------  | A  -- North bank
+-+--+-----------  | B  -- South bank
+-+--+-----------  | C  -- Island (Kneiphof)
+-+--+-----------  | D  -- East district
+-+--+-----------  deriving DecidableEq, Fintype
+-+--+----------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+----------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+---------- 
+-+--+-----------open Konigsberg
+-+--+-----------
+-+--+-----------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-----------Every pair of distinct vertices is connected, capturing the fact that
+-+--+-----------every pair of landmasses had at least one bridge between them. -/
+-+--+-----------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-----------
+-+--+-----------instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-----------  intro u v
+-+--+-----------  simp only [konigsbergGraph]
+-+--+-----------  infer_instance
+-+--+-----------
+-+--+-----------/-
+-+--+-----------Every vertex in K₄ has degree 3 (odd).
+-+--+------------/
+-+--+-----------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-----------  fin_cases v <;> simp +decide
+-+--+----------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+----------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+---------- 
+-+--+---------- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-----------theorem konigsberg_all_odd :
+-+--+-----------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-----------  intro v
+-+--+-----------  rw [konigsberg_degree]
+-+--+-----------  exact ⟨1, rfl⟩
+-+--+----------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+----------+  intro v; fin_cases v <;> native_decide
+-+--+---------- 
+-+--+-----------/-
+-+--+-----------The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+------------/
+-+--+-----------theorem konigsberg_four_odd :
+-+--+-----------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-----------  decide +revert
+-+--+----------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+----------+theorem konigsberg_odd_count :
+-+--+----------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+----------+  native_decide
+-+--+---------- 
+-+--+-----------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-----------then the number of odd-degree vertices is 0 or 2.
+-+--+-----------This is the key obstruction from Mathlib. -/
+-+--+-----------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-----------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-----------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-----------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-----------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-----------  hp.card_odd_degree
+-+--+----------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+---------- 
+-+--+-----------/-
+-+--+-----------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-----------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-----------through Königsberg crossing each bridge exactly once.
+-+--+------------/
+-+--+-----------theorem konigsberg_no_eulerian_trail :
+-+--+-----------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-----------  intro u v p h;
+-+--+-----------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+----------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-+----+--- 
+-+--+-+----+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-+----+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-+----+----is the simple graph that captures the connectivity pattern.
+-+--+-+---- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-+---- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+- --------+
+-+--+----------+The proof combines:
+-+--+----------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+----------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+----------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+----------+  constructor
+-+--+----------+  intro t
+-+--+----------+  have h1 := t.odd_degree_vertices_le_two
+-+--+----------+  have h2 := konigsberg_odd_count
+-+--+----------+  omega
+-+--+-+----+--- 
+-+--+-+----+----In the original problem, some pairs of landmasses had multiple bridges
+-+--+-+----+----between them, making the true model a multigraph. However, for the
+-+--+-+----+----Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-+----+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-+----+----impossibility via Euler's theorem. -/
+-+--+-+---- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-+---- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+- --------+
+-+--+----------+end Bridges+/-
+-+--+-----+---@@ -1,99 +1,86 @@
+-+--+-----+--- /-
+-+--+-----+----Copyright (c) 2025. All rights reserved.
+-+--+-----+----Released under Apache 2.0 license.
+-+--+----- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+----- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+----- ---+-/
+-+--+----- ---+import Mathlib
+-+--+----- ---+import Bridges.EulerianTrail
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----# The Königsberg Bridge Problem — Formalized
+-+--+----- ---+/-!
+-+--+----- ---+# The Königsberg Bridge Problem
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-----+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-----+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+----- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+----- ---+the founding result of graph theory (Euler, 1736).
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-----+----and prove impossibility using the Eulerian trail parity condition.
+-+--+----- ---+## The Problem
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-----+----with a simple-graph abstraction that captures the essential parity
+-+--+-----+----obstruction: a graph where more than two vertices have odd degree
+-+--+-----+----cannot have an Eulerian trail.
+-+--+----- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+----- ---+and included two large islands connected to each other and to the two mainland
+-+--+----- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+----- ---+city that crosses each bridge exactly once.
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----## Main results
+-+--+----- ---+## The Graph
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-----+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-----+----  has no Eulerian trail (from Mathlib).
+-+--+-----+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+----- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+----- ---+- Vertex 0: Central island (Kneiphof)
+-+--+----- ---+- Vertex 1: Northern bank
+-+--+-----@@ -217,39 +67,101 @@
+-+--+----- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+----- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+----- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+---------+-/
+-+--+---------+
+-+--+-----+--- -/
+-+--+-----+--- 
+-+--+-----+----import Mathlib
+-+--+----- ---+namespace Bridges
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----/-! ### The Königsberg graph
+-+--+----- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+----- ---+def konigsberg : Multigraph 4 7 where
+-+--+----- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+----- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-----+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-----+----is the simple graph that captures the connectivity pattern.
+-+--+----- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+----- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----In the original problem, some pairs of landmasses had multiple bridges
+-+--+-----+----between them, making the true model a multigraph. However, for the
+-+--+-----+----Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-----+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-----+----impossibility via Euler's theorem. -/
+-+--+----- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+----- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----/-- The four landmasses of Königsberg. -/
+-+--+-----+----inductive Konigsberg : Type
+-+--+-----+----  | A  -- North bank
+-+--+-----+----  | B  -- South bank
+-+--+-----+----  | C  -- Island (Kneiphof)
+-+--+-----+----  | D  -- East district
+-+--+-----+----  deriving DecidableEq, Fintype
+-+--+----- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+----- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----open Konigsberg
+-+--+-----+----
+-+--+-----+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-----+----Every pair of distinct vertices is connected, capturing the fact that
+-+--+-----+----every pair of landmasses had at least one bridge between them. -/
+-+--+-----+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-----+----
+-+--+-----+----instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-----+----  intro u v
+-+--+-----+----  simp only [konigsbergGraph]
+-+--+-----+----  infer_instance
+-+--+-----+----
+-+--+-----+----/-
+-+--+-----+----Every vertex in K₄ has degree 3 (odd).
+-+--+-----+-----/
+-+--+-----+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-----+----  fin_cases v <;> simp +decide
+-+--+----- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+----- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+---------+
+-+--+---------+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-----+--- 
+-+--+-----+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-----+----theorem konigsberg_all_odd :
+-+--+-----+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-----+----  intro v
+-+--+-----+----  rw [konigsberg_degree]
+-+--+-----+----  exact ⟨1, rfl⟩
+-+--+----- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+----- ---+  intro v; fin_cases v <;> native_decide
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----/-
+-+--+-----+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-----+-----/
+-+--+-----+----theorem konigsberg_four_odd :
+-+--+-----+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-----+----  decide +revert
+-+--+----- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+----- ---+theorem konigsberg_odd_count :
+-+--+----- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+----- ---+  native_decide
+-+--+---------+
+-+--+-----+--- 
+-+--+-----+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-----+----then the number of odd-degree vertices is 0 or 2.
+-+--+-----+----This is the key obstruction from Mathlib. -/
+-+--+-----+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-----+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-----+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-----+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-----+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-----+----  hp.card_odd_degree
+-+--+----- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+---------+
+-+--+---------+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-----+--- 
+-+--+-----+----/-
+-+--+-----+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-----+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-----+----through Königsberg crossing each bridge exactly once.
+-+--+-----+-----/
+-+--+-----+----theorem konigsberg_no_eulerian_trail :
+-+--+-----+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-----+----  intro u v p h;
+-+--+-----+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+----- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+----- ---+
+-+--+----- ---+The proof combines:
+-+--+-----@@ -348,186 +260,186 @@
+-+--+----- --+  omega
+-+--+----- --+
+-+--+----- --+end Bridges+/-
+-+--+-------+Copyright (c) 2025. All rights reserved.
+-+--+-------+Released under Apache 2.0 license.
+-+--+--+@@ -1,445 +1,86 @@
+-+--+--+---- a/Bridges/Konigsberg.lean
+-+--+--+-+++ b/Bridges/Konigsberg.lean
+-+--+--+-@@ -1,344 +1,99 @@
+-+--+--+----- a/Bridges/Konigsberg.lean
+-+--+--+--+++ b/Bridges/Konigsberg.lean
+-+--+--+--@@ -1,256 +1,86 @@
+-+--+--+------ a/Bridges/Konigsberg.lean
+-+--+--+---+++ b/Bridges/Konigsberg.lean
+-+--+--+---@@ -1,168 +1,86 @@
+-+--+--+------- a/Bridges/Konigsberg.lean
+-+--+--+----+++ b/Bridges/Konigsberg.lean
+-+--+--+----@@ -1,99 +1,86 @@
+-+--+--+---- /-
+-+--+--+-----Copyright (c) 2025. All rights reserved.
+-+--+--+-----Released under Apache 2.0 license.
+-+--+--+----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+--+----+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+--+----+-/
+-+--+--+----+import Mathlib
+-+--+--+----+import Bridges.EulerianTrail
+-+--+--+---- 
+-+--+--+-----# The Königsberg Bridge Problem — Formalized
+-+--+--+----+/-!
+-+--+--+----+# The Königsberg Bridge Problem
+-+--+--+---- 
+-+--+--+-----This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+--+-----the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+--+-----impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+--+----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+--+----+the founding result of graph theory (Euler, 1736).
+-+--+--+---- 
+-+--+--+-----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+--+-----and prove impossibility using the Eulerian trail parity condition.
+-+--+--+----+## The Problem
+-+--+--+---- 
+-+--+--+-----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+--+-----with a simple-graph abstraction that captures the essential parity
+-+--+--+-----obstruction: a graph where more than two vertices have odd degree
+-+--+--+-----cannot have an Eulerian trail.
+-+--+--+----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+--+----+and included two large islands connected to each other and to the two mainland
+-+--+--+----+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+--+----+city that crosses each bridge exactly once.
+-+--+--+---- 
+-+--+--+-----## Main results
+-+--+--+----+## The Graph
+-+--+--+---- 
+-+--+--+-----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+--+-----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+--+-----  has no Eulerian trail (from Mathlib).
+-+--+--+-----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+--+----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+--+----+- Vertex 0: Central island (Kneiphof)
+-+--+--+----+- Vertex 1: Northern bank
+-+--+--+----+- Vertex 2: Southern bank
+-+--+--+----+- Vertex 3: Eastern island (Lomse)
+-+--+-- ----+
+-+--+-------+# The Königsberg Bridge Problem — Formalized
+-+--+--+----+The seven bridges are:
+-+--+--+----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+--+----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+--+----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+--+----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+--+----+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-- ----+
+-+--+-------+This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-------+the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-------+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+--+----+## Main Results
+-+--+-- ----+
+-+--+-------+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-------+and prove impossibility using the Eulerian trail parity condition.
+-+--+--+----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+--+----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+--+----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+--+---- -/
+-+--+--+---- 
+-+--+--+-----import Mathlib
+-+--+--+----+namespace Bridges
+-+--+--+---- 
+-+--+--+-----/-! ### The Königsberg graph
+-+--+--+----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+--+----+def konigsberg : Multigraph 4 7 where
+-+--+--+----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+--+----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+--+---- 
+-+--+--+-----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+--+-----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+--+-----is the simple graph that captures the connectivity pattern.
+-+--+--+----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+--+----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+--+---- 
+-+--+--+-----In the original problem, some pairs of landmasses had multiple bridges
+-+--+--+-----between them, making the true model a multigraph. However, for the
+-+--+--+-----Eulerian trail condition, what matters is the parity of degrees at each
+-+--+--+-----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+--+-----impossibility via Euler's theorem. -/
+-+--+--+----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+--+----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+--+---- 
+-+--+--+-----/-- The four landmasses of Königsberg. -/
+-+--+--+-----inductive Konigsberg : Type
+-+--+--+-----  | A  -- North bank
+-+--+--+-----  | B  -- South bank
+-+--+--+-----  | C  -- Island (Kneiphof)
+-+--+--+-----  | D  -- East district
+-+--+--+-----  deriving DecidableEq, Fintype
+-+--+--+----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+--+----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+--+---- 
+-+--+--+-----open Konigsberg
+-+--+--+-----
+-+--+--+-----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+--+-----Every pair of distinct vertices is connected, capturing the fact that
+-+--+--+-----every pair of landmasses had at least one bridge between them. -/
+-+--+--+-----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+--+-----
+-+--+--+-----instance : DecidableRel konigsbergGraph.Adj := by
+-+--+--+-----  intro u v
+-+--+--+-----  simp only [konigsbergGraph]
+-+--+--+-----  infer_instance
+-+--+--+-----
+-+--+--+-----/-
+-+--+--+-----Every vertex in K₄ has degree 3 (odd).
+-+--+--+------/
+-+--+--+-----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+--+-----  fin_cases v <;> simp +decide
+-+--+--+----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+--+----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+--+---- 
+-+--+--+---- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+--+-----theorem konigsberg_all_odd :
+-+--+--+-----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+--+-----  intro v
+-+--+--+-----  rw [konigsberg_degree]
+-+--+--+-----  exact ⟨1, rfl⟩
+-+--+--+----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+--+----+  intro v; fin_cases v <;> native_decide
+-+--+--+---- 
+-+--+--+-----/-
+-+--+--+-----The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+--+------/
+-+--+--+-----theorem konigsberg_four_odd :
+-+--+--+-----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+--+-----  decide +revert
+-+--+--+----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+--+----+theorem konigsberg_odd_count :
+-+--+--+----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+--+----+  native_decide
+-+--+--+---- 
+-+--+--+-----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+--+-----then the number of odd-degree vertices is 0 or 2.
+-+--+--+-----This is the key obstruction from Mathlib. -/
+-+--+--+-----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+--+-----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+--+-----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+--+-----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+--+-----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+--+-----  hp.card_odd_degree
+-+--+--+----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+--+---- 
+-+--+--+-----/-
+-+--+--+-----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+--+-----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+--+-----through Königsberg crossing each bridge exactly once.
+-+--+--+------/
+-+--+--+-----theorem konigsberg_no_eulerian_trail :
+-+--+--+-----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+--+-----  intro u v p h;
+-+--+--+-----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+--+----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-- ----+
+-+--+-------+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-------+with a simple-graph abstraction that captures the essential parity
+-+--+-------+obstruction: a graph where more than two vertices have odd degree
+-+--+-------+cannot have an Eulerian trail.
+-+--+--+----+The proof combines:
+-+--+--+----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+--+----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+--+----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+--+----+  constructor
+-+--+--+----+  intro t
+-+--+--+----+  have h1 := t.odd_degree_vertices_le_two
+-+--+--+----+  have h2 := konigsberg_odd_count
+-+--+--+----+  omega
+-+--+-- ----+
+-+--+-------+## Main results
+-+--+-------+
+-+--+-------+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-------+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-------+  has no Eulerian trail (from Mathlib).
+-+--+-------+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-----+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-----+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+----- -+-/
+-+--+-------+
+-+--+----- -+import Mathlib
+-+--+-------+
+-+--+-------+/-! ### The Königsberg graph
+-+--+-------+
+-+--+-------+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-------+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-------+is the simple graph that captures the connectivity pattern.
+-+--+-------+
+-+--+-------+In the original problem, some pairs of landmasses had multiple bridges
+-+--+-------+between them, making the true model a multigraph. However, for the
+-+--+-------+Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-------+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-------+impossibility via Euler's theorem. -/
+-+--+-------+
+-+--+-------+/-- The four landmasses of Königsberg. -/
+-+--+-------+inductive Konigsberg : Type
+-+--+-------+  | A  -- North bank
+-+--+-------+  | B  -- South bank
+-+--+-------+  | C  -- Island (Kneiphof)
+-+--+-------+  | D  -- East district
+-+--+-------+  deriving DecidableEq, Fintype
+-+--+-------+
+-+--+-------+open Konigsberg
+-+--+-------+
+-+--+-------+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-------+Every pair of distinct vertices is connected, capturing the fact that
+-+--+-------+every pair of landmasses had at least one bridge between them. -/
+-+--+-------+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-------+
+-+--+-------+instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-------+  intro u v
+-+--+-------+  simp only [konigsbergGraph]
+-+--+-------+  infer_instance
+-+--+-------+
+-+--+-------+/-
+-+--+-------+Every vertex in K₄ has degree 3 (odd).
+-+--+-----+-+import Bridges.EulerianTrail
+-+--+-+----+--- 
+-+--+-+----+----/-- The four landmasses of Königsberg. -/
+-+--+-+----+----inductive Konigsberg : Type
+-+--+-+----+----  | A  -- North bank
+-+--+-+----+----  | B  -- South bank
+-+--+-+----+----  | C  -- Island (Kneiphof)
+-+--+-+----+----  | D  -- East district
+-+--+-+----+----  deriving DecidableEq, Fintype
+-+--+-+---- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-+---- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-+--------+
+-+--+-+----+--- 
+-+--+-+----+----open Konigsberg
+-+--+-+----+----
+-+--+-+----+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-+----+----Every pair of distinct vertices is connected, capturing the fact that
+-+--+-+----+----every pair of landmasses had at least one bridge between them. -/
+-+--+-+----+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+----+----
+-+--+-+----+----instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-+----+----  intro u v
+-+--+-+----+----  simp only [konigsbergGraph]
+-+--+-+----+----  infer_instance
+-+--+-+----+----
+-+--+-+----+----/-
+-+--+-+----+----Every vertex in K₄ has degree 3 (odd).
+-+--+-+----+-----/
+-+--+-+----+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-+----+----  fin_cases v <;> simp +decide
+-+--+-+---- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+---- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+--------+
+-+--+-+--------+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+----+--- 
+-+--+-+----+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+----+----theorem konigsberg_all_odd :
+-+--+-+----+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-+----+----  intro v
+-+--+-+----+----  rw [konigsberg_degree]
+-+--+-+----+----  exact ⟨1, rfl⟩
+-+--+-+---- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+---- ---+  intro v; fin_cases v <;> native_decide
+-+--+-+--------+
+-+--+-+----+--- 
+-+--+-+----+----/-
+-+--+-+----+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+----+-----/
+-+--+-+----+----theorem konigsberg_four_odd :
+-+--+-+----+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-+----+----  decide +revert
+-+--+-+---- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-+---- ---+theorem konigsberg_odd_count :
+-+--+-+---- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-+---- ---+  native_decide
+-+--+-+--------+
+-+--+-+----+--- 
+-+--+-+----+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-+----+----then the number of odd-degree vertices is 0 or 2.
+-+--+-+----+----This is the key obstruction from Mathlib. -/
+-+--+-+----+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-+----+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-+----+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-+----+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-+----+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-+----+----  hp.card_odd_degree
+-+--+-+---- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-+--------+
+-+--+-+--------+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+----+--- 
+-+--+-+----+----/-
+-+--+-+----+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-+----+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-+----+----through Königsberg crossing each bridge exactly once.
+-+--+-+----+-----/
+-+--+-+----+----theorem konigsberg_no_eulerian_trail :
+-+--+-+----+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-+----+----  intro u v p h;
+-+--+-+----+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+---- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-+---- ---+
+-+--+-+---- ---+The proof combines:
+-+--+-+----@@ -348,186 +260,186 @@
+-+--+-+---- --+  omega
+-+--+-+---- --+
+-+--+-+---- --+end Bridges+/-
+-+--+-+------+Copyright (c) 2025. All rights reserved.
+-+--+-+------+Released under Apache 2.0 license.
+-+--+-+-+@@ -1,445 +1,86 @@
+-+--+-++-@@ -1,204 +1,54 @@
+-+--+-++- --- a/Bridges/Konigsberg.lean
+-+--+-++- +++ b/Bridges/Konigsberg.lean
+-+--+-++--@@ -1,445 +1,86 @@
+-+--+-++-+@@ -1,344 +1,99 @@
+-+--+-++- ---- a/Bridges/Konigsberg.lean
+-+--+-++- -+++ b/Bridges/Konigsberg.lean
+-+--+-++---@@ -1,344 +1,99 @@
+-+--+-++-+-@@ -1,256 +1,86 @@
+-+--+-++- ----- a/Bridges/Konigsberg.lean
+-+--+-++- --+++ b/Bridges/Konigsberg.lean
+-+--+-++----@@ -1,256 +1,86 @@
+-+--+-++-+--@@ -1,168 +1,86 @@
+-+--+-++- ------ a/Bridges/Konigsberg.lean
+-+--+-++- ---+++ b/Bridges/Konigsberg.lean
+-+--+-++-----@@ -1,168 +1,86 @@
+-+--+-++--------- a/Bridges/Konigsberg.lean
+-+--+-++------+++ b/Bridges/Konigsberg.lean
+-+--+-++------@@ -1,99 +1,86 @@
+-+--+-++------ /-
+-+--+-++-------Copyright (c) 2025. All rights reserved.
+-+--+-++-------Released under Apache 2.0 license.
+-+--+-++------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-++------+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-++------+-/
+-+--+-++------+import Mathlib
+-+--+-++------+import Bridges.EulerianTrail
+-+--+-++------ 
+-+--+-++-------# The Königsberg Bridge Problem — Formalized
+-+--+-++------+/-!
+-+--+-++------+# The Königsberg Bridge Problem
+-+--+-++------ 
+-+--+-++-------This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-++-------the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-++-------impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-++------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-++------+the founding result of graph theory (Euler, 1736).
+-+--+-++------ 
+-+--+-++-------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-++-------and prove impossibility using the Eulerian trail parity condition.
+-+--+-++------+## The Problem
+-+--+-++------ 
+-+--+-++-------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-++-------with a simple-graph abstraction that captures the essential parity
+-+--+-++-------obstruction: a graph where more than two vertices have odd degree
+-+--+-++-------cannot have an Eulerian trail.
+-+--+-++------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-++------+and included two large islands connected to each other and to the two mainland
+-+--+-++------+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-++------+city that crosses each bridge exactly once.
+-+--+-++------ 
+-+--+-++-------## Main results
+-+--+-++------+## The Graph
+-+--+-++------ 
+-+--+-++-------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-++-------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-++-------  has no Eulerian trail (from Mathlib).
+-+--+-++-------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-++------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-++------+- Vertex 0: Central island (Kneiphof)
+-+--+-++------+- Vertex 1: Northern bank
+-+--+-++------+- Vertex 2: Southern bank
+-+--+-++------+- Vertex 3: Eastern island (Lomse)
+-+-- -++------+
+-+----++------+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----++------+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----++------+  has no Eulerian trail (from Mathlib).
+-+----++------+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----++----+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++----+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++---- -+-/
+-+--+-++------+The seven bridges are:
+-+--+-++------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-++------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-++------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-++------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-++------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-- -++------+
+-+----++---- -+import Mathlib
+-+--+-++------+## Main Results
+-+-- -++------+
+-+----++------+/-! ### The Königsberg graph
+-+--+-++------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-++------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-++------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-++------ -/
+-+--+-++------ 
+-+--+-++-------import Mathlib
+-+--+-++------+namespace Bridges
+-+--+-++------ 
+-+--+-++-------/-! ### The Königsberg graph
+-+--+-++------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-++------+def konigsberg : Multigraph 4 7 where
+-+--+-++------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-++------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-++------ 
+-+--+-++-------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-++-------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-++-------is the simple graph that captures the connectivity pattern.
+-+--+-++------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-++------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-++------ 
+-+--+-++-------In the original problem, some pairs of landmasses had multiple bridges
+-+--+-++-------between them, making the true model a multigraph. However, for the
+-+--+-++-------Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-++-------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-++-------impossibility via Euler's theorem. -/
+-+--+-++------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-++------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-++------ 
+-+--+-++-------/-- The four landmasses of Königsberg. -/
+-+--+-++-------inductive Konigsberg : Type
+-+--+-++-------  | A  -- North bank
+-+--+-++-------  | B  -- South bank
+-+--+-++-------  | C  -- Island (Kneiphof)
+-+--+-++-------  | D  -- East district
+-+--+-++-------  deriving DecidableEq, Fintype
+-+--+-++------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-++------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-++------ 
+-+--+-++-------open Konigsberg
+-+--+-++-------
+-+--+-++-------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-++-------Every pair of distinct vertices is connected, capturing the fact that
+-+--+-++-------every pair of landmasses had at least one bridge between them. -/
+-+--+-++-------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-++-------
+-+--+-++-------instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-++-------  intro u v
+-+--+-++-------  simp only [konigsbergGraph]
+-+--+-++-------  infer_instance
+-+--+-++-------
+-+--+-++-------/-
+-+--+-++-------Every vertex in K₄ has degree 3 (odd).
+-+--+-++--------/
+-+--+-++-------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-++-------  fin_cases v <;> simp +decide
+-+--+-++------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-++------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-++------ 
+-+--+-++------ /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-++-------theorem konigsberg_all_odd :
+-+--+-++-------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-++-------  intro v
+-+--+-++-------  rw [konigsberg_degree]
+-+--+-++-------  exact ⟨1, rfl⟩
+-+--+-++------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-++------+  intro v; fin_cases v <;> native_decide
+-+--+-++------ 
+-+--+-++-------/-
+-+--+-++-------The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-++--------/
+-+--+-++-------theorem konigsberg_four_odd :
+-+--+-++-------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-++-------  decide +revert
+-+--+-++------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-++------+theorem konigsberg_odd_count :
+-+--+-++------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-++------+  native_decide
+-+--+-++------ 
+-+--+-++-------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-++-------then the number of odd-degree vertices is 0 or 2.
+-+--+-++-------This is the key obstruction from Mathlib. -/
+-+--+-++-------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-++-------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-++-------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-++-------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-++-------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-++-------  hp.card_odd_degree
+-+--+-++------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-++------ 
+-+--+-++-------/-
+-+--+-++-------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-++-------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-++-------through Königsberg crossing each bridge exactly once.
+-+--+-++--------/
+-+--+-++-------theorem konigsberg_no_eulerian_trail :
+-+--+-++-------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-++-------  intro u v p h;
+-+--+-++-------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-++------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-- -++------+
+-+----++------+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----++------+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----++------+is the simple graph that captures the connectivity pattern.
+-+--+-++------+The proof combines:
+-+--+-++------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-++------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-++------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-++------+  constructor
+-+--+-++------+  intro t
+-+--+-++------+  have h1 := t.odd_degree_vertices_le_two
+-+--+-++------+  have h2 := konigsberg_odd_count
+-+--+-++------+  omega
+-+-- -++------+
+-+----++------+In the original problem, some pairs of landmasses had multiple bridges
+-+----++------+between them, making the true model a multigraph. However, for the
+-+----++------+Eulerian trail condition, what matters is the parity of degrees at each
+-+----++------+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----++------+impossibility via Euler's theorem. -/
+-+----++------+
+-+----++------+/-- The four landmasses of Königsberg. -/
+-+----++------+inductive Konigsberg : Type
+-+----++------+  | A  -- North bank
+-+----++------+  | B  -- South bank
+-+----++------+  | C  -- Island (Kneiphof)
+-+----++------+  | D  -- East district
+-+----++------+  deriving DecidableEq, Fintype
+-+----++------+
+-+----++------+open Konigsberg
+-+----++------+
+-+----++------+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----++------+Every pair of distinct vertices is connected, capturing the fact that
+-+----++------+every pair of landmasses had at least one bridge between them. -/
+-+----++------+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++------+
+-+----++------+instance : DecidableRel konigsbergGraph.Adj := by
+-+----++------+  intro u v
+-+----++------+  simp only [konigsbergGraph]
+-+----++------+  infer_instance
+-+----++------+
+-+----++------+/-
+-+----++------+Every vertex in K₄ has degree 3 (odd).
+-+----++----+-+import Bridges.EulerianTrail
+-+----++----+-+
+-+----++----+-+/-!
+-+----++----+-+# The Königsberg Bridge Problem
+-+----++----+-+
+-+----++----+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----++----+-+the founding result of graph theory (Euler, 1736).
+-+----++----+-+
+-+----++----+-+## The Problem
+-+----++----+-+
+-+----++----+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----++----+-+and included two large islands connected to each other and to the two mainland
+-+----++----+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+----++----+-+city that crosses each bridge exactly once.
+-+----++----+-+
+-+----++----+-+## The Graph
+-+----++----+-+
+-+----++----+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----++----+-+- Vertex 0: Central island (Kneiphof)
+-+----++----+-+- Vertex 1: Northern bank
+-+----++----+-+- Vertex 2: Southern bank
+-+----++----+-+- Vertex 3: Eastern island (Lomse)
+-+----++----+-+
+-+----++----+-+The seven bridges are:
+-+----++----+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----++----+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----++----+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----++----+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----++----+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----++----+-+
+-+----++----+-+## Main Results
+-+----++----+-+
+-+----++----+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++----+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++----+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++---- -+-/
+-+----++------+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----++------+  fin_cases v <;> simp +decide
+-+----++----+-+
+-+----++----+-+namespace Bridges
+-+----++----+-+
+-+----++----+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----++----+-+def konigsberg : Multigraph 4 7 where
+-+----++----+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----++----+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----++----+-+
+-+----++----+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----++----+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----++----+-+
+-+----++----+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----++----+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----++----+-+
+-+----++----+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----++----+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----++----+-+
+-+----++----+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++----+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++---- -+
+-+----++---- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++------+theorem konigsberg_all_odd :
+-+----++------+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----++------+  intro v
+-+----++------+  rw [konigsberg_degree]
+-+----++------+  exact ⟨1, rfl⟩
+-+----++------+
+-+----++------+/-
+-+----++------+The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++---+@@ -1,256 +1,86 @@
+-+----++---+---- a/Bridges/Konigsberg.lean
+-+----++---+-+++ b/Bridges/Konigsberg.lean
+-+----++---+-@@ -1,168 +1,86 @@
+-+----++---+----- a/Bridges/Konigsberg.lean
+-+----++---+--+++ b/Bridges/Konigsberg.lean
+-+----++---+--@@ -1,99 +1,86 @@
+-+----++---+-- /-
+-+----++---+---Copyright (c) 2025. All rights reserved.
+-+----++---+---Released under Apache 2.0 license.
+-+----++---+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++---+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++--- --+-/
+-+----++------+theorem konigsberg_four_odd :
+-+----++------+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----++------+  decide +revert
+-+----++------+
+-+----++------+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----++------+then the number of odd-degree vertices is 0 or 2.
+-+----++------+This is the key obstruction from Mathlib. -/
+-+----++------+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----++------+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----++------+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----++------+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----++------+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----++------+  hp.card_odd_degree
+-+----++------+
+-+----++------+/-
+-+----++------+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----++------+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----++------+through Königsberg crossing each bridge exactly once.
+-+----++------+-/
+-+----++------+theorem konigsberg_no_eulerian_trail :
+-+----++------+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----++------+  intro u v p h;
+-+----++------+  have := euler_necessary h; simp_all +decide ;+/-
+-+----++---+--+import Mathlib
+-+----++---+--+import Bridges.EulerianTrail
+-+----++---+-- 
+-+----++---+---# The Königsberg Bridge Problem — Formalized
+-+----++---+--+/-!
+-+----++---+--+# The Königsberg Bridge Problem
+-+----++---+-- 
+-+----++---+---This file formalizes the Königsberg Bridge Problem, widely considered
+-+----++---+---the founding problem of graph theory. In 1736, Euler proved that it is
+-+----++---+---impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++---+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----++---+--+the founding result of graph theory (Euler, 1736).
+-+----++---+-- 
+-+----++---+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----++---+---and prove impossibility using the Eulerian trail parity condition.
+-+----++---+--+## The Problem
+-+----++---+-- 
+-+----++---+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----++---+---with a simple-graph abstraction that captures the essential parity
+-+----++---+---obstruction: a graph where more than two vertices have odd degree
+-+----++---+---cannot have an Eulerian trail.
+-+----++---+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----++---+--+and included two large islands connected to each other and to the two mainland
+-+----++---+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+----++---+--+city that crosses each bridge exactly once.
+-+----++---+-- 
+-+----++---+---## Main results
+-+----++---+--+## The Graph
+-+----++---+-- 
+-+----++---+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----++---+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----++---+---  has no Eulerian trail (from Mathlib).
+-+----++---+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----++---+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----++---+--+- Vertex 0: Central island (Kneiphof)
+-+----++---+--+- Vertex 1: Northern bank
+-+----++---+--+- Vertex 2: Southern bank
+-+----++---+--+- Vertex 3: Eastern island (Lomse)
+-+----++---+--+
+-+----++---+--+The seven bridges are:
+-+----++---+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----++---+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----++---+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----++---+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----++---+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----++---+--+
+-+----++---+--+## Main Results
+-+----++---+--+
+-+----++---+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++---+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++---+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++---+-- -/
+-+----++---+-- 
+-+----++---+---import Mathlib
+-+----++---+--+namespace Bridges
+-+----++---+-- 
+-+----++---+---/-! ### The Königsberg graph
+-+----++---+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----++---+--+def konigsberg : Multigraph 4 7 where
+-+----++---+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----++---+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----++---+-- 
+-+----++---+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----++---+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----++---+---is the simple graph that captures the connectivity pattern.
+-+----++---+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----++---+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----++---+-- 
+-+----++---+---In the original problem, some pairs of landmasses had multiple bridges
+-+----++---+---between them, making the true model a multigraph. However, for the
+-+----++---+---Eulerian trail condition, what matters is the parity of degrees at each
+-+----++---+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----++---+---impossibility via Euler's theorem. -/
+-+----++---+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----++---+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----++---+-- 
+-+----++---+---/-- The four landmasses of Königsberg. -/
+-+----++---+---inductive Konigsberg : Type
+-+----++---+---  | A  -- North bank
+-+----++---+---  | B  -- South bank
+-+----++---+---  | C  -- Island (Kneiphof)
+-+----++---+---  | D  -- East district
+-+----++---+---  deriving DecidableEq, Fintype
+-+----++---+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----++---+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----++---+-- 
+-+----++---+---open Konigsberg
+-+----++---+---
+-+----++---+---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----++---+---Every pair of distinct vertices is connected, capturing the fact that
+-+----++---+---every pair of landmasses had at least one bridge between them. -/
+-+----++---+---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++---+---
+-+----++---+---instance : DecidableRel konigsbergGraph.Adj := by
+-+----++---+---  intro u v
+-+----++---+---  simp only [konigsbergGraph]
+-+----++---+---  infer_instance
+-+----++---+---
+-+----++---+---/-
+-+----++---+---Every vertex in K₄ has degree 3 (odd).
+-+----++---+----/
+-+----++---+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----++---+---  fin_cases v <;> simp +decide
+-+----++---+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++---+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++---+-- 
+-+----++---+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++---+---theorem konigsberg_all_odd :
+-+----++---+---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----++---+---  intro v
+-+----++---+---  rw [konigsberg_degree]
+-+----++---+---  exact ⟨1, rfl⟩
+-+----++---+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++---+--+  intro v; fin_cases v <;> native_decide
+-+----++---+-- 
+-+----++---+---/-
+-+----++---+---The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++---+----/
+-+----++---+---theorem konigsberg_four_odd :
+-+----++---+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----++---+---  decide +revert
+-+----++---+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----++---+--+theorem konigsberg_odd_count :
+-+----++---+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----++---+--+  native_decide
+-+----++---+-- 
+-+----++---+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----++---+---then the number of odd-degree vertices is 0 or 2.
+-+----++---+---This is the key obstruction from Mathlib. -/
+-+----++---+---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----++---+---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----++---+---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----++---+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----++---+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----++---+---  hp.card_odd_degree
+-+----++---+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----++---+-- 
+-+----++---+---/-
+-+----++---+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----++---+---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----++---+---through Königsberg crossing each bridge exactly once.
+-+----++---+----/
+-+----++---+---theorem konigsberg_no_eulerian_trail :
+-+----++---+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----++---+---  intro u v p h;
+-+----++---+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++---+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++---+--+
+-+----++---+--+The proof combines:
+-+----++---+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----++---+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----++---+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----++---+--+  constructor
+-+----++---+--+  intro t
+-+----++---+--+  have h1 := t.odd_degree_vertices_le_two
+-+----++---+--+  have h2 := konigsberg_odd_count
+-+----++---+--+  omega
+-+----++---+--+
+-+----++---+--+end Bridges+/-
+-+----++--- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++--- -+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++----+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++----+-+  intro v; fin_cases v <;> native_decide
+-+----++----+-+
+-+----++----+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----++----+-+theorem konigsberg_odd_count :
+-+----++----+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----++----+-+  native_decide
+-+----++----+-+
+-+----++----+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----++----+-+
+-+----++----+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++----+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++----+-+
+-+----++----+-+The proof combines:
+-+----++----+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----++----+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----++----+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----++----+-+  constructor
+-+----++----+-+  intro t
+-+----++----+-+  have h1 := t.odd_degree_vertices_le_two
+-+----++----+-+  have h2 := konigsberg_odd_count
+-+----++----+-+  omega
+-+----++----+-+
+-+----++----+-+end Bridges+/-
+-+----++----++Copyright (c) 2025. All rights reserved.
+-+----++----++Released under Apache 2.0 license.
+-+----++----++
+-+----++----++# The Königsberg Bridge Problem — Formalized
+-+----++----++
+-+----++----++This file formalizes the Königsberg Bridge Problem, widely considered
+-+----++----++the founding problem of graph theory. In 1736, Euler proved that it is
+-+----++----++impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++----++
+-+----++----++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----++----++and prove impossibility using the Eulerian trail parity condition.
+-+----++----++
+-+----++----++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----++----++with a simple-graph abstraction that captures the essential parity
+-+----++----++obstruction: a graph where more than two vertices have odd degree
+-+----++----++cannot have an Eulerian trail.
+-+----++----++
+-+----++----++## Main results
+-+----++----++
+-+----++----++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----++----++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----++----++  has no Eulerian trail (from Mathlib).
+-+----++----++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----++---- +-/
+-+----++----++
+-+----++---- +import Mathlib
+-+----++---+-+-/
+-+----++---+-+import Mathlib
+-+----++--- -+import Bridges.EulerianTrail
+-+----++--- -+
+-+----++--- -+/-!
+-+----++---@@ -593,42 +211,7 @@
+-+----++--- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++--- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++--- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++----++
+-+----++----++/-! ### The Königsberg graph
+-+----++----++
+-+----++----++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----++----++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----++----++is the simple graph that captures the connectivity pattern.
+-+----++----++
+-+----++----++In the original problem, some pairs of landmasses had multiple bridges
+-+----++----++between them, making the true model a multigraph. However, for the
+-+----++----++Eulerian trail condition, what matters is the parity of degrees at each
+-+----++----++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----++----++impossibility via Euler's theorem. -/
+-+----++----++
+-+----++----++/-- The four landmasses of Königsberg. -/
+-+----++----++inductive Konigsberg : Type
+-+----++----++  | A  -- North bank
+-+----++----++  | B  -- South bank
+-+----++----++  | C  -- Island (Kneiphof)
+-+----++----++  | D  -- East district
+-+----++----++  deriving DecidableEq, Fintype
+-+----++----++
+-+----++----++open Konigsberg
+-+----++----++
+-+----++----++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----++----++Every pair of distinct vertices is connected, capturing the fact that
+-+----++----++every pair of landmasses had at least one bridge between them. -/
+-+----++----++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++----++
+-+----++----++instance : DecidableRel konigsbergGraph.Adj := by
+-+----++----++  intro u v
+-+----++----++  simp only [konigsbergGraph]
+-+----++----++  infer_instance
+-+----++----++
+-+----++----++/-
+-+----++----++Every vertex in K₄ has degree 3 (odd).
+-+----++---- +-/
+-+----++---+-+-/
+-+----++--- -+
+-+----++--- -+namespace Bridges
+-+----++--- -+
+-+----++---@@ -648,10 +231,8 @@
+-+----++--- -+
+-+----++--- -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++--- -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++----++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----++----++  fin_cases v <;> simp +decide
+-+----++---- +
+-+----++---- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----+ ---+-+
+-+---++----+-+
+-+--- +----+-+/-!
+-+--- +----+-+# The Königsberg Bridge Problem
+-+--- +----+-+
+-+---@@ -3247,10 +1737,7 @@
+-+--- +----+-+
+-+--- +----+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--- +----+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++---+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++--- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++--- -+  intro v; fin_cases v <;> native_decide
+-+----+ --- -+
+-+---++---- -+
+-+--- +---- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--- +------+theorem konigsberg_all_odd :
+-+--- +------+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---@@ -3261,2222 +1748,17 @@
+-+--- +------+/-
+-+--- +------+The number of odd-degree vertices in the Königsberg graph is 4.
+-+--- +---+@@ -1,256 +1,86 @@
+-+---- ---+---- a/Bridges/Konigsberg.lean
+-+---- ---+-+++ b/Bridges/Konigsberg.lean
+-+--------+-@@ -1,344 +1,99 @@
+-+---++---+---- a/Bridges/Konigsberg.lean
+-+---++---+-+++ b/Bridges/Konigsberg.lean
+-+--- +---+-@@ -1,168 +1,86 @@
+-+---- ---+----- a/Bridges/Konigsberg.lean
+-+---- ---+--+++ b/Bridges/Konigsberg.lean
+-+--------+--@@ -1,256 +1,86 @@
+-+--------+------ a/Bridges/Konigsberg.lean
+-+--------+---+++ b/Bridges/Konigsberg.lean
+-+--------+---@@ -1,168 +1,86 @@
+-+--------+------- a/Bridges/Konigsberg.lean
+-+--------+----+++ b/Bridges/Konigsberg.lean
+-+--------+----@@ -1,99 +1,86 @@
+-+--------+---- /-
+-+--------+-----Copyright (c) 2025. All rights reserved.
+-+--------+-----Released under Apache 2.0 license.
+-+--------+----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--------+----+Released under Apache 2.0 license as described in the file LICENSE.
+-+--------+----+-/
+-+--------+----+import Mathlib
+-+--------+----+import Bridges.EulerianTrail
+-+--------+---- 
+-+--------+-----# The Königsberg Bridge Problem — Formalized
+-+--------+----+/-!
+-+--------+----+# The Königsberg Bridge Problem
+-+--------+---- 
+-+--------+-----This file formalizes the Königsberg Bridge Problem, widely considered
+-+--------+-----the founding problem of graph theory. In 1736, Euler proved that it is
+-+--------+-----impossible to traverse all seven bridges of Königsberg exactly once.
+-+--------+----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--------+----+the founding result of graph theory (Euler, 1736).
+-+--------+---- 
+-+--------+-----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--------+-----and prove impossibility using the Eulerian trail parity condition.
+-+--------+----+## The Problem
+-+--------+---- 
+-+--------+-----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--------+-----with a simple-graph abstraction that captures the essential parity
+-+--------+-----obstruction: a graph where more than two vertices have odd degree
+-+--------+-----cannot have an Eulerian trail.
+-+--------+----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--------+----+and included two large islands connected to each other and to the two mainland
+-+--------+----+portions by seven bridges. The problem asks whether there is a walk through the
+-+--------+----+city that crosses each bridge exactly once.
+-+--------+---- 
+-+--------+-----## Main results
+-+--------+----+## The Graph
+-+--------+---- 
+-+--------+-----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--------+-----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--------+-----  has no Eulerian trail (from Mathlib).
+-+--------+-----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--------+----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--------+----+- Vertex 0: Central island (Kneiphof)
+-+--------+----+- Vertex 1: Northern bank
+-+--------+----+- Vertex 2: Southern bank
+-+--------+----+- Vertex 3: Eastern island (Lomse)
+-+-------- ----+
+-+-------------+# The Königsberg Bridge Problem — Formalized
+-+--------+----+The seven bridges are:
+-+--------+----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--------+----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--------+----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--------+----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--------+----+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------- ----+
+-+-------------+This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------------+the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------------+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--------+----+## Main Results
+-+-------- ----+
+-+-------------+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------------+and prove impossibility using the Eulerian trail parity condition.
+-+--------+----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--------+----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--------+----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--------+---- -/
+-+--------+---- 
+-+--------+-----import Mathlib
+-+--------+----+namespace Bridges
+-+--------+---- 
+-+--------+-----/-! ### The Königsberg graph
+-+--------+----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--------+----+def konigsberg : Multigraph 4 7 where
+-+--------+----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--------+----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--------+---- 
+-+--------+-----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--------+-----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--------+-----is the simple graph that captures the connectivity pattern.
+-+--------+----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--------+----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--------+---- 
+-+--------+-----In the original problem, some pairs of landmasses had multiple bridges
+-+--------+-----between them, making the true model a multigraph. However, for the
+-+--------+-----Eulerian trail condition, what matters is the parity of degrees at each
+-+--------+-----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--------+-----impossibility via Euler's theorem. -/
+-+--------+----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--------+----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--------+---- 
+-+--------+-----/-- The four landmasses of Königsberg. -/
+-+--------+-----inductive Konigsberg : Type
+-+--------+-----  | A  -- North bank
+-+--------+-----  | B  -- South bank
+-+--------+-----  | C  -- Island (Kneiphof)
+-+--------+-----  | D  -- East district
+-+--------+-----  deriving DecidableEq, Fintype
+-+--------+----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--------+----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--------+---- 
+-+--------+-----open Konigsberg
+-+--------+-----
+-+--------+-----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--------+-----Every pair of distinct vertices is connected, capturing the fact that
+-+--------+-----every pair of landmasses had at least one bridge between them. -/
+-+--------+-----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--------+-----
+-+--------+-----instance : DecidableRel konigsbergGraph.Adj := by
+-+--------+-----  intro u v
+-+--------+-----  simp only [konigsbergGraph]
+-+--------+-----  infer_instance
+-+--------+-----
+-+--------+-----/-
+-+--------+-----Every vertex in K₄ has degree 3 (odd).
+-+--------+------/
+-+--------+-----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--------+-----  fin_cases v <;> simp +decide
+-+--------+----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--------+----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--------+---- 
+-+--------+---- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--------+-----theorem konigsberg_all_odd :
+-+--------+-----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--------+-----  intro v
+-+--------+-----  rw [konigsberg_degree]
+-+--------+-----  exact ⟨1, rfl⟩
+-+--------+----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--------+----+  intro v; fin_cases v <;> native_decide
+-+--------+---- 
+-+--------+-----/-
+-+--------+-----The number of odd-degree vertices in the Königsberg graph is 4.
+-+--------+------/
+-+--------+-----theorem konigsberg_four_odd :
+-+--------+-----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--------+-----  decide +revert
+-+--------+----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--------+----+theorem konigsberg_odd_count :
+-+--------+----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--------+----+  native_decide
+-+--------+---- 
+-+--------+-----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--------+-----then the number of odd-degree vertices is 0 or 2.
+-+--------+-----This is the key obstruction from Mathlib. -/
+-+--------+-----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--------+-----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--------+-----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--------+-----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--------+-----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--------+-----  hp.card_odd_degree
+-+--------+----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--------+---- 
+-+--------+-----/-
+-+--------+-----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--------+-----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--------+-----through Königsberg crossing each bridge exactly once.
+-+--------+------/
+-+--------+-----theorem konigsberg_no_eulerian_trail :
+-+--------+-----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--------+-----  intro u v p h;
+-+--------+-----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--------+----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------- ----+
+-+-------------+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------------+with a simple-graph abstraction that captures the essential parity
+-+-------------+obstruction: a graph where more than two vertices have odd degree
+-+-------------+cannot have an Eulerian trail.
+-+--------+----+The proof combines:
+-+--------+----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--------+----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--------+----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--------+----+  constructor
+-+--------+----+  intro t
+-+--------+----+  have h1 := t.odd_degree_vertices_le_two
+-+--------+----+  have h2 := konigsberg_odd_count
+-+--------+----+  omega
+-+-------- ----+
+-+-------------+## Main results
+-+-------------+
+-+-------------+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------------+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------------+  has no Eulerian trail (from Mathlib).
+-+-------------+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-----------+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-----------+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+----------- -+-/
+-+-------------+
+-+----------- -+import Mathlib
+-+-------------+
+-+-------------+/-! ### The Königsberg graph
+-+-------------+
+-+-------------+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------------+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------------+is the simple graph that captures the connectivity pattern.
+-+-------------+
+-+-------------+In the original problem, some pairs of landmasses had multiple bridges
+-+-------------+between them, making the true model a multigraph. However, for the
+-+-------------+Eulerian trail condition, what matters is the parity of degrees at each
+-+-------------+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------------+impossibility via Euler's theorem. -/
+-+-------------+
+-+-------------+/-- The four landmasses of Königsberg. -/
+-+-------------+inductive Konigsberg : Type
+-+-------------+  | A  -- North bank
+-+-------------+  | B  -- South bank
+-+-------------+  | C  -- Island (Kneiphof)
+-+-------------+  | D  -- East district
+-+-------------+  deriving DecidableEq, Fintype
+-+-------------+
+-+-------------+open Konigsberg
+-+-------------+
+-+-------------+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------------+Every pair of distinct vertices is connected, capturing the fact that
+-+-------------+every pair of landmasses had at least one bridge between them. -/
+-+-------------+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------------+
+-+-------------+instance : DecidableRel konigsbergGraph.Adj := by
+-+-------------+  intro u v
+-+-------------+  simp only [konigsbergGraph]
+-+-------------+  infer_instance
+-+-------------+
+-+-------------+/-
+-+-------------+Every vertex in K₄ has degree 3 (odd).
+-+-----------+-+import Bridges.EulerianTrail
+-+-------+----+--- 
+-+-------+----+----/-- The four landmasses of Königsberg. -/
+-+-------+----+----inductive Konigsberg : Type
+-+-------+----+----  | A  -- North bank
+-+-------+----+----  | B  -- South bank
+-+-------+----+----  | C  -- Island (Kneiphof)
+-+-------+----+----  | D  -- East district
+-+-------+----+----  deriving DecidableEq, Fintype
+-+-------+---- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------+---- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----open Konigsberg
+-+-------+----+----
+-+-------+----+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------+----+----Every pair of distinct vertices is connected, capturing the fact that
+-+-------+----+----every pair of landmasses had at least one bridge between them. -/
+-+-------+----+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+----+----
+-+-------+----+----instance : DecidableRel konigsbergGraph.Adj := by
+-+-------+----+----  intro u v
+-+-------+----+----  simp only [konigsbergGraph]
+-+-------+----+----  infer_instance
+-+-------+----+----
+-+-------+----+----/-
+-+-------+----+----Every vertex in K₄ has degree 3 (odd).
+-+-------+----+-----/
+-+-------+----+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------+----+----  fin_cases v <;> simp +decide
+-+-------+---- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+---- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+--------+
+-+-------+--------+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+----+--- 
+-+-------+----+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+----+----theorem konigsberg_all_odd :
+-+-------+----+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------+----+----  intro v
+-+-------+----+----  rw [konigsberg_degree]
+-+-------+----+----  exact ⟨1, rfl⟩
+-+-------+---- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+---- ---+  intro v; fin_cases v <;> native_decide
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----/-
+-+-------+----+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+----+-----/
+-+-------+----+----theorem konigsberg_four_odd :
+-+-------+----+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------+----+----  decide +revert
+-+-------+---- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------+---- ---+theorem konigsberg_odd_count :
+-+-------+---- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------+---- ---+  native_decide
+-+-------+--------+
+-+-------+----+--- 
+-+-------+----+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------+----+----then the number of odd-degree vertices is 0 or 2.
+-+-------+----+----This is the key obstruction from Mathlib. -/
+-+-------+----+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------+----+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------+----+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------+----+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------+----+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------+----+----  hp.card_odd_degree
+-+-------+---- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------+--------+
+-+-------+--------+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+----+--- 
+-+-------+----+----/-
+-+-------+----+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------+----+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------+----+----through Königsberg crossing each bridge exactly once.
+-+-------+----+-----/
+-+-------+----+----theorem konigsberg_no_eulerian_trail :
+-+-------+----+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------+----+----  intro u v p h;
+-+-------+----+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+---- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+---- ---+
+-+-------+---- ---+The proof combines:
+-+-------+----@@ -348,186 +260,186 @@
+-+-------+---- --+  omega
+-+-------+---- --+
+-+-------+---- --+end Bridges+/-
+-+-------+------+Copyright (c) 2025. All rights reserved.
+-+-------+------+Released under Apache 2.0 license.
+-+-------+-+@@ -1,445 +1,86 @@
+-+-------++-@@ -1,204 +1,54 @@
+-+-------++- --- a/Bridges/Konigsberg.lean
+-+-------++- +++ b/Bridges/Konigsberg.lean
+-+-------++--@@ -1,445 +1,86 @@
+-+-------++-+@@ -1,344 +1,99 @@
+-+-------++- ---- a/Bridges/Konigsberg.lean
+-+-------++- -+++ b/Bridges/Konigsberg.lean
+-+-------++---@@ -1,344 +1,99 @@
+-+-------++-+-@@ -1,256 +1,86 @@
+-+-------++- ----- a/Bridges/Konigsberg.lean
+-+-------++- --+++ b/Bridges/Konigsberg.lean
+-+-------++----@@ -1,256 +1,86 @@
+-+-------++-+--@@ -1,168 +1,86 @@
+-+-------++- ------ a/Bridges/Konigsberg.lean
+-+-------++- ---+++ b/Bridges/Konigsberg.lean
+-+-------++-----@@ -1,168 +1,86 @@
+-+-------++--------- a/Bridges/Konigsberg.lean
+-+-------++------+++ b/Bridges/Konigsberg.lean
+-+-------++------@@ -1,99 +1,86 @@
+-+-------++------ /-
+-+-------++-------Copyright (c) 2025. All rights reserved.
+-+-------++-------Released under Apache 2.0 license.
+-+-------++------+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------++------+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------++------+-/
+-+-------++------+import Mathlib
+-+-------++------+import Bridges.EulerianTrail
+-+-------++------ 
+-+-------++-------# The Königsberg Bridge Problem — Formalized
+-+-------++------+/-!
+-+-------++------+# The Königsberg Bridge Problem
+-+-------++------ 
+-+-------++-------This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------++-------the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------++-------impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------++------+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------++------+the founding result of graph theory (Euler, 1736).
+-+-------++------ 
+-+-------++-------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------++-------and prove impossibility using the Eulerian trail parity condition.
+-+-------++------+## The Problem
+-+-------++------ 
+-+-------++-------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------++-------with a simple-graph abstraction that captures the essential parity
+-+-------++-------obstruction: a graph where more than two vertices have odd degree
+-+-------++-------cannot have an Eulerian trail.
+-+-------++------+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------++------+and included two large islands connected to each other and to the two mainland
+-+-------++------+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------++------+city that crosses each bridge exactly once.
+-+-------++------ 
+-+-------++-------## Main results
+-+-------++------+## The Graph
+-+-------++------ 
+-+-------++-------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------++-------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------++-------  has no Eulerian trail (from Mathlib).
+-+-------++-------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------++------+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------++------+- Vertex 0: Central island (Kneiphof)
+-+-------++------+- Vertex 1: Northern bank
+-+-------++------+- Vertex 2: Southern bank
+-+-------++------+- Vertex 3: Eastern island (Lomse)
+-+-------++------+
+-+-------++------+The seven bridges are:
+-+-------++------+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------++------+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------++------+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------++------+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------++------+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------++------+
+-+-------++------+## Main Results
+-+-------++------+
+-+-------++------+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------++------+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------++------+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------++------ -/
+-+-------++------ 
+-+-------++-------import Mathlib
+-+-------++------+namespace Bridges
+-+-------++------ 
+-+-------++-------/-! ### The Königsberg graph
+-+-------++------+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------++------+def konigsberg : Multigraph 4 7 where
+-+-------++------+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------++------+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------++------ 
+-+-------++-------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------++-------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------++-------is the simple graph that captures the connectivity pattern.
+-+-------++------+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------++------+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------++------ 
+-+-------++-------In the original problem, some pairs of landmasses had multiple bridges
+-+-------++-------between them, making the true model a multigraph. However, for the
+-+-------++-------Eulerian trail condition, what matters is the parity of degrees at each
+-+-------++-------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------++-------impossibility via Euler's theorem. -/
+-+-------++------+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------++------+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------++------ 
+-+-------++-------/-- The four landmasses of Königsberg. -/
+-+-------++-------inductive Konigsberg : Type
+-+-------++-------  | A  -- North bank
+-+-------++-------  | B  -- South bank
+-+-------++-------  | C  -- Island (Kneiphof)
+-+-------++-------  | D  -- East district
+-+-------++-------  deriving DecidableEq, Fintype
+-+-------++------+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------++------+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------++------ 
+-+-------++-------open Konigsberg
+-+-------++-------
+-+-------++-------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------++-------Every pair of distinct vertices is connected, capturing the fact that
+-+-------++-------every pair of landmasses had at least one bridge between them. -/
+-+-------++-------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------++-------
+-+-------++-------instance : DecidableRel konigsbergGraph.Adj := by
+-+-------++-------  intro u v
+-+-------++-------  simp only [konigsbergGraph]
+-+-------++-------  infer_instance
+-+-------++-------
+-+-------++-------/-
+-+-------++-------Every vertex in K₄ has degree 3 (odd).
+-+-------++--------/
+-+-------++-------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------++-------  fin_cases v <;> simp +decide
+-+-------++------+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------++------+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------++------ 
+-+-------++------ /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------++-------theorem konigsberg_all_odd :
+-+-------++-------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------++-------  intro v
+-+-------++-------  rw [konigsberg_degree]
+-+-------++-------  exact ⟨1, rfl⟩
+-+-------++------+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------++------+  intro v; fin_cases v <;> native_decide
+-+-------++------ 
+-+-------++-------/-
+-+-------++-------The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------++--------/
+-+-------++-------theorem konigsberg_four_odd :
+-+-------++-------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------++-------  decide +revert
+-+-------++------+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------++------+theorem konigsberg_odd_count :
+-+-------++------+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------++------+  native_decide
+-+-------++------ 
+-+-------++-------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------++-------then the number of odd-degree vertices is 0 or 2.
+-+-------++-------This is the key obstruction from Mathlib. -/
+-+-------++-------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------++-------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------++-------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------++-------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------++-------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------++-------  hp.card_odd_degree
+-+-------++------+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------++------ 
+-+-------++-------/-
+-+-------++-------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------++-------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------++-------through Königsberg crossing each bridge exactly once.
+-+-------++--------/
+-+-------++-------theorem konigsberg_no_eulerian_trail :
+-+-------++-------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------++-------  intro u v p h;
+-+-------++-------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------++------+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------++------+
+-+-------++------+The proof combines:
+-+-------++------+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------++------+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------++------+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------++------+  constructor
+-+-------++------+  intro t
+-+-------++------+  have h1 := t.odd_degree_vertices_le_two
+-+-------++------+  have h2 := konigsberg_odd_count
+-+-------++------+  omega
+-+-------++------+
+-+-------++------+end Bridges+/-
+-+-------++-+---@@ -1,99 +1,86 @@
+-+-------++-+--- /-
+-+-------++-+----Copyright (c) 2025. All rights reserved.
+-+-------++-+----Released under Apache 2.0 license.
+-+-------++- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------++- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------++- ---+-/
+-+-------++- ---+import Mathlib
+-+-------++- ---+import Bridges.EulerianTrail
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----# The Königsberg Bridge Problem — Formalized
+-+-------++- ---+/-!
+-+-------++- ---+# The Königsberg Bridge Problem
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------++-+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------++-+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------++- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------++- ---+the founding result of graph theory (Euler, 1736).
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------++-+----and prove impossibility using the Eulerian trail parity condition.
+-+-------++- ---+## The Problem
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------++-+----with a simple-graph abstraction that captures the essential parity
+-+-------++-+----obstruction: a graph where more than two vertices have odd degree
+-+-------++-+----cannot have an Eulerian trail.
+-+-------++- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------++- ---+and included two large islands connected to each other and to the two mainland
+-+-------++- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------++- ---+city that crosses each bridge exactly once.
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----## Main results
+-+-------++- ---+## The Graph
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------++-+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------++-+----  has no Eulerian trail (from Mathlib).
+-+-------++-+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------++- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------++- ---+- Vertex 0: Central island (Kneiphof)
+-+-------++- ---+- Vertex 1: Northern bank
+-+-------++-@@ -217,39 +67,101 @@
+-+-------++- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------++- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------++- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------++-----+-/
+-+-------++-----+
+-+-------++-+--- -/
+-+-------++-+--- 
+-+-------++-+----import Mathlib
+-+-------++- ---+namespace Bridges
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----/-! ### The Königsberg graph
+-+-------++- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------++- ---+def konigsberg : Multigraph 4 7 where
+-+-------++- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------++- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------++-+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------++-+----is the simple graph that captures the connectivity pattern.
+-+-------++- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------++- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----In the original problem, some pairs of landmasses had multiple bridges
+-+-------++-+----between them, making the true model a multigraph. However, for the
+-+-------++-+----Eulerian trail condition, what matters is the parity of degrees at each
+-+-------++-+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------++-+----impossibility via Euler's theorem. -/
+-+-------++- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------++- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----/-- The four landmasses of Königsberg. -/
+-+-------++-+----inductive Konigsberg : Type
+-+-------++-+----  | A  -- North bank
+-+-------++-+----  | B  -- South bank
+-+-------++-+----  | C  -- Island (Kneiphof)
+-+-------++-+----  | D  -- East district
+-+-------++-+----  deriving DecidableEq, Fintype
+-+-------++- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------++- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----open Konigsberg
+-+-------++-+----
+-+-------++-+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------++-+----Every pair of distinct vertices is connected, capturing the fact that
+-+-------++-+----every pair of landmasses had at least one bridge between them. -/
+-+-------++-+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------++-+----
+-+-------++-+----instance : DecidableRel konigsbergGraph.Adj := by
+-+-------++-+----  intro u v
+-+-------++-+----  simp only [konigsbergGraph]
+-+-------++-+----  infer_instance
+-+-------++-+----
+-+-------++-+----/-
+-+-------++-+----Every vertex in K₄ has degree 3 (odd).
+-+-------++-+-----/
+-+-------++-+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------++-+----  fin_cases v <;> simp +decide
+-+-------++- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------++- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------++-----+
+-+-------++-----+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------++-+--- 
+-+-------++-+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------++-+----theorem konigsberg_all_odd :
+-+-------++-+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------++-+----  intro v
+-+-------++-+----  rw [konigsberg_degree]
+-+-------++-+----  exact ⟨1, rfl⟩
+-+-------++- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------++- ---+  intro v; fin_cases v <;> native_decide
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----/-
+-+-------++-+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------++-+-----/
+-+-------++-+----theorem konigsberg_four_odd :
+-+-------++-+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------++-+----  decide +revert
+-+-------++- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------++- ---+theorem konigsberg_odd_count :
+-+-------++- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------++- ---+  native_decide
+-+-------++-----+
+-+-------++-+--- 
+-+-------++-+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------++-+----then the number of odd-degree vertices is 0 or 2.
+-+-------++-+----This is the key obstruction from Mathlib. -/
+-+-------++-+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------++-+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------++-+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------++-+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------++-+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------++-+----  hp.card_odd_degree
+-+-------++- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------++-----+
+-+-------++-----+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------++-+--- 
+-+-------++-+----/-
+-+-------++-+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------++-+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------++-+----through Königsberg crossing each bridge exactly once.
+-+-------++-+-----/
+-+-------++-+----theorem konigsberg_no_eulerian_trail :
+-+-------++-+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------++-+----  intro u v p h;
+-+-------++-+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------++- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------++- ---+
+-+-------++- ---+The proof combines:
+-+-------++-@@ -348,186 +260,186 @@
+-+-------++- --+  omega
+-+-------++- --+
+-+-------++- --+end Bridges+/-
+-+-------++---+Copyright (c) 2025. All rights reserved.
+-+-------++---+Released under Apache 2.0 license.
+-+-------++---+
+-+-------++---+# The Königsberg Bridge Problem — Formalized
+-+-------++---+
+-+-------++---+This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------++---+the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------++---+impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------++---+
+-+-------++---+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------++---+and prove impossibility using the Eulerian trail parity condition.
+-+-------++---+
+-+-------++---+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------++---+with a simple-graph abstraction that captures the essential parity
+-+-------++---+obstruction: a graph where more than two vertices have odd degree
+-+-------++---+cannot have an Eulerian trail.
+-+-------++---+
+-+-------++---+## Main results
+-+-------++---+
+-+-------++---+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------++---+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------++---+  has no Eulerian trail (from Mathlib).
+-+-------++---+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------++-+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------++-+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------++- -+-/
+-+-------++---+
+-+-------++- -+import Mathlib
+-+-------++---+
+-+-------++---+/-! ### The Königsberg graph
+-+-------++---+
+-+-------++---+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------++---+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------++---+is the simple graph that captures the connectivity pattern.
+-+-------++---+
+-+-------++---+In the original problem, some pairs of landmasses had multiple bridges
+-+-------++---+between them, making the true model a multigraph. However, for the
+-+-------++---+Eulerian trail condition, what matters is the parity of degrees at each
+-+-------++---+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------++---+impossibility via Euler's theorem. -/
+-+-------++---+
+-+-------++---+/-- The four landmasses of Königsberg. -/
+-+-------++---+inductive Konigsberg : Type
+-+-------++---+  | A  -- North bank
+-+-------++---+  | B  -- South bank
+-+-------++---+  | C  -- Island (Kneiphof)
+-+-------++---+  | D  -- East district
+-+-------++---+  deriving DecidableEq, Fintype
+-+-------++---+
+-+-------++---+open Konigsberg
+-+-------++---+
+-+-------++---+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------++---+Every pair of distinct vertices is connected, capturing the fact that
+-+-------++---+every pair of landmasses had at least one bridge between them. -/
+-+-------++---+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------++---+
+-+-------++---+instance : DecidableRel konigsbergGraph.Adj := by
+-+-------++---+  intro u v
+-+-------++---+  simp only [konigsbergGraph]
+-+-------++---+  infer_instance
+-+-------++---+
+-+-------++---+/-
+-+-------++---+Every vertex in K₄ has degree 3 (odd).
+-+-------++-+-+import Bridges.EulerianTrail
+-+-------++-+-+
+-+-------++-+-+/-!
+-+-------++-+-+# The Königsberg Bridge Problem
+-+-------++-+-+
+-+-------++-+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------++-+-+the founding result of graph theory (Euler, 1736).
+-+-------++-+-+
+-+-------++-+-+## The Problem
+-+-------++-+-+
+-+-------++-+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------++-+-+and included two large islands connected to each other and to the two mainland
+-+-------++-+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------++-+-+city that crosses each bridge exactly once.
+-+-------++-+-+
+-+-------++-+-+## The Graph
+-+-------++-+-+
+-+-------++-+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------++-+-+- Vertex 0: Central island (Kneiphof)
+-+-------++-+-+- Vertex 1: Northern bank
+-+-------++-+-+- Vertex 2: Southern bank
+-+-------++-+-+- Vertex 3: Eastern island (Lomse)
+-+-------++-+-+
+-+-------++-+-+The seven bridges are:
+-+-------++-+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------++-+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------++-+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------++-+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------++-+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------++-+-+
+-+-------++-+-+## Main Results
+-+-------++-+-+
+-+-------++-+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------++-+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------++-+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------++- -+-/
+-+-------++---+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------++---+  fin_cases v <;> simp +decide
+-+-------++-+-+
+-+-------++-+-+namespace Bridges
+-+-------++-+-+
+-+-------++-+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------++-+-+def konigsberg : Multigraph 4 7 where
+-+-------++-+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------++-+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------++-+-+
+-+-------++-+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------++-+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------++-+-+
+-+-------++-+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------++-+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------++-+-+
+-+-------++-+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------++-+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------++-+-+
+-+-------++-+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------++-+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------++- -+
+-+-------++- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------++---+theorem konigsberg_all_odd :
+-+-------++---+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------++---+  intro v
+-+-------++---+  rw [konigsberg_degree]
+-+-------++---+  exact ⟨1, rfl⟩
+-+-------++---+
+-+-------++---+/-
+-+-------++---+The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+++@@ -1,256 +1,86 @@
+-+-------+ +---- a/Bridges/Konigsberg.lean
+-+-------+ +-+++ b/Bridges/Konigsberg.lean
+-+-------+-+-@@ -1,344 +1,99 @@
+-+-------+++-@@ -1,168 +1,86 @@
+-+-------+ +----- a/Bridges/Konigsberg.lean
+-+-------+ +--+++ b/Bridges/Konigsberg.lean
+-+-------+-+--@@ -1,256 +1,86 @@
+-+-------+-+------ a/Bridges/Konigsberg.lean
+-+-------+-+---+++ b/Bridges/Konigsberg.lean
+-+-------+-+---@@ -1,168 +1,86 @@
+-+-------+-+------- a/Bridges/Konigsberg.lean
+-+-------+-+----+++ b/Bridges/Konigsberg.lean
+-+-------+-+----@@ -1,99 +1,86 @@
+-+-------+-+---- /-
+-+-------+-+-----Copyright (c) 2025. All rights reserved.
+-+-------+-+-----Released under Apache 2.0 license.
+-+-------+-+----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+-+----+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+-+----+-/
+-+-------+-+----+import Mathlib
+-+-------+-+----+import Bridges.EulerianTrail
+-+-------+-+---- 
+-+-------+-+-----# The Königsberg Bridge Problem — Formalized
+-+-------+-+----+/-!
+-+-------+-+----+# The Königsberg Bridge Problem
+-+-------+-+---- 
+-+-------+-+-----This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------+-+-----the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------+-+-----impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+-+----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------+-+----+the founding result of graph theory (Euler, 1736).
+-+-------+-+---- 
+-+-------+-+-----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------+-+-----and prove impossibility using the Eulerian trail parity condition.
+-+-------+-+----+## The Problem
+-+-------+-+---- 
+-+-------+-+-----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------+-+-----with a simple-graph abstraction that captures the essential parity
+-+-------+-+-----obstruction: a graph where more than two vertices have odd degree
+-+-------+-+-----cannot have an Eulerian trail.
+-+-------+-+----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------+-+----+and included two large islands connected to each other and to the two mainland
+-+-------+-+----+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------+-+----+city that crosses each bridge exactly once.
+-+-------+-+---- 
+-+-------+-+-----## Main results
+-+-------+-+----+## The Graph
+-+-------+-+---- 
+-+-------+-+-----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------+-+-----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------+-+-----  has no Eulerian trail (from Mathlib).
+-+-------+-+-----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------+-+----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------+-+----+- Vertex 0: Central island (Kneiphof)
+-+-------+-+----+- Vertex 1: Northern bank
+-+-------+-+----+- Vertex 2: Southern bank
+-+-------+-+----+- Vertex 3: Eastern island (Lomse)
+-+-------+- ----+
+-+-------+------+# The Königsberg Bridge Problem — Formalized
+-+-------+-+----+The seven bridges are:
+-+-------+-+----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------+-+----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------+-+----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------+-+----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------+-+----+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------+- ----+
+-+-------+------+This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------+------+the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------+------+impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+-+----+## Main Results
+-+-------+- ----+
+-+-------+------+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------+------+and prove impossibility using the Eulerian trail parity condition.
+-+-------+-+----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+-+----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+-+----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+-+---- -/
+-+-------+-+---- 
+-+-------+-+-----import Mathlib
+-+-------+-+----+namespace Bridges
+-+-------+-+---- 
+-+-------+-+-----/-! ### The Königsberg graph
+-+-------+-+----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------+-+----+def konigsberg : Multigraph 4 7 where
+-+-------+-+----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------+-+----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------+-+---- 
+-+-------+-+-----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------+-+-----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------+-+-----is the simple graph that captures the connectivity pattern.
+-+-------+-+----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------+-+----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------+-+---- 
+-+-------+-+-----In the original problem, some pairs of landmasses had multiple bridges
+-+-------+-+-----between them, making the true model a multigraph. However, for the
+-+-------+-+-----Eulerian trail condition, what matters is the parity of degrees at each
+-+-------+-+-----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------+-+-----impossibility via Euler's theorem. -/
+-+-------+-+----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------+-+----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------+-+---- 
+-+-------+-+-----/-- The four landmasses of Königsberg. -/
+-+-------+-+-----inductive Konigsberg : Type
+-+-------+-+-----  | A  -- North bank
+-+-------+-+-----  | B  -- South bank
+-+-------+-+-----  | C  -- Island (Kneiphof)
+-+-------+-+-----  | D  -- East district
+-+-------+-+-----  deriving DecidableEq, Fintype
+-+-------+-+----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------+-+----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------+-+---- 
+-+-------+-+-----open Konigsberg
+-+-------+-+-----
+-+-------+-+-----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------+-+-----Every pair of distinct vertices is connected, capturing the fact that
+-+-------+-+-----every pair of landmasses had at least one bridge between them. -/
+-+-------+-+-----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+-+-----
+-+-------+-+-----instance : DecidableRel konigsbergGraph.Adj := by
+-+-------+-+-----  intro u v
+-+-------+-+-----  simp only [konigsbergGraph]
+-+-------+-+-----  infer_instance
+-+-------+-+-----
+-+-------+-+-----/-
+-+-------+-+-----Every vertex in K₄ has degree 3 (odd).
+-+-------+-+------/
+-+-------+-+-----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------+-+-----  fin_cases v <;> simp +decide
+-+-------+-+----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+-+----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+-+---- 
+-+-------+-+---- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+-+-----theorem konigsberg_all_odd :
+-+-------+-+-----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------+-+-----  intro v
+-+-------+-+-----  rw [konigsberg_degree]
+-+-------+-+-----  exact ⟨1, rfl⟩
+-+-------+-+----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+-+----+  intro v; fin_cases v <;> native_decide
+-+-------+-+---- 
+-+-------+-+-----/-
+-+-------+-+-----The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+-+------/
+-+-------+-+-----theorem konigsberg_four_odd :
+-+-------+-+-----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------+-+-----  decide +revert
+-+-------+-+----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------+-+----+theorem konigsberg_odd_count :
+-+-------+-+----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------+-+----+  native_decide
+-+-------+-+---- 
+-+-------+-+-----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------+-+-----then the number of odd-degree vertices is 0 or 2.
+-+-------+-+-----This is the key obstruction from Mathlib. -/
+-+-------+-+-----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------+-+-----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------+-+-----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------+-+-----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------+-+-----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------+-+-----  hp.card_odd_degree
+-+-------+-+----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------+-+---- 
+-+-------+-+-----/-
+-+-------+-+-----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------+-+-----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------+-+-----through Königsberg crossing each bridge exactly once.
+-+-------+-+------/
+-+-------+-+-----theorem konigsberg_no_eulerian_trail :
+-+-------+-+-----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------+-+-----  intro u v p h;
+-+-------+-+-----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+-+----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+- ----+
+-+-------+------+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------+------+with a simple-graph abstraction that captures the essential parity
+-+-------+------+obstruction: a graph where more than two vertices have odd degree
+-+-------+------+cannot have an Eulerian trail.
+-+-------+-+----+The proof combines:
+-+-------+-+----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------+-+----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------+-+----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------+-+----+  constructor
+-+-------+-+----+  intro t
+-+-------+-+----+  have h1 := t.odd_degree_vertices_le_two
+-+-------+-+----+  have h2 := konigsberg_odd_count
+-+-------+-+----+  omega
+-+-------+- ----+
+-+-------+------+## Main results
+-+-------+------+
+-+-------+------+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------+------+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------+------+  has no Eulerian trail (from Mathlib).
+-+-------+------+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------+----+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+----+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+---- -+-/
+-+-------+------+
+-+-------+---- -+import Mathlib
+-+-------+------+
+-+-------+------+/-! ### The Königsberg graph
+-+-------+------+
+-+-------+------+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------+------+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------+------+is the simple graph that captures the connectivity pattern.
+-+-------+------+
+-+-------+------+In the original problem, some pairs of landmasses had multiple bridges
+-+-------+------+between them, making the true model a multigraph. However, for the
+-+-------+------+Eulerian trail condition, what matters is the parity of degrees at each
+-+-------+------+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------+------+impossibility via Euler's theorem. -/
+-+-------+------+
+-+-------+------+/-- The four landmasses of Königsberg. -/
+-+-------+------+inductive Konigsberg : Type
+-+-------+------+  | A  -- North bank
+-+-------+------+  | B  -- South bank
+-+-------+------+  | C  -- Island (Kneiphof)
+-+-------+------+  | D  -- East district
+-+-------+------+  deriving DecidableEq, Fintype
+-+-------+------+
+-+-------+------+open Konigsberg
+-+-------+------+
+-+-------+------+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------+------+Every pair of distinct vertices is connected, capturing the fact that
+-+-------+------+every pair of landmasses had at least one bridge between them. -/
+-+-------+------+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+------+
+-+-------+------+instance : DecidableRel konigsbergGraph.Adj := by
+-+-------+------+  intro u v
+-+-------+------+  simp only [konigsbergGraph]
+-+-------+------+  infer_instance
+-+-------+------+
+-+-------+------+/-
+-+-------+------+Every vertex in K₄ has degree 3 (odd).
+-+-------+----+-+import Bridges.EulerianTrail
+-+-------+----+-+
+-+-------+----+-+/-!
+-+-------+----+-+# The Königsberg Bridge Problem
+-+-------+----+-+
+-+-------+----+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------+----+-+the founding result of graph theory (Euler, 1736).
+-+-------+----+-+
+-+-------+----+-+## The Problem
+-+-------+----+-+
+-+-------+----+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------+----+-+and included two large islands connected to each other and to the two mainland
+-+-------+----+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------+----+-+city that crosses each bridge exactly once.
+-+-------+----+-+
+-+-------+----+-+## The Graph
+-+-------+----+-+
+-+-------+----+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------+----+-+- Vertex 0: Central island (Kneiphof)
+-+-------+----+-+- Vertex 1: Northern bank
+-+-------+----+-+- Vertex 2: Southern bank
+-+-------+----+-+- Vertex 3: Eastern island (Lomse)
+-+-------+----+-+
+-+-------+----+-+The seven bridges are:
+-+-------+----+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------+----+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------+----+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------+----+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------+----+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------+----+-+
+-+-------+----+-+## Main Results
+-+-------+----+-+
+-+-------+----+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+----+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+----+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+---- -+-/
+-+-------+------+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------+------+  fin_cases v <;> simp +decide
+-+-------+----+-+
+-+-------+----+-+namespace Bridges
+-+-------+----+-+
+-+-------+----+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------+----+-+def konigsberg : Multigraph 4 7 where
+-+-------+----+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------+----+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------+----+-+
+-+-------+----+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------+----+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------+----+-+
+-+-------+----+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------+----+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------+----+-+
+-+-------+----+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------+----+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------+----+-+
+-+-------+----+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+----+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+---- -+
+-+-------+---- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+------+theorem konigsberg_all_odd :
+-+-------+------+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------+------+  intro v
+-+-------+------+  rw [konigsberg_degree]
+-+-------+------+  exact ⟨1, rfl⟩
+-+-------+------+
+-+-------+------+/-
+-+-------+------+The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+---+@@ -1,256 +1,86 @@
+-+-------+---+---- a/Bridges/Konigsberg.lean
+-+-------+---+-+++ b/Bridges/Konigsberg.lean
+-+-------+---+-@@ -1,168 +1,86 @@
+-+-------+---+----- a/Bridges/Konigsberg.lean
+-+-------+---+--+++ b/Bridges/Konigsberg.lean
+-+-------+---+--@@ -1,99 +1,86 @@
+-+-------+---+-- /-
+-+-------+---+---Copyright (c) 2025. All rights reserved.
+-+-------+---+---Released under Apache 2.0 license.
+-+-------+---+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+---+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+--- --+-/
+-+-------+------+theorem konigsberg_four_odd :
+-+-------+------+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------+------+  decide +revert
+-+-------+------+
+-+-------+------+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------+------+then the number of odd-degree vertices is 0 or 2.
+-+-------+------+This is the key obstruction from Mathlib. -/
+-+-------+------+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------+------+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------+------+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------+------+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------+------+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------+------+  hp.card_odd_degree
+-+-------+------+
+-+-------+------+/-
+-+-------+------+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------+------+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------+------+through Königsberg crossing each bridge exactly once.
+-+-------+------+-/
+-+-------+------+theorem konigsberg_no_eulerian_trail :
+-+-------+------+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------+------+  intro u v p h;
+-+-------+------+  have := euler_necessary h; simp_all +decide ;+/-
+-+-------+---+--+import Mathlib
+-+-------+---+--+import Bridges.EulerianTrail
+-+-------+---+-- 
+-+-------+---+---# The Königsberg Bridge Problem — Formalized
+-+-------+---+--+/-!
+-+-------+---+--+# The Königsberg Bridge Problem
+-+-------+---+-- 
+-+-------+---+---This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------+---+---the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------+---+---impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+---+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------+---+--+the founding result of graph theory (Euler, 1736).
+-+-------+---+-- 
+-+-------+---+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------+---+---and prove impossibility using the Eulerian trail parity condition.
+-+-------+---+--+## The Problem
+-+-------+---+-- 
+-+-------+---+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------+---+---with a simple-graph abstraction that captures the essential parity
+-+-------+---+---obstruction: a graph where more than two vertices have odd degree
+-+-------+---+---cannot have an Eulerian trail.
+-+-------+---+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------+---+--+and included two large islands connected to each other and to the two mainland
+-+-------+---+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------+---+--+city that crosses each bridge exactly once.
+-+-------+---+-- 
+-+-------+---+---## Main results
+-+-------+---+--+## The Graph
+-+-------+---+-- 
+-+-------+---+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------+---+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------+---+---  has no Eulerian trail (from Mathlib).
+-+-------+---+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------+---+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------+---+--+- Vertex 0: Central island (Kneiphof)
+-+-------+---+--+- Vertex 1: Northern bank
+-+-------+---+--+- Vertex 2: Southern bank
+-+-------+---+--+- Vertex 3: Eastern island (Lomse)
+-+-------+---+--+
+-+-------+---+--+The seven bridges are:
+-+-------+---+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------+---+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------+---+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------+---+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------+---+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------+---+--+
+-+-------+---+--+## Main Results
+-+-------+---+--+
+-+-------+---+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+---+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+---+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+---+-- -/
+-+-------+---+-- 
+-+-------+---+---import Mathlib
+-+-------+---+--+namespace Bridges
+-+-------+---+-- 
+-+-------+---+---/-! ### The Königsberg graph
+-+-------+---+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------+---+--+def konigsberg : Multigraph 4 7 where
+-+-------+---+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------+---+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------+---+-- 
+-+-------+---+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------+---+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------+---+---is the simple graph that captures the connectivity pattern.
+-+-------+---+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------+---+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------+---+-- 
+-+-------+---+---In the original problem, some pairs of landmasses had multiple bridges
+-+-------+---+---between them, making the true model a multigraph. However, for the
+-+-------+---+---Eulerian trail condition, what matters is the parity of degrees at each
+-+-------+---+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------+---+---impossibility via Euler's theorem. -/
+-+-------+---+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------+---+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------+---+-- 
+-+-------+---+---/-- The four landmasses of Königsberg. -/
+-+-------+---+---inductive Konigsberg : Type
+-+-------+---+---  | A  -- North bank
+-+-------+---+---  | B  -- South bank
+-+-------+---+---  | C  -- Island (Kneiphof)
+-+-------+---+---  | D  -- East district
+-+-------+---+---  deriving DecidableEq, Fintype
+-+-------+---+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------+---+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------+---+-- 
+-+-------+---+---open Konigsberg
+-+-------+---+---
+-+-------+---+---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------+---+---Every pair of distinct vertices is connected, capturing the fact that
+-+-------+---+---every pair of landmasses had at least one bridge between them. -/
+-+-------+---+---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+---+---
+-+-------+---+---instance : DecidableRel konigsbergGraph.Adj := by
+-+-------+---+---  intro u v
+-+-------+---+---  simp only [konigsbergGraph]
+-+-------+---+---  infer_instance
+-+-------+---+---
+-+-------+---+---/-
+-+-------+---+---Every vertex in K₄ has degree 3 (odd).
+-+-------+---+----/
+-+-------+---+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------+---+---  fin_cases v <;> simp +decide
+-+-------+---+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+---+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+---+-- 
+-+-------+---+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+---+---theorem konigsberg_all_odd :
+-+-------+---+---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------+---+---  intro v
+-+-------+---+---  rw [konigsberg_degree]
+-+-------+---+---  exact ⟨1, rfl⟩
+-+-------+---+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+---+--+  intro v; fin_cases v <;> native_decide
+-+-------+---+-- 
+-+-------+---+---/-
+-+-------+---+---The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+---+----/
+-+-------+---+---theorem konigsberg_four_odd :
+-+-------+---+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------+---+---  decide +revert
+-+-------+---+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------+---+--+theorem konigsberg_odd_count :
+-+-------+---+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------+---+--+  native_decide
+-+-------+---+-- 
+-+-------+---+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------+---+---then the number of odd-degree vertices is 0 or 2.
+-+-------+---+---This is the key obstruction from Mathlib. -/
+-+-------+---+---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------+---+---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------+---+---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------+---+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------+---+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------+---+---  hp.card_odd_degree
+-+-------+---+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------+---+-- 
+-+-------+---+---/-
+-+-------+---+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------+---+---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------+---+---through Königsberg crossing each bridge exactly once.
+-+-------+---+----/
+-+-------+---+---theorem konigsberg_no_eulerian_trail :
+-+-------+---+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------+---+---  intro u v p h;
+-+-------+---+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+---+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+---+--+
+-+-------+---+--+The proof combines:
+-+-------+---+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------+---+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------+---+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------+---+--+  constructor
+-+-------+---+--+  intro t
+-+-------+---+--+  have h1 := t.odd_degree_vertices_le_two
+-+-------+---+--+  have h2 := konigsberg_odd_count
+-+-------+---+--+  omega
+-+-------+---+--+
+-+-------+---+--+end Bridges+/-
+-+-------+--- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+--- -+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+----+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+----+-+  intro v; fin_cases v <;> native_decide
+-+-------+----+-+
+-+-------+----+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------+----+-+theorem konigsberg_odd_count :
+-+-------+----+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------+----+-+  native_decide
+-+-------+----+-+
+-+-------+----+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------+----+-+
+-+-------+----+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+----+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+----+-+
+-+-------+----+-+The proof combines:
+-+-------+----+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------+----+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------+----+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------+----+-+  constructor
+-+-------+----+-+  intro t
+-+-------+----+-+  have h1 := t.odd_degree_vertices_le_two
+-+-------+----+-+  have h2 := konigsberg_odd_count
+-+-------+----+-+  omega
+-+-------+----+-+
+-+-------+----+-+end Bridges+/-
+-+-------+----++Copyright (c) 2025. All rights reserved.
+-+-------+----++Released under Apache 2.0 license.
+-+-------+----++
+-+-------+----++# The Königsberg Bridge Problem — Formalized
+-+-------+----++
+-+-------+----++This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------+----++the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------+----++impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+----++
+-+-------+----++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------+----++and prove impossibility using the Eulerian trail parity condition.
+-+-------+----++
+-+-------+----++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------+----++with a simple-graph abstraction that captures the essential parity
+-+-------+----++obstruction: a graph where more than two vertices have odd degree
+-+-------+----++cannot have an Eulerian trail.
+-+-------+----++
+-+-------+----++## Main results
+-+-------+----++
+-+-------+----++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------+----++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------+----++  has no Eulerian trail (from Mathlib).
+-+-------+----++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------+---- +-/
+-+-------+----++
+-+-------+---- +import Mathlib
+-+-------+---+-+-/
+-+-------+---+-+import Mathlib
+-+-------+--- -+import Bridges.EulerianTrail
+-+-------+--- -+
+-+-------+--- -+/-!
+-+-------+---@@ -593,42 +211,7 @@
+-+-------+--- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+--- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+--- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+----++
+-+-------+----++/-! ### The Königsberg graph
+-+-------+----++
+-+-------+----++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------+----++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------+----++is the simple graph that captures the connectivity pattern.
+-+-------+----++
+-+-------+----++In the original problem, some pairs of landmasses had multiple bridges
+-+-------+----++between them, making the true model a multigraph. However, for the
+-+-------+----++Eulerian trail condition, what matters is the parity of degrees at each
+-+-------+----++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------+----++impossibility via Euler's theorem. -/
+-+-------+----++
+-+-------+----++/-- The four landmasses of Königsberg. -/
+-+-------+----++inductive Konigsberg : Type
+-+-------+----++  | A  -- North bank
+-+-------+----++  | B  -- South bank
+-+-------+----++  | C  -- Island (Kneiphof)
+-+-------+----++  | D  -- East district
+-+-------+----++  deriving DecidableEq, Fintype
+-+-------+----++
+-+-------+----++open Konigsberg
+-+-------+----++
+-+-------+----++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------+----++Every pair of distinct vertices is connected, capturing the fact that
+-+-------+----++every pair of landmasses had at least one bridge between them. -/
+-+-------+----++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+----++
+-+-------+----++instance : DecidableRel konigsbergGraph.Adj := by
+-+-------+----++  intro u v
+-+-------+----++  simp only [konigsbergGraph]
+-+-------+----++  infer_instance
+-+-------+----++
+-+-------+----++/-
+-+-------+----++Every vertex in K₄ has degree 3 (odd).
+-+-------+---- +-/
+-+-------+---+-+-/
+-+-------+--- -+
+-+-------+--- -+namespace Bridges
+-+-------+--- -+
+-+-------+---@@ -648,10 +231,8 @@
+-+-------+--- -+
+-+-------+--- -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+--- -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+----++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------+----++  fin_cases v <;> simp +decide
+-+-------+---- +
+-+-------+---- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+------- ---+-+
+-+-----------+-+/-!
+-+-----------+-+# The Königsberg Bridge Problem
+-+-----------+-+
+-+-----------+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-----------+-+the founding result of graph theory (Euler, 1736).
+-+-----------+-+
+-+-----------+-+## The Problem
+-+-----------+-+
+-+-----------+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-----------+-+and included two large islands connected to each other and to the two mainland
+-+-----------+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+-----------+-+city that crosses each bridge exactly once.
+-+-----------+-+
+-+-----------+-+## The Graph
+-+-----------+-+
+-+-----------+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-----------+-+- Vertex 0: Central island (Kneiphof)
+-+-----------+-+- Vertex 1: Northern bank
+-+-----------+-+- Vertex 2: Southern bank
+-+-----------+-+- Vertex 3: Eastern island (Lomse)
+-+-----------+-+
+-+-----------+-+The seven bridges are:
+-+-----------+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-----------+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-----------+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-----------+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-----------+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-----------+-+
+-+-----------+-+## Main Results
+-+-----------+-+
+-+-----------+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-----------+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-----------+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----------- -+-/
+-+-------------+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------------+  fin_cases v <;> simp +decide
+-+-----------+-+
+-+-----------+-+namespace Bridges
+-+-----------+-+
+-+-----------+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-----------+-+def konigsberg : Multigraph 4 7 where
+-+-----------+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-----------+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-----------+-+
+-+-----------+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-----------+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-----------+-+
+-+-----------+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-----------+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-----------+-+
+-+-----------+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-----------+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-----------+-+
+-+-----------+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-----------+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+---+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+--- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+--- -+  intro v; fin_cases v <;> native_decide
+-+------- --- -+
+-+----------- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------------+theorem konigsberg_all_odd :
+-+-------------+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------------+  intro v
+-+-------------+  rw [konigsberg_degree]
+-+-------------+  exact ⟨1, rfl⟩
+-+-------------+
+-+-------------+/-
+-+-------------+The number of odd-degree vertices in the Königsberg graph is 4.
+-+----------+@@ -1,256 +1,86 @@
+-+----------+---- a/Bridges/Konigsberg.lean
+-+----------+-+++ b/Bridges/Konigsberg.lean
+-+----------+-@@ -1,168 +1,86 @@
+-+----------+----- a/Bridges/Konigsberg.lean
+-+----------+--+++ b/Bridges/Konigsberg.lean
+-+----------+--@@ -1,99 +1,86 @@
+-+----------+-- /-
+-+----------+---Copyright (c) 2025. All rights reserved.
+-+----------+---Released under Apache 2.0 license.
+-+----------+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----------+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+---------- --+-/
+-+-------------+theorem konigsberg_four_odd :
+-+-------------+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------------+  decide +revert
+-+-------------+
+-+-------------+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------------+then the number of odd-degree vertices is 0 or 2.
+-+-------------+This is the key obstruction from Mathlib. -/
+-+-------------+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------------+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------------+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------------+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------------+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------------+  hp.card_odd_degree
+-+-------------+
+-+-------------+/-
+-+-------------+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------------+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------------+through Königsberg crossing each bridge exactly once.
+-+-------------+-/
+-+-------------+theorem konigsberg_no_eulerian_trail :
+-+-------------+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------------+  intro u v p h;
+-+-------------+  have := euler_necessary h; simp_all +decide ;+/-
+-+----------+--+import Mathlib
+-+----------+--+import Bridges.EulerianTrail
+-+----------+-- 
+-+----------+---# The Königsberg Bridge Problem — Formalized
+-+----------+--+/-!
+-+----------+--+# The Königsberg Bridge Problem
+-+----------+-- 
+-+----------+---This file formalizes the Königsberg Bridge Problem, widely considered
+-+----------+---the founding problem of graph theory. In 1736, Euler proved that it is
+-+----------+---impossible to traverse all seven bridges of Königsberg exactly once.
+-+----------+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----------+--+the founding result of graph theory (Euler, 1736).
+-+----------+-- 
+-+----------+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----------+---and prove impossibility using the Eulerian trail parity condition.
+-+----------+--+## The Problem
+-+----------+-- 
+-+----------+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----------+---with a simple-graph abstraction that captures the essential parity
+-+----------+---obstruction: a graph where more than two vertices have odd degree
+-+----------+---cannot have an Eulerian trail.
+-+----------+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----------+--+and included two large islands connected to each other and to the two mainland
+-+----------+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+----------+--+city that crosses each bridge exactly once.
+-+----------+-- 
+-+----------+---## Main results
+-+----------+--+## The Graph
+-+----------+-- 
+-+----------+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----------+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----------+---  has no Eulerian trail (from Mathlib).
+-+----------+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----------+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----------+--+- Vertex 0: Central island (Kneiphof)
+-+----------+--+- Vertex 1: Northern bank
+-+----------+--+- Vertex 2: Southern bank
+-+----------+--+- Vertex 3: Eastern island (Lomse)
+-+----------+--+
+-+----------+--+The seven bridges are:
+-+----------+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----------+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----------+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----------+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----------+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----------+--+
+-+----------+--+## Main Results
+-+----------+--+
+-+----------+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----------+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----------+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----------+-- -/
+-+----------+-- 
+-+----------+---import Mathlib
+-+----------+--+namespace Bridges
+-+----------+-- 
+-+----------+---/-! ### The Königsberg graph
+-+----------+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----------+--+def konigsberg : Multigraph 4 7 where
+-+----------+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----------+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----------+-- 
+-+----------+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----------+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----------+---is the simple graph that captures the connectivity pattern.
+-+----------+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----------+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----------+-- 
+-+----------+---In the original problem, some pairs of landmasses had multiple bridges
+-+----------+---between them, making the true model a multigraph. However, for the
+-+----------+---Eulerian trail condition, what matters is the parity of degrees at each
+-+----------+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----------+---impossibility via Euler's theorem. -/
+-+----------+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----------+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----------+-- 
+-+----------+---/-- The four landmasses of Königsberg. -/
+-+----------+---inductive Konigsberg : Type
+-+----------+---  | A  -- North bank
+-+----------+---  | B  -- South bank
+-+----------+---  | C  -- Island (Kneiphof)
+-+----------+---  | D  -- East district
+-+----------+---  deriving DecidableEq, Fintype
+-+----------+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----------+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----------+-- 
+-+----------+---open Konigsberg
+-+----------+---
+-+----------+---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----------+---Every pair of distinct vertices is connected, capturing the fact that
+-+----------+---every pair of landmasses had at least one bridge between them. -/
+-+----------+---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----------+---
+-+----------+---instance : DecidableRel konigsbergGraph.Adj := by
+-+----------+---  intro u v
+-+----------+---  simp only [konigsbergGraph]
+-+----------+---  infer_instance
+-+----------+---
+-+----------+---/-
+-+----------+---Every vertex in K₄ has degree 3 (odd).
+-+----------+----/
+-+----------+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----------+---  fin_cases v <;> simp +decide
+-+----------+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----------+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----------+-- 
+-+----------+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+----------+---theorem konigsberg_all_odd :
+-+----------+---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----------+---  intro v
+-+----------+---  rw [konigsberg_degree]
+-+----------+---  exact ⟨1, rfl⟩
+-+----------+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----------+--+  intro v; fin_cases v <;> native_decide
+-+----------+-- 
+-+----------+---/-
+-+----------+---The number of odd-degree vertices in the Königsberg graph is 4.
+-+----------+----/
+-+----------+---theorem konigsberg_four_odd :
+-+----------+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----------+---  decide +revert
+-+----------+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----------+--+theorem konigsberg_odd_count :
+-+----------+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----------+--+  native_decide
+-+----------+-- 
+-+----------+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----------+---then the number of odd-degree vertices is 0 or 2.
+-+----------+---This is the key obstruction from Mathlib. -/
+-+----------+---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----------+---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----------+---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----------+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----------+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----------+---  hp.card_odd_degree
+-+----------+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----------+-- 
+-+----------+---/-
+-+----------+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----------+---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----------+---through Königsberg crossing each bridge exactly once.
+-+----------+----/
+-+----------+---theorem konigsberg_no_eulerian_trail :
+-+----------+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----------+---  intro u v p h;
+-+----------+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----------+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----------+--+
+-+----------+--+The proof combines:
+-+----------+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----------+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----------+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----------+--+  constructor
+-+----------+--+  intro t
+-+----------+--+  have h1 := t.odd_degree_vertices_le_two
+-+----------+--+  have h2 := konigsberg_odd_count
+-+----------+--+  omega
+-+----------+--+
+-+----------+--+end Bridges+/-
+-+---------- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---------- -+Released under Apache 2.0 license as described in the file LICENSE.
+-+-----------+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-----------+-+  intro v; fin_cases v <;> native_decide
+-+-----------+-+
+-+-----------+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-----------+-+theorem konigsberg_odd_count :
+-+-----------+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-----------+-+  native_decide
+-+-----------+-+
+-+-----------+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-----------+-+
+-+-----------+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-----------+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-----------+-+
+-+-----------+-+The proof combines:
+-+-----------+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-----------+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-----------+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-----------+-+  constructor
+-+-----------+-+  intro t
+-+-----------+-+  have h1 := t.odd_degree_vertices_le_two
+-+-----------+-+  have h2 := konigsberg_odd_count
+-+-----------+-+  omega
+-+-----------+-+
+-+-----------+-+end Bridges+/-
+-+-----------++Copyright (c) 2025. All rights reserved.
+-+-----------++Released under Apache 2.0 license.
+-+-------+---@@ -675,35 +256,89 @@
+-+-------+--- -+  have h2 := konigsberg_odd_count
+-+-------+--- -+  omega
+-+-------+--- -+
+-+-------+-----+end Bridges++theorem konigsberg_all_odd :
+-+-------+----++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------+----++  intro v
+-+-------+----++  rw [konigsberg_degree]
+-+-------+----++  exact ⟨1, rfl⟩
+-+-------+----++
+-+-------+----++/-
+-+-------+----++The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+----++-/
+-+-------+----++theorem konigsberg_four_odd :
+-+-------+----++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------+----++  decide +revert
+-+-------+----++
+-+-------+----++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------+----++then the number of odd-degree vertices is 0 or 2.
+-+-------+----++This is the key obstruction from Mathlib. -/
+-+-------+----++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------+----++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------+----++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------+----++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------+----++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------+----++  hp.card_odd_degree
+-+-------+----++
+-+-------+----++/-
+-+-------+----++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------+----++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------+----++through Königsberg crossing each bridge exactly once.
+-+-------+----++-/
+-+-------+----++theorem konigsberg_no_eulerian_trail :
+-+-------+----++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------+----++  intro u v p h;
+-+-------+----++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+-------+---++Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+---++Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+---++-/
+-+-------+---++import Mathlib
+-+-------+---++import Bridges.EulerianTrail
+-+------- ---++
+-+-----------++# The Königsberg Bridge Problem — Formalized
+-+-------+---++/-!
+-+-------+---++# The Königsberg Bridge Problem
+-+------- ---++
+-+-----------++This file formalizes the Königsberg Bridge Problem, widely considered
+-+-----------++the founding problem of graph theory. In 1736, Euler proved that it is
+-+-----------++impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+---++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------+---++the founding result of graph theory (Euler, 1736).
+-+------- ---++
+-+-----------++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-----------++and prove impossibility using the Eulerian trail parity condition.
+-+-------+---++## The Problem
+-+------- ---++
+-+-----------++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-----------++with a simple-graph abstraction that captures the essential parity
+-+-----------++obstruction: a graph where more than two vertices have odd degree
+-+-----------++cannot have an Eulerian trail.
+-+-------+---++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------+---++and included two large islands connected to each other and to the two mainland
+-+-------+---++portions by seven bridges. The problem asks whether there is a walk through the
+-+-------+---++city that crosses each bridge exactly once.
+-+------- ---++
+-+-----------++## Main results
+-+-------+---++## The Graph
+-+------- ---++
+-+-----------++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-----------++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-----------++  has no Eulerian trail (from Mathlib).
+-+-----------++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----------- +-/
+-+-------+---++We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------+---++- Vertex 0: Central island (Kneiphof)
+-+-------+---++- Vertex 1: Northern bank
+-+-------+---++- Vertex 2: Southern bank
+-+-------+---++- Vertex 3: Eastern island (Lomse)
+-+------- ---++
+-+----------- +import Mathlib
+-+----------+-+-/
+-+----------+-+import Mathlib
+-+---------- -+import Bridges.EulerianTrail
+-+---------- -+
+-+---------- -+/-!
+-+----------@@ -593,42 +211,7 @@
+-+---------- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---------- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---------- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+---++The seven bridges are:
+-+-------+---++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------+---++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------+---++- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------+---++- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------+---++- Edge 6: One bridge from vertex 2 to vertex 3
+-+------- ---++
+-+-----------++/-! ### The Königsberg graph
+-+-------+---++## Main Results
+-+------- ---++
+-+-----------++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-----------++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-----------++is the simple graph that captures the connectivity pattern.
+-+-------+---++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+---++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+---++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+---++-/
+-+------- ---++
+-+-----------++In the original problem, some pairs of landmasses had multiple bridges
+-+-----------++between them, making the true model a multigraph. However, for the
+-+-----------++Eulerian trail condition, what matters is the parity of degrees at each
+-+-----------++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-----------++impossibility via Euler's theorem. -/
+-+-------+---++namespace Bridges
+-+------- ---++
+-+-----------++/-- The four landmasses of Königsberg. -/
+-+-----------++inductive Konigsberg : Type
+-+-----------++  | A  -- North bank
+-+-----------++  | B  -- South bank
+-+-----------++  | C  -- Island (Kneiphof)
+-+-----------++  | D  -- East district
+-+-----------++  deriving DecidableEq, Fintype
+-+-------+---++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------+---++def konigsberg : Multigraph 4 7 where
+-+-------+---++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------+---++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+------- ---++
+-+-----------++open Konigsberg
+-+-------+---++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------+---++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+------- ---++
+-+-----------++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-----------++Every pair of distinct vertices is connected, capturing the fact that
+-+-----------++every pair of landmasses had at least one bridge between them. -/
+-+-----------++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+---++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------+---++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+------- ---++
+-+-----------++instance : DecidableRel konigsbergGraph.Adj := by
+-+-----------++  intro u v
+-+-----------++  simp only [konigsbergGraph]
+-+-----------++  infer_instance
+-+-------+---++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------+---++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+------- ---++
+-+-----------++/-
+-+-----------++Every vertex in K₄ has degree 3 (odd).
+-+----------- +-/
+-+----------+-+-/
+-+---------- -+
+-+---------- -+namespace Bridges
+-+---------- -+
+-+----------@@ -648,10 +231,8 @@
+-+---------- -+
+-+---------- -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---------- -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-----------++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-----------++  fin_cases v <;> simp +decide
+-+----------- +
+-+----------- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----------+-+
+-+----------+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---------- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---------- -+  intro v; fin_cases v <;> native_decide
+-+---------- -+
+-+----------@@ -675,35 +256,89 @@
+-+---------- -+  have h2 := konigsberg_odd_count
+-+---------- -+  omega
+-+---------- -+
+-+------------+end Bridges++theorem konigsberg_all_odd :
+-+-----------++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-----------++  intro v
+-+-----------++  rw [konigsberg_degree]
+-+-----------++  exact ⟨1, rfl⟩
+-+-------+---++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+---++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+------- ---++
+-+-----------++/-
+-+-----------++The number of odd-degree vertices in the Königsberg graph is 4.
+-+-----------++-/
+-+-----------++theorem konigsberg_four_odd :
+-+-----------++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-----------++  decide +revert
+-+-------+---++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+---++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+---++  intro v; fin_cases v <;> native_decide
+-+------- ---++
+-+-----------++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-----------++then the number of odd-degree vertices is 0 or 2.
+-+-----------++This is the key obstruction from Mathlib. -/
+-+-----------++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-----------++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-----------++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-----------++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-----------++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-----------++  hp.card_odd_degree
+-+-------+---++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------+---++theorem konigsberg_odd_count :
+-+-------+---++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------+---++  native_decide
+-+------- ---++
+-+-----------++/-
+-+-----------++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-----------++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-----------++through Königsberg crossing each bridge exactly once.
+-+-----------++-/
+-+-----------++theorem konigsberg_no_eulerian_trail :
+-+-----------++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-----------++  intro u v p h;
+-+-----------++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+----------++Copyright (c) 2025 Harmonic. All rights reserved.
+-+----------++Released under Apache 2.0 license as described in the file LICENSE.
+-+----------++-/
+-+----------++import Mathlib
+-+----------++import Bridges.EulerianTrail
+-+----------++
+-+----------++/-!
+-+----------++# The Königsberg Bridge Problem
+-+----------++
+-+----------++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----------++the founding result of graph theory (Euler, 1736).
+-+----------++
+-+----------++## The Problem
+-+----------++
+-+----------++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----------++and included two large islands connected to each other and to the two mainland
+-+----------++portions by seven bridges. The problem asks whether there is a walk through the
+-+----------++city that crosses each bridge exactly once.
+-+----------++
+-+----------++## The Graph
+-+----------++
+-+----------++We model the four landmasses as vertices 0–3 of a multigraph:
+-+----------++- Vertex 0: Central island (Kneiphof)
+-+----------++- Vertex 1: Northern bank
+-+----------++- Vertex 2: Southern bank
+-+----------++- Vertex 3: Eastern island (Lomse)
+-+----------++
+-+----------++The seven bridges are:
+-+----------++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----------++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----------++- Edge 4: One bridge from vertex 0 to vertex 3
+-+----------++- Edge 5: One bridge from vertex 1 to vertex 3
+-+----------++- Edge 6: One bridge from vertex 2 to vertex 3
+-+----------++
+-+----------++## Main Results
+-+----------++
+-+----------++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----------++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----------++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----------++-/
+-+----------++
+-+----------++namespace Bridges
+-+----------++
+-+----------++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----------++def konigsberg : Multigraph 4 7 where
+-+----------++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----------++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----------++
+-+----------++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----------++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----------++
+-+----------++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----------++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----------++
+-+----------++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----------++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----------++
+-+----------++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----------++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----------++
+-+----------++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----------++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----------++  intro v; fin_cases v <;> native_decide
+-+----------++
+-+----------++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----------++theorem konigsberg_odd_count :
+-+----------++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----------++  native_decide
+-+----------++
+-+----------++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----------++
+-+----------++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----------++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----------++
+-+----------++The proof combines:
+-+----------++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----------++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----------++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----------++  constructor
+-+----------++  intro t
+-+----------++  have h1 := t.odd_degree_vertices_le_two
+-+----------++  have h2 := konigsberg_odd_count
+-+----------++  omega
+-+----------++
+-+----------++end Bridges+/-
+-+--------+----+end Bridges+/-
+-+--------+---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--------+---+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+---++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------+---++
+-+-------+---++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+---++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+---++
+-+-------+---++The proof combines:
+-+-------+---++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------+---++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------+---++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------+---++  constructor
+-+-------+---++  intro t
+-+-------+---++  have h1 := t.odd_degree_vertices_le_two
+-+-------+---++  have h2 := konigsberg_odd_count
+-+-------+---++  omega
+-+-------+---++
+-+-------+---++end Bridges+/-
+-+-------+-+----+end Bridges+/-
+-+-------+-+---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+-+---+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+-+---+-/
+-+-------+-+---+import Mathlib
+-+-------+-+---+import Bridges.EulerianTrail
+-+-------+-+---+
+-+-------+-+---+/-!
+-+-------+-+---+# The Königsberg Bridge Problem
+-+-------+-+---+
+-+-------+-+---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------+-+---+the founding result of graph theory (Euler, 1736).
+-+-------+-+---+
+-+-------+-+---+## The Problem
+-+-------+-+---+
+-+-------+-+---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------+-+---+and included two large islands connected to each other and to the two mainland
+-+-------+-+---+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------+-+---+city that crosses each bridge exactly once.
+-+-------+-+---+
+-+-------+-+---+## The Graph
+-+-------+-+---+
+-+-------+-+---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------+-+---+- Vertex 0: Central island (Kneiphof)
+-+-------+-+---+- Vertex 1: Northern bank
+-+-------+-+---+- Vertex 2: Southern bank
+-+-------+-+---+- Vertex 3: Eastern island (Lomse)
+-+-------+-+---+
+-+-------+-+---+The seven bridges are:
+-+-------+-+---+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------+-+---+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------+-+---+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------+-+---+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------+-+---+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------+-+---+
+-+-------+-+---+## Main Results
+-+-------+-+---+
+-+-------+-+---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+-+---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+-+---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+-+---+-/
+-+-------+-+---+
+-+-------+-+---+namespace Bridges
+-+-------+-+---+
+-+-------+-+---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------+-+---+def konigsberg : Multigraph 4 7 where
+-+-------+-+---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------+-+---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------+-+---+
+-+-------+-+---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------+-+---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------+-+---+
+-+-------+-+---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------+-+---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------+-+---+
+-+-------+-+---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------+-+---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------+-+---+
+-+-------+-+---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+-+---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+-+---+
+-+-------+-+---+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+-+---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+-+---+  intro v; fin_cases v <;> native_decide
+-+-------+-+---+
+-+-------+-+---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------+-+---+theorem konigsberg_odd_count :
+-+-------+-+---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------+-+---+  native_decide
+-+-------+-+---+
+-+-------+-+---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------+-+---+
+-+-------+-+---+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+-+---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+-+---+
+-+-------+-+---+The proof combines:
+-+-------+-+---+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------+-+---+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------+-+---+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------+-+---+  constructor
+-+-------+-+---+  intro t
+-+-------+-+---+  have h1 := t.odd_degree_vertices_le_two
+-+-------+-+---+  have h2 := konigsberg_odd_count
+-+-------+-+---+  omega
+-+-------+-+---+
+-+-------+-+---+end Bridges+/-
+-+-------+++--@@ -1,99 +1,86 @@
+-+-------+++-- /-
+-+-------+++---Copyright (c) 2025. All rights reserved.
+-+-------+++---Released under Apache 2.0 license.
+-+-------+ +--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+ +--+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+-+--+-/
+-+-------++ --+-/
+-+-------++---+theorem konigsberg_four_odd :
+-+-------++---+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------++---+  decide +revert
+-+-------++---+
+-+-------++---+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------++---+then the number of odd-degree vertices is 0 or 2.
+-+-------++---+This is the key obstruction from Mathlib. -/
+-+-------++---+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------++---+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------++---+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------++---+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------++---+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------++---+  hp.card_odd_degree
+-+-------++---+
+-+-------++---+/-
+-+-------++---+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------++---+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------++---+through Königsberg crossing each bridge exactly once.
+-+------- +---+-/
+-+--------+---+import Mathlib
+-+--------+---+import Bridges.EulerianTrail
+-+--------+---+
+-+--------+---+/-!
+-+--------+---+# The Königsberg Bridge Problem
+-+--------+---+
+-+--------+---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--------+---+the founding result of graph theory (Euler, 1736).
+-+--------+---+
+-+--------+---+## The Problem
+-+--------+---+
+-+--------+---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--------+---+and included two large islands connected to each other and to the two mainland
+-+--------+---+portions by seven bridges. The problem asks whether there is a walk through the
+-+--------+---+city that crosses each bridge exactly once.
+-+--------+---+
+-+--------+---+## The Graph
+-+--------+---+
+-+--------+---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--------+---+- Vertex 0: Central island (Kneiphof)
+-+--------+---+- Vertex 1: Northern bank
+-+--------+---+- Vertex 2: Southern bank
+-+--------+---+- Vertex 3: Eastern island (Lomse)
+-+--------+---+
+-+--------+---+The seven bridges are:
+-+--------+---+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--------+---+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--------+---+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--------+---+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--------+---+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--------+---+
+-+--------+---+## Main Results
+-+--------+---+
+-+--------+---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--------+---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--------+---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--------+---+-/
+-+--------+---+
+-+--------+---+namespace Bridges
+-+--------+---+
+-+--------+---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--------+---+def konigsberg : Multigraph 4 7 where
+-+--------+---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--------+---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--------+---+
+-+--------+---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--------+---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--------+---+
+-+--------+---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--------+---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--------+---+
+-+--------+---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--------+---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--------+---+
+-+--------+---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--------+---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--------+---+
+-+--------+---+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--------+---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--------+---+  intro v; fin_cases v <;> native_decide
+-+--------+---+
+-+--------+---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--------+---+theorem konigsberg_odd_count :
+-+--------+---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--------+---+  native_decide
+-+--------+---+
+-+--------+---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--------+---+
+-+--------+---+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--------+---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--------+---+
+-+--------+---+The proof combines:
+-+--------+---+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--------+---+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--------+---+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--------+---+  constructor
+-+--------+---+  intro t
+-+--------+---+  have h1 := t.odd_degree_vertices_le_two
+-+--------+---+  have h2 := konigsberg_odd_count
+-+--------+---+  omega
+-+--------+---+
+-+--------+---+end Bridges+/-
+-+---++---+----- a/Bridges/Konigsberg.lean
+-+---++---+--+++ b/Bridges/Konigsberg.lean
+-+--- +---+--@@ -1,99 +1,86 @@
+-+--- +---+-- /-
+-+--- +---+---Copyright (c) 2025. All rights reserved.
+-+--- +---+---Released under Apache 2.0 license.
+-+---- ---+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---- ---+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+--------+--+-/
+-+---++---+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---++---+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+--- +--- --+-/
+-+--- +------+theorem konigsberg_four_odd :
+-+--- +------+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---@@ -5501,82 +1783,81 @@
+-+--- +------+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--- +------+  intro u v p h;
+-+--- +------+  have := euler_necessary h; simp_all +decide ;+/-
+-+---- ---+--+import Mathlib
+-+---- ---+--+import Bridges.EulerianTrail
+-+--------+--+
+-+---++---+--+import Mathlib
+-+---++---+--+import Bridges.EulerianTrail
+-+--- +---+-- 
+-+--- +---+---# The Königsberg Bridge Problem — Formalized
+-+---- ---+--+/-!
+-+---- ---+--+# The Königsberg Bridge Problem
+-+--------+--+
+-+---++---+--+/-!
+-+---++---+--+# The Königsberg Bridge Problem
+-+--- +---+-- 
+-+--- +---+---This file formalizes the Königsberg Bridge Problem, widely considered
+-+--- +---+---the founding problem of graph theory. In 1736, Euler proved that it is
+-+--- +---+---impossible to traverse all seven bridges of Königsberg exactly once.
+-+---- ---+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---- ---+--+the founding result of graph theory (Euler, 1736).
+-+--------+--+
+-+---++---+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---++---+--+the founding result of graph theory (Euler, 1736).
+-+--- +---+-- 
+-+--- +---+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--- +---+---and prove impossibility using the Eulerian trail parity condition.
+-+---- ---+--+## The Problem
+-+--------+--+
+-+---++---+--+## The Problem
+-+--- +---+-- 
+-+--- +---+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--- +---+---with a simple-graph abstraction that captures the essential parity
+-+--- +---+---obstruction: a graph where more than two vertices have odd degree
+-+--- +---+---cannot have an Eulerian trail.
+-+---- ---+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---- ---+--+and included two large islands connected to each other and to the two mainland
+-+---- ---+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+---- ---+--+city that crosses each bridge exactly once.
+-+--------+--+
+-+---++---+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---++---+--+and included two large islands connected to each other and to the two mainland
+-+---++---+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+---++---+--+city that crosses each bridge exactly once.
+-+--- +---+-- 
+-+--- +---+---## Main results
+-+---- ---+--+## The Graph
+-+--------+--+
+-+---++---+--+## The Graph
+-+--- +---+-- 
+-+--- +---+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--- +---+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--- +---+---  has no Eulerian trail (from Mathlib).
+-+--- +---+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---- ---+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---- ---+--+- Vertex 0: Central island (Kneiphof)
+-+---- ---+--+- Vertex 1: Northern bank
+-+----@@ -3382,39 +2207,101 @@
+-+---- ---+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---- ---+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---- ---+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--------+--+-/
+-+--------+--+
+-+---++---+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---++---+--+- Vertex 0: Central island (Kneiphof)
+-+---++---+--+- Vertex 1: Northern bank
+-+---++---+--+- Vertex 2: Southern bank
+-+---++---+--+- Vertex 3: Eastern island (Lomse)
+-+---++---+--+
+-+---++---+--+The seven bridges are:
+-+---++---+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---++---+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---++---+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---++---+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---++---+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+---++---+--+
+-+---++---+--+## Main Results
+-+---++---+--+
+-+---++---+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---++---+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---++---+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--- +---+-- -/
+-+--- +---+-- 
+-+--- +---+---import Mathlib
+-+---- ---+--+namespace Bridges
+-+--------+--+
+-+---++---+--+namespace Bridges
+-+--- +---+-- 
+-+--- +---+---/-! ### The Königsberg graph
+-+---- ---+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---- ---+--+def konigsberg : Multigraph 4 7 where
+-+---- ---+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---- ---+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--------+--+
+-+---++---+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---++---+--+def konigsberg : Multigraph 4 7 where
+-+---++---+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---++---+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--- +---+-- 
+-+--- +---+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--- +---+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--- +---+---is the simple graph that captures the connectivity pattern.
+-+---- ---+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---- ---+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--------+--+
+-+---++---+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---++---+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--- +---+-- 
+-+--- +---+---In the original problem, some pairs of landmasses had multiple bridges
+-+--- +---+---between them, making the true model a multigraph. However, for the
+-+--- +---+---Eulerian trail condition, what matters is the parity of degrees at each
+-+--- +---+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--- +---+---impossibility via Euler's theorem. -/
+-+---- ---+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---- ---+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--------+--+
+-+---++---+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---++---+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--- +---+-- 
+-+--- +---+---/-- The four landmasses of Königsberg. -/
+-+--- +---+---inductive Konigsberg : Type
+-+---@@ -5585,9 +1866,8 @@
+-+--- +---+---  | C  -- Island (Kneiphof)
+-+--- +---+---  | D  -- East district
+-+--- +---+---  deriving DecidableEq, Fintype
+-+---- ---+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---- ---+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--------+--+
+-+---++---+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---++---+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--- +---+-- 
+-+--- +---+---open Konigsberg
+-+--- +---+---
+-+---@@ -5606,10 +1886,8 @@
+-+--- +---+----/
+-+--- +---+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--- +---+---  fin_cases v <;> simp +decide
+-+---- ---+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---- ---+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--------+--+
+-+--------+--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---++---+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---++---+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--- +---+-- 
+-+--- +---+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--- +---+---theorem konigsberg_all_odd :
+-+---@@ -5617,9 +1895,8 @@
+-+--- +---+---  intro v
+-+--- +---+---  rw [konigsberg_degree]
+-+--- +---+---  exact ⟨1, rfl⟩
+-+---- ---+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---- ---+--+  intro v; fin_cases v <;> native_decide
+-+--------+--+
+-+---++---+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---++---+--+  intro v; fin_cases v <;> native_decide
+-+--- +---+-- 
+-+--- +---+---/-
+-+--- +---+---The number of odd-degree vertices in the Königsberg graph is 4.
+-+---@@ -5627,11 +1904,10 @@
+-+--- +---+---theorem konigsberg_four_odd :
+-+--- +---+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--- +---+---  decide +revert
+-+---- ---+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---- ---+--+theorem konigsberg_odd_count :
+-+---- ---+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---- ---+--+  native_decide
+-+--------+--+
+-+---++---+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---++---+--+theorem konigsberg_odd_count :
+-+---++---+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---++---+--+  native_decide
+-+--- +---+-- 
+-+--- +---+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--- +---+---then the number of odd-degree vertices is 0 or 2.
+-+---@@ -5642,9 +1918,7 @@
+-+--- +---+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--- +---+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--- +---+---  hp.card_odd_degree
+-+---- ---+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--------+--+
+-+--------+--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---++---+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--- +---+-- 
+-+--- +---+---/-
+-+--- +---+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---@@ -5655,36 +1929,19 @@
+-+--- +---+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--- +---+---  intro u v p h;
+-+--- +---+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---- ---+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---- ---+--+
+-+---- ---+--+The proof combines:
+-+----@@ -3428,1732 +2315,1219 @@
+-+---- ---+--+  omega
+-+---- ---+--+
+-+---- ---+--+end Bridges+/-
+-+--------+-+Copyright (c) 2025. All rights reserved.
+-+--------+-+Released under Apache 2.0 license.
+-+--+-++------+end Bridges+/-
+-+--+-++-+---@@ -1,99 +1,86 @@
+-+--+-++-+--- /-
+-+--+-++-+----Copyright (c) 2025. All rights reserved.
+-+--+-++-+----Released under Apache 2.0 license.
+-+--+-++- ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-++- ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-++- ---+-/
+-+--+-++- ---+import Mathlib
+-+--+-++- ---+import Bridges.EulerianTrail
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----# The Königsberg Bridge Problem — Formalized
+-+--+-++- ---+/-!
+-+--+-++- ---+# The Königsberg Bridge Problem
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-++-+----the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-++-+----impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-++- ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-++- ---+the founding result of graph theory (Euler, 1736).
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-++-+----and prove impossibility using the Eulerian trail parity condition.
+-+--+-++- ---+## The Problem
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-++-+----with a simple-graph abstraction that captures the essential parity
+-+--+-++-+----obstruction: a graph where more than two vertices have odd degree
+-+--+-++-+----cannot have an Eulerian trail.
+-+--+-++- ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-++- ---+and included two large islands connected to each other and to the two mainland
+-+--+-++- ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-++- ---+city that crosses each bridge exactly once.
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----## Main results
+-+--+-++- ---+## The Graph
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-++-+----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-++-+----  has no Eulerian trail (from Mathlib).
+-+--+-++-+----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-++- ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-++- ---+- Vertex 0: Central island (Kneiphof)
+-+--+-++- ---+- Vertex 1: Northern bank
+-+--+-++-@@ -217,39 +67,101 @@
+-+--+-++- ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-++- ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-++- ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-++-----+-/
+-+--+-++-----+
+-+--+-++-+--- -/
+-+--+-++-+--- 
+-+--+-++-+----import Mathlib
+-+--+-++- ---+namespace Bridges
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----/-! ### The Königsberg graph
+-+--+-++- ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-++- ---+def konigsberg : Multigraph 4 7 where
+-+--+-++- ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-++- ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-++-+----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-++-+----is the simple graph that captures the connectivity pattern.
+-+--+-++- ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-++- ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----In the original problem, some pairs of landmasses had multiple bridges
+-+--+-++-+----between them, making the true model a multigraph. However, for the
+-+--+-++-+----Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-++-+----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-++-+----impossibility via Euler's theorem. -/
+-+--+-++- ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-++- ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----/-- The four landmasses of Königsberg. -/
+-+--+-++-+----inductive Konigsberg : Type
+-+--+-++-+----  | A  -- North bank
+-+--+-++-+----  | B  -- South bank
+-+--+-++-+----  | C  -- Island (Kneiphof)
+-+--+-++-+----  | D  -- East district
+-+--+-++-+----  deriving DecidableEq, Fintype
+-+--+-++- ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-++- ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----open Konigsberg
+-+--+-++-+----
+-+--+-++-+----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-++-+----Every pair of distinct vertices is connected, capturing the fact that
+-+--+-++-+----every pair of landmasses had at least one bridge between them. -/
+-+--+-++-+----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-++-+----
+-+--+-++-+----instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-++-+----  intro u v
+-+--+-++-+----  simp only [konigsbergGraph]
+-+--+-++-+----  infer_instance
+-+--+-++-+----
+-+--+-++-+----/-
+-+--+-++-+----Every vertex in K₄ has degree 3 (odd).
+-+--+-++-+-----/
+-+--+-++-+----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-++-+----  fin_cases v <;> simp +decide
+-+--+-++- ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-++- ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-++-----+
+-+--+-++-----+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-++-+--- 
+-+--+-++-+--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-++-+----theorem konigsberg_all_odd :
+-+--+-++-+----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-++-+----  intro v
+-+--+-++-+----  rw [konigsberg_degree]
+-+--+-++-+----  exact ⟨1, rfl⟩
+-+--+-++- ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-++- ---+  intro v; fin_cases v <;> native_decide
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----/-
+-+--+-++-+----The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-++-+-----/
+-+--+-++-+----theorem konigsberg_four_odd :
+-+--+-++-+----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-++-+----  decide +revert
+-+--+-++- ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-++- ---+theorem konigsberg_odd_count :
+-+--+-++- ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-++- ---+  native_decide
+-+--+-++-----+
+-+--+-++-+--- 
+-+--+-++-+----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-++-+----then the number of odd-degree vertices is 0 or 2.
+-+--+-++-+----This is the key obstruction from Mathlib. -/
+-+--+-++-+----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-++-+----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-++-+----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-++-+----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-++-+----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-++-+----  hp.card_odd_degree
+-+--+-++- ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-++-----+
+-+--+-++-----+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-++-+--- 
+-+--+-++-+----/-
+-+--+-++-+----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-++-+----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-++-+----through Königsberg crossing each bridge exactly once.
+-+--+-++-+-----/
+-+--+-++-+----theorem konigsberg_no_eulerian_trail :
+-+--+-++-+----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-++-+----  intro u v p h;
+-+--+-++-+----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-++- ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-++- ---+
+-+--+-++- ---+The proof combines:
+-+--+-++-@@ -348,186 +260,186 @@
+-+--+-++- --+  omega
+-+--+-++- --+
+-+--+-++- --+end Bridges+/-
+-+--+-++---+Copyright (c) 2025. All rights reserved.
+-+--+-++---+Released under Apache 2.0 license.
+-+--+-++---+
+-+--+-++---+# The Königsberg Bridge Problem — Formalized
+-+--+-++---+
+-+--+-++---+This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-++---+the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-++---+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-++---+
+-+--+-++---+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-++---+and prove impossibility using the Eulerian trail parity condition.
+-+--+-++---+
+-+--+-++---+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-++---+with a simple-graph abstraction that captures the essential parity
+-+--+-++---+obstruction: a graph where more than two vertices have odd degree
+-+--+-++---+cannot have an Eulerian trail.
+-+--+-++---+
+-+--+-++---+## Main results
+-+--+-++---+
+-+--+-++---+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-++---+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-++---+  has no Eulerian trail (from Mathlib).
+-+--+-++---+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-++-+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-++-+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-++- -+-/
+-+--+-++---+
+-+--+-++- -+import Mathlib
+-+--+-++---+
+-+--+-++---+/-! ### The Königsberg graph
+-+--+-++---+
+-+--+-++---+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-++---+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-++---+is the simple graph that captures the connectivity pattern.
+-+--+-++---+
+-+--+-++---+In the original problem, some pairs of landmasses had multiple bridges
+-+--+-++---+between them, making the true model a multigraph. However, for the
+-+--+-++---+Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-++---+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-++---+impossibility via Euler's theorem. -/
+-+--+-++---+
+-+--+-++---+/-- The four landmasses of Königsberg. -/
+-+--+-++---+inductive Konigsberg : Type
+-+--+-++---+  | A  -- North bank
+-+--+-++---+  | B  -- South bank
+-+--+-++---+  | C  -- Island (Kneiphof)
+-+--+-++---+  | D  -- East district
+-+--+-++---+  deriving DecidableEq, Fintype
+-+--+-++---+
+-+--+-++---+open Konigsberg
+-+--+-++---+
+-+--+-++---+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-++---+Every pair of distinct vertices is connected, capturing the fact that
+-+--+-++---+every pair of landmasses had at least one bridge between them. -/
+-+--+-++---+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-++---+
+-+--+-++---+instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-++---+  intro u v
+-+--+-++---+  simp only [konigsbergGraph]
+-+--+-++---+  infer_instance
+-+--+-++---+
+-+--+-++---+/-
+-+--+-++---+Every vertex in K₄ has degree 3 (odd).
+-+--+-++-+-+import Bridges.EulerianTrail
+-+--+-++-+-+
+-+--+-++-+-+/-!
+-+--+-++-+-+# The Königsberg Bridge Problem
+-+--+-++-+-+
+-+--+-++-+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-++-+-+the founding result of graph theory (Euler, 1736).
+-+--+-++-+-+
+-+--+-++-+-+## The Problem
+-+--+-++-+-+
+-+--+-++-+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-++-+-+and included two large islands connected to each other and to the two mainland
+-+--+-++-+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-++-+-+city that crosses each bridge exactly once.
+-+--+-++-+-+
+-+--+-++-+-+## The Graph
+-+--+-++-+-+
+-+--+-++-+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-++-+-+- Vertex 0: Central island (Kneiphof)
+-+--+-++-+-+- Vertex 1: Northern bank
+-+--+-++-+-+- Vertex 2: Southern bank
+-+--+-++-+-+- Vertex 3: Eastern island (Lomse)
+-+--+-++-+-+
+-+--+-++-+-+The seven bridges are:
+-+--+-++-+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-++-+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-++-+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-++-+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-++-+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-++-+-+
+-+--+-++-+-+## Main Results
+-+--+-++-+-+
+-+--+-++-+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-++-+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-++-+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-++- -+-/
+-+--+-++---+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-++---+  fin_cases v <;> simp +decide
+-+--+-++-+-+
+-+--+-++-+-+namespace Bridges
+-+--+-++-+-+
+-+--+-++-+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-++-+-+def konigsberg : Multigraph 4 7 where
+-+--+-++-+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-++-+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-++-+-+
+-+--+-++-+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-++-+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-++-+-+
+-+--+-++-+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-++-+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-++-+-+
+-+--+-++-+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-++-+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-++-+-+
+-+--+-++-+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-++-+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-++- -+
+-+--+-++- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-++---+theorem konigsberg_all_odd :
+-+--+-++---+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-++---+  intro v
+-+--+-++---+  rw [konigsberg_degree]
+-+--+-++---+  exact ⟨1, rfl⟩
+-+--+-++---+
+-+--+-++---+/-
+-+--+-++---+The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+++@@ -1,256 +1,86 @@
+-+--+-+ +---- a/Bridges/Konigsberg.lean
+-+--+-+ +-+++ b/Bridges/Konigsberg.lean
+-+--+-+-+-@@ -1,344 +1,99 @@
+-+--+-+++-@@ -1,168 +1,86 @@
+-+--+-+ +----- a/Bridges/Konigsberg.lean
+-+--+-+ +--+++ b/Bridges/Konigsberg.lean
+-+--+-+-+--@@ -1,256 +1,86 @@
+-+--+-+-+------ a/Bridges/Konigsberg.lean
+-+--+-+-+---+++ b/Bridges/Konigsberg.lean
+-+--+-+-+---@@ -1,168 +1,86 @@
+-+--+-+-+------- a/Bridges/Konigsberg.lean
+-+--+-+-+----+++ b/Bridges/Konigsberg.lean
+-+--+-+-+----@@ -1,99 +1,86 @@
+-+--+-+-+---- /-
+-+--+-+-+-----Copyright (c) 2025. All rights reserved.
+-+--+-+-+-----Released under Apache 2.0 license.
+-+--+-+-+----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+-+----+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+-+----+-/
+-+--+-+-+----+import Mathlib
+-+--+-+-+----+import Bridges.EulerianTrail
+-+--+-+-+---- 
+-+--+-+-+-----# The Königsberg Bridge Problem — Formalized
+-+--+-+-+----+/-!
+-+--+-+-+----+# The Königsberg Bridge Problem
+-+--+-+-+---- 
+-+--+-+-+-----This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-+-+-----the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-+-+-----impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+-+----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-+-+----+the founding result of graph theory (Euler, 1736).
+-+--+-+-+---- 
+-+--+-+-+-----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-+-+-----and prove impossibility using the Eulerian trail parity condition.
+-+--+-+-+----+## The Problem
+-+--+-+-+---- 
+-+--+-+-+-----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-+-+-----with a simple-graph abstraction that captures the essential parity
+-+--+-+-+-----obstruction: a graph where more than two vertices have odd degree
+-+--+-+-+-----cannot have an Eulerian trail.
+-+--+-+-+----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-+-+----+and included two large islands connected to each other and to the two mainland
+-+--+-+-+----+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-+-+----+city that crosses each bridge exactly once.
+-+--+-+-+---- 
+-+--+-+-+-----## Main results
+-+--+-+-+----+## The Graph
+-+--+-+-+---- 
+-+--+-+-+-----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-+-+-----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-+-+-----  has no Eulerian trail (from Mathlib).
+-+--+-+-+-----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-+-+----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-+-+----+- Vertex 0: Central island (Kneiphof)
+-+--+-+-+----+- Vertex 1: Northern bank
+-+--+-+-+----+- Vertex 2: Southern bank
+-+--+-+-+----+- Vertex 3: Eastern island (Lomse)
+-+--+-+- ----+
+-+--+-+------+# The Königsberg Bridge Problem — Formalized
+-+--+-+-+----+The seven bridges are:
+-+--+-+-+----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-+-+----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-+-+----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-+-+----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-+-+----+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-+- ----+
+-+--+-+------+This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-+------+the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-+------+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+-+----+## Main Results
+-+--+-+- ----+
+-+--+-+------+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-+------+and prove impossibility using the Eulerian trail parity condition.
+-+--+-+-+----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+-+----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+-+----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+-+---- -/
+-+--+-+-+---- 
+-+--+-+-+-----import Mathlib
+-+--+-+-+----+namespace Bridges
+-+--+-+-+---- 
+-+--+-+-+-----/-! ### The Königsberg graph
+-+--+-+-+----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-+-+----+def konigsberg : Multigraph 4 7 where
+-+--+-+-+----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-+-+----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-+-+---- 
+-+--+-+-+-----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-+-+-----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-+-+-----is the simple graph that captures the connectivity pattern.
+-+--+-+-+----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-+-+----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-+-+---- 
+-+--+-+-+-----In the original problem, some pairs of landmasses had multiple bridges
+-+--+-+-+-----between them, making the true model a multigraph. However, for the
+-+--+-+-+-----Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-+-+-----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-+-+-----impossibility via Euler's theorem. -/
+-+--+-+-+----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-+-+----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-+-+---- 
+-+--+-+-+-----/-- The four landmasses of Königsberg. -/
+-+--+-+-+-----inductive Konigsberg : Type
+-+--+-+-+-----  | A  -- North bank
+-+--+-+-+-----  | B  -- South bank
+-+--+-+-+-----  | C  -- Island (Kneiphof)
+-+--+-+-+-----  | D  -- East district
+-+--+-+-+-----  deriving DecidableEq, Fintype
+-+--+-+-+----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-+-+----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-+-+---- 
+-+--+-+-+-----open Konigsberg
+-+--+-+-+-----
+-+--+-+-+-----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-+-+-----Every pair of distinct vertices is connected, capturing the fact that
+-+--+-+-+-----every pair of landmasses had at least one bridge between them. -/
+-+--+-+-+-----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+-+-----
+-+--+-+-+-----instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-+-+-----  intro u v
+-+--+-+-+-----  simp only [konigsbergGraph]
+-+--+-+-+-----  infer_instance
+-+--+-+-+-----
+-+--+-+-+-----/-
+-+--+-+-+-----Every vertex in K₄ has degree 3 (odd).
+-+--+-+-+------/
+-+--+-+-+-----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-+-+-----  fin_cases v <;> simp +decide
+-+--+-+-+----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+-+----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+-+---- 
+-+--+-+-+---- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+-+-----theorem konigsberg_all_odd :
+-+--+-+-+-----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-+-+-----  intro v
+-+--+-+-+-----  rw [konigsberg_degree]
+-+--+-+-+-----  exact ⟨1, rfl⟩
+-+--+-+-+----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+-+----+  intro v; fin_cases v <;> native_decide
+-+--+-+-+---- 
+-+--+-+-+-----/-
+-+--+-+-+-----The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+-+------/
+-+--+-+-+-----theorem konigsberg_four_odd :
+-+--+-+-+-----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-+-+-----  decide +revert
+-+--+-+-+----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-+-+----+theorem konigsberg_odd_count :
+-+--+-+-+----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-+-+----+  native_decide
+-+--+-+-+---- 
+-+--+-+-+-----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-+-+-----then the number of odd-degree vertices is 0 or 2.
+-+--+-+-+-----This is the key obstruction from Mathlib. -/
+-+--+-+-+-----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-+-+-----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-+-+-----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-+-+-----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-+-+-----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-+-+-----  hp.card_odd_degree
+-+--+-+-+----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-+-+---- 
+-+--+-+-+-----/-
+-+--+-+-+-----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-+-+-----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-+-+-----through Königsberg crossing each bridge exactly once.
+-+--+-+-+------/
+-+--+-+-+-----theorem konigsberg_no_eulerian_trail :
+-+--+-+-+-----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-+-+-----  intro u v p h;
+-+--+-+-+-----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+-+----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-+- ----+
+-+--+-+------+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-+------+with a simple-graph abstraction that captures the essential parity
+-+--+-+------+obstruction: a graph where more than two vertices have odd degree
+-+--+-+------+cannot have an Eulerian trail.
+-+--+-+-+----+The proof combines:
+-+--+-+-+----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-+-+----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-+-+----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-+-+----+  constructor
+-+--+-+-+----+  intro t
+-+--+-+-+----+  have h1 := t.odd_degree_vertices_le_two
+-+--+-+-+----+  have h2 := konigsberg_odd_count
+-+--+-+-+----+  omega
+-+--+-+- ----+
+-+--+-+------+## Main results
+-+--+-+------+
+-+--+-+------+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-+------+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-+------+  has no Eulerian trail (from Mathlib).
+-+--+-+------+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-+----+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+----+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+---- -+-/
+-+--+-+------+
+-+--+-+---- -+import Mathlib
+-+--+-+------+
+-+--+-+------+/-! ### The Königsberg graph
+-+--+-+------+
+-+--+-+------+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-+------+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-+------+is the simple graph that captures the connectivity pattern.
+-+--+-+------+
+-+--+-+------+In the original problem, some pairs of landmasses had multiple bridges
+-+--+-+------+between them, making the true model a multigraph. However, for the
+-+--+-+------+Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-+------+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-+------+impossibility via Euler's theorem. -/
+-+--+-+------+
+-+--+-+------+/-- The four landmasses of Königsberg. -/
+-+--+-+------+inductive Konigsberg : Type
+-+--+-+------+  | A  -- North bank
+-+--+-+------+  | B  -- South bank
+-+--+-+------+  | C  -- Island (Kneiphof)
+-+--+-+------+  | D  -- East district
+-+--+-+------+  deriving DecidableEq, Fintype
+-+--+-+------+
+-+--+-+------+open Konigsberg
+-+--+-+------+
+-+--+-+------+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-+------+Every pair of distinct vertices is connected, capturing the fact that
+-+--+-+------+every pair of landmasses had at least one bridge between them. -/
+-+--+-+------+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+------+
+-+--+-+------+instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-+------+  intro u v
+-+--+-+------+  simp only [konigsbergGraph]
+-+--+-+------+  infer_instance
+-+--+-+------+
+-+--+-+------+/-
+-+--+-+------+Every vertex in K₄ has degree 3 (odd).
+-+--+-+----+-+import Bridges.EulerianTrail
+-+--+-+----+-+
+-+--+-+----+-+/-!
+-+--+-+----+-+# The Königsberg Bridge Problem
+-+--+-+----+-+
+-+--+-+----+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-+----+-+the founding result of graph theory (Euler, 1736).
+-+--+-+----+-+
+-+--+-+----+-+## The Problem
+-+--+-+----+-+
+-+--+-+----+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-+----+-+and included two large islands connected to each other and to the two mainland
+-+--+-+----+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-+----+-+city that crosses each bridge exactly once.
+-+--+-+----+-+
+-+--+-+----+-+## The Graph
+-+--+-+----+-+
+-+--+-+----+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-+----+-+- Vertex 0: Central island (Kneiphof)
+-+--+-+----+-+- Vertex 1: Northern bank
+-+--+-+----+-+- Vertex 2: Southern bank
+-+--+-+----+-+- Vertex 3: Eastern island (Lomse)
+-+--+-+----+-+
+-+--+-+----+-+The seven bridges are:
+-+--+-+----+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-+----+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-+----+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-+----+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-+----+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-+----+-+
+-+--+-+----+-+## Main Results
+-+--+-+----+-+
+-+--+-+----+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+----+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+----+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+---- -+-/
+-+--+-+------+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-+------+  fin_cases v <;> simp +decide
+-+--+-+----+-+
+-+--+-+----+-+namespace Bridges
+-+--+-+----+-+
+-+--+-+----+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-+----+-+def konigsberg : Multigraph 4 7 where
+-+--+-+----+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-+----+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-+----+-+
+-+--+-+----+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-+----+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-+----+-+
+-+--+-+----+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-+----+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-+----+-+
+-+--+-+----+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-+----+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-+----+-+
+-+--+-+----+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+----+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+---- -+
+-+--+-+---- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+------+theorem konigsberg_all_odd :
+-+--+-+------+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-+------+  intro v
+-+--+-+------+  rw [konigsberg_degree]
+-+--+-+------+  exact ⟨1, rfl⟩
+-+--+-+------+
+-+--+-+------+/-
+-+--+-+------+The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+---+@@ -1,256 +1,86 @@
+-+--+-+---+---- a/Bridges/Konigsberg.lean
+-+--+-+---+-+++ b/Bridges/Konigsberg.lean
+-+--+-+---+-@@ -1,168 +1,86 @@
+-+--+-+---+----- a/Bridges/Konigsberg.lean
+-+--+-+---+--+++ b/Bridges/Konigsberg.lean
+-+--+-+---+--@@ -1,99 +1,86 @@
+-+--+-+---+-- /-
+-+--+-+---+---Copyright (c) 2025. All rights reserved.
+-+--+-+---+---Released under Apache 2.0 license.
+-+--+-+---+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+---+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+--- --+-/
+-+--+-+------+theorem konigsberg_four_odd :
+-+--+-+------+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-+------+  decide +revert
+-+--+-+------+
+-+--+-+------+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-+------+then the number of odd-degree vertices is 0 or 2.
+-+--+-+------+This is the key obstruction from Mathlib. -/
+-+--+-+------+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-+------+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-+------+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-+------+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-+------+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-+------+  hp.card_odd_degree
+-+--+-+------+
+-+--+-+------+/-
+-+--+-+------+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-+------+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-+------+through Königsberg crossing each bridge exactly once.
+-+--+-+------+-/
+-+--+-+------+theorem konigsberg_no_eulerian_trail :
+-+--+-+------+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-+------+  intro u v p h;
+-+--+-+------+  have := euler_necessary h; simp_all +decide ;+/-
+-+--+-+---+--+import Mathlib
+-+--+-+---+--+import Bridges.EulerianTrail
+-+--+-+---+-- 
+-+--+-+---+---# The Königsberg Bridge Problem — Formalized
+-+--+-+---+--+/-!
+-+--+-+---+--+# The Königsberg Bridge Problem
+-+--+-+---+-- 
+-+--+-+---+---This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-+---+---the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-+---+---impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+---+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-+---+--+the founding result of graph theory (Euler, 1736).
+-+--+-+---+-- 
+-+--+-+---+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-+---+---and prove impossibility using the Eulerian trail parity condition.
+-+--+-+---+--+## The Problem
+-+--+-+---+-- 
+-+--+-+---+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-+---+---with a simple-graph abstraction that captures the essential parity
+-+--+-+---+---obstruction: a graph where more than two vertices have odd degree
+-+--+-+---+---cannot have an Eulerian trail.
+-+--+-+---+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-+---+--+and included two large islands connected to each other and to the two mainland
+-+--+-+---+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-+---+--+city that crosses each bridge exactly once.
+-+--+-+---+-- 
+-+--+-+---+---## Main results
+-+--+-+---+--+## The Graph
+-+--+-+---+-- 
+-+--+-+---+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-+---+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-+---+---  has no Eulerian trail (from Mathlib).
+-+--+-+---+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-+---+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-+---+--+- Vertex 0: Central island (Kneiphof)
+-+--+-+---+--+- Vertex 1: Northern bank
+-+--+-+---+--+- Vertex 2: Southern bank
+-+--+-+---+--+- Vertex 3: Eastern island (Lomse)
+-+--+-+---+--+
+-+--+-+---+--+The seven bridges are:
+-+--+-+---+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-+---+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-+---+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-+---+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-+---+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-+---+--+
+-+--+-+---+--+## Main Results
+-+--+-+---+--+
+-+--+-+---+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+---+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+---+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+---+-- -/
+-+--+-+---+-- 
+-+--+-+---+---import Mathlib
+-+--+-+---+--+namespace Bridges
+-+--+-+---+-- 
+-+--+-+---+---/-! ### The Königsberg graph
+-+--+-+---+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-+---+--+def konigsberg : Multigraph 4 7 where
+-+--+-+---+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-+---+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-+---+-- 
+-+--+-+---+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-+---+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-+---+---is the simple graph that captures the connectivity pattern.
+-+--+-+---+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-+---+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-+---+-- 
+-+--+-+---+---In the original problem, some pairs of landmasses had multiple bridges
+-+--+-+---+---between them, making the true model a multigraph. However, for the
+-+--+-+---+---Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-+---+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-+---+---impossibility via Euler's theorem. -/
+-+--+-+---+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-+---+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-+---+-- 
+-+--+-+---+---/-- The four landmasses of Königsberg. -/
+-+--+-+---+---inductive Konigsberg : Type
+-+--+-+---+---  | A  -- North bank
+-+--+-+---+---  | B  -- South bank
+-+--+-+---+---  | C  -- Island (Kneiphof)
+-+--+-+---+---  | D  -- East district
+-+--+-+---+---  deriving DecidableEq, Fintype
+-+--+-+---+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-+---+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-+---+-- 
+-+--+-+---+---open Konigsberg
+-+--+-+---+---
+-+--+-+---+---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-+---+---Every pair of distinct vertices is connected, capturing the fact that
+-+--+-+---+---every pair of landmasses had at least one bridge between them. -/
+-+--+-+---+---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+---+---
+-+--+-+---+---instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-+---+---  intro u v
+-+--+-+---+---  simp only [konigsbergGraph]
+-+--+-+---+---  infer_instance
+-+--+-+---+---
+-+--+-+---+---/-
+-+--+-+---+---Every vertex in K₄ has degree 3 (odd).
+-+--+-+---+----/
+-+--+-+---+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-+---+---  fin_cases v <;> simp +decide
+-+--+-+---+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+---+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+---+-- 
+-+--+-+---+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+---+---theorem konigsberg_all_odd :
+-+--+-+---+---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-+---+---  intro v
+-+--+-+---+---  rw [konigsberg_degree]
+-+--+-+---+---  exact ⟨1, rfl⟩
+-+--+-+---+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+---+--+  intro v; fin_cases v <;> native_decide
+-+--+-+---+-- 
+-+--+-+---+---/-
+-+--+-+---+---The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+---+----/
+-+--+-+---+---theorem konigsberg_four_odd :
+-+--+-+---+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-+---+---  decide +revert
+-+--+-+---+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-+---+--+theorem konigsberg_odd_count :
+-+--+-+---+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-+---+--+  native_decide
+-+--+-+---+-- 
+-+--+-+---+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-+---+---then the number of odd-degree vertices is 0 or 2.
+-+--+-+---+---This is the key obstruction from Mathlib. -/
+-+--+-+---+---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-+---+---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-+---+---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-+---+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-+---+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-+---+---  hp.card_odd_degree
+-+--+-+---+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-+---+-- 
+-+--+-+---+---/-
+-+--+-+---+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-+---+---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-+---+---through Königsberg crossing each bridge exactly once.
+-+--+-+---+----/
+-+--+-+---+---theorem konigsberg_no_eulerian_trail :
+-+--+-+---+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-+---+---  intro u v p h;
+-+--+-+---+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+---+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-+---+--+
+-+--+-+---+--+The proof combines:
+-+--+-+---+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-+---+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-+---+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-+---+--+  constructor
+-+--+-+---+--+  intro t
+-+--+-+---+--+  have h1 := t.odd_degree_vertices_le_two
+-+--+-+---+--+  have h2 := konigsberg_odd_count
+-+--+-+---+--+  omega
+-+--+-+---+--+
+-+--+-+---+--+end Bridges+/-
+-+--+-+--- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+--- -+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+----+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+----+-+  intro v; fin_cases v <;> native_decide
+-+--+-+----+-+
+-+--+-+----+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-+----+-+theorem konigsberg_odd_count :
+-+--+-+----+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-+----+-+  native_decide
+-+--+-+----+-+
+-+--+-+----+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-+----+-+
+-+--+-+----+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+----+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-+----+-+
+-+--+-+----+-+The proof combines:
+-+--+-+----+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-+----+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-+----+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-+----+-+  constructor
+-+--+-+----+-+  intro t
+-+--+-+----+-+  have h1 := t.odd_degree_vertices_le_two
+-+--+-+----+-+  have h2 := konigsberg_odd_count
+-+--+-+----+-+  omega
+-+--+-+----+-+
+-+--+-+----+-+end Bridges+/-
+-+--+-+----++Copyright (c) 2025. All rights reserved.
+-+--+-+----++Released under Apache 2.0 license.
+-+--+-+----++
+-+--+-+----++# The Königsberg Bridge Problem — Formalized
+-+--+-+----++
+-+--+-+----++This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-+----++the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-+----++impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+----++
+-+--+-+----++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-+----++and prove impossibility using the Eulerian trail parity condition.
+-+--+-+----++
+-+--+-+----++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-+----++with a simple-graph abstraction that captures the essential parity
+-+--+-+----++obstruction: a graph where more than two vertices have odd degree
+-+--+-+----++cannot have an Eulerian trail.
+-+--+-+----++
+-+--+-+----++## Main results
+-+--+-+----++
+-+--+-+----++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-+----++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-+----++  has no Eulerian trail (from Mathlib).
+-+--+-+----++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-+---- +-/
+-+--+-+----++
+-+--+-+---- +import Mathlib
+-+--+-+---+-+-/
+-+--+-+---+-+import Mathlib
+-+--+-+--- -+import Bridges.EulerianTrail
+-+--+-+--- -+
+-+--+-+--- -+/-!
+-+--+-+---@@ -593,42 +211,7 @@
+-+--+-+--- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+--- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+--- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+----++
+-+--+-+----++/-! ### The Königsberg graph
+-+--+-+----++
+-+--+-+----++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-+----++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-+----++is the simple graph that captures the connectivity pattern.
+-+--+-+----++
+-+--+-+----++In the original problem, some pairs of landmasses had multiple bridges
+-+--+-+----++between them, making the true model a multigraph. However, for the
+-+--+-+----++Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-+----++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-+----++impossibility via Euler's theorem. -/
+-+--+-+----++
+-+--+-+----++/-- The four landmasses of Königsberg. -/
+-+--+-+----++inductive Konigsberg : Type
+-+--+-+----++  | A  -- North bank
+-+--+-+----++  | B  -- South bank
+-+--+-+----++  | C  -- Island (Kneiphof)
+-+--+-+----++  | D  -- East district
+-+--+-+----++  deriving DecidableEq, Fintype
+-+--+-+----++
+-+--+-+----++open Konigsberg
+-+--+-+----++
+-+--+-+----++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-+----++Every pair of distinct vertices is connected, capturing the fact that
+-+--+-+----++every pair of landmasses had at least one bridge between them. -/
+-+--+-+----++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+----++
+-+--+-+----++instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-+----++  intro u v
+-+--+-+----++  simp only [konigsbergGraph]
+-+--+-+----++  infer_instance
+-+--+-+----++
+-+--+-+----++/-
+-+--+-+----++Every vertex in K₄ has degree 3 (odd).
+-+--+-+---- +-/
+-+--+-+---+-+-/
+-+--+-+--- -+
+-+--+-+--- -+namespace Bridges
+-+--+-+--- -+
+-+--+-+---@@ -648,10 +231,8 @@
+-+--+-+--- -+
+-+--+-+--- -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+--- -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+----++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-+----++  fin_cases v <;> simp +decide
+-+--+-+---- +
+-+--+-+---- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+- ---+-+
+-+--+-----+-+/-!
+-+--+-----+-+# The Königsberg Bridge Problem
+-+-- -----+-+
+-+--------+-+# The Königsberg Bridge Problem — Formalized
+-+--+-----+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-----+-+the founding result of graph theory (Euler, 1736).
+-+-- -----+-+
+-+--------+-+This file formalizes the Königsberg Bridge Problem, widely considered
+-+--------+-+the founding problem of graph theory. In 1736, Euler proved that it is
+-+--------+-+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-----+-+## The Problem
+-+-- -----+-+
+-+--------+-+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--------+-+and prove impossibility using the Eulerian trail parity condition.
+-+--+-----+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-----+-+and included two large islands connected to each other and to the two mainland
+-+--+-----+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-----+-+city that crosses each bridge exactly once.
+-+-- -----+-+
+-+--------+-+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--------+-+with a simple-graph abstraction that captures the essential parity
+-+--------+-+obstruction: a graph where more than two vertices have odd degree
+-+--------+-+cannot have an Eulerian trail.
+-+--+-----+-+## The Graph
+-+-- -----+-+
+-+--------+-+## Main results
+-+--+-----+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-----+-+- Vertex 0: Central island (Kneiphof)
+-+--+-----+-+- Vertex 1: Northern bank
+-+--+-----+-+- Vertex 2: Southern bank
+-+--+-----+-+- Vertex 3: Eastern island (Lomse)
+-+-- -----+-+
+-+--------+-+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--------+-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--------+-+  has no Eulerian trail (from Mathlib).
+-+--------+-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---++---+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---++---+--+
+-+---++---+--+The proof combines:
+-+---++---+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---++---+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---++---+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---++---+--+  constructor
+-+---++---+--+  intro t
+-+---++---+--+  have h1 := t.odd_degree_vertices_le_two
+-+---++---+--+  have h2 := konigsberg_odd_count
+-+---++---+--+  omega
+-+---++---+--+
+-+---++---+--+end Bridges+/-
+-+--- +--- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--- +--- -+Released under Apache 2.0 license as described in the file LICENSE.
+-+--- +----+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---@@ -5713,124 +1970,32 @@
+-+--- +----+-+end Bridges+/-
+-+--- +----++Copyright (c) 2025. All rights reserved.
+-+--- +----++Released under Apache 2.0 license.
+-+----++---@@ -675,35 +256,89 @@
+-+----++--- -+  have h2 := konigsberg_odd_count
+-+----++--- -+  omega
+-+----++--- -+
+-+----++-----+end Bridges++theorem konigsberg_all_odd :
+-+----++----++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----++----++  intro v
+-+----++----++  rw [konigsberg_degree]
+-+----++----++  exact ⟨1, rfl⟩
+-+----++----++
+-+----++----++/-
+-+----++----++The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++----++-/
+-+----++----++theorem konigsberg_four_odd :
+-+----++----++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----++----++  decide +revert
+-+----++----++
+-+----++----++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----++----++then the number of odd-degree vertices is 0 or 2.
+-+----++----++This is the key obstruction from Mathlib. -/
+-+----++----++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----++----++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----++----++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----++----++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----++----++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----++----++  hp.card_odd_degree
+-+----++----++
+-+----++----++/-
+-+----++----++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----++----++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----++----++through Königsberg crossing each bridge exactly once.
+-+----++----++-/
+-+----++----++theorem konigsberg_no_eulerian_trail :
+-+----++----++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----++----++  intro u v p h;
+-+----++----++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+----++---++Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++---++Released under Apache 2.0 license as described in the file LICENSE.
+-+----++---++-/
+-+----++---++import Mathlib
+-+----++---++import Bridges.EulerianTrail
+-+----+ ---++
+-+---++----++
+-+--- +----++# The Königsberg Bridge Problem — Formalized
+-+----++---++/-!
+-+----++---++# The Königsberg Bridge Problem
+-+----+ ---++
+-+---++----++
+-+--- +----++This file formalizes the Königsberg Bridge Problem, widely considered
+-+--- +----++the founding problem of graph theory. In 1736, Euler proved that it is
+-+--- +----++impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++---++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----++---++the founding result of graph theory (Euler, 1736).
+-+----+ ---++
+-+---++----++
+-+--- +----++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--- +----++and prove impossibility using the Eulerian trail parity condition.
+-+----++---++## The Problem
+-+----+ ---++
+-+---++----++
+-+--- +----++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--- +----++with a simple-graph abstraction that captures the essential parity
+-+--- +----++obstruction: a graph where more than two vertices have odd degree
+-+--- +----++cannot have an Eulerian trail.
+-+----++---++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----++---++and included two large islands connected to each other and to the two mainland
+-+----++---++portions by seven bridges. The problem asks whether there is a walk through the
+-+----++---++city that crosses each bridge exactly once.
+-+----+ ---++
+-+---++----++
+-+--- +----++## Main results
+-+----++---++## The Graph
+-+----+ ---++
+-+---++----++
+-+--- +----++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--- +----++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--- +----++  has no Eulerian trail (from Mathlib).
+-+--- +----++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--- +---- +-/
+-+----++---++We model the four landmasses as vertices 0–3 of a multigraph:
+-+----++---++- Vertex 0: Central island (Kneiphof)
+-+----++---++- Vertex 1: Northern bank
+-+----++---++- Vertex 2: Southern bank
+-+----++---++- Vertex 3: Eastern island (Lomse)
+-+----+ ---++
+-+---++----++
+-+--- +---- +import Mathlib
+-+---- ---+-+-/
+-+--+-----+-+The seven bridges are:
+-+--+-----+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-----+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-----+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-----+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-----+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-- -----+-+
+-+---- ---+-+import Mathlib
+-+--+-----+-+## Main Results
+-+-- -----+-+
+-+--------+-+/-! ### The Königsberg graph
+-+--+-----+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-----+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-----+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+----- -+-/
+-+--+-------+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-------+  fin_cases v <;> simp +decide
+-+-- -----+-+
+-+--------+-+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--------+-+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--------+-+is the simple graph that captures the connectivity pattern.
+-+--+-----+-+namespace Bridges
+-+-- -----+-+
+-+--------+-+In the original problem, some pairs of landmasses had multiple bridges
+-+--------+-+between them, making the true model a multigraph. However, for the
+-+--------+-+Eulerian trail condition, what matters is the parity of degrees at each
+-+--------+-+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--------+-+impossibility via Euler's theorem. -/
+-+--+-----+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-----+-+def konigsberg : Multigraph 4 7 where
+-+--+-----+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-----+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-- -----+-+
+-+--------+-+/-- The four landmasses of Königsberg. -/
+-+--------+-+inductive Konigsberg : Type
+-+--------+-+  | A  -- North bank
+-+--------+-+  | B  -- South bank
+-+--------+-+  | C  -- Island (Kneiphof)
+-+--------+-+  | D  -- East district
+-+--------+-+  deriving DecidableEq, Fintype
+-+--+-----+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-----+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-- -----+-+
+-+--------+-+open Konigsberg
+-+--+-----+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-----+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-- -----+-+
+-+--------+-+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--------+-+Every pair of distinct vertices is connected, capturing the fact that
+-+--------+-+every pair of landmasses had at least one bridge between them. -/
+-+--------+-+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-----+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-----+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-- -----+-+
+-+--------+-+instance : DecidableRel konigsbergGraph.Adj := by
+-+--------+-+  intro u v
+-+--------+-+  simp only [konigsbergGraph]
+-+--------+-+  infer_instance
+-+--+-----+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-----+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+---+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+--- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+--- -+  intro v; fin_cases v <;> native_decide
+-+--+- --- -+
+-+--+----- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-------+theorem konigsberg_all_odd :
+-+--+-------+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-------+  intro v
+-+--+-------+  rw [konigsberg_degree]
+-+--+-------+  exact ⟨1, rfl⟩
+-+--+-------+
+-+--+-------+/-
+-+--+-------+The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+----+@@ -1,256 +1,86 @@
+-+--+----+---- a/Bridges/Konigsberg.lean
+-+--+----+-+++ b/Bridges/Konigsberg.lean
+-+--+----+-@@ -1,168 +1,86 @@
+-+--+----+----- a/Bridges/Konigsberg.lean
+-+--+----+--+++ b/Bridges/Konigsberg.lean
+-+--+----+--@@ -1,99 +1,86 @@
+-+--+----+-- /-
+-+--+----+---Copyright (c) 2025. All rights reserved.
+-+--+----+---Released under Apache 2.0 license.
+-+--+----+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+----+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+---- --+-/
+-+--+-------+theorem konigsberg_four_odd :
+-+--+-------+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-------+  decide +revert
+-+--+-------+
+-+--+-------+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-------+then the number of odd-degree vertices is 0 or 2.
+-+--+-------+This is the key obstruction from Mathlib. -/
+-+--+-------+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-------+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-------+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-------+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-------+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-------+  hp.card_odd_degree
+-+--+-------+
+-+--+-------+/-
+-+--+-------+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-------+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-------+through Königsberg crossing each bridge exactly once.
+-+--+-------+-/
+-+--+-------+theorem konigsberg_no_eulerian_trail :
+-+--+-------+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-------+  intro u v p h;
+-+--+-------+  have := euler_necessary h; simp_all +decide ;+/-
+-+--+----+--+import Mathlib
+-+--+----+--+import Bridges.EulerianTrail
+-+--+----+-- 
+-+--+----+---# The Königsberg Bridge Problem — Formalized
+-+--+----+--+/-!
+-+--+----+--+# The Königsberg Bridge Problem
+-+--+----+-- 
+-+--+----+---This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+----+---the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+----+---impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+----+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+----+--+the founding result of graph theory (Euler, 1736).
+-+--+----+-- 
+-+--+----+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+----+---and prove impossibility using the Eulerian trail parity condition.
+-+--+----+--+## The Problem
+-+--+----+-- 
+-+--+----+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+----+---with a simple-graph abstraction that captures the essential parity
+-+--+----+---obstruction: a graph where more than two vertices have odd degree
+-+--+----+---cannot have an Eulerian trail.
+-+--+----+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+----+--+and included two large islands connected to each other and to the two mainland
+-+--+----+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+----+--+city that crosses each bridge exactly once.
+-+--+----+-- 
+-+--+----+---## Main results
+-+--+----+--+## The Graph
+-+--+----+-- 
+-+--+----+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+----+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+----+---  has no Eulerian trail (from Mathlib).
+-+--+----+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+----+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+----+--+- Vertex 0: Central island (Kneiphof)
+-+--+----+--+- Vertex 1: Northern bank
+-+--+----+--+- Vertex 2: Southern bank
+-+--+----+--+- Vertex 3: Eastern island (Lomse)
+-+--+----+--+
+-+--+----+--+The seven bridges are:
+-+--+----+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+----+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+----+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+----+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+----+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+----+--+
+-+--+----+--+## Main Results
+-+--+----+--+
+-+--+----+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+----+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+----+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+----+-- -/
+-+--+----+-- 
+-+--+----+---import Mathlib
+-+--+----+--+namespace Bridges
+-+--+----+-- 
+-+--+----+---/-! ### The Königsberg graph
+-+--+----+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+----+--+def konigsberg : Multigraph 4 7 where
+-+--+----+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+----+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+----+-- 
+-+--+----+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+----+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+----+---is the simple graph that captures the connectivity pattern.
+-+--+----+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+----+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+----+-- 
+-+--+----+---In the original problem, some pairs of landmasses had multiple bridges
+-+--+----+---between them, making the true model a multigraph. However, for the
+-+--+----+---Eulerian trail condition, what matters is the parity of degrees at each
+-+--+----+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+----+---impossibility via Euler's theorem. -/
+-+--+----+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+----+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+----+-- 
+-+--+----+---/-- The four landmasses of Königsberg. -/
+-+--+----+---inductive Konigsberg : Type
+-+--+----+---  | A  -- North bank
+-+--+----+---  | B  -- South bank
+-+--+----+---  | C  -- Island (Kneiphof)
+-+--+----+---  | D  -- East district
+-+--+----+---  deriving DecidableEq, Fintype
+-+--+----+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+----+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+----+-- 
+-+--+----+---open Konigsberg
+-+--+----+---
+-+--+----+---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+----+---Every pair of distinct vertices is connected, capturing the fact that
+-+--+----+---every pair of landmasses had at least one bridge between them. -/
+-+--+----+---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+----+---
+-+--+----+---instance : DecidableRel konigsbergGraph.Adj := by
+-+--+----+---  intro u v
+-+--+----+---  simp only [konigsbergGraph]
+-+--+----+---  infer_instance
+-+--+----+---
+-+--+----+---/-
+-+--+----+---Every vertex in K₄ has degree 3 (odd).
+-+--+----+----/
+-+--+----+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+----+---  fin_cases v <;> simp +decide
+-+--+----+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+----+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+----+-- 
+-+--+----+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+----+---theorem konigsberg_all_odd :
+-+--+----+---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+----+---  intro v
+-+--+----+---  rw [konigsberg_degree]
+-+--+----+---  exact ⟨1, rfl⟩
+-+--+----+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+----+--+  intro v; fin_cases v <;> native_decide
+-+--+----+-- 
+-+--+----+---/-
+-+--+----+---The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+----+----/
+-+--+----+---theorem konigsberg_four_odd :
+-+--+----+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+----+---  decide +revert
+-+--+----+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+----+--+theorem konigsberg_odd_count :
+-+--+----+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+----+--+  native_decide
+-+--+----+-- 
+-+--+----+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+----+---then the number of odd-degree vertices is 0 or 2.
+-+--+----+---This is the key obstruction from Mathlib. -/
+-+--+----+---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+----+---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+----+---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+----+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+----+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+----+---  hp.card_odd_degree
+-+--+----+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+----+-- 
+-+--+----+---/-
+-+--+----+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+----+---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+----+---through Königsberg crossing each bridge exactly once.
+-+--+----+----/
+-+--+----+---theorem konigsberg_no_eulerian_trail :
+-+--+----+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+----+---  intro u v p h;
+-+--+----+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+----+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+----+--+
+-+--+----+--+The proof combines:
+-+--+----+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+----+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+----+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+----+--+  constructor
+-+--+----+--+  intro t
+-+--+----+--+  have h1 := t.odd_degree_vertices_le_two
+-+--+----+--+  have h2 := konigsberg_odd_count
+-+--+----+--+  omega
+-+--+----+--+
+-+--+----+--+end Bridges+/-
+-+--+---- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+---- -+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-----+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-----+-+  intro v; fin_cases v <;> native_decide
+-+-- -----+-+
+-+--------+-+/-
+-+--------+-+Every vertex in K₄ has degree 3 (odd).
+-+---++---+-+-/
+-+---++---+-+import Mathlib
+-+--- +--- -+import Bridges.EulerianTrail
+-+--- +--- -+
+-+--- +--- -+/-!
+-+---@@ -5838,31 +2003,19 @@
+-+--- +--- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--- +--- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--- +--- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++---++The seven bridges are:
+-+----++---++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----++---++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----++---++- Edge 4: One bridge from vertex 0 to vertex 3
+-+----++---++- Edge 5: One bridge from vertex 1 to vertex 3
+-+----++---++- Edge 6: One bridge from vertex 2 to vertex 3
+-+----+ ---++
+-+---++----++
+-+--- +----++/-! ### The Königsberg graph
+-+----++---++## Main Results
+-+----+ ---++
+-+---++----++
+-+--- +----++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--- +----++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--- +----++is the simple graph that captures the connectivity pattern.
+-+----++---++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++---++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++---++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++---++-/
+-+----+ ---++
+-+---++----++
+-+--- +----++In the original problem, some pairs of landmasses had multiple bridges
+-+--- +----++between them, making the true model a multigraph. However, for the
+-+--- +----++Eulerian trail condition, what matters is the parity of degrees at each
+-+--- +----++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--- +----++impossibility via Euler's theorem. -/
+-+----++---++namespace Bridges
+-+----+ ---++
+-+---++----++
+-+--- +----++/-- The four landmasses of Königsberg. -/
+-+--- +----++inductive Konigsberg : Type
+-+--- +----++  | A  -- North bank
+-+---@@ -5870,35 +2023,23 @@
+-+--- +----++  | C  -- Island (Kneiphof)
+-+--- +----++  | D  -- East district
+-+--- +----++  deriving DecidableEq, Fintype
+-+----++---++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----++---++def konigsberg : Multigraph 4 7 where
+-+----++---++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----++---++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----+ ---++
+-+---++----++
+-+--- +----++open Konigsberg
+-+----++---++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----++---++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----+ ---++
+-+---++----++
+-+--- +----++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--- +----++Every pair of distinct vertices is connected, capturing the fact that
+-+--- +----++every pair of landmasses had at least one bridge between them. -/
+-+--- +----++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++---++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----++---++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----+ ---++
+-+---++----++
+-+--- +----++instance : DecidableRel konigsbergGraph.Adj := by
+-+--- +----++  intro u v
+-+--- +----++  simp only [konigsbergGraph]
+-+--- +----++  infer_instance
+-+----++---++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----++---++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----+ ---++
+-+---++----++
+-+--- +----++/-
+-+--- +----++Every vertex in K₄ has degree 3 (odd).
+-+--- +---- +-/
+-+---- ---+-+-/
+-+--------+-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--------+-+  fin_cases v <;> simp +decide
+-+---++---+-+-/
+-+--- +--- -+
+-+--- +--- -+namespace Bridges
+-+--- +--- -+
+-+---@@ -5911,551 +2052,297 @@
+-+--- +---- +
+-+--- +---- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---  ---+-+
+-+---- ---+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--------+-+theorem konigsberg_all_odd :
+-+--------+-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--------+-+  intro v
+-+--------+-+  rw [konigsberg_degree]
+-+--------+-+  exact ⟨1, rfl⟩
+-+---+----+-+/-!
+-+---+----+-+# The Königsberg Bridge Problem
+-+--- ----+-+
+-+--------+-+/-
+-+--------+-+The number of odd-degree vertices in the Königsberg graph is 4.
+-+--------+-+-/
+-+--------+-+theorem konigsberg_four_odd :
+-+--------+-+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--------+-+  decide +revert
+-+---+----+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+----+-+the founding result of graph theory (Euler, 1736).
+-+--- ----+-+
+-+--------+-+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--------+-+then the number of odd-degree vertices is 0 or 2.
+-+--------+-+This is the key obstruction from Mathlib. -/
+-+--------+-+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--------+-+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--------+-+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--------+-+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--------+-+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--------+-+  hp.card_odd_degree
+-+---+----+-+## The Problem
+-+--- ----+-+
+-+--------+-+/-
+-+--------+-+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--------+-+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--------+-+through Königsberg crossing each bridge exactly once.
+-+--------+-+-/
+-+--------+-+theorem konigsberg_no_eulerian_trail :
+-+--------+-+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--------+-+  intro u v p h;
+-+--------+-+  have := euler_necessary h; simp_all +decide ;+/-
+-+-------- +Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------- +Released under Apache 2.0 license as described in the file LICENSE.
+-+-------- +-/++---+theorem konigsberg_no_eulerian_trail :
+-+-------++---+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------++---+  intro u v p h;
+-+-------++---+  have := euler_necessary h; simp_all +decide ;+/-
+-+-------+ +--+import Mathlib
+-+-------+ +--+import Bridges.EulerianTrail
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---# The Königsberg Bridge Problem — Formalized
+-+-------+ +--+/-!
+-+-------+ +--+# The Königsberg Bridge Problem
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------+++---the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------+++---impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+ +--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------+ +--+the founding result of graph theory (Euler, 1736).
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------+++---and prove impossibility using the Eulerian trail parity condition.
+-+-------+ +--+## The Problem
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------+++---with a simple-graph abstraction that captures the essential parity
+-+-------+++---obstruction: a graph where more than two vertices have odd degree
+-+-------+++---cannot have an Eulerian trail.
+-+-------+ +--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------+ +--+and included two large islands connected to each other and to the two mainland
+-+-------+ +--+portions by seven bridges. The problem asks whether there is a walk through the
+-+-------+ +--+city that crosses each bridge exactly once.
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---## Main results
+-+-------+ +--+## The Graph
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------+++---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------+++---  has no Eulerian trail (from Mathlib).
+-+-------+++---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------+ +--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------+ +--+- Vertex 0: Central island (Kneiphof)
+-+-------+ +--+- Vertex 1: Northern bank
+-+-------+@@ -1218,39 +572,101 @@
+-+-------+ +--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------+ +--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------+ +--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------+-+--+-/
+-+-------+-+--+
+-+-------+++-- -/
+-+-------+++-- 
+-+-------+++---import Mathlib
+-+-------+ +--+namespace Bridges
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---/-! ### The Königsberg graph
+-+-------+ +--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------+ +--+def konigsberg : Multigraph 4 7 where
+-+-------+ +--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------+ +--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------+++---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------+++---is the simple graph that captures the connectivity pattern.
+-+-------+ +--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------+ +--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---In the original problem, some pairs of landmasses had multiple bridges
+-+-------+++---between them, making the true model a multigraph. However, for the
+-+-------+++---Eulerian trail condition, what matters is the parity of degrees at each
+-+-------+++---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------+++---impossibility via Euler's theorem. -/
+-+-------+ +--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------+ +--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---/-- The four landmasses of Königsberg. -/
+-+-------+++---inductive Konigsberg : Type
+-+-------+++---  | A  -- North bank
+-+-------+++---  | B  -- South bank
+-+-------+++---  | C  -- Island (Kneiphof)
+-+-------+++---  | D  -- East district
+-+-------+++---  deriving DecidableEq, Fintype
+-+-------+ +--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------+ +--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---open Konigsberg
+-+-------+++---
+-+-------+++---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------+++---Every pair of distinct vertices is connected, capturing the fact that
+-+-------+++---every pair of landmasses had at least one bridge between them. -/
+-+-------+++---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+++---
+-+-------+++---instance : DecidableRel konigsbergGraph.Adj := by
+-+-------+++---  intro u v
+-+-------+++---  simp only [konigsbergGraph]
+-+-------+++---  infer_instance
+-+-------+++---
+-+-------+++---/-
+-+-------+++---Every vertex in K₄ has degree 3 (odd).
+-+-------+++----/
+-+-------+++---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------+++---  fin_cases v <;> simp +decide
+-+-------+ +--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------+ +--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------+-+--+
+-+-------+-+--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+++-- 
+-+-------+++-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+++---theorem konigsberg_all_odd :
+-+-------+++---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------+++---  intro v
+-+-------+++---  rw [konigsberg_degree]
+-+-------+++---  exact ⟨1, rfl⟩
+-+-------+ +--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------+ +--+  intro v; fin_cases v <;> native_decide
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---/-
+-+-------+++---The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+++----/
+-+-------+++---theorem konigsberg_four_odd :
+-+-------+++---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------+++---  decide +revert
+-+-------+ +--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------+ +--+theorem konigsberg_odd_count :
+-+-------+ +--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------+ +--+  native_decide
+-+-------+-+--+
+-+-------+++-- 
+-+-------+++---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------+++---then the number of odd-degree vertices is 0 or 2.
+-+-------+++---This is the key obstruction from Mathlib. -/
+-+-------+++---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------+++---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------+++---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------+++---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------+++---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------+++---  hp.card_odd_degree
+-+-------+ +--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------+-+--+
+-+-------+-+--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+++-- 
+-+-------+++---/-
+-+-------+++---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------+++---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------+++---through Königsberg crossing each bridge exactly once.
+-+-------+++----/
+-+-------+++---theorem konigsberg_no_eulerian_trail :
+-+-------+++---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------+++---  intro u v p h;
+-+-------+++---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------+ +--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------+ +--+
+-+-------+ +--+The proof combines:
+-+-------+@@ -1264,104 +680,238 @@
+-+-------+ +--+  omega
+-+-------+ +--+
+-+-------+ +--+end Bridges+/-
+-+-------+-+-+Copyright (c) 2025. All rights reserved.
+-+-------+-+-+Released under Apache 2.0 license.
+-+-------+-+-+
+-+-------+-+-+# The Königsberg Bridge Problem — Formalized
+-+-------+-+-+
+-+-------+-+-+This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------+-+-+the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------+-+-+impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------+-+-+
+-+-------+-+-+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------+-+-+and prove impossibility using the Eulerian trail parity condition.
+-+-------+-+-+
+-+-------+-+-+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------+-+-+with a simple-graph abstraction that captures the essential parity
+-+-------+-+-+obstruction: a graph where more than two vertices have odd degree
+-+-------+-+-+cannot have an Eulerian trail.
+-+-------+-+-+
+-+-------+-+-+## Main results
+-+-------+-+-+
+-+-------+-+-+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------+-+-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------+-+-+  has no Eulerian trail (from Mathlib).
+-+-------+-+-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------++ -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------++ -+Released under Apache 2.0 license as described in the file LICENSE.
+-+-------++-+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------++-+-+  intro v; fin_cases v <;> native_decide
+-+-------++-+-+
+-+-------++-+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------++-+-+theorem konigsberg_odd_count :
+-+-------++-+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------++-+-+  native_decide
+-+-------++-+-+
+-+-------++-+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------++-+-+
+-+-------++-+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------++-+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------++-+-+
+-+-------++-+-+The proof combines:
+-+-------++-+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------++-+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------++-+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------++-+-+  constructor
+-+-------++-+-+  intro t
+-+-------++-+-+  have h1 := t.odd_degree_vertices_le_two
+-+-------++-+-+  have h2 := konigsberg_odd_count
+-+-------++-+-+  omega
+-+-------++-+-+
+-+-------++-+-+end Bridges+/-
+-+-------++-++Copyright (c) 2025. All rights reserved.
+-+-------++-++Released under Apache 2.0 license.
+-+-------++-++
+-+-------++-++# The Königsberg Bridge Problem — Formalized
+-+-------++-++
+-+-------++-++This file formalizes the Königsberg Bridge Problem, widely considered
+-+-------++-++the founding problem of graph theory. In 1736, Euler proved that it is
+-+-------++-++impossible to traverse all seven bridges of Königsberg exactly once.
+-+-------++-++
+-+-------++-++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-------++-++and prove impossibility using the Eulerian trail parity condition.
+-+-------++-++
+-+-------++-++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-------++-++with a simple-graph abstraction that captures the essential parity
+-+-------++-++obstruction: a graph where more than two vertices have odd degree
+-+-------++-++cannot have an Eulerian trail.
+-+-------++-++
+-+-------++-++## Main results
+-+-------++-++
+-+-------++-++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-------++-++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-------++-++  has no Eulerian trail (from Mathlib).
+-+-------++-++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-------++- +-/
+-+-------++-++
+-+-------++- +import Mathlib
+-+-------+ +-+-/
+-+-------+-+-+
+-+-------+ +-+import Mathlib
+-+-------+-+-+
+-+-------+-+-+/-! ### The Königsberg graph
+-+-------+-+-+
+-+-------+-+-+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------+-+-+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------+-+-+is the simple graph that captures the connectivity pattern.
+-+-------+-+-+
+-+-------+-+-+In the original problem, some pairs of landmasses had multiple bridges
+-+-------+-+-+between them, making the true model a multigraph. However, for the
+-+-------+-+-+Eulerian trail condition, what matters is the parity of degrees at each
+-+-------+-+-+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------+-+-+impossibility via Euler's theorem. -/
+-+-------+-+-+
+-+-------+-+-+/-- The four landmasses of Königsberg. -/
+-+-------+-+-+inductive Konigsberg : Type
+-+-------+-+-+  | A  -- North bank
+-+-------+-+-+  | B  -- South bank
+-+-------+-+-+  | C  -- Island (Kneiphof)
+-+-------+-+-+  | D  -- East district
+-+-------+-+-+  deriving DecidableEq, Fintype
+-+-------+-+-+
+-+-------+-+-+open Konigsberg
+-+-------+-+-+
+-+-------+-+-+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------+-+-+Every pair of distinct vertices is connected, capturing the fact that
+-+-------+-+-+every pair of landmasses had at least one bridge between them. -/
+-+-------+-+-+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------+-+-+
+-+-------+-+-+instance : DecidableRel konigsbergGraph.Adj := by
+-+-------+-+-+  intro u v
+-+-------+-+-+  simp only [konigsbergGraph]
+-+-------+-+-+  infer_instance
+-+-------+-+-+
+-+-------+-+-+/-
+-+-------+-+-+Every vertex in K₄ has degree 3 (odd).
+-+-------++ -+import Bridges.EulerianTrail
+-+-------++ -+
+-+-------++ -+/-!
+-+-------++@@ -593,42 +211,7 @@
+-+-------++ -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------++ -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------++ -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------++-++
+-+-------++-++/-! ### The Königsberg graph
+-+-------++-++
+-+-------++-++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-------++-++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-------++-++is the simple graph that captures the connectivity pattern.
+-+-------++-++
+-+-------++-++In the original problem, some pairs of landmasses had multiple bridges
+-+-------++-++between them, making the true model a multigraph. However, for the
+-+-------++-++Eulerian trail condition, what matters is the parity of degrees at each
+-+-------++-++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-------++-++impossibility via Euler's theorem. -/
+-+-------++-++
+-+-------++-++/-- The four landmasses of Königsberg. -/
+-+-------++-++inductive Konigsberg : Type
+-+-------++-++  | A  -- North bank
+-+-------++-++  | B  -- South bank
+-+-------++-++  | C  -- Island (Kneiphof)
+-+-------++-++  | D  -- East district
+-+-------++-++  deriving DecidableEq, Fintype
+-+-------++-++
+-+-------++-++open Konigsberg
+-+-------++-++
+-+-------++-++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-------++-++Every pair of distinct vertices is connected, capturing the fact that
+-+-------++-++every pair of landmasses had at least one bridge between them. -/
+-+-------++-++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-------++-++
+-+-------++-++instance : DecidableRel konigsbergGraph.Adj := by
+-+-------++-++  intro u v
+-+-------++-++  simp only [konigsbergGraph]
+-+-------++-++  infer_instance
+-+-------++-++
+-+-------++-++/-
+-+-------++-++Every vertex in K₄ has degree 3 (odd).
+-+-------++- +-/
+-+-------+ +-+-/
+-+-------+-+-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------+-+-+  fin_cases v <;> simp +decide
+-+-------++ -+
+-+-------++ -+namespace Bridges
+-+-------++ -+
+-+-------++@@ -648,10 +231,8 @@
+-+-------++ -+
+-+-------++ -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------++ -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------++-++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-------++-++  fin_cases v <;> simp +decide
+-+-------++- +
+-+-------++- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+ +-+
+-+-------+ +-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------+-+-+theorem konigsberg_all_odd :
+-+-------+-+-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------+-+-+  intro v
+-+-------+-+-+  rw [konigsberg_degree]
+-+-------+-+-+  exact ⟨1, rfl⟩
+-+-------+-+-+
+-+-------+-+-+/-
+-+-------+-+-+The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------+-+-+-/
+-+-------+-+-+theorem konigsberg_four_odd :
+-+-------+-+-+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------+-+-+  decide +revert
+-+-------+-+-+
+-+-------+-+-+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------+-+-+then the number of odd-degree vertices is 0 or 2.
+-+-------+-+-+This is the key obstruction from Mathlib. -/
+-+-------+-+-+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------+-+-+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------+-+-+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------+-+-+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------+-+-+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------+-+-+  hp.card_odd_degree
+-+-------+-+-+
+-+-------+-+-+/-
+-+-------+-+-+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------+-+-+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------+-+-+through Königsberg crossing each bridge exactly once.
+-+-------+-+-+-/
+-+-------+-+-+theorem konigsberg_no_eulerian_trail :
+-+-------+-+-+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------+-+-+  intro u v p h;
+-+-------+-+-+  have := euler_necessary h; simp_all +decide ;+/-
+-+-------+- +Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------+- +Released under Apache 2.0 license as described in the file LICENSE.
+-+-------+- +-/+ -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------++ -+  intro v; fin_cases v <;> native_decide
+-+-------++ -+
+-+-------++@@ -675,35 +256,89 @@
+-+-------++ -+  have h2 := konigsberg_odd_count
+-+-------++ -+  omega
+-+-------++ -+
+-+-------++--+end Bridges++theorem konigsberg_all_odd :
+-+-------++-++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-------++-++  intro v
+-+-------++-++  rw [konigsberg_degree]
+-+-------++-++  exact ⟨1, rfl⟩
+-+-------++-++
+-+-------++-++/-
+-+-------++-++The number of odd-degree vertices in the Königsberg graph is 4.
+-+-------++-++-/
+-+-------++-++theorem konigsberg_four_odd :
+-+-------++-++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-------++-++  decide +revert
+-+-------++-++
+-+-------++-++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-------++-++then the number of odd-degree vertices is 0 or 2.
+-+-------++-++This is the key obstruction from Mathlib. -/
+-+-------++-++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-------++-++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-------++-++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-------++-++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-------++-++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-------++-++  hp.card_odd_degree
+-+-------++-++
+-+-------++-++/-
+-+-------++-++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-------++-++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-------++-++through Königsberg crossing each bridge exactly once.
+-+-------++-++-/
+-+-------++-++theorem konigsberg_no_eulerian_trail :
+-+-------++-++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-------++-++  intro u v p h;
+-+-------++-++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+-------++++Copyright (c) 2025 Harmonic. All rights reserved.
+-+-------++++Released under Apache 2.0 license as described in the file LICENSE.
+-+-------++++-/
+-+-------++++import Mathlib
+-+-------++++import Bridges.EulerianTrail
+-+-------++++
+-+-------++++/-!
+-+-------++++# The Königsberg Bridge Problem
+-+-------++++
+-+-------++++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-------++++the founding result of graph theory (Euler, 1736).
+-+-------++++
+-+-------++++## The Problem
+-+-------++++
+-+-------++++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-------++++and included two large islands connected to each other and to the two mainland
+-+-------++++portions by seven bridges. The problem asks whether there is a walk through the
+-+-------++++city that crosses each bridge exactly once.
+-+-------++++
+-+-------++++## The Graph
+-+-------++++
+-+-------++++We model the four landmasses as vertices 0–3 of a multigraph:
+-+-------++++- Vertex 0: Central island (Kneiphof)
+-+-------++++- Vertex 1: Northern bank
+-+-------++++- Vertex 2: Southern bank
+-+-------++++- Vertex 3: Eastern island (Lomse)
+-+-------++++
+-+-------++++The seven bridges are:
+-+-------++++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-------++++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-------++++- Edge 4: One bridge from vertex 0 to vertex 3
+-+-------++++- Edge 5: One bridge from vertex 1 to vertex 3
+-+-------++++- Edge 6: One bridge from vertex 2 to vertex 3
+-+-------++++
+-+-------++++## Main Results
+-+-------++++
+-+-------++++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-------++++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-------++++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-------++++-/
+-+-------++++
+-+-------++++namespace Bridges
+-+-------++++
+-+-------++++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-------++++def konigsberg : Multigraph 4 7 where
+-+-------++++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-------++++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-------++++
+-+-------++++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-------++++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-------++++
+-+-------++++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-------++++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-------++++
+-+-------++++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-------++++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-------++++
+-+-------++++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-------++++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-------++++
+-+-------++++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-------++++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-------++++  intro v; fin_cases v <;> native_decide
+-+-------++++
+-+-------++++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-------++++theorem konigsberg_odd_count :
+-+-------++++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-------++++  native_decide
+-+-------++++
+-+-------++++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-------++++
+-+-------++++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-------++++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-------++++
+-+-------++++The proof combines:
+-+-------++++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-------++++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-------++++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-------++++  constructor
+-+-------++++  intro t
+-+-------++++  have h1 := t.odd_degree_vertices_le_two
+-+-------++++  have h2 := konigsberg_odd_count
+-+-------++++  omega
+-+-------++++
+-+-------++++end Bridges++-@@ -1,168 +1,86 @@
+-+------++----- a/Bridges/Konigsberg.lean
+-+------++--+++ b/Bridges/Konigsberg.lean
+-+------++--@@ -1,99 +1,86 @@
+-+------++-- /-
+-+------++---Copyright (c) 2025. All rights reserved.
+-+------++---Released under Apache 2.0 license.
+-+------++--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+------++--+Released under Apache 2.0 license as described in the file LICENSE.
+-+------+ --+-/
+-+------+---+theorem konigsberg_four_odd :
+-+------+---+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+------+---+  decide +revert
+-+---+----+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+----+-+and included two large islands connected to each other and to the two mainland
+-+---+----+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+----+-+city that crosses each bridge exactly once.
+-+---+----+-+
+-+---+----+-+## The Graph
+-+---+----+-+
+-+---+----+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+----+-+- Vertex 0: Central island (Kneiphof)
+-+---+----+-+- Vertex 1: Northern bank
+-+---+----+-+- Vertex 2: Southern bank
+-+---+----+-+- Vertex 3: Eastern island (Lomse)
+-+---+----+-+
+-+---+----+-+The seven bridges are:
+-+---+----+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+----+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+----+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+----+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+----+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+----+-+
+-+---+----+-+## Main Results
+-+---+----+-+
+-+---+----+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+----+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+----+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+---- -+-/
+-+---+------+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+------+  fin_cases v <;> simp +decide
+-+---+----+-+
+-+---+----+-+namespace Bridges
+-+---+----+-+
+-+---+----+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+----+-+def konigsberg : Multigraph 4 7 where
+-+---+----+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+----+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+----+-+
+-+---+----+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+----+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+----+-+
+-+---+----+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+----+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+----+-+
+-+---+----+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+----+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+----+-+
+-+---+----+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+----+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---++---+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--- +--- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--- +--- -+  intro v; fin_cases v <;> native_decide
+-+--+-----+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-----+-+theorem konigsberg_odd_count :
+-+--+-----+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-----+-+  native_decide
+-+--+-----+-+
+-+--+-----+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-----+-+
+-+--+-----+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-----+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-----+-+
+-+--+-----+-+The proof combines:
+-+--+-----+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-----+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-----+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-----+-+  constructor
+-+--+-----+-+  intro t
+-+--+-----+-+  have h1 := t.odd_degree_vertices_le_two
+-+--+-----+-+  have h2 := konigsberg_odd_count
+-+--+-----+-+  omega
+-+--+-----+-+
+-+--+-----+-+end Bridges+/-
+-+--+-----++Copyright (c) 2025. All rights reserved.
+-+--+-----++Released under Apache 2.0 license.
+-+--+-+---@@ -675,35 +256,89 @@
+-+--+-+--- -+  have h2 := konigsberg_odd_count
+-+--+-+--- -+  omega
+-+-- -+--- -+
+-+---+ --- -+
+-+---+---- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+------+theorem konigsberg_all_odd :
+-+---+------+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+------+  intro v
+-+---+------+  rw [konigsberg_degree]
+-+---+------+  exact ⟨1, rfl⟩
+-+---+------+
+-+---+------+/-
+-+---+------+The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+---+@@ -1,256 +1,86 @@
+-+---+---+---- a/Bridges/Konigsberg.lean
+-+---+---+-+++ b/Bridges/Konigsberg.lean
+-+---+---+-@@ -1,168 +1,86 @@
+-+---+---+----- a/Bridges/Konigsberg.lean
+-+---+---+--+++ b/Bridges/Konigsberg.lean
+-+---+---+--@@ -1,99 +1,86 @@
+-+---+---+-- /-
+-+---+---+---Copyright (c) 2025. All rights reserved.
+-+---+---+---Released under Apache 2.0 license.
+-+---+---+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+---+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+--- --+-/
+-+---+------+theorem konigsberg_four_odd :
+-+---+------+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+------+  decide +revert
+-+---+------+
+-+---+------+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+------+then the number of odd-degree vertices is 0 or 2.
+-+---+------+This is the key obstruction from Mathlib. -/
+-+---+------+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+------+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+------+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+------+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+------+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+------+  hp.card_odd_degree
+-+---+------+
+-+---+------+/-
+-+---+------+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+------+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+------+through Königsberg crossing each bridge exactly once.
+-+---+------+-/
+-+---+------+theorem konigsberg_no_eulerian_trail :
+-+---+------+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+------+  intro u v p h;
+-+---+------+  have := euler_necessary h; simp_all +decide ;+/-
+-+---+---+--+import Mathlib
+-+---+---+--+import Bridges.EulerianTrail
+-+---+---+-- 
+-+---+---+---# The Königsberg Bridge Problem — Formalized
+-+---+---+--+/-!
+-+---+---+--+# The Königsberg Bridge Problem
+-+---+---+-- 
+-+---+---+---This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+---+---the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+---+---impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+---+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+---+--+the founding result of graph theory (Euler, 1736).
+-+---+---+-- 
+-+---+---+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+---+---and prove impossibility using the Eulerian trail parity condition.
+-+---+---+--+## The Problem
+-+---+---+-- 
+-+---+---+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+---+---with a simple-graph abstraction that captures the essential parity
+-+---+---+---obstruction: a graph where more than two vertices have odd degree
+-+---+---+---cannot have an Eulerian trail.
+-+---+---+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+---+--+and included two large islands connected to each other and to the two mainland
+-+---+---+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+---+--+city that crosses each bridge exactly once.
+-+---+---+-- 
+-+---+---+---## Main results
+-+---+---+--+## The Graph
+-+---+---+-- 
+-+---+---+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+---+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+---+---  has no Eulerian trail (from Mathlib).
+-+---+---+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+---+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+---+--+- Vertex 0: Central island (Kneiphof)
+-+---+---+--+- Vertex 1: Northern bank
+-+---+---+--+- Vertex 2: Southern bank
+-+---+---+--+- Vertex 3: Eastern island (Lomse)
+-+---+---+--+
+-+---+---+--+The seven bridges are:
+-+---+---+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+---+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+---+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+---+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+---+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+---+--+
+-+---+---+--+## Main Results
+-+---+---+--+
+-+---+---+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+---+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+---+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+---+-- -/
+-+---+---+-- 
+-+---+---+---import Mathlib
+-+---+---+--+namespace Bridges
+-+---+---+-- 
+-+---+---+---/-! ### The Königsberg graph
+-+---+---+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+---+--+def konigsberg : Multigraph 4 7 where
+-+---+---+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+---+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+---+-- 
+-+---+---+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+---+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+---+---is the simple graph that captures the connectivity pattern.
+-+---+---+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+---+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+---+-- 
+-+---+---+---In the original problem, some pairs of landmasses had multiple bridges
+-+---+---+---between them, making the true model a multigraph. However, for the
+-+---+---+---Eulerian trail condition, what matters is the parity of degrees at each
+-+---+---+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+---+---impossibility via Euler's theorem. -/
+-+---+---+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+---+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+---+-- 
+-+---+---+---/-- The four landmasses of Königsberg. -/
+-+---+---+---inductive Konigsberg : Type
+-+---+---+---  | A  -- North bank
+-+---+---+---  | B  -- South bank
+-+---+---+---  | C  -- Island (Kneiphof)
+-+---+---+---  | D  -- East district
+-+---+---+---  deriving DecidableEq, Fintype
+-+---+---+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+---+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+---+-- 
+-+---+---+---open Konigsberg
+-+---+---+---
+-+---+---+---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+---+---Every pair of distinct vertices is connected, capturing the fact that
+-+---+---+---every pair of landmasses had at least one bridge between them. -/
+-+---+---+---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+---+---
+-+---+---+---instance : DecidableRel konigsbergGraph.Adj := by
+-+---+---+---  intro u v
+-+---+---+---  simp only [konigsbergGraph]
+-+---+---+---  infer_instance
+-+---+---+---
+-+---+---+---/-
+-+---+---+---Every vertex in K₄ has degree 3 (odd).
+-+---+---+----/
+-+---+---+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+---+---  fin_cases v <;> simp +decide
+-+---+---+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+---+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+---+-- 
+-+---+---+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+---+---theorem konigsberg_all_odd :
+-+---+---+---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+---+---  intro v
+-+---+---+---  rw [konigsberg_degree]
+-+---+---+---  exact ⟨1, rfl⟩
+-+---+---+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+---+--+  intro v; fin_cases v <;> native_decide
+-+---+---+-- 
+-+---+---+---/-
+-+---+---+---The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+---+----/
+-+---+---+---theorem konigsberg_four_odd :
+-+---+---+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+---+---  decide +revert
+-+---+---+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+---+--+theorem konigsberg_odd_count :
+-+---+---+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+---+--+  native_decide
+-+---+---+-- 
+-+---+---+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+---+---then the number of odd-degree vertices is 0 or 2.
+-+---+---+---This is the key obstruction from Mathlib. -/
+-+---+---+---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+---+---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+---+---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+---+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+---+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+---+---  hp.card_odd_degree
+-+---+---+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+---+-- 
+-+---+---+---/-
+-+---+---+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+---+---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+---+---through Königsberg crossing each bridge exactly once.
+-+---+---+----/
+-+---+---+---theorem konigsberg_no_eulerian_trail :
+-+---+---+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+---+---  intro u v p h;
+-+---+---+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+---+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+---+--+
+-+---+---+--+The proof combines:
+-+---+---+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+---+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+---+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+---+--+  constructor
+-+---+---+--+  intro t
+-+---+---+--+  have h1 := t.odd_degree_vertices_le_two
+-+---+---+--+  have h2 := konigsberg_odd_count
+-+---+---+--+  omega
+-+---+---+--+
+-+---+---+--+end Bridges+/-
+-+---+--- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+--- -+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+----+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+----+-+  intro v; fin_cases v <;> native_decide
+-+---+----+-+
+-+---+----+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+----+-+theorem konigsberg_odd_count :
+-+---+----+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+----+-+  native_decide
+-+---+----+-+
+-+---+----+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+----+-+
+-+---+----+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+----+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+----+-+
+-+---+----+-+The proof combines:
+-+---+----+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+----+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+----+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+----+-+  constructor
+-+---+----+-+  intro t
+-+---+----+-+  have h1 := t.odd_degree_vertices_le_two
+-+---+----+-+  have h2 := konigsberg_odd_count
+-+---+----+-+  omega
+-+---+----+-+
+-+---+----+-+end Bridges+/-
+-+---+----++Copyright (c) 2025. All rights reserved.
+-+---+----++Released under Apache 2.0 license.
+-+--- +---@@ -675,35 +256,89 @@
+-+--- +--- -+  have h2 := konigsberg_odd_count
+-+--- +--- -+  omega
+-+---@@ -6465,19 +2352,14 @@
+-+--- +----++  intro v
+-+--- +----++  rw [konigsberg_degree]
+-+--- +----++  exact ⟨1, rfl⟩
+-+----++---++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++---++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----+ ---++
+-+---++----++
+-+--- +----++/-
+-+--- +----++The number of odd-degree vertices in the Königsberg graph is 4.
+-+--- +----++-/
+-+--- +----++theorem konigsberg_four_odd :
+-+--- +----++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--- +----++  decide +revert
+-+----++---++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++---++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++---++  intro v; fin_cases v <;> native_decide
+-+----+ ---++
+-+---++----++
+-+--- +----++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--- +----++then the number of odd-degree vertices is 0 or 2.
+-+--- +----++This is the key obstruction from Mathlib. -/
+-+---@@ -6487,11 +2369,7 @@
+-+--- +----++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--- +----++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--- +----++  hp.card_odd_degree
+-+----++---++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----++---++theorem konigsberg_odd_count :
+-+----++---++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----++---++  native_decide
+-+----+ ---++
+-+---++----++
+-+--- +----++/-
+-+--- +----++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--- +----++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---@@ -6506,70 +2384,262 @@
+-+--- +---++-/
+-+--- +---++import Mathlib
+-+--- +---++import Bridges.EulerianTrail
+-+--+-+-----+end Bridges++theorem konigsberg_all_odd :
+-+--+-+----++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-+----++  intro v
+-+--+-+----++  rw [konigsberg_degree]
+-+--+-+----++  exact ⟨1, rfl⟩
+-+--+-+----++
+-+--+-+----++/-
+-+--+-+----++The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+----++-/
+-+--+-+----++theorem konigsberg_four_odd :
+-+--+-+----++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-+----++  decide +revert
+-+--+-+----++
+-+--+-+----++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-+----++then the number of odd-degree vertices is 0 or 2.
+-+--+-+----++This is the key obstruction from Mathlib. -/
+-+--+-+----++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-+----++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-+----++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-+----++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-+----++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-+----++  hp.card_odd_degree
+-+--+-+----++
+-+--+-+----++/-
+-+--+-+----++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-+----++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-+----++through Königsberg crossing each bridge exactly once.
+-+--+-+----++-/
+-+--+-+----++theorem konigsberg_no_eulerian_trail :
+-+--+-+----++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-+----++  intro u v p h;
+-+--+-+----++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+--+-+---++Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+---++Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+---++-/
+-+--+-+---++import Mathlib
+-+--+-+---++import Bridges.EulerianTrail
+-+--+- ---++
+-+--+-----++# The Königsberg Bridge Problem — Formalized
+-+--+-+---++/-!
+-+--+-+---++# The Königsberg Bridge Problem
+-+--+- ---++
+-+--+-----++This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-----++the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-----++impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+---++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-+---++the founding result of graph theory (Euler, 1736).
+-+--+- ---++
+-+--+-----++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-----++and prove impossibility using the Eulerian trail parity condition.
+-+--+-+---++## The Problem
+-+--+- ---++
+-+--+-----++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-----++with a simple-graph abstraction that captures the essential parity
+-+--+-----++obstruction: a graph where more than two vertices have odd degree
+-+--+-----++cannot have an Eulerian trail.
+-+--+-+---++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-+---++and included two large islands connected to each other and to the two mainland
+-+--+-+---++portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-+---++city that crosses each bridge exactly once.
+-+--+- ---++
+-+--+-----++## Main results
+-+--+-+---++## The Graph
+-+--+- ---++
+-+--+-----++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-----++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-----++  has no Eulerian trail (from Mathlib).
+-+--+-----++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+----- +-/
+-+--+-+---++We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-+---++- Vertex 0: Central island (Kneiphof)
+-+--+-+---++- Vertex 1: Northern bank
+-+--+-+---++- Vertex 2: Southern bank
+-+--+-+---++- Vertex 3: Eastern island (Lomse)
+-+--+- ---++
+-+--+----- +import Mathlib
+-+--+----+-+-/
+-+--+----+-+import Mathlib
+-+--+---- -+import Bridges.EulerianTrail
+-+--+---- -+
+-+--+---- -+/-!
+-+--+----@@ -593,42 +211,7 @@
+-+--+---- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+---- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+---- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+---++The seven bridges are:
+-+--+-+---++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-+---++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-+---++- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-+---++- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-+---++- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+- ---++
+-+--+-----++/-! ### The Königsberg graph
+-+--+-+---++## Main Results
+-+--+- ---++
+-+--+-----++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-----++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-----++is the simple graph that captures the connectivity pattern.
+-+--+-+---++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+---++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+---++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+---++-/
+-+--+- ---++
+-+--+-----++In the original problem, some pairs of landmasses had multiple bridges
+-+--+-----++between them, making the true model a multigraph. However, for the
+-+--+-----++Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-----++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-----++impossibility via Euler's theorem. -/
+-+--+-+---++namespace Bridges
+-+--+- ---++
+-+--+-----++/-- The four landmasses of Königsberg. -/
+-+--+-----++inductive Konigsberg : Type
+-+--+-----++  | A  -- North bank
+-+--+-----++  | B  -- South bank
+-+--+-----++  | C  -- Island (Kneiphof)
+-+--+-----++  | D  -- East district
+-+--+-----++  deriving DecidableEq, Fintype
+-+--+-+---++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-+---++def konigsberg : Multigraph 4 7 where
+-+--+-+---++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-+---++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+- ---++
+-+--+-----++open Konigsberg
+-+--+-+---++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-+---++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+- ---++
+-+--+-----++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-----++Every pair of distinct vertices is connected, capturing the fact that
+-+--+-----++every pair of landmasses had at least one bridge between them. -/
+-+--+-----++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+---++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-+---++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+- ---++
+-+--+-----++instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-----++  intro u v
+-+--+-----++  simp only [konigsbergGraph]
+-+--+-----++  infer_instance
+-+--+-+---++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-+---++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+- ---++
+-+--+-----++/-
+-+--+-----++Every vertex in K₄ has degree 3 (odd).
+-+--+----- +-/
+-+--+----+-+-/
+-+--+---- -+
+-+--+---- -+namespace Bridges
+-+--+---- -+
+-+--+----@@ -648,10 +231,8 @@
+-+--+---- -+
+-+--+---- -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+---- -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-----++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-----++  fin_cases v <;> simp +decide
+-+--+----- +
+-+--+----- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+----+-+
+-+--+----+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+---- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+---- -+  intro v; fin_cases v <;> native_decide
+-+--+---- -+
+-+--+----@@ -675,35 +256,89 @@
+-+--+---- -+  have h2 := konigsberg_odd_count
+-+--+---- -+  omega
+-+--+---- -+
+-+--+------+end Bridges++theorem konigsberg_all_odd :
+-+--+-----++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-----++  intro v
+-+--+-----++  rw [konigsberg_degree]
+-+--+-----++  exact ⟨1, rfl⟩
+-+--+-+---++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+---++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+- ---++
+-+--+-----++/-
+-+--+-----++The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-----++-/
+-+--+-----++theorem konigsberg_four_odd :
+-+--+-----++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-----++  decide +revert
+-+--+-+---++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+---++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+---++  intro v; fin_cases v <;> native_decide
+-+--+- ---++
+-+--+-----++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-----++then the number of odd-degree vertices is 0 or 2.
+-+--+-----++This is the key obstruction from Mathlib. -/
+-+--+-----++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-----++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-----++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-----++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-----++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-----++  hp.card_odd_degree
+-+--+-+---++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-+---++theorem konigsberg_odd_count :
+-+--+-+---++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-+---++  native_decide
+-+--+- ---++
+-+--+-----++/-
+-+--+-----++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-----++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-----++through Königsberg crossing each bridge exactly once.
+-+--+-----++-/
+-+--+-----++theorem konigsberg_no_eulerian_trail :
+-+--+-----++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-----++  intro u v p h;
+-+--+-----++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+--+----++Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+----++Released under Apache 2.0 license as described in the file LICENSE.
+-+--+----++-/
+-+--+----++import Mathlib
+-+--+----++import Bridges.EulerianTrail
+-+--+----++
+-+--+----++/-!
+-+--+----++# The Königsberg Bridge Problem
+-+--+----++
+-+--+----++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+----++the founding result of graph theory (Euler, 1736).
+-+--+----++
+-+--+----++## The Problem
+-+--+----++
+-+--+----++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+----++and included two large islands connected to each other and to the two mainland
+-+--+----++portions by seven bridges. The problem asks whether there is a walk through the
+-+--+----++city that crosses each bridge exactly once.
+-+--+----++
+-+--+----++## The Graph
+-+--+----++
+-+--+----++We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+----++- Vertex 0: Central island (Kneiphof)
+-+--+----++- Vertex 1: Northern bank
+-+--+----++- Vertex 2: Southern bank
+-+--+----++- Vertex 3: Eastern island (Lomse)
+-+--+----++
+-+--+----++The seven bridges are:
+-+--+----++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+----++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+----++- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+----++- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+----++- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+----++
+-+--+----++## Main Results
+-+--+----++
+-+--+----++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+----++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+----++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+----++-/
+-+--+----++
+-+--+----++namespace Bridges
+-+--+----++
+-+--+----++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+----++def konigsberg : Multigraph 4 7 where
+-+--+----++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+----++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+----++
+-+--+----++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+----++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+----++
+-+--+----++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+----++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+----++
+-+--+----++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+----++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+----++
+-+--+----++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+----++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+----++
+-+--+----++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+----++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+----++  intro v; fin_cases v <;> native_decide
+-+--+----++
+-+--+----++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+----++theorem konigsberg_odd_count :
+-+--+----++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+----++  native_decide
+-+--+----++
+-+--+----++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+----++
+-+--+----++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+----++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+----++
+-+--+----++The proof combines:
+-+--+----++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+----++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+----++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+----++  constructor
+-+--+----++  intro t
+-+--+----++  have h1 := t.odd_degree_vertices_le_two
+-+--+----++  have h2 := konigsberg_odd_count
+-+--+----++  omega
+-+--+----++
+-+--+----++end Bridges+/-
+-+--+--+----+end Bridges+/-
+-+--+--+---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+--+---+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+---++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-- -+---++
+-+---+ ---++
+-+---+----++# The Königsberg Bridge Problem — Formalized
+-+--- +---++/-!
+-+--- +---++# The Königsberg Bridge Problem
+-+--+-+---++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+---++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-- -+---++
+-+---+ ---++
+-+---+----++This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+----++the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+----++impossible to traverse all seven bridges of Königsberg exactly once.
+-+--- +---++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--- +---++the founding result of graph theory (Euler, 1736).
+-+--+-+---++The proof combines:
+-+--+-+---++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-+---++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-+---++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-+---++  constructor
+-+--+-+---++  intro t
+-+--+-+---++  have h1 := t.odd_degree_vertices_le_two
+-+--+-+---++  have h2 := konigsberg_odd_count
+-+--+-+---++  omega
+-+-- -+---++
+-+---+ ---++
+-+---+----++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+----++and prove impossibility using the Eulerian trail parity condition.
+-+--- +---++## The Problem
+-+----+---++
+-+---+ ---++
+-+---+----++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+----++with a simple-graph abstraction that captures the essential parity
+-+---+----++obstruction: a graph where more than two vertices have odd degree
+-+---+----++cannot have an Eulerian trail.
+-+--- +---++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--- +---++and included two large islands connected to each other and to the two mainland
+-+--- +---++portions by seven bridges. The problem asks whether there is a walk through the
+-+--- +---++city that crosses each bridge exactly once.
+-+----+---++
+-+---+ ---++
+-+---+----++## Main results
+-+--- +---++## The Graph
+-+----+---++
+-+---+ ---++
+-+---+----++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+----++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+----++  has no Eulerian trail (from Mathlib).
+-+---+----++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+---- +-/
+-+--- +---++We model the four landmasses as vertices 0–3 of a multigraph:
+-+--- +---++- Vertex 0: Central island (Kneiphof)
+-+--- +---++- Vertex 1: Northern bank
+-+--- +---++- Vertex 2: Southern bank
+-+--- +---++- Vertex 3: Eastern island (Lomse)
+-+----+---++
+-+---+ ---++
+-+---+---- +import Mathlib
+-+---+---+-+-/
+-+---+---+-+import Mathlib
+-+---+--- -+import Bridges.EulerianTrail
+-+---+--- -+
+-+---+--- -+/-!
+-+---+---@@ -593,42 +211,7 @@
+-+---+--- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+--- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+--- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--- +---++The seven bridges are:
+-+--- +---++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--- +---++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--- +---++- Edge 4: One bridge from vertex 0 to vertex 3
+-+--- +---++- Edge 5: One bridge from vertex 1 to vertex 3
+-+--- +---++- Edge 6: One bridge from vertex 2 to vertex 3
+-+----+---++
+-+---+ ---++
+-+---+----++/-! ### The Königsberg graph
+-+--- +---++## Main Results
+-+----+---++
+-+---+ ---++
+-+---+----++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+----++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+----++is the simple graph that captures the connectivity pattern.
+-+--- +---++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--- +---++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--- +---++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--- +---++-/
+-+----+---++
+-+---+ ---++
+-+---+----++In the original problem, some pairs of landmasses had multiple bridges
+-+---+----++between them, making the true model a multigraph. However, for the
+-+---+----++Eulerian trail condition, what matters is the parity of degrees at each
+-+---+----++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+----++impossibility via Euler's theorem. -/
+-+--- +---++namespace Bridges
+-+----+---++
+-+---+ ---++
+-+---+----++/-- The four landmasses of Königsberg. -/
+-+---+----++inductive Konigsberg : Type
+-+---+----++  | A  -- North bank
+-+---+----++  | B  -- South bank
+-+---+----++  | C  -- Island (Kneiphof)
+-+---+----++  | D  -- East district
+-+---+----++  deriving DecidableEq, Fintype
+-+--- +---++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--- +---++def konigsberg : Multigraph 4 7 where
+-+--- +---++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--- +---++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----+---++
+-+---+ ---++
+-+---+----++open Konigsberg
+-+--- +---++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--- +---++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----+---++
+-+---+ ---++
+-+---+----++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+----++Every pair of distinct vertices is connected, capturing the fact that
+-+---+----++every pair of landmasses had at least one bridge between them. -/
+-+---+----++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--- +---++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--- +---++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----+---++
+-+---+ ---++
+-+---+----++instance : DecidableRel konigsbergGraph.Adj := by
+-+---+----++  intro u v
+-+---+----++  simp only [konigsbergGraph]
+-+---+----++  infer_instance
+-+--- +---++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--- +---++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----+---++
+-+---+ ---++
+-+---+----++/-
+-+---+----++Every vertex in K₄ has degree 3 (odd).
+-+---+---- +-/
+-+---+---+-+-/
+-+---+--- -+
+-+---+--- -+namespace Bridges
+-+---+--- -+
+-+---+---@@ -648,10 +231,8 @@
+-+---+--- -+
+-+---+--- -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+--- -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+----++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+----++  fin_cases v <;> simp +decide
+-+---+---- +
+-+---+---- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+---+-+
+-+---+---+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+--- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+--- -+  intro v; fin_cases v <;> native_decide
+-+---+--- -+
+-+---+---@@ -675,35 +256,89 @@
+-+---+--- -+  have h2 := konigsberg_odd_count
+-+---+--- -+  omega
+-+---+--- -+
+-+---+-----+end Bridges++theorem konigsberg_all_odd :
+-+---+----++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+----++  intro v
+-+---+----++  rw [konigsberg_degree]
+-+---+----++  exact ⟨1, rfl⟩
+-+--- +---++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--- +---++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----+---++
+-+---+ ---++
+-+---+----++/-
+-+---+----++The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+----++-/
+-+---+----++theorem konigsberg_four_odd :
+-+---+----++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+----++  decide +revert
+-+--- +---++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--- +---++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--- +---++  intro v; fin_cases v <;> native_decide
+-+----+---++
+-+---+ ---++
+-+---+----++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+----++then the number of odd-degree vertices is 0 or 2.
+-+---+----++This is the key obstruction from Mathlib. -/
+-+---+----++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+----++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+----++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+----++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+----++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+----++  hp.card_odd_degree
+-+--- +---++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--- +---++theorem konigsberg_odd_count :
+-+--- +---++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--- +---++  native_decide
+-+----+---++
+-+---+ ---++
+-+---+----++/-
+-+---+----++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+----++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+----++through Königsberg crossing each bridge exactly once.
+-+---+----++-/
+-+---+----++theorem konigsberg_no_eulerian_trail :
+-+---+----++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+----++  intro u v p h;
+-+---+----++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+---+---++Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+---++Released under Apache 2.0 license as described in the file LICENSE.
+-+---+---++-/
+-+---+---++import Mathlib
+-+---+---++import Bridges.EulerianTrail
+-+---+---++
+-+---+---++/-!
+-+---+---++# The Königsberg Bridge Problem
+-+---+---++
+-+---+---++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+---++the founding result of graph theory (Euler, 1736).
+-+---+---++
+-+---+---++## The Problem
+-+---+---++
+-+---+---++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+---++and included two large islands connected to each other and to the two mainland
+-+---+---++portions by seven bridges. The problem asks whether there is a walk through the
+-+---+---++city that crosses each bridge exactly once.
+-+---+---++
+-+---+---++## The Graph
+-+---+---++
+-+---+---++We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+---++- Vertex 0: Central island (Kneiphof)
+-+---+---++- Vertex 1: Northern bank
+-+---+---++- Vertex 2: Southern bank
+-+---+---++- Vertex 3: Eastern island (Lomse)
+-+---+---++
+-+---+---++The seven bridges are:
+-+---+---++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+---++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+---++- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+---++- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+---++- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+---++
+-+---+---++## Main Results
+-+---+---++
+-+---+---++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+---++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+---++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+---++-/
+-+---+---++
+-+---+---++namespace Bridges
+-+---+---++
+-+---+---++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+---++def konigsberg : Multigraph 4 7 where
+-+---+---++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+---++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+---++
+-+---+---++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+---++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+---++
+-+---+---++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+---++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+---++
+-+---+---++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+---++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+---++
+-+---+---++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+---++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+---++
+-+---+---++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+---++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+---++  intro v; fin_cases v <;> native_decide
+-+---+---++
+-+---+---++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+---++theorem konigsberg_odd_count :
+-+---+---++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+---++  native_decide
+-+---+---++
+-+---+---++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+---++
+-+---+---++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+---++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+---++
+-+---+---++The proof combines:
+-+---+---++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+---++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+---++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+---++  constructor
+-+---+---++  intro t
+-+---+---++  have h1 := t.odd_degree_vertices_le_two
+-+---+---++  have h2 := konigsberg_odd_count
+-+---+---++  omega
+-+---+---++
+-+---+---++end Bridges+/-
+-+---+-+----+end Bridges+/-
+-+---+-+---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+-+---+Released under Apache 2.0 license as described in the file LICENSE.
+-+--- +---++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--- +---++
+-+--- +---++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---@@ -6589,154 +2659,13 @@
+-+--- +-+----+end Bridges+/-
+-+--- +-+---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--- +-+---+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++---++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----++---++
+-+----++---++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++---++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++---++
+-+----++---++The proof combines:
+-+----++---++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----++---++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----++---++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----++---++  constructor
+-+----++---++  intro t
+-+----++---++  have h1 := t.odd_degree_vertices_le_two
+-+----++---++  have h2 := konigsberg_odd_count
+-+----++---++  omega
+-+----++---++
+-+----++---++end Bridges+/-
+-+----++-+----+end Bridges+/-
+-+----++-+---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++-+---+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++-+---+-/
+-+----++-+---+import Mathlib
+-+----++-+---+import Bridges.EulerianTrail
+-+----++-+---+
+-+----++-+---+/-!
+-+----++-+---+# The Königsberg Bridge Problem
+-+----++-+---+
+-+----++-+---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----++-+---+the founding result of graph theory (Euler, 1736).
+-+----++-+---+
+-+----++-+---+## The Problem
+-+----++-+---+
+-+----++-+---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----++-+---+and included two large islands connected to each other and to the two mainland
+-+----++-+---+portions by seven bridges. The problem asks whether there is a walk through the
+-+----++-+---+city that crosses each bridge exactly once.
+-+----++-+---+
+-+----++-+---+## The Graph
+-+----++-+---+
+-+----++-+---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----++-+---+- Vertex 0: Central island (Kneiphof)
+-+----++-+---+- Vertex 1: Northern bank
+-+----++-+---+- Vertex 2: Southern bank
+-+----++-+---+- Vertex 3: Eastern island (Lomse)
+-+----++-+---+
+-+----++-+---+The seven bridges are:
+-+----++-+---+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----++-+---+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----++-+---+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----++-+---+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----++-+---+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----++-+---+
+-+----++-+---+## Main Results
+-+----++-+---+
+-+----++-+---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++-+---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++-+---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++-+---+-/
+-+----++-+---+
+-+----++-+---+namespace Bridges
+-+----++-+---+
+-+----++-+---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----++-+---+def konigsberg : Multigraph 4 7 where
+-+----++-+---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----++-+---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----++-+---+
+-+----++-+---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----++-+---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----++-+---+
+-+----++-+---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----++-+---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----++-+---+
+-+----++-+---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----++-+---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----++-+---+
+-+----++-+---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++-+---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++-+---+
+-+----++-+---+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++-+---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++-+---+  intro v; fin_cases v <;> native_decide
+-+----++-+---+
+-+----++-+---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----++-+---+theorem konigsberg_odd_count :
+-+----++-+---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----++-+---+  native_decide
+-+----++-+---+
+-+----++-+---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----++-+---+
+-+----++-+---+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++-+---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++-+---+
+-+----++-+---+The proof combines:
+-+----++-+---+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----++-+---+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----++-+---+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----++-+---+  constructor
+-+----++-+---+  intro t
+-+----++-+---+  have h1 := t.odd_degree_vertices_le_two
+-+----++-+---+  have h2 := konigsberg_odd_count
+-+----++-+---+  omega
+-+----++-+---+
+-+----++-+---+end Bridges+/-
+-+----++++--@@ -1,99 +1,86 @@
+-+----++++-- /-
+-+----++++---Copyright (c) 2025. All rights reserved.
+-+----++++---Released under Apache 2.0 license.
+-+----++ +--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++ +--+Released under Apache 2.0 license as described in the file LICENSE.
+-+----++-+--+-/
+-+----+++ --+-/
+-+----+++---+theorem konigsberg_four_odd :
+-+----+++---+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----+++---+  decide +revert
+-+----+++---+
+-+----+++---+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----+++---+then the number of odd-degree vertices is 0 or 2.
+-+----+++---+This is the key obstruction from Mathlib. -/
+-+----+++---+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----+++---+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----+++---+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----+++---+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----+++---+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----+++---+  hp.card_odd_degree
+-+----+++---+
+-+----+++---+/-
+-+----+++---+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----+++---+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----+++---+through Königsberg crossing each bridge exactly once.
+-+----+ +---+-/
+-+---++-+---+-/
+-+--- +-+---+import Mathlib
+-+--- +-+---+import Bridges.EulerianTrail
+-+---- -+---+
+-+------+---+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+------+---+then the number of odd-degree vertices is 0 or 2.
+-+------+---+This is the key obstruction from Mathlib. -/
+-+------+---+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+------+---+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+------+---+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+------+---+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+------+---+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+------+---+  hp.card_odd_degree
+-+---++-+---+
+-+--- +-+---+/-!
+-+--- +-+---+# The Königsberg Bridge Problem
+-+---- -+---+
+-+------+---+/-
+-+------+---+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+------+---+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+------+---+through Königsberg crossing each bridge exactly once.
+-+---++-+---+
+-+--- +-+---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--- +-+---+the founding result of graph theory (Euler, 1736).
+-+--- +-+---+
+-+---@@ -6767,1113 +2696,8 @@
+-+--- +-+---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--- +-+---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--- +-+---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---- -+---+-/
+-+------+---+theorem konigsberg_no_eulerian_trail :
+-+------+---+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+------+---+  intro u v p h;
+-+------+---+  have := euler_necessary h; simp_all +decide ;+/-
+-+------++--+import Mathlib
+-+------++--+import Bridges.EulerianTrail
+-+------++-- 
+-+------++---# The Königsberg Bridge Problem — Formalized
+-+------++--+/-!
+-+------++--+# The Königsberg Bridge Problem
+-+------++-- 
+-+------++---This file formalizes the Königsberg Bridge Problem, widely considered
+-+------++---the founding problem of graph theory. In 1736, Euler proved that it is
+-+------++---impossible to traverse all seven bridges of Königsberg exactly once.
+-+------++--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+------++--+the founding result of graph theory (Euler, 1736).
+-+------++-- 
+-+------++---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+------++---and prove impossibility using the Eulerian trail parity condition.
+-+------++--+## The Problem
+-+------++-- 
+-+------++---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+------++---with a simple-graph abstraction that captures the essential parity
+-+------++---obstruction: a graph where more than two vertices have odd degree
+-+------++---cannot have an Eulerian trail.
+-+------++--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+------++--+and included two large islands connected to each other and to the two mainland
+-+------++--+portions by seven bridges. The problem asks whether there is a walk through the
+-+------++--+city that crosses each bridge exactly once.
+-+------++-- 
+-+------++---## Main results
+-+------++--+## The Graph
+-+------++-- 
+-+------++---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+------++---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+------++---  has no Eulerian trail (from Mathlib).
+-+------++---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+------++--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+------++--+- Vertex 0: Central island (Kneiphof)
+-+------++--+- Vertex 1: Northern bank
+-+------++--+- Vertex 2: Southern bank
+-+------++--+- Vertex 3: Eastern island (Lomse)
+-+------++--+
+-+------++--+The seven bridges are:
+-+------++--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+------++--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+------++--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+------++--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+------++--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+------++--+
+-+------++--+## Main Results
+-+------++--+
+-+------++--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+------++--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+------++--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+------++-- -/
+-+------++-- 
+-+------++---import Mathlib
+-+------++--+namespace Bridges
+-+------++-- 
+-+------++---/-! ### The Königsberg graph
+-+------++--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+------++--+def konigsberg : Multigraph 4 7 where
+-+------++--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+------++--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+------++-- 
+-+------++---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+------++---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+------++---is the simple graph that captures the connectivity pattern.
+-+------++--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+------++--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+------++-- 
+-+------++---In the original problem, some pairs of landmasses had multiple bridges
+-+------++---between them, making the true model a multigraph. However, for the
+-+------++---Eulerian trail condition, what matters is the parity of degrees at each
+-+------++---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+------++---impossibility via Euler's theorem. -/
+-+------++--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+------++--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+------++-- 
+-+------++---/-- The four landmasses of Königsberg. -/
+-+------++---inductive Konigsberg : Type
+-+------++---  | A  -- North bank
+-+------++---  | B  -- South bank
+-+------++---  | C  -- Island (Kneiphof)
+-+------++---  | D  -- East district
+-+------++---  deriving DecidableEq, Fintype
+-+------++--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+------++--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+------++-- 
+-+------++---open Konigsberg
+-+------++---
+-+------++---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+------++---Every pair of distinct vertices is connected, capturing the fact that
+-+------++---every pair of landmasses had at least one bridge between them. -/
+-+------++---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+------++---
+-+------++---instance : DecidableRel konigsbergGraph.Adj := by
+-+------++---  intro u v
+-+------++---  simp only [konigsbergGraph]
+-+------++---  infer_instance
+-+------++---
+-+------++---/-
+-+------++---Every vertex in K₄ has degree 3 (odd).
+-+------++----/
+-+------++---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+------++---  fin_cases v <;> simp +decide
+-+------++--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+------++--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+------++-- 
+-+------++-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+------++---theorem konigsberg_all_odd :
+-+------++---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+------++---  intro v
+-+------++---  rw [konigsberg_degree]
+-+------++---  exact ⟨1, rfl⟩
+-+------++--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+------++--+  intro v; fin_cases v <;> native_decide
+-+------++-- 
+-+------++---/-
+-+------++---The number of odd-degree vertices in the Königsberg graph is 4.
+-+------++----/
+-+------++---theorem konigsberg_four_odd :
+-+------++---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+------++---  decide +revert
+-+------++--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+------++--+theorem konigsberg_odd_count :
+-+------++--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+------++--+  native_decide
+-+------++-- 
+-+------++---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+------++---then the number of odd-degree vertices is 0 or 2.
+-+------++---This is the key obstruction from Mathlib. -/
+-+------++---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+------++---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+------++---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+------++---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+------++---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+------++---  hp.card_odd_degree
+-+------++--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+------++-- 
+-+------++---/-
+-+------++---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+------++---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+------++---through Königsberg crossing each bridge exactly once.
+-+------++----/
+-+------++---theorem konigsberg_no_eulerian_trail :
+-+------++---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+------++---  intro u v p h;
+-+------++---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+------++--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+------++--+
+-+------++--+The proof combines:
+-+------++--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+------++--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+------++--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+------++--+  constructor
+-+------++--+  intro t
+-+------++--+  have h1 := t.odd_degree_vertices_le_two
+-+------++--+  have h2 := konigsberg_odd_count
+-+------++--+  omega
+-+------++--+
+-+------++--+end Bridges+/-
+-+------+ -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+------+ -+Released under Apache 2.0 license as described in the file LICENSE.
+-+------+-+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+------+-+-+  intro v; fin_cases v <;> native_decide
+-+------+-+-+
+-+------+-+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+------+-+-+theorem konigsberg_odd_count :
+-+------+-+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+------+-+-+  native_decide
+-+------+-+-+
+-+------+-+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+------+-+-+
+-+------+-+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+------+-+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+------+-+-+
+-+------+-+-+The proof combines:
+-+------+-+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+------+-+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+------+-+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+------+-+-+  constructor
+-+------+-+-+  intro t
+-+------+-+-+  have h1 := t.odd_degree_vertices_le_two
+-+------+-+-+  have h2 := konigsberg_odd_count
+-+------+-+-+  omega
+-+------+-+-+
+-+------+-+-+end Bridges+/-
+-+------+-++Copyright (c) 2025. All rights reserved.
+-+------+-++Released under Apache 2.0 license.
+-+------+-++
+-+------+-++# The Königsberg Bridge Problem — Formalized
+-+------+-++
+-+------+-++This file formalizes the Königsberg Bridge Problem, widely considered
+-+------+-++the founding problem of graph theory. In 1736, Euler proved that it is
+-+------+-++impossible to traverse all seven bridges of Königsberg exactly once.
+-+------+-++
+-+------+-++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+------+-++and prove impossibility using the Eulerian trail parity condition.
+-+------+-++
+-+------+-++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+------+-++with a simple-graph abstraction that captures the essential parity
+-+------+-++obstruction: a graph where more than two vertices have odd degree
+-+------+-++cannot have an Eulerian trail.
+-+------+-++
+-+------+-++## Main results
+-+------+-++
+-+------+-++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+------+-++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+------+-++  has no Eulerian trail (from Mathlib).
+-+------+-++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+------+- +-/
+-+------+-++
+-+------+- +import Mathlib
+-+------++-+-/
+-+------++-+import Mathlib
+-+------+ -+import Bridges.EulerianTrail
+-+------+ -+
+-+------+ -+/-!
+-+------+@@ -593,42 +211,7 @@
+-+------+ -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+------+ -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+------+ -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+------+-++
+-+------+-++/-! ### The Königsberg graph
+-+------+-++
+-+------+-++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+------+-++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+------+-++is the simple graph that captures the connectivity pattern.
+-+------+-++
+-+------+-++In the original problem, some pairs of landmasses had multiple bridges
+-+------+-++between them, making the true model a multigraph. However, for the
+-+------+-++Eulerian trail condition, what matters is the parity of degrees at each
+-+------+-++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+------+-++impossibility via Euler's theorem. -/
+-+------+-++
+-+------+-++/-- The four landmasses of Königsberg. -/
+-+------+-++inductive Konigsberg : Type
+-+------+-++  | A  -- North bank
+-+------+-++  | B  -- South bank
+-+------+-++  | C  -- Island (Kneiphof)
+-+------+-++  | D  -- East district
+-+------+-++  deriving DecidableEq, Fintype
+-+------+-++
+-+------+-++open Konigsberg
+-+------+-++
+-+------+-++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+------+-++Every pair of distinct vertices is connected, capturing the fact that
+-+------+-++every pair of landmasses had at least one bridge between them. -/
+-+------+-++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+------+-++
+-+------+-++instance : DecidableRel konigsbergGraph.Adj := by
+-+------+-++  intro u v
+-+------+-++  simp only [konigsbergGraph]
+-+------+-++  infer_instance
+-+------+-++
+-+------+-++/-
+-+------+-++Every vertex in K₄ has degree 3 (odd).
+-+------+- +-/
+-+------++-+-/
+-+------+ -+
+-+------+ -+namespace Bridges
+-+------+ -+
+-+------+@@ -648,10 +231,8 @@
+-+------+ -+
+-+------+ -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+------+ -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+------+-++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+------+-++  fin_cases v <;> simp +decide
+-+------+- +
+-+------+- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+------++-+
+-+------++-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+------+ -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+------+ -+  intro v; fin_cases v <;> native_decide
+-+------+ -+
+-+------+@@ -675,35 +256,89 @@
+-+------+ -+  have h2 := konigsberg_odd_count
+-+------+ -+  omega
+-+------+ -+
+-+------+--+end Bridges++theorem konigsberg_all_odd :
+-+------+-++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+------+-++  intro v
+-+------+-++  rw [konigsberg_degree]
+-+------+-++  exact ⟨1, rfl⟩
+-+------+-++
+-+------+-++/-
+-+------+-++The number of odd-degree vertices in the Königsberg graph is 4.
+-+------+-++-/
+-+------+-++theorem konigsberg_four_odd :
+-+------+-++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+------+-++  decide +revert
+-+------+-++
+-+------+-++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+------+-++then the number of odd-degree vertices is 0 or 2.
+-+------+-++This is the key obstruction from Mathlib. -/
+-+------+-++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+------+-++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+------+-++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+------+-++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+------+-++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+------+-++  hp.card_odd_degree
+-+------+-++
+-+------+-++/-
+-+------+-++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+------+-++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+------+-++through Königsberg crossing each bridge exactly once.
+-+------+-++-/
+-+------+-++theorem konigsberg_no_eulerian_trail :
+-+------+-++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+------+-++  intro u v p h;
+-+------+-++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+------+++Copyright (c) 2025 Harmonic. All rights reserved.
+-+------+++Released under Apache 2.0 license as described in the file LICENSE.
+-+------+++-/
+-+------+++import Mathlib
+-+------+++import Bridges.EulerianTrail
+-+------+++
+-+------+++/-!
+-+------+++# The Königsberg Bridge Problem
+-+------+++
+-+------+++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+------+++the founding result of graph theory (Euler, 1736).
+-+------+++
+-+------+++## The Problem
+-+------+++
+-+------+++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+------+++and included two large islands connected to each other and to the two mainland
+-+------+++portions by seven bridges. The problem asks whether there is a walk through the
+-+------+++city that crosses each bridge exactly once.
+-+------+++
+-+------+++## The Graph
+-+------+++
+-+------+++We model the four landmasses as vertices 0–3 of a multigraph:
+-+------+++- Vertex 0: Central island (Kneiphof)
+-+------+++- Vertex 1: Northern bank
+-+------+++- Vertex 2: Southern bank
+-+------+++- Vertex 3: Eastern island (Lomse)
+-+------+++
+-+------+++The seven bridges are:
+-+------+++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+------+++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+------+++- Edge 4: One bridge from vertex 0 to vertex 3
+-+------+++- Edge 5: One bridge from vertex 1 to vertex 3
+-+------+++- Edge 6: One bridge from vertex 2 to vertex 3
+-+------+++
+-+------+++## Main Results
+-+------+++
+-+------+++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+------+++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+------+++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+------+++-/
+-+------+++
+-+------+++namespace Bridges
+-+------+++
+-+------+++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+------+++def konigsberg : Multigraph 4 7 where
+-+------+++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+------+++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+------+++
+-+------+++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+------+++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+------+++
+-+------+++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+------+++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+------+++
+-+------+++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+------+++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+------+++
+-+------+++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+------+++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+------+++
+-+------+++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+------+++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+------+++  intro v; fin_cases v <;> native_decide
+-+------+++
+-+------+++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+------+++theorem konigsberg_odd_count :
+-+------+++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+------+++  native_decide
+-+------+++
+-+------+++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+------+++
+-+------+++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+------+++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+------+++
+-+------+++The proof combines:
+-+------+++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+------+++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+------+++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+------+++  constructor
+-+------+++  intro t
+-+------+++  have h1 := t.odd_degree_vertices_le_two
+-+------+++  have h2 := konigsberg_odd_count
+-+------+++  omega
+-+------+++
+-+------+++end Bridges+--- a/Bridges/Konigsberg.lean
+-+-----++++ b/Bridges/Konigsberg.lean
+-+-----+@@ -1,204 +1,54 @@
+-+-----+ --- a/Bridges/Konigsberg.lean
+-+-----+ +++ b/Bridges/Konigsberg.lean
+-+-----+-@@ -1,445 +1,86 @@
+-+-----++@@ -1,344 +1,99 @@
+-+-----+ ---- a/Bridges/Konigsberg.lean
+-+-----+ -+++ b/Bridges/Konigsberg.lean
+-+-----+--@@ -1,344 +1,99 @@
+-+-----++-@@ -1,256 +1,86 @@
+-+-----+ ----- a/Bridges/Konigsberg.lean
+-+-----+ --+++ b/Bridges/Konigsberg.lean
+-+-----+---@@ -1,256 +1,86 @@
+-+-----++--@@ -1,168 +1,86 @@
+-+-----+ ------ a/Bridges/Konigsberg.lean
+-+-----+ ---+++ b/Bridges/Konigsberg.lean
+-+-----+----@@ -1,168 +1,86 @@
+-+-----+-------- a/Bridges/Konigsberg.lean
+-+-----+-----+++ b/Bridges/Konigsberg.lean
+-+-----+-----@@ -1,99 +1,86 @@
+-+-----+----- /-
+-+-----+------Copyright (c) 2025. All rights reserved.
+-+-----+------Released under Apache 2.0 license.
+-+-----+-----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-----+-----+Released under Apache 2.0 license as described in the file LICENSE.
+-+-----+-----+-/
+-+-----+-----+import Mathlib
+-+-----+-----+import Bridges.EulerianTrail
+-+-----+----- 
+-+-----+------# The Königsberg Bridge Problem — Formalized
+-+-----+-----+/-!
+-+-----+-----+# The Königsberg Bridge Problem
+-+-----+----- 
+-+-----+------This file formalizes the Königsberg Bridge Problem, widely considered
+-+-----+------the founding problem of graph theory. In 1736, Euler proved that it is
+-+-----+------impossible to traverse all seven bridges of Königsberg exactly once.
+-+-----+-----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-----+-----+the founding result of graph theory (Euler, 1736).
+-+-----+----- 
+-+-----+------We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-----+------and prove impossibility using the Eulerian trail parity condition.
+-+-----+-----+## The Problem
+-+-----+----- 
+-+-----+------Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-----+------with a simple-graph abstraction that captures the essential parity
+-+-----+------obstruction: a graph where more than two vertices have odd degree
+-+-----+------cannot have an Eulerian trail.
+-+-----+-----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-----+-----+and included two large islands connected to each other and to the two mainland
+-+-----+-----+portions by seven bridges. The problem asks whether there is a walk through the
+-+-----+-----+city that crosses each bridge exactly once.
+-+-----+----- 
+-+-----+------## Main results
+-+-----+-----+## The Graph
+-+-----+----- 
+-+-----+------* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-----+------* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-----+------  has no Eulerian trail (from Mathlib).
+-+-----+------* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-----+-----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-----+-----+- Vertex 0: Central island (Kneiphof)
+-+-----+-----+- Vertex 1: Northern bank
+-+-----+-----+- Vertex 2: Southern bank
+-+-----+-----+- Vertex 3: Eastern island (Lomse)
+-+-----+-----+
+-+-----+-----+The seven bridges are:
+-+-----+-----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-----+-----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-----+-----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-----+-----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-----+-----+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-----+-----+
+-+-----+-----+## Main Results
+-+-----+-----+
+-+-----+-----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-----+-----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-----+-----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-----+----- -/
+-+-----+----- 
+-+-----+------import Mathlib
+-+-----+-----+namespace Bridges
+-+-----+----- 
+-+-----+------/-! ### The Königsberg graph
+-+-----+-----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-----+-----+def konigsberg : Multigraph 4 7 where
+-+-----+-----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-----+-----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-----+----- 
+-+-----+------The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-----+------7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-----+------is the simple graph that captures the connectivity pattern.
+-+-----+-----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-----+-----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-----+----- 
+-+-----+------In the original problem, some pairs of landmasses had multiple bridges
+-+-----+------between them, making the true model a multigraph. However, for the
+-+-----+------Eulerian trail condition, what matters is the parity of degrees at each
+-+-----+------vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-----+------impossibility via Euler's theorem. -/
+-+-----+-----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-----+-----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-----+----- 
+-+-----+------/-- The four landmasses of Königsberg. -/
+-+-----+------inductive Konigsberg : Type
+-+-----+------  | A  -- North bank
+-+-----+------  | B  -- South bank
+-+-----+------  | C  -- Island (Kneiphof)
+-+-----+------  | D  -- East district
+-+-----+------  deriving DecidableEq, Fintype
+-+-----+-----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-----+-----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-----+----- 
+-+-----+------open Konigsberg
+-+-----+------
+-+-----+------/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-----+------Every pair of distinct vertices is connected, capturing the fact that
+-+-----+------every pair of landmasses had at least one bridge between them. -/
+-+-----+------def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-----+------
+-+-----+------instance : DecidableRel konigsbergGraph.Adj := by
+-+-----+------  intro u v
+-+-----+------  simp only [konigsbergGraph]
+-+-----+------  infer_instance
+-+-----+------
+-+-----+------/-
+-+-----+------Every vertex in K₄ has degree 3 (odd).
+-+-----+-------/
+-+-----+------theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-----+------  fin_cases v <;> simp +decide
+-+-----+-----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-----+-----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-----+----- 
+-+-----+----- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-----+------theorem konigsberg_all_odd :
+-+-----+------    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-----+------  intro v
+-+-----+------  rw [konigsberg_degree]
+-+-----+------  exact ⟨1, rfl⟩
+-+-----+-----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-----+-----+  intro v; fin_cases v <;> native_decide
+-+-----+----- 
+-+-----+------/-
+-+-----+------The number of odd-degree vertices in the Königsberg graph is 4.
+-+-----+-------/
+-+-----+------theorem konigsberg_four_odd :
+-+-----+------    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-----+------  decide +revert
+-+-----+-----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-----+-----+theorem konigsberg_odd_count :
+-+-----+-----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-----+-----+  native_decide
+-+-----+----- 
+-+-----+------/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-----+------then the number of odd-degree vertices is 0 or 2.
+-+-----+------This is the key obstruction from Mathlib. -/
+-+-----+------theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-----+------    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-----+------    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-----+------    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-----+------    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-----+------  hp.card_odd_degree
+-+-----+-----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-----+----- 
+-+-----+------/-
+-+-----+------**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-----+------Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-----+------through Königsberg crossing each bridge exactly once.
+-+-----+-------/
+-+-----+------theorem konigsberg_no_eulerian_trail :
+-+-----+------    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-----+------  intro u v p h;
+-+-----+------  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-----+-----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-----+-----+
+-+-----+-----+The proof combines:
+-+-----+-----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-----+-----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-----+-----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-----+-----+  constructor
+-+-----+-----+  intro t
+-+-----+-----+  have h1 := t.odd_degree_vertices_le_two
+-+-----+-----+  have h2 := konigsberg_odd_count
+-+-----+-----+  omega
+-+-----+-----+
+-+-----+-----+end Bridges+/-
+-+-----++---@@ -1,99 +1,86 @@
+-+-----++--- /-
+-+-----++----Copyright (c) 2025. All rights reserved.
+-+-----++----Released under Apache 2.0 license.
+-+-----+ ---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-----+ ---+Released under Apache 2.0 license as described in the file LICENSE.
+-+-----+ ---+-/
+-+-----+ ---+import Mathlib
+-+-----+ ---+import Bridges.EulerianTrail
+-+-----+----+
+-+-----++--- 
+-+-----++----# The Königsberg Bridge Problem — Formalized
+-+-----+ ---+/-!
+-+-----+ ---+# The Königsberg Bridge Problem
+-+-----+----+
+-+-----++--- 
+-+-----++----This file formalizes the Königsberg Bridge Problem, widely considered
+-+-----++----the founding problem of graph theory. In 1736, Euler proved that it is
+-+-----++----impossible to traverse all seven bridges of Königsberg exactly once.
+-+-----+ ---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-----+ ---+the founding result of graph theory (Euler, 1736).
+-+-----+----+
+-+-----++--- 
+-+-----++----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-----++----and prove impossibility using the Eulerian trail parity condition.
+-+-----+ ---+## The Problem
+-+-----+----+
+-+-----++--- 
+-+-----++----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-----++----with a simple-graph abstraction that captures the essential parity
+-+-----++----obstruction: a graph where more than two vertices have odd degree
+-+-----++----cannot have an Eulerian trail.
+-+-----+ ---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-----+ ---+and included two large islands connected to each other and to the two mainland
+-+-----+ ---+portions by seven bridges. The problem asks whether there is a walk through the
+-+-----+ ---+city that crosses each bridge exactly once.
+-+-----+----+
+-+-----++--- 
+-+-----++----## Main results
+-+-----+ ---+## The Graph
+-+-----+----+
+-+-----++--- 
+-+-----++----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-----++----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-----++----  has no Eulerian trail (from Mathlib).
+-+-----++----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-----+ ---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-----+ ---+- Vertex 0: Central island (Kneiphof)
+-+-----+ ---+- Vertex 1: Northern bank
+-+-----+@@ -217,39 +67,101 @@
+-+-----+ ---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-----+ ---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-----+ ---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-----+----+-/
+-+-----+----+
+-+-----++--- -/
+-+-----++--- 
+-+-----++----import Mathlib
+-+-----+ ---+namespace Bridges
+-+-----+----+
+-+-----++--- 
+-+-----++----/-! ### The Königsberg graph
+-+-----+ ---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-----+ ---+def konigsberg : Multigraph 4 7 where
+-+-----+ ---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-----+ ---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-----+----+
+-+-----++--- 
+-+-----++----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-----++----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-----++----is the simple graph that captures the connectivity pattern.
+-+-----+ ---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-----+ ---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-----+----+
+-+-----++--- 
+-+-----++----In the original problem, some pairs of landmasses had multiple bridges
+-+-----++----between them, making the true model a multigraph. However, for the
+-+-----++----Eulerian trail condition, what matters is the parity of degrees at each
+-+-----++----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-----++----impossibility via Euler's theorem. -/
+-+-----+ ---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-----+ ---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-----+----+
+-+-----++--- 
+-+-----++----/-- The four landmasses of Königsberg. -/
+-+-----++----inductive Konigsberg : Type
+-+-----++----  | A  -- North bank
+-+-----++----  | B  -- South bank
+-+-----++----  | C  -- Island (Kneiphof)
+-+-----++----  | D  -- East district
+-+-----++----  deriving DecidableEq, Fintype
+-+-----+ ---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-----+ ---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-----+----+
+-+-----++--- 
+-+-----++----open Konigsberg
+-+-----++----
+-+-----++----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-----++----Every pair of distinct vertices is connected, capturing the fact that
+-+-----++----every pair of landmasses had at least one bridge between them. -/
+-+-----++----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-----++----
+-+-----++----instance : DecidableRel konigsbergGraph.Adj := by
+-+-----++----  intro u v
+-+-----++----  simp only [konigsbergGraph]
+-+-----++----  infer_instance
+-+-----++----
+-+-----++----/-
+-+-----++----Every vertex in K₄ has degree 3 (odd).
+-+-----++-----/
+-+-----++----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-----++----  fin_cases v <;> simp +decide
+-+-----+ ---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-----+ ---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-----+----+
+-+-----+----+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-----++--- 
+-+-----++--- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-----++----theorem konigsberg_all_odd :
+-+-----++----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-----++----  intro v
+-+-----++----  rw [konigsberg_degree]
+-+-----++----  exact ⟨1, rfl⟩
+-+-----+ ---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-----+ ---+  intro v; fin_cases v <;> native_decide
+-+-----+----+
+-+-----++--- 
+-+-----++----/-
+-+-----++----The number of odd-degree vertices in the Königsberg graph is 4.
+-+-----++-----/
+-+-----++----theorem konigsberg_four_odd :
+-+-----++----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-----++----  decide +revert
+-+-----+ ---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-----+ ---+theorem konigsberg_odd_count :
+-+-----+ ---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-----+ ---+  native_decide
+-+-----+----+
+-+-----++--- 
+-+-----++----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-----++----then the number of odd-degree vertices is 0 or 2.
+-+-----++----This is the key obstruction from Mathlib. -/
+-+-----++----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-----++----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-----++----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-----++----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-----++----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-----++----  hp.card_odd_degree
+-+-----+ ---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-----+----+
+-+-----+----+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-----++--- 
+-+-----++----/-
+-+-----++----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-----++----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-----++----through Königsberg crossing each bridge exactly once.
+-+-----++-----/
+-+-----++----theorem konigsberg_no_eulerian_trail :
+-+-----++----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-----++----  intro u v p h;
+-+-----++----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-----+ ---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-----+ ---+
+-+-----+ ---+The proof combines:
+-+-----+@@ -348,186 +260,186 @@
+-+-----+ --+  omega
+-+-----+ --+
+-+-----+ --+end Bridges+/-
+-+-----+--+Copyright (c) 2025. All rights reserved.
+-+-----+--+Released under Apache 2.0 license.
+-+--+-+---++end Bridges+/-
+-+--+-+-+----+end Bridges+/-
+-+--+-+-+---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+-+---+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+-+---+-/
+-+--+-+-+---+import Mathlib
+-+--+-+-+---+import Bridges.EulerianTrail
+-+--+-+-+---+
+-+--+-+-+---+/-!
+-+--+-+-+---+# The Königsberg Bridge Problem
+-+--+-+-+---+
+-+--+-+-+---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-+-+---+the founding result of graph theory (Euler, 1736).
+-+--+-+-+---+
+-+--+-+-+---+## The Problem
+-+--+-+-+---+
+-+--+-+-+---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-+-+---+and included two large islands connected to each other and to the two mainland
+-+--+-+-+---+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-+-+---+city that crosses each bridge exactly once.
+-+--+-+-+---+
+-+--+-+-+---+## The Graph
+-+--+-+-+---+
+-+--+-+-+---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-+-+---+- Vertex 0: Central island (Kneiphof)
+-+--+-+-+---+- Vertex 1: Northern bank
+-+--+-+-+---+- Vertex 2: Southern bank
+-+--+-+-+---+- Vertex 3: Eastern island (Lomse)
+-+--+-+-+---+
+-+--+-+-+---+The seven bridges are:
+-+--+-+-+---+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-+-+---+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-+-+---+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-+-+---+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-+-+---+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-+-+---+
+-+--+-+-+---+## Main Results
+-+--+-+-+---+
+-+--+-+-+---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+-+---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+-+---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+-+---+-/
+-+--+-+-+---+
+-+--+-+-+---+namespace Bridges
+-+--+-+-+---+
+-+--+-+-+---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-+-+---+def konigsberg : Multigraph 4 7 where
+-+--+-+-+---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-+-+---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-+-+---+
+-+--+-+-+---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-+-+---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-+-+---+
+-+--+-+-+---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-+-+---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-+-+---+
+-+--+-+-+---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-+-+---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-+-+---+
+-+--+-+-+---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+-+---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+-+---+
+-+--+-+-+---+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+-+---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+-+---+  intro v; fin_cases v <;> native_decide
+-+--+-+-+---+
+-+--+-+-+---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-+-+---+theorem konigsberg_odd_count :
+-+--+-+-+---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-+-+---+  native_decide
+-+--+-+-+---+
+-+--+-+-+---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-+-+---+
+-+--+-+-+---+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+-+---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-+-+---+
+-+--+-+-+---+The proof combines:
+-+--+-+-+---+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-+-+---+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-+-+---+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-+-+---+  constructor
+-+--+-+-+---+  intro t
+-+--+-+-+---+  have h1 := t.odd_degree_vertices_le_two
+-+--+-+-+---+  have h2 := konigsberg_odd_count
+-+--+-+-+---+  omega
+-+--+-+-+---+
+-+--+-+-+---+end Bridges+/-
+-+--+-+++--@@ -1,99 +1,86 @@
+-+--+-+++-- /-
+-+--+-+++---Copyright (c) 2025. All rights reserved.
+-+--+-+++---Released under Apache 2.0 license.
+-+--+-+ +--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+ +--+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+-+--+-/
+-+--+-++ --+-/
+-+--+-++---+theorem konigsberg_four_odd :
+-+--+-++---+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-++---+  decide +revert
+-+--+-++---+
+-+--+-++---+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-++---+then the number of odd-degree vertices is 0 or 2.
+-+--+-++---+This is the key obstruction from Mathlib. -/
+-+--+-++---+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-++---+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-++---+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-++---+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-++---+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-++---+  hp.card_odd_degree
+-+--+-++---+
+-+--+-++---+/-
+-+--+-++---+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-++---+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-++---+through Königsberg crossing each bridge exactly once.
+-+--+- +---+-/
+-+--+--+---+import Mathlib
+-+--+--+---+import Bridges.EulerianTrail
+-+--+--+---+
+-+--+--+---+/-!
+-+--+--+---+# The Königsberg Bridge Problem
+-+--+--+---+
+-+--+--+---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+--+---+the founding result of graph theory (Euler, 1736).
+-+--+--+---+
+-+--+--+---+## The Problem
+-+--+--+---+
+-+--+--+---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+--+---+and included two large islands connected to each other and to the two mainland
+-+--+--+---+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+--+---+city that crosses each bridge exactly once.
+-+--+--+---+
+-+--+--+---+## The Graph
+-+--+--+---+
+-+--+--+---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+--+---+- Vertex 0: Central island (Kneiphof)
+-+--+--+---+- Vertex 1: Northern bank
+-+--+--+---+- Vertex 2: Southern bank
+-+--+--+---+- Vertex 3: Eastern island (Lomse)
+-+--+--+---+
+-+--+--+---+The seven bridges are:
+-+--+--+---+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+--+---+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+--+---+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+--+---+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+--+---+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+--+---+
+-+--+--+---+## Main Results
+-+--+--+---+
+-+--+--+---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+--+---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+--+---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+--+---+-/
+-+--+--+---+
+-+--+--+---+namespace Bridges
+-+--+--+---+
+-+--+--+---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+--+---+def konigsberg : Multigraph 4 7 where
+-+--+--+---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+--+---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+--+---+
+-+--+--+---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+--+---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+--+---+
+-+--+--+---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+--+---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+--+---+
+-+--+--+---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+--+---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+--+---+
+-+--+--+---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+--+---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+--+---+
+-+--+--+---+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+--+---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+--+---+  intro v; fin_cases v <;> native_decide
+-+--+--+---+
+-+--+--+---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+--+---+theorem konigsberg_odd_count :
+-+--+--+---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+--+---+  native_decide
+-+--+--+---+
+-+--+--+---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+--+---+
+-+--+--+---+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+--+---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+--+---+
+-+--+--+---+The proof combines:
+-+--+--+---+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+--+---+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+--+---+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+--+---+  constructor
+-+--+--+---+  intro t
+-+--+--+---+  have h1 := t.odd_degree_vertices_le_two
+-+--+--+---+  have h2 := konigsberg_odd_count
+-+--+--+---+  omega
+-+--+--+---+
+-+--+--+---+end Bridges+/-
+-+--+--+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+--+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+--+--+-/
+-+--+--+--+import Mathlib
+-+--+--+--+import Bridges.EulerianTrail
+-+-- --+--+
+-+-----+--+# The Königsberg Bridge Problem — Formalized
+-+--+--+--+/-!
+-+--+--+--+# The Königsberg Bridge Problem
+-+-- --+--+
+-+-----+--+This file formalizes the Königsberg Bridge Problem, widely considered
+-+-----+--+the founding problem of graph theory. In 1736, Euler proved that it is
+-+-----+--+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+--+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+--+--+the founding result of graph theory (Euler, 1736).
+-+-- --+--+
+-+-----+--+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-----+--+and prove impossibility using the Eulerian trail parity condition.
+-+--+--+--+## The Problem
+-+-- --+--+
+-+-----+--+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-----+--+with a simple-graph abstraction that captures the essential parity
+-+-----+--+obstruction: a graph where more than two vertices have odd degree
+-+-----+--+cannot have an Eulerian trail.
+-+--+--+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+--+--+and included two large islands connected to each other and to the two mainland
+-+--+--+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+--+--+city that crosses each bridge exactly once.
+-+-- --+--+
+-+-----+--+## Main results
+-+--+--+--+## The Graph
+-+-- --+--+
+-+-----+--+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-----+--+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-----+--+  has no Eulerian trail (from Mathlib).
+-+-----+--+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-----++-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-----++-+Released under Apache 2.0 license as described in the file LICENSE.
+-+-----+ -+-/
+-+--+--+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+--+--+- Vertex 0: Central island (Kneiphof)
+-+--+--+--+- Vertex 1: Northern bank
+-+--+--+--+- Vertex 2: Southern bank
+-+--+--+--+- Vertex 3: Eastern island (Lomse)
+-+-- --+--+
+-+-----+ -+import Mathlib
+-+--+--+--+The seven bridges are:
+-+--+--+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+--+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+--+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+--+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+--+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-- --+--+
+-+-----+--+/-! ### The Königsberg graph
+-+--+--+--+## Main Results
+-+-- --+--+
+-+-----+--+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-----+--+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-----+--+is the simple graph that captures the connectivity pattern.
+-+--+--+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+--+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+--+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+--+--+-/
+-+-- --+--+
+-+-----+--+In the original problem, some pairs of landmasses had multiple bridges
+-+-----+--+between them, making the true model a multigraph. However, for the
+-+-----+--+Eulerian trail condition, what matters is the parity of degrees at each
+-+-----+--+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-----+--+impossibility via Euler's theorem. -/
+-+--+--+--+namespace Bridges
+-+-- --+--+
+-+-----+--+/-- The four landmasses of Königsberg. -/
+-+-----+--+inductive Konigsberg : Type
+-+-----+--+  | A  -- North bank
+-+-----+--+  | B  -- South bank
+-+-----+--+  | C  -- Island (Kneiphof)
+-+-----+--+  | D  -- East district
+-+-----+--+  deriving DecidableEq, Fintype
+-+--+--+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+--+--+def konigsberg : Multigraph 4 7 where
+-+--+--+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+--+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-- --+--+
+-+-----+--+open Konigsberg
+-+--+--+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+--+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-- --+--+
+-+-----+--+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-----+--+Every pair of distinct vertices is connected, capturing the fact that
+-+-----+--+every pair of landmasses had at least one bridge between them. -/
+-+-----+--+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+--+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+--+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-- --+--+
+-+-----+--+instance : DecidableRel konigsbergGraph.Adj := by
+-+-----+--+  intro u v
+-+-----+--+  simp only [konigsbergGraph]
+-+-----+--+  infer_instance
+-+--+--+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+--+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-- --+--+
+-+-----+--+/-
+-+-----+--+Every vertex in K₄ has degree 3 (odd).
+-+-----++-+import Bridges.EulerianTrail
+-+-----++-+
+-+-----++-+/-!
+-+-----++-+# The Königsberg Bridge Problem
+-+-----++-+
+-+-----++-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-----++-+the founding result of graph theory (Euler, 1736).
+-+-----++-+
+-+-----++-+## The Problem
+-+-----++-+
+-+-----++-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-----++-+and included two large islands connected to each other and to the two mainland
+-+-----++-+portions by seven bridges. The problem asks whether there is a walk through the
+-+-----++-+city that crosses each bridge exactly once.
+-+-----++-+
+-+-----++-+## The Graph
+-+-----++-+
+-+-----++-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-----++-+- Vertex 0: Central island (Kneiphof)
+-+-----++-+- Vertex 1: Northern bank
+-+-----++-+- Vertex 2: Southern bank
+-+-----++-+- Vertex 3: Eastern island (Lomse)
+-+-----++-+
+-+-----++-+The seven bridges are:
+-+-----++-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-----++-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-----++-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-----++-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-----++-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-----++-+
+-+-----++-+## Main Results
+-+-----++-+
+-+-----++-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-----++-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-----++-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-----+ -+-/
+-+-----+--+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-----+--+  fin_cases v <;> simp +decide
+-+-----++-+
+-+-----++-+namespace Bridges
+-+-----++-+
+-+-----++-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-----++-+def konigsberg : Multigraph 4 7 where
+-+-----++-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-----++-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-----++-+
+-+-----++-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-----++-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-----++-+
+-+-----++-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-----++-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-----++-+
+-+-----++-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-----++-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-----++-+
+-+-----++-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-----++-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-----+ -+
+-+-----+ -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-----+--+theorem konigsberg_all_odd :
+-+-----+--+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-----+--+  intro v
+-+-----+--+  rw [konigsberg_degree]
+-+-----+--+  exact ⟨1, rfl⟩
+-+--+--+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+--+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-- --+--+
+-+-----+--+/-
+-+-----+--+The number of odd-degree vertices in the Königsberg graph is 4.
+-+-----+--+-/
+-+-----+--+theorem konigsberg_four_odd :
+-+-----+--+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-----+--+  decide +revert
+-+--+--+--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+--+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+--+--+  intro v; fin_cases v <;> native_decide
+-+-- --+--+
+-+-----+--+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-----+--+then the number of odd-degree vertices is 0 or 2.
+-+-----+--+This is the key obstruction from Mathlib. -/
+-+-----+--+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-----+--+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-----+--+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-----+--+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-----+--+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-----+--+  hp.card_odd_degree
+-+--+--+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+--+--+theorem konigsberg_odd_count :
+-+--+--+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+--+--+  native_decide
+-+-- --+--+
+-+-----+--+/-
+-+-----+--+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-----+--+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-----+--+through Königsberg crossing each bridge exactly once.
+-+-----+--+-/
+-+-----+--+theorem konigsberg_no_eulerian_trail :
+-+-----+--+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-----+--+  intro u v p h;
+-+-----+--+  have := euler_necessary h; simp_all +decide ;+/-
+-+-++--@@ -1,256 +1,86 @@
+-+-++------ a/Bridges/Konigsberg.lean
+-+-++---+++ b/Bridges/Konigsberg.lean
+-+-++---@@ -1,168 +1,86 @@
+-+-++------- a/Bridges/Konigsberg.lean
+-+-++----+++ b/Bridges/Konigsberg.lean
+-+-++----@@ -1,99 +1,86 @@
+-+-++---- /-
+-+-++-----Copyright (c) 2025. All rights reserved.
+-+-++-----Released under Apache 2.0 license.
+-+-++----+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-++----+Released under Apache 2.0 license as described in the file LICENSE.
+-+-++----+-/
+-+-++----+import Mathlib
+-+-++----+import Bridges.EulerianTrail
+-+-++---- 
+-+-++-----# The Königsberg Bridge Problem — Formalized
+-+-++----+/-!
+-+-++----+# The Königsberg Bridge Problem
+-+-++---- 
+-+-++-----This file formalizes the Königsberg Bridge Problem, widely considered
+-+-++-----the founding problem of graph theory. In 1736, Euler proved that it is
+-+-++-----impossible to traverse all seven bridges of Königsberg exactly once.
+-+-++----+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-++----+the founding result of graph theory (Euler, 1736).
+-+-++---- 
+-+-++-----We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-++-----and prove impossibility using the Eulerian trail parity condition.
+-+-++----+## The Problem
+-+-++---- 
+-+-++-----Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-++-----with a simple-graph abstraction that captures the essential parity
+-+-++-----obstruction: a graph where more than two vertices have odd degree
+-+-++-----cannot have an Eulerian trail.
+-+-++----+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-++----+and included two large islands connected to each other and to the two mainland
+-+-++----+portions by seven bridges. The problem asks whether there is a walk through the
+-+-++----+city that crosses each bridge exactly once.
+-+-++---- 
+-+-++-----## Main results
+-+-++----+## The Graph
+-+-++---- 
+-+-++-----* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-++-----* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-++-----  has no Eulerian trail (from Mathlib).
+-+-++-----* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-++----+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-++----+- Vertex 0: Central island (Kneiphof)
+-+-++----+- Vertex 1: Northern bank
+-+-++----+- Vertex 2: Southern bank
+-+-++----+- Vertex 3: Eastern island (Lomse)
+-+-+ ----+
+-+-+-----+# The Königsberg Bridge Problem — Formalized
+-+-++----+The seven bridges are:
+-+-++----+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-++----+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-++----+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-++----+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-++----+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-+ ----+
+-+-+-----+This file formalizes the Königsberg Bridge Problem, widely considered
+-+-+-----+the founding problem of graph theory. In 1736, Euler proved that it is
+-+-+-----+impossible to traverse all seven bridges of Königsberg exactly once.
+-+-++----+## Main Results
+-+-+ ----+
+-+-+-----+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-+-----+and prove impossibility using the Eulerian trail parity condition.
+-+-++----+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-++----+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-++----+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-++---- -/
+-+-++---- 
+-+-++-----import Mathlib
+-+-++----+namespace Bridges
+-+-++---- 
+-+-++-----/-! ### The Königsberg graph
+-+-++----+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-++----+def konigsberg : Multigraph 4 7 where
+-+-++----+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-++----+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-++---- 
+-+-++-----The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-++-----7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-++-----is the simple graph that captures the connectivity pattern.
+-+-++----+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-++----+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-++---- 
+-+-++-----In the original problem, some pairs of landmasses had multiple bridges
+-+-++-----between them, making the true model a multigraph. However, for the
+-+-++-----Eulerian trail condition, what matters is the parity of degrees at each
+-+-++-----vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-++-----impossibility via Euler's theorem. -/
+-+-++----+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-++----+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-++---- 
+-+-++-----/-- The four landmasses of Königsberg. -/
+-+-++-----inductive Konigsberg : Type
+-+-++-----  | A  -- North bank
+-+-++-----  | B  -- South bank
+-+-++-----  | C  -- Island (Kneiphof)
+-+-++-----  | D  -- East district
+-+-++-----  deriving DecidableEq, Fintype
+-+-++----+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-++----+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-++---- 
+-+-++-----open Konigsberg
+-+-++-----
+-+-++-----/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-++-----Every pair of distinct vertices is connected, capturing the fact that
+-+-++-----every pair of landmasses had at least one bridge between them. -/
+-+-++-----def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-++-----
+-+-++-----instance : DecidableRel konigsbergGraph.Adj := by
+-+-++-----  intro u v
+-+-++-----  simp only [konigsbergGraph]
+-+-++-----  infer_instance
+-+-++-----
+-+-++-----/-
+-+-++-----Every vertex in K₄ has degree 3 (odd).
+-+-++------/
+-+-++-----theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-++-----  fin_cases v <;> simp +decide
+-+-++----+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-++----+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-++---- 
+-+-++---- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-++-----theorem konigsberg_all_odd :
+-+-++-----    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-++-----  intro v
+-+-++-----  rw [konigsberg_degree]
+-+-++-----  exact ⟨1, rfl⟩
+-+-++----+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-++----+  intro v; fin_cases v <;> native_decide
+-+-++---- 
+-+-++-----/-
+-+-++-----The number of odd-degree vertices in the Königsberg graph is 4.
+-+-++------/
+-+-++-----theorem konigsberg_four_odd :
+-+-++-----    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-++-----  decide +revert
+-+-++----+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-++----+theorem konigsberg_odd_count :
+-+-++----+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-++----+  native_decide
+-+-++---- 
+-+-++-----/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-++-----then the number of odd-degree vertices is 0 or 2.
+-+-++-----This is the key obstruction from Mathlib. -/
+-+-++-----theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-++-----    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-++-----    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-++-----    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-++-----    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-++-----  hp.card_odd_degree
+-+-++----+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-++---- 
+-+-++-----/-
+-+-++-----**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-++-----Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-++-----through Königsberg crossing each bridge exactly once.
+-+-++------/
+-+-++-----theorem konigsberg_no_eulerian_trail :
+-+-++-----    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-++-----  intro u v p h;
+-+-++-----  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-++----+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-+ ----+
+-+-+-----+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-+-----+with a simple-graph abstraction that captures the essential parity
+-+-+-----+obstruction: a graph where more than two vertices have odd degree
+-+-+-----+cannot have an Eulerian trail.
+-+-++----+The proof combines:
+-+-++----+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-++----+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-++----+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-++----+  constructor
+-+-++----+  intro t
+-+-++----+  have h1 := t.odd_degree_vertices_le_two
+-+-++----+  have h2 := konigsberg_odd_count
+-+-++----+  omega
+-+-+ ----+
+-+-+-----+## Main results
+-+-+-----+
+-+-+-----+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-+-----+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-+-----+  has no Eulerian trail (from Mathlib).
+-+-+-----+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+- ---+-+Copyright (c) 2025 Harmonic. All rights reserved.
+-+- ---+-+Released under Apache 2.0 license as described in the file LICENSE.
+-+-----++-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-----++-+  intro v; fin_cases v <;> native_decide
+-+-----++-+
+-+-----++-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-----++-+theorem konigsberg_odd_count :
+-+-----++-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-----++-+  native_decide
+-+-----++-+
+-+-----++-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-----++-+
+-+-----++-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-----++-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-----++-+
+-+-----++-+The proof combines:
+-+-----++-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-----++-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-----++-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-----++-+  constructor
+-+-----++-+  intro t
+-+-----++-+  have h1 := t.odd_degree_vertices_le_two
+-+-----++-+  have h2 := konigsberg_odd_count
+-+-----++-+  omega
+-+-----++-+
+-+-----++-+end Bridges+/-
+-+-----+++Copyright (c) 2025. All rights reserved.
+-+-----+++Released under Apache 2.0 license.
+-+-----+++
+-+-----+++# The Königsberg Bridge Problem — Formalized
+-+-----+++
+-+-----+++This file formalizes the Königsberg Bridge Problem, widely considered
+-+-----+++the founding problem of graph theory. In 1736, Euler proved that it is
+-+-----+++impossible to traverse all seven bridges of Königsberg exactly once.
+-+-----+++
+-+-----+++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-----+++and prove impossibility using the Eulerian trail parity condition.
+-+-----+++
+-+-----+++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-----+++with a simple-graph abstraction that captures the essential parity
+-+-----+++obstruction: a graph where more than two vertices have odd degree
+-+-----+++cannot have an Eulerian trail.
+-+-----+++
+-+-----+++## Main results
+-+-----+++
+-+-----+++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-----+++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-----+++  has no Eulerian trail (from Mathlib).
+-+-----+++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-----+ +-/
+-+-----+++
+-+-----+ +import Mathlib
+-+-+--- -+-/
+-+-+-----+
+-+-+--- -+import Mathlib
+-+-+-----+
+-+-+-----+/-! ### The Königsberg graph
+-+-+-----+
+-+-+-----+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-+-----+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-+-----+is the simple graph that captures the connectivity pattern.
+-+-+-----+
+-+-+-----+In the original problem, some pairs of landmasses had multiple bridges
+-+-+-----+between them, making the true model a multigraph. However, for the
+-+-+-----+Eulerian trail condition, what matters is the parity of degrees at each
+-+-+-----+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-+-----+impossibility via Euler's theorem. -/
+-+-+-----+
+-+-+-----+/-- The four landmasses of Königsberg. -/
+-+-+-----+inductive Konigsberg : Type
+-+-+-----+  | A  -- North bank
+-+-+-----+  | B  -- South bank
+-+-+-----+  | C  -- Island (Kneiphof)
+-+-+-----+  | D  -- East district
+-+-+-----+  deriving DecidableEq, Fintype
+-+-+-----+
+-+-+-----+open Konigsberg
+-+-+-----+
+-+-+-----+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-+-----+Every pair of distinct vertices is connected, capturing the fact that
+-+-+-----+every pair of landmasses had at least one bridge between them. -/
+-+-+-----+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-+-----+
+-+-+-----+instance : DecidableRel konigsbergGraph.Adj := by
+-+-+-----+  intro u v
+-+-+-----+  simp only [konigsbergGraph]
+-+-+-----+  infer_instance
+-+-+-----+
+-+-+-----+/-
+-+-+-----+Every vertex in K₄ has degree 3 (odd).
+-+- ---+-+import Bridges.EulerianTrail
+-+--+--+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+--+--+
+-+--+--+--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+--+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+--+--+
+-+--+--+--+The proof combines:
+-+--+--+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+--+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+--+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+--+--+  constructor
+-+--+--+--+  intro t
+-+--+--+--+  have h1 := t.odd_degree_vertices_le_two
+-+--+--+--+  have h2 := konigsberg_odd_count
+-+--+--+--+  omega
+-+--+--+--+
+-+--+--+--+end Bridges+/-
+-+--+--+-+Copyright (c) 2025. All rights reserved.
+-+--+--+-+Released under Apache 2.0 license.
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+/-!
+-+- ---+-+# The Königsberg Bridge Problem
+-+--+--+-+# The Königsberg Bridge Problem — Formalized
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+- ---+-+the founding result of graph theory (Euler, 1736).
+-+--+--+-+This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+--+-+the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+--+-+impossible to traverse all seven bridges of Königsberg exactly once.
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+## The Problem
+-+--+--+-+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+--+-+and prove impossibility using the Eulerian trail parity condition.
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+- ---+-+and included two large islands connected to each other and to the two mainland
+-+- ---+-+portions by seven bridges. The problem asks whether there is a walk through the
+-+- ---+-+city that crosses each bridge exactly once.
+-+--+--+-+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+--+-+with a simple-graph abstraction that captures the essential parity
+-+--+--+-+obstruction: a graph where more than two vertices have odd degree
+-+--+--+-+cannot have an Eulerian trail.
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+## The Graph
+-+--+--+-+## Main results
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+We model the four landmasses as vertices 0–3 of a multigraph:
+-+- ---+-+- Vertex 0: Central island (Kneiphof)
+-+- ---+-+- Vertex 1: Northern bank
+-+- ---+-+- Vertex 2: Southern bank
+-+- ---+-+- Vertex 3: Eastern island (Lomse)
+-+--+--+-+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+--+-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+--+-+  has no Eulerian trail (from Mathlib).
+-+--+--+-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+--+-+-/
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+The seven bridges are:
+-+- ---+-+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+- ---+-+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+- ---+-+- Edge 4: One bridge from vertex 0 to vertex 3
+-+- ---+-+- Edge 5: One bridge from vertex 1 to vertex 3
+-+- ---+-+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+--+-+import Mathlib
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+## Main Results
+-+--+--+-+/-! ### The Königsberg graph
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+- ---+-+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+- ---+-+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-----+++
+-+-----+++/-! ### The Königsberg graph
+-+-----+++
+-+-----+++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-----+++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-----+++is the simple graph that captures the connectivity pattern.
+-+-----+++
+-+-----+++In the original problem, some pairs of landmasses had multiple bridges
+-+-----+++between them, making the true model a multigraph. However, for the
+-+-----+++Eulerian trail condition, what matters is the parity of degrees at each
+-+-----+++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-----+++impossibility via Euler's theorem. -/
+-+-----+++
+-+-----+++/-- The four landmasses of Königsberg. -/
+-+-----+++inductive Konigsberg : Type
+-+-----+++  | A  -- North bank
+-+-----+++  | B  -- South bank
+-+-----+++  | C  -- Island (Kneiphof)
+-+-----+++  | D  -- East district
+-+-----+++  deriving DecidableEq, Fintype
+-+-----+++
+-+-----+++open Konigsberg
+-+-----+++
+-+-----+++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-----+++Every pair of distinct vertices is connected, capturing the fact that
+-+-----+++every pair of landmasses had at least one bridge between them. -/
+-+-----+++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-----+++
+-+-----+++instance : DecidableRel konigsbergGraph.Adj := by
+-+-----+++  intro u v
+-+-----+++  simp only [konigsbergGraph]
+-+-----+++  infer_instance
+-+-----+++
+-+-----+++/-
+-+-----+++Every vertex in K₄ has degree 3 (odd).
+-+-----+ +-/
+-+--+--+-+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+--+-+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+--+-+is the simple graph that captures the connectivity pattern.
+-+-- --+-+
+-+-+--- -+-/
+-+-+-----+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-+-----+  fin_cases v <;> simp +decide
+-+-+---+-+
+-+- ---+-+namespace Bridges
+-+--+--+-+In the original problem, some pairs of landmasses had multiple bridges
+-+--+--+-+between them, making the true model a multigraph. However, for the
+-+--+--+-+Eulerian trail condition, what matters is the parity of degrees at each
+-+--+--+-+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+--+-+impossibility via Euler's theorem. -/
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+- ---+-+def konigsberg : Multigraph 4 7 where
+-+- ---+-+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+- ---+-+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+--+-+/-- The four landmasses of Königsberg. -/
+-+--+--+-+inductive Konigsberg : Type
+-+--+--+-+  | A  -- North bank
+-+--+--+-+  | B  -- South bank
+-+--+--+-+  | C  -- Island (Kneiphof)
+-+--+--+-+  | D  -- East district
+-+--+--+-+  deriving DecidableEq, Fintype
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+- ---+-+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+--+-+open Konigsberg
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+- ---+-+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+--+-+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+--+-+Every pair of distinct vertices is connected, capturing the fact that
+-+--+--+-+every pair of landmasses had at least one bridge between them. -/
+-+--+--+-+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+- ---+-+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+--+-+instance : DecidableRel konigsbergGraph.Adj := by
+-+--+--+-+  intro u v
+-+--+--+-+  simp only [konigsbergGraph]
+-+--+--+-+  infer_instance
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+- ---+-+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-----+++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-----+++  fin_cases v <;> simp +decide
+-+-----+ +
+-+-----+ +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+--- -+
+-+-+--- -+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+-----+theorem konigsberg_all_odd :
+-+-+-----+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-+-----+  intro v
+-+-+-----+  rw [konigsberg_degree]
+-+-+-----+  exact ⟨1, rfl⟩
+-+-+-----+
+-+-+-----+/-
+-+-+-----+The number of odd-degree vertices in the Königsberg graph is 4.
+-+-+--+@@ -1,256 +1,86 @@
+-+-+--+---- a/Bridges/Konigsberg.lean
+-+-+--+-+++ b/Bridges/Konigsberg.lean
+-+-+--+-@@ -1,168 +1,86 @@
+-+-+--+----- a/Bridges/Konigsberg.lean
+-+-+--+--+++ b/Bridges/Konigsberg.lean
+-+-+--+--@@ -1,99 +1,86 @@
+-+-+--+-- /-
+-+-+--+---Copyright (c) 2025. All rights reserved.
+-+-+--+---Released under Apache 2.0 license.
+-+-+--+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-+--+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+-+-- --+-/
+-+-+-----+theorem konigsberg_four_odd :
+-+-+-----+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-+-----+  decide +revert
+-+-+-----+
+-+-+-----+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-+-----+then the number of odd-degree vertices is 0 or 2.
+-+-+-----+This is the key obstruction from Mathlib. -/
+-+-+-----+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-+-----+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-+-----+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-+-----+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-+-----+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-+-----+  hp.card_odd_degree
+-+-+-----+
+-+-+-----+/-
+-+-+-----+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-+-----+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-+-----+through Königsberg crossing each bridge exactly once.
+-+-+-----+-/
+-+-+-----+theorem konigsberg_no_eulerian_trail :
+-+-+-----+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-+-----+  intro u v p h;
+-+-+-----+  have := euler_necessary h; simp_all +decide ;+/-
+-+-+--+--+import Mathlib
+-+-+--+--+import Bridges.EulerianTrail
+-+-+--+-- 
+-+-+--+---# The Königsberg Bridge Problem — Formalized
+-+-+--+--+/-!
+-+-+--+--+# The Königsberg Bridge Problem
+-+-+--+-- 
+-+-+--+---This file formalizes the Königsberg Bridge Problem, widely considered
+-+-+--+---the founding problem of graph theory. In 1736, Euler proved that it is
+-+-+--+---impossible to traverse all seven bridges of Königsberg exactly once.
+-+-+--+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-+--+--+the founding result of graph theory (Euler, 1736).
+-+-+--+-- 
+-+-+--+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-+--+---and prove impossibility using the Eulerian trail parity condition.
+-+-+--+--+## The Problem
+-+-+--+-- 
+-+-+--+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-+--+---with a simple-graph abstraction that captures the essential parity
+-+-+--+---obstruction: a graph where more than two vertices have odd degree
+-+-+--+---cannot have an Eulerian trail.
+-+-+--+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-+--+--+and included two large islands connected to each other and to the two mainland
+-+-+--+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+-+--+--+city that crosses each bridge exactly once.
+-+-+--+-- 
+-+-+--+---## Main results
+-+-+--+--+## The Graph
+-+-+--+-- 
+-+-+--+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-+--+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-+--+---  has no Eulerian trail (from Mathlib).
+-+-+--+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-+--+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-+--+--+- Vertex 0: Central island (Kneiphof)
+-+-+--+--+- Vertex 1: Northern bank
+-+-+--+--+- Vertex 2: Southern bank
+-+-+--+--+- Vertex 3: Eastern island (Lomse)
+-+-+--+--+
+-+-+--+--+The seven bridges are:
+-+-+--+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-+--+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-+--+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-+--+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-+--+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-+--+--+
+-+-+--+--+## Main Results
+-+-+--+--+
+-+-+--+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-+--+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-+--+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-+--+-- -/
+-+-+--+-- 
+-+-+--+---import Mathlib
+-+-+--+--+namespace Bridges
+-+-+--+-- 
+-+-+--+---/-! ### The Königsberg graph
+-+-+--+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-+--+--+def konigsberg : Multigraph 4 7 where
+-+-+--+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-+--+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-+--+-- 
+-+-+--+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-+--+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-+--+---is the simple graph that captures the connectivity pattern.
+-+-+--+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-+--+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-+--+-- 
+-+-+--+---In the original problem, some pairs of landmasses had multiple bridges
+-+-+--+---between them, making the true model a multigraph. However, for the
+-+-+--+---Eulerian trail condition, what matters is the parity of degrees at each
+-+-+--+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-+--+---impossibility via Euler's theorem. -/
+-+-+--+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-+--+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-+--+-- 
+-+-+--+---/-- The four landmasses of Königsberg. -/
+-+-+--+---inductive Konigsberg : Type
+-+-+--+---  | A  -- North bank
+-+-+--+---  | B  -- South bank
+-+-+--+---  | C  -- Island (Kneiphof)
+-+-+--+---  | D  -- East district
+-+-+--+---  deriving DecidableEq, Fintype
+-+-+--+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-+--+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-+--+-- 
+-+-+--+---open Konigsberg
+-+-+--+---
+-+-+--+---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-+--+---Every pair of distinct vertices is connected, capturing the fact that
+-+-+--+---every pair of landmasses had at least one bridge between them. -/
+-+-+--+---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-+--+---
+-+-+--+---instance : DecidableRel konigsbergGraph.Adj := by
+-+-+--+---  intro u v
+-+-+--+---  simp only [konigsbergGraph]
+-+-+--+---  infer_instance
+-+-+--+---
+-+-+--+---/-
+-+-+--+---Every vertex in K₄ has degree 3 (odd).
+-+-+--+----/
+-+-+--+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-+--+---  fin_cases v <;> simp +decide
+-+-+--+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-+--+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-+--+-- 
+-+-+--+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+--+---theorem konigsberg_all_odd :
+-+-+--+---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-+--+---  intro v
+-+-+--+---  rw [konigsberg_degree]
+-+-+--+---  exact ⟨1, rfl⟩
+-+-+--+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-+--+--+  intro v; fin_cases v <;> native_decide
+-+-+--+-- 
+-+-+--+---/-
+-+-+--+---The number of odd-degree vertices in the Königsberg graph is 4.
+-+-+--+----/
+-+-+--+---theorem konigsberg_four_odd :
+-+-+--+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-+--+---  decide +revert
+-+-+--+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-+--+--+theorem konigsberg_odd_count :
+-+-+--+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-+--+--+  native_decide
+-+-+--+-- 
+-+-+--+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-+--+---then the number of odd-degree vertices is 0 or 2.
+-+-+--+---This is the key obstruction from Mathlib. -/
+-+-+--+---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-+--+---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-+--+---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-+--+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-+--+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-+--+---  hp.card_odd_degree
+-+-+--+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-+--+-- 
+-+-+--+---/-
+-+-+--+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-+--+---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-+--+---through Königsberg crossing each bridge exactly once.
+-+-+--+----/
+-+-+--+---theorem konigsberg_no_eulerian_trail :
+-+-+--+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-+--+---  intro u v p h;
+-+-+--+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-+--+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-+--+--+
+-+-+--+--+The proof combines:
+-+-+--+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-+--+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-+--+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-+--+--+  constructor
+-+-+--+--+  intro t
+-+-+--+--+  have h1 := t.odd_degree_vertices_le_two
+-+-+--+--+  have h2 := konigsberg_odd_count
+-+-+--+--+  omega
+-+-+--+--+
+-+-+--+--+end Bridges+/-
+-+-+-- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-+-- -+Released under Apache 2.0 license as described in the file LICENSE.
+-+- ---+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+- ---+-+  intro v; fin_cases v <;> native_decide
+-+--+--+-+/-
+-+--+--+-+Every vertex in K₄ has degree 3 (odd).
+-+--+--+-+-/
+-+--+--+-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+--+-+  fin_cases v <;> simp +decide
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+- ---+-+theorem konigsberg_odd_count :
+-+- ---+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+- ---+-+  native_decide
+-+--+--+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+--+-+theorem konigsberg_all_odd :
+-+--+--+-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+--+-+  intro v
+-+--+--+-+  rw [konigsberg_degree]
+-+--+--+-+  exact ⟨1, rfl⟩
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+--+-+/-
+-+--+--+-+The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+--+-+-/
+-+--+--+-+theorem konigsberg_four_odd :
+-+--+--+-+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+--+-+  decide +revert
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+- ---+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+--+-+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+--+-+then the number of odd-degree vertices is 0 or 2.
+-+--+--+-+This is the key obstruction from Mathlib. -/
+-+--+--+-+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+--+-+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+--+-+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+--+-+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+--+-+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+--+-+  hp.card_odd_degree
+-+-- --+-+
+-+-+---+-+
+-+- ---+-+The proof combines:
+-+- ---+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+- ---+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-@@ -12344,2252 +883,485 @@
+-+- ---+-+  have h2 := konigsberg_odd_count
+-+- ---+-+  omega
+-+- ---+-+
+-+-----+-+end Bridges++theorem konigsberg_all_odd :
+-+-----+++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-----+++  intro v
+-+-----+++  rw [konigsberg_degree]
+-+-----+++  exact ⟨1, rfl⟩
+-+-----+++
+-+-----+++/-
+-+-----+++The number of odd-degree vertices in the Königsberg graph is 4.
+-+-----+++-/
+-+-----+++theorem konigsberg_four_odd :
+-+-----+++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-----+++  decide +revert
+-+-----+++
+-+-----+++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-----+++then the number of odd-degree vertices is 0 or 2.
+-+-----+++This is the key obstruction from Mathlib. -/
+-+-----+++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-----+++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-----+++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-----+++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-----+++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-----+++  hp.card_odd_degree
+-+-----+++
+-+-----+++/-
+-+-----+++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-----+++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-----+++through Königsberg crossing each bridge exactly once.
+-+-----+++-/
+-+-----+++theorem konigsberg_no_eulerian_trail :
+-+-----+++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-----+++  intro u v p h;
+-+-----+++  have := euler_necessary h; simp_all +decide ;+-+---+
+-+---++-+---+-/
+-+---++-+---+
+-+--- +-+---+namespace Bridges
+-+--- +-+---+
+-+--- +-+---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---@@ -7918,91 +2742,465 @@
+-+--- +-+---+  omega
+-+--- +-+---+
+-+--- +-+---+end Bridges+/-
+-+----+-+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----+-+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+---++++--@@ -1,99 +1,86 @@
+-+---++++-- /-
+-+---++++---Copyright (c) 2025. All rights reserved.
+-+---++++---Released under Apache 2.0 license.
+-+---++ +--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---++ +--+Released under Apache 2.0 license as described in the file LICENSE.
+-+--- +-+--+-/
+-+----+-+--+import Mathlib
+-+----+-+--+import Bridges.EulerianTrail
+-+---+++ --+-/
+-+---+++---+theorem konigsberg_four_odd :
+-+---+++---+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+++---+  decide +revert
+-+---+++---+
+-+---+++---+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+++---+then the number of odd-degree vertices is 0 or 2.
+-+---+++---+This is the key obstruction from Mathlib. -/
+-+---+++---+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+++---+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+++---+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+++---+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+++---+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+++---+  hp.card_odd_degree
+-+---+++---+
+-+---+++---+/-
+-+---+++---+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+++---+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+++---+through Königsberg crossing each bridge exactly once.
+-+---+ +---+-/
+-+---+-+---+import Mathlib
+-+---+-+---+import Bridges.EulerianTrail
+-+---+-+---+
+-+---+-+---+/-!
+-+---+-+---+# The Königsberg Bridge Problem
+-+---+-+---+
+-+---+-+---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+-+---+the founding result of graph theory (Euler, 1736).
+-+---+-+---+
+-+---+-+---+## The Problem
+-+---+-+---+
+-+---+-+---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+-+---+and included two large islands connected to each other and to the two mainland
+-+---+-+---+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+-+---+city that crosses each bridge exactly once.
+-+---+-+---+
+-+---+-+---+## The Graph
+-+---+-+---+
+-+---+-+---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+-+---+- Vertex 0: Central island (Kneiphof)
+-+---+-+---+- Vertex 1: Northern bank
+-+---+-+---+- Vertex 2: Southern bank
+-+---+-+---+- Vertex 3: Eastern island (Lomse)
+-+---+-+---+
+-+---+-+---+The seven bridges are:
+-+---+-+---+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+-+---+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+-+---+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+-+---+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+-+---+- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+-+---+
+-+---+-+---+## Main Results
+-+---+-+---+
+-+---+-+---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+-+---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+-+---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+-+---+-/
+-+---+-+---+
+-+---+-+---+namespace Bridges
+-+---+-+---+
+-+---+-+---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+-+---+def konigsberg : Multigraph 4 7 where
+-+---+-+---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+-+---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+-+---+
+-+---+-+---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+-+---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+-+---+
+-+---+-+---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+-+---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+-+---+
+-+---+-+---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+-+---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+-+---+
+-+---+-+---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+-+---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+-+---+
+-+---+-+---+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+-+---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+-+---+  intro v; fin_cases v <;> native_decide
+-+---+-+---+
+-+---+-+---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+-+---+theorem konigsberg_odd_count :
+-+---+-+---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+-+---+  native_decide
+-+---+-+---+
+-+---+-+---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+-+---+
+-+---+-+---+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+-+---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+-+---+
+-+---+-+---+The proof combines:
+-+---+-+---+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+-+---+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+-+---+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+-+---+  constructor
+-+---+-+---+  intro t
+-+---+-+---+  have h1 := t.odd_degree_vertices_le_two
+-+---+-+---+  have h2 := konigsberg_odd_count
+-+---+-+---+  omega
+-+---+-+---+
+-+---+-+---+end Bridges+/-
+-+---+-+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+-+--+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+-+--+-/
+-+---+-+--+import Mathlib
+-+---+-+--+import Bridges.EulerianTrail
+-+---+-+--+
+-+---+-+--+/-!
+-+---+-+--+# The Königsberg Bridge Problem
+-+---+-+--+
+-+---+-+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+-+--+the founding result of graph theory (Euler, 1736).
+-+---+-+--+
+-+---+-+--+## The Problem
+-+---+-+--+
+-+---+-+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+-+--+and included two large islands connected to each other and to the two mainland
+-+---+-+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+---+-+--+city that crosses each bridge exactly once.
+-+---+-+--+
+-+---+-+--+## The Graph
+-+---+-+--+
+-+---+-+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+-+--+- Vertex 0: Central island (Kneiphof)
+-+---+-+--+- Vertex 1: Northern bank
+-+---+-+--+- Vertex 2: Southern bank
+-+---+-+--+- Vertex 3: Eastern island (Lomse)
+-+---+-+--+
+-+---+-+--+The seven bridges are:
+-+---+-+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+-+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+-+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+-+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+-+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+-+--+
+-+---+-+--+## Main Results
+-+---+-+--+
+-+---+-+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+-+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+-+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+-+--+-/
+-+---+-+--+
+-+---+-+--+namespace Bridges
+-+---+-+--+
+-+---+-+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+-+--+def konigsberg : Multigraph 4 7 where
+-+---+-+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+-+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+-+--+
+-+---+-+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+-+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+-+--+
+-+---+-+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+-+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+-+--+
+-+---+-+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+-+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+-+--+
+-+---+-+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+-+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+-+--+
+-+---+-+--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+-+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+-+--+  intro v; fin_cases v <;> native_decide
+-+---+-+--+
+-+---+-+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+-+--+theorem konigsberg_odd_count :
+-+---+-+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+-+--+  native_decide
+-+---+-+--+
+-+---+-+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+-+--+
+-+---+-+--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+-+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+-+--+
+-+---+-+--+The proof combines:
+-+---+-+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+-+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+-+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+-+--+  constructor
+-+---+-+--+  intro t
+-+---+-+--+  have h1 := t.odd_degree_vertices_le_two
+-+---+-+--+  have h2 := konigsberg_odd_count
+-+---+-+--+  omega
+-+---+-+--+
+-+---+-+--+end Bridges+/-
+-+---+-+-+Copyright (c) 2025. All rights reserved.
+-+---+-+-+Released under Apache 2.0 license.
+-+--+--+-+/-
+-+--+--+-+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+--+-+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+--+-+through Königsberg crossing each bridge exactly once.
+-+--+--+-+-/
+-+--+--+-+theorem konigsberg_no_eulerian_trail :
+-+--+--+-+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+--+-+  intro u v p h;
+-+--+--+-+  have := euler_necessary h; simp_all +decide ;+/-
+-+--+-- +Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-- +Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-- +-/++---+theorem konigsberg_no_eulerian_trail :
+-+--+-++---+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-++---+  intro u v p h;
+-+--+-++---+  have := euler_necessary h; simp_all +decide ;+/-
+-+--+-+ +--+import Mathlib
+-+--+-+ +--+import Bridges.EulerianTrail
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---# The Königsberg Bridge Problem — Formalized
+-+--+-+ +--+/-!
+-+--+-+ +--+# The Königsberg Bridge Problem
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-+++---the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-+++---impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+ +--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-+ +--+the founding result of graph theory (Euler, 1736).
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-+++---and prove impossibility using the Eulerian trail parity condition.
+-+--+-+ +--+## The Problem
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-+++---with a simple-graph abstraction that captures the essential parity
+-+--+-+++---obstruction: a graph where more than two vertices have odd degree
+-+--+-+++---cannot have an Eulerian trail.
+-+--+-+ +--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-+ +--+and included two large islands connected to each other and to the two mainland
+-+--+-+ +--+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-+ +--+city that crosses each bridge exactly once.
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---## Main results
+-+--+-+ +--+## The Graph
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-+++---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-+++---  has no Eulerian trail (from Mathlib).
+-+--+-+++---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-+ +--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-+ +--+- Vertex 0: Central island (Kneiphof)
+-+--+-+ +--+- Vertex 1: Northern bank
+-+--+-+@@ -1218,39 +572,101 @@
+-+--+-+ +--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-+ +--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-+ +--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-+-+--+-/
+-+--+-+-+--+
+-+--+-+++-- -/
+-+--+-+++-- 
+-+--+-+++---import Mathlib
+-+--+-+ +--+namespace Bridges
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---/-! ### The Königsberg graph
+-+--+-+ +--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-+ +--+def konigsberg : Multigraph 4 7 where
+-+--+-+ +--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-+ +--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-+++---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-+++---is the simple graph that captures the connectivity pattern.
+-+--+-+ +--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-+ +--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---In the original problem, some pairs of landmasses had multiple bridges
+-+--+-+++---between them, making the true model a multigraph. However, for the
+-+--+-+++---Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-+++---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-+++---impossibility via Euler's theorem. -/
+-+--+-+ +--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-+ +--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---/-- The four landmasses of Königsberg. -/
+-+--+-+++---inductive Konigsberg : Type
+-+--+-+++---  | A  -- North bank
+-+--+-+++---  | B  -- South bank
+-+--+-+++---  | C  -- Island (Kneiphof)
+-+--+-+++---  | D  -- East district
+-+--+-+++---  deriving DecidableEq, Fintype
+-+--+-+ +--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-+ +--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---open Konigsberg
+-+--+-+++---
+-+--+-+++---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-+++---Every pair of distinct vertices is connected, capturing the fact that
+-+--+-+++---every pair of landmasses had at least one bridge between them. -/
+-+--+-+++---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+++---
+-+--+-+++---instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-+++---  intro u v
+-+--+-+++---  simp only [konigsbergGraph]
+-+--+-+++---  infer_instance
+-+--+-+++---
+-+--+-+++---/-
+-+--+-+++---Every vertex in K₄ has degree 3 (odd).
+-+--+-+++----/
+-+--+-+++---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-+++---  fin_cases v <;> simp +decide
+-+--+-+ +--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-+ +--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-+-+--+
+-+--+-+-+--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+++-- 
+-+--+-+++-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+++---theorem konigsberg_all_odd :
+-+--+-+++---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-+++---  intro v
+-+--+-+++---  rw [konigsberg_degree]
+-+--+-+++---  exact ⟨1, rfl⟩
+-+--+-+ +--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-+ +--+  intro v; fin_cases v <;> native_decide
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---/-
+-+--+-+++---The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+++----/
+-+--+-+++---theorem konigsberg_four_odd :
+-+--+-+++---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-+++---  decide +revert
+-+--+-+ +--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-+ +--+theorem konigsberg_odd_count :
+-+--+-+ +--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-+ +--+  native_decide
+-+--+-+-+--+
+-+--+-+++-- 
+-+--+-+++---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-+++---then the number of odd-degree vertices is 0 or 2.
+-+--+-+++---This is the key obstruction from Mathlib. -/
+-+--+-+++---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-+++---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-+++---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-+++---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-+++---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-+++---  hp.card_odd_degree
+-+--+-+ +--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-+-+--+
+-+--+-+-+--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+++-- 
+-+--+-+++---/-
+-+--+-+++---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-+++---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-+++---through Königsberg crossing each bridge exactly once.
+-+--+-+++----/
+-+--+-+++---theorem konigsberg_no_eulerian_trail :
+-+--+-+++---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-+++---  intro u v p h;
+-+--+-+++---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-+ +--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-+ +--+
+-+--+-+ +--+The proof combines:
+-+--+-+@@ -1264,104 +680,238 @@
+-+--+-+ +--+  omega
+-+--+-+ +--+
+-+--+-+ +--+end Bridges+/-
+-+--+-+-+-+Copyright (c) 2025. All rights reserved.
+-+--+-+-+-+Released under Apache 2.0 license.
+-+--+-+-+-+
+-+--+-+-+-+# The Königsberg Bridge Problem — Formalized
+-+--+-+-+-+
+-+--+-+-+-+This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-+-+-+the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-+-+-+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-+-+-+
+-+--+-+-+-+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-+-+-+and prove impossibility using the Eulerian trail parity condition.
+-+--+-+-+-+
+-+--+-+-+-+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-+-+-+with a simple-graph abstraction that captures the essential parity
+-+--+-+-+-+obstruction: a graph where more than two vertices have odd degree
+-+--+-+-+-+cannot have an Eulerian trail.
+-+--+-+-+-+
+-+--+-+-+-+## Main results
+-+--+-+-+-+
+-+--+-+-+-+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-+-+-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-+-+-+  has no Eulerian trail (from Mathlib).
+-+--+-+-+-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-++ -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-++ -+Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-++-+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-++-+-+  intro v; fin_cases v <;> native_decide
+-+--+-++-+-+
+-+--+-++-+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-++-+-+theorem konigsberg_odd_count :
+-+--+-++-+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-++-+-+  native_decide
+-+--+-++-+-+
+-+--+-++-+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-++-+-+
+-+--+-++-+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-++-+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-++-+-+
+-+--+-++-+-+The proof combines:
+-+--+-++-+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-++-+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-++-+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-++-+-+  constructor
+-+--+-++-+-+  intro t
+-+--+-++-+-+  have h1 := t.odd_degree_vertices_le_two
+-+--+-++-+-+  have h2 := konigsberg_odd_count
+-+--+-++-+-+  omega
+-+--+-++-+-+
+-+--+-++-+-+end Bridges+/-
+-+--+-++-++Copyright (c) 2025. All rights reserved.
+-+--+-++-++Released under Apache 2.0 license.
+-+--+-++-++
+-+--+-++-++# The Königsberg Bridge Problem — Formalized
+-+--+-++-++
+-+--+-++-++This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+-++-++the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+-++-++impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+-++-++
+-+--+-++-++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+-++-++and prove impossibility using the Eulerian trail parity condition.
+-+--+-++-++
+-+--+-++-++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+-++-++with a simple-graph abstraction that captures the essential parity
+-+--+-++-++obstruction: a graph where more than two vertices have odd degree
+-+--+-++-++cannot have an Eulerian trail.
+-+--+-++-++
+-+--+-++-++## Main results
+-+--+-++-++
+-+--+-++-++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+-++-++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+-++-++  has no Eulerian trail (from Mathlib).
+-+--+-++-++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+-++- +-/
+-+--+-++-++
+-+--+-++- +import Mathlib
+-+--+-+ +-+-/
+-+--+-+-+-+
+-+--+-+ +-+import Mathlib
+-+--+-+-+-+
+-+--+-+-+-+/-! ### The Königsberg graph
+-+--+-+-+-+
+-+--+-+-+-+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-+-+-+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-+-+-+is the simple graph that captures the connectivity pattern.
+-+--+-+-+-+
+-+--+-+-+-+In the original problem, some pairs of landmasses had multiple bridges
+-+--+-+-+-+between them, making the true model a multigraph. However, for the
+-+--+-+-+-+Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-+-+-+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-+-+-+impossibility via Euler's theorem. -/
+-+--+-+-+-+
+-+--+-+-+-+/-- The four landmasses of Königsberg. -/
+-+--+-+-+-+inductive Konigsberg : Type
+-+--+-+-+-+  | A  -- North bank
+-+--+-+-+-+  | B  -- South bank
+-+--+-+-+-+  | C  -- Island (Kneiphof)
+-+--+-+-+-+  | D  -- East district
+-+--+-+-+-+  deriving DecidableEq, Fintype
+-+--+-+-+-+
+-+--+-+-+-+open Konigsberg
+-+--+-+-+-+
+-+--+-+-+-+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-+-+-+Every pair of distinct vertices is connected, capturing the fact that
+-+--+-+-+-+every pair of landmasses had at least one bridge between them. -/
+-+--+-+-+-+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-+-+-+
+-+--+-+-+-+instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-+-+-+  intro u v
+-+--+-+-+-+  simp only [konigsbergGraph]
+-+--+-+-+-+  infer_instance
+-+--+-+-+-+
+-+--+-+-+-+/-
+-+--+-+-+-+Every vertex in K₄ has degree 3 (odd).
+-+--+-++ -+import Bridges.EulerianTrail
+-+--+-++ -+
+-+--+-++ -+/-!
+-+--+-++@@ -593,42 +211,7 @@
+-+--+-++ -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-++ -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-++ -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-++-++
+-+--+-++-++/-! ### The Königsberg graph
+-+--+-++-++
+-+--+-++-++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+-++-++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+-++-++is the simple graph that captures the connectivity pattern.
+-+--+-++-++
+-+--+-++-++In the original problem, some pairs of landmasses had multiple bridges
+-+--+-++-++between them, making the true model a multigraph. However, for the
+-+--+-++-++Eulerian trail condition, what matters is the parity of degrees at each
+-+--+-++-++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+-++-++impossibility via Euler's theorem. -/
+-+--+-++-++
+-+--+-++-++/-- The four landmasses of Königsberg. -/
+-+--+-++-++inductive Konigsberg : Type
+-+--+-++-++  | A  -- North bank
+-+--+-++-++  | B  -- South bank
+-+--+-++-++  | C  -- Island (Kneiphof)
+-+--+-++-++  | D  -- East district
+-+--+-++-++  deriving DecidableEq, Fintype
+-+--+-++-++
+-+--+-++-++open Konigsberg
+-+--+-++-++
+-+--+-++-++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+-++-++Every pair of distinct vertices is connected, capturing the fact that
+-+--+-++-++every pair of landmasses had at least one bridge between them. -/
+-+--+-++-++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+-++-++
+-+--+-++-++instance : DecidableRel konigsbergGraph.Adj := by
+-+--+-++-++  intro u v
+-+--+-++-++  simp only [konigsbergGraph]
+-+--+-++-++  infer_instance
+-+--+-++-++
+-+--+-++-++/-
+-+--+-++-++Every vertex in K₄ has degree 3 (odd).
+-+--+-++- +-/
+-+--+-+ +-+-/
+-+--+-+-+-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-+-+-+  fin_cases v <;> simp +decide
+-+--+-++ -+
+-+--+-++ -+namespace Bridges
+-+--+-++ -+
+-+--+-++@@ -648,10 +231,8 @@
+-+--+-++ -+
+-+--+-++ -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-++ -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-++-++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+-++-++  fin_cases v <;> simp +decide
+-+--+-++- +
+-+--+-++- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+ +-+
+-+--+-+ +-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-+-+-+theorem konigsberg_all_odd :
+-+--+-+-+-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-+-+-+  intro v
+-+--+-+-+-+  rw [konigsberg_degree]
+-+--+-+-+-+  exact ⟨1, rfl⟩
+-+--+-+-+-+
+-+--+-+-+-+/-
+-+--+-+-+-+The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-+-+-+-/
+-+--+-+-+-+theorem konigsberg_four_odd :
+-+--+-+-+-+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-+-+-+  decide +revert
+-+--+-+-+-+
+-+--+-+-+-+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-+-+-+then the number of odd-degree vertices is 0 or 2.
+-+--+-+-+-+This is the key obstruction from Mathlib. -/
+-+--+-+-+-+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-+-+-+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-+-+-+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-+-+-+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-+-+-+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-+-+-+  hp.card_odd_degree
+-+--+-+-+-+
+-+--+-+-+-+/-
+-+--+-+-+-+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-+-+-+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-+-+-+through Königsberg crossing each bridge exactly once.
+-+--+-+-+-+-/
+-+--+-+-+-+theorem konigsberg_no_eulerian_trail :
+-+--+-+-+-+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-+-+-+  intro u v p h;
+-+--+-+-+-+  have := euler_necessary h; simp_all +decide ;+/-
+-+--+-+- +Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-+- +Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-+- +-/+ -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-++ -+  intro v; fin_cases v <;> native_decide
+-+--+-++ -+
+-+--+-++@@ -675,35 +256,89 @@
+-+--+-++ -+  have h2 := konigsberg_odd_count
+-+--+-++ -+  omega
+-+--+-++ -+
+-+--+-++--+end Bridges++theorem konigsberg_all_odd :
+-+--+-++-++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+-++-++  intro v
+-+--+-++-++  rw [konigsberg_degree]
+-+--+-++-++  exact ⟨1, rfl⟩
+-+--+-++-++
+-+--+-++-++/-
+-+--+-++-++The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+-++-++-/
+-+--+-++-++theorem konigsberg_four_odd :
+-+--+-++-++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+-++-++  decide +revert
+-+--+-++-++
+-+--+-++-++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+-++-++then the number of odd-degree vertices is 0 or 2.
+-+--+-++-++This is the key obstruction from Mathlib. -/
+-+--+-++-++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+-++-++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+-++-++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+-++-++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+-++-++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+-++-++  hp.card_odd_degree
+-+--+-++-++
+-+--+-++-++/-
+-+--+-++-++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+-++-++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+-++-++through Königsberg crossing each bridge exactly once.
+-+--+-++-++-/
+-+--+-++-++theorem konigsberg_no_eulerian_trail :
+-+--+-++-++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+-++-++  intro u v p h;
+-+--+-++-++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+--+-++++Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+-++++Released under Apache 2.0 license as described in the file LICENSE.
+-+--+-++++-/
+-+--+-++++import Mathlib
+-+--+-++++import Bridges.EulerianTrail
+-+--+-++++
+-+--+-++++/-!
+-+--+-++++# The Königsberg Bridge Problem
+-+--+-++++
+-+--+-++++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+-++++the founding result of graph theory (Euler, 1736).
+-+--+-++++
+-+--+-++++## The Problem
+-+--+-++++
+-+--+-++++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+-++++and included two large islands connected to each other and to the two mainland
+-+--+-++++portions by seven bridges. The problem asks whether there is a walk through the
+-+--+-++++city that crosses each bridge exactly once.
+-+--+-++++
+-+--+-++++## The Graph
+-+--+-++++
+-+--+-++++We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+-++++- Vertex 0: Central island (Kneiphof)
+-+--+-++++- Vertex 1: Northern bank
+-+--+-++++- Vertex 2: Southern bank
+-+--+-++++- Vertex 3: Eastern island (Lomse)
+-+--+-++++
+-+--+-++++The seven bridges are:
+-+--+-++++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+-++++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+-++++- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+-++++- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+-++++- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+-++++
+-+--+-++++## Main Results
+-+--+-++++
+-+--+-++++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+-++++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+-++++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+-++++-/
+-+--+-++++
+-+--+-++++namespace Bridges
+-+--+-++++
+-+--+-++++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+-++++def konigsberg : Multigraph 4 7 where
+-+--+-++++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+-++++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+-++++
+-+--+-++++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+-++++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+-++++
+-+--+-++++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+-++++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+-++++
+-+--+-++++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+-++++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+-++++
+-+--+-++++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+-++++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+-++++
+-+--+-++++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+-++++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+-++++  intro v; fin_cases v <;> native_decide
+-+--+-++++
+-+--+-++++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+-++++theorem konigsberg_odd_count :
+-+--+-++++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+-++++  native_decide
+-+--+-++++
+-+--+-++++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+-++++
+-+--+-++++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+-++++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+-++++
+-+--+-++++The proof combines:
+-+--+-++++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+-++++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+-++++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+-++++  constructor
+-+--+-++++  intro t
+-+--+-++++  have h1 := t.odd_degree_vertices_le_two
+-+--+-++++  have h2 := konigsberg_odd_count
+-+--+-++++  omega
+-+--+-++++
+-+--+-++++end Bridges++-@@ -1,168 +1,86 @@
+-+--+++----- a/Bridges/Konigsberg.lean
+-+--+++--+++ b/Bridges/Konigsberg.lean
+-+--+++--@@ -1,99 +1,86 @@
+-+--+++-- /-
+-+--+++---Copyright (c) 2025. All rights reserved.
+-+--+++---Released under Apache 2.0 license.
+-+--+++--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--+++--+Released under Apache 2.0 license as described in the file LICENSE.
+-+--++ --+-/
+-+--++---+theorem konigsberg_four_odd :
+-+--++---+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--++---+  decide +revert
+-+--++---+
+-+--++---+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--++---+then the number of odd-degree vertices is 0 or 2.
+-+--++---+This is the key obstruction from Mathlib. -/
+-+--++---+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--++---+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--++---+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--++---+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--++---+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--++---+  hp.card_odd_degree
+-+--++---+
+-+--++---+/-
+-+--++---+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--++---+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--++---+through Königsberg crossing each bridge exactly once.
+-+--++---+-/
+-+--++---+theorem konigsberg_no_eulerian_trail :
+-+--++---+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--++---+  intro u v p h;
+-+--++---+  have := euler_necessary h; simp_all +decide ;+/-
+-+--+++--+import Mathlib
+-+--+++--+import Bridges.EulerianTrail
+-+--+++-- 
+-+--+++---# The Königsberg Bridge Problem — Formalized
+-+--+++--+/-!
+-+--+++--+# The Königsberg Bridge Problem
+-+--+++-- 
+-+--+++---This file formalizes the Königsberg Bridge Problem, widely considered
+-+--+++---the founding problem of graph theory. In 1736, Euler proved that it is
+-+--+++---impossible to traverse all seven bridges of Königsberg exactly once.
+-+--+++--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--+++--+the founding result of graph theory (Euler, 1736).
+-+--+++-- 
+-+--+++---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--+++---and prove impossibility using the Eulerian trail parity condition.
+-+--+++--+## The Problem
+-+--+++-- 
+-+--+++---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--+++---with a simple-graph abstraction that captures the essential parity
+-+--+++---obstruction: a graph where more than two vertices have odd degree
+-+--+++---cannot have an Eulerian trail.
+-+--+++--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--+++--+and included two large islands connected to each other and to the two mainland
+-+--+++--+portions by seven bridges. The problem asks whether there is a walk through the
+-+--+++--+city that crosses each bridge exactly once.
+-+--+++-- 
+-+--+++---## Main results
+-+--+++--+## The Graph
+-+--+++-- 
+-+--+++---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--+++---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--+++---  has no Eulerian trail (from Mathlib).
+-+--+++---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--+++--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+--+++--+- Vertex 0: Central island (Kneiphof)
+-+--+++--+- Vertex 1: Northern bank
+-+--+++--+- Vertex 2: Southern bank
+-+--+++--+- Vertex 3: Eastern island (Lomse)
+-+--+++--+
+-+--+++--+The seven bridges are:
+-+--+++--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--+++--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--+++--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+--+++--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+--+++--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+--+++--+
+-+--+++--+## Main Results
+-+--+++--+
+-+--+++--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--+++--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--+++--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--+++-- -/
+-+--+++-- 
+-+--+++---import Mathlib
+-+--+++--+namespace Bridges
+-+--+++-- 
+-+--+++---/-! ### The Königsberg graph
+-+--+++--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--+++--+def konigsberg : Multigraph 4 7 where
+-+--+++--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--+++--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--+++-- 
+-+--+++---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--+++---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--+++---is the simple graph that captures the connectivity pattern.
+-+--+++--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--+++--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--+++-- 
+-+--+++---In the original problem, some pairs of landmasses had multiple bridges
+-+--+++---between them, making the true model a multigraph. However, for the
+-+--+++---Eulerian trail condition, what matters is the parity of degrees at each
+-+--+++---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--+++---impossibility via Euler's theorem. -/
+-+--+++--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--+++--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--+++-- 
+-+--+++---/-- The four landmasses of Königsberg. -/
+-+--+++---inductive Konigsberg : Type
+-+--+++---  | A  -- North bank
+-+--+++---  | B  -- South bank
+-+--+++---  | C  -- Island (Kneiphof)
+-+--+++---  | D  -- East district
+-+--+++---  deriving DecidableEq, Fintype
+-+--+++--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--+++--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--+++-- 
+-+--+++---open Konigsberg
+-+--+++---
+-+--+++---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--+++---Every pair of distinct vertices is connected, capturing the fact that
+-+--+++---every pair of landmasses had at least one bridge between them. -/
+-+--+++---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--+++---
+-+--+++---instance : DecidableRel konigsbergGraph.Adj := by
+-+--+++---  intro u v
+-+--+++---  simp only [konigsbergGraph]
+-+--+++---  infer_instance
+-+--+++---
+-+--+++---/-
+-+--+++---Every vertex in K₄ has degree 3 (odd).
+-+--+++----/
+-+--+++---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--+++---  fin_cases v <;> simp +decide
+-+--+++--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--+++--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--+++-- 
+-+--+++-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+++---theorem konigsberg_all_odd :
+-+--+++---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--+++---  intro v
+-+--+++---  rw [konigsberg_degree]
+-+--+++---  exact ⟨1, rfl⟩
+-+--+++--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--+++--+  intro v; fin_cases v <;> native_decide
+-+--+++-- 
+-+--+++---/-
+-+--+++---The number of odd-degree vertices in the Königsberg graph is 4.
+-+--+++----/
+-+--+++---theorem konigsberg_four_odd :
+-+--+++---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--+++---  decide +revert
+-+--+++--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--+++--+theorem konigsberg_odd_count :
+-+--+++--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--+++--+  native_decide
+-+--+++-- 
+-+--+++---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--+++---then the number of odd-degree vertices is 0 or 2.
+-+--+++---This is the key obstruction from Mathlib. -/
+-+--+++---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--+++---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--+++---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--+++---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--+++---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--+++---  hp.card_odd_degree
+-+--+++--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--+++-- 
+-+--+++---/-
+-+--+++---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--+++---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--+++---through Königsberg crossing each bridge exactly once.
+-+--+++----/
+-+--+++---theorem konigsberg_no_eulerian_trail :
+-+--+++---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--+++---  intro u v p h;
+-+--+++---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--+++--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--+++--+
+-+--+++--+The proof combines:
+-+--+++--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--+++--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--+++--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--+++--+  constructor
+-+--+++--+  intro t
+-+--+++--+  have h1 := t.odd_degree_vertices_le_two
+-+--+++--+  have h2 := konigsberg_odd_count
+-+--+++--+  omega
+-+--+++--+
+-+--+++--+end Bridges+/-
+-+--++ -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+--++ -+Released under Apache 2.0 license as described in the file LICENSE.
+-+--++-+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--++-+-+  intro v; fin_cases v <;> native_decide
+-+-- +-+-+
+-+---+-+-+# The Königsberg Bridge Problem — Formalized
+-+--++-+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--++-+-+theorem konigsberg_odd_count :
+-+--++-+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--++-+-+  native_decide
+-+-- +-+-+
+-+---+-+-+This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+-+-+the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+-+-+impossible to traverse all seven bridges of Königsberg exactly once.
+-+--++-+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-- +-+-+
+-+---+-+-+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+-+-+and prove impossibility using the Eulerian trail parity condition.
+-+--++-+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--++-+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-- +-+-+
+-+---+-+-+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+-+-+with a simple-graph abstraction that captures the essential parity
+-+---+-+-+obstruction: a graph where more than two vertices have odd degree
+-+---+-+-+cannot have an Eulerian trail.
+-+--++-+-+The proof combines:
+-+--++-+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--++-+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--++-+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--++-+-+  constructor
+-+--++-+-+  intro t
+-+--++-+-+  have h1 := t.odd_degree_vertices_le_two
+-+--++-+-+  have h2 := konigsberg_odd_count
+-+--++-+-+  omega
+-+-- +-+-+
+-+---+-+-+## Main results
+-+---+-+-+
+-+---+-+-+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+-+-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+-+-+  has no Eulerian trail (from Mathlib).
+-+---+-+-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+-+-+-/
+-+---+-+-+
+-+---+-+-+import Mathlib
+-+---+-+-+
+-+---+-+-+/-! ### The Königsberg graph
+-+---+-+-+
+-+---+-+-+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+-+-+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+-+-+is the simple graph that captures the connectivity pattern.
+-+---+-+-+
+-+---+-+-+In the original problem, some pairs of landmasses had multiple bridges
+-+---+-+-+between them, making the true model a multigraph. However, for the
+-+---+-+-+Eulerian trail condition, what matters is the parity of degrees at each
+-+---+-+-+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+-+-+impossibility via Euler's theorem. -/
+-+---+-+-+
+-+---+-+-+/-- The four landmasses of Königsberg. -/
+-+---+-+-+inductive Konigsberg : Type
+-+---+-+-+  | A  -- North bank
+-+---+-+-+  | B  -- South bank
+-+---+-+-+  | C  -- Island (Kneiphof)
+-+---+-+-+  | D  -- East district
+-+---+-+-+  deriving DecidableEq, Fintype
+-+---+-+-+
+-+---+-+-+open Konigsberg
+-+---+-+-+
+-+---+-+-+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+-+-+Every pair of distinct vertices is connected, capturing the fact that
+-+---+-+-+every pair of landmasses had at least one bridge between them. -/
+-+---+-+-+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+-+-+
+-+---+-+-+instance : DecidableRel konigsbergGraph.Adj := by
+-+---+-+-+  intro u v
+-+---+-+-+  simp only [konigsbergGraph]
+-+---+-+-+  infer_instance
+-+---+-+-+
+-+---+-+-+/-
+-+---+-+-+Every vertex in K₄ has degree 3 (odd).
+-+---+-+-+-/
+-+---+-+-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+-+-+  fin_cases v <;> simp +decide
+-+---+-+-+
+-+---+-+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+-+-+theorem konigsberg_all_odd :
+-+---+-+-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+-+-+  intro v
+-+---+-+-+  rw [konigsberg_degree]
+-+---+-+-+  exact ⟨1, rfl⟩
+-+---+-+-+
+-+---+-+-+/-
+-+---+-+-+The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+-+-+-/
+-+---+-+-+theorem konigsberg_four_odd :
+-+---+-+-+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+-+-+  decide +revert
+-+---+-+-+
+-+---+-+-+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+-+-+then the number of odd-degree vertices is 0 or 2.
+-+---+-+-+This is the key obstruction from Mathlib. -/
+-+---+-+-+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+-+-+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+-+-+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+-+-+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+-+-+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+-+-+  hp.card_odd_degree
+-+---+-+-+
+-+---+-+-+/-
+-+---+-+-+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+-+-+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+-+-+through Königsberg crossing each bridge exactly once.
+-+---+-+-+-/
+-+---+-+-+theorem konigsberg_no_eulerian_trail :
+-+---+-+-+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+-+-+  intro u v p h;
+-+---+-+-+  have := euler_necessary h; simp_all +decide ;+/-
+-+---+- +Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+- +Released under Apache 2.0 license as described in the file LICENSE.
+-+---+- +-/++---+theorem konigsberg_no_eulerian_trail :
+-+---+++---+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+++---+  intro u v p h;
+-+---+++---+  have := euler_necessary h; simp_all +decide ;+/-
+-+---++ +--+import Mathlib
+-+---++ +--+import Bridges.EulerianTrail
+-+--- +-+--+
+-+----+-+--+/-!
+-+----+-+--+# The Königsberg Bridge Problem
+-+---++++-- 
+-+---++++---# The Königsberg Bridge Problem — Formalized
+-+---++ +--+/-!
+-+---++ +--+# The Königsberg Bridge Problem
+-+--- +-+--+
+-+----+-+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----+-+--+the founding result of graph theory (Euler, 1736).
+-+---++++-- 
+-+---++++---This file formalizes the Königsberg Bridge Problem, widely considered
+-+---++++---the founding problem of graph theory. In 1736, Euler proved that it is
+-+---++++---impossible to traverse all seven bridges of Königsberg exactly once.
+-+---++ +--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---++ +--+the founding result of graph theory (Euler, 1736).
+-+--- +-+--+
+-+----+-+--+## The Problem
+-+---++++-- 
+-+---++++---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---++++---and prove impossibility using the Eulerian trail parity condition.
+-+---++ +--+## The Problem
+-+--- +-+--+
+-+----+-+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----+-+--+and included two large islands connected to each other and to the two mainland
+-+----+-+--+portions by seven bridges. The problem asks whether there is a walk through the
+-+----+-+--+city that crosses each bridge exactly once.
+-+---++++-- 
+-+---++++---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---++++---with a simple-graph abstraction that captures the essential parity
+-+---++++---obstruction: a graph where more than two vertices have odd degree
+-+---++++---cannot have an Eulerian trail.
+-+---++ +--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---++ +--+and included two large islands connected to each other and to the two mainland
+-+---++ +--+portions by seven bridges. The problem asks whether there is a walk through the
+-+---++ +--+city that crosses each bridge exactly once.
+-+--- +-+--+
+-+----+-+--+## The Graph
+-+---++++-- 
+-+---++++---## Main results
+-+---++ +--+## The Graph
+-+--- +-+--+
+-+----+-+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----+-+--+- Vertex 0: Central island (Kneiphof)
+-+----+-+--+- Vertex 1: Northern bank
+-+----+-+--+- Vertex 2: Southern bank
+-+----+-+--+- Vertex 3: Eastern island (Lomse)
+-+----+-+--+
+-+----+-+--+The seven bridges are:
+-+----+-+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----+-+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----+-+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+----+-+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+----+-+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+----+-+--+
+-+----+-+--+## Main Results
+-+----+-+--+
+-+----+-+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----+-+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----+-+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---++++-- 
+-+---++++---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---++++---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---++++---  has no Eulerian trail (from Mathlib).
+-+---++++---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---++ +--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+---++ +--+- Vertex 0: Central island (Kneiphof)
+-+---++ +--+- Vertex 1: Northern bank
+-+---++@@ -1218,39 +572,101 @@
+-+---++ +--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---++ +--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---++ +--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--- +-+--+-/
+-+--- +-+--+
+-+----+-+--+namespace Bridges
+-+---++++-- -/
+-+---++++-- 
+-+---++++---import Mathlib
+-+---++ +--+namespace Bridges
+-+--- +-+--+
+-+----+-+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----+-+--+def konigsberg : Multigraph 4 7 where
+-+----+-+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----+-+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---++++-- 
+-+---++++---/-! ### The Königsberg graph
+-+---++ +--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---++ +--+def konigsberg : Multigraph 4 7 where
+-+---++ +--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---++ +--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--- +-+--+
+-+----+-+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----+-+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---++++-- 
+-+---++++---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---++++---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---++++---is the simple graph that captures the connectivity pattern.
+-+---++ +--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---++ +--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--- +-+--+
+-+----+-+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----+-+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---++++-- 
+-+---++++---In the original problem, some pairs of landmasses had multiple bridges
+-+---++++---between them, making the true model a multigraph. However, for the
+-+---++++---Eulerian trail condition, what matters is the parity of degrees at each
+-+---++++---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---++++---impossibility via Euler's theorem. -/
+-+---++ +--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---++ +--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--- +-+--+
+-+----+-+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----+-+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---++++-- 
+-+---++++---/-- The four landmasses of Königsberg. -/
+-+---++++---inductive Konigsberg : Type
+-+---++++---  | A  -- North bank
+-+---++++---  | B  -- South bank
+-+---++++---  | C  -- Island (Kneiphof)
+-+---++++---  | D  -- East district
+-+---++++---  deriving DecidableEq, Fintype
+-+---++ +--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---++ +--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--- +-+--+
+-+----+-+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----+-+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---++++-- 
+-+---++++---open Konigsberg
+-+---++++---
+-+---++++---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---++++---Every pair of distinct vertices is connected, capturing the fact that
+-+---++++---every pair of landmasses had at least one bridge between them. -/
+-+---++++---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---++++---
+-+---++++---instance : DecidableRel konigsbergGraph.Adj := by
+-+---++++---  intro u v
+-+---++++---  simp only [konigsbergGraph]
+-+---++++---  infer_instance
+-+---++++---
+-+---++++---/-
+-+---++++---Every vertex in K₄ has degree 3 (odd).
+-+---++++----/
+-+---++++---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---++++---  fin_cases v <;> simp +decide
+-+---++ +--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---++ +--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--- +-+--+
+-+--- +-+--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----+-+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----+-+--+  intro v; fin_cases v <;> native_decide
+-+---++++-- 
+-+---++++-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+---++++---theorem konigsberg_all_odd :
+-+---++++---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---++++---  intro v
+-+---++++---  rw [konigsberg_degree]
+-+---++++---  exact ⟨1, rfl⟩
+-+---++ +--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---++ +--+  intro v; fin_cases v <;> native_decide
+-+--- +-+--+
+-+----+-+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----+-+--+theorem konigsberg_odd_count :
+-+----+-+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----+-+--+  native_decide
+-+---++++-- 
+-+---++++---/-
+-+---++++---The number of odd-degree vertices in the Königsberg graph is 4.
+-+---++++----/
+-+---++++---theorem konigsberg_four_odd :
+-+---++++---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---++++---  decide +revert
+-+---++ +--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---++ +--+theorem konigsberg_odd_count :
+-+---++ +--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---++ +--+  native_decide
+-+--- +-+--+
+-+----+-+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---++++-- 
+-+---++++---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---++++---then the number of odd-degree vertices is 0 or 2.
+-+---++++---This is the key obstruction from Mathlib. -/
+-+---++++---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---++++---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---++++---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---++++---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---++++---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---++++---  hp.card_odd_degree
+-+---++ +--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--- +-+--+
+-+--- +-+--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----+-+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----+-+--+
+-+----+-+--+The proof combines:
+-+----+-+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----+-+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----+-+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----+-+--+  constructor
+-+----+-+--+  intro t
+-+----+-+--+  have h1 := t.odd_degree_vertices_le_two
+-+----+-+--+  have h2 := konigsberg_odd_count
+-+----+-+--+  omega
+-+----+-+--+
+-+----+-+--+end Bridges+/-
+-+---++++-- 
+-+---++++---/-
+-+---++++---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---++++---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---++++---through Königsberg crossing each bridge exactly once.
+-+---++++----/
+-+---++++---theorem konigsberg_no_eulerian_trail :
+-+---++++---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---++++---  intro u v p h;
+-+---++++---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---++ +--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---++ +--+
+-+---++ +--+The proof combines:
+-+---++@@ -1264,104 +680,238 @@
+-+---++ +--+  omega
+-+---++ +--+
+-+---++ +--+end Bridges+/-
+-+--- +-+-+Copyright (c) 2025. All rights reserved.
+-+--- +-+-+Released under Apache 2.0 license.
+-+--- +-+-+
+-+---@@ -8026,9 +3224,61 @@
+-+--- +-+-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--- +-+-+  has no Eulerian trail (from Mathlib).
+-+--- +-+-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----+-+-+-/
+-+---+++ -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+++ -+Released under Apache 2.0 license as described in the file LICENSE.
+-+---+++-+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+++-+-+  intro v; fin_cases v <;> native_decide
+-+---+++-+-+
+-+---+++-+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+++-+-+theorem konigsberg_odd_count :
+-+---+++-+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+++-+-+  native_decide
+-+---+++-+-+
+-+---+++-+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+++-+-+
+-+---+++-+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+++-+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+++-+-+
+-+---+++-+-+The proof combines:
+-+---+++-+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+++-+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+++-+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+++-+-+  constructor
+-+---+++-+-+  intro t
+-+---+++-+-+  have h1 := t.odd_degree_vertices_le_two
+-+---+++-+-+  have h2 := konigsberg_odd_count
+-+---+++-+-+  omega
+-+---+++-+-+
+-+---+++-+-+end Bridges+/-
+-+---+++-++Copyright (c) 2025. All rights reserved.
+-+---+++-++Released under Apache 2.0 license.
+-+---+++-++
+-+---+++-++# The Königsberg Bridge Problem — Formalized
+-+---+++-++
+-+---+++-++This file formalizes the Königsberg Bridge Problem, widely considered
+-+---+++-++the founding problem of graph theory. In 1736, Euler proved that it is
+-+---+++-++impossible to traverse all seven bridges of Königsberg exactly once.
+-+---+++-++
+-+---+++-++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+---+++-++and prove impossibility using the Eulerian trail parity condition.
+-+---+++-++
+-+---+++-++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+---+++-++with a simple-graph abstraction that captures the essential parity
+-+---+++-++obstruction: a graph where more than two vertices have odd degree
+-+---+++-++cannot have an Eulerian trail.
+-+---+++-++
+-+---+++-++## Main results
+-+---+++-++
+-+---+++-++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+---+++-++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+---+++-++  has no Eulerian trail (from Mathlib).
+-+---+++-++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+---+++- +-/
+-+---+++-++
+-+---+++- +import Mathlib
+-+---++ +-+-/
+-+--- +-+-+
+-+----+-+-+import Mathlib
+-+---++ +-+import Mathlib
+-+--- +-+-+
+-+--- +-+-+/-! ### The Königsberg graph
+-+--- +-+-+
+-+---@@ -8064,11 +3314,65 @@
+-+--- +-+-+
+-+--- +-+-+/-
+-+--- +-+-+Every vertex in K₄ has degree 3 (odd).
+-+----+-+-+-/
+-+---+++ -+import Bridges.EulerianTrail
+-+---+++ -+
+-+---+++ -+/-!
+-+---+++@@ -593,42 +211,7 @@
+-+---+++ -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+++ -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+++ -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+++-++
+-+---+++-++/-! ### The Königsberg graph
+-+---+++-++
+-+---+++-++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+---+++-++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+---+++-++is the simple graph that captures the connectivity pattern.
+-+---+++-++
+-+---+++-++In the original problem, some pairs of landmasses had multiple bridges
+-+---+++-++between them, making the true model a multigraph. However, for the
+-+---+++-++Eulerian trail condition, what matters is the parity of degrees at each
+-+---+++-++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+---+++-++impossibility via Euler's theorem. -/
+-+---+++-++
+-+---+++-++/-- The four landmasses of Königsberg. -/
+-+---+++-++inductive Konigsberg : Type
+-+---+++-++  | A  -- North bank
+-+---+++-++  | B  -- South bank
+-+---+++-++  | C  -- Island (Kneiphof)
+-+---+++-++  | D  -- East district
+-+---+++-++  deriving DecidableEq, Fintype
+-+---+++-++
+-+---+++-++open Konigsberg
+-+---+++-++
+-+---+++-++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+---+++-++Every pair of distinct vertices is connected, capturing the fact that
+-+---+++-++every pair of landmasses had at least one bridge between them. -/
+-+---+++-++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+---+++-++
+-+---+++-++instance : DecidableRel konigsbergGraph.Adj := by
+-+---+++-++  intro u v
+-+---+++-++  simp only [konigsbergGraph]
+-+---+++-++  infer_instance
+-+---+++-++
+-+---+++-++/-
+-+---+++-++Every vertex in K₄ has degree 3 (odd).
+-+---+++- +-/
+-+---++ +-+-/
+-+--- +-+-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--- +-+-+  fin_cases v <;> simp +decide
+-+----+-+-+
+-+----+-+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+++ -+
+-+---+++ -+namespace Bridges
+-+---+++ -+
+-+---+++@@ -648,10 +231,8 @@
+-+---+++ -+
+-+---+++ -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+++ -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+++-++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+---+++-++  fin_cases v <;> simp +decide
+-+---+++- +
+-+---+++- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---++ +-+
+-+---++ +-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--- +-+-+theorem konigsberg_all_odd :
+-+--- +-+-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--- +-+-+  intro v
+-+---@@ -8103,498 +3407,127 @@
+-+--- +-+-+  have := euler_necessary h; simp_all +decide ;+/-
+-+--- +- +Copyright (c) 2025 Harmonic. All rights reserved.
+-+--- +- +Released under Apache 2.0 license as described in the file LICENSE.
+-+----+- +-/++---+theorem konigsberg_no_eulerian_trail :
+-+----+++---+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----+++---+  intro u v p h;
+-+----+++---+  have := euler_necessary h; simp_all +decide ;+/-
+-+----++ +--+import Mathlib
+-+----++ +--+import Bridges.EulerianTrail
+-+----++-+--+
+-+----++++-- 
+-+----++++---# The Königsberg Bridge Problem — Formalized
+-+----++ +--+/-!
+-+----++ +--+# The Königsberg Bridge Problem
+-+----++-+--+
+-+----++++-- 
+-+----++++---This file formalizes the Königsberg Bridge Problem, widely considered
+-+----++++---the founding problem of graph theory. In 1736, Euler proved that it is
+-+----++++---impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++ +--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----++ +--+the founding result of graph theory (Euler, 1736).
+-+----++-+--+
+-+----++++-- 
+-+----++++---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----++++---and prove impossibility using the Eulerian trail parity condition.
+-+----++ +--+## The Problem
+-+----++-+--+
+-+----++++-- 
+-+----++++---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----++++---with a simple-graph abstraction that captures the essential parity
+-+----++++---obstruction: a graph where more than two vertices have odd degree
+-+----++++---cannot have an Eulerian trail.
+-+----++ +--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----++ +--+and included two large islands connected to each other and to the two mainland
+-+----++ +--+portions by seven bridges. The problem asks whether there is a walk through the
+-+----++ +--+city that crosses each bridge exactly once.
+-+----++-+--+
+-+----++++-- 
+-+----++++---## Main results
+-+----++ +--+## The Graph
+-+----++-+--+
+-+----++++-- 
+-+----++++---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----++++---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----++++---  has no Eulerian trail (from Mathlib).
+-+----++++---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----++ +--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+----++ +--+- Vertex 0: Central island (Kneiphof)
+-+----++ +--+- Vertex 1: Northern bank
+-+----++@@ -1218,39 +572,101 @@
+-+----++ +--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----++ +--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----++ +--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----++-+--+-/
+-+----++-+--+
+-+----++++-- -/
+-+----++++-- 
+-+----++++---import Mathlib
+-+----++ +--+namespace Bridges
+-+----++-+--+
+-+----++++-- 
+-+----++++---/-! ### The Königsberg graph
+-+----++ +--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----++ +--+def konigsberg : Multigraph 4 7 where
+-+----++ +--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----++ +--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----++-+--+
+-+----++++-- 
+-+----++++---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----++++---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----++++---is the simple graph that captures the connectivity pattern.
+-+----++ +--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----++ +--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----++-+--+
+-+----++++-- 
+-+----++++---In the original problem, some pairs of landmasses had multiple bridges
+-+----++++---between them, making the true model a multigraph. However, for the
+-+----++++---Eulerian trail condition, what matters is the parity of degrees at each
+-+----++++---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----++++---impossibility via Euler's theorem. -/
+-+----++ +--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----++ +--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----++-+--+
+-+----++++-- 
+-+----++++---/-- The four landmasses of Königsberg. -/
+-+----++++---inductive Konigsberg : Type
+-+----++++---  | A  -- North bank
+-+----++++---  | B  -- South bank
+-+----++++---  | C  -- Island (Kneiphof)
+-+----++++---  | D  -- East district
+-+----++++---  deriving DecidableEq, Fintype
+-+----++ +--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----++ +--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----++-+--+
+-+----++++-- 
+-+----++++---open Konigsberg
+-+----++++---
+-+----++++---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----++++---Every pair of distinct vertices is connected, capturing the fact that
+-+----++++---every pair of landmasses had at least one bridge between them. -/
+-+----++++---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++++---
+-+----++++---instance : DecidableRel konigsbergGraph.Adj := by
+-+----++++---  intro u v
+-+----++++---  simp only [konigsbergGraph]
+-+----++++---  infer_instance
+-+----++++---
+-+----++++---/-
+-+----++++---Every vertex in K₄ has degree 3 (odd).
+-+----++++----/
+-+----++++---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----++++---  fin_cases v <;> simp +decide
+-+----++ +--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----++ +--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----++-+--+
+-+----++-+--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++++-- 
+-+----++++-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++++---theorem konigsberg_all_odd :
+-+----++++---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----++++---  intro v
+-+----++++---  rw [konigsberg_degree]
+-+----++++---  exact ⟨1, rfl⟩
+-+----++ +--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----++ +--+  intro v; fin_cases v <;> native_decide
+-+----++-+--+
+-+----++++-- 
+-+----++++---/-
+-+----++++---The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++++----/
+-+----++++---theorem konigsberg_four_odd :
+-+----++++---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----++++---  decide +revert
+-+----++ +--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----++ +--+theorem konigsberg_odd_count :
+-+----++ +--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----++ +--+  native_decide
+-+----++-+--+
+-+----++++-- 
+-+----++++---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----++++---then the number of odd-degree vertices is 0 or 2.
+-+----++++---This is the key obstruction from Mathlib. -/
+-+----++++---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----++++---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----++++---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----++++---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----++++---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----++++---  hp.card_odd_degree
+-+----++ +--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----++-+--+
+-+----++-+--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++++-- 
+-+----++++---/-
+-+----++++---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----++++---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----++++---through Königsberg crossing each bridge exactly once.
+-+----++++----/
+-+----++++---theorem konigsberg_no_eulerian_trail :
+-+----++++---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----++++---  intro u v p h;
+-+----++++---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----++ +--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----++ +--+
+-+----++ +--+The proof combines:
+-+----++@@ -1264,104 +680,238 @@
+-+----++ +--+  omega
+-+----++ +--+
+-+----++ +--+end Bridges+/-
+-+----++-+-+Copyright (c) 2025. All rights reserved.
+-+----++-+-+Released under Apache 2.0 license.
+-+----++-+-+
+-+----++-+-+# The Königsberg Bridge Problem — Formalized
+-+----++-+-+
+-+----++-+-+This file formalizes the Königsberg Bridge Problem, widely considered
+-+----++-+-+the founding problem of graph theory. In 1736, Euler proved that it is
+-+----++-+-+impossible to traverse all seven bridges of Königsberg exactly once.
+-+----++-+-+
+-+----++-+-+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----++-+-+and prove impossibility using the Eulerian trail parity condition.
+-+----++-+-+
+-+----++-+-+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----++-+-+with a simple-graph abstraction that captures the essential parity
+-+----++-+-+obstruction: a graph where more than two vertices have odd degree
+-+----++-+-+cannot have an Eulerian trail.
+-+----++-+-+
+-+----++-+-+## Main results
+-+----++-+-+
+-+----++-+-+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----++-+-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----++-+-+  has no Eulerian trail (from Mathlib).
+-+----++-+-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----+++ -+Copyright (c) 2025 Harmonic. All rights reserved.
+-+----+++ -+Released under Apache 2.0 license as described in the file LICENSE.
+-+----+++-+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----+++-+-+  intro v; fin_cases v <;> native_decide
+-+----+++-+-+
+-+----+++-+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----+++-+-+theorem konigsberg_odd_count :
+-+----+++-+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----+++-+-+  native_decide
+-+----+++-+-+
+-+----+++-+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----+++-+-+
+-+----+++-+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----+++-+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----+++-+-+
+-+----+++-+-+The proof combines:
+-+----+++-+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----+++-+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----+++-+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----+++-+-+  constructor
+-+----+++-+-+  intro t
+-+----+++-+-+  have h1 := t.odd_degree_vertices_le_two
+-+----+++-+-+  have h2 := konigsberg_odd_count
+-+----+++-+-+  omega
+-+----+++-+-+
+-+----+++-+-+end Bridges+/-
+-+----+++-++Copyright (c) 2025. All rights reserved.
+-+----+++-++Released under Apache 2.0 license.
+-+----+++-++
+-+----+++-++# The Königsberg Bridge Problem — Formalized
+-+----+++-++
+-+----+++-++This file formalizes the Königsberg Bridge Problem, widely considered
+-+----+++-++the founding problem of graph theory. In 1736, Euler proved that it is
+-+----+++-++impossible to traverse all seven bridges of Königsberg exactly once.
+-+----+++-++
+-+----+++-++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+----+++-++and prove impossibility using the Eulerian trail parity condition.
+-+----+++-++
+-+----+++-++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+----+++-++with a simple-graph abstraction that captures the essential parity
+-+----+++-++obstruction: a graph where more than two vertices have odd degree
+-+----+++-++cannot have an Eulerian trail.
+-+----+++-++
+-+----+++-++## Main results
+-+----+++-++
+-+----+++-++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+----+++-++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+----+++-++  has no Eulerian trail (from Mathlib).
+-+----+++-++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+----+++- +-/
+-+----+++-++
+-+----+++- +import Mathlib
+-+----++ +-+-/
+-+----++-+-+
+-+----++ +-+import Mathlib
+-+----++-+-+
+-+----++-+-+/-! ### The Königsberg graph
+-+----++-+-+
+-+----++-+-+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----++-+-+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----++-+-+is the simple graph that captures the connectivity pattern.
+-+----++-+-+
+-+----++-+-+In the original problem, some pairs of landmasses had multiple bridges
+-+----++-+-+between them, making the true model a multigraph. However, for the
+-+----++-+-+Eulerian trail condition, what matters is the parity of degrees at each
+-+----++-+-+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----++-+-+impossibility via Euler's theorem. -/
+-+----++-+-+
+-+----++-+-+/-- The four landmasses of Königsberg. -/
+-+----++-+-+inductive Konigsberg : Type
+-+----++-+-+  | A  -- North bank
+-+----++-+-+  | B  -- South bank
+-+----++-+-+  | C  -- Island (Kneiphof)
+-+----++-+-+  | D  -- East district
+-+----++-+-+  deriving DecidableEq, Fintype
+-+----++-+-+
+-+----++-+-+open Konigsberg
+-+----++-+-+
+-+----++-+-+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----++-+-+Every pair of distinct vertices is connected, capturing the fact that
+-+----++-+-+every pair of landmasses had at least one bridge between them. -/
+-+----++-+-+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----++-+-+
+-+----++-+-+instance : DecidableRel konigsbergGraph.Adj := by
+-+----++-+-+  intro u v
+-+----++-+-+  simp only [konigsbergGraph]
+-+----++-+-+  infer_instance
+-+----++-+-+
+-+----++-+-+/-
+-+----++-+-+Every vertex in K₄ has degree 3 (odd).
+-+----+++ -+import Bridges.EulerianTrail
+-+----+++ -+
+-+----+++ -+/-!
+-+----+++@@ -593,42 +211,7 @@
+-+----+++ -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----+++ -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----+++ -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----+++-++
+-+----+++-++/-! ### The Königsberg graph
+-+----+++-++
+-+----+++-++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+----+++-++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+----+++-++is the simple graph that captures the connectivity pattern.
+-+----+++-++
+-+----+++-++In the original problem, some pairs of landmasses had multiple bridges
+-+----+++-++between them, making the true model a multigraph. However, for the
+-+----+++-++Eulerian trail condition, what matters is the parity of degrees at each
+-+----+++-++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+----+++-++impossibility via Euler's theorem. -/
+-+----+++-++
+-+----+++-++/-- The four landmasses of Königsberg. -/
+-+----+++-++inductive Konigsberg : Type
+-+----+++-++  | A  -- North bank
+-+----+++-++  | B  -- South bank
+-+----+++-++  | C  -- Island (Kneiphof)
+-+----+++-++  | D  -- East district
+-+----+++-++  deriving DecidableEq, Fintype
+-+----+++-++
+-+----+++-++open Konigsberg
+-+----+++-++
+-+----+++-++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+----+++-++Every pair of distinct vertices is connected, capturing the fact that
+-+----+++-++every pair of landmasses had at least one bridge between them. -/
+-+----+++-++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+----+++-++
+-+----+++-++instance : DecidableRel konigsbergGraph.Adj := by
+-+----+++-++  intro u v
+-+----+++-++  simp only [konigsbergGraph]
+-+----+++-++  infer_instance
+-+----+++-++
+-+----+++-++/-
+-+----+++-++Every vertex in K₄ has degree 3 (odd).
+-+----+++- +-/
+-+----++ +-+-/
+-+----++-+-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----++-+-+  fin_cases v <;> simp +decide
+-+----+++ -+
+-+----+++ -+namespace Bridges
+-+----+++ -+
+-+----+++@@ -648,10 +231,8 @@
+-+----+++ -+
+-+----+++ -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----+++ -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----+++-++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+----+++-++  fin_cases v <;> simp +decide
+-+----+++- +
+-+----+++- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++ +-+
+-+----++ +-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----++-+-+theorem konigsberg_all_odd :
+-+----++-+-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----++-+-+  intro v
+-+----++-+-+  rw [konigsberg_degree]
+-+----++-+-+  exact ⟨1, rfl⟩
+-+----++-+-+
+-+----++-+-+/-
+-+----++-+-+The number of odd-degree vertices in the Königsberg graph is 4.
+-+----++-+-+-/
+-+----++-+-+theorem konigsberg_four_odd :
+-+----++-+-+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----++-+-+  decide +revert
+-+----++-+-+
+-+----++-+-+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----++-+-+then the number of odd-degree vertices is 0 or 2.
+-+----++-+-+This is the key obstruction from Mathlib. -/
+-+----++-+-+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----++-+-+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----++-+-+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----++-+-+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----++-+-+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----++-+-+  hp.card_odd_degree
+-+----++-+-+
+-+----++-+-+/-
+-+----++-+-+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----++-+-+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----++-+-+through Königsberg crossing each bridge exactly once.
+-+----++-+-+-/
+-+----++-+-+theorem konigsberg_no_eulerian_trail :
+-+----++-+-+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----++-+-+  intro u v p h;
+-+----++-+-+  have := euler_necessary h; simp_all +decide ;+/-
+-+----++- +Copyright (c) 2025 Harmonic. All rights reserved.
+-+----++- +Released under Apache 2.0 license as described in the file LICENSE.
+-+----++- +-/+ -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----+++ -+  intro v; fin_cases v <;> native_decide
+-+----+++ -+
+-+----+++@@ -675,35 +256,89 @@
+-+----+++ -+  have h2 := konigsberg_odd_count
+-+----+++ -+  omega
+-+----+++ -+
+-+----+++--+end Bridges++theorem konigsberg_all_odd :
+-+----+++-++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+----+++-++  intro v
+-+----+++-++  rw [konigsberg_degree]
+-+----+++-++  exact ⟨1, rfl⟩
+-+----+++-++
+-+----+++-++/-
+-+----+++-++The number of odd-degree vertices in the Königsberg graph is 4.
+-+----+++-++-/
+-+----+++-++theorem konigsberg_four_odd :
+-+----+++-++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+----+++-++  decide +revert
+-+----+++-++
+-+----+++-++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+----+++-++then the number of odd-degree vertices is 0 or 2.
+-+----+++-++This is the key obstruction from Mathlib. -/
+-+----+++-++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+----+++-++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+----+++-++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+----+++-++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+----+++-++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+----+++-++  hp.card_odd_degree
+-+----+++-++
+-+----+++-++/-
+-+----+++-++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+----+++-++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+----+++-++through Königsberg crossing each bridge exactly once.
+-+----+++-++-/
+-+----+++-++theorem konigsberg_no_eulerian_trail :
+-+----+++-++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+----+++-++  intro u v p h;
+-+----+++-++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+----+++++Copyright (c) 2025 Harmonic. All rights reserved.
+-+----+++++Released under Apache 2.0 license as described in the file LICENSE.
+-+----+++++-/
+-+----+++++import Mathlib
+-+----+++++import Bridges.EulerianTrail
+-+----+++++
+-+----+++++/-!
+-+----+++++# The Königsberg Bridge Problem
+-+----+++++
+-+----+++++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+----+++++the founding result of graph theory (Euler, 1736).
+-+----+++++
+-+----+++++## The Problem
+-+----+++++
+-+----+++++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+----+++++and included two large islands connected to each other and to the two mainland
+-+----+++++portions by seven bridges. The problem asks whether there is a walk through the
+-+----+++++city that crosses each bridge exactly once.
+-+----+++++
+-+----+++++## The Graph
+-+----+++++
+-+----+++++We model the four landmasses as vertices 0–3 of a multigraph:
+-+----+++++- Vertex 0: Central island (Kneiphof)
+-+----+++++- Vertex 1: Northern bank
+-+----+++++- Vertex 2: Southern bank
+-+----+++++- Vertex 3: Eastern island (Lomse)
+-+----+++++
+-+----+++++The seven bridges are:
+-+----+++++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+----+++++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+----+++++- Edge 4: One bridge from vertex 0 to vertex 3
+-+----+++++- Edge 5: One bridge from vertex 1 to vertex 3
+-+----+++++- Edge 6: One bridge from vertex 2 to vertex 3
+-+----+++++
+-+----+++++## Main Results
+-+----+++++
+-+----+++++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+----+++++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+----+++++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+----+++++-/
+-+----+++++
+-+----+++++namespace Bridges
+-+----+++++
+-+----+++++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+----+++++def konigsberg : Multigraph 4 7 where
+-+----+++++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+----+++++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+----+++++
+-+----+++++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+----+++++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+----+++++
+-+----+++++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+----+++++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+----+++++
+-+----+++++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+----+++++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+----+++++
+-+----+++++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+----+++++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+----+++++
+-+----+++++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+----+++++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+----+++++  intro v; fin_cases v <;> native_decide
+-+----+++++
+-+----+++++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+----+++++theorem konigsberg_odd_count :
+-+----+++++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+----+++++  native_decide
+-+----+++++
+-+----+++++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+----+++++
+-+----+++++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+----+++++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+----+++++
+-+----+++++The proof combines:
+-+----+++++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+----+++++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+----+++++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+----+++++  constructor
+-+----+++++  intro t
+-+----+++++  have h1 := t.odd_degree_vertices_le_two
+-+----+++++  have h2 := konigsberg_odd_count
+-+----+++++  omega
+-+----+++++
+-+----+++++end Bridges++- +-/+ -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+++ -+  intro v; fin_cases v <;> native_decide
+-+---+++ -+
+-+---+++@@ -675,35 +256,89 @@
+-+---+++ -+  have h2 := konigsberg_odd_count
+-+---+++ -+  omega
+-+---+++ -+
+-+---+++--+end Bridges++theorem konigsberg_all_odd :
+-+---+++-++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+---+++-++  intro v
+-+---+++-++  rw [konigsberg_degree]
+-+---+++-++  exact ⟨1, rfl⟩
+-+---+++-++
+-+---+++-++/-
+-+---+++-++The number of odd-degree vertices in the Königsberg graph is 4.
+-+---+++-++-/
+-+---+++-++theorem konigsberg_four_odd :
+-+---+++-++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+---+++-++  decide +revert
+-+---+++-++
+-+---+++-++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+---+++-++then the number of odd-degree vertices is 0 or 2.
+-+---+++-++This is the key obstruction from Mathlib. -/
+-+---+++-++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+---+++-++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+---+++-++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+---+++-++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+---+++-++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+---+++-++  hp.card_odd_degree
+-+---+++-++
+-+---+++-++/-
+-+---+++-++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+---+++-++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+---+++-++through Königsberg crossing each bridge exactly once.
+-+---+++-++-/
+-+---+++-++theorem konigsberg_no_eulerian_trail :
+-+---+++-++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+---+++-++  intro u v p h;
+-+---+++-++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+---+++++Copyright (c) 2025 Harmonic. All rights reserved.
+-+---+++++Released under Apache 2.0 license as described in the file LICENSE.
+-+---+++++-/
+-+---+++++import Mathlib
+-+---+++++import Bridges.EulerianTrail
+-+---+++++
+-+---+++++/-!
+-+---+++++# The Königsberg Bridge Problem
+-+---+++++
+-+---+++++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+---+++++the founding result of graph theory (Euler, 1736).
+-+---+++++
+-+---+++++## The Problem
+-+---+++++
+-+---+++++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+---+++++and included two large islands connected to each other and to the two mainland
+-+---+++++portions by seven bridges. The problem asks whether there is a walk through the
+-+---+++++city that crosses each bridge exactly once.
+-+---+++++
+-+---+++++## The Graph
+-+---+++++
+-+---+++++We model the four landmasses as vertices 0–3 of a multigraph:
+-+---+++++- Vertex 0: Central island (Kneiphof)
+-+---+++++- Vertex 1: Northern bank
+-+---+++++- Vertex 2: Southern bank
+-+---+++++- Vertex 3: Eastern island (Lomse)
+-+---+++++
+-+---+++++The seven bridges are:
+-+---+++++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+---+++++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+---+++++- Edge 4: One bridge from vertex 0 to vertex 3
+-+---+++++- Edge 5: One bridge from vertex 1 to vertex 3
+-+---+++++- Edge 6: One bridge from vertex 2 to vertex 3
+-+---+++++
+-+---+++++## Main Results
+-+---+++++
+-+---+++++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+---+++++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+---+++++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+---+++++-/
+-+---+++++
+-+---+++++namespace Bridges
+-+---+++++
+-+---+++++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+---+++++def konigsberg : Multigraph 4 7 where
+-+---+++++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+---+++++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+---+++++
+-+---+++++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+---+++++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+---+++++
+-+---+++++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+---+++++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+---+++++
+-+---+++++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+---+++++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+---+++++
+-+---+++++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+---+++++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+---+++++
+-+---+++++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+---+++++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+---+++++  intro v; fin_cases v <;> native_decide
+-+---+++++
+-+---+++++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+---+++++theorem konigsberg_odd_count :
+-+---+++++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+---+++++  native_decide
+-+---+++++
+-+---+++++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+---+++++
+-+---+++++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+---+++++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+---+++++
+-+---+++++The proof combines:
+-+---+++++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+---+++++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+---+++++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+---+++++  constructor
+-+---+++++  intro t
+-+---+++++  have h1 := t.odd_degree_vertices_le_two
+-+---+++++  have h2 := konigsberg_odd_count
+-+---+++++  omega
+-+---+++++
+-+---+++++end Bridges++-+-+end Bridges+/-
+-+--++-++Copyright (c) 2025. All rights reserved.
+-+--++-++Released under Apache 2.0 license.
+-+--++-++
+-+--++-++# The Königsberg Bridge Problem — Formalized
+-+--++-++
+-+--++-++This file formalizes the Königsberg Bridge Problem, widely considered
+-+--++-++the founding problem of graph theory. In 1736, Euler proved that it is
+-+--++-++impossible to traverse all seven bridges of Königsberg exactly once.
+-+--++-++
+-+--++-++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+--++-++and prove impossibility using the Eulerian trail parity condition.
+-+--++-++
+-+--++-++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+--++-++with a simple-graph abstraction that captures the essential parity
+-+--++-++obstruction: a graph where more than two vertices have odd degree
+-+--++-++cannot have an Eulerian trail.
+-+--++-++
+-+--++-++## Main results
+-+--++-++
+-+--++-++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+--++-++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+--++-++  has no Eulerian trail (from Mathlib).
+-+--++-++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+--++- +-/
+-+--++-++
+-+--++- +import Mathlib
+-+--+++-+-/
+-+--+++-+import Mathlib
+-+--++ -+import Bridges.EulerianTrail
+-+--++ -+
+-+--++ -+/-!
+-+--++@@ -593,42 +211,7 @@
+-+--++ -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--++ -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--++ -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--++-++
+-+--++-++/-! ### The Königsberg graph
+-+--++-++
+-+--++-++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+--++-++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+--++-++is the simple graph that captures the connectivity pattern.
+-+--++-++
+-+--++-++In the original problem, some pairs of landmasses had multiple bridges
+-+--++-++between them, making the true model a multigraph. However, for the
+-+--++-++Eulerian trail condition, what matters is the parity of degrees at each
+-+--++-++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+--++-++impossibility via Euler's theorem. -/
+-+--++-++
+-+--++-++/-- The four landmasses of Königsberg. -/
+-+--++-++inductive Konigsberg : Type
+-+--++-++  | A  -- North bank
+-+--++-++  | B  -- South bank
+-+--++-++  | C  -- Island (Kneiphof)
+-+--++-++  | D  -- East district
+-+--++-++  deriving DecidableEq, Fintype
+-+--++-++
+-+--++-++open Konigsberg
+-+--++-++
+-+--++-++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+--++-++Every pair of distinct vertices is connected, capturing the fact that
+-+--++-++every pair of landmasses had at least one bridge between them. -/
+-+--++-++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+--++-++
+-+--++-++instance : DecidableRel konigsbergGraph.Adj := by
+-+--++-++  intro u v
+-+--++-++  simp only [konigsbergGraph]
+-+--++-++  infer_instance
+-+--++-++
+-+--++-++/-
+-+--++-++Every vertex in K₄ has degree 3 (odd).
+-+--++- +-/
+-+--+++-+-/
+-+--++ -+
+-+--++ -+namespace Bridges
+-+--++ -+
+-+--++@@ -648,10 +231,8 @@
+-+--++ -+
+-+--++ -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--++ -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--++-++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+--++-++  fin_cases v <;> simp +decide
+-+--++- +
+-+--++- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--+++-+
+-+--+++-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--++ -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--++ -+  intro v; fin_cases v <;> native_decide
+-+--++ -+
+-+--++@@ -675,35 +256,89 @@
+-+--++ -+  have h2 := konigsberg_odd_count
+-+--++ -+  omega
+-+--++ -+
+-+--++--+end Bridges++theorem konigsberg_all_odd :
+-+--++-++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+--++-++  intro v
+-+--++-++  rw [konigsberg_degree]
+-+--++-++  exact ⟨1, rfl⟩
+-+--++-++
+-+--++-++/-
+-+--++-++The number of odd-degree vertices in the Königsberg graph is 4.
+-+--++-++-/
+-+--++-++theorem konigsberg_four_odd :
+-+--++-++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+--++-++  decide +revert
+-+--++-++
+-+--++-++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+--++-++then the number of odd-degree vertices is 0 or 2.
+-+--++-++This is the key obstruction from Mathlib. -/
+-+--++-++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+--++-++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+--++-++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+--++-++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+--++-++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+--++-++  hp.card_odd_degree
+-+--++-++
+-+--++-++/-
+-+--++-++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+--++-++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+--++-++through Königsberg crossing each bridge exactly once.
+-+--++-++-/
+-+--++-++theorem konigsberg_no_eulerian_trail :
+-+--++-++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+--++-++  intro u v p h;
+-+--++-++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+--++++Copyright (c) 2025 Harmonic. All rights reserved.
+-+--++++Released under Apache 2.0 license as described in the file LICENSE.
+-+--++++-/
+-+--++++import Mathlib
+-+--++++import Bridges.EulerianTrail
+-+--++++
+-+--++++/-!
+-+--++++# The Königsberg Bridge Problem
+-+--++++
+-+--++++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+--++++the founding result of graph theory (Euler, 1736).
+-+--++++
+-+--++++## The Problem
+-+--++++
+-+--++++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+--++++and included two large islands connected to each other and to the two mainland
+-+--++++portions by seven bridges. The problem asks whether there is a walk through the
+-+--++++city that crosses each bridge exactly once.
+-+--++++
+-+--++++## The Graph
+-+--++++
+-+--++++We model the four landmasses as vertices 0–3 of a multigraph:
+-+--++++- Vertex 0: Central island (Kneiphof)
+-+--++++- Vertex 1: Northern bank
+-+--++++- Vertex 2: Southern bank
+-+--++++- Vertex 3: Eastern island (Lomse)
+-+--++++
+-+--++++The seven bridges are:
+-+--++++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+--++++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+--++++- Edge 4: One bridge from vertex 0 to vertex 3
+-+--++++- Edge 5: One bridge from vertex 1 to vertex 3
+-+--++++- Edge 6: One bridge from vertex 2 to vertex 3
+-+--++++
+-+--++++## Main Results
+-+--++++
+-+--++++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+--++++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+--++++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+--++++-/
+-+--++++
+-+--++++namespace Bridges
+-+--++++
+-+--++++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+--++++def konigsberg : Multigraph 4 7 where
+-+--++++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+--++++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+--++++
+-+--++++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+--++++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+--++++
+-+--++++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+--++++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+--++++
+-+--++++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+--++++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+--++++
+-+--++++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+--++++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+--++++
+-+--++++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+--++++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+--++++  intro v; fin_cases v <;> native_decide
+-+--++++
+-+--++++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+--++++theorem konigsberg_odd_count :
+-+--++++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+--++++  native_decide
+-+--++++
+-+--++++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+--++++
+-+--++++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+--++++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+--++++
+-+--++++The proof combines:
+-+--++++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+--++++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+--++++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+--++++  constructor
+-+--++++  intro t
+-+--++++  have h1 := t.odd_degree_vertices_le_two
+-+--++++  have h2 := konigsberg_odd_count
+-+--++++  omega
+-+--++++
+-+--++++end Bridges+---+-+end Bridges+/-
+-+-+---++Copyright (c) 2025. All rights reserved.
+-+-+---++Released under Apache 2.0 license.
+-+-+---++
+-+-+---++# The Königsberg Bridge Problem — Formalized
+-+-+---++
+-+-+---++This file formalizes the Königsberg Bridge Problem, widely considered
+-+-+---++the founding problem of graph theory. In 1736, Euler proved that it is
+-+-+---++impossible to traverse all seven bridges of Königsberg exactly once.
+-+-+---++
+-+-+---++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-+---++and prove impossibility using the Eulerian trail parity condition.
+-+-+---++
+-+-+---++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-+---++with a simple-graph abstraction that captures the essential parity
+-+-+---++obstruction: a graph where more than two vertices have odd degree
+-+-+---++cannot have an Eulerian trail.
+-+-+---++
+-+-+---++## Main results
+-+-+---++
+-+-+---++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-+---++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-+---++  has no Eulerian trail (from Mathlib).
+-+-+---++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-+--- +-/
+-+-+---++
+-+-+--- +import Mathlib
+-+-+--+-+-/
+-+-+--+-+import Mathlib
+-+-+-- -+import Bridges.EulerianTrail
+-+-+-- -+
+-+-+-- -+/-!
+-+-+--@@ -593,42 +211,7 @@
+-+-+-- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-+-- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-+-- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-+---++
+-+-+---++/-! ### The Königsberg graph
+-+-+---++
+-+-+---++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-+---++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-+---++is the simple graph that captures the connectivity pattern.
+-+-+---++
+-+-+---++In the original problem, some pairs of landmasses had multiple bridges
+-+-+---++between them, making the true model a multigraph. However, for the
+-+-+---++Eulerian trail condition, what matters is the parity of degrees at each
+-+-+---++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-+---++impossibility via Euler's theorem. -/
+-+-+---++
+-+-+---++/-- The four landmasses of Königsberg. -/
+-+-+---++inductive Konigsberg : Type
+-+-+---++  | A  -- North bank
+-+-+---++  | B  -- South bank
+-+-+---++  | C  -- Island (Kneiphof)
+-+-+---++  | D  -- East district
+-+-+---++  deriving DecidableEq, Fintype
+-+-+---++
+-+-+---++open Konigsberg
+-+-+---++
+-+-+---++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-+---++Every pair of distinct vertices is connected, capturing the fact that
+-+-+---++every pair of landmasses had at least one bridge between them. -/
+-+-+---++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-+---++
+-+-+---++instance : DecidableRel konigsbergGraph.Adj := by
+-+-+---++  intro u v
+-+-+---++  simp only [konigsbergGraph]
+-+-+---++  infer_instance
+-+-+---++
+-+-+---++/-
+-+-+---++Every vertex in K₄ has degree 3 (odd).
+-+-+--- +-/
+-+-+--+-+-/
+-+-+-- -+
+-+-+-- -+namespace Bridges
+-+-+-- -+
+-+-+--@@ -648,10 +231,8 @@
+-+-+-- -+
+-+-+-- -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-+-- -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-+---++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-+---++  fin_cases v <;> simp +decide
+-+-+--- +
+-+-+--- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+--+-+
+-+-+--+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+-- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-+-- -+  intro v; fin_cases v <;> native_decide
+-+-+-- -+
+-+-+--@@ -675,35 +256,89 @@
+-+-+-- -+  have h2 := konigsberg_odd_count
+-+-+-- -+  omega
+-+-+-- -+
+-+-+----+end Bridges++theorem konigsberg_all_odd :
+-+-+---++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-+---++  intro v
+-+-+---++  rw [konigsberg_degree]
+-+-+---++  exact ⟨1, rfl⟩
+-+-+---++
+-+-+---++/-
+-+-+---++The number of odd-degree vertices in the Königsberg graph is 4.
+-+-+---++-/
+-+-+---++theorem konigsberg_four_odd :
+-+-+---++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-+---++  decide +revert
+-+-+---++
+-+-+---++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-+---++then the number of odd-degree vertices is 0 or 2.
+-+-+---++This is the key obstruction from Mathlib. -/
+-+-+---++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-+---++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-+---++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-+---++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-+---++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-+---++  hp.card_odd_degree
+-+-+---++
+-+-+---++/-
+-+-+---++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-+---++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-+---++through Königsberg crossing each bridge exactly once.
+-+-+---++-/
+-+-+---++theorem konigsberg_no_eulerian_trail :
+-+-+---++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-+---++  intro u v p h;
+-+-+---++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-+-+--++Copyright (c) 2025 Harmonic. All rights reserved.
+-+-+--++Released under Apache 2.0 license as described in the file LICENSE.
+-+-+--++-/
+-+-+--++import Mathlib
+-+-+--++import Bridges.EulerianTrail
+-+-+--++
+-+-+--++/-!
+-+-+--++# The Königsberg Bridge Problem
+-+-+--++
+-+-+--++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-+--++the founding result of graph theory (Euler, 1736).
+-+-+--++
+-+-+--++## The Problem
+-+-+--++
+-+-+--++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-+--++and included two large islands connected to each other and to the two mainland
+-+-+--++portions by seven bridges. The problem asks whether there is a walk through the
+-+-+--++city that crosses each bridge exactly once.
+-+-+--++
+-+-+--++## The Graph
+-+-+--++
+-+-+--++We model the four landmasses as vertices 0–3 of a multigraph:
+-+-+--++- Vertex 0: Central island (Kneiphof)
+-+-+--++- Vertex 1: Northern bank
+-+-+--++- Vertex 2: Southern bank
+-+-+--++- Vertex 3: Eastern island (Lomse)
+-+-+--++
+-+-+--++The seven bridges are:
+-+-+--++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-+--++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-+--++- Edge 4: One bridge from vertex 0 to vertex 3
+-+-+--++- Edge 5: One bridge from vertex 1 to vertex 3
+-+-+--++- Edge 6: One bridge from vertex 2 to vertex 3
+-+-+--++
+-+-+--++## Main Results
+-+-+--++
+-+-+--++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-+--++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-+--++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-+--++-/
+-+-+--++
+-+-+--++namespace Bridges
+-+-+--++
+-+-+--++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-+--++def konigsberg : Multigraph 4 7 where
+-+-+--++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-+--++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-+--++
+-+-+--++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-+--++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-+--++
+-+-+--++/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-+--++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-+--++
+-+-+--++/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-+--++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-+--++
+-+-+--++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-+--++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-+--++
+-+-+--++/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-+--++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-+--++  intro v; fin_cases v <;> native_decide
+-+-+--++
+-+-+--++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-+--++theorem konigsberg_odd_count :
+-+-+--++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-+--++  native_decide
+-+-+--++
+-+-+--++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-+--++
+-+-+--++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-+--++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-+--++
+-+-+--++The proof combines:
+-+-+--++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-+--++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-+--++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-+--++  constructor
+-+-+--++  intro t
+-+-+--++  have h1 := t.odd_degree_vertices_le_two
+-+-+--++  have h2 := konigsberg_odd_count
+-+-+--++  omega
+-+-+--++
+-+-+--++end Bridges+/-
+-+-++----+end Bridges+/-
+-+-++---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-++---+Released under Apache 2.0 license as described in the file LICENSE.
+-+-++---+-/
+-+-++---+import Mathlib
+-+-++---+import Bridges.EulerianTrail
+-+-++---+
+-+-++---+/-!
+-+-++---+# The Königsberg Bridge Problem
+-+-++---+
+-+-++---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-++---+the founding result of graph theory (Euler, 1736).
+-+-++---+
+-+-++---+## The Problem
+-+-++---+
+-+-++---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-++---+and included two large islands connected to each other and to the two mainland
+-+-++---+portions by seven bridges. The problem asks whether there is a walk through the
+-+-++---+city that crosses each bridge exactly once.
+-+-++---+
+-+-++---+## The Graph
+-+-++---+
+-+-++---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-++---+- Vertex 0: Central island (Kneiphof)
+-+-++---+- Vertex 1: Northern bank
+-+-++---+- Vertex 2: Southern bank
+-+-++---+- Vertex 3: Eastern island (Lomse)
+-+-++---+
+-+-++---+The seven bridges are:
+-+-++---+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-++---+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-++---+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-++---+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-++---+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-++---+
+-+-++---+## Main Results
+-+-++---+
+-+-++---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-++---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-++---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-++---+-/
+-+-++---+
+-+-++---+namespace Bridges
+-+-++---+
+-+-++---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-++---+def konigsberg : Multigraph 4 7 where
+-+-++---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-++---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-++---+
+-+-++---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-++---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-++---+
+-+-++---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-++---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-++---+
+-+-++---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-++---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-++---+
+-+-++---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-++---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-++---+
+-+-++---+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-++---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-++---+  intro v; fin_cases v <;> native_decide
+-+-++---+
+-+-++---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-++---+theorem konigsberg_odd_count :
+-+-++---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-++---+  native_decide
+-+-++---+
+-+-++---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-++---+
+-+-++---+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-++---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-++---+
+-+-++---+The proof combines:
+-+-++---+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-++---+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-++---+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-++---+  constructor
+-+-++---+  intro t
+-+-++---+  have h1 := t.odd_degree_vertices_le_two
+-+-++---+  have h2 := konigsberg_odd_count
+-+-++---+  omega
+-+-++---+
+-+-++---+end Bridges+/-
+-+-++--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+-++--+Released under Apache 2.0 license as described in the file LICENSE.
+-+-++--+-/
+-+-++--+import Mathlib
+-+-++--+import Bridges.EulerianTrail
+-+-++--+
+-+-++--+/-!
+-+-++--+# The Königsberg Bridge Problem
+-+-++--+
+-+-++--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+-++--+the founding result of graph theory (Euler, 1736).
+-+-++--+
+-+-++--+## The Problem
+-+-++--+
+-+-++--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+-++--+and included two large islands connected to each other and to the two mainland
+-+-++--+portions by seven bridges. The problem asks whether there is a walk through the
+-+-++--+city that crosses each bridge exactly once.
+-+-++--+
+-+-++--+## The Graph
+-+-++--+
+-+-++--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+-++--+- Vertex 0: Central island (Kneiphof)
+-+-++--+- Vertex 1: Northern bank
+-+-++--+- Vertex 2: Southern bank
+-+-++--+- Vertex 3: Eastern island (Lomse)
+-+-++--+
+-+-++--+The seven bridges are:
+-+-++--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+-++--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+-++--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+-++--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+-++--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+-++--+
+-+-++--+## Main Results
+-+-++--+
+-+-++--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+-++--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+-++--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+-++--+-/
+-+-++--+
+-+-++--+namespace Bridges
+-+-++--+
+-+-++--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+-++--+def konigsberg : Multigraph 4 7 where
+-+-++--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+-++--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+-++--+
+-+-++--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+-++--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+-++--+
+-+-++--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+-++--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+-++--+
+-+-++--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+-++--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+-++--+
+-+-++--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+-++--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+-++--+
+-+-++--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-++--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+-++--+  intro v; fin_cases v <;> native_decide
+-+-++--+
+-+-++--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+-++--+theorem konigsberg_odd_count :
+-+-++--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+-++--+  native_decide
+-+-++--+
+-+-++--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+-++--+
+-+-++--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+-++--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+-++--+
+-+-++--+The proof combines:
+-+-++--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+-++--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+-++--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+-++--+  constructor
+-+-++--+  intro t
+-+-++--+  have h1 := t.odd_degree_vertices_le_two
+-+-++--+  have h2 := konigsberg_odd_count
+-+-++--+  omega
+-+-++--+
+-+-++--+end Bridges+/-
+-+-++-+Copyright (c) 2025. All rights reserved.
+-+-++-+Released under Apache 2.0 license.
+-+-++-+
+-+-++-+# The Königsberg Bridge Problem — Formalized
+-+-++-+
+-+-++-+This file formalizes the Königsberg Bridge Problem, widely considered
+-+-++-+the founding problem of graph theory. In 1736, Euler proved that it is
+-+-++-+impossible to traverse all seven bridges of Königsberg exactly once.
+-+-++-+
+-+-++-+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+-++-+and prove impossibility using the Eulerian trail parity condition.
+-+-++-+
+-+-++-+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+-++-+with a simple-graph abstraction that captures the essential parity
+-+-++-+obstruction: a graph where more than two vertices have odd degree
+-+-++-+cannot have an Eulerian trail.
+-+-++-+
+-+-++-+## Main results
+-+-++-+
+-+-++-+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+-++-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+-++-+  has no Eulerian trail (from Mathlib).
+-+-++-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+-++-+-/
+-+-++-+
+-+-++-+import Mathlib
+-+-++-+
+-+-++-+/-! ### The Königsberg graph
+-+-++-+
+-+-++-+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+-++-+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+-++-+is the simple graph that captures the connectivity pattern.
+-+-++-+
+-+-++-+In the original problem, some pairs of landmasses had multiple bridges
+-+-++-+between them, making the true model a multigraph. However, for the
+-+-++-+Eulerian trail condition, what matters is the parity of degrees at each
+-+-++-+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+-++-+impossibility via Euler's theorem. -/
+-+-++-+
+-+-++-+/-- The four landmasses of Königsberg. -/
+-+-++-+inductive Konigsberg : Type
+-+-++-+  | A  -- North bank
+-+-++-+  | B  -- South bank
+-+-++-+  | C  -- Island (Kneiphof)
+-+-++-+  | D  -- East district
+-+-++-+  deriving DecidableEq, Fintype
+-+-++-+
+-+-++-+open Konigsberg
+-+-++-+
+-+-++-+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+-++-+Every pair of distinct vertices is connected, capturing the fact that
+-+-++-+every pair of landmasses had at least one bridge between them. -/
+-+-++-+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+-++-+
+-+-++-+instance : DecidableRel konigsbergGraph.Adj := by
+-+-++-+  intro u v
+-+-++-+  simp only [konigsbergGraph]
+-+-++-+  infer_instance
+-+-++-+
+-+-++-+/-
+-+-++-+Every vertex in K₄ has degree 3 (odd).
+-+-++-+-/
+-+-++-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+-++-+  fin_cases v <;> simp +decide
+-+-++-+
+-+-++-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+-++-+theorem konigsberg_all_odd :
+-+-++-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+-++-+  intro v
+-+-++-+  rw [konigsberg_degree]
+-+-++-+  exact ⟨1, rfl⟩
+-+-++-+
+-+-++-+/-
+-+-++-+The number of odd-degree vertices in the Königsberg graph is 4.
+-+-++-+-/
+-+-++-+theorem konigsberg_four_odd :
+-+-++-+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+-++-+  decide +revert
+-+-++-+
+-+-++-+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+-++-+then the number of odd-degree vertices is 0 or 2.
+-+-++-+This is the key obstruction from Mathlib. -/
+-+-++-+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+-++-+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+-++-+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+-++-+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+-++-+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+-++-+  hp.card_odd_degree
+-+-++-+
+-+-++-+/-
+-+-++-+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+-++-+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+-++-+through Königsberg crossing each bridge exactly once.
+-+-++-+-/
+-+-++-+theorem konigsberg_no_eulerian_trail :
+-+-++-+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+-++-+  intro u v p h;
+-+-++-+  have := euler_necessary h; simp_all +decide ;+/-
+-+-+ +Copyright (c) 2025 Harmonic. All rights reserved.
+-+-+ +Released under Apache 2.0 license as described in the file LICENSE.
+-+-+ +-/+--+-@@ -1,168 +1,86 @@
+-++--+----- a/Bridges/Konigsberg.lean
+-++--+--+++ b/Bridges/Konigsberg.lean
+-++--+--@@ -1,99 +1,86 @@
+-++--+-- /-
+-++--+---Copyright (c) 2025. All rights reserved.
+-++--+---Released under Apache 2.0 license.
+-++--+--+Copyright (c) 2025 Harmonic. All rights reserved.
+-++--+--+Released under Apache 2.0 license as described in the file LICENSE.
+-++-- --+-/
+-++-----+theorem konigsberg_four_odd :
+-++-----+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-++-----+  decide +revert
+-++-----+
+-++-----+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-++-----+then the number of odd-degree vertices is 0 or 2.
+-++-----+This is the key obstruction from Mathlib. -/
+-++-----+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-++-----+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-++-----+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-++-----+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-++-----+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-++-----+  hp.card_odd_degree
+-++-----+
+-++-----+/-
+-++-----+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-++-----+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-++-----+through Königsberg crossing each bridge exactly once.
+-++-----+-/
+-++-----+theorem konigsberg_no_eulerian_trail :
+-++-----+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-++-----+  intro u v p h;
+-++-----+  have := euler_necessary h; simp_all +decide ;+/-
+-++--+--+import Mathlib
+-++--+--+import Bridges.EulerianTrail
+-++--+-- 
+-++--+---# The Königsberg Bridge Problem — Formalized
+-++--+--+/-!
+-++--+--+# The Königsberg Bridge Problem
+-++--+-- 
+-++--+---This file formalizes the Königsberg Bridge Problem, widely considered
+-++--+---the founding problem of graph theory. In 1736, Euler proved that it is
+-++--+---impossible to traverse all seven bridges of Königsberg exactly once.
+-++--+--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-++--+--+the founding result of graph theory (Euler, 1736).
+-++--+-- 
+-++--+---We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-++--+---and prove impossibility using the Eulerian trail parity condition.
+-++--+--+## The Problem
+-++--+-- 
+-++--+---Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-++--+---with a simple-graph abstraction that captures the essential parity
+-++--+---obstruction: a graph where more than two vertices have odd degree
+-++--+---cannot have an Eulerian trail.
+-++--+--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-++--+--+and included two large islands connected to each other and to the two mainland
+-++--+--+portions by seven bridges. The problem asks whether there is a walk through the
+-++--+--+city that crosses each bridge exactly once.
+-++--+-- 
+-++--+---## Main results
+-++--+--+## The Graph
+-++--+-- 
+-++--+---* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-++--+---* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-++--+---  has no Eulerian trail (from Mathlib).
+-++--+---* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-++--+--+We model the four landmasses as vertices 0–3 of a multigraph:
+-++--+--+- Vertex 0: Central island (Kneiphof)
+-++--+--+- Vertex 1: Northern bank
+-++--+--+- Vertex 2: Southern bank
+-++--+--+- Vertex 3: Eastern island (Lomse)
+-++--+--+
+-++--+--+The seven bridges are:
+-++--+--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-++--+--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-++--+--+- Edge 4: One bridge from vertex 0 to vertex 3
+-++--+--+- Edge 5: One bridge from vertex 1 to vertex 3
+-++--+--+- Edge 6: One bridge from vertex 2 to vertex 3
+-++--+--+
+-++--+--+## Main Results
+-++--+--+
+-++--+--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-++--+--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-++--+--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-++--+-- -/
+-++--+-- 
+-++--+---import Mathlib
+-++--+--+namespace Bridges
+-++--+-- 
+-++--+---/-! ### The Königsberg graph
+-++--+--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-++--+--+def konigsberg : Multigraph 4 7 where
+-++--+--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-++--+--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-++--+-- 
+-++--+---The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-++--+---7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-++--+---is the simple graph that captures the connectivity pattern.
+-++--+--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-++--+--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-++--+-- 
+-++--+---In the original problem, some pairs of landmasses had multiple bridges
+-++--+---between them, making the true model a multigraph. However, for the
+-++--+---Eulerian trail condition, what matters is the parity of degrees at each
+-++--+---vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-++--+---impossibility via Euler's theorem. -/
+-++--+--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-++--+--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-++--+-- 
+-++--+---/-- The four landmasses of Königsberg. -/
+-++--+---inductive Konigsberg : Type
+-++--+---  | A  -- North bank
+-++--+---  | B  -- South bank
+-++--+---  | C  -- Island (Kneiphof)
+-++--+---  | D  -- East district
+-++--+---  deriving DecidableEq, Fintype
+-++--+--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-++--+--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-++--+-- 
+-++--+---open Konigsberg
+-++--+---
+-++--+---/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-++--+---Every pair of distinct vertices is connected, capturing the fact that
+-++--+---every pair of landmasses had at least one bridge between them. -/
+-++--+---def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-++--+---
+-++--+---instance : DecidableRel konigsbergGraph.Adj := by
+-++--+---  intro u v
+-++--+---  simp only [konigsbergGraph]
+-++--+---  infer_instance
+-++--+---
+-++--+---/-
+-++--+---Every vertex in K₄ has degree 3 (odd).
+-++--+----/
+-++--+---theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-++--+---  fin_cases v <;> simp +decide
+-++--+--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-++--+--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-++--+-- 
+-++--+-- /-- All four vertices of the Königsberg graph have odd degree. -/
+-++--+---theorem konigsberg_all_odd :
+-++--+---    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-++--+---  intro v
+-++--+---  rw [konigsberg_degree]
+-++--+---  exact ⟨1, rfl⟩
+-++--+--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-++--+--+  intro v; fin_cases v <;> native_decide
+-++--+-- 
+-++--+---/-
+-++--+---The number of odd-degree vertices in the Königsberg graph is 4.
+-++--+----/
+-++--+---theorem konigsberg_four_odd :
+-++--+---    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-++--+---  decide +revert
+-++--+--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-++--+--+theorem konigsberg_odd_count :
+-++--+--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-++--+--+  native_decide
+-++--+-- 
+-++--+---/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-++--+---then the number of odd-degree vertices is 0 or 2.
+-++--+---This is the key obstruction from Mathlib. -/
+-++--+---theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-++--+---    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-++--+---    {p : G.Walk u v} (hp : p.IsEulerian) :
+-++--+---    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-++--+---    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-++--+---  hp.card_odd_degree
+-++--+--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-++--+-- 
+-++--+---/-
+-++--+---**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-++--+---Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-++--+---through Königsberg crossing each bridge exactly once.
+-++--+----/
+-++--+---theorem konigsberg_no_eulerian_trail :
+-++--+---    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-++--+---  intro u v p h;
+-++--+---  have := euler_necessary h; simp_all +decide ;+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-++--+--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-++--+--+
+-++--+--+The proof combines:
+-++--+--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-++--+--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-++--+--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-++--+--+  constructor
+-++--+--+  intro t
+-++--+--+  have h1 := t.odd_degree_vertices_le_two
+-++--+--+  have h2 := konigsberg_odd_count
+-++--+--+  omega
+-++--+--+
+-++--+--+end Bridges+/-
+-++-- -+Copyright (c) 2025 Harmonic. All rights reserved.
+-++-- -+Released under Apache 2.0 license as described in the file LICENSE.
+-++---+-+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-++---+-+  intro v; fin_cases v <;> native_decide
+-++---+-+
+-++---+-+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-++---+-+theorem konigsberg_odd_count :
+-++---+-+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-++---+-+  native_decide
+-++---+-+
+-++---+-+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-++---+-+
+-++---+-+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-++---+-+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-++---+-+
+-++---+-+The proof combines:
+-++---+-+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-++---+-+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-++---+-+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-++---+-+  constructor
+-++---+-+  intro t
+-++---+-+  have h1 := t.odd_degree_vertices_le_two
+-++---+-+  have h2 := konigsberg_odd_count
+-++---+-+  omega
+-++---+-+
+-++---+-+end Bridges+/-
+-++---++Copyright (c) 2025. All rights reserved.
+-++---++Released under Apache 2.0 license.
+-++---++
+-++---++# The Königsberg Bridge Problem — Formalized
+-++---++
+-++---++This file formalizes the Königsberg Bridge Problem, widely considered
+-++---++the founding problem of graph theory. In 1736, Euler proved that it is
+-++---++impossible to traverse all seven bridges of Königsberg exactly once.
+-++---++
+-++---++We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-++---++and prove impossibility using the Eulerian trail parity condition.
+-++---++
+-++---++Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-++---++with a simple-graph abstraction that captures the essential parity
+-++---++obstruction: a graph where more than two vertices have odd degree
+-++---++cannot have an Eulerian trail.
+-++---++
+-++---++## Main results
+-++---++
+-++---++* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-++---++* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-++---++  has no Eulerian trail (from Mathlib).
+-++---++* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-++--- +-/
+-++---++
+-++--- +import Mathlib
+-++--+-+-/
+-++--+-+import Mathlib
+-++-- -+import Bridges.EulerianTrail
+-++-- -+
+-++-- -+/-!
+-++--@@ -593,42 +211,7 @@
+-++-- -+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-++-- -+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-++-- -+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-++---++
+-++---++/-! ### The Königsberg graph
+-++---++
+-++---++The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-++---++7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-++---++is the simple graph that captures the connectivity pattern.
+-++---++
+-++---++In the original problem, some pairs of landmasses had multiple bridges
+-++---++between them, making the true model a multigraph. However, for the
+-++---++Eulerian trail condition, what matters is the parity of degrees at each
+-++---++vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-++---++impossibility via Euler's theorem. -/
+-++---++
+-++---++/-- The four landmasses of Königsberg. -/
+-++---++inductive Konigsberg : Type
+-++---++  | A  -- North bank
+-++---++  | B  -- South bank
+-++---++  | C  -- Island (Kneiphof)
+-++---++  | D  -- East district
+-++---++  deriving DecidableEq, Fintype
+-++---++
+-++---++open Konigsberg
+-++---++
+-++---++/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-++---++Every pair of distinct vertices is connected, capturing the fact that
+-++---++every pair of landmasses had at least one bridge between them. -/
+-++---++def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-++---++
+-++---++instance : DecidableRel konigsbergGraph.Adj := by
+-++---++  intro u v
+-++---++  simp only [konigsbergGraph]
+-++---++  infer_instance
+-++---++
+-++---++/-
+-++---++Every vertex in K₄ has degree 3 (odd).
+-++--- +-/
+-++--+-+-/
+-++-- -+
+-++-- -+namespace Bridges
+-++-- -+
+-++--@@ -648,10 +231,8 @@
+-++-- -+
+-++-- -+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-++-- -+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-++---++theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-++---++  fin_cases v <;> simp +decide
+-++--- +
+-++--- +/-- All four vertices of the Königsberg graph have odd degree. -/
+-++--+-+
+-++--+-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-++-- -+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-++-- -+  intro v; fin_cases v <;> native_decide
+-++-- -+
+-++--@@ -675,35 +256,89 @@
+-++-- -+  have h2 := konigsberg_odd_count
+-++-- -+  omega
+-++-- -+
+-++----+end Bridges++theorem konigsberg_all_odd :
+-++---++    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-++---++  intro v
+-++---++  rw [konigsberg_degree]
+-++---++  exact ⟨1, rfl⟩
+-++---++
+-++---++/-
+-++---++The number of odd-degree vertices in the Königsberg graph is 4.
+-++---++-/
+-++---++theorem konigsberg_four_odd :
+-++---++    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-++---++  decide +revert
+-++---++
+-++---++/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-++---++then the number of odd-degree vertices is 0 or 2.
+-++---++This is the key obstruction from Mathlib. -/
+-++---++theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-++---++    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-++---++    {p : G.Walk u v} (hp : p.IsEulerian) :
+-++---++    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-++---++    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-++---++  hp.card_odd_degree
+-++---++
+-++---++/-
+-++---++**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-++---++Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-++---++through Königsberg crossing each bridge exactly once.
+-++---++-/
+-++---++theorem konigsberg_no_eulerian_trail :
+-++---++    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-++---++  intro u v p h;
+-++---++  have := euler_necessary h; simp_all +decide ;+-+end Bridges+/-
+-++--++Copyright (c) 2025 Harmonic. All rights reserved.
+-++--++Released under Apache 2.0 license as described in the file LICENSE.
+-++--++-/
+-++--++import Mathlib
+-++--++import Bridges.EulerianTrail
+-++--++
+-++--++/-!
+-++--++# The Königsberg Bridge Problem
+-++--++
+-++--++We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-++--++the founding result of graph theory (Euler, 1736).
+-++--++
+-++--++## The Problem
+-++--++
+-++--++The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-++--++and included two large islands connected to each other and to the two mainland
+-++--++portions by seven bridges. The problem asks whether there is a walk through the
+-++--++city that crosses each bridge exactly once.
+-++--++
+-++--++## The Graph
+-++--++
+-++--++We model the four landmasses as vertices 0–3 of a multigraph:
+-++--++- Vertex 0: Central island (Kneiphof)
+-++--++- Vertex 1: Northern bank
+-++--++- Vertex 2: Southern bank
+-++--++- Vertex 3: Eastern island (Lomse)
+-++--++
+-++--++The seven bridges are:
+-++--++- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-++--++- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-++--++- Edge 4: One bridge from vertex 0 to vertex 3
+-++--++- Edge 5: One bridge from vertex 1 to vertex 3
+-++--++- Edge 6: One bridge from vertex 2 to vertex 3
+-++--++
+-++--++## Main Results
+-++--++
+-++--++* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-++--++* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-++--++* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-++--++-/
+-++--++
+-++--++namespace Bridges
+-++--++
+-++--++/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-++--++def konigsberg : Multigraph 4 7 where
+-++--++  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-++--++  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-++--++
+-++--++/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-++--++theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-++--++
+-++--++/-- The degree of vertex 1 (northern bank) is 3. -/
+-++--++theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-++--++
+-++--++/-- The degree of vertex 2 (southern bank) is 3. -/
+-++--++theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-++--++
+-++--++/-- The degree of vertex 3 (Lomse island) is 3. -/
+-++--++theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-++--++
+-++--++/-- All four vertices of the Königsberg graph have odd degree. -/
+-++--++theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-++--++  intro v; fin_cases v <;> native_decide
+-++--++
+-++--++/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-++--++theorem konigsberg_odd_count :
+-++--++    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-++--++  native_decide
+-++--++
+-++--++/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-++--++
+-++--++This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-++--++four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-++--++
+-++--++The proof combines:
+-++--++1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-++--++2. The computation that Königsberg has 4 odd-degree vertices. -/
+-++--++theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-++--++  constructor
+-++--++  intro t
+-++--++  have h1 := t.odd_degree_vertices_le_two
+-++--++  have h2 := konigsberg_odd_count
+-++--++  omega
+-++--++
+-++--++end Bridges+/-
+-+++----+end Bridges+/-
+-+++---+Copyright (c) 2025 Harmonic. All rights reserved.
+-+++---+Released under Apache 2.0 license as described in the file LICENSE.
+-+++---+-/
+-+++---+import Mathlib
+-+++---+import Bridges.EulerianTrail
+-+++---+
+-+++---+/-!
+-+++---+# The Königsberg Bridge Problem
+-+++---+
+-+++---+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+++---+the founding result of graph theory (Euler, 1736).
+-+++---+
+-+++---+## The Problem
+-+++---+
+-+++---+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+++---+and included two large islands connected to each other and to the two mainland
+-+++---+portions by seven bridges. The problem asks whether there is a walk through the
+-+++---+city that crosses each bridge exactly once.
+-+++---+
+-+++---+## The Graph
+-+++---+
+-+++---+We model the four landmasses as vertices 0–3 of a multigraph:
+-+++---+- Vertex 0: Central island (Kneiphof)
+-+++---+- Vertex 1: Northern bank
+-+++---+- Vertex 2: Southern bank
+-+++---+- Vertex 3: Eastern island (Lomse)
+-+++---+
+-+++---+The seven bridges are:
+-+++---+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+++---+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+++---+- Edge 4: One bridge from vertex 0 to vertex 3
+-+++---+- Edge 5: One bridge from vertex 1 to vertex 3
+-+++---+- Edge 6: One bridge from vertex 2 to vertex 3
+-+++---+
+-+++---+## Main Results
+-+++---+
+-+++---+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+++---+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+++---+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+++---+-/
+-+++---+
+-+++---+namespace Bridges
+-+++---+
+-+++---+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+++---+def konigsberg : Multigraph 4 7 where
+-+++---+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+++---+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+++---+
+-+++---+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+++---+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+++---+
+-+++---+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+++---+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+++---+
+-+++---+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+++---+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+++---+
+-+++---+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+++---+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+++---+
+-+++---+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+++---+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+++---+  intro v; fin_cases v <;> native_decide
+-+++---+
+-+++---+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+++---+theorem konigsberg_odd_count :
+-+++---+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+++---+  native_decide
+-+++---+
+-+++---+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+++---+
+-+++---+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+++---+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+++---+
+-+++---+The proof combines:
+-+++---+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+++---+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+++---+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+++---+  constructor
+-+++---+  intro t
+-+++---+  have h1 := t.odd_degree_vertices_le_two
+-+++---+  have h2 := konigsberg_odd_count
+-+++---+  omega
+-+++---+
+-+++---+end Bridges+/-
+-+++--+Copyright (c) 2025 Harmonic. All rights reserved.
+-+++--+Released under Apache 2.0 license as described in the file LICENSE.
+-+++--+-/
+-+++--+import Mathlib
+-+++--+import Bridges.EulerianTrail
+-+++--+
+-+++--+/-!
+-+++--+# The Königsberg Bridge Problem
+-+++--+
+-+++--+We formalize and prove the impossibility of the Königsberg Bridge Problem,
+-+++--+the founding result of graph theory (Euler, 1736).
+-+++--+
+-+++--+## The Problem
+-+++--+
+-+++--+The city of Königsberg (now Kaliningrad) was set on both sides of the Pregel River,
+-+++--+and included two large islands connected to each other and to the two mainland
+-+++--+portions by seven bridges. The problem asks whether there is a walk through the
+-+++--+city that crosses each bridge exactly once.
+-+++--+
+-+++--+## The Graph
+-+++--+
+-+++--+We model the four landmasses as vertices 0–3 of a multigraph:
+-+++--+- Vertex 0: Central island (Kneiphof)
+-+++--+- Vertex 1: Northern bank
+-+++--+- Vertex 2: Southern bank
+-+++--+- Vertex 3: Eastern island (Lomse)
+-+++--+
+-+++--+The seven bridges are:
+-+++--+- Edges 0, 1: Two bridges from vertex 0 to vertex 1
+-+++--+- Edges 2, 3: Two bridges from vertex 0 to vertex 2
+-+++--+- Edge 4: One bridge from vertex 0 to vertex 3
+-+++--+- Edge 5: One bridge from vertex 1 to vertex 3
+-+++--+- Edge 6: One bridge from vertex 2 to vertex 3
+-+++--+
+-+++--+## Main Results
+-+++--+
+-+++--+* `Bridges.konigsberg_degrees` : The degrees of the four vertices are 5, 3, 3, 3.
+-+++--+* `Bridges.konigsberg_odd_count` : All four vertices have odd degree.
+-+++--+* `Bridges.konigsberg_no_eulerian_trail` : There is no Eulerian trail in the Königsberg graph.
+-+++--+-/
+-+++--+
+-+++--+namespace Bridges
+-+++--+
+-+++--+/-- The Königsberg bridge graph: 4 vertices, 7 edges. -/
+-+++--+def konigsberg : Multigraph 4 7 where
+-+++--+  endpt₁ := ![0, 0, 0, 0, 0, 1, 2]
+-+++--+  endpt₂ := ![1, 1, 2, 2, 3, 3, 3]
+-+++--+
+-+++--+/-- The degree of vertex 0 (Kneiphof island) is 5. -/
+-+++--+theorem konigsberg_degree_0 : konigsberg.degree 0 = 5 := by native_decide
+-+++--+
+-+++--+/-- The degree of vertex 1 (northern bank) is 3. -/
+-+++--+theorem konigsberg_degree_1 : konigsberg.degree 1 = 3 := by native_decide
+-+++--+
+-+++--+/-- The degree of vertex 2 (southern bank) is 3. -/
+-+++--+theorem konigsberg_degree_2 : konigsberg.degree 2 = 3 := by native_decide
+-+++--+
+-+++--+/-- The degree of vertex 3 (Lomse island) is 3. -/
+-+++--+theorem konigsberg_degree_3 : konigsberg.degree 3 = 3 := by native_decide
+-+++--+
+-+++--+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+++--+theorem konigsberg_all_odd : ∀ v : Fin 4, konigsberg.degree v % 2 = 1 := by
+-+++--+  intro v; fin_cases v <;> native_decide
+-+++--+
+-+++--+/-- The number of odd-degree vertices in the Königsberg graph is 4. -/
+-+++--+theorem konigsberg_odd_count :
+-+++--+    (Finset.univ.filter (fun v : Fin 4 => konigsberg.degree v % 2 = 1)).card = 4 := by
+-+++--+  native_decide
+-+++--+
+-+++--+/-- **Königsberg Bridge Theorem**: There is no Eulerian trail in the Königsberg graph.
+-+++--+
+-+++--+This is the founding theorem of graph theory. Euler showed in 1736 that since all
+-+++--+four vertices have odd degree, no walk can cross each of the seven bridges exactly once.
+-+++--+
+-+++--+The proof combines:
+-+++--+1. The Euler Parity Theorem: any Eulerian trail implies ≤ 2 odd-degree vertices.
+-+++--+2. The computation that Königsberg has 4 odd-degree vertices. -/
+-+++--+theorem konigsberg_no_eulerian_trail : IsEmpty (EulerianTrail konigsberg) := by
+-+++--+  constructor
+-+++--+  intro t
+-+++--+  have h1 := t.odd_degree_vertices_le_two
+-+++--+  have h2 := konigsberg_odd_count
+-+++--+  omega
+-+++--+
+-+++--+end Bridges+/-
+-+++-+Copyright (c) 2025. All rights reserved.
+-+++-+Released under Apache 2.0 license.
+-+++-+
+-+++-+# The Königsberg Bridge Problem — Formalized
+-+++-+
+-+++-+This file formalizes the Königsberg Bridge Problem, widely considered
+-+++-+the founding problem of graph theory. In 1736, Euler proved that it is
+-+++-+impossible to traverse all seven bridges of Königsberg exactly once.
+-+++-+
+-+++-+We model the Königsberg graph (4 vertices, 7 edges as a multigraph)
+-+++-+and prove impossibility using the Eulerian trail parity condition.
+-+++-+
+-+++-+Since Mathlib's `SimpleGraph` does not support multigraphs, we work
+-+++-+with a simple-graph abstraction that captures the essential parity
+-+++-+obstruction: a graph where more than two vertices have odd degree
+-+++-+cannot have an Eulerian trail.
+-+++-+
+-+++-+## Main results
+-+++-+
+-+++-+* `konigsberg_no_eulerian_trail` — The Königsberg graph has no Eulerian trail.
+-+++-+* `odd_degree_obstruction` — A graph with more than 2 odd-degree vertices
+-+++-+  has no Eulerian trail (from Mathlib).
+-+++-+* `konigsberg_four_odd` — All four Königsberg vertices have odd degree.
+-+++-+-/
+-+++-+
+-+++-+import Mathlib
+-+++-+
+-+++-+/-! ### The Königsberg graph
+-+++-+
+-+++-+The city of Königsberg (now Kaliningrad) had 4 landmasses connected by
+-+++-+7 bridges. We model this as a complete graph on 4 vertices (K₄), which
+-+++-+is the simple graph that captures the connectivity pattern.
+-+++-+
+-+++-+In the original problem, some pairs of landmasses had multiple bridges
+-+++-+between them, making the true model a multigraph. However, for the
+-+++-+Eulerian trail condition, what matters is the parity of degrees at each
+-+++-+vertex. K₄ has all vertices of degree 3 (odd), which suffices to prove
+-+++-+impossibility via Euler's theorem. -/
+-+++-+
+-+++-+/-- The four landmasses of Königsberg. -/
+-+++-+inductive Konigsberg : Type
+-+++-+  | A  -- North bank
+-+++-+  | B  -- South bank
+-+++-+  | C  -- Island (Kneiphof)
+-+++-+  | D  -- East district
+-+++-+  deriving DecidableEq, Fintype
+-+++-+
+-+++-+open Konigsberg
+-+++-+
+-+++-+/-- The Königsberg graph modeled as K₄ (complete graph on 4 vertices).
+-+++-+Every pair of distinct vertices is connected, capturing the fact that
+-+++-+every pair of landmasses had at least one bridge between them. -/
+-+++-+def konigsbergGraph : SimpleGraph Konigsberg := ⊤
+-+++-+
+-+++-+instance : DecidableRel konigsbergGraph.Adj := by
+-+++-+  intro u v
+-+++-+  simp only [konigsbergGraph]
+-+++-+  infer_instance
+-+++-+
+-+++-+/-
+-+++-+Every vertex in K₄ has degree 3 (odd).
+-+++-+-/
+-+++-+theorem konigsberg_degree (v : Konigsberg) : konigsbergGraph.degree v = 3 := by
+-+++-+  fin_cases v <;> simp +decide
+-+++-+
+-+++-+/-- All four vertices of the Königsberg graph have odd degree. -/
+-+++-+theorem konigsberg_all_odd :
+-+++-+    ∀ v : Konigsberg, Odd (konigsbergGraph.degree v) := by
+-+++-+  intro v
+-+++-+  rw [konigsberg_degree]
+-+++-+  exact ⟨1, rfl⟩
+-+++-+
+-+++-+/-
+-+++-+The number of odd-degree vertices in the Königsberg graph is 4.
+-+++-+-/
+-+++-+theorem konigsberg_four_odd :
+-+++-+    Fintype.card { v : Konigsberg // Odd (konigsbergGraph.degree v) } = 4 := by
+-+++-+  decide +revert
+-+++-+
+-+++-+/-- **Euler's Theorem (necessary condition)**: If a graph has an Eulerian trail,
+-+++-+then the number of odd-degree vertices is 0 or 2.
+-+++-+This is the key obstruction from Mathlib. -/
+-+++-+theorem euler_necessary {V : Type*} [Fintype V] [DecidableEq V]
+-+++-+    {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
+-+++-+    {p : G.Walk u v} (hp : p.IsEulerian) :
+-+++-+    Fintype.card { w : V | Odd (G.degree w) } = 0 ∨
+-+++-+    Fintype.card { w : V | Odd (G.degree w) } = 2 :=
+-+++-+  hp.card_odd_degree
+-+++-+
+-+++-+/-
+-+++-+**The Königsberg Bridge Theorem**: There is no Eulerian trail in the
+-+++-+Königsberg graph. This formalizes Euler's 1736 result — one cannot walk
+-+++-+through Königsberg crossing each bridge exactly once.
+-+++-+-/
+-+++-+theorem konigsberg_no_eulerian_trail :
+-+++-+    ∀ (u v : Konigsberg) (p : konigsbergGraph.Walk u v), ¬p.IsEulerian := by
+-+++-+  intro u v p h;
+-+++-+  have := euler_necessary h; simp_all +decide ;+/-
+-++ +Copyright (c) 2025 Harmonic. All rights reserved.
+-++ +Released under Apache 2.0 license as described in the file LICENSE.
+-++ +-/++--------@@ -1,99 +1,86 @@
 ++-------- /-
 ++---------Copyright (c) 2025. All rights reserved.
 ++---------Released under Apache 2.0 license.
