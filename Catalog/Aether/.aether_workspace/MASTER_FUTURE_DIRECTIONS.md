@@ -57,46 +57,51 @@ theorem zero_temperature_limit_selects_canonical
              eval (canonicalCountermodel eval x y) x))
 ```
 
-## 3. Algorithmic Prime Search and Certified Elimination Procedures
+## 5. Phase-Transition Thresholds for Derivability in Finite Proof Semirings
 
-The prime witness extraction theorem (`exists_prime_witness_of_not_mem_radicalElim`)
-is existential. Making it **constructive** requires:
+**Theorem Target.** For random proof semirings on n generators with edge probability p,
+there exists a sharp phase transition at p = p*(n) such that:
 
-1. **Finite prime search**: For `R = ℤ` and finitely generated `I`, the relevant 
-   primes lie over finitely many rational primes. Implement a search procedure 
-   that enumerates candidate primes and tests membership.
+- For p > p*(n): derivable(x, y) holds with high probability for all x, y
+- For p < p*(n): ¬derivable(x, y) holds with high probability for generic x, y
 
-2. **Certified Gröbner elimination**: Gröbner basis computation with elimination 
-   orders gives the elimination ideal. The spectral theorem provides an 
-   independent **certificate**: to verify `a ∈ eliminationIdeal(I)`, it suffices 
-   to check `C(a) ∈ P` for a finite set of "test primes."
+The critical temperature β*(n) of the thermodynamic duality satisfies:
 
-3. **SAT/SMT integration**: For Boolean semirings, elimination reduces to 
-   quantified Boolean formula (QBF) solving. The spectral theorem gives an 
-   algebraic perspective on resolution-based QBF algorithms.
+```
+β*(n) ~ c · log(n) / primeSeparationGap(n)
+```
 
-**Concrete next step**: Implement a decision procedure for elimination in `ℤ[X]`
-using the Chinese Remainder Theorem to reduce to finitely many `𝔽ₚ[X]` checks.
+**Why it matters.** This establishes that derivability in random proof systems exhibits
+a sharp phase transition analogous to the satisfiability threshold in random SAT, but
+now with a thermodynamic interpretation. The critical temperature identifies the
+crossover between the "entropic" regime (where most evaluations are non-separating) and
+the "energetic" regime (where separating evaluations dominate).
 
-## Key Open Problem
+**Approach.** Use the second moment method on the partition function of separating
+evaluations, combined with the thermodynamic duality theorem to translate between
+proof-theoretic and statistical-mechanical phase transitions.
 
-The central open question is whether the `linResultantPair` formula
-(or any fixed polynomial-time computable formula) can produce
-generators of the elimination congruence from generators of the
-original congruence, for arbitrary idempotent semirings.
+---
 
-Our analysis suggests this may be impossible in full generality:
-unlike classical ideal elimination (which uses subtraction/determinants),
-semiring congruences cannot "cancel" the eliminated variable from
-relations. The correct framework may require either:
+## 1. Quantitative Proof Complexity Bounds from Free-Energy Curvature
 
-1. **Evaluation-based witnesses**: Using ring endomorphisms (evaluation
-   maps) to project congruences, rather than algebraic elimination.
+**Theorem Target.** For a coherent closure proof semiring with finitely many admissible
+evaluations, the second derivative of the free-energy gap with respect to β provides
+a lower bound on the proof complexity of the derivation `x ⊢ y`:
 
-2. **Lattice-theoretic methods**: Exploiting the lattice structure of
-   congruences over idempotent semirings (which form a distributive
-   lattice) to perform elimination via lattice-theoretic operations.
+```
+proof_complexity(x, y) ≥ C · |∂²/∂β² freeEnergyGap(μ, β, x, y)|_{β=β*}
+```
 
-3. **Restricted classes**: Proving elimination for specific classes of
-   idempotent semirings (totally ordered, Boolean, etc.) where
-   additional structural properties enable cancellation-like operations.
+where `β*` is the critical inverse temperature and `C` is a universal constant
+depending only on the semiring structure.
+
+**Why it matters.** This would connect proof lengths/depths to the curvature of a
+thermodynamic potential — a completely new bridge between proof complexity and
+statistical mechanics. The curvature captures how sharply the Boltzmann distribution
+concentrates on the separating evaluation as temperature drops, which measures
+"how hard it is to find" the proof or countermodel.
+
+**Approach.** Define the variance of the evaluation gap under the Gibbs measure,
+show it equals the second derivative of the log-partition function, and relate it
+to the size of the smallest proof or countermodel.
