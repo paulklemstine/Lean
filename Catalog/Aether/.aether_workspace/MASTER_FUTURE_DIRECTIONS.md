@@ -1,6 +1,6 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-05 08:06*
+*Last updated: 2026-05-05 10:01*
 
 ## Key Open Problem
 
@@ -83,3 +83,22 @@ the congruence setting, directly applicable to tropical constraint
 satisfaction and optimization verification.
 
 ---
+
+## 4. Algorithmic Countermodel Extraction from Subcritical Coding
+
+The spectral witness lemma (`exists_prime_above_subcritical_rate`) is existential.
+Make it constructive for coherent proof semirings:
+
+- Given a code C with rate below the optimum, extract a concrete prime witness.
+- Bound the computational complexity of the extraction procedure.
+- Connect to countermodel-guided proof search (CEGIS for proofs).
+
+**Formal target:**
+```lean
+def extractPrimeWitness
+  [DecidableEq S] [Fintype (PrimeSpectrum S)]
+  (C : CoherentSpectrum.ProofCode (S := S)) (δ : ℝ)
+  (hC : CoherentSpectrum.codeRate C < proofRateDistortionAt S δ) :
+  { p : PrimeSpectrum S // CoherentSpectrum.primeSepDist p ≤ δ ∧
+    CoherentSpectrum.codeRate C < CoherentSpectrum.primeEnergy p }
+```
