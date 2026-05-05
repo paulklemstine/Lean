@@ -102,6 +102,16 @@ class AEMEvaluator:
         "tropical_hecke", "dilithium", "berggren_spectral",
         "tropical_cryptography", "non_archimedean_probability",
         "tropical_information", "pythagorean_quantum",
+        # Extended open problem keywords
+        "satake", "weierstrass", "stone_weierstrass", "lawvere",
+        "chaitin", "godel_incompleteness", "fixed_point",
+        "riemann_hypothesis", "bsd", "birch_swinnerton_dyer",
+        "poincare", "navier_stokes", "yang_mills",
+        "nucleus_decomposition", "eml_closure", "proof_semiring",
+        "congruence_elimination", "spectral_decomposition",
+        "tropical_fourier", "certified_robust",
+        "lattice_crypto", "module_sis", "module_lwe",
+        "entropy_decomposition", "data_processing",
     }
 
     # Theorems with direct physical/computational applications
@@ -109,6 +119,11 @@ class AEMEvaluator:
         "certified_robustness", "lipschitz", "gradient_descent", "convergence",
         "gronwall", "resnet", "softmax", "logsumexp", "fidelity",
         "cryptographic", "post_quantum", "zero_knowledge",
+        # Extended application keywords
+        "hamiltonian_simulation", "quantum_fidelity", "error_correcting",
+        "rate_distortion", "mutual_information", "channel_capacity",
+        "approximation_bound", "lipschitz_bound", "complexity_bound",
+        "partition_function", "free_energy", "boltzmann_distribution",
     }
 
     def __init__(self, catalog_root: Optional[Path] = None):
@@ -435,22 +450,30 @@ class AEMEvaluator:
         else:
             details["extensibility"] = "minimal"
 
-        # 3. Problem Resolution: advances open problems
+        # 3. Problem Resolution: advances open problems + application theorems
         source_lower = lean_source.lower()
         open_problem_count = 0
         for kw in self.OPEN_PROBLEM_THEOREMS:
             if kw in source_lower or kw in file_path.lower():
                 open_problem_count += 1
 
-        if open_problem_count >= 3:
+        # Also count application theorem keywords (currently unused)
+        app_theorem_count = 0
+        for kw in self.APPLICATION_THEOREMS:
+            if kw in source_lower or kw in file_path.lower():
+                app_theorem_count += 1
+
+        combined_problem_score = open_problem_count + (app_theorem_count * 0.5)  # Application theorems count half
+
+        if combined_problem_score >= 4:
             score += 2.5
-            details["open_problem_progress"] = f"major({open_problem_count})"
-        elif open_problem_count >= 2:
+            details["open_problem_progress"] = f"major({open_problem_count}+{app_theorem_count}app)"
+        elif combined_problem_score >= 2.5:
             score += 2.0
-            details["open_problem_progress"] = f"significant({open_problem_count})"
-        elif open_problem_count >= 1:
+            details["open_problem_progress"] = f"significant({open_problem_count}+{app_theorem_count}app)"
+        elif combined_problem_score >= 1:
             score += 1.0
-            details["open_problem_progress"] = f"touches({open_problem_count})"
+            details["open_problem_progress"] = f"touches({open_problem_count}+{app_theorem_count}app)"
         else:
             details["open_problem_progress"] = "none"
 
@@ -473,6 +496,18 @@ class AEMEvaluator:
             details["framework"] = "basic"
         else:
             details["framework"] = "flat"
+
+        # 5. Documentation and API clarity: doc-comments make infrastructure more useful
+        doc_comments = len(re.findall(r'/-!|/-\s|/--|\n\s*--\s', lean_source))
+        type_signatures = len(re.findall(r'@(\w+)', lean_source))  # type annotations
+        if doc_comments >= 10 and type_signatures >= 3:
+            score += 0.5
+            details["documentation"] = "rich"
+        elif doc_comments >= 5:
+            score += 0.3
+            details["documentation"] = "moderate"
+        else:
+            details["documentation"] = "minimal"
 
         return min(score, 10.0)
 
