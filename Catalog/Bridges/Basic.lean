@@ -1,96 +1,104 @@
-import Mathlib
+/-
+# Bridge Theory in Simple Graphs
 
-/-!
-# Tropical Functionals: Basic Definitions
+This file develops the theory of bridges (cut edges) in simple graphs,
+proving the fundamental equivalence between trees and connected graphs
+where every edge is a bridge.
 
-This file defines the foundational structures for the tropical Riesz representation theory:
-- `TropCont X`: continuous functions from `X` to `WithBot ℝ` (the max-plus semiring)
-- `TropicalFunctional X`: max-plus linear functionals on `TropCont X`
-- Basic lemmas about extensionality and monotonicity
+## Main Results
 
-## Mathematical context
+* `SimpleGraph.IsAcyclic.isBridge_of_mem_edgeSet` — In an acyclic graph, every edge is a bridge
+* `SimpleGraph.IsTree.isBridge_of_mem_edgeSet` — In a tree, every edge is a bridge
+* `SimpleGraph.isAcyclic_of_forall_isBridge` — If every edge is a bridge, the graph is acyclic
+* `SimpleGraph.isTree_iff_connected_and_forall_isBridge` — **Tree-Bridge Equivalence**:
+  A graph is a tree if and only if it is connected and every edge is a bridge
 
-In the max-plus (tropical) semiring `(WithBot ℝ, sup, +)`, the element `⊥ = -∞` is the
-additive zero and `0` is the multiplicative unit. A *tropical functional* is a map
-`Λ : TropCont X → WithBot ℝ` that preserves `sup` (tropical addition), commutes with
-translation by constants (tropical scalar multiplication), and normalizes constants.
+## Historical Context
 
-This is the tropical analogue of a positive linear functional in classical analysis.
+Bridges in graph theory originate from Euler's 1736 analysis of the Königsberg
+bridge problem. The Tree-Bridge Equivalence Theorem provides a fundamental
+structural characterization: trees are precisely the minimally connected graphs,
+where the removal of any single edge disconnects the graph.
+
+## References
+
+* Reinhard Diestel, *Graph Theory*, 5th Edition, Springer, 2017
 -/
 
-noncomputable section
+import Mathlib
 
-/-! ## Topology on `WithBot ℝ` -/
+namespace SimpleGraph
 
-instance WithBot.Real.topologicalSpace : TopologicalSpace (WithBot ℝ) :=
-  Preorder.topology (WithBot ℝ)
-instance WithBot.Real.orderTopology : OrderTopology (WithBot ℝ) := ⟨rfl⟩
+variable {V : Type*} {G : SimpleGraph V} {e : Sym2 V}
 
-/-! ## The function space `TropCont X` -/
+/-! ### Trees have all bridges
 
-/-- Continuous functions from `X` to `WithBot ℝ` with the order topology.
-In the tropical setting, these are the analogues of continuous real-valued functions. -/
-abbrev TropCont (X : Type*) [TopologicalSpace X] := C(X, WithBot ℝ)
+We prove that in a tree, every edge is a bridge. This follows from the
+characterization that an edge is a bridge iff it does not lie on any cycle,
+combined with the fact that trees are acyclic.
+-/
 
-/-! ## Operations on `TropCont X` -/
+/-- In an acyclic graph, every edge is a bridge. Since there are no cycles,
+no edge can lie on a cycle, which is precisely the bridge characterization. -/
+theorem IsAcyclic.isBridge_of_mem_edgeSet (hAcyclic : G.IsAcyclic)
+    (he : e ∈ G.edgeSet) : G.IsBridge e := by
+  rw [isBridge_iff_mem_and_forall_cycle_notMem]
+  exact ⟨he, fun u p hp => absurd hp (hAcyclic p)⟩
 
-/-- Pointwise supremum of two tropical continuous functions. -/
-def TropCont.tsup {X : Type*} [TopologicalSpace X]
-    (f g : TropCont X) : TropCont X :=
-  ⟨fun x => f x ⊔ g x, f.continuous.sup g.continuous⟩
+/-- In a tree, every edge is a bridge. This is a direct consequence of
+acyclicity: since no cycles exist, no edge can participate in a cycle. -/
+theorem IsTree.isBridge_of_mem_edgeSet (hTree : G.IsTree)
+    (he : e ∈ G.edgeSet) : G.IsBridge e :=
+  hTree.IsAcyclic.isBridge_of_mem_edgeSet he
 
-@[simp] theorem TropCont.tsup_apply {X : Type*} [TopologicalSpace X]
-    (f g : TropCont X) (x : X) : (TropCont.tsup f g) x = f x ⊔ g x := rfl
+/-! ### Connected graphs with all bridges are trees
 
-/-! ## Tropical Functional -/
+We prove the converse: if a connected graph has the property that every
+edge is a bridge, then it must be acyclic (and hence a tree).
+-/
 
-/-- A max-plus linear functional on continuous functions `X → WithBot ℝ`.
+/-- If every edge of a graph is a bridge, then the graph is acyclic.
 
-This structure captures the tropical analogue of a positive linear functional:
-- `map_sup'`: preserves tropical addition (= pointwise sup)
-- `map_const'`: normalizes constant functions
-- `map_addConst'`: commutes with tropical scalar multiplication (= translation by constants)
-- `monotone'`: order-preserving -/
-structure TropicalFunctional (X : Type*) [TopologicalSpace X] where
-  /-- The underlying function on `TropCont X`. -/
-  toFun : TropCont X → WithBot ℝ
-  /-- Preservation of pointwise supremum (tropical addition). -/
-  map_sup' : ∀ f g : TropCont X, toFun (TropCont.tsup f g) = toFun f ⊔ toFun g
-  /-- Normalization of constant functions. -/
-  map_const' : ∀ c : WithBot ℝ, toFun (ContinuousMap.const _ c) = c
-  /-- Commutation with additive translation (tropical scalar action).
-  The function `g` must satisfy `g x = c + f x` for all `x`. -/
-  map_addConst' : ∀ (c : WithBot ℝ) (f g : TropCont X),
-    (∀ x, g x = c + f x) → toFun g = c + toFun f
-  /-- Monotonicity (order-preservation). -/
-  monotone' : ∀ {f g : TropCont X}, (∀ x, f x ≤ g x) → toFun f ≤ toFun g
+**Proof sketch**: Suppose for contradiction there exists a cycle `c`.
+Since `c` is not nil, it has at least one edge `e`. This edge lies in the
+edge set of `G`, so by hypothesis it is a bridge. But bridges cannot lie
+on any cycle (by `isBridge_iff_mem_and_forall_cycle_notMem`), contradicting
+that `e` lies on `c`. -/
+theorem isAcyclic_of_forall_isBridge
+    (h : ∀ e ∈ G.edgeSet, G.IsBridge e) : G.IsAcyclic := by
+  intro v c hc
+  -- A cycle must have at least one edge
+  have hne : c.edges ≠ [] := by
+    intro he
+    cases c with
+    | nil => exact hc.ne_nil rfl
+    | cons _ _ => simp [Walk.edges_cons] at he
+  obtain ⟨e, he⟩ := List.exists_mem_of_ne_nil _ hne
+  have he_mem : e ∈ G.edgeSet := Walk.edges_subset_edgeSet _ he
+  have hbridge := h e he_mem
+  rw [isBridge_iff_mem_and_forall_cycle_notMem] at hbridge
+  exact hbridge.2 c hc he
 
-namespace TropicalFunctional
+/-- **Tree-Bridge Equivalence Theorem.**
+A graph is a tree if and only if it is connected and every edge is a bridge.
 
-variable {X : Type*} [TopologicalSpace X]
+This is a fundamental characterization of trees: they are precisely the
+connected graphs that are "minimally connected" — removing any single
+edge disconnects the graph.
 
-/-- Extensionality: two tropical functionals are equal iff they agree on all functions. -/
-@[ext]
-theorem ext {Λ₁ Λ₂ : TropicalFunctional X}
-    (h : ∀ f, Λ₁.toFun f = Λ₂.toFun f) : Λ₁ = Λ₂ := by
-  cases Λ₁; cases Λ₂; simp only [mk.injEq]; ext f; exact h f
+### Forward direction
+In a tree (connected + acyclic), every edge is a bridge because there are
+no cycles, so no edge can lie on a cycle.
 
-/-- Monotonicity restated as a named lemma. -/
-theorem monotone (Λ : TropicalFunctional X) {f g : TropCont X}
-    (h : ∀ x, f x ≤ g x) : Λ.toFun f ≤ Λ.toFun g :=
-  Λ.monotone' h
+### Reverse direction
+If every edge is a bridge, the graph must be acyclic: any cycle would contain
+an edge that both lies on a cycle and is a bridge, which is a contradiction. -/
+theorem isTree_iff_connected_and_forall_isBridge :
+    G.IsTree ↔ G.Connected ∧ ∀ e ∈ G.edgeSet, G.IsBridge e := by
+  constructor
+  · intro hTree
+    exact ⟨hTree.isConnected, fun e he => hTree.isBridge_of_mem_edgeSet he⟩
+  · intro ⟨hConn, hBridge⟩
+    exact ⟨hConn, isAcyclic_of_forall_isBridge hBridge⟩
 
-/-- Evaluation of a tropical functional on a constant function. -/
-@[simp]
-theorem map_const (Λ : TropicalFunctional X) (c : WithBot ℝ) :
-    Λ.toFun (ContinuousMap.const _ c) = c :=
-  Λ.map_const' c
-
-/-- A tropical functional preserves sup of a pair. -/
-theorem map_sup (Λ : TropicalFunctional X) (f g : TropCont X) :
-    Λ.toFun (TropCont.tsup f g) = Λ.toFun f ⊔ Λ.toFun g :=
-  Λ.map_sup' f g
-
-end TropicalFunctional
-
-end
+end SimpleGraph
