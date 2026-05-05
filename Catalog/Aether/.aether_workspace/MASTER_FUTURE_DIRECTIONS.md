@@ -25,99 +25,54 @@ relations. The correct framework may require either:
    idempotent semirings (totally ordered, Boolean, etc.) where
    additional structural properties enable cancellation-like operations.
 
-## 1. Quadratic Resultant Pairs via 3×3 Permanent Identities
+## 5. Comparison with Prime-Congruence and Tropical Spectra
 
-**Target theorem:**
-```lean
-theorem quadResultantPair_mem_elimination
-    (C : SemiringCong (PolyFull S σ))
-    (p q : PolyPair S σ)
-    (hp : C.r p.lhs p.rhs) (hq : C.r q.lhs q.rhs)
-    (hpl : noneDegree p.lhs ≤ 2) (hpr : noneDegree p.rhs ≤ 2)
-    (hql : noneDegree q.lhs ≤ 2) (hqr : noneDegree q.rhs ≤ 2) :
-    ∀ r ∈ quadResultantFamily p q,
-      (eliminationCong C).r r.1 r.2
-```
+**Goal**: Relate the nucleus spectrum to other spectral constructions:
+- Prime congruence spectrum of a semiring
+- Tropical spectrum (prime tropical ideals)
+- Zariski spectrum of commutative rings (classical case)
 
-The permanent of a 3×3 matrix over a commutative semiring is always
-well-defined (no subtraction needed). Define the Sylvester matrix of
-two quadratic polynomial pairs and extract elimination witnesses from
-its permanent expansion. Each monomial in the permanent corresponds to
-a balanced coefficient matching that eliminates X_none.
+**Approach**: Show that for a commutative ring `R`, the nucleus spectrum of the lattice of ideals recovers the Zariski spectrum `Spec(R)`. For tropical semirings, compare with the Giansiracusa-Giansiracusa tropical scheme structure. The key comparison theorem would be: under appropriate hypotheses, the nucleus spectrum, congruence spectrum, and classical spectrum coincide.
 
-## 5. Complexity Bounds for Projected Generator Size
+**Why it matters**: This positions the nucleus spectrum as a unifying framework. Different algebraic structures (rings, semirings, tropical algebras) have different natural spectral constructions, but the nucleus/frame approach treats them uniformly through the lens of closure operators and their prime spectra.
 
-**Target theorem:**
-```lean
-theorem elimination_generator_bound
-    [Fintype σ]
-    (C : SemiringCong (PolyFull S σ))
-    (T : Finset (PolyPair S σ))
-    (hgen : C = generatedBy T)
-    (N : ℕ) (hdeg : ∀ p ∈ T, noneDegree p.lhs ≤ N ∧ noneDegree p.rhs ≤ N) :
-    ∃ U : Finset (PolyRet S σ × PolyRet S σ),
-      U.card ≤ T.card ^ 2 * (N + 1) ^ 2 ∧
-      eliminationCong C = generatedBy' U
-```
+---
 
-Provide explicit bounds on the size of the projected generating set.
-For linear generators (N=1), the cross-multiplication produces at most
-O(|T|²) pairs. For higher degrees, the permanent-based construction
-gives polynomial bounds in both |T| and N.
+## 4. Interaction with Lawvere Metric/Entropy Completion
 
-## 4. Tropical Nullstellensatz Certificates
+**Goal**: Enrich the spectral geometry with quantitative semantics:
+- Define a Lawvere metric on prime elements using enriched closure operators
+- Show that metric completion of the spectrum recovers the full frame
+- Connect entropy-based closure operators to weighted spectral measures
 
-**Target theorem:**
-```lean
-theorem tropical_nullstellensatz_certificate
-    (C : SemiringCong (MvPolynomial σ (TropicalSemiring ℝ)))
-    (f g : MvPolynomial σ (TropicalSemiring ℝ))
-    (h : ∀ v : σ → TropicalSemiring ℝ, eval v f = eval v g) :
-    ∃ N : ℕ, ∃ deriv : DerivationChain C f g, deriv.length ≤ N
-```
+**Approach**: Replace the Boolean membership `k ≤ p` with a quantitative measure `d(k, p) ∈ [0, ∞]`. The Lawvere enrichment replaces the partial order with an enriched category, and completion produces a quantitative spectrum where "how far" an element is from a prime carries information beyond the Boolean "contains/doesn't contain."
 
-This would connect congruence elimination to tropical variety
-certification: if two polynomials agree on all tropical points,
-there should be a bounded derivation in the congruence. The
-elimination machinery provides the inductive step (eliminate one
-variable at a time, using coefficient extraction to reduce dimension).
+**Why it matters**: This bridges qualitative proof theory (Boolean entailment) with quantitative information theory (entropy, KL-divergence). The spectral points become "information-theoretic worlds" with distances measuring the cost of proof transformation.
 
-## 3. Multivariable Iterated Elimination
+---
 
-**Target theorem:**
-```lean
-theorem iterated_elimination_comm
-    {σ : Type*} (i j : σ) (hij : i ≠ j)
-    (C : SemiringCong (MvPolynomial σ S)) :
-    eliminateVar i (eliminateVar j C) = eliminateVar j (eliminateVar i C)
-```
+## 3. Algorithm Extraction for Compact-Open Entailment Approximants
 
-Show that eliminating variables in different orders yields the same
-result (order-independence). This is the congruence analogue of the
-classical elimination theory theorem that iterated resultants commute.
-In the bounded-degree regime (all generators linear or quadratic),
-this should be provable using the coefficient extraction infrastructure.
+**Goal**: Extract computational content from the compact-open basis:
+- Define finite approximation schemes for entailment regions
+- Show that `k ≤ a` can be decided by checking finitely many compact elements
+- Implement proof search algorithms guided by the spectral topology
 
-## 2. Functoriality of Elimination Under Semiring Morphisms
+**Approach**: In a compactly generated frame, every element is the sup of compact elements below it. The basic opens `D(k)` for compact `k` form a computationally manageable basis. Proof search becomes: find a compact `k ≤ a` witnessing the entailment, then check `k ≤ b` using the finite structure of compact elements.
 
-**Target theorem:**
-```lean
-theorem eliminationCong_map
-    (φ : S →+* T)
-    (C : SemiringCong (PolyFull S σ))
-    (f g : PolyRet S σ)
-    (h : (eliminationCong C).r f g) :
-    (eliminationCong (C.map (MvPolynomial.map φ))).r
-      (MvPolynomial.map φ f) (MvPolynomial.map φ g)
-```
+**Why it matters**: This turns the theoretical spectral geometry into an algorithmic tool. The compact-open basis gives a finite approximation scheme for the potentially infinite entailment relation, making proof search tractable.
 
-This would show that elimination is natural with respect to semiring
-base change. Combined with the coefficient extraction machinery, this
-creates a functorial framework for congruence elimination.
+---
 
-## Overview
+## 2. Nuclei on Frames and the Frame of Nuclei
 
-This document outlines concrete next theorems and research directions
-building on the formalized infrastructure in `Catalog/Algebra/CongruenceElimination.lean`.
+**Goal**: Define nuclei (closure operators preserving finite meets) on a frame and prove:
+- The set of nuclei forms a frame (complete Heyting algebra)
+- This frame is compactly generated under appropriate conditions
+- Apply the spectral theory from this work to the frame of nuclei
 
-# Future Directions for Congruence Elimination Theory
+**Approach**: A nucleus `j : L → L` on a frame `L` satisfies `a ≤ j(a)`, `j(j(a)) = j(a)`, and `j(a ⊓ b) = j(a) ⊓ j(b)`. The lattice of nuclei, ordered by `j ≤ k ↔ ∀ a, j(a) ≤ k(a)`, forms a frame. The proof that it's a frame uses the frame structure of `L` and is one of the key results in locale theory.
+
+**Why it matters**: This directly instantiates our spectral theory for "proof semirings" — the closure operators on a proof semiring are exactly nuclei, and their prime spectrum gives the geometric semantics promised by Stone duality.
+
+---
