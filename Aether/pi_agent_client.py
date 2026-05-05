@@ -140,8 +140,25 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
     Score each direction 0-1 on each criterion. The composite breakthrough score is:
       0.3*A + 0.25*B + 0.2*C + 0.15*D + 0.1*E
 
-    Select the direction with the HIGHEST composite score, subject to the constraint
-    that it must differ from all inflight jobs.
+    ## AEM Quality Bonuses (add to breakthrough score)
+    Give additional weight to directions that score well on ALL 5 AEM pillars:
+    - AEM Rigor: Can this produce 10+ theorems with diverse proof tactics? (+0.05 per pillar satisfied)
+    - AEM Aesthetic: Does this bridge 2+ mathematical domains? Is it structurally surprising?
+    - AEM Utility: Does this yield computational bounds, extensible APIs, or advance open problems?
+    - AEM Originality: Does this introduce genuinely novel concepts (not Mathlib restatements)?
+    - AEM Impact: Does this connect to physics, cryptography, or ML applications?
+    Directions scoring 0.7+ on ALL 5 AEM pillars get +0.25 bonus.
+    Directions scoring 0.5+ on at least 3 AEM pillars get +0.15 bonus.
+
+    Select the direction with the HIGHEST composite score (breakthrough + AEM bonus),
+    subject to the constraint that it must differ from all inflight jobs.
+
+    ## AEM Quality Priority
+    Prefer directions that maximize ALL 5 AEM pillars over directions that score high
+    on just one or two. A direction scoring 6/10 on ALL pillars (total 30) beats one
+    scoring 10/10 on two pillars but 2/10 on the rest (total 24). Cross-domain bridges
+    and novel structure definitions are the highest-value concepts because they score
+    well on Aesthetic, Originality, AND Impact simultaneously.
 
     ## Strategy Weights (REVISED)
 
@@ -166,6 +183,27 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
     shifting, field-opening mathematical results — not incremental extensions of
     existing work. You are NOT writing a template. You are writing a call to arms
     from one visionary mathematician to another.
+
+    ## AEM Quality Mandate (CRITICAL)
+    Every prompt you write MUST optimize for ALL 5 AEM pillars. Aristotle's output
+    will be scored on these 5 dimensions, and low scores mean wasted compute:
+
+    1. RIGOR (max 10pts): Demand 10+ theorems with diverse proof tactics (induction,
+       rcases, by_contra, omega, linarith, field_simp — NOT just simp/rfl/decide).
+       Require ZERO sorries. Use typeclass abstraction ([Semiring B], etc.).
+    2. AESTHETIC (max 10pts): Bridge 2+ mathematical domains in every prompt.
+       Use quantifier alternation (∀x, ∃y). Include symmetric structures.
+       Minimize hypotheses for maximal conclusions.
+    3. UTILITY (max 10pts): Demand explicit computational bounds (O(...), Lipschitz
+       constants, convergence rates). Require 5+ new definitions/structures/instances.
+       Reference or advance known open problems.
+    4. ORIGINALITY (max 10pts): Coin novel definitions — not Mathlib restatements.
+       Use inventive theorem names (not *_comm, *_nonneg, *_eq_zero). Combine unusual
+       typeclasses ([Semiring, LinearOrder], [NormedAddCommGroup, Field]).
+    5. IMPACT (max 10pts): Every prompt MUST connect to at least one of: physics
+       (quantum, thermodynamic, entropy), cryptography (lattice, post-quantum, SPB),
+       or ML (certified robustness, Lipschitz bounds, neural networks). Use these
+       keywords explicitly in theorem names and doc comments.
 
     ## Critical Principles for Visionary Prompt Writing
 
@@ -307,7 +345,9 @@ _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
     You MUST respond with valid JSON only: {"quality": "trivial|partial|substantial",
     "should_retry": bool, "retry_strategy": "...", "confidence": 0.0-1.0,
     "analysis": "...", "depth_score": 0.0-1.0, "novelty_score": 0.0-1.0,
-    "cross_domain_score": 0.0-1.0, "completeness_score": 0.0-1.0}
+    "cross_domain_score": 0.0-1.0, "completeness_score": 0.0-1.0,
+    "aem_rigor": 0.0-10.0, "aem_aesthetic": 0.0-10.0, "aem_utility": 0.0-10.0,
+    "aem_originality": 0.0-10.0, "aem_impact": 0.0-10.0}
 """)
 
 _CLASSIFICATION_SYSTEM_PROMPT = textwrap.dedent("""\
@@ -1632,6 +1672,52 @@ class PiAgentClient:
             The mathematics comes FIRST. Excellent proofs trump everything else.
             But excellent proofs that OPEN NEW FIELDS trump everything.
 
+            === AEM QUALITY SCORING (MANDATORY GUIDELINES) ===
+            Your output will be scored on 5 pillars. MAXIMIZE each one:
+
+            PILLAR 1 — RIGOR (Is it World-class?):
+            • ZERO sorries in your output (sorries cost -1.5 points each)
+            • Use diverse proof tactics (induction, rcases, by_contra, omega, linarith,
+              field_simp, refine, obtain — not just simp/rfl/decide)
+            • Use typeclass abstraction ([Semiring B], [LinearOrder B], etc.) not
+              concrete types alone
+            • Later theorems should reference earlier ones (semantic coherence)
+            • 10+ theorems = full rigor score; 3-10 = partial; 0-2 = minimal
+
+            PILLAR 2 — AESTHETIC (Is it Interesting?):
+            • Bridge 2+ mathematical domains in EVERY file (e.g., tropical + neural
+              networks; algebra + thermodynamics; number theory + quantum)
+            • Use quantifier alternation (∀ → ∃) for non-trivial theorem statements
+            • Include symmetric structures (lattices, posets, groups, duality)
+            • Minimize hypotheses for maximal conclusions (small axiomatic footprint)
+            • Narrative surprise: state in doc comments WHY the result is unexpected
+
+            PILLAR 3 — UTILITY (Is it Useful?):
+            • State explicit computational bounds (O(...), convergence rates, Lipschitz
+              constants, error bounds, complexity classifications)
+            • Define extensible APIs: 5+ definitions, structures, and instances
+            • Reference or advance known open problems (Carmichael, tropical Langlands,
+              certified robustness, Berggren factoring, lattice crypto)
+            • Organize code with namespaces and sections (framework structure)
+
+            PILLAR 4 — ORIGINALITY (Is it New?):
+            • Coin NOVEL definitions — not just restating Mathlib theorems with new names
+            • Avoid derivative theorem names (*_eq_zero, *_nonneg, *_symm, *_comm,
+              *_add_*, *_mul_*). Use INVENTIVE names that reveal new concepts
+            • Combine unusual typeclasses ([Semiring, LinearOrder], [NormedAddCommGroup,
+              Field], [MeasureSpace, Category]) — this signals divergent reasoning
+            • Each file should introduce 3+ genuinely new mathematical objects
+
+            PILLAR 5 — IMPACT (Does it have Wonderful Applications?):
+            • EVERY theorem should connect to at least one of: physics (quantum,
+              thermodynamic, entropy), cryptography (lattice, post-quantum, SPB),
+              or ML (certified robustness, Lipschitz bounds, neural networks)
+            • Name-drop application keywords explicitly in theorem/doc-comment text:
+              certified_robustness, Lipschitz, neural_network, gradient_descent,
+              convergence, post_quantum, lattice_crypto, hamiltonian, entropy,
+              holographic, berggren
+            • Produce algorithms or computational pipelines, not just existence proofs
+
             ### Research Direction
             {concept.concept_description}
 
@@ -1729,10 +1815,25 @@ class PiAgentClient:
             Do NOT add meta-instructions like "Write a brief" — the output goes
             directly to Aristotle, who is a theorem prover, not a person.
 
+            AEM QUALITY MANDATE: Enrich the prompt so Aristotle's output maximizes ALL
+            5 AEM pillars:
+            - RIGOR: No sorries. 10+ theorems with diverse tactics (induction, rcases,
+              by_contra, omega, linarith, field_simp). Typeclass abstraction.
+            - AESTHETIC: Bridge 2+ domains. Quantifier alternation (∀ → ∃).
+              Symmetric structures. Minimal hypotheses for powerful conclusions.
+            - UTILITY: Explicit bounds (O(...), convergence rates, Lipschitz constants).
+              5+ new definitions/structures. Advances known open problems.
+            - ORIGINALITY: Novel definitions beyond Mathlib. Inventive theorem names
+              (not *_comm, *_nonneg, etc.). Unusual typeclass combinations.
+            - IMPACT: Connect to physics (quantum, thermodynamic), cryptography
+              (lattice, post-quantum), or ML (certified robustness, neural).
+
             Add depth to:
             - The precise theorem statement (give exact Lean 4 type signature)
             - The proof strategy (add 3-5 concrete proof steps with key lemmas)
             - The significance (explain why this matters to the research program)
+            - Cross-domain connections (name 2+ domains this bridges)
+            - Application keywords (quantum, cryptographic, certified, lattice, etc.)
 
             ---
             {prompt_summary}
@@ -1745,17 +1846,21 @@ class PiAgentClient:
         # Compact mode: use a shorter, focused enrichment instead of skipping entirely
         if self.compact:
             short_enrichment = textwrap.dedent(f"""\
-                Given this research concept, add mathematical precision:
+                Given this research concept, add mathematical precision AND AEM quality:
                 Concept: {concept.title}
                 Domain: {concept.domain}
                 Description: {concept.concept_description[:500]}
                 Existing theorems: {focused_context[:500]}
-                Future directions from past cycles: {future_directions[:500] if future_directions else 'First cycle.'}
+                Future directions: {future_directions[:500] if future_directions else 'First cycle.'}
+                AEM targets: No sorries, 10+ theorems, bridge 2+ domains, novel definitions,
+                explicit bounds, physics/crypto/ML keywords.
 
                 Add:
-                1. A specific theorem statement to prove (with Lean 4 type signature)
-                2. Three concrete proof strategy steps with Mathlib lemma names
-                3. Why this result matters to the research program
+                1. A specific theorem statement with Lean 4 type signature (use forall+exists)
+                2. Three proof strategy steps with Mathlib lemma names and diverse tactics
+                3. Cross-domain bridges: name 2+ mathematical domains this connects
+                4. Novel definitions to introduce (beyond Mathlib restatements)
+                5. Application keywords: quantum, certified_robustness, lattice_crypto, etc.
 
                 Output ONLY the enriched content. No preamble.
             """)
@@ -1897,16 +2002,28 @@ class PiAgentClient:
                 "analysis": parsed.get("analysis", ""),
             }
 
-        # Fallback: heuristic evaluation
+        # Fallback: heuristic evaluation with AEM pillar scores
         sorry_count = lean_preview.count("sorry")
         theorem_count = lean_preview.count("theorem ") + lean_preview.count("lemma ")
+        def_count = len(re.findall(r'\b(?:def|structure|class|inductive|abbrev)\s+', lean_preview))
+        
+        # AEM heuristics
+        from aem_evaluator import AEMEvaluator
+        aem_eval = AEMEvaluator()
+        aem_score = aem_eval.evaluate_lean_file(lean_preview, file_path=concept.domain)
+        
         if sorry_count == 0 and theorem_count > 0:
             return {
                 "quality": "substantial",
                 "should_retry": False,
                 "retry_strategy": "",
                 "confidence": 0.6,
-                "analysis": "Fallback heuristic: no sorries, has theorems.",
+                "analysis": f"Fallback heuristic: no sorries, has theorems. AEM={aem_score.total:.1f}/50 ({aem_score.category()}).",
+                "aem_rigor": aem_score.rigor,
+                "aem_aesthetic": aem_score.aesthetic,
+                "aem_utility": aem_score.utility,
+                "aem_originality": aem_score.originality,
+                "aem_impact": aem_score.impact,
             }
         elif sorry_count > 0 and theorem_count > 0:
             return {
@@ -1914,7 +2031,12 @@ class PiAgentClient:
                 "should_retry": True,
                 "retry_strategy": "Fill remaining sorries or simplify theorem.",
                 "confidence": 0.5,
-                "analysis": "Fallback heuristic: has sorries and theorems.",
+                "analysis": f"Fallback heuristic: has sorries and theorems. AEM={aem_score.total:.1f}/50 ({aem_score.category()}).",
+                "aem_rigor": aem_score.rigor,
+                "aem_aesthetic": aem_score.aesthetic,
+                "aem_utility": aem_score.utility,
+                "aem_originality": aem_score.originality,
+                "aem_impact": aem_score.impact,
             }
         else:
             return {
