@@ -21,7 +21,7 @@ MathJax = {
 <p>Accumulated wisdom from all Aristotle research cycles. Each completed cycle produces
 a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross-domain bridges.</p>
 <h2>Accumulated Research Wisdom</h2>
-<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-05 06:04</em></p><p><h2>Key Open Problem</h2></p><p>The central open question is whether the <code>linResultantPair</code> formula
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-05 06:05</em></p><p><h2>Key Open Problem</h2></p><p>The central open question is whether the <code>linResultantPair</code> formula
 (or any fixed polynomial-time computable formula) can produce
 generators of the elimination congruence from generators of the
 original congruence, for arbitrary idempotent semirings.</p><p>Our analysis suggests this may be impossible in full generality:
@@ -38,13 +38,28 @@ relations. The correct framework may require either:</p><p><li><strong>Evaluatio
 <li>Zariski spectrum of commutative rings (classical case)</li></p><p><strong>Approach</strong>: Show that for a commutative ring <code>R</code>, the nucleus spectrum of the lattice of ideals recovers the Zariski spectrum <code>Spec(R)</code>. For tropical semirings, compare with the Giansiracusa-Giansiracusa tropical scheme structure. The key comparison theorem would be: under appropriate hypotheses, the nucleus spectrum, congruence spectrum, and classical spectrum coincide.</p><p><strong>Why it matters</strong>: This positions the nucleus spectrum as a unifying framework. Different algebraic structures (rings, semirings, tropical algebras) have different natural spectral constructions, but the nucleus/frame approach treats them uniformly through the lens of closure operators and their prime spectra.</p><p>---</p><p><h2>4. Interaction with Lawvere Metric/Entropy Completion</h2></p><p><strong>Goal</strong>: Enrich the spectral geometry with quantitative semantics:
 <li>Define a Lawvere metric on prime elements using enriched closure operators</li>
 <li>Show that metric completion of the spectrum recovers the full frame</li>
-<li>Connect entropy-based closure operators to weighted spectral measures</li></p><p><strong>Approach</strong>: Replace the Boolean membership <code>k ≤ p</code> with a quantitative measure <code>d(k, p) ∈ [0, ∞]</code>. The Lawvere enrichment replaces the partial order with an enriched category, and completion produces a quantitative spectrum where "how far" an element is from a prime carries information beyond the Boolean "contains/doesn't contain."</p><p><strong>Why it matters</strong>: This bridges qualitative proof theory (Boolean entailment) with quantitative information theory (entropy, KL-divergence). The spectral points become "information-theoretic worlds" with distances measuring the cost of proof transformation.</p><p>---</p><p><h2>3. Algorithm Extraction for Compact-Open Entailment Approximants</h2></p><p><strong>Goal</strong>: Extract computational content from the compact-open basis:
-<li>Define finite approximation schemes for entailment regions</li>
-<li>Show that <code>k ≤ a</code> can be decided by checking finitely many compact elements</li>
-<li>Implement proof search algorithms guided by the spectral topology</li></p><p><strong>Approach</strong>: In a compactly generated frame, every element is the sup of compact elements below it. The basic opens <code>D(k)</code> for compact <code>k</code> form a computationally manageable basis. Proof search becomes: find a compact <code>k ≤ a</code> witnessing the entailment, then check <code>k ≤ b</code> using the finite structure of compact elements.</p><p><strong>Why it matters</strong>: This turns the theoretical spectral geometry into an algorithmic tool. The compact-open basis gives a finite approximation scheme for the potentially infinite entailment relation, making proof search tractable.</p><p>---</p><p><h2>2. Nuclei on Frames and the Frame of Nuclei</h2></p><p><strong>Goal</strong>: Define nuclei (closure operators preserving finite meets) on a frame and prove:
-<li>The set of nuclei forms a frame (complete Heyting algebra)</li>
-<li>This frame is compactly generated under appropriate conditions</li>
-<li>Apply the spectral theory from this work to the frame of nuclei</li></p><p><strong>Approach</strong>: A nucleus <code>j : L → L</code> on a frame <code>L</code> satisfies <code>a ≤ j(a)</code>, <code>j(j(a)) = j(a)</code>, and <code>j(a ⊓ b) = j(a) ⊓ j(b)</code>. The lattice of nuclei, ordered by <code>j ≤ k ↔ ∀ a, j(a) ≤ k(a)</code>, forms a frame. The proof that it's a frame uses the frame structure of <code>L</code> and is one of the key results in locale theory.</p><p><strong>Why it matters</strong>: This directly instantiates our spectral theory for "proof semirings" — the closure operators on a proof semiring are exactly nuclei, and their prime spectrum gives the geometric semantics promised by Stone duality.</p><p>---</p></div>
+<li>Connect entropy-based closure operators to weighted spectral measures</li></p><p><strong>Approach</strong>: Replace the Boolean membership <code>k ≤ p</code> with a quantitative measure <code>d(k, p) ∈ [0, ∞]</code>. The Lawvere enrichment replaces the partial order with an enriched category, and completion produces a quantitative spectrum where "how far" an element is from a prime carries information beyond the Boolean "contains/doesn't contain."</p><p><strong>Why it matters</strong>: This bridges qualitative proof theory (Boolean entailment) with quantitative information theory (entropy, KL-divergence). The spectral points become "information-theoretic worlds" with distances measuring the cost of proof transformation.</p><p>---</p><p><h2>Summary</h2></p><p>These five directions collectively make the sentence **"proof semantics is an idempotent
+scheme"** mathematically literal:</p><p>| Direction | Algebraic Geometry Analogue | Proof Theory Interpretation |
+|-----------|---------------------------|---------------------------|
+| Stalks | Local rings at points | Local proof theories at primes |
+| Irreducibles | Generic points | Prime deductive theories |
+| Čech descent | Sheaf gluing | Proof reconstruction from local data |
+| Tropical geometry | Tropicalization | Max-plus truth valuation geometry |
+| Spectral dimension | Krull dimension | Logical complexity measure |</p><p>The representation theorem proved in this project is the foundation: it establishes that
+the sheaf-theoretic framework is faithful (injectivity) and complete (surjectivity) for
+the class of spectrally complete proof semirings. Each future direction extends this
+foundation in a different geometric dimension.</p><p><h2>3. Čech Descent for Proof Reconstruction</h2></p><p><strong>Theorem target.</strong> Given a finite basic cover <code>{D(xᵢ, yᵢ)}</code> of <code>PrimeConSpec P</code> and
+compatible local sections, reconstruct the unique global element of <code>P</code> representing them.</p><p><code>`</code>
+theorem cech_descent (P : Type u) [ClosureGeneratedProofSemiring P]
+    [SpectrallyComplete P]
+    (n : ℕ) (cover : Fin n → P × P)
+    (hcover : ∀ p : PrimeConSpec P, ∃ i, p ∈ basicOpen (cover i).1 (cover i).2)
+    (sections : ∀ i : Fin n, sectionOnD (cover i).1 (cover i).2)
+    (compat : ∀ i j, restrictD_overlap (sections i) = restrictD_overlap (sections j)) :
+    ∃! a : P, ∀ i, toSectionOnD (cover i).1 (cover i).2 a = sections i
+<code>`</code></p><p><strong>Why it matters:</strong> This gives an <em>algorithm</em> for proof reconstruction from local data.
+Given that a proof's behavior is known on finitely many "test congruences," one can
+computably reconstruct the unique global proof — a form of interpolation for proof values.</p></div>
 <h3>future_directions.html</h3>
 <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"><p>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;

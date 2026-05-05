@@ -1,6 +1,6 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-05 06:04*
+*Last updated: 2026-05-05 06:05*
 
 ## Key Open Problem
 
@@ -51,28 +51,39 @@ relations. The correct framework may require either:
 
 ---
 
-## 3. Algorithm Extraction for Compact-Open Entailment Approximants
+## Summary
 
-**Goal**: Extract computational content from the compact-open basis:
-- Define finite approximation schemes for entailment regions
-- Show that `k ≤ a` can be decided by checking finitely many compact elements
-- Implement proof search algorithms guided by the spectral topology
+These five directions collectively make the sentence **"proof semantics is an idempotent
+scheme"** mathematically literal:
 
-**Approach**: In a compactly generated frame, every element is the sup of compact elements below it. The basic opens `D(k)` for compact `k` form a computationally manageable basis. Proof search becomes: find a compact `k ≤ a` witnessing the entailment, then check `k ≤ b` using the finite structure of compact elements.
+| Direction | Algebraic Geometry Analogue | Proof Theory Interpretation |
+|-----------|---------------------------|---------------------------|
+| Stalks | Local rings at points | Local proof theories at primes |
+| Irreducibles | Generic points | Prime deductive theories |
+| Čech descent | Sheaf gluing | Proof reconstruction from local data |
+| Tropical geometry | Tropicalization | Max-plus truth valuation geometry |
+| Spectral dimension | Krull dimension | Logical complexity measure |
 
-**Why it matters**: This turns the theoretical spectral geometry into an algorithmic tool. The compact-open basis gives a finite approximation scheme for the potentially infinite entailment relation, making proof search tractable.
+The representation theorem proved in this project is the foundation: it establishes that
+the sheaf-theoretic framework is faithful (injectivity) and complete (surjectivity) for
+the class of spectrally complete proof semirings. Each future direction extends this
+foundation in a different geometric dimension.
 
----
+## 3. Čech Descent for Proof Reconstruction
 
-## 2. Nuclei on Frames and the Frame of Nuclei
+**Theorem target.** Given a finite basic cover `{D(xᵢ, yᵢ)}` of `PrimeConSpec P` and
+compatible local sections, reconstruct the unique global element of `P` representing them.
 
-**Goal**: Define nuclei (closure operators preserving finite meets) on a frame and prove:
-- The set of nuclei forms a frame (complete Heyting algebra)
-- This frame is compactly generated under appropriate conditions
-- Apply the spectral theory from this work to the frame of nuclei
+```
+theorem cech_descent (P : Type u) [ClosureGeneratedProofSemiring P]
+    [SpectrallyComplete P]
+    (n : ℕ) (cover : Fin n → P × P)
+    (hcover : ∀ p : PrimeConSpec P, ∃ i, p ∈ basicOpen (cover i).1 (cover i).2)
+    (sections : ∀ i : Fin n, sectionOnD (cover i).1 (cover i).2)
+    (compat : ∀ i j, restrictD_overlap (sections i) = restrictD_overlap (sections j)) :
+    ∃! a : P, ∀ i, toSectionOnD (cover i).1 (cover i).2 a = sections i
+```
 
-**Approach**: A nucleus `j : L → L` on a frame `L` satisfies `a ≤ j(a)`, `j(j(a)) = j(a)`, and `j(a ⊓ b) = j(a) ⊓ j(b)`. The lattice of nuclei, ordered by `j ≤ k ↔ ∀ a, j(a) ≤ k(a)`, forms a frame. The proof that it's a frame uses the frame structure of `L` and is one of the key results in locale theory.
-
-**Why it matters**: This directly instantiates our spectral theory for "proof semirings" — the closure operators on a proof semiring are exactly nuclei, and their prime spectrum gives the geometric semantics promised by Stone duality.
-
----
+**Why it matters:** This gives an *algorithm* for proof reconstruction from local data.
+Given that a proof's behavior is known on finitely many "test congruences," one can
+computably reconstruct the unique global proof — a form of interpolation for proof values.
