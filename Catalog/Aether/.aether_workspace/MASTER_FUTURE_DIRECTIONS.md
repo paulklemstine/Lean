@@ -1,6 +1,6 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-05 08:04*
+*Last updated: 2026-05-05 08:05*
 
 ## Key Open Problem
 
@@ -24,6 +24,59 @@ relations. The correct framework may require either:
 3. **Restricted classes**: Proving elimination for specific classes of
    idempotent semirings (totally ordered, Boolean, etc.) where
    additional structural properties enable cancellation-like operations.
+
+## 5. Algorithm Extraction: Certified Decision Procedure
+
+**Target artifact.** Extract from the Lean proofs a certified
+executable algorithm for congruence membership testing via
+evaluation elimination.
+
+```lean
+def eliminationOracle
+    [Fintype τ] [DecidableEq S] [Fintype S]
+    (C : RingCon (MvPolynomial (σ ⊕ τ) S))
+    (generators : Finset (MvPolynomial (σ ⊕ τ) S × MvPolynomial (σ ⊕ τ) S))
+    (hgen : C = ringConGen (fun f g => (f, g) ∈ generators))
+    (f g : MvPolynomial σ S) :
+    Decidable (eliminationCong C f g) := ...
+```
+
+The algorithm proceeds by:
+1. Enumerating evaluation witnesses up to the computed degree bound
+2. Testing each contraction membership (reduces to ideal membership
+   in the finitely generated case)
+3. Returning a certificate of membership or a separating evaluation
+
+This would be the first formally verified elimination algorithm for
+the congruence setting, directly applicable to tropical constraint
+satisfaction and optimization verification.
+
+---
+
+## 4. Categorical Reformulation: Elimination as Right Kan Extension
+
+**Target construction.** Define the evaluation site as the category of
+evaluation maps `evalXY φ` and show that the elimination congruence is
+the right Kan extension of the congruence `C` along the restriction
+functor from the (x,y)-spectrum to the x-spectrum.
+
+```lean
+def EvaluationSite (C : RingCon (MvPolynomial (σ ⊕ τ) S)) :
+    Category where
+  Obj := {φ : τ → MvPolynomial σ S // AdmissibleEval C φ}
+  Hom φ ψ := ... -- morphisms witnessing contraction refinement
+
+theorem elimination_as_Kan_extension :
+    eliminationCong C = rightKanExtension (EvaluationSite C) (congruencePresheaf C) := ...
+```
+
+This reformulation would unify the spectral evaluation theorem with
+descent theory for congruences. It opens the door to cohomological
+obstruction theory for elimination: when does elimination fail to
+commute with base change? The Kan extension viewpoint makes this
+a question about derived functors.
+
+---
 
 ## 5. Comparison with Prime-Congruence and Tropical Spectra
 
@@ -50,40 +103,3 @@ relations. The correct framework may require either:
 **Why it matters**: This bridges qualitative proof theory (Boolean entailment) with quantitative information theory (entropy, KL-divergence). The spectral points become "information-theoretic worlds" with distances measuring the cost of proof transformation.
 
 ---
-
-## Summary
-
-These five directions collectively make the sentence **"proof semantics is an idempotent
-scheme"** mathematically literal:
-
-| Direction | Algebraic Geometry Analogue | Proof Theory Interpretation |
-|-----------|---------------------------|---------------------------|
-| Stalks | Local rings at points | Local proof theories at primes |
-| Irreducibles | Generic points | Prime deductive theories |
-| Čech descent | Sheaf gluing | Proof reconstruction from local data |
-| Tropical geometry | Tropicalization | Max-plus truth valuation geometry |
-| Spectral dimension | Krull dimension | Logical complexity measure |
-
-The representation theorem proved in this project is the foundation: it establishes that
-the sheaf-theoretic framework is faithful (injectivity) and complete (surjectivity) for
-the class of spectrally complete proof semirings. Each future direction extends this
-foundation in a different geometric dimension.
-
-## 3. Čech Descent for Proof Reconstruction
-
-**Theorem target.** Given a finite basic cover `{D(xᵢ, yᵢ)}` of `PrimeConSpec P` and
-compatible local sections, reconstruct the unique global element of `P` representing them.
-
-```
-theorem cech_descent (P : Type u) [ClosureGeneratedProofSemiring P]
-    [SpectrallyComplete P]
-    (n : ℕ) (cover : Fin n → P × P)
-    (hcover : ∀ p : PrimeConSpec P, ∃ i, p ∈ basicOpen (cover i).1 (cover i).2)
-    (sections : ∀ i : Fin n, sectionOnD (cover i).1 (cover i).2)
-    (compat : ∀ i j, restrictD_overlap (sections i) = restrictD_overlap (sections j)) :
-    ∃! a : P, ∀ i, toSectionOnD (cover i).1 (cover i).2 a = sections i
-```
-
-**Why it matters:** This gives an *algorithm* for proof reconstruction from local data.
-Given that a proof's behavior is known on finitely many "test congruences," one can
-computably reconstruct the unique global proof — a form of interpolation for proof values.
