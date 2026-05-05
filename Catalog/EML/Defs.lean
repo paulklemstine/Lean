@@ -1,132 +1,3979 @@
-/-
-Copyright (c) 2025. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
-
-# Coherent Closure Self-Models: Definitions
-
-This file defines the abstract framework of **coherent closure self-models**,
-which package a formal system with:
-
-1. **Self-referential capability** via a diagonal (Gödel–Lawvere) fixed-point schema
-2. **Provability internalization** (necessitation / Hilbert–Bernays–Löb condition)
-3. **Soundness for internalized propositions** (Σ₁-soundness)
-4. **Thermodynamic structure**: free energy, complexity floor, and a fundamental
-   lower bound axiom asserting that self-compression below the floor is
-   semantically impossible.
-
-## Mathematical context
-
-These axioms abstract the essential properties of sufficiently strong arithmetical
-theories (like Peano Arithmetic) enriched with thermodynamic semantics from the
-Lawvere–Stone prime spectrum. The diagonal lemma is the syntactic engine
-(Gödel 1931, Lawvere 1969), while the free-energy lower bound is the new
-thermodynamic content connecting proof theory to statistical mechanics.
-
-## References
-
-* Gödel, K. — Über formal unentscheidbare Sätze (1931)
-* Lawvere, F.W. — Diagonal arguments and cartesian closed categories (1969)
--/
-
-import Mathlib
-
-universe u
-
-/-! ## The Coherent Closure Self-Model Typeclass -/
-
-/-- A **coherent closure self-model** is an abstract formal system equipped with
-self-referential capability, provability internalization, soundness for
-internalized propositions, and thermodynamic structure.
-
-The key axioms are:
-- `ax_diagonal`: Gödel–Lawvere diagonal fixed-point schema
-- `ax_necessitation`: Hilbert–Bernays derivability condition D1
-- `ax_internalize_sound`: Σ₁-soundness for the internalization fragment
-- `ax_freeEnergy_ge_floor`: thermodynamic lower bound on free energy -/
-class CoherentClosureSelfModel (M : Type u) where
-  /-- The type of sentences in the formal language -/
-  Sentence : Type u
-  /-- The type of Gödel codes -/
-  Code : Type u
-  /-- External derivability predicate -/
-  proves : Sentence → Prop
-  /-- Internal provability predicate (a sentence asserting provability) -/
-  provSent : Sentence → Sentence
-  /-- Sentence-level negation -/
-  negSent : Sentence → Sentence
-  /-- Sentence-level biconditional -/
-  iffSent : Sentence → Sentence → Sentence
-  /-- Internalization: convert an external Lean proposition into an internal sentence -/
-  internalize : Prop → Sentence
-  /-- The self-code (Gödel number) of a sentence -/
-  selfCode : Sentence → Code
-  /-- Free energy at inverse temperature β for a code -/
-  freeEnergy : ℝ → Code → ℝ
-  /-- Complexity floor at inverse temperature β for a sentence -/
-  complexityFloor : ℝ → Sentence → ℝ
-  -- === Logical Axioms ===
-  /-- **Diagonal lemma (Gödel–Lawvere).**
-  For any definable operation `Ψ` on sentences, there exists a diagonal
-  fixed-point sentence `G` satisfying `G ↔ ¬Prov(Ψ(G))`.
-
-  This is the syntactic engine of self-reference, abstracting the construction
-  of Gödel sentences for arbitrary predicates. -/
-  ax_diagonal : ∀ (Ψ : Sentence → Sentence),
-    ∃ G, proves (iffSent G (negSent (provSent (Ψ G))))
-  /-- **Necessitation (Hilbert–Bernays D1).**
-  If `φ` is provable, then "φ is provable" is itself provable.
-  This is the first Hilbert–Bernays derivability condition. -/
-  ax_necessitation : ∀ {φ : Sentence}, proves φ → proves (provSent φ)
-  /-- **Soundness for internalized propositions.**
-  If M proves the internalization of an external proposition P,
-  then P actually holds. This is a restricted form of Σ₁-soundness. -/
-  ax_internalize_sound : ∀ {P : Prop}, proves (internalize P) → P
-  /-- **Consistency of negation.**
-  M does not prove both a sentence and its negation. -/
-  ax_neg_consistent : ∀ {φ : Sentence}, proves φ → proves (negSent φ) → False
-  /-- **Modus ponens for biconditional (forward).**
-  From `proves (φ ↔ ψ)` and `proves φ`, derive `proves ψ`. -/
-  ax_iff_mp : ∀ {φ ψ : Sentence}, proves (iffSent φ ψ) → proves φ → proves ψ
-  /-- **Modus ponens for biconditional (backward).**
-  From `proves (φ ↔ ψ)` and `proves ψ`, derive `proves φ`. -/
-  ax_iff_mpr : ∀ {φ ψ : Sentence}, proves (iffSent φ ψ) → proves ψ → proves φ
-  /-- **Introduction of negation from refutation.**
-  If assuming `proves φ` leads to contradiction, then `proves (negSent φ)`. -/
-  ax_neg_intro : ∀ {φ : Sentence}, (proves φ → False) → proves (negSent φ)
-  -- === Thermodynamic Axioms ===
-  /-- **Free-energy lower bound.**
-  The free energy of any sentence's self-code is bounded below by the
-  complexity floor. This is the fundamental thermodynamic content:
-  self-compression below the floor is semantically impossible.
-
-  Conceptually, this says that any encoding of a self-referential sentence
-  must pay a minimum thermodynamic cost determined by the complexity floor. -/
-  ax_freeEnergy_ge_floor : ∀ (β : ℝ) (G : Sentence),
-    0 < β → complexityFloor β G ≤ freeEnergy β (selfCode G)
-  /-- **Complexity floor nonnegativity.** -/
-  ax_complexityFloor_nonneg : ∀ (β : ℝ) (G : Sentence),
-    0 < β → 0 ≤ complexityFloor β G
-  /-- **Complexity floor nontriviality.**
-  The floor is genuinely nonzero for some sentence, ensuring the theorem
-  is not vacuously about a degenerate system. -/
-  ax_complexityFloor_nontrivial : ∀ (β : ℝ),
-    0 < β → ∃ G : Sentence, 0 < complexityFloor β G
-
-namespace CoherentClosureSelfModel
-
-variable {M : Type u} [CoherentClosureSelfModel M]
-
-/-! ## Public API and Derived Notions -/
-
-/-- The compression predicate: `CompressesAt β G` holds when the free energy
-of `G`'s self-code is strictly below the complexity floor. This is the
-"self-compression" condition that the main theorem shows is unprovable. -/
-def CompressesAt (beta : ℝ) (G : Sentence (M := M)) : Prop :=
-  freeEnergy beta (selfCode G) < complexityFloor beta G
-
-/-- The internalized compression sentence: the sentence asserting (internally
-to M) that `G` achieves strict sub-floor compression at temperature `1/β`. -/
-def CompressesAtSent (beta : ℝ) (G : Sentence (M := M)) : Sentence (M := M) :=
-  internalize (CompressesAt beta G)
-
-end CoherentClosureSelfModel
+--- a/EML/Defs.lean
++++ b/EML/Defs.lean
+@@ -1,132 +1,3845 @@
+-/-
+-Copyright (c) 2025. All rights reserved.
+-Released under Apache 2.0 license as described in the file LICENSE.
+-
+-# Coherent Closure Self-Models: Definitions
+-
+-This file defines the abstract framework of **coherent closure self-models**,
+-which package a formal system with:
+-
+-1. **Self-referential capability** via a diagonal (Gödel–Lawvere) fixed-point schema
+-2. **Provability internalization** (necessitation / Hilbert–Bernays–Löb condition)
+-3. **Soundness for internalized propositions** (Σ₁-soundness)
+-4. **Thermodynamic structure**: free energy, complexity floor, and a fundamental
+-   lower bound axiom asserting that self-compression below the floor is
+-   semantically impossible.
+-
+-## Mathematical context
+-
+-These axioms abstract the essential properties of sufficiently strong arithmetical
+-theories (like Peano Arithmetic) enriched with thermodynamic semantics from the
+-Lawvere–Stone prime spectrum. The diagonal lemma is the syntactic engine
+-(Gödel 1931, Lawvere 1969), while the free-energy lower bound is the new
+-thermodynamic content connecting proof theory to statistical mechanics.
+-
+-## References
+-
+-* Gödel, K. — Über formal unentscheidbare Sätze (1931)
+-* Lawvere, F.W. — Diagonal arguments and cartesian closed categories (1969)
+--/
+-
+-import Mathlib
+-
+-universe u
+-
+-/-! ## The Coherent Closure Self-Model Typeclass -/
+-
+-/-- A **coherent closure self-model** is an abstract formal system equipped with
+-self-referential capability, provability internalization, soundness for
+-internalized propositions, and thermodynamic structure.
+-
+-The key axioms are:
+-- `ax_diagonal`: Gödel–Lawvere diagonal fixed-point schema
+-- `ax_necessitation`: Hilbert–Bernays derivability condition D1
+-- `ax_internalize_sound`: Σ₁-soundness for the internalization fragment
+-- `ax_freeEnergy_ge_floor`: thermodynamic lower bound on free energy -/
+-class CoherentClosureSelfModel (M : Type u) where
+-  /-- The type of sentences in the formal language -/
+-  Sentence : Type u
+-  /-- The type of Gödel codes -/
+-  Code : Type u
+-  /-- External derivability predicate -/
+-  proves : Sentence → Prop
+-  /-- Internal provability predicate (a sentence asserting provability) -/
+-  provSent : Sentence → Sentence
+-  /-- Sentence-level negation -/
+-  negSent : Sentence → Sentence
+-  /-- Sentence-level biconditional -/
+-  iffSent : Sentence → Sentence → Sentence
+-  /-- Internalization: convert an external Lean proposition into an internal sentence -/
+-  internalize : Prop → Sentence
+-  /-- The self-code (Gödel number) of a sentence -/
+-  selfCode : Sentence → Code
+-  /-- Free energy at inverse temperature β for a code -/
+-  freeEnergy : ℝ → Code → ℝ
+-  /-- Complexity floor at inverse temperature β for a sentence -/
+-  complexityFloor : ℝ → Sentence → ℝ
+-  -- === Logical Axioms ===
+-  /-- **Diagonal lemma (Gödel–Lawvere).**
+-  For any definable operation `Ψ` on sentences, there exists a diagonal
+-  fixed-point sentence `G` satisfying `G ↔ ¬Prov(Ψ(G))`.
+-
+-  This is the syntactic engine of self-reference, abstracting the construction
+-  of Gödel sentences for arbitrary predicates. -/
+-  ax_diagonal : ∀ (Ψ : Sentence → Sentence),
+-    ∃ G, proves (iffSent G (negSent (provSent (Ψ G))))
+-  /-- **Necessitation (Hilbert–Bernays D1).**
+-  If `φ` is provable, then "φ is provable" is itself provable.
+-  This is the first Hilbert–Bernays derivability condition. -/
+-  ax_necessitation : ∀ {φ : Sentence}, proves φ → proves (provSent φ)
+-  /-- **Soundness for internalized propositions.**
+-  If M proves the internalization of an external proposition P,
+-  then P actually holds. This is a restricted form of Σ₁-soundness. -/
+-  ax_internalize_sound : ∀ {P : Prop}, proves (internalize P) → P
+-  /-- **Consistency of negation.**
+-  M does not prove both a sentence and its negation. -/
+-  ax_neg_consistent : ∀ {φ : Sentence}, proves φ → proves (negSent φ) → False
+-  /-- **Modus ponens for biconditional (forward).**
+-  From `proves (φ ↔ ψ)` and `proves φ`, derive `proves ψ`. -/
+-  ax_iff_mp : ∀ {φ ψ : Sentence}, proves (iffSent φ ψ) → proves φ → proves ψ
+-  /-- **Modus ponens for biconditional (backward).**
+-  From `proves (φ ↔ ψ)` and `proves ψ`, derive `proves φ`. -/
+-  ax_iff_mpr : ∀ {φ ψ : Sentence}, proves (iffSent φ ψ) → proves ψ → proves φ
+-  /-- **Introduction of negation from refutation.**
+-  If assuming `proves φ` leads to contradiction, then `proves (negSent φ)`. -/
+-  ax_neg_intro : ∀ {φ : Sentence}, (proves φ → False) → proves (negSent φ)
+-  -- === Thermodynamic Axioms ===
+-  /-- **Free-energy lower bound.**
+-  The free energy of any sentence's self-code is bounded below by the
+-  complexity floor. This is the fundamental thermodynamic content:
+-  self-compression below the floor is semantically impossible.
+-
+-  Conceptually, this says that any encoding of a self-referential sentence
+-  must pay a minimum thermodynamic cost determined by the complexity floor. -/
+-  ax_freeEnergy_ge_floor : ∀ (β : ℝ) (G : Sentence),
+-    0 < β → complexityFloor β G ≤ freeEnergy β (selfCode G)
+-  /-- **Complexity floor nonnegativity.** -/
+-  ax_complexityFloor_nonneg : ∀ (β : ℝ) (G : Sentence),
+-    0 < β → 0 ≤ complexityFloor β G
+-  /-- **Complexity floor nontriviality.**
+-  The floor is genuinely nonzero for some sentence, ensuring the theorem
+-  is not vacuously about a degenerate system. -/
+-  ax_complexityFloor_nontrivial : ∀ (β : ℝ),
+-    0 < β → ∃ G : Sentence, 0 < complexityFloor β G
+-
+-namespace CoherentClosureSelfModel
+-
+-variable {M : Type u} [CoherentClosureSelfModel M]
+-
+-/-! ## Public API and Derived Notions -/
+-
+-/-- The compression predicate: `CompressesAt β G` holds when the free energy
+-of `G`'s self-code is strictly below the complexity floor. This is the
+-"self-compression" condition that the main theorem shows is unprovable. -/
+-def CompressesAt (beta : ℝ) (G : Sentence (M := M)) : Prop :=
+-  freeEnergy beta (selfCode G) < complexityFloor beta G
+-
+-/-- The internalized compression sentence: the sentence asserting (internally
+-to M) that `G` achieves strict sub-floor compression at temperature `1/β`. -/
+-def CompressesAtSent (beta : ℝ) (G : Sentence (M := M)) : Sentence (M := M) :=
+-  internalize (CompressesAt beta G)
+-
+-end CoherentClosureSelfModel+--- a/Bridges/Defs.lean
+++++ b/Bridges/Defs.lean
++@@ -1,2009 +1,1834 @@
++---- a/Bridges/Defs.lean
++-+++ b/Bridges/Defs.lean
++-@@ -1,173 +1,1834 @@
++--/-
++--Copyright (c) 2025. All rights reserved.
++--Released under Apache 2.0 license as described in the file LICENSE.
++--
++--# Jacobson Adequacy for Closure-Generated Proof Semirings
++--
++--This file defines the core algebraic structures for the semantic adequacy theorem:
++--derivability in a coherent closure proof semiring is exactly validation in all
++--admissible Jacobson evaluations.
++--
++--## Main Definitions
++--
++--* `CoherentClosureProofSemiring` — a bounded distributive lattice equipped with a
++--  closure operator (nucleus) satisfying extensiveness, idempotency, and monotonicity.
++--
++--* `derivable` — the syntactic preorder: `derivable x y ↔ cl x ≤ cl y`, expressing
++--  that `y` is derivable from `x` via the closure/proof rules.
++--
++--* `AdmissibleEvaluation` — a predicate on functions `e : S → Prop` requiring
++--  monotonicity and closure compatibility (`e (cl x) ↔ e x`).
++--
++--* `admissibleEvaluations` — the set of all admissible evaluations.
++--
++--* `JacobsonPrimePoint` — a prime ideal of the lattice that is compatible with
++--  the closure operator, serving as a spectral witness for non-derivability.
++--
++--* `separates` — a prime ideal separates `x` from `y` when `cl y ∈ J` but `cl x ∉ J`.
++--
++--* `evaluationKernel` — the kernel preorder induced by an admissible evaluation.
++--
++--* `proofCongruence` — the proof preorder as a relation, equal to `derivable`.
++--
++--## Overview
++--
++--The semantic adequacy theorem states:
++--```
++--derivable x y ↔ ∀ e, AdmissibleEvaluation e → e x → e y
++--```
++--where `e x → e y` is the `≤` ordering on `Prop`.
++--
++--The proof strategy is:
++--1. **Soundness**: Every derivable pair is validated by all admissible evaluations.
++--2. **Completeness via prime separation**: If `¬ derivable x y`, the prime ideal
++--   theorem for distributive lattices produces a prime ideal `J` containing `cl y`
++--   but not `cl x`. This yields a countermodel evaluation `e(z) = (cl z ∉ J)`.
++--
++--The Jacobson aspect arises because prime ideals in bounded distributive lattices
++--serve as the spectral points (Jacobson prime points) from which evaluations are
++--extracted. The theorem is a semantic completeness theorem with explicit
++--Jacobson witness extraction.
++---/
++--
++--import Mathlib
++--
++--open Order Set
++--
++--/-! ## Core Algebraic Structure -/
++--
++--/-- A **coherent closure proof semiring** is a bounded distributive lattice `S` equipped with
++--a closure operator `cl : S → S`. The closure satisfies:
++--- *Extensiveness*: `x ≤ cl x` for all `x`
++--- *Idempotency*: `cl (cl x) = cl x` for all `x`
++--- *Monotonicity*: `x ≤ y → cl x ≤ cl y`
++--
++--The "coherent" attribute reflects that `S` is a bounded distributive lattice,
++--ensuring the prime ideal theorem applies for spectral separation. -/
++--class CoherentClosureProofSemiring (S : Type*) extends DistribLattice S, BoundedOrder S where
++--  /-- The closure (nucleus) operator -/
++--  cl : S → S
++--  /-- Extensiveness: every element is below its closure -/
++--  cl_extensive : ∀ x : S, x ≤ cl x
++--  /-- Idempotency: applying closure twice equals applying it once -/
++--  cl_idempotent : ∀ x : S, cl (cl x) = cl x
++--  /-- Monotonicity: closure preserves the order -/
++--  cl_monotone : ∀ x y : S, x ≤ y → cl x ≤ cl y
++--
++--namespace CoherentClosureProofSemiring
++--
++--variable {S : Type*} [CoherentClosureProofSemiring S]
++--
++--/-- Shorthand for the closure operator. -/
++--abbrev cl' : S → S := CoherentClosureProofSemiring.cl
++--
++--/-! ## Derivability -/
++--
++--/-- **Derivability**: `x` derives `y` (written `derivable x y`) when `cl x ≤ cl y`
++--in the underlying lattice order. This is the syntactic preorder generated by the
++--closure/proof rules.
++--
++--Intuitively, `derivable x y` means that the proof-theoretic content of `x`
++--entails that of `y` after closing under all available proof rules. -/
++--def derivable (x y : S) : Prop := cl' x ≤ cl' y
++--
++--theorem derivable_refl (x : S) : derivable x x := le_refl _
++--
++--theorem derivable_trans {x y z : S} (hxy : derivable x y) (hyz : derivable y z) :
++--    derivable x z := le_trans hxy hyz
++--
++--theorem derivable_of_le {x y : S} (h : x ≤ y) : derivable x y :=
++--  cl_monotone x y h
++--
++--theorem derivable_cl (x : S) : derivable x (cl' x) := by
++--  unfold derivable cl'
++--  rw [cl_idempotent]
++--
++--theorem cl_derivable (x : S) : derivable (cl' x) x := by
++--  unfold derivable cl'
++--  rw [cl_idempotent]
++--
++--/-! ## Admissible Evaluations -/
++--
++--/-- An **admissible evaluation** is a function `e : S → Prop` that is:
++--1. *Monotone*: if `x ≤ y` and `e x`, then `e y`
++--2. *Closure-compatible*: `e (cl x) ↔ e x` for all `x`
++--
++--Such evaluations serve as semantic models: they assign truth values to elements
++--of the proof semiring in a way that respects both the lattice order and the
++--closure structure. The ordering on `Prop` is implication (`→`), so
++--`e x ≤ e y` means `e x → e y`. -/
++--structure AdmissibleEvaluation (e : S → Prop) : Prop where
++--  /-- The evaluation is monotone with respect to the lattice order -/
++--  monotone : ∀ x y : S, x ≤ y → e x → e y
++--  /-- The evaluation absorbs the closure operator -/
++--  cl_compat : ∀ x : S, e (cl' x) ↔ e x
++--
++--/-- The set of all admissible evaluations on `S`. -/
++--def admissibleEvaluations (S : Type*) [CoherentClosureProofSemiring S] : Set (S → Prop) :=
++--  {e | AdmissibleEvaluation e}
++--
++--theorem mem_admissibleEvaluations_iff (e : S → Prop) :
++--    e ∈ admissibleEvaluations S ↔ AdmissibleEvaluation e :=
++--  Iff.rfl
++--
++--/-! ## Jacobson Prime Points -/
++--
++--/-- A **Jacobson prime point** is a prime ideal `J` of the bounded distributive lattice `S`
++--that is compatible with the closure operator: `x ∈ J ↔ cl x ∈ J`.
++--
++--These serve as spectral witnesses for non-derivability. The "Jacobson" designation
++--reflects their role as the prime spectrum points from which admissible evaluations
++--are extracted, analogous to Jacobson's correspondence between prime ideals and
++--evaluation points in commutative algebra. -/
++--structure JacobsonPrimePoint (J : Ideal S) : Prop where
++--  /-- The ideal is prime -/
++--  is_prime : J.IsPrime
++--  /-- The ideal is compatible with the closure operator -/
++--  cl_compat : ∀ x : S, x ∈ J → cl' x ∈ J
++--
++--/-- A prime ideal `J` **separates** `x` from `y` when `cl y ∈ J` but `cl x ∉ J`.
++--This witnesses that `x` does not derive `y`: the ideal "sees" a semantic
++--difference between the proof-theoretic content of `x` and `y`. -/
++--def separates (J : Ideal S) (x y : S) : Prop :=
++--  cl' y ∈ J ∧ cl' x ∉ J
++--
++--/-! ## Evaluation Kernels and Proof Congruence -/
++--
++--/-- The **evaluation kernel** of an admissible evaluation `e` is the preorder relation
++--`fun x y => e x → e y`. Two elements are identified by the kernel when they
++--are semantically indistinguishable under `e`. -/
++--def evaluationKernel (e : S → Prop) : S → S → Prop :=
++--  fun x y => e x → e y
++--
++--/-- The **proof congruence** is the derivability relation itself, viewed as a preorder.
++--This is the syntactic side of the adequacy theorem. -/
++--def proofCongruence : S → S → Prop := derivable
++--
++--/-- The **semantic preorder** is the intersection of all evaluation kernels of
++--admissible evaluations. Two elements are semantically ordered when every
++--admissible evaluation validates the ordering. -/
++--def semanticPreorder : S → S → Prop :=
++--  fun x y => ∀ e, AdmissibleEvaluation (S := S) e → e x → e y
++--
++--end CoherentClosureProofSemiring+--- a/Logic/Defs.lean
++-++++ b/Logic/Defs.lean
++-+@@ -1,1773 +1,59 @@
++-+---- a/MachineLearning/Defs.lean
++-+-+++ b/MachineLearning/Defs.lean
++-+-@@ -1,681 +1,1090 @@
++-+----- a/Bridges/Defs.lean
++-+--+++ b/Bridges/Defs.lean
++-+--@@ -1,497 +1,182 @@
++-+------ a/Bridges/Defs.lean
++-+---+++ b/Bridges/Defs.lean
++-+---@@ -1,313 +1,182 @@
++-+------- a/Bridges/Defs.lean
++-+----+++ b/Bridges/Defs.lean
++-+----@@ -1,182 +1,169 @@
++-+---- /-
++-+---- Copyright (c) 2025. All rights reserved.
++-+-----Released under Apache 2.0 license.
++-+----+Released under Apache 2.0 license as described in the file LICENSE.
++-+----+-/
++-+----+import Mathlib
++-+---- 
++-+-----# Idempotent Kantorovich–Rubinstein Duality: Core Definitions
++-+----+/-!
++-+----+# Functorial Mackey Completion for Maxitive Measures on Finite T₀ Spaces
++-+---- 
++-+-----This file defines the fundamental objects for tropical/idempotent optimal transport:
++-+-----maxitive probability profiles, their integral functionals, 1-Lipschitz test functions,
++-+-----the KR dual distance, couplings, and the primal Wasserstein cost.
++-+----+## Overview
++-+---- 
++-+-----## Mathematical context
++-+----+In a finite T₀ space, topology is equivalent to a specialization preorder:
++-+----+closed sets are lower sets, and irreducible closed sets are principal lower
++-+----+sets `↓x = {y | y ≤ x}`. We develop a completion theory for set functions
++-+----+(modeling maxitive measures / capacities) via **codensity assignments** on
++-+----+these irreducible closed sets.
++-+---- 
++-+-----In the max-plus semiring (ℝ, max, +), the analogue of a probability measure is a
++-+-----"maxitive probability profile" μ : X → ℝ with values ≤ 0 and sup = 0. The
++-+-----analogue of integration is the maxitive integral Λ_μ(f) = sup_x(μ(x) + f(x)).
++-+----+## Main definitions
++-+---- 
++-+-----The Kantorovich–Rubinstein dual distance is then defined as
++-+-----  d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))
++-+----+* `FiniteT0SupportClass` — the finite T₀ separation principle
++-+----+* `irreducibleClosed` — principal lower set `↓x`
++-+----+* `irreducibleClosedWeight` — weight of a set function on `↓x`
++-+----+* `supportGaugeEq` — equality of codensity weights
++-+----+* `CodensityAssignment` — monotone function `X → ℝ≥0∞`
++-+----+* `measureToCodensity` — canonical map from monotone set functions to codensity
++-+----+* `codensityToMeasure` — inverse: construct a set function from codensity data
++-+----+* `idempotentKantorovich` — pseudodistance via monotone test functions
++-+----+* `pushforward` — pushforward of a set function along a map
++-+---- 
++-+-----This is the tropical analogue of the classical Wasserstein-1 / earth mover's distance.
++-+----+## Main results
++-+----+
++-+----+* `codensity_roundtrip` — `measureToCodensity ∘ codensityToMeasure = id`
++-+----+* `idempotentKantorovich_eq_zero_iff_supportGaugeEq` — zero distance ⟺ codensity equality
++-+----+* `quotient_equiv_codensityAssignment` — the quotient by zero-distance ≃ CodensityAssignment
++-+----+* `idempotentKantorovich_pushforward_le` — pushforward is nonexpansive
++-+----+* `FunctorialIdempotentMackeyCompletion` — the full functorial completion theorem
++-+---- -/
++-+-----
++-+-----import Mathlib
++-+---- 
++-+---- noncomputable section
++-+---- 
++-+-----open scoped BigOperators
++-+----+open scoped ENNReal
++-+----+open Set
++-+---- 
++-+-----/-! ## 1-Lipschitz functions -/
++-+----+/-! ## The Finite T₀ Separation Principle -/
++-+---- 
++-+-----/-- The type of 1-Lipschitz real-valued functions on a pseudo-metric space. -/
++-+-----def LipOne (X : Type*) [PseudoMetricSpace X] :=
++-+-----  {f : X → ℝ // LipschitzWith 1 f}
++-+----+/-- The finite T₀ separation principle: if two points have the same principal
++-+----+    lower set, they are equal. On a finite preorder, this is equivalent to
++-+----+    antisymmetry, hence to the T₀ separation axiom on the Alexandrov topology. -/
++-+----+class FiniteT0SupportClass (X : Type*) [Fintype X] [Preorder X] : Prop where
++-+----+  antisymm_of_closure_eq : ∀ {x y : X}, (∀ z : X, z ≤ x ↔ z ≤ y) → x = y
++-+---- 
++-+-----namespace LipOne
++-+----+/-- Every finite partial order is a finite T₀ space. -/
++-+----+instance instFiniteT0SupportClassOfPartialOrder
++-+----+    {X : Type*} [Fintype X] [PartialOrder X] : FiniteT0SupportClass X where
++-+----+  antisymm_of_closure_eq h := le_antisymm ((h _).mp le_rfl) ((h _).mpr le_rfl)
++-+---- 
++-+-----variable {X : Type*} [PseudoMetricSpace X]
++-+----+/-! ## Irreducible Closed Sets and Codensity Weights -/
++-+---- 
++-+-----instance : CoeFun (LipOne X) (fun _ => X → ℝ) :=
++-+-----  ⟨fun f => f.1⟩
++-+----+/-- The irreducible closed set (principal lower set) associated to a point `x`.
++-+----+    In the Alexandrov topology on a preorder, this is `↓x = {y | y ≤ x}`,
++-+----+    which is always closed and irreducible. -/
++-+----+def irreducibleClosed (X : Type*) [Preorder X] (x : X) : Set X := {y | y ≤ x}
++-+---- 
++-+-----/-- The constant zero function is 1-Lipschitz. -/
++-+-----def zero : LipOne X :=
++-+-----  ⟨fun _ => 0, LipschitzWith.of_dist_le_mul (fun _ _ => by simp [dist_nonneg])⟩
++-+----+/-- The codensity weight of a point `x` under a set function `μ`:
++-+----+    the value of `μ` on the principal lower set `↓x`. -/
++-+----+def irreducibleClosedWeight {X : Type*} [Preorder X]
++-+----+    (μ : Set X → ℝ≥0∞) (x : X) : ℝ≥0∞ :=
++-+----+  μ (irreducibleClosed X x)
++-+---- 
++-+-----/-- The negation of a 1-Lipschitz function is 1-Lipschitz. -/
++-+-----def neg (f : LipOne X) : LipOne X :=
++-+-----  ⟨-f.1, f.2.neg⟩
++-+----+/-- Two set functions agree on codensity if they assign equal weight to
++-+----+    every principal lower set. This is the kernel of `measureToCodensity`. -/
++-+----+def supportGaugeEq {X : Type*} [Preorder X]
++-+----+    (μ ν : Set X → ℝ≥0∞) : Prop :=
++-+----+  ∀ x : X, irreducibleClosedWeight μ x = irreducibleClosedWeight ν x
++-+---- 
++-+-----/-- The distance function from a fixed point is 1-Lipschitz. -/
++-+-----def distFrom (x₀ : X) : LipOne X :=
++-+-----  ⟨fun x => dist x x₀, LipschitzWith.of_dist_le_mul fun a b => by
++-+-----    simp only [Real.dist_eq, NNReal.coe_one, one_mul]
++-+-----    exact abs_dist_sub_le a b x₀⟩
++-+----+/-! ## Test Functions and Idempotent Kantorovich Distance -/
++-+---- 
++-+-----/-- Composing a 1-Lipschitz function with a 1-Lipschitz map yields a 1-Lipschitz function. -/
++-+-----def comp {Y : Type*} [PseudoMetricSpace Y] (f : LipOne Y) (T : X → Y)
++-+-----    (hT : LipschitzWith 1 T) : LipOne X :=
++-+-----  ⟨fun x => f.1 (T x), by
++-+-----    have h := f.2.comp hT
++-+-----    simp only [one_mul] at h; exact h⟩
++-+----+/-- A test function on a preorder is a monotone real-valued function.
++-+----+    These serve as the dual objects in the idempotent Kantorovich theory. -/
++-+----+def IsTestFunction {X : Type*} [Preorder X] (f : X → ℝ) : Prop :=
++-+----+  Monotone f
++-+---- 
++-+-----end LipOne
++-+----+/-- The idempotent Kantorovich pseudodistance between two set functions.
++-+----+    This is the supremum over monotone test functions of the absolute
++-+----+    discrepancy in their "idempotent integrals" (max-plus pairings).
++-+----+    The symmetrization ensures `d(μ,ν) = 0 ↔ supportGaugeEq μ ν`. -/
++-+----+def idempotentKantorovich {X : Type*} [Fintype X] [Preorder X]
++-+----+    (μ ν : Set X → ℝ≥0∞) : ℝ≥0∞ :=
++-+----+  ⨆ f : {f : X → ℝ // IsTestFunction f},
++-+----+    ENNReal.ofReal (abs
++-+----+      ((⨆ x : X, (f.1 x - (irreducibleClosedWeight μ x).toReal)) -
++-+----+       (⨆ x : X, (f.1 x - (irreducibleClosedWeight ν x).toReal))))
++-+---- 
++-+-----/-! ## Maxitive probability profiles -/
++-+----+/-! ## Codensity Assignments -/
++-+---- 
++-+-----/-- A maxitive probability profile on a finite type `X`: a function `X → ℝ` with
++-+-----    values ≤ 0 and max = 0. This is the tropical analogue of a probability measure.
++-+----+/-- A codensity assignment on a preorder is a monotone function `X → ℝ≥0∞`.
++-+----+    Each value `c x` represents the "codensity" on the irreducible closed
++-+----+    set `↓x`. In finite T₀ spaces, this is the completed/canonical form
++-+----+    of a maxitive measure. -/
++-+----+structure CodensityAssignment (X : Type*) [Preorder X] where
++-+----+  /-- The underlying function assigning weights to points. -/
++-+----+  toFun : X → ℝ≥0∞
++-+----+  /-- The assignment is monotone with respect to the preorder. -/
++-+----+  monotone' : Monotone toFun
++-+---- 
++-+-----    The value μ(x) represents the log-possibility weight at x. Points with μ(x) = 0
++-+-----    are "fully possible" (the mode), while μ(x) < 0 indicates reduced possibility. -/
++-+-----structure MaxitiveProb (X : Type*) [Fintype X] [Nonempty X] where
++-+-----  /-- The log-possibility density function. -/
++-+-----  toFun : X → ℝ
++-+-----  /-- All values are non-positive. -/
++-+-----  nonpos : ∀ x, toFun x ≤ 0
++-+-----  /-- The profile is normalized: the maximum is 0. -/
++-+-----  normalized : Finset.univ.sup' Finset.univ_nonempty toFun = 0
++-+----+namespace CodensityAssignment
++-+---- 
++-+-----namespace MaxitiveProb
++-+----+variable {X : Type*} [Preorder X]
++-+---- 
++-+-----variable {X : Type*} [Fintype X] [Nonempty X]
++-+----+instance : FunLike (CodensityAssignment X) X ℝ≥0∞ where
++-+----+  coe := CodensityAssignment.toFun
++-+----+  coe_injective' a b h := by cases a; cases b; congr
++-+---- 
++-+-----instance : CoeFun (MaxitiveProb X) (fun _ => X → ℝ) :=
++-+-----  ⟨fun μ => μ.toFun⟩
++-+----+@[simp] theorem coe_mk (f : X → ℝ≥0∞) (hf) : (CodensityAssignment.mk f hf : X → ℝ≥0∞) = f := rfl
++-+---- 
++-+-----/-- The Dirac maxitive profile at a point. -/
++-+-----def dirac [DecidableEq X] (x₀ : X) : MaxitiveProb X where
++-+-----  toFun x := if x = x₀ then 0 else -1
++-+-----  nonpos x := by split_ifs <;> norm_num
++-+-----  normalized := by
++-+-----    apply le_antisymm
++-+-----    · exact Finset.sup'_le _ _ fun x _ => by split_ifs <;> norm_num
++-+-----    · exact Finset.le_sup' _ (Finset.mem_univ x₀) |>.trans' (by simp)
++-+----+@[ext]
++-+----+theorem ext {c d : CodensityAssignment X} (h : ∀ x, c x = d x) : c = d :=
++-+----+  DFunLike.ext c d h
++-+---- 
++-+-----/-
++-+-----Existence of a mode point: there exists x with μ(x) = 0.
++-+------/
++-+-----theorem exists_mode (μ : MaxitiveProb X) : ∃ x₀ : X, μ.toFun x₀ = 0 := by
++-+-----  -- Let `x₀` be the mode point of `μ`, which is defined as the element that maximizes `μ`.
++-+-----  obtain ⟨x₀, hx₀⟩ :
++-+-----      ∃ x₀, (μ.toFun x₀) = (Finset.univ.sup' Finset.univ_nonempty μ.toFun) := by
++-+-----        have := Finset.exists_max_image Finset.univ μ.toFun ( Finset.univ_nonempty );
++-+-----        exact ⟨ this.choose, le_antisymm ( Finset.le_sup' ( fun x => μ.toFun x ) ( Finset.mem_univ _ ) ) ( Finset.sup'_le _ _ fun x _ => this.choose_spec.2 x ( Finset.mem_univ x ) ) ⟩;
++-+-----  exact ⟨ x₀, hx₀.trans μ.normalized ⟩
++-+----+theorem monotone (c : CodensityAssignment X) : Monotone c := c.monotone'
++-+---- 
++-+-----end MaxitiveProb
++-+----+end CodensityAssignment
++-+---- 
++-+-----/-! ## Maxitive integral (tropical expectation) -/
++-+----+/-! ## Maps Between Measures and Codensity Assignments -/
++-+---- 
++-+-----/-- The maxitive integral of f with respect to μ:
++-+-----    `Λ_μ(f) = max_x (μ(x) + f(x))`.
++-+-----    This is the tropical analogue of the expectation `𝔼_μ[f]`. -/
++-+-----def maxIntegral {X : Type*} [Fintype X] [Nonempty X]
++-+-----    (μ : MaxitiveProb X) (f : X → ℝ) : ℝ :=
++-+-----  Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + f x
++-+----+/-- A set function is *monotone* if it preserves subset ordering. This is
++-+----+    a basic property of measures, capacities, and maxitive measures. -/
++-+----+def IsMonotoneSetFun {X : Type*} (μ : Set X → ℝ≥0∞) : Prop :=
++-+----+  ∀ ⦃A B : Set X⦄, A ⊆ B → μ A ≤ μ B
++-+---- 
++-+-----/-! ## KR Dual Distance -/
++-+----+/-- The canonical map from monotone set functions to codensity assignments.
++-+----+    Maps `μ` to the function `x ↦ μ(↓x)`. -/
++-+----+def measureToCodensity {X : Type*} [Preorder X]
++-+----+    (μ : Set X → ℝ≥0∞) (hμ : IsMonotoneSetFun μ) : CodensityAssignment X where
++-+----+  toFun := irreducibleClosedWeight μ
++-+----+  monotone' := fun _ _ hxy => hμ (fun _ hz => le_trans hz hxy)
++-+---- 
++-+-----/-- The idempotent Kantorovich–Rubinstein dual discrepancy:
++-+-----    `d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))`.
++-+----+/-- Construct a set function from a codensity assignment by taking the
++-+----+    supremum over elements in the set. This is a right inverse of
++-+----+    `measureToCodensity` and models a "maxitive measure". -/
++-+----+def codensityToMeasure {X : Type*} [Preorder X]
++-+----+    (c : CodensityAssignment X) : Set X → ℝ≥0∞ :=
++-+----+  fun A => ⨆ x ∈ A, c.toFun x
++-+---- 
++-+-----    This is the directed tropical analogue of the Wasserstein-1 distance.
++-+-----    It measures how much μ "exceeds" ν as tested by 1-Lipschitz observables. -/
++-+-----def iKRDual {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+-----    (μ ν : MaxitiveProb X) : ℝ :=
++-+-----  sSup {r : ℝ | ∃ f : LipOne X, r = maxIntegral μ f.1 - maxIntegral ν f.1}
++-+----+/-- Pushforward of a set function along a map `f`: `(f_* μ)(B) = μ(f⁻¹(B))`. -/
++-+----+def pushforward {X Y : Type*} (f : X → Y)
++-+----+    (μ : Set X → ℝ≥0∞) : Set Y → ℝ≥0∞ :=
++-+----+  fun B => μ (f ⁻¹' B)
++-+---- 
++-+-----/-! ## Maxitive Coupling -/
++-+----+/-- A set function is *maxitive* if its value on any set equals the supremum
++-+----+    of its values on principal lower sets of elements in that set.
++-+----+    This is the key property of "max-plus measures" / capacities in
++-+----+    idempotent measure theory. -/
++-+----+def IsMaxitiveSetFun {X : Type*} [Preorder X] (μ : Set X → ℝ≥0∞) : Prop :=
++-+----+  ∀ A : Set X, μ A = ⨆ x ∈ A, μ (irreducibleClosed X x)
++-+---- 
++-+-----/-- A maxitive coupling of two profiles μ and ν on a finite type:
++-+-----    a joint weight function π : X → X → ℝ with prescribed max-marginals. -/
++-+-----structure MaxitiveCoupling {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+-----    (μ ν : MaxitiveProb X) where
++-+-----  /-- The joint weight function. -/
++-+-----  toFun : X → X → ℝ
++-+-----  /-- All values are non-positive. -/
++-+-----  nonpos : ∀ x y, toFun x y ≤ 0
++-+-----  /-- First marginal: max over Y gives μ. -/
++-+-----  fst_marginal : ∀ x, Finset.univ.sup' Finset.univ_nonempty (toFun x) = μ.toFun x
++-+-----  /-- Second marginal: max over X gives ν. -/
++-+-----  snd_marginal : ∀ y, Finset.univ.sup' Finset.univ_nonempty (fun x => toFun x y) = ν.toFun y
++-+----+/-! ## The Zero-Distance Setoid -/
++-+---- 
++-+-----/-! ## Transport Cost -/
++-+-----
++-+-----/-- The max-plus transport cost of a coupling π:
++-+-----    `C(π) = max_{x,y} (π(x,y) + dist(x,y))`. -/
++-+-----def transportCost {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+-----    {μ ν : MaxitiveProb X} (π : MaxitiveCoupling μ ν) : ℝ :=
++-+-----  (Finset.univ ×ˢ Finset.univ).sup'
++-+-----    (by simp [Finset.Nonempty]) fun p => π.toFun p.1 p.2 + dist p.1 p.2
++-+-----
++-+-----/-- The idempotent Wasserstein distance (primal formulation):
++-+-----    `W(μ,ν) = inf_π C(π)`. -/
++-+-----def iWasserstein {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+-----    (μ ν : MaxitiveProb X) : ℝ :=
++-+-----  sInf {r : ℝ | ∃ π : MaxitiveCoupling μ ν, transportCost π ≤ r}
++-+-----
++-+-----/-! ## Tropical Kernel Mean Embedding -/
++-+-----
++-+-----/-- A tropical kernel on X: a function k : X → X → ℝ. -/
++-+-----abbrev TropicalKernel (X : Type*) := X → X → ℝ
++-+-----
++-+-----/-- The tropical kernel mean embedding (finite version):
++-+-----    `kme_μ(y) = max_x (μ(x) + k(x, y))`. -/
++-+-----def tropKME {X : Type*} [Fintype X] [Nonempty X]
++-+-----    (k : TropicalKernel X) (μ : MaxitiveProb X) : X → ℝ :=
++-+-----  fun y => Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + k x y
++-+-----
++-+-----/-- A kernel is characteristic if tropKME is injective. -/
++-+-----def IsCharacteristicKernel {X : Type*} [Fintype X] [Nonempty X]
++-+-----    (k : TropicalKernel X) : Prop :=
++-+-----  Function.Injective (tropKME k : MaxitiveProb X → X → ℝ)
++-+-----
++-+-----/-- A kernel represents all 1-Lipschitz functions if every 1-Lip test is in the
++-+-----    max-plus span of kernel slices. -/
++-+-----def KernelRepresentsLipOne {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+-----    (k : TropicalKernel X) : Prop :=
++-+-----  ∀ f : LipOne X, ∃ (a : X → ℝ),
++-+-----    ∀ x, f.1 x = Finset.univ.sup' Finset.univ_nonempty fun z => a z + k z x
++-+----+/-- The zero-distance equivalence relation on set functions:
++-+----+    `μ ≈ ν` iff they have the same codensity weights on all principal lower sets. -/
++-+----+def supportGaugeSetoid (X : Type*) [Preorder X] : Setoid (Set X → ℝ≥0∞) where
++-+----+  r := supportGaugeEq
++-+----+  iseqv := {
++-+----+    refl := fun _ _ => rfl
++-+----+    symm := fun h x => (h x).symm
++-+----+    trans := fun h₁ h₂ x => (h₁ x).trans (h₂ x)
++-+----+  }
++-+---- 
++-+---- end+/-
++-+---+Copyright (c) 2025. All rights reserved.
++-+---+Released under Apache 2.0 license.
++-+---+
++-+---+# Idempotent Kantorovich–Rubinstein Duality: Core Definitions
++-+---+
++-+---+This file defines the fundamental objects for tropical/idempotent optimal transport:
++-+---+maxitive probability profiles, their integral functionals, 1-Lipschitz test functions,
++-+---+the KR dual distance, couplings, and the primal Wasserstein cost.
++-+---+
++-+---+## Mathematical context
++-+---+
++-+---+In the max-plus semiring (ℝ, max, +), the analogue of a probability measure is a
++-+---+"maxitive probability profile" μ : X → ℝ with values ≤ 0 and sup = 0. The
++-+---+analogue of integration is the maxitive integral Λ_μ(f) = sup_x(μ(x) + f(x)).
++-+---+
++-+---+The Kantorovich–Rubinstein dual distance is then defined as
++-+---+  d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))
++-+---+
++-+---+This is the tropical analogue of the classical Wasserstein-1 / earth mover's distance.
++-+---+-/
++-+---+
++-+---+import Mathlib
++-+---+
++-+---+noncomputable section
++-+---+
++-+---+open scoped BigOperators
++-+---+
++-+---+/-! ## 1-Lipschitz functions -/
++-+---+
++-+---+/-- The type of 1-Lipschitz real-valued functions on a pseudo-metric space. -/
++-+---+def LipOne (X : Type*) [PseudoMetricSpace X] :=
++-+---+  {f : X → ℝ // LipschitzWith 1 f}
++-+---+
++-+---+namespace LipOne
++-+---+
++-+---+variable {X : Type*} [PseudoMetricSpace X]
++-+---+
++-+---+instance : CoeFun (LipOne X) (fun _ => X → ℝ) :=
++-+---+  ⟨fun f => f.1⟩
++-+---+
++-+---+/-- The constant zero function is 1-Lipschitz. -/
++-+---+def zero : LipOne X :=
++-+---+  ⟨fun _ => 0, LipschitzWith.of_dist_le_mul (fun _ _ => by simp [dist_nonneg])⟩
++-+---+
++-+---+/-- The negation of a 1-Lipschitz function is 1-Lipschitz. -/
++-+---+def neg (f : LipOne X) : LipOne X :=
++-+---+  ⟨-f.1, f.2.neg⟩
++-+---+
++-+---+/-- The distance function from a fixed point is 1-Lipschitz. -/
++-+---+def distFrom (x₀ : X) : LipOne X :=
++-+---+  ⟨fun x => dist x x₀, LipschitzWith.of_dist_le_mul fun a b => by
++-+---+    simp only [Real.dist_eq, NNReal.coe_one, one_mul]
++-+---+    exact abs_dist_sub_le a b x₀⟩
++-+---+
++-+---+/-- Composing a 1-Lipschitz function with a 1-Lipschitz map yields a 1-Lipschitz function. -/
++-+---+def comp {Y : Type*} [PseudoMetricSpace Y] (f : LipOne Y) (T : X → Y)
++-+---+    (hT : LipschitzWith 1 T) : LipOne X :=
++-+---+  ⟨fun x => f.1 (T x), by
++-+---+    have h := f.2.comp hT
++-+---+    simp only [one_mul] at h; exact h⟩
++-+---+
++-+---+end LipOne
++-+---+
++-+---+/-! ## Maxitive probability profiles -/
++-+---+
++-+---+/-- A maxitive probability profile on a finite type `X`: a function `X → ℝ` with
++-+---+    values ≤ 0 and max = 0. This is the tropical analogue of a probability measure.
++-+---+
++-+---+    The value μ(x) represents the log-possibility weight at x. Points with μ(x) = 0
++-+---+    are "fully possible" (the mode), while μ(x) < 0 indicates reduced possibility. -/
++-+---+structure MaxitiveProb (X : Type*) [Fintype X] [Nonempty X] where
++-+---+  /-- The log-possibility density function. -/
++-+---+  toFun : X → ℝ
++-+---+  /-- All values are non-positive. -/
++-+---+  nonpos : ∀ x, toFun x ≤ 0
++-+---+  /-- The profile is normalized: the maximum is 0. -/
++-+---+  normalized : Finset.univ.sup' Finset.univ_nonempty toFun = 0
++-+---+
++-+---+namespace MaxitiveProb
++-+---+
++-+---+variable {X : Type*} [Fintype X] [Nonempty X]
++-+---+
++-+---+instance : CoeFun (MaxitiveProb X) (fun _ => X → ℝ) :=
++-+---+  ⟨fun μ => μ.toFun⟩
++-+---+
++-+---+/-- The Dirac maxitive profile at a point. -/
++-+---+def dirac [DecidableEq X] (x₀ : X) : MaxitiveProb X where
++-+---+  toFun x := if x = x₀ then 0 else -1
++-+---+  nonpos x := by split_ifs <;> norm_num
++-+---+  normalized := by
++-+---+    apply le_antisymm
++-+---+    · exact Finset.sup'_le _ _ fun x _ => by split_ifs <;> norm_num
++-+---+    · exact Finset.le_sup' _ (Finset.mem_univ x₀) |>.trans' (by simp)
++-+---+
++-+---+/-
++-+---+Existence of a mode point: there exists x with μ(x) = 0.
++-+---+-/
++-+---+theorem exists_mode (μ : MaxitiveProb X) : ∃ x₀ : X, μ.toFun x₀ = 0 := by
++-+---+  -- Let `x₀` be the mode point of `μ`, which is defined as the element that maximizes `μ`.
++-+---+  obtain ⟨x₀, hx₀⟩ :
++-+---+      ∃ x₀, (μ.toFun x₀) = (Finset.univ.sup' Finset.univ_nonempty μ.toFun) := by
++-+---+        have := Finset.exists_max_image Finset.univ μ.toFun ( Finset.univ_nonempty );
++-+---+        exact ⟨ this.choose, le_antisymm ( Finset.le_sup' ( fun x => μ.toFun x ) ( Finset.mem_univ _ ) ) ( Finset.sup'_le _ _ fun x _ => this.choose_spec.2 x ( Finset.mem_univ x ) ) ⟩;
++-+---+  exact ⟨ x₀, hx₀.trans μ.normalized ⟩
++-+---+
++-+---+end MaxitiveProb
++-+---+
++-+---+/-! ## Maxitive integral (tropical expectation) -/
++-+---+
++-+---+/-- The maxitive integral of f with respect to μ:
++-+---+    `Λ_μ(f) = max_x (μ(x) + f(x))`.
++-+---+    This is the tropical analogue of the expectation `𝔼_μ[f]`. -/
++-+---+def maxIntegral {X : Type*} [Fintype X] [Nonempty X]
++-+---+    (μ : MaxitiveProb X) (f : X → ℝ) : ℝ :=
++-+---+  Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + f x
++-+---+
++-+---+/-! ## KR Dual Distance -/
++-+---+
++-+---+/-- The idempotent Kantorovich–Rubinstein dual discrepancy:
++-+---+    `d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))`.
++-+---+
++-+---+    This is the directed tropical analogue of the Wasserstein-1 distance.
++-+---+    It measures how much μ "exceeds" ν as tested by 1-Lipschitz observables. -/
++-+---+def iKRDual {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+---+    (μ ν : MaxitiveProb X) : ℝ :=
++-+---+  sSup {r : ℝ | ∃ f : LipOne X, r = maxIntegral μ f.1 - maxIntegral ν f.1}
++-+---+
++-+---+/-! ## Maxitive Coupling -/
++-+---+
++-+---+/-- A maxitive coupling of two profiles μ and ν on a finite type:
++-+---+    a joint weight function π : X → X → ℝ with prescribed max-marginals. -/
++-+---+structure MaxitiveCoupling {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+---+    (μ ν : MaxitiveProb X) where
++-+---+  /-- The joint weight function. -/
++-+---+  toFun : X → X → ℝ
++-+---+  /-- All values are non-positive. -/
++-+---+  nonpos : ∀ x y, toFun x y ≤ 0
++-+---+  /-- First marginal: max over Y gives μ. -/
++-+---+  fst_marginal : ∀ x, Finset.univ.sup' Finset.univ_nonempty (toFun x) = μ.toFun x
++-+---+  /-- Second marginal: max over X gives ν. -/
++-+---+  snd_marginal : ∀ y, Finset.univ.sup' Finset.univ_nonempty (fun x => toFun x y) = ν.toFun y
++-+---+
++-+---+/-! ## Transport Cost -/
++-+---+
++-+---+/-- The max-plus transport cost of a coupling π:
++-+---+    `C(π) = max_{x,y} (π(x,y) + dist(x,y))`. -/
++-+---+def transportCost {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+---+    {μ ν : MaxitiveProb X} (π : MaxitiveCoupling μ ν) : ℝ :=
++-+---+  (Finset.univ ×ˢ Finset.univ).sup'
++-+---+    (by simp [Finset.Nonempty]) fun p => π.toFun p.1 p.2 + dist p.1 p.2
++-+---+
++-+---+/-- The idempotent Wasserstein distance (primal formulation):
++-+---+    `W(μ,ν) = inf_π C(π)`. -/
++-+---+def iWasserstein {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+---+    (μ ν : MaxitiveProb X) : ℝ :=
++-+---+  sInf {r : ℝ | ∃ π : MaxitiveCoupling μ ν, transportCost π ≤ r}
++-+---+
++-+---+/-! ## Tropical Kernel Mean Embedding -/
++-+---+
++-+---+/-- A tropical kernel on X: a function k : X → X → ℝ. -/
++-+---+abbrev TropicalKernel (X : Type*) := X → X → ℝ
++-+---+
++-+---+/-- The tropical kernel mean embedding (finite version):
++-+---+    `kme_μ(y) = max_x (μ(x) + k(x, y))`. -/
++-+---+def tropKME {X : Type*} [Fintype X] [Nonempty X]
++-+---+    (k : TropicalKernel X) (μ : MaxitiveProb X) : X → ℝ :=
++-+---+  fun y => Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + k x y
++-+---+
++-+---+/-- A kernel is characteristic if tropKME is injective. -/
++-+---+def IsCharacteristicKernel {X : Type*} [Fintype X] [Nonempty X]
++-+---+    (k : TropicalKernel X) : Prop :=
++-+---+  Function.Injective (tropKME k : MaxitiveProb X → X → ℝ)
++-+---+
++-+---+/-- A kernel represents all 1-Lipschitz functions if every 1-Lip test is in the
++-+---+    max-plus span of kernel slices. -/
++-+---+def KernelRepresentsLipOne {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+---+    (k : TropicalKernel X) : Prop :=
++-+---+  ∀ f : LipOne X, ∃ (a : X → ℝ),
++-+---+    ∀ x, f.1 x = Finset.univ.sup' Finset.univ_nonempty fun z => a z + k z x
++-+---+
++-+---+end+/-
++-+--+Copyright (c) 2025. All rights reserved.
++-+--+Released under Apache 2.0 license.
++-+--+
++-+--+# Idempotent Kantorovich–Rubinstein Duality: Core Definitions
++-+--+
++-+--+This file defines the fundamental objects for tropical/idempotent optimal transport:
++-+--+maxitive probability profiles, their integral functionals, 1-Lipschitz test functions,
++-+--+the KR dual distance, couplings, and the primal Wasserstein cost.
++-+--+
++-+--+## Mathematical context
++-+--+
++-+--+In the max-plus semiring (ℝ, max, +), the analogue of a probability measure is a
++-+--+"maxitive probability profile" μ : X → ℝ with values ≤ 0 and sup = 0. The
++-+--+analogue of integration is the maxitive integral Λ_μ(f) = sup_x(μ(x) + f(x)).
++-+--+
++-+--+The Kantorovich–Rubinstein dual distance is then defined as
++-+--+  d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))
++-+--+
++-+--+This is the tropical analogue of the classical Wasserstein-1 / earth mover's distance.
++-+--+-/
++-+--+
++-+--+import Mathlib
++-+--+
++-+--+noncomputable section
++-+--+
++-+--+open scoped BigOperators
++-+--+
++-+--+/-! ## 1-Lipschitz functions -/
++-+--+
++-+--+/-- The type of 1-Lipschitz real-valued functions on a pseudo-metric space. -/
++-+--+def LipOne (X : Type*) [PseudoMetricSpace X] :=
++-+--+  {f : X → ℝ // LipschitzWith 1 f}
++-+--+
++-+--+namespace LipOne
++-+--+
++-+--+variable {X : Type*} [PseudoMetricSpace X]
++-+--+
++-+--+instance : CoeFun (LipOne X) (fun _ => X → ℝ) :=
++-+--+  ⟨fun f => f.1⟩
++-+--+
++-+--+/-- The constant zero function is 1-Lipschitz. -/
++-+--+def zero : LipOne X :=
++-+--+  ⟨fun _ => 0, LipschitzWith.of_dist_le_mul (fun _ _ => by simp [dist_nonneg])⟩
++-+--+
++-+--+/-- The negation of a 1-Lipschitz function is 1-Lipschitz. -/
++-+--+def neg (f : LipOne X) : LipOne X :=
++-+--+  ⟨-f.1, f.2.neg⟩
++-+--+
++-+--+/-- The distance function from a fixed point is 1-Lipschitz. -/
++-+--+def distFrom (x₀ : X) : LipOne X :=
++-+--+  ⟨fun x => dist x x₀, LipschitzWith.of_dist_le_mul fun a b => by
++-+--+    simp only [Real.dist_eq, NNReal.coe_one, one_mul]
++-+--+    exact abs_dist_sub_le a b x₀⟩
++-+--+
++-+--+/-- Composing a 1-Lipschitz function with a 1-Lipschitz map yields a 1-Lipschitz function. -/
++-+--+def comp {Y : Type*} [PseudoMetricSpace Y] (f : LipOne Y) (T : X → Y)
++-+--+    (hT : LipschitzWith 1 T) : LipOne X :=
++-+--+  ⟨fun x => f.1 (T x), by
++-+--+    have h := f.2.comp hT
++-+--+    simp only [one_mul] at h; exact h⟩
++-+--+
++-+--+end LipOne
++-+--+
++-+--+/-! ## Maxitive probability profiles -/
++-+--+
++-+--+/-- A maxitive probability profile on a finite type `X`: a function `X → ℝ` with
++-+--+    values ≤ 0 and max = 0. This is the tropical analogue of a probability measure.
++-+--+
++-+--+    The value μ(x) represents the log-possibility weight at x. Points with μ(x) = 0
++-+--+    are "fully possible" (the mode), while μ(x) < 0 indicates reduced possibility. -/
++-+--+structure MaxitiveProb (X : Type*) [Fintype X] [Nonempty X] where
++-+--+  /-- The log-possibility density function. -/
++-+--+  toFun : X → ℝ
++-+--+  /-- All values are non-positive. -/
++-+--+  nonpos : ∀ x, toFun x ≤ 0
++-+--+  /-- The profile is normalized: the maximum is 0. -/
++-+--+  normalized : Finset.univ.sup' Finset.univ_nonempty toFun = 0
++-+--+
++-+--+namespace MaxitiveProb
++-+--+
++-+--+variable {X : Type*} [Fintype X] [Nonempty X]
++-+--+
++-+--+instance : CoeFun (MaxitiveProb X) (fun _ => X → ℝ) :=
++-+--+  ⟨fun μ => μ.toFun⟩
++-+--+
++-+--+/-- The Dirac maxitive profile at a point. -/
++-+--+def dirac [DecidableEq X] (x₀ : X) : MaxitiveProb X where
++-+--+  toFun x := if x = x₀ then 0 else -1
++-+--+  nonpos x := by split_ifs <;> norm_num
++-+--+  normalized := by
++-+--+    apply le_antisymm
++-+--+    · exact Finset.sup'_le _ _ fun x _ => by split_ifs <;> norm_num
++-+--+    · exact Finset.le_sup' _ (Finset.mem_univ x₀) |>.trans' (by simp)
++-+--+
++-+--+/-
++-+--+Existence of a mode point: there exists x with μ(x) = 0.
++-+--+-/
++-+--+theorem exists_mode (μ : MaxitiveProb X) : ∃ x₀ : X, μ.toFun x₀ = 0 := by
++-+--+  -- Let `x₀` be the mode point of `μ`, which is defined as the element that maximizes `μ`.
++-+--+  obtain ⟨x₀, hx₀⟩ :
++-+--+      ∃ x₀, (μ.toFun x₀) = (Finset.univ.sup' Finset.univ_nonempty μ.toFun) := by
++-+--+        have := Finset.exists_max_image Finset.univ μ.toFun ( Finset.univ_nonempty );
++-+--+        exact ⟨ this.choose, le_antisymm ( Finset.le_sup' ( fun x => μ.toFun x ) ( Finset.mem_univ _ ) ) ( Finset.sup'_le _ _ fun x _ => this.choose_spec.2 x ( Finset.mem_univ x ) ) ⟩;
++-+--+  exact ⟨ x₀, hx₀.trans μ.normalized ⟩
++-+--+
++-+--+end MaxitiveProb
++-+--+
++-+--+/-! ## Maxitive integral (tropical expectation) -/
++-+--+
++-+--+/-- The maxitive integral of f with respect to μ:
++-+--+    `Λ_μ(f) = max_x (μ(x) + f(x))`.
++-+--+    This is the tropical analogue of the expectation `𝔼_μ[f]`. -/
++-+--+def maxIntegral {X : Type*} [Fintype X] [Nonempty X]
++-+--+    (μ : MaxitiveProb X) (f : X → ℝ) : ℝ :=
++-+--+  Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + f x
++-+--+
++-+--+/-! ## KR Dual Distance -/
++-+--+
++-+--+/-- The idempotent Kantorovich–Rubinstein dual discrepancy:
++-+--+    `d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))`.
++-+--+
++-+--+    This is the directed tropical analogue of the Wasserstein-1 distance.
++-+--+    It measures how much μ "exceeds" ν as tested by 1-Lipschitz observables. -/
++-+--+def iKRDual {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+--+    (μ ν : MaxitiveProb X) : ℝ :=
++-+--+  sSup {r : ℝ | ∃ f : LipOne X, r = maxIntegral μ f.1 - maxIntegral ν f.1}
++-+--+
++-+--+/-! ## Maxitive Coupling -/
++-+--+
++-+--+/-- A maxitive coupling of two profiles μ and ν on a finite type:
++-+--+    a joint weight function π : X → X → ℝ with prescribed max-marginals. -/
++-+--+structure MaxitiveCoupling {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+--+    (μ ν : MaxitiveProb X) where
++-+--+  /-- The joint weight function. -/
++-+--+  toFun : X → X → ℝ
++-+--+  /-- All values are non-positive. -/
++-+--+  nonpos : ∀ x y, toFun x y ≤ 0
++-+--+  /-- First marginal: max over Y gives μ. -/
++-+--+  fst_marginal : ∀ x, Finset.univ.sup' Finset.univ_nonempty (toFun x) = μ.toFun x
++-+--+  /-- Second marginal: max over X gives ν. -/
++-+--+  snd_marginal : ∀ y, Finset.univ.sup' Finset.univ_nonempty (fun x => toFun x y) = ν.toFun y
++-+--+
++-+--+/-! ## Transport Cost -/
++-+--+
++-+--+/-- The max-plus transport cost of a coupling π:
++-+--+    `C(π) = max_{x,y} (π(x,y) + dist(x,y))`. -/
++-+--+def transportCost {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+--+    {μ ν : MaxitiveProb X} (π : MaxitiveCoupling μ ν) : ℝ :=
++-+--+  (Finset.univ ×ˢ Finset.univ).sup'
++-+--+    (by simp [Finset.Nonempty]) fun p => π.toFun p.1 p.2 + dist p.1 p.2
++-+--+
++-+--+/-- The idempotent Wasserstein distance (primal formulation):
++-+--+    `W(μ,ν) = inf_π C(π)`. -/
++-+--+def iWasserstein {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+--+    (μ ν : MaxitiveProb X) : ℝ :=
++-+--+  sInf {r : ℝ | ∃ π : MaxitiveCoupling μ ν, transportCost π ≤ r}
++-+--+
++-+--+/-! ## Tropical Kernel Mean Embedding -/
++-+--+
++-+--+/-- A tropical kernel on X: a function k : X → X → ℝ. -/
++-+--+abbrev TropicalKernel (X : Type*) := X → X → ℝ
++-+--+
++-+--+/-- The tropical kernel mean embedding (finite version):
++-+--+    `kme_μ(y) = max_x (μ(x) + k(x, y))`. -/
++-+--+def tropKME {X : Type*} [Fintype X] [Nonempty X]
++-+--+    (k : TropicalKernel X) (μ : MaxitiveProb X) : X → ℝ :=
++-+--+  fun y => Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + k x y
++-+--+
++-+--+/-- A kernel is characteristic if tropKME is injective. -/
++-+--+def IsCharacteristicKernel {X : Type*} [Fintype X] [Nonempty X]
++-+--+    (k : TropicalKernel X) : Prop :=
++-+--+  Function.Injective (tropKME k : MaxitiveProb X → X → ℝ)
++-+--+
++-+--+/-- A kernel represents all 1-Lipschitz functions if every 1-Lip test is in the
++-+--+    max-plus span of kernel slices. -/
++-+--+def KernelRepresentsLipOne {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
++-+--+    (k : TropicalKernel X) : Prop :=
++-+--+  ∀ f : LipOne X, ∃ (a : X → ℝ),
++-+--+    ∀ x, f.1 x = Finset.univ.sup' Finset.univ_nonempty fun z => a z + k z x
++-+--+
++-+--+end+--- a/Tropical/Defs.lean
++-+-++++ b/Tropical/Defs.lean
++-+-+@@ -1,608 +1,482 @@
++-+-+ --- a/Tropical/Defs.lean
++-+-+ +++ b/Tropical/Defs.lean
++-+-+-@@ -1,124 +1,482 @@
++-+-+--/-
++-+-+--Copyright (c) 2025. All rights reserved.
++-+-+--Released under Apache 2.0 license as described in the file LICENSE.
++-+-+--
++-+-+--# GL₃ Tropical Satake Classification — Definitions
++-+-+--
++-+-+--## Overview
++-+-+--
++-+-+--This file provides the core definitions for the GL₃ tropical Satake
++-+-+--classification theorem on bounded support. We model the dominant coweight
++-+-+--chamber for GL₃ (modulo center) as pairs `(a, b) ∈ ℕ²`, representing the
++-+-+--dominant coweight `(a + b, b, 0)`.
++-+-+--
++-+-+--## Mathematical Model
++-+-+--
++-+-+--The tropical Hecke algebra is modeled by *edge data*: a pair of functions
++-+-+--on `ℕ` representing the generator coefficients along the two simple-coroot
++-+-+--directions of the GL₃ dominant chamber. The tropical Satake transform extends
++-+-+--edge data to the full chamber via the additive formula
++-+-+--
++-+-+--  `D(a, b) = f₁(a) + f₂(b)`
++-+-+--
++-+-+--reflecting the factored structure of the GL₃ Satake kernel in the tropical limit.
++-+-+--
++-+-+--The admissibility conditions characterize which functions on the dominant chamber
++-+-+--arise as images of the tropical Satake transform. They decompose into:
++-+-+--
++-+-+--* **EdgeValuationCompatible** — normalization at the origin
++-+-+--* **Levi12Compatible** — first-coordinate increment independence
++-+-+--* **Levi23Compatible** — second-coordinate increment independence
++-+-+--* **AdjacentFacetCompatible** — vanishing discrete Laplacian
++-+-+--
++-+-+--These conditions are shown to be mutually equivalent (up to the origin condition)
++-+-+--and collectively equivalent to additive separability `D(a,b) = D(a,0) + D(0,b)`.
++-+-+---/
++-+-+--import Mathlib
++-+-+--
++-+-+--namespace TropSatakeGL3
++-+-+--
++-+-+--/-! ## Core Types -/
++-+-+--
++-+-+--/-- Dominant coweight for GL₃ (mod center), parameterized as
++-+-+--    `(a, b) ↦ (a + b, b, 0)`. -/
++-+-+--abbrev DomWt := ℕ × ℕ
++-+-+--
++-+-+--/-- A tropical datum: a real-valued function on the dominant chamber. -/
++-+-+--abbrev TropDatum := DomWt → ℝ
++-+-+--
++-+-+--/-- Height of a dominant coweight: `height(a, b) = a + b = λ₁`. -/
++-+-+--def height (p : DomWt) : ℕ := p.1 + p.2
++-+-+--
++-+-+--@[simp] lemma height_def (a b : ℕ) : height (a, b) = a + b := rfl
++-+-+--
++-+-+--/-! ## Bounded Support -/
++-+-+--
++-+-+--/-- Bounded support: the datum vanishes above a given height. -/
++-+-+--def BoundedSupport (N : ℕ) (D : TropDatum) : Prop :=
++-+-+--  ∀ p : DomWt, N < p.1 + p.2 → D p = 0
++-+-+--
++-+-+--/-! ## Tropical Hecke Algebra -/
++-+-+--
++-+-+--/-- A tropical Hecke element for GL₃, given by edge data along the two
++-+-+--    simple-coroot directions, normalized so that both vanish at the origin.
++-+-+--
++-+-+--    * `edge1` stores the values along the first wall `{(a, 0) : a ∈ ℕ}`
++-+-+--    * `edge2` stores the values along the second wall `{(0, b) : b ∈ ℕ}` -/
++-+-+--@[ext]
++-+-+--structure TropHecke where
++-+-+--  /-- Generator coefficients along the first simple-coroot direction. -/
++-+-+--  edge1 : ℕ → ℝ
++-+-+--  /-- Generator coefficients along the second simple-coroot direction. -/
++-+-+--  edge2 : ℕ → ℝ
++-+-+--  /-- Normalization: edge1 vanishes at the origin. -/
++-+-+--  edge1_zero : edge1 0 = 0
++-+-+--  /-- Normalization: edge2 vanishes at the origin. -/
++-+-+--  edge2_zero : edge2 0 = 0
++-+-+--
++-+-+--/-- The tropical Satake transform for GL₃: extends edge data to the full
++-+-+--    dominant chamber via `D(a, b) = f₁(a) + f₂(b)`.
++-+-+--
++-+-+--    This additive extension encodes the fact that the GL₃ Satake kernel
++-+-+--    factors through the two simple-root SL₂ subgroups in the tropical limit. -/
++-+-+--noncomputable def tropSatake (h : TropHecke) : TropDatum :=
++-+-+--  fun p => h.edge1 p.1 + h.edge2 p.2
++-+-+--
++-+-+--/-- Bounded support for Hecke elements: both edge functions vanish beyond height N. -/
++-+-+--def HeckeBoundedSupport (N : ℕ) (h : TropHecke) : Prop :=
++-+-+--  (∀ a, N < a → h.edge1 a = 0) ∧ (∀ b, N < b → h.edge2 b = 0)
++-+-+--
++-+-+--/-! ## Admissibility Conditions -/
++-+-+--
++-+-+--/-- **Edge valuation compatibility**: the datum vanishes at the origin.
++-+-+--    This is the normalization condition corresponding to the identity
++-+-+--    element of the Hecke algebra. -/
++-+-+--def EdgeValuationCompatible (D : TropDatum) : Prop :=
++-+-+--  D (0, 0) = 0
++-+-+--
++-+-+--/-- **Levi₁₂ compatibility**: increments in the first coordinate direction
++-+-+--    are independent of the second coordinate. This corresponds to the
++-+-+--    rank-2 Levi subgroup for the simple root α₁. -/
++-+-+--def Levi12Compatible (D : TropDatum) : Prop :=
++-+-+--  ∀ a b : ℕ, D (a + 1, b) - D (a, b) = D (a + 1, 0) - D (a, 0)
++-+-+--
++-+-+--/-- **Levi₂₃ compatibility**: increments in the second coordinate direction
++-+-+--    are independent of the first coordinate. This corresponds to the
++-+-+--    rank-2 Levi subgroup for the simple root α₂. -/
++-+-+--def Levi23Compatible (D : TropDatum) : Prop :=
++-+-+--  ∀ a b : ℕ, D (a, b + 1) - D (a, b) = D (0, b + 1) - D (0, b)
++-+-+--
++-+-+--/-- **Adjacent facet compatibility**: the discrete Laplacian vanishes,
++-+-+--    expressing the commutativity of the two simple-root propagation
++-+-+--    operators on the dominant chamber. -/
++-+-+--def AdjacentFacetCompatible (D : TropDatum) : Prop :=
++-+-+--  ∀ a b : ℕ, D (a + 1, b + 1) + D (a, b) = D (a + 1, b) + D (a, b + 1)
++-+-+--
++-+-+--/-- **Full Satake admissibility**: conjunction of all four compatibility
++-+-+--    conditions for the GL₃ tropical Satake transform. -/
++-+-+--def SatakeAdmissible (D : TropDatum) : Prop :=
++-+-+--  EdgeValuationCompatible D ∧
++-+-+--  Levi12Compatible D ∧
++-+-+--  Levi23Compatible D ∧
++-+-+--  AdjacentFacetCompatible D
++-+-+--
++-+-+--end TropSatakeGL3+--- a/Tropical/Defs.lean
++-+-+-++++ b/Tropical/Defs.lean
++-+-+-+@@ -1,327 +1,153 @@
++-+-+-+---- a/Tropical/Defs.lean
++-+-+-+-+++ b/Tropical/Defs.lean
++-+-+-+-@@ -1,172 +1,153 @@
++-+-+-+----- a/MachineLearning/Defs.lean
++-+-+-+--+++ b/MachineLearning/Defs.lean
++-+-+-+--@@ -1,105 +1,86 @@
++-+-+-+-- import Mathlib
++-+-+-+-- 
++-+-+-+-- /-!
++-+-+-+---# Top-K Robustness: Definitions
++-+-+-+--+# Top-k Order Statistics and Robustness Definitions
++-+-+-+-- 
++-+-+-+---Core definitions for the top-`k` certified robustness theory for multiclass
++-+-+-+---piecewise-linear networks. All definitions avoid sorting machinery and instead
++-+-+-+---phrase top-`k` membership via pairwise comparison against outside classes.
++-+-+-+--+This file defines the core objects for top-k certified robustness:
++-+-+-+-- 
++-+-+-+---## Main definitions
++-+-+-+--+* `kthLargest s k` — the (k+1)-th largest value of `s : Fin C → ℝ` (0-indexed)
++-+-+-+--+* `topkGap s k` — the gap between the k-th and (k+1)-th largest values
++-+-+-+--+* `topKSet s k` — the set of indices with scores strictly above the (k+1)-th largest
++-+-+-+-- 
++-+-+-+---* `scoreGap` — The score gap `f(x,i) - f(x,j)` between two classes.
++-+-+-+---* `finCompl` — The complement of a finset `S` in `Fin n`.
++-+-+-+---* `crossGaps` — The finite set of all score gaps between classes in `S` and classes outside `S`.
++-+-+-+---* `topkMargin'` — The minimum score gap across all (in, out) pairs, via `Finset.min'`.
++-+-+-+---* `IsTopKSet` — Predicate: all classes in `S` weakly dominate all classes outside `S`.
++-+-+-+---* `StrictTopKSet` — Predicate: all classes in `S` strictly dominate all classes outside `S`.
++-+-+-+--+The k-th largest value is defined via the classical "sup of infima" characterization:
++-+-+-+--+  `kthLargest s k = max_{|S|=k+1} min_{i ∈ S} s(i)`
++-+-+-+--+
++-+-+-+--+This definition is proof-friendly because the perturbation bound follows directly
++-+-+-+--+from the monotonicity of inf and sup operations.
++-+-+-+-- -/
++-+-+-+--+
++-+-+-+--+noncomputable section
++-+-+-+-- 
++-+-+-+-- open Finset
++-+-+-+-- 
++-+-+-+---noncomputable section
++-+-+-+--+/-! ## Auxiliary lemmas for powersetCard -/
++-+-+-+-- 
++-+-+-+---variable {n : ℕ}
++-+-+-+--+/-- Nonemptiness of powersetCard when k+1 ≤ C -/
++-+-+-+--+lemma powersetCard_univ_nonempty {C : ℕ} (k : ℕ) (h : k < C) :
++-+-+-+--+    ((univ : Finset (Fin C)).powersetCard (k + 1)).Nonempty := by
++-+-+-+--+  rw [powersetCard_nonempty, card_univ, Fintype.card_fin]; omega
++-+-+-+-- 
++-+-+-+---/-- The score gap between class `i` and class `j` at input `x`. -/
++-+-+-+---def scoreGap {α : Type*} (f : α → Fin n → ℝ) (x : α) (i j : Fin n) : ℝ :=
++-+-+-+---  f x i - f x j
++-+-+-+--+/-- Any member of `powersetCard (k+1) univ` is nonempty -/
++-+-+-+--+lemma nonempty_of_mem_powersetCard_succ {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
++-+-+-+--+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.Nonempty := by
++-+-+-+--+  rw [nonempty_iff_ne_empty]
++-+-+-+--+  intro h
++-+-+-+--+  have := (mem_powersetCard.mp hS).2
++-+-+-+--+  rw [h, card_empty] at this; omega
++-+-+-+-- 
++-+-+-+---/-- The complement of `S` in `Fin n`, as a `Finset`. -/
++-+-+-+---def finCompl (S : Finset (Fin n)) : Finset (Fin n) :=
++-+-+-+---  Finset.univ.filter fun j => j ∉ S
++-+-+-+--+/-- Card of members of powersetCard -/
++-+-+-+--+lemma card_of_mem_powersetCard {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
++-+-+-+--+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.card = k + 1 :=
++-+-+-+--+  (mem_powersetCard.mp hS).2
++-+-+-+-- 
++-+-+-+---/-- The finite set of all score gaps `f(x,i) - f(x,j)` for `i ∈ S` and `j ∉ S`. -/
++-+-+-+---def crossGaps {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Finset ℝ :=
++-+-+-+---  (S ×ˢ finCompl S).image (fun p => scoreGap f x p.1 p.2)
++-+-+-+--+/-! ## Core Definitions -/
++-+-+-+-- 
++-+-+-+---/-- Nonemptiness of `crossGaps` from nonemptiness of `S` and its complement. -/
++-+-+-+---theorem crossGaps_nonempty {α : Type*} (f : α → Fin n → ℝ) (x : α)
++-+-+-+---    (S : Finset (Fin n))
++-+-+-+---    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) :
++-+-+-+---    (crossGaps f x S).Nonempty := by
++-+-+-+---  rcases hS with ⟨i, hi⟩; rcases hSc with ⟨j, hj⟩
++-+-+-+---  exact ⟨scoreGap f x i j, Finset.mem_image.mpr
++-+-+-+---    ⟨(i, j), Finset.mem_product.mpr ⟨hi, hj⟩, rfl⟩⟩
++-+-+-+--+/-- The k-th largest value (0-indexed) of a finite score function `s : Fin C → ℝ`.
++-+-+-+--+    Defined as the maximum over all (k+1)-element subsets of `Fin C` of the
++-+-+-+--+    minimum value of `s` on the subset:
++-+-+-+--+      `kthLargest s k = sup_{|S|=k+1} inf_{i ∈ S} s(i)`
++-+-+-+--+    Returns 0 if `k ≥ C`. -/
++-+-+-+--+def kthLargest {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
++-+-+-+--+  if h : k < C then
++-+-+-+--+    ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
++-+-+-+--+      (powersetCard_univ_nonempty k h)
++-+-+-+--+      (fun S => if hne : S.Nonempty then S.inf' hne s else 0)
++-+-+-+--+  else 0
++-+-+-+-- 
++-+-+-+---/-- The minimum score gap across all `(i ∈ S, j ∉ S)` pairs.
++-+-+-+---This is the "top-k margin" — the smallest advantage any in-set class holds
++-+-+-+---over any out-set class. -/
++-+-+-+---def topkMargin' {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n))
++-+-+-+---    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) : ℝ :=
++-+-+-+---  (crossGaps f x S).min' (crossGaps_nonempty f x S hS hSc)
++-+-+-+--+/-- The top-k gap: the difference between the k-th largest and (k+1)-th largest values.
++-+-+-+--+    For `k ≥ 1`, this measures the separation between the top-k scores and the rest.
++-+-+-+--+    `topkGap s k = kthLargest s (k-1) - kthLargest s k` -/
++-+-+-+--+def topkGap {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
++-+-+-+--+  kthLargest s (k - 1) - kthLargest s k
++-+-+-+-- 
++-+-+-+---/-- `S` is a (weak) top-k set at `x`: every class in `S` has score ≥ every class
++-+-+-+---outside `S`. -/
++-+-+-+---def IsTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
++-+-+-+---  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j ≤ f x i
++-+-+-+--+/-- The top-k set: the set of indices whose score strictly exceeds the (k+1)-th
++-+-+-+--+    largest value. Under a positive gap condition, this has exactly k elements. -/
++-+-+-+--+def topKSet {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : Finset (Fin C) :=
++-+-+-+--+  univ.filter (fun i => kthLargest s k < s i)
++-+-+-+-- 
++-+-+-+---/-- `S` is a strict top-k set at `x`: every class in `S` has score strictly greater
++-+-+-+---than every class outside `S`. -/
++-+-+-+---def StrictTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
++-+-+-+---  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j < f x i
++-+-+-+--+/-! ## Basic kthLargest simplification -/
++-+-+-+-- 
++-+-+-+---/-- A strict top-k set is also a weak top-k set. -/
++-+-+-+---theorem StrictTopKSet.isTopKSet {α : Type*} {f : α → Fin n → ℝ} {x : α}
++-+-+-+---    {S : Finset (Fin n)}
++-+-+-+---    (h : StrictTopKSet f x S) : IsTopKSet f x S :=
++-+-+-+---  fun _ _ hi hj => le_of_lt (h hi hj)
++-+-+-+--+/-- Unfold kthLargest when k < C -/
++-+-+-+--+lemma kthLargest_def {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
++-+-+-+--+    kthLargest s k =
++-+-+-+--+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
++-+-+-+--+        (powersetCard_univ_nonempty k hk)
++-+-+-+--+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) := by
++-+-+-+--+  simp [kthLargest, hk]
++-+-+-+-- 
++-+-+-+---/-- Membership in `crossGaps` unpacked. -/
++-+-+-+---theorem mem_crossGaps_iff {α : Type*} {f : α → Fin n → ℝ} {x : α}
++-+-+-+---    {S : Finset (Fin n)} {r : ℝ} :
++-+-+-+---    r ∈ crossGaps f x S ↔ ∃ i ∈ S, ∃ j, j ∉ S ∧ r = scoreGap f x i j := by
++-+-+-+---  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
++-+-+-+---    Finset.mem_filter, Finset.mem_univ, true_and]
++-+-+-+---  constructor
++-+-+-+---  · rintro ⟨⟨i, j⟩, ⟨hi, hj⟩, heq⟩
++-+-+-+---    exact ⟨i, hi, j, hj, heq.symm⟩
++-+-+-+---  · rintro ⟨i, hi, j, hj, heq⟩
++-+-+-+---    exact ⟨⟨i, j⟩, ⟨hi, hj⟩, heq.symm⟩
++-+-+-+---
++-+-+-+---/-- Every `(i, j)` gap with `i ∈ S`, `j ∉ S` is at least the top-k margin. -/
++-+-+-+---theorem topkMargin'_le_scoreGap {α : Type*} {f : α → Fin n → ℝ} {x : α}
++-+-+-+---    {S : Finset (Fin n)}
++-+-+-+---    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
++-+-+-+---    {i j : Fin n} (hi : i ∈ S) (hj : j ∉ S) :
++-+-+-+---    topkMargin' f x S hS hSc ≤ scoreGap f x i j := by
++-+-+-+---  apply Finset.min'_le
++-+-+-+---  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
++-+-+-+---    Finset.mem_filter, Finset.mem_univ, true_and]
++-+-+-+---  exact ⟨⟨i, j⟩, ⟨hi, hj⟩, rfl⟩
++-+-+-+---
++-+-+-+---/-- Positive top-k margin implies `StrictTopKSet`. -/
++-+-+-+---theorem strictTopKSet_of_pos_margin {α : Type*} {f : α → Fin n → ℝ} {x : α}
++-+-+-+---    {S : Finset (Fin n)}
++-+-+-+---    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
++-+-+-+---    (hpos : 0 < topkMargin' f x S hS hSc) :
++-+-+-+---    StrictTopKSet f x S := by
++-+-+-+---  intro i j hi hj
++-+-+-+---  have h : topkMargin' f x S hS hSc ≤ scoreGap f x i j :=
++-+-+-+---    topkMargin'_le_scoreGap hi hj
++-+-+-+---  simp only [scoreGap] at h
++-+-+-+---  linarith
++-+-+-+--+/-- The sup' function on powersetCard evaluates to inf' on nonempty subsets -/
++-+-+-+--+lemma kthLargest_eq_sup'_inf' {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
++-+-+-+--+    kthLargest s k =
++-+-+-+--+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
++-+-+-+--+        (powersetCard_univ_nonempty k hk)
++-+-+-+--+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) :=
++-+-+-+--+  kthLargest_def s k hk
++-+-+-+-- 
++-+-+-+-- end+/-
++-+-+-+-+Copyright (c) 2025. All rights reserved.
++-+-+-+-+Released under Apache 2.0 license as described in the file LICENSE.
++-+-+-+-+
++-+-+-+-+# GL₃ Tropical Satake Surjectivity — Definitions
++-+-+-+-+
++-+-+-+-+This file provides the foundational definitions for the GL₃ tropical Satake
++-+-+-+-+surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
++-+-+-+-+the Satake support extraction map, and the admissibility predicate.
++-+-+-+-+-/
++-+-+-+-+import Mathlib
++-+-+-+-+
++-+-+-+-+namespace GL3TropicalSatake
++-+-+-+-+
++-+-+-+-+/-! ## Sorting into Dominant Chamber -/
++-+-+-+-+
++-+-+-+-+/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
++-+-+-+-+def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
++-+-+-+-+  (max a (max b c),
++-+-+-+-+   a + b + c - max a (max b c) - min a (min b c),
++-+-+-+-+   min a (min b c))
++-+-+-+-+
++-+-+-+-+theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
++-+-+-+-+  simp only [sort₃]; omega
++-+-+-+-+
++-+-+-+-+theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
++-+-+-+-+  simp only [sort₃]; omega
++-+-+-+-+
++-+-+-+-+theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
++-+-+-+-+    sort₃ a b c = (a, b, c) := by
++-+-+-+-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+-+-+
++-+-+-+-+theorem sort₃_sum (a b c : ℤ) :
++-+-+-+-+    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
++-+-+-+-+  simp only [sort₃]; omega
++-+-+-+-+
++-+-+-+-+theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
++-+-+-+-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+-+-+
++-+-+-+-+theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
++-+-+-+-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+-+-+
++-+-+-+-+theorem sort₃_idempotent (a b c : ℤ) :
++-+-+-+-+    let s := sort₃ a b c
++-+-+-+-+    sort₃ s.1 s.2.1 s.2.2 = s := by
++-+-+-+-+  have h1 := sort₃_fst_ge_snd a b c
++-+-+-+-+  have h2 := sort₃_snd_ge_thd a b c
++-+-+-+-+  exact sort₃_of_dominant h1 h2
++-+-+-+-+
++-+-+-+-+/-! ## Dominant Coweights -/
++-+-+-+-+
++-+-+-+-+/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
++-+-+-+-+def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
++-+-+-+-+
++-+-+-+-+instance : DecidableEq GL3Dom := Subtype.instDecidableEq
++-+-+-+-+
++-+-+-+-+/-- Construct the dominant representative of any triple. -/
++-+-+-+-+def toGL3Dom (a b c : ℤ) : GL3Dom :=
++-+-+-+-+  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
++-+-+-+-+
++-+-+-+-+/-- The zero dominant coweight. -/
++-+-+-+-+def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
++-+-+-+-+
++-+-+-+-+instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
++-+-+-+-+
++-+-+-+-+@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
++-+-+-+-+
++-+-+-+-+/-- Componentwise addition of dominant coweights is dominant. -/
++-+-+-+-+def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
++-+-+-+-+  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
++-+-+-+-+   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
++-+-+-+-+
++-+-+-+-+instance : Add GL3Dom := ⟨GL3Dom.add⟩
++-+-+-+-+
++-+-+-+-+@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
++-+-+-+-+    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
++-+-+-+-+
++-+-+-+-+/-- toGL3Dom of a dominant triple returns the original triple. -/
++-+-+-+-+theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
++-+-+-+-+    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
++-+-+-+-+  simp only [toGL3Dom]
++-+-+-+-+  exact Subtype.ext (sort₃_of_dominant h1 h2)
++-+-+-+-+
++-+-+-+-+/-- toGL3Dom is invariant under transposition (12). -/
++-+-+-+-+theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
++-+-+-+-+  exact Subtype.ext (sort₃_swap12 a b c)
++-+-+-+-+
++-+-+-+-+/-- toGL3Dom is invariant under the 3-cycle. -/
++-+-+-+-+theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
++-+-+-+-+  exact Subtype.ext (sort₃_cycle a b c)
++-+-+-+-+
++-+-+-+-+/-! ## Support Datum -/
++-+-+-+-+
++-+-+-+-+/-- A support datum is a function from dominant coweights to ℤ. -/
++-+-+-+-+def SupportDatum := GL3Dom → ℤ
++-+-+-+-+
++-+-+-+-+instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
++-+-+-+-+
++-+-+-+-+
++-+-+-+-+
++-+-+-+-+/-- Finite support means vanishing outside some finite set. -/
++-+-+-+-+def FiniteSupport (h : SupportDatum) : Prop :=
++-+-+-+-+  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
++-+-+-+-+
++-+-+-+-+/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
++-+-+-+-+
++-+-+-+-+/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
++-+-+-+-+    transposition (12) and the 3-cycle (123). -/
++-+-+-+-+def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
++-+-+-+-+  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
++-+-+-+-+
++-+-+-+-+/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
++-+-+-+-+def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
++-+-+-+-+
++-+-+-+-+instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
++-+-+-+-+
++-+-+-+-+/-- Extensionality for tropical Hecke functions. -/
++-+-+-+-+@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
++-+-+-+-+    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
++-+-+-+-+  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
++-+-+-+-+
++-+-+-+-+/-! ## Satake Support Map -/
++-+-+-+-+
++-+-+-+-+/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
++-+-+-+-+def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
++-+-+-+-+  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
++-+-+-+-+
++-+-+-+-+/-! ## Satake Extension -/
++-+-+-+-+
++-+-+-+-+/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
++-+-+-+-+def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
++-+-+-+-+  fun a b c => h (toGL3Dom a b c)
++-+-+-+-+
++-+-+-+-+theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
++-+-+-+-+  constructor
++-+-+-+-+  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
++-+-+-+-+  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
++-+-+-+-+
++-+-+-+-+/-- Lift a support datum to a tropical Hecke function. -/
++-+-+-+-+def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
++-+-+-+-+  ⟨satakeExtend h, satakeExtend_invariant h⟩
++-+-+-+-+
++-+-+-+-+/-! ## S₃-invariant functions are determined by their dominant values -/
++-+-+-+-+
++-+-+-+-+/-
++-+-+-+-+Any triple has the same S₃-invariant value as its sorted version.
++-+-+-+-+-/
++-+-+-+-+theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
++-+-+-+-+    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
++-+-+-+-+  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
++-+-+-+-+  grind
++-+-+-+-+
++-+-+-+-+end GL3TropicalSatake+/-
++-+-+-++Copyright (c) 2025. All rights reserved.
++-+-+-++Released under Apache 2.0 license as described in the file LICENSE.
++-+-+-++
++-+-+-++# GL₃ Tropical Satake Surjectivity — Definitions
++-+-+-++
++-+-+-++This file provides the foundational definitions for the GL₃ tropical Satake
++-+-+-++surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
++-+-+-++the Satake support extraction map, and the admissibility predicate.
++-+-+-++-/
++-+-+-++import Mathlib
++-+-+-++
++-+-+-++namespace GL3TropicalSatake
++-+-+-++
++-+-+-++/-! ## Sorting into Dominant Chamber -/
++-+-+-++
++-+-+-++/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
++-+-+-++def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
++-+-+-++  (max a (max b c),
++-+-+-++   a + b + c - max a (max b c) - min a (min b c),
++-+-+-++   min a (min b c))
++-+-+-++
++-+-+-++theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
++-+-+-++  simp only [sort₃]; omega
++-+-+-++
++-+-+-++theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
++-+-+-++  simp only [sort₃]; omega
++-+-+-++
++-+-+-++theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
++-+-+-++    sort₃ a b c = (a, b, c) := by
++-+-+-++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+-++
++-+-+-++theorem sort₃_sum (a b c : ℤ) :
++-+-+-++    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
++-+-+-++  simp only [sort₃]; omega
++-+-+-++
++-+-+-++theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
++-+-+-++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+-++
++-+-+-++theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
++-+-+-++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+-++
++-+-+-++theorem sort₃_idempotent (a b c : ℤ) :
++-+-+-++    let s := sort₃ a b c
++-+-+-++    sort₃ s.1 s.2.1 s.2.2 = s := by
++-+-+-++  have h1 := sort₃_fst_ge_snd a b c
++-+-+-++  have h2 := sort₃_snd_ge_thd a b c
++-+-+-++  exact sort₃_of_dominant h1 h2
++-+-+-++
++-+-+-++/-! ## Dominant Coweights -/
++-+-+-++
++-+-+-++/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
++-+-+-++def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
++-+-+-++
++-+-+-++instance : DecidableEq GL3Dom := Subtype.instDecidableEq
++-+-+-++
++-+-+-++/-- Construct the dominant representative of any triple. -/
++-+-+-++def toGL3Dom (a b c : ℤ) : GL3Dom :=
++-+-+-++  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
++-+-+-++
++-+-+-++/-- The zero dominant coweight. -/
++-+-+-++def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
++-+-+-++
++-+-+-++instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
++-+-+-++
++-+-+-++@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
++-+-+-++
++-+-+-++/-- Componentwise addition of dominant coweights is dominant. -/
++-+-+-++def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
++-+-+-++  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
++-+-+-++   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
++-+-+-++
++-+-+-++instance : Add GL3Dom := ⟨GL3Dom.add⟩
++-+-+-++
++-+-+-++@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
++-+-+-++    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
++-+-+-++
++-+-+-++/-- toGL3Dom of a dominant triple returns the original triple. -/
++-+-+-++theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
++-+-+-++    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
++-+-+-++  simp only [toGL3Dom]
++-+-+-++  exact Subtype.ext (sort₃_of_dominant h1 h2)
++-+-+-++
++-+-+-++/-- toGL3Dom is invariant under transposition (12). -/
++-+-+-++theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
++-+-+-++  exact Subtype.ext (sort₃_swap12 a b c)
++-+-+-++
++-+-+-++/-- toGL3Dom is invariant under the 3-cycle. -/
++-+-+-++theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
++-+-+-++  exact Subtype.ext (sort₃_cycle a b c)
++-+-+-++
++-+-+-++/-! ## Support Datum -/
++-+-+-++
++-+-+-++/-- A support datum is a function from dominant coweights to ℤ. -/
++-+-+-++def SupportDatum := GL3Dom → ℤ
++-+-+-++
++-+-+-++instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
++-+-+-++
++-+-+-++
++-+-+-++
++-+-+-++/-- Finite support means vanishing outside some finite set. -/
++-+-+-++def FiniteSupport (h : SupportDatum) : Prop :=
++-+-+-++  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
++-+-+-++
++-+-+-++/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
++-+-+-++
++-+-+-++/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
++-+-+-++    transposition (12) and the 3-cycle (123). -/
++-+-+-++def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
++-+-+-++  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
++-+-+-++
++-+-+-++/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
++-+-+-++def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
++-+-+-++
++-+-+-++instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
++-+-+-++
++-+-+-++/-- Extensionality for tropical Hecke functions. -/
++-+-+-++@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
++-+-+-++    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
++-+-+-++  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
++-+-+-++
++-+-+-++/-! ## Satake Support Map -/
++-+-+-++
++-+-+-++/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
++-+-+-++def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
++-+-+-++  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
++-+-+-++
++-+-+-++/-! ## Satake Extension -/
++-+-+-++
++-+-+-++/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
++-+-+-++def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
++-+-+-++  fun a b c => h (toGL3Dom a b c)
++-+-+-++
++-+-+-++theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
++-+-+-++  constructor
++-+-+-++  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
++-+-+-++  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
++-+-+-++
++-+-+-++/-- Lift a support datum to a tropical Hecke function. -/
++-+-+-++def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
++-+-+-++  ⟨satakeExtend h, satakeExtend_invariant h⟩
++-+-+-++
++-+-+-++/-! ## S₃-invariant functions are determined by their dominant values -/
++-+-+-++
++-+-+-++/-
++-+-+-++Any triple has the same S₃-invariant value as its sorted version.
++-+-+-++-/
++-+-+-++theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
++-+-+-++    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
++-+-+-++  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
++-+-+-++  grind
++-+-+-++
++-+-+-++end GL3TropicalSatake+@@ -1,327 +1,153 @@
++-+-++---- a/Tropical/Defs.lean
++-+-++-+++ b/Tropical/Defs.lean
++-+-++-@@ -1,172 +1,153 @@
++-+-++----- a/MachineLearning/Defs.lean
++-+-++--+++ b/MachineLearning/Defs.lean
++-+-++--@@ -1,105 +1,86 @@
++-+-++-- import Mathlib
++-+-++-- 
++-+-++-- /-!
++-+-++---# Top-K Robustness: Definitions
++-+-++--+# Top-k Order Statistics and Robustness Definitions
++-+-++-- 
++-+-++---Core definitions for the top-`k` certified robustness theory for multiclass
++-+-++---piecewise-linear networks. All definitions avoid sorting machinery and instead
++-+-++---phrase top-`k` membership via pairwise comparison against outside classes.
++-+-++--+This file defines the core objects for top-k certified robustness:
++-+-++-- 
++-+-++---## Main definitions
++-+-++--+* `kthLargest s k` — the (k+1)-th largest value of `s : Fin C → ℝ` (0-indexed)
++-+-++--+* `topkGap s k` — the gap between the k-th and (k+1)-th largest values
++-+-++--+* `topKSet s k` — the set of indices with scores strictly above the (k+1)-th largest
++-+-++-- 
++-+-++---* `scoreGap` — The score gap `f(x,i) - f(x,j)` between two classes.
++-+-++---* `finCompl` — The complement of a finset `S` in `Fin n`.
++-+-++---* `crossGaps` — The finite set of all score gaps between classes in `S` and classes outside `S`.
++-+-++---* `topkMargin'` — The minimum score gap across all (in, out) pairs, via `Finset.min'`.
++-+-++---* `IsTopKSet` — Predicate: all classes in `S` weakly dominate all classes outside `S`.
++-+-++---* `StrictTopKSet` — Predicate: all classes in `S` strictly dominate all classes outside `S`.
++-+-++--+The k-th largest value is defined via the classical "sup of infima" characterization:
++-+-++--+  `kthLargest s k = max_{|S|=k+1} min_{i ∈ S} s(i)`
++-+-++--+
++-+-++--+This definition is proof-friendly because the perturbation bound follows directly
++-+-++--+from the monotonicity of inf and sup operations.
++-+-++-- -/
++-+-++--+
++-+-++--+noncomputable section
++-+-++-- 
++-+-++-- open Finset
++-+-++-- 
++-+-++---noncomputable section
++-+-++--+/-! ## Auxiliary lemmas for powersetCard -/
++-+-++-- 
++-+-++---variable {n : ℕ}
++-+-++--+/-- Nonemptiness of powersetCard when k+1 ≤ C -/
++-+-++--+lemma powersetCard_univ_nonempty {C : ℕ} (k : ℕ) (h : k < C) :
++-+-++--+    ((univ : Finset (Fin C)).powersetCard (k + 1)).Nonempty := by
++-+-++--+  rw [powersetCard_nonempty, card_univ, Fintype.card_fin]; omega
++-+-++-- 
++-+-++---/-- The score gap between class `i` and class `j` at input `x`. -/
++-+-++---def scoreGap {α : Type*} (f : α → Fin n → ℝ) (x : α) (i j : Fin n) : ℝ :=
++-+-++---  f x i - f x j
++-+-++--+/-- Any member of `powersetCard (k+1) univ` is nonempty -/
++-+-++--+lemma nonempty_of_mem_powersetCard_succ {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
++-+-++--+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.Nonempty := by
++-+-++--+  rw [nonempty_iff_ne_empty]
++-+-++--+  intro h
++-+-++--+  have := (mem_powersetCard.mp hS).2
++-+-++--+  rw [h, card_empty] at this; omega
++-+-++-- 
++-+-++---/-- The complement of `S` in `Fin n`, as a `Finset`. -/
++-+-++---def finCompl (S : Finset (Fin n)) : Finset (Fin n) :=
++-+-++---  Finset.univ.filter fun j => j ∉ S
++-+-++--+/-- Card of members of powersetCard -/
++-+-++--+lemma card_of_mem_powersetCard {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
++-+-++--+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.card = k + 1 :=
++-+-++--+  (mem_powersetCard.mp hS).2
++-+-++-- 
++-+-++---/-- The finite set of all score gaps `f(x,i) - f(x,j)` for `i ∈ S` and `j ∉ S`. -/
++-+-++---def crossGaps {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Finset ℝ :=
++-+-++---  (S ×ˢ finCompl S).image (fun p => scoreGap f x p.1 p.2)
++-+-++--+/-! ## Core Definitions -/
++-+-++-- 
++-+-++---/-- Nonemptiness of `crossGaps` from nonemptiness of `S` and its complement. -/
++-+-++---theorem crossGaps_nonempty {α : Type*} (f : α → Fin n → ℝ) (x : α)
++-+-++---    (S : Finset (Fin n))
++-+-++---    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) :
++-+-++---    (crossGaps f x S).Nonempty := by
++-+-++---  rcases hS with ⟨i, hi⟩; rcases hSc with ⟨j, hj⟩
++-+-++---  exact ⟨scoreGap f x i j, Finset.mem_image.mpr
++-+-++---    ⟨(i, j), Finset.mem_product.mpr ⟨hi, hj⟩, rfl⟩⟩
++-+-++--+/-- The k-th largest value (0-indexed) of a finite score function `s : Fin C → ℝ`.
++-+-++--+    Defined as the maximum over all (k+1)-element subsets of `Fin C` of the
++-+-++--+    minimum value of `s` on the subset:
++-+-++--+      `kthLargest s k = sup_{|S|=k+1} inf_{i ∈ S} s(i)`
++-+-++--+    Returns 0 if `k ≥ C`. -/
++-+-++--+def kthLargest {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
++-+-++--+  if h : k < C then
++-+-++--+    ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
++-+-++--+      (powersetCard_univ_nonempty k h)
++-+-++--+      (fun S => if hne : S.Nonempty then S.inf' hne s else 0)
++-+-++--+  else 0
++-+-++-- 
++-+-++---/-- The minimum score gap across all `(i ∈ S, j ∉ S)` pairs.
++-+-++---This is the "top-k margin" — the smallest advantage any in-set class holds
++-+-++---over any out-set class. -/
++-+-++---def topkMargin' {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n))
++-+-++---    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) : ℝ :=
++-+-++---  (crossGaps f x S).min' (crossGaps_nonempty f x S hS hSc)
++-+-++--+/-- The top-k gap: the difference between the k-th largest and (k+1)-th largest values.
++-+-++--+    For `k ≥ 1`, this measures the separation between the top-k scores and the rest.
++-+-++--+    `topkGap s k = kthLargest s (k-1) - kthLargest s k` -/
++-+-++--+def topkGap {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
++-+-++--+  kthLargest s (k - 1) - kthLargest s k
++-+-++-- 
++-+-++---/-- `S` is a (weak) top-k set at `x`: every class in `S` has score ≥ every class
++-+-++---outside `S`. -/
++-+-++---def IsTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
++-+-++---  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j ≤ f x i
++-+-++--+/-- The top-k set: the set of indices whose score strictly exceeds the (k+1)-th
++-+-++--+    largest value. Under a positive gap condition, this has exactly k elements. -/
++-+-++--+def topKSet {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : Finset (Fin C) :=
++-+-++--+  univ.filter (fun i => kthLargest s k < s i)
++-+-++-- 
++-+-++---/-- `S` is a strict top-k set at `x`: every class in `S` has score strictly greater
++-+-++---than every class outside `S`. -/
++-+-++---def StrictTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
++-+-++---  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j < f x i
++-+-++--+/-! ## Basic kthLargest simplification -/
++-+-++-- 
++-+-++---/-- A strict top-k set is also a weak top-k set. -/
++-+-++---theorem StrictTopKSet.isTopKSet {α : Type*} {f : α → Fin n → ℝ} {x : α}
++-+-++---    {S : Finset (Fin n)}
++-+-++---    (h : StrictTopKSet f x S) : IsTopKSet f x S :=
++-+-++---  fun _ _ hi hj => le_of_lt (h hi hj)
++-+-++--+/-- Unfold kthLargest when k < C -/
++-+-++--+lemma kthLargest_def {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
++-+-++--+    kthLargest s k =
++-+-++--+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
++-+-++--+        (powersetCard_univ_nonempty k hk)
++-+-++--+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) := by
++-+-++--+  simp [kthLargest, hk]
++-+-++-- 
++-+-++---/-- Membership in `crossGaps` unpacked. -/
++-+-++---theorem mem_crossGaps_iff {α : Type*} {f : α → Fin n → ℝ} {x : α}
++-+-++---    {S : Finset (Fin n)} {r : ℝ} :
++-+-++---    r ∈ crossGaps f x S ↔ ∃ i ∈ S, ∃ j, j ∉ S ∧ r = scoreGap f x i j := by
++-+-++---  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
++-+-++---    Finset.mem_filter, Finset.mem_univ, true_and]
++-+-++---  constructor
++-+-++---  · rintro ⟨⟨i, j⟩, ⟨hi, hj⟩, heq⟩
++-+-++---    exact ⟨i, hi, j, hj, heq.symm⟩
++-+-++---  · rintro ⟨i, hi, j, hj, heq⟩
++-+-++---    exact ⟨⟨i, j⟩, ⟨hi, hj⟩, heq.symm⟩
++-+-++---
++-+-++---/-- Every `(i, j)` gap with `i ∈ S`, `j ∉ S` is at least the top-k margin. -/
++-+-++---theorem topkMargin'_le_scoreGap {α : Type*} {f : α → Fin n → ℝ} {x : α}
++-+-++---    {S : Finset (Fin n)}
++-+-++---    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
++-+-++---    {i j : Fin n} (hi : i ∈ S) (hj : j ∉ S) :
++-+-++---    topkMargin' f x S hS hSc ≤ scoreGap f x i j := by
++-+-++---  apply Finset.min'_le
++-+-++---  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
++-+-++---    Finset.mem_filter, Finset.mem_univ, true_and]
++-+-++---  exact ⟨⟨i, j⟩, ⟨hi, hj⟩, rfl⟩
++-+-++---
++-+-++---/-- Positive top-k margin implies `StrictTopKSet`. -/
++-+-++---theorem strictTopKSet_of_pos_margin {α : Type*} {f : α → Fin n → ℝ} {x : α}
++-+-++---    {S : Finset (Fin n)}
++-+-++---    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
++-+-++---    (hpos : 0 < topkMargin' f x S hS hSc) :
++-+-++---    StrictTopKSet f x S := by
++-+-++---  intro i j hi hj
++-+-++---  have h : topkMargin' f x S hS hSc ≤ scoreGap f x i j :=
++-+-++---    topkMargin'_le_scoreGap hi hj
++-+-++---  simp only [scoreGap] at h
++-+-++---  linarith
++-+-++--+/-- The sup' function on powersetCard evaluates to inf' on nonempty subsets -/
++-+-++--+lemma kthLargest_eq_sup'_inf' {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
++-+-++--+    kthLargest s k =
++-+-++--+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
++-+-++--+        (powersetCard_univ_nonempty k hk)
++-+-++--+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) :=
++-+-++--+  kthLargest_def s k hk
++-+-++-- 
++-+-++-- end+/-
++-+-++-+Copyright (c) 2025. All rights reserved.
++-+-++-+Released under Apache 2.0 license as described in the file LICENSE.
++-+-++-+
++-+-++-+# GL₃ Tropical Satake Surjectivity — Definitions
++-+-++-+
++-+-++-+This file provides the foundational definitions for the GL₃ tropical Satake
++-+-++-+surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
++-+-++-+the Satake support extraction map, and the admissibility predicate.
++-+-++-+-/
++-+-++-+import Mathlib
++-+-++-+
++-+-++-+namespace GL3TropicalSatake
++-+-++-+
++-+-++-+/-! ## Sorting into Dominant Chamber -/
++-+-++-+
++-+-++-+/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
++-+-++-+def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
++-+-++-+  (max a (max b c),
++-+-++-+   a + b + c - max a (max b c) - min a (min b c),
++-+-++-+   min a (min b c))
++-+-++-+
++-+-++-+theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
++-+-++-+  simp only [sort₃]; omega
++-+-++-+
++-+-++-+theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
++-+-++-+  simp only [sort₃]; omega
++-+-++-+
++-+-++-+theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
++-+-++-+    sort₃ a b c = (a, b, c) := by
++-+-++-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-++-+
++-+-++-+theorem sort₃_sum (a b c : ℤ) :
++-+-++-+    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
++-+-++-+  simp only [sort₃]; omega
++-+-++-+
++-+-++-+theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
++-+-++-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-++-+
++-+-++-+theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
++-+-++-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-++-+
++-+-++-+theorem sort₃_idempotent (a b c : ℤ) :
++-+-++-+    let s := sort₃ a b c
++-+-++-+    sort₃ s.1 s.2.1 s.2.2 = s := by
++-+-++-+  have h1 := sort₃_fst_ge_snd a b c
++-+-++-+  have h2 := sort₃_snd_ge_thd a b c
++-+-++-+  exact sort₃_of_dominant h1 h2
++-+-++-+
++-+-++-+/-! ## Dominant Coweights -/
++-+-++-+
++-+-++-+/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
++-+-++-+def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
++-+-++-+
++-+-++-+instance : DecidableEq GL3Dom := Subtype.instDecidableEq
++-+-++-+
++-+-++-+/-- Construct the dominant representative of any triple. -/
++-+-++-+def toGL3Dom (a b c : ℤ) : GL3Dom :=
++-+-++-+  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
++-+-++-+
++-+-++-+/-- The zero dominant coweight. -/
++-+-++-+def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
++-+-++-+
++-+-++-+instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
++-+-++-+
++-+-++-+@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
++-+-++-+
++-+-++-+/-- Componentwise addition of dominant coweights is dominant. -/
++-+-++-+def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
++-+-++-+  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
++-+-++-+   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
++-+-++-+
++-+-++-+instance : Add GL3Dom := ⟨GL3Dom.add⟩
++-+-++-+
++-+-++-+@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
++-+-++-+    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
++-+-++-+
++-+-++-+/-- toGL3Dom of a dominant triple returns the original triple. -/
++-+-++-+theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
++-+-++-+    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
++-+-++-+  simp only [toGL3Dom]
++-+-++-+  exact Subtype.ext (sort₃_of_dominant h1 h2)
++-+-++-+
++-+-++-+/-- toGL3Dom is invariant under transposition (12). -/
++-+-++-+theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
++-+-++-+  exact Subtype.ext (sort₃_swap12 a b c)
++-+-++-+
++-+-++-+/-- toGL3Dom is invariant under the 3-cycle. -/
++-+-++-+theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
++-+-++-+  exact Subtype.ext (sort₃_cycle a b c)
++-+-++-+
++-+-++-+/-! ## Support Datum -/
++-+-++-+
++-+-++-+/-- A support datum is a function from dominant coweights to ℤ. -/
++-+-++-+def SupportDatum := GL3Dom → ℤ
++-+-++-+
++-+-++-+instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
++-+-++-+
++-+-++-+
++-+-++-+
++-+-++-+/-- Finite support means vanishing outside some finite set. -/
++-+-++-+def FiniteSupport (h : SupportDatum) : Prop :=
++-+-++-+  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
++-+-++-+
++-+-++-+/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
++-+-++-+
++-+-++-+/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
++-+-++-+    transposition (12) and the 3-cycle (123). -/
++-+-++-+def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
++-+-++-+  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
++-+-++-+
++-+-++-+/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
++-+-++-+def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
++-+-++-+
++-+-++-+instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
++-+-++-+
++-+-++-+/-- Extensionality for tropical Hecke functions. -/
++-+-++-+@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
++-+-++-+    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
++-+-++-+  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
++-+-++-+
++-+-++-+/-! ## Satake Support Map -/
++-+-++-+
++-+-++-+/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
++-+-++-+def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
++-+-++-+  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
++-+-++-+
++-+-++-+/-! ## Satake Extension -/
++-+-++-+
++-+-++-+/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
++-+-++-+def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
++-+-++-+  fun a b c => h (toGL3Dom a b c)
++-+-++-+
++-+-++-+theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
++-+-++-+  constructor
++-+-++-+  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
++-+-++-+  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
++-+-++-+
++-+-++-+/-- Lift a support datum to a tropical Hecke function. -/
++-+-++-+def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
++-+-++-+  ⟨satakeExtend h, satakeExtend_invariant h⟩
++-+-++-+
++-+-++-+/-! ## S₃-invariant functions are determined by their dominant values -/
++-+-++-+
++-+-++-+/-
++-+-++-+Any triple has the same S₃-invariant value as its sorted version.
++-+-++-+-/
++-+-++-+theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
++-+-++-+    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
++-+-++-+  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
++-+-++-+  grind
++-+-++-+
++-+-++-+end GL3TropicalSatake+/-
++-+-+++Copyright (c) 2025. All rights reserved.
++-+-+++Released under Apache 2.0 license as described in the file LICENSE.
++-+-+++
++-+-+++# GL₃ Tropical Satake Surjectivity — Definitions
++-+-+++
++-+-+++This file provides the foundational definitions for the GL₃ tropical Satake
++-+-+++surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
++-+-+++the Satake support extraction map, and the admissibility predicate.
++-+-+++-/
++-+-+++import Mathlib
++-+-+++
++-+-+++namespace GL3TropicalSatake
++-+-+++
++-+-+++/-! ## Sorting into Dominant Chamber -/
++-+-+++
++-+-+++/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
++-+-+++def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
++-+-+++  (max a (max b c),
++-+-+++   a + b + c - max a (max b c) - min a (min b c),
++-+-+++   min a (min b c))
++-+-+++
++-+-+++theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
++-+-+++  simp only [sort₃]; omega
++-+-+++
++-+-+++theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
++-+-+++  simp only [sort₃]; omega
++-+-+++
++-+-+++theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
++-+-+++    sort₃ a b c = (a, b, c) := by
++-+-+++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+++
++-+-+++theorem sort₃_sum (a b c : ℤ) :
++-+-+++    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
++-+-+++  simp only [sort₃]; omega
++-+-+++
++-+-+++theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
++-+-+++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+++
++-+-+++theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
++-+-+++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
++-+-+++
++-+-+++theorem sort₃_idempotent (a b c : ℤ) :
++-+-+++    let s := sort₃ a b c
++-+-+++    sort₃ s.1 s.2.1 s.2.2 = s := by
++-+-+++  have h1 := sort₃_fst_ge_snd a b c
++-+-+++  have h2 := sort₃_snd_ge_thd a b c
++-+-+++  exact sort₃_of_dominant h1 h2
++-+-+++
++-+-+++/-! ## Dominant Coweights -/
++-+-+++
++-+-+++/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
++-+-+++def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
++-+-+++
++-+-+++instance : DecidableEq GL3Dom := Subtype.instDecidableEq
++-+-+++
++-+-+++/-- Construct the dominant representative of any triple. -/
++-+-+++def toGL3Dom (a b c : ℤ) : GL3Dom :=
++-+-+++  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
++-+-+++
++-+-+++/-- The zero dominant coweight. -/
++-+-+++def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
++-+-+++
++-+-+++instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
++-+-+++
++-+-+++@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
++-+-+++
++-+-+++/-- Componentwise addition of dominant coweights is dominant. -/
++-+-+++def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
++-+-+++  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
++-+-+++   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
++-+-+++
++-+-+++instance : Add GL3Dom := ⟨GL3Dom.add⟩
++-+-+++
++-+-+++@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
++-+-+++    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
++-+-+++
++-+-+++/-- toGL3Dom of a dominant triple returns the original triple. -/
++-+-+++theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
++-+-+++    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
++-+-+++  simp only [toGL3Dom]
++-+-+++  exact Subtype.ext (sort₃_of_dominant h1 h2)
++-+-+++
++-+-+++/-- toGL3Dom is invariant under transposition (12). -/
++-+-+++theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
++-+-+++  exact Subtype.ext (sort₃_swap12 a b c)
++-+-+++
++-+-+++/-- toGL3Dom is invariant under the 3-cycle. -/
++-+-+++theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
++-+-+++  exact Subtype.ext (sort₃_cycle a b c)
++-+-+++
++-+-+++/-! ## Support Datum -/
++-+-+++
++-+-+++/-- A support datum is a function from dominant coweights to ℤ. -/
++-+-+++def SupportDatum := GL3Dom → ℤ
++-+-+++
++-+-+++instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
++-+-+++
++-+-+++
++-+-+++
++-+-+++/-- Finite support means vanishing outside some finite set. -/
++-+-+++def FiniteSupport (h : SupportDatum) : Prop :=
++-+-+++  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
++-+-+++
++-+-+++/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
++-+-+++
++-+-+++/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
++-+-+++    transposition (12) and the 3-cycle (123). -/
++-+-+++def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
++-+-+++  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
++-+-+++
++-+-+++/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
++-+-+++def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
++-+-+++
++-+-+++instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
++-+-+++
++-+-+++/-- Extensionality for tropical Hecke functions. -/
++-+-+++@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
++-+-+++    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
++-+-+++  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
++-+-+++
++-+-+++/-! ## Satake Support Map -/
++-+-+++
++-+-+++/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
++-+-+++def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
++-+-+++  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
++-+-+++
++-+-+++/-! ## Satake Extension -/
++-+-+++
++-+-+++/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
++-+-+++def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
++-+-+++  fun a b c => h (toGL3Dom a b c)
++-+-+++
++-+-+++theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
++-+-+++  constructor
++-+-+++  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
++-+-+++  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
++-+-+++
++-+-+++/-- Lift a support datum to a tropical Hecke function. -/
++-+-+++def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
++-+-+++  ⟨satakeExtend h, satakeExtend_invariant h⟩
++-+-+++
++-+-+++/-! ## S₃-invariant functions are determined by their dominant values -/
++-+-+++
++-+-+++/-
++-+-+++Any triple has the same S₃-invariant value as its sorted version.
++-+-+++-/
++-+-+++theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
++-+-+++    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
++-+-+++  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
++-+-+++  grind
++-+-+++
++-+-+++end GL3TropicalSatake+import Mathlib
++-++
++-++/-! # CatalogBuild.Logic.Defs
++-++
++-++Auto-generated from theorem catalog database.
++-++Domain: Logic
++-++Declarations: 8
++-++-/
++-++
++-++/-- r₂(n): number of representations of n as a sum of 2 squares (with signs and order).
++-++Formula: r₂(n) = 4 · Σ_{d|n} χ₋₄(d). -/
++-++def r2 (n : ℕ) : ℤ :=
++-++  4 * ∑ d ∈ (Nat.divisors n), chi4 (d : ℤ)
++-++
++-++/-- r₄(n): number of representations of n as a sum of 4 squares.
++-++Jacobi's four-square theorem: r₄(n) = 8 · Σ_{d|n, 4∤d} d. -/
++-++def r4 (n : ℕ) : ℤ :=
++-++  8 * ∑ d ∈ (Nat.divisors n).filter (fun d => ¬(4 ∣ d)), (d : ℤ)
++-++
++-++/-- r₈(n): number of representations of n as a sum of 8 squares.
++-++Formula: r₈(n) = 16 · Σ_{d|n} (-1)^{n+d} · d³. -/
++-++def r8 (n : ℕ) : ℤ :=
++-++  16 * ∑ d ∈ (Nat.divisors n), ((-1 : ℤ) ^ (n + d) * (d : ℤ) ^ 3)
++-++
++-++/-- The four-channel signature of a positive integer. -/
++-++structure IntSignature where
++-++  ch1 : ℤ  -- Channel 1: trivially 1 for all n ≥ 1 (every n is a sum of 1 square... of itself, but we use r₁(n) = 2 if n is a perfect square, 0 otherwise, or just n itself)
++-++  ch2 : ℤ  -- Channel 2: r₂(n)
++-++  ch3 : ℤ  -- Channel 3: r₄(n)
++-++  ch4 : ℤ  -- Channel 4: r₈(n)
++-++  deriving Repr
++-++
++-++/-- Compute the four-channel signature of n. -/
++-++def signature (n : ℕ) : IntSignature where
++-++  ch1 := n
++-++  ch2 := r2 n
++-++  ch3 := r4 n
++-++  ch4 := r8 n
++-++
++-++/-- Squared Euclidean distance between two signatures (using integer arithmetic). -/
++-++def sigDistSq (s t : IntSignature) : ℤ :=
++-++  (s.ch1 - t.ch1)^2 + (s.ch2 - t.ch2)^2 + (s.ch3 - t.ch3)^2 + (s.ch4 - t.ch4)^2
++-++
++-++/-- Normalized signature: each channel divided by n (as rationals). -/
++-++structure NormSignature where
++-++  ch1 : ℚ
++-++  ch2 : ℚ
++-++  ch3 : ℚ
++-++  ch4 : ℚ
++-++  deriving Repr
++-++
++-++/-- Compute the normalized signature. -/
++-++def normSignature (n : ℕ) (hn : n ≠ 0) : NormSignature :=
++-++  let s := signature n
++-++  { ch1 := (s.ch1 : ℚ) / n
++-++    ch2 := (s.ch2 : ℚ) / n
++-++    ch3 := (s.ch3 : ℚ) / n
++-++    ch4 := (s.ch4 : ℚ) / n }
++-+++--- a/Logic/Defs.lean
++++++ b/Logic/Defs.lean
+++@@ -1,1773 +1,59 @@
+++---- a/MachineLearning/Defs.lean
+++-+++ b/MachineLearning/Defs.lean
+++-@@ -1,681 +1,1090 @@
+++----- a/Bridges/Defs.lean
+++--+++ b/Bridges/Defs.lean
+++--@@ -1,497 +1,182 @@
+++------ a/Bridges/Defs.lean
+++---+++ b/Bridges/Defs.lean
+++---@@ -1,313 +1,182 @@
+++------- a/Bridges/Defs.lean
+++----+++ b/Bridges/Defs.lean
+++----@@ -1,182 +1,169 @@
+++---- /-
+++---- Copyright (c) 2025. All rights reserved.
+++-----Released under Apache 2.0 license.
+++----+Released under Apache 2.0 license as described in the file LICENSE.
+++----+-/
+++----+import Mathlib
+++---- 
+++-----# Idempotent Kantorovich–Rubinstein Duality: Core Definitions
+++----+/-!
+++----+# Functorial Mackey Completion for Maxitive Measures on Finite T₀ Spaces
+++---- 
+++-----This file defines the fundamental objects for tropical/idempotent optimal transport:
+++-----maxitive probability profiles, their integral functionals, 1-Lipschitz test functions,
+++-----the KR dual distance, couplings, and the primal Wasserstein cost.
+++----+## Overview
+++---- 
+++-----## Mathematical context
+++----+In a finite T₀ space, topology is equivalent to a specialization preorder:
+++----+closed sets are lower sets, and irreducible closed sets are principal lower
+++----+sets `↓x = {y | y ≤ x}`. We develop a completion theory for set functions
+++----+(modeling maxitive measures / capacities) via **codensity assignments** on
+++----+these irreducible closed sets.
+++---- 
+++-----In the max-plus semiring (ℝ, max, +), the analogue of a probability measure is a
+++-----"maxitive probability profile" μ : X → ℝ with values ≤ 0 and sup = 0. The
+++-----analogue of integration is the maxitive integral Λ_μ(f) = sup_x(μ(x) + f(x)).
+++----+## Main definitions
+++---- 
+++-----The Kantorovich–Rubinstein dual distance is then defined as
+++-----  d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))
+++----+* `FiniteT0SupportClass` — the finite T₀ separation principle
+++----+* `irreducibleClosed` — principal lower set `↓x`
+++----+* `irreducibleClosedWeight` — weight of a set function on `↓x`
+++----+* `supportGaugeEq` — equality of codensity weights
+++----+* `CodensityAssignment` — monotone function `X → ℝ≥0∞`
+++----+* `measureToCodensity` — canonical map from monotone set functions to codensity
+++----+* `codensityToMeasure` — inverse: construct a set function from codensity data
+++----+* `idempotentKantorovich` — pseudodistance via monotone test functions
+++----+* `pushforward` — pushforward of a set function along a map
+++---- 
+++-----This is the tropical analogue of the classical Wasserstein-1 / earth mover's distance.
+++----+## Main results
+++----+
+++----+* `codensity_roundtrip` — `measureToCodensity ∘ codensityToMeasure = id`
+++----+* `idempotentKantorovich_eq_zero_iff_supportGaugeEq` — zero distance ⟺ codensity equality
+++----+* `quotient_equiv_codensityAssignment` — the quotient by zero-distance ≃ CodensityAssignment
+++----+* `idempotentKantorovich_pushforward_le` — pushforward is nonexpansive
+++----+* `FunctorialIdempotentMackeyCompletion` — the full functorial completion theorem
+++---- -/
+++-----
+++-----import Mathlib
+++---- 
+++---- noncomputable section
+++---- 
+++-----open scoped BigOperators
+++----+open scoped ENNReal
+++----+open Set
+++---- 
+++-----/-! ## 1-Lipschitz functions -/
+++----+/-! ## The Finite T₀ Separation Principle -/
+++---- 
+++-----/-- The type of 1-Lipschitz real-valued functions on a pseudo-metric space. -/
+++-----def LipOne (X : Type*) [PseudoMetricSpace X] :=
+++-----  {f : X → ℝ // LipschitzWith 1 f}
+++----+/-- The finite T₀ separation principle: if two points have the same principal
+++----+    lower set, they are equal. On a finite preorder, this is equivalent to
+++----+    antisymmetry, hence to the T₀ separation axiom on the Alexandrov topology. -/
+++----+class FiniteT0SupportClass (X : Type*) [Fintype X] [Preorder X] : Prop where
+++----+  antisymm_of_closure_eq : ∀ {x y : X}, (∀ z : X, z ≤ x ↔ z ≤ y) → x = y
+++---- 
+++-----namespace LipOne
+++----+/-- Every finite partial order is a finite T₀ space. -/
+++----+instance instFiniteT0SupportClassOfPartialOrder
+++----+    {X : Type*} [Fintype X] [PartialOrder X] : FiniteT0SupportClass X where
+++----+  antisymm_of_closure_eq h := le_antisymm ((h _).mp le_rfl) ((h _).mpr le_rfl)
+++---- 
+++-----variable {X : Type*} [PseudoMetricSpace X]
+++----+/-! ## Irreducible Closed Sets and Codensity Weights -/
+++---- 
+++-----instance : CoeFun (LipOne X) (fun _ => X → ℝ) :=
+++-----  ⟨fun f => f.1⟩
+++----+/-- The irreducible closed set (principal lower set) associated to a point `x`.
+++----+    In the Alexandrov topology on a preorder, this is `↓x = {y | y ≤ x}`,
+++----+    which is always closed and irreducible. -/
+++----+def irreducibleClosed (X : Type*) [Preorder X] (x : X) : Set X := {y | y ≤ x}
+++---- 
+++-----/-- The constant zero function is 1-Lipschitz. -/
+++-----def zero : LipOne X :=
+++-----  ⟨fun _ => 0, LipschitzWith.of_dist_le_mul (fun _ _ => by simp [dist_nonneg])⟩
+++----+/-- The codensity weight of a point `x` under a set function `μ`:
+++----+    the value of `μ` on the principal lower set `↓x`. -/
+++----+def irreducibleClosedWeight {X : Type*} [Preorder X]
+++----+    (μ : Set X → ℝ≥0∞) (x : X) : ℝ≥0∞ :=
+++----+  μ (irreducibleClosed X x)
+++---- 
+++-----/-- The negation of a 1-Lipschitz function is 1-Lipschitz. -/
+++-----def neg (f : LipOne X) : LipOne X :=
+++-----  ⟨-f.1, f.2.neg⟩
+++----+/-- Two set functions agree on codensity if they assign equal weight to
+++----+    every principal lower set. This is the kernel of `measureToCodensity`. -/
+++----+def supportGaugeEq {X : Type*} [Preorder X]
+++----+    (μ ν : Set X → ℝ≥0∞) : Prop :=
+++----+  ∀ x : X, irreducibleClosedWeight μ x = irreducibleClosedWeight ν x
+++---- 
+++-----/-- The distance function from a fixed point is 1-Lipschitz. -/
+++-----def distFrom (x₀ : X) : LipOne X :=
+++-----  ⟨fun x => dist x x₀, LipschitzWith.of_dist_le_mul fun a b => by
+++-----    simp only [Real.dist_eq, NNReal.coe_one, one_mul]
+++-----    exact abs_dist_sub_le a b x₀⟩
+++----+/-! ## Test Functions and Idempotent Kantorovich Distance -/
+++---- 
+++-----/-- Composing a 1-Lipschitz function with a 1-Lipschitz map yields a 1-Lipschitz function. -/
+++-----def comp {Y : Type*} [PseudoMetricSpace Y] (f : LipOne Y) (T : X → Y)
+++-----    (hT : LipschitzWith 1 T) : LipOne X :=
+++-----  ⟨fun x => f.1 (T x), by
+++-----    have h := f.2.comp hT
+++-----    simp only [one_mul] at h; exact h⟩
+++----+/-- A test function on a preorder is a monotone real-valued function.
+++----+    These serve as the dual objects in the idempotent Kantorovich theory. -/
+++----+def IsTestFunction {X : Type*} [Preorder X] (f : X → ℝ) : Prop :=
+++----+  Monotone f
+++---- 
+++-----end LipOne
+++----+/-- The idempotent Kantorovich pseudodistance between two set functions.
+++----+    This is the supremum over monotone test functions of the absolute
+++----+    discrepancy in their "idempotent integrals" (max-plus pairings).
+++----+    The symmetrization ensures `d(μ,ν) = 0 ↔ supportGaugeEq μ ν`. -/
+++----+def idempotentKantorovich {X : Type*} [Fintype X] [Preorder X]
+++----+    (μ ν : Set X → ℝ≥0∞) : ℝ≥0∞ :=
+++----+  ⨆ f : {f : X → ℝ // IsTestFunction f},
+++----+    ENNReal.ofReal (abs
+++----+      ((⨆ x : X, (f.1 x - (irreducibleClosedWeight μ x).toReal)) -
+++----+       (⨆ x : X, (f.1 x - (irreducibleClosedWeight ν x).toReal))))
+++---- 
+++-----/-! ## Maxitive probability profiles -/
+++----+/-! ## Codensity Assignments -/
+++---- 
+++-----/-- A maxitive probability profile on a finite type `X`: a function `X → ℝ` with
+++-----    values ≤ 0 and max = 0. This is the tropical analogue of a probability measure.
+++----+/-- A codensity assignment on a preorder is a monotone function `X → ℝ≥0∞`.
+++----+    Each value `c x` represents the "codensity" on the irreducible closed
+++----+    set `↓x`. In finite T₀ spaces, this is the completed/canonical form
+++----+    of a maxitive measure. -/
+++----+structure CodensityAssignment (X : Type*) [Preorder X] where
+++----+  /-- The underlying function assigning weights to points. -/
+++----+  toFun : X → ℝ≥0∞
+++----+  /-- The assignment is monotone with respect to the preorder. -/
+++----+  monotone' : Monotone toFun
+++---- 
+++-----    The value μ(x) represents the log-possibility weight at x. Points with μ(x) = 0
+++-----    are "fully possible" (the mode), while μ(x) < 0 indicates reduced possibility. -/
+++-----structure MaxitiveProb (X : Type*) [Fintype X] [Nonempty X] where
+++-----  /-- The log-possibility density function. -/
+++-----  toFun : X → ℝ
+++-----  /-- All values are non-positive. -/
+++-----  nonpos : ∀ x, toFun x ≤ 0
+++-----  /-- The profile is normalized: the maximum is 0. -/
+++-----  normalized : Finset.univ.sup' Finset.univ_nonempty toFun = 0
+++----+namespace CodensityAssignment
+++---- 
+++-----namespace MaxitiveProb
+++----+variable {X : Type*} [Preorder X]
+++---- 
+++-----variable {X : Type*} [Fintype X] [Nonempty X]
+++----+instance : FunLike (CodensityAssignment X) X ℝ≥0∞ where
+++----+  coe := CodensityAssignment.toFun
+++----+  coe_injective' a b h := by cases a; cases b; congr
+++---- 
+++-----instance : CoeFun (MaxitiveProb X) (fun _ => X → ℝ) :=
+++-----  ⟨fun μ => μ.toFun⟩
+++----+@[simp] theorem coe_mk (f : X → ℝ≥0∞) (hf) : (CodensityAssignment.mk f hf : X → ℝ≥0∞) = f := rfl
+++---- 
+++-----/-- The Dirac maxitive profile at a point. -/
+++-----def dirac [DecidableEq X] (x₀ : X) : MaxitiveProb X where
+++-----  toFun x := if x = x₀ then 0 else -1
+++-----  nonpos x := by split_ifs <;> norm_num
+++-----  normalized := by
+++-----    apply le_antisymm
+++-----    · exact Finset.sup'_le _ _ fun x _ => by split_ifs <;> norm_num
+++-----    · exact Finset.le_sup' _ (Finset.mem_univ x₀) |>.trans' (by simp)
+++----+@[ext]
+++----+theorem ext {c d : CodensityAssignment X} (h : ∀ x, c x = d x) : c = d :=
+++----+  DFunLike.ext c d h
+++---- 
+++-----/-
+++-----Existence of a mode point: there exists x with μ(x) = 0.
+++------/
+++-----theorem exists_mode (μ : MaxitiveProb X) : ∃ x₀ : X, μ.toFun x₀ = 0 := by
+++-----  -- Let `x₀` be the mode point of `μ`, which is defined as the element that maximizes `μ`.
+++-----  obtain ⟨x₀, hx₀⟩ :
+++-----      ∃ x₀, (μ.toFun x₀) = (Finset.univ.sup' Finset.univ_nonempty μ.toFun) := by
+++-----        have := Finset.exists_max_image Finset.univ μ.toFun ( Finset.univ_nonempty );
+++-----        exact ⟨ this.choose, le_antisymm ( Finset.le_sup' ( fun x => μ.toFun x ) ( Finset.mem_univ _ ) ) ( Finset.sup'_le _ _ fun x _ => this.choose_spec.2 x ( Finset.mem_univ x ) ) ⟩;
+++-----  exact ⟨ x₀, hx₀.trans μ.normalized ⟩
+++----+theorem monotone (c : CodensityAssignment X) : Monotone c := c.monotone'
+++---- 
+++-----end MaxitiveProb
+++----+end CodensityAssignment
+++---- 
+++-----/-! ## Maxitive integral (tropical expectation) -/
+++----+/-! ## Maps Between Measures and Codensity Assignments -/
+++---- 
+++-----/-- The maxitive integral of f with respect to μ:
+++-----    `Λ_μ(f) = max_x (μ(x) + f(x))`.
+++-----    This is the tropical analogue of the expectation `𝔼_μ[f]`. -/
+++-----def maxIntegral {X : Type*} [Fintype X] [Nonempty X]
+++-----    (μ : MaxitiveProb X) (f : X → ℝ) : ℝ :=
+++-----  Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + f x
+++----+/-- A set function is *monotone* if it preserves subset ordering. This is
+++----+    a basic property of measures, capacities, and maxitive measures. -/
+++----+def IsMonotoneSetFun {X : Type*} (μ : Set X → ℝ≥0∞) : Prop :=
+++----+  ∀ ⦃A B : Set X⦄, A ⊆ B → μ A ≤ μ B
+++---- 
+++-----/-! ## KR Dual Distance -/
+++----+/-- The canonical map from monotone set functions to codensity assignments.
+++----+    Maps `μ` to the function `x ↦ μ(↓x)`. -/
+++----+def measureToCodensity {X : Type*} [Preorder X]
+++----+    (μ : Set X → ℝ≥0∞) (hμ : IsMonotoneSetFun μ) : CodensityAssignment X where
+++----+  toFun := irreducibleClosedWeight μ
+++----+  monotone' := fun _ _ hxy => hμ (fun _ hz => le_trans hz hxy)
+++---- 
+++-----/-- The idempotent Kantorovich–Rubinstein dual discrepancy:
+++-----    `d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))`.
+++----+/-- Construct a set function from a codensity assignment by taking the
+++----+    supremum over elements in the set. This is a right inverse of
+++----+    `measureToCodensity` and models a "maxitive measure". -/
+++----+def codensityToMeasure {X : Type*} [Preorder X]
+++----+    (c : CodensityAssignment X) : Set X → ℝ≥0∞ :=
+++----+  fun A => ⨆ x ∈ A, c.toFun x
+++---- 
+++-----    This is the directed tropical analogue of the Wasserstein-1 distance.
+++-----    It measures how much μ "exceeds" ν as tested by 1-Lipschitz observables. -/
+++-----def iKRDual {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++-----    (μ ν : MaxitiveProb X) : ℝ :=
+++-----  sSup {r : ℝ | ∃ f : LipOne X, r = maxIntegral μ f.1 - maxIntegral ν f.1}
+++----+/-- Pushforward of a set function along a map `f`: `(f_* μ)(B) = μ(f⁻¹(B))`. -/
+++----+def pushforward {X Y : Type*} (f : X → Y)
+++----+    (μ : Set X → ℝ≥0∞) : Set Y → ℝ≥0∞ :=
+++----+  fun B => μ (f ⁻¹' B)
+++---- 
+++-----/-! ## Maxitive Coupling -/
+++----+/-- A set function is *maxitive* if its value on any set equals the supremum
+++----+    of its values on principal lower sets of elements in that set.
+++----+    This is the key property of "max-plus measures" / capacities in
+++----+    idempotent measure theory. -/
+++----+def IsMaxitiveSetFun {X : Type*} [Preorder X] (μ : Set X → ℝ≥0∞) : Prop :=
+++----+  ∀ A : Set X, μ A = ⨆ x ∈ A, μ (irreducibleClosed X x)
+++---- 
+++-----/-- A maxitive coupling of two profiles μ and ν on a finite type:
+++-----    a joint weight function π : X → X → ℝ with prescribed max-marginals. -/
+++-----structure MaxitiveCoupling {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++-----    (μ ν : MaxitiveProb X) where
+++-----  /-- The joint weight function. -/
+++-----  toFun : X → X → ℝ
+++-----  /-- All values are non-positive. -/
+++-----  nonpos : ∀ x y, toFun x y ≤ 0
+++-----  /-- First marginal: max over Y gives μ. -/
+++-----  fst_marginal : ∀ x, Finset.univ.sup' Finset.univ_nonempty (toFun x) = μ.toFun x
+++-----  /-- Second marginal: max over X gives ν. -/
+++-----  snd_marginal : ∀ y, Finset.univ.sup' Finset.univ_nonempty (fun x => toFun x y) = ν.toFun y
+++----+/-! ## The Zero-Distance Setoid -/
+++---- 
+++-----/-! ## Transport Cost -/
+++-----
+++-----/-- The max-plus transport cost of a coupling π:
+++-----    `C(π) = max_{x,y} (π(x,y) + dist(x,y))`. -/
+++-----def transportCost {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++-----    {μ ν : MaxitiveProb X} (π : MaxitiveCoupling μ ν) : ℝ :=
+++-----  (Finset.univ ×ˢ Finset.univ).sup'
+++-----    (by simp [Finset.Nonempty]) fun p => π.toFun p.1 p.2 + dist p.1 p.2
+++-----
+++-----/-- The idempotent Wasserstein distance (primal formulation):
+++-----    `W(μ,ν) = inf_π C(π)`. -/
+++-----def iWasserstein {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++-----    (μ ν : MaxitiveProb X) : ℝ :=
+++-----  sInf {r : ℝ | ∃ π : MaxitiveCoupling μ ν, transportCost π ≤ r}
+++-----
+++-----/-! ## Tropical Kernel Mean Embedding -/
+++-----
+++-----/-- A tropical kernel on X: a function k : X → X → ℝ. -/
+++-----abbrev TropicalKernel (X : Type*) := X → X → ℝ
+++-----
+++-----/-- The tropical kernel mean embedding (finite version):
+++-----    `kme_μ(y) = max_x (μ(x) + k(x, y))`. -/
+++-----def tropKME {X : Type*} [Fintype X] [Nonempty X]
+++-----    (k : TropicalKernel X) (μ : MaxitiveProb X) : X → ℝ :=
+++-----  fun y => Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + k x y
+++-----
+++-----/-- A kernel is characteristic if tropKME is injective. -/
+++-----def IsCharacteristicKernel {X : Type*} [Fintype X] [Nonempty X]
+++-----    (k : TropicalKernel X) : Prop :=
+++-----  Function.Injective (tropKME k : MaxitiveProb X → X → ℝ)
+++-----
+++-----/-- A kernel represents all 1-Lipschitz functions if every 1-Lip test is in the
+++-----    max-plus span of kernel slices. -/
+++-----def KernelRepresentsLipOne {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++-----    (k : TropicalKernel X) : Prop :=
+++-----  ∀ f : LipOne X, ∃ (a : X → ℝ),
+++-----    ∀ x, f.1 x = Finset.univ.sup' Finset.univ_nonempty fun z => a z + k z x
+++----+/-- The zero-distance equivalence relation on set functions:
+++----+    `μ ≈ ν` iff they have the same codensity weights on all principal lower sets. -/
+++----+def supportGaugeSetoid (X : Type*) [Preorder X] : Setoid (Set X → ℝ≥0∞) where
+++----+  r := supportGaugeEq
+++----+  iseqv := {
+++----+    refl := fun _ _ => rfl
+++----+    symm := fun h x => (h x).symm
+++----+    trans := fun h₁ h₂ x => (h₁ x).trans (h₂ x)
+++----+  }
+++---- 
+++---- end+/-
+++---+Copyright (c) 2025. All rights reserved.
+++---+Released under Apache 2.0 license.
+++---+
+++---+# Idempotent Kantorovich–Rubinstein Duality: Core Definitions
+++---+
+++---+This file defines the fundamental objects for tropical/idempotent optimal transport:
+++---+maxitive probability profiles, their integral functionals, 1-Lipschitz test functions,
+++---+the KR dual distance, couplings, and the primal Wasserstein cost.
+++---+
+++---+## Mathematical context
+++---+
+++---+In the max-plus semiring (ℝ, max, +), the analogue of a probability measure is a
+++---+"maxitive probability profile" μ : X → ℝ with values ≤ 0 and sup = 0. The
+++---+analogue of integration is the maxitive integral Λ_μ(f) = sup_x(μ(x) + f(x)).
+++---+
+++---+The Kantorovich–Rubinstein dual distance is then defined as
+++---+  d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))
+++---+
+++---+This is the tropical analogue of the classical Wasserstein-1 / earth mover's distance.
+++---+-/
+++---+
+++---+import Mathlib
+++---+
+++---+noncomputable section
+++---+
+++---+open scoped BigOperators
+++---+
+++---+/-! ## 1-Lipschitz functions -/
+++---+
+++---+/-- The type of 1-Lipschitz real-valued functions on a pseudo-metric space. -/
+++---+def LipOne (X : Type*) [PseudoMetricSpace X] :=
+++---+  {f : X → ℝ // LipschitzWith 1 f}
+++---+
+++---+namespace LipOne
+++---+
+++---+variable {X : Type*} [PseudoMetricSpace X]
+++---+
+++---+instance : CoeFun (LipOne X) (fun _ => X → ℝ) :=
+++---+  ⟨fun f => f.1⟩
+++---+
+++---+/-- The constant zero function is 1-Lipschitz. -/
+++---+def zero : LipOne X :=
+++---+  ⟨fun _ => 0, LipschitzWith.of_dist_le_mul (fun _ _ => by simp [dist_nonneg])⟩
+++---+
+++---+/-- The negation of a 1-Lipschitz function is 1-Lipschitz. -/
+++---+def neg (f : LipOne X) : LipOne X :=
+++---+  ⟨-f.1, f.2.neg⟩
+++---+
+++---+/-- The distance function from a fixed point is 1-Lipschitz. -/
+++---+def distFrom (x₀ : X) : LipOne X :=
+++---+  ⟨fun x => dist x x₀, LipschitzWith.of_dist_le_mul fun a b => by
+++---+    simp only [Real.dist_eq, NNReal.coe_one, one_mul]
+++---+    exact abs_dist_sub_le a b x₀⟩
+++---+
+++---+/-- Composing a 1-Lipschitz function with a 1-Lipschitz map yields a 1-Lipschitz function. -/
+++---+def comp {Y : Type*} [PseudoMetricSpace Y] (f : LipOne Y) (T : X → Y)
+++---+    (hT : LipschitzWith 1 T) : LipOne X :=
+++---+  ⟨fun x => f.1 (T x), by
+++---+    have h := f.2.comp hT
+++---+    simp only [one_mul] at h; exact h⟩
+++---+
+++---+end LipOne
+++---+
+++---+/-! ## Maxitive probability profiles -/
+++---+
+++---+/-- A maxitive probability profile on a finite type `X`: a function `X → ℝ` with
+++---+    values ≤ 0 and max = 0. This is the tropical analogue of a probability measure.
+++---+
+++---+    The value μ(x) represents the log-possibility weight at x. Points with μ(x) = 0
+++---+    are "fully possible" (the mode), while μ(x) < 0 indicates reduced possibility. -/
+++---+structure MaxitiveProb (X : Type*) [Fintype X] [Nonempty X] where
+++---+  /-- The log-possibility density function. -/
+++---+  toFun : X → ℝ
+++---+  /-- All values are non-positive. -/
+++---+  nonpos : ∀ x, toFun x ≤ 0
+++---+  /-- The profile is normalized: the maximum is 0. -/
+++---+  normalized : Finset.univ.sup' Finset.univ_nonempty toFun = 0
+++---+
+++---+namespace MaxitiveProb
+++---+
+++---+variable {X : Type*} [Fintype X] [Nonempty X]
+++---+
+++---+instance : CoeFun (MaxitiveProb X) (fun _ => X → ℝ) :=
+++---+  ⟨fun μ => μ.toFun⟩
+++---+
+++---+/-- The Dirac maxitive profile at a point. -/
+++---+def dirac [DecidableEq X] (x₀ : X) : MaxitiveProb X where
+++---+  toFun x := if x = x₀ then 0 else -1
+++---+  nonpos x := by split_ifs <;> norm_num
+++---+  normalized := by
+++---+    apply le_antisymm
+++---+    · exact Finset.sup'_le _ _ fun x _ => by split_ifs <;> norm_num
+++---+    · exact Finset.le_sup' _ (Finset.mem_univ x₀) |>.trans' (by simp)
+++---+
+++---+/-
+++---+Existence of a mode point: there exists x with μ(x) = 0.
+++---+-/
+++---+theorem exists_mode (μ : MaxitiveProb X) : ∃ x₀ : X, μ.toFun x₀ = 0 := by
+++---+  -- Let `x₀` be the mode point of `μ`, which is defined as the element that maximizes `μ`.
+++---+  obtain ⟨x₀, hx₀⟩ :
+++---+      ∃ x₀, (μ.toFun x₀) = (Finset.univ.sup' Finset.univ_nonempty μ.toFun) := by
+++---+        have := Finset.exists_max_image Finset.univ μ.toFun ( Finset.univ_nonempty );
+++---+        exact ⟨ this.choose, le_antisymm ( Finset.le_sup' ( fun x => μ.toFun x ) ( Finset.mem_univ _ ) ) ( Finset.sup'_le _ _ fun x _ => this.choose_spec.2 x ( Finset.mem_univ x ) ) ⟩;
+++---+  exact ⟨ x₀, hx₀.trans μ.normalized ⟩
+++---+
+++---+end MaxitiveProb
+++---+
+++---+/-! ## Maxitive integral (tropical expectation) -/
+++---+
+++---+/-- The maxitive integral of f with respect to μ:
+++---+    `Λ_μ(f) = max_x (μ(x) + f(x))`.
+++---+    This is the tropical analogue of the expectation `𝔼_μ[f]`. -/
+++---+def maxIntegral {X : Type*} [Fintype X] [Nonempty X]
+++---+    (μ : MaxitiveProb X) (f : X → ℝ) : ℝ :=
+++---+  Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + f x
+++---+
+++---+/-! ## KR Dual Distance -/
+++---+
+++---+/-- The idempotent Kantorovich–Rubinstein dual discrepancy:
+++---+    `d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))`.
+++---+
+++---+    This is the directed tropical analogue of the Wasserstein-1 distance.
+++---+    It measures how much μ "exceeds" ν as tested by 1-Lipschitz observables. -/
+++---+def iKRDual {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++---+    (μ ν : MaxitiveProb X) : ℝ :=
+++---+  sSup {r : ℝ | ∃ f : LipOne X, r = maxIntegral μ f.1 - maxIntegral ν f.1}
+++---+
+++---+/-! ## Maxitive Coupling -/
+++---+
+++---+/-- A maxitive coupling of two profiles μ and ν on a finite type:
+++---+    a joint weight function π : X → X → ℝ with prescribed max-marginals. -/
+++---+structure MaxitiveCoupling {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++---+    (μ ν : MaxitiveProb X) where
+++---+  /-- The joint weight function. -/
+++---+  toFun : X → X → ℝ
+++---+  /-- All values are non-positive. -/
+++---+  nonpos : ∀ x y, toFun x y ≤ 0
+++---+  /-- First marginal: max over Y gives μ. -/
+++---+  fst_marginal : ∀ x, Finset.univ.sup' Finset.univ_nonempty (toFun x) = μ.toFun x
+++---+  /-- Second marginal: max over X gives ν. -/
+++---+  snd_marginal : ∀ y, Finset.univ.sup' Finset.univ_nonempty (fun x => toFun x y) = ν.toFun y
+++---+
+++---+/-! ## Transport Cost -/
+++---+
+++---+/-- The max-plus transport cost of a coupling π:
+++---+    `C(π) = max_{x,y} (π(x,y) + dist(x,y))`. -/
+++---+def transportCost {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++---+    {μ ν : MaxitiveProb X} (π : MaxitiveCoupling μ ν) : ℝ :=
+++---+  (Finset.univ ×ˢ Finset.univ).sup'
+++---+    (by simp [Finset.Nonempty]) fun p => π.toFun p.1 p.2 + dist p.1 p.2
+++---+
+++---+/-- The idempotent Wasserstein distance (primal formulation):
+++---+    `W(μ,ν) = inf_π C(π)`. -/
+++---+def iWasserstein {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++---+    (μ ν : MaxitiveProb X) : ℝ :=
+++---+  sInf {r : ℝ | ∃ π : MaxitiveCoupling μ ν, transportCost π ≤ r}
+++---+
+++---+/-! ## Tropical Kernel Mean Embedding -/
+++---+
+++---+/-- A tropical kernel on X: a function k : X → X → ℝ. -/
+++---+abbrev TropicalKernel (X : Type*) := X → X → ℝ
+++---+
+++---+/-- The tropical kernel mean embedding (finite version):
+++---+    `kme_μ(y) = max_x (μ(x) + k(x, y))`. -/
+++---+def tropKME {X : Type*} [Fintype X] [Nonempty X]
+++---+    (k : TropicalKernel X) (μ : MaxitiveProb X) : X → ℝ :=
+++---+  fun y => Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + k x y
+++---+
+++---+/-- A kernel is characteristic if tropKME is injective. -/
+++---+def IsCharacteristicKernel {X : Type*} [Fintype X] [Nonempty X]
+++---+    (k : TropicalKernel X) : Prop :=
+++---+  Function.Injective (tropKME k : MaxitiveProb X → X → ℝ)
+++---+
+++---+/-- A kernel represents all 1-Lipschitz functions if every 1-Lip test is in the
+++---+    max-plus span of kernel slices. -/
+++---+def KernelRepresentsLipOne {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++---+    (k : TropicalKernel X) : Prop :=
+++---+  ∀ f : LipOne X, ∃ (a : X → ℝ),
+++---+    ∀ x, f.1 x = Finset.univ.sup' Finset.univ_nonempty fun z => a z + k z x
+++---+
+++---+end+/-
+++--+Copyright (c) 2025. All rights reserved.
+++--+Released under Apache 2.0 license.
+++--+
+++--+# Idempotent Kantorovich–Rubinstein Duality: Core Definitions
+++--+
+++--+This file defines the fundamental objects for tropical/idempotent optimal transport:
+++--+maxitive probability profiles, their integral functionals, 1-Lipschitz test functions,
+++--+the KR dual distance, couplings, and the primal Wasserstein cost.
+++--+
+++--+## Mathematical context
+++--+
+++--+In the max-plus semiring (ℝ, max, +), the analogue of a probability measure is a
+++--+"maxitive probability profile" μ : X → ℝ with values ≤ 0 and sup = 0. The
+++--+analogue of integration is the maxitive integral Λ_μ(f) = sup_x(μ(x) + f(x)).
+++--+
+++--+The Kantorovich–Rubinstein dual distance is then defined as
+++--+  d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))
+++--+
+++--+This is the tropical analogue of the classical Wasserstein-1 / earth mover's distance.
+++--+-/
+++--+
+++--+import Mathlib
+++--+
+++--+noncomputable section
+++--+
+++--+open scoped BigOperators
+++--+
+++--+/-! ## 1-Lipschitz functions -/
+++--+
+++--+/-- The type of 1-Lipschitz real-valued functions on a pseudo-metric space. -/
+++--+def LipOne (X : Type*) [PseudoMetricSpace X] :=
+++--+  {f : X → ℝ // LipschitzWith 1 f}
+++--+
+++--+namespace LipOne
+++--+
+++--+variable {X : Type*} [PseudoMetricSpace X]
+++--+
+++--+instance : CoeFun (LipOne X) (fun _ => X → ℝ) :=
+++--+  ⟨fun f => f.1⟩
+++--+
+++--+/-- The constant zero function is 1-Lipschitz. -/
+++--+def zero : LipOne X :=
+++--+  ⟨fun _ => 0, LipschitzWith.of_dist_le_mul (fun _ _ => by simp [dist_nonneg])⟩
+++--+
+++--+/-- The negation of a 1-Lipschitz function is 1-Lipschitz. -/
+++--+def neg (f : LipOne X) : LipOne X :=
+++--+  ⟨-f.1, f.2.neg⟩
+++--+
+++--+/-- The distance function from a fixed point is 1-Lipschitz. -/
+++--+def distFrom (x₀ : X) : LipOne X :=
+++--+  ⟨fun x => dist x x₀, LipschitzWith.of_dist_le_mul fun a b => by
+++--+    simp only [Real.dist_eq, NNReal.coe_one, one_mul]
+++--+    exact abs_dist_sub_le a b x₀⟩
+++--+
+++--+/-- Composing a 1-Lipschitz function with a 1-Lipschitz map yields a 1-Lipschitz function. -/
+++--+def comp {Y : Type*} [PseudoMetricSpace Y] (f : LipOne Y) (T : X → Y)
+++--+    (hT : LipschitzWith 1 T) : LipOne X :=
+++--+  ⟨fun x => f.1 (T x), by
+++--+    have h := f.2.comp hT
+++--+    simp only [one_mul] at h; exact h⟩
+++--+
+++--+end LipOne
+++--+
+++--+/-! ## Maxitive probability profiles -/
+++--+
+++--+/-- A maxitive probability profile on a finite type `X`: a function `X → ℝ` with
+++--+    values ≤ 0 and max = 0. This is the tropical analogue of a probability measure.
+++--+
+++--+    The value μ(x) represents the log-possibility weight at x. Points with μ(x) = 0
+++--+    are "fully possible" (the mode), while μ(x) < 0 indicates reduced possibility. -/
+++--+structure MaxitiveProb (X : Type*) [Fintype X] [Nonempty X] where
+++--+  /-- The log-possibility density function. -/
+++--+  toFun : X → ℝ
+++--+  /-- All values are non-positive. -/
+++--+  nonpos : ∀ x, toFun x ≤ 0
+++--+  /-- The profile is normalized: the maximum is 0. -/
+++--+  normalized : Finset.univ.sup' Finset.univ_nonempty toFun = 0
+++--+
+++--+namespace MaxitiveProb
+++--+
+++--+variable {X : Type*} [Fintype X] [Nonempty X]
+++--+
+++--+instance : CoeFun (MaxitiveProb X) (fun _ => X → ℝ) :=
+++--+  ⟨fun μ => μ.toFun⟩
+++--+
+++--+/-- The Dirac maxitive profile at a point. -/
+++--+def dirac [DecidableEq X] (x₀ : X) : MaxitiveProb X where
+++--+  toFun x := if x = x₀ then 0 else -1
+++--+  nonpos x := by split_ifs <;> norm_num
+++--+  normalized := by
+++--+    apply le_antisymm
+++--+    · exact Finset.sup'_le _ _ fun x _ => by split_ifs <;> norm_num
+++--+    · exact Finset.le_sup' _ (Finset.mem_univ x₀) |>.trans' (by simp)
+++--+
+++--+/-
+++--+Existence of a mode point: there exists x with μ(x) = 0.
+++--+-/
+++--+theorem exists_mode (μ : MaxitiveProb X) : ∃ x₀ : X, μ.toFun x₀ = 0 := by
+++--+  -- Let `x₀` be the mode point of `μ`, which is defined as the element that maximizes `μ`.
+++--+  obtain ⟨x₀, hx₀⟩ :
+++--+      ∃ x₀, (μ.toFun x₀) = (Finset.univ.sup' Finset.univ_nonempty μ.toFun) := by
+++--+        have := Finset.exists_max_image Finset.univ μ.toFun ( Finset.univ_nonempty );
+++--+        exact ⟨ this.choose, le_antisymm ( Finset.le_sup' ( fun x => μ.toFun x ) ( Finset.mem_univ _ ) ) ( Finset.sup'_le _ _ fun x _ => this.choose_spec.2 x ( Finset.mem_univ x ) ) ⟩;
+++--+  exact ⟨ x₀, hx₀.trans μ.normalized ⟩
+++--+
+++--+end MaxitiveProb
+++--+
+++--+/-! ## Maxitive integral (tropical expectation) -/
+++--+
+++--+/-- The maxitive integral of f with respect to μ:
+++--+    `Λ_μ(f) = max_x (μ(x) + f(x))`.
+++--+    This is the tropical analogue of the expectation `𝔼_μ[f]`. -/
+++--+def maxIntegral {X : Type*} [Fintype X] [Nonempty X]
+++--+    (μ : MaxitiveProb X) (f : X → ℝ) : ℝ :=
+++--+  Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + f x
+++--+
+++--+/-! ## KR Dual Distance -/
+++--+
+++--+/-- The idempotent Kantorovich–Rubinstein dual discrepancy:
+++--+    `d_KR(μ, ν) = sup_{f 1-Lip} (Λ_μ(f) - Λ_ν(f))`.
+++--+
+++--+    This is the directed tropical analogue of the Wasserstein-1 distance.
+++--+    It measures how much μ "exceeds" ν as tested by 1-Lipschitz observables. -/
+++--+def iKRDual {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++--+    (μ ν : MaxitiveProb X) : ℝ :=
+++--+  sSup {r : ℝ | ∃ f : LipOne X, r = maxIntegral μ f.1 - maxIntegral ν f.1}
+++--+
+++--+/-! ## Maxitive Coupling -/
+++--+
+++--+/-- A maxitive coupling of two profiles μ and ν on a finite type:
+++--+    a joint weight function π : X → X → ℝ with prescribed max-marginals. -/
+++--+structure MaxitiveCoupling {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++--+    (μ ν : MaxitiveProb X) where
+++--+  /-- The joint weight function. -/
+++--+  toFun : X → X → ℝ
+++--+  /-- All values are non-positive. -/
+++--+  nonpos : ∀ x y, toFun x y ≤ 0
+++--+  /-- First marginal: max over Y gives μ. -/
+++--+  fst_marginal : ∀ x, Finset.univ.sup' Finset.univ_nonempty (toFun x) = μ.toFun x
+++--+  /-- Second marginal: max over X gives ν. -/
+++--+  snd_marginal : ∀ y, Finset.univ.sup' Finset.univ_nonempty (fun x => toFun x y) = ν.toFun y
+++--+
+++--+/-! ## Transport Cost -/
+++--+
+++--+/-- The max-plus transport cost of a coupling π:
+++--+    `C(π) = max_{x,y} (π(x,y) + dist(x,y))`. -/
+++--+def transportCost {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++--+    {μ ν : MaxitiveProb X} (π : MaxitiveCoupling μ ν) : ℝ :=
+++--+  (Finset.univ ×ˢ Finset.univ).sup'
+++--+    (by simp [Finset.Nonempty]) fun p => π.toFun p.1 p.2 + dist p.1 p.2
+++--+
+++--+/-- The idempotent Wasserstein distance (primal formulation):
+++--+    `W(μ,ν) = inf_π C(π)`. -/
+++--+def iWasserstein {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++--+    (μ ν : MaxitiveProb X) : ℝ :=
+++--+  sInf {r : ℝ | ∃ π : MaxitiveCoupling μ ν, transportCost π ≤ r}
+++--+
+++--+/-! ## Tropical Kernel Mean Embedding -/
+++--+
+++--+/-- A tropical kernel on X: a function k : X → X → ℝ. -/
+++--+abbrev TropicalKernel (X : Type*) := X → X → ℝ
+++--+
+++--+/-- The tropical kernel mean embedding (finite version):
+++--+    `kme_μ(y) = max_x (μ(x) + k(x, y))`. -/
+++--+def tropKME {X : Type*} [Fintype X] [Nonempty X]
+++--+    (k : TropicalKernel X) (μ : MaxitiveProb X) : X → ℝ :=
+++--+  fun y => Finset.univ.sup' Finset.univ_nonempty fun x => μ.toFun x + k x y
+++--+
+++--+/-- A kernel is characteristic if tropKME is injective. -/
+++--+def IsCharacteristicKernel {X : Type*} [Fintype X] [Nonempty X]
+++--+    (k : TropicalKernel X) : Prop :=
+++--+  Function.Injective (tropKME k : MaxitiveProb X → X → ℝ)
+++--+
+++--+/-- A kernel represents all 1-Lipschitz functions if every 1-Lip test is in the
+++--+    max-plus span of kernel slices. -/
+++--+def KernelRepresentsLipOne {X : Type*} [Fintype X] [Nonempty X] [PseudoMetricSpace X]
+++--+    (k : TropicalKernel X) : Prop :=
+++--+  ∀ f : LipOne X, ∃ (a : X → ℝ),
+++--+    ∀ x, f.1 x = Finset.univ.sup' Finset.univ_nonempty fun z => a z + k z x
+++--+
+++--+end+--- a/Tropical/Defs.lean
+++-++++ b/Tropical/Defs.lean
+++-+@@ -1,608 +1,482 @@
+++-+ --- a/Tropical/Defs.lean
+++-+ +++ b/Tropical/Defs.lean
+++-+-@@ -1,124 +1,482 @@
+++-+--/-
+++-+--Copyright (c) 2025. All rights reserved.
+++-+--Released under Apache 2.0 license as described in the file LICENSE.
+++-+--
+++-+--# GL₃ Tropical Satake Classification — Definitions
+++-+--
+++-+--## Overview
+++-+--
+++-+--This file provides the core definitions for the GL₃ tropical Satake
+++-+--classification theorem on bounded support. We model the dominant coweight
+++-+--chamber for GL₃ (modulo center) as pairs `(a, b) ∈ ℕ²`, representing the
+++-+--dominant coweight `(a + b, b, 0)`.
+++-+--
+++-+--## Mathematical Model
+++-+--
+++-+--The tropical Hecke algebra is modeled by *edge data*: a pair of functions
+++-+--on `ℕ` representing the generator coefficients along the two simple-coroot
+++-+--directions of the GL₃ dominant chamber. The tropical Satake transform extends
+++-+--edge data to the full chamber via the additive formula
+++-+--
+++-+--  `D(a, b) = f₁(a) + f₂(b)`
+++-+--
+++-+--reflecting the factored structure of the GL₃ Satake kernel in the tropical limit.
+++-+--
+++-+--The admissibility conditions characterize which functions on the dominant chamber
+++-+--arise as images of the tropical Satake transform. They decompose into:
+++-+--
+++-+--* **EdgeValuationCompatible** — normalization at the origin
+++-+--* **Levi12Compatible** — first-coordinate increment independence
+++-+--* **Levi23Compatible** — second-coordinate increment independence
+++-+--* **AdjacentFacetCompatible** — vanishing discrete Laplacian
+++-+--
+++-+--These conditions are shown to be mutually equivalent (up to the origin condition)
+++-+--and collectively equivalent to additive separability `D(a,b) = D(a,0) + D(0,b)`.
+++-+---/
+++-+--import Mathlib
+++-+--
+++-+--namespace TropSatakeGL3
+++-+--
+++-+--/-! ## Core Types -/
+++-+--
+++-+--/-- Dominant coweight for GL₃ (mod center), parameterized as
+++-+--    `(a, b) ↦ (a + b, b, 0)`. -/
+++-+--abbrev DomWt := ℕ × ℕ
+++-+--
+++-+--/-- A tropical datum: a real-valued function on the dominant chamber. -/
+++-+--abbrev TropDatum := DomWt → ℝ
+++-+--
+++-+--/-- Height of a dominant coweight: `height(a, b) = a + b = λ₁`. -/
+++-+--def height (p : DomWt) : ℕ := p.1 + p.2
+++-+--
+++-+--@[simp] lemma height_def (a b : ℕ) : height (a, b) = a + b := rfl
+++-+--
+++-+--/-! ## Bounded Support -/
+++-+--
+++-+--/-- Bounded support: the datum vanishes above a given height. -/
+++-+--def BoundedSupport (N : ℕ) (D : TropDatum) : Prop :=
+++-+--  ∀ p : DomWt, N < p.1 + p.2 → D p = 0
+++-+--
+++-+--/-! ## Tropical Hecke Algebra -/
+++-+--
+++-+--/-- A tropical Hecke element for GL₃, given by edge data along the two
+++-+--    simple-coroot directions, normalized so that both vanish at the origin.
+++-+--
+++-+--    * `edge1` stores the values along the first wall `{(a, 0) : a ∈ ℕ}`
+++-+--    * `edge2` stores the values along the second wall `{(0, b) : b ∈ ℕ}` -/
+++-+--@[ext]
+++-+--structure TropHecke where
+++-+--  /-- Generator coefficients along the first simple-coroot direction. -/
+++-+--  edge1 : ℕ → ℝ
+++-+--  /-- Generator coefficients along the second simple-coroot direction. -/
+++-+--  edge2 : ℕ → ℝ
+++-+--  /-- Normalization: edge1 vanishes at the origin. -/
+++-+--  edge1_zero : edge1 0 = 0
+++-+--  /-- Normalization: edge2 vanishes at the origin. -/
+++-+--  edge2_zero : edge2 0 = 0
+++-+--
+++-+--/-- The tropical Satake transform for GL₃: extends edge data to the full
+++-+--    dominant chamber via `D(a, b) = f₁(a) + f₂(b)`.
+++-+--
+++-+--    This additive extension encodes the fact that the GL₃ Satake kernel
+++-+--    factors through the two simple-root SL₂ subgroups in the tropical limit. -/
+++-+--noncomputable def tropSatake (h : TropHecke) : TropDatum :=
+++-+--  fun p => h.edge1 p.1 + h.edge2 p.2
+++-+--
+++-+--/-- Bounded support for Hecke elements: both edge functions vanish beyond height N. -/
+++-+--def HeckeBoundedSupport (N : ℕ) (h : TropHecke) : Prop :=
+++-+--  (∀ a, N < a → h.edge1 a = 0) ∧ (∀ b, N < b → h.edge2 b = 0)
+++-+--
+++-+--/-! ## Admissibility Conditions -/
+++-+--
+++-+--/-- **Edge valuation compatibility**: the datum vanishes at the origin.
+++-+--    This is the normalization condition corresponding to the identity
+++-+--    element of the Hecke algebra. -/
+++-+--def EdgeValuationCompatible (D : TropDatum) : Prop :=
+++-+--  D (0, 0) = 0
+++-+--
+++-+--/-- **Levi₁₂ compatibility**: increments in the first coordinate direction
+++-+--    are independent of the second coordinate. This corresponds to the
+++-+--    rank-2 Levi subgroup for the simple root α₁. -/
+++-+--def Levi12Compatible (D : TropDatum) : Prop :=
+++-+--  ∀ a b : ℕ, D (a + 1, b) - D (a, b) = D (a + 1, 0) - D (a, 0)
+++-+--
+++-+--/-- **Levi₂₃ compatibility**: increments in the second coordinate direction
+++-+--    are independent of the first coordinate. This corresponds to the
+++-+--    rank-2 Levi subgroup for the simple root α₂. -/
+++-+--def Levi23Compatible (D : TropDatum) : Prop :=
+++-+--  ∀ a b : ℕ, D (a, b + 1) - D (a, b) = D (0, b + 1) - D (0, b)
+++-+--
+++-+--/-- **Adjacent facet compatibility**: the discrete Laplacian vanishes,
+++-+--    expressing the commutativity of the two simple-root propagation
+++-+--    operators on the dominant chamber. -/
+++-+--def AdjacentFacetCompatible (D : TropDatum) : Prop :=
+++-+--  ∀ a b : ℕ, D (a + 1, b + 1) + D (a, b) = D (a + 1, b) + D (a, b + 1)
+++-+--
+++-+--/-- **Full Satake admissibility**: conjunction of all four compatibility
+++-+--    conditions for the GL₃ tropical Satake transform. -/
+++-+--def SatakeAdmissible (D : TropDatum) : Prop :=
+++-+--  EdgeValuationCompatible D ∧
+++-+--  Levi12Compatible D ∧
+++-+--  Levi23Compatible D ∧
+++-+--  AdjacentFacetCompatible D
+++-+--
+++-+--end TropSatakeGL3+--- a/Tropical/Defs.lean
+++-+-++++ b/Tropical/Defs.lean
+++-+-+@@ -1,327 +1,153 @@
+++-+-+---- a/Tropical/Defs.lean
+++-+-+-+++ b/Tropical/Defs.lean
+++-+-+-@@ -1,172 +1,153 @@
+++-+-+----- a/MachineLearning/Defs.lean
+++-+-+--+++ b/MachineLearning/Defs.lean
+++-+-+--@@ -1,105 +1,86 @@
+++-+-+-- import Mathlib
+++-+-+-- 
+++-+-+-- /-!
+++-+-+---# Top-K Robustness: Definitions
+++-+-+--+# Top-k Order Statistics and Robustness Definitions
+++-+-+-- 
+++-+-+---Core definitions for the top-`k` certified robustness theory for multiclass
+++-+-+---piecewise-linear networks. All definitions avoid sorting machinery and instead
+++-+-+---phrase top-`k` membership via pairwise comparison against outside classes.
+++-+-+--+This file defines the core objects for top-k certified robustness:
+++-+-+-- 
+++-+-+---## Main definitions
+++-+-+--+* `kthLargest s k` — the (k+1)-th largest value of `s : Fin C → ℝ` (0-indexed)
+++-+-+--+* `topkGap s k` — the gap between the k-th and (k+1)-th largest values
+++-+-+--+* `topKSet s k` — the set of indices with scores strictly above the (k+1)-th largest
+++-+-+-- 
+++-+-+---* `scoreGap` — The score gap `f(x,i) - f(x,j)` between two classes.
+++-+-+---* `finCompl` — The complement of a finset `S` in `Fin n`.
+++-+-+---* `crossGaps` — The finite set of all score gaps between classes in `S` and classes outside `S`.
+++-+-+---* `topkMargin'` — The minimum score gap across all (in, out) pairs, via `Finset.min'`.
+++-+-+---* `IsTopKSet` — Predicate: all classes in `S` weakly dominate all classes outside `S`.
+++-+-+---* `StrictTopKSet` — Predicate: all classes in `S` strictly dominate all classes outside `S`.
+++-+-+--+The k-th largest value is defined via the classical "sup of infima" characterization:
+++-+-+--+  `kthLargest s k = max_{|S|=k+1} min_{i ∈ S} s(i)`
+++-+-+--+
+++-+-+--+This definition is proof-friendly because the perturbation bound follows directly
+++-+-+--+from the monotonicity of inf and sup operations.
+++-+-+-- -/
+++-+-+--+
+++-+-+--+noncomputable section
+++-+-+-- 
+++-+-+-- open Finset
+++-+-+-- 
+++-+-+---noncomputable section
+++-+-+--+/-! ## Auxiliary lemmas for powersetCard -/
+++-+-+-- 
+++-+-+---variable {n : ℕ}
+++-+-+--+/-- Nonemptiness of powersetCard when k+1 ≤ C -/
+++-+-+--+lemma powersetCard_univ_nonempty {C : ℕ} (k : ℕ) (h : k < C) :
+++-+-+--+    ((univ : Finset (Fin C)).powersetCard (k + 1)).Nonempty := by
+++-+-+--+  rw [powersetCard_nonempty, card_univ, Fintype.card_fin]; omega
+++-+-+-- 
+++-+-+---/-- The score gap between class `i` and class `j` at input `x`. -/
+++-+-+---def scoreGap {α : Type*} (f : α → Fin n → ℝ) (x : α) (i j : Fin n) : ℝ :=
+++-+-+---  f x i - f x j
+++-+-+--+/-- Any member of `powersetCard (k+1) univ` is nonempty -/
+++-+-+--+lemma nonempty_of_mem_powersetCard_succ {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
+++-+-+--+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.Nonempty := by
+++-+-+--+  rw [nonempty_iff_ne_empty]
+++-+-+--+  intro h
+++-+-+--+  have := (mem_powersetCard.mp hS).2
+++-+-+--+  rw [h, card_empty] at this; omega
+++-+-+-- 
+++-+-+---/-- The complement of `S` in `Fin n`, as a `Finset`. -/
+++-+-+---def finCompl (S : Finset (Fin n)) : Finset (Fin n) :=
+++-+-+---  Finset.univ.filter fun j => j ∉ S
+++-+-+--+/-- Card of members of powersetCard -/
+++-+-+--+lemma card_of_mem_powersetCard {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
+++-+-+--+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.card = k + 1 :=
+++-+-+--+  (mem_powersetCard.mp hS).2
+++-+-+-- 
+++-+-+---/-- The finite set of all score gaps `f(x,i) - f(x,j)` for `i ∈ S` and `j ∉ S`. -/
+++-+-+---def crossGaps {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Finset ℝ :=
+++-+-+---  (S ×ˢ finCompl S).image (fun p => scoreGap f x p.1 p.2)
+++-+-+--+/-! ## Core Definitions -/
+++-+-+-- 
+++-+-+---/-- Nonemptiness of `crossGaps` from nonemptiness of `S` and its complement. -/
+++-+-+---theorem crossGaps_nonempty {α : Type*} (f : α → Fin n → ℝ) (x : α)
+++-+-+---    (S : Finset (Fin n))
+++-+-+---    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) :
+++-+-+---    (crossGaps f x S).Nonempty := by
+++-+-+---  rcases hS with ⟨i, hi⟩; rcases hSc with ⟨j, hj⟩
+++-+-+---  exact ⟨scoreGap f x i j, Finset.mem_image.mpr
+++-+-+---    ⟨(i, j), Finset.mem_product.mpr ⟨hi, hj⟩, rfl⟩⟩
+++-+-+--+/-- The k-th largest value (0-indexed) of a finite score function `s : Fin C → ℝ`.
+++-+-+--+    Defined as the maximum over all (k+1)-element subsets of `Fin C` of the
+++-+-+--+    minimum value of `s` on the subset:
+++-+-+--+      `kthLargest s k = sup_{|S|=k+1} inf_{i ∈ S} s(i)`
+++-+-+--+    Returns 0 if `k ≥ C`. -/
+++-+-+--+def kthLargest {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
+++-+-+--+  if h : k < C then
+++-+-+--+    ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
+++-+-+--+      (powersetCard_univ_nonempty k h)
+++-+-+--+      (fun S => if hne : S.Nonempty then S.inf' hne s else 0)
+++-+-+--+  else 0
+++-+-+-- 
+++-+-+---/-- The minimum score gap across all `(i ∈ S, j ∉ S)` pairs.
+++-+-+---This is the "top-k margin" — the smallest advantage any in-set class holds
+++-+-+---over any out-set class. -/
+++-+-+---def topkMargin' {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n))
+++-+-+---    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) : ℝ :=
+++-+-+---  (crossGaps f x S).min' (crossGaps_nonempty f x S hS hSc)
+++-+-+--+/-- The top-k gap: the difference between the k-th largest and (k+1)-th largest values.
+++-+-+--+    For `k ≥ 1`, this measures the separation between the top-k scores and the rest.
+++-+-+--+    `topkGap s k = kthLargest s (k-1) - kthLargest s k` -/
+++-+-+--+def topkGap {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
+++-+-+--+  kthLargest s (k - 1) - kthLargest s k
+++-+-+-- 
+++-+-+---/-- `S` is a (weak) top-k set at `x`: every class in `S` has score ≥ every class
+++-+-+---outside `S`. -/
+++-+-+---def IsTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
+++-+-+---  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j ≤ f x i
+++-+-+--+/-- The top-k set: the set of indices whose score strictly exceeds the (k+1)-th
+++-+-+--+    largest value. Under a positive gap condition, this has exactly k elements. -/
+++-+-+--+def topKSet {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : Finset (Fin C) :=
+++-+-+--+  univ.filter (fun i => kthLargest s k < s i)
+++-+-+-- 
+++-+-+---/-- `S` is a strict top-k set at `x`: every class in `S` has score strictly greater
+++-+-+---than every class outside `S`. -/
+++-+-+---def StrictTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
+++-+-+---  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j < f x i
+++-+-+--+/-! ## Basic kthLargest simplification -/
+++-+-+-- 
+++-+-+---/-- A strict top-k set is also a weak top-k set. -/
+++-+-+---theorem StrictTopKSet.isTopKSet {α : Type*} {f : α → Fin n → ℝ} {x : α}
+++-+-+---    {S : Finset (Fin n)}
+++-+-+---    (h : StrictTopKSet f x S) : IsTopKSet f x S :=
+++-+-+---  fun _ _ hi hj => le_of_lt (h hi hj)
+++-+-+--+/-- Unfold kthLargest when k < C -/
+++-+-+--+lemma kthLargest_def {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
+++-+-+--+    kthLargest s k =
+++-+-+--+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
+++-+-+--+        (powersetCard_univ_nonempty k hk)
+++-+-+--+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) := by
+++-+-+--+  simp [kthLargest, hk]
+++-+-+-- 
+++-+-+---/-- Membership in `crossGaps` unpacked. -/
+++-+-+---theorem mem_crossGaps_iff {α : Type*} {f : α → Fin n → ℝ} {x : α}
+++-+-+---    {S : Finset (Fin n)} {r : ℝ} :
+++-+-+---    r ∈ crossGaps f x S ↔ ∃ i ∈ S, ∃ j, j ∉ S ∧ r = scoreGap f x i j := by
+++-+-+---  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
+++-+-+---    Finset.mem_filter, Finset.mem_univ, true_and]
+++-+-+---  constructor
+++-+-+---  · rintro ⟨⟨i, j⟩, ⟨hi, hj⟩, heq⟩
+++-+-+---    exact ⟨i, hi, j, hj, heq.symm⟩
+++-+-+---  · rintro ⟨i, hi, j, hj, heq⟩
+++-+-+---    exact ⟨⟨i, j⟩, ⟨hi, hj⟩, heq.symm⟩
+++-+-+---
+++-+-+---/-- Every `(i, j)` gap with `i ∈ S`, `j ∉ S` is at least the top-k margin. -/
+++-+-+---theorem topkMargin'_le_scoreGap {α : Type*} {f : α → Fin n → ℝ} {x : α}
+++-+-+---    {S : Finset (Fin n)}
+++-+-+---    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
+++-+-+---    {i j : Fin n} (hi : i ∈ S) (hj : j ∉ S) :
+++-+-+---    topkMargin' f x S hS hSc ≤ scoreGap f x i j := by
+++-+-+---  apply Finset.min'_le
+++-+-+---  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
+++-+-+---    Finset.mem_filter, Finset.mem_univ, true_and]
+++-+-+---  exact ⟨⟨i, j⟩, ⟨hi, hj⟩, rfl⟩
+++-+-+---
+++-+-+---/-- Positive top-k margin implies `StrictTopKSet`. -/
+++-+-+---theorem strictTopKSet_of_pos_margin {α : Type*} {f : α → Fin n → ℝ} {x : α}
+++-+-+---    {S : Finset (Fin n)}
+++-+-+---    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
+++-+-+---    (hpos : 0 < topkMargin' f x S hS hSc) :
+++-+-+---    StrictTopKSet f x S := by
+++-+-+---  intro i j hi hj
+++-+-+---  have h : topkMargin' f x S hS hSc ≤ scoreGap f x i j :=
+++-+-+---    topkMargin'_le_scoreGap hi hj
+++-+-+---  simp only [scoreGap] at h
+++-+-+---  linarith
+++-+-+--+/-- The sup' function on powersetCard evaluates to inf' on nonempty subsets -/
+++-+-+--+lemma kthLargest_eq_sup'_inf' {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
+++-+-+--+    kthLargest s k =
+++-+-+--+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
+++-+-+--+        (powersetCard_univ_nonempty k hk)
+++-+-+--+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) :=
+++-+-+--+  kthLargest_def s k hk
+++-+-+-- 
+++-+-+-- end+/-
+++-+-+-+Copyright (c) 2025. All rights reserved.
+++-+-+-+Released under Apache 2.0 license as described in the file LICENSE.
+++-+-+-+
+++-+-+-+# GL₃ Tropical Satake Surjectivity — Definitions
+++-+-+-+
+++-+-+-+This file provides the foundational definitions for the GL₃ tropical Satake
+++-+-+-+surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
+++-+-+-+the Satake support extraction map, and the admissibility predicate.
+++-+-+-+-/
+++-+-+-+import Mathlib
+++-+-+-+
+++-+-+-+namespace GL3TropicalSatake
+++-+-+-+
+++-+-+-+/-! ## Sorting into Dominant Chamber -/
+++-+-+-+
+++-+-+-+/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
+++-+-+-+def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
+++-+-+-+  (max a (max b c),
+++-+-+-+   a + b + c - max a (max b c) - min a (min b c),
+++-+-+-+   min a (min b c))
+++-+-+-+
+++-+-+-+theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
+++-+-+-+  simp only [sort₃]; omega
+++-+-+-+
+++-+-+-+theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
+++-+-+-+  simp only [sort₃]; omega
+++-+-+-+
+++-+-+-+theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
+++-+-+-+    sort₃ a b c = (a, b, c) := by
+++-+-+-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+-+-+
+++-+-+-+theorem sort₃_sum (a b c : ℤ) :
+++-+-+-+    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
+++-+-+-+  simp only [sort₃]; omega
+++-+-+-+
+++-+-+-+theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
+++-+-+-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+-+-+
+++-+-+-+theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
+++-+-+-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+-+-+
+++-+-+-+theorem sort₃_idempotent (a b c : ℤ) :
+++-+-+-+    let s := sort₃ a b c
+++-+-+-+    sort₃ s.1 s.2.1 s.2.2 = s := by
+++-+-+-+  have h1 := sort₃_fst_ge_snd a b c
+++-+-+-+  have h2 := sort₃_snd_ge_thd a b c
+++-+-+-+  exact sort₃_of_dominant h1 h2
+++-+-+-+
+++-+-+-+/-! ## Dominant Coweights -/
+++-+-+-+
+++-+-+-+/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
+++-+-+-+def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
+++-+-+-+
+++-+-+-+instance : DecidableEq GL3Dom := Subtype.instDecidableEq
+++-+-+-+
+++-+-+-+/-- Construct the dominant representative of any triple. -/
+++-+-+-+def toGL3Dom (a b c : ℤ) : GL3Dom :=
+++-+-+-+  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
+++-+-+-+
+++-+-+-+/-- The zero dominant coweight. -/
+++-+-+-+def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
+++-+-+-+
+++-+-+-+instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
+++-+-+-+
+++-+-+-+@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
+++-+-+-+
+++-+-+-+/-- Componentwise addition of dominant coweights is dominant. -/
+++-+-+-+def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
+++-+-+-+  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
+++-+-+-+   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
+++-+-+-+
+++-+-+-+instance : Add GL3Dom := ⟨GL3Dom.add⟩
+++-+-+-+
+++-+-+-+@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
+++-+-+-+    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
+++-+-+-+
+++-+-+-+/-- toGL3Dom of a dominant triple returns the original triple. -/
+++-+-+-+theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
+++-+-+-+    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
+++-+-+-+  simp only [toGL3Dom]
+++-+-+-+  exact Subtype.ext (sort₃_of_dominant h1 h2)
+++-+-+-+
+++-+-+-+/-- toGL3Dom is invariant under transposition (12). -/
+++-+-+-+theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
+++-+-+-+  exact Subtype.ext (sort₃_swap12 a b c)
+++-+-+-+
+++-+-+-+/-- toGL3Dom is invariant under the 3-cycle. -/
+++-+-+-+theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
+++-+-+-+  exact Subtype.ext (sort₃_cycle a b c)
+++-+-+-+
+++-+-+-+/-! ## Support Datum -/
+++-+-+-+
+++-+-+-+/-- A support datum is a function from dominant coweights to ℤ. -/
+++-+-+-+def SupportDatum := GL3Dom → ℤ
+++-+-+-+
+++-+-+-+instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
+++-+-+-+
+++-+-+-+
+++-+-+-+
+++-+-+-+/-- Finite support means vanishing outside some finite set. -/
+++-+-+-+def FiniteSupport (h : SupportDatum) : Prop :=
+++-+-+-+  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
+++-+-+-+
+++-+-+-+/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
+++-+-+-+
+++-+-+-+/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
+++-+-+-+    transposition (12) and the 3-cycle (123). -/
+++-+-+-+def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
+++-+-+-+  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
+++-+-+-+
+++-+-+-+/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
+++-+-+-+def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
+++-+-+-+
+++-+-+-+instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
+++-+-+-+
+++-+-+-+/-- Extensionality for tropical Hecke functions. -/
+++-+-+-+@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
+++-+-+-+    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
+++-+-+-+  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
+++-+-+-+
+++-+-+-+/-! ## Satake Support Map -/
+++-+-+-+
+++-+-+-+/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
+++-+-+-+def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
+++-+-+-+  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
+++-+-+-+
+++-+-+-+/-! ## Satake Extension -/
+++-+-+-+
+++-+-+-+/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
+++-+-+-+def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
+++-+-+-+  fun a b c => h (toGL3Dom a b c)
+++-+-+-+
+++-+-+-+theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
+++-+-+-+  constructor
+++-+-+-+  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
+++-+-+-+  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
+++-+-+-+
+++-+-+-+/-- Lift a support datum to a tropical Hecke function. -/
+++-+-+-+def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
+++-+-+-+  ⟨satakeExtend h, satakeExtend_invariant h⟩
+++-+-+-+
+++-+-+-+/-! ## S₃-invariant functions are determined by their dominant values -/
+++-+-+-+
+++-+-+-+/-
+++-+-+-+Any triple has the same S₃-invariant value as its sorted version.
+++-+-+-+-/
+++-+-+-+theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
+++-+-+-+    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
+++-+-+-+  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
+++-+-+-+  grind
+++-+-+-+
+++-+-+-+end GL3TropicalSatake+/-
+++-+-++Copyright (c) 2025. All rights reserved.
+++-+-++Released under Apache 2.0 license as described in the file LICENSE.
+++-+-++
+++-+-++# GL₃ Tropical Satake Surjectivity — Definitions
+++-+-++
+++-+-++This file provides the foundational definitions for the GL₃ tropical Satake
+++-+-++surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
+++-+-++the Satake support extraction map, and the admissibility predicate.
+++-+-++-/
+++-+-++import Mathlib
+++-+-++
+++-+-++namespace GL3TropicalSatake
+++-+-++
+++-+-++/-! ## Sorting into Dominant Chamber -/
+++-+-++
+++-+-++/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
+++-+-++def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
+++-+-++  (max a (max b c),
+++-+-++   a + b + c - max a (max b c) - min a (min b c),
+++-+-++   min a (min b c))
+++-+-++
+++-+-++theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
+++-+-++  simp only [sort₃]; omega
+++-+-++
+++-+-++theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
+++-+-++  simp only [sort₃]; omega
+++-+-++
+++-+-++theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
+++-+-++    sort₃ a b c = (a, b, c) := by
+++-+-++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+-++
+++-+-++theorem sort₃_sum (a b c : ℤ) :
+++-+-++    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
+++-+-++  simp only [sort₃]; omega
+++-+-++
+++-+-++theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
+++-+-++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+-++
+++-+-++theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
+++-+-++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+-++
+++-+-++theorem sort₃_idempotent (a b c : ℤ) :
+++-+-++    let s := sort₃ a b c
+++-+-++    sort₃ s.1 s.2.1 s.2.2 = s := by
+++-+-++  have h1 := sort₃_fst_ge_snd a b c
+++-+-++  have h2 := sort₃_snd_ge_thd a b c
+++-+-++  exact sort₃_of_dominant h1 h2
+++-+-++
+++-+-++/-! ## Dominant Coweights -/
+++-+-++
+++-+-++/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
+++-+-++def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
+++-+-++
+++-+-++instance : DecidableEq GL3Dom := Subtype.instDecidableEq
+++-+-++
+++-+-++/-- Construct the dominant representative of any triple. -/
+++-+-++def toGL3Dom (a b c : ℤ) : GL3Dom :=
+++-+-++  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
+++-+-++
+++-+-++/-- The zero dominant coweight. -/
+++-+-++def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
+++-+-++
+++-+-++instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
+++-+-++
+++-+-++@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
+++-+-++
+++-+-++/-- Componentwise addition of dominant coweights is dominant. -/
+++-+-++def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
+++-+-++  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
+++-+-++   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
+++-+-++
+++-+-++instance : Add GL3Dom := ⟨GL3Dom.add⟩
+++-+-++
+++-+-++@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
+++-+-++    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
+++-+-++
+++-+-++/-- toGL3Dom of a dominant triple returns the original triple. -/
+++-+-++theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
+++-+-++    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
+++-+-++  simp only [toGL3Dom]
+++-+-++  exact Subtype.ext (sort₃_of_dominant h1 h2)
+++-+-++
+++-+-++/-- toGL3Dom is invariant under transposition (12). -/
+++-+-++theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
+++-+-++  exact Subtype.ext (sort₃_swap12 a b c)
+++-+-++
+++-+-++/-- toGL3Dom is invariant under the 3-cycle. -/
+++-+-++theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
+++-+-++  exact Subtype.ext (sort₃_cycle a b c)
+++-+-++
+++-+-++/-! ## Support Datum -/
+++-+-++
+++-+-++/-- A support datum is a function from dominant coweights to ℤ. -/
+++-+-++def SupportDatum := GL3Dom → ℤ
+++-+-++
+++-+-++instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
+++-+-++
+++-+-++
+++-+-++
+++-+-++/-- Finite support means vanishing outside some finite set. -/
+++-+-++def FiniteSupport (h : SupportDatum) : Prop :=
+++-+-++  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
+++-+-++
+++-+-++/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
+++-+-++
+++-+-++/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
+++-+-++    transposition (12) and the 3-cycle (123). -/
+++-+-++def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
+++-+-++  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
+++-+-++
+++-+-++/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
+++-+-++def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
+++-+-++
+++-+-++instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
+++-+-++
+++-+-++/-- Extensionality for tropical Hecke functions. -/
+++-+-++@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
+++-+-++    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
+++-+-++  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
+++-+-++
+++-+-++/-! ## Satake Support Map -/
+++-+-++
+++-+-++/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
+++-+-++def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
+++-+-++  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
+++-+-++
+++-+-++/-! ## Satake Extension -/
+++-+-++
+++-+-++/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
+++-+-++def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
+++-+-++  fun a b c => h (toGL3Dom a b c)
+++-+-++
+++-+-++theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
+++-+-++  constructor
+++-+-++  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
+++-+-++  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
+++-+-++
+++-+-++/-- Lift a support datum to a tropical Hecke function. -/
+++-+-++def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
+++-+-++  ⟨satakeExtend h, satakeExtend_invariant h⟩
+++-+-++
+++-+-++/-! ## S₃-invariant functions are determined by their dominant values -/
+++-+-++
+++-+-++/-
+++-+-++Any triple has the same S₃-invariant value as its sorted version.
+++-+-++-/
+++-+-++theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
+++-+-++    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
+++-+-++  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
+++-+-++  grind
+++-+-++
+++-+-++end GL3TropicalSatake+@@ -1,327 +1,153 @@
+++-++---- a/Tropical/Defs.lean
+++-++-+++ b/Tropical/Defs.lean
+++-++-@@ -1,172 +1,153 @@
+++-++----- a/MachineLearning/Defs.lean
+++-++--+++ b/MachineLearning/Defs.lean
+++-++--@@ -1,105 +1,86 @@
+++-++-- import Mathlib
+++-++-- 
+++-++-- /-!
+++-++---# Top-K Robustness: Definitions
+++-++--+# Top-k Order Statistics and Robustness Definitions
+++-++-- 
+++-++---Core definitions for the top-`k` certified robustness theory for multiclass
+++-++---piecewise-linear networks. All definitions avoid sorting machinery and instead
+++-++---phrase top-`k` membership via pairwise comparison against outside classes.
+++-++--+This file defines the core objects for top-k certified robustness:
+++-++-- 
+++-++---## Main definitions
+++-++--+* `kthLargest s k` — the (k+1)-th largest value of `s : Fin C → ℝ` (0-indexed)
+++-++--+* `topkGap s k` — the gap between the k-th and (k+1)-th largest values
+++-++--+* `topKSet s k` — the set of indices with scores strictly above the (k+1)-th largest
+++-++-- 
+++-++---* `scoreGap` — The score gap `f(x,i) - f(x,j)` between two classes.
+++-++---* `finCompl` — The complement of a finset `S` in `Fin n`.
+++-++---* `crossGaps` — The finite set of all score gaps between classes in `S` and classes outside `S`.
+++-++---* `topkMargin'` — The minimum score gap across all (in, out) pairs, via `Finset.min'`.
+++-++---* `IsTopKSet` — Predicate: all classes in `S` weakly dominate all classes outside `S`.
+++-++---* `StrictTopKSet` — Predicate: all classes in `S` strictly dominate all classes outside `S`.
+++-++--+The k-th largest value is defined via the classical "sup of infima" characterization:
+++-++--+  `kthLargest s k = max_{|S|=k+1} min_{i ∈ S} s(i)`
+++-++--+
+++-++--+This definition is proof-friendly because the perturbation bound follows directly
+++-++--+from the monotonicity of inf and sup operations.
+++-++-- -/
+++-++--+
+++-++--+noncomputable section
+++-++-- 
+++-++-- open Finset
+++-++-- 
+++-++---noncomputable section
+++-++--+/-! ## Auxiliary lemmas for powersetCard -/
+++-++-- 
+++-++---variable {n : ℕ}
+++-++--+/-- Nonemptiness of powersetCard when k+1 ≤ C -/
+++-++--+lemma powersetCard_univ_nonempty {C : ℕ} (k : ℕ) (h : k < C) :
+++-++--+    ((univ : Finset (Fin C)).powersetCard (k + 1)).Nonempty := by
+++-++--+  rw [powersetCard_nonempty, card_univ, Fintype.card_fin]; omega
+++-++-- 
+++-++---/-- The score gap between class `i` and class `j` at input `x`. -/
+++-++---def scoreGap {α : Type*} (f : α → Fin n → ℝ) (x : α) (i j : Fin n) : ℝ :=
+++-++---  f x i - f x j
+++-++--+/-- Any member of `powersetCard (k+1) univ` is nonempty -/
+++-++--+lemma nonempty_of_mem_powersetCard_succ {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
+++-++--+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.Nonempty := by
+++-++--+  rw [nonempty_iff_ne_empty]
+++-++--+  intro h
+++-++--+  have := (mem_powersetCard.mp hS).2
+++-++--+  rw [h, card_empty] at this; omega
+++-++-- 
+++-++---/-- The complement of `S` in `Fin n`, as a `Finset`. -/
+++-++---def finCompl (S : Finset (Fin n)) : Finset (Fin n) :=
+++-++---  Finset.univ.filter fun j => j ∉ S
+++-++--+/-- Card of members of powersetCard -/
+++-++--+lemma card_of_mem_powersetCard {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
+++-++--+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.card = k + 1 :=
+++-++--+  (mem_powersetCard.mp hS).2
+++-++-- 
+++-++---/-- The finite set of all score gaps `f(x,i) - f(x,j)` for `i ∈ S` and `j ∉ S`. -/
+++-++---def crossGaps {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Finset ℝ :=
+++-++---  (S ×ˢ finCompl S).image (fun p => scoreGap f x p.1 p.2)
+++-++--+/-! ## Core Definitions -/
+++-++-- 
+++-++---/-- Nonemptiness of `crossGaps` from nonemptiness of `S` and its complement. -/
+++-++---theorem crossGaps_nonempty {α : Type*} (f : α → Fin n → ℝ) (x : α)
+++-++---    (S : Finset (Fin n))
+++-++---    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) :
+++-++---    (crossGaps f x S).Nonempty := by
+++-++---  rcases hS with ⟨i, hi⟩; rcases hSc with ⟨j, hj⟩
+++-++---  exact ⟨scoreGap f x i j, Finset.mem_image.mpr
+++-++---    ⟨(i, j), Finset.mem_product.mpr ⟨hi, hj⟩, rfl⟩⟩
+++-++--+/-- The k-th largest value (0-indexed) of a finite score function `s : Fin C → ℝ`.
+++-++--+    Defined as the maximum over all (k+1)-element subsets of `Fin C` of the
+++-++--+    minimum value of `s` on the subset:
+++-++--+      `kthLargest s k = sup_{|S|=k+1} inf_{i ∈ S} s(i)`
+++-++--+    Returns 0 if `k ≥ C`. -/
+++-++--+def kthLargest {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
+++-++--+  if h : k < C then
+++-++--+    ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
+++-++--+      (powersetCard_univ_nonempty k h)
+++-++--+      (fun S => if hne : S.Nonempty then S.inf' hne s else 0)
+++-++--+  else 0
+++-++-- 
+++-++---/-- The minimum score gap across all `(i ∈ S, j ∉ S)` pairs.
+++-++---This is the "top-k margin" — the smallest advantage any in-set class holds
+++-++---over any out-set class. -/
+++-++---def topkMargin' {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n))
+++-++---    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) : ℝ :=
+++-++---  (crossGaps f x S).min' (crossGaps_nonempty f x S hS hSc)
+++-++--+/-- The top-k gap: the difference between the k-th largest and (k+1)-th largest values.
+++-++--+    For `k ≥ 1`, this measures the separation between the top-k scores and the rest.
+++-++--+    `topkGap s k = kthLargest s (k-1) - kthLargest s k` -/
+++-++--+def topkGap {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
+++-++--+  kthLargest s (k - 1) - kthLargest s k
+++-++-- 
+++-++---/-- `S` is a (weak) top-k set at `x`: every class in `S` has score ≥ every class
+++-++---outside `S`. -/
+++-++---def IsTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
+++-++---  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j ≤ f x i
+++-++--+/-- The top-k set: the set of indices whose score strictly exceeds the (k+1)-th
+++-++--+    largest value. Under a positive gap condition, this has exactly k elements. -/
+++-++--+def topKSet {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : Finset (Fin C) :=
+++-++--+  univ.filter (fun i => kthLargest s k < s i)
+++-++-- 
+++-++---/-- `S` is a strict top-k set at `x`: every class in `S` has score strictly greater
+++-++---than every class outside `S`. -/
+++-++---def StrictTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
+++-++---  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j < f x i
+++-++--+/-! ## Basic kthLargest simplification -/
+++-++-- 
+++-++---/-- A strict top-k set is also a weak top-k set. -/
+++-++---theorem StrictTopKSet.isTopKSet {α : Type*} {f : α → Fin n → ℝ} {x : α}
+++-++---    {S : Finset (Fin n)}
+++-++---    (h : StrictTopKSet f x S) : IsTopKSet f x S :=
+++-++---  fun _ _ hi hj => le_of_lt (h hi hj)
+++-++--+/-- Unfold kthLargest when k < C -/
+++-++--+lemma kthLargest_def {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
+++-++--+    kthLargest s k =
+++-++--+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
+++-++--+        (powersetCard_univ_nonempty k hk)
+++-++--+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) := by
+++-++--+  simp [kthLargest, hk]
+++-++-- 
+++-++---/-- Membership in `crossGaps` unpacked. -/
+++-++---theorem mem_crossGaps_iff {α : Type*} {f : α → Fin n → ℝ} {x : α}
+++-++---    {S : Finset (Fin n)} {r : ℝ} :
+++-++---    r ∈ crossGaps f x S ↔ ∃ i ∈ S, ∃ j, j ∉ S ∧ r = scoreGap f x i j := by
+++-++---  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
+++-++---    Finset.mem_filter, Finset.mem_univ, true_and]
+++-++---  constructor
+++-++---  · rintro ⟨⟨i, j⟩, ⟨hi, hj⟩, heq⟩
+++-++---    exact ⟨i, hi, j, hj, heq.symm⟩
+++-++---  · rintro ⟨i, hi, j, hj, heq⟩
+++-++---    exact ⟨⟨i, j⟩, ⟨hi, hj⟩, heq.symm⟩
+++-++---
+++-++---/-- Every `(i, j)` gap with `i ∈ S`, `j ∉ S` is at least the top-k margin. -/
+++-++---theorem topkMargin'_le_scoreGap {α : Type*} {f : α → Fin n → ℝ} {x : α}
+++-++---    {S : Finset (Fin n)}
+++-++---    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
+++-++---    {i j : Fin n} (hi : i ∈ S) (hj : j ∉ S) :
+++-++---    topkMargin' f x S hS hSc ≤ scoreGap f x i j := by
+++-++---  apply Finset.min'_le
+++-++---  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
+++-++---    Finset.mem_filter, Finset.mem_univ, true_and]
+++-++---  exact ⟨⟨i, j⟩, ⟨hi, hj⟩, rfl⟩
+++-++---
+++-++---/-- Positive top-k margin implies `StrictTopKSet`. -/
+++-++---theorem strictTopKSet_of_pos_margin {α : Type*} {f : α → Fin n → ℝ} {x : α}
+++-++---    {S : Finset (Fin n)}
+++-++---    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
+++-++---    (hpos : 0 < topkMargin' f x S hS hSc) :
+++-++---    StrictTopKSet f x S := by
+++-++---  intro i j hi hj
+++-++---  have h : topkMargin' f x S hS hSc ≤ scoreGap f x i j :=
+++-++---    topkMargin'_le_scoreGap hi hj
+++-++---  simp only [scoreGap] at h
+++-++---  linarith
+++-++--+/-- The sup' function on powersetCard evaluates to inf' on nonempty subsets -/
+++-++--+lemma kthLargest_eq_sup'_inf' {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
+++-++--+    kthLargest s k =
+++-++--+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
+++-++--+        (powersetCard_univ_nonempty k hk)
+++-++--+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) :=
+++-++--+  kthLargest_def s k hk
+++-++-- 
+++-++-- end+/-
+++-++-+Copyright (c) 2025. All rights reserved.
+++-++-+Released under Apache 2.0 license as described in the file LICENSE.
+++-++-+
+++-++-+# GL₃ Tropical Satake Surjectivity — Definitions
+++-++-+
+++-++-+This file provides the foundational definitions for the GL₃ tropical Satake
+++-++-+surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
+++-++-+the Satake support extraction map, and the admissibility predicate.
+++-++-+-/
+++-++-+import Mathlib
+++-++-+
+++-++-+namespace GL3TropicalSatake
+++-++-+
+++-++-+/-! ## Sorting into Dominant Chamber -/
+++-++-+
+++-++-+/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
+++-++-+def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
+++-++-+  (max a (max b c),
+++-++-+   a + b + c - max a (max b c) - min a (min b c),
+++-++-+   min a (min b c))
+++-++-+
+++-++-+theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
+++-++-+  simp only [sort₃]; omega
+++-++-+
+++-++-+theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
+++-++-+  simp only [sort₃]; omega
+++-++-+
+++-++-+theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
+++-++-+    sort₃ a b c = (a, b, c) := by
+++-++-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-++-+
+++-++-+theorem sort₃_sum (a b c : ℤ) :
+++-++-+    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
+++-++-+  simp only [sort₃]; omega
+++-++-+
+++-++-+theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
+++-++-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-++-+
+++-++-+theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
+++-++-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-++-+
+++-++-+theorem sort₃_idempotent (a b c : ℤ) :
+++-++-+    let s := sort₃ a b c
+++-++-+    sort₃ s.1 s.2.1 s.2.2 = s := by
+++-++-+  have h1 := sort₃_fst_ge_snd a b c
+++-++-+  have h2 := sort₃_snd_ge_thd a b c
+++-++-+  exact sort₃_of_dominant h1 h2
+++-++-+
+++-++-+/-! ## Dominant Coweights -/
+++-++-+
+++-++-+/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
+++-++-+def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
+++-++-+
+++-++-+instance : DecidableEq GL3Dom := Subtype.instDecidableEq
+++-++-+
+++-++-+/-- Construct the dominant representative of any triple. -/
+++-++-+def toGL3Dom (a b c : ℤ) : GL3Dom :=
+++-++-+  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
+++-++-+
+++-++-+/-- The zero dominant coweight. -/
+++-++-+def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
+++-++-+
+++-++-+instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
+++-++-+
+++-++-+@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
+++-++-+
+++-++-+/-- Componentwise addition of dominant coweights is dominant. -/
+++-++-+def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
+++-++-+  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
+++-++-+   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
+++-++-+
+++-++-+instance : Add GL3Dom := ⟨GL3Dom.add⟩
+++-++-+
+++-++-+@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
+++-++-+    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
+++-++-+
+++-++-+/-- toGL3Dom of a dominant triple returns the original triple. -/
+++-++-+theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
+++-++-+    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
+++-++-+  simp only [toGL3Dom]
+++-++-+  exact Subtype.ext (sort₃_of_dominant h1 h2)
+++-++-+
+++-++-+/-- toGL3Dom is invariant under transposition (12). -/
+++-++-+theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
+++-++-+  exact Subtype.ext (sort₃_swap12 a b c)
+++-++-+
+++-++-+/-- toGL3Dom is invariant under the 3-cycle. -/
+++-++-+theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
+++-++-+  exact Subtype.ext (sort₃_cycle a b c)
+++-++-+
+++-++-+/-! ## Support Datum -/
+++-++-+
+++-++-+/-- A support datum is a function from dominant coweights to ℤ. -/
+++-++-+def SupportDatum := GL3Dom → ℤ
+++-++-+
+++-++-+instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
+++-++-+
+++-++-+
+++-++-+
+++-++-+/-- Finite support means vanishing outside some finite set. -/
+++-++-+def FiniteSupport (h : SupportDatum) : Prop :=
+++-++-+  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
+++-++-+
+++-++-+/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
+++-++-+
+++-++-+/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
+++-++-+    transposition (12) and the 3-cycle (123). -/
+++-++-+def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
+++-++-+  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
+++-++-+
+++-++-+/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
+++-++-+def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
+++-++-+
+++-++-+instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
+++-++-+
+++-++-+/-- Extensionality for tropical Hecke functions. -/
+++-++-+@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
+++-++-+    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
+++-++-+  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
+++-++-+
+++-++-+/-! ## Satake Support Map -/
+++-++-+
+++-++-+/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
+++-++-+def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
+++-++-+  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
+++-++-+
+++-++-+/-! ## Satake Extension -/
+++-++-+
+++-++-+/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
+++-++-+def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
+++-++-+  fun a b c => h (toGL3Dom a b c)
+++-++-+
+++-++-+theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
+++-++-+  constructor
+++-++-+  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
+++-++-+  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
+++-++-+
+++-++-+/-- Lift a support datum to a tropical Hecke function. -/
+++-++-+def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
+++-++-+  ⟨satakeExtend h, satakeExtend_invariant h⟩
+++-++-+
+++-++-+/-! ## S₃-invariant functions are determined by their dominant values -/
+++-++-+
+++-++-+/-
+++-++-+Any triple has the same S₃-invariant value as its sorted version.
+++-++-+-/
+++-++-+theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
+++-++-+    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
+++-++-+  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
+++-++-+  grind
+++-++-+
+++-++-+end GL3TropicalSatake+/-
+++-+++Copyright (c) 2025. All rights reserved.
+++-+++Released under Apache 2.0 license as described in the file LICENSE.
+++-+++
+++-+++# GL₃ Tropical Satake Surjectivity — Definitions
+++-+++
+++-+++This file provides the foundational definitions for the GL₃ tropical Satake
+++-+++surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
+++-+++the Satake support extraction map, and the admissibility predicate.
+++-+++-/
+++-+++import Mathlib
+++-+++
+++-+++namespace GL3TropicalSatake
+++-+++
+++-+++/-! ## Sorting into Dominant Chamber -/
+++-+++
+++-+++/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
+++-+++def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
+++-+++  (max a (max b c),
+++-+++   a + b + c - max a (max b c) - min a (min b c),
+++-+++   min a (min b c))
+++-+++
+++-+++theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
+++-+++  simp only [sort₃]; omega
+++-+++
+++-+++theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
+++-+++  simp only [sort₃]; omega
+++-+++
+++-+++theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
+++-+++    sort₃ a b c = (a, b, c) := by
+++-+++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+++
+++-+++theorem sort₃_sum (a b c : ℤ) :
+++-+++    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
+++-+++  simp only [sort₃]; omega
+++-+++
+++-+++theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
+++-+++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+++
+++-+++theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
+++-+++  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
+++-+++
+++-+++theorem sort₃_idempotent (a b c : ℤ) :
+++-+++    let s := sort₃ a b c
+++-+++    sort₃ s.1 s.2.1 s.2.2 = s := by
+++-+++  have h1 := sort₃_fst_ge_snd a b c
+++-+++  have h2 := sort₃_snd_ge_thd a b c
+++-+++  exact sort₃_of_dominant h1 h2
+++-+++
+++-+++/-! ## Dominant Coweights -/
+++-+++
+++-+++/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
+++-+++def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
+++-+++
+++-+++instance : DecidableEq GL3Dom := Subtype.instDecidableEq
+++-+++
+++-+++/-- Construct the dominant representative of any triple. -/
+++-+++def toGL3Dom (a b c : ℤ) : GL3Dom :=
+++-+++  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
+++-+++
+++-+++/-- The zero dominant coweight. -/
+++-+++def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
+++-+++
+++-+++instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
+++-+++
+++-+++@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
+++-+++
+++-+++/-- Componentwise addition of dominant coweights is dominant. -/
+++-+++def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
+++-+++  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
+++-+++   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
+++-+++
+++-+++instance : Add GL3Dom := ⟨GL3Dom.add⟩
+++-+++
+++-+++@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
+++-+++    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
+++-+++
+++-+++/-- toGL3Dom of a dominant triple returns the original triple. -/
+++-+++theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
+++-+++    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
+++-+++  simp only [toGL3Dom]
+++-+++  exact Subtype.ext (sort₃_of_dominant h1 h2)
+++-+++
+++-+++/-- toGL3Dom is invariant under transposition (12). -/
+++-+++theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
+++-+++  exact Subtype.ext (sort₃_swap12 a b c)
+++-+++
+++-+++/-- toGL3Dom is invariant under the 3-cycle. -/
+++-+++theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
+++-+++  exact Subtype.ext (sort₃_cycle a b c)
+++-+++
+++-+++/-! ## Support Datum -/
+++-+++
+++-+++/-- A support datum is a function from dominant coweights to ℤ. -/
+++-+++def SupportDatum := GL3Dom → ℤ
+++-+++
+++-+++instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
+++-+++
+++-+++
+++-+++
+++-+++/-- Finite support means vanishing outside some finite set. -/
+++-+++def FiniteSupport (h : SupportDatum) : Prop :=
+++-+++  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
+++-+++
+++-+++/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
+++-+++
+++-+++/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
+++-+++    transposition (12) and the 3-cycle (123). -/
+++-+++def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
+++-+++  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
+++-+++
+++-+++/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
+++-+++def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
+++-+++
+++-+++instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
+++-+++
+++-+++/-- Extensionality for tropical Hecke functions. -/
+++-+++@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
+++-+++    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
+++-+++  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
+++-+++
+++-+++/-! ## Satake Support Map -/
+++-+++
+++-+++/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
+++-+++def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
+++-+++  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
+++-+++
+++-+++/-! ## Satake Extension -/
+++-+++
+++-+++/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
+++-+++def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
+++-+++  fun a b c => h (toGL3Dom a b c)
+++-+++
+++-+++theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
+++-+++  constructor
+++-+++  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
+++-+++  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
+++-+++
+++-+++/-- Lift a support datum to a tropical Hecke function. -/
+++-+++def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
+++-+++  ⟨satakeExtend h, satakeExtend_invariant h⟩
+++-+++
+++-+++/-! ## S₃-invariant functions are determined by their dominant values -/
+++-+++
+++-+++/-
+++-+++Any triple has the same S₃-invariant value as its sorted version.
+++-+++-/
+++-+++theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
+++-+++    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
+++-+++  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
+++-+++  grind
+++-+++
+++-+++end GL3TropicalSatake+import Mathlib
++++
++++/-! # CatalogBuild.Logic.Defs
++++
++++Auto-generated from theorem catalog database.
++++Domain: Logic
++++Declarations: 8
++++-/
++++
++++/-- r₂(n): number of representations of n as a sum of 2 squares (with signs and order).
++++Formula: r₂(n) = 4 · Σ_{d|n} χ₋₄(d). -/
++++def r2 (n : ℕ) : ℤ :=
++++  4 * ∑ d ∈ (Nat.divisors n), chi4 (d : ℤ)
++++
++++/-- r₄(n): number of representations of n as a sum of 4 squares.
++++Jacobi's four-square theorem: r₄(n) = 8 · Σ_{d|n, 4∤d} d. -/
++++def r4 (n : ℕ) : ℤ :=
++++  8 * ∑ d ∈ (Nat.divisors n).filter (fun d => ¬(4 ∣ d)), (d : ℤ)
++++
++++/-- r₈(n): number of representations of n as a sum of 8 squares.
++++Formula: r₈(n) = 16 · Σ_{d|n} (-1)^{n+d} · d³. -/
++++def r8 (n : ℕ) : ℤ :=
++++  16 * ∑ d ∈ (Nat.divisors n), ((-1 : ℤ) ^ (n + d) * (d : ℤ) ^ 3)
++++
++++/-- The four-channel signature of a positive integer. -/
++++structure IntSignature where
++++  ch1 : ℤ  -- Channel 1: trivially 1 for all n ≥ 1 (every n is a sum of 1 square... of itself, but we use r₁(n) = 2 if n is a perfect square, 0 otherwise, or just n itself)
++++  ch2 : ℤ  -- Channel 2: r₂(n)
++++  ch3 : ℤ  -- Channel 3: r₄(n)
++++  ch4 : ℤ  -- Channel 4: r₈(n)
++++  deriving Repr
++++
++++/-- Compute the four-channel signature of n. -/
++++def signature (n : ℕ) : IntSignature where
++++  ch1 := n
++++  ch2 := r2 n
++++  ch3 := r4 n
++++  ch4 := r8 n
++++
++++/-- Squared Euclidean distance between two signatures (using integer arithmetic). -/
++++def sigDistSq (s t : IntSignature) : ℤ :=
++++  (s.ch1 - t.ch1)^2 + (s.ch2 - t.ch2)^2 + (s.ch3 - t.ch3)^2 + (s.ch4 - t.ch4)^2
++++
++++/-- Normalized signature: each channel divided by n (as rationals). -/
++++structure NormSignature where
++++  ch1 : ℚ
++++  ch2 : ℚ
++++  ch3 : ℚ
++++  ch4 : ℚ
++++  deriving Repr
++++
++++/-- Compute the normalized signature. -/
++++def normSignature (n : ℕ) (hn : n ≠ 0) : NormSignature :=
++++  let s := signature n
++++  { ch1 := (s.ch1 : ℚ) / n
++++    ch2 := (s.ch2 : ℚ) / n
++++    ch3 := (s.ch3 : ℚ) / n
++++    ch4 := (s.ch4 : ℚ) / n }
++++
