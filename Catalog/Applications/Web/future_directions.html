@@ -21,7 +21,79 @@ MathJax = {
 <p>Accumulated wisdom from all Aristotle research cycles. Each completed cycle produces
 a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross-domain bridges.</p>
 <h2>Accumulated Research Wisdom</h2>
-<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-05 06:04</em></p><p></p></div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-05 06:04</em></p><p><h2>Key Open Problem</h2></p><p>The central open question is whether the <code>linResultantPair</code> formula
+(or any fixed polynomial-time computable formula) can produce
+generators of the elimination congruence from generators of the
+original congruence, for arbitrary idempotent semirings.</p><p>Our analysis suggests this may be impossible in full generality:
+unlike classical ideal elimination (which uses subtraction/determinants),
+semiring congruences cannot "cancel" the eliminated variable from
+relations. The correct framework may require either:</p><p><li><strong>Evaluation-based witnesses</strong>: Using ring endomorphisms (evaluation</li>
+   maps) to project congruences, rather than algebraic elimination.</p><p><li><strong>Lattice-theoretic methods</strong>: Exploiting the lattice structure of</li>
+   congruences over idempotent semirings (which form a distributive
+   lattice) to perform elimination via lattice-theoretic operations.</p><p><li><strong>Restricted classes</strong>: Proving elimination for specific classes of</li>
+   idempotent semirings (totally ordered, Boolean, etc.) where
+   additional structural properties enable cancellation-like operations.</p><p><h2>1. Quadratic Resultant Pairs via 3×3 Permanent Identities</h2></p><p><strong>Target theorem:</strong>
+<code>`</code>lean
+theorem quadResultantPair_mem_elimination
+    (C : SemiringCong (PolyFull S σ))
+    (p q : PolyPair S σ)
+    (hp : C.r p.lhs p.rhs) (hq : C.r q.lhs q.rhs)
+    (hpl : noneDegree p.lhs ≤ 2) (hpr : noneDegree p.rhs ≤ 2)
+    (hql : noneDegree q.lhs ≤ 2) (hqr : noneDegree q.rhs ≤ 2) :
+    ∀ r ∈ quadResultantFamily p q,
+      (eliminationCong C).r r.1 r.2
+<code>`</code></p><p>The permanent of a 3×3 matrix over a commutative semiring is always
+well-defined (no subtraction needed). Define the Sylvester matrix of
+two quadratic polynomial pairs and extract elimination witnesses from
+its permanent expansion. Each monomial in the permanent corresponds to
+a balanced coefficient matching that eliminates X_none.</p><p><h2>5. Complexity Bounds for Projected Generator Size</h2></p><p><strong>Target theorem:</strong>
+<code>`</code>lean
+theorem elimination_generator_bound
+    [Fintype σ]
+    (C : SemiringCong (PolyFull S σ))
+    (T : Finset (PolyPair S σ))
+    (hgen : C = generatedBy T)
+    (N : ℕ) (hdeg : ∀ p ∈ T, noneDegree p.lhs ≤ N ∧ noneDegree p.rhs ≤ N) :
+    ∃ U : Finset (PolyRet S σ × PolyRet S σ),
+      U.card ≤ T.card ^ 2 * (N + 1) ^ 2 ∧
+      eliminationCong C = generatedBy' U
+<code>`</code></p><p>Provide explicit bounds on the size of the projected generating set.
+For linear generators (N=1), the cross-multiplication produces at most
+O(|T|²) pairs. For higher degrees, the permanent-based construction
+gives polynomial bounds in both |T| and N.</p><p><h2>4. Tropical Nullstellensatz Certificates</h2></p><p><strong>Target theorem:</strong>
+<code>`</code>lean
+theorem tropical_nullstellensatz_certificate
+    (C : SemiringCong (MvPolynomial σ (TropicalSemiring ℝ)))
+    (f g : MvPolynomial σ (TropicalSemiring ℝ))
+    (h : ∀ v : σ → TropicalSemiring ℝ, eval v f = eval v g) :
+    ∃ N : ℕ, ∃ deriv : DerivationChain C f g, deriv.length ≤ N
+<code>`</code></p><p>This would connect congruence elimination to tropical variety
+certification: if two polynomials agree on all tropical points,
+there should be a bounded derivation in the congruence. The
+elimination machinery provides the inductive step (eliminate one
+variable at a time, using coefficient extraction to reduce dimension).</p><p><h2>3. Multivariable Iterated Elimination</h2></p><p><strong>Target theorem:</strong>
+<code>`</code>lean
+theorem iterated_elimination_comm
+    {σ : Type*} (i j : σ) (hij : i ≠ j)
+    (C : SemiringCong (MvPolynomial σ S)) :
+    eliminateVar i (eliminateVar j C) = eliminateVar j (eliminateVar i C)
+<code>`</code></p><p>Show that eliminating variables in different orders yields the same
+result (order-independence). This is the congruence analogue of the
+classical elimination theory theorem that iterated resultants commute.
+In the bounded-degree regime (all generators linear or quadratic),
+this should be provable using the coefficient extraction infrastructure.</p><p><h2>2. Functoriality of Elimination Under Semiring Morphisms</h2></p><p><strong>Target theorem:</strong>
+<code>`</code>lean
+theorem eliminationCong_map
+    (φ : S →+* T)
+    (C : SemiringCong (PolyFull S σ))
+    (f g : PolyRet S σ)
+    (h : (eliminationCong C).r f g) :
+    (eliminationCong (C.map (MvPolynomial.map φ))).r
+      (MvPolynomial.map φ f) (MvPolynomial.map φ g)
+<code>`</code></p><p>This would show that elimination is natural with respect to semiring
+base change. Combined with the coefficient extraction machinery, this
+creates a functorial framework for congruence elimination.</p><p><h2>Overview</h2></p><p>This document outlines concrete next theorems and research directions
+building on the formalized infrastructure in <code>Catalog/Algebra/CongruenceElimination.lean</code>.</p><p><h1>Future Directions for Congruence Elimination Theory</h1></p></div>
 <h3>future_directions.html</h3>
 <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"><p>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -46,12 +118,32 @@ MathJax = {
 &lt;p&gt;Accumulated wisdom from all Aristotle research cycles. Each completed cycle produces
 a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross-domain bridges.&lt;/p&gt;
 &lt;h2&gt;Accumulated Research Wisdom&lt;/h2&gt;
-&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&gt;&lt;p&gt;&lt;h1&gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Last updated: 2026-05-05 05:14&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;h2&gt;Next Steps&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;1. Tropical Nullstellensatz for Proof Semirings&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Establish a Nullstellensatz-type theorem for idempotent semirings (dioids) where the addition is join and multiplication is composition.&lt;/p&gt;&lt;p&gt;In classical algebraic geometry, the Nullstellensatz says that maximal ideals correspond to points of the variety. For proof semirings, the analogous statement would be: &lt;strong&gt;the maximal theories of a finitely generated proof semiring correspond to the "points" of the proof space&lt;/strong&gt; — i.e., to complete consistent extensions.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Key question&lt;/strong&gt;: When does every maximal theory arise as the kernel of an evaluation map to a simple proof semiring?&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Lean target&lt;/strong&gt;: Formalize the idempotent semiring order (&lt;code&gt;a ≤ b ↔ a + b = b&lt;/code&gt;) and prove that in this setting, prime theories correspond to prime filters in the lattice, connecting to the Stone duality for distributive lattices.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;2. Constructive Prime Witness Extraction for Non-Derivability&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Replace the Zorn's lemma argument with a constructive procedure for finding prime separating witnesses.&lt;/p&gt;&lt;p&gt;The current proof uses classical logic (Zorn's lemma). For computational applications — particularly automated theorem proving and proof search — a constructive version is needed. This would give an &lt;strong&gt;algorithm&lt;/strong&gt; that, given a semiprime kernel K and a ∉ K, produces a prime theory P with K ⊆ P and a ∉ P.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: For finitely generated theories, the prime avoidance argument can be made constructive by exhaustive search over a finite lattice of theories. For countably generated theories, a priority argument (analogous to Lindenbaum's lemma) may suffice.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Lean target&lt;/strong&gt;: Prove a &lt;code&gt;Decidable&lt;/code&gt; version of &lt;code&gt;exists_prime_theory_avoiding&lt;/code&gt; for &lt;code&gt;Fintype α&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;3. Spectral Completeness for Closure Operators&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Connect the prime theory intersection theorem to closure operators and Galois connections in the style of abstract interpretation.&lt;/p&gt;&lt;p&gt;Given a closure operator &lt;code&gt;C : Set α → Set α&lt;/code&gt; (monotone, extensive, idempotent), the closed sets form a complete lattice. The prime theories in this lattice are the "semantic points" of the closure system. The reconstruction theorem says that semiprime closed sets are determined by their prime spectrum.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Key application&lt;/strong&gt;: In abstract interpretation, the closed sets are the abstract domains. The prime spectrum gives a canonical decomposition of abstract domains into "prime components," each corresponding to a single semantic distinction.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Lean target&lt;/strong&gt;: Formalize &lt;code&gt;ClosureOperator&lt;/code&gt;-based proof semirings and prove the spectrum theorem in this generality. Bridge to Mathlib's &lt;code&gt;ClosureOperator&lt;/code&gt; API.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;4. Comparison with Kripke/Joyal Semantics via Prime Filters&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Establish a formal comparison between:
-&lt;li&gt;Prime theories in proof semirings (our framework)&lt;/li&gt;
-&lt;li&gt;Kripke frames / prime filters in Heyting algebras&lt;/li&gt;
-&lt;li&gt;Points of the Zariski spectrum&lt;/li&gt;&lt;/p&gt;&lt;p&gt;In intuitionistic logic, Kripke semantics uses prime filters of a Heyting algebra as "possible worlds." Our prime theories play an analogous role for proof semirings. The comparison would formalize:&lt;/p&gt;&lt;p&gt;&lt;li&gt;&lt;strong&gt;Distributive lattice case&lt;/strong&gt;: Prime theories = prime filters = spectrum points (Stone duality)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;General semiring case&lt;/strong&gt;: Prime theories generalize prime filters to non-lattice settings&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Ring case&lt;/strong&gt;: Prime theories = prime ideals = Zariski spectrum points&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Lean target&lt;/strong&gt;: For a &lt;code&gt;BooleanAlge</p></div>
+&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&gt;&lt;p&gt;&lt;h1&gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Last updated: 2026-05-05 06:04&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;/div&gt;
+&lt;h3&gt;future_directions.html&lt;/h3&gt;
+&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"&gt;&lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang="en"&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta charset="UTF-8"&amp;gt;&amp;lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&amp;gt;
+&amp;lt;title&amp;gt;Future Directions — Aether Research&amp;lt;/title&amp;gt;
+&amp;lt;link rel="stylesheet" href="style.css"&amp;gt;
+&amp;lt;script&amp;gt;
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+&amp;lt;/script&amp;gt;
+&amp;lt;script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src="https://d3js.org/d3.v7.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;nav&amp;gt;&amp;lt;a href="index.html"&amp;gt;Home&amp;lt;/a&amp;gt; &amp;lt;a href="future_directions.html"&amp;gt;Future Directions&amp;lt;/a&amp;gt;
+&amp;lt;a href="discussions.html"&amp;gt;Articles&amp;lt;/a&amp;gt;&amp;lt;/nav&amp;gt;
+&amp;lt;div class="container"&amp;gt;
+&amp;lt;h1&amp;gt;Future Research Directions&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;Accumulated wisdom from all Aristotle research cycles. Each completed cycle produces
+a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross-domain bridges.&amp;lt;/p&amp;gt;
+&amp;lt;h2&amp;gt;Accumulated Research Wisdom&amp;lt;/h2&amp;gt;
+&amp;lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&amp;gt;&amp;lt;p&amp;gt;&amp;lt;h1&amp;gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&amp;lt;/h1&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;em&amp;gt;Last updated: 2026-05-05 05:14&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;h2&amp;gt;Next Steps&amp;lt;/h2&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;h3&amp;gt;1. Tropical Nullstellensatz for Proof Semirings&amp;lt;/h3&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Goal&amp;lt;/strong&amp;gt;: Establish a Nullstellensatz-type theorem for idempotent semirings (dioids) where the addition is join and multiplication is composition.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;In classical algebraic geometry, the Nullstellensatz says that maximal ideals correspond to points of the variety. For proof semirings, the analogous statement would be: &amp;lt;strong&amp;gt;the maximal theories of a finitely generated proof semiring correspond to the "points" of the proof space&amp;lt;/strong&amp;gt; — i.e., to complete consistent extensions.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Key question&amp;lt;/strong&amp;gt;: When does every maximal theory arise as the kernel of an evaluation map to a simple proof semiring?&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Lean target&amp;lt;/strong&amp;gt;: Formalize the idempotent semiring order (&amp;lt;code&amp;gt;a ≤ b ↔ a + b = b&amp;lt;/code&amp;gt;) and prove that in this setting, prime theories correspond to prime filters in the lattice, connecting to the Stone duality for distributive lattices.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;h3&amp;gt;2. Constructive Prime Witness Extraction for Non-Derivability&amp;lt;/h3&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Goal&amp;lt;/strong&amp;gt;: Replace the Zorn's lemma argument with a constructive procedure for finding prime separating witnesses.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;The current proof uses classical logic (Zorn's lemma). For computational applications — particularly automated theorem proving and proof search — a constructive version is needed. This would give an &amp;lt;strong&amp;gt;algorithm&amp;lt;/strong&amp;gt; that, given a semiprime kernel K and a ∉ K, produces a prime theory P with K ⊆ P and a ∉ P.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Approach&amp;lt;/strong&amp;gt;: For finitely generated theories, the prime avoidance argument can be made constructive by exhaustive search over a finite lattice of theories. For countably generated theories, a priority argument (analogous to Lindenbaum's lemma) may suffice.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Lean target&amp;lt;/strong&amp;gt;: Prove a &amp;lt;code&amp;gt;Decidable&amp;lt;/code&amp;gt; version of &amp;lt;code&amp;gt;exists_prime_theory_avoiding&amp;lt;/code&amp;gt; for &amp;lt;code&amp;gt;Fintype α&amp;lt;/code&amp;gt;.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;h3&amp;gt;3. Spe</p></div>
 
 </div>
 <footer>Generated by Aether Website Generator &mdash; Autonomous Mathematical Research Engine</footer>
