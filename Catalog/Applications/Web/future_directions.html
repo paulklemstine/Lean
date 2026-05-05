@@ -21,51 +21,30 @@ MathJax = {
 <p>Accumulated wisdom from all Aristotle research cycles. Each completed cycle produces
 a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross-domain bridges.</p>
 <h2>Accumulated Research Wisdom</h2>
-<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-05 02:23</em></p><p><h2>Next Targets</h2></p><p><h3>1. Tropical Choquet Theory on Compact Spaces</h3></p><p><strong>Goal</strong>: Extend the representation theorem from finite discrete spaces to compact Hausdorff spaces.</p><p><strong>Approach</strong>: Define the tropical capacity <code>μ_K(Λ) = inf{Λ(f) | f ≥ 0 on K}</code> for compact sets K, prove maxitivity <code>μ(K ∪ L) = max(μ(K), μ(L))</code> using Urysohn separation, and establish the representation <code>Λ(f) = sup_K (μ(K) + inf_{x ∈ K} f(x))</code>.</p><p><strong>Key challenge</strong>: The upper-continuity hypothesis on functionals needs to be related to topological properties of the compact-open topology on <code>C(X, WithBot ℝ)</code>.</p><p><strong>Status</strong>: Infrastructure for capacity (<code>muK</code>) and tropical integral (<code>tropicalIntegral</code>) is defined. The <code>UCTropicalFunctional</code> structure with upper-continuity is formalized. The functional extensionality theorem is stated but unproven.</p><p><h3>2. Radon-Style Regularity for Maxitive Measures</h3></p><p><strong>Goal</strong>: Show that the maxitive capacity arising from a tropical functional is inner regular on open sets and outer regular on compact sets.</p><p><strong>Formalization target</strong>:
-<code>`</code>
-∀ U : Set X, IsOpen U →
-  μ(U) = sSup {μ(K) | K ⊆ U ∧ IsCompact K}
-<code>`</code></p><p>This would enable passage between the compact-set capacity and a full set function, paralleling the classical Riesz-Markov-Kakutani theorem.</p><p><h3>3. Duality Between Tropical Ideals and Maxitive Measure Supports</h3></p><p><strong>Goal</strong>: Establish a Gelfand-type duality in the tropical setting: closed tropical ideals in <code>TropCont(X)</code> correspond to closed subsets of X via the support of maxitive measures.</p><p><strong>Formalization target</strong>: Define the support of a maxitive measure as <code>supp(μ) = {x | μ({x}) ≠ ⊥}</code> and prove:
-<li>The kernel of a tropical functional equals <code>{f | f|_{supp(w)} = ⊥}</code> in the discrete case.</li>
-<li>Two tropical functionals have the same support iff they agree up to tropical scalar multiple.</li></p><p><h3>4. Categorical Functoriality of Λ ↦ μ_Λ</h3></p><p><strong>Goal</strong>: Show that the assignment sending a tropical functional to its representing measure is functorial with respect to continuous maps.</p><p>Given <code>φ : X → Y</code> continuous, define the pushforward <code>φ_<em> μ</code> and pullback <code>φ</em> Λ</code>, and prove:
-<li><code>μ_{φ<em> Λ} = φ_</em> (μ_Λ)</code> (the representing measure of the pullback functional is the pushforward measure).</li>
-<li>This is natural in the categorical sense.</li></p><p><h3>5. Finite/Infinite Approximation with Certified Bounds</h3></p><p><strong>Goal</strong>: Given a tropical functional Λ on <code>C(X, WithBot ℝ)</code> for compact X, approximate it by finite-dimensional tropical functionals with explicit error bounds.</p><p><strong>Approach</strong>: For a finite covering {U_1, ..., U_n} of X with mesh ε, construct a discrete functional Λ_ε and prove:
-<code>`</code>
-|Λ(f) - Λ_ε(f)| ≤ ω_f(ε)
-<code>`</code>
-where ω_f is the modulus of continuity of f. This gives certified reconstruction bounds.</p><p><strong>Application</strong>: Certified algorithms for recovering maxitive measures from finitely many function evaluations.</p><p><h2>Next Theorems to Formalize</h2></p><p><h3>1. Functoriality of the Tropical Spectrum</h3></p><p>Every continuous map <code>f : X → Y</code> between compact Hausdorff spaces induces a
-pullback map <code>f* : A_Y → A_X</code> on function algebras, which in turn induces a
-continuous map on tropical spectra. This should give a contravariant functor
-from CompHaus to the category of tropical spectral spaces.</p><p><code>`</code>
-theorem tropSpec_functorial (f : C(X, Y)) :
-    Continuous (tropSpecMap f) ∧ tropSpecMap (ContinuousMap.id X) = id
-<code>`</code></p><p><h3>2. Spectral Compactness</h3></p><p>The tropical evaluation spectrum of a compact space is compact.
-This follows immediately from the homeomorphism theorem but could also
-be proved directly from the definition, which would give an independent
-proof of compactness of the congruence space.</p><p><code>`</code>
-theorem tropEvalSpec_compact [CompactSpace X] :
-    @CompactSpace (TropEvalSpec A eval) (tropEvalSpecTopology A eval)
-<code>`</code></p><p><h3>3. Spectral Semisimplicity</h3></p><p>The intersection of all evaluation congruences is the diagonal (equality):
-<code>`</code>
-theorem tropSpec_semisimple
-    (hsep : ∀ x y : X, x ≠ y → ∃ f, eval x f ≠ eval y f) :
-    ⨅ x, evalCongr A eval x = ⊥
-<code>`</code>
-This formalizes the fact that the algebra detects all function-level distinctions.</p><p><h3>4. Tropical Structure Sheaf</h3></p><p>Define a structure presheaf on the tropical spectrum by assigning to each
-open set the algebra of "tropical regular functions" — sections of the
-natural projection from the function algebra. Prove it satisfies the sheaf
-condition.</p><p><code>`</code>
-def tropStructureSheaf : TopCat.Presheaf (Type*) (tropSpecTop A eval)
-theorem tropStructureSheaf_isSheaf : tropStructureSheaf.IsSheaf
-<code>`</code></p><p><h3>5. Tropical Stone–Weierstrass on the Spectrum</h3></p><p>Show that the density results from tropical Stone–Weierstrass translate
-to a statement about the spectrum: every closed set in the spectrum is
-an intersection of tropical vanishing loci. This connects approximation
-theory to spectral geometry.</p><p><code>`</code>
-theorem tropVanishPair_generates_closed :
-    ∀ s : Set (TropEvalSpec A eval),
-      @IsClosed _ (tropEvalSpecTopology A eval) s ↔
-        ∃ I : Set (A × A), s = ⋂ p ∈ I, tropVanishPair A eval p.1 p.2
-<code>`</code></p></div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-05 03:04</em></p><p><h2>Next Steps</h2></p><p><h3>1. Elimination for Injective Variable Maps (Hilbert Basis Analogue)</h3></p><p>The current <code>elimination_fg</code> theorem handles surjective variable maps <code>ι : τ → σ</code>. The harder and more geometrically relevant case is <strong>injective</strong> <code>ι</code> (embedding fewer variables into more), corresponding to elimination of variables from polynomial congruences.</p><p>This requires a Noetherian-type argument specific to idempotent semirings. In classical algebra, this follows from Hilbert's basis theorem. The idempotent analogue should exploit the lattice structure of idempotent semiring congruences.</p><p><strong>Conjecture</strong>: For <code>ι : τ ↪ σ</code> an embedding of finite types and <code>S</code> a commutative idempotent semiring, <code>elimination_fg</code> holds without the surjectivity hypothesis.</p><p><h3>2. Gröbner-Style Canonical Bases for Idempotent Congruences</h3></p><p>Define a term ordering on <code>MvPolynomial σ S</code> for idempotent <code>S</code> and develop:
+<li>Leading term extraction for congruence pairs</li>
+<li>S-polynomial analogues for congruence generators</li>
+<li>A Buchberger-style algorithm producing canonical generating sets</li>
+<li>Proof that the algorithm terminates (requires the Noetherian property)</li></p><p><h3>3. Tropical Nullstellensatz via Finitely Presented Congruences</h3></p><p>Using the elimination infrastructure:
+<li>Define the tropical variety of a finitely presented congruence</li>
+<li>Prove that the variety determines the congruence (up to radical)</li>
+<li>Establish a correspondence between coordinate congruences and tropical algebraic sets</li>
+<li>Connect to existing formalized tropical geometry</li></p><p><h3>4. Certified Congruence Decision Procedures</h3></p><p>Strengthen the decidability result:
+<li>Define explicit bounded-depth derivation certificates as inductive types</li>
+<li>Prove decidability for bounded certificates via finite search</li>
+<li>Establish completeness bounds: given generators of total degree ≤ d, prove that derivation depth is bounded by a computable function of d and the number of variables</li>
+<li>Implement a verified decision procedure for congruence membership</li></p><p><h3>5. Functorial Theory: Pullback/Pushforward for Congruences</h3></p><p>Generalize <code>eliminateCongruence</code> to a functorial framework:
+<li>Define pushforward of congruences along arbitrary semiring homomorphisms</li>
+<li>Prove base-change properties for congruence generation</li>
+<li>Establish adjunction between pullback and pushforward</li>
+<li>Apply to morphisms of tropical polynomial semirings</li></p><p><h3>6. Elimination Complexity Bounds</h3></p><p>Bound the size of elimination generators:
+<li>Given R with |R| = n generators of degree ≤ d in k variables</li>
+<li>Bound |eliminationGenerators| in terms of n, d, k</li>
+<li>Compare with classical doubly-exponential bounds for ideal elimination</li>
+<li>Explore whether idempotency gives better bounds</li></p><p><h3>7. Applications to Neural Network Verification</h3></p><p>For max-plus neural networks (ReLU networks viewed over the tropical semiring):
+<li>Model network equivalence as congruence membership</li>
+<li>Use elimination to project out hidden-layer variables</li>
+<li>Derive certified bounds on network behavior from congruence certificates</li></p></div>
 <h3>future_directions.html</h3>
 <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"><p>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -90,7 +69,7 @@ MathJax = {
 &lt;p&gt;Accumulated wisdom from all Aristotle research cycles. Each completed cycle produces
 a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross-domain bridges.&lt;/p&gt;
 &lt;h2&gt;Accumulated Research Wisdom&lt;/h2&gt;
-&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&gt;&lt;p&gt;&lt;h1&gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Last updated: 2026-05-05 02:04&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;h2&gt;Next Targets&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;1. Tropical Choquet Theory on Compact Spaces&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Extend the representation theorem from finite discrete spaces to compact Hausdorff spaces.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: Define the tropical capacity &lt;code&gt;μ_K(Λ) = inf{Λ(f) | f ≥ 0 on K}&lt;/code&gt; for compact sets K, prove maxitivity &lt;code&gt;μ(K ∪ L) = max(μ(K), μ(L))&lt;/code&gt; using Urysohn separation, and establish the representation &lt;code&gt;Λ(f) = sup_K (μ(K) + inf_{x ∈ K} f(x))&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Key challenge&lt;/strong&gt;: The upper-continuity hypothesis on functionals needs to be related to topological properties of the compact-open topology on &lt;code&gt;C(X, WithBot ℝ)&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Status&lt;/strong&gt;: Infrastructure for capacity (&lt;code&gt;muK&lt;/code&gt;) and tropical integral (&lt;code&gt;tropicalIntegral&lt;/code&gt;) is defined. The &lt;code&gt;UCTropicalFunctional&lt;/code&gt; structure with upper-continuity is formalized. The functional extensionality theorem is stated but unproven.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;2. Radon-Style Regularity for Maxitive Measures&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Show that the maxitive capacity arising from a tropical functional is inner regular on open sets and outer regular on compact sets.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Formalization target&lt;/strong&gt;:
+&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&gt;&lt;p&gt;&lt;h1&gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Last updated: 2026-05-05 02:23&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;h2&gt;Next Targets&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;1. Tropical Choquet Theory on Compact Spaces&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Extend the representation theorem from finite discrete spaces to compact Hausdorff spaces.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: Define the tropical capacity &lt;code&gt;μ_K(Λ) = inf{Λ(f) | f ≥ 0 on K}&lt;/code&gt; for compact sets K, prove maxitivity &lt;code&gt;μ(K ∪ L) = max(μ(K), μ(L))&lt;/code&gt; using Urysohn separation, and establish the representation &lt;code&gt;Λ(f) = sup_K (μ(K) + inf_{x ∈ K} f(x))&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Key challenge&lt;/strong&gt;: The upper-continuity hypothesis on functionals needs to be related to topological properties of the compact-open topology on &lt;code&gt;C(X, WithBot ℝ)&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Status&lt;/strong&gt;: Infrastructure for capacity (&lt;code&gt;muK&lt;/code&gt;) and tropical integral (&lt;code&gt;tropicalIntegral&lt;/code&gt;) is defined. The &lt;code&gt;UCTropicalFunctional&lt;/code&gt; structure with upper-continuity is formalized. The functional extensionality theorem is stated but unproven.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;2. Radon-Style Regularity for Maxitive Measures&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Show that the maxitive capacity arising from a tropical functional is inner regular on open sets and outer regular on compact sets.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Formalization target&lt;/strong&gt;:
 &lt;code&gt;`&lt;/code&gt;
 ∀ U : Set X, IsOpen U →
   μ(U) = sSup {μ(K) | K ⊆ U ∧ IsCompact K}
