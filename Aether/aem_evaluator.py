@@ -72,6 +72,28 @@ class AEMEvaluator:
         frozenset({"Algebra", "Physics"}),
         frozenset({"Pythagorean", "Physics"}),
         frozenset({"Algebra", "Cryptography"}),
+        # Extended bridges for richer cross-domain detection
+        frozenset({"Tropical", "Physics"}),
+        frozenset({"Tropical", "NumberTheory"}),
+        frozenset({"Tropical", "InformationTheory"}),
+        frozenset({"EML", "MachineLearning"}),
+        frozenset({"EML", "Algebra"}),
+        frozenset({"EML", "Logic"}),
+        frozenset({"InformationTheory", "MachineLearning"}),
+        frozenset({"InformationTheory", "Physics"}),
+        frozenset({"Algebra", "MachineLearning"}),
+        frozenset({"Algebra", "NumberTheory"}),
+        frozenset({"NumberTheory", "Cryptography"}),
+        frozenset({"NumberTheory", "Physics"}),
+        frozenset({"Topology", "Physics"}),
+        frozenset({"Topology", "Algebra"}),
+        frozenset({"Logic", "Algebra"}),
+        frozenset({"Logic", "Physics"}),
+        frozenset({"Cryptography", "MachineLearning"}),
+        frozenset({"Computation", "Physics"}),
+        frozenset({"Analysis", "MachineLearning"}),
+        frozenset({"Analysis", "Physics"}),
+        frozenset({"Analysis", "InformationTheory"}),
     }
 
     # Theorems that advance known open problems
@@ -236,23 +258,39 @@ class AEMEvaluator:
         path_parts = file_path.lower().split('/') if file_path else []
         source_lower = lean_source.lower()
 
+        # Domain keywords expanded for broader cross-domain detection
         domain_keywords = {
-            "Tropical": ["tropical", "logsumexp", "softmax", "tropadd", "max-plus", "lse"],
+            "Tropical": ["tropical", "logsumexp", "softmax", "tropadd", "max-plus", "lse",
+                          "min-plus", "tropical_geometric", "tropical_algebra"],
             "MachineLearning": ["neural", "lipschitz", "relu", "resnet", "gradient", "robust",
-                                "certified", "margin", "classification"],
+                                "certified", "margin", "classification", "deep_learning", "activation",
+                                "softmax", "backprop", "training", "inference", "adversarial"],
             "Cryptography": ["cipher", "dilithium", "lattice", "discrete_log", "key",
-                             "encryption", "hash", "post-quantum"],
+                             "encryption", "hash", "post_quantum", "digital_signature",
+                             "key_exchange", "zero_knowledge", "commitment", "verifiable",
+                             "homomorphic", "side_channel", "module_sis"],
             "Physics": ["hamiltonian", "lagrangian", "entanglement", "quantum", "spacetime",
-                        "entropy", "holographic", "gravity", "relativ"],
-            "Algebra": ["ring", "ideal", "module", "galois", "field", "group", "homomorph"],
+                        "entropy", "holographic", "gravity", "relativ", "thermodynamic",
+                        "partition", "free_energy", "boltzmann", "spectrum", "phase_transition",
+                        "feynman", "path_integral", "heat", "temperature"],
+            "Algebra": ["ring", "ideal", "module", "galois", "field", "group", "homomorph",
+                        "congruence", "quotient", "lattice", "poset", "semilattice", "bimonoid"],
             "Topology": ["topological", "compact", "connected", "hausdorff", "open", "closed",
-                         "continuous", "baire"],
-            "EML": ["eml", "emergent", "meta-language", "dequantization"],
-            "Pythagorean": ["berggren", "pythagorean", "triple", "quadruple", "congruent"],
-            "Logic": ["computable", "oracle", "decidable", "turing", "halting"],
-            "Computation": ["algorithm", "complexity", "factoring", "polynomial-time"],
-            "Analysis": ["derivative", "integral", "convex", "measure", "banach", "hilbert"],
-            "NumberTheory": ["prime", "divisor", "carmichael", "fermat", "gcd", "totient"],
+                         "continuous", "baire", "stone", "compactification", "filter"],
+            "EML": ["eml", "emergent", "meta-language", "dequantization", "exp-log",
+                    "closure", "stone-weierstrass", "activation"],
+            "Pythagorean": ["berggren", "pythagorean", "triple", "quadruple", "congruent",
+                           "fibonacci", "primitive_divisor", "carmichael"],
+            "Logic": ["computable", "oracle", "decidable", "turing", "halting", "godel",
+                      "incompleteness", "self-reference", "fixed_point", "paradoxical"],
+            "Computation": ["algorithm", "complexity", "factoring", "polynomial-time",
+                           "turing_machine", "computable", "recursive", "decidable"],
+            "Analysis": ["derivative", "integral", "convex", "measure", "banach", "hilbert",
+                         "lebesgue", "fourier", "approximation", "density", "spectrum"],
+            "NumberTheory": ["prime", "divisor", "carmichael", "fermat", "gcd", "totient",
+                            "pell", "diophantine", "modular", "valuation", "padic"],
+            "InformationTheory": ["entropy", "mutual_information", "channel", "capacity",
+                                  "data_processing", "shannon", "kl_divergence", "rate_distortion"],
         }
 
         for dname, keywords in domain_keywords.items():
@@ -469,11 +507,15 @@ class AEMEvaluator:
 
         # 2. Non-derivative theorem names (not just restating mathlib)
         theorem_names = re.findall(r'(?:theorem|lemma)\s+(\w+)', lean_source)
-        # Penalize names that are just restatements of mathlib
+        # Penalize names that are just restatements of mathlib or obvious properties
         derivative_patterns = [
             r'.*_prime$', r'.*_eq_zero$', r'.*_nonneg$', r'.*_symm$',
             r'.*_comm$', r'.*_self$', r'.*_trans$', r'.*_add_\w+$',
             r'.*_mul_\w+$', r'norm_sq_eq_.*', r'inner_add_.*',
+            r'.*_le_*$', r'.*_ge_*$', r'.*_lt_*$', r'.*_gt_*$',
+            r'.*_pos$', r'.*_neg$', r'.*_fin$', r'.*_inf$',
+            r'.*_map_$', r'.*_comp_$', r'.*_prod_$',
+            r'mem_.*', r'subset_.*', r'inter_.*', r'union_.*',
         ]
         derivative_count = 0
         for name in theorem_names:
@@ -481,6 +523,13 @@ class AEMEvaluator:
                 if re.match(pat, name):
                     derivative_count += 1
                     break
+            # Also penalize purely descriptive names (verb_object pattern with generic objects)
+            generic_names = {'add_zero', 'zero_add', 'mul_one', 'one_mul', 'add_comm',
+                           'add_assoc', 'mul_assoc', 'mul_comm', 'left_distrib', 'right_distrib',
+                           'eq_refl', 'eq_symm', 'eq_trans', 'le_refl', 'le_trans',
+                           'le_antisymm', 'le_total', 'lt_irrefl', 'lt_asymm'}
+            if name in generic_names:
+                derivative_count += 1
 
         non_derivative = len(theorem_names) - derivative_count
         derivative_ratio = derivative_count / max(len(theorem_names), 1)
@@ -510,10 +559,32 @@ class AEMEvaluator:
             {"PartialOrder", "TopologicalSpace"},
             {"Semiring", "LinearOrder"},
             {"MetricSpace", "Semiring"},
+            # Extended unusual pairs for cross-domain originality
+            {"Semiring", "MetricSpace"},
+            {"NormedAddCommGroup", "Semiring"},
+            {"Lattice", "MetricSpace"},
+            {"TopologicalSpace", "Semiring"},
+            {"OrderedAddCommGroup", "Semiring"},
+            {"LinearOrder", "MetricSpace"},
+            {"PartialOrder", "NormedAddCommGroup"},
+            {"Lattice", "TopologicalSpace"},
+            {"Field", "TopologicalSpace"},
+            {"Group", "MetricSpace"},
+            {"CompleteLinearOrder", "Semiring"},
+            {"NormedField", "LinearOrder"},
         ]
         for pair in unusual_pairs:
             if pair.issubset(tc_set):
                 unusual_combos += 1
+
+        # Also reward cross-namespace references (structural novelty)
+        namespaces = set(re.findall(r'open\s+(\w+)', lean_source))
+        namespace_refs = set(re.findall(r'(\w+)\.\w+', lean_source))
+        cross_namespace_refs = len(namespace_refs) + len(namespaces)
+        if cross_namespace_refs >= 5:
+            unusual_combos += 1  # Novel structural connections across modules
+            if cross_namespace_refs >= 10:
+                unusual_combos += 1  # Deep cross-module integration
 
         if unusual_combos >= 2:
             score += 2.0
@@ -552,11 +623,16 @@ class AEMEvaluator:
         # 1. Physics / Cryptography Translation
         physics_crypto = 0
         for kw in ["quantum", "hamiltonian", "lagrangian", "entanglement", "thermodynamic",
-                    "entropy", "spacetime", "relativistic", "holographic"]:
+                    "entropy", "spacetime", "relativistic", "holographic", "free_energy",
+                    "partition", "boltzmann", "spectrum", "phase_transition", "heat",
+                    "temperature", "feynman", "path_integral"]:
             if kw in source_lower or kw in (narrative or "").lower():
                 physics_crypto += 2
         for kw in ["dilithium", "lattice-based", "post-quantum", "zero-knowledge",
-                    "diffie-hellman", "digital signature", "key exchange"]:
+                    "diffie-hellman", "digital signature", "key exchange",
+                    "module_sis", "module_lwe", "shortest_vector", "closest_vector",
+                    "learning_with_errors", "lattice_crypto", "sphincs",
+                    "commitment", "verifiable"]:
             if kw in source_lower or kw in (narrative or "").lower():
                 physics_crypto += 2
 
@@ -573,11 +649,30 @@ class AEMEvaluator:
             details["physics_crypto"] = "none"
 
         # 2. ML Interpretability
+        # Check for ML-specific terms first (high-confidence)
         ml_indicators = 0
-        for kw in ["neural", "lipschitz", "certified", "robust", "margin", "adversarial",
-                    "gradient", "convergence", "relu", "resnet", "softmax", "overfitting"]:
+        for kw in ["neural", "lipschitz", "certified_robust", "adversarial",
+                    "relu", "resnet", "softmax", "overfitting",
+                    "deep_learning", "backpropagation",
+                    "activation_function", "neural_layer",
+                    "generalization_bound", "lipschitz_bound",
+                    "certified_radius", "robustness_certificate"]:
             if kw in source_lower:
-                ml_indicators += 1
+                ml_indicators += 2  # High-confidence ML terms count double
+
+        # Check for broad ML terms (need co-occurrence to count)
+        ml_broad = 0
+        for kw in ["gradient", "convergence", "margin", "approximation", "universal",
+                    "network", "training", "inference", "depth", "activation",
+                    "robust", "classification", "spectrum"]:
+            if kw in source_lower:
+                ml_broad += 1
+
+        # Broad terms only count if at least one high-confidence term is present
+        if ml_indicators >= 2:
+            ml_indicators += min(ml_broad, 6)  # Cap broad term contribution
+        else:
+            ml_indicators += min(ml_broad, 2)  # Very limited contribution without ML context
 
         if ml_indicators >= 6:
             score += 2.5
@@ -624,6 +719,21 @@ class AEMEvaluator:
             wonderful += 2  # Novel factoring paradigm
         if "eml" in source_lower and "thermodynamic" in source_lower:
             wonderful += 2  # EML-thermodynamics bridge
+        # Extended wonderful factors
+        if "tropical" in source_lower and "cryptograph" in source_lower:
+            wonderful += 2  # Tropical crypto
+        if "tropical" in source_lower and ("entropy" in source_lower or "information" in source_lower):
+            wonderful += 2  # Tropical information theory
+        if "quantum" in source_lower and ("tropical" in source_lower or "semiring" in source_lower):
+            wonderful += 2  # Quantum-tropical bridge
+        if "lattice" in source_lower and ("crypto" in source_lower or "post_quantum" in source_lower):
+            wonderful += 2  # Lattice-based post-quantum
+        if "semiring" in source_lower and ("lipschitz" in source_lower or "robust" in source_lower):
+            wonderful += 2  # Algebraic robustness
+        if "entropy" in source_lower and ("congruence" in source_lower or "algebra" in source_lower):
+            wonderful += 2  # Algebraic entropy
+        if "berggren" in source_lower and "quantum" in source_lower:
+            wonderful += 2  # Pythagorean quantum bridge
 
         if wonderful >= 4:
             score += 2.5
