@@ -1534,6 +1534,20 @@ class PiAgentClient:
                 - Build on existing catalog theorems (referenced below)
                 - Minimize `sorry` — isolate truly hard steps rather than leaving gaps
                 - Avoid trivial tautologies (no `True := by trivial`)
+
+                AEM QUALITY TARGETS:
+                - RIGOR: Prove 10+ theorems using diverse tactics (induction, rcases,
+                  by_contra, omega, linarith). ZERO sorries. Use typeclass abstraction.
+                - AESTHETIC: Bridge 2+ mathematical domains. Use quantifier alternation
+                  (∀x, ∃y). Include symmetric structures. Name-drop both domains.
+                - UTILITY: State explicit computational bounds (Lipschitz constants,
+                  convergence rates, O(...) complexity). Define 5+ new structures/instances.
+                - ORIGINALITY: Coin novel definitions with inventive names. Avoid
+                  derivative names like *_comm, *_nonneg. Combine unusual typeclasses.
+                - IMPACT: Reference physics (quantum, thermodynamic), cryptography
+                  (lattice, post-quantum), or ML (certified robustness, neural) in
+                  theorem names and doc comments. Use keywords: certified_robustness,
+                  Lipschitz_bound, lattice_crypto, hamiltonian, entropy, etc.
             """),
             "formalize": textwrap.dedent("""\
                 Research Mode: FORMALIZE
@@ -1543,6 +1557,13 @@ class PiAgentClient:
                 into precise definitions and theorem statements, then prove what you
                 can. If some parts require new axioms, declare them clearly and prove
                 consequences.
+
+                AEM QUALITY TARGETS:
+                - RIGOR: Prove 10+ theorems with diverse tactics. ZERO sorries.
+                - AESTHETIC: Formalize ideas that bridge 2+ mathematical domains.
+                - UTILITY: Define 5+ structures with computational implications.
+                - ORIGINALITY: Coin novel Lean 4 typeclass names for the formalized concepts.
+                - IMPACT: Formalize concepts with physics/crypto/ML applications.
             """),
             "counterexample": textwrap.dedent("""\
                 Research Mode: COUNTEREXAMPLE
@@ -1564,6 +1585,15 @@ class PiAgentClient:
                 2. DO NOT change theorem statements — only fill the `sorry`
                 3. Break hard proofs into helper lemmas first
                 4. A proof with fewer sorries is better than one that doesn't compile
+
+                AEM QUALITY TARGETS:
+                - RIGOR: Every sorry filled = +1.5 rigor points. ZERO sorries remaining.
+                  Use diverse tactics, not just simp/rfl/decide.
+                - AESTHETIC: Add doc comments explaining why the filled proof matters
+                  across domains. Reference connections to other fields.
+                - UTILITY: Add helper lemmas that extend the proof's applicability.
+                - ORIGINALITY: If the proof reveals a novel technique, document it.
+                - IMPACT: State consequences for applications in doc comments.
             """),
             "discover": textwrap.dedent("""\
                 Research Mode: DISCOVER
@@ -1585,6 +1615,17 @@ class PiAgentClient:
 
                 Think beyond current mathematical fashion. What would a civilization 200 years
                 more advanced prove? What connections would surprise specialists?
+
+                AEM QUALITY TARGETS:
+                - RIGOR: 10+ theorems with diverse proof tactics. ZERO sorries.
+                - AESTHETIC: Discover AND prove cross-domain bridges. Name both domains.
+                  Look for dualities, correspondences, isomorphisms across fields.
+                - UTILITY: Discover theorems with explicit bounds or algorithmic content.
+                  Define 5+ structures organizing the discovered territory.
+                - ORIGINALITY: Coin names for new concepts YOU discovered — not Mathlib restatements.
+                  Define novel typeclasses combining unexpected mathematical structures.
+                - IMPACT: Frame discoveries in terms of applications: certified_robustness,
+                  lattice_crypto, hamiltonian_simulation, entropy, etc.
             """),
             "millennial": textwrap.dedent("""\
                 Research Mode: MILLENNIAL
@@ -1605,6 +1646,14 @@ class PiAgentClient:
 
                 Even a partial result on a millennial problem is significant. Be bold but
                 precise. State precise conjectures for steps you cannot prove.
+
+                AEM QUALITY TARGETS:
+                - RIGOR: 10+ theorems advancing toward the target. ZERO sorries on lemmas you prove.
+                - AESTHETIC: Show how the sub-problem bridges multiple mathematical domains.
+                - UTILITY: Progress on millennial problems IS maximal utility. State explicit
+                  implications for applications (cryptography, quantum computing, etc.).
+                - ORIGINALITY: Introduce novel definitions and techniques specific to this problem.
+                - IMPACT: Frame progress in terms of practical consequences.
             """),
         }
 
