@@ -57,6 +57,27 @@ theorem zero_temperature_limit_selects_canonical
              eval (canonicalCountermodel eval x y) x))
 ```
 
+## 3. Algorithmic Prime Search and Certified Elimination Procedures
+
+The prime witness extraction theorem (`exists_prime_witness_of_not_mem_radicalElim`)
+is existential. Making it **constructive** requires:
+
+1. **Finite prime search**: For `R = ℤ` and finitely generated `I`, the relevant 
+   primes lie over finitely many rational primes. Implement a search procedure 
+   that enumerates candidate primes and tests membership.
+
+2. **Certified Gröbner elimination**: Gröbner basis computation with elimination 
+   orders gives the elimination ideal. The spectral theorem provides an 
+   independent **certificate**: to verify `a ∈ eliminationIdeal(I)`, it suffices 
+   to check `C(a) ∈ P` for a finite set of "test primes."
+
+3. **SAT/SMT integration**: For Boolean semirings, elimination reduces to 
+   quantified Boolean formula (QBF) solving. The spectral theorem gives an 
+   algebraic perspective on resolution-based QBF algorithms.
+
+**Concrete next step**: Implement a decision procedure for elimination in `ℤ[X]`
+using the Chinese Remainder Theorem to reduce to finitely many `𝔽ₚ[X]` checks.
+
 ## Key Open Problem
 
 The central open question is whether the `linResultantPair` formula
@@ -79,22 +100,3 @@ relations. The correct framework may require either:
 3. **Restricted classes**: Proving elimination for specific classes of
    idempotent semirings (totally ordered, Boolean, etc.) where
    additional structural properties enable cancellation-like operations.
-
-## 4. Algorithmic Extraction of Minimal-Energy Countermodels from Finite Spectra
-
-**Goal**: For coherent proof semirings with finite prime spectrum, give an explicit algorithm that finds the countermodel minimizing the free-energy gap, and prove its correctness.
-
-**Precise statement**: Define a function
-
-  `minEnergyCountermodel : (S → S → Prop) → S → S → Option (P × ℝ)`
-
-that, given a non-derivable pair `(x, y)`, returns the thermodynamic state `(p*, β*)` achieving the maximal free-energy gap. Prove:
-
-  1. If `¬ derivable x y`, the function returns `some (p*, β*)` with `0 < FreeEnergyGap p* β* x y`.
-  2. The returned state maximizes the gap: `∀ p β, FreeEnergyGap p β x y ≤ FreeEnergyGap p* β* x y`.
-
-**Technical approach**: Over a finite prime spectrum, the optimization reduces to a finite search over prime points combined with a one-dimensional optimization over β ≥ 0 for each prime. The optimal β* has a closed form when the evaluation is affine in β (as in the additive thermodynamic formula).
-
-**File**: `Bridges/MinimalEnergyCountermodel.lean`
-
----
