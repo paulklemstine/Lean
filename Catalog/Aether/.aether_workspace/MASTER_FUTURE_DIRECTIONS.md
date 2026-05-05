@@ -2,6 +2,35 @@
 
 *Last updated: 2026-05-05 10:07*
 
+## 5. Thermodynamic Dual Semantics: Free-Energy Interpretation
+
+**Statement**: In the thermodynamic interpretation, derivability corresponds to
+non-positive free-energy gap: `derivable x y ↔ F(x) - F(y) ≤ 0` where `F` is
+a free-energy functional derived from the partition function over admissible
+evaluations.
+
+**Formalization target**:
+```lean
+theorem thermodynamic_duality
+    [CoherentClosureProofSemiring S] [MeasurableSpace S] (x y : S) :
+    derivable x y ↔ freeEnergyGap x y ≤ 0
+```
+
+where `freeEnergyGap x y = sup { log(P(e x)) - log(P(e y)) | e admissible }`.
+
+**Why it matters**: This connects proof theory to statistical mechanics, where
+the "temperature" parameter controls the sharpness of the evaluation. At zero
+temperature (the "ground state"), the evaluations concentrate on the separating
+prime ideals, recovering the algebraic adequacy theorem. At positive temperature,
+the free-energy gap provides a smooth relaxation of derivability that could be
+optimized by gradient methods.
+
+**Approach**: Define the partition function as a sum/integral over admissible
+evaluations, define the free energy via the Legendre transform, and show that
+the zero-temperature limit recovers the algebraic adequacy theorem.
+
+---
+
 ## 5. Statistical-Mechanical Extension: Partition Functions and Zero-Temperature Limits
 
 **Problem:** Introduce the partition function `Z(β) = Σ_p exp(−β · eval(p, y) + β · eval(p, x))` and prove that the zero-temperature (β → ∞) limit selects the canonical extremal prime.
@@ -69,20 +98,3 @@ that, given a non-derivable pair `(x, y)`, returns the thermodynamic state `(p*,
 **File**: `Bridges/MinimalEnergyCountermodel.lean`
 
 ---
-
-## 1. Infinite-Spectrum Extension via Compactness
-
-**Problem:** Extend the finite extremal reconstruction theorem to infinite prime spectra using topological compactness or upper semicontinuity of the gap functional.
-
-**Approach:** When the prime spectrum carries the Zariski topology, the evaluation gap `p ↦ eval(p, y) − eval(p, x)` should be upper semicontinuous. By compactness of the spectrum (which holds for commutative rings), the supremum is attained. This replaces `Finset.exists_max_image` with `IsCompact.exists_isMaxOn`.
-
-**Key challenge:** Formalizing the topology on the prime spectrum and the continuity/semicontinuity of the evaluation in Lean, building on `PrimeSpectrum.zariskiTopology` from Mathlib.
-
-**Expected result:**
-```
-theorem compact_spectrum_countermodel_extraction
-    [TopologicalSpace (PrimeSpectrum S)] [CompactSpace (PrimeSpectrum S)]
-    (hcont : UpperSemicontinuous (fun p => eval p y - eval p x))
-    (hex : ∃ p, 0 < eval p y - eval p x) :
-    ∃ p, (∀ q, eval q y - eval q x ≤ eval p y - eval p x) ∧ 0 < eval p y - eval p x
-```
