@@ -836,7 +836,13 @@ class AEMEvaluator:
             except Exception:
                 continue
             rel_path = str(lean_file.relative_to(catalog_root))
-            score = self.evaluate_lean_file(source, file_path=rel_path)
+            
+            # Extract doc comments as narrative for better aesthetic/impact scoring
+            # Doc comments in Lean 4 use /-! ... -/ (visible) or /- ... -/ (hidden)
+            doc_comments = re.findall(r'/-!?(.*?)-/', source, re.DOTALL)
+            narrative = ' '.join(doc_comments).strip() if doc_comments else ""
+            
+            score = self.evaluate_lean_file(source, file_path=rel_path, narrative=narrative)
             results[rel_path] = score
         return results
 
