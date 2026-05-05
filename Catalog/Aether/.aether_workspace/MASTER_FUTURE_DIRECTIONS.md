@@ -1,6 +1,6 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-05 08:05*
+*Last updated: 2026-05-05 08:06*
 
 ## Key Open Problem
 
@@ -24,6 +24,25 @@ relations. The correct framework may require either:
 3. **Restricted classes**: Proving elimination for specific classes of
    idempotent semirings (totally ordered, Boolean, etc.) where
    additional structural properties enable cancellation-like operations.
+
+## 4. Algorithmic Extraction of Minimal-Energy Countermodels from Finite Spectra
+
+**Goal**: For coherent proof semirings with finite prime spectrum, give an explicit algorithm that finds the countermodel minimizing the free-energy gap, and prove its correctness.
+
+**Precise statement**: Define a function
+
+  `minEnergyCountermodel : (S → S → Prop) → S → S → Option (P × ℝ)`
+
+that, given a non-derivable pair `(x, y)`, returns the thermodynamic state `(p*, β*)` achieving the maximal free-energy gap. Prove:
+
+  1. If `¬ derivable x y`, the function returns `some (p*, β*)` with `0 < FreeEnergyGap p* β* x y`.
+  2. The returned state maximizes the gap: `∀ p β, FreeEnergyGap p β x y ≤ FreeEnergyGap p* β* x y`.
+
+**Technical approach**: Over a finite prime spectrum, the optimization reduces to a finite search over prime points combined with a one-dimensional optimization over β ≥ 0 for each prime. The optimal β* has a closed form when the evaluation is affine in β (as in the additive thermodynamic formula).
+
+**File**: `Bridges/MinimalEnergyCountermodel.lean`
+
+---
 
 ## 5. Comparison with Stone/Localic Duality for Proof Semirings
 
@@ -62,30 +81,5 @@ The algorithm proceeds by:
 This would be the first formally verified elimination algorithm for
 the congruence setting, directly applicable to tropical constraint
 satisfaction and optimization verification.
-
----
-
-## 4. Categorical Reformulation: Elimination as Right Kan Extension
-
-**Target construction.** Define the evaluation site as the category of
-evaluation maps `evalXY φ` and show that the elimination congruence is
-the right Kan extension of the congruence `C` along the restriction
-functor from the (x,y)-spectrum to the x-spectrum.
-
-```lean
-def EvaluationSite (C : RingCon (MvPolynomial (σ ⊕ τ) S)) :
-    Category where
-  Obj := {φ : τ → MvPolynomial σ S // AdmissibleEval C φ}
-  Hom φ ψ := ... -- morphisms witnessing contraction refinement
-
-theorem elimination_as_Kan_extension :
-    eliminationCong C = rightKanExtension (EvaluationSite C) (congruencePresheaf C) := ...
-```
-
-This reformulation would unify the spectral evaluation theorem with
-descent theory for congruences. It opens the door to cohomological
-obstruction theory for elimination: when does elimination fail to
-commute with base change? The Kan extension viewpoint makes this
-a question about derived functors.
 
 ---
