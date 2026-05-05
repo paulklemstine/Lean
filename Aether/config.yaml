@@ -12,7 +12,7 @@ pi_agent:
     hourly_allowance: 0.4
     estimated_pollen_per_call: 0.008
     estimated_pollen_per_pi_execution: 0.05
-    min_balance: 0.0
+    min_balance: 0.1
     defer_when_low: true
     balance_cache_seconds: 60
     reset_buffer_seconds: 10

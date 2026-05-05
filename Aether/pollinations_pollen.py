@@ -373,10 +373,25 @@ class PollinationsPollenGate:
         self._roll_local_window(now)
         remote_balance = self._get_remote_balance(force=True)
         available = self._available_pollen(remote_balance)
-        if available + 1e-9 < cost:
+
+        # Only defer when truly depleted (available <= min_balance).
+        # With min_balance defaulting to 0.0, this means only defer at zero.
+        # If available > min_balance, always proceed — the forecast is just
+        # an estimate and shortfalls of a few hundredths of pollen should
+        # not block research for an entire hour.
+        if available <= self.config.min_balance:
             return self._next_hour_reset(now) - now, (
-                f"available pollen {available:.3f} < forecast {cost:.3f}"
+                f"available pollen {available:.3f} depleted (<= min_balance {self.config.min_balance:.3f})"
             ), remote_balance
+
+        # Available pollen is above minimum — proceed even if forecast
+        # slightly exceeds available. The API will return 402/429 if
+        # actually out of budget, and we handle that gracefully.
+        if available + 1e-9 < cost:
+            print(
+                f"[Pollen] Note: forecast {cost:.3f} > available {available:.3f}, "
+                f"but above min_balance — proceeding anyway."
+            )
 
         return 0.0, "", remote_balance
 
