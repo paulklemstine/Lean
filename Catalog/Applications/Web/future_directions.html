@@ -44,7 +44,17 @@ a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross
 <li>Explore whether idempotency gives better bounds</li></p><p><h3>7. Applications to Neural Network Verification</h3></p><p>For max-plus neural networks (ReLU networks viewed over the tropical semiring):
 <li>Model network equivalence as congruence membership</li>
 <li>Use elimination to project out hidden-layer variables</li>
-<li>Derive certified bounds on network behavior from congruence certificates</li></p></div>
+<li>Derive certified bounds on network behavior from congruence certificates</li></p><p><h2>5. Computational Extraction: Codensity Assignments → Certified Reconstruction Algorithms</h2></p><p>The codensity round-trip (<code>measureToCodensity ∘ codensityToMeasure = id</code>) provides a <strong>certified reconstruction algorithm</strong>: given a codensity profile <code>c : X → ℝ≥0∞</code>, the maxitive measure <code>codensityToMeasure c</code> is the unique (among maxitive measures) set function with that profile. This can be turned into a verified program:
+<li><strong>Input:</strong> Observed codensity values at finitely many points</li>
+<li><strong>Output:</strong> A maxitive measure, with a formal certificate (Lean proof) that it is the unique maxitive measure consistent with the observations</li></p><p>This has applications in robust statistics (worst-case reasoning), reliability engineering (system failure analysis where events combine via max), and formal verification of probabilistic systems.</p><p><strong>Concrete next theorem:</strong>
+<code>`</code>
+theorem codensity_reconstruction_unique
+  {X : Type*} [Fintype X] [PartialOrder X]
+  (c : CodensityAssignment X)
+  (μ : Set X → ℝ≥0∞)
+  (hμ_max : IsMaxitiveSetFun μ) :
+  (∀ x, irreducibleClosedWeight μ x = c x) ↔ μ = codensityToMeasure c
+<code>`</code></p></div>
 <h3>future_directions.html</h3>
 <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"><p>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -69,24 +79,39 @@ MathJax = {
 &lt;p&gt;Accumulated wisdom from all Aristotle research cycles. Each completed cycle produces
 a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross-domain bridges.&lt;/p&gt;
 &lt;h2&gt;Accumulated Research Wisdom&lt;/h2&gt;
-&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&gt;&lt;p&gt;&lt;h1&gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Last updated: 2026-05-05 02:23&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;h2&gt;Next Targets&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;1. Tropical Choquet Theory on Compact Spaces&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Extend the representation theorem from finite discrete spaces to compact Hausdorff spaces.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: Define the tropical capacity &lt;code&gt;μ_K(Λ) = inf{Λ(f) | f ≥ 0 on K}&lt;/code&gt; for compact sets K, prove maxitivity &lt;code&gt;μ(K ∪ L) = max(μ(K), μ(L))&lt;/code&gt; using Urysohn separation, and establish the representation &lt;code&gt;Λ(f) = sup_K (μ(K) + inf_{x ∈ K} f(x))&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Key challenge&lt;/strong&gt;: The upper-continuity hypothesis on functionals needs to be related to topological properties of the compact-open topology on &lt;code&gt;C(X, WithBot ℝ)&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Status&lt;/strong&gt;: Infrastructure for capacity (&lt;code&gt;muK&lt;/code&gt;) and tropical integral (&lt;code&gt;tropicalIntegral&lt;/code&gt;) is defined. The &lt;code&gt;UCTropicalFunctional&lt;/code&gt; structure with upper-continuity is formalized. The functional extensionality theorem is stated but unproven.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;2. Radon-Style Regularity for Maxitive Measures&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Show that the maxitive capacity arising from a tropical functional is inner regular on open sets and outer regular on compact sets.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Formalization target&lt;/strong&gt;:
-&lt;code&gt;`&lt;/code&gt;
-∀ U : Set X, IsOpen U →
-  μ(U) = sSup {μ(K) | K ⊆ U ∧ IsCompact K}
-&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;This would enable passage between the compact-set capacity and a full set function, paralleling the classical Riesz-Markov-Kakutani theorem.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;3. Duality Between Tropical Ideals and Maxitive Measure Supports&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Establish a Gelfand-type duality in the tropical setting: closed tropical ideals in &lt;code&gt;TropCont(X)&lt;/code&gt; correspond to closed subsets of X via the support of maxitive measures.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Formalization target&lt;/strong&gt;: Define the support of a maxitive measure as &lt;code&gt;supp(μ) = {x | μ({x}) ≠ ⊥}&lt;/code&gt; and prove:
-&lt;li&gt;The kernel of a tropical functional equals &lt;code&gt;{f | f|_{supp(w)} = ⊥}&lt;/code&gt; in the discrete case.&lt;/li&gt;
-&lt;li&gt;Two tropical functionals have the same support iff they agree up to tropical scalar multiple.&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;4. Categorical Functoriality of Λ ↦ μ_Λ&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Show that the assignment sending a tropical functional to its representing measure is functorial with respect to continuous maps.&lt;/p&gt;&lt;p&gt;Given &lt;code&gt;φ : X → Y&lt;/code&gt; continuous, define the pushforward &lt;code&gt;φ_&lt;em&gt; μ&lt;/code&gt; and pullback &lt;code&gt;φ&lt;/em&gt; Λ&lt;/code&gt;, and prove:
-&lt;li&gt;&lt;code&gt;μ_{φ&lt;em&gt; Λ} = φ_&lt;/em&gt; (μ_Λ)&lt;/code&gt; (the representing measure of the pullback functional is the pushforward measure).&lt;/li&gt;
-&lt;li&gt;This is natural in the categorical sense.&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;5. Finite/Infinite Approximation with Certified Bounds&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Given a tropical functional Λ on &lt;code&gt;C(X, WithBot ℝ)&lt;/code&gt; for compact X, approximate it by finite-dimensional tropical functionals with explicit error bounds.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: For a finite covering {U_1, ..., U_n} of X with mesh ε, construct a discrete functional Λ_ε and prove:
-&lt;code&gt;`&lt;/code&gt;
-|Λ(f) - Λ_ε(f)| ≤ ω_f(ε)
-&lt;code&gt;`&lt;/code&gt;
-where ω_f is the modulus of continuity of f. This gives certified reconstruction bounds.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Application&lt;/strong&gt;: Certified algorithms for recovering maxitive measures from finitely many function evaluations.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;Next Theorems to Formalize&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;1. Functoriality of the Tropical Spectrum&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;Every continuous map &lt;code&gt;f : X → Y&lt;/code&gt; between compact Hausdorff spaces induces a
-pullback map &lt;code&gt;f* : A_Y → A_X&lt;/code&gt; on function algebras, which in turn induces a
-continuous map on tropical spectra. This should give a contravariant functor
-from CompHaus to the category of tropical spectral spaces.&lt;/p&gt;&lt;p&gt;&lt;code&gt;`&lt;/code&gt;
-theorem tropSpec_functorial (f : C(X, Y)) :
-    Continuous (tr</p></div>
+&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&gt;&lt;p&gt;&lt;h1&gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Last updated: 2026-05-05 03:04&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;h2&gt;Next Steps&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;1. Elimination for Injective Variable Maps (Hilbert Basis Analogue)&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;The current &lt;code&gt;elimination_fg&lt;/code&gt; theorem handles surjective variable maps &lt;code&gt;ι : τ → σ&lt;/code&gt;. The harder and more geometrically relevant case is &lt;strong&gt;injective&lt;/strong&gt; &lt;code&gt;ι&lt;/code&gt; (embedding fewer variables into more), corresponding to elimination of variables from polynomial congruences.&lt;/p&gt;&lt;p&gt;This requires a Noetherian-type argument specific to idempotent semirings. In classical algebra, this follows from Hilbert's basis theorem. The idempotent analogue should exploit the lattice structure of idempotent semiring congruences.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Conjecture&lt;/strong&gt;: For &lt;code&gt;ι : τ ↪ σ&lt;/code&gt; an embedding of finite types and &lt;code&gt;S&lt;/code&gt; a commutative idempotent semiring, &lt;code&gt;elimination_fg&lt;/code&gt; holds without the surjectivity hypothesis.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;2. Gröbner-Style Canonical Bases for Idempotent Congruences&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;Define a term ordering on &lt;code&gt;MvPolynomial σ S&lt;/code&gt; for idempotent &lt;code&gt;S&lt;/code&gt; and develop:
+&lt;li&gt;Leading term extraction for congruence pairs&lt;/li&gt;
+&lt;li&gt;S-polynomial analogues for congruence generators&lt;/li&gt;
+&lt;li&gt;A Buchberger-style algorithm producing canonical generating sets&lt;/li&gt;
+&lt;li&gt;Proof that the algorithm terminates (requires the Noetherian property)&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;3. Tropical Nullstellensatz via Finitely Presented Congruences&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;Using the elimination infrastructure:
+&lt;li&gt;Define the tropical variety of a finitely presented congruence&lt;/li&gt;
+&lt;li&gt;Prove that the variety determines the congruence (up to radical)&lt;/li&gt;
+&lt;li&gt;Establish a correspondence between coordinate congruences and tropical algebraic sets&lt;/li&gt;
+&lt;li&gt;Connect to existing formalized tropical geometry&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;4. Certified Congruence Decision Procedures&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;Strengthen the decidability result:
+&lt;li&gt;Define explicit bounded-depth derivation certificates as inductive types&lt;/li&gt;
+&lt;li&gt;Prove decidability for bounded certificates via finite search&lt;/li&gt;
+&lt;li&gt;Establish completeness bounds: given generators of total degree ≤ d, prove that derivation depth is bounded by a computable function of d and the number of variables&lt;/li&gt;
+&lt;li&gt;Implement a verified decision procedure for congruence membership&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;5. Functorial Theory: Pullback/Pushforward for Congruences&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;Generalize &lt;code&gt;eliminateCongruence&lt;/code&gt; to a functorial framework:
+&lt;li&gt;Define pushforward of congruences along arbitrary semiring homomorphisms&lt;/li&gt;
+&lt;li&gt;Prove base-change properties for congruence generation&lt;/li&gt;
+&lt;li&gt;Establish adjunction between pullback and pushforward&lt;/li&gt;
+&lt;li&gt;Apply to morphisms of tropical polynomial semirings&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;6. Elimination Complexity Bounds&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;Bound the size of elimination generators:
+&lt;li&gt;Given R with |R| = n generators of degree ≤ d in k variables&lt;/li&gt;
+&lt;li&gt;Bound |eliminationGenerators| in terms of n, d, k&lt;/li&gt;
+&lt;li&gt;Compare with classical doubly-exponential bounds for ideal elimination&lt;/li&gt;
+&lt;li&gt;Explore whether idempotency gives better bounds&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;7. Applications to Neural Network Verification&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;For max-plus neural networks (ReLU networks viewed over the tropical semiring):
+&lt;li&gt;Model network equivalence as congruence membership&lt;/li&gt;
+&lt;li&gt;Use elimination to project out hidden-layer variables&lt;/li&gt;
+&lt;li&gt;Derive certified bounds on network behavior from congruence certificates&lt;/li&gt;&lt;/p&gt;&lt;/div&gt;
+&lt;h3&gt;future_directions.html&lt;/h3&gt;
+&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"&gt;&lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang="en"&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta charset="UTF-8"&amp;gt;&amp;lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&amp;gt;
+&amp;lt;title&amp;gt;Future Directions — Aether Research&amp;lt;/title&amp;gt;
+&amp;lt;link rel="stylesheet" href="style.css"&amp;gt;
+&amp;lt;script&amp;gt;
+MathJax = {</p></div>
 
 </div>
 <footer>Generated by Aether Website Generator &mdash; Autonomous Mathematical Research Engine</footer>

@@ -58,3 +58,21 @@ For max-plus neural networks (ReLU networks viewed over the tropical semiring):
 - Model network equivalence as congruence membership
 - Use elimination to project out hidden-layer variables
 - Derive certified bounds on network behavior from congruence certificates
+
+## 5. Computational Extraction: Codensity Assignments → Certified Reconstruction Algorithms
+
+The codensity round-trip (`measureToCodensity ∘ codensityToMeasure = id`) provides a **certified reconstruction algorithm**: given a codensity profile `c : X → ℝ≥0∞`, the maxitive measure `codensityToMeasure c` is the unique (among maxitive measures) set function with that profile. This can be turned into a verified program:
+- **Input:** Observed codensity values at finitely many points
+- **Output:** A maxitive measure, with a formal certificate (Lean proof) that it is the unique maxitive measure consistent with the observations
+
+This has applications in robust statistics (worst-case reasoning), reliability engineering (system failure analysis where events combine via max), and formal verification of probabilistic systems.
+
+**Concrete next theorem:**
+```
+theorem codensity_reconstruction_unique
+  {X : Type*} [Fintype X] [PartialOrder X]
+  (c : CodensityAssignment X)
+  (μ : Set X → ℝ≥0∞)
+  (hμ_max : IsMaxitiveSetFun μ) :
+  (∀ x, irreducibleClosedWeight μ x = c x) ↔ μ = codensityToMeasure c
+```
