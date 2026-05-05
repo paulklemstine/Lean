@@ -80,52 +80,16 @@ relations. The correct framework may require either:&lt;/p&gt;&lt;p&gt;&lt;li&gt
    congruences over idempotent semirings (which form a distributive
    lattice) to perform elimination via lattice-theoretic operations.&lt;/p&gt;&lt;p&gt;&lt;li&gt;&lt;strong&gt;Restricted classes&lt;/strong&gt;: Proving elimination for specific classes of&lt;/li&gt;
    idempotent semirings (totally ordered, Boolean, etc.) where
-   additional structural properties enable cancellation-like operations.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;1. Quadratic Resultant Pairs via 3×3 Permanent Identities&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Target theorem:&lt;/strong&gt;
-&lt;code&gt;`&lt;/code&gt;lean
-theorem quadResultantPair_mem_elimination
-    (C : SemiringCong (PolyFull S σ))
-    (p q : PolyPair S σ)
-    (hp : C.r p.lhs p.rhs) (hq : C.r q.lhs q.rhs)
-    (hpl : noneDegree p.lhs ≤ 2) (hpr : noneDegree p.rhs ≤ 2)
-    (hql : noneDegree q.lhs ≤ 2) (hqr : noneDegree q.rhs ≤ 2) :
-    ∀ r ∈ quadResultantFamily p q,
-      (eliminationCong C).r r.1 r.2
-&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;The permanent of a 3×3 matrix over a commutative semiring is always
-well-defined (no subtraction needed). Define the Sylvester matrix of
-two quadratic polynomial pairs and extract elimination witnesses from
-its permanent expansion. Each monomial in the permanent corresponds to
-a balanced coefficient matching that eliminates X_none.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;5. Complexity Bounds for Projected Generator Size&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Target theorem:&lt;/strong&gt;
-&lt;code&gt;`&lt;/code&gt;lean
-theorem elimination_generator_bound
-    [Fintype σ]
-    (C : SemiringCong (PolyFull S σ))
-    (T : Finset (PolyPair S σ))
-    (hgen : C = generatedBy T)
-    (N : ℕ) (hdeg : ∀ p ∈ T, noneDegree p.lhs ≤ N ∧ noneDegree p.rhs ≤ N) :
-    ∃ U : Finset (PolyRet S σ × PolyRet S σ),
-      U.card ≤ T.card ^ 2 * (N + 1) ^ 2 ∧
-      eliminationCong C = generatedBy' U
-&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;Provide explicit bounds on the size of the projected generating set.
-For linear generators (N=1), the cross-multiplication produces at most
-O(|T|²) pairs. For higher degrees, the permanent-based construction
-gives polynomial bounds in both |T| and N.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;4. Tropical Nullstellensatz Certificates&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Target theorem:&lt;/strong&gt;
-&lt;code&gt;`&lt;/code&gt;lean
-theorem tropical_nullstellensatz_certificate
-    (C : SemiringCong (MvPolynomial σ (TropicalSemiring ℝ)))
-    (f g : MvPolynomial σ (TropicalSemiring ℝ))
-    (h : ∀ v : σ → TropicalSemiring ℝ, eval v f = eval v g) :
-    ∃ N : ℕ, ∃ deriv : DerivationChain C f g, deriv.length ≤ N
-&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;This would connect congruence elimination to tropical variety
-certification: if two polynomials agree on all tropical points,
-there should be a bounded derivation in the congruence. The
-elimination machinery provides the inductive step (eliminate one
-variable at a time, using coefficient extraction to reduce dimension).&lt;/p&gt;&lt;p&gt;&lt;h2&gt;3. Multivariable Iterated Elimination&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Target theorem:&lt;/strong&gt;
-&lt;code&gt;`&lt;/code&gt;lean
-theorem iterated_elimination_comm
-    {σ : Type*} (i j : σ) (hij : i ≠ j)
-    (C : SemiringCong (MvPolynomial σ S)) :
-    eliminateVar i (eliminateVar j C) = eliminateVar j (eliminateVar i C)
-&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;Show th</p></div>
+   additional structural properties enable cancellation-like operations.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;5. Comparison with Prime-Congruence and Tropical Spectra&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Relate the nucleus spectrum to other spectral constructions:
+&lt;li&gt;Prime congruence spectrum of a semiring&lt;/li&gt;
+&lt;li&gt;Tropical spectrum (prime tropical ideals)&lt;/li&gt;
+&lt;li&gt;Zariski spectrum of commutative rings (classical case)&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: Show that for a commutative ring &lt;code&gt;R&lt;/code&gt;, the nucleus spectrum of the lattice of ideals recovers the Zariski spectrum &lt;code&gt;Spec(R)&lt;/code&gt;. For tropical semirings, compare with the Giansiracusa-Giansiracusa tropical scheme structure. The key comparison theorem would be: under appropriate hypotheses, the nucleus spectrum, congruence spectrum, and classical spectrum coincide.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Why it matters&lt;/strong&gt;: This positions the nucleus spectrum as a unifying framework. Different algebraic structures (rings, semirings, tropical algebras) have different natural spectral constructions, but the nucleus/frame approach treats them uniformly through the lens of closure operators and their prime spectra.&lt;/p&gt;&lt;p&gt;---&lt;/p&gt;&lt;p&gt;&lt;h2&gt;4. Interaction with Lawvere Metric/Entropy Completion&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Enrich the spectral geometry with quantitative semantics:
+&lt;li&gt;Define a Lawvere metric on prime elements using enriched closure operators&lt;/li&gt;
+&lt;li&gt;Show that metric completion of the spectrum recovers the full frame&lt;/li&gt;
+&lt;li&gt;Connect entropy-based closure operators to weighted spectral measures&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: Replace the Boolean membership &lt;code&gt;k ≤ p&lt;/code&gt; with a quantitative measure &lt;code&gt;d(k, p) ∈ [0, ∞]&lt;/code&gt;. The Lawvere enrichment replaces the partial order with an enriched category, and completion produces a quantitative spectrum where "how far" an element is from a prime carries information beyond the Boolean "contains/doesn't contain."&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Why it matters&lt;/strong&gt;: This bridges qualitative proof theory (Boolean entailment) with quantitative information theory (entropy, KL-divergence). The spectral points become "information-theoretic worlds" with distances measuring the cost of proof transformation.&lt;/p&gt;&lt;p&gt;---&lt;/p&gt;&lt;p&gt;&lt;h2&gt;3. Algorithm Extraction for Compact-Open Entailment Approximants&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Extract computational content from the compact-open basis:
+&lt;li&gt;Define finite approximation schemes for entailment regions&lt;/li&gt;
+&lt;li&gt;Show that &lt;code&gt;k ≤ a&lt;/code&gt; can be decided by checking finitely many compact elements&lt;/li&gt;
+&lt;li&gt;Implement proof search algorithms guided by the spectral topology&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: In a compactly generated frame, every element is the sup of compact elem</p></div>
 
 </div>
 <footer>Generated by Aether Website Generator &mdash; Autonomous Mathematical Research Engine</footer>
