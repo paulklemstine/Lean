@@ -48,7 +48,6 @@ from aristotle_loop import AristotleLoop
 from output_organizer import OutputOrganizer, normalize_domain
 from aristotle_sdk_client import AristotleSDKClient
 from git_automator import GitAutomator
-from website_generator import WebsiteGenerator
 
 
 @dataclass
@@ -68,7 +67,6 @@ class ResearchJob:
     result_paper: Optional[str] = None
     result_future_directions: Optional[str] = None
     result_discussion: Optional[str] = None
-    result_html: Optional[str] = None
     result_summary: Optional[str] = None
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
@@ -610,7 +608,6 @@ Research mode: {concept.research_mode}
         paper_files = []
         future_directions_files = []
         discussion_files = []
-        html_files = []
         summary = None
 
         for root, dirs, files in os.walk(extract_dir):
@@ -668,8 +665,6 @@ Research mode: {concept.research_mode}
                     lean_files.append(fp)
                 elif f.endswith(".py"):
                     python_files.append(fp)
-                elif f.endswith(".html"):
-                    html_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
                     fname_lower = f.lower()
                     if "future_directions" in fname_lower or "future-directions" in fname_lower:
@@ -717,12 +712,6 @@ Research mode: {concept.research_mode}
                 parts.append(f.read_text())
             job.result_discussion = "\n\n".join(parts)
 
-        # Collect interactive web pages
-        if html_files:
-            parts = []
-            for f in sorted(html_files):
-                parts.append(f.read_text())
-            job.result_html = "\n\n".join(parts)
 
         # Summary
         job.result_summary = summary
@@ -736,7 +725,7 @@ Research mode: {concept.research_mode}
               f"Papers: {len(paper_files)} files, "
               f"FUTURE_DIRECTIONS: {len(future_directions_files)} files, "
               f"Discussion: {len(discussion_files)} files, "
-              f"HTML: {len(html_files)} files, "
+
               f"Sorries: {job.sorry_count}, Theorems: {job.theorem_count}")
 
         return job
@@ -905,12 +894,6 @@ Research mode: {concept.research_mode}
             except Exception as e:
                 print(f"[Integrate] Warning: Failed to merge FUTURE_DIRECTIONS into master: {e}")
 
-        # Regenerate website from all Catalog artifacts
-        try:
-            website_gen = WebsiteGenerator(self.catalog_root)
-            website_gen.generate_site()
-        except Exception as e:
-            print(f"[Integrate] Warning: Failed to regenerate website: {e}")
 
         return job
 
@@ -1034,7 +1017,7 @@ Research mode: {concept.research_mode}
         catalog_root = self.catalog_root
         
         # Check Applications directories exist
-        for subdir in ["Papers", "Demos", "Visuals", "Articles", "Web"]:
+        for subdir in ["Papers", "Demos", "Visuals", "Articles"]:
             d = catalog_root / "Applications" / subdir
             if d.exists():
                 report["verified_files"].append(f"Applications/{subdir}/ exists")
@@ -1044,10 +1027,6 @@ Research mode: {concept.research_mode}
         if master_fd.exists():
             report["verified_files"].append("MASTER_FUTURE_DIRECTIONS.md exists")
         
-        # Check website exists
-        website_index = catalog_root / "Applications" / "Web" / "index.html"
-        if website_index.exists():
-            report["verified_files"].append("Website index.html exists")
         
         return report
 

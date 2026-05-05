@@ -36,7 +36,7 @@ class PlacementDecision:
     """Where a file should be placed in the Catalog."""
     source_path: Path
     target_path: Path
-    artifact_type: str  # "theorem" | "paper" | "demo" | "visual" | "article" | "future_directions" | "webpage" | "raw" | "metadata"
+    artifact_type: str  # "theorem" | "paper" | "demo" | "visual" | "article" | "future_directions" | "raw" | "metadata"
     domain: str
     reason: str
     confidence: float = 0.0
@@ -162,10 +162,6 @@ ARTIFACT_PATTERNS = {
     "future_directions": {
         "names": ["FUTURE_DIRECTIONS", "future_directions", "FUTURE-DIRECTIONS"],
         "exts": [".md"],
-    },
-    "webpage": {
-        "names": ["index", "page", "interactive"],
-        "exts": [".html"],
     },
     "theorem": {
         "names": ["Main", "main", "Theorem", "theorem"],
@@ -305,14 +301,6 @@ class OutputOrganizer:
                 decisions["papers"].append(decision)
                 print(f"[Organizer] {result_file.name} -> {decision.target_path} (future_directions)")
 
-            elif file_type == "webpage":
-                decision = self._place_artifact(
-                    result_file, "Applications/Web", exp_id, concept, dry_run,
-                    suffix_override=".html"
-                )
-                decisions.setdefault("webpages", []).append(decision)
-                print(f"[Organizer] {result_file.name} -> {decision.target_path} (webpage)")
-
             elif file_type == "metadata":
                 decision = self._place_raw(result_file, exp_id, dry_run)
                 decisions["raw"].append(decision)
@@ -326,9 +314,9 @@ class OutputOrganizer:
     def _classify_artifact_type(self, file_path: Path) -> str:
         """Classify a file into its artifact type.
 
-        Priority: .lean > .html > name patterns > extension.
+        Priority: .lean > name patterns > extension.
         Returns: "theorem" | "paper" | "demo" | "visual" | "article" |
-                 "future_directions" | "webpage" | "metadata" | "raw"
+                 "future_directions" | "metadata" | "raw"
         """
         name = file_path.stem
         suffix = file_path.suffix.lower()
@@ -336,10 +324,6 @@ class OutputOrganizer:
         # .lean files are always theorems
         if suffix == ".lean":
             return "theorem"
-
-        # .html files are web pages
-        if suffix == ".html":
-            return "webpage"
 
         # Check metadata
         if suffix == ".json" and "metadata" in name.lower():
@@ -596,8 +580,6 @@ class OutputOrganizer:
             new_name = f"{safe_title}_demo.py"
         elif suffix == ".svg":
             new_name = f"{safe_title}_diagram.svg"
-        elif suffix == ".html" and target_dir_name == "Applications/Web":
-            new_name = f"{safe_title}.html"
         else:
             new_name = source.name
 

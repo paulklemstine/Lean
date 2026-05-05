@@ -1705,13 +1705,6 @@ class PiAgentClient:
 
             6. **diagram.svg** — visualization of key mathematical structures
 
-            7. **index.html** — RECOMMENDED interactive web page
-               - Self-contained HTML file with MathJax for math rendering
-               - D3.js for interactive visualizations of key structures
-               - Linked sections: theorem, paper, discussion, demo
-               - No external dependencies except MathJax/D3.js CDNs
-               - Makes your research accessible and explorable
-
             {"Fill existing `sorry` placeholders — do not change theorem statements." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs. Think big — aim for results that would appear in JAMS, Annals, or FOCS."}
 
             ### Catalog Reference Files
