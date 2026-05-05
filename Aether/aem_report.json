@@ -1,0 +1,273 @@
+{
+  "total_files": 2057,
+  "averages": {
+    "rigor": 7.15,
+    "aesthetic": 4.21,
+    "utility": 4.28,
+    "originality": 4.04,
+    "impact": 1.38,
+    "total": 21.06
+  },
+  "top_files": [
+    {
+      "path": "EML/Defs.lean",
+      "score": {
+        "rigor": 10.0,
+        "aesthetic": 7.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 8.0,
+        "total": 38.5,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Bridges/Basic.lean",
+      "score": {
+        "rigor": 10.0,
+        "aesthetic": 6.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 7.0,
+        "total": 36.5,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Bridges/Defs.lean",
+      "score": {
+        "rigor": 10.0,
+        "aesthetic": 7.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 6.0,
+        "total": 36.5,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Physics/Basic.lean",
+      "score": {
+        "rigor": 10.0,
+        "aesthetic": 6.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 7.0,
+        "total": 36.5,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "EML/Basic.lean",
+      "score": {
+        "rigor": 10.0,
+        "aesthetic": 6.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 7.0,
+        "total": 36.5,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Algebra/Defs.lean",
+      "score": {
+        "rigor": 9.8,
+        "aesthetic": 7.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 6.0,
+        "total": 36.3,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Cryptography/Basic.lean",
+      "score": {
+        "rigor": 9.8,
+        "aesthetic": 6.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 6.0,
+        "total": 35.3,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Logic/Defs.lean",
+      "score": {
+        "rigor": 9.8,
+        "aesthetic": 7.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 5.0,
+        "total": 35.3,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Algebra/IntegerEnergy/Quantum.lean",
+      "score": {
+        "rigor": 9.2,
+        "aesthetic": 7.5,
+        "utility": 6.5,
+        "originality": 5.5,
+        "impact": 5.5,
+        "total": 34.2,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Tropical/Defs.lean",
+      "score": {
+        "rigor": 9.2,
+        "aesthetic": 6.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 5.0,
+        "total": 33.7,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "EML/Theorems.lean",
+      "score": {
+        "rigor": 10.0,
+        "aesthetic": 7.5,
+        "utility": 5.5,
+        "originality": 5.5,
+        "impact": 5.0,
+        "total": 33.5,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "MachineLearning/Other/GazingPool.lean",
+      "score": {
+        "rigor": 10.0,
+        "aesthetic": 6.0,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 4.5,
+        "total": 33.5,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Algebra/Basic.lean",
+      "score": {
+        "rigor": 9.8,
+        "aesthetic": 6.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 4.0,
+        "total": 33.3,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Logic/Basic.lean",
+      "score": {
+        "rigor": 9.8,
+        "aesthetic": 6.5,
+        "utility": 7.5,
+        "originality": 5.5,
+        "impact": 4.0,
+        "total": 33.3,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Algebra/IntegerEnergy/Oracle.lean",
+      "score": {
+        "rigor": 9.8,
+        "aesthetic": 6.7,
+        "utility": 6.5,
+        "originality": 5.5,
+        "impact": 4.5,
+        "total": 33.0,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Bridges/MaslovDequantizationRobustness.lean",
+      "score": {
+        "rigor": 8.6,
+        "aesthetic": 6.0,
+        "utility": 6.5,
+        "originality": 5.5,
+        "impact": 6.0,
+        "total": 32.6,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Bridges/EntropyClosureSeparation.lean",
+      "score": {
+        "rigor": 8.1,
+        "aesthetic": 6.5,
+        "utility": 6.5,
+        "originality": 5.5,
+        "impact": 6.0,
+        "total": 32.6,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Tropical/Langlands/UniversalOracleTeam.lean",
+      "score": {
+        "rigor": 8.6,
+        "aesthetic": 6.0,
+        "utility": 6.5,
+        "originality": 5.5,
+        "impact": 5.5,
+        "total": 32.1,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Algebra/Factoring/Quantum.lean",
+      "score": {
+        "rigor": 8.6,
+        "aesthetic": 6.0,
+        "utility": 6.5,
+        "originality": 5.5,
+        "impact": 5.5,
+        "total": 32.1,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    },
+    {
+      "path": "Computation/Oracles/UniversalOracleTeam.lean",
+      "score": {
+        "rigor": 8.6,
+        "aesthetic": 6.0,
+        "utility": 6.5,
+        "originality": 5.5,
+        "impact": 5.5,
+        "total": 32.1,
+        "category": "Tenured Professor",
+        "details": {}
+      }
+    }
+  ]
+}
