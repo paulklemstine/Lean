@@ -25,6 +25,18 @@ relations. The correct framework may require either:
    idempotent semirings (totally ordered, Boolean, etc.) where
    additional structural properties enable cancellation-like operations.
 
+## 5. Comparison with Stone/Localic Duality for Proof Semirings
+
+**Target**: Establish a formal comparison between nucleus-sheaf reconstruction and Stone duality for distributive lattices, mediated by the proof semiring interpretation.
+
+```
+theorem nucleus_sheaf_vs_stone_duality
+    (S : Type*) [CoherentIdemCommSemiring S] :
+    Nonempty (NucleusSpectrum S ≃ₜ StoneSpectrum (IdealLattice S))
+```
+
+In a proof semiring (where elements represent derivations), the nucleus spectrum should be homeomorphic to the Stone spectrum of the lattice of theories. The sheaf reconstruction then corresponds to the Stone representation of the lattice as clopen sets of a spectral space. This comparison would unify the algebraic-geometric viewpoint (sheaves on spectra) with the order-theoretic viewpoint (Stone duality) and the proof-theoretic viewpoint (completeness of derivation systems). Establishing this triangle of equivalences would be a major structural result connecting algebra, topology, and logic in the idempotent setting.
+
 ## 5. Algorithm Extraction: Certified Decision Procedure
 
 **Target artifact.** Extract from the Lean proofs a certified
@@ -75,31 +87,5 @@ descent theory for congruences. It opens the door to cohomological
 obstruction theory for elimination: when does elimination fail to
 commute with base change? The Kan extension viewpoint makes this
 a question about derived functors.
-
----
-
-## 5. Comparison with Prime-Congruence and Tropical Spectra
-
-**Goal**: Relate the nucleus spectrum to other spectral constructions:
-- Prime congruence spectrum of a semiring
-- Tropical spectrum (prime tropical ideals)
-- Zariski spectrum of commutative rings (classical case)
-
-**Approach**: Show that for a commutative ring `R`, the nucleus spectrum of the lattice of ideals recovers the Zariski spectrum `Spec(R)`. For tropical semirings, compare with the Giansiracusa-Giansiracusa tropical scheme structure. The key comparison theorem would be: under appropriate hypotheses, the nucleus spectrum, congruence spectrum, and classical spectrum coincide.
-
-**Why it matters**: This positions the nucleus spectrum as a unifying framework. Different algebraic structures (rings, semirings, tropical algebras) have different natural spectral constructions, but the nucleus/frame approach treats them uniformly through the lens of closure operators and their prime spectra.
-
----
-
-## 4. Interaction with Lawvere Metric/Entropy Completion
-
-**Goal**: Enrich the spectral geometry with quantitative semantics:
-- Define a Lawvere metric on prime elements using enriched closure operators
-- Show that metric completion of the spectrum recovers the full frame
-- Connect entropy-based closure operators to weighted spectral measures
-
-**Approach**: Replace the Boolean membership `k ≤ p` with a quantitative measure `d(k, p) ∈ [0, ∞]`. The Lawvere enrichment replaces the partial order with an enriched category, and completion produces a quantitative spectrum where "how far" an element is from a prime carries information beyond the Boolean "contains/doesn't contain."
-
-**Why it matters**: This bridges qualitative proof theory (Boolean entailment) with quantitative information theory (entropy, KL-divergence). The spectral points become "information-theoretic worlds" with distances measuring the cost of proof transformation.
 
 ---
