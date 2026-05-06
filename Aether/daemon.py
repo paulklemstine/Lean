@@ -129,12 +129,42 @@ class AetherDaemon:
         self.state_path.write_text(self.state.to_json(), encoding="utf-8")
 
     def _select_domain(self) -> Dict[str, Any]:
-        """Weighted random domain selection, avoiding immediate repeats."""
+        """Weighted random domain selection, prioritizing weak domains.
+        
+        Domains with lower AEM scores get higher weight (up to 3x boost)
+        based on weakness relative to the catalog average.
+        """
         candidates = [d for d in self.domains if d["id"] != self.state.last_domain]
         if not candidates:
             candidates = self.domains
 
         weights = [self._domain_weights.get(d["id"], 1.0) for d in candidates]
+        
+        # Boost weak domains based on AEM pillar scores
+        try:
+            from aem_evaluator import AEMEvaluator
+            from collections import defaultdict
+            evaluator = AEMEvaluator()
+            catalog_results = evaluator.evaluate_catalog(self.catalog_root, use_disk_cache=True)
+            
+            domain_avgs = defaultdict(list)
+            for path, score in catalog_results.items():
+                p = str(path).lower()
+                for d in candidates:
+                    if d["id"].lower() in p:
+                        domain_avgs[d["id"]].append(score.total)
+                        break
+            
+            global_avg = sum(s.total for s in catalog_results.values()) / len(catalog_results) if catalog_results else 32.0
+            for i, d in enumerate(candidates):
+                scores = domain_avgs.get(d["id"], [global_avg])
+                domain_avg = sum(scores) / len(scores)
+                weakness_ratio = max(global_avg - domain_avg, 0) / global_avg
+                boost = 1.0 + 2.0 * weakness_ratio  # 1x to 3x
+                weights[i] *= boost
+        except Exception:
+            pass  # Fall back to base weights
+        
         total = sum(weights)
         if total == 0:
             return random.choice(candidates)
