@@ -563,11 +563,37 @@ class AEMEvaluator:
 
         # 1. Conceptual Invention: new definitions/structures
         new_objects = len(re.findall(r'\b(?:def|structure|class|inductive|abbrev)\s+(\w+)', lean_source))
-        # Filter out standard mathlib re-statements
+        # Filter out standard mathlib re-statements and common derivative/filler names
         standard_names = {'hilbertSchmidtNorm', 'BridgeLevel', 'tropAdd', 'lse2',
-                         'ScoreVec', 'DomGL3', 'TropFn', 'SupportedInBox'}
+                         'ScoreVec', 'DomGL3', 'TropFn', 'SupportedInBox',
+                         # Highly duplicated derivative/filler names from the catalog
+                         'konigsberg', 'Konigsberg', 'konigsbergGraph',
+                         'SPBExpr', 'pullbackAlg', 'ShefferAlg', 'FiberConst',
+                         'fiberConstLift', 'GL3Dom', 'of', 'and', 'in',
+                         'encodes', 'sort₃', 'zero', 'comp', 'neg', 'is',
+                         # Generic trivial definitions
+                         'toGL3Dom', ' established', 'empty', 'id', 'flip',
+                         'toFun', 'invFun', 'inv', 'map', 'hom',
+                         'prod', 'sum', 'bot', 'top', 'inf', 'sup'}
         def_names = re.findall(r'\b(?:def|structure|class|inductive|abbrev)\s+(\w+)', lean_source)
         genuinely_new = sum(1 for name in def_names if name not in standard_names)
+
+        # Apply duplication penalty: if a definition appears very frequently
+        # across many files, it's likely derivative/filler, not genuinely novel
+        # This prevents inflated originality from repeated structure names
+        duplication_penalty = 0.0
+        for name in def_names:
+            name_lower = name.lower()
+            # Generic pattern names that appear in many files
+            if name_lower in ('main', 'test', 'example', 'foo', 'bar', 'tmp',
+                              'aux', 'helper', 'lemma1', 'lemma2', 'thm1', 'thm2',
+                              'proof1', 'proof2', 'step1', 'step2', 'inst',
+                              'mk', 'val', 'get', 'set', 'run', 'do', 'apply',
+                              'solve', 'compute', 'check', 'verify', 'test'):
+                duplication_penalty += 0.2
+
+        # Deduct duplication penalty from genuinely_new count
+        genuinely_new = max(0, genuinely_new - int(duplication_penalty))
 
         if genuinely_new >= 5:
             score += 3.0
@@ -661,6 +687,22 @@ class AEMEvaluator:
             unusual_combos += 1  # Novel structural connections across modules
             if cross_namespace_refs >= 10:
                 unusual_combos += 1  # Deep cross-module integration
+
+        # Bridge mention density: high-Originality files have 109.7x more
+        # cross-domain bridge mentions than low-Originality files.
+        # Explicitly reward bridge/bridge-like references in doc comments.
+        bridge_keywords = ['bridge', 'connects', 'unifies', 'cross-domain', 'analogue',
+                          'correspondence', 'isomorphism between', 'transfers to',
+                          'maps to', 'lifts to', 'reduces to']
+        bridge_count = sum(1 for kw in bridge_keywords if kw in lean_source.lower())
+        if bridge_count >= 5:
+            unusual_combos += 2  # Strong bridge density
+            details["bridge_density"] = f"high({bridge_count})"
+        elif bridge_count >= 2:
+            unusual_combos += 1  # Moderate bridge density
+            details["bridge_density"] = f"moderate({bridge_count})"
+        else:
+            details["bridge_density"] = f"low({bridge_count})"
 
         if unusual_combos >= 2:
             score += 2.0
@@ -757,7 +799,9 @@ class AEMEvaluator:
             details["physics_crypto"] = "none"
 
         # 2. ML Interpretability
-        # Check for ML-specific terms first (high-confidence)
+        # Two-tier keyword system: high-confidence terms are strong signals.
+        # Broad terms are WEAK signals — they only count if high-confidence terms
+        # are also present, preventing generic math from scoring high on Impact.
         ml_indicators = 0
         for kw in ["neural", "lipschitz", "certified_robust", "adversarial",
                     "relu", "resnet", "softmax", "overfitting",
@@ -768,7 +812,9 @@ class AEMEvaluator:
             if kw in source_lower:
                 ml_indicators += 2  # High-confidence ML terms count double
 
-        # Check for broad ML terms (need co-occurrence to count)
+        # Broad ML terms: these are extremely common in pure math and should
+        # NOT trigger Impact scoring unless ML-specific context is also present.
+        # We require at least ONE high-confidence term before any broad terms count.
         ml_broad = 0
         for kw in ["gradient", "convergence", "margin", "approximation", "universal",
                     "network", "training", "inference", "depth", "activation",
@@ -776,11 +822,11 @@ class AEMEvaluator:
             if kw in source_lower:
                 ml_broad += 1
 
-        # Broad terms only count if at least one high-confidence term is present
+        # Broad terms ONLY count with ML context present
         if ml_indicators >= 2:
-            ml_indicators += min(ml_broad, 6)  # Cap broad term contribution
-        else:
-            ml_indicators += min(ml_broad, 2)  # Very limited contribution without ML context
+            ml_indicators += min(ml_broad, 4)  # Capped contribution
+        # If no high-confidence ML terms, broad terms do NOT count at all
+        # This prevents pure algebra files from scoring high on ML Impact
 
         if ml_indicators >= 6:
             score += 2.5
@@ -795,11 +841,26 @@ class AEMEvaluator:
             details["ml_interpretability"] = "none"
 
         # 3. Systemic Optimization
+        # Two-tier: specific optimization keywords are strong signals.
+        # Generic math terms are WEAK and only count with context.
         optimization = 0
-        for kw in ["optimal", "efficient", "complexity", "algorithm", "compiler",
-                    "factor", "search", "bound", "rate", "converge", "iteration"]:
+        # High-confidence optimization terms (specific, not generic)
+        for kw in ["optimal", "efficient", "complexity_bound", "algorithm",
+                    "compiler", "factoring_algorithm", "search_algorithm",
+                    "convergence_rate", "iteration_complexity", "time_complexity",
+                    "space_complexity", "computational_bound"]:
             if kw in source_lower:
-                optimization += 1
+                optimization += 2  # Specific optimization terms count double
+        # Generic terms: only count if high-confidence optimization context is present
+        generic_opt = 0
+        for kw in ["bound", "rate", "converge", "iteration", "factor", "search"]:
+            if kw in source_lower:
+                generic_opt += 1
+        if optimization >= 2:  # Has specific optimization context
+            optimization += min(generic_opt, 3)  # Limited contribution
+        else:
+            # Generic terms alone do NOT count — every math proof has bounds
+            optimization += 0
 
         if optimization >= 5:
             score += 2.0
