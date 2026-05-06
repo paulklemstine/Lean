@@ -218,11 +218,7 @@ class CatalogAnalyzer:
     def get_domain_summary_for_prompt(self) -> str:
         """Generate a compact domain summary for Pi-Agent prompts.
 
-        Returns a string like:
-            Catalog: 13 domains, 1446 files, 28797 declarations
-            - Algebra: 100 files, 1365 declarations, 0 sorries
-            - Physics: 114 files, 2830 declarations, 1 sorry
-            ...
+        Returns a string including AEM pillar scores and weak domain indicators.
         """
         if self._summaries is None:
             self.scan()
@@ -237,14 +233,54 @@ class CatalogAnalyzer:
             f"{total_sorries} sorries remaining"
         ]
 
+        # Try to get AEM pillar scores for each domain
+        domain_aem = {}
+        try:
+            from aem_evaluator import AEMEvaluator
+            from collections import defaultdict
+            evaluator = AEMEvaluator()
+            catalog_results = evaluator.evaluate_catalog(self.catalog_root, use_disk_cache=True)
+            
+            # Group by domain and compute pillar averages
+            domain_pillars = defaultdict(lambda: {'count': 0, 'O': 0, 'U': 0, 'I': 0})
+            for path, score in catalog_results.items():
+                p = str(path).lower()
+                for domain in self._domain_index.keys():
+                    if domain.lower() in p:
+                        dp = domain_pillars[domain]
+                        dp['count'] += 1
+                        dp['O'] += score.originality
+                        dp['U'] += score.utility
+                        dp['I'] += score.impact
+                        break
+            
+            # Find weakest pillar per domain
+            for domain, dp in domain_pillars.items():
+                if dp['count'] > 0:
+                    domain_aem[domain] = {
+                        'O': dp['O'] / dp['count'],
+                        'U': dp['U'] / dp['count'],
+                        'I': dp['I'] / dp['count'],
+                    }
+        except Exception:
+            pass
+
         for domain in sorted(self._domain_index.keys()):
             files = self._domain_index[domain]
             file_count = len(files)
             decl_count = sum(len(f.declarations) for f in files)
             sorry_count = sum(f.sorry_count for f in files)
             sorry_note = f", {sorry_count} sorries" if sorry_count > 0 else ""
+            
+            # Add AEM pillar info if available
+            aem_note = ""
+            if domain in domain_aem:
+                d = domain_aem[domain]
+                weakest = min([('O', d['O']), ('U', d['U']), ('I', d['I'])], key=lambda x: x[1])
+                aem_note = f", O={d['O']:.1f} U={d['U']:.1f} I={d['I']:.1f} weakest={weakest[0]}"
+            
             lines.append(
-                f"  - {domain}: {file_count} files, {decl_count} declarations{sorry_note}"
+                f"  - {domain}: {file_count} files, {decl_count} declarations{sorry_note}{aem_note}"
             )
 
         return "\n".join(lines)
