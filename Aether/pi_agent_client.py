@@ -1226,6 +1226,34 @@ class PiAgentClient:
                 "refs": ["Cryptography/SPBQuantumCrypto.lean"],
                 "novelty": 0.90, "breakthrough": 0.91,
             },
+            # High-originality arcs targeting weak domains (Shared O=3.48, Physics O=4.34, Logic O=5.15)
+            {
+                "title": "berggren_lorentz_quantum_correspondence",
+                "domain": "Bridges",
+                "desc": "Establish a rigorous correspondence between Berggren tree automorphisms and Lorentz group representations in quantum field theory. This bridges Pythagorean algebra (Berggren tree symmetries), Physics (Lorentz/Poincaré representations), and Cryptography (post-quantum key exchange via representation theory). Define new structures: BerggrenLorentzMap, PythagoreanSpinor, LorentzCayleyTransform. Establish computational bounds: prove O(n log n) decomposition of Lorentz transformations via Berggren tree traversal. Show that Pythagorean spinors give provably secure post-quantum key exchange.",
+                "framing": "Define BerggrenLorentzMap : BerggrenTree -> LorentzGroup SO(3,1) mapping Berggren automorphisms to Lorentz boosts. Prove: (1) BerggrenLorentzMap is a group homomorphism, (2) PythagoreanSpinor representations double-cover SO(3), (3) LorentzCayleyTransform enables O(n log n) decomposition of arbitrary Lorentz transformations. Bridge to cryptography: prove Berggren-Lorentz key exchange is IND-CPA secure under Berggren hardness assumption. Bridge to physics: connect Pythagorean spinor spectra to Dirac equation discrete symmetries.",
+                "mode": "prove",
+                "refs": ["Physics/Quantum/TropicalFeynman.lean", "Pythagorean/BerggrenGenerators.lean", "Cryptography/SPBQuantumCrypto.lean"],
+                "novelty": 0.95, "breakthrough": 0.97,
+            },
+            {
+                "title": "pythagorean_semiring_universal_property",
+                "domain": "Bridges",
+                "desc": "Prove that the Pythagorean semiring satisfies a universal property making it the initial object in the category of Pythagorean-structured semirings. This bridges Algebra (universal properties), Number Theory (Pythagorean triples), Topology (Stone duality for semirings), and Machine Learning (tropical neuron universal approximation). Define new structures: PythagoreanSemiring, BerggrenAdjunction, StoneDualPythagorean. Establish computational bounds: prove O(n) decision for Pythagorean semiring identities. Show that Berggren adjunction yields certified Lipschitz bounds for tropical neural networks.",
+                "framing": "Define PythagoreanSemiring as the initial object in the category of semirings with a ternary relation a^2 + b^2 = c^2. Prove: (1) PythagoreanSemiring satisfies universal property (initiality), (2) StoneDualPythagorean establishes duality between PythagoreanSemiring ideals and Stone spaces, (3) BerggrenAdjunction lifts universal property to Berggren trees. Bridge to ML: prove universal property yields O(n^2) universal approximation bounds for tropical neural networks. Bridge to cryptography: connect Stone duality to hash function collision resistance.",
+                "mode": "prove",
+                "refs": ["Algebra/Defs.lean", "Pythagorean/BerggrenGenerators.lean", "Bridges/AlgebraEMLBridge.lean"],
+                "novelty": 0.94, "breakthrough": 0.96,
+            },
+            {
+                "title": "tropical_spectral_logic_theory",
+                "domain": "Bridges",
+                "desc": "Develop a spectral theory for tropical logic: prove that tropical satisfiability has a spectral gap determined by the tropical eigenvalue of the constraint matrix. This bridges Logic (SAT solving), Tropical geometry (spectral theory), Computation (complexity bounds), and Cryptography (tropical SAT-based zero-knowledge proofs). Define new structures: TropicalSpectralSAT, ConstraintTropicalEigenvalue, SpectralGapCertificate. Establish computational bounds: prove O(n^2) spectral gap detection for tropical Horn-SAT. Show that spectral SAT gaps yield O(sqrt(n))-round zero-knowledge proofs.",
+                "framing": "Define TropicalSpectralSAT : TropicalMatrix -> SATResult mapping constraint matrices to spectral satisfiability certificates. Prove: (1) tropical Horn-SAT has spectral gap iff the constraint matrix has tropical eigenvalue > 0, (2) SpectralGapCertificate gives O(n^2) decision procedure, (3) the spectral gap determines the number of rounds for SAT-based zero-knowledge proofs. Bridge to cryptography: show tropical spectral SAT yields succinct zero-knowledge arguments with O(sqrt(n))-round complexity. Bridge to computation: connect spectral gaps to phase transitions in random tropical SAT.",
+                "mode": "prove",
+                "refs": ["Logic/Defs.lean", "Tropical/Core/TropicalSemiring.lean", "Cryptography/SPBQuantumCrypto.lean"],
+                "novelty": 0.93, "breakthrough": 0.95,
+            },
         ]
         arc = VISIONARY_ARCS[cycle % len(VISIONARY_ARCS)]
         return ResearchConcept(
