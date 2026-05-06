@@ -239,13 +239,13 @@ class PromptEngine:
               - Define extensible structures: clean APIs with `def`, `structure`, `class`, `instance` for reuse.
               - Advance open problems or significantly narrow search spaces.
               - Provide simplification frameworks.
-              Target: 5+ reusable structures/functions with computational bounds.
+              Target: 5+ reusable structures/functions with computational bounds (struct, class, def, instance).
 
             ORIGINALITY (0-10): Truly novel mathematics.
               - Invent genuinely NEW mathematical objects, operators, or invariants — not parameter tweaks on Mathlib.
               - Apply known theory to completely new domains yielding structurally unfamiliar results.
               - Follow divergent reasoning paths that human intuition would not naturally take.
-              Target: 3+ genuinely new definitions/structures that don't exist in Mathlib.
+              Target: 5+ genuinely new definitions/structures (def, structure, class, instance) that don't exist in Mathlib. High-Originality files average 10+ new definitions.
 
             IMPACT (0-10): Wonderful real-world applications.
               - Map directly to Physics (quantum mechanics, thermodynamics, general relativity).

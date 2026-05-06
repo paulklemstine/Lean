@@ -1825,7 +1825,7 @@ class PiAgentClient:
               *_add_*, *_mul_*). Use INVENTIVE names that reveal new concepts
             • Combine unusual typeclasses ([Semiring, LinearOrder], [NormedAddCommGroup,
               Field], [MeasureSpace, Category]) — this signals divergent reasoning
-            • Each file should introduce 3+ genuinely new mathematical objects
+            • Each file should introduce 5+ genuinely new mathematical objects (def, structure, class, instance). High-Originality files average 10+ new definitions.
 
             PILLAR 5 — IMPACT (Does it have Wonderful Applications?):
             • EVERY theorem should connect to at least one of: physics (quantum,
