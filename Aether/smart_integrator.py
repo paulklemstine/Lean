@@ -644,24 +644,48 @@ class SmartIntegrator:
             return {"ok": False, "error": "No Lean declarations found"}
 
         # AEM quality gate: evaluate and reject low-quality files
+        # Provides detailed feedback for prompt improvement
         try:
             from aem_evaluator import AEMEvaluator
             evaluator = AEMEvaluator()
             score = evaluator.evaluate_lean_file(lean_source, file_path="validation_gate")
 
             if score.total < self.MIN_AEM_SCORE:
-                return {"ok": False, "error": f"AEM score {score.total:.1f} below minimum {self.MIN_AEM_SCORE:.0f} (Automated Drone threshold)"}
+                return {"ok": False, "error": f"AEM score {score.total:.1f} below minimum {self.MIN_AEM_SCORE:.0f} (Automated Drone threshold)",
+                        "aem_score": score.total, "rigor": score.rigor, "aesthetic": score.aesthetic,
+                        "utility": score.utility, "originality": score.originality, "impact": score.impact}
 
             if score.originality < self.MIN_AEM_ORIGINALITY:
-                return {"ok": False, "error": f"Originality {score.originality:.1f} below minimum {self.MIN_AEM_ORIGINALITY:.0f}"}
+                # Provide actionable feedback for improving originality
+                feedback = f"Originality {score.originality:.1f} below minimum {self.MIN_AEM_ORIGINALITY:.0f}. "
+                if score.originality < 2:
+                    feedback += "Needs genuinely new mathematical definitions (def, structure, class). "
+                    feedback += "Target 5+ novel structures with descriptive names. "
+                    feedback += "Add cross-domain bridge references in doc comments."
+                else:
+                    feedback += "Needs more novel mathematical objects. "
+                    feedback += "Target 3+ new definitions that don't exist in Mathlib. "
+                    feedback += "Add 2+ cross-domain bridge mentions."
+                return {"ok": False, "error": feedback,
+                        "aem_score": score.total, "rigor": score.rigor, "aesthetic": score.aesthetic,
+                        "utility": score.utility, "originality": score.originality, "impact": score.impact}
 
             if score.utility < self.MIN_AEM_UTILITY:
-                return {"ok": False, "error": f"Utility {score.utility:.1f} below minimum {self.MIN_AEM_UTILITY:.0f}"}
+                feedback = f"Utility {score.utility:.1f} below minimum {self.MIN_AEM_UTILITY:.0f}. "
+                if score.utility < 2:
+                    feedback += "Needs reusable API structures (def, structure, class, instance) and SPECIFIC computational bounds (O(n), Omega(2^n)). "
+                    feedback += "Generic terms like 'bound' or 'rate' alone don't qualify."
+                else:
+                    feedback += "Needs more reusable definitions and SPECIFIC computational bounds. "
+                    feedback += "Add explicit O() bounds in theorem statements."
+                return {"ok": False, "error": feedback,
+                        "aem_score": score.total, "rigor": score.rigor, "aesthetic": score.aesthetic,
+                        "utility": score.utility, "originality": score.originality, "impact": score.impact}
         except Exception:
             # If AEM evaluation fails, fall through to accept
             pass
 
-        return {"ok": True, "error": ""}
+        return {"ok": True, "error": "", "aem_score": None}
 
     def generate_manifest(
         self,
