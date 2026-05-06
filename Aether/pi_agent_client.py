@@ -1530,7 +1530,12 @@ class PiAgentClient:
             "\n- AESTHETIC: Bridge 2+ domains in theorem names and doc comments. Use quantifier alternation."\
             "\n- UTILITY: Define 5+ structures/instances. State explicit computational bounds (Lipschitz, convergence)."\
             "\n- ORIGINALITY: Coin novel definitions beyond Mathlib. Inventive theorem names."\
-            "\n- IMPACT: Include keywords: certified_robustness, Lipschitz_bound, lattice_crypto, hamiltonian, entropy."
+            "\n- IMPACT: Include keywords: certified_robustness, Lipschitz_bound, lattice_crypto, hamiltonian, entropy."\
+            "\n\n**FILE RICHNESS MANDATE**: Produce substantial, rich files (not stubs)."\
+            "\n- Target 500+ lines with 20+ theorems and 10+ definitions per file."\
+            "\n- Historical Masters in the catalog average 2000+ lines, 180+ theorems, 70+ definitions."\
+            "\n- Each file should be a complete mathematical narrative with definitions, lemmas, and main theorems all connected."\
+            "\n- When producing catalog-wide output: create files across MULTIPLE domains (Bridges, Algebra, Cryptography, Tropical, EML, Physics), not just one domain."
 
         return assignment
 
