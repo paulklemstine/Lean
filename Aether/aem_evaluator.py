@@ -142,23 +142,41 @@ class AEMEvaluator:
     def __init__(self, catalog_root: Optional[Path] = None):
         self.catalog_root = catalog_root
         self._catalog_cache: Dict[str, Dict] = {}
+        # Content-hash based scoring cache for fast re-evaluation
+        self._score_cache: Dict[str, Tuple[str, AEMScore]] = {}  # path -> (content_hash, score)
+
+    def _content_hash(self, content: str) -> str:
+        """Fast hash of content for cache invalidation."""
+        import hashlib
+        return hashlib.sha256(content.encode('utf-8')).hexdigest()[:16]
 
     def evaluate_lean_file(self, lean_source: str, file_path: str = "",
                            domain: str = "", narrative: str = "") -> AEMScore:
         """Complete AEM evaluation of a Lean 4 file."""
+        # Check cache by content hash
+        content_hash = self._content_hash(lean_source)
+        if file_path in self._score_cache:
+            cached_hash, cached_score = self._score_cache[file_path]
+            if cached_hash == content_hash:
+                return cached_score
+
         rigor = self._score_rigor(lean_source, file_path)
         aesthetic = self._score_aesthetic(lean_source, file_path, domain, narrative)
         utility = self._score_utility(lean_source, file_path, domain)
         originality = self._score_originality(lean_source, file_path, domain, narrative)
         impact = self._score_impact(lean_source, file_path, domain, narrative)
 
-        return AEMScore(
+        score = AEMScore(
             rigor=rigor,
             aesthetic=aesthetic,
             utility=utility,
             originality=originality,
             impact=impact,
         )
+
+        # Cache the result
+        self._score_cache[file_path] = (content_hash, score)
+        return score
 
     # ------------------------------------------------------------------
     # Pillar 1: Rigor & Sophistication
