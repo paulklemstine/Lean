@@ -306,11 +306,45 @@ class CycleMaster:
         self.state_path.write_text(self.state.to_json(), encoding="utf-8")
 
     def _select_domain(self) -> Dict[str, Any]:
-        """Weighted random, avoiding immediate repeats."""
+        """Weighted random, avoiding immediate repeats.
+        Prioritizes domains with weaker AEM pillar scores."""
         candidates = [d for d in self.domains if d["id"] != self.state.last_domain]
         if not candidates:
             candidates = self.domains
+        
+        # Base weights from config
         weights = [self._domain_weights.get(d["id"], 1.0) for d in candidates]
+        
+        # Boost weak domains: domains with lower AEM scores get higher weight
+        # This ensures we target the weakest areas of the catalog
+        try:
+            from aem_evaluator import AEMEvaluator
+            evaluator = AEMEvaluator()
+            catalog_results = evaluator.evaluate_catalog(self.catalog_root, use_disk_cache=True)
+            
+            # Calculate domain AEM averages
+            from collections import defaultdict
+            domain_scores = defaultdict(list)
+            for path, score in catalog_results.items():
+                p = str(path).lower()
+                for d in candidates:
+                    domain_name = d["id"].lower()
+                    if domain_name in p:
+                        domain_scores[d["id"]].append(score.total)
+                        break
+            
+            # Boost weight for weaker domains (inverse of AEM score)
+            global_avg = sum(s.total for s in catalog_results.values()) / len(catalog_results) if catalog_results else 32.0
+            for i, d in enumerate(candidates):
+                scores = domain_scores.get(d["id"], [global_avg])
+                domain_avg = sum(scores) / len(scores)
+                # Weaker domains get up to 3x weight boost
+                weakness_ratio = max(global_avg - domain_avg, 0) / global_avg
+                boost = 1.0 + 2.0 * weakness_ratio  # 1x to 3x
+                weights[i] *= boost
+        except Exception:
+            pass  # If evaluation fails, use base weights
+        
         total = sum(weights)
         if total == 0:
             import random
