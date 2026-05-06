@@ -269,6 +269,8 @@ class PromptEngine:
             - Build on existing catalog definitions. Do not re-invent.
             - Every new definition must serve a purpose and be USED in at least one theorem.
             - Cross-reference domains explicitly in doc comments: e.g., "Bridge: connects Tropical Geometry to Post-Quantum Cryptography via min-plus matrix rank."
+            - PRODUCE RICH, SUBSTANTIAL FILES: The highest-AEM files in the catalog average 2000+ lines with 150+ theorems and 60+ definitions. Produce comprehensive files, not stubs. Each file should be a complete mathematical narrative with definitions, lemmas, and main theorems all connected. Target 500+ lines with 20+ theorems and 10+ definitions per file.
+            - EXPAND MULTIPLE DOMAINS: When producing a catalog-wide response, create files in multiple domains (Bridges, Algebra, Cryptography, Tropical, EML, Physics, etc.), not just a single domain. The highest-AEM files bridge 2+ domains.
 
             Deliver whatever feels right for this body of work. You may produce:
             - A Lean proof (theorem.lean)
