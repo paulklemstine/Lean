@@ -1,6 +1,34 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-06 14:17*
+*Last updated: 2026-05-06 14:18*
+
+## 3. Minimizer Extraction Theorem: Explicit Compressed Countermodels
+
+**Statement (conjectured):**
+```lean
+theorem minimizer_existence
+    [CoherentClosureProofSemiring S] [Fintype (SpectralPoint S)]
+    (D : StrongDivergence (SpectralPoint S))
+    (μ : SpectralPoint S → ℝ) (hμ : FullSupport μ) (x y : S) (β : ℝ) (hβ : 0 < β) :
+    ∃ ν : SpectralPoint S → ℝ, (∀ p, 0 ≤ ν p) ∧
+      thermodynamicRate D.toDivergence μ β x y ν =
+        sInf (rateSet D.toDivergence μ β x y) := sorry
+
+theorem minimizer_countermodel_extraction
+    [CoherentClosureProofSemiring S] [Fintype (SpectralPoint S)]
+    (D : StrongDivergence (SpectralPoint S))
+    (μ : SpectralPoint S → ℝ) (x y : S) (β : ℝ) (hβ : 0 < β)
+    (hnd : ¬derivable x y) :
+    ∃ ν : SpectralPoint S → ℝ, (∀ p, 0 ≤ ν p) ∧
+      0 < thermodynamicRate D.toDivergence μ β x y ν ∧
+      (∃ p, 0 < ν p ∧ 0 < countermodelDefect x y p) := sorry
+```
+
+**Significance:** The minimizer of the rate function provides the "most compressed" countermodel distribution — it balances divergence from the reference (parsimony) against countermodel evidence (separation). This yields an information-theoretically optimal countermodel.
+
+**Approach:** Use compactness of the probability simplex (in the finite case) and lower semicontinuity of the rate function. The minimizer's support identifies the most informative spectral points.
+
+---
 
 ## 5. Thermodynamic Dual Semantics: Free-Energy Interpretation
 
@@ -56,54 +84,3 @@ theorem zero_temperature_limit_selects_canonical
       (nhds (eval (canonicalCountermodel eval x y) y -
              eval (canonicalCountermodel eval x y) x))
 ```
-
-## 5. Phase-Transition Thresholds for Derivability in Finite Proof Semirings
-
-**Theorem Target.** For random proof semirings on n generators with edge probability p,
-there exists a sharp phase transition at p = p*(n) such that:
-
-- For p > p*(n): derivable(x, y) holds with high probability for all x, y
-- For p < p*(n): ¬derivable(x, y) holds with high probability for generic x, y
-
-The critical temperature β*(n) of the thermodynamic duality satisfies:
-
-```
-β*(n) ~ c · log(n) / primeSeparationGap(n)
-```
-
-**Why it matters.** This establishes that derivability in random proof systems exhibits
-a sharp phase transition analogous to the satisfiability threshold in random SAT, but
-now with a thermodynamic interpretation. The critical temperature identifies the
-crossover between the "entropic" regime (where most evaluations are non-separating) and
-the "energetic" regime (where separating evaluations dominate).
-
-**Approach.** Use the second moment method on the partition function of separating
-evaluations, combined with the thermodynamic duality theorem to translate between
-proof-theoretic and statistical-mechanical phase transitions.
-
----
-
-## 1. Sharpness / Converse Theorem
-
-**Question:** Does `reflectionCapacity M ≤ proofEntropyRate M + diagonalOverhead M` imply the absence of reflective barriers?
-
-**Precise statement:**
-```lean
-theorem converse_no_barrier_of_capacity_le
-    (M : Type u) [ClosureSelfModel M] :
-    reflectionCapacity M ≤ proofEntropyRate M + diagonalOverhead M →
-    ∀ φ : Formula M, ¬ reflectiveBarrier M φ
-```
-
-This would establish the threshold as **sharp**: reflective barriers exist if and only if the gap is positive. The proof likely requires additional structure on the model—specifically, that the complexity floor of every diagonal sentence is bounded above by the proof entropy rate + diagonal overhead when the gap is nonpositive.
-
-**Approach:** Strengthen the `ClosureSelfModel` class with an axiom:
-```lean
-ax_floor_bounded_below_threshold :
-    reflCap ≤ proofEntRate + diagOvhd →
-    ∀ (β : ℝ) (G : Sentence), 0 < β →
-      complexityFloor β G ≤ proofEntRate + diagOvhd - reflCap + reflCap
-```
-Then show this forces the complexity floor to be zero or negative for all diagonal sentences, collapsing the barrier condition.
-
----
