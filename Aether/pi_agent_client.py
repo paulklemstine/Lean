@@ -1976,9 +1976,10 @@ class PiAgentClient:
                     idx = direct_prompt.find("### Catalog Reference Files")
                     catalog_section = "\n\n" + direct_prompt[idx:]
 
-                # Compose: enriched content + preserved AEM sections + catalog
+                # Compose: enriched content + preserved AEM sections + mode + catalog
                 enriched_with_aem = (
                     (aem_scoring + "\n\n" if aem_scoring else "") +
+                    (mode_instruction + "\n\n" if mode_instruction else "") +
                     cleaned +
                     (aem_mandate if aem_mandate else "") +
                     catalog_section
