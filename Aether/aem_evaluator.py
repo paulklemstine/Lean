@@ -936,9 +936,31 @@ class AEMEvaluator:
 
         return min(score, 10.0)
 
-    def evaluate_catalog(self, catalog_root: Path) -> Dict[str, AEMScore]:
-        """Evaluate all files in the catalog."""
+    def evaluate_catalog(self, catalog_root: Path, use_disk_cache: bool = True) -> Dict[str, AEMScore]:
+        """Evaluate all files in the catalog.
+        
+        Args:
+            catalog_root: Path to the catalog directory
+            use_disk_cache: If True, use .aem_cache.json for fast loading
+                            when files haven't changed.
+        """
         results = {}
+        
+        # Try loading from disk cache first
+        cache_path = catalog_root / '.aem_cache.json'
+        disk_cache = {}
+        if use_disk_cache and cache_path.exists():
+            try:
+                import json as _json
+                with open(cache_path) as f:
+                    disk_cache = _json.load(f)
+            except Exception:
+                disk_cache = {}
+        
+        # Track which files we've already cached
+        cached_count = 0
+        evaluated_count = 0
+        
         for lean_file in catalog_root.rglob("*.lean"):
             if '.lake' in str(lean_file):
                 continue
@@ -948,13 +970,49 @@ class AEMEvaluator:
                 continue
             rel_path = str(lean_file.relative_to(catalog_root))
             
-            # Extract doc comments as narrative for better aesthetic/impact scoring
-            # Doc comments in Lean 4 use /-! ... -/ (visible) or /- ... -/ (hidden)
+            # Check disk cache
+            content_hash = self._content_hash(source)
+            if rel_path in disk_cache:
+                cached_entry = disk_cache[rel_path]
+                if isinstance(cached_entry, dict) and cached_entry.get('_hash') == content_hash:
+                    # Cache hit - reconstruct AEMScore from dict
+                    score = AEMScore(
+                        rigor=cached_entry.get('rigor', 0),
+                        aesthetic=cached_entry.get('aesthetic', 0),
+                        utility=cached_entry.get('utility', 0),
+                        originality=cached_entry.get('originality', 0),
+                        impact=cached_entry.get('impact', 0),
+                    )
+                    results[rel_path] = score
+                    cached_count += 1
+                    # Also update in-memory cache
+                    self._score_cache[rel_path] = (content_hash, score)
+                    continue
+            
+            # Cache miss - evaluate the file
             doc_comments = re.findall(r'/-!?(.*?)-/', source, re.DOTALL)
             narrative = ' '.join(doc_comments).strip() if doc_comments else ""
             
             score = self.evaluate_lean_file(source, file_path=rel_path, narrative=narrative)
             results[rel_path] = score
+            evaluated_count += 1
+        
+        # Save updated disk cache
+        if use_disk_cache:
+            try:
+                import json as _json
+                cache_data = {}
+                for path, score in results.items():
+                    source = (catalog_root / path).read_text(encoding='utf-8')
+                    h = self._content_hash(source)
+                    d = score.to_dict()
+                    d['_hash'] = h
+                    cache_data[path] = d
+                with open(cache_path, 'w') as f:
+                    _json.dump(cache_data, f)
+            except Exception:
+                pass  # Disk cache is best-effort
+        
         return results
 
 
