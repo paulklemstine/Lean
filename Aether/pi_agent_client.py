@@ -655,6 +655,16 @@ class PiAgentClient:
     # Research direction selection
     # ------------------------------------------------------------------
 
+    def generate_breakthrough_concept(
+        self,
+        domain: str = "",
+        seed_concepts: list = None,
+        target: str = "theorem",
+    ) -> "ResearchConcept":
+        """Shim for CycleMaster compatibility — delegates to select_research_direction."""
+        domains = [{"id": domain, "description": domain, "seed_concepts": seed_concepts or []}]
+        return self.select_research_direction(domains=domains)
+
     def select_research_direction(
         self,
         domains: List[Dict[str, Any]],

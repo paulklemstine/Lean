@@ -218,11 +218,57 @@ class PromptEngine:
             applications using breakthroughs in this mathematics. Write a paper of
             recommended future research directions to explore.
 
+            === AEM QUALITY SCORING (your output will be scored on these 5 pillars) ===
+
+            RIGOR (0-10): Formal verification quality.
+              - ZERO `sorry` in core logic. Every proof is complete.
+              - Use diverse tactics: induction, rcases, ext, simp, linarith, omega, field_simp, exact, refine, constructor, by_contra, etc.
+              - Proper abstraction: generalize from R to CommRing or Semiring where natural, without over-abstracting into triviality.
+              - Semantic coherence: lemmas build on each other logically toward the main theorem.
+              Target: 10+ theorems with ZERO sorries and 6+ distinct tactics.
+
+            AESTHETIC (0-10): Mathematical beauty and surprise.
+              - Bridge at least 2 seemingly disparate domains (e.g., Tropical + Cryptography, Algebra + Quantum Mechanics).
+              - Achieve non-trivial/unintuitive results that challenge expectations.
+              - Minimize axiomatic footprint: big results from few assumptions.
+              - Exhibit natural symmetries: commutativity, duality, adjointness.
+              Target: 2+ cross-domain bridges with non-trivial results.
+
+            UTILITY (0-10): Structural usefulness for further work.
+              - Establish computational/complexity bounds (e.g., convergence rates, O() bounds).
+              - Define extensible structures: clean APIs with `def`, `structure`, `class`, `instance` for reuse.
+              - Advance open problems or significantly narrow search spaces.
+              - Provide simplification frameworks.
+              Target: 5+ reusable structures/functions with computational bounds.
+
+            ORIGINALITY (0-10): Truly novel mathematics.
+              - Invent genuinely NEW mathematical objects, operators, or invariants — not parameter tweaks on Mathlib.
+              - Apply known theory to completely new domains yielding structurally unfamiliar results.
+              - Follow divergent reasoning paths that human intuition would not naturally take.
+              Target: 3+ genuinely new definitions/structures that don't exist in Mathlib.
+
+            IMPACT (0-10): Wonderful real-world applications.
+              - Map directly to Physics (quantum mechanics, thermodynamics, general relativity).
+              - Map to Cryptography (post-quantum, lattice-based, zero-knowledge proofs).
+              - Map to Machine Learning (certified robustness, Lipschitz bounds, convergence guarantees).
+              - Enable systemic optimization (more efficient algorithms, compilers, architectures).
+              Target: Explicit connections to 2+ of: physics, cryptography, machine learning.
+
+            === AEM QUALITY MANDATE ===
+            Your output MUST satisfy ALL five AEM pillars above.
+            - RIGOR: Prove every theorem completely. ZERO sorries in core results.
+            - AESTHETIC: Include at least 2 cross-domain bridges with surprising connections.
+            - UTILITY: Define reusable structures with documented computational bounds.
+            - ORIGINALITY: Invent at least 3 genuinely new mathematical objects.
+            - IMPACT: Explicitly connect to physics, cryptography, or machine learning.
+
             Core guardrails (non-negotiable):
             - Use concrete types (Nat, Real, Matrix, Finset, etc.). Avoid `True := by trivial`.
             - Formalize genuine, substantive theorems in Lean 4 (mathlib4 v4.28.0).
-            - Minimize `sorry`. If a step is beyond zero-shot, isolate it with `sorry` rather than hallucinating a lemma.
+            - ZERO sorry in core theorems. If a step is beyond zero-shot, isolate it as a clearly marked auxiliary lemma rather than using sorry.
             - Build on existing catalog definitions. Do not re-invent.
+            - Every new definition must serve a purpose and be USED in at least one theorem.
+            - Cross-reference domains explicitly in doc comments: e.g., "Bridge: connects Tropical Geometry to Post-Quantum Cryptography via min-plus matrix rank."
 
             Deliver whatever feels right for this body of work. You may produce:
             - A Lean proof (theorem.lean)
@@ -232,7 +278,7 @@ class PromptEngine:
             - A public-facing article (DISCUSSION.md)
 
             Or any combination thereof. Structure and length are up to you.
-            Quality over quantity. Surprise us.
+            Quality over quantity. Surprise us. Produce work that scores 35+/50 on the AEM rubric.
         """)
 
         # 3. Open-ended deliverables (suggestive, not prescriptive)
