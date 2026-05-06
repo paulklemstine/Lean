@@ -615,8 +615,14 @@ class SmartIntegrator:
 
         return best_dir
 
+    # AEM quality gate constants: reject files scoring below Graduate Researcher level
+    # This prevents low-quality stubs and placeholder files from entering the catalog
+    MIN_AEM_SCORE = 20.0  # Minimum: above Automated Drone level
+    MIN_AEM_ORIGINALITY = 3.0  # Minimum originality: must have some novel content
+    MIN_AEM_UTILITY = 3.0  # Minimum utility: must have some computational content
+
     def _validate_lean_file(self, lean_source: str) -> Dict[str, Any]:
-        """Basic validation of Lean source."""
+        """Validate Lean source with AEM quality gate."""
         # Check for balanced braces
         open_count = lean_source.count("{") + lean_source.count("(") + lean_source.count("[")
         close_count = lean_source.count("}") + lean_source.count(")") + lean_source.count("]")
@@ -625,7 +631,8 @@ class SmartIntegrator:
             return {"ok": False, "error": "Unbalanced braces"}
 
         # Check for non-ASCII garbage (common with LLM outputs)
-        if "\x00" in lean_source or "�" in lean_source:
+        replacement_char = "\ufffd"
+        if "\x00" in lean_source or replacement_char in lean_source:
             return {"ok": False, "error": "Contains null/replacement characters"}
 
         # Must have at least one declaration
@@ -635,6 +642,24 @@ class SmartIntegrator:
         )
         if not has_decl:
             return {"ok": False, "error": "No Lean declarations found"}
+
+        # AEM quality gate: evaluate and reject low-quality files
+        try:
+            from aem_evaluator import AEMEvaluator
+            evaluator = AEMEvaluator()
+            score = evaluator.evaluate_lean_file(lean_source, file_path="validation_gate")
+
+            if score.total < self.MIN_AEM_SCORE:
+                return {"ok": False, "error": f"AEM score {score.total:.1f} below minimum {self.MIN_AEM_SCORE:.0f} (Automated Drone threshold)"}
+
+            if score.originality < self.MIN_AEM_ORIGINALITY:
+                return {"ok": False, "error": f"Originality {score.originality:.1f} below minimum {self.MIN_AEM_ORIGINALITY:.0f}"}
+
+            if score.utility < self.MIN_AEM_UTILITY:
+                return {"ok": False, "error": f"Utility {score.utility:.1f} below minimum {self.MIN_AEM_UTILITY:.0f}"}
+        except Exception:
+            # If AEM evaluation fails, fall through to accept
+            pass
 
         return {"ok": True, "error": ""}
 
