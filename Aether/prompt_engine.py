@@ -240,12 +240,16 @@ class PromptEngine:
               - Advance open problems or significantly narrow search spaces.
               - Provide simplification frameworks.
               Target: 5+ reusable structures/functions with computational bounds (struct, class, def, instance).
+              NOTE: Generic terms like "bound", "rate", "convergence" alone do NOT score utility.
+              Only SPECIFIC bounds (O(n log n), Omega(2^n), Theta(n^2)) count.
 
             ORIGINALITY (0-10): Truly novel mathematics.
               - Invent genuinely NEW mathematical objects, operators, or invariants — not parameter tweaks on Mathlib.
               - Apply known theory to completely new domains yielding structurally unfamiliar results.
               - Follow divergent reasoning paths that human intuition would not naturally take.
+              - EXPLICITLY mention cross-domain bridges in doc comments: "Bridge: connects X to Y".
               Target: 5+ genuinely new definitions/structures (def, structure, class, instance) that don't exist in Mathlib. High-Originality files average 10+ new definitions.
+              NOTE: Generic names (main, test, aux, helper) do NOT count as genuinely new.
 
             IMPACT (0-10): Wonderful real-world applications.
               - Map directly to Physics (quantum mechanics, thermodynamics, general relativity).
@@ -253,6 +257,8 @@ class PromptEngine:
               - Map to Machine Learning (certified robustness, Lipschitz bounds, convergence guarantees).
               - Enable systemic optimization (more efficient algorithms, compilers, architectures).
               Target: Explicit connections to 2+ of: physics, cryptography, machine learning.
+              NOTE: Impact requires SPECIFIC application terms (e.g., "lipschitz_certified_robustness",
+              not just "convergence"). Generic keywords alone do NOT score Impact.
 
             === AEM QUALITY MANDATE ===
             Your output MUST satisfy ALL five AEM pillars above.

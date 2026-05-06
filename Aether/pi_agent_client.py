@@ -1528,9 +1528,9 @@ class PiAgentClient:
         assignment += "\n\n**AEM QUALITY MANDATE**: Your output will be scored on 5 pillars. Optimize ALL:"\
             "\n- RIGOR: 10+ theorems, diverse tactics (induction, rcases, by_contra, omega, linarith), ZERO sorries"\
             "\n- AESTHETIC: Bridge 2+ domains in theorem names and doc comments. Use quantifier alternation."\
-            "\n- UTILITY: Define 5+ structures/instances. State explicit computational bounds (Lipschitz, convergence)."\
-            "\n- ORIGINALITY: Coin novel definitions beyond Mathlib. Inventive theorem names."\
-            "\n- IMPACT: Include keywords: certified_robustness, Lipschitz_bound, lattice_crypto, hamiltonian, entropy."\
+            "\n- UTILITY: Define 5+ structures/instances. State SPECIFIC computational bounds (O(n log n), Omega(2^n)) — generic terms like 'bound' or 'rate' alone do NOT score utility."\
+            "\n- ORIGINALITY: Coin novel definitions beyond Mathlib. Inventive theorem names. Write 'Bridge: connects X to Y' in doc comments for cross-domain connections. Generic names (main, test, aux) do NOT count."\
+            "\n- IMPACT: Use SPECIFIC application terms (lipschitz_certified_robustness, post_quantum_security, tropical_hash_collision) — generic terms like 'convergence' or 'spectrum' without ML/crypto/physics context do NOT score impact."\
             "\n\n**FILE RICHNESS MANDATE**: Produce substantial, rich files (not stubs)."\
             "\n- Target 500+ lines with 20+ theorems and 10+ definitions per file."\
             "\n- Historical Masters in the catalog average 2000+ lines, 180+ theorems, 70+ definitions."\
