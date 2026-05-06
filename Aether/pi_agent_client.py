@@ -1254,6 +1254,25 @@ class PiAgentClient:
                 "refs": ["Logic/Defs.lean", "Tropical/Core/TropicalSemiring.lean", "Cryptography/SPBQuantumCrypto.lean"],
                 "novelty": 0.93, "breakthrough": 0.95,
             },
+            # Additional arcs targeting Algebra (O=5.42) and EML (O=5.46) domains
+            {
+                "title": "tropical_ideal_theory_computational_bounds",
+                "domain": "Bridges",
+                "desc": "Develop a computational theory of tropical ideals connecting tropical geometry to commutative algebra and post-quantum cryptography. This bridges Algebra (ideal theory), Tropical geometry (min-plus algebra), and Cryptography (post-quantum hash functions). Define new structures: TropicalIdeal, GroebnerTropicalBasis, TropicalQuotientRing. Establish computational bounds: prove O(n^2 log n) for tropical Groebner basis computation. Show that tropical ideals yield collision-resistant post-quantum hash functions with provable security bounds.",
+                "framing": "Define TropicalIdeal as a min-plus submodule of TropicalPolynomial n satisfying: (1) tropical closure under min-plus operations, (2) finite tropical Groebner basis exists. Prove: (1) every tropical ideal has a reduced tropical Groebner basis computable in O(n^2 log n) steps, (2) tropical quotient rings satisfy a Stone duality with tropical varieties, (3) tropical ideal membership is decidable in polynomial time. Bridge to cryptography: prove TropicalIdeal-based hash functions are collision-resistant under the tropical Groebner hardness assumption. Bridge to computation: connect tropical ideal membership to linear programming and show O(n^2) certification.",
+                "mode": "prove",
+                "refs": ["Algebra/Defs.lean", "Tropical/Defs.lean", "Cryptography/SPBQuantumCrypto.lean"],
+                "novelty": 0.95, "breakthrough": 0.97,
+            },
+            {
+                "title": "eml_closure_thermodynamic_hash",
+                "domain": "Bridges",
+                "desc": "Prove that the EML (Exponential-Multiplicative-Logarithmic) closure forms a universal hash family with thermodynamic security guarantees. This bridges EML theory (closure algebras), Cryptography (universal hashing), Machine Learning (certified adversarial robustness), and Physics (free energy bounds). Define new structures: EMLHashFamily, ThermodynamicSecurityParameter, EMLRobustnessCertificate. Establish computational bounds: prove O(n log n) hashing with thermodynamic collision probability at most exp(-Delta_F/kT).",
+                "framing": "Define EMLHashFamily : Type -> Type mapping finite sets to tropical polynomial rings via EML closures. Prove: (1) for any epsilon > 0 and set S, there exists an EML hash function h with collision probability at most epsilon, computable in O(n log n), (2) the thermodynamic security parameter Delta_F (free energy gap) bounds collision probability via exp(-Delta_F/kT), (3) EML robustness certificates for neural networks are computable in O(n) time given the hash. Bridge to physics: connect EML collision probability to Boltzmann distribution over tropical varieties. Bridge to ML: show EML hashing yields certified Lipschitz bounds for adversarial examples.",
+                "mode": "prove",
+                "refs": ["EML/Defs.lean", "Cryptography/Basic.lean", "Bridges/EMLTropicalBridge.lean"],
+                "novelty": 0.94, "breakthrough": 0.96,
+            },
         ]
         arc = VISIONARY_ARCS[cycle % len(VISIONARY_ARCS)]
         return ResearchConcept(
