@@ -149,7 +149,7 @@ class AEMEvaluator:
         rigor = self._score_rigor(lean_source, file_path)
         aesthetic = self._score_aesthetic(lean_source, file_path, domain, narrative)
         utility = self._score_utility(lean_source, file_path, domain)
-        originality = self._score_originality(lean_source, file_path, domain)
+        originality = self._score_originality(lean_source, file_path, domain, narrative)
         impact = self._score_impact(lean_source, file_path, domain, narrative)
 
         return AEMScore(
@@ -556,7 +556,7 @@ class AEMEvaluator:
     # Pillar 4: Paradigm Originality
     # ------------------------------------------------------------------
     def _score_originality(self, lean_source: str, file_path: str = "",
-                          domain: str = "") -> float:
+                          domain: str = "", narrative: str = "") -> float:
         """Score training data independence, conceptual invention, divergent reasoning."""
         score = 0.0
         details = {}
@@ -683,6 +683,38 @@ class AEMEvaluator:
                 details["speculative_bonus"] = "partial"
             else:
                 details["speculative_bonus"] = "ungrounded"
+
+        # 5. Narrative originality signals
+        # The doc comments explicitly describe whether the work is novel,
+        # introduces new concepts, or connects domains
+        if narrative:
+            narr_lower = narrative.lower()
+            novel_indicators = 0
+            if any(kw in narr_lower for kw in ['novel', 'new definition', 'we introduce', 'we define',
+                                                  'introduces', 'for the first time', 'new type',
+                                                  'new structure', 'new concept']):
+                novel_indicators += 2  # Explicit novelty claims
+            if any(kw in narr_lower for kw in ['bridge', 'connects', 'unifies', 'duality',
+                                                  'correspondence', 'isomorphism', 'equivalence']):
+                novel_indicators += 1  # Cross-domain connections
+            if any(kw in narr_lower for kw in ['surprising', 'unexpected', 'counterintuitive',
+                                                  'paradox', 'remarkable', 'deep', 'fundamental']):
+                novel_indicators += 1  # Surprise indicators
+            if any(kw in narr_lower for kw in ['conjecture', 'open problem', 'open question',
+                                                  'unresolved', 'remains to be proved']):
+                novel_indicators += 1  # Open problem statements
+
+            if novel_indicators >= 4:
+                score += 1.5
+                details["narrative_originality"] = f"strong({novel_indicators})"
+            elif novel_indicators >= 2:
+                score += 0.8
+                details["narrative_originality"] = f"moderate({novel_indicators})"
+            elif novel_indicators >= 1:
+                score += 0.3
+                details["narrative_originality"] = f"weak({novel_indicators})"
+            else:
+                details["narrative_originality"] = "none"
 
         return min(score, 10.0)
 
