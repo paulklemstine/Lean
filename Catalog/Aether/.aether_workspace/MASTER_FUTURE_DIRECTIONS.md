@@ -83,25 +83,27 @@ proof-theoretic and statistical-mechanical phase transitions.
 
 ---
 
-## 1. Quantitative Proof Complexity Bounds from Free-Energy Curvature
+## 1. Sharpness / Converse Theorem
 
-**Theorem Target.** For a coherent closure proof semiring with finitely many admissible
-evaluations, the second derivative of the free-energy gap with respect to β provides
-a lower bound on the proof complexity of the derivation `x ⊢ y`:
+**Question:** Does `reflectionCapacity M ≤ proofEntropyRate M + diagonalOverhead M` imply the absence of reflective barriers?
 
+**Precise statement:**
+```lean
+theorem converse_no_barrier_of_capacity_le
+    (M : Type u) [ClosureSelfModel M] :
+    reflectionCapacity M ≤ proofEntropyRate M + diagonalOverhead M →
+    ∀ φ : Formula M, ¬ reflectiveBarrier M φ
 ```
-proof_complexity(x, y) ≥ C · |∂²/∂β² freeEnergyGap(μ, β, x, y)|_{β=β*}
+
+This would establish the threshold as **sharp**: reflective barriers exist if and only if the gap is positive. The proof likely requires additional structure on the model—specifically, that the complexity floor of every diagonal sentence is bounded above by the proof entropy rate + diagonal overhead when the gap is nonpositive.
+
+**Approach:** Strengthen the `ClosureSelfModel` class with an axiom:
+```lean
+ax_floor_bounded_below_threshold :
+    reflCap ≤ proofEntRate + diagOvhd →
+    ∀ (β : ℝ) (G : Sentence), 0 < β →
+      complexityFloor β G ≤ proofEntRate + diagOvhd - reflCap + reflCap
 ```
+Then show this forces the complexity floor to be zero or negative for all diagonal sentences, collapsing the barrier condition.
 
-where `β*` is the critical inverse temperature and `C` is a universal constant
-depending only on the semiring structure.
-
-**Why it matters.** This would connect proof lengths/depths to the curvature of a
-thermodynamic potential — a completely new bridge between proof complexity and
-statistical mechanics. The curvature captures how sharply the Boltzmann distribution
-concentrates on the separating evaluation as temperature drops, which measures
-"how hard it is to find" the proof or countermodel.
-
-**Approach.** Define the variance of the evaluation gap under the Gibbs measure,
-show it equals the second derivative of the log-partition function, and relate it
-to the size of the smallest proof or countermodel.
+---
