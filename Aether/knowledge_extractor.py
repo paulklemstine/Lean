@@ -619,6 +619,11 @@ Research mode: {concept.research_mode}
         future_directions_files = []
         discussion_files = []
         summary = None
+        # Track diff files and seen paths to avoid duplicates.
+        # We cannot set attributes on Path objects (they use __slots__),
+        # so we use a dict keyed by the file's string path.
+        diff_paths = {}   # abs_path_str -> True if file is a diff, not full content
+        seen_rel_paths = {}   # catalog-relative path -> fp (dedup by catalog location)
 
         for root, dirs, files in os.walk(extract_dir):
             for f in files:
@@ -629,6 +634,7 @@ Research mode: {concept.research_mode}
 
                 # Is this file identical to a local file?
                 is_modified = True
+                is_diff_file = False
                 try:
                     rel = fp.relative_to(extract_dir)
                     
@@ -638,6 +644,13 @@ Research mode: {concept.research_mode}
                         local_equiv = self.catalog_root / Path(*rel.parts[idx+1:])
                     else:
                         local_equiv = self.catalog_root / rel
+
+                    # Deduplicate: if we've already seen a file for this catalog
+                    # location, skip the duplicate (prefer the version closer to root).
+                    catalog_rel = str(local_equiv.relative_to(self.catalog_root)) if local_equiv.exists() else str(rel)
+                    if catalog_rel in seen_rel_paths:
+                        continue
+                    seen_rel_paths[catalog_rel] = fp
                         
                     if local_equiv.exists():
                         # Read text and ignore whitespace/CRLF differences
@@ -661,9 +674,11 @@ Research mode: {concept.research_mode}
                                 tofile=f"b/{local_equiv.relative_to(self.catalog_root)}"
                             ))
                             if diff:
-                                # We store the diff text instead of the full file to help Pi merge
-                                fp.write_text("".join(diff), encoding='utf-8')
-                                fp._is_diff = True
+                                # Store diff text separately; do NOT modify the
+                                # original file and do NOT set attributes on Path.
+                                diff_text = "".join(diff)
+                                diff_paths[str(fp)] = diff_text
+                                is_diff_file = True
                 except Exception as e:
                     print(f"[Extract] Warning comparing {fp.name}: {e}")
 
@@ -672,7 +687,7 @@ Research mode: {concept.research_mode}
                 elif not is_modified:
                     continue  # Skip unchanged files!
                 elif f.endswith(".lean") and f != "Main.lean":
-                    lean_files.append(fp)
+                    lean_files.append((fp, is_diff_file))
                 elif f.endswith(".py"):
                     python_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
@@ -687,11 +702,25 @@ Research mode: {concept.research_mode}
         # Collect Lean sources — Aristotle decides which files contain the new theorems
         if lean_files:
             parts = []
-            for f in sorted(lean_files):
-                is_diff = getattr(f, "_is_diff", False)
-                rel_path = f.relative_to(extract_dir) if extract_dir in f.parents else f.name
-                header = f"-- DIFF: {rel_path}\n" if is_diff else f"-- NEW_FILE: {rel_path}\n"
-                parts.append(f"{header}{f.read_text(encoding='utf-8', errors='ignore')}")
+            seen_paths = set()  # Deduplicate by catalog-relative path
+            for fp, is_diff_file in sorted(lean_files, key=lambda x: str(x[0])):
+                # Get content: if it's a diff file, use the diff text from diff_paths dict,
+                # otherwise read the file directly
+                if is_diff_file and str(fp) in diff_paths:
+                    content = diff_paths[str(fp)]
+                else:
+                    content = fp.read_text(encoding='utf-8', errors='ignore')
+                rel_path = fp.relative_to(extract_dir) if extract_dir in fp.parents else fp.name
+                # Deduplicate by catalog-relative path to avoid writing same file twice
+                dedup_key = str(rel_path).replace('\\', '/')
+                # For files under Catalog/ subdirectory, strip that prefix for dedup
+                if "Catalog/" in dedup_key:
+                    dedup_key = dedup_key.split("Catalog/", 1)[1]
+                if dedup_key in seen_paths:
+                    continue
+                seen_paths.add(dedup_key)
+                header = f"-- DIFF: {rel_path}\n" if is_diff_file else f"-- NEW_FILE: {rel_path}\n"
+                parts.append(f"{header}{content}\n")
             job.result_lean = "\n\n".join(parts)
 
         # Collect Python artifacts — demos, applications, whatever Aristotle created
@@ -844,8 +873,9 @@ Research mode: {concept.research_mode}
         plan_prompt += (
             f"\nReview these paths. Ensure Lean proofs with sorries go to Speculative/AutoResearch/.\n"
             f"Lean files without sorries must go to their real Catalog domain directory, not Speculative/AutoResearch/.\n"
-            f"Respond ONLY with a JSON dictionary mapping the index (as string) to the authorized target path relative to the Catalog root.\n"
-            f"Example: {{\"0\": \"Tropical/MyFile.lean\"}}"
+            f"If a file should NOT be integrated (it is a placeholder, empty, or not a valid Catalog path), respond with \"REJECT\" as the path.\n"
+            f"Respond ONLY with a JSON dictionary mapping the index (as string) to the authorized target path relative to the Catalog root, or \"REJECT\".\n"
+            f"Example: {{\"0\": \"Tropical/MyFile.lean\", \"1\": \"REJECT\"}}"
         )
         
         raw_plan = await asyncio.to_thread(
@@ -863,12 +893,44 @@ Research mode: {concept.research_mode}
         except Exception:
             plan = {}
 
-        # 3. Apply the changes
+        # 3. Apply the changes — with deduplication and REJECT filtering
+        written_paths = set()  # Track what we've already written to avoid duplicates
+        
         for i, p in enumerate(parts):
-            target_path = plan.get(str(i), p["path"])
-            target_path = self._authorize_integration_path(job, p, target_path)
+            raw_target = plan.get(str(i), p["path"])
+            
+            # Filter out REJECT entries (Pi said don't integrate this)
+            if not raw_target or raw_target.upper().startswith("REJECT"):
+                print(f"[Integrate] Skipped (rejected by Pi): {p['path']}")
+                continue
+            
+            target_path = self._authorize_integration_path(job, p, raw_target)
+            
+            # Filter out REJECT entries from authorization
+            if not target_path or target_path == "REJECT" or target_path.upper().startswith("REJECT"):
+                print(f"[Integrate] Skipped (rejected): {p['path']}")
+                continue
+            
+            # Deduplicate: skip if we've already written to this path in this pass
+            if target_path in written_paths:
+                print(f"[Integrate] Skipped (duplicate target): {target_path}")
+                continue
+            written_paths.add(target_path)
                 
             abs_target = self.catalog_root / target_path
+            
+            # Safety check: don't overwrite an existing catalog file with identical content
+            if abs_target.exists() and p["type"] == "new":
+                try:
+                    existing_content = abs_target.read_text(encoding='utf-8', errors='ignore')
+                    new_content = p.get("content", "")
+                    import re
+                    if re.sub(r'\s+', ' ', existing_content).strip() == re.sub(r'\s+', ' ', new_content).strip():
+                        print(f"[Integrate] Skipped (unchanged): {target_path}")
+                        continue
+                except Exception:
+                    pass  # If we can't read it, proceed with writing
+            
             abs_target.parent.mkdir(parents=True, exist_ok=True)
             
             if p["type"] == "new":
@@ -914,20 +976,69 @@ Research mode: {concept.research_mode}
         buried under Speculative/AutoResearch simply because Aristotle emitted
         them from a generated project directory. Speculative is reserved for
         Lean files that still contain `sorry`.
+
+        Preserves subdirectory structure from Pi's response (e.g.
+        EML/ReflectionCapacity/Defs.lean) rather than flattening to just
+        domain/filename.
         """
         target_path = self._strip_catalog_prefix(str(requested_path or part.get("path", "")))
         suffix = Path(target_path).suffix.lower()
 
+        # Safety: reject obviously invalid paths
+        if not target_path or target_path.upper().startswith("REJECT"):
+            return "REJECT"
+
         if suffix == ".lean" and part.get("type") == "new":
-            filename = Path(target_path).name
             has_sorry = self._lean_contains_sorry(part.get("content", ""))
             if has_sorry:
-                return f"Speculative/AutoResearch/{filename}"
+                # Incomplete proofs go to Speculative/AutoResearch, preserving any
+                # subdirectory structure Pi suggested (e.g. EML/ReflectionCapacity/).
+                filename = Path(target_path).name
+                # If Pi gave a proper sub-structured speculative path, keep it
+                parts = [p for p in target_path.replace("\\", "/").split("/") if p]
+                if len(parts) > 2:
+                    # Already has structure like Speculative/AutoResearch/EML/X.lean
+                    return target_path
+                else:
+                    return f"Speculative/AutoResearch/{filename}"
 
-            domain = normalize_domain(job.concept.domain or self._domain_from_path(target_path) or "MachineLearning")
-            if not domain or domain == "Speculative":
-                domain = self._domain_from_path(target_path) or "MachineLearning"
-            return f"{domain}/{filename}"
+            # For sorry-free Lean: trust Pi's full path structure. If Pi says
+            # EML/ReflectionCapacity/Defs.lean, keep that. Only fix if it's still
+            # stuck under Speculative/ or missing a domain prefix.
+            parts = [p for p in target_path.replace("\\", "/").split("/") if p]
+            
+            # If the path starts with Speculative, re-route to the proper domain
+            if parts and parts[0] == "Speculative" and len(parts) >= 2:
+                # Determine domain from the path content first, then concept domain
+                path_domain = self._domain_from_path(target_path)
+                domain = normalize_domain(path_domain or job.concept.domain or "MachineLearning")
+                if not domain or domain == "Speculative":
+                    domain = path_domain or "MachineLearning"
+                # Rebuild with domain prefix, preserving subdirectory structure
+                # e.g. Speculative/AutoResearch/EML/ReflectionCapacity/Defs.lean
+                #      -> EML/ReflectionCapacity/Defs.lean
+                sub_parts = parts[1:]  # Skip "Speculative"
+                if sub_parts and sub_parts[0] == "AutoResearch":
+                    sub_parts = sub_parts[1:]  # Skip "AutoResearch"
+                # If sub_parts starts with a domain directory that matches our domain,
+                # skip it to avoid duplication like EML/EML/...
+                if sub_parts and normalize_domain(sub_parts[0]) == domain:
+                    sub_parts = sub_parts[1:]
+                if sub_parts:
+                    return "/".join([domain] + sub_parts)
+                else:
+                    return f"{domain}/{Path(target_path).name}"
+            
+            # If path is just a filename (no domain prefix), add the domain
+            filename = Path(target_path).name
+            path_domain = self._domain_from_path(target_path)
+            if not path_domain:
+                # No domain in path — use the concept domain
+                domain = normalize_domain(job.concept.domain or "MachineLearning")
+                return f"{domain}/{filename}"
+
+            # Path looks good — trust Pi's structure
+            return target_path
 
         return target_path
 
@@ -950,13 +1061,18 @@ Research mode: {concept.research_mode}
 
     @staticmethod
     def _domain_from_path(path: str) -> str:
+        """Extract the content domain from a path, skipping Speculative/AutoResearch prefixes."""
         parts = [p for p in path.replace("\\", "/").split("/") if p]
         known_domains = {
             "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
             "EML", "Geometry", "Logic", "MachineLearning", "Physics",
-            "Pythagorean", "Shared", "Speculative", "Tropical",
+            "Pythagorean", "Shared", "Tropical",
         }
+        # Skip structural prefixes that aren't content domains
+        skip_prefixes = {"Speculative", "AutoResearch"}
         for part in parts:
+            if part in skip_prefixes:
+                continue
             if part in known_domains:
                 return part
         return ""
