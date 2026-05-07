@@ -276,10 +276,14 @@ class CycleMaster:
         # Subsystems
         self.memory = ResearchMemory(self.workspace)
 
+        _pi_cfg = config.get("pi_agent", {})
         self.pi_agent = PiAgentClient(
             memory=self.memory,
-            model=config.get("pi_agent", {}).get("model", "kimi-k2.6:cloud"),
-            pollinations=config.get("pi_agent", {}).get("pollinations", {}),
+            model=_pi_cfg.get("model", "kimi-k2.6:cloud"),
+            pollinations=_pi_cfg.get("pollinations", {}),
+            use_ollama=_pi_cfg.get("use_ollama", False),
+            ollama_base_url=_pi_cfg.get("ollama_base_url"),
+            ollama_model=_pi_cfg.get("ollama_model"),
         ) if self.global_settings.get("pi_agent_enabled", True) else None
 
         self.prompt_engine = PromptEngine(config.get("prompts", {}))

@@ -108,6 +108,9 @@ class KnowledgeExtractor:
             timeout=pi_cfg.get("timeout", 300),
             compact="cloud" in pi_cfg.get("model", "kimi-k2.6:cloud").lower(),
             pollinations=pi_cfg.get("pollinations", {}),
+            use_ollama=pi_cfg.get("use_ollama", False),
+            ollama_base_url=pi_cfg.get("ollama_base_url"),
+            ollama_model=pi_cfg.get("ollama_model"),
         )
 
         self.output_organizer = OutputOrganizer(

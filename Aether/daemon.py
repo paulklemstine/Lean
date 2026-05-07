@@ -86,9 +86,13 @@ class AetherDaemon:
         self.reports_dir.mkdir(parents=True, exist_ok=True)
 
         # Subsystems
+        _pi_cfg = config.get("pi_agent", {})
         self.pi_agent = PiAgentClient(
-            model=config.get("pi_agent", {}).get("model", "fingpt-7b:latest"),
-            pollinations=config.get("pi_agent", {}).get("pollinations", {}),
+            model=_pi_cfg.get("model", "fingpt-7b:latest"),
+            pollinations=_pi_cfg.get("pollinations", {}),
+            use_ollama=_pi_cfg.get("use_ollama", False),
+            ollama_base_url=_pi_cfg.get("ollama_base_url"),
+            ollama_model=_pi_cfg.get("ollama_model"),
         ) if self.global_settings.get("pi_agent_enabled", True) else None
 
         self.prompt_engine = PromptEngine(config.get("prompts", {}))

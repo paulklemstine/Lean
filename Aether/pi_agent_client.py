@@ -396,13 +396,17 @@ VISIONARY_BRIDGES = [
 
 
 class PiAgentClient:
-    """v3 Pi-Agent client: glm-5.1:cloud via ollama HTTP API.
+    """v3 Pi-Agent client: LLM provider via Pollinations or local Ollama.
 
     The brain of Aether v3. Handles:
     - Research direction selection
     - Dynamic prompt writing
     - Result quality evaluation
     - File classification and placement
+
+    Set use_ollama=True to route all LLM calls through a local Ollama
+    instance instead of the Pollinations cloud API. When using Ollama,
+    the pollen gate (rate/budget tracking) is skipped.
     """
 
     OLLAMA_BASE_URL = "http://127.0.0.1:11434"
@@ -415,12 +419,18 @@ class PiAgentClient:
         timeout: int = 300,
         compact: bool = False,
         pollinations: Optional[Dict[str, Any]] = None,
+        use_ollama: bool = False,
+        ollama_base_url: Optional[str] = None,
+        ollama_model: Optional[str] = None,
     ):
         self.model = model
         self.memory = memory
         self.catalog_root = Path(catalog_root) if catalog_root else None
         self.timeout = timeout
         self.compact = compact
+        self.use_ollama = use_ollama
+        self.ollama_base_url = ollama_base_url or self.OLLAMA_BASE_URL
+        self.ollama_model = ollama_model or model
         # Use max timeout for client connection, use per-request timeouts for operations
         self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=300.0, write=30.0, pool=30.0))
         default_state_path = Path(__file__).parent / ".aether_workspace" / "pollinations_pollen_state.json"
@@ -440,8 +450,14 @@ class PiAgentClient:
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
     def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Call the Pollinations API directly (replaces pi CLI).
-        
+        """Dispatch LLM call to Pollinations or local Ollama based on use_ollama flag."""
+        if self.use_ollama:
+            return self._call_ollama_local(system, user, timeout=timeout)
+        return self._call_pollinations(system, user, timeout=timeout)
+
+    def _call_pollinations(self, system: str, user: str, timeout: Optional[int] = None) -> str:
+        """Call the Pollinations cloud API.
+
         Args:
             system: System prompt
             user: User prompt
@@ -449,12 +465,12 @@ class PiAgentClient:
         """
         request_timeout = timeout or self.timeout
         print(f"[Pi-Agent] → calling Pollinations API (model={self.model}, timeout={request_timeout}s)")
-        
+
         headers = {
             "Authorization": f"Bearer {self.pollen_gate.api_key}",
             "Content-Type": "application/json"
         }
-        
+
         payload = {
             "model": self.model,
             "messages": [
@@ -465,7 +481,7 @@ class PiAgentClient:
             "top_p": 0.92
         }
         input_chars = len(system) + len(user)
-        
+
         try:
             reservation = self.wait_for_pollinations_pollen(
                 "Pi-Agent LLM request",
@@ -517,12 +533,11 @@ class PiAgentClient:
             response.raise_for_status()
             data = response_json if response_json is not None else response.json()
             content = data["choices"][0]["message"]["content"]
-            
-            # Log the response
+
             response_preview = content[:500].replace('\n', ' ')
             print(f"[Pi-Agent] ← response ({len(content)} chars)")
             print(f"[Pi-Agent]   {response_preview}...")
-            
+
             return content
         except httpx.TimeoutException:
             print(f"[Pi-Agent] ← API TIMEOUT after {request_timeout}s")
@@ -533,6 +548,54 @@ class PiAgentClient:
                 err_msg += f" - {e.response.text}"
             print(f"[Pi-Agent] ← API exception: {type(e).__name__}: {err_msg}")
             return f"[API_ERROR: {err_msg}]"
+
+    def _call_ollama_local(self, system: str, user: str, timeout: Optional[int] = None) -> str:
+        """Call a local Ollama instance via its OpenAI-compatible API.
+
+        Args:
+            system: System prompt
+            user: User prompt
+            timeout: Override timeout in seconds (uses self.timeout if None)
+        """
+        request_timeout = timeout or self.timeout
+        model = self.ollama_model or self.model
+        url = f"{self.ollama_base_url}/v1/chat/completions"
+        print(f"[Pi-Agent] → calling Ollama (model={model}, url={url}, timeout={request_timeout}s)")
+
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ],
+            "temperature": 0.85,
+            "top_p": 0.92,
+        }
+
+        try:
+            response = self.client.post(
+                url,
+                json=payload,
+                timeout=request_timeout,
+            )
+            response.raise_for_status()
+            data = response.json()
+            content = data["choices"][0]["message"]["content"]
+
+            response_preview = content[:500].replace('\n', ' ')
+            print(f"[Pi-Agent] ← response ({len(content)} chars)")
+            print(f"[Pi-Agent]   {response_preview}...")
+
+            return content
+        except httpx.TimeoutException:
+            print(f"[Pi-Agent] ← Ollama TIMEOUT after {request_timeout}s")
+            return f"[OLLAMA_TIMEOUT: Request timed out after {request_timeout}s]"
+        except Exception as e:
+            err_msg = str(e)
+            if hasattr(e, 'response') and e.response:
+                err_msg += f" - {e.response.text}"
+            print(f"[Pi-Agent] ← Ollama exception: {type(e).__name__}: {err_msg}")
+            return f"[OLLAMA_ERROR: {err_msg}]"
 
     def wait_for_pollinations_pollen(
         self,
@@ -801,7 +864,7 @@ class PiAgentClient:
         if self.compact:
             # Cloud/compact mode: shorter timeout since we have local fallback
             concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
-            parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith("[OLLAMA") else None
+            parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith(("[OLLAMA", "[API_")) else None
         else:
             # Local model: give more time
             concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
@@ -2056,7 +2119,7 @@ class PiAgentClient:
         else:
             raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=6000)
 
-        use_enriched = raw and not raw.startswith("[OLLAMA") and "TIMEOUT" not in raw
+        use_enriched = raw and not raw.startswith(("[OLLAMA", "[API_")) and "TIMEOUT" not in raw
         if use_enriched:
             cleaned = self._strip_llm_preamble(raw)
             if cleaned and len(cleaned) > 200:
