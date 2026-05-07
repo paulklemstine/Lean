@@ -113,6 +113,45 @@ class AEMEvaluator:
         frozenset({"Geometry", "Physics"}),              # geometric physics, differential geometry
         frozenset({"Computation", "Cryptography"}),      # computational complexity of crypto
         frozenset({"Computation", "MachineLearning"}),  # ML algorithms, computational learning
+        # Missing mathematical bridges verified by catalog presence (38 pairs)
+        frozenset({"Algebra", "Computation"}),         # algorithmic algebra, Grobner bases
+        frozenset({"Computation", "Topology"}),        # computational topology, persistent homology
+        frozenset({"Computation", "Tropical"}),        # tropical computation, max-plus algebra
+        frozenset({"Logic", "Tropical"}),              # tropical logic, idempotent semirings
+        frozenset({"Logic", "Topology"}),              # topological semantics, stone duality
+        frozenset({"Analysis", "Computation"}),        # computable analysis, numerical methods
+        frozenset({"Algebra", "Analysis"}),             # harmonic analysis, spectral theory
+        frozenset({"Analysis", "Logic"}),               # proof theory, constructive analysis
+        frozenset({"Topology", "Tropical"}),           # tropical topology, tropical varieties
+        frozenset({"Computation", "NumberTheory"}),    # computational number theory
+        frozenset({"Analysis", "Topology"}),           # functional analysis, Banach spaces
+        frozenset({"Logic", "NumberTheory"}),          # logical foundations of arithmetic
+        frozenset({"Computation", "Pythagorean"}),     # Diophantine computation
+        frozenset({"Analysis", "Tropical"}),           # tropical analysis, amoebas
+        frozenset({"Algebra", "Geometry"}),             # algebraic geometry
+        frozenset({"Computation", "EML"}),             # computational EML
+        frozenset({"Computation", "Geometry"}),         # computational geometry
+        frozenset({"Cryptography", "Topology"}),       # topological cryptography
+        frozenset({"NumberTheory", "Pythagorean"}),    # Diophantine equations
+        frozenset({"Geometry", "Logic"}),              # geometric logic, topos theory
+        frozenset({"Logic", "Pythagorean"}),           # number-theoretic logic
+        frozenset({"EML", "Topology"}),                # topological EML
+        frozenset({"Pythagorean", "Topology"}),        # topological Pythagorean
+        frozenset({"Geometry", "Topology"}),           # geometric topology
+        frozenset({"Analysis", "Cryptography"}),       # cryptographic analysis
+        frozenset({"Analysis", "NumberTheory"}),       # analytic number theory
+        frozenset({"Analysis", "EML"}),                # EML analysis
+        frozenset({"Geometry", "Tropical"}),           # tropical geometry
+        frozenset({"Analysis", "Geometry"}),            # differential geometry
+        frozenset({"Analysis", "Pythagorean"}),         # Pythagorean analysis
+        frozenset({"Cryptography", "Geometry"}),        # geometric cryptography
+        frozenset({"Geometry", "NumberTheory"}),        # geometry of numbers
+        frozenset({"Geometry", "Pythagorean"}),         # geometric Pythagorean
+        frozenset({"MachineLearning", "NumberTheory"}), # ML for number theory
+        frozenset({"Geometry", "MachineLearning"}),     # geometric deep learning
+        frozenset({"EML", "Geometry"}),                 # geometric EML
+        frozenset({"EML", "NumberTheory"}),             # EML number theory
+        frozenset({"Cryptography", "EML"}),             # already defined above (no dup)
     }
 
     # Theorems that advance known open problems

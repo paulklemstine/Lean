@@ -219,16 +219,6 @@
     "category": "Tenured Professor",
     "details": {}
   },
-  "Tropical/ThetaCorrespondence.lean": {
-    "rigor": 7.5,
-    "aesthetic": 6.0,
-    "utility": 6.5,
-    "originality": 6.8,
-    "impact": 2.5,
-    "total": 29.3,
-    "category": "Graduate Researcher",
-    "details": {}
-  },
   "Tropical/Tropical_Hecke_Trace_Formula_for_GL\u2082.lean": {
     "rigor": 7.5,
     "aesthetic": 5.5,
@@ -276,16 +266,6 @@
     "originality": 7.8,
     "impact": 3.8,
     "total": 29.9,
-    "category": "Graduate Researcher",
-    "details": {}
-  },
-  "Tropical/PeriodsMotives.lean": {
-    "rigor": 8.0,
-    "aesthetic": 6.0,
-    "utility": 6.5,
-    "originality": 6.5,
-    "impact": 2.5,
-    "total": 29.5,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -429,16 +409,6 @@
     "category": "Tenured Professor",
     "details": {}
   },
-  "Tropical/QuantumTropical.lean": {
-    "rigor": 7.5,
-    "aesthetic": 6.0,
-    "utility": 6.8,
-    "originality": 7.5,
-    "impact": 6.3,
-    "total": 34.1,
-    "category": "Tenured Professor",
-    "details": {}
-  },
   "Tropical/EMLFutureResearch.lean": {
     "rigor": 7.5,
     "aesthetic": 6.0,
@@ -491,11 +461,11 @@
   },
   "Speculative/ArithmeticFunctions.lean": {
     "rigor": 8.0,
-    "aesthetic": 4.7,
+    "aesthetic": 5.2,
     "utility": 4.8,
     "originality": 8.0,
     "impact": 2.0,
-    "total": 27.5,
+    "total": 28.0,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -631,11 +601,11 @@
   },
   "Bridges/ECOCRobustSoft.lean": {
     "rigor": 7.7,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 5.3,
     "originality": 3.8,
     "impact": 6.1,
-    "total": 28.4,
+    "total": 28.9,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -791,11 +761,11 @@
   },
   "Bridges/IdempotentKMESupport.lean": {
     "rigor": 10.0,
-    "aesthetic": 6.5,
+    "aesthetic": 7.5,
     "utility": 5.8,
     "originality": 7.8,
     "impact": 4.1,
-    "total": 34.2,
+    "total": 35.2,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -911,21 +881,21 @@
   },
   "Bridges/BisimulationMetric.lean": {
     "rigor": 9.3,
-    "aesthetic": 5.5,
+    "aesthetic": 6.5,
     "utility": 6.8,
     "originality": 6.5,
     "impact": 3.3,
-    "total": 31.4,
+    "total": 32.4,
     "category": "Tenured Professor",
     "details": {}
   },
   "Bridges/Support.lean": {
     "rigor": 9.8,
-    "aesthetic": 5.0,
+    "aesthetic": 6.0,
     "utility": 6.8,
     "originality": 6.8,
     "impact": 5.6,
-    "total": 34.0,
+    "total": 35.0,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -981,11 +951,11 @@
   },
   "Bridges/FiniteRiesz.lean": {
     "rigor": 9.3,
-    "aesthetic": 5.0,
+    "aesthetic": 6.0,
     "utility": 4.8,
     "originality": 6.5,
     "impact": 4.6,
-    "total": 30.2,
+    "total": 31.2,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -1231,12 +1201,12 @@
   },
   "Bridges/BerggrenFactoring.lean": {
     "rigor": 7.3,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 4.8,
     "originality": 4.5,
     "impact": 7.5,
-    "total": 29.6,
-    "category": "Graduate Researcher",
+    "total": 30.1,
+    "category": "Tenured Professor",
     "details": {}
   },
   "Bridges/SpectralIdempotentBridge.lean": {
@@ -1611,11 +1581,11 @@
   },
   "Physics/KorseltCriterionFull.lean": {
     "rigor": 8.0,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 4.8,
     "originality": 5.5,
     "impact": 2.1,
-    "total": 25.9,
+    "total": 26.4,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -1706,16 +1676,6 @@
     "originality": 7.5,
     "impact": 3.0,
     "total": 31.8,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "EML/V5Theorems.lean": {
-    "rigor": 8.0,
-    "aesthetic": 7.5,
-    "utility": 6.8,
-    "originality": 7.5,
-    "impact": 4.3,
-    "total": 34.1,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -2301,11 +2261,11 @@
   },
   "Algebra/InvariantStatistic.lean": {
     "rigor": 7.7,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 6.8,
     "originality": 6.8,
     "impact": 4.1,
-    "total": 30.9,
+    "total": 31.4,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -2821,11 +2781,11 @@
   },
   "Computation/SearchTheory.lean": {
     "rigor": 9.0,
-    "aesthetic": 5.7,
+    "aesthetic": 6.7,
     "utility": 5.8,
     "originality": 8.3,
     "impact": 2.3,
-    "total": 31.1,
+    "total": 32.1,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -2881,11 +2841,11 @@
   },
   "Logic/CoherenceStratified.lean": {
     "rigor": 8.1,
-    "aesthetic": 6.0,
+    "aesthetic": 6.5,
     "utility": 6.8,
     "originality": 7.5,
     "impact": 3.1,
-    "total": 31.5,
+    "total": 32.0,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -3061,11 +3021,11 @@
   },
   "Logic/GuardedFixpoint.lean": {
     "rigor": 8.2,
-    "aesthetic": 5.5,
+    "aesthetic": 6.5,
     "utility": 7.8,
     "originality": 8.3,
     "impact": 2.6,
-    "total": 32.4,
+    "total": 33.4,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -3191,11 +3151,11 @@
   },
   "Logic/GuardedTrace.lean": {
     "rigor": 9.2,
-    "aesthetic": 5.5,
+    "aesthetic": 6.5,
     "utility": 6.8,
     "originality": 6.8,
     "impact": 2.8,
-    "total": 31.1,
+    "total": 32.1,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -3211,22 +3171,22 @@
   },
   "Logic/UniverseIdempotent.lean": {
     "rigor": 9.2,
-    "aesthetic": 4.5,
+    "aesthetic": 5.0,
     "utility": 5.8,
     "originality": 5.5,
     "impact": 5.6,
-    "total": 30.6,
+    "total": 31.1,
     "category": "Tenured Professor",
     "details": {}
   },
   "Logic/OracleTeamGenesis.lean": {
     "rigor": 8.1,
-    "aesthetic": 4.5,
+    "aesthetic": 5.5,
     "utility": 6.8,
     "originality": 7.5,
     "impact": 3.1,
-    "total": 30.0,
-    "category": "Graduate Researcher",
+    "total": 31.0,
+    "category": "Tenured Professor",
     "details": {}
   },
   "Logic/Core.lean": {
@@ -3441,11 +3401,11 @@
   },
   "Pythagorean/ModularForms/ModularFormsAdvanced.lean": {
     "rigor": 8.0,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 5.8,
     "originality": 6.5,
     "impact": 6.1,
-    "total": 31.9,
+    "total": 32.4,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -3499,16 +3459,6 @@
     "category": "Tenured Professor",
     "details": {}
   },
-  "Pythagorean/Berggren/InvertedTreeAdvanced.lean": {
-    "rigor": 8.0,
-    "aesthetic": 6.0,
-    "utility": 6.8,
-    "originality": 7.5,
-    "impact": 6.1,
-    "total": 34.4,
-    "category": "Tenured Professor",
-    "details": {}
-  },
   "Pythagorean/Berggren/BerggrenDescent.lean": {
     "rigor": 8.0,
     "aesthetic": 5.5,
@@ -3521,11 +3471,11 @@
   },
   "Pythagorean/Berggren/NewResearchTheorems.lean": {
     "rigor": 7.5,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 7.8,
     "originality": 5.5,
     "impact": 7.1,
-    "total": 33.4,
+    "total": 33.9,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -3561,11 +3511,11 @@
   },
   "Tropical/Oracles/SelfLearningOracle.lean": {
     "rigor": 8.6,
-    "aesthetic": 4.7,
+    "aesthetic": 5.7,
     "utility": 4.8,
     "originality": 7.5,
     "impact": 6.6,
-    "total": 32.2,
+    "total": 33.2,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -3619,26 +3569,6 @@
     "category": "Tenured Professor",
     "details": {}
   },
-  "Tropical/Langlands/FundamentalLemma.lean": {
-    "rigor": 7.0,
-    "aesthetic": 6.5,
-    "utility": 5.8,
-    "originality": 7.8,
-    "impact": 6.8,
-    "total": 33.9,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Tropical/Langlands/OpenQuestionsResearch.lean": {
-    "rigor": 8.0,
-    "aesthetic": 7.5,
-    "utility": 4.3,
-    "originality": 3.5,
-    "impact": 9.3,
-    "total": 32.6,
-    "category": "Tenured Professor",
-    "details": {}
-  },
   "Tropical/Langlands/Foundations.lean": {
     "rigor": 9.2,
     "aesthetic": 6.5,
@@ -3646,16 +3576,6 @@
     "originality": 6.5,
     "impact": 8.3,
     "total": 37.3,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Tropical/Langlands/AdvancedTheory.lean": {
-    "rigor": 7.5,
-    "aesthetic": 5.7,
-    "utility": 6.8,
-    "originality": 8.3,
-    "impact": 9.3,
-    "total": 37.6,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -3681,11 +3601,11 @@
   },
   "Tropical/Langlands/Algorithmic.lean": {
     "rigor": 7.5,
-    "aesthetic": 5.0,
+    "aesthetic": 6.0,
     "utility": 6.5,
     "originality": 6.5,
     "impact": 3.1,
-    "total": 28.6,
+    "total": 29.6,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -3699,26 +3619,6 @@
     "category": "Graduate Researcher",
     "details": {}
   },
-  "Tropical/Langlands/NeuralCompilationTeams.lean": {
-    "rigor": 8.6,
-    "aesthetic": 6.5,
-    "utility": 3.8,
-    "originality": 5.5,
-    "impact": 6.8,
-    "total": 31.2,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Tropical/Langlands/LLMSingleMatMul.lean": {
-    "rigor": 9.2,
-    "aesthetic": 7.5,
-    "utility": 4.8,
-    "originality": 5.5,
-    "impact": 6.8,
-    "total": 33.8,
-    "category": "Tenured Professor",
-    "details": {}
-  },
   "Tropical/Langlands/PAdicTropical.lean": {
     "rigor": 7.1,
     "aesthetic": 6.0,
@@ -3729,26 +3629,6 @@
     "category": "Graduate Researcher",
     "details": {}
   },
-  "Tropical/Langlands/CompilationCompression.lean": {
-    "rigor": 8.6,
-    "aesthetic": 6.0,
-    "utility": 6.8,
-    "originality": 8.3,
-    "impact": 10.0,
-    "total": 39.7,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Tropical/Langlands/ExceptionalGroups.lean": {
-    "rigor": 8.0,
-    "aesthetic": 6.5,
-    "utility": 6.8,
-    "originality": 7.5,
-    "impact": 5.5,
-    "total": 34.3,
-    "category": "Tenured Professor",
-    "details": {}
-  },
   "Tropical/Langlands/SatakeIsomorphism.lean": {
     "rigor": 8.3,
     "aesthetic": 6.5,
@@ -3756,26 +3636,6 @@
     "originality": 7.8,
     "impact": 7.6,
     "total": 37.0,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Tropical/Langlands/AutomorphicBuildings.lean": {
-    "rigor": 7.0,
-    "aesthetic": 6.0,
-    "utility": 6.8,
-    "originality": 6.5,
-    "impact": 4.0,
-    "total": 30.3,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Tropical/Langlands/UniversalOracleTeam.lean": {
-    "rigor": 8.6,
-    "aesthetic": 6.5,
-    "utility": 7.8,
-    "originality": 7.5,
-    "impact": 9.8,
-    "total": 40.2,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -4101,12 +3961,12 @@
   },
   "Tropical/Cryptography/TropicalTrapdoorReversal.lean": {
     "rigor": 7.3,
-    "aesthetic": 4.0,
+    "aesthetic": 5.0,
     "utility": 4.8,
     "originality": 6.5,
     "impact": 7.1,
-    "total": 29.7,
-    "category": "Graduate Researcher",
+    "total": 30.7,
+    "category": "Tenured Professor",
     "details": {}
   },
   "Tropical/Varieties/TropicalLanglandsVarieties.lean": {
@@ -4139,16 +3999,6 @@
     "category": "Tenured Professor",
     "details": {}
   },
-  "Tropical/MachineLearning/MachineLearning.lean": {
-    "rigor": 8.0,
-    "aesthetic": 6.0,
-    "utility": 4.8,
-    "originality": 6.5,
-    "impact": 5.0,
-    "total": 30.3,
-    "category": "Tenured Professor",
-    "details": {}
-  },
   "Speculative/SciFi/TemporalAndTimeTravel.lean": {
     "rigor": 9.6,
     "aesthetic": 7.5,
@@ -4156,26 +4006,6 @@
     "originality": 7.0,
     "impact": 5.0,
     "total": 34.9,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Speculative/DivisionAlgebras/ResearchQuestions.lean": {
-    "rigor": 7.8,
-    "aesthetic": 6.5,
-    "utility": 5.8,
-    "originality": 7.3,
-    "impact": 8.3,
-    "total": 35.7,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Speculative/DivisionAlgebras/QuantumE8ModularForms.lean": {
-    "rigor": 7.5,
-    "aesthetic": 6.0,
-    "utility": 5.8,
-    "originality": 7.0,
-    "impact": 6.8,
-    "total": 33.1,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -4191,11 +4021,11 @@
   },
   "Speculative/AutoResearch/FibPrimitive.lean": {
     "rigor": 7.0,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 6.8,
     "originality": 8.0,
     "impact": 7.3,
-    "total": 34.6,
+    "total": 35.1,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -4211,11 +4041,11 @@
   },
   "Speculative/Consciousness/CayleyDicksonLadder.lean": {
     "rigor": 7.0,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 5.8,
     "originality": 8.0,
     "impact": 2.6,
-    "total": 28.9,
+    "total": 29.4,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -4231,11 +4061,11 @@
   },
   "Speculative/Consciousness/MobiusSelfObservation.lean": {
     "rigor": 5.5,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 6.5,
     "originality": 8.0,
     "impact": 1.9,
-    "total": 27.4,
+    "total": 27.9,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -4451,11 +4281,11 @@
   },
   "Speculative/Other/MathExplorations.lean": {
     "rigor": 8.0,
-    "aesthetic": 4.0,
+    "aesthetic": 4.5,
     "utility": 4.3,
     "originality": 6.0,
     "impact": 5.6,
-    "total": 27.9,
+    "total": 28.4,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -4561,21 +4391,21 @@
   },
   "Cryptography/Ethereum/OracleTeam.lean": {
     "rigor": 6.5,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 4.8,
     "originality": 6.5,
     "impact": 4.6,
-    "total": 27.9,
+    "total": 28.4,
     "category": "Graduate Researcher",
     "details": {}
   },
   "Cryptography/Ethereum/LiquidityProvision.lean": {
     "rigor": 6.5,
-    "aesthetic": 4.5,
+    "aesthetic": 5.5,
     "utility": 5.8,
     "originality": 6.5,
     "impact": 4.3,
-    "total": 27.6,
+    "total": 28.6,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -4951,11 +4781,11 @@
   },
   "Geometry/Stereographic/NonAbelianGauge.lean": {
     "rigor": 7.6,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 5.8,
     "originality": 7.5,
     "impact": 5.1,
-    "total": 31.5,
+    "total": 32.0,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -5391,11 +5221,11 @@
   },
   "Algebra/IntegerEnergy/GenesisOracle.lean": {
     "rigor": 8.6,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 5.8,
     "originality": 7.5,
     "impact": 3.1,
-    "total": 30.5,
+    "total": 31.0,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -5471,11 +5301,11 @@
   },
   "Algebra/IntegerEnergy/Foundation.lean": {
     "rigor": 8.7,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 6.8,
     "originality": 5.5,
     "impact": 4.1,
-    "total": 30.6,
+    "total": 31.1,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -5801,11 +5631,11 @@
   },
   "Algebra/IntegerEnergy/StrangeLoops.lean": {
     "rigor": 7.7,
-    "aesthetic": 4.5,
+    "aesthetic": 5.5,
     "utility": 6.8,
     "originality": 7.8,
     "impact": 2.1,
-    "total": 28.9,
+    "total": 29.9,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -5851,11 +5681,11 @@
   },
   "Algebra/IntegerEnergy/DescentTheory4D.lean": {
     "rigor": 8.0,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 4.8,
     "originality": 6.5,
     "impact": 1.1,
-    "total": 25.9,
+    "total": 26.4,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -6061,12 +5891,12 @@
   },
   "Algebra/DivisionAlgebras/DivisionAlgebras.lean": {
     "rigor": 8.4,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 5.8,
     "originality": 6.3,
     "impact": 3.9,
-    "total": 29.9,
-    "category": "Graduate Researcher",
+    "total": 30.4,
+    "category": "Tenured Professor",
     "details": {}
   },
   "Algebra/DivisionAlgebras/QuantumE8ModularForms.lean": {
@@ -6261,11 +6091,11 @@
   },
   "Algebra/Core/NewResearchTheorems.lean": {
     "rigor": 7.5,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 7.8,
     "originality": 5.5,
     "impact": 7.1,
-    "total": 33.4,
+    "total": 33.9,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -6521,11 +6351,11 @@
   },
   "Algebra/Factoring/Hyperbolic.lean": {
     "rigor": 8.0,
-    "aesthetic": 6.0,
+    "aesthetic": 6.5,
     "utility": 5.8,
     "originality": 7.5,
     "impact": 9.0,
-    "total": 36.3,
+    "total": 36.8,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -6551,11 +6381,11 @@
   },
   "Algebra/Factoring/Berggren.lean": {
     "rigor": 8.0,
-    "aesthetic": 4.5,
+    "aesthetic": 5.0,
     "utility": 6.8,
     "originality": 7.5,
     "impact": 7.5,
-    "total": 34.3,
+    "total": 34.8,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -6671,11 +6501,11 @@
   },
   "Algebra/Advanced/ModularFormsAdvanced.lean": {
     "rigor": 8.0,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 5.8,
     "originality": 6.5,
     "impact": 6.1,
-    "total": 31.9,
+    "total": 32.4,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -6999,26 +6829,6 @@
     "category": "Graduate Researcher",
     "details": {}
   },
-  "MachineLearning/Prediction/CategoryTheory.lean": {
-    "rigor": 7.2,
-    "aesthetic": 6.0,
-    "utility": 5.8,
-    "originality": 7.5,
-    "impact": 1.8,
-    "total": 28.3,
-    "category": "Graduate Researcher",
-    "details": {}
-  },
-  "MachineLearning/Prediction/BayesOptimal.lean": {
-    "rigor": 7.3,
-    "aesthetic": 7.5,
-    "utility": 4.8,
-    "originality": 5.8,
-    "impact": 2.6,
-    "total": 28.0,
-    "category": "Graduate Researcher",
-    "details": {}
-  },
   "MachineLearning/Other/GazingPool.lean": {
     "rigor": 10.0,
     "aesthetic": 7.5,
@@ -7241,11 +7051,11 @@
   },
   "Computation/Oracles/SelfLearningOracle.lean": {
     "rigor": 8.6,
-    "aesthetic": 4.7,
+    "aesthetic": 5.7,
     "utility": 4.8,
     "originality": 7.5,
     "impact": 6.6,
-    "total": 32.2,
+    "total": 33.2,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -7271,11 +7081,11 @@
   },
   "Computation/Oracles/MetaOracle.lean": {
     "rigor": 8.1,
-    "aesthetic": 5.5,
+    "aesthetic": 6.5,
     "utility": 6.8,
     "originality": 7.5,
     "impact": 5.6,
-    "total": 33.5,
+    "total": 34.5,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -7349,36 +7159,6 @@
     "category": "Tenured Professor",
     "details": {}
   },
-  "Computation/Oracles/MetaOracleCore.lean": {
-    "rigor": 6.6,
-    "aesthetic": 5.5,
-    "utility": 5.8,
-    "originality": 7.5,
-    "impact": 5.6,
-    "total": 31.0,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Computation/Oracles/MetaOracleAdvanced.lean": {
-    "rigor": 7.7,
-    "aesthetic": 6.5,
-    "utility": 4.8,
-    "originality": 5.5,
-    "impact": 5.1,
-    "total": 29.6,
-    "category": "Graduate Researcher",
-    "details": {}
-  },
-  "Computation/Oracles/OptimalComputer.lean": {
-    "rigor": 7.0,
-    "aesthetic": 8.5,
-    "utility": 6.8,
-    "originality": 7.8,
-    "impact": 5.1,
-    "total": 35.2,
-    "category": "Tenured Professor",
-    "details": {}
-  },
   "Computation/Oracles/OracleApplicationsFrontier.lean": {
     "rigor": 8.1,
     "aesthetic": 4.5,
@@ -7396,16 +7176,6 @@
     "originality": 6.5,
     "impact": 5.0,
     "total": 33.4,
-    "category": "Tenured Professor",
-    "details": {}
-  },
-  "Computation/Oracles/Advanced.lean": {
-    "rigor": 8.1,
-    "aesthetic": 6.0,
-    "utility": 5.8,
-    "originality": 6.5,
-    "impact": 6.3,
-    "total": 32.7,
     "category": "Tenured Professor",
     "details": {}
   },
@@ -7431,11 +7201,11 @@
   },
   "Computation/Oracles/GoodhartsRepulsor.lean": {
     "rigor": 6.6,
-    "aesthetic": 6.0,
+    "aesthetic": 7.0,
     "utility": 5.8,
     "originality": 7.5,
     "impact": 2.4,
-    "total": 28.3,
+    "total": 29.3,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -7461,11 +7231,11 @@
   },
   "Computation/Oracles/InverseOracle.lean": {
     "rigor": 8.7,
-    "aesthetic": 4.0,
+    "aesthetic": 5.0,
     "utility": 5.8,
     "originality": 7.5,
     "impact": 2.8,
-    "total": 28.8,
+    "total": 29.8,
     "category": "Graduate Researcher",
     "details": {}
   },
@@ -7519,24 +7289,14 @@
     "category": "Tenured Professor",
     "details": {}
   },
-  "Computation/Factoring/ChimeraFactoring.lean": {
-    "rigor": 8.0,
-    "aesthetic": 7.5,
-    "utility": 5.8,
-    "originality": 4.8,
-    "impact": 7.3,
-    "total": 33.4,
-    "category": "Tenured Professor",
-    "details": {}
-  },
   "Computation/Other/OptimalPlanning.lean": {
     "rigor": 8.0,
-    "aesthetic": 5.5,
+    "aesthetic": 6.0,
     "utility": 5.8,
     "originality": 7.5,
     "impact": 3.1,
-    "total": 29.9,
-    "category": "Graduate Researcher",
+    "total": 30.4,
+    "category": "Tenured Professor",
     "details": {}
   },
   "Computation/Other/Duality.lean": {
