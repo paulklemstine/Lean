@@ -612,6 +612,24 @@ class AEMEvaluator:
         else:
             details["extensibility"] = "minimal"
 
+        # 2.5 Theorem Density: proved theorems provide reusable mathematical
+        # infrastructure that other files can import and build upon. A file with
+        # many proved theorems is more useful than one with few, all else equal,
+        # because theorems are the primary form of reusable content in Lean 4.
+        # Use regex to count actual declarations, not keyword matches in diffs/comments.
+        theorem_count = len(re.findall(r'^(?:theorem|lemma)\s+', lean_source, re.MULTILINE))
+        if theorem_count >= 80:
+            score += 1.5
+            details["theorem_density"] = f"comprehensive({theorem_count})"
+        elif theorem_count >= 40:
+            score += 1.0
+            details["theorem_density"] = f"extensive({theorem_count})"
+        elif theorem_count >= 20:
+            score += 0.5
+            details["theorem_density"] = f"moderate({theorem_count})"
+        else:
+            details["theorem_density"] = f"minimal({theorem_count})"
+
         # 3. Problem Resolution: advances open problems + application theorems
         source_lower = lean_source.lower()
         open_problem_count = 0
@@ -1092,7 +1110,8 @@ class AEMEvaluator:
         # for downstream work and have inherent impact even without specific apps.
         foundational = 0
         count_defs = len(re.findall(r'^(?:def|structure|class|instance)\s', lean_source, re.MULTILINE))
-        count_theorems = lean_source.count('theorem ') + lean_source.count('lemma ')
+        # Use regex to count actual theorem/lemma declarations, not keyword matches
+        count_theorems = len(re.findall(r'^(?:theorem|lemma)\s+', lean_source, re.MULTILINE))
         # Files with many definitions provide structural foundations
         if count_defs >= 15:
             foundational += 1.0
