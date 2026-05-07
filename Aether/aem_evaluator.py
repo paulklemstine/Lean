@@ -243,36 +243,40 @@ class AEMEvaluator:
         # 1. Sorry count adjusted by sorry density (sorries per theorem)
         # A file with 40 theorems and 1 sorry (2.5% density) is much more rigorous
         # than a file with 2 theorems and 1 sorry (50% density).
+        # Also count `admit` as a sorry-equivalent tactical in Lean 4.
         sorry_count = lean_source.lower().count("sorry")
+        # Count `admit` as a tactic (not as part of identifiers like IsConsciousAdmitting)
+        admit_tactic_count = len(re.findall(r'\bby\s+admit\b|\b:=\s*admit\b', lean_source))
+        total_sorry = sorry_count + admit_tactic_count
         theorem_matches = re.findall(r'(?:theorem|lemma)\s+(\w+)', lean_source)
         theorem_count = len(theorem_matches)
-        sorry_density = sorry_count / max(theorem_count, 1)  # sorries per theorem
+        sorry_density = total_sorry / max(theorem_count, 1)  # sorries per theorem
         
-        if sorry_count == 0:
+        if total_sorry == 0:
             score += 3.0
             details["sorry_status"] = "no_sorries"
         elif sorry_density < 0.1:
             # Nearly complete: <10% sorry density (e.g., 1 sorry in 10+ theorems)
             score += 2.5
-            details["sorry_status"] = f"nearly_complete({sorry_count}/{theorem_count}, density={sorry_density:.2f})"
+            details["sorry_status"] = f"nearly_complete({total_sorry}/{theorem_count}, density={sorry_density:.2f})"
         elif sorry_density < 0.3:
             # Mostly complete: 10-30% sorry density
             score += 1.5
-            details["sorry_status"] = f"minor_gaps({sorry_count}/{theorem_count}, density={sorry_density:.2f})"
-        elif sorry_count <= 2:
+            details["sorry_status"] = f"minor_gaps({total_sorry}/{theorem_count}, density={sorry_density:.2f})"
+        elif total_sorry <= 2:
             # Very few sorries regardless of density
             score += 1.5
-            details["sorry_status"] = f"minor_gaps({sorry_count})"
+            details["sorry_status"] = f"minor_gaps({total_sorry})"
         elif sorry_density < 0.5:
             # Significant but not overwhelming gaps
             score += 0.5
-            details["sorry_status"] = f"significant_gaps({sorry_count}/{theorem_count}, density={sorry_density:.2f})"
-        elif sorry_count <= 10:
+            details["sorry_status"] = f"significant_gaps({total_sorry}/{theorem_count}, density={sorry_density:.2f})"
+        elif total_sorry <= 10:
             score += 0.5
-            details["sorry_status"] = f"significant_gaps({sorry_count})"
+            details["sorry_status"] = f"significant_gaps({total_sorry})"
         else:
             score += 0.0
-            details["sorry_status"] = f"major_gaps({sorry_count})"
+            details["sorry_status"] = f"major_gaps({total_sorry})"
 
         # 2. Theorem/lemma count and proof completeness
         if theorem_count == 0:

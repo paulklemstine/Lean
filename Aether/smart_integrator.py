@@ -566,10 +566,12 @@ class SmartIntegrator:
             domain, "Speculative"
         )
 
-        # Check if the file has sorrys
-        sorry_count = lean_source.count("sorry")
+        # Check if the file has sorrys or admit tactics (incomplete proofs)
+        sorry_count = lean_source.lower().count("sorry")
+        admit_tactic_count = len(re.findall(r'\bby\s+admit\b|\b:=\s*admit\b', lean_source))
+        total_sorry = sorry_count + admit_tactic_count
 
-        if sorry_count > 0:
+        if total_sorry > 0:
             # Incomplete proof: place in Speculative/AutoResearch
             target_dir = self.catalog_root / "Speculative" / "AutoResearch"
             target = target_dir / f"PENDING_{domain}_{exp_id}_{result_file.name}"
