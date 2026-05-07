@@ -1068,8 +1068,11 @@ class AEMEvaluator:
                     "convergence_rate", "iteration_complexity", "time_complexity",
                     "space_complexity", "computational_bound",
                     # Extended computation: decidability, complexity classes
-                    "decidable", "undecidable", "np_complete", "np_hard",
-                    "computable", "recursive", "halting", "search_strategy",
+                    # NOTE: "computable" and "decidable" removed - they are Lean 4
+                    # typeclass names (Decidable/Computable) that appear in 76%/22%
+                    # of files, not genuine optimization concepts.
+                    "undecidable", "np_complete", "np_hard",
+                    "recursive", "halting", "search_strategy",
                     "decision_problem", "complexity_class", "polynomial_time",
                     "exponential_time", "reduction", "completeness"]:
             if kw in source_lower:
