@@ -1207,7 +1207,7 @@ class AEMEvaluator:
         domain_bonus = 0.0
         applied_domains = {"cryptography": 1.0, "machinelearning": 0.75,
                           "physics": 0.75, "computation": 0.5}
-        bridge_domains = {"bridges": 0.5, "eml": 0.25}
+        bridge_domains = {"bridges": 0.5, "eml": 0.5}
         if domain in applied_domains:
             domain_bonus = applied_domains[domain]
         elif domain in bridge_domains:
