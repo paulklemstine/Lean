@@ -731,7 +731,13 @@ class AEMEvaluator:
                          # Generic trivial definitions
                          'toGL3Dom', ' established', 'empty', 'id', 'flip',
                          'toFun', 'invFun', 'inv', 'map', 'hom',
-                         'prod', 'sum', 'bot', 'top', 'inf', 'sup'}
+                         'prod', 'sum', 'bot', 'top', 'inf', 'sup',
+                         # Repetitive framework names (appear in 6+ files)
+                         'Oracle', 'MetaOracle', 'Oct', 'score',
+                         'PhotonGraph', 'PhotonEventGraph', 'PhotonState',
+                         'actGen', 'EMLTree', 'Mat2x2', 'BergWord',
+                         'rootTriple', 'CollapseOperator',
+                         'berggrenA', 'berggrenB', 'berggrenC'}
         def_names = re.findall(r'\b(?:def|structure|class|inductive|abbrev)\s+(\w+)', lean_source)
         genuinely_new = sum(1 for name in def_names if name not in standard_names)
 
@@ -746,7 +752,13 @@ class AEMEvaluator:
                               'aux', 'helper', 'lemma1', 'lemma2', 'thm1', 'thm2',
                               'proof1', 'proof2', 'step1', 'step2', 'inst',
                               'mk', 'val', 'get', 'set', 'run', 'do', 'apply',
-                              'solve', 'compute', 'check', 'verify', 'test'):
+                              'solve', 'compute', 'check', 'verify', 'test',
+                              # Highly repetitive names appearing in 6+ files
+                              'oracle', 'metaoracle', 'oct', 'score',
+                              'photongraph', 'photoneventgraph', 'photonstate',
+                              'actgen', 'emltree', 'mat2x2', 'bergword',
+                              'roottriple', 'collapseoperator',
+                              'berggrena', 'berggrenb', 'berggrenc'):
                 duplication_penalty += 0.2
 
         # Deduct duplication penalty from genuinely_new count
