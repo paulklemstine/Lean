@@ -1089,9 +1089,17 @@ class AEMEvaluator:
                 generic_opt += 1
         if optimization >= 2:  # Has specific optimization context
             optimization += min(generic_opt, 3)  # Limited contribution
+            # Context-dependent: computable/decidable only count with
+            # other optimization terms (they're Lean 4 typeclasses that
+            # appear in 76%/22% of files, but ARE about computation/logic)
+            if "computable" in source_lower:
+                optimization += 1  # +1 with context (not +2 standalone)
+            if "decidable" in source_lower:
+                optimization += 1  # +1 with context (not +2 standalone)
         else:
             # Generic terms alone do NOT count — every math proof has bounds
             optimization += 0
+            # computable/decidable alone also don't count — Lean 4 typeclasses
 
         if optimization >= 5:
             score += 2.0
