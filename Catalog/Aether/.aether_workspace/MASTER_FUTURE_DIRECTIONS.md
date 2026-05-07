@@ -1,103 +1,105 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-07 13:32*
+*Last updated: 2026-05-07 14:39*
 
 ## Breakthrough Opportunities (ranked by impact)
 
-### 1. Tropical Satake Isomorphism (Full Version)
+### 1. Tropical Matrix Decomposition Hardness Lower Bound
 
-- **Theorem Statement:** For a finite distributive lattice $L$, the map
-  $S : \mathcal{H}(L) \to \text{Fun}^{\text{sph}}(\text{Spec}(L), \mathbb{R}_{\max})$
-  sending $T_p \mapsto (q \mapsto T_p(\mathbf{1})(q))$ is an isomorphism of max-plus algebras.
+**Theorem Statement**: For generic n×n tropical matrices A, B with A⊗B = B⊗A and spectral gap Δ > 0, any algorithm recovering (a, b) from A^a ⊗ B^b requires Ω(Δ^{n/2}) operations.
 
-- **Proof Strategy:**
-  1. *Injectivity:* Show distinct Hecke operators produce distinct evaluation maps by
-     constructing separating functions using lattice atoms.
-  2. *Surjectivity:* Prove every spherical function arises as a Hecke evaluation using
-     Möbius inversion on the lattice.
-  3. *Algebra homomorphism:* Extend the commutativity result to show the Satake map
-     preserves the sup-algebra structure.
+**Proof Strategy**:
+- Define a tropical lattice embedding: map (a,b) ↦ A^a ⊗ B^b as a lattice point
+- Show the lattice has minimum distance proportional to Δ
+- Reduce to the Shortest Vector Problem (SVP) in the tropical lattice
+- Use known SVP hardness results (Ajtai 1996) to establish lower bounds
 
-- **Why This Is Revolutionary:** Establishes the first complete tropical analogue of the
-  classical Satake isomorphism, opening the path to tropical Langlands functoriality.
+**Why This Is Revolutionary**: Would be the first provable lower bound for any tropical cryptographic primitive, making tropical key exchange a candidate for NIST standardization.
 
-- **Catalog Leverage:** Build on `MaxPlusHecke.heckeOp_comm` and `MaxPlusHecke.heckeOp_const`.
+**Catalog Leverage**: Build on `tropPow_tropPow_comm_of_comm`, `stickel_bilateral_key_agreement`
 
-- **Research Mode:** formalize
-- **Estimated Depth:** 4
+**Research Mode**: prove
 
-### 2. Hecke Eigenfunction Classification
+**Estimated Depth**: 5
 
-- **Theorem Statement:** For a finite Boolean lattice $2^n$, the Hecke eigenfunctions are
-  precisely the functions of the form $f(S) = |S \cap A|$ for fixed $A \subseteq [n]$,
-  with eigenvalue $|A|$.
+---
 
-- **Proof Strategy:**
-  1. Verify the eigenfunction equation by direct computation on Boolean lattices.
-  2. Count eigenfunctions and show they span the function space.
-  3. Establish uniqueness via the commutativity theorem (simultaneous diagonalization).
+### 2. Deep ReLU Network Certified Robustness via Tropical Composition
 
-- **Why This Is Revolutionary:** Provides the first concrete spectral decomposition for
-  tropical Hecke algebras, connecting to combinatorial optimization and matroid theory.
+**Theorem Statement**: For an L-layer ReLU network with weight matrices W₁,...,W_L, the total Lipschitz constant satisfies K ≤ ∏ᵢ max_j |W_i[j,·]|₁, and the certified robustness radius for margin m is r = m / K.
 
-- **Catalog Leverage:** `MaxPlusHecke.const_is_eigenfunction`, `MaxPlusHecke.heckeOp_comm`.
+**Proof Strategy**:
+- Formalize multi-variable tropical polynomial evaluation
+- Extend `tropPolyEval_lipschitz_certified_robustness` to multiple variables
+- Apply `tropicalLipschitz_composition` iteratively for L layers
+- Prove the product bound is tight (exhibit achieving example)
 
-- **Research Mode:** discover
-- **Estimated Depth:** 3
+**Why This Is Revolutionary**: First formally verified end-to-end certified robustness bound for deep ReLU networks with explicit, computable constants.
 
-### 3. Tropical Hecke Trace Formula
+**Catalog Leverage**: `tropPolyEval_lipschitz_certified_robustness`, `tropicalLipschitz_composition`, `relu_one_lipschitz`
 
-- **Theorem Statement:** For a finite lattice $L$ with $n$ elements,
-  $\sum_p T_p = n \cdot T_\bot$, where the sum is pointwise sup.
+**Research Mode**: prove
 
-- **Proof Strategy:**
-  1. Show the union of all Hecke filters covers $L$ for any evaluation point.
-  2. Compute the sup of all Hecke operators at each point.
-  3. Relate to the cycle structure of the lattice.
+**Estimated Depth**: 3
 
-- **Why This Is Revolutionary:** Tropical analogue of the Arthur-Selberg trace formula,
-  connecting the geometric side (lattice structure) to the spectral side (eigenvalues).
+---
 
-- **Catalog Leverage:** `MaxPlusHecke.heckeOp_bot_param`, `MaxPlusHecke.heckeOp_le_sup`.
+### 3. Tropical Eigenvalue Theory and Karp's Algorithm
 
-- **Research Mode:** formalize
-- **Estimated Depth:** 2
+**Theorem Statement**: The tropical eigenvalue λ(A) = min_{σ∈Cycles} (weight(σ)/length(σ)) satisfies A^n ⊗ v = λ(A)^n ⊗ v for the tropical eigenvector v, and can be computed in O(n³) time.
 
-### 4. Tropical Hecke Operators for ReLU Network Analysis
+**Proof Strategy**:
+- Define tropical eigenpairs: A ⊗ v = λ ⊗ v (entrywise min-plus)
+- Prove existence for irreducible matrices via the fixed-point theorem
+- Formalize Karp's algorithm as computing the max cycle mean
+- Prove correctness by path decomposition into cycles + tails
 
-- **Theorem Statement:** For a tropical ReLU network $N : \mathbb{R}^d \to \mathbb{R}^k$
-  factoring through a Hecke eigenfunction with eigenvalue $\chi$, the Lipschitz constant
-  of $N$ satisfies $\text{Lip}(N) \leq |\chi|_{\text{trop}}$.
+**Why This Is Revolutionary**: Connects tropical spectral theory to both quantum Hamiltonian ground states (tight-binding model) and cryptographic security parameters.
 
-- **Proof Strategy:**
-  1. Model the ReLU network as a composition of max-plus linear maps.
-  2. Interpret each layer as a Hecke operator on a suitable lattice.
-  3. Apply the sup-norm preservation theorem (`heckeOp_sup_norm_le`).
+**Catalog Leverage**: `tropMul_assoc`, `tropPow_right_mul`, `tropScalar_tropMul_left`
 
-- **Why This Is Revolutionary:** First Hecke-theoretic robustness certificate for neural
-  networks, connecting representation theory to certified AI safety.
+**Research Mode**: prove
 
-- **Catalog Leverage:** `MaxPlusHecke.heckeOp_sup_norm_le`, `MaxPlusHecke.heckeOp_monotone`.
+**Estimated Depth**: 4
 
-- **Research Mode:** formalize
-- **Estimated Depth:** 3
+---
 
-### 5. Post-Quantum Hecke Hash Functions
+### 4. Tropical Variety Intersection and Neural Network Expressivity
 
-- **Theorem Statement:** Define $h : L \to \mathbb{Z}/n\mathbb{Z}^k$ by
-  $h(p) = (\text{satakeCard}(p, q_1), \ldots, \text{satakeCard}(p, q_k))$ for fixed
-  evaluation points $q_1, \ldots, q_k$. If $L$ is a partition lattice with width $\Omega(2^{n/2})$,
-  then finding collisions requires $\Omega(2^{n/4})$ lattice operations.
+**Theorem Statement**: A tropical polynomial map ℝ^n → ℝ with m terms has at most (m choose n) linear regions. The ReLU network computing this polynomial requires width ≥ m and depth ≥ ⌈log₂(m/n)⌉.
 
-- **Proof Strategy:**
-  1. Prove the Satake cardinality map is injective on antichains of the lattice.
-  2. Reduce collision-finding to the Shortest Vector Problem on tropical lattices.
-  3. Show the reduction is tight using known SVP lower bounds.
+**Proof Strategy**:
+- Define tropical hypersurfaces as loci where the minimum is achieved by ≥2 terms
+- Prove the hyperplane arrangement theorem for tropical linear functions
+- Count maximal cells using the theory of regular subdivisions
+- Derive depth-width tradeoffs from the cell counting bound
 
-- **Why This Is Revolutionary:** New class of post-quantum hash functions based on
-  tropical lattice problems.
+**Why This Is Revolutionary**: First formal proof of neural network depth-width tradeoffs via tropical geometry, connecting expressivity theory to algebraic geometry.
 
-- **Catalog Leverage:** `MaxPlusHecke.satakeCard_anti`, `MaxPlusHecke.satakeCard_mono`.
+**Catalog Leverage**: `tropPolyEval_lipschitz_certified_robustness`, `inf'_min_distrib`
 
-- **Research Mode:** discover
-- **Estimated Depth:** 5
+**Research Mode**: prove
+
+**Estimated Depth**: 4
+
+---
+
+### 5. Tropical Stickel Protocol with Polynomial Keys
+
+**Theorem Statement**: For tropical polynomials p, q (formal min-plus expressions), if A⊗B = B⊗A then p(A) ⊗ q(B) = q(B) ⊗ p(A), and the generalized Stickel protocol with polynomial keys achieves key agreement.
+
+**Proof Strategy**:
+- Define formal tropical polynomial evaluation at matrices
+- Prove distributivity of ⊗ over ⊕ for matrix expressions (already done!)
+- Use distributivity to expand p(A) ⊗ q(B) into sum of monomials
+- Apply `tropPow_tropPow_comm_of_comm` to each monomial pair
+
+**Why This Is Revolutionary**: Extends the Stickel protocol from power-based keys to polynomial-based keys, exponentially increasing the key space and security.
+
+**Catalog Leverage**: `tropMul_tropAdd_left_distrib`, `tropMul_tropAdd_right_distrib`, `tropPow_tropPow_comm_of_comm`
+
+**Research Mode**: prove
+
+**Estimated Depth**: 3
+
+---
