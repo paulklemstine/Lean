@@ -492,6 +492,20 @@ class AEMEvaluator:
         if re.search(r'Filter\.(Tendsto|atTop|nhds|eventually)', lean_source):
             surprise_indicators += 1
 
+        # Cross-disciplinary surprise: connecting many VERIFIED mathematical bridges
+        # IS inherently surprising, similar to the Langlands program connecting
+        # number theory to representation theory. The keyword here is "verified" —
+        # we count actual CROSS_DOMAIN_BRIDGES matches, not just keyword proximity.
+        # A file with 10+ verified bridges connects genuinely distinct mathematical
+        # areas, which is aesthetically remarkable.
+        n_bridges = len(cross_pairs)
+        if n_bridges >= 20:
+            surprise_indicators += 2  # Deep breadth: 8+ field connections
+            details["cross_disciplinary"] = f"deep({n_bridges}_bridges)"
+        elif n_bridges >= 10:
+            surprise_indicators += 1  # Notable breadth: 5+ field connections
+            details["cross_disciplinary"] = f"notable({n_bridges}_bridges)"
+
         if surprise_indicators >= 5:
             score += 2.5
             details["surprise"] = f"high({surprise_indicators})"
