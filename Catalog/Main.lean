@@ -13,13 +13,11 @@ import Catalog.Algebra.Advanced.Advanced
 import Catalog.Algebra.Advanced.InvertedTreeAdvanced
 import Catalog.Algebra.Advanced.MetaOracleAdvanced
 import Catalog.Algebra.Advanced.ModularFormsAdvanced
-import Catalog.Algebra.Advanced.MoonshineCodingTheory
 import Catalog.Algebra.AutoResearch.ArithmeticDarkMatter
 import Catalog.Algebra.AutoResearch.Basic
 import Catalog.Algebra.AutoResearch.DeepOpenProblems
 import Catalog.Algebra.AutoResearch.DescentTheory
 import Catalog.Algebra.AutoResearch.MoonshotQuantum
-import Catalog.Algebra.BerggrenFreeSemigroup
 import Catalog.Algebra.BerggrenPythagoreanCore
 import Catalog.Algebra.Core.AdvancedFactoringResearch
 import Catalog.Algebra.Core.BayesOptimal
@@ -228,7 +226,6 @@ import Catalog.Bridges.LawvereCodingTheorem
 import Catalog.Bridges.LawvereRateDistortionDuality
 import Catalog.Bridges.LawvereThermodynamicGalois
 import Catalog.Bridges.MaslovDequantizationRobustness
-import Catalog.Bridges.Moonshine.MoonshineCodingTheory
 import Catalog.Bridges.MultiClassCertificationBridge
 import Catalog.Bridges.NucleusSheafReconstruction
 import Catalog.Bridges.PersistentTropicalBridge
@@ -486,7 +483,6 @@ import Catalog.Logic.HolographicSearch
 import Catalog.Logic.HyperAgentTheory
 import Catalog.Logic.IdempotentProofComplexity
 import Catalog.Logic.IntegratedInformation
-import Catalog.Logic.KleeneFixedPoint
 import Catalog.Logic.LightNumberLine
 import Catalog.Logic.OmegaMetaOracle
 import Catalog.Logic.OneGateAgent
@@ -541,7 +537,6 @@ import Catalog.MachineLearning.ShefferFunction.AlgebraicElectricity
 import Catalog.MachineLearning.ShefferFunction.GravityAI
 import Catalog.MachineLearning.ShefferFunction.PhotonEpistemicBridge
 import Catalog.MachineLearning.ShefferFunction.PhotonNetworks
-import Catalog.MachineLearning.ShefferFunction.QuantumAIMadScience
 import Catalog.MachineLearning.ShefferFunction.QuantumMoonshots
 import Catalog.MachineLearning.Stability
 import Catalog.MachineLearning.TropKME
@@ -617,8 +612,6 @@ import Catalog.ResearchOutput.TheoreticalExtensions
 import Catalog.ResearchOutput.V11_DoublyExponentialGrowth
 import Catalog.Shared.Fib_gcd_identity
 import Catalog.Shared.FibonacciLTE
-import Catalog.Shared.Softplus_strictMono
-import Catalog.Shared.Spb
 import Catalog.Speculative.AdvancedOpenQuestions
 import Catalog.Speculative.ArithmeticFunctions
 import Catalog.Speculative.AutoResearch.CarmichaelComposite
@@ -661,7 +654,6 @@ import Catalog.Speculative.Other.StrangeLoops
 import Catalog.Speculative.RosettaStone.Bridge9_Motivic
 import Catalog.Speculative.SciFi.TemporalAndTimeTravel
 import Catalog.Speculative.Wieferich
-import Catalog.Speculative.WieferichExtended
 import Catalog.Tropical.AdvancedTheory
 import Catalog.Tropical.AlgebraicMirror
 import Catalog.Tropical.AutomorphicBuildings
@@ -717,7 +709,6 @@ import Catalog.Tropical.Langlands.QuantumTropical
 import Catalog.Tropical.Langlands.SatakeIsomorphism
 import Catalog.Tropical.Langlands.ShimuraVarieties
 import Catalog.Tropical.Langlands.ThetaCorrespondence
-import Catalog.Tropical.Langlands.TropicalSatakeGL3Algebra
 import Catalog.Tropical.Langlands.UniversalOracleTeam
 import Catalog.Tropical.MachineLearning.MachineLearning
 import Catalog.Tropical.MirrorFixedPoints
@@ -747,12 +738,10 @@ import Catalog.Tropical.QuantumTropicalFunctor
 import Catalog.Tropical.Satake.Surjectivity_of_the_Tropical_Satake_Transform_for_GL₃
 import Catalog.Tropical.SatakeIsomorphism
 import Catalog.Tropical.SpectralIdempotentBridge
-import Catalog.Tropical.Symmetric.TropicalSatakeGL3
 import Catalog.Tropical.Theorems
 import Catalog.Tropical.ThetaCorrespondence
 import Catalog.Tropical.TropicalDeepLearningFoundations
 import Catalog.Tropical.TropicalSatake
-import Catalog.Tropical.TropicalSatakeGL3
 import Catalog.Tropical.TropicalSatakeSurjectivity
 import Catalog.Tropical.TropicalSchurGL3
 import Catalog.Tropical.Tropical_Certified_Robustness_for_Multi_Class_ReLU_Networks
