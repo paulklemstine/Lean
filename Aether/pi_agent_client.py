@@ -1319,6 +1319,30 @@ class PiAgentClient:
             },
 
         ]
+        # Dynamic concept selection: use ResearchDirector to target weakest domain-pillar combos
+        # Falls back to VISIONARY_ARCS if ResearchDirector is unavailable
+        try:
+            from research_director import ResearchDirector
+            director = ResearchDirector(str(self.catalog_root) if hasattr(self, 'catalog_root') and self.catalog_root else "../Catalog")
+            tasks = director.get_next_tasks(1)
+            if tasks:
+                task = tasks[0]
+                return ResearchConcept(
+                    title=task.concept_title,
+                    domain=normalize_domain(task.domain),
+                    concept_description=task.concept_description,
+                    mathematical_framing=task.concept_framing if task.concept_framing else "",
+                    lean_guess="",
+                    catalog_references=task.reference_files if task.reference_files else [],
+                    research_mode="prove",
+                    novelty_estimate=0.95,
+                    breakthrough_potential=0.97,
+                    key_references=task.reference_files[:3] if task.reference_files else [],
+                )
+        except Exception:
+            pass
+        
+        # Fallback to VISIONARY_ARCS round-robin
         arc = VISIONARY_ARCS[cycle % len(VISIONARY_ARCS)]
         return ResearchConcept(
             title=arc["title"],
