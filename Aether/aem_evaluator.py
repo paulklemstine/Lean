@@ -975,13 +975,13 @@ class AEMEvaluator:
         for kw in ["quantum", "hamiltonian", "lagrangian", "entanglement", "thermodynamic",
                     "entropy", "spacetime", "relativistic", "holographic", "free_energy",
                     "partition", "boltzmann", "spectrum", "phase_transition", "heat",
-                    "temperature", "feynman", "path_integral",
+                    "temperature", "feynman", "path_integral", "gravity",
                     # Extended physics terms: relativistic geometry, classical mechanics
                     "lorentz", "minkowski", "geodesic", "null_cone", "causal",
                     "spinor", "gauge", "symmetry_group", "observable",
                     "eigenvalue", "hermitian", "unitary", "hilbert_space",
                     "schrodinger", "heisenberg", "commutator", "operator_algebra",
-                    "lie_algebra", "represent", "irreducible",
+                    "lie_algebra", "irreducible",
                     # Thermodynamics / statistical mechanics
                     "free_energy", "boltzmann", "partition_function",
                     # Mathematical physics
