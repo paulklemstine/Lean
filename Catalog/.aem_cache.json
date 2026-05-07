@@ -1619,6 +1619,16 @@
     "category": "Graduate Researcher",
     "details": {}
   },
+  "Physics/LorentzBerggrenThermodynamic.lean": {
+    "rigor": 7.5,
+    "aesthetic": 6.5,
+    "utility": 8.3,
+    "originality": 7.3,
+    "impact": 10.0,
+    "total": 39.6,
+    "category": "Tenured Professor",
+    "details": {}
+  },
   "Physics/QuantumE8ModularForms.lean": {
     "rigor": 7.5,
     "aesthetic": 6.0,
@@ -2029,6 +2039,16 @@
     "category": "Tenured Professor",
     "details": {}
   },
+  "EML/EMLTropicalSemiring.lean": {
+    "rigor": 7.9,
+    "aesthetic": 7.5,
+    "utility": 7.8,
+    "originality": 6.8,
+    "impact": 10.0,
+    "total": 40.0,
+    "category": "Tenured Professor",
+    "details": {}
+  },
   "EML/SymbolicRegression.lean": {
     "rigor": 7.3,
     "aesthetic": 6.5,
@@ -2436,6 +2456,16 @@
     "originality": 7.8,
     "impact": 7.3,
     "total": 35.9,
+    "category": "Tenured Professor",
+    "details": {}
+  },
+  "MachineLearning/TropicalNeuralRobustness.lean": {
+    "rigor": 8.0,
+    "aesthetic": 6.5,
+    "utility": 9.3,
+    "originality": 7.3,
+    "impact": 10.0,
+    "total": 41.1,
     "category": "Tenured Professor",
     "details": {}
   },
