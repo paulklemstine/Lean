@@ -107,6 +107,12 @@ class AEMEvaluator:
         frozenset({"Algebra", "InformationTheory"}),
         frozenset({"MachineLearning", "InformationTheory"}),
         frozenset({"Physics", "InformationTheory"}),
+        # Deeply legitimate bridges added for Aesthetic accuracy
+        frozenset({"MachineLearning", "Logic"}),       # formal verification of ML
+        frozenset({"Logic", "Cryptography"}),           # zero-knowledge proofs, formal crypto
+        frozenset({"Geometry", "Physics"}),              # geometric physics, differential geometry
+        frozenset({"Computation", "Cryptography"}),      # computational complexity of crypto
+        frozenset({"Computation", "MachineLearning"}),  # ML algorithms, computational learning
     }
 
     # Theorems that advance known open problems
