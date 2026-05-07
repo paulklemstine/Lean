@@ -152,6 +152,12 @@ class AEMEvaluator:
         frozenset({"EML", "Geometry"}),                 # geometric EML
         frozenset({"EML", "NumberTheory"}),             # EML number theory
         frozenset({"Cryptography", "EML"}),             # already defined above (no dup)
+        frozenset({"Computation", "InformationTheory"}),  # information-theoretic computation
+        frozenset({"InformationTheory", "Logic"}),        # logical information theory
+        frozenset({"InformationTheory", "NumberTheory"}), # number-theoretic information
+        frozenset({"Cryptography", "InformationTheory"}),  # cryptographic information theory
+        frozenset({"InformationTheory", "Pythagorean"}),    # Pythagorean information theory
+        frozenset({"EML", "InformationTheory"}),            # EML information theory
     }
 
     # Theorems that advance known open problems
