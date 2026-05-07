@@ -157,6 +157,9 @@ class AEMEvaluator:
         frozenset({"InformationTheory", "NumberTheory"}), # number-theoretic information
         frozenset({"Cryptography", "InformationTheory"}),  # cryptographic information theory
         frozenset({"InformationTheory", "Pythagorean"}),    # Pythagorean information theory
+        frozenset({"Geometry", "InformationTheory"}),    # information geometry, geometric coding theory
+        frozenset({"NumberTheory", "Topology"}),        # topological number theory, p-adic topology
+        frozenset({"InformationTheory", "Topology"}),    # topological information theory, entropy topology
         frozenset({"EML", "InformationTheory"}),            # EML information theory
     }
 
