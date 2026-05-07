@@ -327,6 +327,38 @@ class AEMEvaluator:
     # ------------------------------------------------------------------
     # Pillar 2: Mathematical Aesthetic
     # ------------------------------------------------------------------
+    def _get_domain_keywords(self) -> dict:
+        """Return the domain keywords dictionary used for cross-domain detection."""
+        return {
+            "Tropical": ["tropical", "logsumexp", "softmax", "tropadd", "max-plus", "lse",
+                          "min-plus", "tropical_geometric", "tropical_algebra"],
+            "MachineLearning": ["neural", "lipschitz", "relu", "resnet", "gradient", "robust",
+                                "certified", "margin", "classification", "deep_learning", "activation",
+                                "softmax", "backprop", "training", "inference", "adversarial"],
+            "Cryptography": ["cipher", "dilithium", "lattice", "discrete_log", "key",
+                             "encryption", "hash", "post_quantum", "digital_signature",
+                             "key_exchange", "zero_knowledge", "commitment", "verifiable",
+                             "homomorphic", "side_channel", "module_sis"],
+            "Physics": ["hamiltonian", "lagrangian", "entanglement", "quantum", "spacetime",
+                        "entropy", "holographic", "gravity", "relativ", "thermodynamic",
+                        "partition", "free_energy", "boltzmann", "spectrum", "phase_transition",
+                        "feynman", "path_integral", "heat", "temperature"],
+            "Algebra": ["ring", "ideal", "module", "galois", "field", "group", "homomorph",
+                        "congruence", "quotient", "lattice", "poset", "semilattice", "bimonoid"],
+            "EML": ["eml", "emergent", "meta-language", "dequantization", "exp-log",
+                    "closure", "stone-weierstrass", "activation"],
+            "Pythagorean": ["berggren", "pythagorean", "triple", "quadruple", "congruent",
+                           "fibonacci", "primitive_divisor", "carmichael"],
+            "Logic": ["computable", "oracle", "decidable", "turing", "halting", "godel",
+                      "incompleteness", "self-reference", "fixed_point", "paradoxical"],
+            "Computation": ["algorithm", "complexity", "factoring", "polynomial-time",
+                           "turing_machine", "computable", "recursive", "decidable"],
+            "NumberTheory": ["prime", "divisor", "carmichael", "fermat", "gcd", "totient",
+                            "pell", "diophantine", "modular", "valuation", "padic"],
+            "InformationTheory": ["entropy", "mutual_information", "channel", "capacity",
+                                  "data_processing", "shannon", "kl_divergence", "rate_distortion"],
+        }
+
     def _score_aesthetic(self, lean_source: str, file_path: str = "",
                          domain: str = "", narrative: str = "") -> float:
         """Score cross-domain bridges, surprise, axiomatic footprint, symmetry."""
@@ -1006,6 +1038,39 @@ class AEMEvaluator:
             foundational += 0.5
         details["foundational"] = f"defs={count_defs},thms={count_theorems},score={foundational}"
         score += min(foundational, 1.5)
+
+        # 5.5 Structural Breadth Impact: files that span multiple mathematical
+        # domains have broader impact potential. A good researcher recognizes that
+        # bridging algebra and topology, or connecting logic to computation,
+        # creates impact THROUGH connectivity, not just keyword matching.
+        # This uses the same domain detection as Aesthetic but scores it for Impact.
+        breadth_domains = set()
+        for dname, keywords in self._get_domain_keywords().items():
+            for kw in keywords:
+                if kw in source_lower or kw in (file_path.lower() if file_path else ""):
+                    breadth_domains.add(dname)
+                    break
+        nb = len(breadth_domains)
+        if nb >= 5:
+            score += 1.0
+            details["breadth"] = f"{nb}_domains({breadth_domains})"
+        elif nb >= 4:
+            score += 0.7
+            details["breadth"] = f"{nb}_domains"
+        elif nb >= 3:
+            score += 0.3
+            details["breadth"] = f"{nb}_domains"
+        else:
+            details["breadth"] = f"{nb}_domains"
+
+        # 5.6 Theorem Density Impact: proved results are citable foundations.
+        # Files with 10+ theorems establish foundations others build on.
+        if count_theorems >= 10:
+            score += 0.3
+            details["theorem_density"] = f"{count_theorems}_theorems"
+        elif count_theorems >= 5:
+            score += 0.1
+            details["theorem_density"] = f"{count_theorems}_theorems"
 
         # 6. Domain Relevance: files organized in inherently applied domains
         # have genuine application impact even if their content doesn't use
