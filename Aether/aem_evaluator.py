@@ -1112,14 +1112,16 @@ class AEMEvaluator:
         count_defs = len(re.findall(r'^(?:def|structure|class|instance)\s', lean_source, re.MULTILINE))
         # Use regex to count actual theorem/lemma declarations, not keyword matches
         count_theorems = len(re.findall(r'^(?:theorem|lemma)\s+', lean_source, re.MULTILINE))
-        # Files with many definitions provide structural foundations
+        # Files with many definitions provide structural foundations that others
+        # build upon. This is the primary foundational impact signal.
         if count_defs >= 15:
-            foundational += 1.0
+            foundational += 1.5
         elif count_defs >= 8:
+            foundational += 1.0
+        elif count_defs >= 5:
             foundational += 0.5
-        # Files with many theorems provide proof foundations
-        if count_theorems >= 30:
-            foundational += 0.5
+        # NOTE: Theorem count as "proof foundations" is now covered by the
+        # "theorem_density_impact" section above, so we don't duplicate it here.
         details["foundational"] = f"defs={count_defs},thms={count_theorems},score={foundational}"
         score += min(foundational, 1.5)
 
@@ -1148,13 +1150,18 @@ class AEMEvaluator:
             details["breadth"] = f"{nb}_domains"
 
         # 5.6 Theorem Density Impact: proved results are citable foundations.
-        # Files with 10+ theorems establish foundations others build on.
-        if count_theorems >= 10:
-            score += 0.3
-            details["theorem_density"] = f"{count_theorems}_theorems"
-        elif count_theorems >= 5:
+        # NOTE: Theorem density is now primarily scored in Utility (section 2.5)
+        # as "reusable mathematical infrastructure." This section provides a small
+        # Impact bonus for citability — a different quality. A theorem that others
+        # cite IS impactful even if not directly applied.
+        if count_theorems >= 30:
+            score += 0.2
+            details["theorem_density_impact"] = f"extensive({count_theorems})"
+        elif count_theorems >= 15:
             score += 0.1
-            details["theorem_density"] = f"{count_theorems}_theorems"
+            details["theorem_density_impact"] = f"moderate({count_theorems})"
+        else:
+            details["theorem_density_impact"] = f"minimal({count_theorems})"
 
         # 6. Domain Relevance: files organized in inherently applied domains
         # have genuine application impact even if their content doesn't use
