@@ -385,15 +385,23 @@ class ResearchDirector:
         # Generate title based on domain + pillar weakness
         TITLE_TEMPLATES = {
             ("Shared", "I"): "Foundations of Information-Theoretic Shared Structures",
+            ("Shared", "O"): "Novel Shared Algebraic Invariants with Cross-Domain Applications",
             ("Logic", "I"): "Post-Quantum Formal Verification of Cryptographic Protocols",
+            ("Logic", "U"): "Decidable Verification of Security Properties in Polynomial Time",
             ("Physics", "U"): "Computational Thermodynamics: Verified Bounds for Phase Transitions",
             ("EML", "I"): "Verified Universal Approximation Theorem for EML Networks",
             ("Tropical", "U"): "Tropical Optimization with Certified Complexity Bounds",
             ("Cryptography", "I"): "Post-Quantum Lattice-Based Hash Functions with Verified Security",
             ("MachineLearning", "U"): "Certified Lipschitz Bounds for Deep Neural Networks",
             ("Algebra", "I"): "Algebraic Structures in Post-Quantum Cryptography",
-            ("Logic", "U"): "Decidable Verification of Security Properties in Polynomial Time",
             ("Bridges", "I"): "Cross-Domain Bridges Connecting Pure Math to Real Applications",
+            ("Speculative", "I"): "Speculative Structures with Verified Cryptographic and Physical Applications",
+            ("Speculative", "O"): "Novel Speculative Constructions Bridging Number Theory and Computation",
+            ("ResearchOutput", "I"): "Research Output Applications: Connecting Theory to Post-Quantum Verification",
+            ("ResearchOutput", "U"): "Decidable Bounds for Research Output Verification Algorithms",
+            ("Applications", "U"): "Applied Computational Bounds: Certified Algorithms with O(n log n) Complexity",
+            ("Applications", "A"): "Applied Aesthetics: Beautiful Connections Between Optimization and Number Theory",
+            ("Applications", "I"): "Applied Impact: From Pure Math to Post-Quantum Security and Neural Certification",
         }
         
         title = TITLE_TEMPLATES.get((domain, pillar), 
