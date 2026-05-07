@@ -472,6 +472,9 @@ class AEMEvaluator:
                             "pell", "diophantine", "modular", "valuation", "padic"],
             "InformationTheory": ["entropy", "mutual_information", "channel", "capacity",
                                   "data_processing", "shannon", "kl_divergence", "rate_distortion"],
+            "Analysis": ["derivative", "integral", "convex", "measure", "banach", "hilbert",
+                         "lebesgue", "fourier", "approximation", "density", "spectral",
+                         "weierstrass", "cauchy", "banach_algebra"],
         }
 
         for dname, keywords in domain_keywords.items():
