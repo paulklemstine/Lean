@@ -746,7 +746,11 @@ class AEMEvaluator:
                          'PhotonGraph', 'PhotonEventGraph', 'PhotonState',
                          'actGen', 'EMLTree', 'Mat2x2', 'BergWord',
                          'rootTriple', 'CollapseOperator',
-                         'berggrenA', 'berggrenB', 'berggrenC'}
+                         'berggrenA', 'berggrenB', 'berggrenC',
+                 'EMLPythExpr', 'EMLExpr', 'EMLExprTree', 'EMLRegTree', 'EMLCTree',
+                 'SolverOracle', 'GenesisOracle', 'PredictionOracle', 'NumberLineOracle',
+                 'BergGen', 'BerggrenWord', 'IharaGraph', 'MetricGraph', 'ProofGraph',
+                 'tropMul', 'MathBridge'}
         def_names = re.findall(r'\b(?:def|structure|class|inductive|abbrev)\s+(\w+)', lean_source)
         genuinely_new = sum(1 for name in def_names if name not in standard_names)
 
@@ -767,7 +771,11 @@ class AEMEvaluator:
                               'photongraph', 'photoneventgraph', 'photonstate',
                               'actgen', 'emltree', 'mat2x2', 'bergword',
                               'roottriple', 'collapseoperator',
-                              'berggrena', 'berggrenb', 'berggrenc'):
+                              'berggrena', 'berggrenb', 'berggrenc',
+                              'emlpythexpr', 'emlexpr', 'emlexprtree', 'emlregtree', 'emlctree',
+                              'solveroracle', 'genesisoracle', 'predictionoracle', 'numberlineoracle',
+                              'berggen', 'berggrenword', 'iharagraph', 'metricgraph', 'proofgraph',
+                              'mathbridge'):
                 duplication_penalty += 0.2
 
         # Deduct duplication penalty from genuinely_new count
