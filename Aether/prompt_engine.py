@@ -153,6 +153,46 @@ class PromptEngine:
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.max_context = self.config.get("max_context_theorems", 8)
+        self._weakness_cache = None
+
+    def _generate_catalog_weaknesses(self) -> str:
+        """Generate dynamic catalog weakness data from current AEM analysis.
+        
+        Uses ResearchDirector to analyze the catalog and identify the weakest
+        domain-pillar combinations. Falls back to a basic analysis if 
+        ResearchDirector is unavailable.
+        """
+        try:
+            from research_director import ResearchDirector
+            director = ResearchDirector("../Catalog")
+            analysis = director.analyze_catalog()
+            
+            weaknesses = analysis["weakest_10"][:8]
+            pillars = analysis["pillars"]
+            weakest_pillar = min(pillars, key=pillars.get)
+            
+            lines = [
+                f"The weakest domain-pillar combinations that need improvement:",
+            ]
+            for domain, pillar, score in weaknesses:
+                lines.append(f"  - {domain} {pillar} ({score:.1f}/10)")
+            
+            lines.append(f"\n  Overall weakest pillar: {weakest_pillar}={pillars[weakest_pillar]:.2f}")
+            lines.append(f"  vs strongest pillar: R={pillars['R']:.2f}")
+            lines.append(f"  Current catalog: {analysis['catalog_aem']:.2f}/50, {analysis['catalog_files']} files")
+            
+            return "\n".join(lines)
+        except Exception:
+            # Fallback: return a generic weakness statement
+            return (
+                "The weakest domain-pillar combinations that need improvement:\n"
+                "  - Shared Impact (I≈2.7/10): Needs connections to applied domains\n"
+                "  - Speculative Impact (I≈4.6/10): Needs explicit application connections\n"
+                "  - Logic Impact (I≈5.4/10): Needs connections to crypto, ML, SAT solving\n"
+                "  - Physics Utility (U≈5.4/10): Needs explicit computational bounds\n"
+                "  - EML Impact (I≈5.4/10): Needs thermodynamic, ML, crypto applications\n"
+                "  Overall weakest pillar: Utility (U≈5.9) vs Rigor (R≈8.0)"
+            )
 
     def build_prompt(
         self,
@@ -168,6 +208,9 @@ class PromptEngine:
 
         if artifacts is None:
             artifacts = ArtifactRequests()
+
+        # 0. Generate dynamic catalog weakness data from current AEM analysis
+        catalog_weaknesses = self._generate_catalog_weaknesses()
 
         # 1. Inject domain-specific creativity boosters
         boosters = self.DOMAIN_BOOSTERS.get(domain.lower(), [])
@@ -195,18 +238,22 @@ class PromptEngine:
             Reuse existing definitions and theorems. Build upward.
             Cross-pollinate across domains. Find hidden symmetries.
 
-            === CURRENT CATALOG WEAKNESSES (target for improvement) ===
-            The weakest domain-pillar combinations that need improvement:
-            - Shared Impact (I=1.25/10): Needs connections to physics, ML, cryptography (only 4 files!)
-            - Speculative Impact (I=3.45/10): Needs explicit application connections
-            - Logic Impact (I=4.28/10): Needs connections to cryptography, ML, and SAT solving
-            - EML Impact (I=4.09/10): Needs thermodynamic, ML, and crypto applications
-            - Geometry Impact (I=4.74/10): Needs physics and visualization connections
+            === CURRENT CATALOG WEAKNESSES (auto-generated from analysis) ===
+            {catalog_weaknesses}
             Target these weak areas to maximize your AEM score.
-            IMPACT is the weakest pillar overall (avg I=4.89 vs R=7.93, A=6.18).
             Every file should explicitly reference at least ONE of: physics (quantum,
             thermodynamic, Hamiltonian), cryptography (rigidity, hash, encoding),
             ML (neural, robust, certified), or optimization (algorithm, complexity).
+            
+            The 5 AEM pillars and what counts for each:
+            - RIGOR: ZERO sorry, 10+ theorems, 6+ distinct tactics. Prove everything.
+            - AESTHETIC: 2+ cross-domain bridges, quantifier alternation, minimal assumptions.
+            - UTILITY: 5+ reusable structures (struct, class, def, instance), SPECIFIC
+              computational bounds (O(n log n), Omega(2^n)), not generic 'bound'/'rate'.
+            - ORIGINALITY: 5+ genuinely NEW definitions that don't exist in Mathlib.
+              Generic names (main, test, aux) don't count.
+            - IMPACT: Explicit connections to 2+ of: physics, cryptography, ML.
+              Bridge: connects X to Y in doc comments. Structural breadth (3+ domains).
 
             === RESEARCH BODY ===
             DOMAIN: {domain}

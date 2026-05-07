@@ -1,0 +1,67 @@
+{
+  "version": "2.0",
+  "goal": "Produce world-class mathematics consistently scoring 40+/50 on AEM",
+  "current_aem": 33.34,
+  "weakest_pillars": {
+    "Shared_I": 2.65,
+    "Speculative_I": 4.60,
+    "Logic_I": 5.36,
+    "Physics_U": 5.38,
+    "EML_I": 5.43
+  },
+  "target_concepts": [
+    {
+      "id": "shared_information_theory_foundations",
+      "title": "Foundations of Information-Theoretic Shared Structures",
+      "domain": "Shared",
+      "target_pillar": "Impact",
+      "target_weakness": "Shared I=2.65 (catastrophically low)",
+      "concept": "Define a unified information-theoretic framework for shared mathematical structures: Shannon entropy measures shared information content, tropical entropy measures min-plus information, and Kolmogorov complexity measures algorithmic shared content. Prove that these three measures are connected through a shared algebraic structure (the information semiring). Bridge to Cryptography (shared secret keys from shared randomness), Physics (shared thermodynamic quantities), and ML (shared representations in neural networks).",
+      "aem_target": "40+/50 with I=10, O=8, U=8",
+      "cross_domains": ["Cryptography", "Physics", "MachineLearning", "InformationTheory", "Algebra"],
+      "novelty": 0.96,
+      "key_definitions": ["InformationSemiring", "SharedEntropy", "TropicalMutualInformation", "KolmogorovSharedContent", "SharedSecretKey"]
+    },
+    {
+      "id": "logic_post_quantum_verification",
+      "title": "Post-Quantum Formal Verification of Cryptographic Protocols",
+      "domain": "Logic",
+      "target_pillar": "Impact",
+      "target_weakness": "Logic I=5.36 (low applications)",
+      "concept": "Prove that zero-knowledge proof systems can be formally verified in Lean 4, with explicit connections to post-quantum lattice-based cryptography. Define a verified ZK-SNARK circuit model, prove completeness and soundness, and establish computational bounds on verification time. Bridge to Cryptography (lattice-based post-quantum security), ML (verified neural network inference), and Computation (decidability of verification).",
+      "aem_target": "40+/50 with I=10, O=8, U=9",
+      "cross_domains": ["Cryptography", "MachineLearning", "Computation", "Algebra"],
+      "novelty": 0.95,
+      "key_definitions": ["VerifiedZKCircuit", "PostQuantumSoundness", "LatticeCommitmentVerified", "NeuralVerificationBound"]
+    },
+    {
+      "id": "physics_computational_thermodynamics",
+      "title": "Computational Thermodynamics: Verified Bounds for Phase Transitions",
+      "domain": "Physics",
+      "target_pillar": "Utility",
+      "target_weakness": "Physics U=5.38 (lacks computational bounds)",
+      "concept": "Establish O(n log n) computational bounds for simulating thermodynamic phase transitions, with verified convergence rates for free energy landscapes. Prove that the tropical limit of thermodynamic partition functions converges at rate O(exp(-1/epsilon)). Define verified structures: ThermodynamicPhaseTransition, VerifiedFreeEnergy, ConvergenceRateBound. Bridge to ML (temperature-based optimization), Cryptography (thermal noise in random number generation), and EML (exponential-multiplicative closures).",
+      "aem_target": "40+/50 with U=10, I=10, O=8",
+      "cross_domains": ["MachineLearning", "Cryptography", "EML", "Tropical", "Computation"],
+      "novelty": 0.94,
+      "key_definitions": ["VerifiedPhaseTransition", "ConvergenceRateBound", "ThermodynamicPartitionFunction", "FreeEnergyLandscape", "TropicalLimitBound"]
+    },
+    {
+      "id": "eml_universal_approximation_verified",
+      "title": "Verified Universal Approximation Theorem for EML Networks",
+      "domain": "EML",
+      "target_pillar": "Impact",
+      "target_weakness": "EML I=5.43 (low applications)",
+      "concept": "Prove a verified universal approximation theorem for EML (Exponential-Multiplicative-Logarithmic) networks, establishing that any continuous function on a compact domain can be approximated to arbitrary precision by a finite EML network. Establish O(K(f)/epsilon) depth bounds where K(f) is Kolmogorov complexity. Connect to ML (verified neural network approximation), Cryptography (EML-based hash functions), and Physics (EML thermodynamic limits). Define: EMLClosureNet, VerifiedApproximation, KolmogorovDepthBound.",
+      "aem_target": "40+/50 with I=10, U=9, O=8",
+      "cross_domains": ["MachineLearning", "Cryptography", "Physics", "Computation", "InformationTheory"],
+      "novelty": 0.93,
+      "key_definitions": ["EMLClosureNet", "VerifiedApproximation", "KolmogorovDepthBound", "EMLThermodynamicLimit", "CertifiedEMLHash"]
+    }
+  ],
+  "prompt_enhancements": {
+    "master_class_directive": "You are producing mathematics at the level of a Fields Medal winner. Every definition must serve a purpose. Every theorem must advance understanding. Every bridge must reveal a deep connection that surprises even experts. Your output will be scored on 5 pillars. Score 40+/50 by: R=10 (ZERO sorry, 10+ theorems, 6+ tactics), A=8+ (2+ cross-domain bridges, quantifier alternation), U=9+ (O() bounds, 5+ reusable structures), O=8+ (5+ genuinely new definitions), I=10 (explicit connections to physics, crypto, or ML).",
+    "weakness_targeting": "TARGET THESE SPECIFIC WEAKNESSES: Shared Impact=2.65 (needs crypto/ML/physics connections), Logic Impact=5.36 (needs post-quantum verification), Physics Utility=5.38 (needs verified computational bounds), EML Impact=5.43 (needs universal approximation + applications). Each concept MUST explicitly address its target weakness.",
+    "example_master": "The highest-scoring file in the catalog (AEM=44.7) is Algebra/IntegerEnergy/Quantum.lean with R=9 A=8 U=8 O=9 I=10. It achieves this through: 2991 lines, 163 definitions, 274 theorems, 5+ cross-domain bridges (Algebra-Quantum-InformationTheory-Tropical-Pythagorean), explicit cryptographic applications, and verified computational bounds. YOUR OUTPUT MUST MATCH OR EXCEED THIS QUALITY."
+  }
+}

@@ -25,6 +25,7 @@ import httpx
 from catalog_analyzer import CatalogAnalyzer, CatalogFileSummary
 from pollinations_pollen import PollinationsPollenConfig, PollinationsPollenGate
 from research_memory import ResearchMemory
+from research_director import ResearchDirector
 
 
 @dataclass
@@ -1272,7 +1273,51 @@ class PiAgentClient:
                 "mode": "prove",
                 "refs": ["EML/Defs.lean", "Cryptography/Basic.lean", "Bridges/EMLTropicalBridge.lean"],
                 "novelty": 0.94, "breakthrough": 0.96,
+            },            {
+                "title": "shared_information_semiring_foundations",
+                "domain": "Shared",
+                "desc": "FOUNDATIONS: Define the information semiring — a shared algebraic structure unifying Shannon entropy, tropical entropy, and Kolmogorov complexity. PROVE: (1) all three are homomorphisms from probability distributions to the information semiring, (2) the shared entropy measure satisfies a data processing inequality, (3) Kolmogorov shared content bounds compression ratio. BRIDGES: Cryptography (shared secret key generation from shared randomness), Physics (thermodynamic shared observables), ML (shared representations in neural networks). TARGET: Shared Impact=2.65 → 8+ by connecting to 3+ applied domains. Establish O(n log n) bounds for shared key generation.",
+                "framing": "Define InformationSemiring (R, min, +) as the shared algebraic backbone of information theory. Define SharedEntropy(X,Y) = min(H(X), H(Y), K(XY)) as the shared information measure. Prove: SharedEntropy(X,Y) <= H(X), SharedEntropy(X,Y) <= H(Y) (data processing), and compression_ratio(X) >= SharedEntropy(X,Y)/H(X). Bridge to cryptography: prove that shared entropy yields O(n log n) shared secret key generation from public randomness. Bridge to physics: show that shared thermodynamic observables satisfy a free energy inequality. Bridge to ML: prove that shared representations minimize worst-case loss in federated learning.",
+                "mode": "prove",
+                "refs": ["Shared/Fib_gcd_identity.lean", "Cryptography/Basic.lean", "Bridges/AlgebraCryptographyTropicalBridge.lean", "Tropical/Core/TropicalSemiring.lean"],
+                "novelty": 0.97, "breakthrough": 0.99,
+                "target_weakness": "Shared Impact=2.65",
+                "target_pillars": {"I": 10, "O": 8, "U": 9},
             },
+            {
+                "title": "logic_post_quantum_verified_zk",
+                "domain": "Logic",
+                "desc": "FOUNDATIONS: Define verified zero-knowledge proof systems for post-quantum lattice-based cryptography in Lean 4. PROVE: (1) completeness: honest provers always convince verifiers, (2) soundness: malicious provers succeed with negligible probability, (3) zero-knowledge: simulator produces indistinguishable transcripts. BRIDGES: Cryptography (lattice-based post-quantum security with Module-SIS and Module-LWE assumptions), ML (verified neural network inference bounds), Computation (decidability of ZK verification in polynomial time). TARGET: Logic Impact=5.36 → 9+ by connecting to crypto, ML, computation. Establish O(n^2) verification time bound.",
+                "framing": "Define VerifiedZKCircuit(S, R) : Type where S is the statement and R is the relation. Define PostQuantumSoundness(lambda, n) : Prop stating that for any quantum adversary with lambda qubits, soundness error is at most 2^{-n}. Prove: (1) verified_completeness: for all (x, w) in R, Prob[verify(prove(x, w), x)] = 1, (2) verified_soundness: for all malicious provers P, Prob[verify(P(x), x)] <= 2^{-n}, (3) verified_zero_knowledge: exists simulator S such that |Pr[verify(P(x,w), x)] - Pr[verify(S(x), x)]| <= negl(n). Bridge to crypto: prove Module-SIS based commitment schemes satisfy verified soundness. Bridge to ML: show verified ZK circuits yield O(n^2) certified robustness bounds for neural networks.",
+                "mode": "prove",
+                "refs": ["Logic/SpectralCollapse.lean", "Cryptography/Basic.lean", "Bridges/AlgebraCryptographyTropicalBridge.lean"],
+                "novelty": 0.96, "breakthrough": 0.98,
+                "target_weakness": "Logic Impact=5.36",
+                "target_pillars": {"I": 10, "U": 9, "O": 8},
+            },
+            {
+                "title": "physics_verified_thermodynamic_bounds",
+                "domain": "Physics",
+                "desc": "FOUNDATIONS: Establish verified computational bounds for simulating thermodynamic phase transitions. PROVE: (1) O(n log n) algorithm for computing free energy landscapes of polynomial Hamiltonians, (2) convergence rate O(exp(-1/epsilon)) for tropical dequantization, (3) certified bounds on specific heat near critical points. BRIDGES: ML (temperature-based optimization with certified convergence), Cryptography (thermal noise analysis for random number generation), EML (exponential-multiplicative closure thermodynamic limits), Tropical (min-plus phase transitions). TARGET: Physics Utility=5.38 → 9+ by establishing explicit O() bounds. Define VerifiedFreeEnergy, ConvergenceRateBound, ThermodynamicPhaseTransition.",
+                "framing": "Define VerifiedFreeEnergy(H, epsilon) : Prop stating that |F_computed(H) - F_exact(H)| < epsilon where F is the free energy. Prove: (1) free_energy_convergence_rate: for Hamiltonian H on n sites, the tropical dequantization converges at rate O(exp(-1/epsilon)), (2) phase_transition_detection: critical point detection is O(n log n) via tropical eigenvalue analysis, (3) specific_heat_bound: certified_robustness(C, T_c, delta) bounds specific heat within delta of T_c. Bridge to ML: show that annealing schedules provably find global minima when F is verified. Bridge to crypto: prove that thermal noise in TRNGs has O(sqrt(n)) statistical distance from uniform. Bridge to EML: show EML closure depth equals thermodynamic depth.",
+                "mode": "prove",
+                "refs": ["Physics/QuantumE8ModularForms.lean", "Bridges/EMLTropicalBridge.lean", "Tropical/StoneWeierstrassMinPlus.lean", "EML/Defs.lean"],
+                "novelty": 0.95, "breakthrough": 0.97,
+                "target_weakness": "Physics Utility=5.38",
+                "target_pillars": {"U": 10, "I": 10, "O": 8},
+            },
+            {
+                "title": "eml_verified_universal_approximation",
+                "domain": "EML",
+                "desc": "FOUNDATIONS: Prove the verified universal approximation theorem for EML networks with explicit depth-complexity bounds. PROVE: (1) for any continuous f on compact domain and epsilon > 0, exists EML network Phi with ||Phi - f|| < epsilon, (2) depth(Phi) = O(K(f)/epsilon) where K(f) is Kolmogorov complexity, (3) construction is polynomial-time computable. BRIDGES: ML (verified neural approximation with Lipschitz bounds), Cryptography (EML-based cryptographic hash functions), Physics (EML thermodynamic limits), Information Theory (EML compression bounds). TARGET: EML Impact=5.43 → 9+ by connecting to ML, crypto, physics. Establish O(K(f)/epsilon) depth bound.",
+                "framing": "Define VerifiedEMLApproximation(f, epsilon) : Prop stating that exists Phi : EMLClosureNet such that forall x, |Phi(x) - f(x)| < epsilon AND depth(Phi) <= C * K(f) / epsilon AND construction_time(Phi) <= polynomial(K(f), 1/epsilon). Prove: (1) eml_universal_approximation: forall f continuous on compact domain, forall epsilon > 0, VerifiedEMLApproximation(f, epsilon), (2) eml_depth_bound: depth(Phi) = O(K(f)/epsilon), (3) eml_lipschitz_bound: if f is L-Lipschitz, then Phi is (L+epsilon)-Lipschitz. Bridge to ML: show verified EML approximation yields certified adversarial robustness for ReLU networks. Bridge to crypto: prove EML hash functions are collision-resistant with O(2^{n/2}) security. Bridge to physics: connect EML depth to thermodynamic free energy.",
+                "mode": "prove",
+                "refs": ["EML/Defs.lean", "MachineLearning/Neural/VerifiedRobustness.lean", "Bridges/EMLTropicalBridge.lean", "Cryptography/Basic.lean"],
+                "novelty": 0.94, "breakthrough": 0.96,
+                "target_weakness": "EML Impact=5.43",
+                "target_pillars": {"I": 10, "U": 9, "O": 8},
+            },
+
         ]
         arc = VISIONARY_ARCS[cycle % len(VISIONARY_ARCS)]
         return ResearchConcept(
@@ -2465,3 +2510,53 @@ class PiAgentClient:
                 "confidence": 0.4,
                 "reason": f"Fallback: proof has {sorry_count} sorries, placed in Speculative.",
             }
+
+    def _generate_dynamic_concept(self, cycle: int) -> "ResearchConcept":
+        """Generate a research concept dynamically based on catalog analysis.
+        
+        Uses ResearchDirector to identify weakest domain-pillar combinations
+        and generates targeted concepts that address those weaknesses.
+        Falls back to VISIONARY_ARCS if no ResearchDirector is available.
+        """
+        try:
+            director = ResearchDirector(str(self.catalog_root) if self.catalog_root else "../Catalog")
+            analysis = director.analyze_catalog()
+            
+            # Get the weakest domain-pillar combination that hasn't been recently targeted
+            recent_domains = set()
+            for h in (self.memory.recent_history if self.memory else []):
+                recent_domains.add(h.get("domain", ""))
+            
+            # Cycle through weaknesses, avoiding recently targeted domains
+            weaknesses = analysis["weakest_10"]
+            for val, domain, pillar in weaknesses:
+                if domain not in recent_domains:
+                    # Generate a targeted concept for this weakness
+                    task = director.generate_task(domain=domain, pillar=pillar)
+                    
+                    # Convert to ResearchConcept
+                    return ResearchConcept(
+                        title=task.concept_title,
+                        domain=normalize_domain(task.domain),
+                        concept=task.concept_description,
+                        novelty=0.95,
+                        seed_domains=task.bridged_domains,
+                    )
+            
+            # If all recently targeted, pick the absolute weakest
+            weakest = weaknesses[0]
+            task = director.generate_task(domain=weakest[1], pillar=weakest[2])
+            return ResearchConcept(
+                title=task.concept_title,
+                domain=normalize_domain(task.domain),
+                concept=task.concept_description,
+                novelty=0.95,
+                seed_domains=task.bridged_domains,
+            )
+            
+        except Exception as e:
+            # Fall back to VISIONARY_ARCS if dynamic generation fails
+            import logging
+            logging.warning(f"Dynamic concept generation failed: {e}. Using VISIONARY_ARCS.")
+            return None
+
