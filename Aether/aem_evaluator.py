@@ -562,8 +562,14 @@ class AEMEvaluator:
         details = {}
 
         # 1. Algorithmic / Computational Bounds
+        # Specific mathematical and computational terms that indicate genuine
+        # algorithmic utility. Note: < and > are removed because they match
+        # Lean4 type annotations (not bounds). "rate" is removed because it
+        # matches common words like "separate", "generate", "operate" that
+        # have no computational meaning. ≤ and ≥ are kept because they are
+        # specific Unicode inequality symbols unlikely to be false positives.
         bound_indicators = 0
-        if re.search(r'≤|≥|<|>|bound|complexity|converg|rate|error|optimal', lean_source, re.IGNORECASE):
+        if re.search(r'≤|≥|bound|complexity|converg|error|optimal', lean_source, re.IGNORECASE):
             bound_indicators += 2
         if re.search(r'O\(|omega|Theta|big-O|asymptotic', lean_source, re.IGNORECASE):
             bound_indicators += 2
