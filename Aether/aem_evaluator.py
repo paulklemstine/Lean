@@ -371,7 +371,7 @@ class AEMEvaluator:
         return {
             "Tropical": ["tropical", "logsumexp", "softmax", "tropadd", "max-plus", "lse",
                           "min-plus", "tropical_geometric", "tropical_algebra"],
-            "MachineLearning": ["neural", "lipschitz", "relu", "resnet", "gradient", "robust",
+            "MachineLearning": ["neural", "lipschitz_bound", "lipschitz_constant", "relu", "resnet", "gradient", "robust",
                                 "certified", "margin", "classification", "deep_learning", "activation",
                                 "softmax", "backprop", "training", "inference", "adversarial"],
             "Cryptography": ["cipher", "dilithium", "lattice", "discrete_log", "key",
@@ -413,7 +413,7 @@ class AEMEvaluator:
         domain_keywords = {
             "Tropical": ["tropical", "logsumexp", "softmax", "tropadd", "max-plus", "lse",
                           "min-plus", "tropical_geometric", "tropical_algebra"],
-            "MachineLearning": ["neural", "lipschitz", "relu", "resnet", "gradient", "robust",
+            "MachineLearning": ["neural", "lipschitz_bound", "lipschitz_constant", "relu", "resnet", "gradient", "robust",
                                 "certified", "margin", "classification", "deep_learning", "activation",
                                 "softmax", "backprop", "training", "inference", "adversarial"],
             "Cryptography": ["cipher", "dilithium", "lattice", "discrete_log", "key",
@@ -948,7 +948,7 @@ class AEMEvaluator:
         # Broad terms are WEAK signals — they only count if high-confidence terms
         # are also present, preventing generic math from scoring high on Impact.
         ml_indicators = 0
-        for kw in ["neural", "lipschitz", "certified_robust", "adversarial",
+        for kw in ["neural", "lipschitz_bound", "lipschitz_constant", "certified_robust", "adversarial",
                     "relu", "resnet", "softmax", "overfitting",
                     "deep_learning", "backpropagation",
                     "activation_function", "neural_layer",
@@ -1047,7 +1047,7 @@ class AEMEvaluator:
             wonderful += 2  # Quantum-tropical bridge
         if "lattice" in source_lower and ("crypto" in source_lower or "post_quantum" in source_lower):
             wonderful += 2  # Lattice-based post-quantum
-        if "semiring" in source_lower and ("lipschitz" in source_lower or "robust" in source_lower):
+        if "semiring" in source_lower and ("lipschitz_bound" in source_lower or "lipschitz_constant" in source_lower or "robust" in source_lower):
             wonderful += 2  # Algebraic robustness
         if "entropy" in source_lower and ("congruence" in source_lower or "algebra" in source_lower):
             wonderful += 2  # Algebraic entropy
