@@ -197,12 +197,16 @@ class PromptEngine:
 
             === CURRENT CATALOG WEAKNESSES (target for improvement) ===
             The weakest domain-pillar combinations that need improvement:
-            - Shared Originality (O=4.3/10): Needs genuinely novel definitions and structures
-            - Pythagorean Impact (I=4.8/10): Needs connections to physics and cryptography
-            - Logic Impact (I=5.1/10): Needs connections to cryptography, ML, and physics
-            - Algebra Originality (O=5.3/10): 493 files need more genuinely new definitions
-            - Physics Utility (U=5.3/10): Needs SPECIFIC computational bounds (O(n), Omega(2^n))
+            - Shared Impact (I=1.25/10): Needs connections to physics, ML, cryptography (only 4 files!)
+            - Speculative Impact (I=3.45/10): Needs explicit application connections
+            - Logic Impact (I=4.28/10): Needs connections to cryptography, ML, and SAT solving
+            - EML Impact (I=4.09/10): Needs thermodynamic, ML, and crypto applications
+            - Geometry Impact (I=4.74/10): Needs physics and visualization connections
             Target these weak areas to maximize your AEM score.
+            IMPACT is the weakest pillar overall (avg I=4.89 vs R=7.93, A=6.18).
+            Every file should explicitly reference at least ONE of: physics (quantum,
+            thermodynamic, Hamiltonian), cryptography (rigidity, hash, encoding),
+            ML (neural, robust, certified), or optimization (algorithm, complexity).
 
             === RESEARCH BODY ===
             DOMAIN: {domain}

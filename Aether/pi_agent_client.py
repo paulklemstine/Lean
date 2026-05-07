@@ -1226,7 +1226,7 @@ class PiAgentClient:
                 "refs": ["Cryptography/SPBQuantumCrypto.lean"],
                 "novelty": 0.90, "breakthrough": 0.91,
             },
-            # High-originality arcs targeting weak domains (Shared O=3.48, Physics O=4.34, Logic O=5.15)
+            # High-Impact arcs targeting weak domains (Shared I=1.25, Speculative I=3.45, Logic I=4.28, EML I=4.09)
             {
                 "title": "berggren_lorentz_quantum_correspondence",
                 "domain": "Bridges",

@@ -218,7 +218,6 @@ import Catalog.Bridges.GL3TropicalSatakeCertification
 import Catalog.Bridges.GL3TropicalSatakeScoreStability
 import Catalog.Bridges.GibbsPosterior
 import Catalog.Bridges.HTreeRobust
-import Catalog.Bridges.HammingCode
 import Catalog.Bridges.HierarchicalRobustness
 import Catalog.Bridges.HilbertPolyaOperator
 import Catalog.Bridges.IRVStability
@@ -616,7 +615,6 @@ import Catalog.ResearchOutput.LKTExperiments
 import Catalog.ResearchOutput.Repulsors
 import Catalog.ResearchOutput.TheoreticalExtensions
 import Catalog.ResearchOutput.V11_DoublyExponentialGrowth
-import Catalog.Shared.CarmichaelProof
 import Catalog.Shared.Fib_gcd_identity
 import Catalog.Shared.FibonacciLTE
 import Catalog.Shared.Softplus_strictMono

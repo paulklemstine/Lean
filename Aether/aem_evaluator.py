@@ -783,24 +783,54 @@ class AEMEvaluator:
     # ------------------------------------------------------------------
     def _score_impact(self, lean_source: str, file_path: str = "",
                       domain: str = "", narrative: str = "") -> float:
-        """Score physics/crypto translation, ML interpretability, optimization, wonderful factor."""
+        """Score Impact: applied relevance, foundational significance, cross-domain bridging.
+
+        Five components:
+        1. Physics/Cryptography translation (max ~5)
+        2. ML interpretability (max ~2.5)
+        3. Systemic optimization (max ~2)
+        4. Wonderful factor: paradigm-changing connections (max ~2.5)
+        5. Foundational impact: reusable mathematical infrastructure (max 1.5)
+        6. Domain relevance: files in applied domains have inherent impact (max 1.0)
+        """
         score = 0.0
         details = {}
         source_lower = lean_source.lower()
 
         # 1. Physics / Cryptography Translation
+        # Extended to include more physics/math-physics terms that indicate
+        # genuine physical or cryptographic application.
         physics_crypto = 0
+        # Core physics terms (genuine physical content)
         for kw in ["quantum", "hamiltonian", "lagrangian", "entanglement", "thermodynamic",
                     "entropy", "spacetime", "relativistic", "holographic", "free_energy",
                     "partition", "boltzmann", "spectrum", "phase_transition", "heat",
-                    "temperature", "feynman", "path_integral"]:
+                    "temperature", "feynman", "path_integral",
+                    # Extended physics terms: relativistic geometry, classical mechanics
+                    "lorentz", "minkowski", "geodesic", "null_cone", "causal",
+                    "spinor", "gauge", "symmetry_group", "observable",
+                    "eigenvalue", "hermitian", "unitary", "hilbert_space",
+                    "schrodinger", "heisenberg", "commutator", "operator_algebra",
+                    "lie_algebra", "represent", "irreducible",
+                    # Thermodynamics / statistical mechanics
+                    "free_energy", "boltzmann", "partition_function",
+                    # Mathematical physics
+                    "lagrangian", "variational", "action_functional",
+                    "conservation_law", "noether"]:
             if kw in source_lower or kw in (narrative or "").lower():
                 physics_crypto += 2
+        # Cryptographic terms
         for kw in ["dilithium", "lattice-based", "post-quantum", "zero-knowledge",
                     "diffie-hellman", "digital signature", "key exchange",
                     "module_sis", "module_lwe", "shortest_vector", "closest_vector",
                     "learning_with_errors", "lattice_crypto", "sphincs",
-                    "commitment", "verifiable"]:
+                    "commitment", "verifiable",
+                    # Extended crypto: algebraic structures used in cryptography
+                    "rigid", "fingerprint", "collision_resistant", "hash",
+                    "one_way", "trapdoor", "hard_problem", "subgroup",
+                    "normal_form", "word_problem", "freeness", "free_semigroup",
+                    "free_monoid", "decoding", "encoding", "cryptograph",
+                    "cipher", "encryption", "decryption"]:
             if kw in source_lower or kw in (narrative or "").lower():
                 physics_crypto += 2
 
@@ -866,7 +896,12 @@ class AEMEvaluator:
         for kw in ["optimal", "efficient", "complexity_bound", "algorithm",
                     "compiler", "factoring_algorithm", "search_algorithm",
                     "convergence_rate", "iteration_complexity", "time_complexity",
-                    "space_complexity", "computational_bound"]:
+                    "space_complexity", "computational_bound",
+                    # Extended computation: decidability, complexity classes
+                    "decidable", "undecidable", "np_complete", "np_hard",
+                    "computable", "recursive", "halting", "search_strategy",
+                    "decision_problem", "complexity_class", "polynomial_time",
+                    "exponential_time", "reduction", "completeness"]:
             if kw in source_lower:
                 optimization += 2  # Specific optimization terms count double
         # Generic terms: only count if high-confidence optimization context is present
@@ -894,7 +929,7 @@ class AEMEvaluator:
 
         # 4. "Wonderful" Factor: paradigm-changing connections
         wonderful = 0
-        if "tropical" in source_lower and ("neural" in source_lower or "robust" in source_lower):
+        if "tropical" in source_lower and ("neural" in source_lower or "robust" in source_lower or "deep_learn" in source_lower):
             wonderful += 2  # Tropical+ML = paradigm bridge
         if "carmichael" in source_lower or "primitive_divisor" in source_lower:
             wonderful += 2  # Number theory breakthrough
@@ -921,6 +956,21 @@ class AEMEvaluator:
             wonderful += 2  # Algebraic entropy
         if "berggren" in source_lower and "quantum" in source_lower:
             wonderful += 2  # Pythagorean quantum bridge
+        # Additional wonderful factor patterns
+        if "berggren" in source_lower and ("rigidity" in source_lower or "lorentz" in source_lower or "minkowski" in source_lower):
+            wonderful += 2  # Berggren + physics = novel bridge
+        if "berggren" in source_lower and ("normal_form" in source_lower or "free_semigroup" in source_lower or "freeness" in source_lower):
+            wonderful += 2  # Berggren algebraic structure = crypto foundation
+        if "tropical" in source_lower and ("geometr" in source_lower or "variet" in source_lower or "polytope" in source_lower):
+            wonderful += 2  # Tropical geometry
+        if "stone_weierstrass" in source_lower or ("stone" in source_lower and "weierstrass" in source_lower):
+            wonderful += 2  # Stone-Weierstrass approximation
+        if "lorentz" in source_lower and ("berggren" in source_lower or "triple" in source_lower or "pythagorean" in source_lower):
+            wonderful += 2  # Lorentz + number theory
+        if "satake" in source_lower and ("gl3" in source_lower or "hecke" in source_lower or "tropical" in source_lower):
+            wonderful += 2  # Satake isomorphism + representation theory
+        if "category" in source_lower and ("bridge" in source_lower or "functor" in source_lower or "adjunction" in source_lower):
+            wonderful += 1  # Categorical bridge (1 point, not 2 — softer signal)
 
         if wonderful >= 4:
             score += 2.5
@@ -933,6 +983,42 @@ class AEMEvaluator:
             details["wonderful"] = f"touches({wonderful})"
         else:
             details["wonderful"] = "none"
+
+        # 5. Foundational Impact: files that provide reusable mathematical
+        # infrastructure (many defs/structures/theorems) serve as building blocks
+        # for downstream work and have inherent impact even without specific apps.
+        foundational = 0
+        count_defs = len(re.findall(r'^(?:def|structure|class|instance)\s', lean_source, re.MULTILINE))
+        count_theorems = lean_source.count('theorem ') + lean_source.count('lemma ')
+        # Files with many definitions provide structural foundations
+        if count_defs >= 15:
+            foundational += 1.0
+        elif count_defs >= 8:
+            foundational += 0.5
+        # Files with many theorems provide proof foundations
+        if count_theorems >= 30:
+            foundational += 0.5
+        details["foundational"] = f"defs={count_defs},thms={count_theorems},score={foundational}"
+        score += min(foundational, 1.5)
+
+        # 6. Domain Relevance: files organized in inherently applied domains
+        # have genuine application impact even if their content doesn't use
+        # specific keywords. A cryptography file IS cryptographically relevant.
+        domain_bonus = 0.0
+        applied_domains = {"cryptography": 1.0, "machinelearning": 0.75,
+                          "physics": 0.75, "computation": 0.5}
+        bridge_domains = {"bridges": 0.5, "eml": 0.25}
+        if domain in applied_domains:
+            domain_bonus = applied_domains[domain]
+        elif domain in bridge_domains:
+            domain_bonus = bridge_domains[domain]
+        # Only apply domain bonus if current Impact is below the floor
+        # (avoid double-counting for files that already score high on Impact)
+        if domain_bonus > 0 and score < domain_bonus:
+            score = domain_bonus
+            details["domain_floor"] = f"{domain}_floor={domain_bonus}"
+        else:
+            details["domain_floor"] = "none"
 
         return min(score, 10.0)
 

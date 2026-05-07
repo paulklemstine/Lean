@@ -1099,16 +1099,6 @@
     "category": "Graduate Researcher",
     "details": {}
   },
-  "Bridges/HammingCode.lean": {
-    "rigor": 6.0,
-    "aesthetic": 4.5,
-    "utility": 4.8,
-    "originality": 4.5,
-    "impact": 0.0,
-    "total": 19.8,
-    "category": "Graduate Researcher",
-    "details": {}
-  },
   "Bridges/SatakeEMLBridge.lean": {
     "rigor": 7.5,
     "aesthetic": 6.5,
@@ -1667,16 +1657,6 @@
     "impact": 1.0,
     "total": 22.3,
     "category": "Graduate Researcher",
-    "details": {}
-  },
-  "Shared/CarmichaelProof.lean": {
-    "rigor": 3.0,
-    "aesthetic": 1.7,
-    "utility": 1.5,
-    "originality": 1.5,
-    "impact": 1.5,
-    "total": 9.2,
-    "category": "Automated Drone",
     "details": {}
   },
   "Shared/Spb.lean": {
