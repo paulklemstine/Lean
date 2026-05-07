@@ -1074,12 +1074,17 @@ class AEMEvaluator:
                     "undecidable", "np_complete", "np_hard",
                     "recursive", "halting", "search_strategy",
                     "decision_problem", "complexity_class", "polynomial_time",
-                    "exponential_time", "reduction", "completeness"]:
+                    "exponential_time", "completeness",
+                    # Added: genuinely computational terms (not Lean 4 typeclasses)
+                    "computational"]:
+        # NOTE: "reduction" moved from high-confidence to generic - it means
+        # "algebraic reduction" or "modulo reduction" in most math contexts,
+        # not "computational reduction" (NP-reduction). 53% false positive rate.
             if kw in source_lower:
                 optimization += 2  # Specific optimization terms count double
         # Generic terms: only count if high-confidence optimization context is present
         generic_opt = 0
-        for kw in ["bound", "rate", "converge", "iteration", "factor", "search"]:
+        for kw in ["bound", "rate", "converge", "iteration", "factor", "search", "reduction"]:
             if kw in source_lower:
                 generic_opt += 1
         if optimization >= 2:  # Has specific optimization context
