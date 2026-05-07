@@ -623,6 +623,13 @@ class SmartIntegrator:
 
     def _validate_lean_file(self, lean_source: str) -> Dict[str, Any]:
         """Validate Lean source with AEM quality gate."""
+        # Check for git diff/patch format (not valid .lean files)
+        first_line = lean_source.splitlines()[0].strip() if lean_source else ""
+        if first_line.startswith('---') or first_line.startswith('+++'):
+            return {"ok": False, "error": "Git diff/patch file detected (starts with ---/+++). Not a valid Lean file."}
+        if '+++ b/' in lean_source[:200]:
+            return {"ok": False, "error": "Git diff/patch content detected (+++ b/). Not a valid Lean file."}
+
         # Check for balanced braces
         open_count = lean_source.count("{") + lean_source.count("(") + lean_source.count("[")
         close_count = lean_source.count("}") + lean_source.count(")") + lean_source.count("]")
