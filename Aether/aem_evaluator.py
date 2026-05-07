@@ -874,10 +874,12 @@ class AEMEvaluator:
         if 'Speculative' in file_path or 'scifi' in file_path.lower():
             # Sci-fi content gets bonus for creativity, but only if no sorry
             sorry_count = lean_source.lower().count('sorry')
-            if sorry_count == 0 and len(theorem_names) >= 3:
+            admit_tactic_count = len(re.findall(r'\bby\s+admit\b|\b:=\s*admit\b', lean_source))
+            total_sorry = sorry_count + admit_tactic_count
+            if total_sorry == 0 and len(theorem_names) >= 3:
                 score += 1.5
                 details["speculative_bonus"] = "grounded"
-            elif sorry_count <= 2:
+            elif total_sorry <= 2:
                 score += 0.5
                 details["speculative_bonus"] = "partial"
             else:
