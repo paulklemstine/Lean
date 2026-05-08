@@ -1,65 +1,93 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-08 01:15*
+*Last updated: 2026-05-08 01:30*
 
-## Breakthrough Opportunities (ranked by impact)
+## Breakthrough Opportunities (Ranked by Impact)
 
-### 1. Tropical Certified Robustness for Deep Networks
+### 1. Berggren Path-Finding Hardness Reduction
 
-- **Theorem Statement**: For a feedforward neural network with L layers, each having spectral norm bounded by σᵢ, the certified ℓ₂ robustness radius is at least δ / (2 · ∏ᵢ σᵢ), where δ is the classification margin.
-- **Proof Strategy**:
-  (a) Use the contraction composition theorem (`contraction_composition_rate`) to bound the total Lipschitz constant as ∏ᵢ σᵢ.
-  (b) Apply `certified_robustness_from_lipschitz_spectral` with L = ∏ᵢ σᵢ.
-  (c) For tropical verification, deform the ReLU activations to tropical min-plus operations using `trop_mul_distrib`.
-- **Why This Is Revolutionary**: Gives the first formally verified, layer-by-layer certified robustness bound for deep networks. Directly applicable to autonomous vehicle safety certification.
-- **Catalog Leverage**: Build on `contraction_composition_rate`, `certified_robustness_from_lipschitz_spectral`, `trop_mul_distrib`, `diagonal_op_norm_bound`.
-- **Research Mode**: prove
-- **Estimated Depth**: 3
+**Theorem Statement**: For all n ≥ 3, there exists a polynomial-time reduction from factoring n-bit integers to finding the Berggren path from (3,4,5) to a target triple (a,b,c) with c ≡ 0 (mod n).
 
-### 2. Additive Energy and Lattice SVP Hardness
+**Proof Strategy**:
+- **Approach A**: Given n = pq, construct target triple via Euclid parametrization (m,n) = (p, q). The Berggren path encodes the continued fraction expansion of p/q, and recovering this expansion yields p and q.
+- **Approach B**: Reduce to the word problem in the Berggren group (a finitely presented subgroup of O(2,1;ℤ)). The word problem for arithmetic groups in non-positive curvature is known to be hard.
+- **Key Lemma**: `berggren_path_encodes_cf` — the Berggren path from root to Euclid(m,n) corresponds to the continued fraction [m/n].
 
-- **Theorem Statement**: For a lattice L with Gram matrix G having condition number κ, the additive energy of the set of lattice vectors of norm ≤ R satisfies E(L_R) ≥ |L_R|² · (1 + Ω(1/κ)).
-- **Proof Strategy**:
-  (a) Use the Gram matrix spectral theory (`gram_det_eq_sq`, `gram_matrix_symmetric`) to decompose lattice vectors into eigenspaces.
-  (b) Apply `spectral_energy_trace_bound` to bound the energy in each eigenspace.
-  (c) Sum over eigenspaces using `condition_number_ge_one` to control the cross terms.
-- **Why This Is Revolutionary**: Directly connects the dark matter ratio to SVP hardness — lattices with high dark matter are harder to reduce. Could lead to new lower bounds for lattice-based cryptography.
-- **Catalog Leverage**: Build on `gram_det_eq_sq`, `spectral_energy_trace_bound`, `additive_energy_diagonal_lower_bound`.
-- **Research Mode**: discover
-- **Estimated Depth**: 4
+**Why Revolutionary**: Would establish the first lattice-based cryptographic hardness assumption rooted purely in classical number theory (Pythagorean triples), rather than in worst-case lattice problems.
 
-### 3. Montgomery Pair Correlation via Tropical Deformation
+**Catalog Leverage**: `berggren_childA`, `berggren_childB`, `berggren_childC`, `matA_mul_inv`, `matB_mul_inv`, `matC_mul_inv`
 
-- **Theorem Statement**: The Montgomery pair correlation function F(α) = 1 - (sin πα / πα)² is the tropical limit (β → ∞) of a family of spectral operators Fβ(α) with explicit O(1/β) convergence.
-- **Proof Strategy**:
-  (a) Define the softmin family using `softmin` and prove pointwise convergence to min using `trop_valuation_subadditive`.
-  (b) Use the tropical contraction framework (`TropicalContraction.has_fixed_point_approach`) to bound the convergence rate.
-  (c) Connect to the autocorrelation function from `MontgomeryPairCorrelation.lean`.
-- **Why This Is Revolutionary**: Gives a constructive, algorithmically computable approximation to the Montgomery pair correlation with explicit error bounds. Opens the door to numerical verification of pair correlation conjectures.
-- **Catalog Leverage**: Build on `autocorrelation_total_sum`, `bounded_pair_corr_mono`, `TropicalContraction.has_fixed_point_approach`.
-- **Research Mode**: discover
-- **Estimated Depth**: 5
+**Research Mode**: prove
+**Estimated Depth**: 5
 
-### 4. Spectral Entropy Bounds for Arithmetic Sequences
+---
 
-- **Theorem Statement**: For an arithmetic spectral sequence with dark mass ratio > 1/2, the spectral entropy H satisfies H ≥ log(n)/2, where n is the sequence length.
-- **Proof Strategy**:
-  (a) Use `SpectralDatum.darkMass_zero` and `darkMass_nonneg` to set up the entropy calculation.
-  (b) Apply `am_qm_pair` and `cauchy_schwarz_2` to bound the entropy from below.
-  (c) Use `uniform_entropy_eq_log` as the maximum entropy reference.
-- **Why This Is Revolutionary**: Connects the dark matter ratio to an information-theoretic lower bound on spectral diffusion. Could explain why sets with high dark matter resist compression.
-- **Catalog Leverage**: Build on `SpectralDatum`, `spectralEntropy`, `uniform_entropy_eq_log`, `am_qm_pair`.
-- **Research Mode**: prove
-- **Estimated Depth**: 3
+### 2. Quantum Lower Bound via Hyperbolic Volume Growth
 
-### 5. Berggren Tree Spectral Zeta Function
+**Theorem Statement**: Any bounded-error quantum algorithm solving Berggren-SVP on the depth-d lattice requires Ω(3^{d/6}) queries, where the lower bound comes from the exponential volume growth of hyperbolic space.
 
-- **Theorem Statement**: The spectral zeta function of the Berggren tree Z(s) = Σ_T c(T)^{-s} converges for Re(s) > log 3 / log(2+√3) and has a meromorphic continuation to the complex plane.
-- **Proof Strategy**:
-  (a) Use `berggren_spectral_equation` and `berggren_eigenvalue_product` to compute the spectral radius ρ = 2+√3.
-  (b) Show that the number of triples at depth d is 3^d (from `total_paths_bound` in the catalog).
-  (c) Use `berggren_spectral_radius_gt_one` to establish convergence of the Dirichlet series.
-- **Why This Is Revolutionary**: Creates a new L-function from the Berggren Pythagorean tree. Could connect Pythagorean triple distribution to the Riemann hypothesis via spectral theory.
-- **Catalog Leverage**: Build on `berggren_spectral_equation`, `berggren_eigenvalue_product`, `berggren_spectral_radius_gt_one`, `lorentz_B1_invariant`.
-- **Research Mode**: discover
-- **Estimated Depth**: 5
+**Proof Strategy**:
+- **Approach A**: Apply the adversary method (Ambainis 2002). The key input: Berggren paths of length d form an exponentially large set (3^d elements) in a space with negative curvature, where geodesic divergence prevents efficient quantum interference.
+- **Approach B**: Reduce to the non-abelian hidden subgroup problem for the Berggren group. The group's non-abelian structure (proved: AB ≠ BA) blocks standard quantum Fourier sampling.
+
+**Why Revolutionary**: Would give the first quantum lower bound for a lattice problem derived from number-theoretic structure, as opposed to worst-case complexity assumptions.
+
+**Catalog Leverage**: `berggren_nonabelian`, `pow3_ge_pow2`, `berggren_128bit_security`
+
+**Research Mode**: prove
+**Estimated Depth**: 5
+
+---
+
+### 3. Berggren Lattice Signatures
+
+**Theorem Statement**: There exists a signature scheme where signing requires knowledge of a Berggren path (computable in O(d) matrix multiplications) and verification checks Lorentz invariance (computable in O(1) field operations), with unforgeability reducing to Berggren-SVP.
+
+**Proof Strategy**:
+- **Approach**: Define Sign(sk, m) = pathMatrix(sk) · Hash(m) where Hash maps messages to light-cone vectors. Verification checks Q(σ) = 0 and ‖σ‖ ≤ bound. Forging requires finding a short path — i.e., solving SVP.
+- **Key Lemma**: The Lipschitz bound ‖Mv‖² ≤ 35·‖v‖² ensures signatures have bounded length.
+
+**Why Revolutionary**: Would give a signature scheme with algebraic structure (Lorentz group) enabling efficient batch verification, unlike generic lattice signatures.
+
+**Catalog Leverage**: `berggren_lipschitz_bound`, `lorentzNorm_step_invariant`, `depth1_lattice_volume`
+
+**Research Mode**: prove
+**Estimated Depth**: 4
+
+---
+
+### 4. Higher-Dimensional Berggren Lattices via O(n,1)
+
+**Theorem Statement**: For each n ≥ 2, the group O(n,1;ℤ) acts on the integer light cone Q(x₁,...,x_{n+1}) = x₁² + ... + x_n² - x_{n+1}² = 0, generating lattices of rank (n+1) with Minkowski-bounded shortest vectors.
+
+**Proof Strategy**:
+- Generalize the Berggren matrices from O(2,1;ℤ) to O(n,1;ℤ) using Vinberg's algorithm for reflection groups.
+- Prove the analog of `lorentz_product_preservation` for general signature (n,1).
+- Establish that det = ±1 and the Frobenius norm scales as O(n²).
+
+**Why Revolutionary**: Higher-dimensional Berggren lattices provide a parameterized family of lattice problems with explicit geometric structure, potentially yielding tighter security proofs.
+
+**Catalog Leverage**: `lorentz_product_preservation`, `berggren_uniform_frobenius`
+
+**Research Mode**: discover
+**Estimated Depth**: 4
+
+---
+
+### 5. Tropical Berggren Certified Robustness
+
+**Theorem Statement**: For a ReLU neural network with L layers and width w, if the weight matrices are Berggren matrices, then the network has certified robustness radius δ = ε / (35^{L/2}) where ε is the classification margin.
+
+**Proof Strategy**:
+- Use the Lipschitz bound ‖Mv‖² ≤ 35·‖v‖² iterated L times to get ‖f(x) - f(x')‖ ≤ 35^{L/2} · ‖x - x'‖.
+- The tropical analog max(a,b) - c provides the margin ε.
+- Combine to get certified radius δ = ε / 35^{L/2}.
+
+**Why Revolutionary**: Gives the first certified robustness bound derived from number-theoretic structure, with explicit constants (35 = Frobenius norm²).
+
+**Catalog Leverage**: `berggren_lipschitz_bound`, `tropical_triangle_ineq`, `berggren_uniform_frobenius`
+
+**Research Mode**: prove
+**Estimated Depth**: 3
+
+---
