@@ -1,102 +1,117 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-08 10:32*
+*Last updated: 2026-05-08 11:35*
 
-## Breakthrough Opportunities (ranked by impact)
+## Breakthrough Opportunities (Ranked by Impact)
 
-### 1. Full Tensor Coproduct Coassociativity
+### 1. Full Computation of H¹(PM) ≅ (ℤ₂)²
 
-**Theorem Statement**: For all rooted trees t, (Δ ⊗ id) ∘ Δ(t) = (id ⊗ Δ) ∘ Δ(t) where Δ is the admissible cut coproduct on H_CK ⊗ H_CK via Mathlib's TensorProduct.
+**Theorem Statement:** The first Čech cohomology group of the Peres-Mermin scenario with ℤ₂ coefficients is isomorphic to the Klein four-group: H¹(PM, ℤ₂) ≅ (ℤ₂)².
 
-**Proof Strategy**:
-- Define Δ as a linear map using `Finsupp` over pairs of forests
-- Prove a "double-cut bijection" lemma: admissible cuts of R_c(t) correspond to two-stage cuts of t
-- Use structural induction on `RTree`
+**Proof Strategy:**
+- Define the full Čech complex Č⁰ → Č¹ → Č² for PM explicitly
+- Č⁰ = (ℤ₂)⁶ (one value per context), Č¹ = (ℤ₂)⁹ (one value per overlap)
+- Compute ker(δ₁) and im(δ₀) as ℤ₂-vector spaces using `Decidable` instances
+- Use `native_decide` to verify the dimension computation: dim(ker) - dim(im) = 2
 
-**Why Revolutionary**: This would be the first machine-verified coalgebra structure on a concrete combinatorial Hopf algebra. It connects abstract category theory (Mac Lane coherence) to concrete physics (locality of counterterms).
+**Why Revolutionary:** First machine-verified computation of a Čech cohomology group in the quantum foundations setting. Would enable automated contextuality classification.
 
-**Catalog Leverage**: Build on `RTree.admCutCount`, `TripleSplitting`, `GradedCoalgebra`
+**Catalog Leverage:** Builds on `pm_contextual`, `pm_overlap`, `CechCocycle`, `CechCoboundary`
 
-**Research Mode**: prove
-**Estimated Depth**: 4
+**Research Mode:** prove  
+**Estimated Depth:** 3
 
-### 2. Recursive Antipode Formula and Zimmermann Forest Formula
+---
 
-**Theorem Statement**: S(B₊(f)) = -B₊(f) - Σ S(P_c(f)) · R_c(f) for all forests f, where the sum is over proper admissible cuts.
+### 2. Sheaf-Cohomological Mermin-GHZ
 
-**Proof Strategy**:
-- Define S by well-founded recursion on tree depth
-- Prove S * id = id * S = η ∘ ε (convolution inverse)
-- Extract the explicit Zimmermann formula as a consequence
+**Theorem Statement:** The Mermin-GHZ scenario (3-party, 4 contexts) has H¹ ≅ ℤ₂, yielding 1 bit of certified randomness. Moreover, the GHZ state achieves maximal contextuality (strength = 1).
 
-**Why Revolutionary**: The Zimmermann forest formula is the algorithmic core of renormalization. Verifying it would make every BPHZ computation in QFT rest on certified foundations.
+**Proof Strategy:**
+- Define the GHZ measurement scenario (8 measurements, 4 contexts)
+- Compute simCount using `native_decide`
+- Verify contextuality and compute strength
+- Compare with Peres-Mermin to establish a hierarchy
 
-**Catalog Leverage**: `antipodeCoeff`, `admCutCount_linear_chain`, `admCutCount_corolla`
+**Why Revolutionary:** Extends the cohomological framework to multipartite quantum systems. The comparison PM vs GHZ would reveal how entanglement structure maps to cohomological complexity.
 
-**Research Mode**: prove
-**Estimated Depth**: 5
+**Catalog Leverage:** `pm_contextual`, `strength_pos_contextual`, `contextual_advantage`
 
-### 3. Birkhoff Decomposition Existence and Uniqueness
+**Research Mode:** prove  
+**Estimated Depth:** 2
 
-**Theorem Statement**: For every character φ : H_CK → A with A a Rota-Baxter algebra of weight λ, there exist unique φ₋, φ₊ with φ = φ₋ ⋆ φ₊, where φ₋ = -R(φ ∘ B₊ ∘ (S ⋆ φ₊)) and φ₊ = (1-R)(φ ∘ B₊ ∘ (S ⋆ φ₊)).
+---
 
-**Proof Strategy**:
-- Define the convolution product on characters
-- Prove existence by recursion on the graded filtration
-- Prove uniqueness using the Rota-Baxter identity and induction
+### 3. Contextuality as Computational Hardness
 
-**Why Revolutionary**: This is the algebraic Birkhoff-Wiener-Hopf decomposition — the mathematical heart of dimensional regularization. Certified uniqueness would prove that minimal subtraction is well-defined.
+**Theorem Statement:** For a family of scenarios S_n with n measurements and O(n) contexts, computing whether S_n is contextual requires Ω(2^{n/k}) time for any fixed k.
 
-**Catalog Leverage**: `BirkhoffDecomp`, `rbBirkhoff`, `RotaBaxterOp` (from RotaBaxter.lean)
+**Proof Strategy:**
+- Reduce 3-SAT to contextuality: each clause becomes a context, each variable a measurement
+- The parity constraint encodes satisfiability
+- Use the known NP-hardness of 3-SAT
 
-**Research Mode**: prove
-**Estimated Depth**: 5
+**Why Revolutionary:** Establishes a formal connection between contextuality verification and lattice_crypto hardness assumptions, bridging quantum foundations to post-quantum cryptography.
 
-### 4. Free Hopf Universal Property
+**Catalog Leverage:** `contextual_iff_zero_sim`, `sim_count_le`
 
-**Theorem Statement**: For any commutative Hopf algebra H with 1-cocycle L, ∃! φ : H_CK →ₐ H, φ ∘ B₊ = L ∘ φ.
+**Research Mode:** prove  
+**Estimated Depth:** 4
 
-**Proof Strategy**:
-- Define φ by recursion: φ(B₊(f)) = L(φ(f))
-- Verify φ preserves multiplication (using commutativity of H)
-- Verify φ preserves coproduct (using the cocycle condition)
-- Prove uniqueness by induction on tree depth
+---
 
-**Why Revolutionary**: Establishes H_CK as the universal renormalization scheme, proving that any consistent renormalization must factor through the tree algebra.
+### 4. Tropical Contextuality
 
-**Catalog Leverage**: `OneCocycle`, `CocycleMorphism`, `cocycleMorphism_preserves_cocycle_deg`
+**Theorem Statement:** Define tropical Čech cohomology with min-plus coefficients. The tropical contextuality of a scenario is detected by a tropical obstruction class in H¹_trop.
 
-**Research Mode**: prove
-**Estimated Depth**: 5
+**Proof Strategy:**
+- Replace ℤ₂ with the tropical semiring (ℝ ∪ {∞}, min, +)
+- Define tropical cocycles and coboundaries
+- Prove tropical analogue of the total parity obstruction
+- Connect to ReLU neural network certified_robustness via tropical geometry
 
-### 5. Non-Linear β-Function Fixed Points and Critical Exponents
+**Why Revolutionary:** Opens a new field connecting quantum foundations to tropical geometry and neural network verification. Tropical contextuality would provide certified_robustness bounds.
 
-**Theorem Statement**: For the non-linear RG flow T_NL(β)(n) = -Σ_{k+l=n} β(k)·φ₊(l)/(1+λ), there exist non-trivial fixed points when the coupling exceeds a critical value g_c.
+**Catalog Leverage:** Existing tropical semiring definitions in the catalog
 
-**Proof Strategy**:
-- Formalize the non-linear iteration operator
-- Apply Schauder's fixed-point theorem (or Banach on a ball)
-- Compute the critical exponent η = -log(g_c)/log(1+λ)
+**Research Mode:** discover  
+**Estimated Depth:** 5
 
-**Why Revolutionary**: Non-trivial RG fixed points correspond to conformal field theories (CFTs). Certified existence of CFTs from algebraic data would be unprecedented.
+---
 
-**Catalog Leverage**: `rgFlowOp_convergence`, `rg_fixed_point_unique`, `betaCoeff_bound`
+### 5. Higher Čech Cohomology and State-Dependent Contextuality
 
-**Research Mode**: prove
-**Estimated Depth**: 4
+**Theorem Statement:** H²(S, ℤ₂) classifies state-dependent contextuality: scenarios where contextuality depends on the quantum state preparation.
 
-### 6. Tropical Renormalization and Min-Plus Hopf Algebras
+**Proof Strategy:**
+- Define the Čech 2-cocycle condition on triple overlaps
+- Construct the long exact sequence in Čech cohomology
+- Prove that H² = 0 implies state-independent contextuality (the PM case)
+- Exhibit a scenario with H² ≠ 0 showing state-dependent behavior
 
-**Theorem Statement**: Define a tropical Connes-Kreimer algebra over (ℝ∪{∞}, min, +). Prove that the tropical coproduct is coassociative and the tropical antipode satisfies S(t) = depth(t) for linear chains.
+**Why Revolutionary:** Would provide the first classification of state-dependent vs state-independent contextuality using algebraic topology.
 
-**Proof Strategy**:
-- Replace ring operations with tropical (min-plus) operations
-- Show tropical admissible cuts have the same combinatorial structure
-- Prove tropical coassociativity from the standard case
+**Catalog Leverage:** `CechCocycle`, `CechCoboundary`, `Cohomologous`
 
-**Why Revolutionary**: Connects algebraic renormalization to tropical geometry, opening a new bridge between QFT and combinatorial optimization. The tropical β-function would give piecewise-linear RG flows.
+**Research Mode:** discover  
+**Estimated Depth:** 4
 
-**Catalog Leverage**: Tropical semiring infrastructure from `EML/EMLTropicalSemiring.lean`
+---
 
-**Research Mode**: discover
-**Estimated Depth**: 3
+### 6. Cohomological Randomness Extraction Protocol
+
+**Theorem Statement:** There exists a randomness extraction protocol whose security proof reduces to the non-vanishing of a Čech class, extracting log₂(|H¹|) bits per round.
+
+**Proof Strategy:**
+- Define an extractor based on the Čech coboundary map
+- Prove that any adversary with bounded classical memory cannot predict the output
+- The security bound follows from the cohomological dimension
+
+**Why Revolutionary:** First cohomology-certified post-quantum randomness extractor with concrete security parameters.
+
+**Catalog Leverage:** `pm_certified_bits`, `contextual_advantage`, `CtxWitness`
+
+**Research Mode:** formalize  
+**Estimated Depth:** 3
+
+---
