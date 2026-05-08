@@ -1254,6 +1254,7 @@ Research mode: {concept.research_mode}
         try:
             self.git.add(".")
             self.git.commit(commit_msg)
+            self.git.push()
         except Exception as e:
             print(f"[Commit] Warning: {e}")
 
