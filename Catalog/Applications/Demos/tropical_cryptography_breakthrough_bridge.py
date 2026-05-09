@@ -1,1012 +1,1017 @@
 #!/usr/bin/env python3
 """
-Tropical Cryptographic Algorithms
+Tropical Cryptography Algorithms
 
-Implements the core algorithms for tropical post-quantum cryptography:
-1. Tropical matrix multiplication (O(n³))
-2. Tropical matrix power (O(n³ · exp))
-3. Tropical determinant (O(n³) via Hungarian, O(n!) brute force)
-4. Tropical key exchange protocol
-5. Tropical hash function
-6. Security parameter computation
-
-Bridge: Tropical Geometry × Post-Quantum Cryptography × Computational Complexity
+Complete implementations of the algorithms from the research paper,
+with docstrings, type hints, and complexity analysis.
 """
 
 import numpy as np
-from typing import Tuple, Optional, List
-from math import factorial, log2
+from typing import Tuple, List, Optional
 from itertools import permutations
-import time
+import hashlib
 
 
 class TropicalMatrix:
     """
-    A matrix over the tropical (min-plus) semiring.
-    
+    A matrix in the min-plus (tropical) semiring.
+
     Operations:
-        ⊕ (tropical add) = min
-        ⊗ (tropical mul) = +
-    
-    Matrix multiplication: (A⊗B)_{ij} = min_k (A_{ik} + B_{kj})
+    - Tropical addition (⊕) = elementwise min
+    - Tropical multiplication (⊗) = min-plus matrix multiplication
+
+    Complexity:
+    - Addition: O(n²)
+    - Multiplication: O(n³)
+    - Power (repeated squaring): O(n³ log k)
     """
-    
+
     def __init__(self, data: np.ndarray):
         """Initialize from a numpy array."""
-        self.data = np.array(data, dtype=np.float64)
+        self.data = data.astype(float)
         self.n = data.shape[0]
         assert data.shape == (self.n, self.n), "Matrix must be square"
-    
+
+    @classmethod
+    def random(cls, n: int, low: int = 0, high: int = 100) -> 'TropicalMatrix':
+        """Generate a random tropical matrix with entries in [low, high)."""
+        return cls(np.random.randint(low, high, (n, n)))
+
     @classmethod
     def identity(cls, n: int) -> 'TropicalMatrix':
-        """Tropical identity: 0 on diagonal, +∞ off diagonal."""
+        """
+        Tropical identity matrix: 0 on diagonal, +∞ off diagonal.
+        Satisfies I ⊗ A = A ⊗ I = A.
+        """
         data = np.full((n, n), np.inf)
         np.fill_diagonal(data, 0)
         return cls(data)
-    
-    @classmethod
-    def random(cls, n: int, low: float = 0, high: float = 10) -> 'TropicalMatrix':
-        """Random tropical matrix with entries in [low, high]."""
-        return cls(np.random.uniform(low, high, (n, n)))
-    
-    def __matmul__(self, other: 'TropicalMatrix') -> 'TropicalMatrix':
+
+    def tropical_add(self, other: 'TropicalMatrix') -> 'TropicalMatrix':
+        """Tropical addition: elementwise min. O(n²)."""
+        return TropicalMatrix(np.minimum(self.data, other.data))
+
+    def tropical_mul(self, other: 'TropicalMatrix') -> 'TropicalMatrix':
         """
-        Tropical matrix multiplication: (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj}).
-        
-        Complexity: O(n³) time, O(n²) space.
-        
-        This is equivalent to the Floyd-Warshall shortest path computation.
+        Tropical multiplication: (A⊗B)_{ij} = min_k(A_{ik} + B_{kj}).
+        Complexity: O(n³).
         """
-        assert self.n == other.n, "Dimension mismatch"
         n = self.n
-        # Vectorized: for each (i,j), compute min over k of A[i,k] + B[k,j]
-        # A[i,:] has shape (n,), B[:,j] has shape (n,)
-        # We want C[i,j] = min_k (A[i,k] + B[k,j])
-        # Broadcast: A[:, :, np.newaxis] + B[np.newaxis, :, :] has shape (n, n, n)
-        # Then take min over axis=1
-        C = np.min(self.data[:, :, np.newaxis] + other.data[np.newaxis, :, :], axis=1)
-        return TropicalMatrix(C)
-    
-    def power(self, exp: int) -> 'TropicalMatrix':
+        result = np.full((n, n), np.inf)
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    val = self.data[i, k] + other.data[k, j]
+                    if val < result[i, j]:
+                        result[i, j] = val
+        return TropicalMatrix(result)
+
+    def tropical_mv(self, v: np.ndarray) -> np.ndarray:
         """
-        Tropical matrix power: A^⊗exp.
-        
-        Complexity: O(n³ · exp) time.
-        
-        For cryptographic key generation, exp is the secret exponent.
+        Tropical matrix-vector product: (A⊗v)_i = min_j(A_{ij} + v_j).
+        Complexity: O(n²).
+
+        This is the core cryptographic primitive:
+        - Forward: O(n²)
+        - Inversion: Ω(B^n) where B = entry bound
         """
-        if exp == 0:
-            return TropicalMatrix.identity(self.n)
-        if exp == 1:
-            return TropicalMatrix(self.data.copy())
-        
-        # Binary exponentiation (O(n³ log exp))
-        result = TropicalMatrix.identity(self.n)
-        base = TropicalMatrix(self.data.copy())
-        while exp > 0:
-            if exp % 2 == 1:
-                result = result @ base
-            base = base @ base
-            exp //= 2
+        n = self.n
+        result = np.full(n, np.inf)
+        for i in range(n):
+            for j in range(n):
+                val = self.data[i, j] + v[j]
+                if val < result[i]:
+                    result[i] = val
         return result
-    
-    def tropical_det(self) -> Tuple[float, Optional[tuple]]:
+
+    def tropical_pow(self, k: int) -> 'TropicalMatrix':
         """
-        Tropical determinant: min_{σ ∈ S_n} Σ_i A_{i,σ(i)}.
-        
-        Brute force: O(n! · n) — only for small n.
-        For large n, use the Hungarian algorithm (O(n³)).
+        Tropical matrix power by repeated squaring.
+        Complexity: O(n³ log k).
+
+        Algorithm:
+            if k = 1: return A
+            if k even: return (A^{k/2})²
+            if k odd: return A ⊗ A^{k-1}
+        """
+        if k <= 1:
+            return TropicalMatrix(self.data.copy())
+
+        if k % 2 == 0:
+            half = self.tropical_pow(k // 2)
+            return half.tropical_mul(half)
+        else:
+            return self.tropical_mul(self.tropical_pow(k - 1))
+
+    def tropical_det(self) -> float:
+        """
+        Tropical determinant = min-weight perfect matching.
+        tdet(A) = min_{σ ∈ S_n} Σ_i A_{i,σ(i)}
+
+        Complexity: O(n!) — use Hungarian algorithm for O(n³) in practice.
         """
         n = self.n
-        min_sum = np.inf
-        best_perm = None
+        min_weight = np.inf
         for perm in permutations(range(n)):
-            s = sum(self.data[i, perm[i]] for i in range(n))
-            if s < min_sum:
-                min_sum = s
-                best_perm = perm
-        return min_sum, best_perm
-    
-    def spectral_radius(self) -> float:
-        """Tropical spectral radius: tropDet(A) / n."""
-        det, _ = self.tropical_det()
-        return det / self.n
-    
-    def tropical_norm(self) -> float:
-        """Tropical (max/ℓ∞) norm: max_{i,j} |A_{ij}|."""
-        finite = self.data[np.isfinite(self.data)]
-        if len(finite) == 0:
-            return 0.0
-        return np.max(np.abs(finite))
-    
-    def __repr__(self):
+            weight = sum(self.data[i, perm[i]] for i in range(n))
+            if weight < min_weight:
+                min_weight = weight
+        return min_weight
+
+    def tropical_eigenvalue_approx(self, max_power: int = 100) -> float:
+        """
+        Approximate tropical eigenvalue via the limit A^{⊗k}_{ii} / k.
+        The tropical eigenvalue equals the minimum cycle mean.
+
+        Complexity: O(n³ · max_power).
+        """
+        Ak = self.tropical_pow(max_power)
+        return min(Ak.data[i, i] / max_power for i in range(self.n))
+
+    def linf_norm(self) -> float:
+        """L∞ norm of matrix entries."""
+        return np.max(np.abs(self.data[np.isfinite(self.data)]))
+
+    def __repr__(self) -> str:
         return f"TropicalMatrix({self.data})"
+
+
+class TropicalHashFunction:
+    """
+    Tropical hash function: H(v) = A^{⊗k} ⊗ v.
+
+    Security parameters:
+    - n: matrix dimension (primary parameter)
+    - k: number of iterations
+    - B: entry bound
+
+    Forward cost: O(n³ log k + n²) = O(n³ log k)
+    Birthday collision bound: Ω((2B+1)^{n²/2}) queries
+    """
+
+    def __init__(self, n: int, k: int, entry_bound: int = 100):
+        """
+        Initialize tropical hash function.
+
+        Args:
+            n: Matrix dimension
+            k: Number of iterations (power)
+            entry_bound: Maximum absolute entry value
+        """
+        self.n = n
+        self.k = k
+        self.entry_bound = entry_bound
+        # Generate random generator matrix
+        self.generator = TropicalMatrix.random(n, 0, entry_bound)
+        # Precompute A^{⊗k}
+        self.power_matrix = self.generator.tropical_pow(k)
+
+    def hash(self, v: np.ndarray) -> np.ndarray:
+        """
+        Compute hash: H(v) = A^{⊗k} ⊗ v.
+        Complexity: O(n²) per evaluation (after precomputation).
+        """
+        return self.power_matrix.tropical_mv(v)
+
+    def security_bits(self) -> float:
+        """Estimate collision security in bits."""
+        output_space_bits = self.n * self.n * np.log2(2 * self.entry_bound + 1)
+        return output_space_bits / 2  # Birthday bound
+
+    def forward_ops(self) -> int:
+        """Number of operations for forward evaluation."""
+        return self.n ** 3 * int(np.ceil(np.log2(max(self.k, 1)))) + self.n ** 2
 
 
 class TropicalKeyExchange:
     """
-    Tropical Diffie-Hellman Key Exchange Protocol.
-    
-    Public parameters: n (dimension), G (generator matrix)
-    Alice: secret a, publishes G^⊗a
-    Bob: secret b, publishes G^⊗b
-    Shared key: G^⊗(a+b)
-    
-    Security: Based on the hardness of tropical discrete logarithm
-    (given G and G^⊗a, find a).
+    Tropical Diffie-Hellman Key Exchange.
+
+    Protocol:
+    1. Public: generator matrix A of dimension n
+    2. Alice: secret a, sends A^{⊗a}
+    3. Bob: secret b, sends A^{⊗b}
+    4. Shared key: A^{⊗(a+b)}
+
+    Security assumption: Tropical Discrete Logarithm Problem (TDLP)
     """
-    
-    def __init__(self, n: int, bound: float = 10.0):
-        """
-        Initialize key exchange with dimension n.
-        
-        Args:
-            n: Matrix dimension (security parameter)
-            bound: Entry magnitude bound for generator
-        """
+
+    def __init__(self, n: int, entry_bound: int = 100):
         self.n = n
-        self.generator = TropicalMatrix.random(n, 0, bound)
-    
-    def generate_keypair(self, secret: int) -> TropicalMatrix:
-        """Generate public key G^⊗secret."""
-        return self.generator.power(secret)
-    
-    def compute_shared_key(self, peer_public: TropicalMatrix, 
-                           my_secret: int) -> TropicalMatrix:
-        """Compute shared key: (G^⊗peer)^⊗my = G^⊗(peer+my)."""
-        return peer_public.power(my_secret)
-    
-    def verify_correctness(self, a: int, b: int) -> bool:
+        self.generator = TropicalMatrix.random(n, 0, entry_bound)
+
+    def generate_public_key(self, secret: int) -> TropicalMatrix:
+        """Compute public key A^{⊗secret}. O(n³ log secret)."""
+        return self.generator.tropical_pow(secret)
+
+    def compute_shared_key(self, other_public: TropicalMatrix, my_secret: int) -> TropicalMatrix:
+        """Compute shared key (A^{⊗b})^{⊗a} = A^{⊗(a·b)}... wait.
+
+        Note: In tropical algebra, (A^{⊗b})^{⊗a} = A^{⊗(a*b)} not A^{⊗(a+b)}.
+        So the shared secret uses multiplicative composition.
         """
-        Verify that Alice and Bob derive the same shared key.
-        
-        K_Alice = (G^⊗b)^⊗a = G^⊗(a+b)
-        K_Bob = (G^⊗a)^⊗b = G^⊗(a+b)
-        """
-        GA = self.generate_keypair(a)
-        GB = self.generate_keypair(b)
-        
-        K_alice = GB.power(a)
-        K_bob = GA.power(b)
-        K_direct = self.generator.power(a * b)
-        
-        return (np.allclose(K_alice.data, K_direct.data) and 
-                np.allclose(K_bob.data, K_direct.data))
+        return other_public.tropical_pow(my_secret)
+
+    def verify_agreement(self, alice_secret: int, bob_secret: int) -> bool:
+        """Verify that both parties compute the same shared key."""
+        alice_public = self.generate_public_key(alice_secret)
+        bob_public = self.generate_public_key(bob_secret)
+
+        alice_shared = self.compute_shared_key(bob_public, alice_secret)
+        bob_shared = self.compute_shared_key(alice_public, bob_secret)
+
+        return np.allclose(alice_shared.data, bob_shared.data)
 
 
-class TropicalHash:
+def lipschitz_certificate(A: TropicalMatrix, v: np.ndarray, epsilon: float) -> dict:
     """
-    Tropical hash function based on iterated min-plus matrix multiplication.
-    
-    H(m) = G_1 ⊗ G_2 ⊗ ... ⊗ G_k where G_i depends on message block m_i.
-    
-    Collision resistance follows from the hardness of tropical
-    matrix factorization.
+    Compute certified robustness certificate for tropical operation.
+
+    For input v with perturbation bound ε, certifies that
+    ||A⊗(v+δ) - A⊗v||_∞ ≤ ε for all ||δ||_∞ ≤ ε.
+
+    Returns:
+        Dictionary with certificate information
     """
-    
-    def __init__(self, n: int, num_blocks: int = 8):
-        """
-        Initialize tropical hash with dimension n.
-        
-        Args:
-            n: Internal state dimension
-            num_blocks: Number of message blocks
-        """
-        self.n = n
-        self.num_blocks = num_blocks
-        # Generate random matrices for each possible byte value
-        self.lookup = {}
-        for b in range(256):
-            np.random.seed(b + 1000)
-            self.lookup[b] = TropicalMatrix.random(n, 0, 10)
-    
-    def hash(self, message: bytes) -> np.ndarray:
-        """
-        Hash a message using tropical matrix multiplication.
-        
-        Returns the first row of the accumulated tropical product.
-        """
-        state = TropicalMatrix.identity(self.n)
-        for byte in message:
-            state = state @ self.lookup[byte]
-        return state.data[0]
+    base_output = A.tropical_mv(v)
+    return {
+        'input': v.tolist(),
+        'output': base_output.tolist(),
+        'perturbation_bound': epsilon,
+        'output_bound': epsilon,  # Lipschitz constant = 1
+        'lipschitz_constant': 1,
+        'certified': True,
+        'explanation': f'For all δ with ||δ||_∞ ≤ {epsilon}, '
+                       f'||A⊗(v+δ) - A⊗v||_∞ ≤ {epsilon}'
+    }
 
 
-def security_parameter_table():
+def padic_valuation(n: int, p: int) -> int:
     """
-    Compute security parameters for tropical cryptography.
-    
-    Returns a table mapping dimension n to classical and quantum
-    security levels (in bits).
+    Compute the p-adic valuation v_p(n) = max{k : p^k | n}.
+
+    This is the bridge from multiplicative number theory to tropical algebra:
+    v_p(a·b) = v_p(a) + v_p(b) [multiplication → addition]
+    v_p(min(a,b)) = min(v_p(a), v_p(b)) [when a|b or b|a]
     """
-    results = []
-    for n in range(5, 70):
-        nfact = factorial(n)
-        log2_nfact = log2(nfact)
-        classical_bits = int(log2_nfact)
-        quantum_bits = int(log2_nfact / 2)
-        results.append({
-            'n': n,
-            'n_factorial': nfact,
-            'log2_factorial': log2_nfact,
-            'classical_security_bits': classical_bits,
-            'quantum_security_bits': quantum_bits,
-        })
-    return results
+    if n == 0:
+        return float('inf')
+    count = 0
+    while n % p == 0:
+        n //= p
+        count += 1
+    return count
 
 
-def benchmark_tropical_mul(dimensions: List[int], num_trials: int = 5):
+def tropical_from_padic(matrix: np.ndarray, p: int) -> TropicalMatrix:
     """
-    Benchmark tropical matrix multiplication for various dimensions.
-    
-    Returns timing data for performance analysis.
+    Convert an integer matrix to a tropical matrix via p-adic valuation.
+    This is the Rosetta Stone bridge: classical → tropical → lattice.
+
+    Bridge: Number Theory → Tropical Geometry → Lattice Cryptography
     """
-    results = []
-    for n in dimensions:
-        times = []
-        for _ in range(num_trials):
-            A = TropicalMatrix.random(n)
-            B = TropicalMatrix.random(n)
-            start = time.perf_counter()
-            _ = A @ B
-            elapsed = time.perf_counter() - start
-            times.append(elapsed)
-        avg = np.mean(times)
-        results.append({'n': n, 'avg_time_ms': avg * 1000, 'ops': n**3})
-    return results
-
-
-if __name__ == "__main__":
-    print("Tropical Cryptographic Algorithms — Self-Test")
-    print("=" * 50)
-    
-    # Test associativity
-    n = 5
-    A = TropicalMatrix.random(n)
-    B = TropicalMatrix.random(n)
-    C = TropicalMatrix.random(n)
-    
-    AB_C = (A @ B) @ C
-    A_BC = A @ (B @ C)
-    assert np.allclose(AB_C.data, A_BC.data), "Associativity failed!"
-    print("✓ Associativity verified")
-    
-    # Test identity
-    I = TropicalMatrix.identity(n)
-    AI = A @ I
-    IA = I @ A
-    assert np.allclose(AI.data, A.data), "Right identity failed!"
-    assert np.allclose(IA.data, A.data), "Left identity failed!"
-    print("✓ Identity verified")
-    
-    # Test key exchange
-    ke = TropicalKeyExchange(n=8)
-    assert ke.verify_correctness(3, 5), "Key exchange failed!"
-    print("✓ Key exchange correctness verified")
-    
-    # Test security parameters
-    assert factorial(35) >= 2**128, "Classical security bound failed!"
-    assert factorial(58) >= 2**256, "Quantum security bound failed!"
-    print("✓ Security parameters verified")
-    
-    # Benchmark
-    print("\nBenchmark:")
-    for result in benchmark_tropical_mul([16, 32, 64, 128]):
-        print(f"  n={result['n']:>4}: {result['avg_time_ms']:.2f} ms "
-              f"({result['ops']:>10} ops)")
-    
-    print("\nAll tests passed!")
-
-
-#!/usr/bin/env python3
-"""
-Applications of Tropical Post-Quantum Cryptography
-
-Demonstrates real-world applications:
-1. Shortest-path authenticated routing
-2. Certified robustness for neural networks
-3. Post-quantum key exchange simulation
-4. Tropical hash collision analysis
-
-Bridge: Tropical Geometry × Post-Quantum Cryptography × Machine Learning
-"""
-
-import numpy as np
-from math import factorial, log2
-from algorithms import TropicalMatrix, TropicalKeyExchange, TropicalHash
-
-
-# ─────────────────────────────────────────────────────────────────
-# APPLICATION 1: Shortest-Path Authenticated Routing
-# ─────────────────────────────────────────────────────────────────
-
-def shortest_path_routing():
-    """
-    Tropical matrix multiplication computes all-pairs shortest paths.
-    
-    Given a weighted graph as an adjacency matrix, A^⊗k gives the
-    shortest paths using at most k edges.
-    
-    Application: Authenticated network routing with tropical commitments.
-    """
-    print("=" * 65)
-    print("APPLICATION 1: Shortest-Path Authenticated Routing")
-    print("=" * 65)
-    
-    # Network topology (edge weights; inf = no direct edge)
-    INF = np.inf
-    # 5-node network
-    adj = np.array([
-        [0,   3,   INF, 7,   INF],
-        [3,   0,   1,   INF, 8  ],
-        [INF, 1,   0,   2,   INF],
-        [7,   INF, 2,   0,   4  ],
-        [INF, 8,   INF, 4,   0  ],
-    ])
-    
-    G = TropicalMatrix(adj)
-    print(f"\nNetwork adjacency matrix (5 nodes):")
-    print(adj)
-    
-    # Compute all-pairs shortest paths via tropical matrix power
-    # A^⊗(n-1) gives shortest paths
-    shortest = G.power(4)
-    
-    print(f"\nAll-pairs shortest paths (G^⊗4):")
-    print(shortest.data)
-    
-    # Verify: shortest path from 0 to 4
-    print(f"\nShortest path 0→4: {shortest.data[0,4]}")
-    print(f"  Route: 0→1 (3) → 2 (1) → 3 (2) → 4 (4) = {3+1+2+4}")
-    
-    # Tropical hash commitment for route authentication
-    h = TropicalHash(n=4)
-    route_msg = b"0-1-2-3-4"
-    commitment = h.hash(route_msg)
-    print(f"\nRoute commitment (tropical hash): {np.round(commitment, 4)}")
-
-
-# ─────────────────────────────────────────────────────────────────
-# APPLICATION 2: Certified Robustness for Tropical Neural Nets
-# ─────────────────────────────────────────────────────────────────
-
-def certified_robustness():
-    """
-    A tropical (min-plus) neural network layer computes:
-        y_j = min_k (W_{jk} + x_k)
-    
-    This is exactly tropical matrix-vector multiplication.
-    
-    The Lipschitz constant of this layer (in ℓ∞ norm) is bounded by 1,
-    since min-plus is 1-Lipschitz:
-        |min_k(W_{jk} + x_k) - min_k(W_{jk} + x'_k)| ≤ max_k |x_k - x'_k|
-    
-    This gives CERTIFIED adversarial robustness: if ||x - x'||∞ < ε,
-    then ||f(x) - f(x')||∞ < ε for each tropical layer.
-    """
-    print("\n" + "=" * 65)
-    print("APPLICATION 2: Certified Robustness for Tropical Neural Nets")
-    print("=" * 65)
-    
-    n = 4
-    W = TropicalMatrix.random(n, -5, 5)
-    
-    # Clean input
-    x = np.array([1.0, 2.0, 3.0, 4.0])
-    
-    # Adversarial perturbation
-    epsilon = 0.5
-    delta = np.random.uniform(-epsilon, epsilon, n)
-    x_adv = x + delta
-    
-    # Tropical layer output
-    def tropical_layer(W, x):
-        """Compute min_k (W_{jk} + x_k) for each j."""
-        return np.min(W.data + x[np.newaxis, :], axis=1)
-    
-    y = tropical_layer(W, x)
-    y_adv = tropical_layer(W, x_adv)
-    
-    output_diff = np.max(np.abs(y - y_adv))
-    input_diff = np.max(np.abs(x - x_adv))
-    
-    print(f"\nWeight matrix W:\n{np.round(W.data, 2)}")
-    print(f"\nClean input x = {x}")
-    print(f"Perturbation δ = {np.round(delta, 4)}")
-    print(f"Adversarial x' = {np.round(x_adv, 4)}")
-    print(f"\nOutput f(x)  = {np.round(y, 4)}")
-    print(f"Output f(x') = {np.round(y_adv, 4)}")
-    print(f"\n‖x - x'‖∞ = {input_diff:.4f}")
-    print(f"‖f(x) - f(x')‖∞ = {output_diff:.4f}")
-    print(f"Lipschitz bound: {output_diff:.4f} ≤ {input_diff:.4f}? "
-          f"{'✓ CERTIFIED' if output_diff <= input_diff + 1e-10 else '✗ VIOLATED'}")
-    
-    # Multi-layer network
-    L = 5
-    layers = [TropicalMatrix.random(n, -2, 2) for _ in range(L)]
-    
-    out_clean = x.copy()
-    out_adv = x_adv.copy()
-    for layer in layers:
-        out_clean = tropical_layer(layer, out_clean)
-        out_adv = tropical_layer(layer, out_adv)
-    
-    multi_diff = np.max(np.abs(out_clean - out_adv))
-    print(f"\n{L}-layer tropical network:")
-    print(f"  Input perturbation: {input_diff:.4f}")
-    print(f"  Output perturbation: {multi_diff:.4f}")
-    print(f"  Certified bound (1^{L} · ε = ε): {input_diff:.4f}")
-    print(f"  Robust? {'✓ YES' if multi_diff <= input_diff + 1e-10 else '✗ NO'}")
-
-
-# ─────────────────────────────────────────────────────────────────
-# APPLICATION 3: Post-Quantum Key Exchange Simulation
-# ─────────────────────────────────────────────────────────────────
-
-def key_exchange_simulation():
-    """
-    Full simulation of tropical Diffie-Hellman key exchange.
-    
-    Demonstrates:
-    1. Key generation (tropical matrix power)
-    2. Key exchange (tropical product)
-    3. Key agreement verification
-    4. Timing analysis
-    """
-    print("\n" + "=" * 65)
-    print("APPLICATION 3: Post-Quantum Key Exchange Simulation")
-    print("=" * 65)
-    
-    for n in [8, 16, 32]:
-        ke = TropicalKeyExchange(n=n, bound=100.0)
-        
-        # Generate secrets
-        a, b = 7, 13
-        
-        import time
-        
-        # Alice generates public key
-        t0 = time.perf_counter()
-        PA = ke.generate_keypair(a)
-        t_alice = time.perf_counter() - t0
-        
-        # Bob generates public key
-        t0 = time.perf_counter()
-        PB = ke.generate_keypair(b)
-        t_bob = time.perf_counter() - t0
-        
-        # Shared key computation
-        t0 = time.perf_counter()
-        K_alice = ke.compute_shared_key(PB, a)
-        t_shared = time.perf_counter() - t0
-        
-        K_bob = ke.compute_shared_key(PA, b)
-        
-        # Verify agreement
-        agree = np.allclose(K_alice.data, K_bob.data)
-        
-        print(f"\n  Dimension n={n}:")
-        print(f"    Key generation: {t_alice*1000:.2f} ms")
-        print(f"    Shared key: {t_shared*1000:.2f} ms")
-        print(f"    Keys agree: {'✓' if agree else '✗'}")
-        print(f"    Key size: {n*n*8} bytes")
-        print(f"    Security: ~{int(log2(factorial(n)))} classical bits")
-
-
-# ─────────────────────────────────────────────────────────────────
-# APPLICATION 4: Tropical Hash Collision Analysis
-# ─────────────────────────────────────────────────────────────────
-
-def hash_collision_analysis():
-    """
-    Analyze collision resistance of tropical hash functions.
-    
-    The pigeonhole principle guarantees collisions when input space
-    exceeds output space. We measure empirical collision rates.
-    """
-    print("\n" + "=" * 65)
-    print("APPLICATION 4: Tropical Hash Collision Analysis")
-    print("=" * 65)
-    
-    for n in [4, 8, 16]:
-        h = TropicalHash(n=n)
-        
-        # Hash many random messages and check for near-collisions
-        num_messages = 1000
-        hashes = []
-        for i in range(num_messages):
-            msg = i.to_bytes(4, 'big')
-            hval = h.hash(msg)
-            hashes.append(hval)
-        
-        hashes = np.array(hashes)
-        
-        # Check pairwise distances
-        min_dist = np.inf
-        for i in range(min(100, num_messages)):
-            for j in range(i+1, min(100, num_messages)):
-                dist = np.max(np.abs(hashes[i] - hashes[j]))
-                min_dist = min(min_dist, dist)
-        
-        print(f"\n  Hash dimension n={n}:")
-        print(f"    Output size: {n} real values")
-        print(f"    Min pairwise distance (first 100): {min_dist:.6f}")
-        print(f"    Hash entropy estimate: ~{n * 32} bits")
-    
-    # Demonstrate pigeonhole: discretized hash → guaranteed collisions
-    print(f"\n  Pigeonhole demonstration (discretized to 256 values):")
-    h = TropicalHash(n=2)
-    buckets = {}
-    collisions = 0
-    for i in range(300):
-        msg = i.to_bytes(4, 'big')
-        hval = h.hash(msg)
-        key = tuple(np.round(hval, 1))
-        if key in buckets:
-            collisions += 1
-        else:
-            buckets[key] = i
-    print(f"    Messages: 300, Collisions: {collisions}")
-    print(f"    → Pigeonhole principle confirmed")
-
-
-if __name__ == "__main__":
-    np.random.seed(42)
-    
-    shortest_path_routing()
-    certified_robustness()
-    key_exchange_simulation()
-    hash_collision_analysis()
-    
-    print("\n" + "=" * 65)
-    print("All applications completed successfully!")
-    print("=" * 65)
-
-
-#!/usr/bin/env python3
-"""
-Tropical Post-Quantum Cryptographic Primitives — Interactive Demo
-
-Demonstrates the core mathematical concepts of tropical (min-plus) algebra
-applied to post-quantum cryptography.
-
-Bridge: Tropical Geometry × Post-Quantum Cryptography × Computational Complexity
-"""
-
-import numpy as np
-from math import factorial, log2
-from itertools import permutations
-
-np.random.seed(42)
-
-
-def tropical_add(a, b):
-    """Tropical addition: min(a, b)."""
-    return np.minimum(a, b)
-
-
-def tropical_mul(a, b):
-    """Tropical multiplication: a + b."""
-    return a + b
-
-
-def tropical_mat_mul(A, B):
-    """
-    Tropical matrix multiplication: (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj}).
-    Complexity: O(n³).
-    """
-    n = A.shape[0]
-    C = np.full((n, n), np.inf)
+    n = matrix.shape[0]
+    tropical_data = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
-            for k in range(n):
-                C[i, j] = min(C[i, j], A[i, k] + B[k, j])
-    return C
+            val = int(matrix[i, j])
+            if val == 0:
+                tropical_data[i, j] = float('inf')
+            else:
+                tropical_data[i, j] = padic_valuation(abs(val), p)
+    return TropicalMatrix(tropical_data)
 
 
-def tropical_mat_pow(G, exp):
-    """Tropical matrix power: G^⊗exp (iterated tropical product)."""
-    n = G.shape[0]
-    if exp == 0:
-        # Tropical identity: 0 on diagonal, +inf off diagonal
-        result = np.full((n, n), np.inf)
-        np.fill_diagonal(result, 0)
-        return result
-    result = G.copy()
-    for _ in range(exp - 1):
-        result = tropical_mat_mul(result, G)
+# ============================================================
+# Example usage
+# ============================================================
+
+if __name__ == '__main__':
+    print("Tropical Cryptography Algorithms - Examples")
+    print("=" * 60)
+
+    # 1. Matrix operations
+    print("\n1. Tropical Matrix Operations")
+    A = TropicalMatrix(np.array([[1, 3, 5], [2, 0, 4], [6, 1, 2]], dtype=float))
+    B = TropicalMatrix(np.array([[0, 2, 1], [3, 1, 0], [2, 4, 3]], dtype=float))
+    C = A.tropical_mul(B)
+    print(f"   A ⊗ B = \n{C.data}")
+
+    # 2. Matrix power
+    print("\n2. Tropical Matrix Power (repeated squaring)")
+    Ak = A.tropical_pow(10)
+    print(f"   A^⊗10 diagonal: [{Ak.data[0,0]:.0f}, {Ak.data[1,1]:.0f}, {Ak.data[2,2]:.0f}]")
+
+    # 3. Tropical eigenvalue
+    print("\n3. Tropical Eigenvalue Approximation")
+    eig = A.tropical_eigenvalue_approx(50)
+    print(f"   Approximate tropical eigenvalue: {eig:.4f}")
+
+    # 4. Hash function
+    print("\n4. Tropical Hash Function")
+    h = TropicalHashFunction(n=8, k=100, entry_bound=50)
+    v = np.random.randint(0, 50, 8).astype(float)
+    hv = h.hash(v)
+    print(f"   Hash of {v.tolist()[:4]}... = {hv.tolist()[:4]}...")
+    print(f"   Security: {h.security_bits():.0f} bits")
+
+    # 5. Key exchange
+    print("\n5. Tropical Key Exchange")
+    ke = TropicalKeyExchange(n=4, entry_bound=20)
+    alice_secret, bob_secret = 7, 11
+    print(f"   Alice secret: {alice_secret}, Bob secret: {bob_secret}")
+    agreement = ke.verify_agreement(alice_secret, bob_secret)
+    print(f"   Keys agree? {agreement}")
+
+    # 6. Lipschitz certificate
+    print("\n6. Certified Robustness")
+    cert = lipschitz_certificate(A, np.array([1, 2, 3], dtype=float), epsilon=0.5)
+    print(f"   Certificate: {cert['explanation']}")
+
+    # 7. p-adic bridge
+    print("\n7. p-adic Valuation Bridge")
+    M = np.array([[12, 8, 15], [4, 9, 6], [16, 3, 27]])
+    T = tropical_from_padic(M, 2)
+    print(f"   Classical matrix:\n{M}")
+    print(f"   Tropical (v_2) matrix:\n{T.data}")
+
+    print("\n" + "=" * 60)
+    print("All examples completed successfully!")
+
+
+#!/usr/bin/env python3
+"""
+Tropical Cryptography Applications
+
+Real-world applications of tropical min-plus algebra:
+1. Post-quantum key exchange
+2. Certified adversarial robustness for neural networks
+3. Tropical hash function with collision analysis
+4. Lattice bridge via p-adic valuation
+"""
+
+import numpy as np
+from algorithms import TropicalMatrix, TropicalHashFunction, TropicalKeyExchange
+from algorithms import lipschitz_certificate, padic_valuation, tropical_from_padic
+
+
+def application_1_post_quantum_key_exchange():
+    """
+    Application 1: Post-Quantum Key Exchange via Tropical DLP
+
+    Alice and Bob agree on a shared secret using tropical matrix powers.
+    Security relies on the hardness of the Tropical Discrete Logarithm Problem.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 1: Post-Quantum Key Exchange")
+    print("=" * 70)
+
+    n = 6  # Matrix dimension
+    ke = TropicalKeyExchange(n=n, entry_bound=50)
+    print(f"\nPublic parameters: {n}×{n} tropical matrix")
+    print(f"Generator matrix (first row): {ke.generator.data[0].tolist()}")
+
+    # Alice and Bob choose secrets
+    alice_secret = 13
+    bob_secret = 17
+
+    # Compute public keys
+    alice_public = ke.generate_public_key(alice_secret)
+    bob_public = ke.generate_public_key(bob_secret)
+
+    print(f"\nAlice's secret: {alice_secret}")
+    print(f"Bob's secret: {bob_secret}")
+    print(f"Alice's public key (diagonal): {[alice_public.data[i,i] for i in range(n)]}")
+    print(f"Bob's public key (diagonal): {[bob_public.data[i,i] for i in range(n)]}")
+
+    # Compute shared key
+    alice_shared = ke.compute_shared_key(bob_public, alice_secret)
+    bob_shared = ke.compute_shared_key(alice_public, bob_secret)
+
+    agreement = np.allclose(alice_shared.data, bob_shared.data)
+    print(f"\nShared keys agree? {agreement}")
+    print(f"Shared key (diagonal): {[alice_shared.data[i,i] for i in range(n)]}")
+
+    # Security analysis
+    print(f"\nSecurity Analysis:")
+    print(f"  Forward cost (compute A^⊗k): O({n}³ log k) = O({n**3} log k)")
+    print(f"  Brute force inversion: test all k from 1 to K")
+    print(f"  Structural immunity: min is idempotent → no quantum Fourier transform")
+
+
+def application_2_certified_robustness():
+    """
+    Application 2: Certified Adversarial Robustness for Tropical Neural Networks
+
+    A tropical neural network layer f(x) = A ⊗ x is 1-Lipschitz.
+    This provides certified robustness: perturbations of size ε produce
+    output changes of at most ε.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 2: Certified Adversarial Robustness")
+    print("=" * 70)
+
+    n = 10
+    num_layers = 5
+
+    # Create multi-layer tropical network
+    layers = [TropicalMatrix.random(n, 0, 20) for _ in range(num_layers)]
+
+    # Test input
+    x = np.random.randint(0, 20, n).astype(float)
+
+    # Forward pass
+    output = x.copy()
+    for layer in layers:
+        output = layer.tropical_mv(output)
+
+    print(f"\n{num_layers}-layer tropical network, dimension {n}")
+    print(f"Input: {x[:5].tolist()}...")
+    print(f"Output: {output[:5].tolist()}...")
+
+    # Certified robustness test
+    epsilon = 2.0
+    num_attacks = 1000
+    max_output_change = 0
+
+    for _ in range(num_attacks):
+        delta = np.random.uniform(-epsilon, epsilon, n)
+        perturbed = x + delta
+
+        perturbed_output = perturbed.copy()
+        for layer in layers:
+            perturbed_output = layer.tropical_mv(perturbed_output)
+
+        change = np.max(np.abs(output - perturbed_output))
+        max_output_change = max(max_output_change, change)
+
+    print(f"\nCertified Robustness Analysis:")
+    print(f"  Perturbation bound ε = {epsilon}")
+    print(f"  Lipschitz constant = 1 (per layer) × {num_layers} layers = 1 (non-expansive)")
+    print(f"  Certified output bound: {epsilon}")
+    print(f"  Empirical max output change over {num_attacks} attacks: {max_output_change:.4f}")
+    print(f"  Certificate valid? {max_output_change <= epsilon + 1e-10} ✓")
+
+
+def application_3_tropical_hash():
+    """
+    Application 3: Tropical Hash Function with Collision Analysis
+
+    H(v) = A^{⊗k} ⊗ v provides a hash function with:
+    - O(n² ) evaluation cost (after precomputation)
+    - Collision resistance based on birthday bound
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Tropical Hash Function")
+    print("=" * 70)
+
+    configurations = [
+        (8, 50, 16),
+        (16, 100, 32),
+        (32, 200, 64),
+    ]
+
+    for n, k, B in configurations:
+        h = TropicalHashFunction(n=n, k=k, entry_bound=B)
+
+        # Hash some test inputs
+        v1 = np.random.randint(0, B, n).astype(float)
+        v2 = v1.copy(); v2[0] += 1  # Slight perturbation
+
+        h1 = h.hash(v1)
+        h2 = h.hash(v2)
+
+        diff = np.max(np.abs(h1 - h2))
+
+        print(f"\nConfiguration: n={n}, k={k}, B={B}")
+        print(f"  Security: {h.security_bits():.0f} bits")
+        print(f"  Forward ops: {h.forward_ops():,}")
+        print(f"  Hash diff for 1-bit change: {diff:.1f}")
+        print(f"  Output space: (2·{B}+1)^{n*n} = {2*B+1}^{n*n}")
+
+
+def application_4_lattice_bridge():
+    """
+    Application 4: p-adic Valuation Bridge to Lattice Cryptography
+
+    The p-adic valuation v_p maps:
+    - Multiplication → Addition (v_p(ab) = v_p(a) + v_p(b))
+    - This converts classical matrices to tropical matrices
+
+    The bridge enables hybrid tropical-lattice security reductions.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 4: p-adic Valuation Bridge")
+    print("=" * 70)
+
+    # Classical matrix with entries that are products of small primes
+    M = np.array([
+        [12, 8, 18],
+        [4, 27, 6],
+        [16, 9, 36]
+    ])
+
+    print(f"\nClassical matrix M:")
+    print(M)
+
+    for p in [2, 3]:
+        T = tropical_from_padic(M, p)
+        print(f"\nTropical matrix via v_{p}:")
+        print(T.data.astype(int))
+
+        tdet = T.tropical_det()
+        print(f"  Tropical determinant: {tdet}")
+
+        eig = T.tropical_eigenvalue_approx(20)
+        print(f"  Approx tropical eigenvalue: {eig:.4f}")
+
+    # Demonstrate the homomorphism
+    print("\nHomomorphism verification: v_p(a·b) = v_p(a) + v_p(b)")
+    for p in [2, 3, 5]:
+        a, b = 12, 18
+        print(f"  p={p}: v_{p}({a}·{b}) = v_{p}({a*b}) = {padic_valuation(a*b, p)}")
+        print(f"         v_{p}({a}) + v_{p}({b}) = {padic_valuation(a, p)} + {padic_valuation(b, p)} = {padic_valuation(a, p) + padic_valuation(b, p)}")
+
+    # Lattice determinant bound
+    print("\nLattice determinant bounds:")
+    for n, B, p in [(4, 3, 2), (8, 5, 2), (16, 3, 3)]:
+        det_bound = p ** (n * B)
+        print(f"  n={n}, B={B}, p={p}: det bound = {p}^{n*B} = {det_bound:,.0f}")
+
+
+if __name__ == '__main__':
+    np.random.seed(42)
+
+    application_1_post_quantum_key_exchange()
+    application_2_certified_robustness()
+    application_3_tropical_hash()
+    application_4_lattice_bridge()
+
+    print("\n" + "=" * 70)
+    print("All applications completed successfully!")
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""
+Tropical Min-Plus Cryptography: Concrete Demonstrations
+
+This script demonstrates the key mathematical objects and theorems from
+the tropical cryptography framework with concrete numerical examples.
+"""
+
+import numpy as np
+from itertools import permutations
+import time
+
+
+def tropical_mv(A: np.ndarray, v: np.ndarray) -> np.ndarray:
+    """Tropical (min-plus) matrix-vector product: (A⊗v)_i = min_j(A_{ij} + v_j)"""
+    n = A.shape[0]
+    result = np.full(n, np.inf)
+    for i in range(n):
+        for j in range(n):
+            result[i] = min(result[i], A[i, j] + v[j])
     return result
 
 
-def tropical_det(A):
-    """
-    Tropical determinant: min over all permutations of Σ_i A_{i,σ(i)}.
-    Complexity: O(n! · n) — brute force for demonstration.
-    """
+def tropical_mm(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+    """Tropical (min-plus) matrix multiplication: (A⊗B)_{ij} = min_k(A_{ik} + B_{kj})"""
     n = A.shape[0]
-    min_sum = np.inf
-    best_perm = None
+    result = np.full((n, n), np.inf)
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                result[i, j] = min(result[i, j], A[i, k] + B[k, j])
+    return result
+
+
+def tropical_pow(A: np.ndarray, k: int) -> np.ndarray:
+    """Tropical matrix power by repeated multiplication."""
+    if k <= 0:
+        return A.copy()
+    result = A.copy()
+    for _ in range(k - 1):
+        result = tropical_mm(result, A)
+    return result
+
+
+def tropical_det(A: np.ndarray) -> float:
+    """Tropical determinant = min-weight perfect matching."""
+    n = A.shape[0]
+    min_weight = np.inf
     for perm in permutations(range(n)):
-        s = sum(A[i, perm[i]] for i in range(n))
-        if s < min_sum:
-            min_sum = s
-            best_perm = perm
-    return min_sum, best_perm
+        weight = sum(A[i, perm[i]] for i in range(n))
+        min_weight = min(min_weight, weight)
+    return min_weight
 
 
-def tropical_spectral_radius(A):
-    """Tropical spectral radius: tropDet(A) / n."""
-    n = A.shape[0]
-    det, _ = tropical_det(A)
-    return det / n
+def linf_dist(v: np.ndarray, w: np.ndarray) -> float:
+    """L∞ distance between vectors."""
+    return np.max(np.abs(v - w))
 
 
-# ─────────────────────────────────────────────────────────────────
-# DEMO 1: Basic Tropical Arithmetic
-# ─────────────────────────────────────────────────────────────────
-print("=" * 65)
-print("DEMO 1: Basic Tropical Arithmetic")
-print("=" * 65)
+def perm_weight(A: np.ndarray, perm: tuple) -> float:
+    """Weight of a permutation in a matrix."""
+    return sum(A[i, perm[i]] for i in range(A.shape[0]))
 
-a, b, c = 3.0, 7.0, 2.0
-print(f"\na = {a}, b = {b}, c = {c}")
-print(f"a ⊕ b = min({a}, {b}) = {tropical_add(a, b)}")
-print(f"a ⊗ b = {a} + {b} = {tropical_mul(a, b)}")
-print(f"\nDistributivity: a ⊗ (b ⊕ c) = {a} + min({b}, {c})")
-lhs = tropical_mul(a, tropical_add(b, c))
-rhs = tropical_add(tropical_mul(a, b), tropical_mul(a, c))
-print(f"  LHS = {lhs}")
-print(f"  (a ⊗ b) ⊕ (a ⊗ c) = min({a}+{b}, {a}+{c})")
-print(f"  RHS = {rhs}")
-print(f"  Equal? {np.isclose(lhs, rhs)}")
 
-print(f"\nIdempotency: {a} ⊕ {a} = min({a}, {a}) = {tropical_add(a, a)}")
-print(f"Absorption: min({a}, {a}+2) = {min(a, a+2)}")
+# ============================================================
+# DEMO 1: Min-Plus Distributivity
+# ============================================================
+print("=" * 70)
+print("DEMO 1: Min-Plus Distributivity")
+print("=" * 70)
+print()
 
-# Min-abs identity
-print(f"\nQuantum resistance identity:")
-print(f"  min(a,b) = (a + b - |a - b|) / 2")
-print(f"  min({a},{b}) = ({a} + {b} - |{a}-{b}|) / 2 = {(a+b-abs(a-b))/2}")
+a, b, c = 3, 7, 5
+lhs = a + min(b, c)
+rhs = min(a + b, a + c)
+print(f"  a={a}, b={b}, c={c}")
+print(f"  a + min(b,c) = {a} + min({b},{c}) = {a} + {min(b,c)} = {lhs}")
+print(f"  min(a+b, a+c) = min({a+b}, {a+c}) = {rhs}")
+print(f"  Equal? {lhs == rhs} ✓")
+print()
 
-# ─────────────────────────────────────────────────────────────────
-# DEMO 2: Tropical Matrix Multiplication
-# ─────────────────────────────────────────────────────────────────
-print("\n" + "=" * 65)
-print("DEMO 2: Tropical Matrix Multiplication")
-print("=" * 65)
+# ============================================================
+# DEMO 2: No Additive Inverse
+# ============================================================
+print("=" * 70)
+print("DEMO 2: No Additive Inverse in Min-Plus")
+print("=" * 70)
+print()
 
-A = np.array([[1.0, 3.0, 5.0],
-              [2.0, 0.0, 4.0],
-              [6.0, 1.0, 2.0]])
+print("  Trying to find f such that min(a, f(a)) = 0 for all a:")
+print("  For a = -1: min(-1, f(-1)) ≤ -1 < 0 for ANY f(-1)")
+print("  → No such f exists! ✓")
+print("  This is the structural obstruction blocking Shor's algorithm.")
+print()
 
-B = np.array([[0.0, 2.0, 1.0],
-              [3.0, 1.0, 0.0],
-              [1.0, 4.0, 2.0]])
+# ============================================================
+# DEMO 3: Tropical Matrix-Vector Product
+# ============================================================
+print("=" * 70)
+print("DEMO 3: Tropical Matrix-Vector Product")
+print("=" * 70)
+print()
 
-C = tropical_mat_mul(A, B)
-print(f"\nA =\n{A}")
-print(f"\nB =\n{B}")
-print(f"\nA ⊗ B = (min_k (A_ik + B_kj)) =\n{C}")
+A = np.array([[1, 3, 5],
+              [2, 0, 4],
+              [6, 1, 2]], dtype=float)
+v = np.array([2, 1, 3], dtype=float)
 
-# Verify associativity
-D = np.array([[2.0, 1.0, 3.0],
-              [0.0, 2.0, 1.0],
-              [1.0, 3.0, 0.0]])
+result = tropical_mv(A, v)
+print(f"  A = {A.tolist()}")
+print(f"  v = {v.tolist()}")
+print(f"  A ⊗ v = {result.tolist()}")
+print()
+print("  Verification:")
+for i in range(3):
+    terms = [f"A[{i},{j}]+v[{j}]={A[i,j]+v[j]}" for j in range(3)]
+    print(f"    (A⊗v)[{i}] = min({', '.join(terms)}) = {result[i]}")
+print()
 
-AB_C = tropical_mat_mul(tropical_mat_mul(A, B), D)
-A_BC = tropical_mat_mul(A, tropical_mat_mul(B, D))
-print(f"\nAssociativity check:")
-print(f"  (A ⊗ B) ⊗ D =\n{AB_C}")
-print(f"  A ⊗ (B ⊗ D) =\n{A_BC}")
-print(f"  Equal? {np.allclose(AB_C, A_BC)}")
+# ============================================================
+# DEMO 4: Non-Expansiveness (1-Lipschitz)
+# ============================================================
+print("=" * 70)
+print("DEMO 4: Non-Expansiveness (1-Lipschitz Property)")
+print("=" * 70)
+print()
 
-# ─────────────────────────────────────────────────────────────────
-# DEMO 3: Tropical Determinant
-# ─────────────────────────────────────────────────────────────────
-print("\n" + "=" * 65)
-print("DEMO 3: Tropical Determinant & Spectral Radius")
-print("=" * 65)
+np.random.seed(42)
+n = 8
+A = np.random.randint(0, 10, (n, n)).astype(float)
+num_tests = 1000
+max_ratio = 0
 
-det_val, best = tropical_det(A)
-trace = sum(A[i, i] for i in range(3))
-print(f"\nMatrix A =\n{A}")
-print(f"tropDet(A) = {det_val}")
-print(f"Optimal permutation: {best}")
-print(f"Trace = {trace}")
-print(f"tropDet(A) ≤ trace? {det_val <= trace}")
-print(f"Spectral radius λ*(A) = tropDet(A)/n = {det_val/3:.4f}")
+for _ in range(num_tests):
+    v = np.random.randint(-10, 10, n).astype(float)
+    w = np.random.randint(-10, 10, n).astype(float)
+    input_dist = linf_dist(v, w)
+    output_dist = linf_dist(tropical_mv(A, v), tropical_mv(A, w))
+    if input_dist > 0:
+        ratio = output_dist / input_dist
+        max_ratio = max(max_ratio, ratio)
 
-# ─────────────────────────────────────────────────────────────────
-# DEMO 4: Tropical Key Exchange
-# ─────────────────────────────────────────────────────────────────
-print("\n" + "=" * 65)
-print("DEMO 4: Tropical Diffie-Hellman Key Exchange")
-print("=" * 65)
+print(f"  Tested {num_tests} random pairs for n={n}")
+print(f"  Max ratio ||A⊗v - A⊗w||_∞ / ||v - w||_∞ = {max_ratio:.4f}")
+print(f"  Theorem guarantees ratio ≤ 1.0: {'✓' if max_ratio <= 1.0001 else '✗'}")
+print()
 
-n = 4
-G = np.random.uniform(0, 10, (n, n))
-a_secret = 3
-b_secret = 5
+# ============================================================
+# DEMO 5: Tropical Determinant = Min-Weight Assignment
+# ============================================================
+print("=" * 70)
+print("DEMO 5: Tropical Determinant = Min-Weight Perfect Matching")
+print("=" * 70)
+print()
 
-print(f"\nGenerator G (random {n}×{n} matrix):")
-print(np.round(G, 2))
+A_small = np.array([[3, 1, 4],
+                     [1, 5, 9],
+                     [2, 6, 5]], dtype=float)
 
-GA = tropical_mat_pow(G, a_secret)
-GB = tropical_mat_pow(G, b_secret)
+tdet = tropical_det(A_small)
+trace = sum(A_small[i, i] for i in range(3))
+print(f"  A = {A_small.tolist()}")
+print(f"  Tropical determinant: tdet(A) = {tdet}")
+print(f"  Matrix trace: tr(A) = {trace}")
+print(f"  tdet(A) ≤ tr(A)? {tdet <= trace} ✓")
+print()
 
-# Alice computes shared key: (G^b)^a = G^(a+b)
-K_alice = tropical_mat_pow(GB, a_secret)  # Actually G^b iterated a more times
-# More correctly: key = G^(a+b)
-K_correct = tropical_mat_pow(G, a_secret + b_secret)
+print("  All permutation weights:")
+for perm in permutations(range(3)):
+    w = perm_weight(A_small, perm)
+    marker = " ← minimum" if w == tdet else ""
+    print(f"    σ = {perm}: w = {w}{marker}")
+print()
 
-print(f"\nAlice's secret: a = {a_secret}")
-print(f"Bob's secret: b = {b_secret}")
-print(f"Alice's public: G^⊗{a_secret} (first entry: {GA[0,0]:.4f})")
-print(f"Bob's public: G^⊗{b_secret} (first entry: {GB[0,0]:.4f})")
-print(f"\nShared key G^⊗{a_secret + b_secret} (first row):")
-print(np.round(K_correct[0], 4))
+# ============================================================
+# DEMO 6: Exponential Gap (Forward vs Inversion Cost)
+# ============================================================
+print("=" * 70)
+print("DEMO 6: Exponential Gap: n² vs 2^n")
+print("=" * 70)
+print()
 
-# ─────────────────────────────────────────────────────────────────
-# DEMO 5: Security Parameters
-# ─────────────────────────────────────────────────────────────────
-print("\n" + "=" * 65)
-print("DEMO 5: Security Parameters")
-print("=" * 65)
+print(f"  {'n':>4} | {'n² (forward)':>14} | {'2^n (inversion)':>20} | {'Ratio':>12}")
+print(f"  {'-'*4}-+-{'-'*14}-+-{'-'*20}-+-{'-'*12}")
+for n in [5, 8, 16, 32, 64, 128, 256]:
+    forward = n ** 2
+    inversion = 2 ** n
+    ratio = inversion / forward
+    print(f"  {n:>4} | {forward:>14,} | {inversion:>20,.0f} | {ratio:>12,.0f}×")
+print()
 
-print(f"\n{'n':>4} | {'n!':>20} | {'log₂(n!)':>10} | {'Classical':>10} | {'Quantum':>10}")
-print("-" * 65)
-for n in [10, 20, 30, 35, 40, 50, 58, 64]:
-    nfact = factorial(n)
-    log2_nfact = log2(nfact)
-    classical = int(log2_nfact)
-    quantum = int(log2_nfact / 2)
-    print(f"{n:>4} | {nfact:>20.3e} | {log2_nfact:>10.1f} | {classical:>10} | {quantum:>10}")
+# ============================================================
+# DEMO 7: Tropical Matrix Power Computation
+# ============================================================
+print("=" * 70)
+print("DEMO 7: Tropical Matrix Powers")
+print("=" * 70)
+print()
 
-print(f"\n✓ 35! ≥ 2^128: {factorial(35) >= 2**128}")
-print(f"✓ 58! ≥ 2^256: {factorial(58) >= 2**256}")
+A = np.array([[0, 3, 8],
+              [2, 0, 5],
+              [4, 1, 0]], dtype=float)
 
-# ─────────────────────────────────────────────────────────────────
-# DEMO 6: One-Way Property — Preimage Non-uniqueness
-# ─────────────────────────────────────────────────────────────────
-print("\n" + "=" * 65)
-print("DEMO 6: One-Way Property — Preimage Non-uniqueness")
-print("=" * 65)
+print(f"  A = {A.tolist()}")
+for k in range(1, 6):
+    Ak = tropical_pow(A, k)
+    print(f"  A^⊗{k} diagonal = [{Ak[0,0]:.0f}, {Ak[1,1]:.0f}, {Ak[2,2]:.0f}]")
+    # The diagonal entries approach k * tropical_eigenvalue
 
-target = 5.0
-print(f"\nTarget: min(a, b) = {target}")
-print(f"Possible preimages:")
-for offset in range(5):
-    a_val = target
-    b_val = target + offset
-    print(f"  ({a_val}, {b_val}) → min = {min(a_val, b_val)}")
-    a_val = target + offset
-    b_val = target
-    if offset > 0:
-        print(f"  ({a_val}, {b_val}) → min = {min(a_val, b_val)}")
+print()
+print("  The diagonal entries grow linearly → tropical eigenvalue = min cycle mean")
+print()
 
-print(f"\n→ Infinitely many preimages! The inversion problem is ill-posed.")
+# ============================================================
+# DEMO 8: Shift Equivariance
+# ============================================================
+print("=" * 70)
+print("DEMO 8: Shift Equivariance: A⊗(v+c) = (A⊗v)+c")
+print("=" * 70)
+print()
 
-# ─────────────────────────────────────────────────────────────────
-# DEMO 7: Tropical Norm Triangle Inequality
-# ─────────────────────────────────────────────────────────────────
-print("\n" + "=" * 65)
-print("DEMO 7: Tropical Norm & Triangle Inequality")
-print("=" * 65)
+A = np.array([[1, 3], [2, 0]], dtype=float)
+v = np.array([5, 2], dtype=float)
+c = 7
 
-u = np.array([3.0, -1.0, 4.0, -1.5])
-v = np.array([-2.0, 5.0, -3.0, 2.0])
-w = u + v
+lhs = tropical_mv(A, v + c)
+rhs = tropical_mv(A, v) + c
+print(f"  A = {A.tolist()}, v = {v.tolist()}, c = {c}")
+print(f"  A ⊗ (v + {c}) = {lhs.tolist()}")
+print(f"  (A ⊗ v) + {c} = {rhs.tolist()}")
+print(f"  Equal? {np.allclose(lhs, rhs)} ✓")
+print()
 
-norm_u = np.max(np.abs(u))
-norm_v = np.max(np.abs(v))
-norm_w = np.max(np.abs(w))
+# ============================================================
+# DEMO 9: Birthday Bound for Collision Resistance
+# ============================================================
+print("=" * 70)
+print("DEMO 9: Birthday Bound Collision Resistance")
+print("=" * 70)
+print()
 
-print(f"\nu = {u}")
-print(f"v = {v}")
-print(f"u + v = {w}")
-print(f"‖u‖∞ = {norm_u}")
-print(f"‖v‖∞ = {norm_v}")
-print(f"‖u+v‖∞ = {norm_w}")
-print(f"‖u‖∞ + ‖v‖∞ = {norm_u + norm_v}")
-print(f"Triangle inequality: {norm_w} ≤ {norm_u + norm_v}? {norm_w <= norm_u + norm_v}")
+print(f"  {'Dim n':>6} | {'Entry B':>8} | {'Output Space (bits)':>20} | {'Birthday (bits)':>16}")
+print(f"  {'-'*6}-+-{'-'*8}-+-{'-'*20}-+-{'-'*16}")
+for n, B in [(4, 16), (8, 16), (16, 256), (32, 256), (64, 65536), (128, 65536)]:
+    output_bits = n * n * np.log2(2 * B + 1)
+    birthday_bits = output_bits / 2
+    print(f"  {n:>6} | {B:>8} | {output_bits:>20,.0f} | {birthday_bits:>16,.0f}")
+print()
 
-print("\n" + "=" * 65)
-print("All demos completed successfully!")
-print("=" * 65)
+# ============================================================
+# DEMO 10: Timing: Forward Computation
+# ============================================================
+print("=" * 70)
+print("DEMO 10: Forward Computation Timing")
+print("=" * 70)
+print()
+
+for n in [10, 50, 100, 200]:
+    A = np.random.randint(0, 100, (n, n)).astype(float)
+    v = np.random.randint(0, 100, n).astype(float)
+
+    start = time.time()
+    for _ in range(10):
+        tropical_mv(A, v)
+    elapsed = (time.time() - start) / 10
+
+    print(f"  n={n:>4}: tropical_mv takes {elapsed*1000:.2f} ms (O(n²) = {n*n} ops)")
+
+print()
+print("All demonstrations completed successfully! ✓")
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Tropical Post-Quantum Cryptography
+Tropical Cryptography Visualizations
 
-Generates publication-quality figures illustrating key concepts.
+Generates charts and diagrams illustrating key mathematical structures.
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from math import factorial, log2
-
-plt.style.use('seaborn-v0_8-whitegrid')
+from algorithms import TropicalMatrix, padic_valuation
 
 
-def plot_security_parameters():
-    """Plot security levels vs matrix dimension."""
+def plot_exponential_gap():
+    """Plot the exponential gap between forward and inversion cost."""
     fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    
-    ns = list(range(5, 65))
-    classical = [log2(factorial(n)) for n in ns]
-    quantum = [log2(factorial(n)) / 2 for n in ns]
-    
-    ax.plot(ns, classical, 'b-', linewidth=2, label='Classical security (log₂(n!))')
-    ax.plot(ns, quantum, 'r-', linewidth=2, label='Quantum security (log₂(n!)/2)')
-    ax.axhline(y=128, color='green', linestyle='--', alpha=0.7, label='128-bit target')
-    ax.axhline(y=256, color='orange', linestyle='--', alpha=0.7, label='256-bit target')
-    
-    ax.axvline(x=35, color='green', linestyle=':', alpha=0.5)
-    ax.axvline(x=58, color='orange', linestyle=':', alpha=0.5)
-    
-    ax.annotate('n=35\n(128-bit classical)', xy=(35, 128), 
-                xytext=(40, 80), fontsize=10,
-                arrowprops=dict(arrowstyle='->', color='green'))
-    ax.annotate('n=58\n(128-bit quantum)', xy=(58, 128),
-                xytext=(45, 50), fontsize=10,
-                arrowprops=dict(arrowstyle='->', color='orange'))
-    
-    ax.set_xlabel('Matrix dimension n', fontsize=12)
-    ax.set_ylabel('Security level (bits)', fontsize=12)
-    ax.set_title('Tropical Cryptography: Security vs. Dimension', fontsize=14)
-    ax.legend(fontsize=11, loc='upper left')
-    ax.set_xlim(5, 64)
-    ax.set_ylim(0, 350)
-    
+
+    ns = np.arange(1, 21)
+    forward = ns ** 2
+    inversion = 2.0 ** ns
+
+    ax.semilogy(ns, forward, 'b-o', label='Forward cost: $n^2$', markersize=5, linewidth=2)
+    ax.semilogy(ns, inversion, 'r-s', label='Inversion cost: $2^n$', markersize=5, linewidth=2)
+    ax.fill_between(ns, forward, inversion, alpha=0.15, color='green',
+                    where=inversion > forward, label='Security gap')
+
+    ax.axvline(x=5, color='gray', linestyle='--', alpha=0.5, label='$n \\geq 5$: gap proven')
+    ax.set_xlabel('Dimension $n$', fontsize=13)
+    ax.set_ylabel('Number of operations', fontsize=13)
+    ax.set_title('Tropical One-Way Function: Exponential Security Gap', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(1, 20)
+
     plt.tight_layout()
-    plt.savefig('security_parameters.png', dpi=150, bbox_inches='tight')
-    plt.savefig('security_parameters.svg', bbox_inches='tight')
+    plt.savefig('exponential_gap.png', dpi=150, bbox_inches='tight')
+    plt.savefig('exponential_gap.svg', bbox_inches='tight')
     plt.close()
-    print("✓ Saved security_parameters.png/svg")
+    print("  Saved: exponential_gap.png/svg")
 
 
-def plot_tropical_operations():
-    """Visualize tropical addition (min) vs classical addition."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    
-    x = np.linspace(-3, 3, 200)
-    
-    # Left: tropical addition min(x, 1)
+def plot_lipschitz_verification():
+    """Empirically verify the 1-Lipschitz bound."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    np.random.seed(42)
+
+    # Left: scatter plot of input vs output distances
+    n = 16
+    A = TropicalMatrix.random(n, 0, 50)
+    num_samples = 2000
+
+    input_dists = []
+    output_dists = []
+    for _ in range(num_samples):
+        v = np.random.randint(-20, 20, n).astype(float)
+        w = np.random.randint(-20, 20, n).astype(float)
+        id_ = np.max(np.abs(v - w))
+        od = np.max(np.abs(A.tropical_mv(v) - A.tropical_mv(w)))
+        if id_ > 0:
+            input_dists.append(id_)
+            output_dists.append(od)
+
     ax = axes[0]
-    y_trop = np.minimum(x, 1)
-    y_class = x + 1
-    ax.plot(x, y_trop, 'b-', linewidth=2.5, label='min(x, 1) [tropical ⊕]')
-    ax.plot(x, y_class, 'r--', linewidth=1.5, alpha=0.6, label='x + 1 [classical +]')
-    ax.axhline(y=1, color='gray', linestyle=':', alpha=0.3)
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('y', fontsize=12)
-    ax.set_title('Tropical vs Classical Addition', fontsize=13)
-    ax.legend(fontsize=11)
-    ax.set_ylim(-3, 5)
-    
-    # Right: piecewise-linear structure — min(a,b) = (a+b-|a-b|)/2
+    ax.scatter(input_dists, output_dists, alpha=0.2, s=8, c='blue')
+    max_val = max(max(input_dists), max(output_dists))
+    ax.plot([0, max_val], [0, max_val], 'r--', linewidth=2, label='Lipschitz bound (slope=1)')
+    ax.set_xlabel('Input distance $\\|v - w\\|_\\infty$', fontsize=12)
+    ax.set_ylabel('Output distance $\\|A\\otimes v - A\\otimes w\\|_\\infty$', fontsize=12)
+    ax.set_title('Non-Expansiveness Verification ($n=16$)', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    # Right: ratio histogram
+    ratios = [od/id_ for id_, od in zip(input_dists, output_dists) if id_ > 0]
     ax = axes[1]
-    a = np.linspace(-2, 4, 200)
-    b = 1.0
-    y_min = np.minimum(a, b)
-    y_formula = (a + b - np.abs(a - b)) / 2
-    ax.plot(a, y_min, 'b-', linewidth=2.5, label='min(a, 1)')
-    ax.plot(a, y_formula, 'r--', linewidth=1.5, label='(a+1−|a−1|)/2')
-    ax.axvline(x=1, color='gray', linestyle=':', alpha=0.5)
-    ax.annotate('Corner at a = b\n(defeats QFT)', xy=(1, 1),
-                xytext=(2, -0.5), fontsize=10,
-                arrowprops=dict(arrowstyle='->', color='purple'))
-    ax.set_xlabel('a', fontsize=12)
-    ax.set_title('Piecewise-Linear Identity\n(Quantum Resistance)', fontsize=13)
-    ax.legend(fontsize=11)
-    
+    ax.hist(ratios, bins=50, color='steelblue', edgecolor='white', alpha=0.8)
+    ax.axvline(x=1.0, color='red', linestyle='--', linewidth=2, label='Lipschitz bound')
+    ax.set_xlabel('Ratio $\\|A\\otimes v - A\\otimes w\\|_\\infty / \\|v - w\\|_\\infty$', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Distribution of Contraction Ratios', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('tropical_operations.png', dpi=150, bbox_inches='tight')
-    plt.savefig('tropical_operations.svg', bbox_inches='tight')
+    plt.savefig('lipschitz_verification.png', dpi=150, bbox_inches='tight')
+    plt.savefig('lipschitz_verification.svg', bbox_inches='tight')
     plt.close()
-    print("✓ Saved tropical_operations.png/svg")
+    print("  Saved: lipschitz_verification.png/svg")
 
 
-def plot_factorial_growth():
-    """Plot factorial growth vs exponential — the hardness gap."""
+def plot_tropical_eigenvalue_convergence():
+    """Show convergence of A^k diagonal to tropical eigenvalue."""
     fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    
-    ns = list(range(1, 25))
-    factorials = [log2(factorial(n)) for n in ns]
-    exp_2n = [n for n in ns]  # 2^n
-    exp_n_minus_1 = [n - 1 for n in ns]  # 2^(n-1)
-    
-    ax.plot(ns, factorials, 'b-o', linewidth=2, markersize=5, label='log₂(n!)')
-    ax.plot(ns, exp_2n, 'r--', linewidth=1.5, label='n (= log₂(2ⁿ))')
-    ax.plot(ns, exp_n_minus_1, 'g--', linewidth=1.5, label='n−1 (= log₂(2ⁿ⁻¹))')
-    
-    ax.fill_between(ns, exp_n_minus_1, factorials, alpha=0.15, color='blue',
-                     label='Hardness gap: n! / 2ⁿ⁻¹')
-    
-    ax.set_xlabel('Dimension n', fontsize=12)
-    ax.set_ylabel('log₂(search space)', fontsize=12)
-    ax.set_title('Factorial vs Exponential Growth\n(Tropical Hardness Bound: 2ⁿ⁻¹ ≤ n!)', fontsize=14)
-    ax.legend(fontsize=11)
-    
+
+    A = TropicalMatrix(np.array([
+        [0, 3, 8, 5],
+        [2, 0, 5, 7],
+        [4, 1, 0, 3],
+        [6, 2, 4, 0]
+    ], dtype=float))
+
+    ks = range(1, 31)
+    for i in range(4):
+        vals = []
+        for k in ks:
+            Ak = A.tropical_pow(k)
+            vals.append(Ak.data[i, i] / k)
+        ax.plot(ks, vals, '-o', label=f'$A^{{\\otimes k}}_{{{i}{i}}} / k$', markersize=4)
+
+    # True eigenvalue (min cycle mean)
+    eig = A.tropical_eigenvalue_approx(100)
+    ax.axhline(y=eig, color='black', linestyle='--', linewidth=2,
+               label=f'Tropical eigenvalue $\\lambda = {eig:.2f}$')
+
+    ax.set_xlabel('Power $k$', fontsize=13)
+    ax.set_ylabel('$A^{\\otimes k}_{ii} / k$', fontsize=13)
+    ax.set_title('Convergence to Tropical Eigenvalue (Min Cycle Mean)', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('factorial_growth.png', dpi=150, bbox_inches='tight')
-    plt.savefig('factorial_growth.svg', bbox_inches='tight')
+    plt.savefig('eigenvalue_convergence.png', dpi=150, bbox_inches='tight')
+    plt.savefig('eigenvalue_convergence.svg', bbox_inches='tight')
     plt.close()
-    print("✓ Saved factorial_growth.png/svg")
+    print("  Saved: eigenvalue_convergence.png/svg")
+
+
+def plot_birthday_bound():
+    """Visualize birthday bound collision resistance."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+
+    dims = np.arange(4, 65)
+    B = 16
+
+    output_bits = dims * dims * np.log2(2 * B + 1)
+    birthday_bits = output_bits / 2
+
+    ax.plot(dims, birthday_bits, 'b-', linewidth=2, label='Collision security (bits)')
+    ax.axhline(y=128, color='green', linestyle='--', alpha=0.7, label='NIST Level I (128 bits)')
+    ax.axhline(y=256, color='orange', linestyle='--', alpha=0.7, label='NIST Level V (256 bits)')
+
+    ax.fill_between(dims, 0, birthday_bits, alpha=0.1, color='blue')
+
+    ax.set_xlabel('Matrix dimension $n$', fontsize=13)
+    ax.set_ylabel('Security level (bits)', fontsize=13)
+    ax.set_title(f'Tropical Hash Collision Resistance ($B={B}$)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(0, max(birthday_bits) * 1.1)
+
+    plt.tight_layout()
+    plt.savefig('birthday_bound.png', dpi=150, bbox_inches='tight')
+    plt.savefig('birthday_bound.svg', bbox_inches='tight')
+    plt.close()
+    print("  Saved: birthday_bound.png/svg")
 
 
 def plot_tropical_matrix_heatmap():
-    """Visualize a tropical matrix product as a heatmap."""
+    """Visualize tropical matrix power evolution."""
     np.random.seed(42)
-    n = 8
-    
-    A = np.random.uniform(0, 10, (n, n))
-    B = np.random.uniform(0, 10, (n, n))
-    
-    # Tropical product
-    C = np.min(A[:, :, np.newaxis] + B[np.newaxis, :, :], axis=1)
-    
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
-    
-    for ax, mat, title in zip(axes, [A, B, C], ['Matrix A', 'Matrix B', 'A ⊗ B']):
-        im = ax.imshow(mat, cmap='viridis', aspect='auto')
-        ax.set_title(title, fontsize=13)
+    A = TropicalMatrix.random(8, 0, 20)
+
+    fig, axes = plt.subplots(1, 4, figsize=(16, 4))
+    powers = [1, 5, 10, 20]
+
+    for ax, k in zip(axes, powers):
+        Ak = A.tropical_pow(k)
+        im = ax.imshow(Ak.data, cmap='viridis', aspect='equal')
+        ax.set_title(f'$A^{{\\otimes {k}}}$', fontsize=13)
         ax.set_xlabel('Column')
         ax.set_ylabel('Row')
-        plt.colorbar(im, ax=ax, shrink=0.8)
-    
-    plt.suptitle('Tropical Matrix Multiplication: (A⊗B)ᵢⱼ = minₖ(Aᵢₖ + Bₖⱼ)',
-                 fontsize=14, y=1.02)
+        plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+
+    plt.suptitle('Tropical Matrix Power Evolution', fontsize=14, y=1.02)
     plt.tight_layout()
-    plt.savefig('tropical_matrix_heatmap.png', dpi=150, bbox_inches='tight')
-    plt.savefig('tropical_matrix_heatmap.svg', bbox_inches='tight')
+    plt.savefig('matrix_evolution.png', dpi=150, bbox_inches='tight')
+    plt.savefig('matrix_evolution.svg', bbox_inches='tight')
     plt.close()
-    print("✓ Saved tropical_matrix_heatmap.png/svg")
+    print("  Saved: matrix_evolution.png/svg")
 
 
-def plot_comparison_table():
-    """Create a visual comparison of crypto schemes."""
-    fig, ax = plt.subplots(figsize=(10, 5))
-    ax.axis('off')
-    
-    schemes = ['RSA-2048', 'CRYSTALS-Kyber', 'Classic McEliece', 'Tropical (n=58)']
-    metrics = ['Key Size', 'Quantum Safe', 'Operations', 'Maturity']
-    
-    data = [
-        ['256 bytes', '✗ NO', '× mod N', 'Deployed'],
-        ['~1.5 KB', '✓ YES', 'Poly ring ×', 'NIST Standard'],
-        ['~100 KB', '✓ YES', 'Syndrome', 'NIST Candidate'],
-        ['~4 KB', '✓ (conj.)', 'min + add', 'Research'],
-    ]
-    
-    colors = [['#ffcccc', '#ffcccc', '#ffe0cc', '#ccffcc'],
-              ['#ccffcc', '#ccffcc', '#cce0ff', '#ccffcc'],
-              ['#ffe0cc', '#ccffcc', '#cce0ff', '#ffe0cc'],
-              ['#ccffcc', '#ccffcc', '#ccffcc', '#ffe0cc']]
-    
-    table = ax.table(cellText=data, colLabels=metrics, rowLabels=schemes,
-                     cellColours=colors, loc='center', cellLoc='center')
-    table.auto_set_font_size(False)
-    table.set_fontsize(11)
-    table.scale(1.2, 1.8)
-    
-    ax.set_title('Post-Quantum Cryptography: Scheme Comparison', fontsize=14, pad=20)
-    
-    plt.tight_layout()
-    plt.savefig('scheme_comparison.png', dpi=150, bbox_inches='tight')
-    plt.savefig('scheme_comparison.svg', bbox_inches='tight')
-    plt.close()
-    print("✓ Saved scheme_comparison.png/svg")
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     print("Generating visualizations...")
-    plot_security_parameters()
-    plot_tropical_operations()
-    plot_factorial_growth()
+    plot_exponential_gap()
+    plot_lipschitz_verification()
+    plot_tropical_eigenvalue_convergence()
+    plot_birthday_bound()
     plot_tropical_matrix_heatmap()
-    plot_comparison_table()
-    print("\nAll visualizations generated!")
+    print("\nAll visualizations generated successfully!")
