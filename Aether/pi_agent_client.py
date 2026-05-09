@@ -2049,6 +2049,12 @@ class PiAgentClient:
             7. **PACKAGE.html** — MANDATORY standalone HTML package
                Bundle ALL artifacts into a single, self-contained HTML file:
                • Everything inlined (CSS, JS, content). No external dependencies.
+               • ALL images MUST be embedded as base64 data URIs:
+                 `<img src="data:image/png;base64,..." />` for PNGs,
+                 `<img src="data:image/svg+xml;base64,..." />` for SVGs.
+                 For SVG diagrams, prefer inlining `<svg>...</svg>` markup directly.
+                 If you generate matplotlib/plotly charts, convert to base64 and embed.
+                 NEVER reference external image files — they won't exist standalone.
                • Tab/sidebar navigation: Article, Research Paper, Demos, Algorithms,
                  Visualizations, Code Listings
                • Modern design: clean typography, dark/light toggle, responsive layout

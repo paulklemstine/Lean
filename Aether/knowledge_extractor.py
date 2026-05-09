@@ -517,6 +517,14 @@ Create a **single, self-contained HTML file** that bundles ALL artifacts
 into a beautiful, interactive presentation. Requirements:
 
 • **Single file**: Everything (CSS, JS, content) inlined. No external deps.
+• **Embedded images**: ALL images (charts, diagrams, visualizations) MUST be
+  embedded directly in the HTML as base64 data URIs. Use the format:
+  `<img src="data:image/png;base64,..." />` for PNGs,
+  `<img src="data:image/svg+xml;base64,..." />` for SVGs.
+  If you generate matplotlib/plotly figures in Python, convert them to base64
+  and embed them. For SVG diagrams, inline the SVG markup directly with
+  `<svg>...</svg>` tags — this is preferred over base64 for vector graphics.
+  NEVER use `<img src="filename.png">` — the file won't exist when viewing.
 • **Navigation**: Sidebar or tab navigation between sections:
   - Article (the popular-science piece)
   - Research Paper (the full paper)
