@@ -3,7 +3,7 @@
 
 pi_agent:
   model: "openai-large"
-  use_ollama: true
+  use_ollama: false
   ollama_base_url: "http://127.0.0.1:11434"
   ollama_model: "glm-5.1:cloud"
   timeout: 600
