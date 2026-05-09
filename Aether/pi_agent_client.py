@@ -1988,7 +1988,8 @@ class PiAgentClient:
 
             ### Required Deliverables
 
-            You are a world-class mathematician and software engineer. Create:
+            You are a world-class mathematician, software engineer, and science writer.
+            Create ALL of the following:
 
             1. **Lean 4 files** — formally verified theorems with complete proofs
                - Use concrete types (ℕ, ℝ, Finset, Matrix, etc.)
@@ -1996,16 +1997,29 @@ class PiAgentClient:
                - Minimize `sorry` — isolate hard steps rather than leaving gaps
                - Use doc comments to explain the significance of key results
 
-            2. **RESEARCH_REPORT.md** — paper explaining the discovery
-               - Mathematical significance and connections to existing work
-               - Detailed proofs and explanations
+            2. **ARTICLE.md** — MANDATORY standalone popular-science article
+               CRITICAL RULES:
+               • Do NOT mention "Scientific American", "Sci Am", or "ean" anywhere.
+               • Do NOT mention "Lean", "Lean 4", "formal verification", or "proof assistant".
+               • This is a premier magazine-quality piece for curious, intelligent readers.
+               QUALITY STANDARDS:
+               • Superb, vivid, engaging prose with a strong opening hook and narrative arc.
+               • Concrete analogies and metaphors that make abstract ideas tangible.
+               • Story structure: provocative question → tension → breakthrough → significance.
+               • Real-world connections: technology, nature, everyday life.
+               • Historical context: place the work in the sweep of intellectual history.
+               • 1500–3000 words. Substantial, standalone, enjoyable, interesting.
+               • A reader should say "Wow, I had no idea math could do THAT."
 
-            3. **DISCUSSION.md** — MANDATORY Scientific American-style popular science article
-               - Written for a mathematically literate but non-specialist audience
-               - Use analogies, examples, and narrative to explain WHY this matters
-               - Include at least one surprising connection to everyday life or another field
-               - 1000-2000 words, accessible but not dumbed-down
-               - This makes your research accessible to a broad audience
+            3. **RESEARCH_PAPER.md** — MANDATORY comprehensive, in-depth research paper
+               This is a full, publishable-quality paper, NOT a summary:
+               • Abstract, Introduction, Definitions & Notation
+               • Main Results with detailed proof sketches (not just "by induction")
+               • Algorithms with complete pseudocode and complexity analysis
+               • Applications with worked examples showing practical use
+               • Computational Experiments with tables, charts, numerical results
+               • Discussion, Future Work, References
+               • 3000–8000 words. Thorough and substantive.
 
             4. **FUTURE_DIRECTIONS.md** — MANDATORY breakthrough research roadmap
                This is the MOST IMPORTANT deliverable because it drives the next
@@ -2015,32 +2029,32 @@ class PiAgentClient:
                For each opportunity:
                - **Theorem Statement**: Precise, formalizable statement with quantifiers
                - **Proof Strategy**: 2-3 concrete approaches with key lemmas identified
-               - **Why This Is Revolutionary**: What field it opens, what applications it enables,
-                 what unexpected connections it reveals
+               - **Why This Is Revolutionary**: What field it opens, what applications it enables
                - **Catalog Leverage**: Which existing catalog theorems to build on (by name)
                - **Research Mode**: prove | formalize | discover | counterexample
-               - **Estimated Depth**: 1-5 scale (1 = one clever lemma, 5 = multi-theorem development)
+               - **Estimated Depth**: 1-5 scale
 
                ## Under-explored Territory
-               - Domains with many definitions but few deep theorems
-               - Unexpected structural similarities across domains
-               - "Orphan" results that could seed new research programs
-
                ## Cross-Domain Bridges
-               - Specific, precise connections between domains
-               - Conjectured functorial correspondences or isomorphisms
-               - Algorithmic pipelines combining results from multiple domains
-
                ## Open Problems Encountered
-               - Problems you couldn't solve but identified as important
-               - Conjectures you can state precisely but not yet prove
-               - Connections that seem to exist but need more catalog infrastructure
 
-            5. **demo.py** — Python demo with concrete numerical examples
-               - Working code that brings the math to life
-               - Visualizations where they add insight
+            5. **Python code** — demos, visualizations, algorithms, applications:
+               - **demo.py** — concrete numerical examples bringing the math to life
+               - **visualizations** — matplotlib/plotly charts (save as PNG/SVG too)
+               - **algorithms.py** — implement algorithms from the paper with docstrings
+               - **applications.py** — real-world applications (ML, crypto, physics)
 
             6. **diagram.svg** — visualization of key mathematical structures
+
+            7. **PACKAGE.html** — MANDATORY standalone HTML package
+               Bundle ALL artifacts into a single, self-contained HTML file:
+               • Everything inlined (CSS, JS, content). No external dependencies.
+               • Tab/sidebar navigation: Article, Research Paper, Demos, Algorithms,
+                 Visualizations, Code Listings
+               • Modern design: clean typography, dark/light toggle, responsive layout
+               • KaTeX for math rendering (CDN OK), syntax-highlighted code blocks
+               • Collapsible sections, smooth scroll, table of contents
+               • Must work when opened directly in any browser
 
             {"Fill existing `sorry` placeholders — do not change theorem statements." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs. Think big — aim for results that would appear in JAMS, Annals, or FOCS."}
 

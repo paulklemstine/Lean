@@ -67,6 +67,9 @@ class ResearchJob:
     result_paper: Optional[str] = None
     result_future_directions: Optional[str] = None
     result_discussion: Optional[str] = None
+    result_article: Optional[str] = None
+    result_research_paper: Optional[str] = None
+    result_html_package: Optional[str] = None
     result_summary: Optional[str] = None
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
@@ -179,6 +182,7 @@ class KnowledgeExtractor:
             'job_id', 'cycle_n', 'concept', 'prompt', 'project_dir', 'project_id',
             'status', 'dispatch_time', 'complete_time', 'result_lean', 'result_demo',
             'result_paper', 'result_future_directions', 'result_discussion',
+            'result_article', 'result_research_paper', 'result_html_package',
             'result_summary', 'quality_score', 'quality_assessment',
             'sorry_count', 'theorem_count', 'error_message',
         }
@@ -405,46 +409,135 @@ class KnowledgeExtractor:
         return job
 
     def _augment_prompt_with_deliverables(self, base_prompt: str, concept: ResearchConcept) -> str:
-        """Add open-ended deliverable guidance to the Aristotle prompt.
+        """Add comprehensive deliverable guidance to the Aristotle prompt.
 
         Aristotle is a powerful theorem prover — give it freedom to produce
         excellent work, not rigid file name constraints. We describe WHAT
         outcomes we want, not HOW to name the files.
+
+        Deliverable set (expanded):
+          1. Lean 4 proofs
+          2. Standalone popular-science ARTICLE (no "scientific american" / "lean" mentions)
+          3. Comprehensive RESEARCH_PAPER with depth
+          4. Python demos, visualizations, algorithms
+          5. Applications code
+          6. FUTURE_DIRECTIONS roadmap
+          7. Standalone HTML package bundling everything
         """
         deliverables_section = f"""
 
 ### WHAT WE NEED FROM YOU
 
-You are a world-class mathematician and software engineer. Use your judgment
-on the best way to organize and present your work. We need:
+You are a world-class mathematician, software engineer, and science writer.
+Use your judgment on the best way to organize and present your work.
+We need ALL of the following deliverables:
 
-1. **Formally verified mathematics** in Lean 4
-   - Prove non-trivial theorems with complete proofs (no `sorry` in the final result)
-   - Organize the Lean code however makes sense — one file or several,
-     whatever serves the mathematics best
-   - Use doc comments to explain the significance of key results
+────────────────────────────────────────────────────────────────────────────
+DELIVERABLE 1 — Formally verified mathematics (Lean 4)
+────────────────────────────────────────────────────────────────────────────
+- Prove non-trivial theorems with complete proofs (no `sorry` in the final result)
+- Organize the code however makes sense — one file or several,
+  whatever serves the mathematics best
+- Use doc comments to explain the significance of key results
 
-2. **Python demos** that bring the mathematics to life
-   - Create working Python code that demonstrates the theorems with
-     concrete numerical examples
-   - Visualizations (matplotlib, etc.) where they add insight
-   - Show the math in action — make it tangible and understandable
-   - Name and organize the demos however you see fit
+────────────────────────────────────────────────────────────────────────────
+DELIVERABLE 2 — Standalone Popular-Science ARTICLE  →  ARTICLE.md
+────────────────────────────────────────────────────────────────────────────
+Write a **superb, standalone magazine-quality article** about this research.
 
-3. **A research paper** that explains the discovery
-   - Write this as a proper mathematical paper
-   - Include a Scientific American style discussion section that makes
-     the result accessible to a broad audience — use analogies,
-     intuition, and historical context
-   - Explain connections to existing work and future directions
+CRITICAL RULES FOR THE ARTICLE:
+• Do NOT mention "Scientific American", "Sci Am", or "ean" anywhere.
+• Do NOT mention "Lean", "Lean 4", "formal verification", or "proof assistant".
+• This is a POPULAR SCIENCE article for a curious, intelligent audience.
+  Write it as if it will be published in a premier science magazine.
+• The reader should come away saying "Wow, I had no idea math could do THAT."
 
-4. **Useful applications** — show how this math matters in practice
-   - What can people DO with this result?
-   - Where does it apply in the real world?
-   - Include code, examples, or demonstrations of applications
+ARTICLE QUALITY STANDARDS:
+• **Superb writing**: Vivid, engaging prose. Strong opening hook. Narrative arc.
+  Use concrete analogies and metaphors that make abstract ideas tangible.
+• **Depth without jargon**: Explain the IDEAS, not the formalism.
+  A reader with a college education should understand and enjoy every paragraph.
+• **Story structure**: Open with a provocative question or surprising fact.
+  Build tension. Reveal the breakthrough. Show why it matters.
+• **Real-world connections**: Connect to technology, nature, everyday life.
+  Why should a non-mathematician care about this?
+• **Historical context**: Place the discovery in the sweep of intellectual history.
+  Who tried this before? What barriers stood in the way?
+• **Length**: 1500–3000 words. Substantial but not padded.
+• **Standalone**: The article must make complete sense on its own.
+  No references to "the proof above" or "our formal verification."
+
+────────────────────────────────────────────────────────────────────────────
+DELIVERABLE 3 — Comprehensive RESEARCH PAPER  →  RESEARCH_PAPER.md
+────────────────────────────────────────────────────────────────────────────
+Write a **thorough, in-depth research paper** that a mathematician or
+graduate student would find valuable. This is NOT a summary — it is a
+complete, publishable-quality paper.
+
+RESEARCH PAPER REQUIREMENTS:
+• **Abstract**: Concise summary of contributions and significance.
+• **Introduction**: Motivation, context, relationship to prior work.
+• **Definitions & Notation**: Precise mathematical setup.
+• **Main Results**: Full theorem statements with detailed proof sketches.
+  Include the key ideas, not just "by induction."
+• **Algorithms**: If the work produces algorithms, include complete
+  pseudocode with complexity analysis (time, space, convergence).
+• **Applications**: Concrete applications with worked examples.
+  Show HOW to use the results in practice.
+• **Computational Experiments**: Reference the Python demos.
+  Include tables, charts, or numerical results.
+• **Discussion**: Implications, limitations, open questions.
+• **Future Work**: Specific, actionable next steps.
+• **References**: Cite relevant prior work properly.
+• **Length**: 3000–8000 words. Comprehensive and substantive.
+
+────────────────────────────────────────────────────────────────────────────
+DELIVERABLE 4 — Python Code: Demos, Visualizations, Algorithms
+────────────────────────────────────────────────────────────────────────────
+- **demo.py** — Working Python code demonstrating the theorems with
+  concrete numerical examples. Make the math tangible.
+- **visualizations** — matplotlib / plotly charts showing key mathematical
+  structures, convergence behavior, phase diagrams, etc.
+  Save figures as PNG/SVG files for inclusion in the HTML package.
+- **algorithms.py** — Implement any algorithms from the research paper.
+  Include docstrings, type hints, and example usage.
+- **applications.py** — Code showing real-world applications of the results.
+  If the math applies to ML, crypto, physics — show it working.
+
+────────────────────────────────────────────────────────────────────────────
+DELIVERABLE 5 — FUTURE_DIRECTIONS.md  (MANDATORY — drives next cycle)
+────────────────────────────────────────────────────────────────────────────
+The MOST IMPORTANT deliverable. Structured roadmap of breakthrough
+research opportunities opened by this work. See detailed spec below.
+
+────────────────────────────────────────────────────────────────────────────
+DELIVERABLE 6 — Standalone HTML Package  →  PACKAGE.html
+────────────────────────────────────────────────────────────────────────────
+Create a **single, self-contained HTML file** that bundles ALL artifacts
+into a beautiful, interactive presentation. Requirements:
+
+• **Single file**: Everything (CSS, JS, content) inlined. No external deps.
+• **Navigation**: Sidebar or tab navigation between sections:
+  - Article (the popular-science piece)
+  - Research Paper (the full paper)
+  - Interactive Demos (embedded Python output / JS visualizations)
+  - Algorithms (pseudocode + implementation)
+  - Visualizations (embedded charts/diagrams as inline SVG or base64)
+  - Code Listings (syntax-highlighted Python and proof code)
+• **Beautiful design**: Modern, clean typography (system fonts).
+  Dark/light mode toggle. Responsive layout. Smooth transitions.
+• **Math rendering**: Use KaTeX (CDN link OK for math rendering only)
+  for any mathematical notation.
+• **Syntax highlighting**: Inline code highlighting for Python blocks.
+• **Interactive elements**: Collapsible sections, smooth scroll, TOC.
+• The HTML package should work when opened directly in any browser.
+• Include ALL content from the article, research paper, and code.
+
+────────────────────────────────────────────────────────────────────────────
 
 The mathematics comes FIRST. Excellent proofs trump everything else.
-But great work deserves great presentation — make it real and useful.
+But great work deserves great presentation — make it real, useful, and
+beautiful. Every deliverable should be something you'd be proud to show.
 
 Research domain: {concept.domain}
 Research mode: {concept.research_mode}
@@ -611,9 +704,10 @@ Research mode: {concept.research_mode}
 
         Aristotle is free to organize however it sees fit. We scan for:
         - Any .lean files containing theorem proofs
-        - Any .py files (demos, applications)
-        - Any .md files (papers, discussions, future directions, summaries)
-        - Any .html files (interactive web pages)
+        - Any .py files (demos, applications, algorithms, visualizations)
+        - Any .md files (articles, research papers, discussions, future directions)
+        - Any .html files (standalone HTML packages)
+        - Any .svg/.png files (visualizations, diagrams)
         - Any other useful artifacts
         """
         lean_files = []
@@ -621,6 +715,10 @@ Research mode: {concept.research_mode}
         paper_files = []
         future_directions_files = []
         discussion_files = []
+        article_files = []
+        research_paper_files = []
+        html_package_files = []
+        visual_files = []
         summary = None
         # Track diff files and seen paths to avoid duplicates.
         # We cannot set attributes on Path objects (they use __slots__),
@@ -693,10 +791,19 @@ Research mode: {concept.research_mode}
                     lean_files.append((fp, is_diff_file))
                 elif f.endswith(".py"):
                     python_files.append(fp)
+                elif f.endswith(".html"):
+                    # HTML package files (PACKAGE.html or similar)
+                    html_package_files.append(fp)
+                elif f.endswith((".svg", ".png", ".jpg", ".jpeg")):
+                    visual_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
                     fname_lower = f.lower()
                     if "future_directions" in fname_lower or "future-directions" in fname_lower:
                         future_directions_files.append(fp)
+                    elif fname_lower.startswith("article") or fname_lower == "article.md":
+                        article_files.append(fp)
+                    elif "research_paper" in fname_lower or "research-paper" in fname_lower or fname_lower == "research_paper.md":
+                        research_paper_files.append(fp)
                     elif "discussion" in fname_lower or "sciam" in fname_lower or "scientific_american" in fname_lower:
                         discussion_files.append(fp)
                     else:
@@ -726,14 +833,14 @@ Research mode: {concept.research_mode}
                 parts.append(f"{header}{content}\n")
             job.result_lean = "\n\n".join(parts)
 
-        # Collect Python artifacts — demos, applications, whatever Aristotle created
+        # Collect Python artifacts — demos, applications, algorithms, visualizations
         if python_files:
             parts = []
             for f in sorted(python_files):
                 parts.append(f.read_text())
             job.result_demo = "\n\n".join(parts)
 
-        # Collect paper / discussion artifacts
+        # Collect paper / general markdown artifacts
         if paper_files:
             parts = []
             for f in sorted(paper_files):
@@ -747,13 +854,33 @@ Research mode: {concept.research_mode}
                 parts.append(f.read_text())
             job.result_future_directions = "\n\n".join(parts)
 
-        # Collect Scientific American-style discussion articles
+        # Collect discussion articles (legacy format)
         if discussion_files:
             parts = []
             for f in sorted(discussion_files):
                 parts.append(f.read_text())
             job.result_discussion = "\n\n".join(parts)
 
+        # Collect standalone popular-science ARTICLE (new deliverable)
+        if article_files:
+            parts = []
+            for f in sorted(article_files):
+                parts.append(f.read_text())
+            job.result_article = "\n\n".join(parts)
+
+        # Collect comprehensive RESEARCH PAPER (new deliverable)
+        if research_paper_files:
+            parts = []
+            for f in sorted(research_paper_files):
+                parts.append(f.read_text())
+            job.result_research_paper = "\n\n".join(parts)
+
+        # Collect HTML package (new deliverable — standalone bundle)
+        if html_package_files:
+            parts = []
+            for f in sorted(html_package_files):
+                parts.append(f.read_text(encoding='utf-8', errors='ignore'))
+            job.result_html_package = "\n\n".join(parts)
 
         # Summary
         job.result_summary = summary
@@ -765,9 +892,12 @@ Research mode: {concept.research_mode}
 
         print(f"[Extract] Lean: {len(lean_files)} files, Python: {len(python_files)} files, "
               f"Papers: {len(paper_files)} files, "
+              f"Article: {len(article_files)} files, "
+              f"ResearchPaper: {len(research_paper_files)} files, "
+              f"HTML: {len(html_package_files)} files, "
+              f"Visuals: {len(visual_files)} files, "
               f"FUTURE_DIRECTIONS: {len(future_directions_files)} files, "
               f"Discussion: {len(discussion_files)} files, "
-
               f"Sorries: {job.sorry_count}, Theorems: {job.theorem_count}")
 
         return job
@@ -830,19 +960,33 @@ Research mode: {concept.research_mode}
 
     async def integrate_async(self, job: ResearchJob) -> ResearchJob:
         """Pi-Agent integrates Aristotle's output into the Catalog.
+
+        Handles all artifact types:
+        - Lean files → domain directories or Speculative/AutoResearch/
+        - Python demos → Applications/Demos/
+        - Papers → Applications/Papers/
+        - Articles → Applications/Articles/
+        - Research papers → Applications/Papers/
+        - HTML packages → Applications/Packages/
+        - Discussion → Applications/Articles/
         """
         if job.quality_score < 0.05:
             print(f"[Integrate] REJECTED: score too low ({job.quality_score:.3f})")
             job.status = "rejected"
             return job
 
-        if not job.result_lean and not job.result_demo and not job.result_paper:
+        has_any_content = any([
+            job.result_lean, job.result_demo, job.result_paper,
+            job.result_article, job.result_research_paper,
+            job.result_html_package, job.result_discussion,
+        ])
+        if not has_any_content:
             print(f"[Integrate] No new/modified files to integrate.")
             job.status = "integrated"
             self.completed_count += 1
             return job
 
-        print(f"[Integrate] Asking Pi-Agent to verify and integrate files...")
+        print(f"[Integrate] Asking Pi-Agent to verify and integrate ALL artifacts...")
         import subprocess
         
         # 1. Parse out the diffs and new files
@@ -866,6 +1010,16 @@ Research mode: {concept.research_mode}
         if job.result_paper:
             parts.append({"type": "new", "path": f"Applications/Papers/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_paper})
 
+        # NEW artifact types — integrate into correct Catalog locations
+        if job.result_article:
+            parts.append({"type": "new", "path": f"Applications/Articles/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_article})
+        if job.result_research_paper:
+            parts.append({"type": "new", "path": f"Applications/Papers/research_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_research_paper})
+        if job.result_html_package:
+            parts.append({"type": "new", "path": f"Applications/Packages/{self._derive_artifact_name(job.concept, 'html')}", "content": job.result_html_package})
+        if job.result_discussion:
+            parts.append({"type": "new", "path": f"Applications/Articles/discussion_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_discussion})
+
         # 2. Ask Pi to review and authorize the placements
         plan_prompt = (
             f"Aristotle has generated the following files and diffs for the Catalog:\n"
@@ -874,11 +1028,18 @@ Research mode: {concept.research_mode}
             plan_prompt += f"[{i}] {p['type'].upper()} -> {p['path']}\n"
             
         plan_prompt += (
-            f"\nReview these paths. Ensure Lean proofs with sorries go to Speculative/AutoResearch/.\n"
-            f"Lean files without sorries must go to their real Catalog domain directory, not Speculative/AutoResearch/.\n"
-            f"If a file should NOT be integrated (it is a placeholder, empty, or not a valid Catalog path), respond with \"REJECT\" as the path.\n"
+            f"\nReview these paths and assign each to the correct Catalog location.\n"
+            f"PLACEMENT RULES:\n"
+            f"- Lean proofs WITH sorries → Speculative/AutoResearch/\n"
+            f"- Lean proofs WITHOUT sorries → their real Catalog domain directory\n"
+            f"- Python demos/algorithms → Applications/Demos/\n"
+            f"- Research papers → Applications/Papers/\n"
+            f"- Popular-science articles → Applications/Articles/\n"
+            f"- Discussion articles → Applications/Articles/\n"
+            f"- HTML packages → Applications/Packages/\n"
+            f"- If a file should NOT be integrated (placeholder, empty, invalid), respond with \"REJECT\".\n"
             f"Respond ONLY with a JSON dictionary mapping the index (as string) to the authorized target path relative to the Catalog root, or \"REJECT\".\n"
-            f"Example: {{\"0\": \"Tropical/MyFile.lean\", \"1\": \"REJECT\"}}"
+            f"Example: {{\"0\": \"Tropical/MyFile.lean\", \"1\": \"Applications/Articles/my_article.md\", \"2\": \"REJECT\"}}"
         )
         
         raw_plan = await asyncio.to_thread(
@@ -1146,7 +1307,7 @@ Research mode: {concept.research_mode}
         catalog_root = self.catalog_root
         
         # Check Applications directories exist
-        for subdir in ["Papers", "Demos", "Visuals", "Articles"]:
+        for subdir in ["Papers", "Demos", "Visuals", "Articles", "Packages"]:
             d = catalog_root / "Applications" / subdir
             if d.exists():
                 report["verified_files"].append(f"Applications/{subdir}/ exists")
