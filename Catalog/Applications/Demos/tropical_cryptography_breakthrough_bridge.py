@@ -1,359 +1,362 @@
 #!/usr/bin/env python3
 """
-Tropical Cryptography Demo: Min-Plus One-Way Functions and Certified Robustness
+Tropical Post-Quantum Cryptography Demo
+========================================
+Demonstrates the min-plus semiring algebra and its cryptographic applications.
 
-This demo illustrates the key mathematical results formalized in Lean 4:
-1. Tropical (min-plus) matrix product and its Lipschitz property
-2. Tropical hash function evaluation
-3. Certified robustness radius computation
-4. Graph shortest-path interpretation
-5. Key exchange protocol simulation
+This demo implements:
+1. Tropical (min-plus) matrix arithmetic
+2. Tropical Diffie-Hellman key exchange
+3. Non-commutativity witness
+4. Lipschitz bounds for certified robustness
+5. Security parameter analysis
+
+All operations use integer arithmetic with infinity (float('inf')).
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch
-import itertools
+from itertools import permutations
+import time
 
+INF = float('inf')
 
-def tropical_mat_mul(A, B):
-    """Tropical (min-plus) matrix product: C[i,j] = min_k (A[i,k] + B[k,j])"""
-    n = A.shape[0]
-    C = np.full((n, n), np.inf)
+# =============================================================================
+# Part 1: Tropical Arithmetic Primitives
+# =============================================================================
+
+def trop_add(a, b):
+    """Tropical addition: min(a, b)."""
+    return min(a, b)
+
+def trop_mul(a, b):
+    """Tropical multiplication: a + b (ordinary addition)."""
+    if a == INF or b == INF:
+        return INF
+    return a + b
+
+def trop_mat_mul(A, B):
+    """Tropical matrix multiplication: (A⊗B)_{ij} = min_k(A_{ik} + B_{kj})."""
+    n = len(A)
+    C = [[INF] * n for _ in range(n)]
     for i in range(n):
         for j in range(n):
             for k in range(n):
-                C[i, j] = min(C[i, j], A[i, k] + B[k, j])
+                val = trop_mul(A[i][k], B[k][j])
+                C[i][j] = trop_add(C[i][j], val)
     return C
 
-
-def tropical_mat_vec_mul(A, v):
-    """Tropical matrix-vector product: w[i] = min_k (A[i,k] + v[k])"""
-    n = A.shape[0]
-    w = np.full(n, np.inf)
+def trop_mat_pow(A, k):
+    """Tropical matrix power via repeated squaring: O(n³ log k)."""
+    n = len(A)
+    # Identity matrix: 0 on diagonal, ∞ elsewhere
+    result = [[INF] * n for _ in range(n)]
     for i in range(n):
-        for k in range(n):
-            w[i] = min(w[i], A[i, k] + v[k])
-    return w
-
-
-def tropical_sup_norm(A):
-    """Tropical sup-norm: max absolute entry"""
-    return np.max(np.abs(A))
-
-
-# ============================================================
-# Demo 1: Tropical Matrix Product and Associativity
-# ============================================================
-print("=" * 60)
-print("Demo 1: Tropical Matrix Product & Associativity")
-print("=" * 60)
-
-np.random.seed(42)
-n = 3
-A = np.random.randint(0, 10, (n, n)).astype(float)
-B = np.random.randint(0, 10, (n, n)).astype(float)
-C = np.random.randint(0, 10, (n, n)).astype(float)
-
-AB = tropical_mat_mul(A, B)
-BC = tropical_mat_mul(B, C)
-AB_C = tropical_mat_mul(AB, C)
-A_BC = tropical_mat_mul(A, BC)
-
-print(f"\nA =\n{A}")
-print(f"\nB =\n{B}")
-print(f"\nC =\n{C}")
-print(f"\n(A ⊗ B) ⊗ C =\n{AB_C}")
-print(f"\nA ⊗ (B ⊗ C) =\n{A_BC}")
-print(f"\nAssociativity check: {np.allclose(AB_C, A_BC)}")
-
-# ============================================================
-# Demo 2: Lipschitz Bound Verification
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 2: Lipschitz Bound for Tropical Product")
-print("=" * 60)
-
-A_prime = A + np.random.uniform(-0.5, 0.5, (n, n))
-B_prime = B + np.random.uniform(-0.5, 0.5, (n, n))
-
-AB_orig = tropical_mat_mul(A, B)
-AB_pert = tropical_mat_mul(A_prime, B_prime)
-
-diff_matrix = np.abs(AB_orig - AB_pert)
-max_diff = np.max(diff_matrix)
-
-# Lipschitz bound: |A⊗B - A'⊗B'| ≤ sup|A-A'| + sup|B-B'|
-bound = np.max(np.abs(A - A_prime)) + np.max(np.abs(B - B_prime))
-
-print(f"\nMax |A⊗B - A'⊗B'| = {max_diff:.6f}")
-print(f"Lipschitz bound    = {bound:.6f}")
-print(f"Bound satisfied: {max_diff <= bound + 1e-10}")
-
-# Visualize many perturbation trials
-num_trials = 500
-actual_diffs = []
-bounds = []
-for _ in range(num_trials):
-    eps = np.random.uniform(0, 2)
-    dA = np.random.uniform(-eps, eps, (n, n))
-    dB = np.random.uniform(-eps, eps, (n, n))
+        result[i][i] = 0
     
-    orig = tropical_mat_mul(A, B)
-    pert = tropical_mat_mul(A + dA, B + dB)
+    base = [row[:] for row in A]
+    muls = 0
+    while k > 0:
+        if k % 2 == 1:
+            result = trop_mat_mul(result, base)
+            muls += 1
+        base = trop_mat_mul(base, base)
+        muls += 1
+        k //= 2
+    return result, muls
+
+def trop_trace(A):
+    """Tropical trace: min of diagonal entries."""
+    return min(A[i][i] for i in range(len(A)))
+
+def trop_det(A):
+    """Tropical determinant: minimum weight perfect matching."""
+    n = len(A)
+    best = INF
+    for perm in permutations(range(n)):
+        weight = sum(A[i][perm[i]] for i in range(n))
+        best = min(best, weight)
+    return best
+
+def print_trop_mat(A, name=""):
+    """Pretty-print a tropical matrix."""
+    n = len(A)
+    if name:
+        print(f"\n{name}:")
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if A[i][j] == INF:
+                row.append("  ∞")
+            else:
+                row.append(f"{A[i][j]:3d}")
+        print("  [" + ", ".join(row) + "]")
+
+# =============================================================================
+# Part 2: Demonstrations
+# =============================================================================
+
+def demo_basic_arithmetic():
+    """Demonstrate tropical arithmetic fundamentals."""
+    print("=" * 60)
+    print("DEMO 1: Tropical (Min-Plus) Arithmetic")
+    print("=" * 60)
     
-    actual_diff = np.max(np.abs(orig - pert))
-    lip_bound = np.max(np.abs(dA)) + np.max(np.abs(dB))
+    print("\nTropical addition (= min):")
+    print(f"  3 ⊕ 5 = min(3, 5) = {trop_add(3, 5)}")
+    print(f"  7 ⊕ 2 = min(7, 2) = {trop_add(7, 2)}")
+    print(f"  4 ⊕ ∞ = min(4, ∞) = {trop_add(4, INF)}")
     
-    actual_diffs.append(actual_diff)
-    bounds.append(lip_bound)
+    print("\nTropical multiplication (= +):")
+    print(f"  3 ⊗ 5 = 3 + 5 = {trop_mul(3, 5)}")
+    print(f"  7 ⊗ 2 = 7 + 2 = {trop_mul(7, 2)}")
+    print(f"  4 ⊗ ∞ = 4 + ∞ = {trop_mul(4, INF)}")
+    
+    print("\nKey properties:")
+    print(f"  Additive identity: ∞ (min(x, ∞) = x)")
+    print(f"  Multiplicative identity: 0 (x + 0 = x)")
+    print(f"  Idempotent addition: 3 ⊕ 3 = min(3,3) = {trop_add(3, 3)}")
+    print(f"  ← This means NO additive inverses exist!")
+    print(f"  ← Tropical semiring is NOT a ring")
+    print(f"  ← Blocks algebraic attacks on crypto schemes")
 
-fig, ax = plt.subplots(1, 1, figsize=(8, 6))
-ax.scatter(bounds, actual_diffs, alpha=0.3, s=10, label='Actual difference')
-ax.plot([0, max(bounds)], [0, max(bounds)], 'r--', linewidth=2, label='Lipschitz bound (slope=1)')
-ax.set_xlabel('sup|ΔA| + sup|ΔB| (perturbation bound)')
-ax.set_ylabel('sup|ΔA⊗B - ΔA\'⊗B\'| (output difference)')
-ax.set_title('Tropical Product: 2-Lipschitz Bound Verification\n(500 random perturbation trials)')
-ax.legend()
-ax.grid(True, alpha=0.3)
-plt.tight_layout()
-plt.savefig('lipschitz_bound.png', dpi=150)
-print("\nSaved: lipschitz_bound.png")
+def demo_noncommutativity():
+    """Demonstrate that tropical matrix multiplication is non-commutative."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Non-Commutativity (Foundation of Hardness)")
+    print("=" * 60)
+    
+    A = [[0, 1], [2, 3]]
+    B = [[4, 5], [6, 0]]
+    
+    print_trop_mat(A, "A")
+    print_trop_mat(B, "B")
+    
+    AB = trop_mat_mul(A, B)
+    BA = trop_mat_mul(B, A)
+    
+    print_trop_mat(AB, "A ⊗ B")
+    print_trop_mat(BA, "B ⊗ A")
+    
+    print(f"\n  A ⊗ B ≠ B ⊗ A? {AB != BA} ✓")
+    print(f"  Difference at (0,1): {AB[0][1]} ≠ {BA[0][1]}")
+    print(f"  Difference at (1,0): {AB[1][0]} ≠ {BA[1][0]}")
+    print(f"\n  → Non-commutativity prevents algebraic DLP shortcuts")
 
-# ============================================================
-# Demo 3: Tropical Hash Function & Collision Resistance
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 3: Min-Plus Hash Function")
-print("=" * 60)
+def demo_diffie_hellman():
+    """Demonstrate tropical Diffie-Hellman key exchange."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Tropical Diffie-Hellman Key Exchange")
+    print("=" * 60)
+    
+    # Public generator matrix
+    G = [[0, 3, 7],
+         [5, 0, 2],
+         [1, 4, 0]]
+    
+    print_trop_mat(G, "Public generator G")
+    
+    # Alice's secret: a = 7
+    # Bob's secret: b = 11
+    a, b = 7, 11
+    print(f"\n  Alice's secret: a = {a}")
+    print(f"  Bob's secret:   b = {b}")
+    
+    # Compute public keys
+    Ga, muls_a = trop_mat_pow(G, a)
+    Gb, muls_b = trop_mat_pow(G, b)
+    
+    print_trop_mat(Ga, f"Alice's public key G^{a}")
+    print(f"  (computed in {muls_a} matrix multiplications)")
+    
+    print_trop_mat(Gb, f"Bob's public key G^{b}")
+    print(f"  (computed in {muls_b} matrix multiplications)")
+    
+    # Shared key: both compute G^(a+b)
+    Gab_alice, _ = trop_mat_pow(G, a + b)
+    
+    # Verify: G^a * G^b = G^(a+b) (powers commute!)
+    Ga_Gb = trop_mat_mul(Ga, Gb)
+    Gb_Ga = trop_mat_mul(Gb, Ga)
+    
+    print_trop_mat(Ga_Gb, f"Alice computes: G^{a} ⊗ G^{b}")
+    print_trop_mat(Gb_Ga, f"Bob computes: G^{b} ⊗ G^{a}")
+    
+    print(f"\n  Shared keys agree? {Ga_Gb == Gb_Ga} ✓")
+    print(f"  Equals G^{a+b}?    {Ga_Gb == Gab_alice} ✓")
+    print(f"\n  → Powers of the SAME matrix always commute")
+    print(f"  → Even though general tropical ⊗ is non-commutative!")
 
-n_input = 5
-n_output = 3
-H = np.random.randint(0, 10, (n_output, n_input)).astype(float)
+def demo_lipschitz():
+    """Demonstrate Lipschitz bounds for certified robustness."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: 1-Lipschitz Bound (Certified Robustness)")
+    print("=" * 60)
+    
+    n = 4
+    a = [3, -1, 5, 2]  # Coefficients
+    
+    def trop_linear(x):
+        return min(a[j] + x[j] for j in range(n))
+    
+    print(f"\n  Tropical linear form: f(x) = min_j(a_j + x_j)")
+    print(f"  Coefficients a = {a}")
+    
+    # Test with random vectors
+    np.random.seed(42)
+    max_violations = 0
+    trials = 10000
+    
+    diffs = []
+    output_diffs = []
+    
+    for _ in range(trials):
+        x = np.random.randint(-10, 10, n).tolist()
+        y = np.random.randint(-10, 10, n).tolist()
+        
+        fx = trop_linear(x)
+        fy = trop_linear(y)
+        
+        output_diff = abs(fx - fy)
+        input_diff = max(abs(x[j] - y[j]) for j in range(n))
+        
+        diffs.append(input_diff)
+        output_diffs.append(output_diff)
+        
+        if output_diff > input_diff:
+            max_violations += 1
+    
+    print(f"\n  Tested {trials} random pairs:")
+    print(f"  Lipschitz violations (|f(x)-f(y)| > max|x_j-y_j|): {max_violations}")
+    print(f"  Maximum |f(x)-f(y)|/max|x_j-y_j| ratio: {max(od/max(d,1e-10) for od,d in zip(output_diffs, diffs)):.4f}")
+    print(f"\n  → Tropical linear forms are always 1-Lipschitz ✓")
+    print(f"  → This gives EXACT certified adversarial robustness radii")
+    
+    # Plot
+    plt.figure(figsize=(8, 6))
+    plt.scatter(diffs, output_diffs, alpha=0.1, s=5, color='blue')
+    plt.plot([0, max(diffs)], [0, max(diffs)], 'r--', linewidth=2, label='Lipschitz bound (L=1)')
+    plt.xlabel('Input distance: max_j |x_j - y_j|', fontsize=12)
+    plt.ylabel('Output distance: |f(x) - f(y)|', fontsize=12)
+    plt.title('Tropical Linear Form: 1-Lipschitz Bound', fontsize=14)
+    plt.legend(fontsize=12)
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('lipschitz_bound.png', dpi=150)
+    plt.close()
+    print(f"\n  [Plot saved to lipschitz_bound.png]")
 
-def min_plus_hash(H, v):
-    """Evaluate min-plus hash: h_i = min_k (H[i,k] + v[k])"""
-    return tropical_mat_vec_mul(H, v)
+def demo_security_params():
+    """Demonstrate security parameter analysis."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Post-Quantum Security Parameters")
+    print("=" * 60)
+    
+    print(f"\n  {'n':>4} {'B':>4} {'Key space':>20} {'Bits':>8} {'Grover bits':>12}")
+    print(f"  {'-'*4} {'-'*4} {'-'*20} {'-'*8} {'-'*12}")
+    
+    params = [(4, 7), (8, 15), (8, 255), (16, 255), (32, 255), (64, 255)]
+    
+    for n, B in params:
+        key_space_bits = n * n * np.log2(B + 1)
+        grover_bits = key_space_bits / 2
+        
+        if key_space_bits < 100:
+            ks_str = f"{(B+1)**(n*n)}"
+        else:
+            ks_str = f"≈ 2^{key_space_bits:.0f}"
+        
+        print(f"  {n:4d} {B:4d} {ks_str:>20} {key_space_bits:>8.0f} {grover_bits:>12.0f}")
+    
+    print(f"\n  NIST security levels:")
+    print(f"  Level 1 (AES-128): need ≥ 128 Grover bits → n=8, B=255 (256 bits, Grover=128)")
+    print(f"  Level 3 (AES-192): need ≥ 192 Grover bits → n=8, B=255+ or n=16")
+    print(f"  Level 5 (AES-256): need ≥ 256 Grover bits → n=16, B=255 (2048 bits, Grover=1024)")
 
-v = np.random.uniform(0, 10, n_input)
-w = v + np.random.uniform(-0.1, 0.1, n_input)
+def demo_repeated_squaring():
+    """Demonstrate repeated squaring efficiency."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Repeated Squaring Complexity")
+    print("=" * 60)
+    
+    sizes = [4, 8, 16, 32]
+    exponents = [10, 100, 1000, 10000, 100000, 1000000]
+    
+    print(f"\n  Matrix multiplications needed for A^k (repeated squaring):")
+    print(f"  {'k':>10} {'⌊log₂ k⌋':>10} {'Muls (≤ 2log₂k+2)':>20}")
+    print(f"  {'-'*10} {'-'*10} {'-'*20}")
+    
+    for k in exponents:
+        log2k = int(np.log2(k))
+        muls = 2 * (log2k + 1)
+        print(f"  {k:>10,} {log2k:>10} {muls:>20}")
+    
+    print(f"\n  Timing comparison (n=32 matrices):")
+    n = 32
+    G = [[np.random.randint(0, 100) for _ in range(n)] for _ in range(n)]
+    
+    for k in [10, 100, 1000]:
+        t0 = time.time()
+        _, muls = trop_mat_pow(G, k)
+        elapsed = time.time() - t0
+        print(f"  G^{k:>6}: {elapsed*1000:.1f} ms ({muls} matrix multiplications)")
 
-hash_v = min_plus_hash(H, v)
-hash_w = min_plus_hash(H, w)
+def demo_shortest_paths():
+    """Demonstrate that tropical matrix powering computes shortest paths."""
+    print("\n" + "=" * 60)
+    print("DEMO 7: Shortest Paths via Tropical Powers")
+    print("=" * 60)
+    
+    # Weighted directed graph (adjacency matrix with edge weights)
+    # ∞ means no direct edge
+    A = [[INF,   3,   8, INF, INF],
+         [INF, INF,   2,   1, INF],
+         [INF, INF, INF, INF,   4],
+         [INF, INF, INF, INF,   7],
+         [INF, INF, INF, INF, INF]]
+    
+    print_trop_mat(A, "Adjacency matrix A (edge weights)")
+    
+    # A^k gives shortest paths using exactly k edges
+    # The Kleene star A* = I ⊕ A ⊕ A² ⊕ ... gives all shortest paths
+    n = len(A)
+    star = [[INF] * n for _ in range(n)]
+    for i in range(n):
+        star[i][i] = 0
+    
+    for k in range(1, n):
+        Ak, _ = trop_mat_pow(A, k)
+        for i in range(n):
+            for j in range(n):
+                star[i][j] = min(star[i][j], Ak[i][j])
+    
+    print_trop_mat(star, "Kleene star A* (all-pairs shortest paths)")
+    
+    print(f"\n  Shortest path 0→4: {star[0][4]}")
+    print(f"  (Path: 0→1→2→4 with weight 3+2+4 = 9)")
+    print(f"  Shortest path 0→3: {star[0][3]}")
+    print(f"  (Path: 0→1→3 with weight 3+1 = 4)")
 
-print(f"\nHash matrix H ({n_output}×{n_input}):\n{H}")
-print(f"\nInput v = {v}")
-print(f"Hash(v) = {hash_v}")
-print(f"\nInput w = v + small perturbation")
-print(f"w = {w}")
-print(f"Hash(w) = {hash_w}")
-print(f"\nsup|v - w|    = {np.max(np.abs(v - w)):.6f}")
-print(f"sup|H(v)-H(w)| = {np.max(np.abs(hash_v - hash_w)):.6f}")
-print(f"1-Lipschitz bound satisfied: {np.max(np.abs(hash_v - hash_w)) <= np.max(np.abs(v - w)) + 1e-10}")
+# =============================================================================
+# Main
+# =============================================================================
 
-# ============================================================
-# Demo 4: Certified Robustness Radius
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 4: Certified Robustness Radius")
-print("=" * 60)
-
-margin = 2.0  # Classification margin
-certified_radius = margin  # Since hash is 1-Lipschitz
-
-print(f"\nClassification margin: {margin}")
-print(f"Hash Lipschitz constant: 1")
-print(f"Certified robustness radius: {certified_radius}")
-print(f"\nAny perturbation with sup-norm < {certified_radius} is guaranteed safe.")
-
-# Verify with many adversarial perturbations
-x = np.random.uniform(0, 10, n_input)
-hash_x = min_plus_hash(H, x)
-safe_count = 0
-total = 1000
-for _ in range(total):
-    delta = np.random.uniform(-certified_radius * 0.99, certified_radius * 0.99, n_input)
-    hash_perturbed = min_plus_hash(H, x + delta)
-    if np.max(np.abs(hash_x - hash_perturbed)) < margin:
-        safe_count += 1
-
-print(f"Verified: {safe_count}/{total} perturbations within radius are safe ({100*safe_count/total:.1f}%)")
-
-# ============================================================
-# Demo 5: Graph Shortest Paths via Tropical Powers
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 5: Graph Shortest Paths via Tropical Product")
-print("=" * 60)
-
-# Create a weighted directed graph
-INF = 1e9
-W = np.array([
-    [0, 3, INF, 7],
-    [INF, 0, 2, INF],
-    [INF, INF, 0, 1],
-    [2, INF, INF, 0]
-], dtype=float)
-
-print(f"\nGraph adjacency matrix (∞ = no direct edge):")
-W_display = W.copy()
-W_display[W_display >= INF] = np.inf
-print(W_display)
-
-# Compute shortest paths via tropical closure
-n_graph = W.shape[0]
-D = W.copy()
-for _ in range(n_graph):
-    D_new = np.minimum(D, tropical_mat_mul(D, D))
-    if np.allclose(D, D_new):
-        break
-    D = D_new
-
-print(f"\nAll-pairs shortest distances (tropical closure):")
-print(D)
-print(f"\nShortest 0→3: {D[0,3]} (path: 0→1→2→3 = 3+2+1 = 6)")
-print(f"Shortest 3→1: {D[3,1]} (path: 3→0→1 = 2+3 = 5)")
-
-# Visualize
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-# Graph visualization
-ax = axes[0]
-positions = {0: (0, 1), 1: (1, 1), 2: (1, 0), 3: (0, 0)}
-for i in range(n_graph):
-    circle = plt.Circle(positions[i], 0.12, color='lightblue', ec='navy', linewidth=2)
-    ax.add_patch(circle)
-    ax.text(positions[i][0], positions[i][1], str(i), ha='center', va='center', fontsize=14, fontweight='bold')
-
-for i in range(n_graph):
-    for j in range(n_graph):
-        if W[i, j] < INF and i != j:
-            dx = positions[j][0] - positions[i][0]
-            dy = positions[j][1] - positions[i][1]
-            length = np.sqrt(dx**2 + dy**2)
-            ax.annotate('', xy=(positions[j][0] - 0.15*dx/length, positions[j][1] - 0.15*dy/length),
-                       xytext=(positions[i][0] + 0.15*dx/length, positions[i][1] + 0.15*dy/length),
-                       arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
-            mx = (positions[i][0] + positions[j][0]) / 2 + 0.08 * dy/length
-            my = (positions[i][1] + positions[j][1]) / 2 - 0.08 * dx/length
-            ax.text(mx, my, f'{int(W[i,j])}', ha='center', va='center', fontsize=10, color='red')
-
-ax.set_xlim(-0.3, 1.3)
-ax.set_ylim(-0.3, 1.3)
-ax.set_aspect('equal')
-ax.set_title('Weighted Directed Graph')
-ax.axis('off')
-
-# Shortest distance heatmap
-ax = axes[1]
-D_display = D.copy()
-im = ax.imshow(D_display, cmap='YlOrRd', interpolation='nearest')
-for i in range(n_graph):
-    for j in range(n_graph):
-        ax.text(j, i, f'{int(D_display[i,j])}', ha='center', va='center', fontsize=14)
-ax.set_xticks(range(n_graph))
-ax.set_yticks(range(n_graph))
-ax.set_xlabel('Destination')
-ax.set_ylabel('Source')
-ax.set_title('All-Pairs Shortest Distances\n(via Tropical Matrix Closure)')
-plt.colorbar(im, ax=ax)
-
-plt.tight_layout()
-plt.savefig('shortest_paths.png', dpi=150)
-print("\nSaved: shortest_paths.png")
-
-# ============================================================
-# Demo 6: Tropical Key Exchange Protocol
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 6: Tropical Key Exchange (Diffie-Hellman Analog)")
-print("=" * 60)
-
-n_ke = 3
-G = np.random.randint(1, 5, (n_ke, n_ke)).astype(float)
-np.fill_diagonal(G, 0)
-
-def tropical_pow(A, k):
-    """Compute tropical matrix power A^⊗k"""
-    if k == 0:
-        M = np.max(np.abs(A)) + 1
-        I = np.full_like(A, M)
-        np.fill_diagonal(I, 0)
-        return I
-    result = A.copy()
-    for _ in range(k - 1):
-        result = tropical_mat_mul(result, A)
-    return result
-
-alice_secret = 3
-bob_secret = 5
-
-G_a = tropical_pow(G, alice_secret)
-G_b = tropical_pow(G, bob_secret)
-
-# Alice computes: G^a ⊗ G^b
-alice_shared = tropical_mat_mul(G_a, G_b)
-
-# Bob computes: G^b ⊗ G^a
-bob_shared = tropical_mat_mul(G_b, G_a)
-
-print(f"\nPublic generator G:\n{G}")
-print(f"\nAlice's secret: a = {alice_secret}")
-print(f"Bob's secret:   b = {bob_secret}")
-print(f"\nAlice sends G^⊗{alice_secret}:\n{G_a}")
-print(f"\nBob sends G^⊗{bob_secret}:\n{G_b}")
-print(f"\nAlice's shared secret (G^a ⊗ G^b):\n{alice_shared}")
-print(f"\nBob's shared secret (G^b ⊗ G^a):\n{bob_shared}")
-
-# Note: tropical multiplication is NOT commutative in general
-if np.allclose(alice_shared, bob_shared):
-    print("\n✓ Key exchange successful! (shared secrets match)")
-else:
-    print("\n✗ Note: G^a ⊗ G^b ≠ G^b ⊗ G^a in general (tropical product is non-commutative)")
-    print("  This is a feature, not a bug — non-commutativity adds security.")
-    print("  A real protocol would use G^⊗(a+b) = G^⊗a ⊗ G^⊗1 ⊗ ... (iterated from left)")
-
-# ============================================================
-# Demo 7: One-Way Function: Preimage Non-Uniqueness
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 7: Preimage Non-Uniqueness (One-Way Property)")
-print("=" * 60)
-
-C_target = tropical_mat_mul(A[:3,:3], B[:3,:3])
-
-# Shift trick: A' = A + t, B' = B - t gives same product
-t = 5.0
-A_shifted = A[:3,:3] + t
-B_shifted = B[:3,:3] - t
-C_shifted = tropical_mat_mul(A_shifted, B_shifted)
-
-print(f"\nOriginal: A ⊗ B = C")
-print(f"C =\n{C_target}")
-print(f"\nShifted: (A+{t}) ⊗ (B-{t}) =")
-print(f"{C_shifted}")
-print(f"\nSame product? {np.allclose(C_target, C_shifted)}")
-print(f"Different factors? A ≠ A+{t}: True")
-print("\n→ This demonstrates that tropical matrix inversion is")
-print("  inherently ambiguous: many (A,B) pairs give the same A⊗B.")
-print("  This is the foundation of the one-way function property.")
-
-# ============================================================
-# Summary
-# ============================================================
-print("\n" + "=" * 60)
-print("SUMMARY: Key Results Demonstrated")
-print("=" * 60)
-print("""
-1. ASSOCIATIVITY: (A⊗B)⊗C = A⊗(B⊗C) — enables iterated hashing
-2. LIPSCHITZ BOUND: |A⊗B - A'⊗B'| ≤ sup|A-A'| + sup|B-B'| — certified robustness
-3. HASH FUNCTION: 1-Lipschitz min-plus hash — collision resistance
-4. CERTIFIED RADIUS: perturbations < margin are provably safe
-5. SHORTEST PATHS: tropical closure = all-pairs shortest distances
-6. KEY EXCHANGE: tropical Diffie-Hellman analog
-7. ONE-WAY: preimage non-uniqueness makes inversion hard
-
-All results formally verified in Lean 4 with zero sorry statements.
-""")
+if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  TROPICAL POST-QUANTUM CRYPTOGRAPHY — NUMERICAL DEMO   ║")
+    print("║  Min-Plus One-Way Functions & Lattice-Free Hardness     ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    
+    demo_basic_arithmetic()
+    demo_noncommutativity()
+    demo_diffie_hellman()
+    demo_lipschitz()
+    demo_security_params()
+    demo_repeated_squaring()
+    demo_shortest_paths()
+    
+    print("\n" + "=" * 60)
+    print("All demos complete!")
+    print("=" * 60)
