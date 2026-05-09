@@ -4,65 +4,103 @@
 
 ## Breakthrough Opportunities (ranked by impact)
 
-### 1. Stochastic Data Processing Inequality for Min-Entropy
+### 1. Quantum Operadic Codes and the Quantum Singleton Bound
 
-- **Theorem Statement**: For any Markov chain X → Y → Z (where the transition Y → Z is a stochastic kernel K: β → Dist(γ)), I_∞(X;Z) ≤ I_∞(X;Y).
-- **Proof Strategy**:
-  1. Define stochastic kernel as `StochasticKernel (β γ : Type) := β → FDist γ`.
-  2. Define the joint p_{X,Z}(x,z) = Σ_y p(x,y) · K(z|y).
-  3. Show that AGM(X,Z) ≤ AGM(X,Y) by: max_x Σ_y p(x,y)·K(z|y) ≤ Σ_y K(z|y)·max_x p(x,y), then sum over z and use Σ_z K(z|y) = 1.
-  4. The key helper lemma: `adversarialGuessMass_stochastic_le` following the same pattern as the deterministic case but with weighted sums.
-- **Why This Is Revolutionary**: Extends the DPI to the full generality needed for practical differential privacy composition. Currently, only deterministic post-processing is covered. Stochastic DPI covers noisy channels, Markov chain Monte Carlo, and randomized algorithms.
-- **Catalog Leverage**: Build directly on `adversarialGuessMass_pushforwardSnd_le`, `condMinEntropy_pushforwardSnd_ge`, `tropicalMI_deterministic_DPI`.
-- **Research Mode**: prove
-- **Estimated Depth**: 3
+**Theorem Statement**: For a CSS code over F₄ that is an algebra over the symplectic operad O_symp, the quantum minimum distance satisfies d ≤ n − 2k + 2, with equality if and only if the code is a free O_symp-algebra.
 
-### 2. Quantum Conditional Min-Entropy and Quantum DPI
+**Proof Strategy**:
+- Define the symplectic operad using the symplectic inner product on F₄^(2n)
+- Relate CSS code pairs (C₁, C₂⊥) to O_symp-algebra structure
+- Adapt the MDS-freeness characterization from `free_operad_iff_mds` to the quantum setting
+- Key lemma: symplectic freeness ↔ quantum MDS
 
-- **Theorem Statement**: For quantum states ρ_{AB} on H_A ⊗ H_B and quantum channels Φ: B → C, H_∞(A|Φ(B))_ρ ≥ H_∞(A|B)_ρ.
-- **Proof Strategy**:
-  1. Define quantum conditional min-entropy via semidefinite programming: H_∞(A|B) = -log inf{λ : ρ_{AB} ≤ λ · I_A ⊗ σ_B, σ_B ≥ 0, Tr σ_B = 1}.
-  2. Use the data processing inequality for the quantum relative entropy.
-  3. The key lemma relates the classical AGM to the quantum guessing probability.
-- **Why This Is Revolutionary**: Quantum conditional min-entropy governs quantum key distribution security (BB84, E91). A machine-verified quantum DPI would be the first of its kind.
-- **Catalog Leverage**: Classical DPI structure from this file, Mathlib's matrix/operator theory.
-- **Research Mode**: formalize
-- **Estimated Depth**: 5
+**Why This Is Revolutionary**: Would provide algebraic tools for quantum error correction design, directly impacting fault-tolerant quantum computing. No such operadic characterization of quantum MDS codes currently exists.
 
-### 3. Tight Composition Theorems for Tropical MI
+**Catalog Leverage**: Build on `free_operad_iff_mds`, `OperadicCodeComposite`, `CertifiedDecoderSpec`
 
-- **Theorem Statement**: For k-fold adaptive composition of mechanisms M_1, ..., M_k, each with I_∞ ≤ ε, the total leakage satisfies I_∞(X; Y_1,...,Y_k) ≤ k·ε (basic composition) and I_∞ ≤ O(√(k·ε²·log(1/δ))) (advanced composition).
-- **Proof Strategy**:
-  1. Define sequential composition of mechanisms.
-  2. Prove basic composition by induction using the chain rule structure.
-  3. For advanced composition, use the Azuma-Hoeffding inequality on the martingale of min-entropy losses.
-- **Why This Is Revolutionary**: Composition theorems are the most-used tools in differential privacy. Proving them for min-entropy MI would unify the DP literature with tropical information theory.
-- **Catalog Leverage**: `tropicalMI_nonneg`, `tropicalMI_deterministic_DPI`, `minEntropy_product_eq_add`.
-- **Research Mode**: prove
-- **Estimated Depth**: 4
+**Research Mode**: formalize
 
-### 4. Tropical Fano Inequality
-
-- **Theorem Statement**: For any estimator X̂ = g(Y) of X, P(X̂ ≠ X) ≥ 1 − exp(−H_∞(X|Y)) · |α|^{−1}. Equivalently, H_∞(X|Y) ≤ log(|α| / (1 − P_e)) where P_e = P(X̂ ≠ X).
-- **Proof Strategy**:
-  1. The adversary's best guess achieves P_e = 1 − AGM.
-  2. Any other estimator does worse: P_e ≥ 1 − AGM.
-  3. Convert to entropy bound via −log.
-- **Why This Is Revolutionary**: Fano's inequality is the cornerstone of converse results in information theory. A tropical version would enable proving impossibility results for adversarial estimation.
-- **Catalog Leverage**: `adversarialGuessMass_ge_maxMass_fst`, `condMinEntropy_le_minEntropy_fst`.
-- **Research Mode**: prove
-- **Estimated Depth**: 2
-
-### 5. Tropical Capacity and Maximal Leakage
-
-- **Theorem Statement**: The maximal leakage from Y to X is ML(Y→X) = log(Σ_y max_x p(y|x)) and equals the maximum of I_∞(U;Y) over all priors U on X. Furthermore, ML satisfies a DPI: ML(Z→X) ≤ ML(Y→X) for Markov chains X→Y→Z.
-- **Proof Strategy**:
-  1. Define maximal leakage as the supremum of I_∞ over priors.
-  2. Show the maximizing prior is always achieved.
-  3. Connect to the existing AGM definition.
-- **Why This Is Revolutionary**: Maximal leakage is the premier metric for information-theoretic privacy. Formalizing it would provide the strongest possible privacy guarantee.
-- **Catalog Leverage**: `tropicalMI_nonneg`, `adversarialGuessMass_pushforwardSnd_le`.
-- **Research Mode**: prove
-- **Estimated Depth**: 3
+**Estimated Depth**: 4
 
 ---
+
+### 2. Tropical Operadic Codes for Lattice Cryptography
+
+**Theorem Statement**: For codes over the tropical semiring (ℝ ∪ {∞}, min, +), the tropical Singleton bound gives d_trop ≤ n, and tropical MDS codes correspond to optimal lattice packings in the sense of Minkowski.
+
+**Proof Strategy**:
+- Define tropical operad: composition via min-plus convolution
+- Show tropical codes are lattices in ℝ^n with min-plus metric
+- Prove tropical Singleton bound via tropical dimension theory
+- Connect tropical MDS to lattice kissing numbers
+- Key lemma: tropical freeness ↔ Minkowski-optimal packing
+
+**Why This Is Revolutionary**: Would bridge tropical geometry, lattice theory, and post-quantum cryptography. Tropical MDS codes could provide new constructions for NTRU-like schemes.
+
+**Catalog Leverage**: Build on `TropicalCodeParams`, `tropical_singleton_bound`, `tropical_composite_dist`
+
+**Research Mode**: formalize
+
+**Estimated Depth**: 5
+
+---
+
+### 3. Operadic Certified Robustness for Deep Neural Networks
+
+**Theorem Statement**: For a neural network with L layers, each having margin mᵢ and compression ratio rᵢ = kᵢ/nᵢ, the end-to-end certified robustness satisfies: ε_certified ≤ ∏ᵢ (1 - rᵢ), with equality when each layer is "MDS" (margin = nᵢ - kᵢ + 1).
+
+**Proof Strategy**:
+- Formalize each layer as `NeuralLayerSpec` with `toCodeParams`
+- Define multi-layer composition via `IteratedComposite`
+- Prove margin contraction under composition using `correction_contracts`
+- Show MDS layers give optimal certified robustness
+- Key lemma: Lipschitz constant of composition = product of layer Lipschitz constants
+
+**Why This Is Revolutionary**: Would provide the first algebraic framework for multi-layer certified robustness, replacing the current layer-by-layer Lipschitz analysis with a unified operadic approach.
+
+**Catalog Leverage**: Build on `NeuralLayerSpec`, `neural_composite_valid`, `neural_margin_singleton`, `lipschitz_correction_bound`
+
+**Research Mode**: formalize
+
+**Estimated Depth**: 3
+
+---
+
+### 4. Operadic Homomorphic Encryption
+
+**Theorem Statement**: If E : Code → EncryptedCode is an operad algebra morphism, then homomorphic computation Eval(f, E(x₁),...,E(xₙ)) = E(f(x₁,...,xₙ)) follows from naturality, with decryption certified by the functorial decoder.
+
+**Proof Strategy**:
+- Define encryption as `OperadMorphism` from plaintext operad to ciphertext operad
+- Show homomorphic evaluation is operadic composition in the ciphertext operad
+- Prove correctness via `map_comp` axiom of `OperadMorphism`
+- Certify decryption via `compositeDecoder` applied to the ciphertext decoder
+- Key lemma: naturality of `OperadMorphism` = homomorphic property
+
+**Why This Is Revolutionary**: Would provide a category-theoretic foundation for FHE, potentially enabling new constructions based on operadic structure rather than lattice assumptions alone.
+
+**Catalog Leverage**: Build on `OperadMorphism`, `compositeDecoder`, `functorial_decoding_certification`
+
+**Research Mode**: formalize
+
+**Estimated Depth**: 4
+
+---
+
+### 5. Operadic Satake Transform for Code Composition
+
+**Theorem Statement**: There exists a "Satake transform" S : O-AlgCodes → TropO-AlgCodes that preserves distance bounds and maps MDS codes to tropical MDS codes, establishing a tropical Langlands-type duality for coding theory.
+
+**Proof Strategy**:
+- Define the Satake transform as valuation map from F_q-codes to tropical codes
+- Show S preserves operadic composition (is an operad algebra morphism)
+- Prove S maps MDS to tropical MDS (freeness is preserved)
+- Key lemma: Satake transform commutes with the Singleton bound
+
+**Why This Is Revolutionary**: Would establish a Langlands-type correspondence in coding theory, connecting the arithmetic of finite fields to tropical geometry via operadic structure.
+
+**Catalog Leverage**: Build on `OperadMorphism`, `TropicalCodeParams`, `free_operad_iff_mds`
+
+**Research Mode**: discover
+
+**Estimated Depth**: 5
