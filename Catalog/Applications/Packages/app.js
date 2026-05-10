@@ -7,8 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const tabs = document.querySelectorAll('.tab-btn');
     
+    // Lightbox elements
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    
     let packages = [];
     let currentPackage = null;
+    let currentVizIndex = 0;
 
     // Set marked.js options for KaTeX compatibility if needed
     marked.setOptions({
@@ -46,6 +55,64 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile sidebar toggle
     mobileToggle.addEventListener('click', () => {
         sidebar.classList.toggle('open');
+    });
+
+    // Lightbox Logic
+    function openLightbox(index) {
+        if (!currentPackage || !currentPackage.visualizations) return;
+        currentVizIndex = index;
+        updateLightbox();
+        lightbox.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // prevent scrolling
+    }
+
+    function closeLightbox() {
+        lightbox.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function updateLightbox() {
+        const viz = currentPackage.visualizations[currentVizIndex];
+        let imgContent = '';
+        if (viz.data && viz.data.startsWith('<svg')) {
+            imgContent = viz.data;
+        } else if (viz.data && viz.data.startsWith('data:image')) {
+            imgContent = `<img src="${viz.data}" alt="${viz.name}">`;
+        }
+        lightboxImg.innerHTML = imgContent;
+        lightboxCaption.textContent = viz.name || 'Visualization';
+        
+        // Hide arrows if only 1 image
+        const multiple = currentPackage.visualizations.length > 1;
+        lightboxPrev.style.display = multiple ? 'block' : 'none';
+        lightboxNext.style.display = multiple ? 'block' : 'none';
+    }
+
+    function nextLightbox() {
+        if (!currentPackage || !currentPackage.visualizations) return;
+        currentVizIndex = (currentVizIndex + 1) % currentPackage.visualizations.length;
+        updateLightbox();
+    }
+
+    function prevLightbox() {
+        if (!currentPackage || !currentPackage.visualizations) return;
+        currentVizIndex = (currentVizIndex - 1 + currentPackage.visualizations.length) % currentPackage.visualizations.length;
+        updateLightbox();
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', prevLightbox);
+    lightboxNext.addEventListener('click', nextLightbox);
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('hidden')) {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextLightbox();
+            if (e.key === 'ArrowLeft') prevLightbox();
+        }
     });
 
     // Handle clicks outside sidebar on mobile
@@ -176,9 +243,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const vizDiv = document.getElementById('content-visualizations');
         vizDiv.innerHTML = '';
         if (data.visualizations && data.visualizations.length > 0) {
-            data.visualizations.forEach(viz => {
+            data.visualizations.forEach((viz, index) => {
                 const card = document.createElement('div');
                 card.className = 'gallery-card';
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', () => openLightbox(index));
                 
                 // Determine if it's base64 or inline svg
                 let imgContent = '';
