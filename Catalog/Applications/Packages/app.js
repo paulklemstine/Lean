@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const data = window.PACKAGE_DB[filename];
             currentPackage = data;
-            renderPackage(data);
+            renderPackage(data, filename);
             
             welcomeScreen.classList.add('hidden');
             packageView.classList.remove('hidden');
@@ -218,10 +218,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function renderPackage(data) {
+    function renderPackage(data, filename) {
         // Header
         document.getElementById('pkg-title').textContent = data.title || 'Untitled Research';
         document.getElementById('pkg-domain').textContent = data.domain || 'General';
+        
+        // Find date from index
+        let dateStr = 'Recent';
+        if (window.PACKAGE_INDEX) {
+            const pkgMeta = window.PACKAGE_INDEX.find(p => p.filename === filename);
+            if (pkgMeta && pkgMeta.date) {
+                const d = new Date(pkgMeta.date);
+                if (!isNaN(d)) dateStr = d.toLocaleDateString();
+            }
+        }
+        document.getElementById('pkg-date').textContent = dateStr;
         
         // Article
         const articleDiv = document.getElementById('content-article');
