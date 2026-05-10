@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     output.classList.remove('hidden');
                     output.classList.remove('error');
-                    output.textContent = 'Running...';
+                    output.textContent = 'Preparing environment...';
                     runBtn.disabled = true;
                     
                     let stdout = "";
@@ -401,6 +401,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
                     
                     try {
+                        // Automatically load any imports (like numpy, pandas, etc.)
+                        await pyodideInstance.loadPackagesFromImports(editor.value);
+                        
+                        output.textContent = 'Running...';
+                        
                         const result = await pyodideInstance.runPythonAsync(editor.value);
                         if (result !== undefined && result !== null) {
                             stdout += result + "\n";
