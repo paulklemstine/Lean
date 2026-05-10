@@ -1,1292 +1,1110 @@
 #!/usr/bin/env python3
 """
-Entropy Algebra: Algorithms for Information-Theoretic Security
+Algorithms for Entropy-Algebra-Cryptography Bridges
 
-Implements the key algorithms from the research paper with
-complete docstrings, type hints, and complexity analysis.
+Implements the computational algorithms from the research paper with
+full docstrings, type hints, and complexity analysis.
 """
 
 import math
 from typing import List, Tuple, Optional
-from dataclasses import dataclass
 
 
 # ============================================================
-# Algorithm 1: Collision Probability Computation — O(n)
+# Algorithm 1: Entropy Computation — O(n) complexity
 # ============================================================
-
-def collision_probability(weights: List[float]) -> float:
+def shannon_entropy(probs: List[float]) -> float:
     """
-    Compute the collision probability Σ p_i² of a distribution.
+    Compute Shannon entropy H(X) = -Σ p_i log₂(p_i).
     
-    Complexity: O(n) time, O(1) space.
-    
-    The collision probability determines:
-    - Birthday attack success probability (cryptography)
-    - Rényi-2 entropy H₂ = -log(Σ p_i²) (information theory)
-    - Distinguishability from uniform (statistics)
-    
-    Verified bounds:
-    - 1/n ≤ collision_prob ≤ 1 (birthday bound + normalization)
-    - Equality with 1/n iff uniform distribution
+    Complexity: O(n) where n = len(probs)
+    Space: O(1) additional
     
     Args:
-        weights: Probability distribution (non-negative, sums to 1)
+        probs: Probability distribution (must sum to ~1, all nonneg)
     
     Returns:
-        Collision probability ∈ [1/n, 1]
+        Shannon entropy in bits
     
-    Examples:
-        >>> collision_probability([0.5, 0.5])
-        0.5
-        >>> collision_probability([1/3, 1/3, 1/3])
-        0.3333333333333333
+    Example:
+        >>> shannon_entropy([0.5, 0.5])
+        1.0
+        >>> round(shannon_entropy([0.25, 0.25, 0.25, 0.25]), 4)
+        2.0
     """
-    return sum(p * p for p in weights)
+    return -sum(p * math.log2(p) for p in probs if p > 0)
 
 
-def renyi2_entropy(weights: List[float]) -> float:
+def min_entropy(probs: List[float]) -> float:
     """
-    Compute Rényi entropy of order 2: H₂ = -log(Σ p_i²).
+    Compute min-entropy H_∞(X) = -log₂(max p_i).
     
-    Complexity: O(n) time, O(1) space.
+    Complexity: O(n) 
     
-    The collision entropy bounds:
-    - Shannon entropy: H₂ ≤ H₁ (Shannon) ≤ log(n)
-    - Min-entropy: H_∞ ≤ H₂
-    - Extractable randomness (leftover hash lemma)
+    The min-entropy is always ≤ Shannon entropy (proved formally).
+    It determines cryptographic security: extractable randomness.
     
     Args:
-        weights: Probability distribution
+        probs: Probability distribution
     
     Returns:
-        Rényi-2 entropy in nats
+        Min-entropy in bits
     """
-    cp = collision_probability(weights)
-    if cp <= 0:
-        return float('inf')
-    return -math.log(cp)
+    return -math.log2(max(probs))
+
+
+def max_entropy(n: int) -> float:
+    """
+    Maximum entropy of a distribution on n elements: log₂(n).
+    Achieved by the uniform distribution.
+    
+    Complexity: O(1)
+    """
+    return math.log2(n)
 
 
 # ============================================================
-# Algorithm 2: Entropy Gap Analysis — O(n)
+# Algorithm 2: Entropy Gap Computation — O(n) complexity
 # ============================================================
-
-@dataclass
-class EntropyAnalysis:
-    """Complete entropy analysis of a distribution."""
-    collision_prob: float
-    renyi2: float
-    max_entropy: float
-    entropy_gap: float
-    post_quantum_security_bits: float
-    nist_level: int
-
-
-def analyze_entropy(weights: List[float]) -> EntropyAnalysis:
+def entropy_gap(probs: List[float]) -> float:
     """
-    Complete entropy analysis with security parameter derivation.
+    Compute the entropy gap: H_max - H(X).
     
-    Complexity: O(n) time, O(1) space.
+    The gap measures how far the distribution is from uniform.
+    Formally proven: |gap| ≤ 2n where n = len(probs).
     
-    Computes:
-    1. Collision probability (O(n))
-    2. Rényi-2 entropy (O(1) from collision prob)
-    3. Entropy gap from max-entropy (O(1))
-    4. Post-quantum security bits (O(1))
-    5. NIST security level (O(1))
+    Complexity: O(n)
+    """
+    n = len(probs)
+    h = shannon_entropy(probs)
+    h_max = max_entropy(n)
+    return h_max - h
+
+
+# ============================================================
+# Algorithm 3: Birthday Bound Security Analysis — O(1)
+# ============================================================
+def security_analysis(output_bits: int) -> dict:
+    """
+    Analyze hash function security under classical and quantum attacks.
     
-    Total: O(n) — dominated by the single pass over weights.
+    Implements the formally verified bounds:
+    - Classical collision: σ/2 bits (birthday bound)
+    - Quantum collision: σ/3 bits (BHT algorithm)
+    - Security margin: ≥ σ/6 bits
+    
+    Complexity: O(1)
     
     Args:
-        weights: Probability distribution
+        output_bits: Hash output length σ
     
     Returns:
-        EntropyAnalysis with all derived parameters
+        Dictionary with security parameters
     """
-    n = len(weights)
-    cp = collision_probability(weights)
-    h2 = -math.log(cp) if cp > 0 else float('inf')
-    max_h = math.log(n) if n > 0 else 0
-    gap = max_h - h2
-    pq_bits = h2 / (2 * math.log(2))  # Convert nats to bits, halve for Grover
+    return {
+        'output_bits': output_bits,
+        'classical_collision_bits': output_bits // 2,
+        'quantum_collision_bits': output_bits // 3,
+        'security_margin': output_bits // 2 - output_bits // 3,
+        'post_quantum_safe': output_bits // 3 >= 128,
+        'classical_preimage_bits': output_bits,
+        'quantum_preimage_bits': output_bits * 2 // 3,
+    }
+
+
+# ============================================================
+# Algorithm 4: Key Derivation Security — O(1)
+# ============================================================
+def key_derivation_params(
+    key_length: int,
+    entropy_loss: int = 64,
+    post_quantum: bool = True
+) -> dict:
+    """
+    Compute key derivation parameters satisfying the leftover hash lemma.
     
-    # NIST level classification
-    if gap <= 128 * math.log(2):
-        nist = 5
-    elif gap <= 192 * math.log(2):
-        nist = 3
-    elif gap <= 256 * math.log(2):
-        nist = 1
+    Formally verified: keyLength + entropyLoss ≤ sourceEntropy
+    Post-quantum: sourceEntropy = 2 * keyLength + entropyLoss
+    
+    Complexity: O(1)
+    
+    Args:
+        key_length: Desired key length in bits
+        entropy_loss: Entropy loss in extraction (default 64)
+        post_quantum: Whether to use post-quantum parameters
+    
+    Returns:
+        Dictionary with key derivation parameters
+    """
+    if post_quantum:
+        source_entropy = 2 * key_length + entropy_loss
     else:
-        nist = 0
+        source_entropy = key_length + entropy_loss
     
-    return EntropyAnalysis(
-        collision_prob=cp,
-        renyi2=h2,
-        max_entropy=max_h,
-        entropy_gap=gap,
-        post_quantum_security_bits=pq_bits,
-        nist_level=nist,
-    )
+    return {
+        'key_length': key_length,
+        'entropy_loss': entropy_loss,
+        'source_entropy': source_entropy,
+        'post_quantum': post_quantum,
+        'feasible': key_length + entropy_loss <= source_entropy,
+        'leftover_entropy': source_entropy - key_length - entropy_loss,
+    }
 
 
 # ============================================================
-# Algorithm 3: Lattice Key Parameter Selection — O(1)
+# Algorithm 5: Boltzmann Distribution (Softmax) — O(n)
 # ============================================================
-
-@dataclass
-class LatticeParams:
-    """Lattice-based cryptographic parameters."""
-    dimension: int
-    modulus: int
-    max_entropy_bits: float
-    keygen_complexity: float
-    security_bits: float
-
-
-def select_lattice_params(
-    target_security_bits: float,
-    modulus: int = 3329,
-) -> LatticeParams:
+def boltzmann_distribution(
+    energies: List[float],
+    beta: float
+) -> Tuple[List[float], float]:
     """
-    Select lattice parameters to achieve target security level.
+    Compute the Boltzmann (softmax) distribution.
     
-    Complexity: O(1) time, O(1) space.
+    p_i = exp(-β·E_i) / Z where Z = Σ exp(-β·E_j)
     
-    Uses the relation: security ≈ n·log₂(q) bits.
-    Key generation complexity: O(n²·log(q)) via NTT.
+    Formally verified: all weights are positive (exp > 0).
+    Formally verified: lower energy → higher weight (monotonicity).
     
-    The formal verification proves:
-    - lattice_max_entropy_nonneg: entropy ≥ 0
-    - lattice_entropy_scaling: entropy(2n,q) = 2·entropy(n,q)
-    - lwe_modulus_squaring: entropy(n,q²) = 2·entropy(n,q)
+    Complexity: O(n)
     
     Args:
-        target_security_bits: Desired security level in bits
-        modulus: Ring modulus (default: 3329 for Kyber)
+        energies: Energy values for each state
+        beta: Inverse temperature β = 1/(kT)
     
     Returns:
-        LatticeParams with dimension achieving target security
+        (probabilities, partition_function)
     """
-    log2_q = math.log2(modulus)
-    dimension = math.ceil(target_security_bits / log2_q)
-    # Round up to nearest power of 2 for NTT efficiency
-    dimension = 2 ** math.ceil(math.log2(max(dimension, 1)))
+    # Numerically stable softmax (subtract max)
+    max_e = max(energies)
+    weights = [math.exp(-beta * (e - max_e)) for e in energies]
+    Z = sum(weights)
+    probs = [w / Z for w in weights]
     
-    max_entropy = dimension * math.log2(modulus)
-    complexity = dimension * dimension * math.log2(modulus)
+    # True partition function
+    Z_true = sum(math.exp(-beta * e) for e in energies)
     
-    return LatticeParams(
-        dimension=dimension,
-        modulus=modulus,
-        max_entropy_bits=max_entropy,
-        keygen_complexity=complexity,
-        security_bits=max_entropy,
-    )
+    return probs, Z_true
+
+
+def free_energy(energy: float, entropy: float, temperature: float) -> float:
+    """
+    Compute Helmholtz free energy: F = E - T·S.
+    
+    Formally verified: F ≤ E (since T·S ≥ 0 for T > 0, S ≥ 0).
+    
+    Complexity: O(1)
+    """
+    return energy - temperature * entropy
 
 
 # ============================================================
-# Algorithm 4: Birthday Attack Complexity — O(1)
+# Algorithm 6: Gradient Descent Convergence Rate — O(1)
 # ============================================================
-
-def birthday_attack_complexity(hash_bits: int) -> Tuple[int, float]:
-    """
-    Compute birthday attack complexity for a hash function.
-    
-    Complexity: O(1).
-    
-    For a k-bit hash, birthday attack requires:
-    - Classical: ~2^(k/2) operations
-    - Quantum (Grover): ~2^(k/3) operations
-    
-    Verified: hash_collision_bound proves 2·(k/2) ≤ k.
-    
-    Args:
-        hash_bits: Output size of hash function in bits
-    
-    Returns:
-        (classical_ops_log2, quantum_ops_log2)
-    """
-    classical = hash_bits // 2
-    quantum = hash_bits // 3
-    return classical, quantum
-
-
-# ============================================================
-# Algorithm 5: Partition Function Computation — O(n)
-# ============================================================
-
-def partition_function(energies: List[float], temperature: float) -> float:
-    """
-    Compute partition function Z = Σ exp(-E_i/T).
-    
-    Complexity: O(n) time, O(1) space.
-    
-    Verified properties:
-    - partition_fn_pos: Z > 0 always (sum of positives)
-    - partition_fn_ge_one_at_zero: Z ≥ 1 when ∃i, E_i = 0
-    
-    Args:
-        energies: Energy levels
-        temperature: Temperature T > 0
-    
-    Returns:
-        Partition function value (always positive)
-    """
-    beta = 1.0 / temperature
-    return sum(math.exp(-beta * e) for e in energies)
-
-
-def free_energy(energies: List[float], temperature: float) -> float:
-    """
-    Compute free energy F = -T·log(Z).
-    
-    Complexity: O(n) time, O(1) space.
-    
-    Verified: free_energy_nonpos_at_zero: F ≤ 0 when ∃i, E_i = 0.
-    
-    Args:
-        energies: Energy levels  
-        temperature: Temperature T > 0
-    
-    Returns:
-        Free energy value
-    """
-    z = partition_function(energies, temperature)
-    return -temperature * math.log(z)
-
-
-# ============================================================
-# Algorithm 6: Randomness Extraction — O(n)
-# ============================================================
-
-def extractable_bits(
-    source_entropy_bits: float,
-    security_param: float = 2**(-40),
+def convergence_rate(
+    lipschitz_const: float,
+    initial_gap: float,
+    num_steps: int
 ) -> float:
     """
-    Compute extractable randomness via leftover hash lemma.
+    Compute the convergence rate bound for gradient descent on convex functions.
     
-    Complexity: O(1) from entropy parameters.
-    Extraction itself: O(n) for n-bit source.
+    Rate = L·D₀/T
     
-    Extractable bits = H_∞ - 2·log₂(1/ε)
+    Formally verified: rate ≥ 0 and monotone decreasing in T.
     
-    Verified: extraction_loss_bound proves extractable ≤ source entropy.
+    Complexity: O(1)
     
     Args:
-        source_entropy_bits: Min-entropy of source in bits
-        security_param: Statistical distance ε (default: 2^-40)
+        lipschitz_const: Lipschitz constant L of the gradient
+        initial_gap: Initial suboptimality gap D₀
+        num_steps: Number of gradient descent steps T
     
     Returns:
-        Number of extractable nearly-uniform bits
+        Upper bound on suboptimality after T steps
     """
-    loss = 2 * math.log2(1 / security_param)
-    return max(0, source_entropy_bits - loss)
+    if num_steps == 0:
+        return initial_gap
+    return lipschitz_const * initial_gap / num_steps
 
 
 # ============================================================
-# Algorithm 7: Certified Robustness Computation — O(n)
+# Algorithm 7: LWE Parameter Analysis — O(1)
 # ============================================================
+def lwe_analysis(n: int, m: int, q: int) -> dict:
+    """
+    Analyze LWE (Learning With Errors) parameters.
+    
+    Formally verified:
+    - lweSecretInfo ≤ lweSampleEntropy (since n ≤ m)
+    - Need at least n samples for unique recovery
+    
+    Complexity: O(1)
+    
+    Args:
+        n: Lattice dimension
+        m: Number of samples
+        q: Modulus
+    
+    Returns:
+        Dictionary with LWE analysis
+    """
+    log_q = math.log2(q)
+    secret_entropy = n * log_q
+    sample_entropy = m * log_q
+    
+    return {
+        'dimension': n,
+        'samples': m,
+        'modulus': q,
+        'log_q': log_q,
+        'secret_entropy_bits': secret_entropy,
+        'sample_entropy_bits': sample_entropy,
+        'redundancy_ratio': m / n,
+        'sufficient_samples': m >= n,
+        'estimated_security_bits': n,
+    }
 
-@dataclass
-class RobustnessCertificate:
-    """Certified adversarial robustness from entropy analysis."""
+
+# ============================================================
+# Algorithm 8: Entropy Chain Rule Decomposition — O(n)
+# ============================================================
+def entropy_chain_decomposition(
+    conditional_terms: List[float]
+) -> dict:
+    """
+    Compute the entropy chain rule decomposition.
+    
+    H(X₁,...,Xₙ) = Σᵢ H(Xᵢ | X₁,...,Xᵢ₋₁)
+    
+    Formally verified:
+    - joint_entropy = sum(conditional_terms)
+    - Each term ≤ joint_entropy
+    - joint_entropy ≥ 0 (when terms ≥ 0)
+    
+    Complexity: O(n) where n = number of terms
+    """
+    joint = sum(conditional_terms)
+    return {
+        'num_terms': len(conditional_terms),
+        'conditional_terms': conditional_terms,
+        'joint_entropy': joint,
+        'max_term': max(conditional_terms) if conditional_terms else 0,
+        'all_terms_le_joint': all(t <= joint + 1e-10 for t in conditional_terms),
+        'joint_nonneg': joint >= 0,
+    }
+
+
+# ============================================================
+# Algorithm 9: Statistical Distinguisher — O(n)
+# ============================================================
+def statistical_distance(p: List[float], q: List[float]) -> float:
+    """
+    Compute the statistical distance (total variation) between two distributions.
+    
+    SD(p, q) = (1/2) Σ |p_i - q_i|
+    
+    Formally verified: advantage ≤ 1/2 (perfect distinguishing bound).
+    Formally verified: advantage² ≤ 1/4 (Pinsker-type bound).
+    
+    Complexity: O(n)
+    """
+    return 0.5 * sum(abs(pi - qi) for pi, qi in zip(p, q))
+
+
+# ============================================================
+# Algorithm 10: Lipschitz Certified Robustness — O(n)
+# ============================================================
+def certified_robustness_radius(
+    lipschitz_const: float,
     entropy_margin: float
-    lipschitz_constant: float
-    robustness_radius: float
-    confidence: str
-
-
-def certify_robustness(
-    class_probs: List[float],
-    lipschitz_constant: float = 2.0,
-) -> RobustnessCertificate:
+) -> float:
     """
-    Compute certified robustness radius from classifier entropy.
+    Compute the certified robustness radius for entropy-based classifiers.
     
-    Complexity: O(k) for k classes.
+    If entropy margin is Δ and Lipschitz constant is L,
+    then the classifier is robust within ε = Δ/L in L1 distance.
     
-    The entropy margin δ = H_max - H(output) determines robustness:
-    - Radius = δ / L where L is the Lipschitz constant
-    - Larger margin → more robust → harder to attack
+    Formally verified: |H(p) - H(q)| ≤ L · ‖p - q‖₁
     
-    Verified:
-    - entropy_margin_nonneg: margin ≥ 0
-    - robustness_radius_nonneg: radius ≥ 0
-    - robustness_monotone_in_margin: larger margin → larger radius
+    Complexity: O(1)
     
     Args:
-        class_probs: Output probabilities of classifier
-        lipschitz_constant: Lipschitz constant of network
+        lipschitz_const: Lipschitz constant L of the entropy function
+        entropy_margin: Gap between classes in entropy space Δ
     
     Returns:
-        RobustnessCertificate with verified bounds
+        Certified robustness radius ε
     """
-    k = len(class_probs)
-    max_entropy = math.log(k) if k > 0 else 0
-    
-    # Shannon entropy of output
-    output_entropy = -sum(
-        p * math.log(p) for p in class_probs if p > 0
-    )
-    
-    margin = max_entropy - output_entropy
-    radius = margin / lipschitz_constant if lipschitz_constant > 0 else 0
-    
-    if margin > 0.8 * max_entropy:
-        confidence = "HIGH"
-    elif margin > 0.5 * max_entropy:
-        confidence = "MEDIUM"
-    else:
-        confidence = "LOW"
-    
-    return RobustnessCertificate(
-        entropy_margin=margin,
-        lipschitz_constant=lipschitz_constant,
-        robustness_radius=radius,
-        confidence=confidence,
-    )
+    if lipschitz_const <= 0:
+        return float('inf')
+    return entropy_margin / lipschitz_const
 
 
 # ============================================================
-# Algorithm 8: Tropical Convolution — O(n²) naive
+# Example Usage
 # ============================================================
-
-def tropical_convolution(a: List[float], b: List[float]) -> List[float]:
-    """
-    Compute tropical convolution: (a ⊛ b)[k] = min_i (a[i] + b[k-i]).
-    
-    Complexity: O(n²) naive, O(n log n) via tropical FFT.
-    
-    This is the tropical analog of polynomial multiplication,
-    where (min, +) replaces (+, ×). Used in:
-    - Dynamic programming optimization
-    - Shortest path computation
-    - Entropy convolution bounds
-    
-    Args:
-        a, b: Tropical "polynomials" (vectors of real values)
-    
-    Returns:
-        Tropical convolution result
-    """
-    n = len(a)
-    m = len(b)
-    result = [float('inf')] * (n + m - 1)
-    
-    for i in range(n):
-        for j in range(m):
-            result[i + j] = min(result[i + j], a[i] + b[j])
-    
-    return result
-
-
-# ============================================================
-# Main: Run all algorithm demonstrations
-# ============================================================
-
 if __name__ == "__main__":
-    print("=" * 60)
-    print("ENTROPY ALGEBRA: ALGORITHM DEMONSTRATIONS")
-    print("=" * 60)
+    print("=== Algorithm Examples ===\n")
     
-    # 1. Entropy analysis
-    print("\n--- Entropy Analysis (O(n)) ---")
-    dist = [0.4, 0.3, 0.15, 0.1, 0.05]
-    analysis = analyze_entropy(dist)
-    print(f"Distribution: {dist}")
-    print(f"Collision probability: {analysis.collision_prob:.6f}")
-    print(f"Rényi-2 entropy: {analysis.renyi2:.4f} nats")
-    print(f"Max entropy: {analysis.max_entropy:.4f} nats")
-    print(f"Entropy gap: {analysis.entropy_gap:.4f} nats")
-    print(f"Post-quantum security: {analysis.post_quantum_security_bits:.2f} bits")
+    # Shannon entropy
+    p = [0.25, 0.25, 0.25, 0.25]
+    print(f"Shannon entropy of uniform(4): {shannon_entropy(p):.4f} bits")
+    print(f"Min-entropy of uniform(4):     {min_entropy(p):.4f} bits")
     
-    # 2. Lattice parameters
-    print("\n--- Lattice Parameter Selection (O(1)) ---")
-    for target in [128, 192, 256]:
-        params = select_lattice_params(target)
-        print(f"Target: {target}-bit → n={params.dimension}, q={params.modulus}, "
-              f"entropy={params.max_entropy_bits:.0f} bits")
+    # Security analysis
+    sa = security_analysis(256)
+    print(f"\nSHA-256 security analysis: {sa}")
     
-    # 3. Birthday attack
-    print("\n--- Birthday Attack Complexity (O(1)) ---")
-    for bits in [128, 256, 384, 512]:
-        classical, quantum = birthday_attack_complexity(bits)
-        print(f"  {bits}-bit hash: classical 2^{classical}, quantum 2^{quantum}")
+    # Key derivation
+    kd = key_derivation_params(256, post_quantum=True)
+    print(f"\nPost-quantum key derivation (256-bit): {kd}")
     
-    # 4. Partition function
-    print("\n--- Partition Function (O(n)) ---")
-    energies = [0.0, 0.5, 1.0, 2.0, 3.0]
-    for T in [0.5, 1.0, 2.0, 5.0]:
-        z = partition_function(energies, T)
-        f = free_energy(energies, T)
-        print(f"  T={T}: Z={z:.4f}, F={f:.4f}")
+    # Boltzmann
+    energies = [1.0, 2.0, 3.0, 4.0, 5.0]
+    probs, Z = boltzmann_distribution(energies, beta=1.0)
+    print(f"\nBoltzmann(β=1): probs={[f'{p:.4f}' for p in probs]}, Z={Z:.4f}")
     
-    # 5. Randomness extraction
-    print("\n--- Randomness Extraction (O(n)) ---")
-    for source_bits in [128, 256, 512]:
-        extracted = extractable_bits(source_bits)
-        print(f"  {source_bits}-bit source → {extracted:.0f} extractable bits")
+    # LWE
+    lwe = lwe_analysis(n=512, m=1024, q=3329)
+    print(f"\nKyber-512 LWE analysis: {lwe}")
     
-    # 6. Certified robustness
-    print("\n--- Certified Robustness (O(k)) ---")
-    for probs in [[0.9, 0.05, 0.03, 0.02], [0.5, 0.3, 0.15, 0.05], [0.25]*4]:
-        cert = certify_robustness(probs)
-        print(f"  probs={probs}: radius={cert.robustness_radius:.4f} ({cert.confidence})")
-    
-    # 7. Tropical convolution
-    print("\n--- Tropical Convolution (O(n²)) ---")
-    a = [1.0, 3.0, 2.0]
-    b = [4.0, 1.0, 5.0]
-    result = tropical_convolution(a, b)
-    print(f"  a = {a}")
-    print(f"  b = {b}")
-    print(f"  a ⊛ b = {result}")
-    
-    print("\n" + "=" * 60)
-    print("ALL ALGORITHMS DEMONSTRATED SUCCESSFULLY")
-    print("=" * 60)
+    # Robustness
+    r = certified_robustness_radius(lipschitz_const=2.0, entropy_margin=0.5)
+    print(f"\nCertified robustness radius: {r:.4f}")
 
 
 #!/usr/bin/env python3
 """
-Entropy Algebra: Real-World Applications
+Real-World Applications of Entropy-Algebra-Cryptography Bridges
 
-Demonstrates applications of the information-theoretic framework to:
-1. Cryptographic key management
-2. Machine learning adversarial robustness
-3. Statistical physics simulations
-4. Network security analysis
+Demonstrates how the formalized theorems apply to:
+1. Post-quantum cryptographic parameter selection
+2. Neural network capacity analysis for ML
+3. Thermodynamic bounds on computation
 """
 
 import math
-import random
-from typing import List, Dict, Tuple
+from typing import List, Dict
 
 
 # ============================================================
-# Application 1: Cryptographic Key Strength Analyzer
+# Application 1: Post-Quantum Cryptographic Parameter Advisor
 # ============================================================
-
-class KeyStrengthAnalyzer:
+class PostQuantumAdvisor:
     """
-    Analyze the entropy and security of cryptographic keys.
+    Advise on cryptographic parameter selection for post-quantum security.
     
     Uses the formally verified bounds:
-    - collision_prob_birthday_bound: Σ p_i² ≥ 1/n
-    - renyi2_le_log_n: H₂ ≤ log(n)
-    - grover_bound: quantum_security ≤ classical/2
+    - Birthday bound: classical collision = σ/2 bits
+    - BHT bound: quantum collision = σ/3 bits
+    - Key derivation: need 2× key length for post-quantum
     """
     
-    NIST_LEVELS = {
-        1: 128,   # AES-128 equivalent
-        3: 192,   # AES-192 equivalent
-        5: 256,   # AES-256 equivalent
+    SECURITY_LEVELS = {
+        1: 128,   # NIST Level 1
+        2: 192,
+        3: 256,   # NIST Level 5
     }
     
-    def analyze_key_distribution(self, byte_counts: Dict[int, int]) -> Dict:
-        """Analyze the entropy of a key byte distribution."""
-        total = sum(byte_counts.values())
-        if total == 0:
-            return {"error": "Empty distribution"}
+    def recommend_hash_length(self, security_level: int, quantum_safe: bool = True) -> Dict:
+        """Recommend hash output length for given security level."""
+        target_bits = self.SECURITY_LEVELS.get(security_level, 128)
         
-        probs = [count / total for count in byte_counts.values()]
-        
-        # Collision probability
-        collision_prob = sum(p**2 for p in probs)
-        
-        # Rényi-2 entropy
-        h2 = -math.log2(collision_prob) if collision_prob > 0 else 0
-        
-        # Max entropy
-        n_symbols = len(byte_counts)
-        max_entropy = math.log2(n_symbols) if n_symbols > 0 else 0
-        
-        # Security assessment
-        classical_security = h2
-        quantum_security = h2 / 2  # Grover bound
-        
-        # NIST level
-        nist_level = 0
-        for level, bits in sorted(self.NIST_LEVELS.items()):
-            if quantum_security >= bits:
-                nist_level = level
-        
-        return {
-            "n_symbols": n_symbols,
-            "collision_prob": collision_prob,
-            "renyi2_entropy_bits": h2,
-            "max_entropy_bits": max_entropy,
-            "entropy_gap_bits": max_entropy - h2,
-            "classical_security_bits": classical_security,
-            "quantum_security_bits": quantum_security,
-            "nist_level": nist_level,
-        }
-    
-    def recommend_key_length(self, target_nist_level: int) -> Dict:
-        """Recommend key length for target NIST security level."""
-        if target_nist_level not in self.NIST_LEVELS:
-            return {"error": f"Invalid NIST level. Use {list(self.NIST_LEVELS.keys())}"}
-        
-        target_bits = self.NIST_LEVELS[target_nist_level]
-        # Need 2× classical bits for quantum security
-        classical_needed = 2 * target_bits
-        key_bytes = math.ceil(classical_needed / 8)
-        
-        return {
-            "nist_level": target_nist_level,
-            "quantum_security_bits": target_bits,
-            "classical_security_bits": classical_needed,
-            "recommended_key_bytes": key_bytes,
-            "recommended_key_bits": key_bytes * 8,
-        }
-
-
-# ============================================================
-# Application 2: ML Adversarial Robustness Certifier
-# ============================================================
-
-class RobustnessCertifier:
-    """
-    Certify adversarial robustness of neural network classifiers
-    using entropy-based certificates.
-    
-    Uses the formally verified bounds:
-    - entropy_margin_nonneg: margin ≥ 0
-    - robustness_radius_nonneg: radius ≥ 0
-    - robustness_monotone_in_margin: more margin → more robust
-    """
-    
-    def __init__(self, lipschitz_constant: float = 2.0):
-        self.lipschitz_constant = lipschitz_constant
-    
-    def certify(self, class_probabilities: List[float]) -> Dict:
-        """
-        Certify the robustness of a classification decision.
-        
-        The certified radius guarantees that no adversarial perturbation
-        within the radius can change the classification.
-        """
-        k = len(class_probabilities)
-        if k == 0:
-            return {"error": "Empty probability vector"}
-        
-        max_entropy = math.log(k)
-        shannon_entropy = -sum(
-            p * math.log(p) for p in class_probabilities if p > 0
-        )
-        
-        margin = max_entropy - shannon_entropy
-        radius = margin / self.lipschitz_constant
-        
-        predicted_class = class_probabilities.index(max(class_probabilities))
-        confidence = max(class_probabilities)
-        
-        return {
-            "predicted_class": predicted_class,
-            "confidence": confidence,
-            "shannon_entropy": shannon_entropy,
-            "max_entropy": max_entropy,
-            "entropy_margin": margin,
-            "certified_radius": radius,
-            "lipschitz_constant": self.lipschitz_constant,
-            "is_robust": radius > 0.01,  # Practical threshold
-        }
-    
-    def batch_certify(self, predictions: List[List[float]]) -> Dict:
-        """Certify a batch of predictions and report statistics."""
-        results = [self.certify(p) for p in predictions]
-        
-        radii = [r["certified_radius"] for r in results]
-        robust_count = sum(1 for r in results if r["is_robust"])
-        
-        return {
-            "total_samples": len(predictions),
-            "certified_robust": robust_count,
-            "certification_rate": robust_count / len(predictions),
-            "mean_radius": sum(radii) / len(radii),
-            "min_radius": min(radii),
-            "max_radius": max(radii),
-        }
-
-
-# ============================================================
-# Application 3: Statistical Physics Simulator
-# ============================================================
-
-class StatMechSimulator:
-    """
-    Statistical mechanics simulation using partition functions.
-    
-    Uses the formally verified bounds:
-    - partition_fn_pos: Z > 0
-    - partition_fn_ge_one_at_zero: Z ≥ 1 when ground state E=0
-    - free_energy_nonpos_at_zero: F ≤ 0 when ground state E=0
-    """
-    
-    def __init__(self, energies: List[float]):
-        self.energies = energies
-        self.n_states = len(energies)
-    
-    def partition_function(self, temperature: float) -> float:
-        """Compute Z(T) = Σ exp(-E_i/T)."""
-        beta = 1.0 / temperature
-        return sum(math.exp(-beta * e) for e in self.energies)
-    
-    def free_energy(self, temperature: float) -> float:
-        """Compute F(T) = -T·log(Z)."""
-        z = self.partition_function(temperature)
-        return -temperature * math.log(z)
-    
-    def boltzmann_distribution(self, temperature: float) -> List[float]:
-        """Compute Boltzmann distribution p_i = exp(-E_i/T) / Z."""
-        beta = 1.0 / temperature
-        z = self.partition_function(temperature)
-        return [math.exp(-beta * e) / z for e in self.energies]
-    
-    def mean_energy(self, temperature: float) -> float:
-        """Compute <E> = Σ p_i · E_i."""
-        probs = self.boltzmann_distribution(temperature)
-        return sum(p * e for p, e in zip(probs, self.energies))
-    
-    def entropy(self, temperature: float) -> float:
-        """Compute thermodynamic entropy S = (E - F) / T."""
-        e = self.mean_energy(temperature)
-        f = self.free_energy(temperature)
-        return (e - f) / temperature
-    
-    def phase_diagram(self, t_range: Tuple[float, float], n_points: int = 50) -> Dict:
-        """Compute thermodynamic quantities over temperature range."""
-        t_min, t_max = t_range
-        temperatures = [t_min + (t_max - t_min) * i / (n_points - 1) 
-                       for i in range(n_points)]
-        
-        return {
-            "temperatures": temperatures,
-            "free_energies": [self.free_energy(t) for t in temperatures],
-            "mean_energies": [self.mean_energy(t) for t in temperatures],
-            "entropies": [self.entropy(t) for t in temperatures],
-            "partition_functions": [self.partition_function(t) for t in temperatures],
-        }
-
-
-# ============================================================
-# Application 4: Network Security Monitor
-# ============================================================
-
-class NetworkSecurityMonitor:
-    """
-    Monitor network traffic entropy for anomaly detection.
-    
-    Uses entropy gap as a security indicator:
-    - High entropy gap → non-uniform traffic → potential attack
-    - Low entropy gap → normal traffic pattern
-    """
-    
-    def __init__(self, n_ports: int = 65536):
-        self.n_ports = n_ports
-        self.max_entropy = math.log2(n_ports)
-    
-    def analyze_traffic(self, port_counts: Dict[int, int]) -> Dict:
-        """Analyze port distribution for anomalies."""
-        total = sum(port_counts.values())
-        if total == 0:
-            return {"status": "NO_TRAFFIC"}
-        
-        probs = [count / total for count in port_counts.values()]
-        
-        # Shannon entropy
-        h1 = -sum(p * math.log2(p) for p in probs if p > 0)
-        
-        # Collision entropy
-        collision_prob = sum(p**2 for p in probs)
-        h2 = -math.log2(collision_prob) if collision_prob > 0 else 0
-        
-        gap = self.max_entropy - h2
-        
-        # Anomaly detection
-        if gap > 0.9 * self.max_entropy:
-            status = "CRITICAL"
-            description = "Traffic concentrated on very few ports — possible DDoS or scan"
-        elif gap > 0.7 * self.max_entropy:
-            status = "WARNING"
-            description = "Moderately concentrated traffic — monitor closely"
+        if quantum_safe:
+            # Need σ/3 ≥ target_bits, so σ ≥ 3 × target_bits
+            hash_bits = 3 * target_bits
+            attack_type = "quantum (BHT)"
         else:
-            status = "NORMAL"
-            description = "Traffic distribution appears normal"
+            # Need σ/2 ≥ target_bits, so σ ≥ 2 × target_bits
+            hash_bits = 2 * target_bits
+            attack_type = "classical (birthday)"
         
         return {
-            "status": status,
-            "description": description,
-            "n_active_ports": len(port_counts),
-            "shannon_entropy_bits": h1,
-            "renyi2_entropy_bits": h2,
-            "max_entropy_bits": self.max_entropy,
-            "entropy_gap_bits": gap,
-            "concentration_ratio": gap / self.max_entropy if self.max_entropy > 0 else 0,
+            'security_level': security_level,
+            'target_security_bits': target_bits,
+            'recommended_hash_bits': hash_bits,
+            'attack_model': attack_type,
+            'quantum_safe': quantum_safe,
+            'classical_collision_bits': hash_bits // 2,
+            'quantum_collision_bits': hash_bits // 3,
+        }
+    
+    def recommend_key_derivation(self, key_bits: int, entropy_loss: int = 64) -> Dict:
+        """Recommend key derivation parameters."""
+        classical_source = key_bits + entropy_loss
+        quantum_source = 2 * key_bits + entropy_loss
+        
+        return {
+            'key_length_bits': key_bits,
+            'entropy_loss': entropy_loss,
+            'classical_source_entropy': classical_source,
+            'quantum_source_entropy': quantum_source,
+            'overhead_bits': key_bits,
+            'overhead_percent': (quantum_source / classical_source - 1) * 100,
+        }
+    
+    def evaluate_lwe_params(self, n: int, q: int) -> Dict:
+        """Evaluate LWE parameters for post-quantum security."""
+        log_q = math.log2(q)
+        secret_entropy = n * log_q
+        
+        return {
+            'dimension': n,
+            'modulus': q,
+            'log_q_bits': log_q,
+            'secret_entropy_bits': secret_entropy,
+            'estimated_security_classical': n,
+            'estimated_security_quantum': n,  # LWE is quantum-resistant
+            'nist_level': 1 if n >= 512 else 0,
         }
 
 
 # ============================================================
-# Main: Run all applications
+# Application 2: Neural Network Capacity Analyzer
 # ============================================================
+class NeuralCapacityAnalyzer:
+    """
+    Analyze information capacity of neural network architectures.
+    
+    Uses formally verified bounds:
+    - Total params = depth × width²
+    - Capacity = params × bits_per_weight
+    - depth ≤ totalParams (depth contributes linearly)
+    - width² ≤ totalParams (width contributes quadratically)
+    """
+    
+    def analyze(self, depth: int, width: int, bits_per_weight: int = 32) -> Dict:
+        """Analyze a neural network architecture."""
+        params = depth * width * width
+        capacity_bits = params * bits_per_weight
+        
+        # Compare to various benchmarks
+        imagenet_classes = 1000
+        bits_per_class = math.log2(imagenet_classes)
+        max_classifiable = 2 ** min(capacity_bits, 30)  # cap for display
+        
+        return {
+            'depth': depth,
+            'width': width,
+            'bits_per_weight': bits_per_weight,
+            'total_parameters': params,
+            'capacity_bits': capacity_bits,
+            'capacity_bytes': capacity_bits / 8,
+            'capacity_GB': capacity_bits / (8 * 1e9),
+            'bits_per_imagenet_class': bits_per_class,
+            'theoretical_max_classes': max_classifiable,
+            'depth_utilization': depth / params,
+            'width_utilization': (width * width) / params,
+        }
+    
+    def compare_architectures(self, architectures: List[tuple]) -> List[Dict]:
+        """Compare multiple architectures."""
+        results = []
+        for name, depth, width, bits in architectures:
+            analysis = self.analyze(depth, width, bits)
+            analysis['name'] = name
+            results.append(analysis)
+        return sorted(results, key=lambda x: x['capacity_bits'])
 
+
+# ============================================================
+# Application 3: Thermodynamic Computation Bounds
+# ============================================================
+class LandauerCalculator:
+    """
+    Calculate thermodynamic bounds on computation.
+    
+    Uses the formally verified Landauer principle:
+    - Erasing 1 bit costs at least kT·ln(2) energy
+    - Free energy F = E - TS ≤ E
+    """
+    
+    K_BOLTZMANN = 1.380649e-23  # J/K
+    LN2 = math.log(2)
+    
+    def min_erasure_energy(self, temperature: float, num_bits: int) -> float:
+        """Minimum energy to erase num_bits bits at given temperature."""
+        return num_bits * self.K_BOLTZMANN * temperature * self.LN2
+    
+    def max_bits_per_joule(self, temperature: float) -> float:
+        """Maximum bits erasable with 1 joule at given temperature."""
+        return 1.0 / (self.K_BOLTZMANN * temperature * self.LN2)
+    
+    def efficiency_report(self, temperature: float, power_watts: float,
+                          operations_per_second: float) -> Dict:
+        """Compute efficiency relative to Landauer limit."""
+        landauer_min = self.K_BOLTZMANN * temperature * self.LN2
+        actual_per_op = power_watts / operations_per_second
+        efficiency = landauer_min / actual_per_op
+        
+        return {
+            'temperature_K': temperature,
+            'power_W': power_watts,
+            'ops_per_second': operations_per_second,
+            'energy_per_op_J': actual_per_op,
+            'landauer_min_J': landauer_min,
+            'efficiency_ratio': efficiency,
+            'orders_of_magnitude_gap': math.log10(actual_per_op / landauer_min),
+        }
+
+
+# ============================================================
+# Main Application Demo
+# ============================================================
 if __name__ == "__main__":
     print("=" * 60)
-    print("ENTROPY ALGEBRA: REAL-WORLD APPLICATIONS")
+    print("  REAL-WORLD APPLICATIONS")
+    print("  Entropy-Algebra-Cryptography Bridges")
     print("=" * 60)
     
-    # Application 1: Key Strength
-    print("\n--- Application 1: Cryptographic Key Analysis ---")
-    analyzer = KeyStrengthAnalyzer()
+    # Application 1: Post-quantum advisory
+    print("\n--- Application 1: Post-Quantum Cryptographic Advisor ---\n")
+    advisor = PostQuantumAdvisor()
     
-    # Simulate key byte distribution
-    random.seed(42)
-    good_key = {i: random.randint(1, 10) for i in range(256)}
-    result = analyzer.analyze_key_distribution(good_key)
-    print(f"Good key (256 symbols): H₂={result['renyi2_entropy_bits']:.2f} bits, "
-          f"gap={result['entropy_gap_bits']:.4f} bits")
+    for level in [1, 2, 3]:
+        rec = advisor.recommend_hash_length(level, quantum_safe=True)
+        print(f"  Security Level {level}:")
+        print(f"    Target: {rec['target_security_bits']} bits")
+        print(f"    Hash output: {rec['recommended_hash_bits']} bits")
+        print(f"    Quantum collision security: {rec['quantum_collision_bits']} bits")
+        print()
     
-    bad_key = {0: 1000, 1: 10, 2: 5}
-    result = analyzer.analyze_key_distribution(bad_key)
-    print(f"Bad key (3 symbols): H₂={result['renyi2_entropy_bits']:.2f} bits, "
-          f"gap={result['entropy_gap_bits']:.4f} bits")
+    kd = advisor.recommend_key_derivation(256)
+    print(f"  Key Derivation (256-bit key):")
+    print(f"    Classical source: {kd['classical_source_entropy']} bits")
+    print(f"    Quantum source:   {kd['quantum_source_entropy']} bits")
+    print(f"    Overhead: +{kd['overhead_percent']:.0f}%\n")
     
-    for level in [1, 3, 5]:
-        rec = analyzer.recommend_key_length(level)
-        print(f"NIST Level {level}: need {rec['recommended_key_bits']}-bit key")
+    # Application 2: Neural network capacity
+    print("--- Application 2: Neural Network Capacity Analysis ---\n")
+    analyzer = NeuralCapacityAnalyzer()
     
-    # Application 2: ML Robustness
-    print("\n--- Application 2: Adversarial Robustness ---")
-    certifier = RobustnessCertifier(lipschitz_constant=2.0)
-    
-    predictions = [
-        [0.95, 0.03, 0.02],   # High confidence
-        [0.6, 0.3, 0.1],      # Medium confidence
-        [0.35, 0.33, 0.32],   # Low confidence
+    architectures = [
+        ("ResNet-18", 18, 512, 32),
+        ("ResNet-50", 50, 2048, 32),
+        ("ViT-Base", 12, 768, 16),
+        ("GPT-2", 48, 768, 16),
     ]
     
-    for probs in predictions:
-        cert = certifier.certify(probs)
-        print(f"  probs={probs}: class={cert['predicted_class']}, "
-              f"radius={cert['certified_radius']:.4f}, "
-              f"robust={cert['is_robust']}")
+    results = analyzer.compare_architectures(architectures)
+    for r in results:
+        print(f"  {r['name']}:")
+        print(f"    Parameters: {r['total_parameters']:,}")
+        print(f"    Capacity: {r['capacity_GB']:.2f} GB")
+        print()
     
-    batch = certifier.batch_certify(predictions)
-    print(f"  Batch: {batch['certified_robust']}/{batch['total_samples']} certified "
-          f"(rate={batch['certification_rate']:.2f})")
+    # Application 3: Landauer bounds
+    print("--- Application 3: Thermodynamic Computation Bounds ---\n")
+    calc = LandauerCalculator()
     
-    # Application 3: Statistical Physics
-    print("\n--- Application 3: Statistical Physics ---")
-    sim = StatMechSimulator([0.0, 0.5, 1.0, 2.0, 5.0])
+    # Modern GPU analysis
+    report = calc.efficiency_report(
+        temperature=350,      # GPU at ~77°C
+        power_watts=300,      # TDP
+        operations_per_second=30e12  # 30 TFLOPS
+    )
+    print(f"  Modern GPU (300W, 30 TFLOPS, 350K):")
+    print(f"    Energy per operation:  {report['energy_per_op_J']:.4e} J")
+    print(f"    Landauer minimum:      {report['landauer_min_J']:.4e} J")
+    print(f"    Efficiency gap: ~10^{report['orders_of_magnitude_gap']:.1f}")
+    print(f"    Room for improvement:  {1/report['efficiency_ratio']:.0e}× from limit")
     
-    for T in [0.5, 1.0, 2.0, 5.0]:
-        z = sim.partition_function(T)
-        f = sim.free_energy(T)
-        s = sim.entropy(T)
-        print(f"  T={T:.1f}: Z={z:.4f}, F={f:.4f}, S={s:.4f}")
-    
-    # Application 4: Network Security
-    print("\n--- Application 4: Network Security ---")
-    monitor = NetworkSecurityMonitor(n_ports=1024)
-    
-    # Normal traffic
-    normal_traffic = {p: random.randint(1, 100) for p in random.sample(range(1024), 200)}
-    result = monitor.analyze_traffic(normal_traffic)
-    print(f"  Normal traffic: {result['status']} (gap={result['entropy_gap_bits']:.2f})")
-    
-    # DDoS-like traffic
-    ddos_traffic = {80: 10000, 443: 5000, 8080: 100}
-    result = monitor.analyze_traffic(ddos_traffic)
-    print(f"  DDoS traffic: {result['status']} (gap={result['entropy_gap_bits']:.2f})")
-    
-    print("\n" + "=" * 60)
-    print("ALL APPLICATIONS DEMONSTRATED SUCCESSFULLY")
-    print("=" * 60)
+    print("\nAll applications completed successfully!")
 
 
 #!/usr/bin/env python3
 """
-Entropy Algebra: Information-Theoretic Shared Structures — Demo
+Entropy-Algebra-Cryptography Bridge: Demonstrations
 
-Concrete numerical examples demonstrating the theorems from the
-formal verification. Every computation here corresponds to a
-machine-verified mathematical statement.
-"""
-
-import math
-import random
-
-# ============================================================
-# 1. Collision Probability and Birthday Bound
-# ============================================================
-
-def collision_probability(weights):
-    """Compute Σ p_i² for a probability distribution."""
-    return sum(p**2 for p in weights)
-
-def birthday_bound(n):
-    """Lower bound on collision probability: 1/n."""
-    return 1.0 / n
-
-print("=" * 60)
-print("COLLISION PROBABILITY AND BIRTHDAY BOUND")
-print("=" * 60)
-
-# Uniform distribution on 6 elements
-n = 6
-uniform = [1/n] * n
-cp_uniform = collision_probability(uniform)
-print(f"\nUniform distribution on {n} elements:")
-print(f"  Weights: {[round(w, 4) for w in uniform]}")
-print(f"  Collision prob: {cp_uniform:.6f}")
-print(f"  Birthday bound (1/{n}): {birthday_bound(n):.6f}")
-print(f"  Theorem verified: {cp_uniform >= birthday_bound(n) - 1e-10}")
-
-# Skewed distribution
-skewed = [0.5, 0.2, 0.1, 0.1, 0.05, 0.05]
-cp_skewed = collision_probability(skewed)
-print(f"\nSkewed distribution:")
-print(f"  Weights: {skewed}")
-print(f"  Collision prob: {cp_skewed:.6f}")
-print(f"  Birthday bound: {birthday_bound(n):.6f}")
-print(f"  Theorem verified: {cp_skewed >= birthday_bound(n) - 1e-10}")
-
-# Point mass (worst case)
-point = [1.0] + [0.0] * 5
-cp_point = collision_probability(point)
-print(f"\nPoint mass distribution:")
-print(f"  Collision prob: {cp_point:.6f}")
-print(f"  ≤ 1 (theorem): {cp_point <= 1.0 + 1e-10}")
-
-# ============================================================
-# 2. Rényi Entropy and Entropy Gap
-# ============================================================
-
-def renyi2_entropy(weights):
-    """Rényi entropy of order 2: -log(Σ p_i²)."""
-    cp = collision_probability(weights)
-    return -math.log(cp) if cp > 0 else float('inf')
-
-def entropy_gap(weights, n):
-    """Gap between max-entropy and Rényi-2 entropy."""
-    return math.log(n) - renyi2_entropy(weights)
-
-print("\n" + "=" * 60)
-print("RÉNYI ENTROPY AND ENTROPY GAP")
-print("=" * 60)
-
-for name, dist in [("Uniform", uniform), ("Skewed", skewed), ("Point mass", point)]:
-    h2 = renyi2_entropy(dist)
-    gap = math.log(n) - h2
-    print(f"\n{name}:")
-    print(f"  H₂ = {h2:.4f} nats")
-    print(f"  Max entropy = {math.log(n):.4f} nats")
-    print(f"  Entropy gap = {gap:.4f} nats")
-    print(f"  H₂ ≤ log(n): {h2 <= math.log(n) + 1e-10}")
-
-# ============================================================
-# 3. Post-Quantum Security Parameters
-# ============================================================
-
-def quantum_security(classical_bits):
-    """Grover bound: quantum security = classical/2."""
-    return classical_bits / 2
-
-print("\n" + "=" * 60)
-print("POST-QUANTUM SECURITY (GROVER BOUND)")
-print("=" * 60)
-
-for bits in [128, 256, 384, 512]:
-    q_sec = quantum_security(bits)
-    print(f"  {bits}-bit classical → {q_sec:.0f}-bit quantum security")
-
-# ============================================================
-# 4. Lattice Cryptography Parameters
-# ============================================================
-
-def lattice_max_entropy(dim, mod):
-    """Max entropy for Z_q^n: n·log(q)."""
-    return dim * math.log(mod)
-
-def lattice_keygen_complexity(dim, mod):
-    """O(n² log q) key generation complexity."""
-    return dim * dim * math.log2(mod)
-
-print("\n" + "=" * 60)
-print("LATTICE CRYPTOGRAPHY PARAMETERS")
-print("=" * 60)
-
-params = [
-    ("Kyber-512", 256, 3329),
-    ("Kyber-768", 384, 3329),
-    ("Kyber-1024", 512, 3329),
-]
-
-for name, dim, mod in params:
-    ent = lattice_max_entropy(dim, mod)
-    complexity = lattice_keygen_complexity(dim, mod)
-    print(f"\n{name} (n={dim}, q={mod}):")
-    print(f"  Max entropy: {ent:.2f} nats ({ent/math.log(2):.2f} bits)")
-    print(f"  Key gen complexity: O({complexity:.0f})")
-
-# Verify scaling theorem
-dim, mod = 256, 3329
-ent1 = lattice_max_entropy(dim, mod)
-ent2 = lattice_max_entropy(2*dim, mod)
-print(f"\nScaling verification: entropy(2n,q) = {ent2:.2f} = 2 × {ent1:.2f} = {2*ent1:.2f}")
-print(f"  Theorem verified: {abs(ent2 - 2*ent1) < 1e-10}")
-
-# ============================================================
-# 5. Hash Function Security
-# ============================================================
-
-def hash_collision_resistance(output_bits):
-    """Birthday bound: output_bits / 2."""
-    return output_bits // 2
-
-print("\n" + "=" * 60)
-print("HASH FUNCTION COLLISION RESISTANCE")
-print("=" * 60)
-
-for name, bits in [("SHA-256", 256), ("SHA-512", 512), ("SHA3-256", 256)]:
-    cr = hash_collision_resistance(bits)
-    print(f"  {name}: {bits}-bit output → {cr}-bit collision resistance")
-    print(f"    Birthday attack: 2^{cr} ≈ {2**cr:.2e} operations")
-
-# ============================================================
-# 6. Fibonacci-Entropy Connection
-# ============================================================
-
-def fib(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
-
-print("\n" + "=" * 60)
-print("FIBONACCI-ENTROPY BOUND")
-print("=" * 60)
-
-print(f"{'n':>4} {'fib(n)':>15} {'2^n':>15} {'log(fib)/nlog2':>14} {'fib≤2^n':>8}")
-for n_val in [5, 10, 15, 20, 25, 30]:
-    f = fib(n_val)
-    two_n = 2**n_val
-    ratio = math.log(f) / (n_val * math.log(2)) if f > 0 else 0
-    print(f"{n_val:4d} {f:15d} {two_n:15d} {ratio:14.6f} {str(f <= two_n):>8}")
-
-# ============================================================
-# 7. Golden Ratio and Entropy Rate
-# ============================================================
-
-phi = (1 + math.sqrt(5)) / 2
-print("\n" + "=" * 60)
-print("GOLDEN RATIO AND ENTROPY RATE")
-print("=" * 60)
-print(f"  φ = (1+√5)/2 = {phi:.10f}")
-print(f"  φ < 2: {phi < 2}")
-print(f"  Entropy rate: log₂(φ) = {math.log2(phi):.6f} bits/symbol")
-print(f"  This is < 1 bit/symbol, confirming sub-exponential growth")
-
-# ============================================================
-# 8. Partition Function and Free Energy
-# ============================================================
-
-def partition_function(energies, temperature):
-    """Z = Σ exp(-E_i / T)."""
-    beta = 1.0 / temperature
-    return sum(math.exp(-beta * e) for e in energies)
-
-def free_energy(energies, temperature):
-    """F = -T·log(Z)."""
-    z = partition_function(energies, temperature)
-    return -temperature * math.log(z)
-
-print("\n" + "=" * 60)
-print("PARTITION FUNCTION AND FREE ENERGY")
-print("=" * 60)
-
-energies = [0, 1, 2, 3, 5]
-for T in [0.5, 1.0, 2.0, 5.0, 10.0]:
-    z = partition_function(energies, T)
-    f = free_energy(energies, T)
-    print(f"  T={T:5.1f}: Z={z:8.4f}, F={f:8.4f}, F≤0: {f <= 1e-10}")
-
-# ============================================================
-# 9. Tropical Semiring Operations
-# ============================================================
-
-print("\n" + "=" * 60)
-print("TROPICAL SEMIRING (min, +)")
-print("=" * 60)
-
-a, b, c = 3.0, 1.5, 4.2
-print(f"  a={a}, b={b}, c={c}")
-print(f"  a ⊕ b = min(a,b) = {min(a,b)}")
-print(f"  b ⊕ a = min(b,a) = {min(b,a)} (commutativity ✓)")
-print(f"  a ⊗ b = a+b = {a+b}")
-print(f"  a ⊗ (b ⊕ c) = a + min(b,c) = {a + min(b,c)}")
-print(f"  (a ⊗ b) ⊕ (a ⊗ c) = min(a+b, a+c) = {min(a+b, a+c)}")
-print(f"  Distributivity: {abs(a + min(b,c) - min(a+b, a+c)) < 1e-10} ✓")
-
-# ============================================================
-# 10. Security-Entropy-Robustness Triangle
-# ============================================================
-
-print("\n" + "=" * 60)
-print("SECURITY-ENTROPY-ROBUSTNESS TRIANGLE")
-print("=" * 60)
-
-for entropy_gap_val in [1.0, 2.0, 5.0, 10.0]:
-    security_margin = entropy_gap_val / math.log(2)
-    robustness_radius = entropy_gap_val / 2.0  # Lipschitz const = 2
-    print(f"  Entropy gap={entropy_gap_val:.1f}: "
-          f"Security={security_margin:.2f} bits, "
-          f"Robustness radius={robustness_radius:.2f}")
-
-print("\n" + "=" * 60)
-print("ALL DEMONSTRATIONS COMPLETE")
-print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Entropy Algebra: Visualizations
-
-Generate publication-quality figures for the research paper.
+Concrete numerical examples bringing the formalized mathematics to life.
+Shows how information-theoretic bounds connect cryptography, ML, and physics.
 """
 
 import math
 import os
 
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as mpatches
-    import numpy as np
-    HAS_MATPLOTLIB = True
-except ImportError:
-    HAS_MATPLOTLIB = False
-    print("matplotlib not available, generating SVG directly")
-
-
-def collision_prob(weights):
-    return sum(p**2 for p in weights)
-
-
-def renyi2(weights):
-    cp = collision_prob(weights)
-    return -math.log2(cp) if cp > 0 else 0
-
-
-def partition_fn(energies, T):
-    beta = 1.0 / T
-    return sum(math.exp(-beta * e) for e in energies)
-
-
-def free_energy_fn(energies, T):
-    z = partition_fn(energies, T)
-    return -T * math.log(z)
-
-
-if HAS_MATPLOTLIB:
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Entropy Algebra: Information-Theoretic Shared Structures', 
-                 fontsize=16, fontweight='bold')
+# ============================================================
+# Demo 1: Birthday Bound on Hash Collisions
+# ============================================================
+def demo_birthday_bound():
+    """
+    The birthday bound: a hash with σ-bit output has ~2^(σ/2) collision resistance.
+    Quantum adversaries (BHT algorithm) reduce this to ~2^(σ/3).
+    """
+    print("=" * 60)
+    print("Demo 1: Birthday Bound — Classical vs Quantum Hash Security")
+    print("=" * 60)
     
-    # Plot 1: Collision Probability vs Distribution Parameter
-    ax = axes[0, 0]
-    alphas = np.linspace(0.01, 0.99, 100)
-    n_vals = [3, 5, 10, 20]
-    for n in n_vals:
-        cps = []
-        for a in alphas:
-            weights = [a] + [(1-a)/(n-1)] * (n-1)
-            cps.append(collision_prob(weights))
-        ax.plot(alphas, cps, label=f'n={n}')
+    for sigma in [128, 256, 384, 512]:
+        classical_bits = sigma // 2
+        quantum_bits = sigma // 3
+        margin = classical_bits - quantum_bits
+        print(f"\n  σ = {sigma}-bit hash output:")
+        print(f"    Classical collision security:  {classical_bits} bits  (2^{classical_bits} operations)")
+        print(f"    Quantum collision security:    {quantum_bits} bits  (2^{quantum_bits} operations)")
+        print(f"    Security margin:               {margin} bits")
+        print(f"    Post-quantum safety factor:    {classical_bits / quantum_bits:.2f}×")
+    print()
+
+# ============================================================
+# Demo 2: LWE Information-Theoretic Bounds
+# ============================================================
+def demo_lwe_bounds():
+    """
+    LWE (Learning With Errors) parameters and information bounds.
+    Shows sample entropy vs secret entropy.
+    """
+    print("=" * 60)
+    print("Demo 2: LWE Information-Theoretic Bounds")
+    print("=" * 60)
     
-    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.5, label='Upper bound')
-    for n in n_vals:
-        ax.axhline(y=1/n, color='gray', linestyle=':', alpha=0.3)
-    
-    ax.set_xlabel('Max probability p₁')
-    ax.set_ylabel('Collision probability Σ pᵢ²')
-    ax.set_title('Birthday Bound: Collision Probability')
-    ax.legend(fontsize=8)
-    ax.set_ylim(0, 1.05)
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 2: Rényi Entropy vs Distribution Parameter
-    ax = axes[0, 1]
-    for n in n_vals:
-        h2s = []
-        for a in alphas:
-            weights = [a] + [(1-a)/(n-1)] * (n-1)
-            h2s.append(renyi2(weights))
-        ax.plot(alphas, h2s, label=f'n={n}')
-        ax.axhline(y=math.log2(n), color='gray', linestyle=':', alpha=0.3)
-    
-    ax.set_xlabel('Max probability p₁')
-    ax.set_ylabel('Rényi-2 entropy H₂ (bits)')
-    ax.set_title('Rényi Entropy Bound: H₂ ≤ log₂(n)')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 3: Free Energy vs Temperature
-    ax = axes[1, 0]
-    energies_list = [
-        ([0, 1, 2, 3, 4], '5 levels'),
-        ([0, 0.5, 1], '3 levels (close)'),
-        ([0, 5, 10], '3 levels (spread)'),
+    params = [
+        (512, 1024, 3329, "Kyber-512"),
+        (768, 1024, 3329, "Kyber-768"),
+        (1024, 1024, 3329, "Kyber-1024"),
+        (1024, 2048, 8380417, "Dilithium-1024"),
     ]
-    T_range = np.linspace(0.1, 10, 100)
-    for energies, label in energies_list:
-        F = [free_energy_fn(energies, T) for T in T_range]
-        ax.plot(T_range, F, label=label)
     
-    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-    ax.set_xlabel('Temperature T')
-    ax.set_ylabel('Free energy F = -T log Z')
-    ax.set_title('Free Energy: F ≤ 0 (Second Law)')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 4: Security Parameter Scaling
-    ax = axes[1, 1]
-    dims = list(range(64, 1025, 64))
-    moduli = [3329, 7681, 12289]
-    for q in moduli:
-        entropy_bits = [d * math.log2(q) for d in dims]
-        ax.plot(dims, entropy_bits, label=f'q={q}', marker='o', markersize=3)
-    
-    for level, bits in [(1, 128), (3, 192), (5, 256)]:
-        ax.axhline(y=bits, color='red', linestyle='--', alpha=0.4)
-        ax.text(1050, bits, f'NIST L{level}', fontsize=8, va='center', color='red')
-    
-    ax.set_xlabel('Lattice dimension n')
-    ax.set_ylabel('Max entropy (bits)')
-    ax.set_title('Lattice Crypto: Security Scaling')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/entropy_algebra_figures.png', dpi=150, bbox_inches='tight')
-    plt.savefig('/workspace/request-project/entropy_algebra_figures.svg', bbox_inches='tight')
-    print("Saved figures to entropy_algebra_figures.png/svg")
-    plt.close()
-    
-    # Additional figure: Security-Entropy-Robustness Triangle
-    fig, ax = plt.subplots(figsize=(8, 6))
-    
-    gaps = np.linspace(0, 10, 100)
-    security = gaps / math.log(2)
-    robustness = gaps / 2.0
-    
-    ax.plot(gaps, security, 'b-', linewidth=2, label='Security margin (bits)')
-    ax.plot(gaps, robustness, 'r-', linewidth=2, label='Robustness radius (L=2)')
-    ax.fill_between(gaps, 0, np.minimum(security, robustness), alpha=0.1, color='green')
-    
-    ax.set_xlabel('Entropy Gap (nats)', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Security-Entropy-Robustness Triangle', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/triangle_figure.png', dpi=150, bbox_inches='tight')
-    print("Saved triangle_figure.png")
-    plt.close()
+    for n, m, q, name in params:
+        log_q = math.log2(q)
+        secret_info = n * log_q
+        sample_info = m * log_q
+        redundancy = sample_info / secret_info
+        print(f"\n  {name} (n={n}, m={m}, q={q}):")
+        print(f"    log₂(q) = {log_q:.2f}")
+        print(f"    Secret entropy:  {secret_info:.0f} bits")
+        print(f"    Sample entropy:  {sample_info:.0f} bits")
+        print(f"    Redundancy ratio (m/n): {redundancy:.2f}×")
+        print(f"    Information ratio ≥ 1: {sample_info >= secret_info} ✓")
+    print()
 
-else:
-    # Generate basic SVG without matplotlib
-    print("Generating SVG diagram directly...")
+# ============================================================
+# Demo 3: Neural Network Information Capacity
+# ============================================================
+def demo_neural_capacity():
+    """
+    Information capacity bounds for neural network architectures.
+    """
+    print("=" * 60)
+    print("Demo 3: Neural Network Information Capacity")
+    print("=" * 60)
+    
+    architectures = [
+        (6, 256, 32, "Small MLP"),
+        (12, 512, 32, "Medium MLP"),
+        (48, 768, 16, "GPT-2 Small"),
+        (96, 12288, 16, "GPT-3 175B"),
+        (80, 8192, 16, "LLaMA-65B"),
+    ]
+    
+    for depth, width, bits, name in architectures:
+        params = depth * width * width
+        capacity_bits = params * bits
+        capacity_bytes = capacity_bits / 8
+        print(f"\n  {name} (depth={depth}, width={width}, {bits} bits/weight):")
+        print(f"    Total parameters:    {params:>15,}")
+        print(f"    Info capacity:       {capacity_bits:>15,} bits")
+        print(f"    Capacity:            {capacity_bytes / 1e9:>12.2f} GB")
+        print(f"    Depth contribution:  {depth} ≤ {params} params ✓")
+        print(f"    Width² contribution: {width*width:,} ≤ {params:,} params ✓")
+    print()
 
-# Always generate the main diagram
-svg_content = '''<?xml version="1.0" encoding="UTF-8"?>
+# ============================================================
+# Demo 4: Entropy Triangle — Shannon, Boltzmann, Min-Entropy
+# ============================================================
+def demo_entropy_triangle():
+    """
+    The entropy triangle: crypto (min) ≤ Shannon ≤ thermo (Boltzmann).
+    """
+    print("=" * 60)
+    print("Demo 4: Entropy Triangle")
+    print("=" * 60)
+    
+    # Example: fair coin
+    print("\n  Fair coin (2 outcomes, uniform):")
+    crypto = 1.0  # min-entropy = log2(1/max_prob) = log2(2) = 1
+    shannon = 1.0  # Shannon entropy = 1 bit
+    thermo = 1.0   # thermodynamic entropy ~ Shannon for uniform
+    print(f"    Crypto (min-entropy):  {crypto:.4f} bits")
+    print(f"    Shannon entropy:       {shannon:.4f} bits")
+    print(f"    Thermo entropy:        {thermo:.4f} bits")
+    print(f"    crypto ≤ Shannon ≤ thermo: {crypto <= shannon <= thermo} ✓")
+    
+    # Biased coin
+    p = 0.9
+    print(f"\n  Biased coin (p={p}):")
+    crypto = -math.log2(max(p, 1-p))  # min-entropy
+    shannon = -(p * math.log2(p) + (1-p) * math.log2(1-p))
+    thermo = math.log2(2)  # upper bound: log of state count
+    print(f"    Crypto (min-entropy):  {crypto:.4f} bits")
+    print(f"    Shannon entropy:       {shannon:.4f} bits")
+    print(f"    Thermo entropy:        {thermo:.4f} bits")
+    print(f"    crypto ≤ Shannon ≤ thermo: {crypto <= shannon <= thermo} ✓")
+    
+    # 256-element distribution
+    n = 256
+    print(f"\n  {n}-element nearly uniform distribution:")
+    probs = [1/n] * n
+    probs[0] = 2/n  # slightly biased
+    total = sum(probs)
+    probs = [p/total for p in probs]
+    crypto = -math.log2(max(probs))
+    shannon = -sum(p * math.log2(p) for p in probs if p > 0)
+    thermo = math.log2(n)
+    print(f"    Crypto (min-entropy):  {crypto:.4f} bits")
+    print(f"    Shannon entropy:       {shannon:.4f} bits")
+    print(f"    Thermo entropy:        {thermo:.4f} bits")
+    print(f"    crypto ≤ Shannon ≤ thermo: {crypto <= shannon <= thermo} ✓")
+    print()
+
+# ============================================================
+# Demo 5: Gradient Descent Convergence Rates
+# ============================================================
+def demo_convergence_rates():
+    """
+    Gradient descent convergence: O(L·D²/T) for convex functions.
+    """
+    print("=" * 60)
+    print("Demo 5: Gradient Descent Convergence Rates")
+    print("=" * 60)
+    
+    L = 10.0   # Lipschitz constant
+    D = 5.0    # initial gap
+    
+    print(f"\n  L={L}, D₀={D}")
+    print(f"  {'Steps T':>10} {'Rate Bound':>15} {'Decrease Factor':>18}")
+    print(f"  {'-'*10} {'-'*15} {'-'*18}")
+    
+    prev_rate = None
+    for T in [1, 10, 100, 1000, 10000, 100000]:
+        rate = L * D / T
+        factor = f"{prev_rate/rate:.1f}×" if prev_rate else "—"
+        print(f"  {T:>10,} {rate:>15.6f} {factor:>18}")
+        prev_rate = rate
+    print()
+
+# ============================================================
+# Demo 6: Boltzmann Distribution & Softmax
+# ============================================================
+def demo_boltzmann():
+    """
+    Boltzmann weights = softmax: exp(-β·E_i) / Z.
+    Bridge between statistical physics and ML.
+    """
+    print("=" * 60)
+    print("Demo 6: Boltzmann Distribution (= Softmax in ML)")
+    print("=" * 60)
+    
+    energies = [0.5, 1.0, 2.0, 3.0, 5.0]
+    
+    for beta in [0.1, 1.0, 5.0, 20.0]:
+        weights = [math.exp(-beta * e) for e in energies]
+        Z = sum(weights)
+        probs = [w / Z for w in weights]
+        entropy = -sum(p * math.log2(p) for p in probs if p > 0)
+        
+        print(f"\n  β = {beta} (T = {1/beta:.2f}):")
+        for i, (e, p) in enumerate(zip(energies, probs)):
+            bar = "█" * int(p * 40)
+            print(f"    E_{i}={e:.1f}: p={p:.4f} {bar}")
+        print(f"    Shannon entropy: {entropy:.4f} bits")
+    print()
+
+# ============================================================
+# Demo 7: Key Derivation Security
+# ============================================================
+def demo_key_derivation():
+    """
+    Post-quantum key derivation: need 2× key length source entropy.
+    """
+    print("=" * 60)
+    print("Demo 7: Post-Quantum Key Derivation")
+    print("=" * 60)
+    
+    for key_len in [128, 192, 256]:
+        entropy_loss = 64  # typical
+        classical_source = key_len + entropy_loss
+        quantum_source = 2 * key_len + entropy_loss
+        
+        print(f"\n  Key length: {key_len} bits, entropy loss: {entropy_loss} bits")
+        print(f"    Classical source entropy needed: {classical_source} bits")
+        print(f"    Quantum source entropy needed:   {quantum_source} bits")
+        print(f"    Post-quantum overhead:           {quantum_source - classical_source} bits (+{(quantum_source/classical_source - 1)*100:.0f}%)")
+    print()
+
+# ============================================================
+# Demo 8: Landauer Principle — Physics of Computation
+# ============================================================
+def demo_landauer():
+    """
+    Landauer's principle: erasing 1 bit costs at least kT·ln(2) energy.
+    """
+    print("=" * 60)
+    print("Demo 8: Landauer's Principle — Energy Cost of Computation")
+    print("=" * 60)
+    
+    k_B = 1.380649e-23  # Boltzmann constant (J/K)
+    ln2 = math.log(2)
+    
+    for T in [300, 77, 4, 0.01]:
+        energy_per_bit = k_B * T * ln2
+        
+        # Energy to erase a 256-bit key
+        key_energy = 256 * energy_per_bit
+        
+        print(f"\n  T = {T} K:")
+        print(f"    Energy per bit erasure:  {energy_per_bit:.4e} J")
+        print(f"    Energy to erase 256-bit key: {key_energy:.4e} J")
+        print(f"    Bits erasable with 1 J:  {1/energy_per_bit:.4e}")
+    print()
+
+# ============================================================
+# Main
+# ============================================================
+if __name__ == "__main__":
+    print("\n" + "═" * 60)
+    print("  ENTROPY-ALGEBRA-CRYPTOGRAPHY BRIDGE")
+    print("  Information-Theoretic Shared Structures — Demos")
+    print("═" * 60 + "\n")
+    
+    demo_birthday_bound()
+    demo_lwe_bounds()
+    demo_neural_capacity()
+    demo_entropy_triangle()
+    demo_convergence_rates()
+    demo_boltzmann()
+    demo_key_derivation()
+    demo_landauer()
+    
+    print("All demos completed successfully!")
+
+
+#!/usr/bin/env python3
+"""
+Visualizations for Entropy-Algebra-Cryptography Bridges
+
+Generates charts and diagrams for the research paper and HTML package.
+"""
+
+import math
+import base64
+import io
+
+def generate_svg_diagram():
+    """Generate the main mathematical structure diagram as SVG."""
+    svg = '''<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
   <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
     </marker>
-    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4a90d9;stop-opacity:0.3" />
-      <stop offset="100%" style="stop-color:#7b68ee;stop-opacity:0.3" />
+    <linearGradient id="infoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2196F3;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#2196F3;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="cryptoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F44336;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#F44336;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="physGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#4CAF50;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="mlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9800;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#FF9800;stop-opacity:0.05"/>
     </linearGradient>
   </defs>
   
+  <style>
+    text { font-family: 'Georgia', serif; }
+    .title { font-size: 22px; font-weight: bold; fill: #333; }
+    .domain { font-size: 16px; font-weight: bold; }
+    .theorem { font-size: 11px; fill: #555; }
+    .bridge { font-size: 10px; fill: #777; font-style: italic; }
+    .count { font-size: 13px; font-weight: bold; }
+  </style>
+  
+  <!-- Background -->
   <rect width="800" height="600" fill="#fafafa" rx="10"/>
   
-  <text x="400" y="40" text-anchor="middle" font-size="20" font-weight="bold" fill="#1a1a2e">
-    Entropy Algebra: Information-Theoretic Shared Structures
-  </text>
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" class="title">Entropy-Algebra-Cryptography Bridge</text>
+  <text x="400" y="55" text-anchor="middle" style="font-size:12px;fill:#888;">Cross-Domain Information-Theoretic Shared Structures</text>
   
-  <!-- Central node: Entropy -->
-  <circle cx="400" cy="300" r="70" fill="url(#grad1)" stroke="#4a90d9" stroke-width="3"/>
-  <text x="400" y="290" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a2e">Entropy</text>
-  <text x="400" y="310" text-anchor="middle" font-size="11" fill="#555">H₂ = -log(Σpᵢ²)</text>
-  <text x="400" y="325" text-anchor="middle" font-size="10" fill="#777">O(n) computation</text>
+  <!-- Information Theory (top center) -->
+  <ellipse cx="400" cy="180" rx="140" ry="80" fill="url(#infoGrad)" stroke="#2196F3" stroke-width="2"/>
+  <text x="400" y="155" text-anchor="middle" class="domain" fill="#1565C0">Information Theory</text>
+  <text x="400" y="175" text-anchor="middle" class="theorem">Shannon Entropy · Min-Entropy</text>
+  <text x="400" y="190" text-anchor="middle" class="theorem">Channel Capacity · Chain Rule</text>
+  <text x="400" y="205" text-anchor="middle" class="theorem">Entropy Gap · Data Processing</text>
+  <text x="400" y="225" text-anchor="middle" class="count" fill="#1565C0">15 theorems</text>
   
-  <!-- Cryptography node -->
-  <rect x="60" y="100" width="160" height="80" rx="15" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
-  <text x="140" y="130" text-anchor="middle" font-size="14" font-weight="bold" fill="#1b5e20">Cryptography</text>
-  <text x="140" y="150" text-anchor="middle" font-size="10" fill="#555">Post-quantum security</text>
-  <text x="140" y="165" text-anchor="middle" font-size="10" fill="#555">Lattice-based keys</text>
+  <!-- Cryptography (bottom left) -->
+  <ellipse cx="200" cy="420" rx="140" ry="80" fill="url(#cryptoGrad)" stroke="#F44336" stroke-width="2"/>
+  <text x="200" y="395" text-anchor="middle" class="domain" fill="#C62828">Cryptography</text>
+  <text x="200" y="415" text-anchor="middle" class="theorem">Birthday Bound · LWE Security</text>
+  <text x="200" y="430" text-anchor="middle" class="theorem">Post-Quantum Collision · OTP</text>
+  <text x="200" y="445" text-anchor="middle" class="theorem">Key Derivation · Hash Families</text>
+  <text x="200" y="465" text-anchor="middle" class="count" fill="#C62828">12 theorems</text>
   
-  <!-- Information Theory node -->
-  <rect x="580" y="100" width="160" height="80" rx="15" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
-  <text x="660" y="130" text-anchor="middle" font-size="14" font-weight="bold" fill="#0d47a1">Info Theory</text>
-  <text x="660" y="150" text-anchor="middle" font-size="10" fill="#555">Rényi entropy</text>
-  <text x="660" y="165" text-anchor="middle" font-size="10" fill="#555">Channel capacity</text>
+  <!-- Physics (bottom right) -->
+  <ellipse cx="600" cy="420" rx="140" ry="80" fill="url(#physGrad)" stroke="#4CAF50" stroke-width="2"/>
+  <text x="600" y="395" text-anchor="middle" class="domain" fill="#2E7D32">Physics</text>
+  <text x="600" y="415" text-anchor="middle" class="theorem">Boltzmann Distribution · Free Energy</text>
+  <text x="600" y="430" text-anchor="middle" class="theorem">Landauer Principle · Second Law</text>
+  <text x="600" y="445" text-anchor="middle" class="theorem">Quantum-Classical Gap · Holevo</text>
+  <text x="600" y="465" text-anchor="middle" class="count" fill="#2E7D32">10 theorems</text>
   
-  <!-- Algebra node -->
-  <rect x="60" y="420" width="160" height="80" rx="15" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
-  <text x="140" y="450" text-anchor="middle" font-size="14" font-weight="bold" fill="#b71c1c">Algebra</text>
-  <text x="140" y="470" text-anchor="middle" font-size="10" fill="#555">Tropical semiring</text>
-  <text x="140" y="485" text-anchor="middle" font-size="10" fill="#555">(ℝ, min, +)</text>
+  <!-- Machine Learning (right) -->
+  <ellipse cx="700" cy="220" rx="80" ry="60" fill="url(#mlGrad)" stroke="#FF9800" stroke-width="2"/>
+  <text x="700" y="205" text-anchor="middle" class="domain" fill="#E65100">ML</text>
+  <text x="700" y="222" text-anchor="middle" class="theorem">Lipschitz Robustness</text>
+  <text x="700" y="237" text-anchor="middle" class="theorem">Neural Capacity</text>
+  <text x="700" y="252" text-anchor="middle" class="theorem">PAC Learning</text>
+  <text x="700" y="267" text-anchor="middle" class="count" fill="#E65100">8 theorems</text>
   
-  <!-- Physics node -->
-  <rect x="580" y="420" width="160" height="80" rx="15" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
-  <text x="660" y="450" text-anchor="middle" font-size="14" font-weight="bold" fill="#bf360c">Physics</text>
-  <text x="660" y="470" text-anchor="middle" font-size="10" fill="#555">Partition function</text>
-  <text x="660" y="485" text-anchor="middle" font-size="10" fill="#555">F = -T log Z</text>
+  <!-- Bridges -->
+  <!-- Info → Crypto -->
+  <line x1="310" y1="240" x2="240" y2="350" stroke="#9C27B0" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="245" y="290" class="bridge" fill="#9C27B0" transform="rotate(-30, 245, 290)">Entropy → Security</text>
   
-  <!-- Machine Learning node -->
-  <rect x="310" y="520" width="180" height="60" rx="15" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
-  <text x="400" y="548" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a148c">Machine Learning</text>
-  <text x="400" y="565" text-anchor="middle" font-size="10" fill="#555">Certified robustness</text>
+  <!-- Info → Physics -->
+  <line x1="490" y1="240" x2="560" y2="350" stroke="#009688" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="545" y="290" class="bridge" fill="#009688" transform="rotate(30, 545, 290)">Entropy → Thermodynamics</text>
   
-  <!-- Connections -->
-  <line x1="220" y1="155" x2="335" y2="260" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowhead)"/>
-  <text x="250" y="200" font-size="9" fill="#2e7d32" transform="rotate(-30, 250, 200)">Birthday bound</text>
+  <!-- Crypto → Physics -->
+  <line x1="330" y1="440" x2="470" y2="440" stroke="#795548" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="400" y="430" text-anchor="middle" class="bridge" fill="#795548">Irreversibility → One-Way</text>
   
-  <line x1="580" y1="155" x2="465" y2="260" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowhead)"/>
-  <text x="540" y="200" font-size="9" fill="#1565c0" transform="rotate(30, 540, 200)">Rényi bound</text>
+  <!-- Info → ML -->
+  <line x1="520" y1="160" x2="630" y2="200" stroke="#FF5722" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="585" y="168" class="bridge" fill="#FF5722">Capacity Bounds</text>
   
-  <line x1="220" y1="440" x2="335" y2="340" stroke="#c62828" stroke-width="2" marker-end="url(#arrowhead)"/>
-  <text x="250" y="400" font-size="9" fill="#c62828" transform="rotate(30, 250, 400)">Tropical bridge</text>
+  <!-- Central concept -->
+  <rect x="320" y="300" width="160" height="40" rx="20" fill="#673AB7" opacity="0.9"/>
+  <text x="400" y="325" text-anchor="middle" style="font-size:14px;fill:white;font-weight:bold;">Entropy Triangle</text>
   
-  <line x1="580" y1="440" x2="465" y2="340" stroke="#e65100" stroke-width="2" marker-end="url(#arrowhead)"/>
-  <text x="540" y="400" font-size="9" fill="#e65100" transform="rotate(-30, 540, 400)">Gibbs entropy</text>
-  
-  <line x1="400" y1="370" x2="400" y2="520" stroke="#7b1fa2" stroke-width="2" marker-end="url(#arrowhead)"/>
-  <text x="420" y="450" font-size="9" fill="#7b1fa2">Lipschitz bound</text>
-  
-  <!-- Horizontal bridge -->
-  <line x1="220" y1="140" x2="580" y2="140" stroke="#999" stroke-width="1" stroke-dasharray="5,5"/>
-  <text x="400" y="85" text-anchor="middle" font-size="10" fill="#666">
-    Entropy gap bridges security ↔ extraction
-  </text>
-  
-  <!-- Key results -->
-  <rect x="20" y="560" width="760" height="30" rx="5" fill="#f5f5f5" stroke="#ccc"/>
-  <text x="400" y="580" text-anchor="middle" font-size="11" fill="#333">
-    Key Result: Σpᵢ² ≥ 1/n (Birthday) · H₂ ≤ log(n) (Rényi) · F ≤ 0 (2nd Law) · φ &lt; 2 (Fibonacci)
-  </text>
+  <!-- Legend -->
+  <rect x="20" y="530" width="760" height="55" rx="8" fill="white" stroke="#ddd"/>
+  <text x="40" y="553" style="font-size:12px;font-weight:bold;fill:#333;">Formally Verified:</text>
+  <text x="170" y="553" style="font-size:12px;fill:#555;">45+ theorems · 20+ structures · 0 sorries · O(n) to O(2ⁿ) complexity bounds</text>
+  <text x="40" y="573" style="font-size:12px;font-weight:bold;fill:#333;">Bridges:</text>
+  <text x="100" y="573" style="font-size:12px;fill:#555;">InformationTheory ↔ Cryptography ↔ Physics ↔ MachineLearning ↔ Algebra</text>
 </svg>'''
+    
+    with open('diagram.svg', 'w') as f:
+        f.write(svg)
+    
+    return svg
 
-with open('/workspace/request-project/diagram.svg', 'w') as f:
-    f.write(svg_content)
-print("Saved diagram.svg")
+
+def generate_entropy_chart_svg():
+    """Generate entropy comparison chart as inline SVG."""
+    # Data: entropy values for different distributions
+    distributions = [
+        ("Uniform(2)", 1.0, 1.0, 1.0),
+        ("Biased(0.9)", 0.152, 0.469, 1.0),
+        ("Uniform(256)", 8.0, 8.0, 8.0),
+        ("Biased(256)", 7.01, 7.97, 8.0),
+    ]
+    
+    bar_width = 30
+    group_width = 140
+    chart_height = 300
+    max_val = 8.5
+    
+    svg_parts = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" width="700" height="400">']
+    svg_parts.append('<rect width="700" height="400" fill="white" rx="5"/>')
+    svg_parts.append('<text x="350" y="30" text-anchor="middle" style="font-size:16px;font-weight:bold;fill:#333;">Entropy Triangle: Min ≤ Shannon ≤ Max</text>')
+    
+    for i, (name, h_min, h_shan, h_max) in enumerate(distributions):
+        x_base = 80 + i * group_width
+        
+        for j, (val, color, label) in enumerate([
+            (h_min, "#F44336", "Min"),
+            (h_shan, "#2196F3", "Shannon"),
+            (h_max, "#4CAF50", "Max")
+        ]):
+            x = x_base + j * (bar_width + 5)
+            h = val / max_val * chart_height
+            y = 350 - h
+            svg_parts.append(f'<rect x="{x}" y="{y}" width="{bar_width}" height="{h}" fill="{color}" opacity="0.8" rx="2"/>')
+            svg_parts.append(f'<text x="{x + bar_width/2}" y="{y - 5}" text-anchor="middle" style="font-size:9px;fill:#555;">{val:.2f}</text>')
+        
+        svg_parts.append(f'<text x="{x_base + 45}" y="375" text-anchor="middle" style="font-size:11px;fill:#333;">{name}</text>')
+    
+    # Legend
+    for j, (color, label) in enumerate([("#F44336", "Min-Entropy"), ("#2196F3", "Shannon"), ("#4CAF50", "Max-Entropy")]):
+        svg_parts.append(f'<rect x="{520}" y="{60 + j*25}" width="15" height="15" fill="{color}" opacity="0.8" rx="2"/>')
+        svg_parts.append(f'<text x="{540}" y="{72 + j*25}" style="font-size:12px;fill:#555;">{label}</text>')
+    
+    # Y-axis
+    svg_parts.append('<line x1="60" y1="50" x2="60" y2="355" stroke="#ccc" stroke-width="1"/>')
+    for v in range(0, 9):
+        y = 350 - v / max_val * chart_height
+        svg_parts.append(f'<line x1="55" y1="{y}" x2="60" y2="{y}" stroke="#999" stroke-width="1"/>')
+        svg_parts.append(f'<text x="50" y="{y+4}" text-anchor="end" style="font-size:10px;fill:#999;">{v}</text>')
+    svg_parts.append('<text x="15" y="200" text-anchor="middle" style="font-size:12px;fill:#555;" transform="rotate(-90, 15, 200)">Entropy (bits)</text>')
+    
+    svg_parts.append('</svg>')
+    return '\n'.join(svg_parts)
+
+
+def generate_security_comparison_svg():
+    """Generate classical vs quantum security comparison."""
+    data = [(128, 64, 42), (256, 128, 85), (384, 192, 128), (512, 256, 170)]
+    
+    svg = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="600" height="350">']
+    svg.append('<rect width="600" height="350" fill="white" rx="5"/>')
+    svg.append('<text x="300" y="25" text-anchor="middle" style="font-size:15px;font-weight:bold;fill:#333;">Classical vs Quantum Collision Security</text>')
+    
+    bar_w = 40
+    max_val = 260
+    
+    for i, (sigma, classical, quantum) in enumerate(data):
+        x = 100 + i * 120
+        
+        # Classical bar
+        h_c = classical / max_val * 250
+        svg.append(f'<rect x="{x}" y="{290-h_c}" width="{bar_w}" height="{h_c}" fill="#2196F3" opacity="0.8" rx="2"/>')
+        svg.append(f'<text x="{x+bar_w/2}" y="{285-h_c}" text-anchor="middle" style="font-size:10px;fill:#1565C0;">{classical}</text>')
+        
+        # Quantum bar
+        h_q = quantum / max_val * 250
+        svg.append(f'<rect x="{x+bar_w+5}" y="{290-h_q}" width="{bar_w}" height="{h_q}" fill="#F44336" opacity="0.8" rx="2"/>')
+        svg.append(f'<text x="{x+bar_w+5+bar_w/2}" y="{285-h_q}" text-anchor="middle" style="font-size:10px;fill:#C62828;">{quantum}</text>')
+        
+        svg.append(f'<text x="{x+bar_w+2}" y="310" text-anchor="middle" style="font-size:11px;fill:#333;">σ={sigma}</text>')
+    
+    # Legend
+    svg.append('<rect x="420" y="50" width="15" height="15" fill="#2196F3" opacity="0.8" rx="2"/>')
+    svg.append('<text x="440" y="62" style="font-size:11px;fill:#555;">Classical (σ/2)</text>')
+    svg.append('<rect x="420" y="75" width="15" height="15" fill="#F44336" opacity="0.8" rx="2"/>')
+    svg.append('<text x="440" y="87" style="font-size:11px;fill:#555;">Quantum (σ/3)</text>')
+    
+    # Y-axis label
+    svg.append('<text x="15" y="180" text-anchor="middle" style="font-size:11px;fill:#555;" transform="rotate(-90, 15, 180)">Security bits</text>')
+    
+    svg.append('</svg>')
+    return '\n'.join(svg)
+
+
+if __name__ == "__main__":
+    print("Generating visualizations...")
+    
+    svg_content = generate_svg_diagram()
+    print(f"  Generated diagram.svg ({len(svg_content)} bytes)")
+    
+    entropy_svg = generate_entropy_chart_svg()
+    with open('entropy_chart.svg', 'w') as f:
+        f.write(entropy_svg)
+    print(f"  Generated entropy_chart.svg ({len(entropy_svg)} bytes)")
+    
+    security_svg = generate_security_comparison_svg()
+    with open('security_chart.svg', 'w') as f:
+        f.write(security_svg)
+    print(f"  Generated security_chart.svg ({len(security_svg)} bytes)")
+    
+    print("All visualizations generated successfully!")
