@@ -1,87 +1,89 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-09 21:52*
+*Last updated: 2026-05-09 22:10*
 
 ## Breakthrough Opportunities (ranked by impact)
 
-### 1. Quantitative Leftover Hash Lemma with Rényi Entropy
+### 1. Rényi Entropy Generalization and Quantum Security
 
-- **Theorem Statement**: For a universal hash family H with output length ℓ and source with min-entropy k, the statistical distance from uniform satisfies:
-  `∀ (H : UniversalHashFamily) (X : Source), H∞(X) ≥ k → SD(H(X), Uniform) ≤ 2^(-(k - ℓ)/2)`
+- **Theorem Statement**: ∀ α ∈ (0, 1) ∪ (1, ∞), ∀ d : FinDistribution n, H_α(d) = (1/(1-α)) · log(∑ pᵢ^α) is continuous in α and converges to Shannon entropy as α → 1.
 - **Proof Strategy**: 
-  1. Define universal hash families formally with collision probability bounds
-  2. Prove the collision entropy (Rényi H₂) bounds the statistical distance
-  3. Chain through min-entropy ≤ collision entropy ≤ Shannon entropy
-- **Why This Is Revolutionary**: Gives quantitative, composable security guarantees for key derivation — the foundation of all modern cryptographic protocols
-- **Catalog Leverage**: Build on `key_derivation_entropy_gap`, `post_quantum_key_security`, `birthday_bound_collision`
+  - Define H_α using Finset.sum and Real.log
+  - Prove continuity using Filter.Tendsto and L'Hôpital's rule
+  - Show collision probability = 2^(-H₂) connecting to existing collision_probability theorems
+- **Why This Is Revolutionary**: Unifies collision probability (α=2), Shannon entropy (α→1), and min-entropy (α→∞) into a single parameterized family. Directly applicable to quantum Rényi entropy bounds.
+- **Catalog Leverage**: collision_probability_lower_bound, collision_probability_upper_bound
 - **Research Mode**: prove
 - **Estimated Depth**: 4
 
-### 2. Von Neumann Entropy and Quantum Channel Capacity
+### 2. Formal LWE Hardness Reduction
 
-- **Theorem Statement**: 
-  `∀ (ρ : DensityMatrix n), S(ρ) = -Tr(ρ · log(ρ)) ≥ 0 ∧ S(ρ) ≤ log(n)`
-  `∀ (Φ : QuantumChannel), capacity(Φ) = max_ρ [S(Φ(ρ)) - Σ pᵢ S(Φ(ρᵢ))]`
+- **Theorem Statement**: If the LWE(n, q, χ) problem is hard, then ∀ ε > 0, ∃ KeyDerivationBound with extracted_bits ≥ n · log(q/σ) - 2·log(1/ε).
 - **Proof Strategy**:
-  1. Formalize density matrices as positive semidefinite, trace-1 matrices
-  2. Define von Neumann entropy via spectral decomposition
-  3. Prove Holevo bound as consequence of concavity of von Neumann entropy
-- **Why This Is Revolutionary**: Bridges quantum physics to information theory formally; enables provably secure quantum key distribution bounds
-- **Catalog Leverage**: Build on `holevo_classical_bound`, `quantum_advantage_exists`, `QuantumClassicalGap`
+  - Formalize the LWE assumption as a structure
+  - Build the Regev reduction connecting LWE to key derivation
+  - Use LatticeCryptoParams and KeyDerivationBound structures
+- **Why This Is Revolutionary**: First formal verification of a post-quantum hardness reduction. Would provide machine-checked security guarantees for NIST PQC standards.
+- **Catalog Leverage**: LatticeCryptoParams, KeyDerivationBound, key_extraction_security_tradeoff
 - **Research Mode**: prove
 - **Estimated Depth**: 5
 
-### 3. Formal Pinsker Inequality with KL Divergence
+### 3. Pinsker's Inequality
 
-- **Theorem Statement**:
-  `∀ (P Q : PMF α), SD(P, Q)² ≤ (1/2) · KL(P ‖ Q)`
+- **Theorem Statement**: ∀ d₁ d₂ : FinDistribution n, statisticalDistance(d₁, d₂)² ≤ (1/2) · KL(d₁ ‖ d₂)
 - **Proof Strategy**:
-  1. Define KL divergence formally
-  2. Prove through log-sum inequality
-  3. Connect to the distinguisher advantage bounds already formalized
-- **Why This Is Revolutionary**: Pinsker's inequality is the fundamental bridge between divergence measures and statistical distinguishability — essential for both differential privacy and cryptographic reductions
-- **Catalog Leverage**: Build on `pinsker_advantage_bound`, `advantage_composition_bound`, `StatisticalDistinguisher`
-- **Research Mode**: prove
-- **Estimated Depth**: 3
-
-### 4. Tropical Semiring Completeness for Entropy Optimization
-
-- **Theorem Statement**:
-  `∀ (S : TropicalSemiring), S is idempotent ∧ S has no zero divisors ∧ S is a distributive lattice`
-- **Proof Strategy**:
-  1. Extend current TropicalEntropy to full semiring structure
-  2. Prove idempotency of tropical addition (min)
-  3. Show tropical multiplication (ordinary +) distributes over tropical addition
-  4. Establish the tropical spectral theory for entropy optimization
-- **Why This Is Revolutionary**: Connects entropy optimization to tropical algebraic geometry, opening doors to tropical Langlands-type conjectures
-- **Catalog Leverage**: Build on `tropical_meet_comm`, `tropical_absorption`, `TropicalEntropy`
-- **Research Mode**: prove
-- **Estimated Depth**: 3
-
-### 5. Neural Network Generalization via Entropy Compression
-
-- **Theorem Statement**:
-  `∀ (N : NeuralNet) (S : TrainingSet), |S| ≥ Ω(d·log(1/ε)/ε) → P[error(N) ≤ ε] ≥ 1 - δ`
-  where d = VC dimension ≈ info capacity
-- **Proof Strategy**:
-  1. Bound VC dimension by information capacity (from our neural capacity theorems)
-  2. Apply VC theorem (Vapnik-Chervonenkis) for generalization
-  3. Connect to PAC learning sample complexity bounds
-- **Why This Is Revolutionary**: Gives provable generalization guarantees for deep networks through information-theoretic arguments
-- **Catalog Leverage**: Build on `neural_capacity_ge_params`, `depth_capacity_monotone`, `sample_complexity_pos`, `PACLearningProblem`
+  - Define KL divergence: KL(p‖q) = Σ pᵢ · log(pᵢ/qᵢ)
+  - Prove using the log-sum inequality and convexity of x·log(x)
+  - Key lemma: t - 1 ≥ log(t) for t > 0
+- **Why This Is Revolutionary**: Bridges KL divergence (information theory) to statistical distance (cryptography/ML). Enables tighter Lipschitz bounds for entropy functionals.
+- **Catalog Leverage**: statisticalDistance, statistical_distance_le_one
 - **Research Mode**: prove
 - **Estimated Depth**: 4
 
-### 6. Entropy-Based Differential Privacy
+### 4. Formal Information Bottleneck Optimality
 
-- **Theorem Statement**:
-  `∀ (M : Mechanism) (x x' : Database), neighbor(x, x') → |ln(P[M(x)∈S] / P[M(x')∈S])| ≤ ε`
-  implies `H∞(x | M(x)) ≥ H∞(x) - ε · |x|`
+- **Theorem Statement**: ∀ β > 0, the optimal bottleneck representation T* minimizes I(X;T) - β·I(T;Y) among all Markov chains X → T → Y.
 - **Proof Strategy**:
-  1. Define differential privacy formally
-  2. Connect ε-DP to min-entropy preservation
-  3. Show composition theorem as entropy chain rule application
-- **Why This Is Revolutionary**: Bridges differential privacy to information theory, enabling optimal privacy-utility tradeoffs
-- **Catalog Leverage**: Build on `EntropyChainDecomposition`, `conditional_le_joint`, `entropy_gap_bounded`
+  - Define the IB Lagrangian functional
+  - Prove existence of minimizer using compactness of probability simplex
+  - Show the self-consistent equations using KKT conditions
+- **Why This Is Revolutionary**: Would formalize the theoretical foundation of deep learning's success, connecting information theory to neural network optimization.
+- **Catalog Leverage**: InformationBottleneck, bottleneck_compression, neural_data_processing
+- **Research Mode**: prove
+- **Estimated Depth**: 5
+
+### 5. Quantum Error Correction Bridge
+
+- **Theorem Statement**: A [[n, k, d]] quantum stabilizer code can correct ⌊(d-1)/2⌋ qubit errors, with rate k/n bounded by the quantum Singleton bound: k ≤ n - 2(d-1).
+- **Proof Strategy**:
+  - Define quantum code parameters mirroring LinearCodeParams
+  - Prove the quantum Singleton bound using dimension counting
+  - Bridge to classical codes via CSS construction
+- **Why This Is Revolutionary**: Connects classical coding theory to quantum error correction, enabling formal security analysis of quantum communication protocols.
+- **Catalog Leverage**: LinearCodeParams, code_rate_le_one, correctable_errors_bound
 - **Research Mode**: prove
 - **Estimated Depth**: 4
+
+### 6. Advanced Differential Privacy Composition
+
+- **Theorem Statement**: For k (ε, δ)-DP mechanisms: total privacy is (√(2k ln(1/δ'))·ε + k·ε·(e^ε-1), k·δ + δ')-DP.
+- **Proof Strategy**:
+  - Prove moment generating function bound for privacy loss
+  - Apply Azuma-Hoeffding concentration inequality
+  - Use Real.exp monotonicity and logarithmic bounds
+- **Why This Is Revolutionary**: The advanced composition theorem is the foundation of practical privacy-preserving ML. Formal verification would provide first machine-checked guarantee for gradient descent privacy.
+- **Catalog Leverage**: DifferentialPrivacyParams, dp_linear_budget_bound, sqrt_le_self_of_one_le
+- **Research Mode**: prove
+- **Estimated Depth**: 4
+
+### 7. Entropy Power Inequality
+
+- **Theorem Statement**: For independent random variables X, Y with densities: e^(2h(X+Y)/n) ≥ e^(2h(X)/n) + e^(2h(Y)/n)
+- **Proof Strategy**:
+  - Formalize differential entropy using MeasureTheory
+  - Prove Fisher information inequality
+  - Use de Bruijn's identity connecting entropy and Fisher information
+- **Why This Is Revolutionary**: The entropy power inequality is one of the deepest results in information theory. Formal verification would be a landmark achievement.
+- **Catalog Leverage**: FinDistribution (generalize to continuous), entropy_chain_rule_nonneg
+- **Research Mode**: discover
+- **Estimated Depth**: 5
