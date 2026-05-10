@@ -18,12 +18,39 @@ document.addEventListener('DOMContentLoaded', () => {
     let packages = [];
     let currentPackage = null;
     let currentVizIndex = 0;
+    
+    // Pyodide State
+    let pyodideInstance = null;
+    let isPyodideLoading = false;
 
     // Set marked.js options for KaTeX compatibility if needed
     marked.setOptions({
         breaks: true,
         gfm: true
     });
+    
+    // Initialize Pyodide asynchronously
+    async function initPyodide() {
+        if (pyodideInstance || isPyodideLoading) return;
+        isPyodideLoading = true;
+        try {
+            console.log("Loading Pyodide...");
+            pyodideInstance = await loadPyodide();
+            console.log("Pyodide loaded!");
+            
+            // Enable run buttons if they exist
+            document.querySelectorAll('.run-btn').forEach(btn => {
+                btn.disabled = false;
+                btn.textContent = 'Run Code';
+            });
+        } catch (err) {
+            console.error("Failed to load Pyodide:", err);
+        }
+        isPyodideLoading = false;
+    }
+    
+    // Start loading Pyodide immediately
+    initPyodide();
 
     // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
@@ -287,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Algorithms & Demos
         renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
-        renderCodeBlocks('content-demos', data.demos, 'code');
+        renderInteractiveDemos('content-demos', data.demos);
 
         // Lean
         const leanDiv = document.getElementById('content-lean');
@@ -322,6 +349,78 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             container.innerHTML = '<p style="color:var(--text-muted)">No data provided for this section.</p>';
+        }
+    }
+
+    function renderInteractiveDemos(containerId, items) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        
+        if (items && items.length > 0) {
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'code-card';
+                
+                const header = document.createElement('div');
+                header.className = 'code-header';
+                
+                const title = document.createElement('span');
+                title.className = 'code-title';
+                title.textContent = item.name || 'Interactive Python Demo';
+                
+                const runBtn = document.createElement('button');
+                runBtn.className = 'run-btn';
+                if (!pyodideInstance) {
+                    runBtn.disabled = true;
+                    runBtn.textContent = 'Loading Engine...';
+                } else {
+                    runBtn.textContent = 'Run Code';
+                }
+                
+                header.appendChild(title);
+                header.appendChild(runBtn);
+                
+                const editor = document.createElement('textarea');
+                editor.className = 'code-editor';
+                editor.spellcheck = false;
+                editor.value = item.code || '';
+                
+                const output = document.createElement('pre');
+                output.className = 'code-output hidden';
+                
+                runBtn.addEventListener('click', async () => {
+                    if (!pyodideInstance) return;
+                    
+                    output.classList.remove('hidden');
+                    output.classList.remove('error');
+                    output.textContent = 'Running...';
+                    runBtn.disabled = true;
+                    
+                    let stdout = "";
+                    pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
+                    pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
+                    
+                    try {
+                        const result = await pyodideInstance.runPythonAsync(editor.value);
+                        if (result !== undefined && result !== null) {
+                            stdout += result + "\n";
+                        }
+                        output.textContent = stdout || "Done. (No output)";
+                    } catch (err) {
+                        output.classList.add('error');
+                        output.textContent = stdout + "\n" + err.toString();
+                    } finally {
+                        runBtn.disabled = false;
+                    }
+                });
+                
+                card.appendChild(header);
+                card.appendChild(editor);
+                card.appendChild(output);
+                container.appendChild(card);
+            });
+        } else {
+            container.innerHTML = '<p style="color:var(--text-muted)">No interactive demos provided.</p>';
         }
     }
 

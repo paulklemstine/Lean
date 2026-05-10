@@ -623,6 +623,67 @@ body.light-theme .gallery-img-container {
     background-color: var(--bg-panel);
 }
 
+/* Interactive Runner */
+.run-btn {
+    background: var(--accent-primary);
+    color: #fff;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.run-btn:hover {
+    background: var(--accent-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(139, 92, 246, 0.4);
+}
+
+.run-btn:disabled {
+    background: var(--border-color);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.code-editor {
+    width: 100%;
+    min-height: 200px;
+    padding: 20px 24px;
+    background-color: var(--bg-panel);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border: none;
+    resize: vertical;
+    outline: none;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.code-editor:focus {
+    background-color: var(--bg-elevated);
+}
+
+.code-output {
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 0 !important;
+    border-top: 1px solid var(--border-color);
+    color: #a7f3d0 !important;
+    white-space: pre-wrap;
+    min-height: 60px;
+}
+
+.code-output.error {
+    color: #fca5a5 !important;
+}
+
 /* KaTeX tweaks for light/dark mode */
 .katex {
     color: var(--text-main);
