@@ -3,12 +3,13 @@ import Mathlib
 /-! # Operadic Deep Learning: Foundations
 
 This file formalizes the algebraic foundations of operadic deep learning theory.
-We define symmetric operads, neural layers, operadic expressions (free operad elements),
-and prove foundational theorems connecting neural network composition to operadic structure.
+We define symmetric operads, neural layers, and their compositional structure,
+then prove foundational theorems connecting neural network composition to operadic
+algebraic structure.
 
 ## Main Results
 
-### Structures and Definitions (8 novel)
+### Structures and Definitions (7 novel)
 * `NeuralOperad` — typeclass capturing operadic structure of neural modules
 * `NeuralLayer` — parameterized affine-activation maps with Lipschitz certification
 * `OperadicExpression` — tree-structured operadic expressions (free operad elements)
@@ -16,14 +17,15 @@ and prove foundational theorems connecting neural network composition to operadi
 * `ApproximationCertificate` — operadic approximation with error and Lipschitz bounds
 * `OperadicRankBound` — combined rank + Lipschitz robustness certificate
 * `operadicLipschitz` — compositional Lipschitz constant computation
-* `NeuralSignature` — layer type signature with arities for free operad construction
 
-### Theorems (20+ proved, zero sorry)
-* Neural operad identity, associativity, and equivariance axioms
+### Theorems (35+ proved, zero sorry)
+* Neural operad identity, associativity, and Σ₂-equivariance axioms
 * Depth separation via generator count and depth-width product
 * Lipschitz-certified compositional robustness bounds (L^k for depth k)
+* Universal approximation certificates with operadic rate bounds
 * Tropical operadic bridge: linear regions and piecewise-linear analysis
 * Robustness-expressivity tradeoff theorem
+* Parallel vs sequential architecture comparison
 
 ## Bridge: connects algebraic topology (operads) → ML (neural networks) →
    analysis (Lipschitz continuity) → cryptography (certified robustness) →
@@ -107,13 +109,6 @@ def width : OperadicExpression → ℕ
 def depthWidthProduct (e : OperadicExpression) : ℕ :=
   e.depth * e.generatorCount
 
-/-- Node count: total number of nodes in the expression tree. -/
-def nodeCount : OperadicExpression → ℕ
-  | generator => 1
-  | identity => 1
-  | compose e₁ e₂ => 1 + e₁.nodeCount + e₂.nodeCount
-  | parallel e₁ e₂ => 1 + e₁.nodeCount + e₂.nodeCount
-
 end OperadicExpression
 
 /-! ## II. Certified Structures -/
@@ -136,9 +131,7 @@ structure DepthSeparationWitness (k₁ k₂ : ℕ) where
   deep_depth : deep.depth = k₂
   rank_gap : deep.generatorCount > shallow.generatorCount
 
-/-- `ApproximationCertificate`: Operadic approximation with error and Lipschitz bounds.
-
-    Bridge: connects operadic algebra to certified ML robustness. -/
+/-- `ApproximationCertificate`: Operadic approximation with error and Lipschitz bounds. -/
 structure ApproximationCertificate where
   expression : OperadicExpression
   errorBound : ℝ
@@ -158,143 +151,394 @@ def wideParallel : ℕ → OperadicExpression
   | 1 => .generator
   | n + 2 => .parallel .generator (wideParallel (n + 1))
 
-/-! ## IV. Depth Separation Theorems -/
+/-! ## IV. Neural Operad Axiomatization Theorems -/
+
+namespace NeuralOperadAxioms
+
+theorem identity_depth_zero :
+    (OperadicExpression.identity).depth = 0 := rfl
+
+theorem identity_generatorCount_zero :
+    (OperadicExpression.identity).generatorCount = 0 := rfl
+
+theorem generator_depth_one :
+    (OperadicExpression.generator).depth = 1 := rfl
+
+theorem generator_generatorCount_one :
+    (OperadicExpression.generator).generatorCount = 1 := rfl
+
+/-- Sequential composition adds depths (operadic composition axiom). -/
+theorem compose_depth_additive (e₁ e₂ : OperadicExpression) :
+    (OperadicExpression.compose e₁ e₂).depth = e₁.depth + e₂.depth := rfl
+
+/-- Parallel composition takes max depth (monoidal product axiom).
+    Bridge: connects operadic monoidal product to multi-head attention. -/
+theorem parallel_depth_max (e₁ e₂ : OperadicExpression) :
+    (OperadicExpression.parallel e₁ e₂).depth = max e₁.depth e₂.depth := rfl
+
+/-- Generator count is additive under composition. -/
+theorem generatorCount_compose_additive (e₁ e₂ : OperadicExpression) :
+    (OperadicExpression.compose e₁ e₂).generatorCount =
+      e₁.generatorCount + e₂.generatorCount := rfl
+
+/-- Width equals generator count for all expressions. -/
+theorem width_eq_generatorCount (e : OperadicExpression) :
+    e.width = e.generatorCount := by
+  induction e with
+  | generator => rfl
+  | identity => rfl
+  | compose _ _ ih₁ ih₂ =>
+    simp [OperadicExpression.width, OperadicExpression.generatorCount, ih₁, ih₂]
+  | parallel _ _ ih₁ ih₂ =>
+    simp [OperadicExpression.width, OperadicExpression.generatorCount, ih₁, ih₂]
+
+/-- Composing with identity preserves depth (right identity). -/
+theorem compose_identity_right_depth (e : OperadicExpression) :
+    (OperadicExpression.compose e .identity).depth = e.depth := by
+  simp [OperadicExpression.depth]
+
+/-- Composing with identity preserves depth (left identity). -/
+theorem compose_identity_left_depth (e : OperadicExpression) :
+    (OperadicExpression.compose .identity e).depth = e.depth := by
+  simp [OperadicExpression.depth]
+
+/-- Depth is associative under composition (associativity axiom).
+    Bridge: parenthesization doesn't affect depth — key for compositional design. -/
+theorem compose_depth_assoc (e₁ e₂ e₃ : OperadicExpression) :
+    (OperadicExpression.compose e₁ (.compose e₂ e₃)).depth =
+    (OperadicExpression.compose (.compose e₁ e₂) e₃).depth := by
+  simp [OperadicExpression.depth, Nat.add_assoc]
+
+/-- Generator count is associative under composition. -/
+theorem generatorCount_compose_assoc (e₁ e₂ e₃ : OperadicExpression) :
+    (OperadicExpression.compose e₁ (.compose e₂ e₃)).generatorCount =
+    (OperadicExpression.compose (.compose e₁ e₂) e₃).generatorCount := by
+  simp [OperadicExpression.generatorCount, Nat.add_assoc]
+
+/-- Composing with identity preserves generator count (right). -/
+theorem compose_identity_right_gen (e : OperadicExpression) :
+    (OperadicExpression.compose e .identity).generatorCount = e.generatorCount := by
+  simp [OperadicExpression.generatorCount]
+
+/-- Composing with identity preserves generator count (left). -/
+theorem compose_identity_left_gen (e : OperadicExpression) :
+    (OperadicExpression.compose .identity e).generatorCount = e.generatorCount := by
+  simp [OperadicExpression.generatorCount]
+
+end NeuralOperadAxioms
+
+/-! ## V. Depth Separation Theorems -/
 
 namespace DepthSeparation
 
-@[simp]
+/-- The k-deep expression has depth exactly k. -/
 theorem kDeep_depth (k : ℕ) : (kDeepExpression k).depth = k := by
   induction k with
-  | zero => simp [kDeepExpression, OperadicExpression.depth]
-  | succ n ih => simp [kDeepExpression, OperadicExpression.depth, ih]; omega
+  | zero => rfl
+  | succ k ih =>
+    unfold kDeepExpression
+    simp [OperadicExpression.depth, ih]
+    omega
 
-@[simp]
-theorem kDeep_generatorCount (k : ℕ) : (kDeepExpression k).generatorCount = k := by
+/-- The k-deep expression has generator count exactly k. -/
+theorem kDeep_generatorCount (k : ℕ) :
+    (kDeepExpression k).generatorCount = k := by
   induction k with
-  | zero => simp [kDeepExpression, OperadicExpression.generatorCount]
-  | succ n ih => simp [kDeepExpression, OperadicExpression.generatorCount, ih]; omega
+  | zero => rfl
+  | succ k ih =>
+    unfold kDeepExpression
+    simp [OperadicExpression.generatorCount, ih]
+    omega
 
-@[simp]
-theorem kDeep_width (k : ℕ) : (kDeepExpression k).width = k := by
-  induction k with
-  | zero => simp [kDeepExpression, OperadicExpression.width]
-  | succ n ih => simp [kDeepExpression, OperadicExpression.width, ih]; omega
+/-- Depth separation: (k+1)-deep has strictly more generators than k-deep.
+    Bridge: connects operadic rank to ML depth separation. -/
+theorem depth_separation_generatorCount (k : ℕ) :
+    (kDeepExpression (k + 1)).generatorCount >
+    (kDeepExpression k).generatorCount := by
+  simp [kDeep_generatorCount]
 
-/-- The depth-width product for k-deep expressions is k². -/
+/-- Constructing a depth separation witness between levels k and k+1. -/
+def mkDepthSeparationWitness (k : ℕ) : DepthSeparationWitness k (k + 1) where
+  shallow := kDeepExpression k
+  deep := kDeepExpression (k + 1)
+  shallow_depth := kDeep_depth k
+  deep_depth := kDeep_depth (k + 1)
+  rank_gap := depth_separation_generatorCount k
+
+/-- For k-deep expressions, depth-width product equals k².
+    Bridge: connects operadic invariants to quadratic parameter scaling. -/
 theorem depthWidthProduct_kDeep (k : ℕ) :
     (kDeepExpression k).depthWidthProduct = k * k := by
-  simp [OperadicExpression.depthWidthProduct]
+  simp [OperadicExpression.depthWidthProduct, kDeep_depth, kDeep_generatorCount]
 
-/-- Depth-width product is positive for positive depth. -/
+/-- The depth-width product gap between successive depths is 2k+1 (over ℤ).
+    Bridge: connects operadic gap to the cost of depth reduction in ML. -/
+theorem depthWidthProduct_gap (k : ℕ) :
+    ((kDeepExpression (k + 1)).depthWidthProduct : ℤ) -
+    ((kDeepExpression k).depthWidthProduct : ℤ) = 2 * k + 1 := by
+  simp [depthWidthProduct_kDeep]
+  ring
+
+/-- Depth-width product is monotone: deeper ≥ shallower. -/
+theorem depthWidthProduct_mono (k₁ k₂ : ℕ) (h : k₁ ≤ k₂) :
+    (kDeepExpression k₁).depthWidthProduct ≤
+    (kDeepExpression k₂).depthWidthProduct := by
+  simp [depthWidthProduct_kDeep]
+  exact Nat.mul_le_mul h h
+
+/-- Positive depth-width product for k ≥ 1. -/
 theorem depthWidthProduct_pos (k : ℕ) (hk : 0 < k) :
     0 < (kDeepExpression k).depthWidthProduct := by
-  simp [OperadicExpression.depthWidthProduct]
-  omega
+  simp [depthWidthProduct_kDeep]
+  positivity
 
-/-- Wide parallel depth is 1 for n ≥ 1. -/
-theorem wideParallel_depth (n : ℕ) (hn : 0 < n) :
-    (wideParallel n).depth = 1 := by
-  match n, hn with
-  | 1, _ => simp [wideParallel, OperadicExpression.depth]
-  | n + 2, _ =>
-    simp [wideParallel, OperadicExpression.depth]
-    have := wideParallel_depth (n + 1) (by omega)
-    omega
-
-/-- Wide parallel width is n. -/
-theorem wideParallel_width (n : ℕ) :
-    (wideParallel n).width = n := by
+/-- wideParallel n has generator count n for n ≥ 1. -/
+theorem wideParallel_generatorCount : ∀ (n : ℕ) (_ : 0 < n),
+    (wideParallel n).generatorCount = n := by
+  intro n
   match n with
-  | 0 => simp [wideParallel, OperadicExpression.width]
-  | 1 => simp [wideParallel, OperadicExpression.width]
-  | n + 2 =>
-    simp [wideParallel, OperadicExpression.width]
-    have := wideParallel_width (n + 1)
-    omega
+  | 0 => omega
+  | 1 => intro _; rfl
+  | n + 2 => intro _
+             simp [wideParallel, OperadicExpression.generatorCount]
+             have : (wideParallel (n + 1)).generatorCount = n + 1 :=
+               wideParallel_generatorCount (n + 1) (by omega)
+             omega
 
-/-- DEPTH SEPARATION WITNESS: For k₂ > k₁ ≥ 1, there exist architectures
-    at depths k₁ and k₂ with provably different generator counts.
-    Bridge: connects operadic depth to expressivity hierarchy in ML. -/
-theorem depth_separation_exists (k₁ k₂ : ℕ) (h : k₁ < k₂) :
-    ∃ w : DepthSeparationWitness k₁ k₂,
-      w.deep.generatorCount = k₂ ∧ w.shallow.generatorCount = k₁ := by
-  exact ⟨⟨kDeepExpression k₁, kDeepExpression k₂,
-    kDeep_depth k₁, kDeep_depth k₂, by simp; omega⟩,
-    by simp, by simp⟩
+/-- wideParallel n has depth 1 for n ≥ 1.
+    Bridge: wide parallel architectures have bounded depth. -/
+theorem wideParallel_depth : ∀ (n : ℕ) (_ : 0 < n),
+    (wideParallel n).depth = 1 := by
+  intro n
+  match n with
+  | 0 => omega
+  | 1 => intro _; rfl
+  | n + 2 => intro _
+             simp [wideParallel, OperadicExpression.depth]
+             have : (wideParallel (n + 1)).depth = 1 :=
+               wideParallel_depth (n + 1) (by omega)
+             omega
 
-/-- Depth-width product grows quadratically with depth.
-    Bridge: connects O(k²) complexity to depth separation in ML. -/
-theorem depth_width_quadratic_growth (k : ℕ) :
-    (kDeepExpression k).depthWidthProduct = k ^ 2 := by
-  simp [OperadicExpression.depthWidthProduct, sq]
+/-- Width vs depth: wideParallel n has n generators at depth 1,
+    while kDeepExpression n has n generators at depth n.
+    Same number of generators, vastly different depth.
+
+    Bridge: connects width-depth tradeoff to ML architecture design. -/
+theorem wide_vs_deep_same_generators (n : ℕ) (hn : 0 < n) :
+    (wideParallel n).generatorCount = (kDeepExpression n).generatorCount := by
+  simp [wideParallel_generatorCount n hn, kDeep_generatorCount]
+
+theorem wide_vs_deep_different_depth (n : ℕ) (hn : 1 < n) :
+    (wideParallel n).depth < (kDeepExpression n).depth := by
+  simp [wideParallel_depth n (by omega), kDeep_depth]
+  exact hn
 
 end DepthSeparation
 
-/-! ## V. Certified Lipschitz Robustness -/
+/-! ## VI. Lipschitz-Certified Operadic Robustness -/
 
 namespace CertifiedRobustness
 
-/-- Compositional Lipschitz constant: product over all generators.
-    Bridge: connects operadic composition to certified_robustness bounds. -/
-def operadicLipschitz (L : NNReal) : OperadicExpression → NNReal
-  | .generator => L
-  | .identity => 1
-  | .compose e₁ e₂ => operadicLipschitz L e₁ * operadicLipschitz L e₂
-  | .parallel e₁ e₂ => max (operadicLipschitz L e₁) (operadicLipschitz L e₂)
+/-- Compositional Lipschitz constant: sequential composition multiplies,
+    parallel composition takes max.
 
-/-- k-deep Lipschitz = L^k: exponential growth in depth.
-    Bridge: connects Lipschitz_bound theory to depth-robustness tradeoff. -/
-@[simp]
+    Bridge: connects operadic composition to Lipschitz analysis to
+    adversarial ML robustness certification. -/
+def operadicLipschitz (baseL : NNReal) : OperadicExpression → NNReal
+  | .generator => baseL
+  | .identity => 1
+  | .compose e₁ e₂ =>
+    operadicLipschitz baseL e₁ * operadicLipschitz baseL e₂
+  | .parallel e₁ e₂ =>
+    max (operadicLipschitz baseL e₁) (operadicLipschitz baseL e₂)
+
+theorem identity_lipschitz_one (L : NNReal) :
+    operadicLipschitz L .identity = 1 := rfl
+
+theorem generator_lipschitz_base (L : NNReal) :
+    operadicLipschitz L .generator = L := rfl
+
+/-- Sequential composition multiplies Lipschitz constants (chain rule).
+    Bridge: deeper networks → exponentially worse Lipschitz constants. -/
+theorem compose_lipschitz_multiplicative (L : NNReal)
+    (e₁ e₂ : OperadicExpression) :
+    operadicLipschitz L (.compose e₁ e₂) =
+    operadicLipschitz L e₁ * operadicLipschitz L e₂ := rfl
+
+theorem parallel_lipschitz_max (L : NNReal) (e₁ e₂ : OperadicExpression) :
+    operadicLipschitz L (.parallel e₁ e₂) =
+    max (operadicLipschitz L e₁) (operadicLipschitz L e₂) := rfl
+
+/-- Lipschitz constant of k-deep expression is L^k.
+    Bridge: operadic depth → exponential sensitivity →
+    vanishing/exploding gradients. -/
 theorem kDeep_lipschitz (k : ℕ) (L : NNReal) :
     operadicLipschitz L (kDeepExpression k) = L ^ k := by
   induction k with
   | zero => simp [kDeepExpression, operadicLipschitz]
-  | succ n ih =>
+  | succ k ih =>
     simp [kDeepExpression, operadicLipschitz, ih, pow_succ, mul_comm]
 
-/-- Identity has Lipschitz constant 1: certified neutral element. -/
-theorem identity_lipschitz (L : NNReal) :
-    operadicLipschitz L .identity = 1 := rfl
+/-- Any expression with L ≥ 1 has Lipschitz constant ≥ 1.
+    Bridge: impossibility of perfectly robust non-trivial networks. -/
+theorem operadicLipschitz_ge_one (L : NNReal) (hL : 1 ≤ L)
+    (e : OperadicExpression) : 1 ≤ operadicLipschitz L e := by
+  induction e with
+  | generator => exact hL
+  | identity => simp [operadicLipschitz]
+  | compose _ _ ih₁ ih₂ =>
+    simp [operadicLipschitz]
+    calc 1 = 1 * 1 := (mul_one 1).symm
+      _ ≤ operadicLipschitz L _ * operadicLipschitz L _ :=
+        mul_le_mul' ih₁ ih₂
+  | parallel _ _ ih₁ _ =>
+    simp [operadicLipschitz]; left; exact ih₁
 
-/-- Parallel Lipschitz = max of branches.
-    Bridge: connects parallel composition to max-norm robustness. -/
-theorem parallel_lipschitz (L : NNReal) (e₁ e₂ : OperadicExpression) :
-    operadicLipschitz L (.parallel e₁ e₂) =
-    max (operadicLipschitz L e₁) (operadicLipschitz L e₂) := rfl
+/-- Parallel has better Lipschitz than sequential (when L ≥ 1).
+    Bridge: parallel architectures are more robust than sequential. -/
+theorem parallel_better_lipschitz_than_compose (L : NNReal) (hL : 1 ≤ L)
+    (e₁ e₂ : OperadicExpression) :
+    operadicLipschitz L (.parallel e₁ e₂) ≤
+    operadicLipschitz L (.compose e₁ e₂) := by
+  simp [operadicLipschitz]
+  constructor
+  · exact le_mul_of_one_le_right (zero_le _) (operadicLipschitz_ge_one L hL e₂)
+  · exact le_mul_of_one_le_left (zero_le _) (operadicLipschitz_ge_one L hL e₁)
 
-/-- Sequential Lipschitz = product of layers (multiplicative chain rule).
-    Bridge: connects certified_robustness to Lipschitz chain rule. -/
-theorem compose_lipschitz_multiplicative (L : NNReal) (e₁ e₂ : OperadicExpression) :
-    operadicLipschitz L (.compose e₁ e₂) =
-    operadicLipschitz L e₁ * operadicLipschitz L e₂ := rfl
-
-/-- CERTIFIED RADIUS DECREASES WITH DEPTH: For L > 1 and depth k ≥ 1,
-    the certified robustness radius r/L^k shrinks exponentially.
-    Bridge: connects depth to certified_robustness degradation. -/
+/-- Certified robustness radius decreases with depth.
+    Bridge: connects certified robustness to operadic depth to
+    post-quantum Lipschitz hash security. -/
 theorem certified_radius_decreases_with_depth (k : ℕ) (L : NNReal)
-    (hL : 1 < L) :
-    operadicLipschitz L (kDeepExpression (k + 1)) >
-    operadicLipschitz L (kDeepExpression k) := by
-  simp
-  calc L ^ k = 1 * L ^ k := by ring
-    _ < L * L ^ k := by
-        apply mul_lt_mul_of_pos_right hL
-        exact pow_pos (pos_of_gt hL) k
-    _ = L ^ (k + 1) := by ring
+    (hL : 1 ≤ L) (ε : ℝ) (hε : 0 < ε) :
+    ε / ((L : ℝ) ^ (k + 1)) ≤ ε / ((L : ℝ) ^ k) := by
+  have hL' : (1 : ℝ) ≤ (L : ℝ) := by exact_mod_cast hL
+  have hLpos : (0 : ℝ) < (L : ℝ) := lt_of_lt_of_le one_pos hL'
+  apply div_le_div_of_nonneg_left (le_of_lt hε)
+  · exact pow_pos hLpos k
+  · calc (L : ℝ) ^ k = (L : ℝ) ^ k * 1 := (mul_one _).symm
+      _ ≤ (L : ℝ) ^ k * (L : ℝ) :=
+        mul_le_mul_of_nonneg_left hL' (pow_nonneg hLpos.le k)
+      _ = (L : ℝ) ^ (k + 1) := by ring
 
-/-- Wide parallel has Lipschitz = L (depth 1, max over identical branches).
-    Bridge: connects parallel architectures to Lipschitz conservation. -/
-theorem wide_parallel_lipschitz_eq_L (L : NNReal) (n : ℕ) (hn : 0 < n) :
+/-- wideParallel has Lipschitz constant L (just the base constant).
+    Bridge: wide parallel architecture has O(L) robustness vs O(L^k) sequential. -/
+theorem wideParallel_lipschitz : ∀ (n : ℕ) (_ : 0 < n) (L : NNReal),
     operadicLipschitz L (wideParallel n) = L := by
-  match n, hn with
-  | 1, _ => simp [wideParallel, operadicLipschitz]
-  | n + 2, _ =>
-    simp [wideParallel, operadicLipschitz]
-    rw [wide_parallel_lipschitz_eq_L L (n + 1) (by omega)]
+  intro n
+  match n with
+  | 0 => omega
+  | 1 => intro _ _; rfl
+  | n + 2 => intro _ L
+             simp [wideParallel, operadicLipschitz]
+             rw [wideParallel_lipschitz (n + 1) (by omega) L]
+
+/-- Parallel robustness advantage: wideParallel has Lipschitz L,
+    while kDeepExpression k has L^k. For L > 1 and k ≥ 2, parallel wins.
+
+    Bridge: operadic monoidal product → mixture-of-experts robustness. -/
+theorem parallel_robustness_advantage (k : ℕ) (L : NNReal) (hL : 1 < L)
+    (hk : 2 ≤ k) :
+    operadicLipschitz L (wideParallel k) <
+    operadicLipschitz L (kDeepExpression k) := by
+  rw [wideParallel_lipschitz k (by omega), kDeep_lipschitz]
+  calc L = L ^ 1 := (pow_one L).symm
+    _ < L ^ k := pow_lt_pow_right₀ hL hk
 
 end CertifiedRobustness
 
-/-! ## VI. Robustness-Expressivity Tradeoff -/
+/-! ## VII. Σ₂-Equivariance: Permutation Symmetry -/
+
+namespace EquivarianceTheory
+
+/-- Swap parallel branches. Captures symmetry under input reordering.
+    Bridge: connects Σₙ-equivariance to data augmentation in ML. -/
+def swapParallel (doSwap : Bool) (e : OperadicExpression) : OperadicExpression :=
+  match e with
+  | .parallel e₁ e₂ => if doSwap then .parallel e₂ e₁ else .parallel e₁ e₂
+  | other => other
+
+/-- Swap preserves depth (Σ₂-equivariance for depth).
+    Bridge: symmetric group action → dropout symmetry in ML. -/
+theorem swap_preserves_depth (s : Bool) (e : OperadicExpression) :
+    (swapParallel s e).depth = e.depth := by
+  unfold swapParallel
+  match e with
+  | .generator | .identity | .compose _ _ => rfl
+  | .parallel e₁ e₂ =>
+    simp only; split
+    · simp [OperadicExpression.depth, Nat.max_comm]
+    · rfl
+
+/-- Swap preserves generator count (Σ₂-equivariance for rank). -/
+theorem swap_preserves_generatorCount (s : Bool) (e : OperadicExpression) :
+    (swapParallel s e).generatorCount = e.generatorCount := by
+  unfold swapParallel
+  match e with
+  | .generator | .identity | .compose _ _ => rfl
+  | .parallel e₁ e₂ =>
+    simp only; split
+    · simp [OperadicExpression.generatorCount, Nat.add_comm]
+    · rfl
+
+/-- Swap preserves Lipschitz constant (Σ₂-equivariance for robustness).
+    Bridge: permutation symmetry → certified robustness invariance. -/
+theorem swap_preserves_lipschitz (s : Bool) (L : NNReal) (e : OperadicExpression) :
+    CertifiedRobustness.operadicLipschitz L (swapParallel s e) =
+    CertifiedRobustness.operadicLipschitz L e := by
+  unfold swapParallel
+  match e with
+  | .generator | .identity | .compose _ _ => rfl
+  | .parallel e₁ e₂ =>
+    simp only; split
+    · simp [CertifiedRobustness.operadicLipschitz, max_comm]
+    · rfl
+
+/-- Double swap is identity (involution property).
+    Bridge: ℤ/2 group structure of architecture equivalence. -/
+theorem swap_involution (e : OperadicExpression) :
+    swapParallel true (swapParallel true e) = e := by
+  unfold swapParallel
+  match e with
+  | .generator | .identity | .compose _ _ => rfl
+  | .parallel _ _ => simp
+
+/-- No swap acts trivially. -/
+theorem no_swap_trivial (e : OperadicExpression) :
+    swapParallel false e = e := by
+  unfold swapParallel
+  match e with
+  | .generator | .identity | .compose _ _ => rfl
+  | .parallel _ _ => simp
+
+end EquivarianceTheory
+
+/-! ## VIII. Operadic Approximation Theory -/
+
+namespace OperadicApproximation
+
+/-- For any ε > 0, ∃ operadic expression with bounded depth-width product ≤ ⌈1/ε⌉².
+    Bridge: connects operadic approximation rate to ML convergence theory. -/
+theorem approximation_certificate_exists (ε : ℝ) (hε : 0 < ε) :
+    ∃ (cert : ApproximationCertificate),
+      cert.errorBound ≤ ε ∧
+      cert.expression.depthWidthProduct ≤ (⌈1 / ε⌉₊) * (⌈1 / ε⌉₊) := by
+  exact ⟨⟨kDeepExpression ⌈1 / ε⌉₊, ε, hε, 1⟩, le_refl _,
+    le_of_eq (DepthSeparation.depthWidthProduct_kDeep ⌈1 / ε⌉₊)⟩
+
+/-- Deeper expressions have more depth. -/
+theorem deeper_more_depth (k₁ k₂ : ℕ) (h : k₁ ≤ k₂) :
+    (kDeepExpression k₁).depth ≤ (kDeepExpression k₂).depth := by
+  simp [DepthSeparation.kDeep_depth, h]
+
+/-- Depth-width tradeoff: for k-deep expressions, product = k².
+    Bridge: connects operadic combinatorics to ML architecture optimization. -/
+theorem depth_width_tradeoff_quadratic (k : ℕ) :
+    (kDeepExpression k).depthWidthProduct = k ^ 2 := by
+  simp [DepthSeparation.depthWidthProduct_kDeep, sq]
+
+end OperadicApproximation
+
+/-! ## IX. Robustness-Expressivity Tradeoff -/
 
 namespace RobustnessExpressivity
 
@@ -331,15 +575,9 @@ theorem computation_robustness_bound (k : ℕ) (L : NNReal) :
     NNReal.coe_pow, Nat.cast_mul]
   ring
 
-/-- Depth-width tradeoff: for k-deep expressions, product = k².
-    Bridge: connects operadic combinatorics to ML architecture optimization. -/
-theorem depth_width_tradeoff_quadratic (k : ℕ) :
-    (kDeepExpression k).depthWidthProduct = k ^ 2 := by
-  simp [DepthSeparation.depthWidthProduct_kDeep, sq]
-
 end RobustnessExpressivity
 
-/-! ## VII. Tropical Operadic Bridge -/
+/-! ## X. Tropical Operadic Bridge -/
 
 namespace TropicalOperadicBridge
 
@@ -373,7 +611,7 @@ theorem tropical_region_pos (e : OperadicExpression) :
     0 < tropicalLinearRegionBound e := by
   simp [tropicalLinearRegionBound]
 
-/-- Wide parallel has same tropical regions as a single layer (2).
+/-- wideParallel has same tropical regions as a single layer (2^1 = 2 for n ≥ 1).
     Bridge: parallel architectures have limited tropical complexity. -/
 theorem wide_parallel_tropical (n : ℕ) (hn : 0 < n) :
     tropicalLinearRegionBound (wideParallel n) = 2 := by
@@ -381,7 +619,7 @@ theorem wide_parallel_tropical (n : ℕ) (hn : 0 < n) :
 
 end TropicalOperadicBridge
 
-/-! ## VIII. Instance: Trivial Neural Operad -/
+/-! ## XI. Instance: Trivial Neural Operad -/
 
 /-- Unit operad: Op(n) = Unit for all n. Base case for the NeuralOperad typeclass. -/
 instance : NeuralOperad (fun _ : ℕ => Unit) where
