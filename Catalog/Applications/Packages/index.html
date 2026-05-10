@@ -96,6 +96,10 @@
             opacity: 1;
         }
 
+        .card:visited {
+            border-color: #a855f7;
+        }
+
         .card-title {
             color: var(--text-main);
             font-size: 1.1rem;
@@ -238,9 +242,10 @@
                     const lastModified = response.headers.get('Last-Modified');
                     if (lastModified) {
                         item.date = new Date(lastModified).getTime();
-                        const dateStr = new Date(lastModified).toLocaleDateString(undefined, { 
+                        const dateObj = new Date(lastModified);
+                        const dateStr = dateObj.toLocaleDateString(undefined, {
                             year: 'numeric', month: 'short', day: 'numeric' 
-                        });
+                        }) + ' ' + dateObj.toLocaleTimeString();
                         item.element.querySelector('.date').textContent = dateStr;
                     } else {
                         item.element.querySelector('.date').textContent = '';
