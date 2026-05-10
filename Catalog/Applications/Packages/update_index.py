@@ -1,60 +1,56 @@
 import os
 import glob
-import re
-import subprocess
-
-def get_creation_date(filepath):
-    # Try to get the first commit date using git
-    try:
-        result = subprocess.run(
-            ['git', 'log', '--format=%ai', '--reverse', '--', filepath],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            check=True
-        )
-        dates = result.stdout.strip().split('\n')
-        if dates and dates[0]:
-            return dates[0]
-    except subprocess.CalledProcessError:
-        pass
-
-    # Fallback to file creation/modification time if not in git
-    import time
-    return time.strftime('%Y-%m-%d %H:%M:%S %z', time.localtime(os.path.getctime(filepath)))
+import json
+import time
 
 def update_index():
-    # Find all html files in the directory except index.html
-    # We must be in the Catalog/Applications/Packages directory for this to work correctly
-    # with glob and git
+    # We must be in the Catalog/Applications/Packages directory
     original_dir = os.getcwd()
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-    html_files = [f for f in glob.glob("*.html") if f != "index.html"]
+    json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json")]
     
-    # Format them as a Javascript array of objects
-    file_objects = []
-    for f in html_files:
-        date = get_creation_date(f)
-        file_objects.append(f'{{ filename: "{f}", date: "{date}" }}')
+    package_index = []
+    package_db = {}
+    
+    for f in json_files:
+        try:
+            with open(f, 'r', encoding='utf-8') as file:
+                data = json.load(file)
+            
+            # Use file modified time as date if not provided
+            date_str = data.get("date", time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(os.path.getmtime(f))))
+            
+            # Add to index
+            package_index.append({
+                "filename": f,
+                "title": data.get("title", "Untitled Research"),
+                "domain": data.get("domain", "General"),
+                "date": date_str
+            })
+            
+            # Add to DB
+            package_db[f] = data
+            
+        except Exception as e:
+            print(f"Error processing {f}: {e}")
 
-    files_js = ",\n        ".join(file_objects)
+    # Sort index by date descending
+    package_index.sort(key=lambda x: x["date"], reverse=True)
+
+    # We output a .js file to bypass local file:// CORS restrictions
+    js_content = f"""// AUTO-GENERATED FILE. DO NOT EDIT.
+// This file bundles all JSON packages so they can be loaded from file:// without CORS issues.
+
+window.PACKAGE_INDEX = {json.dumps(package_index, indent=2)};
+
+window.PACKAGE_DB = {json.dumps(package_db, indent=2)};
+"""
     
-    # Read current index.html
-    with open("index.html", "r", encoding="utf-8") as f:
-        content = f.read()
+    with open("packages_db.js", "w", encoding="utf-8") as out:
+        out.write(js_content)
         
-    # Replace the JS files array using Regex
-    pattern = r'(const files = \[).*?(\];)'
-    replacement = f'\\1\n        {files_js}\n    \\2'
-    
-    new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
-    
-    # Save the updated index.html
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(new_content)
-        
-    print(f"Successfully updated index.html with {len(html_files)} files.")
+    print(f"Successfully bundled {len(json_files)} packages into packages_db.js")
     os.chdir(original_dir)
 
 if __name__ == "__main__":

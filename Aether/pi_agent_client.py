@@ -2046,21 +2046,24 @@ class PiAgentClient:
 
             6. **diagram.svg** — visualization of key mathematical structures
 
-            7. **PACKAGE.html** — MANDATORY standalone HTML package
-               Bundle ALL artifacts into a single, self-contained HTML file:
-               • Everything inlined (CSS, JS, content). No external dependencies.
-               • ALL images MUST be embedded as base64 data URIs:
-                 `<img src="data:image/png;base64,..." />` for PNGs,
-                 `<img src="data:image/svg+xml;base64,..." />` for SVGs.
-                 For SVG diagrams, prefer inlining `<svg>...</svg>` markup directly.
-                 If you generate matplotlib/plotly charts, convert to base64 and embed.
+            7. **PACKAGE.json** — MANDATORY JSON Data Package
+               Bundle ALL artifacts into a single JSON file for the web frontend:
+               • Output a strictly valid JSON object:
+                 {{
+                   "title": "Title", "domain": "Domain",
+                   "article": "Markdown content...",
+                   "research_paper": "Markdown content...",
+                   "future_directions": "Markdown content...",
+                   "demos": [ {{ "name": "...", "code": "..." }} ],
+                   "algorithms": [ {{ "name": "...", "pseudocode": "..." }} ],
+                   "visualizations": [ {{ "name": "...", "data": "base64 URI or inline SVG" }} ],
+                   "lean_proofs": "Raw lean code..."
+                 }}
+               • Ensure all Markdown and code is properly JSON-escaped.
+               • ALL images MUST be embedded as base64 data URIs or inline SVG within the `data` field.
+                 If you generate matplotlib/plotly charts, convert to base64.
                  NEVER reference external image files — they won't exist standalone.
-               • Tab/sidebar navigation: Article, Research Paper, Demos, Algorithms,
-                 Visualizations, Code Listings
-               • Modern design: clean typography, dark/light toggle, responsive layout
-               • KaTeX for math rendering (CDN OK), syntax-highlighted code blocks
-               • Collapsible sections, smooth scroll, table of contents
-               • Must work when opened directly in any browser
+               • This JSON file powers the dynamic web UI. Include ALL content.
 
             {"Fill existing `sorry` placeholders — do not change theorem statements." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs. Think big — aim for results that would appear in JAMS, Annals, or FOCS."}
 

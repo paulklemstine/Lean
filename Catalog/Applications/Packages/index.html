@@ -3,269 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aristotle Research Packages</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        
-        :root {
-            --bg-color: #0f172a;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.4);
-        }
-        
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08), transparent 25%);
-            color: var(--text-main);
-            min-height: 100vh;
-        }
+    <title>Aether Research Packages</title>
+    
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #38bdf8, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(56, 189, 248, 0.2);
-        }
-
-        p.subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .card {
-            text-decoration: none;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, #38bdf8, #a855f7);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card:visited {
-            border-color: #a855f7;
-        }
-
-        .card-title {
-            color: var(--text-main);
-            font-size: 1.1rem;
-            font-weight: 600;
-            line-height: 1.4;
-            margin-bottom: 0.75rem;
-            text-transform: capitalize;
-        }
-
-        .card-meta {
-            margin-top: auto;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .loading {
-            text-align: center;
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            opacity: 0.8;
-            height: 20px;
-            transition: opacity 0.5s ease;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid rgba(56,189,248,0.3);
-            border-radius: 50%;
-            border-top-color: #38bdf8;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Aether Research</h2>
+                <button class="mobile-toggle" id="mobile-toggle">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search packages...">
+            </div>
 
-<div class="container">
-    <header>
-        <h1>Research Packages</h1>
-        <p class="subtitle">A complete catalog of formalized theories, proofs, and interactive articles generated by the Aristotle Pipeline.</p>
-    </header>
+            <div class="package-list-container">
+                <h3 class="nav-section-title">Research Packages</h3>
+                <ul id="package-list" class="nav-list">
+                    <!-- Package links populated by JS -->
+                </ul>
+            </div>
+        </nav>
 
-    <div id="status" class="loading"><div class="spinner"></div>Sorting by newest discoveries...</div>
+        <!-- Main Content Area -->
+        <main class="main-content" id="main-content">
+            <div class="welcome-screen" id="welcome-screen">
+                <div class="welcome-content">
+                    <h1>Aether Pipeline</h1>
+                    <p>Select a research package from the sidebar to explore AI-generated mathematical discoveries, articles, and interactive demos.</p>
+                    <div class="glow-orb"></div>
+                </div>
+            </div>
 
-    <div class="grid" id="package-list">
-        <!-- Javascript generates list here -->
+            <div class="package-view hidden" id="package-view">
+                <header class="package-header">
+                    <div class="meta-tags">
+                        <span class="tag domain-tag" id="pkg-domain">Domain</span>
+                        <span class="tag date-tag" id="pkg-date">Date</span>
+                    </div>
+                    <h1 id="pkg-title">Package Title</h1>
+                    
+                    <!-- Internal Tabs for the Package -->
+                    <div class="tabs-container">
+                        <button class="tab-btn active" data-tab="article">Article</button>
+                        <button class="tab-btn" data-tab="paper">Research Paper</button>
+                        <button class="tab-btn" data-tab="visualizations">Visualizations</button>
+                        <button class="tab-btn" data-tab="algorithms">Algorithms</button>
+                        <button class="tab-btn" data-tab="demos">Interactive</button>
+                        <button class="tab-btn" data-tab="lean">Lean 4 Proofs</button>
+                    </div>
+                </header>
+
+                <div class="tab-content-container">
+                    <!-- Article Tab -->
+                    <div class="tab-pane active" id="tab-article">
+                        <div class="markdown-body" id="content-article"></div>
+                    </div>
+                    
+                    <!-- Paper Tab -->
+                    <div class="tab-pane" id="tab-paper">
+                        <div class="markdown-body" id="content-paper"></div>
+                    </div>
+                    
+                    <!-- Visualizations Tab -->
+                    <div class="tab-pane" id="tab-visualizations">
+                        <div class="gallery-grid" id="content-visualizations"></div>
+                    </div>
+                    
+                    <!-- Algorithms Tab -->
+                    <div class="tab-pane" id="tab-algorithms">
+                        <div class="algorithms-list" id="content-algorithms"></div>
+                    </div>
+                    
+                    <!-- Demos Tab -->
+                    <div class="tab-pane" id="tab-demos">
+                        <div class="demos-list" id="content-demos"></div>
+                    </div>
+
+                    <!-- Lean Proofs Tab -->
+                    <div class="tab-pane" id="tab-lean">
+                        <div class="code-container">
+                            <pre><code class="language-lean" id="content-lean"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-</div>
 
-<script>
-    const files = [
-        { filename: "diophantine_quantum_walks_berggren_lorentz_unitari.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "emergent_computation_algebra_lawvere_eml_fixed_poi.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "neural_proof_mining_tactic_monoid_representation_g.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "algebraic_circuit_complexity_ideal_theoretic_polyn.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "algebraic_closure_unification_ideal_theoretic_eml_.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "geometry_breakthrough_discovery.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "persistent_homology_of_proof_complexes_barcode_obs.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "operadic_error_correcting_codes_symmetric_operad_a.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "homological_learning_bounds_ext_groups_classify_tr.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "non_archimedean_information_theory_min_plus_entrop.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "algebra_breakthrough_discovery.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "quantitative_leftover_hash_lemma_with_rnyi_2_entro.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "differential_algebraic_learning_backpropagation_de.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "non_archimedean_quantum_information_p_adic_density.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "idempotent_measure_theory_min_plus_choquet_radon_r.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "topos_theoretic_machine_learning_presheaf_hypothes.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "tropical_mutual_information_and_min_plus_data_proc.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "noetherian_cryptographic_certification_acc_protoco.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "berggren_lattice_cryptography_pythagorean_lattice_.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "operadic_deep_learning_free_operad_universal_archi.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "operator_algebraic_neural_architecture_theory_join.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "galois_cohomology_of_distributed_consensus_h1_obst.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "quantum_informational_neural_capacity_von_neumann_.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "speculative_breakthrough_discovery.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "von_neumann_entropy_bounds_and_holevo_capacity_for.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "proof_quantum_dynamics_normalization_superposition.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "algebraic_k_theory_of_neural_architectures_project.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "tropical_representation_theory_min_plus_irreducibl.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "tropical_symplectic_geometry_min_plus_hamiltonian_.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "arithmetic_height_bounds_on_neural_network_general.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "tropical_cryptography_breakthrough_bridge.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "categorical_information_theory_channel_capacity_as.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "stone_duality_for_machine_learning_boolean_hypothe.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "tropical_information_geometry_min_plus_fisher_info.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "shared_breakthrough_discovery.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "cohomological_cryptography_extension_obstruction_o.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "algebraic_invariant_cryptography_krull_dimension_p.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "lie_algebraic_equivariant_learning_irreducible_rep.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "galois_theoretic_deep_learning_architecture_extens.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "sheaf_theoretic_distributed_consensus_cohomologica.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "min_plus_harmonic_analysis_legendre_fenchel_spectr.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "foundations_of_information_theoretic_shared_struct.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "proof_thermodynamics_cut_elimination_entropy_incre.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "ideal_theoretic_learning_capacity_hilbert_vc_dimen.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "stone_type_duality_for_finite_proof_automata_spect.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "renormalization_group_architecture_dynamics_fixed_.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "tannakian_neural_architecture_theory_fiber_functor.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "vsalgebra_capacity_bounds_near_ring_binding_faithf.html", date: "2026-05-10 00:05:48 -0500" },
-        { filename: "quantum_pythagorean_trapdoors_via_berggren_tree_st.html", date: "2026-05-10 00:05:48 -0500" }
-    ];
-
-    function formatTitle(filename) {
-        return filename
-            .replace('.html', '')
-            .replace(/_/g, ' ')
-            .replace(/\b\w/g, c => c.toUpperCase());
-    }
-
-    document.addEventListener("DOMContentLoaded", async () => {
-        const list = document.getElementById('package-list');
-        const status = document.getElementById('status');
-
-        const cards = files.map(item => {
-            const a = document.createElement('a');
-            a.className = 'card';
-            a.href = item.filename;
-            
-            const title = document.createElement('div');
-            title.className = 'card-title';
-            title.textContent = formatTitle(item.filename);
-
-            const dateObj = new Date(item.date);
-            const dateStr = dateObj.toLocaleDateString(undefined, {
-                year: 'numeric', month: 'short', day: 'numeric'
-            }) + ' ' + dateObj.toLocaleTimeString();
-            
-            const meta = document.createElement('div');
-            meta.className = 'card-meta';
-            meta.innerHTML = `<span>HTML Document</span><span class="date">${dateStr}</span>`;
-            
-            a.appendChild(title);
-            a.appendChild(meta);
-            return { element: a, date: dateObj.getTime() };
-        });
-
-        try {
-            const results = cards;
-            
-            // Sort by newest first
-            results.sort((a, b) => b.date - a.date);
-            
-            // Render sorted
-            list.innerHTML = '';
-            results.forEach(r => list.appendChild(r.element));
-            
-            status.innerHTML = '✨ Dynamically sorted by newest';
-            setTimeout(() => status.style.opacity = '0', 2500);
-            
-        } catch (e) {
-            status.innerHTML = 'Sorted alphabetically';
-            cards.forEach(c => list.appendChild(c.element));
-        }
-    });
-</script>
-
+    <script src="packages_db.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

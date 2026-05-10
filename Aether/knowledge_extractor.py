@@ -69,7 +69,7 @@ class ResearchJob:
     result_discussion: Optional[str] = None
     result_article: Optional[str] = None
     result_research_paper: Optional[str] = None
-    result_html_package: Optional[str] = None
+    result_json_package: Optional[str] = None
     result_summary: Optional[str] = None
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
@@ -182,7 +182,7 @@ class KnowledgeExtractor:
             'job_id', 'cycle_n', 'concept', 'prompt', 'project_dir', 'project_id',
             'status', 'dispatch_time', 'complete_time', 'result_lean', 'result_demo',
             'result_paper', 'result_future_directions', 'result_discussion',
-            'result_article', 'result_research_paper', 'result_html_package',
+            'result_article', 'result_research_paper', 'result_json_package',
             'result_summary', 'quality_score', 'quality_assessment',
             'sorry_count', 'theorem_count', 'error_message',
         }
@@ -422,7 +422,7 @@ class KnowledgeExtractor:
           4. Python demos, visualizations, algorithms
           5. Applications code
           6. FUTURE_DIRECTIONS roadmap
-          7. Standalone HTML package bundling everything
+          7. JSON Data Package bundling everything
         """
         deliverables_section = f"""
 
@@ -511,35 +511,30 @@ The MOST IMPORTANT deliverable. Structured roadmap of breakthrough
 research opportunities opened by this work. See detailed spec below.
 
 ────────────────────────────────────────────────────────────────────────────
-DELIVERABLE 6 — Standalone HTML Package  →  PACKAGE.html
+DELIVERABLE 6 — JSON Data Package  →  PACKAGE.json
 ────────────────────────────────────────────────────────────────────────────
-Create a **single, self-contained HTML file** that bundles ALL artifacts
-into a beautiful, interactive presentation. Requirements:
+Create a **single JSON file** that bundles ALL artifacts for the web templating system.
+Requirements:
 
-• **Single file**: Everything (CSS, JS, content) inlined. No external deps.
+• **Structure**: Output a strictly valid JSON object matching this schema:
+  {{
+    "title": "Title of the Research",
+    "domain": "Mathematical Domain",
+    "article": "Markdown content...",
+    "research_paper": "Markdown content...",
+    "future_directions": "Markdown content...",
+    "demos": [ {{ "name": "...", "code": "..." }} ],
+    "algorithms": [ {{ "name": "...", "pseudocode": "..." }} ],
+    "visualizations": [ {{ "name": "...", "data": "base64 encoded URI or inline SVG string" }} ],
+    "lean_proofs": "Raw lean code..."
+  }}
+• **String Encoding**: Ensure all Markdown and code is properly JSON-escaped (e.g. `\n` for newlines).
 • **Embedded images**: ALL images (charts, diagrams, visualizations) MUST be
-  embedded directly in the HTML as base64 data URIs. Use the format:
-  `<img src="data:image/png;base64,..." />` for PNGs,
-  `<img src="data:image/svg+xml;base64,..." />` for SVGs.
-  If you generate matplotlib/plotly figures in Python, convert them to base64
-  and embed them. For SVG diagrams, inline the SVG markup directly with
-  `<svg>...</svg>` tags — this is preferred over base64 for vector graphics.
-  NEVER use `<img src="filename.png">` — the file won't exist when viewing.
-• **Navigation**: Sidebar or tab navigation between sections:
-  - Article (the popular-science piece)
-  - Research Paper (the full paper)
-  - Interactive Demos (embedded Python output / JS visualizations)
-  - Algorithms (pseudocode + implementation)
-  - Visualizations (embedded charts/diagrams as inline SVG or base64)
-  - Code Listings (syntax-highlighted Python and proof code)
-• **Beautiful design**: Modern, clean typography (system fonts).
-  Dark/light mode toggle. Responsive layout. Smooth transitions.
-• **Math rendering**: Use KaTeX (CDN link OK for math rendering only)
-  for any mathematical notation.
-• **Syntax highlighting**: Inline code highlighting for Python blocks.
-• **Interactive elements**: Collapsible sections, smooth scroll, TOC.
-• The HTML package should work when opened directly in any browser.
-• Include ALL content from the article, research paper, and code.
+  embedded directly in the JSON. If you generate matplotlib/plotly figures, convert them to base64
+  data URIs (e.g., `data:image/png;base64,...`). For SVG diagrams, put the raw `<svg>...</svg>`
+  string into the `data` field. NEVER reference external image files.
+• **Complete**: Include ALL content from the article, research paper, and code. This JSON file
+  is the sole data source for the frontend web application.
 
 ────────────────────────────────────────────────────────────────────────────
 
@@ -725,7 +720,7 @@ Research mode: {concept.research_mode}
         discussion_files = []
         article_files = []
         research_paper_files = []
-        html_package_files = []
+        json_package_files = []
         visual_files = []
         summary = None
         # Track diff files and seen paths to avoid duplicates.
@@ -799,9 +794,9 @@ Research mode: {concept.research_mode}
                     lean_files.append((fp, is_diff_file))
                 elif f.endswith(".py"):
                     python_files.append(fp)
-                elif f.endswith(".html"):
-                    # HTML package files (PACKAGE.html or similar)
-                    html_package_files.append(fp)
+                elif f.endswith(".json") and f != "knowledge_data.json":
+                    # JSON package files (PACKAGE.json or similar)
+                    json_package_files.append(fp)
                 elif f.endswith((".svg", ".png", ".jpg", ".jpeg")):
                     visual_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
@@ -884,11 +879,11 @@ Research mode: {concept.research_mode}
             job.result_research_paper = "\n\n".join(parts)
 
         # Collect HTML package (new deliverable — standalone bundle)
-        if html_package_files:
+        if json_package_files:
             parts = []
-            for f in sorted(html_package_files):
+            for f in sorted(json_package_files):
                 parts.append(f.read_text(encoding='utf-8', errors='ignore'))
-            job.result_html_package = "\n\n".join(parts)
+            job.result_json_package = "\n\n".join(parts)
 
         # Summary
         job.result_summary = summary
@@ -902,7 +897,7 @@ Research mode: {concept.research_mode}
               f"Papers: {len(paper_files)} files, "
               f"Article: {len(article_files)} files, "
               f"ResearchPaper: {len(research_paper_files)} files, "
-              f"HTML: {len(html_package_files)} files, "
+              f"JSON: {len(json_package_files)} files, "
               f"Visuals: {len(visual_files)} files, "
               f"FUTURE_DIRECTIONS: {len(future_directions_files)} files, "
               f"Discussion: {len(discussion_files)} files, "
@@ -986,7 +981,7 @@ Research mode: {concept.research_mode}
         has_any_content = any([
             job.result_lean, job.result_demo, job.result_paper,
             job.result_article, job.result_research_paper,
-            job.result_html_package, job.result_discussion,
+            job.result_json_package, job.result_discussion,
         ])
         if not has_any_content:
             print(f"[Integrate] No new/modified files to integrate.")
@@ -1023,8 +1018,8 @@ Research mode: {concept.research_mode}
             parts.append({"type": "new", "path": f"Applications/Articles/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_article})
         if job.result_research_paper:
             parts.append({"type": "new", "path": f"Applications/Papers/research_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_research_paper})
-        if job.result_html_package:
-            parts.append({"type": "new", "path": f"Applications/Packages/{self._derive_artifact_name(job.concept, 'html')}", "content": job.result_html_package})
+        if job.result_json_package:
+            parts.append({"type": "new", "path": f"Applications/Packages/{self._derive_artifact_name(job.concept, 'json')}", "content": job.result_json_package})
         if job.result_discussion:
             parts.append({"type": "new", "path": f"Applications/Articles/discussion_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_discussion})
 
@@ -1044,7 +1039,7 @@ Research mode: {concept.research_mode}
             f"- Research papers → Applications/Papers/\n"
             f"- Popular-science articles → Applications/Articles/\n"
             f"- Discussion articles → Applications/Articles/\n"
-            f"- HTML packages → Applications/Packages/\n"
+            f"- JSON packages → Applications/Packages/\n"
             f"- If a file should NOT be integrated (placeholder, empty, invalid), respond with \"REJECT\".\n"
             f"Respond ONLY with a JSON dictionary mapping the index (as string) to the authorized target path relative to the Catalog root, or \"REJECT\".\n"
             f"Example: {{\"0\": \"Tropical/MyFile.lean\", \"1\": \"Applications/Articles/my_article.md\", \"2\": \"REJECT\"}}"
@@ -1138,6 +1133,45 @@ Research mode: {concept.research_mode}
             except Exception as e:
                 print(f"[Integrate] Warning: Failed to merge FUTURE_DIRECTIONS into master: {e}")
 
+        # Update the packages_db.js if we saved a JSON package
+        if job.result_json_package:
+            try:
+                packages_dir = self.catalog_root / "Applications" / "Packages"
+                packages_dir.mkdir(parents=True, exist_ok=True)
+                
+                # Regenerate packages_db.js from all json files in the directory
+                import glob
+                json_files = list(packages_dir.glob("*.json"))
+                
+                package_index = []
+                package_db = {}
+                
+                for fp in json_files:
+                    if fp.name in ("index.json", "package.json"): continue
+                    try:
+                        data = json.loads(fp.read_text(encoding='utf-8'))
+                        date_str = data.get("date", __import__("time").strftime('%Y-%m-%dT%H:%M:%SZ', __import__("time").gmtime(os.path.getmtime(str(fp)))))
+                        package_index.append({
+                            "filename": fp.name,
+                            "title": data.get("title", "Untitled Research"),
+                            "domain": data.get("domain", "General"),
+                            "date": date_str
+                        })
+                        package_db[fp.name] = data
+                    except Exception as e:
+                        print(f"[Integrate] Error parsing {fp.name}: {e}")
+                        
+                package_index.sort(key=lambda x: x.get("date", ""), reverse=True)
+                
+                js_content = f"// AUTO-GENERATED FILE. DO NOT EDIT.\n"
+                js_content += f"// This file bundles all JSON packages so they can be loaded from file:// without CORS issues.\n\n"
+                js_content += f"window.PACKAGE_INDEX = {json.dumps(package_index, indent=2)};\n\n"
+                js_content += f"window.PACKAGE_DB = {json.dumps(package_db, indent=2)};\n"
+                
+                (packages_dir / "packages_db.js").write_text(js_content, encoding="utf-8")
+                print(f"[Integrate] Updated packages_db.js with {len(package_index)} packages.")
+            except Exception as e:
+                print(f"[Integrate] Warning: Failed to update packages_db.js: {e}")
 
         return job
 
