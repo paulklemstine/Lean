@@ -523,7 +523,7 @@ Requirements:
     "article": "Markdown content...",
     "research_paper": "Markdown content...",
     "future_directions": "Markdown content...",
-    "demos": [ {{ "name": "...", "code": "..." }} ],
+    "demos": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files like 'algorithms'" }} ],
     "algorithms": [ {{ "name": "...", "pseudocode": "..." }} ],
     "visualizations": [ {{ "name": "...", "data": "base64 encoded URI or inline SVG string" }} ],
     "lean_proofs": "Raw lean code..."
