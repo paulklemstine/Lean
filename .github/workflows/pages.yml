@@ -1,7 +1,7 @@
 name: Deploy Packages to GitHub Pages
 on:
   push:
-    branches: ["main"] # Or whatever your default branch is named
+    branches: ["master"] # Or whatever your default branch is named
   workflow_dispatch:   # Allows you to trigger the deploy manually if needed
 
 permissions:
