@@ -96,6 +96,10 @@
             opacity: 1;
         }
 
+        .card:visited {
+            border-color: #a855f7;
+        }
+
         .card-title {
             color: var(--text-main);
             font-size: 1.1rem;
@@ -158,48 +162,55 @@
 
 <script>
     const files = [
-        "algebra_breakthrough_discovery.html",
-        "algebraic_circuit_complexity_ideal_theoretic_polyn.html",
-        "algebraic_closure_unification_ideal_theoretic_eml_.html",
-        "algebraic_invariant_cryptography_krull_dimension_p.html",
-        "algebraic_k_theory_of_neural_architectures_project.html",
-        "berggren_lattice_cryptography_pythagorean_lattice_.html",
-        "categorical_information_theory_channel_capacity_as.html",
-        "cohomological_cryptography_extension_obstruction_o.html",
-        "differential_algebraic_learning_backpropagation_de.html",
-        "diophantine_quantum_walks_berggren_lorentz_unitari.html",
-        "emergent_computation_algebra_lawvere_eml_fixed_poi.html",
-        "foundations_of_information_theoretic_shared_struct.html",
-        "galois_cohomology_of_distributed_consensus_h1_obst.html",
-        "galois_theoretic_deep_learning_architecture_extens.html",
-        "homological_learning_bounds_ext_groups_classify_tr.html",
-        "ideal_theoretic_learning_capacity_hilbert_vc_dimen.html",
-        "idempotent_measure_theory_min_plus_choquet_radon_r.html",
-        "lie_algebraic_equivariant_learning_irreducible_rep.html",
-        "min_plus_harmonic_analysis_legendre_fenchel_spectr.html",
-        "neural_proof_mining_tactic_monoid_representation_g.html",
-        "noetherian_cryptographic_certification_acc_protoco.html",
-        "non_archimedean_information_theory_min_plus_entrop.html",
-        "non_archimedean_quantum_information_p_adic_density.html",
-        "operadic_deep_learning_free_operad_universal_archi.html",
-        "operadic_error_correcting_codes_symmetric_operad_a.html",
-        "operator_algebraic_neural_architecture_theory_join.html",
-        "persistent_homology_of_proof_complexes_barcode_obs.html",
-        "proof_quantum_dynamics_normalization_superposition.html",
-        "proof_thermodynamics_cut_elimination_entropy_incre.html",
-        "quantum_informational_neural_capacity_von_neumann_.html",
-        "renormalization_group_architecture_dynamics_fixed_.html",
-        "sheaf_theoretic_distributed_consensus_cohomologica.html",
-        "stone_duality_for_machine_learning_boolean_hypothe.html",
-        "stone_type_duality_for_finite_proof_automata_spect.html",
-        "tannakian_neural_architecture_theory_fiber_functor.html",
-        "topos_theoretic_machine_learning_presheaf_hypothes.html",
-        "tropical_cryptography_breakthrough_bridge.html",
-        "tropical_information_geometry_min_plus_fisher_info.html",
-        "tropical_mutual_information_and_min_plus_data_proc.html",
-        "tropical_representation_theory_min_plus_irreducibl.html",
-        "tropical_symplectic_geometry_min_plus_hamiltonian_.html",
-        "vsalgebra_capacity_bounds_near_ring_binding_faithf.html"
+        { filename: "diophantine_quantum_walks_berggren_lorentz_unitari.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "emergent_computation_algebra_lawvere_eml_fixed_poi.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "neural_proof_mining_tactic_monoid_representation_g.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "algebraic_circuit_complexity_ideal_theoretic_polyn.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "algebraic_closure_unification_ideal_theoretic_eml_.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "geometry_breakthrough_discovery.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "persistent_homology_of_proof_complexes_barcode_obs.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "operadic_error_correcting_codes_symmetric_operad_a.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "homological_learning_bounds_ext_groups_classify_tr.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "non_archimedean_information_theory_min_plus_entrop.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "algebra_breakthrough_discovery.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "quantitative_leftover_hash_lemma_with_rnyi_2_entro.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "differential_algebraic_learning_backpropagation_de.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "non_archimedean_quantum_information_p_adic_density.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "idempotent_measure_theory_min_plus_choquet_radon_r.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "topos_theoretic_machine_learning_presheaf_hypothes.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "tropical_mutual_information_and_min_plus_data_proc.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "noetherian_cryptographic_certification_acc_protoco.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "berggren_lattice_cryptography_pythagorean_lattice_.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "operadic_deep_learning_free_operad_universal_archi.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "operator_algebraic_neural_architecture_theory_join.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "galois_cohomology_of_distributed_consensus_h1_obst.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "quantum_informational_neural_capacity_von_neumann_.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "speculative_breakthrough_discovery.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "von_neumann_entropy_bounds_and_holevo_capacity_for.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "proof_quantum_dynamics_normalization_superposition.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "algebraic_k_theory_of_neural_architectures_project.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "tropical_representation_theory_min_plus_irreducibl.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "tropical_symplectic_geometry_min_plus_hamiltonian_.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "arithmetic_height_bounds_on_neural_network_general.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "tropical_cryptography_breakthrough_bridge.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "categorical_information_theory_channel_capacity_as.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "stone_duality_for_machine_learning_boolean_hypothe.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "tropical_information_geometry_min_plus_fisher_info.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "shared_breakthrough_discovery.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "cohomological_cryptography_extension_obstruction_o.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "algebraic_invariant_cryptography_krull_dimension_p.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "lie_algebraic_equivariant_learning_irreducible_rep.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "galois_theoretic_deep_learning_architecture_extens.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "sheaf_theoretic_distributed_consensus_cohomologica.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "min_plus_harmonic_analysis_legendre_fenchel_spectr.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "foundations_of_information_theoretic_shared_struct.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "proof_thermodynamics_cut_elimination_entropy_incre.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "ideal_theoretic_learning_capacity_hilbert_vc_dimen.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "stone_type_duality_for_finite_proof_automata_spect.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "renormalization_group_architecture_dynamics_fixed_.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "tannakian_neural_architecture_theory_fiber_functor.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "vsalgebra_capacity_bounds_near_ring_binding_faithf.html", date: "2026-05-10 00:05:48 -0500" },
+        { filename: "quantum_pythagorean_trapdoors_via_berggren_tree_st.html", date: "2026-05-10 00:05:48 -0500" }
     ];
 
     function formatTitle(filename) {
@@ -213,45 +224,31 @@
         const list = document.getElementById('package-list');
         const status = document.getElementById('status');
 
-        const cards = files.map(filename => {
+        const cards = files.map(item => {
             const a = document.createElement('a');
             a.className = 'card';
-            a.href = filename;
+            a.href = item.filename;
             
             const title = document.createElement('div');
             title.className = 'card-title';
-            title.textContent = formatTitle(filename);
+            title.textContent = formatTitle(item.filename);
+
+            const dateObj = new Date(item.date);
+            const dateStr = dateObj.toLocaleDateString(undefined, {
+                year: 'numeric', month: 'short', day: 'numeric'
+            }) + ' ' + dateObj.toLocaleTimeString();
             
             const meta = document.createElement('div');
             meta.className = 'card-meta';
-            meta.innerHTML = `<span>HTML Document</span><span class="date">Loading date...</span>`;
+            meta.innerHTML = `<span>HTML Document</span><span class="date">${dateStr}</span>`;
             
             a.appendChild(title);
             a.appendChild(meta);
-            return { element: a, filename, date: 0 };
+            return { element: a, date: dateObj.getTime() };
         });
 
         try {
-            const fetchPromises = cards.map(async item => {
-                try {
-                    const response = await fetch(item.filename, { method: 'HEAD', cache: 'no-cache' });
-                    const lastModified = response.headers.get('Last-Modified');
-                    if (lastModified) {
-                        item.date = new Date(lastModified).getTime();
-                        const dateStr = new Date(lastModified).toLocaleDateString(undefined, { 
-                            year: 'numeric', month: 'short', day: 'numeric' 
-                        });
-                        item.element.querySelector('.date').textContent = dateStr;
-                    } else {
-                        item.element.querySelector('.date').textContent = '';
-                    }
-                } catch (e) {
-                    item.element.querySelector('.date').textContent = '';
-                }
-                return item;
-            });
-
-            const results = await Promise.all(fetchPromises);
+            const results = cards;
             
             // Sort by newest first
             results.sort((a, b) => b.date - a.date);
