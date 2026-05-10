@@ -1,8 +1,8 @@
 name: Deploy Packages to GitHub Pages
 on:
   push:
-    branches: ["main"]
-  workflow_dispatch:
+    branches: ["main"] # Or whatever your default branch is named
+  workflow_dispatch:   # Allows you to trigger the deploy manually if needed
 
 permissions:
   contents: read
@@ -20,15 +20,28 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Setup Pages
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Dynamically Update Index.html File List
+        run: |
+          cd Catalog/Applications/Packages
+          python3 update_index.py
+          
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
-      - name: Upload artifact
+        
+      - name: Upload Packages Directory Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # This points GitHub pages specifically at your Packages directory!
+          # This specifies that only the Packages folder should be published!
           path: './Catalog/Applications/Packages'
+          
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
