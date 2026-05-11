@@ -1398,9 +1398,11 @@ Research mode: {concept.research_mode}
 
         Adds a 'modules' dict mapping module names to their source code,
         so the web frontend can register them as importable Python modules.
-        Also adds 'code' fields to algorithms entries from the source.
+        Also adds 'code' fields to algorithms entries from the source,
+        and injects a 'date' field from the cycle completion time.
         """
         import ast
+        from datetime import datetime, timezone
         try:
             pkg = json.loads(json_pkg_str)
         except (json.JSONDecodeError, ValueError):
@@ -1462,6 +1464,10 @@ Research mode: {concept.research_mode}
 
         if modules:
             pkg["modules"] = modules
+
+        # Inject date from cycle completion time
+        if not pkg.get("date"):
+            pkg["date"] = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
         return json.dumps(pkg, ensure_ascii=False)
 

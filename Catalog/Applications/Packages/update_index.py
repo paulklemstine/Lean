@@ -120,6 +120,8 @@ def update_index():
             print(f"Error processing {f}: {e}")
             continue
 
+        # Use date from JSON package (populated during AETHER integration)
+        # Fall back to git creation date, then file mtime
         date_str = data.get("date") or get_creation_date(f, catalog_root)
 
         pkg_slug = f.replace('.json', '')
