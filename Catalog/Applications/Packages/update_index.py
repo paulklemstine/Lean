@@ -69,20 +69,31 @@ def extract_visualization(data, viz_name, pkg_slug, viz_index, viz_dir):
 
     return None
 
-def get_creation_date(filepath, catalog_root):
+def get_creation_date(filename, catalog_root):
     """Get the date a file was first committed to git, falling back to mtime."""
     try:
         import subprocess
+        # Path relative to git root
+        rel_path = os.path.join("Catalog", "Applications", "Packages", filename)
         result = subprocess.run(
-            ["git", "log", "--diff-filter=A", "--format=%aI", "--", filepath],
+            ["git", "log", "--diff-filter=A", "--format=%aI", "--", rel_path],
             capture_output=True, text=True, cwd=catalog_root
         )
         if result.returncode == 0 and result.stdout.strip():
-            return result.stdout.strip().split('\n')[0]
+            date_iso = result.stdout.strip().split('\n')[0]
+            # Convert ISO 8601 to a display-friendly format
+            # e.g. "2026-05-11T09:36:52-05:00" -> "2026-05-11T14:36:52Z"
+            from datetime import datetime, timezone
+            try:
+                dt = datetime.fromisoformat(date_iso)
+                dt_utc = dt.astimezone(timezone.utc)
+                return dt_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
+            except Exception:
+                return date_iso
     except Exception:
         pass
     # Fallback to file modification time
-    return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(os.path.getmtime(filepath)))
+    return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(os.path.getmtime(filename)))
 
 def update_index():
     original_dir = os.getcwd()
