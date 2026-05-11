@@ -69,10 +69,28 @@ def extract_visualization(data, viz_name, pkg_slug, viz_index, viz_dir):
 
     return None
 
+def get_creation_date(filepath, catalog_root):
+    """Get the date a file was first committed to git, falling back to mtime."""
+    try:
+        import subprocess
+        result = subprocess.run(
+            ["git", "log", "--diff-filter=A", "--format=%aI", "--", filepath],
+            capture_output=True, text=True, cwd=catalog_root
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip().split('\n')[0]
+    except Exception:
+        pass
+    # Fallback to file modification time
+    return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(os.path.getmtime(filepath)))
+
 def update_index():
     original_dir = os.getcwd()
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
+
+    # Find the Catalog root (grandparent of Packages dir) for git commands
+    catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
 
     json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json")]
 
@@ -91,7 +109,7 @@ def update_index():
             print(f"Error processing {f}: {e}")
             continue
 
-        date_str = data.get("date", time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(os.path.getmtime(f))))
+        date_str = data.get("date") or get_creation_date(f, catalog_root)
 
         pkg_slug = f.replace('.json', '')
 
