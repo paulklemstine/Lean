@@ -638,14 +638,38 @@ document.addEventListener('DOMContentLoaded', () => {
                         const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
                         if (localModuleRe.test(codeToRun)) {
                             const moduleCode = buildLocalModuleCode(codeToRun, currentPackage);
-                            // Remove ALL local module import lines (single-line and multi-line)
-                            // Multi-line: from X import (\n    A,\n    B\n)
-                            codeToRun = codeToRun.replace(/^from\s+(algorithms|demo)\s+import\s*\([\s\S]*?\)\s*$/gm, '');
-                            // Single-line: from X import A, B
-                            codeToRun = codeToRun.replace(/^from\s+(algorithms|demo)\s+import\s+[^(].*$/gm, '');
-                            // Bare import: import X
-                            codeToRun = codeToRun.replace(/^import\s+(algorithms|demo)\b.*$/gm, '');
-                            codeToRun = moduleCode + '\n' + codeToRun;
+                            // Remove ALL local module import statements by processing line-by-line.
+                            // This handles single-line, multi-line (parenthesized), and bare imports.
+                            const localMods = ['algorithms', 'demo'];
+                            const lines = codeToRun.split('\n');
+                            const filtered = [];
+                            let inLocalImport = false;
+                            for (const line of lines) {
+                                if (inLocalImport) {
+                                    // Still inside a multi-line from X import (...) block
+                                    if (line.includes(')')) {
+                                        inLocalImport = false;
+                                    }
+                                    continue;
+                                }
+                                // Check if this line starts a local module import
+                                const trimmed = line.trim();
+                                let skip = false;
+                                for (const mod of localMods) {
+                                    if (trimmed.startsWith('from ' + mod + ' import ') || trimmed.startsWith('import ' + mod)) {
+                                        skip = true;
+                                        // Check if multi-line (opens paren without closing it)
+                                        if (trimmed.includes('(') && !trimmed.includes(')')) {
+                                            inLocalImport = true;
+                                        }
+                                        break;
+                                    }
+                                }
+                                if (!skip) {
+                                    filtered.push(line);
+                                }
+                            }
+                            codeToRun = moduleCode + '\n' + filtered.join('\n');
                         }
 
                         // Automatically load any imports (like numpy, pandas, etc.)
