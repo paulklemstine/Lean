@@ -1,22 +1,17 @@
+#!/usr/bin/env python3
+"""
+Berggren Minor Trapdoors: Core Algorithms
+
+Implements the evaluation, inversion, and analysis algorithms
+for the Berggren tree cryptographic primitive.
+"""
+
 from typing import Tuple, List, Optional, Dict
 import math
+
 Triple = Tuple[int, int, int]
 MinorProfile = Tuple[int, int, int, int]
-from algorithms import BerggrenTree, BerggrenTrapdoorScheme
-import itertools
-import math
-import hashlib
-from typing import List, Tuple, Dict
-import itertools
-from typing import Tuple, List, Optional
-Triple = Tuple[int, int, int]
-MinorProfile = Tuple[int, int, int, int]
-GENERATORS = {'A': eval_gen_A, 'B': eval_gen_B, 'C': eval_gen_C}
-INV_GENERATORS = {'A': eval_gen_inv_A, 'B': eval_gen_inv_B, 'C': eval_gen_inv_C}
-ROOT = (3, 4, 5)
-import itertools
-import math
-import sys
+
 
 class BerggrenTree:
     """
@@ -213,3 +208,92 @@ class BerggrenTree:
         """Compute the entropy of a minor profile (in bits)."""
         total = sum(abs(x) for x in profile) + 1
         return math.log2(total)
+
+
+# === Cryptographic Protocol Simulation ===
+
+class BerggrenTrapdoorScheme:
+    """
+    A toy trapdoor scheme based on the Berggren tree.
+
+    Key generation: Choose a random word w of length n.
+    Public key: minorProfile(packetOfWord(w))
+    Secret key: w
+    Trapdoor: recover_word(recover_triple(public_key))
+    """
+
+    def __init__(self, security_parameter: int = 20):
+        """
+        Initialize the scheme.
+
+        Args:
+            security_parameter: Word length (security grows exponentially).
+        """
+        self.n = security_parameter
+        self.tree = BerggrenTree()
+
+    def keygen(self) -> Tuple[MinorProfile, str]:
+        """
+        Generate a public/secret key pair.
+
+        Returns:
+            (public_key, secret_key) where public_key is a MinorProfile
+            and secret_key is a BerggrenWord.
+        """
+        import random
+        word = ''.join(random.choice('ABC') for _ in range(self.n))
+        triple = self.tree.eval_word(word)
+        public_key = self.tree.minor_profile(triple)
+        return public_key, word
+
+    def verify_trapdoor(self, public_key: MinorProfile, secret_key: str) -> bool:
+        """
+        Verify that the secret key correctly corresponds to the public key.
+        """
+        triple = self.tree.eval_word(secret_key)
+        return self.tree.minor_profile(triple) == public_key
+
+    def recover_secret(self, public_key: MinorProfile) -> Optional[str]:
+        """
+        Recover the secret key from the public key using the trapdoor.
+        """
+        triple = self.tree.recover_triple(public_key)
+        return self.tree.recover_word(triple)
+
+
+if __name__ == '__main__':
+    # Quick algorithm test
+    tree = BerggrenTree()
+
+    print("=== Algorithm Tests ===\n")
+
+    # Test word evaluation
+    word = "ABCBA"
+    triple = tree.eval_word(word)
+    profile = tree.minor_profile(triple)
+    recovered = tree.recover_word(triple)
+    print(f"Word: {word}")
+    print(f"Triple: {triple}")
+    print(f"Profile: {profile}")
+    print(f"Recovered: {recovered}")
+    print(f"Correct: {recovered == word}")
+    print(f"Pythagorean: {triple[0]**2 + triple[1]**2 == triple[2]**2}")
+    print()
+
+    # Test trapdoor scheme
+    scheme = BerggrenTrapdoorScheme(security_parameter=10)
+    pk, sk = scheme.keygen()
+    print(f"Public key: {pk}")
+    print(f"Secret key: {sk}")
+    print(f"Verification: {scheme.verify_trapdoor(pk, sk)}")
+    print(f"Recovery: {scheme.recover_secret(pk) == sk}")
+
+
+#!/usr/bin/env python3
+"""
+Berggren Minor Trapdoors: Applications
+
+Demonstrates real-world applications of the Berggren tree
+cryptographic primitive in post-quantum security, hashing,
+and certified robustness analysis.
+"""
