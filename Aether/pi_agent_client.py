@@ -412,10 +412,9 @@ class PiAgentClient:
     def _call_pollinations(self, system: str, user: str, timeout: Optional[int] = None) -> str:
         """Call the Pollinations cloud API.
 
-        Args:
-            system: System prompt
-            user: User prompt
-            timeout: Override timeout in seconds (uses self.timeout if None)
+        On 402 (payment required / pollen depleted), waits until the next
+        hourly reset then retries. Retries up to 3 times with increasing
+        backoff for transient errors.
         """
         request_timeout = timeout or self.timeout
         print(f"[Pi-Agent] → calling Pollinations API (model={self.model}, timeout={request_timeout}s)")
@@ -435,35 +434,12 @@ class PiAgentClient:
             "top_p": 0.92
         }
         input_chars = len(system) + len(user)
+        max_retries = 3
 
-        try:
-            reservation = self.wait_for_pollinations_pollen(
-                "Pi-Agent LLM request",
-                kind="chat",
-                input_chars=input_chars,
-            )
-            response = self.client.post(
-                "https://gen.pollinations.ai/v1/chat/completions",
-                headers=headers,
-                json=payload,
-                timeout=request_timeout
-            )
-            response_json = None
+        for attempt in range(max_retries):
             try:
-                response_json = response.json()
-            except Exception:
-                response_json = None
-            self.pollen_gate.record_response(
-                response,
-                kind="chat",
-                input_chars=input_chars,
-                reservation=reservation,
-                response_json=response_json,
-            )
-            if response.status_code in (402, 429):
-                self.pollen_gate.mark_depleted_from_response(response)
                 reservation = self.wait_for_pollinations_pollen(
-                    "Pi-Agent LLM retry",
+                    "Pi-Agent LLM request",
                     kind="chat",
                     input_chars=input_chars,
                 )
@@ -473,6 +449,7 @@ class PiAgentClient:
                     json=payload,
                     timeout=request_timeout
                 )
+                response_json = None
                 try:
                     response_json = response.json()
                 except Exception:
@@ -484,24 +461,61 @@ class PiAgentClient:
                     reservation=reservation,
                     response_json=response_json,
                 )
-            response.raise_for_status()
-            data = response_json if response_json is not None else response.json()
-            content = data["choices"][0]["message"]["content"]
 
-            response_preview = content[:500].replace('\n', ' ')
-            print(f"[Pi-Agent] ← response ({len(content)} chars)")
-            print(f"[Pi-Agent]   {response_preview}...")
+                if response.status_code in (402, 429):
+                    # Pollen depleted — wait for hourly reset
+                    self.pollen_gate.mark_depleted_from_response(response)
+                    wait_until = self.pollen_gate._next_hour_reset(time.time())
+                    wait_seconds = max(60, wait_until - time.time())
+                    # Cap wait at 30 minutes
+                    wait_seconds = min(wait_seconds, 1800)
+                    reset_at = time.strftime("%H:%M:%S", time.localtime(time.time() + wait_seconds))
+                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_seconds:.0f}s until reset ~{reset_at} (attempt {attempt+1}/{max_retries})")
+                    time.sleep(wait_seconds)
+                    continue  # Retry after waiting
 
-            return content
-        except httpx.TimeoutException:
-            print(f"[Pi-Agent] ← API TIMEOUT after {request_timeout}s")
-            return f"[API_TIMEOUT: Request timed out after {request_timeout}s]"
-        except Exception as e:
-            err_msg = str(e)
-            if hasattr(e, 'response') and e.response:
-                err_msg += f" - {e.response.text}"
-            print(f"[Pi-Agent] ← API exception: {type(e).__name__}: {err_msg}")
-            return f"[API_ERROR: {err_msg}]"
+                response.raise_for_status()
+                data = response_json if response_json is not None else response.json()
+                content = data["choices"][0]["message"]["content"]
+
+                response_preview = content[:500].replace('\n', ' ')
+                print(f"[Pi-Agent] ← response ({len(content)} chars)")
+                print(f"[Pi-Agent]   {response_preview}...")
+
+                return content
+
+            except httpx.TimeoutException:
+                print(f"[Pi-Agent] ← API TIMEOUT after {request_timeout}s (attempt {attempt+1}/{max_retries})")
+                if attempt < max_retries - 1:
+                    time.sleep(5 * (attempt + 1))
+                    continue
+                return f"[API_TIMEOUT: Request timed out after {request_timeout}s]"
+
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code in (402, 429):
+                    # Already handled above, but catch if raise_for_status hits first
+                    self.pollen_gate.mark_depleted_from_response(e.response)
+                    wait_until = self.pollen_gate._next_hour_reset(time.time())
+                    wait_seconds = min(max(60, wait_until - time.time()), 1800)
+                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_seconds:.0f}s (attempt {attempt+1}/{max_retries})")
+                    time.sleep(wait_seconds)
+                    continue
+                if e.response.status_code >= 500 and attempt < max_retries - 1:
+                    print(f"[Pi-Agent] ← Server error {e.response.status_code}, retrying ({attempt+1}/{max_retries})")
+                    time.sleep(5 * (attempt + 1))
+                    continue
+                err_msg = str(e)
+                print(f"[Pi-Agent] ← API exception: {err_msg}")
+                return f"[API_ERROR: {err_msg}]"
+
+            except Exception as e:
+                err_msg = str(e)
+                if hasattr(e, 'response') and e.response:
+                    err_msg += f" - {e.response.text}"
+                print(f"[Pi-Agent] ← API exception: {type(e).__name__}: {err_msg}")
+                return f"[API_ERROR: {err_msg}]"
+
+        return f"[API_ERROR: Max retries ({max_retries}) exhausted]"
 
     def _call_ollama_local(self, system: str, user: str, timeout: Optional[int] = None) -> str:
         """Call a local Ollama instance via its OpenAI-compatible API.
