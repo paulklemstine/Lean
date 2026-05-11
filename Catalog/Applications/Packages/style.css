@@ -920,6 +920,7 @@ body.light-theme .gallery-img-container {
 
 .lightbox-content {
     position: relative;
+    width: 90vw;
     max-width: 90vw;
     max-height: 90vh;
     display: flex;
@@ -928,7 +929,7 @@ body.light-theme .gallery-img-container {
 }
 
 .lightbox-img-container {
-    max-width: 100%;
+    width: 100%;
     max-height: 80vh;
     display: flex;
     justify-content: center;
@@ -937,12 +938,20 @@ body.light-theme .gallery-img-container {
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    box-sizing: border-box;
 }
 
 .lightbox-img-container img, .lightbox-img-container svg {
-    max-width: 100%;
-    max-height: 70vh;
+    width: 100%;
+    max-height: 75vh;
     object-fit: contain;
+    display: block;
+}
+
+.lightbox-img-container img[src$=".svg"] {
+    width: 100%;
+    height: auto;
+    max-height: 75vh;
 }
 
 .lightbox-caption {

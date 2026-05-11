@@ -131,7 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const viz = currentPackage.visualizations[currentVizIndex];
         let imgContent = '';
         if (viz.file) {
-            imgContent = `<img src="${viz.file}" alt="${viz.name || 'Visualization'}" style="max-width:100%;max-height:70vh;object-fit:contain;">`;
+            const isSvg = viz.file.endsWith('.svg');
+            const style = isSvg
+                ? 'width:100%;max-height:70vh;object-fit:contain;'
+                : 'max-width:100%;max-height:70vh;object-fit:contain;';
+            imgContent = `<img src="${viz.file}" alt="${viz.name || 'Visualization'}" style="${style}">`;
         } else if (viz.data && viz.data.startsWith('<svg')) {
             const svgUri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(viz.data);
             imgContent = `<img src="${svgUri}" alt="${viz.name || 'Visualization'}" style="max-width:100%;max-height:70vh;object-fit:contain;">`;
@@ -570,15 +574,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     try {
                         let codeToRun = editor.value;
 
-                        // If the demo imports 'algorithms', inject stub definitions
-                        // so it runs standalone. Aristotle often generates demos
-                        // that import from a companion algorithms module, but
-                        // Pyodide only sees the demo code.
+                        // If the demo imports 'algorithms', inject real algorithm code
+                        // so it runs standalone in Pyodide.
                         if (/^(from|import)\s+algorithms\b/m.test(codeToRun)) {
                             const stubs = buildAlgorithmStubs(codeToRun, currentPackage);
-                            // Remove the original 'from algorithms import ...' lines
-                            // since the stubs module is already in sys.modules
-                            codeToRun = codeToRun.replace(/^(from\s+algorithms\s+import\s+.+?|import\s+algorithms\b.*)$/gm, '');
+                            // Remove the original 'from algorithms import ...' statements.
+                            // Must handle both single-line and multi-line (parenthesized) imports.
+                            // Single-line: from algorithms import X, Y
+                            // Multi-line: from algorithms import (\n    X,\n    Y\n)
+                            codeToRun = codeToRun.replace(/^from\s+algorithms\s+import\s*\([\s\S]*?\)\s*$/gm, '');
+                            codeToRun = codeToRun.replace(/^from\s+algorithms\s+import\s+[^(].*$/gm, '');
+                            codeToRun = codeToRun.replace(/^import\s+algorithms\b.*$/gm, '');
                             codeToRun = stubs + '\n' + codeToRun;
                         }
 
