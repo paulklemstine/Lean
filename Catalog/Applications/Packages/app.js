@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ═══════════════════════════════════════════════
-    // AETHER — Alien Rainbow Crystal City in the Backrooms
+    // AETHER — Crystal City of Heaven
     // ═══════════════════════════════════════════════
     (function initBackrooms() {
         const canvas = document.getElementById('backrooms-canvas');
@@ -733,13 +733,13 @@ document.addEventListener('DOMContentLoaded', () => {
         function rr(a, b) { return a + rand() * (b - a); }
 
         // ═══════════════════════════════════════
-        // WORLD — grid maze + organic tendril tunnels + spiral rooms
+        // CRYSTAL CITY — maze with grand rooms, spirals, tendrils
         // ═══════════════════════════════════════
         const CELL = 90;
         const COLS = 36, ROWS = 36;
         const worldW = COLS * CELL, worldH = ROWS * CELL;
 
-        // Base maze: 0=void, 1=room, 2=corridor
+        // Maze grid
         const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
         const vis = Array.from({ length: ROWS }, () => Array(COLS).fill(false));
 
@@ -767,16 +767,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })(1, 1);
 
-        // Widen: merge clusters into big rooms
-        for (let y = 2; y < ROWS - 2; y += 3) {
-            for (let x = 2; x < COLS - 2; x += 3) {
-                if (grid[y][x] === 0 || rand() > 0.4) continue;
-                const sz = rand() > 0.5 ? 2 : 1;
-                for (let dy = -sz; dy <= sz; dy++)
-                    for (let dx = -sz; dx <= sz; dx++)
-                        if (y+dy > 0 && y+dy < ROWS-1 && x+dx > 0 && x+dx < COLS-1)
-                            grid[y+dy][x+dx] = 1;
-            }
+        // Create grand halls — large open spaces
+        for (let i = 0; i < 8; i++) {
+            const cx = Math.floor(rr(4, COLS - 4));
+            const cy = Math.floor(rr(4, ROWS - 4));
+            const r = Math.floor(rr(2, 4));
+            for (let dy = -r; dy <= r; dy++)
+                for (let dx = -r; dx <= r; dx++)
+                    if (cx+dx > 0 && cx+dx < COLS-1 && cy+dy > 0 && cy+dy < ROWS-1)
+                        grid[cy+dy][cx+dx] = 1;
         }
 
         // Remove awkward single-cell walls
@@ -786,165 +785,164 @@ document.addEventListener('DOMContentLoaded', () => {
                 let n = 0;
                 for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0]])
                     if (grid[y+dy][x+dx] !== 0) n++;
-                if (n >= 3 && rand() > 0.3) grid[y][x] = 2;
+                if (n >= 3 && rand() > 0.25) grid[y][x] = 2;
             }
 
         // ═══════════════════════════════════════
-        // SPIRALS — carved into the grid
+        // RAINBOW PALETTE
         // ═══════════════════════════════════════
-        const spirals = [];
-        const SPIRAL_COUNT = 4;
-        for (let s = 0; s < SPIRAL_COUNT; s++) {
-            const scx = Math.floor(rr(4, COLS - 4));
-            const scy = Math.floor(rr(4, ROWS - 4));
-            const arms = Math.floor(rr(2, 5));
-            const maxR = Math.floor(rr(3, 6));
-            const turns = rr(1.5, 3);
-            const pts = [];
-            const steps = 80;
-            for (let i = 0; i < steps; i++) {
-                const t = i / steps;
-                const angle = t * turns * Math.PI * 2;
-                const r = t * maxR;
-                const gx = Math.round(scx + Math.cos(angle) * r);
-                const gy = Math.round(scy + Math.sin(angle) * r);
-                if (gx >= 1 && gx < COLS - 1 && gy >= 1 && gy < ROWS - 1) {
-                    grid[gy][gx] = 1;
-                    pts.push({ x: gx, y: gy });
-                }
-            }
-            spirals.push({ cx: scx, cy: scy, maxR, arms, turns });
-        }
-
-        // ═══════════════════════════════════════
-        // TENDRIL TUNNELS — organic curves through walls
-        // ═══════════════════════════════════════
-        const tendrils = [];
-        const TENDRIL_COUNT = 8;
-        for (let t = 0; t < TENDRIL_COUNT; t++) {
-            const sx = Math.floor(rr(3, COLS - 3));
-            const sy = Math.floor(rr(3, ROWS - 3));
-            const ex = Math.floor(rr(3, COLS - 3));
-            const ey = Math.floor(rr(3, ROWS - 3));
-            const pts = [];
-            const steps = 40;
-            let px = sx, py = sy;
-            for (let i = 0; i < steps; i++) {
-                const tx = sx + (ex - sx) * (i / steps);
-                const ty = sy + (ey - sy) * (i / steps);
-                px += (tx - px) * 0.3 + (rand() - 0.5) * 2.5;
-                py += (ty - py) * 0.3 + (rand() - 0.5) * 2.5;
-                const gx = Math.round(Math.max(1, Math.min(COLS - 2, px)));
-                const gy = Math.round(Math.max(1, Math.min(ROWS - 2, py)));
-                grid[gy][gx] = 2;
-                // Widen tendril slightly
-                for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]])
-                    if (gy+dy > 0 && gy+dy < ROWS-1 && gx+dx > 0 && gx+dx < COLS-1 && rand() > 0.4)
-                        grid[gy+dy][gx+dx] = 2;
-                pts.push({ x: gx * CELL + CELL / 2, y: gy * CELL + CELL / 2 });
-            }
-            tendrils.push(pts);
-        }
-
-        // ═══════════════════════════════════════
-        // CRYSTALS — rainbow, everywhere
-        // ═══════════════════════════════════════
-        const HUES = [
-            { h: '#ff4466', g: 'rgba(255,68,102,', r: 0 },
-            { h: '#ff8844', g: 'rgba(255,136,68,', r: 32 },
-            { h: '#ffcc22', g: 'rgba(255,204,34,', r: 51 },
-            { h: '#44ff88', g: 'rgba(68,255,136,', r: 136 },
-            { h: '#22ccff', g: 'rgba(34,204,255,', r: 195 },
-            { h: '#8844ff', g: 'rgba(136,68,255,', r: 270 },
-            { h: '#ff44cc', g: 'rgba(255,68,204,', r: 320 },
-            { h: '#ffffff', g: 'rgba(255,255,255,', r: -1 }
+        const RAINBOW = [
+            '#ff4466', '#ff8844', '#ffcc22', '#44ff88',
+            '#22ccff', '#8844ff', '#ff44cc', '#ffffff'
         ];
+        function hslStr(h, s, l) { return `hsl(${h}, ${s}%, ${l}%)`; }
+        function cellHue(x, y) {
+            const a = Math.atan2(y - ROWS / 2, x - COLS / 2);
+            const d = Math.hypot(x - COLS / 2, y - ROWS / 2);
+            return ((a / Math.PI * 180) + 360 + d * 4 + time * 8) % 360;
+        }
 
+        // ═══════════════════════════════════════
+        // CRYSTALS — big, beautiful, prismatic
+        // ═══════════════════════════════════════
         const crystals = [];
         for (let y = 1; y < ROWS - 1; y++) {
             for (let x = 1; x < COLS - 1; x++) {
                 if (grid[y][x] === 0) continue;
                 const hash = ((x * 73856093) ^ (y * 19349663)) >>> 0;
-                if (hash % 5 !== 0) continue; // ~20% of open cells
-                const cx = x * CELL + CELL / 2 + rr(-CELL * 0.2, CELL * 0.2);
-                const cy = y * CELL + CELL / 2 + rr(-CELL * 0.2, CELL * 0.2);
-                const hue = HUES[hash % HUES.length] || HUES[0];
-                const size = rr(12, 50);
-                crystals.push({
-                    x: cx, y: cy, size,
-                    hue: hue.h, glowBase: hue.g,
-                    facets: Math.floor(rr(4, 8)),
-                    rot: rr(0, Math.PI * 2),
-                    rayCount: Math.floor(rr(4, 10)),
-                    cluster: hash % 3 === 0 // some are clusters
-                });
-                // Clusters: 2-3 small crystals nearby
-                if (hash % 3 === 0) {
-                    for (let c = 0; c < Math.floor(rr(2, 4)); c++) {
-                        const ch = HUES[(hash + c + 1) % HUES.length] || HUES[0];
+                // ~15% of cells get crystals
+                if (hash % 7 !== 0) continue;
+                const cx = x * CELL + CELL / 2;
+                const cy = y * CELL + CELL / 2;
+                const isGrandHall = grid[y][x] === 1 &&
+                    y > 2 && y < ROWS - 3 && x > 2 && x < COLS - 3 &&
+                    grid[y-1][x] === 1 && grid[y+1][x] === 1 &&
+                    grid[y][x-1] === 1 && grid[y][x+1] === 1;
+
+                if (isGrandHall && rand() > 0.4) {
+                    // Grand crystal cluster — 3-6 large crystals
+                    const n = Math.floor(rr(3, 7));
+                    for (let c = 0; c < n; c++) {
                         crystals.push({
-                            x: cx + rr(-25, 25), y: cy + rr(-25, 25),
-                            size: rr(6, 20), hue: ch.h, glowBase: ch.g,
-                            facets: Math.floor(rr(3, 6)),
+                            x: cx + rr(-CELL * 0.6, CELL * 0.6),
+                            y: cy + rr(-CELL * 0.6, CELL * 0.6),
+                            size: rr(25, 70),
+                            hue: (hash + c * 47) % 360,
+                            facets: Math.floor(rr(5, 9)),
                             rot: rr(0, Math.PI * 2),
-                            rayCount: Math.floor(rr(3, 7)),
-                            cluster: false
+                            rays: Math.floor(rr(6, 14)),
+                            grand: true
                         });
                     }
+                } else {
+                    // Solitary crystal
+                    crystals.push({
+                        x: cx + rr(-CELL * 0.2, CELL * 0.2),
+                        y: cy + rr(-CELL * 0.2, CELL * 0.2),
+                        size: rr(12, 40),
+                        hue: (hash * 3) % 360,
+                        facets: Math.floor(rr(4, 7)),
+                        rot: rr(0, Math.PI * 2),
+                        rays: Math.floor(rr(4, 8)),
+                        grand: false
+                    });
                 }
             }
         }
 
         // ═══════════════════════════════════════
-        // LIGHTS — prismatic, reflected, volumetric
+        // LIGHT SOURCES — prismatic god rays
         // ═══════════════════════════════════════
         const lightSources = [];
         for (let y = 1; y < ROWS - 1; y++) {
             for (let x = 1; x < COLS - 1; x++) {
                 if (grid[y][x] === 0) continue;
                 const hash = ((x * 73856093) ^ (y * 19349663)) >>> 0;
-                if (hash % 4 !== 0) continue; // ~25%
+                if (hash % 3 !== 0) continue; // ~33%
                 const cx = x * CELL + CELL / 2;
                 const cy = y * CELL + CELL / 2;
-                const hueIdx = ((hash >>> 4) % (HUES.length - 1));
-                const hue = HUES[hueIdx] || HUES[0];
                 lightSources.push({
                     x: cx, y: cy,
-                    hue: hue.h, glowBase: hue.g,
+                    hue: ((hash >>> 4) * 37) % 360,
                     horiz: hash % 2 === 0,
-                    len: rr(CELL * 0.5, CELL * 0.8)
+                    len: rr(CELL * 0.5, CELL * 0.85),
+                    intensity: rr(0.6, 1.0)
                 });
             }
         }
 
         // ═══════════════════════════════════════
-        // CAMERA
+        // SPIRALS & TENDRILS
         // ═══════════════════════════════════════
-        let camX = worldW / 2, camY = worldH / 2, camZoom = 1.0, time = 0;
+        const spirals = [];
+        for (let s = 0; s < 5; s++) {
+            const cx = Math.floor(rr(4, COLS - 4));
+            const cy = Math.floor(rr(4, ROWS - 4));
+            const maxR = Math.floor(rr(3, 6));
+            const turns = rr(1.5, 3.5);
+            const arms = Math.floor(rr(2, 5));
+            const hue = (s * 72) % 360;
+            for (let a = 0; a < arms; a++) {
+                const offset = (a / arms) * Math.PI * 2;
+                for (let i = 0; i < 60; i++) {
+                    const t = i / 60;
+                    const angle = t * turns * Math.PI * 2 + offset;
+                    const r = t * maxR;
+                    const gx = Math.round(cx + Math.cos(angle) * r);
+                    const gy = Math.round(cy + Math.sin(angle) * r);
+                    if (gx >= 1 && gx < COLS - 1 && gy >= 1 && gy < ROWS - 1)
+                        grid[gy][gx] = 1;
+                }
+            }
+            spirals.push({ cx: cx * CELL + CELL / 2, cy: cy * CELL + CELL / 2, maxR: maxR * CELL, arms, hue });
+        }
+
+        // Tendril tunnels
+        const tendrils = [];
+        for (let t = 0; t < 10; t++) {
+            const sx = Math.floor(rr(3, COLS - 3));
+            const sy = Math.floor(rr(3, ROWS - 3));
+            const ex = Math.floor(rr(3, COLS - 3));
+            const ey = Math.floor(rr(3, ROWS - 3));
+            const pts = [];
+            let px = sx, py = sy;
+            for (let i = 0; i < 50; i++) {
+                const frac = i / 50;
+                const tx = sx + (ex - sx) * frac;
+                const ty = sy + (ey - sy) * frac;
+                px += (tx - px) * 0.25 + (rand() - 0.5) * 2.8;
+                py += (ty - py) * 0.25 + (rand() - 0.5) * 2.8;
+                const gx = Math.round(Math.max(1, Math.min(COLS - 2, px)));
+                const gy = Math.round(Math.max(1, Math.min(ROWS - 2, py)));
+                grid[gy][gx] = 2;
+                if (rand() > 0.5) {
+                    for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]])
+                        if (gy+dy > 0 && gy+dy < ROWS-1 && gx+dx > 0 && gx+dx < COLS-1)
+                            grid[gy+dy][gx+dx] = 2;
+                }
+                pts.push({ x: gx * CELL + CELL / 2, y: gy * CELL + CELL / 2 });
+            }
+            tendrils.push(pts);
+        }
+
+        // ═══════════════════════════════════════
+        // CAMERA — sweeping flyover
+        // ═══════════════════════════════════════
+        let camX = worldW / 2, camY = worldH / 2, camZoom = 0.5, time = 0;
 
         function getCameraState(t) {
-            const c = t * 0.022, z = t * 0.011;
+            const c = t * 0.018, z = t * 0.009;
             return {
-                x: worldW / 2 + Math.sin(c * 0.7) * worldW * 0.35 + Math.sin(c * 1.3) * worldW * 0.12,
-                y: worldH / 2 + Math.cos(c * 0.5) * worldH * 0.35 + Math.cos(c * 1.1) * worldH * 0.12,
-                zoom: Math.max(0.18, 0.5 + Math.sin(z) * 0.38 + Math.sin(z * 2.1) * 0.14)
+                x: worldW / 2 + Math.sin(c * 0.7) * worldW * 0.38 + Math.sin(c * 1.4) * worldW * 0.08,
+                y: worldH / 2 + Math.cos(c * 0.55) * worldH * 0.38 + Math.cos(c * 1.2) * worldH * 0.08,
+                zoom: Math.max(0.15, 0.4 + Math.sin(z) * 0.35 + Math.sin(z * 2.3) * 0.12)
             };
         }
 
         // ═══════════════════════════════════════
         // DRAWING
         // ═══════════════════════════════════════
-
-        // Floor colors per region — shifting rainbow tint on base
-        function floorColor(gx, gy, isRoom) {
-            const angle = Math.atan2(gy - ROWS / 2, gx - COLS / 2);
-            const dist = Math.hypot(gx - COLS / 2, gy - ROWS / 2);
-            const hue = ((angle / Math.PI * 180) + 360 + dist * 3) % 360;
-            // Desaturated rainbow on dark base
-            const s = isRoom ? 0.25 : 0.15;
-            const l = isRoom ? 0.18 : 0.12;
-            return `hsl(${hue}, ${s * 100}%, ${l * 100}%)`;
-        }
+        const VOID = '#04020a';
 
         function drawFloor(vl, vr, vt, vb) {
             const minC = Math.max(0, Math.floor(vl / CELL));
@@ -957,21 +955,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (grid[y][x] === 0) continue;
                     const px = x * CELL, py = y * CELL;
                     const isRoom = grid[y][x] === 1;
-
-                    // Rainbow-tinted floor
-                    ctx.fillStyle = floorColor(x, y, isRoom);
+                    // Rainbow-tinted floor with animated hue shift
+                    const hue = cellHue(x, y);
+                    ctx.fillStyle = hslStr(hue, isRoom ? 22 : 14, isRoom ? 16 : 10);
                     ctx.fillRect(px, py, CELL, CELL);
-
-                    // Grid lines — repeating floorplan
-                    const angle = Math.atan2(y - ROWS / 2, x - COLS / 2);
-                    const hue = ((angle / Math.PI * 180) + 360) % 360;
-                    ctx.strokeStyle = `hsla(${hue}, 30%, 25%, 0.12)`;
+                    // Grid lines
+                    ctx.strokeStyle = hslStr((hue + 30) % 360, 25, 22);
                     ctx.lineWidth = 0.5;
                     ctx.strokeRect(px, py, CELL, CELL);
                     ctx.beginPath();
                     ctx.moveTo(px + CELL / 2, py); ctx.lineTo(px + CELL / 2, py + CELL);
                     ctx.moveTo(px, py + CELL / 2); ctx.lineTo(px + CELL, py + CELL / 2);
                     ctx.stroke();
+                    // Reflective floor: faint horizontal gradient stripe
+                    ctx.fillStyle = `hsla(${hue}, 30%, 30%, 0.03)`;
+                    ctx.fillRect(px, py, CELL, CELL * 0.15);
                 }
             }
         }
@@ -979,9 +977,9 @@ document.addEventListener('DOMContentLoaded', () => {
         function drawTendrils() {
             for (const pts of tendrils) {
                 if (pts.length < 3) continue;
-                // Glowing tendril path
-                for (const pass of [{w: 30, a: 0.03}, {w: 14, a: 0.06}, {w: 4, a: 0.15}]) {
-                    ctx.strokeStyle = `rgba(180, 120, 255, ${pass.a})`;
+                // 3-pass glow: wide faint → narrow bright
+                for (const pass of [{w: 28, a: 0.025}, {w: 12, a: 0.05}, {w: 3, a: 0.15}]) {
+                    ctx.strokeStyle = `rgba(160, 100, 255, ${pass.a})`;
                     ctx.lineWidth = pass.w;
                     ctx.lineCap = 'round';
                     ctx.lineJoin = 'round';
@@ -989,10 +987,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.moveTo(pts[0].x, pts[0].y);
                     for (let i = 1; i < pts.length; i++) {
                         const prev = pts[i - 1], cur = pts[i];
-                        const mx = (prev.x + cur.x) / 2, my = (prev.y + cur.y) / 2;
-                        ctx.quadraticCurveTo(prev.x, prev.y, mx, my);
+                        ctx.quadraticCurveTo(prev.x, prev.y, (prev.x + cur.x) / 2, (prev.y + cur.y) / 2);
                     }
-                    ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
                     ctx.stroke();
                 }
             }
@@ -1000,33 +996,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function drawSpirals() {
             for (const sp of spirals) {
-                const cx = sp.cx * CELL + CELL / 2;
-                const cy = sp.cy * CELL + CELL / 2;
-                const maxPx = sp.maxR * CELL;
-                // Draw spiral arm lines
-                ctx.strokeStyle = 'rgba(120, 200, 255, 0.06)';
-                ctx.lineWidth = 2;
+                // Spiral arm lines
                 for (let arm = 0; arm < sp.arms; arm++) {
                     const offset = (arm / sp.arms) * Math.PI * 2;
+                    ctx.strokeStyle = `hsla(${sp.hue}, 50%, 40%, 0.04)`;
+                    ctx.lineWidth = 2;
                     ctx.beginPath();
-                    for (let i = 0; i <= 60; i++) {
-                        const t = i / 60;
-                        const angle = t * sp.turns * Math.PI * 2 + offset;
-                        const r = t * maxPx;
-                        const px = cx + Math.cos(angle) * r;
-                        const py = cy + Math.sin(angle) * r;
+                    for (let i = 0; i <= 80; i++) {
+                        const t = i / 80;
+                        const angle = t * 3.5 * Math.PI * 2 + offset;
+                        const r = t * sp.maxR;
+                        const px = sp.cx + Math.cos(angle) * r;
+                        const py = sp.cy + Math.sin(angle) * r;
                         if (i === 0) ctx.moveTo(px, py);
                         else ctx.lineTo(px, py);
                     }
                     ctx.stroke();
                 }
-                // Center glow
-                const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxPx * 0.3);
-                grd.addColorStop(0, 'rgba(120, 200, 255, 0.06)');
-                grd.addColorStop(1, 'rgba(120, 200, 255, 0)');
+                // Center bloom
+                const grd = ctx.createRadialGradient(sp.cx, sp.cy, 0, sp.cx, sp.cy, sp.maxR * 0.35);
+                grd.addColorStop(0, `hsla(${sp.hue}, 60%, 50%, 0.08)`);
+                grd.addColorStop(1, `hsla(${sp.hue}, 60%, 50%, 0)`);
                 ctx.fillStyle = grd;
                 ctx.beginPath();
-                ctx.arc(cx, cy, maxPx * 0.3, 0, Math.PI * 2);
+                ctx.arc(sp.cx, sp.cy, sp.maxR * 0.35, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
@@ -1046,69 +1039,72 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (x === 0 || grid[y][x - 1] === 0) segs.push([px, py, px, py + CELL, x, y]);
                     if (x === COLS - 1 || grid[y][x + 1] === 0) segs.push([px + CELL, py, px + CELL, py + CELL, x, y]);
                 }
-            // Shadow
-            ctx.strokeStyle = 'rgba(5, 3, 15, 0.7)';
+            // Deep shadow
+            ctx.strokeStyle = 'rgba(2, 1, 8, 0.8)';
             ctx.lineWidth = 14; ctx.lineCap = 'square';
             ctx.beginPath();
-            for (const s of segs) { ctx.moveTo(s[0] + 3, s[1] + 3); ctx.lineTo(s[2] + 3, s[3] + 3); }
+            for (const s of segs) { ctx.moveTo(s[0] + 4, s[1] + 4); ctx.lineTo(s[2] + 4, s[3] + 4); }
             ctx.stroke();
-            // Wall face — prismatic tint
+            // Prismatic wall face
             for (const s of segs) {
                 const angle = Math.atan2(s[3] - s[1], s[2] - s[0]);
-                const hue = ((angle / Math.PI * 180) + 360 + s[4] * 5) % 360;
-                ctx.strokeStyle = `hsl(${hue}, 20%, 18%)`;
-                ctx.lineWidth = 8; ctx.lineCap = 'square';
-                ctx.beginPath();
-                ctx.moveTo(s[0], s[1]); ctx.lineTo(s[2], s[3]);
-                ctx.stroke();
-                // Inner highlight
-                ctx.strokeStyle = `hsl(${hue}, 35%, 32%)`;
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.moveTo(s[0], s[1]); ctx.lineTo(s[2], s[3]);
-                ctx.stroke();
+                const hue = ((angle / Math.PI * 180) + 360 + s[4] * 7) % 360;
+                ctx.strokeStyle = hslStr(hue, 20, 15);
+                ctx.lineWidth = 8;
+                ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[2], s[3]); ctx.stroke();
+                // Inner prismatic highlight
+                ctx.strokeStyle = hslStr((hue + 40) % 360, 45, 38);
+                ctx.lineWidth = 2.5;
+                ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[2], s[3]); ctx.stroke();
             }
         }
 
-        function drawLightSources() {
+        function drawLights() {
             for (const l of lightSources) {
-                ctx.save();
-                ctx.translate(l.x, l.y);
-                if (!l.horiz) ctx.rotate(Math.PI / 2);
+                const cx = l.x, cy = l.y;
                 // Tube
-                ctx.fillStyle = l.hue;
-                ctx.globalAlpha = 0.85;
-                ctx.fillRect(-l.len / 2, -3, l.len, 6);
-                ctx.globalAlpha = 1;
+                ctx.save();
+                ctx.translate(cx, cy);
+                if (!l.horiz) ctx.rotate(Math.PI / 2);
+                ctx.fillStyle = `hsla(${l.hue}, 80%, 90%, ${0.7 + l.intensity * 0.3})`;
+                ctx.fillRect(-l.len / 2, -2, l.len, 4);
                 // Brackets
-                ctx.fillStyle = '#444';
-                ctx.fillRect(-l.len / 2 - 2, -5, 4, 10);
-                ctx.fillRect(l.len / 2 - 2, -5, 4, 10);
+                ctx.fillStyle = '#555';
+                ctx.fillRect(-l.len / 2 - 2, -4, 4, 8);
+                ctx.fillRect(l.len / 2 - 2, -4, 4, 8);
                 ctx.restore();
 
-                // Volumetric light pool
-                const poolR = CELL * 2;
-                const grd = ctx.createRadialGradient(l.x, l.y, 8, l.x, l.y, poolR);
-                grd.addColorStop(0, l.glowBase + '0.09)');
-                grd.addColorStop(0.3, l.glowBase + '0.04)');
-                grd.addColorStop(0.7, l.glowBase + '0.01)');
-                grd.addColorStop(1, l.glowBase + '0)');
+                // === GOD RAYS — thick volumetric beams ===
+                const rayLen = CELL * 3.5;
+                ctx.save();
+                ctx.translate(cx, cy);
+                // Main radial glow
+                const grd = ctx.createRadialGradient(0, 0, 10, 0, 0, rayLen);
+                grd.addColorStop(0, `hsla(${l.hue}, 70%, 80%, ${0.06 * l.intensity})`);
+                grd.addColorStop(0.25, `hsla(${l.hue}, 60%, 70%, ${0.03 * l.intensity})`);
+                grd.addColorStop(0.6, `hsla(${(l.hue + 30) % 360}, 50%, 60%, ${0.01 * l.intensity})`);
+                grd.addColorStop(1, 'rgba(0,0,0,0)');
                 ctx.fillStyle = grd;
                 ctx.beginPath();
-                ctx.ellipse(l.x, l.y, poolR, poolR * 0.7, l.horiz ? 0 : Math.PI / 2, 0, Math.PI * 2);
+                ctx.ellipse(0, 0, rayLen, rayLen * 0.65, 0, 0, Math.PI * 2);
                 ctx.fill();
-
-                // Light rays
-                ctx.save();
-                ctx.translate(l.x, l.y);
-                for (let r = 0; r < 6; r++) {
-                    const a = r * Math.PI / 3 + (l.horiz ? 0 : Math.PI / 6);
-                    const len = CELL * 1.8;
-                    ctx.strokeStyle = l.glowBase + '0.018)';
-                    ctx.lineWidth = 2;
+                // Bright center pool
+                const poolGrd = ctx.createRadialGradient(0, 0, 5, 0, 0, CELL * 0.8);
+                poolGrd.addColorStop(0, `hsla(${l.hue}, 80%, 90%, ${0.15 * l.intensity})`);
+                poolGrd.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = poolGrd;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, CELL * 0.8, CELL * 0.5, 0, 0, Math.PI * 2);
+                ctx.fill();
+                // Prismatic rays — 8 beams with rainbow color spread
+                for (let r = 0; r < 8; r++) {
+                    const a = r * Math.PI / 4 + (l.horiz ? 0 : Math.PI / 8);
+                    const rayHue = (l.hue + r * 45) % 360;
+                    ctx.strokeStyle = `hsla(${rayHue}, 80%, 70%, ${0.035 * l.intensity})`;
+                    ctx.lineWidth = 2.5;
                     ctx.beginPath();
                     ctx.moveTo(0, 0);
-                    ctx.lineTo(Math.cos(a) * len, Math.sin(a) * len);
+                    ctx.lineTo(Math.cos(a) * rayLen * 0.75, Math.sin(a) * rayLen * 0.75);
                     ctx.stroke();
                 }
                 ctx.restore();
@@ -1121,21 +1117,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.translate(c.x, c.y);
                 ctx.rotate(c.rot);
 
-                // Outer glow
-                const gr = c.size * 3;
-                const grd = ctx.createRadialGradient(0, 0, 0, 0, 0, gr);
-                grd.addColorStop(0, c.glowBase + '0.18)');
-                grd.addColorStop(0.4, c.glowBase + '0.06)');
-                grd.addColorStop(1, c.glowBase + '0)');
-                ctx.fillStyle = grd;
-                ctx.beginPath();
-                ctx.arc(0, 0, gr, 0, Math.PI * 2);
-                ctx.fill();
+                // === OUTER GLOW — multiple layers for bloom ===
+                const bloom = c.grand ? 4 : 2.5;
+                for (let layer = 0; layer < 3; layer++) {
+                    const r = c.size * (bloom - layer * 0.8);
+                    const alpha = [0.06, 0.12, 0.22][layer] * (c.grand ? 1.5 : 1);
+                    const grd = ctx.createRadialGradient(0, 0, c.size * 0.2, 0, 0, r);
+                    grd.addColorStop(0, `hsla(${c.hue}, 80%, 75%, ${alpha})`);
+                    grd.addColorStop(0.5, `hsla(${(c.hue + 60) % 360}, 60%, 55%, ${alpha * 0.4})`);
+                    grd.addColorStop(1, 'rgba(0,0,0,0)');
+                    ctx.fillStyle = grd;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
 
-                // Crystal body
+                // === CRYSTAL BODY — faceted gem shape ===
                 const inner = c.size * 0.35;
-                ctx.fillStyle = c.hue;
-                ctx.globalAlpha = 0.6;
+                ctx.fillStyle = `hsla(${c.hue}, 85%, 65%, 0.75)`;
                 ctx.beginPath();
                 for (let i = 0; i < c.facets; i++) {
                     const a = (i / c.facets) * Math.PI * 2;
@@ -1146,41 +1145,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.closePath();
                 ctx.fill();
 
-                // Specular highlight
-                ctx.fillStyle = '#ffffff';
-                ctx.globalAlpha = 0.35;
+                // Specular highlight facet
+                ctx.fillStyle = `hsla(${(c.hue + 30) % 360}, 60%, 90%, 0.45)`;
                 ctx.beginPath();
                 for (let i = 0; i < c.facets; i++) {
-                    const a = (i / c.facets) * Math.PI * 2 + 0.3;
-                    const r = (i % 2 === 0 ? c.size : inner) * 0.45;
+                    const a = (i / c.facets) * Math.PI * 2 + 0.25;
+                    const r = (i % 2 === 0 ? c.size : inner) * 0.4;
                     if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
                     else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
                 }
                 ctx.closePath();
                 ctx.fill();
-                ctx.globalAlpha = 1;
 
-                // Refraction rays — rainbow fan
-                for (let r = 0; r < c.rayCount; r++) {
-                    const a = c.rot + r * (Math.PI * 2 / c.rayCount);
-                    const len = c.size * 4;
-                    const rHue = HUES[r % HUES.length];
-                    ctx.strokeStyle = rHue.g + '0.04)';
-                    ctx.lineWidth = 1.5;
+                // Bright core point
+                const coreGrd = ctx.createRadialGradient(0, 0, 0, 0, 0, c.size * 0.3);
+                coreGrd.addColorStop(0, `hsla(${c.hue}, 100%, 95%, 0.6)`);
+                coreGrd.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = coreGrd;
+                ctx.beginPath();
+                ctx.arc(0, 0, c.size * 0.3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // === REFRACTION RAYS — rainbow fan ===
+                for (let r = 0; r < c.rays; r++) {
+                    const a = c.rot + r * (Math.PI * 2 / c.rays);
+                    const rayHue = (c.hue + r * (360 / c.rays)) % 360;
+                    const len = c.size * (c.grand ? 5 : 3.5);
+                    ctx.strokeStyle = `hsla(${rayHue}, 90%, 70%, ${c.grand ? 0.06 : 0.04})`;
+                    ctx.lineWidth = c.grand ? 2 : 1.2;
                     ctx.beginPath();
                     ctx.moveTo(0, 0);
                     ctx.lineTo(Math.cos(a) * len, Math.sin(a) * len);
                     ctx.stroke();
                 }
 
-                // Reflection: mirror crystal ghost below
+                // === REFLECTION — ghost mirror below ===
                 ctx.globalAlpha = 0.08;
-                ctx.scale(1, -0.4);
-                ctx.fillStyle = c.hue;
+                ctx.scale(1, -0.35);
+                ctx.fillStyle = `hsla(${(c.hue + 120) % 360}, 70%, 60%, 1)`;
                 ctx.beginPath();
                 for (let i = 0; i < c.facets; i++) {
                     const a = (i / c.facets) * Math.PI * 2;
-                    const r = i % 2 === 0 ? c.size * 1.5 : inner * 1.5;
+                    const r = (i % 2 === 0 ? c.size : inner) * 1.3;
                     if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
                     else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
                 }
@@ -1200,7 +1206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             camX = cam.x; camY = cam.y; camZoom = cam.zoom;
 
             ctx.clearRect(0, 0, W, H);
-            ctx.fillStyle = '#06040a';
+            ctx.fillStyle = VOID;
             ctx.fillRect(0, 0, W, H);
 
             ctx.save();
@@ -1208,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.scale(camZoom, camZoom);
             ctx.translate(-camX, -camY);
 
-            const m = CELL * 3;
+            const m = CELL * 4;
             const vl = camX - W / (2 * camZoom) - m;
             const vr = camX + W / (2 * camZoom) + m;
             const vt = camY - H / (2 * camZoom) - m;
@@ -1218,21 +1224,20 @@ document.addEventListener('DOMContentLoaded', () => {
             drawTendrils();
             drawSpirals();
             drawWalls(vl, vr, vt, vb);
-            drawLightSources();
+            drawLights();
             drawCrystals();
 
-            // Atmospheric fog — deep violet-black at edges
+            // Atmospheric depth fog — deep indigo
             const fogR = Math.max(W, H) * 0.5 / camZoom;
             const fg = ctx.createRadialGradient(camX, camY, 0, camX, camY, fogR);
-            fg.addColorStop(0, 'rgba(6, 4, 10, 0)');
-            fg.addColorStop(0.4, 'rgba(6, 4, 10, 0)');
-            fg.addColorStop(0.7, 'rgba(6, 4, 10, 0.5)');
-            fg.addColorStop(1, 'rgba(6, 4, 10, 0.96)');
+            fg.addColorStop(0, 'rgba(4, 2, 10, 0)');
+            fg.addColorStop(0.35, 'rgba(4, 2, 10, 0)');
+            fg.addColorStop(0.7, 'rgba(4, 2, 10, 0.5)');
+            fg.addColorStop(1, 'rgba(4, 2, 10, 0.97)');
             ctx.fillStyle = fg;
             ctx.fillRect(vl, vt, vr - vl, vb - vt);
 
             ctx.restore();
-
             requestAnimationFrame(render);
         }
 
@@ -1248,5 +1253,4 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!welcomeScreen.classList.contains('hidden')) {
             animating = true; requestAnimationFrame(render);
         }
-    })();
-});
+    })();});
