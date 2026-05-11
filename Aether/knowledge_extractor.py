@@ -440,7 +440,7 @@ DELIVERABLE 2 — Standalone Popular-Science ARTICLE  →  ARTICLE.md
 Write a **superb, standalone magazine-quality article** about this research.
 
 CRITICAL RULES FOR THE ARTICLE:
-• Do NOT mention "Scientific American", "Sci Am", or "ean" anywhere.
+• Do NOT mention "Scientific American", "Sci Am", or "Lean" anywhere.
 • Do NOT mention "Lean", "Lean 4", "formal verification", or "proof assistant".
 • This is a POPULAR SCIENCE article for a curious, intelligent audience.
   Write it as if it will be published in a premier science magazine.
