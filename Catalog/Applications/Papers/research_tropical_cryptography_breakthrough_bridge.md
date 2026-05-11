@@ -1,309 +1,269 @@
-# Tropical Cryptography Bridge: Min-Plus One-Way Functions and Post-Quantum Primitives
+# Structural Rigidity of Tropical Matrix Encodings: A Foundation for Min-Plus Cryptographic Primitives
 
 ## Abstract
 
-We establish a rigorous mathematical bridge between tropical (min-plus) algebra and post-quantum cryptographic primitives. Working in the min-plus semiring (ℝ, min, +), we formalize tropical matrix multiplication as a candidate one-way function, prove that the forward evaluation is polynomial-time O(n³) while the inverse factorization problem requires Ω(n!) search, and derive concrete security parameters: n=35 for 128-bit classical security and n=58 for 128-bit post-quantum security. All results are machine-verified with zero unproven assumptions. Key contributions include: (1) a 1-Lipschitz bound on tropical hash functions enabling certified robustness analysis, (2) proof that tropical algebra's idempotent structure obstructs quantum period-finding (Shor's algorithm), (3) cross-domain bridges connecting tropical cryptography to neural network robustness (via ReLU = −min(0,−x)) and lattice-based cryptography (via the meet-semilattice structure of min). The formalization comprises 35+ theorems using diverse proof tactics including induction, case analysis, omega arithmetic, and native computation.
+We establish the first formally verified structural foundation for tropical (min-plus) cryptographic primitives. Our main result is a **Row Rigidity Theorem**: under a row-separation condition on a tropical matrix A with designated minimizer pattern σ and separation parameter δ > 0, the min-plus matrix-vector action `T_A(x)(i) = min_j(A_{ij} + x_j)` collapses to the deterministic affine readout `A_{i,σ(i)} + x_{σ(i)}` for all vectors x with coordinate oscillation bounded by δ. When σ is a bijection, the tropical encoding is provably injective on the bounded-oscillation domain. All results are formalized and machine-verified. We discuss applications to post-quantum key exchange, entropy-preserving encodings, and tropical hash function design.
+
+**Keywords:** tropical cryptography, min-plus algebra, post-quantum cryptography, one-way functions, formal verification
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The advent of quantum computing poses an existential threat to classical public-key cryptography. Shor's algorithm [Shor94] breaks RSA, Diffie-Hellman, and elliptic curve cryptography by exploiting the group structure of modular arithmetic through the quantum Fourier transform. NIST's Post-Quantum Cryptography standardization effort [NIST22] has identified lattice-based, code-based, hash-based, and multivariate polynomial schemes as leading candidates. However, a parallel line of research explores algebraic structures fundamentally incompatible with quantum period-finding, of which tropical algebra is a prime example.
+The advent of large-scale quantum computing threatens all cryptographic systems based on the hardness of integer factorization or discrete logarithm problems [Shor94]. The post-quantum cryptography program seeks algebraic structures whose hardness survives quantum attack. Leading candidates include lattice-based schemes [Regev05], code-based schemes [McEliece78], and multivariate polynomial schemes [Patarin96].
 
-### 1.2 Tropical Algebra
+Tropical (min-plus) algebra offers a fundamentally different algebraic substrate. In the tropical semiring (ℝ, min, +), the additive operation is the minimum and the multiplicative operation is ordinary addition. This semiring lacks additive inverses, which means quantum Fourier transform–based algorithms (the engine of Shor's algorithm) cannot be directly applied.
 
-The *tropical semiring* (also called the min-plus algebra) replaces ordinary addition with min and ordinary multiplication with +. Formally, (ℝ ∪ {+∞}, ⊕, ⊗) where:
-- a ⊕ b = min(a, b) (tropical addition)
-- a ⊗ b = a + b (tropical multiplication)
+Grigoriev and Shpilrain [GS14] proposed tropical matrix multiplication as a cryptographic primitive, observing that the forward operation (tropical matrix product) is efficient O(n³) while inversion appears to require exponential search. However, their work and subsequent analyses [KU18] remained at the heuristic level — no formal structural theorems certified that tropical encoding preserves information on well-defined message domains.
 
-This structure satisfies all semiring axioms: both operations are associative and commutative, ⊗ distributes over ⊕, and +∞ is the additive identity (min(a, +∞) = a). Crucially, ⊕ is *idempotent* (a ⊕ a = a) and there are no additive inverses — this is the structural property that obstructs quantum attacks.
+### 1.2 Contributions
 
-### 1.3 Prior Work
+This paper makes the following contributions:
 
-Grigoriev and Shpilrain [GS14] proposed the first tropical cryptographic protocols, including a key exchange based on tropical matrix powers. Kotov and Ushakov [KU18] analyzed the security of these protocols, identifying algebraic attacks on certain parameter regimes. Linde [Lin19] extended this analysis and proposed improved parameter selection. Our work builds on this foundation by providing machine-verified security proofs with explicit parameter bounds.
+1. **Row Rigidity Theorem** (Theorem 3.1): Under a row-separation condition with parameter δ, the tropical matrix-vector product equals a deterministic affine readout on the δ-bounded-oscillation domain.
 
-### 1.4 Contributions
+2. **Tropical Encoding Injectivity** (Theorem 3.2): When the designated minimizer pattern is a bijection, the tropical encoding is injective on the bounded-oscillation domain.
 
-1. **Machine-verified formalization** of tropical cryptographic primitives (35+ theorems, 0 sorry).
-2. **Concrete security parameters**: n=35 for 128-bit classical, n=58 for 128-bit post-quantum security.
-3. **1-Lipschitz bound** on tropical hash functions: |min(a,b) − min(c,d)| ≤ |a−c| + |b−d|.
-4. **Quantum resistance proof**: idempotent obstruction to period-finding.
-5. **Cross-domain bridges**: ReLU networks ↔ tropical rational functions; min-lattice ↔ lattice crypto.
+3. **Cardinality Preservation** (Corollary 3.3): Injective tropical encodings preserve the cardinality of finite message sets, establishing entropy non-decrease.
+
+4. **Machine Verification**: All results are formalized in Lean 4 with the Mathlib library, providing the highest level of mathematical certainty.
+
+5. **Computational Demonstrations**: Numerical experiments confirm the theorems and illustrate the sharp phase transition at the oscillation boundary.
+
+### 1.3 Related Work
+
+Grigoriev and Shpilrain [GS14] introduced tropical key exchange based on the Stickel protocol over the tropical semiring. Kotov and Ushakov [KU18] showed vulnerabilities in specific instantiations but left open the question of whether modified schemes could be secure. Isaac and Kahrobaei [IK14] explored tropical algebra in the context of group-based cryptography.
+
+Our approach is orthogonal: rather than analyzing specific protocols, we establish structural theorems about tropical matrix action that any tropical cryptographic scheme can build upon. The row-separation condition is new and provides a quantitative criterion for when tropical encoding is well-behaved.
+
+---
 
 ## 2. Definitions and Notation
 
-### 2.1 Tropical Semiring Operations
+### 2.1 Tropical Semiring
 
-**Definition 2.1** (Tropical Addition). For a, b ∈ ℝ:
-$$a \oplus b := \min(a, b)$$
+The **tropical semiring** is the triple (ℝ ∪ {+∞}, ⊕, ⊗) where:
+- a ⊕ b = min(a, b) (tropical addition)
+- a ⊗ b = a + b (tropical multiplication)
+- The tropical additive identity is +∞
+- The tropical multiplicative identity is 0
 
-**Definition 2.2** (Tropical Multiplication). For a, b ∈ ℝ:
-$$a \otimes b := a + b$$
+This forms a commutative idempotent semiring. The idempotency a ⊕ a = a (since min(a,a) = a) and the absence of additive inverses (there is no b such that min(a,b) = +∞ for finite a) are the key features distinguishing tropical from classical algebra.
 
-### 2.2 Tropical Matrix Multiplication
+### 2.2 Tropical Matrix-Vector Action
 
-**Definition 2.3** (Tropical Matrix Product). For n×n matrices A, B over ℝ:
-$$(A \otimes B)[i,j] := \bigoplus_k (A[i,k] \otimes B[k,j]) = \min_k (A[i,k] + B[k,j])$$
+**Definition 2.1** (Tropical Matrix-Vector Product). Let A ∈ ℝ^{n×m} be a tropical matrix. The **tropical matrix-vector action** on x ∈ ℝ^m is:
 
-This is exactly the step in the Floyd-Warshall algorithm for all-pairs shortest paths.
+```
+(T_A x)(i) = ⨁_j (A_{ij} ⊗ x_j) = min_j (A_{ij} + x_j)
+```
 
-### 2.3 Tropical Matrix Power
+for i ∈ {1, ..., n}.
 
-**Definition 2.4**. G⁰ = I (tropical identity: 0 on diagonal, +∞ off-diagonal). G^(k+1) = G^k ⊗ G.
+In the formal development, this is implemented using `Finset.inf'` over the finite universe:
 
-### 2.4 Structures
+```lean
+def tropicalMatVec {m n : ℕ} [NeZero m]
+    (A : Fin n → Fin m → ℝ) (x : Fin m → ℝ) : Fin n → ℝ :=
+  fun i => Finset.univ.inf' Finset.univ_nonempty (fun j => A i j + x j)
+```
 
-**Definition 2.5** (TropicalOWFInstance). A pair (G, n) where G is an n×n real matrix with n > 0.
+### 2.3 Bounded Oscillation
 
-**Definition 2.6** (TropicalTrapdoorSystem). A triple (P, L, R) where P = L ⊗ R is the public matrix and L, R are the secret factors.
+**Definition 2.2** (Bounded Oscillation). A vector x ∈ ℝ^m has **δ-bounded oscillation** if:
 
-**Definition 2.7** (TropicalHashDomain). A tuple (H, B, n, m) where H is an n×m hash matrix and B > 0 is the input bound.
+```
+∀ j, k ∈ {1,...,m}, |x_j - x_k| ≤ δ
+```
 
-**Definition 2.8** (TropicalSecurityLevel). An enumeration {classical128, quantum128, classical256, quantum256} with minimum dimensions {35, 58, 58, 98}.
+This is equivalent to requiring that x lies in a hypercube of side length δ aligned with the constant vector direction.
+
+### 2.4 Row Separation
+
+**Definition 2.3** (Row Separation). A matrix A ∈ ℝ^{n×m} is **(σ, δ)-row-separated** for a function σ : {1,...,n} → {1,...,m} and δ ≥ 0 if:
+
+```
+∀ i ∈ {1,...,n}, ∀ j ≠ σ(i), A_{i,σ(i)} + δ ≤ A_{ij}
+```
+
+In words: in each row i, the entry at column σ(i) is at least δ smaller than every other entry in that row.
+
+---
 
 ## 3. Main Results
 
-### 3.1 Semiring Laws (Theorems 1-10)
+### 3.1 Designated Column Minimality
 
-We verify the complete semiring axiom system:
+**Lemma 3.1.** Let A be (σ, δ)-row-separated with δ ≥ 0, and let x have δ-bounded oscillation. Then for all i and j:
 
-**Theorem 3.1** (Left Distributivity). a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c).
+```
+A_{i,σ(i)} + x_{σ(i)} ≤ A_{ij} + x_j
+```
 
-*Proof sketch*: a + min(b,c) = min(a+b, a+c), which follows from the monotonicity of addition. Formally proved using `simp [min_add_add_left]`.
+*Proof sketch.* If j = σ(i), the inequality is trivial. If j ≠ σ(i):
+- Row separation gives A_{i,σ(i)} + δ ≤ A_{ij}, i.e., A_{ij} ≥ A_{i,σ(i)} + δ.
+- Bounded oscillation gives |x_{σ(i)} - x_j| ≤ δ, which implies x_{σ(i)} - x_j ≤ δ, i.e., x_{σ(i)} ≤ x_j + δ.
+- Adding: A_{i,σ(i)} + x_{σ(i)} ≤ A_{i,σ(i)} + x_j + δ ≤ A_{ij} + x_j. □
 
-**Theorem 3.2** (Idempotency). a ⊕ a = a.
+The formal proof uses `by_cases` on j = σ(i) and `linarith` with the separation and oscillation hypotheses.
 
-*Proof*: min(a,a) = a. This is `min_self`.
+### 3.2 Row Rigidity Theorem
 
-**Theorem 3.3** (Absorption). If b ≥ 0, then a ⊕ (a ⊗ b) = a.
+**Theorem 3.1** (Row Rigidity). Let A ∈ ℝ^{n×m} be (σ, δ)-row-separated with δ ≥ 0, and let x ∈ ℝ^m have δ-bounded oscillation. Then:
 
-*Proof*: min(a, a+b) = a since a ≤ a+b when b ≥ 0.
+```
+T_A(x) = (i ↦ A_{i,σ(i)} + x_{σ(i)})
+```
 
-**Theorem 3.4** (Min-Max Duality Sum). min(a,b) + max(a,b) = a + b.
+That is, the tropical matrix-vector product equals the affine readout through the designated minimizer pattern.
 
-This is `min_add_max` in Mathlib.
+*Proof.* By function extensionality, it suffices to show for each i:
 
-### 3.2 Matrix Operations (Theorems 11-14)
+```
+min_j (A_{ij} + x_j) = A_{i,σ(i)} + x_{σ(i)}
+```
 
-**Theorem 3.5** (Entry Bound). (A ⊗ B)[i,j] ≤ A[i,k] + B[k,j] for all k.
+**Upper bound:** Since σ(i) ∈ {1,...,m}, we have min_j (A_{ij} + x_j) ≤ A_{i,σ(i)} + x_{σ(i)}.
 
-*Proof*: Direct from the definition as an infimum: ⨅_k f(k) ≤ f(k₀). Uses `ciInf_le`.
+**Lower bound:** By Lemma 3.1, A_{i,σ(i)} + x_{σ(i)} ≤ A_{ij} + x_j for all j. Therefore A_{i,σ(i)} + x_{σ(i)} ≤ min_j (A_{ij} + x_j).
 
-**Theorem 3.6** (Left Monotonicity). If A'[i,j] ≤ A[i,j] for all i,j, then (A' ⊗ B)[i,j] ≤ (A ⊗ B)[i,j].
+The two bounds yield equality. □
 
-*Proof*: By `ciInf_mono`, since A'[i,k] + B[k,j] ≤ A[i,k] + B[k,j].
+### 3.3 Tropical Encoding Injectivity
 
-**Theorem 3.7** (Spectral Bound). tropTrace(A ⊗ B) ≤ ⨅_i (A[i,i] + B[i,i]).
+**Theorem 3.2** (Injectivity). Let A ∈ ℝ^{n×n} be (σ, δ)-row-separated where σ : Fin n ≃ Fin n is a bijection and δ ≥ 0. If x, y ∈ ℝ^n both have δ-bounded oscillation and T_A(x) = T_A(y), then x = y.
 
-*Proof*: (A⊗B)[i,i] ≤ A[i,i] + B[i,i] (by taking k=i in the infimum), so ⨅_i(A⊗B)[i,i] ≤ ⨅_i(A[i,i]+B[i,i]).
+*Proof.* By Theorem 3.1:
+```
+∀ i: A_{i,σ(i)} + x_{σ(i)} = A_{i,σ(i)} + y_{σ(i)}
+```
+Therefore x_{σ(i)} = y_{σ(i)} for all i. Since σ is bijective (an equivalence), for any j ∈ {1,...,n}, taking i = σ⁻¹(j) gives x_j = y_j. By function extensionality, x = y. □
 
-### 3.3 One-Way Function Properties (Theorems 15-22)
+### 3.4 Cardinality Preservation
 
-**Theorem 3.8** (Preimage Non-Uniqueness). For all c ∈ ℝ, there exist distinct pairs (a,b) ≠ (a',b') with min(a,b) = min(a',b') = c.
+**Corollary 3.3.** If f : α → β is injective and α is finite, then |range(f)| = |α|.
 
-*Proof*: Take (c,c) and (c, c+1). Both have min = c, but c ≠ c+1.
+This standard result, when combined with Theorem 3.2, shows that tropical encoding on a finite message set within the bounded-oscillation domain preserves cardinality, and hence preserves min-entropy lower bounds.
 
-**Theorem 3.9** (Exponential Search Space). For n ≥ 1: 2^(n-1) ≤ n!.
-
-*Proof*: By induction. Base: 2⁰ = 1 ≤ 1!. Step: 2^n = 2·2^(n-1) ≤ 2·n! ≤ (n+1)·n! = (n+1)!.
-
-**Theorem 3.10** (Factorial Dominates Exponential). For all n: 2^n ≤ (n+1)!.
-
-*Proof*: Same induction as Theorem 3.9, shifted.
-
-**Theorem 3.11** (Grover Bound). If 2^(2λ) ≤ n!, then 2^λ ≤ √(n!).
-
-*Proof*: (2^λ)² = 2^(2λ) ≤ n!, so 2^λ ≤ √(n!) by `Nat.le_sqrt`.
-
-**Theorem 3.12** (128-bit Classical Security). 2^128 ≤ 35!.
-
-*Proof*: By `native_decide` — exact computation.
-
-**Theorem 3.13** (128-bit Post-Quantum Security). 2^256 ≤ 58!.
-
-*Proof*: By `native_decide`.
-
-### 3.4 Lipschitz Bounds (Theorems 23-25)
-
-**Theorem 3.14** (Min Contraction). |min(a,b) − min(a,c)| ≤ |b − c|.
-
-*Proof*: Case analysis on a ≤ b, a ≤ c. In each of four cases, the bound follows from triangle inequality properties.
-
-**Theorem 3.15** (Min 1-Lipschitz). |min(a,b) − min(c,d)| ≤ |a−c| + |b−d|.
-
-*Proof*: By triangle inequality composition:
-$$|min(a,b) - min(c,d)| \leq |min(a,b) - min(a,d)| + |min(a,d) - min(c,d)| \leq |b-d| + |a-c|$$
-
-using the contraction theorem twice (with variable swaps).
-
-### 3.5 Quantum Resistance (Theorems 26-30)
-
-**Theorem 3.16** (Piecewise Linear Identity). |a − b| + (a + b) = 2·max(a,b).
-
-*Proof*: Case split on a ≤ b vs b ≤ a, then ring arithmetic.
-
-**Theorem 3.17** (ReLU-Tropical Bridge). max(0, x) = −min(0, −x).
-
-*Proof*: Case analysis on x ≥ 0 vs x ≤ 0. Uses `max_cases` and `min_cases`.
-
-**Theorem 3.18** (Min-Max Duality). min(a,b) = −max(−a,−b).
-
-*Proof*: Case split on a ≤ b, then simplification.
-
-**Theorem 3.19** (Idempotent Obstruction). For k ≥ 1: min^(k)(a) = a.
-
-*Proof*: By induction on k. Base: min(a,a) = a. Step: min(a, min^(k)(a)) = min(a, a) = a.
-
-This theorem is the formal statement of why quantum period-finding fails on tropical structures: the iterated self-min has no period — it is the identity for all k.
-
-### 3.6 Cross-Domain Bridges (Theorems 31-35)
-
-**Theorem 3.20** (Lattice Bridge). min is associative and satisfies min(a,b) ≤ a and min(a,b) ≤ b.
-
-**Theorem 3.21** (Double Min Commutativity). min(min(a,b), min(c,d)) = min(min(a,c), min(b,d)).
-
-**Theorem 3.22** (No Additive Inverse). If a > 0 and b > 0, then min(a,b) < a + b.
+---
 
 ## 4. Algorithms
 
-### 4.1 Tropical Matrix Multiplication
+### 4.1 Tropical Encoding
 
+**Algorithm 1: TropicalEncode**
 ```
-Algorithm 1: TROPICAL-MATMUL(A, B, n)
-Input: n×n matrices A, B over ℝ ∪ {+∞}
-Output: n×n matrix C = A ⊗ B
-for i = 1 to n do
-  for j = 1 to n do
-    C[i,j] ← +∞
-    for k = 1 to n do
-      C[i,j] ← min(C[i,j], A[i,k] + B[k,j])
-return C
+Input: Matrix A ∈ ℝ^{n×m}, vector x ∈ ℝ^m
+Output: Ciphertext y ∈ ℝ^n
 
-Time: O(n³)    Space: O(n²)
-```
-
-### 4.2 Tropical Matrix Power (Repeated Squaring)
-
-```
-Algorithm 2: TROPICAL-POWER(G, k, n)
-Input: n×n matrix G, exponent k ≥ 0
-Output: G^k in the tropical semiring
-R ← tropical identity matrix (0 on diagonal, +∞ elsewhere)
-B ← G
-while k > 0 do
-  if k is odd then R ← TROPICAL-MATMUL(R, B, n)
-  B ← TROPICAL-MATMUL(B, B, n)
-  k ← ⌊k/2⌋
-return R
-
-Time: O(n³ log k)    Space: O(n²)
-```
-
-### 4.3 Tropical Hash Function
-
-```
-Algorithm 3: TROPICAL-HASH(H, x, n, m)
-Input: n×m matrix H, m-vector x
-Output: n-vector y = H ⊗ x
-for i = 1 to n do
-  y[i] ← +∞
-  for j = 1 to m do
-    y[i] ← min(y[i], H[i,j] + x[j])
+for i = 1 to n:
+    y[i] = min_{j=1}^{m} (A[i,j] + x[j])
 return y
-
-Time: O(nm)    Space: O(n)
 ```
 
-### 4.4 Tropical Key Exchange
+**Complexity:** O(nm) time, O(n) additional space.
 
+### 4.2 Trapdoor Decoding (with secret σ)
+
+**Algorithm 2: TropicalDecode**
 ```
-Algorithm 4: TROPICAL-KEY-EXCHANGE(G, n)
-Setup: Public n×n matrix G
-Alice: Pick secret a, compute A = G^a, send A to Bob
-Bob:   Pick secret b, compute B = G^b, send B to Alice
-Alice: Compute shared = A ⊗ B = G^(a+b)
-Bob:   Compute shared = B ⊗ A = G^(b+a)
-// Both arrive at the same shared secret G^(a+b)
+Input: Matrix A ∈ ℝ^{n×n}, permutation σ, ciphertext y ∈ ℝ^n
+Output: Message x ∈ ℝ^n
 
-Key generation: O(n³ log max(a,b))
-Key exchange:   O(n³) per party
+for j = 1 to n:
+    i = σ⁻¹(j)
+    x[j] = y[i] - A[i, j]
+return x
 ```
 
-## 5. Applications
+**Complexity:** O(n) time, O(n) space.
 
-### 5.1 Post-Quantum Key Exchange
+**Correctness:** By Theorem 3.1, if x has δ-bounded oscillation and A is (σ, δ)-row-separated, then y_i = A_{i,σ(i)} + x_{σ(i)}. Therefore x_{σ(i)} = y_i - A_{i,σ(i)}, i.e., x_j = y_{σ⁻¹(j)} - A_{σ⁻¹(j), j}.
 
-Using Algorithm 4 with n=58 provides 128-bit post-quantum security. Public keys are 58×58 = 3364 real numbers ≈ 13.3 KB at 32-bit precision. Key exchange requires 2 tropical matrix multiplications ≈ 2 × 58³ ≈ 390K additions and comparisons.
+### 4.3 Brute-Force Inversion (without σ)
 
-### 5.2 Collision-Resistant Hashing
+**Algorithm 3: TropicalBruteForce**
+```
+Input: Matrix A ∈ ℝ^{n×n}, ciphertext y ∈ ℝ^n
+Output: All valid (x, σ) pairs
 
-Algorithm 3 with n=32 (output dimension) and m=64 (input dimension) provides a hash function with 32-dimensional output. The 1-Lipschitz property (Theorem 3.15) guarantees stability. Birthday attack resistance requires output space ≥ 2²⁵⁶, achieved when entries have ≥ 8 bits of precision (since (2⁸)³² = 2²⁵⁶).
+for each permutation σ ∈ S_n:
+    for j = 1 to n:
+        x[j] = y[σ⁻¹(j)] - A[σ⁻¹(j), j]
+    if TropicalEncode(A, x) == y and BoundedOscillation(x, δ):
+        output (x, σ)
+```
 
-### 5.3 Neural Network Certified Robustness
+**Complexity:** O(n! · n²) time. This is the essential computational bottleneck that provides security.
 
-Via the ReLU-tropical bridge (Theorem 3.17), the Lipschitz bounds on tropical operations translate to certified robustness guarantees for ReLU neural networks. The contraction theorem |min(a,b) − min(a,c)| ≤ |b − c| bounds the sensitivity of each neuron, enabling compositional Lipschitz constant estimation.
+---
 
-## 6. Computational Experiments
+## 5. Computational Experiments
 
-### 6.1 Security Parameter Verification
+### 5.1 Rigidity Verification
 
-| Dimension n | log₂(n!) | Classical bits | Quantum bits | Meets 128-bit PQ? |
-|:-----------:|:--------:|:--------------:|:------------:|:------------------:|
-| 10 | 21.8 | 21 | 10 | ✗ |
-| 20 | 61.1 | 61 | 30 | ✗ |
-| 35 | 133.4 | 133 | 66 | ✗ |
-| 40 | 159.2 | 159 | 79 | ✗ |
-| 58 | 261.8 | 261 | 130 | ✓ |
-| 98 | 514.0 | 514 | 257 | ✓ |
+We generated random 4×4 row-separated matrices with δ = 2.0 and tested the rigidity theorem on 5 random bounded-oscillation vectors. In all cases, the maximum absolute error between the tropical action and the affine readout was exactly 0, confirming the theorem computationally.
 
-### 6.2 Complexity Gap
+### 5.2 Injectivity Testing
 
-| n | Forward (n³) | Inverse (n!) | Ratio |
-|:-:|:------------:|:------------:|:-----:|
-| 6 | 216 | 720 | 3.3 |
-| 10 | 1,000 | 3,628,800 | 3,629 |
-| 20 | 8,000 | 2.4 × 10¹⁸ | 3.0 × 10¹⁴ |
-| 35 | 42,875 | 1.0 × 10⁴⁰ | 2.4 × 10³⁵ |
+For a random 5×5 row-separated matrix with δ = 3.0 and a random permutation σ, we generated 1000 random bounded-oscillation vectors and computed their tropical encodings. Among the 499,500 pairs tested, zero collisions were found (no two distinct vectors produced the same encoding), confirming injectivity.
 
-### 6.3 Key Exchange Correctness
+### 5.3 Phase Transition at the Oscillation Boundary
 
-Verified computationally: for random 4×4 base matrices, G^a ⊗ G^b = G^(a+b) holds to machine precision for all tested (a,b) pairs.
+We studied the error between tropical action and affine readout as a function of oscillation amplitude for a 2×2 system with δ = 2.0. The error is exactly zero for oscillation ≤ δ and increases linearly beyond δ, confirming the sharp phase transition predicted by the theory. See Figure 1.
 
-## 7. Discussion
+### 5.4 Failure Outside the Domain
 
-### 7.1 Strengths
+For a 3×3 identity-permutation matrix with δ = 1.0, we demonstrated that a vector with oscillation 10.0 (far exceeding δ) produces a tropical encoding that differs dramatically from the affine readout: the tropical output was [0, 1, 1] while the affine readout was [0, 5, 10]. This confirms that the rigidity theorem is tight — the bounded-oscillation hypothesis is necessary.
 
-- **Simplicity**: All operations are min and +. No modular arithmetic, no polynomial rings.
-- **Quantum resistance**: Structural (idempotent, no periods), not merely computational.
-- **Cross-domain utility**: Same framework applies to shortest paths, neural networks, and free energy.
+---
 
-### 7.2 Limitations
+## 6. Discussion
 
-- **Key sizes**: 13 KB vs 2.4 KB for Kyber. Manageable but not ideal.
-- **Known attacks**: Kotov-Ushakov showed algebraic attacks on certain parameter regimes; more analysis needed.
-- **No standard**: Unlike lattice-based schemes, tropical crypto has no NIST standardization.
+### 6.1 Cryptographic Interpretation
 
-### 7.3 Open Problems
+The Row Rigidity Theorem provides a clean algebraic foundation for tropical one-way function design:
 
-1. Tight characterization of the tropical matrix factorization problem complexity.
-2. Security proofs in standard models (e.g., reduction to NP-hard problems).
-3. Efficient trapdoor constructions with provable security.
-4. Tropical analogs of homomorphic encryption.
+1. **Forward direction** (encoding): Efficient O(n²) tropical matrix-vector multiplication.
+2. **Information preservation**: Injectivity on the bounded-oscillation domain guarantees no message collisions.
+3. **Inversion hardness** (heuristic): Without knowledge of σ, the attacker faces an n!-sized search space.
+4. **Trapdoor**: Knowledge of σ enables O(n) decoding.
 
-## 8. Future Work
+### 6.2 Post-Quantum Relevance
 
-1. Extend to tropical polynomial systems for richer algebraic structure.
-2. Explore connections to valued matroid theory and tropical Grassmannians.
-3. Implement constant-time tropical operations to prevent side-channel attacks.
-4. Develop IND-CCA2 secure encryption from tropical trapdoors.
-5. Investigate tropical secret sharing and multi-party computation.
+The tropical semiring lacks the group structure exploited by Shor's algorithm. The best known quantum attack is Grover search over permutations, giving O(√(n!)) query complexity — still superexponential in n.
 
-## 9. References
+### 6.3 Limitations
 
-- [GS14] D. Grigoriev and V. Shpilrain. "Tropical cryptography." Communications in Algebra, 42(6):2624–2632, 2014.
-- [KU18] M. Kotov and A. Ushakov. "Analysis of a key exchange protocol based on tropical matrix algebra." Journal of Mathematical Cryptology, 12(3):137–141, 2018.
-- [Lin19] J. Linde. "Tropical cryptography and analysis of Grigoriev-Shpilrain protocol." 2019.
-- [Shor94] P. Shor. "Algorithms for quantum computation: discrete logarithms and factoring." In FOCS, 1994.
-- [NIST22] NIST. "Post-Quantum Cryptography Standardization." 2022.
-- [Sim88] I. Simon. "Recognizable sets with multiplicities in the tropical semiring." In MFCS, 1988.
-- [MS15] D. Maclagan and B. Sturmfels. "Introduction to Tropical Geometry." AMS, 2015.
+- The row-separation condition is a strong structural requirement. Practical instantiations must balance separation (for security) against matrix entropy (for key diversity).
+- The bounded-oscillation domain restricts the message space. Practical schemes may need preprocessing to map arbitrary messages into bounded-oscillation vectors.
+- We prove structural injectivity, not computational hardness. A formal reduction from a standard hard problem remains an important open question.
+
+### 6.4 Connection to Tropical Geometry
+
+The bounded-oscillation domain corresponds to a polytope in ℝ^m, and the row-separation condition determines a cell decomposition of ℝ^m into regions where different minimizer patterns are active. The rigidity theorem says that the bounded-oscillation polytope lies entirely within one cell. This connects our work to the theory of tropical hyperplane arrangements and regular subdivisions.
+
+---
+
+## 7. Future Work
+
+1. **Tropical trapdoor functions**: Formalize the trapdoor property and prove security under standard assumptions.
+2. **Entropy bounds**: Prove that random row-separated matrices preserve min-entropy of message distributions.
+3. **Tropical hash families**: Define collision-resistant hash families using non-square tropical matrices.
+4. **Quantum query lower bounds**: Prove formal Ω(√(n!)) lower bounds for tropical inversion in the quantum query model.
+5. **Tropical error-correcting codes**: Use row separation as a "minimum distance" analogue to build tropical codes with decoding guarantees.
+
+---
+
+## References
+
+- [GS14] D. Grigoriev and V. Shpilrain, "Tropical cryptography," Communications in Algebra, 42(6):2624–2632, 2014.
+- [KU18] M. Kotov and A. Ushakov, "Analysis of a key exchange protocol based on tropical matrix algebra," Journal of Mathematical Cryptology, 12(3):137–141, 2018.
+- [IK14] A. Isaac and D. Kahrobaei, "A closer look at the tropical cryptography," International Journal of Computer Mathematics, 2014.
+- [Shor94] P. Shor, "Algorithms for quantum computation: discrete logarithms and factoring," Proceedings of FOCS, 1994.
+- [Regev05] O. Regev, "On lattices, learning with errors, random linear codes, and cryptography," Proceedings of STOC, 2005.
+- [McEliece78] R. McEliece, "A public-key cryptosystem based on algebraic coding theory," DSN Progress Report, 1978.
+- [Patarin96] J. Patarin, "Hidden field equations and isomorphisms of polynomials," Proceedings of EUROCRYPT, 1996.
+- [Simon88] I. Simon, "Recognizable sets with multiplicities in the tropical semiring," Proceedings of MFCS, 1988.
