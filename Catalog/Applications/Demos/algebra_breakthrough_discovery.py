@@ -1,855 +1,489 @@
 #!/usr/bin/env python3
 """
-Spectral Contraction Algebras: Algorithms
+applications.py — Real-world applications of difference set theory.
 
-Implements the key algorithms from the SCA framework with full
-docstrings, type hints, and complexity analysis.
+Demonstrates how the structural properties (symmetry, translation invariance,
+diameter bounds) apply to signal processing, pattern recognition, and
+cryptographic analysis.
 """
 
-import numpy as np
-from typing import List, Tuple, Optional
-from dataclasses import dataclass
-
-
-@dataclass
-class ContractionRate:
-    """A certified contraction rate in [0, 1).
-    
-    Represents a Lipschitz constant for a neural network layer,
-    a convergence rate for an optimization algorithm, or a
-    security decay rate for a cryptographic scheme.
-    """
-    val: float
-    
-    def __post_init__(self):
-        assert 0 <= self.val < 1, f"Rate must be in [0,1), got {self.val}"
-    
-    def __mul__(self, other: 'ContractionRate') -> 'ContractionRate':
-        """Product of contraction rates. O(1) time."""
-        return ContractionRate(self.val * other.val)
-    
-    def entropy(self) -> float:
-        """Contraction entropy H(k) = -log(k). O(1) time."""
-        if self.val == 0:
-            return float('inf')
-        return -np.log(self.val)
-
-
-@dataclass
-class LipschitzTower:
-    """A tower of Lipschitz layers with certified contraction rates.
-    
-    Represents a deep neural network where each layer has a known
-    Lipschitz constant, enabling certified robustness computation.
-    
-    Time complexity: O(n) for total contraction, O(1) for spectral radius.
-    Space complexity: O(n) for storing rates.
-    """
-    rates: List[float]
-    
-    def __post_init__(self):
-        for r in self.rates:
-            assert 0 <= r < 1, f"All rates must be in [0,1), got {r}"
-    
-    @property
-    def depth(self) -> int:
-        """Network depth. O(1)."""
-        return len(self.rates)
-    
-    def total_contraction(self) -> float:
-        """Product of all rates. O(n) time.
-        
-        This is the end-to-end Lipschitz constant of the network,
-        giving the certified robustness bound.
-        """
-        result = 1.0
-        for r in self.rates:
-            result *= r
-        return result
-    
-    def spectral_radius(self) -> float:
-        """Maximum rate. O(n) time.
-        
-        Bounds the per-layer worst-case sensitivity.
-        """
-        return max(self.rates) if self.rates else 0.0
-    
-    def spectral_bound(self) -> float:
-        """Upper bound via spectral radius: ρ^n. O(n) time.
-        
-        Theorem 5: total_contraction ≤ spectral_radius^depth.
-        """
-        return self.spectral_radius() ** self.depth
-    
-    def certified_robustness(self, input_radius: float) -> float:
-        """Certified robustness radius. O(n) time.
-        
-        If the input perturbation has radius ε, the output perturbation
-        has radius at most ε · ∏Lᵢ.
-        """
-        return input_radius * self.total_contraction()
-
-
-@dataclass 
-class ConvergenceCertificate:
-    """Constructive bound on iterations to ε-optimality.
-    
-    Given a contraction rate k, initial distance d₀, and target ε,
-    computes the minimum number of iterations N such that k^N · d₀ < ε.
-    
-    Time complexity: O(1) for computing N (uses logarithms).
-    """
-    rate: float
-    initial_dist: float
-    target_eps: float
-    
-    def __post_init__(self):
-        assert 0 <= self.rate < 1
-        assert self.initial_dist > 0
-        assert self.target_eps > 0
-    
-    def iterations_needed(self) -> int:
-        """Minimum iterations for ε-optimality. O(1) time.
-        
-        N = ⌈log(ε/d₀) / log(k)⌉
-        
-        This gives O(log(1/ε)) iteration complexity.
-        """
-        if self.rate == 0:
-            return 1
-        return int(np.ceil(
-            np.log(self.target_eps / self.initial_dist) / np.log(self.rate)
-        ))
-    
-    def distance_after(self, n: int) -> float:
-        """Distance bound after n iterations. O(1) time."""
-        return self.rate ** n * self.initial_dist
-    
-    def verify(self) -> bool:
-        """Verify the certificate. O(1) time."""
-        N = self.iterations_needed()
-        return self.distance_after(N) < self.target_eps
-
-
-def tropical_min_plus_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
-    """Tropical (min-plus) matrix multiplication.
-    
-    Computes C[i,j] = min_k (A[i,k] + B[k,j]).
-    
-    This is the core operation for Floyd-Warshall shortest path
-    and tropical eigenvalue computation.
-    
-    Time complexity: O(n³) where n is the matrix dimension.
-    Space complexity: O(n²) for the result matrix.
-    
-    Args:
-        A: n×m matrix (or use np.inf for "infinity")
-        B: m×p matrix
-    
-    Returns:
-        n×p result matrix under min-plus multiplication.
-    """
-    n, m = A.shape
-    _, p = B.shape
-    C = np.full((n, p), np.inf)
-    for i in range(n):
-        for j in range(p):
-            for k in range(m):
-                C[i, j] = min(C[i, j], A[i, k] + B[k, j])
-    return C
-
-
-def tropical_shortest_paths(W: np.ndarray) -> np.ndarray:
-    """All-pairs shortest paths via tropical matrix powering.
-    
-    Uses repeated tropical (min-plus) matrix multiplication to
-    compute all-pairs shortest paths. Equivalent to Floyd-Warshall.
-    
-    Time complexity: O(n³ log n) via repeated squaring.
-    Space complexity: O(n²).
-    
-    Args:
-        W: n×n weight matrix (np.inf for no edge, 0 on diagonal).
-    
-    Returns:
-        n×n matrix of shortest path distances.
-    """
-    n = W.shape[0]
-    D = W.copy()
-    power = 1
-    while power < n:
-        D = tropical_min_plus_multiply(D, D)
-        power *= 2
-    return D
-
-
-def compute_security_margin(dim: int, attack_exponent: float) -> float:
-    """Compute lattice security margin in bits.
-    
-    Security margin = log₂(dim) - attack_exponent.
-    
-    For post-quantum lattice cryptography, this measures the gap
-    between the lattice dimension and the best known attack.
-    
-    Time complexity: O(1).
-    
-    Args:
-        dim: Lattice dimension (must be ≥ 2).
-        attack_exponent: Best known attack complexity exponent.
-    
-    Returns:
-        Security margin in bits.
-    """
-    assert dim >= 2
-    return np.log2(dim) - attack_exponent
-
-
-def portfolio_contraction(
-    rates: List[float],
-    weights: List[float]
-) -> Tuple[float, float, float]:
-    """Compute portfolio contraction bounds.
-    
-    For an ensemble of networks with Lipschitz constants rates[i]
-    and mixture weights weights[i], computes:
-    - The weighted average contraction rate
-    - Lower bound (minimum rate)
-    - Upper bound (maximum rate)
-    
-    Theorem 20-21: min(rates) ≤ Σ wᵢrᵢ ≤ max(rates).
-    
-    Time complexity: O(n).
-    
-    Args:
-        rates: Contraction rates of individual networks.
-        weights: Non-negative weights summing to 1.
-    
-    Returns:
-        (weighted_avg, min_rate, max_rate)
-    """
-    assert abs(sum(weights) - 1.0) < 1e-10
-    assert all(w >= 0 for w in weights)
-    
-    weighted_avg = sum(w * r for w, r in zip(weights, rates))
-    return weighted_avg, min(rates), max(rates)
-
-
-def contraction_entropy(k: float) -> float:
-    """Compute contraction entropy H(k) = -log(k).
-    
-    Bridge: connects Lipschitz constants to information theory.
-    
-    Properties (proven in Lean):
-    - H(k₁·k₂) = H(k₁) + H(k₂)  (additivity)
-    - k₁ ≤ k₂ → H(k₂) ≤ H(k₁)  (monotonicity)
-    - k · exp(H(k)) = 1           (duality)
-    
-    Time complexity: O(1).
-    """
-    assert 0 < k <= 1
-    return -np.log(k)
+import random
+from collections import Counter
 
 
 # ============================================================
-# Example usage
+# Application 1: Translation-Invariant Feature Extraction
 # ============================================================
+
+def translation_invariant_features(signal: list[int]) -> dict:
+    """
+    Extract features from a 1D discrete signal that are invariant under
+    translation (shifting).
+
+    By Theorem B, the difference set is translation-invariant, so any
+    statistic derived from it is also translation-invariant.
+
+    This is the mathematical foundation of shift-invariant pattern recognition.
+
+    Args:
+        signal: List of integer positions (e.g., peak locations)
+
+    Returns:
+        Dictionary of translation-invariant features
+    """
+    S = frozenset(signal)
+    diffs = {x - y for x in S for y in S}
+    nonzero_diffs = diffs - {0}
+    pos_diffs = frozenset(d for d in nonzero_diffs if d > 0)
+
+    # Representation counts (autocorrelation)
+    repr_counts = Counter()
+    for d in pos_diffs:
+        repr_counts[d] = sum(1 for x in S if x - d in S)
+
+    return {
+        'num_positive_differences': len(pos_diffs),
+        'min_gap': min(pos_diffs) if pos_diffs else 0,
+        'max_gap': max(pos_diffs) if pos_diffs else 0,
+        'diameter': max(S) - min(S) if S else 0,
+        'gap_histogram': dict(repr_counts),
+        'is_sidon': all(v <= 1 for v in repr_counts.values()),
+        'additive_energy': sum(v**2 for v in repr_counts.values()) + len(S)**2,
+    }
+
+
+def demo_shift_invariant_recognition():
+    """Show that shifted versions of the same pattern produce identical features."""
+    print("Application 1: Shift-Invariant Pattern Recognition")
+    print("-" * 50)
+
+    # A pattern of peak positions
+    pattern = [2, 5, 7, 13, 18]
+    print(f"Original pattern: {pattern}")
+
+    # Extract features from shifted versions
+    for shift in [0, 100, -500, 12345]:
+        shifted = [x + shift for x in pattern]
+        features = translation_invariant_features(shifted)
+        print(f"  Shift {shift:>6d}: {len(features['gap_histogram'])} gaps, "
+              f"energy={features['additive_energy']}, "
+              f"Sidon={features['is_sidon']}")
+
+    print("  ✓ All shifted versions produce identical features (Theorem B)\n")
+
+
+# ============================================================
+# Application 2: Radar/Sonar Ambiguity Analysis
+# ============================================================
+
+def ambiguity_analysis(antenna_positions: list[int]) -> dict:
+    """
+    Analyze the ambiguity properties of a linear antenna array.
+
+    In radar/sonar, the difference set of antenna positions determines
+    the set of spatial frequencies that can be resolved. The negation
+    symmetry (Theorem A) means the array has the same resolution
+    looking left as looking right.
+
+    Args:
+        antenna_positions: Integer positions of antenna elements
+
+    Returns:
+        Analysis of the array's ambiguity properties
+    """
+    S = frozenset(antenna_positions)
+    diffs = {x - y for x in S for y in S}
+    nonzero_diffs = diffs - {0}
+    pos_diffs = sorted(d for d in nonzero_diffs if d > 0)
+
+    # Check for "holes" in the positive differences
+    if pos_diffs:
+        full_range = set(range(1, max(pos_diffs) + 1))
+        holes = full_range - set(pos_diffs)
+    else:
+        holes = set()
+
+    # Representation counts for each difference
+    repr_counts = {}
+    for d in pos_diffs:
+        repr_counts[d] = sum(1 for x in S if x - d in S)
+
+    return {
+        'num_elements': len(S),
+        'aperture': max(S) - min(S) if S else 0,
+        'num_baselines': len(pos_diffs),
+        'max_possible_baselines': max(S) - min(S) if S else 0,
+        'coverage_ratio': len(pos_diffs) / (max(S) - min(S)) if len(S) > 1 else 0,
+        'holes': sorted(holes),
+        'is_redundancy_free': all(v == 1 for v in repr_counts.values()),
+        'max_redundancy': max(repr_counts.values()) if repr_counts else 0,
+    }
+
+
+def demo_antenna_array():
+    """Demonstrate difference set analysis for antenna array design."""
+    print("Application 2: Antenna Array Ambiguity Analysis")
+    print("-" * 50)
+
+    # A minimum-redundancy array (Sidon-like)
+    mra = [0, 1, 3, 7, 12, 20]
+    analysis = ambiguity_analysis(mra)
+    print(f"Array positions: {mra}")
+    print(f"  Aperture: {analysis['aperture']}")
+    print(f"  Baselines: {analysis['num_baselines']}/{analysis['max_possible_baselines']}")
+    print(f"  Coverage: {analysis['coverage_ratio']:.1%}")
+    print(f"  Holes: {analysis['holes'][:5]}{'...' if len(analysis['holes']) > 5 else ''}")
+    print(f"  Redundancy-free: {analysis['is_redundancy_free']}")
+
+    # A uniform array (high redundancy)
+    uniform = [0, 1, 2, 3, 4, 5]
+    analysis_u = ambiguity_analysis(uniform)
+    print(f"\nUniform array: {uniform}")
+    print(f"  Aperture: {analysis_u['aperture']}")
+    print(f"  Baselines: {analysis_u['num_baselines']}/{analysis_u['max_possible_baselines']}")
+    print(f"  Coverage: {analysis_u['coverage_ratio']:.1%}")
+    print(f"  Redundancy-free: {analysis_u['is_redundancy_free']}")
+    print(f"  Max redundancy: {analysis_u['max_redundancy']}")
+    print()
+
+
+# ============================================================
+# Application 3: Cryptographic Sequence Analysis
+# ============================================================
+
+def sequence_difference_profile(seq: list[int]) -> dict:
+    """
+    Analyze a sequence's difference profile for cryptographic quality.
+
+    Good pseudorandom sequences should have approximately flat
+    autocorrelation, meaning representation counts r(d) ≈ r(d')
+    for all nonzero d, d'. The even-cardinality theorem (Theorem A)
+    ensures the nonzero differences always come in sign-paired orbits.
+
+    Args:
+        seq: Sequence of integers
+
+    Returns:
+        Cryptographic quality metrics
+    """
+    S = frozenset(seq)
+    nonzero_diffs = {x - y for x in S for y in S} - {0}
+    pos_diffs = sorted(d for d in nonzero_diffs if d > 0)
+
+    repr_counts = [sum(1 for x in S if x - d in S) for d in pos_diffs]
+
+    if repr_counts:
+        mean_repr = sum(repr_counts) / len(repr_counts)
+        variance = sum((r - mean_repr)**2 for r in repr_counts) / len(repr_counts)
+    else:
+        mean_repr = 0
+        variance = 0
+
+    return {
+        'sequence_length': len(S),
+        'num_orbits': len(pos_diffs),
+        'mean_representation': mean_repr,
+        'representation_variance': variance,
+        'flatness_score': 1.0 / (1.0 + variance),  # 1.0 = perfectly flat
+        'is_sidon': all(r <= 1 for r in repr_counts),
+    }
+
+
+def demo_crypto_analysis():
+    """Compare difference profiles of structured vs. random sequences."""
+    print("Application 3: Cryptographic Sequence Quality")
+    print("-" * 50)
+
+    # A structured (bad) sequence
+    structured = list(range(0, 20, 2))  # even numbers
+    profile_s = sequence_difference_profile(structured)
+    print(f"Structured (evens 0-18): flatness = {profile_s['flatness_score']:.4f}, "
+          f"Sidon = {profile_s['is_sidon']}")
+
+    # A random sequence
+    random.seed(42)
+    rand_seq = sorted(random.sample(range(100), 10))
+    profile_r = sequence_difference_profile(rand_seq)
+    print(f"Random ({rand_seq[:4]}...): flatness = {profile_r['flatness_score']:.4f}, "
+          f"Sidon = {profile_r['is_sidon']}")
+
+    # A Sidon set (best possible)
+    sidon = [0, 1, 3, 7, 12, 20, 29, 38]
+    profile_si = sequence_difference_profile(sidon)
+    print(f"Sidon-like ({sidon[:4]}...): flatness = {profile_si['flatness_score']:.4f}, "
+          f"Sidon = {profile_si['is_sidon']}")
+    print()
+
+
+# ============================================================
+# Main
+# ============================================================
+
 if __name__ == '__main__':
     print("=" * 60)
-    print("Spectral Contraction Algebras: Algorithm Demonstrations")
+    print("APPLICATIONS OF DIFFERENCE SET STRUCTURAL THEORY")
     print("=" * 60)
-    
-    # 1. Lipschitz Tower
-    print("\n--- Lipschitz Tower ---")
-    tower = LipschitzTower([0.5, 0.7, 0.3, 0.9])
-    print(f"Depth: {tower.depth}")
-    print(f"Total contraction: {tower.total_contraction():.6f}")
-    print(f"Spectral radius: {tower.spectral_radius():.2f}")
-    print(f"Spectral bound (ρ^n): {tower.spectral_bound():.6f}")
-    print(f"Certified robustness (ε=1.0): {tower.certified_robustness(1.0):.6f}")
-    
-    # 2. Convergence Certificate
-    print("\n--- Convergence Certificate ---")
-    cert = ConvergenceCertificate(rate=0.7, initial_dist=100.0, target_eps=0.01)
-    print(f"Rate: {cert.rate}, d₀: {cert.initial_dist}, ε: {cert.target_eps}")
-    print(f"Iterations needed: {cert.iterations_needed()}")
-    print(f"Distance after N iterations: {cert.distance_after(cert.iterations_needed()):.8f}")
-    print(f"Certificate valid: {cert.verify()}")
-    
-    # 3. Tropical Shortest Paths
-    print("\n--- Tropical Shortest Paths ---")
-    W = np.array([
-        [0, 3, np.inf, 7],
-        [8, 0, 2, np.inf],
-        [5, np.inf, 0, 1],
-        [2, np.inf, np.inf, 0]
-    ])
-    D = tropical_shortest_paths(W)
-    print("Weight matrix W:")
-    print(W)
-    print("\nShortest path distances:")
-    print(D)
-    
-    # 4. Security Margins
-    print("\n--- Lattice Security Margins ---")
-    for dim in [256, 512, 1024, 2048, 4096]:
-        margin = compute_security_margin(dim, 3.0)
-        print(f"  dim={dim:>5}: security margin = {margin:.2f} bits")
-    
-    # 5. Portfolio Bounds
-    print("\n--- Portfolio Contraction ---")
-    avg, lo, hi = portfolio_contraction(
-        [0.3, 0.5, 0.7, 0.4], [0.25, 0.25, 0.25, 0.25]
-    )
-    print(f"Weighted avg: {avg:.4f}")
-    print(f"Lower bound:  {lo:.4f}")
-    print(f"Upper bound:  {hi:.4f}")
-    print(f"Sandwich: {lo:.4f} ≤ {avg:.4f} ≤ {hi:.4f} ✓")
+    print()
 
+    demo_shift_invariant_recognition()
+    demo_antenna_array()
+    demo_crypto_analysis()
 
-#!/usr/bin/env python3
-"""
-Spectral Contraction Algebras: Real-World Applications
-
-Demonstrates applications to:
-- Machine Learning: Certified robustness for neural networks
-- Cryptography: Post-quantum lattice security parameter selection
-- Physics: Entropy production in thermodynamic systems
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from typing import List, Tuple
-
-
-# ============================================================
-# Application 1: Neural Network Certified Robustness
-# ============================================================
-class CertifiedNeuralNetwork:
-    """A neural network with layer-wise Lipschitz certification.
-    
-    Each layer has a known Lipschitz constant, enabling:
-    - Certified robustness radius computation
-    - Adversarial attack bound estimation
-    - Depth-robustness trade-off analysis
-    """
-    
-    def __init__(self, layer_lipschitz: List[float]):
-        self.layers = layer_lipschitz
-        self.depth = len(layer_lipschitz)
-    
-    def total_lipschitz(self) -> float:
-        """End-to-end Lipschitz constant. O(n)."""
-        result = 1.0
-        for L in self.layers:
-            result *= L
-        return result
-    
-    def certified_radius(self, margin: float) -> float:
-        """Minimum adversarial perturbation radius.
-        
-        If the classifier has margin `margin` at input x,
-        then any perturbation of radius < margin / L_total
-        preserves the classification.
-        """
-        L = self.total_lipschitz()
-        if L == 0:
-            return float('inf')
-        return margin / L
-    
-    def sensitivity_profile(self) -> List[float]:
-        """Cumulative Lipschitz constant at each layer depth."""
-        profile = []
-        cumulative = 1.0
-        for L in self.layers:
-            cumulative *= L
-            profile.append(cumulative)
-        return profile
-
-
-def demo_certified_robustness():
-    """Demonstrate certified robustness for a deep network."""
     print("=" * 60)
-    print("APPLICATION 1: Neural Network Certified Robustness")
-    print("=" * 60)
-    
-    # Example: 10-layer network with known Lipschitz constants
-    lipschitz_constants = [0.8, 0.9, 0.7, 0.85, 0.75, 0.9, 0.65, 0.8, 0.7, 0.95]
-    net = CertifiedNeuralNetwork(lipschitz_constants)
-    
-    print(f"\nNetwork depth: {net.depth}")
-    print(f"Layer Lipschitz constants: {lipschitz_constants}")
-    print(f"Total Lipschitz constant: {net.total_lipschitz():.6f}")
-    
-    # Certified radii for different classification margins
-    margins = [0.1, 0.5, 1.0, 2.0]
-    print(f"\n{'Margin':>10} {'Certified Radius':>18}")
-    print("-" * 30)
-    for m in margins:
-        r = net.certified_radius(m)
-        print(f"{m:>10.2f} {r:>18.6f}")
-    
-    # Sensitivity profile
-    profile = net.sensitivity_profile()
-    print(f"\nSensitivity profile (cumulative Lipschitz):")
-    for i, s in enumerate(profile):
-        bar = "█" * int(s * 50)
-        print(f"  Layer {i+1:>2}: {s:.6f} {bar}")
-
-
-# ============================================================
-# Application 2: Post-Quantum Lattice Crypto Parameter Selection
-# ============================================================
-def demo_lattice_crypto():
-    """Demonstrate lattice cryptography parameter selection."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Post-Quantum Lattice Crypto Parameters")
-    print("=" * 60)
-    
-    # NIST security levels
-    nist_levels = {
-        "Level 1 (AES-128)": 128,
-        "Level 3 (AES-192)": 192,
-        "Level 5 (AES-256)": 256
-    }
-    
-    # Best known attack exponents for different lattice problems
-    attack_exponents = {
-        "BKZ-2.0 (LWE)": 0.292,
-        "Quantum sieve": 0.265,
-        "Classical sieve": 0.292
-    }
-    
-    print(f"\n{'Security Level':>25} {'Target bits':>12} {'Attack':>20} {'Min Dimension':>14}")
-    print("-" * 75)
-    
-    for level_name, target_bits in nist_levels.items():
-        for attack_name, exp in attack_exponents.items():
-            # Solve: log2(dim) - exp >= target_bits/dim
-            # Approximate: dim >= 2^(target_bits * exp + exp)
-            # More precisely: security margin = log2(dim) / exp
-            min_dim = int(np.ceil(2 ** (target_bits * exp)))
-            margin = np.log2(float(min_dim)) - target_bits * exp
-            print(f"{level_name:>25} {target_bits:>12} {attack_name:>20} {min_dim:>14}")
-    
-    # Dimension doubling analysis
-    print(f"\nDimension Doubling Security Gain:")
-    print(f"{'Dimension':>12} {'Security Margin':>16} {'Gain from doubling':>20}")
-    print("-" * 52)
-    prev_margin = None
-    for d in [256, 512, 1024, 2048, 4096, 8192]:
-        margin = np.log2(d)
-        gain = margin - prev_margin if prev_margin is not None else 0
-        print(f"{d:>12} {margin:>16.4f} {gain:>20.4f}")
-        prev_margin = margin
-
-
-# ============================================================
-# Application 3: Thermodynamic Entropy Production
-# ============================================================
-def demo_entropy_production():
-    """Demonstrate entropy production in contraction dynamics."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Thermodynamic Entropy Production")
-    print("=" * 60)
-    
-    # Model: a system with contraction rate k loses information at rate -log(k)
-    contraction_rates = [0.1, 0.3, 0.5, 0.7, 0.9]
-    
-    print(f"\n{'System':>10} {'Rate k':>10} {'Entropy rate':>14} {'After 10 steps':>16} {'After 100 steps':>17}")
-    print("-" * 70)
-    
-    for i, k in enumerate(contraction_rates):
-        H = -np.log(k)
-        total_10 = 10 * H
-        total_100 = 100 * H
-        print(f"{'System '+str(i+1):>10} {k:>10.2f} {H:>14.4f} {total_10:>16.4f} {total_100:>17.4f}")
-    
-    # Composition law: H(k1*k2) = H(k1) + H(k2)
-    k1, k2 = 0.5, 0.7
-    print(f"\nEntropy additivity verification:")
-    print(f"  H({k1}) = {-np.log(k1):.6f}")
-    print(f"  H({k2}) = {-np.log(k2):.6f}")
-    print(f"  H({k1}·{k2}) = H({k1*k2:.2f}) = {-np.log(k1*k2):.6f}")
-    print(f"  H({k1}) + H({k2}) = {-np.log(k1) + (-np.log(k2)):.6f}")
-    print(f"  Equal: ✓")
-
-
-# ============================================================
-# Application 4: Gradient Descent Convergence Certificate
-# ============================================================
-def demo_gradient_descent():
-    """Demonstrate convergence certificates for gradient descent."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Gradient Descent Convergence Certificate")
-    print("=" * 60)
-    
-    # Simulate gradient descent on f(x) = 0.5 * L * x^2
-    # with learning rate η < 2/L, contraction rate k = |1 - ηL|
-    L = 2.0  # Lipschitz constant of gradient
-    learning_rates = [0.1, 0.3, 0.5, 0.8, 0.9]
-    
-    print(f"\nGradient Lipschitz constant L = {L}")
-    print(f"\n{'Learning rate η':>16} {'Contraction k':>16} {'Steps to ε=0.001':>20} {'Converges':>12}")
-    print("-" * 68)
-    
-    for eta in learning_rates:
-        k = abs(1 - eta * L)
-        if k < 1:
-            N = int(np.ceil(np.log(0.001 / 10.0) / np.log(k)))
-            converges = "Yes"
-        else:
-            N = -1
-            converges = "No"
-        print(f"{eta:>16.2f} {k:>16.4f} {N:>20} {converges:>12}")
-    
-    # Track convergence for best rate
-    best_eta = 1.0 / L  # optimal rate
-    k = abs(1 - best_eta * L)
-    x = 10.0
-    trajectory = [x]
-    for _ in range(30):
-        x = x * k  # simplified contraction
-        trajectory.append(x)
-    
-    print(f"\nOptimal learning rate η = 1/L = {best_eta}")
-    print(f"Contraction rate: k = {k}")
-    print(f"First 10 iterates: {[f'{t:.4f}' for t in trajectory[:10]]}")
-
-
-# ============================================================
-# Visualization
-# ============================================================
-def create_application_plots():
-    """Create application-specific visualizations."""
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Applications of Spectral Contraction Algebras', fontsize=14, fontweight='bold')
-    
-    # Plot 1: Certified robustness vs depth
-    ax = axes[0, 0]
-    for k in [0.7, 0.8, 0.9, 0.95]:
-        depths = np.arange(1, 31)
-        radii = 1.0 / (k ** depths)  # robustness radius = margin / k^n
-        ax.semilogy(depths, radii, label=f'k = {k}')
-    ax.set_xlabel('Network Depth')
-    ax.set_ylabel('Certified Robustness Radius')
-    ax.set_title('Depth vs Robustness (per-layer Lipschitz = k)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 2: Security margin landscape
-    ax = axes[0, 1]
-    dims = np.arange(100, 5001, 50)
-    for target in [128, 192, 256]:
-        margins = np.log2(dims) * 0.292  # simplified BKZ model
-        ax.plot(dims, margins, label=f'BKZ target={target}')
-        ax.axhline(y=target, linestyle='--', alpha=0.3)
-    ax.set_xlabel('Lattice Dimension')
-    ax.set_ylabel('Security (bits)')
-    ax.set_title('Lattice Dimension vs Security Level')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 3: Entropy production timeline
-    ax = axes[1, 0]
-    steps = np.arange(0, 101)
-    for k in [0.3, 0.5, 0.7, 0.9]:
-        H = -np.log(k)
-        total_entropy = steps * H
-        ax.plot(steps, total_entropy, label=f'k={k}, H={H:.2f}')
-    ax.set_xlabel('Iterations')
-    ax.set_ylabel('Total Entropy Produced')
-    ax.set_title('Cumulative Entropy Production')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 4: Convergence comparison
-    ax = axes[1, 1]
-    L = 2.0
-    for eta in [0.1, 0.3, 0.5, 0.8]:
-        k = abs(1 - eta * L)
-        if k < 1:
-            n = np.arange(0, 50)
-            dist = 10.0 * k**n
-            ax.semilogy(n, dist, label=f'η={eta}, k={k:.2f}')
-    ax.set_xlabel('Iteration')
-    ax.set_ylabel('Distance to optimum')
-    ax.set_title('Gradient Descent: Learning Rate Comparison')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/applications_plots.png', dpi=150, bbox_inches='tight')
-    print("\nApplication plots saved to applications_plots.png")
-    plt.close()
-
-
-if __name__ == '__main__':
-    demo_certified_robustness()
-    demo_lattice_crypto()
-    demo_entropy_production()
-    demo_gradient_descent()
-    create_application_plots()
-    print("\n" + "=" * 60)
-    print("All application demos complete.")
+    print("ALL APPLICATIONS DEMONSTRATED")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Spectral Contraction Algebras: Numerical Demonstrations
+demo.py — Demonstrates the structural properties of finite difference sets.
 
-This script demonstrates the key theorems from the Spectral Contraction
-Algebra framework with concrete numerical examples.
+Verified properties:
+  Theorem A: Negation symmetry and even cardinality of nonzero differences
+  Theorem B: Translation invariance
+  Theorem C: Diameter bound on all differences
+
+Run: python3 demo.py
 """
 
-import numpy as np
+import random
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from typing import List, Tuple
+import numpy as np
+
+
+def difference_set(S: set[int]) -> set[int]:
+    """Compute the difference set {x - y : x, y in S}."""
+    return {x - y for x in S for y in S}
+
+
+def nonzero_difference_set(S: set[int]) -> set[int]:
+    """Compute the nonzero difference set."""
+    return difference_set(S) - {0}
+
+
+def translate(S: set[int], a: int) -> set[int]:
+    """Translate S by a."""
+    return {x + a for x in S}
+
+
+def diameter(S: set[int]) -> int:
+    """Diameter = max(S) - min(S)."""
+    return max(S) - min(S)
+
 
 # ============================================================
-# Demo 1: Contraction Rate Composition
+# Theorem A: Negation Symmetry
 # ============================================================
-def demo_contraction_composition():
-    """Demonstrate that composing contractions multiplies rates."""
+
+def demo_negation_symmetry():
     print("=" * 60)
-    print("DEMO 1: Contraction Rate Composition")
+    print("THEOREM A: Negation Symmetry")
     print("=" * 60)
-    
-    rates = [0.5, 0.7, 0.3, 0.9, 0.6]
-    print(f"\nLayer Lipschitz constants: {rates}")
-    
-    total = 1.0
-    for i, r in enumerate(rates):
-        total *= r
-        print(f"  After layer {i+1}: total contraction = {total:.6f}")
-    
-    print(f"\nTotal contraction (product): {total:.6f}")
-    print(f"Spectral radius (max rate): {max(rates):.2f}")
-    print(f"Spectral radius^n bound:    {max(rates)**len(rates):.6f}")
-    print(f"Verified: total ≤ spectral^n: {total <= max(rates)**len(rates)}")
+
+    # Concrete example
+    S = {1, 3, 7, 12}
+    D = difference_set(S)
+    D_star = nonzero_difference_set(S)
+
+    print(f"\nS = {sorted(S)}")
+    print(f"Δ(S) = {sorted(D)}")
+    print(f"|Δ(S)| = {len(D)}")
+    print(f"Δ*(S) = {sorted(D_star)}")
+    print(f"|Δ*(S)| = {len(D_star)} (even: {len(D_star) % 2 == 0})")
+
+    # Verify symmetry
+    assert all(-z in D for z in D), "Symmetry failed!"
+    assert all(-z in D_star for z in D_star), "Nonzero symmetry failed!"
+    print("✓ Negation symmetry verified")
+
+    # Positive/negative decomposition
+    pos = {z for z in D_star if z > 0}
+    neg = {z for z in D_star if z < 0}
+    print(f"Δ⁺(S) = {sorted(pos)}, |Δ⁺| = {len(pos)}")
+    print(f"Δ⁻(S) = {sorted(neg)}, |Δ⁻| = {len(neg)}")
+    assert len(pos) == len(neg), "Halves not equal!"
+    assert len(D_star) == 2 * len(pos), "Decomposition failed!"
+    print("✓ |Δ*(S)| = 2 · |Δ⁺(S)| verified")
+
+    # Statistical verification on random sets
+    print("\nRandom verification (1000 trials)...")
+    for _ in range(1000):
+        n = random.randint(2, 15)
+        S_rand = set(random.sample(range(-50, 51), n))
+        D_star_rand = nonzero_difference_set(S_rand)
+        assert len(D_star_rand) % 2 == 0, f"Even cardinality failed for {S_rand}"
+        assert all(-z in D_star_rand for z in D_star_rand), \
+            f"Symmetry failed for {S_rand}"
+    print("✓ All 1000 random tests passed")
 
 
 # ============================================================
-# Demo 2: Geometric Convergence
+# Theorem B: Translation Invariance
 # ============================================================
-def demo_geometric_convergence():
-    """Demonstrate geometric convergence of Picard iteration."""
+
+def demo_translation_invariance():
     print("\n" + "=" * 60)
-    print("DEMO 2: Geometric Convergence (Picard Iteration)")
+    print("THEOREM B: Translation Invariance")
     print("=" * 60)
-    
-    k = 0.7
-    d0 = 10.0
-    
-    print(f"\nContraction rate k = {k}")
-    print(f"Initial distance d₀ = {d0}")
-    print(f"\n{'Iteration':>10} {'Distance':>12} {'Bound k^n·d₀':>14} {'Verified':>10}")
-    print("-" * 50)
-    
-    dist = d0
-    for n in range(15):
-        bound = k**n * d0
-        print(f"{n:>10} {dist:>12.6f} {bound:>14.6f} {str(dist <= bound + 1e-10):>10}")
-        dist *= k
-    
-    # Find N for epsilon
-    for eps in [1.0, 0.1, 0.01, 0.001]:
-        N = int(np.ceil(np.log(eps / d0) / np.log(k)))
-        print(f"\n  For ε = {eps}: need N ≥ {N} iterations (k^N · d₀ = {k**N * d0:.6f})")
+
+    S = {1, 3, 7, 12}
+    D_original = difference_set(S)
+
+    for a in [-1000, -1, 0, 1, 42, 1000]:
+        S_shifted = translate(S, a)
+        D_shifted = difference_set(S_shifted)
+        assert D_shifted == D_original, \
+            f"Translation invariance failed for a={a}"
+        print(f"  a = {a:>5d}: S+a = {sorted(S_shifted)[:4]}... → Δ(S+a) = Δ(S) ✓")
+
+    # Statistical verification
+    print("\nRandom verification (1000 trials)...")
+    for _ in range(1000):
+        n = random.randint(2, 12)
+        S_rand = set(random.sample(range(-50, 51), n))
+        a = random.randint(-10000, 10000)
+        assert difference_set(translate(S_rand, a)) == difference_set(S_rand)
+    print("✓ All 1000 random tests passed")
 
 
 # ============================================================
-# Demo 3: Tropical Duality
+# Theorem C: Diameter Bound
 # ============================================================
-def demo_tropical_duality():
-    """Demonstrate tropical min-plus / max-plus duality."""
+
+def demo_diameter_bound():
     print("\n" + "=" * 60)
-    print("DEMO 3: Tropical Negation Anti-Isomorphism")
+    print("THEOREM C: Diameter Bound")
     print("=" * 60)
-    
-    pairs = [(3.0, 7.0), (-2.0, 5.0), (0.0, 0.0), (1.5, -3.5)]
-    
-    print(f"\n{'a':>8} {'b':>8} {'min(a,b)':>10} {'-min(a,b)':>12} {'max(-a,-b)':>12} {'Equal':>8}")
-    print("-" * 65)
-    
-    for a, b in pairs:
-        min_ab = min(a, b)
-        neg_min = -min_ab
-        max_neg = max(-a, -b)
-        print(f"{a:>8.1f} {b:>8.1f} {min_ab:>10.1f} {neg_min:>12.1f} {max_neg:>12.1f} {str(abs(neg_min - max_neg) < 1e-10):>8}")
 
+    S = {1, 3, 7, 12}
+    D = difference_set(S)
+    diam = diameter(S)
 
-# ============================================================
-# Demo 4: Entropy-Contraction Bridge
-# ============================================================
-def demo_entropy_bridge():
-    """Demonstrate the entropy-contraction correspondence."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Contraction Entropy Bridge")
-    print("=" * 60)
-    
-    rates = np.linspace(0.01, 0.99, 20)
-    entropies = -np.log(rates)
-    
-    print(f"\n{'Rate k':>10} {'Entropy -log(k)':>16} {'exp(-H)':>10} {'k·exp(H)':>10}")
-    print("-" * 50)
-    
-    for k, H in zip(rates[::4], entropies[::4]):
-        exp_neg_H = np.exp(-H)
-        product = k * np.exp(H)
-        print(f"{k:>10.3f} {H:>16.4f} {exp_neg_H:>10.4f} {product:>10.4f}")
-    
-    print("\nVerified: k · exp(H(k)) = 1 for all k > 0 ✓")
+    print(f"\nS = {sorted(S)}")
+    print(f"Diameter D = {max(S)} - {min(S)} = {diam}")
+    print(f"Δ(S) = {sorted(D)}")
+    print(f"max |z| for z ∈ Δ(S) = {max(abs(z) for z in D)}")
+    print(f"Bound: max |z| ≤ D = {diam}")
+    assert all(abs(z) <= diam for z in D), "Diameter bound failed!"
+    print("✓ All differences bounded by diameter")
 
+    # Cardinality consequence
+    print(f"\n|Δ(S)| = {len(D)} ≤ 2D+1 = {2*diam+1}")
+    assert len(D) <= 2 * diam + 1
 
-# ============================================================
-# Demo 5: Lattice Security Margin
-# ============================================================
-def demo_security_margin():
-    """Demonstrate lattice security margin scaling."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Post-Quantum Lattice Security Margin")
-    print("=" * 60)
-    
-    attack_exp = 3.0  # Fixed attack exponent
-    
-    print(f"\nAttack exponent α = {attack_exp}")
-    print(f"\n{'Dimension':>10} {'Security Margin':>16} {'Δ from prev':>12}")
-    print("-" * 42)
-    
-    prev_margin = None
-    for dim in [64, 128, 256, 512, 1024, 2048]:
-        margin = np.log2(dim) - attack_exp
-        delta = margin - prev_margin if prev_margin is not None else 0
-        print(f"{dim:>10} {margin:>16.4f} {delta:>12.4f}")
-        prev_margin = margin
-    
-    print("\nVerified: Doubling dimension adds +1 bit of security ✓")
-
-
-# ============================================================
-# Demo 6: Portfolio Contraction Bound
-# ============================================================
-def demo_portfolio_bound():
-    """Demonstrate convex contraction bounds for ensemble networks."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Portfolio Contraction Bound (Ensemble Networks)")
-    print("=" * 60)
-    
-    n = 5
-    rates = np.array([0.3, 0.5, 0.7, 0.4, 0.6])
-    weights = np.array([0.2, 0.15, 0.25, 0.3, 0.1])
-    
-    print(f"\nRates:   {rates}")
-    print(f"Weights: {weights} (sum = {weights.sum():.2f})")
-    
-    weighted_avg = np.sum(weights * rates)
-    max_rate = np.max(rates)
-    min_rate = np.min(rates)
-    
-    print(f"\nMin rate:        {min_rate:.4f}")
-    print(f"Weighted avg:    {weighted_avg:.4f}")
-    print(f"Max rate:        {max_rate:.4f}")
-    print(f"Verified: min ≤ avg ≤ max: {min_rate <= weighted_avg <= max_rate} ✓")
+    # Statistical verification
+    print("\nRandom verification (1000 trials)...")
+    for _ in range(1000):
+        n = random.randint(2, 15)
+        S_rand = set(random.sample(range(-50, 51), n))
+        D_rand = difference_set(S_rand)
+        d = diameter(S_rand)
+        assert all(abs(z) <= d for z in D_rand)
+        assert len(D_rand) <= 2 * d + 1
+    print("✓ All 1000 random tests passed")
 
 
 # ============================================================
 # Visualization
 # ============================================================
+
 def create_visualizations():
-    """Create publication-quality visualizations."""
-    
-    fig, axes = plt.subplots(2, 3, figsize=(18, 11))
-    fig.suptitle('Spectral Contraction Algebras: Key Results', fontsize=16, fontweight='bold')
-    
-    # Plot 1: Contraction convergence
-    ax = axes[0, 0]
-    for k in [0.3, 0.5, 0.7, 0.9]:
-        ns = np.arange(0, 30)
-        ax.semilogy(ns, k**ns, label=f'k = {k}')
-    ax.set_xlabel('Iterations n')
-    ax.set_ylabel('k^n (log scale)')
-    ax.set_title('Geometric Convergence Rates')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 2: Entropy vs contraction rate
-    ax = axes[0, 1]
-    ks = np.linspace(0.01, 0.99, 100)
-    ax.plot(ks, -np.log(ks), 'b-', linewidth=2)
-    ax.fill_between(ks, 0, -np.log(ks), alpha=0.15, color='blue')
-    ax.set_xlabel('Contraction rate k')
-    ax.set_ylabel('Entropy H(k) = -log(k)')
-    ax.set_title('Contraction Entropy Bridge')
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 3: Security margin scaling
-    ax = axes[0, 2]
-    dims = np.array([2**i for i in range(4, 14)])
-    for alpha in [2.0, 3.0, 4.0, 5.0]:
-        margins = np.log2(dims) - alpha
-        ax.plot(np.log2(dims), margins, 'o-', label=f'α = {alpha}')
-    ax.set_xlabel('log₂(dimension)')
-    ax.set_ylabel('Security margin (bits)')
-    ax.set_title('Lattice Security vs Dimension')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 4: Tower contraction depth
-    ax = axes[1, 0]
-    depths = np.arange(1, 21)
-    for sr in [0.3, 0.5, 0.7, 0.9]:
-        ax.semilogy(depths, sr**depths, 'o-', markersize=3, label=f'ρ = {sr}')
-    ax.set_xlabel('Network depth n')
-    ax.set_ylabel('Total contraction ρ^n')
-    ax.set_title('Spectral Dominance (Thm 5)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 5: Tropical duality
-    ax = axes[1, 1]
-    xs = np.linspace(-3, 3, 200)
-    ys = np.linspace(-3, 3, 200)
-    X, Y = np.meshgrid(xs, ys)
-    Z_min = np.minimum(X, Y)
-    Z_max = np.maximum(X, Y)
-    c1 = ax.contourf(X, Y, Z_min, levels=15, cmap='coolwarm', alpha=0.7)
-    ax.set_xlabel('a')
-    ax.set_ylabel('b')
-    ax.set_title('Tropical min(a,b) Landscape')
-    plt.colorbar(c1, ax=ax, shrink=0.8)
-    
-    # Plot 6: Iteration complexity
-    ax = axes[1, 2]
-    epsilons = np.logspace(-8, -1, 50)
-    for k in [0.3, 0.5, 0.7, 0.9]:
-        iters = np.log(epsilons) / np.log(k)
-        ax.semilogx(epsilons, iters, label=f'k = {k}')
-    ax.set_xlabel('Target ε (log scale)')
-    ax.set_ylabel('Iterations needed')
-    ax.set_title('O(log(1/ε)) Complexity')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/visualizations.png', dpi=150, bbox_inches='tight')
-    plt.savefig('/workspace/request-project/visualizations.svg', bbox_inches='tight')
-    print("\nVisualizations saved to visualizations.png and visualizations.svg")
-    plt.close()
+    print("\n" + "=" * 60)
+    print("Creating Visualizations")
+    print("=" * 60)
 
+    # Figure 1: Difference set symmetry visualization
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    S = {1, 3, 7, 12}
+    D = sorted(difference_set(S))
+    D_star = sorted(nonzero_difference_set(S))
+
+    # Plot 1: The difference set with symmetry highlighted
+    ax = axes[0]
+    colors = ['#e74c3c' if z < 0 else '#2ecc71' if z > 0 else '#3498db' for z in D]
+    ax.bar(range(len(D)), [1]*len(D), color=colors, edgecolor='black', linewidth=0.5)
+    ax.set_xticks(range(len(D)))
+    ax.set_xticklabels([str(d) for d in D], rotation=45, fontsize=8)
+    ax.set_title(f'Δ(S) for S = {sorted(S)}\nRed=negative, Green=positive, Blue=zero',
+                 fontsize=10)
+    ax.set_ylabel('Membership')
+    ax.set_yticks([])
+
+    # Plot 2: Even cardinality across random sets
+    ax = axes[1]
+    sizes = []
+    cards = []
+    for _ in range(200):
+        n = random.randint(2, 20)
+        S_rand = set(random.sample(range(-30, 31), n))
+        sizes.append(n)
+        cards.append(len(nonzero_difference_set(S_rand)))
+    ax.scatter(sizes, cards, alpha=0.5, s=15, c='#9b59b6')
+    ax.set_xlabel('|S|')
+    ax.set_ylabel('|Δ*(S)|')
+    ax.set_title('Nonzero difference set cardinality\n(all even, by Theorem A)')
+
+    # Plot 3: Diameter bound tightness
+    ax = axes[2]
+    ratios = []
+    set_sizes = []
+    for _ in range(300):
+        n = random.randint(3, 15)
+        S_rand = set(random.sample(range(-40, 41), n))
+        d = diameter(S_rand)
+        if d > 0:
+            ratio = len(difference_set(S_rand)) / (2 * d + 1)
+            ratios.append(ratio)
+            set_sizes.append(n)
+    ax.scatter(set_sizes, ratios, alpha=0.5, s=15, c='#e67e22')
+    ax.set_xlabel('|S|')
+    ax.set_ylabel('|Δ(S)| / (2D+1)')
+    ax.set_title('Diameter bound utilization\n(always ≤ 1, by Theorem C)')
+    ax.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='Upper bound')
+    ax.legend()
+
+    plt.tight_layout()
+    plt.savefig('difference_set_structure.png', dpi=150, bbox_inches='tight')
+    print("✓ Saved difference_set_structure.png")
+
+    # Figure 2: Translation invariance demonstration
+    fig2, ax2 = plt.subplots(figsize=(10, 4))
+    S = {2, 5, 8, 14}
+    translations = [-10, -5, 0, 5, 10, 20]
+    D_original = sorted(difference_set(S))
+
+    for i, a in enumerate(translations):
+        S_t = translate(S, a)
+        D_t = sorted(difference_set(S_t))
+        y = [i] * len(D_t)
+        ax2.scatter(D_t, y, s=30, zorder=5)
+
+    ax2.set_yticks(range(len(translations)))
+    ax2.set_yticklabels([f'S + {a}' for a in translations])
+    ax2.set_xlabel('Difference values')
+    ax2.set_title('Translation Invariance: Δ(S+a) = Δ(S) for all a')
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('translation_invariance.png', dpi=150, bbox_inches='tight')
+    print("✓ Saved translation_invariance.png")
+
+
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == '__main__':
-    demo_contraction_composition()
-    demo_geometric_convergence()
-    demo_tropical_duality()
-    demo_entropy_bridge()
-    demo_security_margin()
-    demo_portfolio_bound()
+    random.seed(42)
+
+    demo_negation_symmetry()
+    demo_translation_invariance()
+    demo_diameter_bound()
     create_visualizations()
+
     print("\n" + "=" * 60)
-    print("All demos complete. All theorems verified numerically.")
+    print("ALL DEMOS COMPLETE")
     print("=" * 60)

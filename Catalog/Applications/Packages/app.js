@@ -704,4 +704,354 @@ document.addEventListener('DOMContentLoaded', () => {
              .replace(/"/g, "&quot;")
              .replace(/'/g, "&#039;");
     }
+
+    // ═══════════════════════════════════════════════
+    // Backrooms Maze Canvas Animation
+    // ═══════════════════════════════════════════════
+    (function initBackrooms() {
+        const canvas = document.getElementById('backrooms-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        let W, H;
+        function resize() {
+            W = canvas.width = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // --- Maze Generation ---
+        // Grid of cells; each cell may become a room or a corridor
+        const CELL = 60; // base cell size in world pixels
+        const COLS = 40, ROWS = 40;
+        const rooms = [];
+        const corridors = [];
+
+        // Simple seeded RNG for consistency
+        function mulberry32(a) {
+            return function() {
+                a |= 0; a = a + 0x6D2B79F5 | 0;
+                let t = Math.imul(a ^ a >>> 15, 1 | a);
+                t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+        const rand = mulberry32(0xAE7BE11);
+
+        // Room types with different shapes
+        const ROOM_SHAPES = [
+            'rect', 'L', 'T', 'cross', 'hall', 'narrow', 'wide', 'odd'
+        ];
+
+        // Color palette — Backrooms yellow/amber/warm tones
+        const FLOOR_COLORS = [
+            '#c9a835', '#b89a2e', '#d4b84a', '#a8892a', '#dbca6f',
+            '#c4a040', '#bfa244', '#d6c068', '#e0c870', '#c8a030'
+        ];
+        const WALL_COLOR = '#3a3020';
+        const WALL_EDGE = '#5a4a30';
+        const CARPET_COLORS = ['#8b4513', '#6b3410', '#7a4a20', '#5a3010'];
+        const LIGHT_COLOR = 'rgba(255, 240, 180,';
+
+        // Generate rooms
+        const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0)); // 0=empty, 1=room, 2=corridor
+
+        // Place rooms of various sizes and shapes
+        for (let i = 0; i < 55; i++) {
+            const shape = ROOM_SHAPES[Math.floor(rand() * ROOM_SHAPES.length)];
+            const cx = Math.floor(rand() * (COLS - 6)) + 3;
+            const cy = Math.floor(rand() * (ROWS - 6)) + 3;
+            const w = Math.floor(rand() * 4) + 2;
+            const h = Math.floor(rand() * 4) + 2;
+            const color = FLOOR_COLORS[Math.floor(rand() * FLOOR_COLORS.length)];
+            const carpet = rand() > 0.5 ? CARPET_COLORS[Math.floor(rand() * CARPET_COLORS.length)] : null;
+
+            const cells = [];
+            // Build shape cells
+            switch (shape) {
+                case 'rect':
+                    for (let dy = 0; dy < h; dy++)
+                        for (let dx = 0; dx < w; dx++)
+                            cells.push([cx + dx, cy + dy]);
+                    break;
+                case 'L':
+                    for (let dx = 0; dx < w; dx++) cells.push([cx + dx, cy]);
+                    for (let dy = 1; dy < h; dy++) cells.push([cx, cy + dy]);
+                    break;
+                case 'T':
+                    for (let dx = 0; dx < w; dx++) cells.push([cx + dx, cy]);
+                    for (let dy = 1; dy < h; dy++)
+                        cells.push([cx + Math.floor(w / 2), cy + dy]);
+                    break;
+                case 'cross':
+                    for (let dx = 0; dx < w; dx++) cells.push([cx + dx, cy + Math.floor(h / 2)]);
+                    for (let dy = 0; dy < h; dy++)
+                        if (dy !== Math.floor(h / 2)) cells.push([cx + Math.floor(w / 2), cy + dy]);
+                    break;
+                case 'hall':
+                    for (let dx = 0; dx < w + 2; dx++) cells.push([cx + dx, cy]);
+                    break;
+                case 'narrow':
+                    for (let dy = 0; dy < h + 1; dy++) cells.push([cx, cy + dy]);
+                    break;
+                case 'wide':
+                    for (let dx = 0; dx < w + 2; dx++)
+                        for (let dy = 0; dy < 2; dy++)
+                            cells.push([cx + dx, cy + dy]);
+                    break;
+                case 'odd':
+                    // Asymmetric blob
+                    for (let dx = 0; dx < w; dx++) cells.push([cx + dx, cy]);
+                    for (let dy = 1; dy < h; dy++) cells.push([cx + w - 1, cy + dy]);
+                    if (rand() > 0.5) cells.push([cx, cy + 1]);
+                    break;
+            }
+
+            // Mark cells
+            let ok = true;
+            for (const [gx, gy] of cells) {
+                if (gx < 0 || gx >= COLS || gy < 0 || gy >= ROWS || grid[gy][gx] !== 0) {
+                    ok = false; break;
+                }
+            }
+            if (!ok) continue;
+
+            for (const [gx, gy] of cells) grid[gy][gx] = 1;
+
+            rooms.push({
+                cells, color, carpet, shape,
+                hasLight: rand() > 0.4,
+                lightFlicker: rand() * Math.PI * 2
+            });
+        }
+
+        // Connect rooms with corridors (simple: connect each room to nearest unconnected)
+        const roomCenters = rooms.map(r => {
+            let sx = 0, sy = 0;
+            r.cells.forEach(([x, y]) => { sx += x; sy += y; });
+            return { x: sx / r.cells.length, y: sy / r.cells.length };
+        });
+
+        const connected = new Set([0]);
+        for (let i = 1; i < rooms.length; i++) {
+            let bestD = Infinity, bestJ = 0;
+            for (const j of connected) {
+                const dx = roomCenters[i].x - roomCenters[j].x;
+                const dy = roomCenters[i].y - roomCenters[j].y;
+                const d = dx * dx + dy * dy;
+                if (d < bestD) { bestD = d; bestJ = j; }
+            }
+            // Carve corridor from bestJ to i
+            let cx = Math.round(roomCenters[bestJ].x);
+            let cy = Math.round(roomCenters[bestJ].y);
+            const tx = Math.round(roomCenters[i].x);
+            const ty = Math.round(roomCenters[i].y);
+            while (cx !== tx || cy !== ty) {
+                if (cx >= 0 && cx < COLS && cy >= 0 && cy < ROWS && grid[cy][cx] === 0) {
+                    grid[cy][cx] = 2;
+                }
+                if (Math.abs(tx - cx) > Math.abs(ty - cy)) {
+                    cx += cx < tx ? 1 : -1;
+                } else {
+                    cy += cy < ty ? 1 : -1;
+                }
+            }
+            connected.add(i);
+        }
+
+        // Also add some random corridors for maze density
+        for (let i = 0; i < 30; i++) {
+            const x1 = Math.floor(rand() * COLS);
+            const y1 = Math.floor(rand() * ROWS);
+            const x2 = Math.floor(rand() * COLS);
+            const y2 = Math.floor(rand() * ROWS);
+            let cx = x1, cy = y1;
+            while (cx !== x2 || cy !== y2) {
+                if (cx >= 0 && cx < COLS && cy >= 0 && cy < ROWS && grid[cy][cx] === 0) {
+                    grid[cy][cx] = 2;
+                }
+                if (Math.abs(x2 - cx) > Math.abs(y2 - cy)) {
+                    cx += cx < x2 ? 1 : -1;
+                } else {
+                    cy += cy < y2 ? 1 : -1;
+                }
+            }
+        }
+
+        // World dimensions
+        const worldW = COLS * CELL;
+        const worldH = ROWS * CELL;
+
+        // --- Camera ---
+        let camX = worldW / 2, camY = worldH / 2;
+        let camZoom = 1.0;
+        let time = 0;
+
+        // Camera path: smooth sweeping, zoom in/out
+        function getCameraState(t) {
+            // Multiple overlapping sinusoidal motions for organic movement
+            const cycle = t * 0.04; // slow
+            const zoomCycle = t * 0.02;
+
+            const panX = worldW / 2
+                + Math.sin(cycle * 0.7) * worldW * 0.25
+                + Math.sin(cycle * 1.3) * worldW * 0.1;
+            const panY = worldH / 2
+                + Math.cos(cycle * 0.5) * worldH * 0.25
+                + Math.cos(cycle * 1.1) * worldH * 0.1;
+
+            // Zoom oscillates between close-up and bird's eye
+            const zoom = 0.8 + Math.sin(zoomCycle) * 0.6 + Math.sin(zoomCycle * 2.3) * 0.15;
+
+            return { x: panX, y: panY, zoom: Math.max(0.3, zoom) };
+        }
+
+        // --- Rendering ---
+        function drawRoomCell(gx, gy, isRoom, roomIdx) {
+            const x = gx * CELL;
+            const y = gy * CELL;
+
+            // Floor
+            if (isRoom) {
+                const room = rooms[roomIdx];
+                ctx.fillStyle = room.color;
+                ctx.fillRect(x, y, CELL, CELL);
+
+                // Carpet patch
+                if (room.carpet && rand() > 0.5) {
+                    ctx.fillStyle = room.carpet;
+                    const inset = CELL * 0.15;
+                    ctx.fillRect(x + inset, y + inset, CELL - inset * 2, CELL - inset * 2);
+                }
+
+                // Ceiling light glow
+                if (room.hasLight) {
+                    const flicker = 0.12 + Math.sin(time * 3 + room.lightFlicker) * 0.06;
+                    const grad = ctx.createRadialGradient(
+                        x + CELL / 2, y + CELL / 2, 0,
+                        x + CELL / 2, y + CELL / 2, CELL * 0.6
+                    );
+                    grad.addColorStop(0, LIGHT_COLOR + flicker + ')');
+                    grad.addColorStop(1, LIGHT_COLOR + '0)');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(x - CELL * 0.1, y - CELL * 0.1, CELL * 1.2, CELL * 1.2);
+                }
+            } else {
+                // Corridor
+                ctx.fillStyle = '#9a8a30';
+                ctx.fillRect(x, y, CELL, CELL);
+            }
+
+            // Walls: draw wall segments on edges adjacent to empty space
+            ctx.strokeStyle = WALL_COLOR;
+            ctx.lineWidth = 2.5;
+            const dirs = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+            for (const [dx, dy] of dirs) {
+                const nx = gx + dx, ny = gy + dy;
+                if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS || grid[ny][nx] === 0) {
+                    ctx.beginPath();
+                    if (dx === 0 && dy === -1) { ctx.moveTo(x, y); ctx.lineTo(x + CELL, y); }
+                    if (dx === 0 && dy === 1) { ctx.moveTo(x, y + CELL); ctx.lineTo(x + CELL, y + CELL); }
+                    if (dx === -1 && dy === 0) { ctx.moveTo(x, y); ctx.lineTo(x, y + CELL); }
+                    if (dx === 1 && dy === 0) { ctx.moveTo(x + CELL, y); ctx.lineTo(x + CELL, y + CELL); }
+                    ctx.stroke();
+                }
+            }
+
+            // Wall edge highlight
+            ctx.strokeStyle = WALL_EDGE;
+            ctx.lineWidth = 1;
+            for (const [dx, dy] of dirs) {
+                const nx = gx + dx, ny = gy + dy;
+                if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS || grid[ny][nx] === 0) {
+                    const off = 2;
+                    ctx.beginPath();
+                    if (dx === 0 && dy === -1) { ctx.moveTo(x, y + off); ctx.lineTo(x + CELL, y + off); }
+                    if (dx === 0 && dy === 1) { ctx.moveTo(x, y + CELL - off); ctx.lineTo(x + CELL, y + CELL - off); }
+                    if (dx === -1 && dy === 0) { ctx.moveTo(x + off, y); ctx.lineTo(x + off, y + CELL); }
+                    if (dx === 1 && dy === 0) { ctx.moveTo(x + CELL - off, y); ctx.lineTo(x + CELL - off, y + CELL); }
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Build a room lookup for fast cell→room mapping
+        const cellToRoom = Array.from({ length: ROWS }, () => Array(COLS).fill(-1));
+        rooms.forEach((room, idx) => {
+            room.cells.forEach(([gx, gy]) => { cellToRoom[gy][gx] = idx; });
+        });
+
+        function render() {
+            time += 0.016;
+            const cam = getCameraState(time);
+            camX = cam.x;
+            camY = cam.y;
+            camZoom = cam.zoom;
+
+            ctx.clearRect(0, 0, W, H);
+
+            // Dark void background
+            ctx.fillStyle = '#0a0806';
+            ctx.fillRect(0, 0, W, H);
+
+            ctx.save();
+
+            // Apply camera transform
+            ctx.translate(W / 2, H / 2);
+            ctx.scale(camZoom, camZoom);
+            ctx.translate(-camX, -camY);
+
+            // Determine visible cells for culling
+            const viewLeft = camX - W / (2 * camZoom) - CELL;
+            const viewRight = camX + W / (2 * camZoom) + CELL;
+            const viewTop = camY - H / (2 * camZoom) - CELL;
+            const viewBottom = camY + H / (2 * camZoom) + CELL;
+
+            const minCol = Math.max(0, Math.floor(viewLeft / CELL));
+            const maxCol = Math.min(COLS - 1, Math.ceil(viewRight / CELL));
+            const minRow = Math.max(0, Math.floor(viewTop / CELL));
+            const maxRow = Math.min(ROWS - 1, Math.ceil(viewBottom / CELL));
+
+            for (let gy = minRow; gy <= maxRow; gy++) {
+                for (let gx = minCol; gx <= maxCol; gx++) {
+                    if (grid[gy][gx] === 0) continue;
+                    drawRoomCell(gx, gy, grid[gy][gx] === 1, cellToRoom[gy][gx]);
+                }
+            }
+
+            // Ambient fog/vignette at edges of view
+            const fogGrad = ctx.createRadialGradient(camX, camY, 0, camX, camY, Math.max(W, H) * 0.8 / camZoom);
+            fogGrad.addColorStop(0, 'rgba(10, 8, 6, 0)');
+            fogGrad.addColorStop(0.6, 'rgba(10, 8, 6, 0)');
+            fogGrad.addColorStop(1, 'rgba(10, 8, 6, 0.85)');
+            ctx.fillStyle = fogGrad;
+            ctx.fillRect(viewLeft, viewTop, viewRight - viewLeft, viewBottom - viewTop);
+
+            ctx.restore();
+
+            // Screen-level subtle scan lines
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
+            for (let y = 0; y < H; y += 3) {
+                ctx.fillRect(0, y, W, 1);
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        // Only render when welcome screen is visible
+        const observer = new MutationObserver(() => {
+            if (!welcomeScreen.classList.contains('hidden')) {
+                resize();
+                requestAnimationFrame(render);
+            }
+        });
+        observer.observe(welcomeScreen, { attributes: true, attributeFilter: ['class'] });
+
+        // Start rendering
+        if (!welcomeScreen.classList.contains('hidden')) {
+            requestAnimationFrame(render);
+        }
+    })();
 });
