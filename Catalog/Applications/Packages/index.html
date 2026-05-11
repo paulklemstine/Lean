@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aether Research Packages</title>
-    
+
     <!-- Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
     <!-- KaTeX for Math Rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    
+
     <!-- Marked.js for Markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
-    
+
     <!-- Pyodide for WASM Python Execution -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="dark-theme">
     <!-- Mobile floating menu button (always visible on small screens) -->
     <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
@@ -37,15 +41,31 @@
                 <h2>Aether Research</h2>
                 <div class="header-controls">
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
-                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
                     </button>
                     <button class="mobile-toggle" id="mobile-toggle">
                         <span></span><span></span><span></span>
                     </button>
                 </div>
             </div>
-            
+
             <div class="search-container">
                 <input type="text" id="search-input" placeholder="Search packages...">
             </div>
@@ -61,11 +81,18 @@
         <!-- Main Content Area -->
         <main class="main-content" id="main-content">
             <div class="welcome-screen" id="welcome-screen">
+                <canvas id="backrooms-canvas"></canvas>
+                <div class="welcome-overlay"></div>
                 <div class="welcome-content">
-                    <h1>Aether Pipeline</h1>
-                    <p>Select a research package from the sidebar to explore AI-generated mathematical discoveries, articles, and interactive demos.</p>
-                    <div class="glow-orb"></div>
+                    <h1 class="welcome-title">AETHER</h1>
+                    <p class="welcome-subtitle">The Backrooms of Mathematics</p>
+                    <p class="welcome-tagline">Dreams become reality</p>
+                    <p class="welcome-desc">Select a research package from the sidebar to explore AI-generated
+                        mathematical discoveries, articles, and interactive demos.</p>
                 </div>
+                <footer class="welcome-footer">
+                    &copy; 2026 <a href="mailto:paulklemstine@gmail.com">Paul Klemstine</a>
+                </footer>
             </div>
 
             <div class="package-view hidden" id="package-view">
@@ -76,7 +103,7 @@
                         <span class="tag time-tag" id="pkg-time" style="display:none">Time</span>
                     </div>
                     <h1 id="pkg-title">Package Title</h1>
-                    
+
                     <!-- Internal Tabs for the Package -->
                     <div class="tabs-container">
                         <button class="tab-btn active" data-tab="article">Article</button>
@@ -93,22 +120,22 @@
                     <div class="tab-pane active" id="tab-article">
                         <div class="markdown-body" id="content-article"></div>
                     </div>
-                    
+
                     <!-- Paper Tab -->
                     <div class="tab-pane" id="tab-paper">
                         <div class="markdown-body" id="content-paper"></div>
                     </div>
-                    
+
                     <!-- Visualizations Tab -->
                     <div class="tab-pane" id="tab-visualizations">
                         <div class="gallery-grid" id="content-visualizations"></div>
                     </div>
-                    
+
                     <!-- Algorithms Tab -->
                     <div class="tab-pane" id="tab-algorithms">
                         <div class="algorithms-list" id="content-algorithms"></div>
                     </div>
-                    
+
                     <!-- Demos Tab -->
                     <div class="tab-pane" id="tab-demos">
                         <div class="demos-list" id="content-demos"></div>
@@ -139,4 +166,5 @@
     <script src="packages_db.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>

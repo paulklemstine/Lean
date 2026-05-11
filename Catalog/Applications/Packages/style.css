@@ -288,49 +288,79 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 40px;
     position: relative;
+    overflow: hidden;
+}
+
+#backrooms-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+}
+
+.welcome-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+    z-index: 1;
 }
 
 .welcome-content {
-    background: var(--bg-glass);
-    padding: 60px;
-    border-radius: 24px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-lg);
-    backdrop-filter: blur(20px);
-    max-width: 600px;
+    position: relative;
+    z-index: 2;
+    padding: 60px 40px;
+    max-width: 700px;
 }
 
-.welcome-content h1 {
+.welcome-title {
     font-family: var(--font-heading);
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 20px;
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    font-size: 6rem;
+    font-weight: 900;
+    margin: 0 0 10px 0;
+    letter-spacing: 0.15em;
+    background: linear-gradient(180deg, #f5e6a3 0%, #c9a835 40%, #8b6914 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.03em;
+    text-shadow: none;
+    filter: drop-shadow(0 0 30px rgba(201, 168, 53, 0.4));
 }
 
-.welcome-content p {
-    color: var(--text-muted);
+.welcome-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #c9a835;
+    margin: 0 0 6px 0;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(201, 168, 53, 0.5);
+}
+
+.welcome-tagline {
+    font-family: var(--font-body);
     font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(245, 230, 163, 0.7);
+    margin: 0 0 30px 0;
+    letter-spacing: 0.08em;
 }
 
-.glow-orb {
+.welcome-desc {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.welcome-footer {
     position: absolute;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, rgba(139, 92, 246, 0.1) 40%, rgba(0,0,0,0) 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(40px);
-    animation: pulse 8s infinite alternate ease-in-out;
+    bottom: 20px;
+    left: 0; right: 0;
+    text-align: center;
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
 }
 
 @keyframes pulse {
