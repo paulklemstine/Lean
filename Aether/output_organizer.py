@@ -159,10 +159,6 @@ ARTIFACT_PATTERNS = {
                   "scientific_american", "SCIENTIFIC_AMERICAN"],
         "exts": [".md"],
     },
-    "future_directions": {
-        "names": ["FUTURE_DIRECTIONS", "future_directions", "FUTURE-DIRECTIONS"],
-        "exts": [".md"],
-    },
     "theorem": {
         "names": ["Main", "main", "Theorem", "theorem"],
         "exts": [".lean"],
@@ -202,7 +198,6 @@ class OutputOrganizer:
             self.catalog_root / "Applications" / "Demos",
             self.catalog_root / "Applications" / "Visuals",
             self.catalog_root / "Applications" / "Articles",
-            self.catalog_root / "Applications" / "Web",
             self.catalog_root / "ResearchOutput",
         ]
         for d in dirs:
@@ -244,6 +239,7 @@ class OutputOrganizer:
             "demos": [],
             "visuals": [],
             "articles": [],
+            "future_directions": [],
             "raw": [],
             "rejected": [],
         }
@@ -294,11 +290,11 @@ class OutputOrganizer:
                 print(f"[Organizer] {result_file.name} -> {decision.target_path} (article)")
 
             elif file_type == "future_directions":
-                decision = self._place_artifact(
-                    result_file, "Applications/Papers", exp_id, concept, dry_run,
-                    suffix_override="_future_directions.md"
+                # Route FUTURE_DIRECTIONS.md to ResearchOutput for the feedback loop
+                decision = self._place_future_directions(
+                    result_file, exp_id, concept, dry_run
                 )
-                decisions["papers"].append(decision)
+                decisions["future_directions"].append(decision)
                 print(f"[Organizer] {result_file.name} -> {decision.target_path} (future_directions)")
 
             elif file_type == "metadata":
@@ -316,7 +312,7 @@ class OutputOrganizer:
 
         Priority: .lean > name patterns > extension.
         Returns: "theorem" | "paper" | "demo" | "visual" | "article" |
-                 "future_directions" | "metadata" | "raw"
+                 "metadata" | "raw"
         """
         name = file_path.stem
         suffix = file_path.suffix.lower()
@@ -332,10 +328,9 @@ class OutputOrganizer:
         # Check name patterns for .md files
         if suffix == ".md":
             name_lower = name.lower()
-            # Future directions: highest priority for .md
-            for pattern in ARTIFACT_PATTERNS["future_directions"]["names"]:
-                if pattern.lower() in name_lower:
-                    return "future_directions"
+            # Future directions: critical for the feedback loop
+            if "future_direction" in name_lower or name == "FUTURE_DIRECTIONS":
+                return "future_directions"
             # Papers: research reports
             for pattern in ARTIFACT_PATTERNS["paper"]["names"]:
                 if pattern.lower() in name_lower:
@@ -348,8 +343,6 @@ class OutputOrganizer:
             try:
                 content = file_path.read_text(encoding="utf-8", errors="replace")[:2000]
                 content_lower = content.lower()
-                if "future directions" in content_lower or "breakthrough opportunities" in content_lower:
-                    return "future_directions"
                 if "scientific american" in content_lower or "discussion" in content_lower:
                     return "article"
                 if "abstract" in content_lower or "research report" in content_lower:
@@ -562,7 +555,6 @@ class OutputOrganizer:
         exp_id: str,
         concept: Any,
         dry_run: bool,
-        suffix_override: str = "",
     ) -> PlacementDecision:
         """Place a non-.lean artifact (paper, demo, visual, article, etc.)."""
         # Generate a descriptive filename
@@ -570,9 +562,7 @@ class OutputOrganizer:
         safe_title = re.sub(r'[^a-zA-Z0-9_]', '_', concept_title)[:50]
 
         suffix = source.suffix
-        if suffix_override:
-            new_name = f"{safe_title}{suffix_override}"
-        elif suffix == ".md" and target_dir_name == "Applications/Papers":
+        if suffix == ".md" and target_dir_name == "Applications/Papers":
             new_name = f"{safe_title}_paper.md"
         elif suffix == ".md" and target_dir_name == "Applications/Articles":
             new_name = f"{safe_title}_article.md"
@@ -618,6 +608,97 @@ class OutputOrganizer:
             reason="Raw experiment data for provenance",
             confidence=1.0,
         )
+
+    def _place_future_directions(
+        self, source: Path, exp_id: str, concept: Any, dry_run: bool
+    ) -> PlacementDecision:
+        """Route FUTURE_DIRECTIONS.md to ResearchOutput for the feedback loop.
+
+        Also extracts Future Directions sections from research papers
+        in the same result directory, saving them as extracted_future_directions.md.
+        """
+        target_dir = self.catalog_root / "ResearchOutput" / exp_id
+        target_path = target_dir / "FUTURE_DIRECTIONS.md"
+
+        if not dry_run:
+            target_dir.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, target_path)
+
+            # Also extract Future Directions sections from research papers
+            self._extract_future_directions_from_papers(source.parent, exp_id)
+
+        return PlacementDecision(
+            source_path=source,
+            target_path=target_path,
+            artifact_type="future_directions",
+            domain="ResearchOutput",
+            reason="Future directions drive the next research cycle",
+            confidence=1.0,
+        )
+
+    def _extract_future_directions_from_papers(
+        self, result_dir: Path, exp_id: str
+    ) -> None:
+        """Extract Future Directions sections from research papers in the result dir."""
+        target_dir = self.catalog_root / "ResearchOutput" / exp_id
+        section_names = [
+            "Future Directions", "What We Don't Know", "Open Questions",
+            "Open Problems", "What Could This Be Good For", "Looking Forward",
+        ]
+
+        for paper_name in ["research_paper.md", "RESEARCH_REPORT.md",
+                           "RESEARCH_PAPER.md", "research_report.md"]:
+            paper_path = result_dir / paper_name
+            if not paper_path.exists():
+                # Also check subdirectories
+                for sub in result_dir.iterdir():
+                    if sub.is_dir():
+                        candidate = sub / paper_name
+                        if candidate.exists():
+                            paper_path = candidate
+                            break
+
+            if paper_path.exists():
+                try:
+                    content = paper_path.read_text(encoding="utf-8", errors="replace")
+                    section = self._extract_section(content, section_names)
+                    if section and len(section) > 100:
+                        extracted_path = target_dir / "extracted_future_directions.md"
+                        extracted_path.write_text(section, encoding="utf-8")
+                        print(f"[Organizer] Extracted future directions section from {paper_name}")
+                        break  # Only extract from the first paper found
+                except Exception as e:
+                    print(f"[Organizer] Failed to extract from {paper_name}: {e}")
+
+    @staticmethod
+    def _extract_section(content: str, section_names: list) -> str:
+        """Extract a named section from a markdown document."""
+        lines = content.splitlines()
+        capturing = False
+        capture_level = 0
+        result_lines = []
+
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                level = len(stripped) - len(stripped.lstrip("#"))
+                heading_text = stripped.lstrip("# ").strip()
+
+                if capturing:
+                    if level <= capture_level:
+                        break
+                    result_lines.append(line)
+                else:
+                    for name in section_names:
+                        if name.lower() in heading_text.lower():
+                            capturing = True
+                            capture_level = level
+                            result_lines.append(line)
+                            break
+            elif capturing:
+                result_lines.append(line)
+
+        return "\n".join(result_lines)
 
     def _is_build_artifact(self, rel_path: Path) -> bool:
         """Check if a path is a build artifact."""

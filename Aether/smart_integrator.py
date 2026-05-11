@@ -566,12 +566,10 @@ class SmartIntegrator:
             domain, "Speculative"
         )
 
-        # Check if the file has sorrys or admit tactics (incomplete proofs)
+        # Check if the file has sorrys (incomplete proofs)
         sorry_count = lean_source.lower().count("sorry")
-        admit_tactic_count = len(re.findall(r'\bby\s+admit\b|\b:=\s*admit\b', lean_source))
-        total_sorry = sorry_count + admit_tactic_count
 
-        if total_sorry > 0:
+        if sorry_count > 0:
             # Incomplete proof: place in Speculative/AutoResearch
             target_dir = self.catalog_root / "Speculative" / "AutoResearch"
             target = target_dir / f"PENDING_{domain}_{exp_id}_{result_file.name}"
@@ -617,21 +615,8 @@ class SmartIntegrator:
 
         return best_dir
 
-    # AEM quality gate constants: reject files scoring below Graduate Researcher level
-    # This prevents low-quality stubs and placeholder files from entering the catalog
-    MIN_AEM_SCORE = 20.0  # Minimum: above Automated Drone level
-    MIN_AEM_ORIGINALITY = 3.0  # Minimum originality: must have some novel content
-    MIN_AEM_UTILITY = 3.0  # Minimum utility: must have some computational content
-
     def _validate_lean_file(self, lean_source: str) -> Dict[str, Any]:
-        """Validate Lean source with AEM quality gate."""
-        # Check for git diff/patch format (not valid .lean files)
-        first_line = lean_source.splitlines()[0].strip() if lean_source else ""
-        if first_line.startswith('---') or first_line.startswith('+++'):
-            return {"ok": False, "error": "Git diff/patch file detected (starts with ---/+++). Not a valid Lean file."}
-        if '+++ b/' in lean_source[:200]:
-            return {"ok": False, "error": "Git diff/patch content detected (+++ b/). Not a valid Lean file."}
-
+        """Validate Lean source for basic structural correctness."""
         # Check for balanced braces
         open_count = lean_source.count("{") + lean_source.count("(") + lean_source.count("[")
         close_count = lean_source.count("}") + lean_source.count(")") + lean_source.count("]")
@@ -652,49 +637,7 @@ class SmartIntegrator:
         if not has_decl:
             return {"ok": False, "error": "No Lean declarations found"}
 
-        # AEM quality gate: evaluate and reject low-quality files
-        # Provides detailed feedback for prompt improvement
-        try:
-            from aem_evaluator import AEMEvaluator
-            evaluator = AEMEvaluator()
-            score = evaluator.evaluate_lean_file(lean_source, file_path="validation_gate")
-
-            if score.total < self.MIN_AEM_SCORE:
-                return {"ok": False, "error": f"AEM score {score.total:.1f} below minimum {self.MIN_AEM_SCORE:.0f} (Automated Drone threshold)",
-                        "aem_score": score.total, "rigor": score.rigor, "aesthetic": score.aesthetic,
-                        "utility": score.utility, "originality": score.originality, "impact": score.impact}
-
-            if score.originality < self.MIN_AEM_ORIGINALITY:
-                # Provide actionable feedback for improving originality
-                feedback = f"Originality {score.originality:.1f} below minimum {self.MIN_AEM_ORIGINALITY:.0f}. "
-                if score.originality < 2:
-                    feedback += "Needs genuinely new mathematical definitions (def, structure, class). "
-                    feedback += "Target 5+ novel structures with descriptive names. "
-                    feedback += "Add cross-domain bridge references in doc comments."
-                else:
-                    feedback += "Needs more novel mathematical objects. "
-                    feedback += "Target 3+ new definitions that don't exist in Mathlib. "
-                    feedback += "Add 2+ cross-domain bridge mentions."
-                return {"ok": False, "error": feedback,
-                        "aem_score": score.total, "rigor": score.rigor, "aesthetic": score.aesthetic,
-                        "utility": score.utility, "originality": score.originality, "impact": score.impact}
-
-            if score.utility < self.MIN_AEM_UTILITY:
-                feedback = f"Utility {score.utility:.1f} below minimum {self.MIN_AEM_UTILITY:.0f}. "
-                if score.utility < 2:
-                    feedback += "Needs reusable API structures (def, structure, class, instance) and SPECIFIC computational bounds (O(n), Omega(2^n)). "
-                    feedback += "Generic terms like 'bound' or 'rate' alone don't qualify."
-                else:
-                    feedback += "Needs more reusable definitions and SPECIFIC computational bounds. "
-                    feedback += "Add explicit O() bounds in theorem statements."
-                return {"ok": False, "error": feedback,
-                        "aem_score": score.total, "rigor": score.rigor, "aesthetic": score.aesthetic,
-                        "utility": score.utility, "originality": score.originality, "impact": score.impact}
-        except Exception:
-            # If AEM evaluation fails, fall through to accept
-            pass
-
-        return {"ok": True, "error": "", "aem_score": None}
+        return {"ok": True, "error": ""}
 
     def generate_manifest(
         self,

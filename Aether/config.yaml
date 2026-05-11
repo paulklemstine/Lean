@@ -3,9 +3,7 @@
 
 pi_agent:
   model: "openai-large"
-  use_ollama: false
   ollama_base_url: "http://127.0.0.1:11434"
-  ollama_model: "glm-5.1:cloud"
   timeout: 600
   pollinations:
     enabled: true
@@ -14,7 +12,7 @@ pi_agent:
     hourly_allowance: 0.4
     estimated_pollen_per_call: 0.008
     estimated_pollen_per_pi_execution: 0.05
-    min_balance: 0.04
+    min_balance: 0.0
     defer_when_low: true
     balance_cache_seconds: 60
     reset_buffer_seconds: 10
@@ -35,7 +33,6 @@ pi_agent:
     - counterexample
     - sorry_fill
     - discover
-    - millennial
 
 aristotle:
   api_base_url: "https://aristotle.harmonic.fun/api/v1"
@@ -276,7 +273,8 @@ research:
       target_sorry_reduction: 3
       difficulty: "phd"
 
-  difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem", "discover", "millennial"]
+  difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem", "discover"]
+  arc_rotation: "round_robin"
   max_concurrent_cycles: 10
   cycle_interval_seconds: 300
   max_retries_per_cycle: 3

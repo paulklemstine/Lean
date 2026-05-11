@@ -65,11 +65,6 @@ class ResearchJob:
     result_lean: Optional[str] = None
     result_demo: Optional[str] = None
     result_paper: Optional[str] = None
-    result_future_directions: Optional[str] = None
-    result_discussion: Optional[str] = None
-    result_article: Optional[str] = None
-    result_research_paper: Optional[str] = None
-    result_json_package: Optional[str] = None
     result_summary: Optional[str] = None
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
@@ -177,14 +172,10 @@ class KnowledgeExtractor:
         path = self.workspace / "inflight_jobs.json"
         if not path.exists():
             return
-        # Known fields on ResearchJob — ignore any extras (e.g., removed fields)
-        known_fields = {
-            'job_id', 'cycle_n', 'concept', 'prompt', 'project_dir', 'project_id',
-            'status', 'dispatch_time', 'complete_time', 'result_lean', 'result_demo',
-            'result_paper', 'result_future_directions', 'result_discussion',
+        # Fields removed from ResearchJob — strip from saved data to avoid errors
+        removed_fields = {
+            'result_future_directions', 'result_discussion',
             'result_article', 'result_research_paper', 'result_json_package',
-            'result_summary', 'quality_score', 'quality_assessment',
-            'sorry_count', 'theorem_count', 'error_message',
         }
         try:
             data = json.loads(path.read_text())
@@ -194,8 +185,8 @@ class KnowledgeExtractor:
                 d['concept'] = concept
                 if 'project_dir' in d and d['project_dir']:
                     d['project_dir'] = Path(d['project_dir'])
-                # Strip unknown fields (e.g., removed result_html)
-                d = {k: v for k, v in d.items() if k in known_fields}
+                for f in removed_fields:
+                    d.pop(f, None)
                 self.inflight[pid] = ResearchJob(**d)
             if self.inflight:
                 print(f"[Aether] Recovered {len(self.inflight)} inflight jobs from previous run")
@@ -1125,13 +1116,6 @@ Research mode: {concept.research_mode}
         print(f"[Integrate] Pi successfully integrated all files.")
         job.status = "integrated"
         self.completed_count += 1
-
-        # Merge FUTURE_DIRECTIONS into master file
-        if job.result_future_directions:
-            try:
-                self.catalog_analyzer.update_master_future_directions(job.result_future_directions)
-            except Exception as e:
-                print(f"[Integrate] Warning: Failed to merge FUTURE_DIRECTIONS into master: {e}")
 
         # Update the packages_db.js if we saved a JSON package
         if job.result_json_package:

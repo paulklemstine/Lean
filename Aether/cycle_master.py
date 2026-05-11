@@ -36,7 +36,7 @@ import yaml
 
 # Aether subsystems
 from pi_agent_client import PiAgentClient, ResearchConcept
-from prompt_engine import PromptEngine, ArtifactRequests
+from prompt_engine import PromptEngine, ArtifactRequests, ResearchPrompt
 from aristotle_sdk_client import AristotleSDKClient
 from lean_catalog_builder import LeanCatalogBuilder
 from smart_integrator import SmartIntegrator
@@ -298,6 +298,9 @@ class CycleMaster:
         self._shutdown_requested = False
         self._domain_weights = {d["id"]: d.get("weight", 1.0) for d in self.domains}
 
+        # Arc-driven selection: round-robin through research arcs
+        self._arc_index = self.state.cycle_count % len(self.domains) if self.domains else 0
+
     def _load_state(self) -> CycleState:
         if self.state_path.exists():
             try:
@@ -310,57 +313,23 @@ class CycleMaster:
         self.state_path.write_text(self.state.to_json(), encoding="utf-8")
 
     def _select_domain(self) -> Dict[str, Any]:
-        """Weighted random, avoiding immediate repeats.
-        Prioritizes domains with weaker AEM pillar scores."""
-        candidates = [d for d in self.domains if d["id"] != self.state.last_domain]
-        if not candidates:
-            candidates = self.domains
-        
-        # Base weights from config
-        weights = [self._domain_weights.get(d["id"], 1.0) for d in candidates]
-        
-        # Boost weak domains: domains with lower AEM scores get higher weight
-        # This ensures we target the weakest areas of the catalog
-        try:
-            from aem_evaluator import AEMEvaluator
-            evaluator = AEMEvaluator()
-            catalog_results = evaluator.evaluate_catalog(self.catalog_root, use_disk_cache=True)
-            
-            # Calculate domain AEM averages
-            from collections import defaultdict
-            domain_scores = defaultdict(list)
-            for path, score in catalog_results.items():
-                p = str(path).lower()
-                for d in candidates:
-                    domain_name = d["id"].lower()
-                    if domain_name in p:
-                        domain_scores[d["id"]].append(score.total)
-                        break
-            
-            # Boost weight for weaker domains (inverse of AEM score)
-            global_avg = sum(s.total for s in catalog_results.values()) / len(catalog_results) if catalog_results else 32.0
-            for i, d in enumerate(candidates):
-                scores = domain_scores.get(d["id"], [global_avg])
-                domain_avg = sum(scores) / len(scores)
-                # Weaker domains get up to 3x weight boost
-                weakness_ratio = max(global_avg - domain_avg, 0) / global_avg
-                boost = 1.0 + 2.0 * weakness_ratio  # 1x to 3x
-                weights[i] *= boost
-        except Exception:
-            pass  # If evaluation fails, use base weights
-        
-        total = sum(weights)
-        if total == 0:
-            import random
-            return random.choice(candidates)
-        import random
-        r = random.uniform(0, total)
-        cumulative = 0.0
-        for d, w in zip(candidates, weights):
-            cumulative += w
-            if r <= cumulative:
-                return d
-        return candidates[-1]
+        """Arc-driven round-robin domain selection.
+
+        Cycles through research arcs from config.yaml in order, ensuring
+        every arc gets attention. Falls back to weighted random if no arcs.
+        """
+        if not self.domains:
+            raise ValueError("No domains configured")
+
+        # Round-robin through arcs based on cycle count
+        idx = self._arc_index % len(self.domains)
+        selected = self.domains[idx]
+
+        # Advance for next cycle
+        self._arc_index = idx + 1
+
+        print(f"[Domain] Arc-driven selection: {selected['id']} (arc {idx+1}/{len(self.domains)})")
+        return selected
 
     def _generate_lean_source(self, concept: ResearchConcept) -> str:
         """Generate Lean source from concept."""
@@ -446,54 +415,117 @@ class CycleMaster:
         return artifacts
 
     async def _prepare_job(self, forced_domain: Optional[str] = None) -> Optional[InFlightJob]:
-        """Prepare a job: select domain, generate concept, build prompt, prepare lean project.
+        """Prepare a job: select domain, gather presearch, generate concept, build prompt, prepare lean project.
         Returns InFlightJob ready for dispatch, or None if preparation fails."""
         self.state.cycle_count += 1
         cycle_n = self.state.cycle_count
 
-        # Phase 1: Domain selection
+        # Phase 1: Arc-driven domain selection
         domain = self._select_domain() if forced_domain is None else next(
             (d for d in self.domains if d["id"] == forced_domain), self.domains[0]
         )
         self.state.last_domain = domain["id"]
         print(f"[Prepare] Domain: {domain['name']} ({domain['id']})")
 
-        # Phase 2: Pi-Agent concept generation
+        # Phase 1b: Gather presearch context for this arc
+        presearch = ""
+        future_direction_candidates = []
+        if self.pi_agent:
+            presearch = self.pi_agent.gather_presearch(domain)
+
+            # Analyze future directions from previous cycles
+            from research_memory import FutureDirectionsManager
+            fd_manager = FutureDirectionsManager(self.workspace)
+            available = fd_manager.get_available_directions(limit=5, domain_filter=domain["id"])
+            if not available:
+                # No domain-filtered directions — try any available
+                available = fd_manager.get_available_directions(limit=5)
+
+            if available and self.pi_agent.catalog_analyzer:
+                # Use the LLM to analyze and rank future directions
+                fd_text = self.pi_agent.catalog_analyzer.collect_future_directions(limit=3)
+                future_direction_candidates = self.pi_agent.analyze_future_directions(
+                    fd_text, domain
+                )
+                print(f"[Prepare] Found {len(future_direction_candidates)} future direction candidates")
+
+        # Phase 2: Pi-Agent concept generation — prefer future directions over LLM generation
         exp_id = str(uuid.uuid4())[:8]
         print(f"[Prepare] Pi-Agent generating concept (exp={exp_id})...")
 
-        if self.pi_agent:
-            concept = self.pi_agent.generate_breakthrough_concept(
-                domain=domain["id"],
-                seed_concepts=domain.get("seed_concepts", []),
-                target="theorem",
+        concept = None
+
+        # Try to use a future direction candidate first
+        if future_direction_candidates:
+            best = future_direction_candidates[0]
+            from output_organizer import normalize_domain
+            concept = ResearchConcept(
+                title=best["title"],
+                domain=normalize_domain(best.get("domain", domain["id"])),
+                concept_description=best["description"],
+                mathematical_framing=best.get("description", ""),
+                lean_guess="",
+                catalog_references=best.get("catalog_references", []),
+                research_mode=best.get("research_mode", "prove"),
+                novelty_estimate=0.85,
+                breakthrough_potential=best.get("priority_score", 0.8),
+                key_references=best.get("catalog_references", [])[:3],
             )
-        else:
+            # Mark the direction as in-progress
+            if available:
+                fd_manager.mark_direction_consumed(available[0].id, exp_id)
+            print(f"[Prepare] Using future direction: {concept.title}")
+
+        if concept is None and self.pi_agent:
+            concept = self.pi_agent.select_research_direction(
+                domains=[domain],
+                research_context=presearch,
+                inflight_concepts=[j.concept.title for j in getattr(self, '_inflight_jobs', [])],
+            )
+        if concept is None:
             concept = ResearchConcept(
                 title=f"auto_concept_{exp_id}",
                 domain=domain["id"],
-                concept_description="Auto-generated placeholder.",
+                concept_description=domain.get("frontier", "Explore this domain."),
                 mathematical_framing="TBD",
             )
         print(f"[Prepare] Concept: {concept.title} (novelty={concept.novelty_estimate:.2f})")
 
-        # Phase 3: Build prompt
+        # Phase 3: Build Aristotle prompt using Pi-Agent's write_aristotle_prompt
         print(f"[Prepare] Building Aristotle prompt...")
-        prompt = self.prompt_engine.build_prompt(
-            title=concept.title,
-            domain=domain["id"],
-            concept_description=concept.concept_description,
-            mathematical_framing=concept.mathematical_framing,
-            lean_guess=concept.lean_guess,
-            difficulty=domain.get("difficulty_target", "phd"),
-            artifacts=ArtifactRequests(
-                research_report=True,
-                python_demo=True,
-                svg_demo=True,
-                sciam_discussion=True,
-                lean_proof=True,
-            ),
-        )
+        if self.pi_agent:
+            prompt_text = self.pi_agent.write_aristotle_prompt(
+                concept=concept,
+                catalog_references=concept.catalog_references,
+                theorem_context=presearch[:1000] if presearch else "",
+            )
+            prompt = ResearchPrompt(
+                prompt_text=prompt_text,
+                artifact_requests=ArtifactRequests(
+                    research_report=True,
+                    python_demo=True,
+                    svg_demo=True,
+                    sciam_discussion=True,
+                    lean_proof=True,
+                ),
+                expected_artifacts=["theorem.lean", "RESEARCH_REPORT.md", "demo.py", "diagram.svg", "DISCUSSION.md"],
+            )
+        else:
+            prompt = self.prompt_engine.build_prompt(
+                title=concept.title,
+                domain=domain["id"],
+                concept_description=concept.concept_description,
+                mathematical_framing=concept.mathematical_framing,
+                lean_guess=concept.lean_guess,
+                difficulty=domain.get("difficulty_target", "phd"),
+                artifacts=ArtifactRequests(
+                    research_report=True,
+                    python_demo=True,
+                    svg_demo=True,
+                    sciam_discussion=True,
+                    lean_proof=True,
+                ),
+            )
         print(f"[Prepare] Prompt: {len(prompt.prompt_text)} chars")
 
         # Phase 4: Generate Lean source
@@ -622,7 +654,7 @@ class CycleMaster:
         )
 
         # Build new prompt with revised text
-        from prompt_engine import PromptEngine, ArtifactRequests
+        from prompt_engine import PromptEngine, ArtifactRequests, ResearchPrompt
         prompt_engine = PromptEngine(self.config.get("prompts", {}))
         revised_prompt = prompt_engine.build_prompt(
             title=revised_concept.title,
@@ -797,6 +829,19 @@ class CycleMaster:
             self.telemetry.log_experiment(record)
             # Also record in ResearchMemory for novelty tracking
             if self.memory:
+                # Extract actual theorem names from placed .lean files
+                key_theorems = []
+                for d in decisions["placed"][:10]:
+                    if d.target_path.suffix == ".lean":
+                        try:
+                            content = d.target_path.read_text(encoding="utf-8", errors="replace")
+                            key_theorems.extend(re.findall(r'(?:theorem|lemma)\s+(\w+)', content)[:5])
+                        except Exception:
+                            pass
+                # Fallback to file names if no theorems found
+                if not key_theorems:
+                    key_theorems = [d.target_path.name for d in decisions["placed"][:5]]
+
                 mem_record = MemoryExperimentRecord(
                     exp_id=exp_id,
                     domain=domain["id"],
@@ -804,13 +849,31 @@ class CycleMaster:
                     concept_description=concept.concept_description,
                     status="success" if success else "failure",
                     files_produced=changed_count,
-                    key_theorems=[d.target_path.name for d in decisions["placed"][:5]],
+                    key_theorems=key_theorems,
                     prompt_text=job.prompt.prompt_text,
                     proof_quality="substantial" if not self._is_trivial_proof(lean_source) else "trivial",
                     retry_of=getattr(job, "retry_of", ""),
                     retry_count=getattr(job, "retry_count", 0),
                 )
                 self.memory.record(mem_record)
+
+                # Also feed future directions from Aristotle's output to FutureDirectionsManager
+                from research_memory import FutureDirectionsManager
+                fd_manager = FutureDirectionsManager(self.workspace)
+                # Look for FUTURE_DIRECTIONS.md in the extracted results
+                if extract_dir and extract_dir.exists():
+                    for fd_pattern in ["FUTURE_DIRECTIONS.md", "future_directions*.md"]:
+                        for fd_file in extract_dir.rglob(fd_pattern):
+                            try:
+                                fd_content = fd_file.read_text(encoding="utf-8", errors="replace")
+                                if len(fd_content) > 100:
+                                    added = fd_manager.add_directions_from_text(
+                                        fd_content, exp_id, str(fd_file)
+                                    )
+                                    if added:
+                                        print(f"[Process] Added {added} future directions from {fd_file.name}")
+                            except Exception:
+                                pass
         else:
             print(f"[Process] No result tarball for {exp_id}. Status: {job.status}")
 

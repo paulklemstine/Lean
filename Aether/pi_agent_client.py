@@ -25,8 +25,6 @@ import httpx
 from catalog_analyzer import CatalogAnalyzer, CatalogFileSummary
 from pollinations_pollen import PollinationsPollenConfig, PollinationsPollenGate
 from research_memory import ResearchMemory
-from research_director import ResearchDirector
-
 
 @dataclass
 class ResearchConcept:
@@ -141,25 +139,8 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
     Score each direction 0-1 on each criterion. The composite breakthrough score is:
       0.3*A + 0.25*B + 0.2*C + 0.15*D + 0.1*E
 
-    ## AEM Quality Bonuses (add to breakthrough score)
-    Give additional weight to directions that score well on ALL 5 AEM pillars:
-    - AEM Rigor: Can this produce 10+ theorems with diverse proof tactics? (+0.05 per pillar satisfied)
-    - AEM Aesthetic: Does this bridge 2+ mathematical domains? Is it structurally surprising?
-    - AEM Utility: Does this yield computational bounds, extensible APIs, or advance open problems?
-    - AEM Originality: Does this introduce genuinely novel concepts (not Mathlib restatements)?
-    - AEM Impact: Does this connect to physics, cryptography, or ML applications?
-    Directions scoring 0.7+ on ALL 5 AEM pillars get +0.25 bonus.
-    Directions scoring 0.5+ on at least 3 AEM pillars get +0.15 bonus.
-
-    Select the direction with the HIGHEST composite score (breakthrough + AEM bonus),
+    Select the direction with the HIGHEST composite score,
     subject to the constraint that it must differ from all inflight jobs.
-
-    ## AEM Quality Priority
-    Prefer directions that maximize ALL 5 AEM pillars over directions that score high
-    on just one or two. A direction scoring 6/10 on ALL pillars (total 30) beats one
-    scoring 10/10 on two pillars but 2/10 on the rest (total 24). Cross-domain bridges
-    and novel structure definitions are the highest-value concepts because they score
-    well on Aesthetic, Originality, AND Impact simultaneously.
 
     ## Strategy Weights (REVISED)
 
@@ -184,27 +165,6 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
     shifting, field-opening mathematical results — not incremental extensions of
     existing work. You are NOT writing a template. You are writing a call to arms
     from one visionary mathematician to another.
-
-    ## AEM Quality Mandate (CRITICAL)
-    Every prompt you write MUST optimize for ALL 5 AEM pillars. Aristotle's output
-    will be scored on these 5 dimensions, and low scores mean wasted compute:
-
-    1. RIGOR (max 10pts): Demand 10+ theorems with diverse proof tactics (induction,
-       rcases, by_contra, omega, linarith, field_simp — NOT just simp/rfl/decide).
-       Require ZERO sorries. Use typeclass abstraction ([Semiring B], etc.).
-    2. AESTHETIC (max 10pts): Bridge 2+ mathematical domains in every prompt.
-       Use quantifier alternation (∀x, ∃y). Include symmetric structures.
-       Minimize hypotheses for maximal conclusions.
-    3. UTILITY (max 10pts): Demand explicit computational bounds (O(...), Lipschitz
-       constants, convergence rates). Require 5+ new definitions/structures/instances.
-       Reference or advance known open problems.
-    4. ORIGINALITY (max 10pts): Coin novel definitions — not Mathlib restatements.
-       Use inventive theorem names (not *_comm, *_nonneg, *_eq_zero). Combine unusual
-       typeclasses ([Semiring, LinearOrder], [NormedAddCommGroup, Field]).
-    5. IMPACT (max 10pts): Every prompt MUST connect to at least one of: physics
-       (quantum, thermodynamic, entropy), cryptography (lattice, post-quantum, SPB),
-       or ML (certified robustness, Lipschitz bounds, neural networks). Use these
-       keywords explicitly in theorem names and doc comments.
 
     ## Critical Principles for Visionary Prompt Writing
 
@@ -243,10 +203,6 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
           ends, which is essential.
         - "discover": For exploring mathematical territory with no specific
           conjecture — find theorems, algorithms, or connections nobody expected.
-        - "millennial": For attacking sub-problems of famous unsolved problems
-          (Riemann Hypothesis, P vs NP, BSD, etc.). These are specific, concrete
-          targets derived from open problems that would be revolutionary if proved.
-          Be bold but precise — attack the sub-problem with every tool available.
 
     7. AVOID INCREMENTAL VARIANTS: If the catalog already has a result like
        "tropical certified robustness for ReLU networks," do NOT ask for
@@ -346,9 +302,7 @@ _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
     You MUST respond with valid JSON only: {"quality": "trivial|partial|substantial",
     "should_retry": bool, "retry_strategy": "...", "confidence": 0.0-1.0,
     "analysis": "...", "depth_score": 0.0-1.0, "novelty_score": 0.0-1.0,
-    "cross_domain_score": 0.0-1.0, "completeness_score": 0.0-1.0,
-    "aem_rigor": 0.0-10.0, "aem_aesthetic": 0.0-10.0, "aem_utility": 0.0-10.0,
-    "aem_originality": 0.0-10.0, "aem_impact": 0.0-10.0}
+    "cross_domain_score": 0.0-1.0, "completeness_score": 0.0-1.0}
 """)
 
 _CLASSIFICATION_SYSTEM_PROMPT = textwrap.dedent("""\
@@ -716,6 +670,159 @@ class PiAgentClient:
         return None
 
     # ------------------------------------------------------------------
+    # Presearch: context gathering before Aristotle
+    # ------------------------------------------------------------------
+
+    def gather_presearch(self, arc: dict) -> str:
+        """Gather focused context for an arc before building the Aristotle prompt.
+
+        Assembles concise context from the catalog, sorry targets, future
+        directions, and research memory — limited to ~2K chars to keep
+        prompts tight.
+        """
+        domain = arc.get("id", "Bridges")
+        seed_domains = arc.get("seed_domains", [domain])
+
+        parts = []
+
+        # 1. Focused catalog context
+        if self.catalog_analyzer:
+            self.catalog_analyzer.scan()
+            ctx = self.catalog_analyzer.build_focused_context(
+                domain=domain,
+                concept_description=arc.get("frontier", arc.get("description", "")),
+                max_theorems=5,
+            )
+            if ctx and ctx != "No catalog context available.":
+                parts.append(f"## Catalog Theorems ({domain})\n{ctx[:800]}")
+
+        # 2. Priority sorry targets for this domain
+        if self.catalog_analyzer:
+            priority_files = self.catalog_analyzer.get_priority_sorry_targets()
+            domain_files = [
+                f for f in priority_files
+                if f.domain == domain or f.domain in seed_domains
+            ][:5]
+            if domain_files:
+                sorry_text = "\n".join(
+                    f"  - {f.relative_path} ({f.sorry_count} sorries)"
+                    for f in domain_files
+                )
+                parts.append(f"## Priority Sorry Targets\n{sorry_text}")
+
+        # 3. Exclusion prompt (what to avoid)
+        if self.memory:
+            exclusion = self.memory.build_exclusion_prompt()
+            if exclusion:
+                parts.append(exclusion[:500])
+
+        # 4. Success patterns
+        if self.memory:
+            successes = self.memory.build_success_patterns()
+            if successes:
+                parts.append(successes[:500])
+
+        result = "\n\n".join(parts)
+        # Cap at ~2K chars
+        if len(result) > 2000:
+            result = result[:2000] + "\n\n[... presearch truncated ...]"
+        return result
+
+    def analyze_future_directions(self, future_directions: str, arc: dict) -> list:
+        """Use the LLM to parse and rank future directions into structured candidates.
+
+        Replaces the regex-based _extract_future_direction_concepts with an
+        LLM-powered analysis that produces higher-quality candidates.
+        Returns a list of dicts with: title, description, suggested_domain,
+        research_mode, catalog_references, priority_score.
+        """
+        if not future_directions or "No previous" in future_directions:
+            return []
+
+        domain = arc.get("id", "Bridges")
+        frontier = arc.get("frontier", "")
+
+        analysis_prompt = textwrap.dedent(f"""\
+            You are analyzing mathematical research directions from previous
+            experiments. The current research arc is "{domain}" with frontier
+            "{frontier}".
+
+            Below are future directions from completed research cycles.
+            For each viable direction, extract:
+            1. A concise title (under 60 chars)
+            2. A specific mathematical description (2-3 sentences)
+            3. The most relevant Catalog domain
+            4. Suggested research mode (prove/formalize/discover/counterexample)
+            5. Priority score (0.0-1.0) based on: specificity, cross-domain
+               potential, and feasibility
+
+            PREFER directions that:
+            - Have precise theorem statements (not "explore X")
+            - Bridge 2+ domains
+            - Build on the current arc's frontier
+            - Are immediately actionable
+
+            ---
+            {future_directions[:4000]}
+            ---
+
+            Output a JSON array of objects:
+            [{{"title": "...", "description": "...", "domain": "...",
+               "research_mode": "prove", "priority_score": 0.85,
+               "catalog_references": ["..."]}}]
+        """)
+
+        raw = self._call_ollama(
+            "You are a mathematical research analyst. Extract structured research directions from text.",
+            analysis_prompt,
+            timeout=2000,
+        )
+
+        if raw and not raw.startswith(("[OLLAMA", "[API_")):
+            parsed = self._parse_json_response(raw)
+            if parsed and isinstance(parsed, list):
+                # Validate and normalize
+                results = []
+                for item in parsed[:5]:  # Max 5 candidates
+                    if isinstance(item, dict) and item.get("title"):
+                        results.append({
+                            "title": str(item.get("title", ""))[:80],
+                            "description": str(item.get("description", ""))[:500],
+                            "domain": str(item.get("domain", domain)),
+                            "research_mode": str(item.get("research_mode", "prove")),
+                            "priority_score": float(item.get("priority_score", 0.7)),
+                            "catalog_references": item.get("catalog_references", []),
+                        })
+                return results
+
+        # Fallback to regex extraction
+        return self._extract_future_directions_as_dicts(future_directions)
+
+    def _extract_future_directions_as_dicts(self, text: str) -> list:
+        """Fallback regex-based extraction when LLM is unavailable."""
+        import re
+        directions = []
+
+        numbered_items = re.findall(
+            r'\d+\.\s+\*\*([^*]+)\*\*[.:]\s*(.+?)(?=\n\d+\.|$)',
+            text, re.DOTALL
+        )
+        for title, desc in numbered_items:
+            title_clean = title.strip().rstrip('.')[:60]
+            desc_clean = desc.strip()[:300]
+            if len(desc_clean) > 30:
+                directions.append({
+                    "title": title_clean,
+                    "description": desc_clean,
+                    "domain": self._infer_domain_from_text(title_clean + " " + desc_clean),
+                    "research_mode": "prove",
+                    "priority_score": 0.75,
+                    "catalog_references": [],
+                })
+
+        return directions[:5]
+
+    # ------------------------------------------------------------------
     # Research direction selection
     # ------------------------------------------------------------------
 
@@ -856,7 +963,7 @@ class PiAgentClient:
             "prove that X has property Y using technique Z." Reference specific
             catalog theorems by name.
 
-            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill|millennial", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
+            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
 
         # Concept generation: try LLM with short timeout, quick fallback to local
@@ -864,7 +971,7 @@ class PiAgentClient:
         if self.compact:
             # Cloud/compact mode: shorter timeout since we have local fallback
             concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
-            parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith(("[OLLAMA", "[API_")) else None
+            parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith("[OLLAMA") else None
         else:
             # Local model: give more time
             concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
@@ -894,16 +1001,7 @@ class PiAgentClient:
             )
             # Validate concept quality
             if concept.novelty_estimate >= 0.1 and concept.breakthrough_potential >= 0.1 and not concept.title.startswith("research_concept_"):
-                # Fuzzy dedup check — reject near-duplicates
-                is_dup, similarity = self.memory.has_been_explored_fuzzy(
-                    concept.title, concept.concept_description, concept.domain
-                )
-                if is_dup:
-                    print(f"[Pi-Agent] Rejecting near-duplicate concept: {concept.title[:60]} (similarity={similarity:.2f})")
-                else:
-                    return concept
-                if similarity >= 0.5:
-                    print(f"[Pi-Agent] Warning: concept suspiciously similar to past work (similarity={similarity:.2f}). Falling back to local generator.")
+                return concept
             # LLM gave garbage — fall through to local generator
             print(f"[Pi-Agent] LLM returned low-quality concept: {concept.title} (n={concept.novelty_estimate:.2f}, b={concept.breakthrough_potential:.2f}). Using local fallback.")
 
@@ -934,21 +1032,19 @@ class PiAgentClient:
 
         # Determine which type of concept to generate this cycle
         # Visionary distribution: minimize sorry_fill, maximize breakthrough potential
-        # 5% sorry_fill, 20% bridge, 25% arc, 20% discovery, 15% millennial, 15% future
+        # 5% sorry_fill, 25% bridge, 30% arc, 25% discovery, 15% future
         cycle = PiAgentClient._concept_cycle_index
         PiAgentClient._concept_cycle_index += 1
-        mode_bucket = cycle % 20  # 0=sorry(1), 1-4=bridge(4), 5-9=arc(5), 10-13=discover(4), 14-16=millennial(3), 17-19=future(3)
+        mode_bucket = cycle % 20  # 0=sorry(1), 1-5=bridge(5), 6-11=arc(6), 12-15=discover(4), 16-19=future(4)
 
         if mode_bucket == 0:
             mode = "sorry_fill"
-        elif mode_bucket <= 4:
+        elif mode_bucket <= 5:
             mode = "bridge"
-        elif mode_bucket <= 9:
+        elif mode_bucket <= 11:
             mode = "arc"
-        elif mode_bucket <= 13:
+        elif mode_bucket <= 15:
             mode = "discover"
-        elif mode_bucket <= 16:
-            mode = "millennial"
         else:
             mode = "future"
 
@@ -1094,51 +1190,7 @@ class PiAgentClient:
                     key_references=refs[:3],
                 )
 
-        # Priority 4: Millennial problems — attack famous unsolved problems
-        # These are sub-problems of Millennium Prize and other famous conjectures.
-        # Each has a formal statement, proof strategies, and catalog connections.
-        if mode == "millennial":
-            try:
-                from millennial_problems import get_millennial_problem, format_problem_for_prompt
-                problem = get_millennial_problem(cycle)
-                domain = normalize_domain(problem.catalog_domains[0] if problem.catalog_domains else "Algebra")
-
-                # Find catalog references from relevant domains
-                refs = []
-                if self.catalog_analyzer:
-                    all_files = self.catalog_analyzer.scan()
-                    for d in problem.catalog_domains[:2]:
-                        d_files = [f.relative_path for f in all_files if d.lower() in f.relative_path.lower()][:3]
-                        refs.extend(d_files)
-
-                concept_title = problem.name.lower().replace(" ", "_") + "_sub_problem"
-                concept_desc = (f"Sub-problem of {problem.name}: {problem.sub_problem} "
-                               f"[{problem.difficulty}]")
-                math_framing = (f"ATTACK MILLENNIUM-LEVEL PROBLEM: {problem.name}. "
-                               f"{problem.description} "
-                               f"Your specific target: {problem.sub_problem} "
-                               f"Proof strategies: {'; '.join(problem.proof_strategy_hints[:2])}")
-
-                print(f"[Local] millennial problem: {problem.name} ({problem.difficulty})")
-
-                return ResearchConcept(
-                    title=concept_title,
-                    domain=domain,
-                    concept_description=concept_desc,
-                    mathematical_framing=math_framing,
-                    lean_guess=problem.sub_problem_formal,
-                    catalog_references=refs[:6],
-                    research_mode="prove",
-                    novelty_estimate=0.97,
-                    breakthrough_potential=0.98,
-                    key_references=problem.catalog_domains,
-                )
-            except ImportError:
-                print("[Local] millennial_problems module not available, falling through")
-            except Exception as e:
-                print(f"[Local] millennial mode error: {e}, falling through")
-
-        # Priority 5: Directions from Aristotle's FUTURE_DIRECTIONS reports
+        # Priority 4: Directions from Aristotle's FUTURE_DIRECTIONS reports
         # This is the self-improving feedback loop: Aristotle's own
         # recommendations from past cycles guide the next concept.
         if mode == "future" and self.catalog_analyzer:
@@ -1382,30 +1434,8 @@ class PiAgentClient:
             },
 
         ]
-        # Dynamic concept selection: use ResearchDirector to target weakest domain-pillar combos
-        # Falls back to VISIONARY_ARCS if ResearchDirector is unavailable
-        try:
-            from research_director import ResearchDirector
-            director = ResearchDirector(str(self.catalog_root) if hasattr(self, 'catalog_root') and self.catalog_root else "../Catalog")
-            tasks = director.get_next_tasks(1)
-            if tasks:
-                task = tasks[0]
-                return ResearchConcept(
-                    title=task.concept_title,
-                    domain=normalize_domain(task.domain),
-                    concept_description=task.concept_description,
-                    mathematical_framing=task.concept_framing if task.concept_framing else "",
-                    lean_guess="",
-                    catalog_references=task.reference_files if task.reference_files else [],
-                    research_mode="prove",
-                    novelty_estimate=0.95,
-                    breakthrough_potential=0.97,
-                    key_references=task.reference_files[:3] if task.reference_files else [],
-                )
-        except Exception:
-            pass
-        
-        # Fallback to VISIONARY_ARCS round-robin
+
+        # Use VISIONARY_ARCS round-robin
         arc = VISIONARY_ARCS[cycle % len(VISIONARY_ARCS)]
         return ResearchConcept(
             title=arc["title"],
@@ -1583,19 +1613,7 @@ class PiAgentClient:
 
         # Build proof strategies based on mode
         mode = concept.research_mode
-        if mode == "millennial":
-            # For millennial problems, the lean_guess IS the assignment
-            assignment = (
-                f"**TARGET THEOREM**: {theorem_target}\n\n"
-                f"**DOMAIN**: {concept.domain}\n\n"
-                f"**PRECISE ASSIGNMENT**: Prove (or make maximum progress toward) "
-                f"the theorem stated above. This is a sub-problem of a Millennium Prize "
-                f"or famous open problem. Every lemma you prove is significant.\n\n"
-                f"**FAILURE MODE**: If you cannot prove the full statement, prove the "
-                f"strongest lemma you can. Do NOT fall back to trivial statements. "
-                f"State precise conjectures for steps you cannot prove."
-            )
-        elif mode == "sorry_fill":
+        if mode == "sorry_fill":
             assignment = (
                 f"**TARGET**: Fill all `sorry` placeholders in the referenced files.\n\n"
                 f"**PRECISE ASSIGNMENT**: Read the surrounding context. Every `sorry` "
@@ -1656,14 +1674,8 @@ class PiAgentClient:
             key_refs = ", ".join(str(r) for r in concept.key_references[:3])
             assignment += f"\n**KEY REFERENCES**: {key_refs}"
 
-        # Add AEM quality mandate for Aristotle's output
-        assignment += "\n\n**AEM QUALITY MANDATE**: Your output will be scored on 5 pillars. Optimize ALL:"\
-            "\n- RIGOR: 10+ theorems, diverse tactics (induction, rcases, by_contra, omega, linarith), ZERO sorries"\
-            "\n- AESTHETIC: Bridge 2+ domains in theorem names and doc comments. Use quantifier alternation."\
-            "\n- UTILITY: Define 5+ structures/instances. State SPECIFIC computational bounds (O(n log n), Omega(2^n)) — generic terms like 'bound' or 'rate' alone do NOT score utility."\
-            "\n- ORIGINALITY: Coin novel definitions beyond Mathlib. Inventive theorem names. Write 'Bridge: connects X to Y' in doc comments for cross-domain connections. Generic names (main, test, aux) do NOT count."\
-            "\n- IMPACT: Use SPECIFIC application terms (lipschitz_certified_robustness, post_quantum_security, tropical_hash_collision) — generic terms like 'convergence' or 'spectrum' without ML/crypto/physics context do NOT score impact."\
-            "\n\n**FILE RICHNESS MANDATE**: Produce substantial, rich files (not stubs)."\
+        # Add file richness mandate for Aristotle's output
+        assignment += "\n\n**FILE RICHNESS MANDATE**: Produce substantial, rich files (not stubs)."\
             "\n- Target 500+ lines with 20+ theorems and 10+ definitions per file."\
             "\n- Historical Masters in the catalog average 2000+ lines, 180+ theorems, 70+ definitions."\
             "\n- Each file should be a complete mathematical narrative with definitions, lemmas, and main theorems all connected."\
@@ -1680,25 +1692,15 @@ class PiAgentClient:
         recent_failures: Optional[List[Dict]] = None,
         theorem_context: str = "",
     ) -> str:
-        """Dynamically write the full Aristotle prompt.
+        """Write a streamlined Aristotle prompt (5-10K chars).
 
-        Composes a prompt that is sent DIRECTLY to Aristotle (the theorem prover).
-        This is NOT a meta-instruction asking someone to write a brief — it is
-        the actual task description Aristotle receives.
-
-        Strategy:
-        1. Build a complete direct-to-Aristotle prompt with all context
-        2. Ask the LLM (Pi-Agent) to enrich it with deeper mathematical insight
-        3. Strip any LLM preamble/echo before returning
-        4. Fall back to the direct prompt (never a meta-instruction) if LLM fails
-
-        Args:
-            theorem_context: Previously proved theorems from ResearchContext,
-                           so Aristotle can build on existing results.
+        Philosophy: Give Aristotle the direction and context, not a script.
+        Let it decide what to prove, how deep to go, and what artifacts to produce.
+        The only hard requirement is FUTURE_DIRECTIONS.md — it drives the next cycle.
         """
         refs = catalog_references or concept.catalog_references or []
 
-        # Build focused catalog context (specific theorem signatures, not all files)
+        # Build focused catalog context (specific theorem signatures)
         focused_context = ""
         if self.catalog_analyzer:
             focused_context = self.catalog_analyzer.build_focused_context(
@@ -1707,502 +1709,115 @@ class PiAgentClient:
                 max_theorems=5,
             )
 
-        # Build reference section (full file contents for the most relevant files)
+        # Build reference section (limited to 3 most relevant files)
         ref_section = ""
         if refs and self.catalog_analyzer:
-            # Limit to 5 most relevant files to keep prompt focused
-            ref_section = self.catalog_analyzer.build_catalog_context_string(refs[:5])
+            ref_section = self.catalog_analyzer.build_catalog_context_string(refs[:3])
         elif catalog_context:
-            ref_section = catalog_context
+            ref_section = catalog_context[:3000]
 
-        # Collect Aristotle's future directions from past cycles
-        future_directions = ""
-        if self.catalog_analyzer:
-            future_directions = self.catalog_analyzer.collect_future_directions(limit=2)
-
-        # Research mode instructions (addressed directly to Aristotle)
-        mode_instructions = {
-            "prove": textwrap.dedent("""\
-                Research Mode: PROVE
-
-                Discover and prove new, non-trivial theorems that advance the
-                mathematical frontier. Start from the existing verified theorems
-                listed below and extend them into deeper territory. Every theorem
-                you prove should require genuine mathematical insight — not just
-                unfolding definitions or numeric verification.
-
-                Your Lean 4 files must:
-                - Use concrete types (ℕ, ℝ, Finset, Matrix, etc.)
-                - Build on existing catalog theorems (referenced below)
-                - Minimize `sorry` — isolate truly hard steps rather than leaving gaps
-                - Avoid trivial tautologies (no `True := by trivial`)
-
-                AEM QUALITY TARGETS:
-                - RIGOR: Prove 10+ theorems using diverse tactics (induction, rcases,
-                  by_contra, omega, linarith). ZERO sorries. Use typeclass abstraction.
-                - AESTHETIC: Bridge 2+ mathematical domains. Use quantifier alternation
-                  (∀x, ∃y). Include symmetric structures. Name-drop both domains.
-                - UTILITY: State explicit computational bounds (Lipschitz constants,
-                  convergence rates, O(...) complexity). Define 5+ new structures/instances.
-                - ORIGINALITY: Coin novel definitions with inventive names. Avoid
-                  derivative names like *_comm, *_nonneg. Combine unusual typeclasses.
-                - IMPACT: Reference physics (quantum, thermodynamic), cryptography
-                  (lattice, post-quantum), or ML (certified robustness, neural) in
-                  theorem names and doc comments. Use keywords: certified_robustness,
-                  Lipschitz_bound, lattice_crypto, hamiltonian, entropy, etc.
-            """),
-            "formalize": textwrap.dedent("""\
-                Research Mode: FORMALIZE
-
-                You are given informal mathematical ideas, notes, or a paper excerpt.
-                Formalize these ideas in Lean 4. Translate the informal mathematics
-                into precise definitions and theorem statements, then prove what you
-                can. If some parts require new axioms, declare them clearly and prove
-                consequences.
-
-                AEM QUALITY TARGETS:
-                - RIGOR: Prove 10+ theorems with diverse tactics. ZERO sorries.
-                - AESTHETIC: Formalize ideas that bridge 2+ mathematical domains.
-                - UTILITY: Define 5+ structures with computational implications.
-                - ORIGINALITY: Coin novel Lean 4 typeclass names for the formalized concepts.
-                - IMPACT: Formalize concepts with physics/crypto/ML applications.
-            """),
-            "counterexample": textwrap.dedent("""\
-                Research Mode: COUNTEREXAMPLE
-
-                Find a counterexample to a stated conjecture. If the conjecture is
-                false, provide a specific counterexample formalized in Lean 4 and
-                prove that it contradicts the conjecture. If the conjecture is
-                actually true, prove it instead.
-            """),
-            "sorry_fill": textwrap.dedent("""\
-                Research Mode: SORRY_FILL
-
-                You are given Lean 4 files that contain `sorry` placeholders.
-                Your task is CRITICALLY IMPORTANT: fill ALL `sorry` placeholders
-                with complete, rigorous proofs. This closes known open problems.
-
-                Strategy:
-                1. READ the surrounding context — theorem statements and imports are hints
-                2. DO NOT change theorem statements — only fill the `sorry`
-                3. Break hard proofs into helper lemmas first
-                4. A proof with fewer sorries is better than one that doesn't compile
-
-                AEM QUALITY TARGETS:
-                - RIGOR: Every sorry filled = +1.5 rigor points. ZERO sorries remaining.
-                  Use diverse tactics, not just simp/rfl/decide.
-                - AESTHETIC: Add doc comments explaining why the filled proof matters
-                  across domains. Reference connections to other fields.
-                - UTILITY: Add helper lemmas that extend the proof's applicability.
-                - ORIGINALITY: If the proof reveals a novel technique, document it.
-                - IMPACT: State consequences for applications in doc comments.
-            """),
-            "discover": textwrap.dedent("""\
-                Research Mode: DISCOVER
-
-                You are an explorer in uncharted mathematical territory. There is no
-                specific conjecture to prove. Your mission is to SURVEY the landscape,
-                IDENTIFY deep structures, and PROVE whatever theorems the territory reveals.
-
-                Strategy:
-                1. Examine the catalog references and existing theorems carefully
-                2. Look for unexpected patterns, symmetries, or structural correspondences
-                3. Conjecture and prove theorems that reveal the underlying mathematical truth
-                4. If you find a connection to another domain, prove it rigorously
-                5. Produce a FUTURE_DIRECTIONS.md mapping the territory you've discovered
-
-                Your Lean 4 files must contain genuine theorems with complete or near-complete
-                proofs. "Discovery" is not an excuse for vague or trivial results — every
-                theorem must be precise and mathematically substantive.
-
-                Think beyond current mathematical fashion. What would a civilization 200 years
-                more advanced prove? What connections would surprise specialists?
-
-                AEM QUALITY TARGETS:
-                - RIGOR: 10+ theorems with diverse proof tactics. ZERO sorries.
-                - AESTHETIC: Discover AND prove cross-domain bridges. Name both domains.
-                  Look for dualities, correspondences, isomorphisms across fields.
-                - UTILITY: Discover theorems with explicit bounds or algorithmic content.
-                  Define 5+ structures organizing the discovered territory.
-                - ORIGINALITY: Coin names for new concepts YOU discovered — not Mathlib restatements.
-                  Define novel typeclasses combining unexpected mathematical structures.
-                - IMPACT: Frame discoveries in terms of applications: certified_robustness,
-                  lattice_crypto, hamiltonian_simulation, entropy, etc.
-            """),
-            "millennial": textwrap.dedent("""\
-                Research Mode: MILLENNIAL
-
-                You are attacking a sub-problem of one of the most important open problems
-                in mathematics — a Millennium Prize problem or famous conjecture.
-
-                This is a DIRECT ASSIGNMENT. Prove the specific sub-problem stated below.
-                If you cannot prove the full sub-problem, prove the strongest lemma you can.
-                Do NOT fall back to trivial statements.
-
-                Strategy:
-                1. Read the precise formal statement below carefully
-                2. Study the proof strategy hints — they suggest concrete approaches
-                3. Build on the catalog theorems listed in the references
-                4. If the full statement is beyond reach, prove a meaningful special case
-                5. Every lemma you prove should advance toward the target
-
-                Even a partial result on a millennial problem is significant. Be bold but
-                precise. State precise conjectures for steps you cannot prove.
-
-                AEM QUALITY TARGETS:
-                - RIGOR: 10+ theorems advancing toward the target. ZERO sorries on lemmas you prove.
-                - AESTHETIC: Show how the sub-problem bridges multiple mathematical domains.
-                - UTILITY: Progress on millennial problems IS maximal utility. State explicit
-                  implications for applications (cryptography, quantum computing, etc.).
-                - ORIGINALITY: Introduce novel definitions and techniques specific to this problem.
-                - IMPACT: Frame progress in terms of practical consequences.
-            """),
+        # Concise mode instructions
+        mode_brief = {
+            "prove": "Prove new, non-trivial theorems. Build on catalog theorems. Minimize sorry.",
+            "formalize": "Formalize informal mathematics in Lean 4. Define precisely, prove what you can.",
+            "counterexample": "Find a counterexample to the conjecture, or prove it true if it holds.",
+            "sorry_fill": "Fill ALL sorry placeholders. Do NOT change theorem statements.",
+            "discover": "Survey the territory. Find deep structures. Prove theorems that reveal truth. Produce FUTURE_DIRECTIONS.md.",
         }
 
-        mode_instruction = mode_instructions.get(concept.research_mode, mode_instructions["prove"])
+        mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
 
-        # Build history section
-        history_section = ""
-        if recent_successes:
-            success_titles = [s.get("concept_title", s.get("title", "?")) for s in recent_successes[:5]]
-            history_section += f"\nRecent successful concepts: {', '.join(success_titles)}\n"
-        if recent_failures:
-            failure_titles = [f.get("concept_title", f.get("title", "?")) for f in recent_failures[:5]]
-            failure_reasons = [f.get("reason", "unknown") for f in recent_failures[:5]]
-            history_section += f"\nRecent failures (avoid these approaches): "
-            for title, reason in zip(failure_titles, failure_reasons):
-                history_section += f"\n  - {title}: {reason}"
+        # Build the streamlined prompt
+        lean_section = ""
+        if concept.lean_guess:
+            lean_section = f"\n### Lean 4 Sketch\n{concept.lean_guess}\n"
 
-        # Known working tactic patterns from autoresearch.md
-        tactic_patterns = textwrap.dedent("""\
-            Known Working Lean 4 Tactics:
-            - `nlinarith [sq_nonneg X]` for quadratic inequalities
-            - `positivity` for positivity goals
-            - `field_simp` then `ring` for division
-            - `Real.exp_le_exp.mpr` for exp monotonicity
-            - `Real.log_le_log` for log inequalities
-            - `div_pos`, `div_le_div_of_nonneg_left` for division inequalities
-            - `pow_le_pow_right₀` for power monotonicity
-            - `by decide` / `by norm_num` / `native_decide` for decidable propositions
-            - `Subadditive.tendsto_lim` for Fekete's Lemma
-            - `ConvexOn.map_sum_le` for Jensen's inequality
-            - `exists_deriv_eq_slope` for MVT
-        """)
+        # Previously proved theorems (if any)
+        theorem_section = ""
+        if theorem_context:
+            theorem_section = f"\n### Previously Proved Theorems\n{theorem_context[:1000]}\n"
 
-        # ---- DIRECT ARISTOTLE PROMPT ----
-        # Structured: assignment first, then context, then deliverables
-        assignment_section = self._build_assignment(concept)
+        # Catalog references
+        catalog_section = ""
+        if ref_section:
+            catalog_section = f"\n### Catalog Reference Files\n{ref_section}\n"
+        else:
+            catalog_section = "\nNo specific files referenced. Use Mathlib and general knowledge.\n"
 
         direct_prompt = textwrap.dedent(f"""\
-            ## YOUR ASSIGNMENT: {concept.title}
+            ## Assignment: {concept.title}
 
-            {assignment_section}
-
-            {mode_instruction}
-
-            === VISIONARY DIRECTIVES ===
-
-            Think beyond current mathematical fashion. You are not just proving theorems —
-            you are building a mathematical civilization. Every result should:
-
-            1. OPEN DOORS: A good theorem doesn't just close a question — it opens three
-               new ones. What does your result make possible that wasn't possible before?
-            2. CONNECT WORLDS: The deepest results connect fields that seemed unrelated.
-               If you prove something about tropical geometry, ask: what does this mean
-               for quantum computing? For cryptography? For neural networks?
-            3. PRODUCE ALGORITHMS: Don't just prove existence — construct. Don't just
-               construct — compute. Don't just compute — optimize. Every theorem should
-               have an algorithmic shadow.
-            4. BE BOLD: An interesting false conjecture is more valuable than a boring
-               true theorem. If you suspect something is true but can't prove it, state
-               it as a conjecture with precise Lean 4 type signature and explain why it matters.
-            5. BUILD INFRASTRUCTURE: Definitions are as valuable as theorems. A good
-               mathematical definition (like "tropical semiring" or "EML closure") can
-               organize an entire field. Define things precisely, then prove things about them.
-
-            The mathematics comes FIRST. Excellent proofs trump everything else.
-            But excellent proofs that OPEN NEW FIELDS trump everything.
-
-            === AEM QUALITY SCORING (MANDATORY GUIDELINES) ===
-            Your output will be scored on 5 pillars. MAXIMIZE each one:
-
-            PILLAR 1 — RIGOR (Is it World-class?):
-            • ZERO sorries in your output (sorries cost -1.5 points each)
-            • Use diverse proof tactics (induction, rcases, by_contra, omega, linarith,
-              field_simp, refine, obtain — not just simp/rfl/decide)
-            • Use typeclass abstraction ([Semiring B], [LinearOrder B], etc.) not
-              concrete types alone
-            • Later theorems should reference earlier ones (semantic coherence)
-            • 10+ theorems = full rigor score; 3-10 = partial; 0-2 = minimal
-
-            PILLAR 2 — AESTHETIC (Is it Interesting?):
-            • Bridge 2+ mathematical domains in EVERY file (e.g., tropical + neural
-              networks; algebra + thermodynamics; number theory + quantum)
-            • Use quantifier alternation (∀ → ∃) for non-trivial theorem statements
-            • Include symmetric structures (lattices, posets, groups, duality)
-            • Minimize hypotheses for maximal conclusions (small axiomatic footprint)
-            • Narrative surprise: state in doc comments WHY the result is unexpected
-
-            PILLAR 3 — UTILITY (Is it Useful?):
-            • State explicit computational bounds (O(...), convergence rates, Lipschitz
-              constants, error bounds, complexity classifications)
-            • Define extensible APIs: 5+ definitions, structures, and instances
-            • Reference or advance known open problems (Carmichael, tropical Langlands,
-              certified robustness, Berggren factoring, lattice crypto)
-            • Organize code with namespaces and sections (framework structure)
-
-            PILLAR 4 — ORIGINALITY (Is it New?):
-            • Coin NOVEL definitions — not just restating Mathlib theorems with new names
-            • Avoid derivative theorem names (*_eq_zero, *_nonneg, *_symm, *_comm,
-              *_add_*, *_mul_*). Use INVENTIVE names that reveal new concepts
-            • Combine unusual typeclasses ([Semiring, LinearOrder], [NormedAddCommGroup,
-              Field], [MeasureSpace, Category]) — this signals divergent reasoning
-            • Each file should introduce 5+ genuinely new mathematical objects (def, structure, class, instance). High-Originality files average 10+ new definitions.
-
-            PILLAR 5 — IMPACT (Does it have Wonderful Applications?):
-            • EVERY theorem should connect to at least one of: physics (quantum,
-              thermodynamic, entropy), cryptography (lattice, post-quantum, SPB),
-              or ML (certified robustness, Lipschitz bounds, neural networks)
-            • Name-drop application keywords explicitly in theorem/doc-comment text:
-              certified_robustness, Lipschitz, neural_network, gradient_descent,
-              convergence, post_quantum, lattice_crypto, hamiltonian, entropy,
-              holographic, berggren
-            • Produce algorithms or computational pipelines, not just existence proofs
+            {mode_line}
 
             ### Research Direction
             {concept.concept_description}
 
-            ### Precise Mathematical Framing
+            ### Mathematical Framing
             {concept.mathematical_framing}
+            {lean_section}
 
-            {"### Lean 4 Sketch" + chr(10) + concept.lean_guess if concept.lean_guess else ""}
-
-            ### Existing Verified Theorems to Build On
+            ### Existing Verified Theorems
             {focused_context}
+            {theorem_section}
+            {catalog_section}
+            ---
 
-            {tactic_patterns}
+            You are Aristotle. Pursue this research direction deeply and originally.
+            Discover what matters. Prove what you can. Define what needs defining.
+            Build on the catalog theorems referenced above.
 
-            {history_section if history_section else ""}
+            Use concrete types (Nat, Real, Finset, Matrix). Avoid trivial tautologies.
+            If a direct proof fails, try the contrapositive, a constructive witness,
+            or structural induction. Connect to at least one other domain for impact.
 
-            {"### Previously Proved Theorems" + chr(10) + theorem_context if theorem_context else ""}
+            Required: Lean 4 proofs, FUTURE_DIRECTIONS.md
+            Optional: ARTICLE.md, RESEARCH_PAPER.md, demo.py, diagram.svg
 
-            ### Required Deliverables
-
-            You are a world-class mathematician, software engineer, and science writer.
-            Create ALL of the following:
-
-            1. **Lean 4 files** — formally verified theorems with complete proofs
-               - Use concrete types (ℕ, ℝ, Finset, Matrix, etc.)
-               - Build on the existing catalog theorems listed above
-               - Minimize `sorry` — isolate hard steps rather than leaving gaps
-               - Use doc comments to explain the significance of key results
-
-            2. **ARTICLE.md** — MANDATORY standalone popular-science article
-               CRITICAL RULES:
-               • Do NOT mention "Scientific American", "Sci Am", or "ean" anywhere.
-               • Do NOT mention "Lean", "Lean 4", "formal verification", or "proof assistant".
-               • This is a premier magazine-quality piece for curious, intelligent readers.
-               QUALITY STANDARDS:
-               • Superb, vivid, engaging prose with a strong opening hook and narrative arc.
-               • Concrete analogies and metaphors that make abstract ideas tangible.
-               • Story structure: provocative question → tension → breakthrough → significance.
-               • Real-world connections: technology, nature, everyday life.
-               • Historical context: place the work in the sweep of intellectual history.
-               • 1500–3000 words. Substantial, standalone, enjoyable, interesting.
-               • A reader should say "Wow, I had no idea math could do THAT."
-
-            3. **RESEARCH_PAPER.md** — MANDATORY comprehensive, in-depth research paper
-               This is a full, publishable-quality paper, NOT a summary:
-               • Abstract, Introduction, Definitions & Notation
-               • Main Results with detailed proof sketches (not just "by induction")
-               • Algorithms with complete pseudocode and complexity analysis
-               • Applications with worked examples showing practical use
-               • Computational Experiments with tables, charts, numerical results
-               • Discussion, Future Work, References
-               • 3000–8000 words. Thorough and substantive.
-
-            4. **FUTURE_DIRECTIONS.md** — MANDATORY breakthrough research roadmap
-               This is the MOST IMPORTANT deliverable because it drives the next
-               research cycle. Structure it as:
-
-               ## Breakthrough Opportunities (ranked by impact)
-               For each opportunity:
-               - **Theorem Statement**: Precise, formalizable statement with quantifiers
-               - **Proof Strategy**: 2-3 concrete approaches with key lemmas identified
-               - **Why This Is Revolutionary**: What field it opens, what applications it enables
-               - **Catalog Leverage**: Which existing catalog theorems to build on (by name)
-               - **Research Mode**: prove | formalize | discover | counterexample
-               - **Estimated Depth**: 1-5 scale
-
-               ## Under-explored Territory
-               ## Cross-Domain Bridges
-               ## Open Problems Encountered
-
-            5. **Python code** — demos, visualizations, algorithms, applications:
-               - **demo.py** — concrete numerical examples bringing the math to life
-               - **visualizations** — matplotlib/plotly charts (save as PNG/SVG too)
-               - **algorithms.py** — implement algorithms from the paper with docstrings
-               - **applications.py** — real-world applications (ML, crypto, physics)
-
-            6. **diagram.svg** — visualization of key mathematical structures
-
-            7. **PACKAGE.json** — MANDATORY JSON Data Package
-               Bundle ALL artifacts into a single JSON file for the web frontend:
-               • Output a strictly valid JSON object:
-                 {{
-                   "title": "Title", "domain": "Domain",
-                   "article": "Markdown content...",
-                   "research_paper": "Markdown content...",
-                   "future_directions": "Markdown content...",
-                   "demos": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files like 'algorithms'" }} ],
-                   "algorithms": [ {{ "name": "...", "pseudocode": "..." }} ],
-                   "visualizations": [ {{ "name": "...", "data": "base64 URI or inline SVG" }} ],
-                   "lean_proofs": "Raw lean code..."
-                 }}
-               • Ensure all Markdown and code is properly JSON-escaped.
-               • ALL images MUST be embedded as base64 data URIs or inline SVG within the `data` field.
-                 If you generate matplotlib/plotly charts, convert to base64.
-                 NEVER reference external image files — they won't exist standalone.
-               • This JSON file powers the dynamic web UI. Include ALL content.
-
-            {"Fill existing `sorry` placeholders — do not change theorem statements." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs. Think big — aim for results that would appear in JAMS, Annals, or FOCS."}
-
-            ### Catalog Reference Files
-            {ref_section if ref_section else "No specific files referenced. Use Mathlib and general knowledge."}
+            FUTURE_DIRECTIONS.md is critical — it drives the next research cycle.
+            Structure it with specific theorem statements, proof strategies, and
+            cross-domain connections.
         """)
 
-        # ---- LLM ENRICHMENT ----
-        # Ask Pi-Agent to enrich the direct prompt with deeper mathematical insight.
-        # The output must still be a direct-to-Aristotle prompt, not a meta-instruction.
-        # Create a summary of the direct prompt for the enrichment step.
-        # The full direct prompt can be 50K+ chars with catalog references,
-        # which is too long for the LLM. We only send the task portion
-        # (first ~3000 chars, before the catalog context) to the LLM.
-        prompt_summary = direct_prompt[:5000]
-        if len(direct_prompt) > 3000:
-            prompt_summary += "\n\n[... catalog context omitted for brevity ...]"
-
+        # LLM enrichment: add mathematical depth and precision
+        prompt_summary = direct_prompt[:3000]
         enrichment_request = textwrap.dedent(f"""\
-            Below is a research prompt that will be sent directly to Aristotle (a
-            Lean 4 theorem prover). Your job is to ENRICH it with deeper mathematical
-            insight, specific proof strategy hints, and precise Lean 4 type signatures.
-            Do NOT add meta-instructions like "Write a brief" — the output goes
-            directly to Aristotle, who is a theorem prover, not a person.
-
-            AEM QUALITY MANDATE: Enrich the prompt so Aristotle's output maximizes ALL
-            5 AEM pillars:
-            - RIGOR: No sorries. 10+ theorems with diverse tactics (induction, rcases,
-              by_contra, omega, linarith, field_simp). Typeclass abstraction.
-            - AESTHETIC: Bridge 2+ domains. Quantifier alternation (∀ → ∃).
-              Symmetric structures. Minimal hypotheses for powerful conclusions.
-            - UTILITY: Explicit bounds (O(...), convergence rates, Lipschitz constants).
-              5+ new definitions/structures. Advances known open problems.
-            - ORIGINALITY: Novel definitions beyond Mathlib. Inventive theorem names
-              (not *_comm, *_nonneg, etc.). Unusual typeclass combinations.
-            - IMPACT: Connect to physics (quantum, thermodynamic), cryptography
-              (lattice, post-quantum), or ML (certified robustness, neural).
-
-            Add depth to:
-            - The precise theorem statement (give exact Lean 4 type signature)
-            - The proof strategy (add 3-5 concrete proof steps with key lemmas)
-            - The significance (explain why this matters to the research program)
-            - Cross-domain connections (name 2+ domains this bridges)
-            - Application keywords (quantum, cryptographic, certified, lattice, etc.)
+            Enrich this Aristotle research prompt with deeper mathematical insight.
+            Add: precise theorem statement with Lean 4 type signature, 2-3 proof
+            strategy steps, cross-domain connections, application keywords.
 
             ---
             {prompt_summary}
             ---
 
-            Output the enriched TASK SECTIONS ONLY (no catalog references needed).
-            No preamble, no "Here is the enriched prompt:", just the task content.
+            Output ONLY the enriched content. No preamble.
         """)
 
-        # Compact mode: use a shorter, focused enrichment instead of skipping entirely
         if self.compact:
             short_enrichment = textwrap.dedent(f"""\
-                Given this research concept, add mathematical precision AND AEM quality:
-                Concept: {concept.title}
+                Add mathematical precision to this concept:
+                Title: {concept.title}
                 Domain: {concept.domain}
-                Description: {concept.concept_description[:500]}
-                Existing theorems: {focused_context[:500]}
-                Future directions: {future_directions[:500] if future_directions else 'First cycle.'}
-                AEM targets: No sorries, 10+ theorems, bridge 2+ domains, novel definitions,
-                explicit bounds, physics/crypto/ML keywords.
+                Description: {concept.concept_description[:400]}
 
-                Add:
-                1. A specific theorem statement with Lean 4 type signature (use forall+exists)
-                2. Three proof strategy steps with Mathlib lemma names and diverse tactics
-                3. Cross-domain bridges: name 2+ mathematical domains this connects
-                4. Novel definitions to introduce (beyond Mathlib restatements)
-                5. Application keywords: quantum, certified_robustness, lattice_crypto, etc.
-
-                Output ONLY the enriched content. No preamble.
+                Output: enriched theorem statement with Lean 4 signature, 2-3 proof steps,
+                cross-domain bridges. No preamble.
             """)
             raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, short_enrichment, timeout=3000)
         else:
-            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=6000)
+            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=4000)
 
         use_enriched = raw and not raw.startswith(("[OLLAMA", "[API_")) and "TIMEOUT" not in raw
         if use_enriched:
             cleaned = self._strip_llm_preamble(raw)
-            if cleaned and len(cleaned) > 200:
-                # The LLM enriched the task section. Merge with catalog context.
-                # CRITICAL: Preserve the AEM QUALITY MANDATE and AEM SCORING sections
-                # from the direct prompt — the LLM enrichment may strip them.
-                aem_mandate = ""
-                if "**AEM QUALITY MANDATE**" in direct_prompt:
-                    idx_start = direct_prompt.find("**AEM QUALITY MANDATE**")
-                    # Find the end of the mandate section (next major section or end)
-                    mandate_text = direct_prompt[idx_start:]
-                    # Extract just the mandate (up to the next ### or end of mandate content)
-                    mandate_end_patterns = ["\n### ", "\n=== "]
-                    mandate_end = len(mandate_text)
-                    for pat in mandate_end_patterns:
-                        pos = mandate_text.find(pat, 10)  # Skip first few chars
-                        if pos > 0 and pos < mandate_end:
-                            mandate_end = pos
-                    aem_mandate = "\n\n" + mandate_text[:mandate_end]
-
-                # Also extract the AEM QUALITY SCORING section if present
-                aem_scoring = ""
-                if "=== AEM QUALITY SCORING" in direct_prompt:
-                    idx_start = direct_prompt.find("=== AEM QUALITY SCORING")
-                    idx_end = direct_prompt.find("===", idx_start + 30)  # End of section
-                    if idx_end > 0:
-                        aem_scoring = "\n\n" + direct_prompt[idx_start:idx_end]
-                    else:
-                        # Take until the next major section
-                        aem_scoring = "\n\n" + direct_prompt[idx_start:idx_start + 2000]
-
-                # Extract the mode instruction if present
-                mode_instruction = ""
-                for mode_kw in ["Research Mode: PROVE", "Research Mode: FORMALIZE",
-                                 "Research Mode: SORRY_FILL", "Research Mode: DISCOVER",
-                                 "Research Mode: MILLENNIAL", "Research Mode: COUNTEREXAMPLE"]:
-                    if mode_kw in direct_prompt:
-                        idx_start = direct_prompt.find(mode_kw)
-                        # Find end of mode instruction (next double newline + section header)
-                        idx_end = direct_prompt.find("\n===", idx_start)
-                        if idx_end < 0:
-                            idx_end = min(idx_start + 1000, len(direct_prompt))
-                        mode_instruction = "\n\n" + direct_prompt[idx_start:idx_end]
-                        break
-
-                catalog_section = ""
+            if cleaned and len(cleaned) > 100:
+                catalog_section_text = ""
                 if "### Catalog Reference Files" in direct_prompt:
                     idx = direct_prompt.find("### Catalog Reference Files")
-                    catalog_section = "\n\n" + direct_prompt[idx:]
+                    catalog_section_text = "\n\n" + direct_prompt[idx:]
 
-                # Compose: enriched content + preserved AEM sections + mode + catalog
-                enriched_with_aem = (
-                    (aem_scoring + "\n\n" if aem_scoring else "") +
-                    (mode_instruction + "\n\n" if mode_instruction else "") +
-                    cleaned +
-                    (aem_mandate if aem_mandate else "") +
-                    catalog_section
-                )
-                return enriched_with_aem
-        # Fallback: use the direct prompt (never a meta-instruction)
+                enriched_prompt = cleaned + catalog_section_text
+                return enriched_prompt
+
         print(f"[Pi-Agent] Using direct prompt (enrichment {'failed' if raw and 'TIMEOUT' in raw else 'returned insufficient content'})")
         return direct_prompt
 
@@ -2326,28 +1941,18 @@ class PiAgentClient:
                 "analysis": parsed.get("analysis", ""),
             }
 
-        # Fallback: heuristic evaluation with AEM pillar scores
+        # Fallback: heuristic evaluation
         sorry_count = lean_preview.count("sorry")
         theorem_count = lean_preview.count("theorem ") + lean_preview.count("lemma ")
         def_count = len(re.findall(r'\b(?:def|structure|class|inductive|abbrev)\s+', lean_preview))
-        
-        # AEM heuristics
-        from aem_evaluator import AEMEvaluator
-        aem_eval = AEMEvaluator()
-        aem_score = aem_eval.evaluate_lean_file(lean_preview, file_path=concept.domain)
-        
+
         if sorry_count == 0 and theorem_count > 0:
             return {
                 "quality": "substantial",
                 "should_retry": False,
                 "retry_strategy": "",
                 "confidence": 0.6,
-                "analysis": f"Fallback heuristic: no sorries, has theorems. AEM={aem_score.total:.1f}/50 ({aem_score.category()}).",
-                "aem_rigor": aem_score.rigor,
-                "aem_aesthetic": aem_score.aesthetic,
-                "aem_utility": aem_score.utility,
-                "aem_originality": aem_score.originality,
-                "aem_impact": aem_score.impact,
+                "analysis": f"Fallback heuristic: no sorries, has theorems.",
             }
         elif sorry_count > 0 and theorem_count > 0:
             return {
@@ -2355,12 +1960,7 @@ class PiAgentClient:
                 "should_retry": True,
                 "retry_strategy": "Fill remaining sorries or simplify theorem.",
                 "confidence": 0.5,
-                "analysis": f"Fallback heuristic: has sorries and theorems. AEM={aem_score.total:.1f}/50 ({aem_score.category()}).",
-                "aem_rigor": aem_score.rigor,
-                "aem_aesthetic": aem_score.aesthetic,
-                "aem_utility": aem_score.utility,
-                "aem_originality": aem_score.originality,
-                "aem_impact": aem_score.impact,
+                "analysis": f"Fallback heuristic: has sorries and theorems.",
             }
         else:
             return {
@@ -2620,53 +2220,4 @@ class PiAgentClient:
                 "confidence": 0.4,
                 "reason": f"Fallback: proof has {sorry_count} sorries, placed in Speculative.",
             }
-
-    def _generate_dynamic_concept(self, cycle: int) -> "ResearchConcept":
-        """Generate a research concept dynamically based on catalog analysis.
-        
-        Uses ResearchDirector to identify weakest domain-pillar combinations
-        and generates targeted concepts that address those weaknesses.
-        Falls back to VISIONARY_ARCS if no ResearchDirector is available.
-        """
-        try:
-            director = ResearchDirector(str(self.catalog_root) if self.catalog_root else "../Catalog")
-            analysis = director.analyze_catalog()
-            
-            # Get the weakest domain-pillar combination that hasn't been recently targeted
-            recent_domains = set()
-            for h in (self.memory.recent_history if self.memory else []):
-                recent_domains.add(h.get("domain", ""))
-            
-            # Cycle through weaknesses, avoiding recently targeted domains
-            weaknesses = analysis["weakest_10"]
-            for val, domain, pillar in weaknesses:
-                if domain not in recent_domains:
-                    # Generate a targeted concept for this weakness
-                    task = director.generate_task(domain=domain, pillar=pillar)
-                    
-                    # Convert to ResearchConcept
-                    return ResearchConcept(
-                        title=task.concept_title,
-                        domain=normalize_domain(task.domain),
-                        concept=task.concept_description,
-                        novelty=0.95,
-                        seed_domains=task.bridged_domains,
-                    )
-            
-            # If all recently targeted, pick the absolute weakest
-            weakest = weaknesses[0]
-            task = director.generate_task(domain=weakest[1], pillar=weakest[2])
-            return ResearchConcept(
-                title=task.concept_title,
-                domain=normalize_domain(task.domain),
-                concept=task.concept_description,
-                novelty=0.95,
-                seed_domains=task.bridged_domains,
-            )
-            
-        except Exception as e:
-            # Fall back to VISIONARY_ARCS if dynamic generation fails
-            import logging
-            logging.warning(f"Dynamic concept generation failed: {e}. Using VISIONARY_ARCS.")
-            return None
 

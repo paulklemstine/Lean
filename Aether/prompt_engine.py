@@ -153,46 +153,6 @@ class PromptEngine:
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.max_context = self.config.get("max_context_theorems", 8)
-        self._weakness_cache = None
-
-    def _generate_catalog_weaknesses(self) -> str:
-        """Generate dynamic catalog weakness data from current AEM analysis.
-        
-        Uses ResearchDirector to analyze the catalog and identify the weakest
-        domain-pillar combinations. Falls back to a basic analysis if 
-        ResearchDirector is unavailable.
-        """
-        try:
-            from research_director import ResearchDirector
-            director = ResearchDirector("../Catalog")
-            analysis = director.analyze_catalog()
-            
-            weaknesses = analysis["weakest_10"][:8]
-            pillars = analysis["pillars"]
-            weakest_pillar = min(pillars, key=pillars.get)
-            
-            lines = [
-                f"The weakest domain-pillar combinations that need improvement:",
-            ]
-            for domain, pillar, score in weaknesses:
-                lines.append(f"  - {domain} {pillar} ({score:.1f}/10)")
-            
-            lines.append(f"\n  Overall weakest pillar: {weakest_pillar}={pillars[weakest_pillar]:.2f}")
-            lines.append(f"  vs strongest pillar: R={pillars['R']:.2f}")
-            lines.append(f"  Current catalog: {analysis['catalog_aem']:.2f}/50, {analysis['catalog_files']} files")
-            
-            return "\n".join(lines)
-        except Exception:
-            # Fallback: return a generic weakness statement
-            return (
-                "The weakest domain-pillar combinations that need improvement:\n"
-                "  - Shared Impact (I≈2.7/10): Needs connections to applied domains\n"
-                "  - Speculative Impact (I≈4.6/10): Needs explicit application connections\n"
-                "  - Logic Impact (I≈5.4/10): Needs connections to crypto, ML, SAT solving\n"
-                "  - Physics Utility (U≈5.4/10): Needs explicit computational bounds\n"
-                "  - EML Impact (I≈5.4/10): Needs thermodynamic, ML, crypto applications\n"
-                "  Overall weakest pillar: Utility (U≈5.9) vs Rigor (R≈8.0)"
-            )
 
     def build_prompt(
         self,
@@ -208,9 +168,6 @@ class PromptEngine:
 
         if artifacts is None:
             artifacts = ArtifactRequests()
-
-        # 0. Generate dynamic catalog weakness data from current AEM analysis
-        catalog_weaknesses = self._generate_catalog_weaknesses()
 
         # 1. Inject domain-specific creativity boosters
         boosters = self.DOMAIN_BOOSTERS.get(domain.lower(), [])
@@ -238,23 +195,6 @@ class PromptEngine:
             Reuse existing definitions and theorems. Build upward.
             Cross-pollinate across domains. Find hidden symmetries.
 
-            === CURRENT CATALOG WEAKNESSES (auto-generated from analysis) ===
-            {catalog_weaknesses}
-            Target these weak areas to maximize your AEM score.
-            Every file should explicitly reference at least ONE of: physics (quantum,
-            thermodynamic, Hamiltonian), cryptography (rigidity, hash, encoding),
-            ML (neural, robust, certified), or optimization (algorithm, complexity).
-            
-            The 5 AEM pillars and what counts for each:
-            - RIGOR: ZERO sorry, 10+ theorems, 6+ distinct tactics. Prove everything.
-            - AESTHETIC: 2+ cross-domain bridges, quantifier alternation, minimal assumptions.
-            - UTILITY: 5+ reusable structures (struct, class, def, instance), SPECIFIC
-              computational bounds (O(n log n), Omega(2^n)), not generic 'bound'/'rate'.
-            - ORIGINALITY: 5+ genuinely NEW definitions that don't exist in Mathlib.
-              Generic names (main, test, aux) don't count.
-            - IMPACT: Explicit connections to 2+ of: physics, cryptography, ML.
-              Bridge: connects X to Y in doc comments. Structural breadth (3+ domains).
-
             === RESEARCH BODY ===
             DOMAIN: {domain}
             TITLE: {title}
@@ -278,65 +218,11 @@ class PromptEngine:
             applications using breakthroughs in this mathematics. Write a paper of
             recommended future research directions to explore.
 
-            === AEM QUALITY SCORING (your output will be scored on these 5 pillars) ===
-
-            RIGOR (0-10): Formal verification quality.
-              - ZERO `sorry` in core logic. Every proof is complete.
-              - Use diverse tactics: induction, rcases, ext, simp, linarith, omega, field_simp, exact, refine, constructor, by_contra, etc.
-              - Proper abstraction: generalize from R to CommRing or Semiring where natural, without over-abstracting into triviality.
-              - Semantic coherence: lemmas build on each other logically toward the main theorem.
-              Target: 10+ theorems with ZERO sorries and 6+ distinct tactics.
-
-            AESTHETIC (0-10): Mathematical beauty and surprise.
-              - Bridge at least 2 seemingly disparate domains (e.g., Tropical + Cryptography, Algebra + Quantum Mechanics).
-              - Achieve non-trivial/unintuitive results that challenge expectations.
-              - Minimize axiomatic footprint: big results from few assumptions.
-              - Exhibit natural symmetries: commutativity, duality, adjointness.
-              Target: 2+ cross-domain bridges with non-trivial results.
-
-            UTILITY (0-10): Structural usefulness for further work.
-              - Establish computational/complexity bounds (e.g., convergence rates, O() bounds).
-              - Define extensible structures: clean APIs with `def`, `structure`, `class`, `instance` for reuse.
-              - Advance open problems or significantly narrow search spaces.
-              - Provide simplification frameworks.
-              Target: 5+ reusable structures/functions with computational bounds (struct, class, def, instance).
-              NOTE: Generic terms like "bound", "rate", "convergence" alone do NOT score utility.
-              Only SPECIFIC bounds (O(n log n), Omega(2^n), Theta(n^2)) count.
-
-            ORIGINALITY (0-10): Truly novel mathematics.
-              - Invent genuinely NEW mathematical objects, operators, or invariants — not parameter tweaks on Mathlib.
-              - Apply known theory to completely new domains yielding structurally unfamiliar results.
-              - Follow divergent reasoning paths that human intuition would not naturally take.
-              - EXPLICITLY mention cross-domain bridges in doc comments: "Bridge: connects X to Y".
-              Target: 5+ genuinely new definitions/structures (def, structure, class, instance) that don't exist in Mathlib. High-Originality files average 10+ new definitions.
-              NOTE: Generic names (main, test, aux, helper) do NOT count as genuinely new.
-
-            IMPACT (0-10): Wonderful real-world applications.
-              - Map directly to Physics (quantum mechanics, thermodynamics, general relativity).
-              - Map to Cryptography (post-quantum, lattice-based, zero-knowledge proofs).
-              - Map to Machine Learning (certified robustness, Lipschitz bounds, convergence guarantees).
-              - Enable systemic optimization (more efficient algorithms, compilers, architectures).
-              Target: Explicit connections to 2+ of: physics, cryptography, machine learning.
-              NOTE: Impact requires SPECIFIC application terms (e.g., "lipschitz_certified_robustness",
-              not just "convergence"). Generic keywords alone do NOT score Impact.
-
-            === AEM QUALITY MANDATE ===
-            Your output MUST satisfy ALL five AEM pillars above.
-            - RIGOR: Prove every theorem completely. ZERO sorries in core results.
-            - AESTHETIC: Include at least 2 cross-domain bridges with surprising connections.
-            - UTILITY: Define reusable structures with documented computational bounds.
-            - ORIGINALITY: Invent at least 3 genuinely new mathematical objects.
-            - IMPACT: Explicitly connect to physics, cryptography, or machine learning.
-
             Core guardrails (non-negotiable):
             - Use concrete types (Nat, Real, Matrix, Finset, etc.). Avoid `True := by trivial`.
             - Formalize genuine, substantive theorems in Lean 4 (mathlib4 v4.28.0).
-            - ZERO sorry in core theorems. If a step is beyond zero-shot, isolate it as a clearly marked auxiliary lemma rather than using sorry.
+            - Minimize sorry. If a step is beyond zero-shot, isolate it as a clearly marked auxiliary lemma rather than using sorry.
             - Build on existing catalog definitions. Do not re-invent.
-            - Every new definition must serve a purpose and be USED in at least one theorem.
-            - Cross-reference domains explicitly in doc comments: e.g., "Bridge: connects Tropical Geometry to Post-Quantum Cryptography via min-plus matrix rank."
-            - PRODUCE RICH, SUBSTANTIAL FILES: The highest-AEM files in the catalog average 2000+ lines with 150+ theorems and 60+ definitions. Produce comprehensive files, not stubs. Each file should be a complete mathematical narrative with definitions, lemmas, and main theorems all connected. Target 500+ lines with 20+ theorems and 10+ definitions per file.
-            - EXPAND MULTIPLE DOMAINS: When producing a catalog-wide response, create files in multiple domains (Bridges, Algebra, Cryptography, Tropical, EML, Physics, etc.), not just a single domain. The highest-AEM files bridge 2+ domains.
 
             Deliver whatever feels right for this body of work. You may produce:
             - A Lean proof (theorem.lean)
@@ -346,7 +232,7 @@ class PromptEngine:
             - A public-facing article (DISCUSSION.md)
 
             Or any combination thereof. Structure and length are up to you.
-            Quality over quantity. Surprise us. Produce work that scores 35+/50 on the AEM rubric.
+            Quality over quantity. Surprise us.
         """)
 
         # 3. Open-ended deliverables (suggestive, not prescriptive)

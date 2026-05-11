@@ -218,7 +218,7 @@ class CatalogAnalyzer:
     def get_domain_summary_for_prompt(self) -> str:
         """Generate a compact domain summary for Pi-Agent prompts.
 
-        Returns a string including AEM pillar scores and weak domain indicators.
+        Returns a string with file count, declaration count, and sorry count per domain.
         """
         if self._summaries is None:
             self.scan()
@@ -233,54 +233,15 @@ class CatalogAnalyzer:
             f"{total_sorries} sorries remaining"
         ]
 
-        # Try to get AEM pillar scores for each domain
-        domain_aem = {}
-        try:
-            from aem_evaluator import AEMEvaluator
-            from collections import defaultdict
-            evaluator = AEMEvaluator()
-            catalog_results = evaluator.evaluate_catalog(self.catalog_root, use_disk_cache=True)
-            
-            # Group by domain and compute pillar averages
-            domain_pillars = defaultdict(lambda: {'count': 0, 'O': 0, 'U': 0, 'I': 0})
-            for path, score in catalog_results.items():
-                p = str(path).lower()
-                for domain in self._domain_index.keys():
-                    if domain.lower() in p:
-                        dp = domain_pillars[domain]
-                        dp['count'] += 1
-                        dp['O'] += score.originality
-                        dp['U'] += score.utility
-                        dp['I'] += score.impact
-                        break
-            
-            # Find weakest pillar per domain
-            for domain, dp in domain_pillars.items():
-                if dp['count'] > 0:
-                    domain_aem[domain] = {
-                        'O': dp['O'] / dp['count'],
-                        'U': dp['U'] / dp['count'],
-                        'I': dp['I'] / dp['count'],
-                    }
-        except Exception:
-            pass
-
         for domain in sorted(self._domain_index.keys()):
             files = self._domain_index[domain]
             file_count = len(files)
             decl_count = sum(len(f.declarations) for f in files)
             sorry_count = sum(f.sorry_count for f in files)
             sorry_note = f", {sorry_count} sorries" if sorry_count > 0 else ""
-            
-            # Add AEM pillar info if available
-            aem_note = ""
-            if domain in domain_aem:
-                d = domain_aem[domain]
-                weakest = min([('O', d['O']), ('U', d['U']), ('I', d['I'])], key=lambda x: x[1])
-                aem_note = f", O={d['O']:.1f} U={d['U']:.1f} I={d['I']:.1f} weakest={weakest[0]}"
-            
+
             lines.append(
-                f"  - {domain}: {file_count} files, {decl_count} declarations{sorry_note}{aem_note}"
+                f"  - {domain}: {file_count} files, {decl_count} declarations{sorry_note}"
             )
 
         return "\n".join(lines)
@@ -426,69 +387,79 @@ class CatalogAnalyzer:
         header = "Existing theorems you can build on:\n"
         return header + "\n".join(results)
 
-    def collect_future_directions(self, limit: int = 5) -> str:
+    def collect_future_directions(self, limit: int = 10) -> str:
         """Collect Aristotle's FUTURE_DIRECTIONS reports from previous cycles.
 
         Aristotle includes a FUTURE_DIRECTIONS.md (or similar) in its output,
         containing its own research recommendations. Pi reads these to guide
         the next research cycle, creating a self-improving feedback loop.
 
-        Sources (in priority order):
-        1. Master FUTURE_DIRECTIONS — accumulated wisdom from all past cycles
-        2. Catalog/ResearchOutput/*/FUTURE_DIRECTIONS.md
-        3. Catalog/ResearchOutput/*/future_directions*.md
-        4. Catalog/ResearchOutput/*/research_paper.md (for "Future Directions" sections)
+        Sources:
+        1. Catalog/ResearchOutput/*/FUTURE_DIRECTIONS.md
+        2. Catalog/ResearchOutput/*/future_directions*.md
+        3. Catalog/ResearchOutput/*/extracted_future_directions.md
+        4. Catalog/Speculative/AutoResearch/*/(FUTURE_DIRECTIONS|future_directions|research_paper)
+        5. Catalog/ResearchOutput/*/research_paper.md (for "Future Directions" sections)
 
-        Returns the concatenated content of the most recent N reports.
+        Returns the concatenated content of the largest N reports, deduplicated
+        by concept similarity.
         """
         future_dirs: list = []
 
-        # 1. Master FUTURE_DIRECTIONS (highest priority — accumulated wisdom)
-        master_content = self.get_master_future_directions()
-        if master_content and len(master_content) > 100:
-            future_dirs.append({
-                "path": "MASTER_FUTURE_DIRECTIONS.md",
-                "content": master_content,
-                "size": len(master_content),
-                "priority": 0,  # Highest priority
-            })
+        # Scan directories for future directions files
+        scan_dirs = [
+            self.catalog_root / "ResearchOutput",
+            self.catalog_root / "Speculative" / "AutoResearch",
+        ]
 
-        # 2. Scan ResearchOutput subdirectories
-        research_output_dir = self.catalog_root / "ResearchOutput"
-        if research_output_dir.exists():
-            for subdir in sorted(research_output_dir.iterdir()):
+        for scan_dir in scan_dirs:
+            if not scan_dir.exists():
+                continue
+            for subdir in sorted(scan_dir.iterdir()):
                 if not subdir.is_dir():
                     continue
 
-                # Look for future directions files
+                # Look for future directions files (including nested subdirs)
                 candidates = []
                 for pattern in [
                     "FUTURE_DIRECTIONS.md",
                     "future_directions*.md",
+                    "extracted_future_directions.md",
                 ]:
                     candidates.extend(subdir.glob(pattern))
+                    # Also check one level deeper
+                    for sub2 in sorted(subdir.iterdir()):
+                        if sub2.is_dir():
+                            candidates.extend(sub2.glob(pattern))
 
                 for candidate in candidates:
                     try:
                         content = candidate.read_text(encoding="utf-8", errors="replace")
-                        # Only include if it has substantial content
                         if len(content) > 100:
                             future_dirs.append({
                                 "path": str(candidate.relative_to(self.catalog_root)),
                                 "content": content,
                                 "size": len(content),
-                                "priority": 1,
+                                "dedup_key": content[:200].lower().strip(),
                             })
                     except Exception:
                         continue
 
                 # Also check research papers for "Future Directions" sections
-                for paper_name in ["research_paper.md", "RESEARCH_REPORT.md"]:
+                for paper_name in ["research_paper.md", "RESEARCH_REPORT.md",
+                                   "RESEARCH_PAPER.md"]:
                     paper = subdir / paper_name
+                    if not paper.exists():
+                        # Check one level deeper
+                        for sub2 in sorted(subdir.iterdir()):
+                            if sub2.is_dir():
+                                candidate = sub2 / paper_name
+                                if candidate.exists():
+                                    paper = candidate
+                                    break
                     if paper.exists():
                         try:
                             content = paper.read_text(encoding="utf-8", errors="replace")
-                            # Extract "Future Directions" or "What We Don't Know" sections
                             section = self._extract_section(content, [
                                 "Future Directions",
                                 "What We Don't Know",
@@ -502,7 +473,7 @@ class CatalogAnalyzer:
                                     "path": str(paper.relative_to(self.catalog_root)),
                                     "content": section,
                                     "size": len(section),
-                                    "priority": 2,
+                                    "dedup_key": section[:200].lower().strip(),
                                 })
                         except Exception:
                             continue
@@ -510,9 +481,19 @@ class CatalogAnalyzer:
         if not future_dirs:
             return "No previous future directions reports found."
 
-        # Take the most impactful N (master first, then richest per-project reports)
-        future_dirs.sort(key=lambda x: (x.get("priority", 1), -x["size"]))
-        selected = future_dirs[:limit]
+        # Deduplicate by content similarity
+        seen_keys = set()
+        unique_dirs = []
+        for fd in future_dirs:
+            key = fd["dedup_key"]
+            if key not in seen_keys:
+                seen_keys.add(key)
+                unique_dirs.append(fd)
+            # Skip duplicates with similar opening content
+
+        # Take the largest N reports
+        unique_dirs.sort(key=lambda x: x["size"], reverse=True)
+        selected = unique_dirs[:limit]
 
         parts = []
         for fd in selected:
@@ -907,114 +888,6 @@ class CatalogAnalyzer:
 
         return "\n".join(lines)
 
-    def update_master_future_directions(self, new_content: str) -> str:
-        """Merge new FUTURE_DIRECTIONS content into the master file.
-
-        The master file accumulates insights from all past research cycles.
-        It lives at .aether_workspace/MASTER_FUTURE_DIRECTIONS.md.
-        Pi injects this into every research direction selection prompt
-        so it reasons more knowledgeably over time.
-
-        Deduplication: entries with >70% word overlap are merged (keep newer).
-        The file is capped at ~5000 chars to keep prompts manageable.
-        """
-        import datetime
-        master_path = self.catalog_root / "Aether" / ".aether_workspace" / "MASTER_FUTURE_DIRECTIONS.md"
-
-        # Read existing master
-        existing_content = ""
-        if master_path.exists():
-            try:
-                existing_content = master_path.read_text(encoding="utf-8", errors="replace")
-            except Exception:
-                existing_content = ""
-
-        # Parse existing entries (split by "##" headers)
-        existing_entries = []
-        if existing_content.strip():
-            # Skip the title line
-            for section in re.split(r'\n(?=## )', existing_content):
-                section = section.strip()
-                if section and not section.startswith("# MASTER FUTURE"):
-                    existing_entries.append(section)
-
-        # Parse new content into entries
-        new_entries = []
-        for section in re.split(r'\n(?=## )', new_content):
-            section = section.strip()
-            if section and len(section) > 50:
-                new_entries.append(section)
-
-        # Merge: add new entries that don't overlap with existing ones
-        def _word_set(text: str) -> set:
-            """Extract significant words from text for dedup."""
-            stop_words = {"the", "a", "an", "is", "are", "was", "were", "be",
-                         "been", "being", "have", "has", "had", "do", "does",
-                         "did", "will", "would", "could", "should", "may",
-                         "might", "shall", "can", "to", "of", "in", "for",
-                         "on", "with", "at", "by", "from", "as", "into",
-                         "through", "during", "before", "after", "above",
-                         "below", "between", "and", "but", "or", "nor",
-                         "not", "so", "yet", "both", "either", "neither",
-                         "each", "every", "all", "any", "few", "more",
-                         "most", "other", "some", "such", "no", "only",
-                         "own", "same", "than", "too", "very", "just",
-                         "because", "if", "when", "where", "how", "what",
-                         "which", "who", "whom", "this", "that", "these",
-                         "those", "it", "its", "we", "our", "they", "them"}
-            words = set(re.findall(r'[a-zA-Z]{3,}', text.lower()))
-            return words - stop_words
-
-        merged = list(existing_entries)
-        for new_entry in new_entries:
-            new_words = _word_set(new_entry)
-            is_dup = False
-            for i, existing in enumerate(existing_entries):
-                existing_words = _word_set(existing)
-                overlap = len(new_words & existing_words)
-                union = len(new_words | existing_words)
-                if union > 0 and overlap / union > 0.7:
-                    # Overlap >70% — keep the newer entry
-                    merged[i] = new_entry
-                    is_dup = True
-                    break
-            if not is_dup:
-                merged.append(new_entry)
-
-        # Cap at ~5000 chars by trimming oldest (shortest) entries
-        merged.sort(key=len, reverse=True)  # Keep richest entries
-        total_len = 0
-        kept = []
-        for entry in merged:
-            if total_len + len(entry) > 5000:
-                break
-            kept.append(entry)
-            total_len += len(entry)
-
-        # Write the master file
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-        master_text = f"# MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom\n\n"
-        master_text += f"*Last updated: {timestamp}*\n\n"
-        master_text += "\n\n".join(kept)
-
-        master_path.parent.mkdir(parents=True, exist_ok=True)
-        master_path.write_text(master_text, encoding="utf-8")
-
-        print(f"[MasterFD] Updated master FUTURE_DIRECTIONS ({len(kept)} entries, {len(master_text)} chars)")
-        return master_text
-
-    def get_master_future_directions(self) -> str:
-        """Read the master FUTURE_DIRECTIONS file for injection into prompts."""
-        master_path = self.catalog_root / "Aether" / ".aether_workspace" / "MASTER_FUTURE_DIRECTIONS.md"
-        if master_path.exists():
-            try:
-                content = master_path.read_text(encoding="utf-8", errors="replace")
-                if len(content) > 3000:
-                    content = content[:3000] + "\n\n[... truncated for prompt size ...]"
-                return content
-            except Exception:
-                pass
-        return ""
 
 
 def main():

@@ -6,11 +6,10 @@ and guide future research toward novel ground.
 """
 
 import json
-import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Optional, Set
 
 
 @dataclass
@@ -102,78 +101,6 @@ class ResearchMemory:
         desc_snippet = description.lower()[:100]
         return title_lower in self._titles or desc_snippet in self._descriptions
 
-    def has_been_explored_fuzzy(self, title: str, description: str, domain: str = "") -> Tuple[bool, float]:
-        """Check if a concept has already been explored using fuzzy matching.
-
-        Returns (is_duplicate, similarity_score) where:
-        - similarity_score >= 0.7: definitely a duplicate
-        - similarity_score 0.5-0.7: suspiciously similar, add warning
-        - similarity_score < 0.5: likely novel
-
-        Matching strategy:
-        1. Exact match on title or description prefix (fast path)
-        2. Jaccard keyword overlap on title+description
-        3. Domain + keyword overlap combo
-        """
-        # Fast path: exact match
-        title_lower = title.lower()
-        if title_lower in self._titles:
-            return True, 1.0
-        desc_snippet = description.lower()[:100]
-        if desc_snippet in self._descriptions:
-            return True, 1.0
-
-        # Fuzzy match: keyword Jaccard similarity
-        new_keywords = self._extract_keywords(title + " " + description)
-        if not new_keywords:
-            return False, 0.0
-
-        best_score = 0.0
-        for record in self._cache:
-            existing_keywords = self._extract_keywords(
-                record.concept_title + " " + record.concept_description
-            )
-            if not existing_keywords:
-                continue
-
-            # Jaccard similarity
-            intersection = new_keywords & existing_keywords
-            union = new_keywords | existing_keywords
-            if union:
-                score = len(intersection) / len(union)
-            else:
-                score = 0.0
-
-            # Boost score if same domain
-            if domain and record.domain and domain.lower() == record.domain.lower():
-                score = min(1.0, score + 0.1)
-
-            best_score = max(best_score, score)
-            if best_score >= 0.7:
-                return True, best_score
-
-        is_dup = best_score >= 0.7
-        return is_dup, best_score
-
-    @staticmethod
-    def _extract_keywords(text: str) -> Set[str]:
-        """Extract significant keywords from text for dedup matching."""
-        stop_words = {
-            "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
-            "have", "has", "had", "do", "does", "did", "will", "would", "could",
-            "should", "may", "might", "shall", "can", "to", "of", "in", "for",
-            "on", "with", "at", "by", "from", "as", "into", "through", "during",
-            "before", "after", "above", "below", "between", "and", "but", "or",
-            "nor", "not", "so", "yet", "both", "either", "neither", "each",
-            "every", "all", "any", "few", "more", "most", "other", "some", "such",
-            "no", "only", "own", "same", "than", "too", "very", "just", "because",
-            "if", "when", "where", "how", "what", "which", "who", "whom", "this",
-            "that", "these", "those", "it", "its", "we", "our", "they", "them",
-            "prove", "show", "using", "via", "over", "also", "given", "let",
-        }
-        words = set(re.findall(r'[a-z]{3,}', text.lower()))
-        return words - stop_words
-
     def get_domain_history(self, domain: str, limit: int = 50) -> List[ExperimentRecord]:
         """Get recent experiments in a domain."""
         return [r for r in self._cache if r.domain == domain][-limit:]
@@ -217,32 +144,14 @@ class ResearchMemory:
             )
 
     def build_exclusion_prompt(self) -> str:
-        """Build a prompt fragment listing explored concepts to avoid.
-
-        Expanded from 20 to 50 entries with keyword overlap warnings.
-        """
-        recent = self._cache[-50:] if len(self._cache) > 50 else self._cache
+        """Build a prompt fragment listing explored concepts to avoid."""
+        recent = self._cache[-20:] if len(self._cache) > 20 else self._cache
         if not recent:
             return ""
 
         lines = ["Previously explored concepts (AVOID these exact ideas):"]
         for r in recent:
             lines.append(f"  - {r.concept_title} ({r.domain}): {r.concept_description[:80]}...")
-
-        # Add keyword patterns to help LLM avoid near-duplicates
-        if len(self._cache) > 10:
-            keyword_freq: Dict[str, int] = {}
-            for r in self._cache:
-                for kw in self._extract_keywords(r.concept_title + " " + r.concept_description):
-                    keyword_freq[kw] = keyword_freq.get(kw, 0) + 1
-
-            # Find overused keywords (appeared in >3 experiments)
-            overused = {kw: count for kw, count in keyword_freq.items() if count > 3}
-            if overused:
-                lines.append("")
-                lines.append("Overused concept keywords (AVOID recombining these with the same domains):")
-                for kw, count in sorted(overused.items(), key=lambda x: -x[1])[:15]:
-                    lines.append(f"  - \"{kw}\" (used {count} times)")
 
         return "\n".join(lines)
 
@@ -310,3 +219,254 @@ class ResearchMemory:
     def get_retry_history(self, original_exp_id: str) -> List[ExperimentRecord]:
         """Get all retries for an original experiment."""
         return [r for r in self._cache if r.retry_of == original_exp_id]
+
+
+@dataclass
+class FutureDirection:
+    """A research direction extracted from Aristotle's FUTURE_DIRECTIONS.md output."""
+    id: str
+    title: str
+    description: str
+    source_exp_id: str
+    source_path: str
+    domains: List[str] = field(default_factory=list)
+    proof_strategy: str = ""
+    research_mode: str = "prove"
+    depth_estimate: int = 3
+    priority_score: float = 0.5
+    status: str = "available"  # available, in_progress, completed, abandoned
+    consumed_by_exp_id: str = ""
+    timestamp: str = ""
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "source_exp_id": self.source_exp_id,
+            "source_path": self.source_path,
+            "domains": self.domains,
+            "proof_strategy": self.proof_strategy,
+            "research_mode": self.research_mode,
+            "depth_estimate": self.depth_estimate,
+            "priority_score": self.priority_score,
+            "status": self.status,
+            "consumed_by_exp_id": self.consumed_by_exp_id,
+            "timestamp": self.timestamp,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "FutureDirection":
+        return cls(**{k: v for k, v in d.items() if k in cls.__dataclass_fields__})
+
+
+class FutureDirectionsManager:
+    """Manages a persistent list of future research directions extracted from
+    Aristotle's outputs. Tracks consumption status so directions are removed
+    from the available list when they're being researched."""
+
+    def __init__(self, workspace: Path):
+        self.workspace = Path(workspace)
+        self._file = self.workspace / "future_directions.json"
+        self._directions: List[FutureDirection] = []
+        self._load()
+
+    def _load(self) -> None:
+        if not self._file.exists():
+            return
+        try:
+            data = json.loads(self._file.read_text(encoding="utf-8"))
+            self._directions = [FutureDirection.from_dict(d) for d in data]
+        except Exception:
+            self._directions = []
+
+    def _save(self) -> None:
+        self.workspace.mkdir(parents=True, exist_ok=True)
+        self._file.write_text(
+            json.dumps([d.to_dict() for d in self._directions], indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
+
+    def add_direction(self, direction: FutureDirection) -> None:
+        """Add a new future direction. Skips if a very similar title already exists."""
+        title_lower = direction.title.lower().strip()
+        for existing in self._directions:
+            if existing.title.lower().strip() == title_lower:
+                return
+            # Also skip if descriptions are very similar (>80% word overlap)
+            existing_words = set(existing.description.lower().split())
+            new_words = set(direction.description.lower().split())
+            if existing_words and new_words:
+                overlap = len(existing_words & new_words) / max(len(existing_words), len(new_words))
+                if overlap > 0.8:
+                    return
+        if not direction.timestamp:
+            direction.timestamp = datetime.now(timezone.utc).isoformat()
+        self._directions.append(direction)
+        self._save()
+
+    def add_directions_from_text(
+        self, text: str, source_exp_id: str, source_path: str
+    ) -> int:
+        """Parse a FUTURE_DIRECTIONS.md text and add structured directions.
+
+        Returns the number of directions added.
+        """
+        import re
+        added = 0
+        current_title = ""
+        current_body = ""
+
+        # Pattern 1: Bold-numbered sections like "1. **Title.** Description..."
+        for m in re.finditer(r'\d+\.\s+\*\*([^*]+?)\*\*\s*', text):
+            title = m.group(1).strip().rstrip(".")
+            # Capture description from end of bold marker to next numbered item
+            remaining = text[m.end():]
+            next_item = re.search(r'\n\s*\d+\.\s+\*\*', remaining)
+            if next_item:
+                desc = remaining[:next_item.start()].strip()
+            else:
+                end_match = re.search(r'\n\n(?!\s)', remaining)
+                desc = remaining[:end_match.start()].strip() if end_match else remaining.strip()
+
+            desc = desc[:800]
+            if len(desc) > 30:
+                fd = FutureDirection(
+                    id=f"fd_{len(self._directions):04d}",
+                    title=title,
+                    description=desc,
+                    source_exp_id=source_exp_id,
+                    source_path=source_path,
+                    domains=self._infer_domains(title + " " + desc),
+                    depth_estimate=3,
+                    priority_score=0.75,
+                )
+                self.add_direction(fd)
+                added += 1
+
+        # Pattern 2: Markdown headers with research content
+        if added == 0:
+            for m in re.finditer(
+                r'#{2,4}\s+(.+?)\n(.*?)(?=#{2,4}|\Z)',
+                text, re.DOTALL
+            ):
+                header = m.group(1).strip()
+                body = m.group(2).strip()
+                if len(body) > 100 and any(
+                    kw in (header + body).lower()
+                    for kw in ["prove", "show", "extend", "formalize", "conjecture",
+                                "theorem", "establish", "open", "future", "direction"]
+                ):
+                    fd = FutureDirection(
+                        id=f"fd_{len(self._directions):04d}",
+                        title=header[:80],
+                        description=body[:800],
+                        source_exp_id=source_exp_id,
+                        source_path=source_path,
+                        domains=self._infer_domains(header + " " + body),
+                        depth_estimate=3,
+                        priority_score=0.7,
+                    )
+                    self.add_direction(fd)
+                    added += 1
+
+        # Pattern 3: Bullet items with mathematical content
+        if added == 0:
+            for m in re.finditer(r'[-•]\s+(.+?)(?=\n[-•]|\n\n|\Z)', text, re.DOTALL):
+                item = m.group(1).strip()
+                if len(item) > 80 and any(
+                    kw in item.lower()
+                    for kw in ["prove", "show", "extend", "formalize", "conjecture", "theorem"]
+                ):
+                    fd = FutureDirection(
+                        id=f"fd_{len(self._directions):04d}",
+                        title=item[:60].rstrip() + "...",
+                        description=item[:800],
+                        source_exp_id=source_exp_id,
+                        source_path=source_path,
+                        domains=self._infer_domains(item),
+                        depth_estimate=3,
+                        priority_score=0.65,
+                    )
+                    self.add_direction(fd)
+                    added += 1
+
+        return added
+
+    @staticmethod
+    def _infer_domains(text: str) -> List[str]:
+        """Infer likely Catalog domains from text content."""
+        text_lower = text.lower()
+        domain_keywords = {
+            "Tropical": ["tropical", "min-plus", "semiring", "maslov", "dequantization"],
+            "Physics": ["quantum", "feynman", "path integral", "wave", "lorentz"],
+            "Pythagorean": ["pythagorean", "berggren", "fibonacci", "carmichael", "primitive triple"],
+            "Cryptography": ["crypto", "spb", "diffie-hellman", "discrete log", "lattice", "dilithium"],
+            "EML": ["eml", "exponential", "multiplicative", "logarithmic", "closure"],
+            "Bridges": ["bridge", "cross-domain", "unification", "functor", "correspondence"],
+            "Algebra": ["algebra", "ring", "group", "field", "galois", "module", "spectral"],
+            "MachineLearning": ["neural", "learning", "tropical robust", "approximation", "deep learning"],
+            "Logic": ["logic", "type theory", "homotopy", "proof", "decidable", "constructive"],
+            "Computation": ["turing", "complexity", "circuit", "reversible", "automaton"],
+            "Speculative": ["speculative", "science fiction", "hyperspace", "alien"],
+            "Geometry": ["geometry", "geometric", "curve", "surface", "manifold"],
+        }
+        domains = []
+        for domain, keywords in domain_keywords.items():
+            if any(kw in text_lower for kw in keywords):
+                domains.append(domain)
+        return domains or ["Bridges"]
+
+    def get_available_directions(
+        self, limit: int = 10, domain_filter: Optional[str] = None
+    ) -> List[FutureDirection]:
+        """Return available directions, optionally filtered by domain, sorted by priority."""
+        available = [d for d in self._directions if d.status == "available"]
+        if domain_filter:
+            available = [d for d in available if domain_filter in d.domains or not d.domains]
+        available.sort(key=lambda d: d.priority_score, reverse=True)
+        return available[:limit]
+
+    def mark_direction_consumed(self, direction_id: str, exp_id: str) -> None:
+        """Mark a direction as in-progress when it's selected for research."""
+        for d in self._directions:
+            if d.id == direction_id:
+                d.status = "in_progress"
+                d.consumed_by_exp_id = exp_id
+                break
+        self._save()
+
+    def mark_direction_completed(self, direction_id: str) -> None:
+        """Mark a direction as completed after successful research."""
+        for d in self._directions:
+            if d.id == direction_id:
+                d.status = "completed"
+                break
+        self._save()
+
+    def mark_direction_abandoned(self, direction_id: str) -> None:
+        """Mark a direction as abandoned (e.g., trivial proof)."""
+        for d in self._directions:
+            if d.id == direction_id:
+                d.status = "abandoned"
+                break
+        self._save()
+
+    def get_direction_for_exp(self, exp_id: str) -> Optional[FutureDirection]:
+        """Find the direction being researched by a given experiment."""
+        for d in self._directions:
+            if d.consumed_by_exp_id == exp_id:
+                return d
+        return None
+
+    def get_stats(self) -> dict:
+        """Return stats about direction consumption."""
+        from collections import Counter
+        statuses = Counter(d.status for d in self._directions)
+        return {
+            "total": len(self._directions),
+            "available": statuses.get("available", 0),
+            "in_progress": statuses.get("in_progress", 0),
+            "completed": statuses.get("completed", 0),
+            "abandoned": statuses.get("abandoned", 0),
+        }
