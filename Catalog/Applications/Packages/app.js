@@ -401,13 +401,103 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function buildLocalModuleCode(code, pkgData) {
+        // Build Python code to register all local modules needed by a demo.
+        // Handles 'from algorithms import ...', 'from demo import ...', etc.
+        // Priority: pkg.modules > algorithms[].code > pseudocode stubs.
+        // Returns the preamble code to prepend before the demo code.
+
+        // Detect all local module imports
+        const localModuleRe = /^from\s+(\w+)\s+import\s+/gm;
+        const bareImportRe = /^\s*import\s+(\w+)\s*$/gm;
+        const neededModules = new Set();
+        let match;
+        while ((match = localModuleRe.exec(code)) !== null) {
+            neededModules.add(match[1]);
+        }
+        while ((match = bareImportRe.exec(code)) !== null) {
+            // Only treat known local modules, not stdlib/installed packages
+            const mod = match[1];
+            if (['algorithms', 'demo'].includes(mod)) {
+                neededModules.add(mod);
+            }
+        }
+
+        if (neededModules.size === 0) return '';
+
+        let preamble = '';
+
+        // For each needed module, try to find real source code
+        for (const modName of neededModules) {
+            // 1. Check pkg.modules (preferred: full source from extraction)
+            if (pkgData && pkgData.modules && pkgData.modules[modName]) {
+                preamble += `# --- ${modName} module (from Aristotle output) ---\n`;
+                preamble += pkgData.modules[modName];
+                preamble += `\n\n# --- Register ${modName} module ---\n`;
+                preamble += 'import types as _types_' + modName + '\n';
+                preamble += 'import sys as _sys_' + modName + '\n';
+                preamble += `_mod_${modName} = _types_${modName}.ModuleType("${modName}")\n`;
+                preamble += `for _n in list(globals().keys()):\n`;
+                preamble += `    if not _n.startswith("_") and _n not in ("_types_${modName}", "_sys_${modName}", "_mod_${modName}"):\n`;
+                preamble += `        try:\n`;
+                preamble += `            setattr(_mod_${modName}, _n, globals()[_n])\n`;
+                preamble += `        except Exception:\n`;
+                preamble += `            pass\n`;
+                preamble += `_sys_${modName}.modules["${modName}"] = _mod_${modName}\n`;
+                preamble += `# --- End ${modName} module ---\n\n`;
+                continue;
+            }
+
+            // 2. For 'algorithms', check algorithms[].code
+            if (modName === 'algorithms' && pkgData && pkgData.algorithms) {
+                const codeParts = [];
+                const seenCode = new Set();
+                for (const algo of pkgData.algorithms) {
+                    if (algo.code && !seenCode.has(algo.code)) {
+                        seenCode.add(algo.code);
+                        codeParts.push(algo.code.trim());
+                    }
+                }
+                if (codeParts.length > 0) {
+                    preamble += `# --- algorithms module (from code fields) ---\n`;
+                    preamble += codeParts.join('\n\n');
+                    preamble += `\n\n# --- Register algorithms module ---\n`;
+                    preamble += 'import types as _types_algorithms\n';
+                    preamble += 'import sys as _sys_algorithms\n';
+                    preamble += '_mod_algorithms = _types_algorithms.ModuleType("algorithms")\n';
+                    preamble += 'for _n in list(globals().keys()):\n';
+                    preamble += '    if not _n.startswith("_") and _n not in ("_types_algorithms", "_sys_algorithms", "_mod_algorithms"):\n';
+                    preamble += '        try:\n';
+                    preamble += '            setattr(_mod_algorithms, _n, globals()[_n])\n';
+                    preamble += '        except Exception:\n';
+                    preamble += '            pass\n';
+                    preamble += '_sys_algorithms.modules["algorithms"] = _mod_algorithms\n';
+                    preamble += '# --- End algorithms module ---\n\n';
+                    continue;
+                }
+            }
+
+            // 3. Fall back to stubs for 'algorithms' only
+            if (modName === 'algorithms') {
+                preamble += buildAlgorithmStubs(code, pkgData);
+                continue;
+            }
+
+            // 4. Unknown module with no source — create empty module
+            preamble += `# --- ${modName} module (empty stub) ---\n`;
+            preamble += `import types as _types_${modName}\n`;
+            preamble += `import sys as _sys_${modName}\n`;
+            preamble += `_mod_${modName} = _types_${modName}.ModuleType("${modName}")\n`;
+            preamble += `_sys_${modName}.modules["${modName}"] = _mod_${modName}\n`;
+            preamble += `# --- End ${modName} stub ---\n\n`;
+        }
+
+        return preamble;
+    }
+
     function buildAlgorithmStubs(code, pkgData) {
-        // Build Python code for the 'algorithms' module so Pyodide demos work.
-        // Priority: use actual executable 'code' from algorithms array > stubs.
-        // Aristotle generates demos that import from a companion 'algorithms' module,
-        // but Pyodide only sees the demo code. This function:
-        // 1. If algorithms array has 'code' fields, assemble the real module
-        // 2. Otherwise, extract imported names and create stub definitions
+        // Fallback: build stub definitions for 'algorithms' module from pseudocode.
+        // Only used when no real source code is available.
         const fromImportRe = /^from\s+algorithms\s+import\s+(.+?)$/gm;
         const bareImportRe = /^\s*import\s+algorithms\b/m;
 
@@ -420,37 +510,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // If algorithms array has 'code' fields, build a real module from those
-        if (pkgData && pkgData.algorithms) {
-            const codeParts = [];
-            const seenCode = new Set();
-            for (const algo of pkgData.algorithms) {
-                if (algo.code && !seenCode.has(algo.code)) {
-                    seenCode.add(algo.code);
-                    codeParts.push(algo.code.trim());
-                }
-            }
-            if (codeParts.length > 0) {
-                // Found real executable code — build the module from it
-                let moduleCode = '# --- Algorithms module (from Aristotle output) ---\n';
-                moduleCode += codeParts.join('\n\n');
-                moduleCode += '\n\n# --- Register as importable module ---\n';
-                moduleCode += 'import types as _types\n';
-                moduleCode += 'import sys as _sys\n';
-                moduleCode += '_alg_mod = _types.ModuleType("algorithms")\n';
-                moduleCode += 'for _n in list(globals().keys()):\n';
-                moduleCode += '    if not _n.startswith("_") and _n not in ("_types", "_sys", "_alg_mod"):\n';
-                moduleCode += '        try:\n';
-                moduleCode += '            setattr(_alg_mod, _n, globals()[_n])\n';
-                moduleCode += '        except Exception:\n';
-                moduleCode += '            pass\n';
-                moduleCode += '_sys.modules["algorithms"] = _alg_mod\n';
-                moduleCode += '# --- End algorithms module ---\n\n';
-                return moduleCode;
-            }
-        }
-
-        // No executable code available — fall back to stubs from pseudocode
         let stubs = '# --- Auto-generated algorithm stubs ---\n';
 
         if (importedNames.size === 0 && bareImportRe.test(code)) {
@@ -574,18 +633,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     try {
                         let codeToRun = editor.value;
 
-                        // If the demo imports 'algorithms', inject real algorithm code
-                        // so it runs standalone in Pyodide.
-                        if (/^(from|import)\s+algorithms\b/m.test(codeToRun)) {
-                            const stubs = buildAlgorithmStubs(codeToRun, currentPackage);
-                            // Remove the original 'from algorithms import ...' statements.
-                            // Must handle both single-line and multi-line (parenthesized) imports.
-                            // Single-line: from algorithms import X, Y
-                            // Multi-line: from algorithms import (\n    X,\n    Y\n)
-                            codeToRun = codeToRun.replace(/^from\s+algorithms\s+import\s*\([\s\S]*?\)\s*$/gm, '');
-                            codeToRun = codeToRun.replace(/^from\s+algorithms\s+import\s+[^(].*$/gm, '');
-                            codeToRun = codeToRun.replace(/^import\s+algorithms\b.*$/gm, '');
-                            codeToRun = stubs + '\n' + codeToRun;
+                        // If the demo imports local modules (algorithms, demo, etc.),
+                        // inject their source code and register them in Pyodide.
+                        const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
+                        if (localModuleRe.test(codeToRun)) {
+                            const moduleCode = buildLocalModuleCode(codeToRun, currentPackage);
+                            // Remove ALL local module import lines (single-line and multi-line)
+                            // Multi-line: from X import (\n    A,\n    B\n)
+                            codeToRun = codeToRun.replace(/^from\s+(algorithms|demo)\s+import\s*\([\s\S]*?\)\s*$/gm, '');
+                            // Single-line: from X import A, B
+                            codeToRun = codeToRun.replace(/^from\s+(algorithms|demo)\s+import\s+[^(].*$/gm, '');
+                            // Bare import: import X
+                            codeToRun = codeToRun.replace(/^import\s+(algorithms|demo)\b.*$/gm, '');
+                            codeToRun = moduleCode + '\n' + codeToRun;
                         }
 
                         // Automatically load any imports (like numpy, pandas, etc.)

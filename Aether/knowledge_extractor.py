@@ -28,6 +28,7 @@ import argparse
 import asyncio
 import json
 import os
+import re
 import shutil
 import tarfile
 import tempfile
@@ -1028,10 +1029,10 @@ Research mode: {concept.research_mode}
         if job.result_research_paper:
             parts.append({"type": "new", "path": f"Applications/Papers/research_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_research_paper})
         if job.result_json_package:
-            # Inject algorithms code into the JSON package if available
+            # Enrich JSON package with executable module code for Pyodide
             enriched_pkg = job.result_json_package
-            if job.result_algorithms:
-                enriched_pkg = self._inject_algorithms_code(job.result_json_package, job.result_algorithms)
+            if job.result_algorithms or job.result_demo:
+                enriched_pkg = self._enrich_json_package(job.result_json_package, job)
             parts.append({"type": "new", "path": f"Applications/Packages/{self._derive_artifact_name(job.concept, 'json')}", "content": enriched_pkg})
         if job.result_discussion:
             parts.append({"type": "new", "path": f"Applications/Articles/discussion_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_discussion})
@@ -1392,13 +1393,12 @@ Research mode: {concept.research_mode}
         return [(lean_source, name)]
 
     @staticmethod
-    def _inject_algorithms_code(json_pkg_str: str, algorithms_code: str) -> str:
-        """Inject executable algorithms code into the JSON package.
+    def _enrich_json_package(json_pkg_str: str, job) -> str:
+        """Enrich JSON package with executable module code for Pyodide demos.
 
-        Aristotle's PACKAGE.json has algorithms with only 'pseudocode'.
-        The actual executable algorithms.py code was collected separately.
-        This method parses the JSON, adds a 'code' field to each algorithm
-        entry, and returns the enriched JSON string.
+        Adds a 'modules' dict mapping module names to their source code,
+        so the web frontend can register them as importable Python modules.
+        Also adds 'code' fields to algorithms entries from the source.
         """
         import ast
         try:
@@ -1406,69 +1406,62 @@ Research mode: {concept.research_mode}
         except (json.JSONDecodeError, ValueError):
             return json_pkg_str
 
-        algorithms = pkg.get("algorithms", [])
-        if not algorithms or not algorithms_code:
-            return json_pkg_str
+        # Build modules dict from all Python artifacts
+        modules = {}
 
-        # Parse the algorithms.py source to extract top-level classes and functions
-        try:
-            tree = ast.parse(algorithms_code)
-        except SyntaxError:
-            # Can't parse — put the whole code as a single module-level code field
-            for alg in algorithms:
-                if not alg.get("code"):
-                    alg["code"] = algorithms_code
-            return json.dumps(pkg, ensure_ascii=False)
+        if hasattr(job, 'result_algorithms') and job.result_algorithms:
+            modules["algorithms"] = job.result_algorithms
+            # Also inject code into algorithms entries for backward compat
+            algorithms = pkg.get("algorithms", [])
+            if algorithms:
+                try:
+                    tree = ast.parse(job.result_algorithms)
+                    source_lines = job.result_algorithms.splitlines()
+                    definitions = {}
+                    for node in ast.iter_child_nodes(tree):
+                        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                            name = node.name
+                        elif isinstance(node, ast.ClassDef):
+                            name = node.name
+                        else:
+                            continue
+                        start = node.lineno - 1
+                        end = node.end_lineno
+                        definitions[name] = "\n".join(source_lines[start:end])
+                    module_code_lines = []
+                    for node in ast.iter_child_nodes(tree):
+                        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                            continue
+                        if isinstance(node, (ast.Assign, ast.AugAssign, ast.Import, ast.ImportFrom)):
+                            start = node.lineno - 1
+                            end = node.end_lineno
+                            module_code_lines.append("\n".join(source_lines[start:end]))
+                    module_preamble = "\n".join(module_code_lines) if module_code_lines else ""
+                    for alg in algorithms:
+                        if alg.get("code"):
+                            continue
+                        alg_name = alg.get("name", "").lower()
+                        alg_key = re.sub(r'[^a-z0-9]', '', alg_name)
+                        matched_code = []
+                        for def_name, def_code in definitions.items():
+                            def_key = re.sub(r'[^a-z0-9]', '', def_name.lower())
+                            if def_key in alg_key or alg_key in def_key:
+                                matched_code.append(def_code)
+                        if matched_code:
+                            code_block = (module_preamble + "\n\n" + "\n\n".join(matched_code)) if module_preamble else "\n\n".join(matched_code)
+                            alg["code"] = code_block.strip()
+                        else:
+                            alg["code"] = job.result_algorithms
+                except SyntaxError:
+                    for alg in algorithms:
+                        if not alg.get("code"):
+                            alg["code"] = job.result_algorithms
 
-        # Build a map of name -> source code for each top-level definition
-        source_lines = algorithms_code.splitlines()
-        definitions = {}
-        for node in ast.iter_child_nodes(tree):
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                name = node.name
-            elif isinstance(node, ast.ClassDef):
-                name = node.name
-            else:
-                continue
-            # Extract the source for this definition
-            start = node.lineno - 1
-            end = node.end_lineno
-            definitions[name] = "\n".join(source_lines[start:end])
+        if hasattr(job, 'result_demo') and job.result_demo:
+            modules["demo"] = job.result_demo
 
-        # Also collect module-level assignments (NEG_INF, constants, etc.)
-        module_code_lines = []
-        for node in ast.iter_child_nodes(tree):
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-                continue
-            if isinstance(node, (ast.Assign, ast.AugAssign, ast.Import, ast.ImportFrom)):
-                start = node.lineno - 1
-                end = node.end_lineno
-                module_code_lines.append("\n".join(source_lines[start:end]))
-        module_preamble = "\n".join(module_code_lines) if module_code_lines else ""
-
-        # For each algorithm, find matching definitions by name similarity
-        # and inject the code
-        for alg in algorithms:
-            if alg.get("code"):
-                continue
-            alg_name = alg.get("name", "").lower()
-            # Normalize: remove spaces, punctuation
-            import re
-            alg_key = re.sub(r'[^a-z0-9]', '', alg_name)
-
-            # Try to find a function/class whose name matches
-            matched_code = []
-            for def_name, def_code in definitions.items():
-                def_key = re.sub(r'[^a-z0-9]', '', def_name.lower())
-                if def_key in alg_key or alg_key in def_key:
-                    matched_code.append(def_code)
-
-            if matched_code:
-                code_block = module_preamble + "\n\n" + "\n\n".join(matched_code) if module_preamble else "\n\n".join(matched_code)
-                alg["code"] = code_block.strip()
-            else:
-                # No match found — provide the full module
-                alg["code"] = algorithms_code
+        if modules:
+            pkg["modules"] = modules
 
         return json.dumps(pkg, ensure_ascii=False)
 
