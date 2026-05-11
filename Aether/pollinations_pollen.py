@@ -134,34 +134,18 @@ class PollinationsPollenGate:
         kind: str = "chat",
         input_chars: int = 0,
     ) -> PollenReservation:
-        """Wait until pollen is available, then reserve predicted hourly budget."""
+        """Reserve pollen for a call. Forecasting/deferral removed — always proceeds."""
         if not self.config.enabled:
             return PollenReservation("", kind, input_chars, 0.0)
 
         cost = self.forecast_cost(kind=kind, input_chars=input_chars, fallback_cost=cost)
-        while True:
-            wait_seconds, reason, balance_before = self._seconds_until_available(cost)
-            if wait_seconds <= 0:
-                reservation = self._reserve_local(
-                    cost,
-                    kind=kind,
-                    input_chars=input_chars,
-                    balance_before=balance_before,
-                )
-                print(
-                    f"[Pollen] Reserved {cost:.4f} pollen for {label} "
-                    f"(kind={kind}, input_chars={input_chars}, available={self._available_label(balance_before)})."
-                )
-                return reservation
-
-            reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time() + wait_seconds))
-            print(
-                f"[Pollen] Deferring {label}: {reason}. "
-                f"Waiting {wait_seconds:.0f}s until reset around {reset_at}."
-            )
-            if not self.config.defer_when_low:
-                return PollenReservation("", kind, input_chars, cost, balance_before)
-            time.sleep(min(wait_seconds, max(1, self.config.max_sleep_seconds)))
+        reservation = self._reserve_local(
+            cost,
+            kind=kind,
+            input_chars=input_chars,
+            balance_before=None,
+        )
+        return reservation
 
     def forecast_cost(
         self,
