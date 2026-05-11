@@ -407,19 +407,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Priority: pkg.modules > algorithms[].code > pseudocode stubs.
         // Returns the preamble code to prepend before the demo code.
 
-        // Detect all local module imports
+        // Detect local module imports — only 'algorithms' and 'demo' are local modules
+        const knownLocalModules = ['algorithms', 'demo'];
         const localModuleRe = /^from\s+(\w+)\s+import\s+/gm;
         const bareImportRe = /^\s*import\s+(\w+)\s*$/gm;
         const neededModules = new Set();
         let match;
         while ((match = localModuleRe.exec(code)) !== null) {
-            neededModules.add(match[1]);
+            if (knownLocalModules.includes(match[1])) {
+                neededModules.add(match[1]);
+            }
         }
         while ((match = bareImportRe.exec(code)) !== null) {
-            // Only treat known local modules, not stdlib/installed packages
-            const mod = match[1];
-            if (['algorithms', 'demo'].includes(mod)) {
-                neededModules.add(mod);
+            if (knownLocalModules.includes(match[1])) {
+                neededModules.add(match[1]);
             }
         }
 
@@ -483,13 +484,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 continue;
             }
 
-            // 4. Unknown module with no source — create empty module
-            preamble += `# --- ${modName} module (empty stub) ---\n`;
-            preamble += `import types as _types_${modName}\n`;
-            preamble += `import sys as _sys_${modName}\n`;
-            preamble += `_mod_${modName} = _types_${modName}.ModuleType("${modName}")\n`;
-            preamble += `_sys_${modName}.modules["${modName}"] = _mod_${modName}\n`;
-            preamble += `# --- End ${modName} stub ---\n\n`;
+            // 4. 'demo' module with no source — nothing we can do
+            console.warn(`No source code for module '${modName}'`);
         }
 
         return preamble;
