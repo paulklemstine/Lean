@@ -70,6 +70,7 @@ class ResearchJob:
     result_discussion: Optional[str] = None
     result_article: Optional[str] = None
     result_research_paper: Optional[str] = None
+    result_algorithms: Optional[str] = None
     result_json_package: Optional[str] = None
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
@@ -518,7 +519,7 @@ Requirements:
     "research_paper": "Markdown content...",
     "future_directions": "Markdown content...",
     "demos": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files like 'algorithms'" }} ],
-    "algorithms": [ {{ "name": "...", "pseudocode": "..." }} ],
+    "algorithms": [ {{ "name": "...", "pseudocode": "...", "code": "executable Python implementation" }} ],
     "visualizations": [ {{ "name": "...", "data": "base64 encoded URI or inline SVG string" }} ],
     "lean_proofs": "Raw lean code..."
   }}
@@ -830,12 +831,24 @@ Research mode: {concept.research_mode}
                 parts.append(f"{header}{content}\n")
             job.result_lean = "\n\n".join(parts)
 
-        # Collect Python artifacts — demos, applications, algorithms, visualizations
-        if python_files:
-            parts = []
-            for f in sorted(python_files):
-                parts.append(f.read_text())
-            job.result_demo = "\n\n".join(parts)
+        # Collect Python artifacts — separate algorithms from demos
+        algo_parts = []
+        demo_parts = []
+        for f in sorted(python_files):
+            content = f.read_text()
+            fname = f.name.lower()
+            if "algorithm" in fname or fname == "algorithms.py":
+                algo_parts.append(content)
+            else:
+                demo_parts.append(content)
+        if algo_parts:
+            job.result_algorithms = "\n\n".join(algo_parts)
+        if demo_parts:
+            job.result_demo = "\n\n".join(demo_parts)
+        elif algo_parts and not demo_parts:
+            # If all .py files are algorithms, still put them in result_demo
+            # so downstream consumers that only check result_demo still work
+            job.result_demo = "\n\n".join(algo_parts)
 
         # Collect paper / general markdown artifacts
         if paper_files:
@@ -1004,6 +1017,8 @@ Research mode: {concept.research_mode}
                     
         if job.result_demo:
             parts.append({"type": "new", "path": f"Applications/Demos/{self._derive_artifact_name(job.concept, 'py')}", "content": job.result_demo})
+        if job.result_algorithms:
+            parts.append({"type": "new", "path": f"Applications/Demos/algorithms_{self._derive_artifact_name(job.concept, 'py')}", "content": job.result_algorithms})
         if job.result_paper:
             parts.append({"type": "new", "path": f"Applications/Papers/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_paper})
 
@@ -1013,7 +1028,11 @@ Research mode: {concept.research_mode}
         if job.result_research_paper:
             parts.append({"type": "new", "path": f"Applications/Papers/research_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_research_paper})
         if job.result_json_package:
-            parts.append({"type": "new", "path": f"Applications/Packages/{self._derive_artifact_name(job.concept, 'json')}", "content": job.result_json_package})
+            # Inject algorithms code into the JSON package if available
+            enriched_pkg = job.result_json_package
+            if job.result_algorithms:
+                enriched_pkg = self._inject_algorithms_code(job.result_json_package, job.result_algorithms)
+            parts.append({"type": "new", "path": f"Applications/Packages/{self._derive_artifact_name(job.concept, 'json')}", "content": enriched_pkg})
         if job.result_discussion:
             parts.append({"type": "new", "path": f"Applications/Articles/discussion_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_discussion})
 
@@ -1371,6 +1390,87 @@ Research mode: {concept.research_mode}
         # Single file — derive name from concept
         name = concept.title.replace(" ", "_").replace("-", "_") + ".lean"
         return [(lean_source, name)]
+
+    @staticmethod
+    def _inject_algorithms_code(json_pkg_str: str, algorithms_code: str) -> str:
+        """Inject executable algorithms code into the JSON package.
+
+        Aristotle's PACKAGE.json has algorithms with only 'pseudocode'.
+        The actual executable algorithms.py code was collected separately.
+        This method parses the JSON, adds a 'code' field to each algorithm
+        entry, and returns the enriched JSON string.
+        """
+        import ast
+        try:
+            pkg = json.loads(json_pkg_str)
+        except (json.JSONDecodeError, ValueError):
+            return json_pkg_str
+
+        algorithms = pkg.get("algorithms", [])
+        if not algorithms or not algorithms_code:
+            return json_pkg_str
+
+        # Parse the algorithms.py source to extract top-level classes and functions
+        try:
+            tree = ast.parse(algorithms_code)
+        except SyntaxError:
+            # Can't parse — put the whole code as a single module-level code field
+            for alg in algorithms:
+                if not alg.get("code"):
+                    alg["code"] = algorithms_code
+            return json.dumps(pkg, ensure_ascii=False)
+
+        # Build a map of name -> source code for each top-level definition
+        source_lines = algorithms_code.splitlines()
+        definitions = {}
+        for node in ast.iter_child_nodes(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                name = node.name
+            elif isinstance(node, ast.ClassDef):
+                name = node.name
+            else:
+                continue
+            # Extract the source for this definition
+            start = node.lineno - 1
+            end = node.end_lineno
+            definitions[name] = "\n".join(source_lines[start:end])
+
+        # Also collect module-level assignments (NEG_INF, constants, etc.)
+        module_code_lines = []
+        for node in ast.iter_child_nodes(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                continue
+            if isinstance(node, (ast.Assign, ast.AugAssign, ast.Import, ast.ImportFrom)):
+                start = node.lineno - 1
+                end = node.end_lineno
+                module_code_lines.append("\n".join(source_lines[start:end]))
+        module_preamble = "\n".join(module_code_lines) if module_code_lines else ""
+
+        # For each algorithm, find matching definitions by name similarity
+        # and inject the code
+        for alg in algorithms:
+            if alg.get("code"):
+                continue
+            alg_name = alg.get("name", "").lower()
+            # Normalize: remove spaces, punctuation
+            import re
+            alg_key = re.sub(r'[^a-z0-9]', '', alg_name)
+
+            # Try to find a function/class whose name matches
+            matched_code = []
+            for def_name, def_code in definitions.items():
+                def_key = re.sub(r'[^a-z0-9]', '', def_name.lower())
+                if def_key in alg_key or alg_key in def_key:
+                    matched_code.append(def_code)
+
+            if matched_code:
+                code_block = module_preamble + "\n\n" + "\n\n".join(matched_code) if module_preamble else "\n\n".join(matched_code)
+                alg["code"] = code_block.strip()
+            else:
+                # No match found — provide the full module
+                alg["code"] = algorithms_code
+
+        return json.dumps(pkg, ensure_ascii=False)
 
     def _derive_artifact_name(self, concept: ResearchConcept, ext: str) -> str:
         """Derive a sensible artifact name from the concept.

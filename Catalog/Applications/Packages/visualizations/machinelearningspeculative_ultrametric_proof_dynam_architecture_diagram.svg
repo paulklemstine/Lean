@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <linearGradient id="ultraGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="600" fill="#f8f9fa" rx="10"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">
+    Ultrametric Proof Dynamics: Architecture Overview
+  </text>
+
+  <!-- Central structure: ProofStateContraction -->
+  <rect x="300" y="60" width="300" height="80" rx="10" fill="url(#ultraGrad)" opacity="0.9"/>
+  <text x="450" y="90" text-anchor="middle" font-size="15" font-weight="bold" fill="white">ProofStateContraction</text>
+  <text x="450" y="110" text-anchor="middle" font-size="11" fill="white">(d, F, q) : ultrametric + contraction</text>
+  <text x="450" y="128" text-anchor="middle" font-size="10" fill="#eee">∀ x y, d(F x, F y) ≤ q · d(x, y)</text>
+
+  <!-- Left column: Ultrametric Geometry -->
+  <rect x="30" y="180" width="200" height="160" rx="8" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="2"/>
+  <text x="130" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c3e50">Ultrametric Geometry</text>
+  <text x="130" y="220" text-anchor="middle" font-size="10" fill="#7f8c8d">UltrametricDistPred</text>
+  <line x1="50" y1="228" x2="210" y2="228" stroke="#bdc3c7"/>
+  <text x="45" y="248" font-size="10" fill="#34495e">• Isosceles Shell</text>
+  <text x="45" y="266" font-size="10" fill="#34495e">• Strong Triangle Ineq</text>
+  <text x="45" y="284" font-size="10" fill="#34495e">• Identity of Indisc.</text>
+  <text x="45" y="302" font-size="10" fill="#34495e">• Positive Definiteness</text>
+  <text x="45" y="325" font-size="9" fill="#e74c3c" font-style="italic">d(x,z) ≤ max(d(x,y), d(y,z))</text>
+
+  <!-- Center column: Iteration Dynamics -->
+  <rect x="260" y="180" width="220" height="160" rx="8" fill="#e8f6f3" stroke="#1abc9c" stroke-width="2"/>
+  <text x="370" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c3e50">Iteration Dynamics</text>
+  <text x="370" y="220" text-anchor="middle" font-size="10" fill="#7f8c8d">DiagStableProofSystem</text>
+  <line x1="275" y1="228" x2="465" y2="228" stroke="#1abc9c"/>
+  <text x="275" y="248" font-size="10" fill="#34495e">• Geometric Step Decay</text>
+  <text x="275" y="266" font-size="10" fill="#34495e">• Diagonal Stability</text>
+  <text x="275" y="284" font-size="10" fill="#34495e">• Orbit Tail Bound</text>
+  <text x="275" y="302" font-size="10" fill="#34495e">• Diameter Collapse</text>
+  <text x="275" y="325" font-size="9" fill="#e74c3c" font-style="italic">d(F^[n+1]x, F^[n]x) ≤ q^n·d₀</text>
+
+  <!-- Right column: Certified Compression -->
+  <rect x="510" y="180" width="200" height="160" rx="8" fill="#fef9e7" stroke="#f39c12" stroke-width="2"/>
+  <text x="610" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c3e50">Certified Compression</text>
+  <text x="610" y="220" text-anchor="middle" font-size="10" fill="#7f8c8d">HasExpComprProfile</text>
+  <line x1="525" y1="228" x2="695" y2="228" stroke="#f39c12"/>
+  <text x="525" y="248" font-size="10" fill="#34495e">• Threshold Existence</text>
+  <text x="525" y="266" font-size="10" fill="#34495e">• Certified Orbit Radius</text>
+  <text x="525" y="284" font-size="10" fill="#34495e">• Entropy Barrier</text>
+  <text x="525" y="302" font-size="10" fill="#34495e">• Compression Rate O(q^n)</text>
+  <text x="525" y="325" font-size="9" fill="#e74c3c" font-style="italic">∀ε>0, ∃N, d(F^N x, F^{N+1}x) ≤ ε</text>
+
+  <!-- Far right: Applications -->
+  <rect x="740" y="180" width="140" height="160" rx="8" fill="#fdedec" stroke="#e74c3c" stroke-width="2"/>
+  <text x="810" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c3e50">Applications</text>
+  <line x1="752" y1="210" x2="868" y2="210" stroke="#e74c3c"/>
+  <text x="752" y="230" font-size="10" fill="#34495e">🔒 Post-Quantum</text>
+  <text x="752" y="250" font-size="10" fill="#34495e">🧠 Neural Pruning</text>
+  <text x="752" y="270" font-size="10" fill="#34495e">🛡️ Certified ML</text>
+  <text x="752" y="290" font-size="10" fill="#34495e">#️⃣ Hash Collision</text>
+  <text x="752" y="310" font-size="10" fill="#34495e">⚛️ Spin Glass</text>
+
+  <!-- Arrows from center to columns -->
+  <line x1="350" y1="140" x2="180" y2="178" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="450" y1="140" x2="370" y2="178" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="520" y1="140" x2="580" y2="178" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="590" y1="140" x2="780" y2="178" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Bottom: Theorem flow -->
+  <rect x="30" y="380" width="840" height="200" rx="8" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="450" y="405" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Theorem Dependency Flow</text>
+
+  <!-- Theorem boxes -->
+  <rect x="50" y="420" width="150" height="40" rx="5" fill="#3498db" opacity="0.8"/>
+  <text x="125" y="445" text-anchor="middle" font-size="10" fill="white">iterate_pair_bound</text>
+
+  <rect x="230" y="420" width="150" height="40" rx="5" fill="#3498db" opacity="0.8"/>
+  <text x="305" y="445" text-anchor="middle" font-size="10" fill="white">iterate_step_bound</text>
+
+  <rect x="410" y="420" width="150" height="40" rx="5" fill="#2ecc71" opacity="0.8"/>
+  <text x="485" y="445" text-anchor="middle" font-size="10" fill="white">diagonal_stability</text>
+
+  <rect x="590" y="420" width="160" height="40" rx="5" fill="#f39c12" opacity="0.8"/>
+  <text x="670" y="445" text-anchor="middle" font-size="10" fill="white">compression_threshold</text>
+
+  <!-- Second row -->
+  <rect x="50" y="490" width="150" height="40" rx="5" fill="#9b59b6" opacity="0.8"/>
+  <text x="125" y="515" text-anchor="middle" font-size="10" fill="white">orbit_tail_bound</text>
+
+  <rect x="230" y="490" width="150" height="40" rx="5" fill="#9b59b6" opacity="0.8"/>
+  <text x="305" y="515" text-anchor="middle" font-size="10" fill="white">diameter_collapse</text>
+
+  <rect x="410" y="490" width="150" height="40" rx="5" fill="#e74c3c" opacity="0.8"/>
+  <text x="485" y="515" text-anchor="middle" font-size="10" fill="white">certified_orbit_radius</text>
+
+  <rect x="590" y="490" width="160" height="40" rx="5" fill="#e74c3c" opacity="0.8"/>
+  <text x="670" y="515" text-anchor="middle" font-size="10" fill="white">proof_functorial</text>
+
+  <!-- Dependency arrows -->
+  <line x1="200" y1="440" x2="228" y2="440" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="380" y1="440" x2="408" y2="440" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="560" y1="440" x2="588" y2="440" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <line x1="305" y1="460" x2="125" y2="488" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="125" y1="530" x2="230" y2="510" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="305" y1="460" x2="485" y2="488" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+
+  <!-- Legend -->
+  <text x="50" y="565" font-size="10" fill="#7f8c8d">
+    🔵 Foundation  🟢 Stability  🟡 Compression  🟣 Geometry  🔴 Applications
+  </text>
+</svg>

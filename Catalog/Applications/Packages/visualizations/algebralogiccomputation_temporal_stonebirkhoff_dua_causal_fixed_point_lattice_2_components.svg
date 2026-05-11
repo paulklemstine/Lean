@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="400" style="background: #fafafa; font-family: sans-serif;">
+<text x="250.0" y="25" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Causal Fixed-Point Lattice</text>
+<line x1="250.0" y1="340.0" x2="155.0" y2="200.0" stroke="#999" stroke-width="1.5"/>
+<line x1="250.0" y1="340.0" x2="345.0" y2="200.0" stroke="#999" stroke-width="1.5"/>
+<line x1="155.0" y1="200.0" x2="250.0" y2="60.0" stroke="#999" stroke-width="1.5"/>
+<line x1="345.0" y1="200.0" x2="250.0" y2="60.0" stroke="#999" stroke-width="1.5"/>
+<circle cx="250.0" cy="340.0" r="20" fill="#4a90d9" stroke="#2c5282" stroke-width="2"/>
+<text x="250.0" y="344.0" text-anchor="middle" font-size="12" fill="white">∅</text>
+<circle cx="155.0" cy="200.0" r="20" fill="#4a90d9" stroke="#2c5282" stroke-width="2"/>
+<text x="155.0" y="204.0" text-anchor="middle" font-size="10" fill="white">{0,1,2}</text>
+<circle cx="345.0" cy="200.0" r="20" fill="#4a90d9" stroke="#2c5282" stroke-width="2"/>
+<text x="345.0" y="204.0" text-anchor="middle" font-size="10" fill="white">{3,4,5}</text>
+<circle cx="250.0" cy="60.0" r="20" fill="#4a90d9" stroke="#2c5282" stroke-width="2"/>
+<text x="250.0" y="64.0" text-anchor="middle" font-size="12" fill="white">{0..5}</text>
+</svg>

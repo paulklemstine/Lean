@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arrowG" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2ecc71"/>
+    </marker>
+    <marker id="arrowP" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9b59b6"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">
+    Tannaka Closure Reconstruction Architecture
+  </text>
+
+  <!-- Left: Closure System -->
+  <rect x="30" y="60" width="220" height="160" rx="15" fill="#ebf5fb" stroke="#3498db" stroke-width="2"/>
+  <text x="140" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="#2980b9">Closure System</text>
+  <text x="140" y="110" text-anchor="middle" font-size="12" fill="#555">cl : Set X → Set X</text>
+  <text x="140" y="135" text-anchor="middle" font-size="11" fill="#777">• extensive: s ⊆ cl(s)</text>
+  <text x="140" y="155" text-anchor="middle" font-size="11" fill="#777">• monotone: s ⊆ t → cl(s) ⊆ cl(t)</text>
+  <text x="140" y="175" text-anchor="middle" font-size="11" fill="#777">• idempotent: cl(cl(s)) = cl(s)</text>
+  <text x="140" y="205" text-anchor="middle" font-size="10" fill="#999">= observableClosure eval</text>
+
+  <!-- Center: Observable Kernel -->
+  <rect x="290" y="60" width="220" height="160" rx="15" fill="#fef9e7" stroke="#f39c12" stroke-width="2"/>
+  <text x="400" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="#e67e22">Observable Evaluation</text>
+  <text x="400" y="110" text-anchor="middle" font-size="12" fill="#555">eval : O → X → R</text>
+  <text x="400" y="135" text-anchor="middle" font-size="11" fill="#777">kernel(φ) = {x | eval φ x = 0}</text>
+  <text x="400" y="160" text-anchor="middle" font-size="11" fill="#777">ann(s) = {φ | ∀ x ∈ s, eval φ x = 0}</text>
+  <text x="400" y="185" text-anchor="middle" font-size="11" fill="#777">cl(s) = ⋂ φ∈ann(s) kernel(φ)</text>
+  <text x="400" y="208" text-anchor="middle" font-size="10" fill="#e74c3c" font-weight="bold">Reconstruction Identity</text>
+
+  <!-- Right: Endomorphism Monoid -->
+  <rect x="550" y="60" width="220" height="160" rx="15" fill="#f4ecf7" stroke="#8e44ad" stroke-width="2"/>
+  <text x="660" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="#8e44ad">Endomorphism Monoid</text>
+  <text x="660" y="110" text-anchor="middle" font-size="12" fill="#555">End_C(X) : Monoid</text>
+  <text x="660" y="135" text-anchor="middle" font-size="11" fill="#777">f ∘ g ∈ End_C(X)</text>
+  <text x="660" y="155" text-anchor="middle" font-size="11" fill="#777">id ∈ End_C(X)</text>
+  <text x="660" y="180" text-anchor="middle" font-size="11" fill="#777">f '' cl(s) ⊆ cl(f '' s)</text>
+  <text x="660" y="205" text-anchor="middle" font-size="10" fill="#999">Koopman dynamics</text>
+
+  <!-- Arrows between boxes -->
+  <line x1="250" y1="140" x2="290" y2="140" stroke="#2ecc71" stroke-width="2" marker-end="url(#arrowG)"/>
+  <text x="270" y="130" text-anchor="middle" font-size="9" fill="#2ecc71" font-weight="bold">eval</text>
+  <line x1="510" y1="140" x2="550" y2="140" stroke="#9b59b6" stroke-width="2" marker-end="url(#arrowP)"/>
+  <text x="530" y="130" text-anchor="middle" font-size="9" fill="#9b59b6" font-weight="bold">act</text>
+
+  <!-- Bottom row: Applications -->
+  <rect x="30" y="280" width="160" height="120" rx="10" fill="#eafaf1" stroke="#27ae60" stroke-width="2"/>
+  <text x="110" y="305" text-anchor="middle" font-size="13" font-weight="bold" fill="#27ae60">ML Robustness</text>
+  <text x="110" y="330" text-anchor="middle" font-size="10" fill="#555">Lipschitz observable</text>
+  <text x="110" y="350" text-anchor="middle" font-size="10" fill="#555">radius = |φ(x)| / K</text>
+  <text x="110" y="375" text-anchor="middle" font-size="9" fill="#888">Certified perturbation</text>
+  <text x="110" y="390" text-anchor="middle" font-size="9" fill="#888">bound: O(n²)</text>
+
+  <rect x="220" y="280" width="160" height="120" rx="10" fill="#fdf2e9" stroke="#e67e22" stroke-width="2"/>
+  <text x="300" y="305" text-anchor="middle" font-size="13" font-weight="bold" fill="#e67e22">Quantum Physics</text>
+  <text x="300" y="330" text-anchor="middle" font-size="10" fill="#555">Observable sectors</text>
+  <text x="300" y="350" text-anchor="middle" font-size="10" fill="#555">∀x ∉ cl(s), ∃φ witness</text>
+  <text x="300" y="375" text-anchor="middle" font-size="9" fill="#888">Indistinguishability</text>
+  <text x="300" y="390" text-anchor="middle" font-size="9" fill="#888">= kernel intersection</text>
+
+  <rect x="410" y="280" width="160" height="120" rx="10" fill="#fdedec" stroke="#e74c3c" stroke-width="2"/>
+  <text x="490" y="305" text-anchor="middle" font-size="13" font-weight="bold" fill="#e74c3c">Cryptography</text>
+  <text x="490" y="330" text-anchor="middle" font-size="10" fill="#555">Fingerprint injection</text>
+  <text x="490" y="350" text-anchor="middle" font-size="10" fill="#555">Post-quantum hashing</text>
+  <text x="490" y="375" text-anchor="middle" font-size="9" fill="#888">Separation ⇒</text>
+  <text x="490" y="390" text-anchor="middle" font-size="9" fill="#888">collision resistance</text>
+
+  <rect x="600" y="280" width="170" height="120" rx="10" fill="#f4ecf7" stroke="#8e44ad" stroke-width="2"/>
+  <text x="685" y="305" text-anchor="middle" font-size="13" font-weight="bold" fill="#8e44ad">Algebra</text>
+  <text x="685" y="330" text-anchor="middle" font-size="10" fill="#555">Galois correspondence</text>
+  <text x="685" y="350" text-anchor="middle" font-size="10" fill="#555">ann ↔ zeroLocus</text>
+  <text x="685" y="375" text-anchor="middle" font-size="9" fill="#888">Tannaka-style</text>
+  <text x="685" y="390" text-anchor="middle" font-size="9" fill="#888">reconstruction</text>
+
+  <!-- Connecting arrows down -->
+  <line x1="140" y1="220" x2="110" y2="280" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead)"/>
+  <line x1="400" y1="220" x2="300" y2="280" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead)"/>
+  <line x1="400" y1="220" x2="490" y2="280" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead)"/>
+  <line x1="660" y1="220" x2="685" y2="280" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead)"/>
+
+  <!-- Central reconstruction theorem -->
+  <rect x="180" y="430" width="440" height="50" rx="10" fill="#fff3cd" stroke="#ffc107" stroke-width="2"/>
+  <text x="400" y="455" text-anchor="middle" font-size="13" font-weight="bold" fill="#856404">
+    cl = observableClosure eval  ⟺  cl(s) = ⋂{ker(φ) | φ ∈ ann(s)}
+  </text>
+  <text x="400" y="472" text-anchor="middle" font-size="10" fill="#856404">
+    Main Reconstruction Identity (34 theorems, 0 sorries)
+  </text>
+</svg>

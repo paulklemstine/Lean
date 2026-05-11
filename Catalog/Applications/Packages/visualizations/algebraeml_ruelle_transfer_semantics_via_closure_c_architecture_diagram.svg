@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#555"/>
+    </marker>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90D9;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#7B68EE;stop-opacity:0.15"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="600" fill="#fafbfc" rx="8"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Algebra–EML Ruelle Transfer Semantics: Cross-Domain Bridge</text>
+
+  <!-- Central node: Transfer Matrix -->
+  <rect x="330" y="230" width="240" height="80" rx="12" fill="#4A90D9" stroke="#2c6fbb" stroke-width="2"/>
+  <text x="450" y="262" text-anchor="middle" font-size="14" fill="white" font-weight="bold">Correspondence Matrix</text>
+  <text x="450" y="282" text-anchor="middle" font-size="12" fill="#dceefb">M = correspondenceMatrix(K)</text>
+  <text x="450" y="298" text-anchor="middle" font-size="11" fill="#b8d8f8">tr(M^n) = weightedLoopSum(K, n)</text>
+
+  <!-- Node 1: Dynamics (top-left) -->
+  <rect x="50" y="80" width="200" height="70" rx="10" fill="#27ae60" stroke="#1e8449" stroke-width="2"/>
+  <text x="150" y="108" text-anchor="middle" font-size="13" fill="white" font-weight="bold">Dynamical System</text>
+  <text x="150" y="128" text-anchor="middle" font-size="11" fill="#d5f5e3">f : α → α, periodicPoints</text>
+  <text x="150" y="143" text-anchor="middle" font-size="10" fill="#abebc6">periodicCount f n ≤ card α</text>
+
+  <!-- Node 2: Observable Basis (top-right) -->
+  <rect x="650" y="80" width="200" height="70" rx="10" fill="#8e44ad" stroke="#6c3483" stroke-width="2"/>
+  <text x="750" y="108" text-anchor="middle" font-size="13" fill="white" font-weight="bold">Observable Basis</text>
+  <text x="750" y="128" text-anchor="middle" font-size="11" fill="#e8daef">ClosureObservableBasisFor</text>
+  <text x="750" y="143" text-anchor="middle" font-size="10" fill="#d2b4de">separates + closureStable</text>
+
+  <!-- Node 3: Norm Bounds (bottom-left) -->
+  <rect x="50" y="420" width="200" height="70" rx="10" fill="#e67e22" stroke="#ca6f1e" stroke-width="2"/>
+  <text x="150" y="448" text-anchor="middle" font-size="13" fill="white" font-weight="bold">Certified Bounds</text>
+  <text x="150" y="468" text-anchor="middle" font-size="11" fill="#fdebd0">‖Lv‖∞ ≤ ‖L‖∞·‖v‖∞</text>
+  <text x="150" y="483" text-anchor="middle" font-size="10" fill="#f5cba7">O(n·d³) complexity</text>
+
+  <!-- Node 4: Zeta / Rationality (bottom-right) -->
+  <rect x="650" y="420" width="200" height="70" rx="10" fill="#c0392b" stroke="#a93226" stroke-width="2"/>
+  <text x="750" y="448" text-anchor="middle" font-size="13" fill="white" font-weight="bold">Artin–Mazur Zeta</text>
+  <text x="750" y="468" text-anchor="middle" font-size="11" fill="#fadbd8">artinMazurCoeff f n</text>
+  <text x="750" y="483" text-anchor="middle" font-size="10" fill="#f1948a">|a_n| ≤ card α</text>
+
+  <!-- Node 5: Applications (bottom center) -->
+  <rect x="330" y="520" width="240" height="60" rx="10" fill="#2c3e50" stroke="#1a252f" stroke-width="2"/>
+  <text x="450" y="545" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Applications</text>
+  <text x="450" y="565" text-anchor="middle" font-size="10" fill="#aab7c4">Crypto · ML Robustness · Thermodynamics</text>
+
+  <!-- Arrows: Dynamics → Matrix -->
+  <line x1="220" y1="150" x2="350" y2="240" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="260" y="185" font-size="10" fill="#555" transform="rotate(-25, 260, 185)">deterministicCorrespondence</text>
+
+  <!-- Arrows: Observable → Matrix -->
+  <line x1="680" y1="150" x2="550" y2="240" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="590" y="185" font-size="10" fill="#555" transform="rotate(25, 590, 185)">pullbackMatrix</text>
+
+  <!-- Arrows: Matrix → Bounds -->
+  <line x1="350" y1="310" x2="220" y2="420" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="250" y="370" font-size="10" fill="#555" transform="rotate(25, 250, 370)">rowSumNorm</text>
+
+  <!-- Arrows: Matrix → Zeta -->
+  <line x1="550" y1="310" x2="680" y2="420" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="590" y="370" font-size="10" fill="#555" transform="rotate(-25, 590, 370)">tr(M^n)/n</text>
+
+  <!-- Arrows: Dynamics ↔ Zeta (the flagship theorem) -->
+  <path d="M 250,130 Q 450,50 750,100" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+  <text x="480" y="65" font-size="11" fill="#e74c3c" font-weight="bold">tr(M^n) = periodicCount f n</text>
+
+  <!-- Arrows to Applications -->
+  <line x1="220" y1="490" x2="350" y2="530" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="680" y1="490" x2="550" y2="530" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Legend boxes -->
+  <rect x="30" y="545" width="12" height="12" fill="#27ae60" rx="2"/>
+  <text x="48" y="556" font-size="10" fill="#555">Dynamics</text>
+  <rect x="110" y="545" width="12" height="12" fill="#8e44ad" rx="2"/>
+  <text x="128" y="556" font-size="10" fill="#555">Algebra/EML</text>
+  <rect x="200" y="545" width="12" height="12" fill="#4A90D9" rx="2"/>
+  <text x="218" y="556" font-size="10" fill="#555">Transfer Op.</text>
+
+  <rect x="30" y="565" width="12" height="12" fill="#e67e22" rx="2"/>
+  <text x="48" y="576" font-size="10" fill="#555">Robustness</text>
+  <rect x="110" y="565" width="12" height="12" fill="#c0392b" rx="2"/>
+  <text x="128" y="576" font-size="10" fill="#555">Zeta Theory</text>
+  <rect x="200" y="565" width="12" height="12" fill="#2c3e50" rx="2"/>
+  <text x="218" y="576" font-size="10" fill="#555">Applications</text>
+</svg>

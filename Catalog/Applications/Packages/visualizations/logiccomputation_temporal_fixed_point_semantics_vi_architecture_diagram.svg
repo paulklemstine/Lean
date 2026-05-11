@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arrowblue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2196F3"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">
+    Temporal Fixed-Point Semantics Architecture
+  </text>
+
+  <!-- Layer 1: Core Definitions -->
+  <rect x="50" y="50" width="700" height="80" rx="10" fill="#E3F2FD" stroke="#2196F3" stroke-width="2"/>
+  <text x="400" y="70" text-anchor="middle" font-size="14" font-weight="bold" fill="#1565C0">Core Reversible Oracle Semantics</text>
+  <text x="130" y="95" text-anchor="middle" font-size="11" fill="#333">RevStep</text>
+  <rect x="85" y="82" width="90" height="20" rx="5" fill="#BBDEFB" stroke="#1976D2"/>
+  <text x="280" y="95" text-anchor="middle" font-size="11" fill="#333">RevPath</text>
+  <rect x="235" y="82" width="90" height="20" rx="5" fill="#BBDEFB" stroke="#1976D2"/>
+  <text x="430" y="95" text-anchor="middle" font-size="11" fill="#333">TemporalConstraint</text>
+  <rect x="355" y="82" width="150" height="20" rx="5" fill="#BBDEFB" stroke="#1976D2"/>
+  <text x="610" y="95" text-anchor="middle" font-size="11" fill="#333">NovikovConsistent</text>
+  <rect x="535" y="82" width="150" height="20" rx="5" fill="#BBDEFB" stroke="#1976D2"/>
+  <text x="400" y="120" text-anchor="middle" font-size="10" fill="#666">symm_apply_apply · RevPath_add · RevPath_symm_cancel · RevPath_injective · rev_reachability</text>
+
+  <!-- Arrow down -->
+  <line x1="400" y1="135" x2="400" y2="160" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Layer 2: Closure Operator -->
+  <rect x="100" y="165" width="600" height="80" rx="10" fill="#E8F5E9" stroke="#4CAF50" stroke-width="2"/>
+  <text x="400" y="185" text-anchor="middle" font-size="14" font-weight="bold" fill="#2E7D32">Loop Closure &amp; Least Fixed Point</text>
+  <text x="230" y="210" text-anchor="middle" font-size="11" fill="#333">loopClosure</text>
+  <rect x="175" y="197" width="110" height="20" rx="5" fill="#C8E6C9" stroke="#388E3C"/>
+  <text x="400" y="210" text-anchor="middle" font-size="11" fill="#333">temporalLFP</text>
+  <rect x="340" y="197" width="120" height="20" rx="5" fill="#C8E6C9" stroke="#388E3C"/>
+  <text x="570" y="210" text-anchor="middle" font-size="11" fill="#333">Knaster-Tarski</text>
+  <rect x="510" y="197" width="120" height="20" rx="5" fill="#C8E6C9" stroke="#388E3C"/>
+  <text x="400" y="235" text-anchor="middle" font-size="10" fill="#666">monotone · prefixed · is_fixed · least · entropy_no_paradox · fixedpoint_stability</text>
+
+  <!-- Arrow down -->
+  <line x1="400" y1="250" x2="400" y2="275" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Layer 3: Bounded Specs + Quotient -->
+  <rect x="50" y="280" width="340" height="80" rx="10" fill="#FFF3E0" stroke="#FF9800" stroke-width="2"/>
+  <text x="220" y="300" text-anchor="middle" font-size="14" font-weight="bold" fill="#E65100">Bounded Temporal Specs</text>
+  <text x="130" y="325" text-anchor="middle" font-size="10" fill="#333">BoundedTemporalSpec</text>
+  <rect x="65" y="312" width="130" height="18" rx="5" fill="#FFE0B2" stroke="#F57C00"/>
+  <text x="290" y="325" text-anchor="middle" font-size="10" fill="#333">entropyWeight</text>
+  <rect x="235" y="312" width="110" height="18" rx="5" fill="#FFE0B2" stroke="#F57C00"/>
+  <text x="220" y="350" text-anchor="middle" font-size="9" fill="#666">witnessbound · certifiedRadius · temporalCost</text>
+
+  <rect x="410" y="280" width="340" height="80" rx="10" fill="#F3E5F5" stroke="#9C27B0" stroke-width="2"/>
+  <text x="580" y="300" text-anchor="middle" font-size="14" font-weight="bold" fill="#6A1B9A">Nerode Quotient</text>
+  <text x="500" y="325" text-anchor="middle" font-size="10" fill="#333">TemporalNerode</text>
+  <rect x="440" y="312" width="120" height="18" rx="5" fill="#E1BEE7" stroke="#7B1FA2"/>
+  <text x="660" y="325" text-anchor="middle" font-size="10" fill="#333">TemporalQuotient</text>
+  <rect x="595" y="312" width="130" height="18" rx="5" fill="#E1BEE7" stroke="#7B1FA2"/>
+  <text x="580" y="350" text-anchor="middle" font-size="9" fill="#666">refl · symm · trans · sound · complete · collision_bound</text>
+
+  <!-- Arrow down -->
+  <line x1="400" y1="365" x2="400" y2="390" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Layer 4: Applications -->
+  <rect x="50" y="395" width="700" height="90" rx="10" fill="#FFEBEE" stroke="#F44336" stroke-width="2"/>
+  <text x="400" y="415" text-anchor="middle" font-size="14" font-weight="bold" fill="#C62828">Cross-Domain Applications</text>
+
+  <rect x="75" y="425" width="140" height="25" rx="5" fill="#FFCDD2" stroke="#E53935"/>
+  <text x="145" y="442" text-anchor="middle" font-size="10" fill="#333">🔬 Quantum Circuits</text>
+
+  <rect x="235" y="425" width="150" height="25" rx="5" fill="#FFCDD2" stroke="#E53935"/>
+  <text x="310" y="442" text-anchor="middle" font-size="10" fill="#333">🔐 Post-Quantum Crypto</text>
+
+  <rect x="405" y="425" width="140" height="25" rx="5" fill="#FFCDD2" stroke="#E53935"/>
+  <text x="475" y="442" text-anchor="middle" font-size="10" fill="#333">🤖 Certified ML</text>
+
+  <rect x="565" y="425" width="160" height="25" rx="5" fill="#FFCDD2" stroke="#E53935"/>
+  <text x="645" y="442" text-anchor="middle" font-size="10" fill="#333">🌡️ Thermodynamics</text>
+
+  <text x="400" y="475" text-anchor="middle" font-size="10" fill="#666">
+    finCyclicStep · bitFlipStep · parityConstraint · bitFlip_post_quantum_consistency · revpath_periodic_finite
+  </text>
+
+  <!-- Cross-links -->
+  <line x1="220" y1="330" x2="410" y2="330" stroke="#555" stroke-width="1" stroke-dasharray="5,5"/>
+</svg>

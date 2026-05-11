@@ -130,8 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateLightbox() {
         const viz = currentPackage.visualizations[currentVizIndex];
         let imgContent = '';
-        if (viz.data && viz.data.startsWith('<svg')) {
-            // Wrap SVG in an img via data URI so it sizes like a raster image
+        if (viz.file) {
+            imgContent = `<img src="${viz.file}" alt="${viz.name || 'Visualization'}" style="max-width:100%;max-height:70vh;object-fit:contain;">`;
+        } else if (viz.data && viz.data.startsWith('<svg')) {
             const svgUri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(viz.data);
             imgContent = `<img src="${svgUri}" alt="${viz.name || 'Visualization'}" style="max-width:100%;max-height:70vh;object-fit:contain;">`;
         } else if (viz.data && viz.data.startsWith('data:image')) {
@@ -327,11 +328,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = 'gallery-card';
                 card.style.cursor = 'pointer';
                 card.addEventListener('click', () => openLightbox(index));
-                
-                // Determine if it's base64 or inline svg
+
+                // Prefer extracted file over inline data
                 let imgContent = '';
-                if (viz.data && viz.data.startsWith('<svg')) {
-                    // Wrap SVG in an img via data URI so it sizes properly
+                if (viz.file) {
+                    imgContent = `<img src="${viz.file}" alt="${viz.name || 'Visualization'}">`;
+                } else if (viz.data && viz.data.startsWith('<svg')) {
                     const svgUri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(viz.data);
                     imgContent = `<img src="${svgUri}" alt="${viz.name || 'Visualization'}">`;
                 } else if (viz.data && viz.data.startsWith('data:image')) {
@@ -396,31 +398,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function buildAlgorithmStubs(code, pkgData) {
-        // Build Python stub definitions for imports from the 'algorithms' module.
+        // Build Python code for the 'algorithms' module so Pyodide demos work.
+        // Priority: use actual executable 'code' from algorithms array > stubs.
         // Aristotle generates demos that import from a companion 'algorithms' module,
-        // but Pyodide only runs the demo code. This function:
-        // 1. Extracts all names imported from 'algorithms'
-        // 2. Creates stub functions/classes that return plausible default values
-        // 3. Optionally converts pseudocode from the package's algorithms section
-        // Collect imported names from "from algorithms import X, Y, Z"
+        // but Pyodide only sees the demo code. This function:
+        // 1. If algorithms array has 'code' fields, assemble the real module
+        // 2. Otherwise, extract imported names and create stub definitions
         const fromImportRe = /^from\s+algorithms\s+import\s+(.+?)$/gm;
-        // Also handle "import algorithms" and "import algorithms as alg"
         const bareImportRe = /^\s*import\s+algorithms\b/m;
 
         const importedNames = new Set();
         let match;
         while ((match = fromImportRe.exec(code)) !== null) {
             match[1].split(',').forEach(name => {
-                // Handle "X as Y" and strip whitespace
                 const clean = name.trim().replace(/\s+as\s+\w+$/, '').trim();
                 if (clean) importedNames.add(clean);
             });
         }
 
+        // If algorithms array has 'code' fields, build a real module from those
+        if (pkgData && pkgData.algorithms) {
+            const codeParts = [];
+            const seenCode = new Set();
+            for (const algo of pkgData.algorithms) {
+                if (algo.code && !seenCode.has(algo.code)) {
+                    seenCode.add(algo.code);
+                    codeParts.push(algo.code.trim());
+                }
+            }
+            if (codeParts.length > 0) {
+                // Found real executable code — build the module from it
+                let moduleCode = '# --- Algorithms module (from Aristotle output) ---\n';
+                moduleCode += codeParts.join('\n\n');
+                moduleCode += '\n\n# --- Register as importable module ---\n';
+                moduleCode += 'import types as _types\n';
+                moduleCode += 'import sys as _sys\n';
+                moduleCode += '_alg_mod = _types.ModuleType("algorithms")\n';
+                moduleCode += 'for _n in list(globals().keys()):\n';
+                moduleCode += '    if not _n.startswith("_") and _n not in ("_types", "_sys", "_alg_mod"):\n';
+                moduleCode += '        try:\n';
+                moduleCode += '            setattr(_alg_mod, _n, globals()[_n])\n';
+                moduleCode += '        except Exception:\n';
+                moduleCode += '            pass\n';
+                moduleCode += '_sys.modules["algorithms"] = _alg_mod\n';
+                moduleCode += '# --- End algorithms module ---\n\n';
+                return moduleCode;
+            }
+        }
+
+        // No executable code available — fall back to stubs from pseudocode
         let stubs = '# --- Auto-generated algorithm stubs ---\n';
 
         if (importedNames.size === 0 && bareImportRe.test(code)) {
-            // Bare "import algorithms" — create a module object
             stubs += 'import types\nalgorithms = types.ModuleType("algorithms")\n';
             stubs += 'import sys\nsys.modules["algorithms"] = algorithms\n';
             return stubs;
@@ -428,7 +457,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (importedNames.size === 0) return '';
 
-        // Try to build real implementations from pseudocode
         const pseudocodeMap = {};
         if (pkgData && pkgData.algorithms) {
             pkgData.algorithms.forEach(algo => {
@@ -439,9 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Generate stubs for each imported name
         for (const name of importedNames) {
-            // Check if it starts with uppercase (likely a class)
             const isClass = /^[A-Z]/.test(name);
 
             if (isClass) {
@@ -451,18 +477,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 stubs += `    def __getattr__(self, attr):\n`;
                 stubs += `        return lambda *a, **kw: print(f"[stub] ${name}.{attr} called")\n`;
             } else {
-                // Check if pseudocode is available and parseable as Python
                 const pcode = pseudocodeMap[name];
                 if (pcode) {
-                    // Try to use pseudocode directly — wrap in a function
-                    // Remove "function", "procedure" etc. and normalize
                     let pyCode = pcode
                         .replace(/^(function|procedure|def)\s+/i, '')
                         .replace(/^return\s+/gm, 'return ')
                         .trim();
                     stubs += `def ${name}(*args, **kwargs):\n`;
                     stubs += `    # Algorithm: ${name}\n`;
-                    // Indent pseudocode as function body
                     const lines = pyCode.split('\n');
                     for (const line of lines) {
                         const trimmed = line.trim();
@@ -472,13 +494,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     stubs += `    pass  # fallback\n\n`;
                 } else {
-                    // Generic stub that returns a sensible default
                     stubs += `def ${name}(*args, **kwargs):\n`;
                     stubs += `    # [auto-stub] ${name} - see Algorithms tab for details\n`;
                     stubs += `    import math, random\n`;
                     stubs += `    if args:\n`;
                     stubs += `        if isinstance(args[0], (list, tuple)) and len(args) >= 2:\n`;
-                    stubs += `            # Likely a two-argument function returning a number\n`;
                     stubs += `            return random.randint(1, 100)\n`;
                     stubs += `        if isinstance(args[0], int):\n`;
                     stubs += `            return random.randint(1, 100)\n`;
@@ -487,7 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Create the algorithms module and inject stubs
         stubs += 'import types as _types\n';
         stubs += '_alg_mod = _types.ModuleType("algorithms")\n';
         for (const name of importedNames) {

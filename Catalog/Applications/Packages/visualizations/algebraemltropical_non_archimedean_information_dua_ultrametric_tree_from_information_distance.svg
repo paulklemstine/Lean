@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+  <style>
+    .branch { stroke: #4A90D9; stroke-width: 2.5; fill: none; }
+    .leaf { fill: #D9534F; stroke: #A33; stroke-width: 2; }
+    .leaf-label { font-family: monospace; font-size: 12px; text-anchor: middle; fill: #333; }
+    .dist-label { font-family: sans-serif; font-size: 10px; text-anchor: middle; fill: #4A90D9; font-weight: bold; }
+    .title { font-family: sans-serif; font-size: 14px; text-anchor: middle; font-weight: bold; fill: #333; }
+    .axis-label { font-family: sans-serif; font-size: 9px; fill: #999; }
+  </style>
+  <text x="200" y="25" class="title">Ultrametric Tree from Information Distance</text>
+  <text x="200" y="42" style="font-family:sans-serif;font-size:10px;text-anchor:middle;fill:#666;">
+    d(S,T) = v(cl(S∪T)), satisfying d(A,C) ≤ max(d(A,B), d(B,C))
+  </text>
+
+  <!-- Cost axis -->
+  <line x1="30" y1="60" x2="30" y2="240" stroke="#CCC" stroke-width="1"/>
+  <text x="20" y="95" class="axis-label" text-anchor="end">3</text>
+  <text x="20" y="155" class="axis-label" text-anchor="end">2</text>
+  <text x="20" y="215" class="axis-label" text-anchor="end">1</text>
+  <line x1="25" y1="90" x2="35" y2="90" stroke="#CCC" stroke-width="1"/>
+  <line x1="25" y1="150" x2="35" y2="150" stroke="#CCC" stroke-width="1"/>
+  <line x1="25" y1="210" x2="35" y2="210" stroke="#CCC" stroke-width="1"/>
+
+  <!-- Tree structure for {0},{1},{2} with d({0},{1})=2, d({0},{2})=3, d({1},{2})=3 -->
+  <!-- Root at height 3 -->
+  <line x1="200" y1="90" x2="120" y2="150" class="branch"/>
+  <line x1="200" y1="90" x2="280" y2="150" class="branch"/>
+  
+  <!-- Left subtree at height 2 -->
+  <line x1="120" y1="150" x2="80" y2="230" class="branch"/>
+  <line x1="120" y1="150" x2="160" y2="230" class="branch"/>
+  
+  <!-- Right leaf at height 3 -->
+  <line x1="280" y1="150" x2="280" y2="230" class="branch"/>
+
+  <!-- Junction points -->
+  <circle cx="200" cy="90" r="4" fill="#4A90D9"/>
+  <circle cx="120" cy="150" r="4" fill="#4A90D9"/>
+
+  <!-- Leaves -->
+  <circle cx="80" cy="240" r="12" class="leaf"/>
+  <text x="80" y="262" class="leaf-label">{0}</text>
+  
+  <circle cx="160" cy="240" r="12" class="leaf"/>
+  <text x="160" y="262" class="leaf-label">{1}</text>
+  
+  <circle cx="280" cy="240" r="12" class="leaf"/>
+  <text x="280" y="262" class="leaf-label">{2}</text>
+
+  <!-- Distance labels -->
+  <text x="120" y="140" class="dist-label">d=2</text>
+  <text x="200" y="80" class="dist-label">d=3</text>
+</svg>
