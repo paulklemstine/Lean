@@ -1,6 +1,6 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-10 21:04*
+*Last updated: 2026-05-10 21:05*
 
 ## Breakthrough Opportunities (ranked by impact)
 
@@ -43,12 +43,3 @@
 - **Catalog Leverage**: `quotient_closure_flow_descends`, `asymptoticSetoid`
 - **Research Mode**: formalize
 - **Estimated Depth**: 5
-
-## Open Problems Encountered
-- The theorem `universalityClass_step_closed` (step preserves membership in a universality class) is FALSE in general — it requires the universality class to be defined by shifted trajectories or requires additional idempotency/periodicity conditions
-- Full decidability of asymptotic congruence for finite closure flows requires solving the eventual periodicity detection problem, which we bounded but did not make constructive
-
-## Cross-Domain Bridges
-- **Physics ↔ ML**: Universality classes as equivalence classes of neural architectures under feature abstraction
-- **Cryptography ↔ Algebra**: Lattice reduction as closure flow, security parameters as orbit bounds
-- **Tropical ↔ Quantum**: Max-plus observable algebras with renormalization group structure
