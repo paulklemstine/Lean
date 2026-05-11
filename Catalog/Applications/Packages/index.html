@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
+    <!-- Mobile floating menu button (always visible on small screens) -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+    </button>
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
@@ -67,6 +73,7 @@
                     <div class="meta-tags">
                         <span class="tag domain-tag" id="pkg-domain">Domain</span>
                         <span class="tag date-tag" id="pkg-date">Date</span>
+                        <span class="tag time-tag" id="pkg-time" style="display:none">Time</span>
                     </div>
                     <h1 id="pkg-title">Package Title</h1>
                     

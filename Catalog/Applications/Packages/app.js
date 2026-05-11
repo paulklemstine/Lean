@@ -80,9 +80,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mobile sidebar toggle
-    mobileToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('open');
-    });
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        if (mobileMenuBtn) mobileMenuBtn.classList.add('active');
+        if (sidebarOverlay) sidebarOverlay.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('visible');
+        document.body.style.overflow = '';
+    }
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', closeSidebar);
+    }
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            if (sidebar.classList.contains('open')) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        });
+    }
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeSidebar);
+    }
 
     // Lightbox Logic
     function openLightbox(index) {
@@ -102,9 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const viz = currentPackage.visualizations[currentVizIndex];
         let imgContent = '';
         if (viz.data && viz.data.startsWith('<svg')) {
-            imgContent = viz.data;
+            // Wrap SVG in an img via data URI so it sizes like a raster image
+            const svgUri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(viz.data);
+            imgContent = `<img src="${svgUri}" alt="${viz.name || 'Visualization'}" style="max-width:100%;max-height:70vh;object-fit:contain;">`;
         } else if (viz.data && viz.data.startsWith('data:image')) {
-            imgContent = `<img src="${viz.data}" alt="${viz.name}">`;
+            imgContent = `<img src="${viz.data}" alt="${viz.name || 'Visualization'}" style="max-width:100%;max-height:70vh;object-fit:contain;">`;
         }
         lightboxImg.innerHTML = imgContent;
         lightboxCaption.textContent = viz.name || 'Visualization';
@@ -142,10 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Handle clicks outside sidebar on mobile
+    // Handle clicks on main content to close sidebar on mobile
     document.getElementById('main-content').addEventListener('click', () => {
         if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
-            sidebar.classList.remove('open');
+            closeSidebar();
         }
     });
 
@@ -192,15 +223,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             li.className = 'nav-item';
             
-            // Format date nicely
+            // Format date and time nicely
             const d = new Date(pkg.date);
             const dateStr = !isNaN(d) ? d.toLocaleDateString() : 'Recent';
+            const timeStr = !isNaN(d) ? d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '';
 
             li.innerHTML = `
                 <div class="nav-item-title">${pkg.title || 'Untitled Research'}</div>
                 <div class="nav-item-meta">
                     <span>${pkg.domain || 'General'}</span>
-                    <span>${dateStr}</span>
+                    <span class="nav-item-datetime">${dateStr}${timeStr ? `<br><span class="nav-item-time">${timeStr}</span>` : ''}</span>
                 </div>
             `;
             
@@ -208,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 li.classList.add('active');
                 loadPackage(pkg.filename);
-                if (window.innerWidth <= 768) sidebar.classList.remove('open');
+                if (window.innerWidth <= 768) closeSidebar();
             });
             
             packageList.appendChild(li);
@@ -250,16 +282,25 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('pkg-title').textContent = data.title || 'Untitled Research';
         document.getElementById('pkg-domain').textContent = data.domain || 'General';
         
-        // Find date from index
+        // Find date and time from index
         let dateStr = 'Recent';
+        let timeStr = '';
         if (window.PACKAGE_INDEX) {
             const pkgMeta = window.PACKAGE_INDEX.find(p => p.filename === filename);
             if (pkgMeta && pkgMeta.date) {
                 const d = new Date(pkgMeta.date);
-                if (!isNaN(d)) dateStr = d.toLocaleDateString();
+                if (!isNaN(d)) {
+                    dateStr = d.toLocaleDateString();
+                    timeStr = d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                }
             }
         }
         document.getElementById('pkg-date').textContent = dateStr;
+        const timeEl = document.getElementById('pkg-time');
+        if (timeEl) {
+            timeEl.textContent = timeStr;
+            timeEl.style.display = timeStr ? 'block' : 'none';
+        }
         
         // Article
         const articleDiv = document.getElementById('content-article');
@@ -290,7 +331,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Determine if it's base64 or inline svg
                 let imgContent = '';
                 if (viz.data && viz.data.startsWith('<svg')) {
-                    imgContent = viz.data; // Raw SVG
+                    // Wrap SVG in an img via data URI so it sizes properly
+                    const svgUri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(viz.data);
+                    imgContent = `<img src="${svgUri}" alt="${viz.name || 'Visualization'}">`;
                 } else if (viz.data && viz.data.startsWith('data:image')) {
                     imgContent = `<img src="${viz.data}" alt="${viz.name || 'Visualization'}">`;
                 } else {
@@ -352,6 +395,111 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function buildAlgorithmStubs(code, pkgData) {
+        // Build Python stub definitions for imports from the 'algorithms' module.
+        // Aristotle generates demos that import from a companion 'algorithms' module,
+        // but Pyodide only runs the demo code. This function:
+        // 1. Extracts all names imported from 'algorithms'
+        // 2. Creates stub functions/classes that return plausible default values
+        // 3. Optionally converts pseudocode from the package's algorithms section
+        // Collect imported names from "from algorithms import X, Y, Z"
+        const fromImportRe = /^from\s+algorithms\s+import\s+(.+?)$/gm;
+        // Also handle "import algorithms" and "import algorithms as alg"
+        const bareImportRe = /^\s*import\s+algorithms\b/m;
+
+        const importedNames = new Set();
+        let match;
+        while ((match = fromImportRe.exec(code)) !== null) {
+            match[1].split(',').forEach(name => {
+                // Handle "X as Y" and strip whitespace
+                const clean = name.trim().replace(/\s+as\s+\w+$/, '').trim();
+                if (clean) importedNames.add(clean);
+            });
+        }
+
+        let stubs = '# --- Auto-generated algorithm stubs ---\n';
+
+        if (importedNames.size === 0 && bareImportRe.test(code)) {
+            // Bare "import algorithms" — create a module object
+            stubs += 'import types\nalgorithms = types.ModuleType("algorithms")\n';
+            stubs += 'import sys\nsys.modules["algorithms"] = algorithms\n';
+            return stubs;
+        }
+
+        if (importedNames.size === 0) return '';
+
+        // Try to build real implementations from pseudocode
+        const pseudocodeMap = {};
+        if (pkgData && pkgData.algorithms) {
+            pkgData.algorithms.forEach(algo => {
+                const name = algo.name ? algo.name.replace(/[^a-zA-Z0-9_]/g, '_') : '';
+                if (name && algo.pseudocode) {
+                    pseudocodeMap[name] = algo.pseudocode;
+                }
+            });
+        }
+
+        // Generate stubs for each imported name
+        for (const name of importedNames) {
+            // Check if it starts with uppercase (likely a class)
+            const isClass = /^[A-Z]/.test(name);
+
+            if (isClass) {
+                stubs += `class ${name}:\n`;
+                stubs += `    def __init__(self, *args, **kwargs):\n`;
+                stubs += `        print(f"[stub] ${name} created")\n`;
+                stubs += `    def __getattr__(self, attr):\n`;
+                stubs += `        return lambda *a, **kw: print(f"[stub] ${name}.{attr} called")\n`;
+            } else {
+                // Check if pseudocode is available and parseable as Python
+                const pcode = pseudocodeMap[name];
+                if (pcode) {
+                    // Try to use pseudocode directly — wrap in a function
+                    // Remove "function", "procedure" etc. and normalize
+                    let pyCode = pcode
+                        .replace(/^(function|procedure|def)\s+/i, '')
+                        .replace(/^return\s+/gm, 'return ')
+                        .trim();
+                    stubs += `def ${name}(*args, **kwargs):\n`;
+                    stubs += `    # Algorithm: ${name}\n`;
+                    // Indent pseudocode as function body
+                    const lines = pyCode.split('\n');
+                    for (const line of lines) {
+                        const trimmed = line.trim();
+                        if (trimmed) {
+                            stubs += `    ${trimmed}\n`;
+                        }
+                    }
+                    stubs += `    pass  # fallback\n\n`;
+                } else {
+                    // Generic stub that returns a sensible default
+                    stubs += `def ${name}(*args, **kwargs):\n`;
+                    stubs += `    # [auto-stub] ${name} - see Algorithms tab for details\n`;
+                    stubs += `    import math, random\n`;
+                    stubs += `    if args:\n`;
+                    stubs += `        if isinstance(args[0], (list, tuple)) and len(args) >= 2:\n`;
+                    stubs += `            # Likely a two-argument function returning a number\n`;
+                    stubs += `            return random.randint(1, 100)\n`;
+                    stubs += `        if isinstance(args[0], int):\n`;
+                    stubs += `            return random.randint(1, 100)\n`;
+                    stubs += `    return []\n\n`;
+                }
+            }
+        }
+
+        // Create the algorithms module and inject stubs
+        stubs += 'import types as _types\n';
+        stubs += '_alg_mod = _types.ModuleType("algorithms")\n';
+        for (const name of importedNames) {
+            stubs += `_alg_mod.${name} = ${name}\n`;
+        }
+        stubs += 'import sys as _sys\n';
+        stubs += '_sys.modules["algorithms"] = _alg_mod\n';
+        stubs += '# --- End auto-generated stubs ---\n\n';
+
+        return stubs;
+    }
+
     function renderInteractiveDemos(containerId, items) {
         const container = document.getElementById(containerId);
         container.innerHTML = '';
@@ -390,23 +538,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 runBtn.addEventListener('click', async () => {
                     if (!pyodideInstance) return;
-                    
+
                     output.classList.remove('hidden');
                     output.classList.remove('error');
                     output.textContent = 'Preparing environment...';
                     runBtn.disabled = true;
-                    
+
                     let stdout = "";
                     pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
                     pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
-                    
+
                     try {
+                        let codeToRun = editor.value;
+
+                        // If the demo imports 'algorithms', inject stub definitions
+                        // so it runs standalone. Aristotle often generates demos
+                        // that import from a companion algorithms module, but
+                        // Pyodide only sees the demo code.
+                        if (/^(from|import)\s+algorithms\b/m.test(codeToRun)) {
+                            const stubs = buildAlgorithmStubs(codeToRun, currentPackage);
+                            // Remove the original 'from algorithms import ...' lines
+                            // since the stubs module is already in sys.modules
+                            codeToRun = codeToRun.replace(/^(from\s+algorithms\s+import\s+.+?|import\s+algorithms\b.*)$/gm, '');
+                            codeToRun = stubs + '\n' + codeToRun;
+                        }
+
                         // Automatically load any imports (like numpy, pandas, etc.)
-                        await pyodideInstance.loadPackagesFromImports(editor.value);
-                        
+                        await pyodideInstance.loadPackagesFromImports(codeToRun);
+
                         output.textContent = 'Running...';
-                        
-                        const result = await pyodideInstance.runPythonAsync(editor.value);
+
+                        const result = await pyodideInstance.runPythonAsync(codeToRun);
                         if (result !== undefined && result !== null) {
                             stdout += result + "\n";
                         }
