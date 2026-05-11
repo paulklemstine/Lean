@@ -66,6 +66,11 @@ class ResearchJob:
     result_demo: Optional[str] = None
     result_paper: Optional[str] = None
     result_summary: Optional[str] = None
+    result_future_directions: Optional[str] = None
+    result_discussion: Optional[str] = None
+    result_article: Optional[str] = None
+    result_research_paper: Optional[str] = None
+    result_json_package: Optional[str] = None
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
     sorry_count: int = 0
@@ -174,8 +179,6 @@ class KnowledgeExtractor:
             return
         # Fields removed from ResearchJob — strip from saved data to avoid errors
         removed_fields = {
-            'result_future_directions', 'result_discussion',
-            'result_article', 'result_research_paper', 'result_json_package',
         }
         try:
             data = json.loads(path.read_text())
