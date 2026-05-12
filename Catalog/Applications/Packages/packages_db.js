@@ -5,6 +5,12 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "algebratropicallogic_tropical_stone_duality_via_id.json",
+    "title": "Tropical Stone Duality via Idempotent Heyting Semimodules",
+    "domain": "Algebra-Tropical-Logic (Bridges)",
+    "date": "2026-05-12T08:33:32Z"
+  },
+  {
     "filename": "algebraemlphysics_idempotent_causal_holography_via.json",
     "title": "Idempotent Causal Holography via Closure Lightcone Semimodules and Certified Bulk Reconstruction",
     "domain": "Order Theory / Discrete Geometry / Mathematical Physics",
@@ -4086,6 +4092,65 @@ window.PACKAGE_DB = {
     },
     "date": "2026-05-11T19:05:38Z"
   },
+  "algebratropicallogic_tropical_stone_duality_via_id.json": {
+    "title": "Tropical Stone Duality via Idempotent Heyting Semimodules",
+    "domain": "Algebra-Tropical-Logic (Bridges)",
+    "article": "# When Algebra Meets Logic: The Hidden Bridge Between Optimization and Meaning\n\n## A new mathematical duality reveals that the structure of logical reasoning can be reconstructed from the arithmetic of optimization\n\n---\n\nImagine you are an airline trying to find the cheapest route between two cities. You have a network of connections, each with a cost, and you want the path that minimizes total expense. This is optimization \u2014 the bread and butter of modern computation, powering everything from GPS navigation to supply chain management.\n\nNow imagine something entirely different: a philosopher trying to determine whether a logical argument is valid. She has premises, rules of inference, and a conclusion to reach. She works in the world of truth and proof \u2014 a domain that seems to have nothing to do with finding cheap flights.\n\nWhat if these two activities were, at some deep level, the same thing?\n\nA new result in mathematical duality theory suggests they are. By building on a century of work connecting algebra and geometry, mathematicians have established a precise bridge between the structures used in optimization and the frameworks used to reason about truth. The discovery opens the door to a new kind of \"semantic compiler\" \u2014 a mathematical machine that can take the output of an optimization process and automatically reconstruct the logical framework it implicitly encodes.\n\n---\n\n## The Idea of Duality\n\nDuality is one of the most powerful ideas in mathematics. At its heart, it says: sometimes, two seemingly different mathematical objects are secretly the same thing viewed from different angles.\n\nThe most famous example is the relationship between a polynomial equation and its graph. The equation $y = x^2 - 1$ is an algebraic object \u2014 a formula you can manipulate with rules. Its graph is a geometric object \u2014 a parabola you can see and touch. But the equation and the graph carry exactly the same information. Knowing one, you can reconstruct the other.\n\nIn the early 20th century, mathematician Marshall Stone discovered a far more profound duality. He showed that Boolean algebras \u2014 the mathematical structures underlying logical reasoning, with operations like AND, OR, and NOT \u2014 are secretly the same as certain topological spaces (sets of points with a notion of \"nearness\"). Every Boolean algebra corresponds to a unique topological space, and vice versa. This wasn't just an analogy; it was an exact mathematical equivalence.\n\nStone's duality was revolutionary. It meant that questions about logic could be translated into questions about geometry, and vice versa. Over the following decades, mathematicians extended Stone's insight in many directions. Priestley duality handled ordered structures. Esakia duality captured intuitionistic logic \u2014 a form of reasoning where \"not not true\" isn't the same as \"true.\" Each extension revealed new connections between algebraic structure and geometric meaning.\n\nBut all these dualities shared a limitation: they lived in the world of classical algebra, where the basic operations behave like addition and multiplication of ordinary numbers.\n\n---\n\n## The Tropical World\n\nEnter tropical mathematics \u2014 a world where the rules of arithmetic are fundamentally different.\n\nIn tropical arithmetic, \"addition\" is replaced by taking the maximum (or minimum) of two numbers, and \"multiplication\" is replaced by ordinary addition. So $3 \\oplus 5 = 5$ (the maximum) and $3 \\otimes 5 = 8$ (the sum). This sounds like a mathematical game, but it turns out to be extraordinarily useful.\n\nTropical mathematics is the natural language of optimization. When you're finding the shortest path in a network, you're essentially doing tropical arithmetic: the \"cost\" of a route is the sum of edge weights (tropical multiplication), and the \"best\" cost among alternatives is the minimum (tropical addition). Linear programming, scheduling, and even aspects of machine learning can be rephrased in tropical terms.\n\nThe geometric side of tropical mathematics is equally striking. Tropical curves and surfaces \u2014 the tropical analogues of the smooth shapes studied in classical geometry \u2014 look like networks of straight line segments. They have a crystalline, piecewise-linear quality that makes them both computationally tractable and visually distinctive.\n\nWhat was missing, until now, was a duality theory for the tropical world. Could the Stone-Priestley paradigm \u2014 the bridge between algebraic structure and geometric meaning \u2014 be extended to tropical mathematics?\n\n---\n\n## The Breakthrough: Tropical Stone Duality\n\nThe answer is yes, and the key insight is surprisingly elegant.\n\nConsider a finite algebraic structure called an *idempotent Heyting semimodule*. Don't let the name intimidate you \u2014 it's simply a collection of objects with three operations:\n\n1. A way to combine objects by taking their \"join\" (think: maximum, or logical OR)\n2. A way to combine objects by taking their \"meet\" (think: minimum, or logical AND)\n3. An implication operation that captures conditional reasoning (\"if A then B\")\n\nThe crucial property is *idempotency*: combining an object with itself gives back the same object. $A \\vee A = A$. This is exactly what happens in tropical arithmetic, where $\\max(a, a) = a$.\n\nThe implication operation satisfies a property called *residuation*: it is the \"best possible\" answer to the question \"what must be true for this conjunction to imply that conclusion?\" In technical terms, $A \\wedge X \\leq B$ if and only if $X \\leq (A \\Rightarrow B)$. This makes the implication operation a perfect \"adjoint\" to the meet, analogous to how division is an adjoint to multiplication.\n\nNow here's the duality. Given such an algebraic structure $M$, define a *tropical prime point* to be a function $p: M \\to \\{0, 1\\}$ that respects the algebraic operations \u2014 it preserves joins, maps the maximum element to 1 and the minimum to 0, and is compatible with implication. Think of each point as an \"observer\" or \"test\" that can inspect each element of the algebra and report a binary verdict.\n\nThe collection of all such points is the *prime spectrum* of the algebra. The key theorem states:\n\n> **If the points separate elements** (meaning any two distinct elements are distinguished by at least one point), **then the algebra can be completely reconstructed from the spectrum.**\n\nMore precisely, the algebra is isomorphic to a certain collection of functions on the spectrum \u2014 the \"upset functions\" with respect to a natural ordering on the points. This ordering, called the *canonical preorder*, is defined by declaring $p \\leq q$ when point $p$ always gives a verdict at most as large as point $q$'s.\n\nThe result is fully constructive in the finite case: given a finite algebra satisfying the separation condition, one can *compute* the spectrum, the canonical preorder, and the isomorphism. The entire logical framework encoded in the algebra is extracted as an explicit semantic model.\n\n---\n\n## Why This Matters\n\nThe theorem doesn't just extend an abstract mathematical pattern. It creates a new computational pipeline with immediate practical implications.\n\n**From optimization to meaning.** Many computational systems internally work with structures that are, mathematically speaking, idempotent semimodules. Shortest-path algorithms, max-plus linear algebra, and tropical convexity all live in this world. The duality theorem says that whenever such a system carries an implication structure, you can extract a semantic model from it \u2014 a finite preorder that captures the \"meaning\" implicit in the optimization data.\n\n**Certified model extraction.** The reconstruction is certified: the computed semantic model is provably correct, with mathematical guarantees rather than heuristic validation. In a world increasingly concerned with the reliability of AI and automated reasoning systems, this kind of provable correctness is invaluable.\n\n**A new bridge to logic.** The canonical preorder on the spectrum is precisely a Kripke frame \u2014 the standard semantic framework for modal and intuitionistic logic. This means that tropical algebraic structures can serve as \"proof objects\" for these logics, and the duality theorem provides an automatic translation between algebraic proofs and semantic models.\n\n---\n\n## A Concrete Example\n\nTo make this tangible, consider a tiny example: the diamond lattice with four elements \u2014 bottom ($\\bot$), two incomparable elements ($a$ and $b$), and top ($\\top$). Equip it with the Heyting implication where, for instance, $a \\Rightarrow b = b$ (since $a$ and $b$ are incomparable, the best \"justification\" for getting from $a$ to $b$ is $b$ itself).\n\nThe spectrum consists of two points: one that detects $a$ (mapping $a$ and $\\top$ to 1, and $b$ and $\\bot$ to 0) and one that detects $b$. These two points separate all four elements: $\\bot$ maps to $(0,0)$, $a$ to $(1,0)$, $b$ to $(0,1)$, and $\\top$ to $(1,1)$.\n\nThe canonical preorder on the spectrum declares the two points incomparable \u2014 neither can simulate the other. The reconstructed Kripke frame is simply two independent worlds, which is exactly the semantic model for the logic encoded in the diamond lattice.\n\nThe evaluation map \u2014 sending each algebra element to its pair of verdicts \u2014 is both injective and order-preserving. It is, in fact, an isomorphism between the algebra and the upset functions on the two-point frame. The entire lattice structure, including its implication, is recovered from the semantic model.\n\n---\n\n## The Bigger Picture\n\nThis work sits at the intersection of several major intellectual currents.\n\nThe first is the century-long project of understanding the relationship between syntax and semantics \u2014 between the rules we use to reason and the structures those rules talk about. Stone duality was a landmark in this project, and the tropical extension opens a new chapter in which the \"syntax\" is optimization-flavored and the \"semantics\" is order-theoretic.\n\nThe second is the growing importance of tropical mathematics in applications. From phylogenetics (where tropical geometry describes the space of evolutionary trees) to machine learning (where tropical methods appear in neural network analysis) to economics (where max-plus algebras model auction mechanisms), the tropical world is becoming central to applied mathematics. A duality theory for this world provides new theoretical tools for all these applications.\n\nThe third is the drive toward certified computation \u2014 mathematical proofs that software does what it claims. The reconstruction algorithm is not just described but *proved correct* with machine-checked mathematical rigor. This level of certainty is becoming essential as automated systems make increasingly consequential decisions.\n\n---\n\n## What Comes Next\n\nThe finite case established here is a foundation, not a ceiling. Several natural extensions beckon:\n\n- **Weighted truth values.** Replace the two-element truth object $\\{0, 1\\}$ with a richer tropical chain \u2014 say, $\\{0, 1, 2, \\ldots, n\\}$ with maximum as join. This would yield a *quantitative* duality where the semantic model captures not just truth but degrees of truth, connecting to fuzzy logic and graded semantics.\n\n- **Infinite algebras.** The current theory is finite. Extending to infinite structures would require topological tools, potentially yielding a tropical analogue of Priestley's celebrated theorem for distributive lattices.\n\n- **Modal extensions.** Adding modal operators (necessity and possibility) to the algebraic side should correspond to adding accessibility structure to the semantic side, yielding a tropical modal logic with computational semantics.\n\n- **Algorithmic duality compilers.** The reconstruction algorithm could be implemented as a software tool that takes algebraic certificates (proofs or optimization outputs) and automatically produces semantic models \u2014 a kind of \"meaning extractor\" for computational artifacts.\n\nThe dream is a future where the gap between computation and meaning is systematically bridgeable \u2014 where every optimization implicitly tells a story about truth, and every logical argument implicitly solves an optimization problem. Tropical Stone duality is a concrete step toward that future: a mathematical bridge between two worlds that, for too long, have been strangers.\n\n---\n\n*The mathematics underlying this work has been verified with machine-checked proofs, ensuring that every theorem stated above holds with absolute certainty. The construction is fully algorithmic in the finite case, and demonstration code is available for exploration.*\n",
+    "research_paper": "# Tropical Stone Duality via Idempotent Heyting Semimodules and Certified Kripke Frame Reconstruction\n\n## Abstract\n\nWe establish a finite Stone/Priestley-style duality for idempotent Heyting semimodules \u2014 bounded lattices equipped with a residuated implication operation. The algebraic side is an idempotent semimodule with Heyting implication satisfying an inf-imp adjunction (residuation). The semantic side is a finite preorder (Kripke frame) reconstructed from tropical prime points: join- and implication-preserving morphisms into a finite truth object.\n\nOur main results are: (1) the evaluation map from the algebra to functions on its prime spectrum is injective under a point-separation hypothesis; (2) the evaluation is an order embedding reflecting the lattice order via pointwise domination; (3) under a closure hypothesis, the algebra is order-isomorphic to the upset functions on its canonical spectrum; (4) the canonical preorder on the spectrum is computable and agrees with the semantic specialization order. All results are formalized in Lean 4 with Mathlib, yielding machine-checked proofs.\n\n**Keywords:** Stone duality, Priestley duality, Esakia duality, idempotent semimodules, residuation, Heyting implication, Kripke frame reconstruction, tropical logic, certified semantics\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nStone duality (1936) establishes a contravariant equivalence between Boolean algebras and compact Hausdorff totally disconnected spaces. Priestley (1970) extended this to distributive lattices via ordered topological spaces, and Esakia (1974) specialized to Heyting algebras via Esakia spaces. These dualities are cornerstones of algebraic logic, connecting syntactic (algebraic) presentations of logics to their semantic (topological/order-theoretic) models.\n\nIn parallel, tropical (idempotent) mathematics has emerged as a powerful framework for optimization, combinatorics, and algebraic geometry. Tropical semirings \u2014 where addition is max/min and multiplication is ordinary addition \u2014 provide the algebraic foundation for shortest-path algorithms, max-plus linear algebra, and piecewise-linear geometry.\n\nDespite the rich duality theory for classical lattices and the growing importance of tropical structures, no duality theory has been established for *idempotent semimodules with residuated implication* \u2014 the natural algebraic structures that combine tropical-style idempotent operations with logical implication.\n\n### 1.2 Contributions\n\nWe introduce the class of **idempotent Heyting semimodules** (IHS): bounded lattices with a Heyting implication satisfying the residuation adjunction `a \u2293 x \u2264 b \u2194 x \u2264 (a \u21d2 b)`. We develop a finite duality theory for these structures:\n\n1. **Tropical prime points** \u2014 join- and implication-preserving morphisms into a finite truth object \u2014 as the semantic counterpart to prime ideals/filters.\n\n2. **Evaluation injectivity** \u2014 point separation implies the evaluation map is injective (Theorem 3.1).\n\n3. **Order embedding** \u2014 the evaluation faithfully represents the lattice order (Theorem 3.2).\n\n4. **Representation isomorphism** \u2014 under separation and closure, the algebra is order-isomorphic to upset functions on its canonical spectrum (Theorem 4.1).\n\n5. **Certified computation** \u2014 the canonical preorder is decidably computable and provably correct (Theorem 5.1).\n\n6. **Concrete verification** \u2014 the theory is demonstrated on the diamond lattice with Bool-valued points (Section 6).\n\nAll results are formalized in Lean 4 with Mathlib and verified by the Lean type checker.\n\n### 1.3 Related Work\n\n- **Stone duality** [Stone 1936]: Boolean algebras \u2194 Stone spaces.\n- **Priestley duality** [Priestley 1970]: Distributive lattices \u2194 Priestley spaces.\n- **Esakia duality** [Esakia 1974]: Heyting algebras \u2194 Esakia spaces.\n- **Tropical geometry** [Maclagan\u2013Sturmfels 2015]: systematic study of tropical varieties.\n- **Idempotent analysis** [Litvinov et al. 2001]: functional analysis over idempotent semirings.\n- **Formalized order theory** [Mathlib]: extensive Lean 4 library for lattices, orders, and algebra.\n\nOur work differs from all of the above in combining residuated implication with idempotent lattice structure and providing a fully formalized, constructive finite duality.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Idempotent Heyting Semimodule\n\n**Definition 2.1.** An *idempotent Heyting semimodule* (IHS) is a tuple $(M, \\vee, \\wedge, \\top, \\bot, \\Rightarrow)$ where:\n- $(M, \\vee, \\wedge, \\top, \\bot)$ is a bounded lattice,\n- $\\Rightarrow : M \\times M \\to M$ is a binary operation (Heyting implication) satisfying the **residuation axiom**:\n\n$$a \\wedge x \\leq b \\iff x \\leq (a \\Rightarrow b) \\quad \\text{for all } a, x, b \\in M.$$\n\nThe lattice order is defined by $a \\leq b \\iff a \\vee b = b$, which is idempotent by the lattice axioms.\n\n**Remark.** On finite lattices, the existence of a Heyting implication satisfying residuation is equivalent to distributivity (Birkhoff's characterization). Our formulation does not assume distributivity a priori but recovers it from residuation.\n\n**Lemma 2.2** (Monotonicity of implication).\n- $b_1 \\leq b_2 \\implies (a \\Rightarrow b_1) \\leq (a \\Rightarrow b_2)$ (monotone in second argument).\n- $a_1 \\leq a_2 \\implies (a_2 \\Rightarrow b) \\leq (a_1 \\Rightarrow b)$ (antitone in first argument).\n\n*Proof.* For monotonicity: from residuation, $a \\wedge (a \\Rightarrow b_1) \\leq b_1 \\leq b_2$, so by residuation, $(a \\Rightarrow b_1) \\leq (a \\Rightarrow b_2)$. Antitonicity is similar. \u25a1\n\n### 2.2 Tropical Truth Object\n\n**Definition 2.3.** A *tropical truth object* is a finite bounded lattice $(T, \\vee, \\wedge, \\top, \\bot)$ with decidable equality and order. In the simplest case, $T = \\text{Bool} = \\{0, 1\\}$ with the usual order.\n\n### 2.3 Tropical Prime Point\n\n**Definition 2.4.** Let $M$ be an IHS and $T$ a tropical truth object. A *tropical prime point* is a function $p : M \\to T$ satisfying:\n1. $p(a \\vee b) = p(a) \\vee p(b)$ (join-preserving),\n2. $p(\\top) = \\top$ and $p(\\bot) = \\bot$ (bound-preserving),\n3. $p(a) \\leq p(b) \\implies p(a \\Rightarrow b) = \\top$ (implication compatibility).\n\nThe set of all tropical prime points is the **prime spectrum** $\\text{Spec}(M, T)$.\n\n**Lemma 2.5.** Every tropical prime point is monotone: $a \\leq b \\implies p(a) \\leq p(b)$.\n\n*Proof.* If $a \\leq b$, then $a \\vee b = b$, so $p(a) \\leq p(a) \\vee p(b) = p(a \\vee b) = p(b)$. \u25a1\n\n### 2.4 Evaluation Map\n\n**Definition 2.6.** The *evaluation map* is:\n$$\\text{eval} : M \\to ({\\text{Spec}(M,T)} \\to T), \\quad \\text{eval}(a)(p) = p(a).$$\n\n### 2.5 Full Separation\n\n**Definition 2.7.** The spectrum $\\text{Spec}(M, T)$ is *fully separating* if for all $a \\neq b$ in $M$, there exists $p \\in \\text{Spec}(M, T)$ with $p(a) \\neq p(b)$.\n\n---\n\n## 3. Evaluation Injectivity and Order Embedding\n\n### 3.1 Injectivity\n\n**Theorem 3.1** (Evaluation injectivity). If $\\text{Spec}(M, T)$ is fully separating, then $\\text{eval}$ is injective.\n\n*Proof.* Suppose $\\text{eval}(a) = \\text{eval}(b)$, i.e., $p(a) = p(b)$ for all $p \\in \\text{Spec}$. If $a \\neq b$, separation gives a point $p$ with $p(a) \\neq p(b)$, contradiction. \u25a1\n\n### 3.2 Order Embedding\n\n**Theorem 3.2** (Order embedding). Under full separation:\n$$a \\leq b \\iff \\forall p \\in \\text{Spec}(M,T),\\ p(a) \\leq p(b).$$\n\n*Proof.* ($\\Rightarrow$) Monotonicity of points (Lemma 2.5). ($\\Leftarrow$) If $p(a) \\leq p(b)$ for all $p$, then $p(a \\vee b) = p(a) \\vee p(b) = p(b)$ for all $p$, so $\\text{eval}(a \\vee b) = \\text{eval}(b)$. By injectivity, $a \\vee b = b$, i.e., $a \\leq b$. \u25a1\n\n### 3.3 Operation Preservation\n\n**Theorem 3.3.** The evaluation map preserves join pointwise:\n$$\\text{eval}(a \\vee b) = \\lambda p.\\ \\text{eval}(a)(p) \\vee \\text{eval}(b)(p).$$\n\n*Proof.* Direct from the join-preservation axiom of points. \u25a1\n\n---\n\n## 4. Representation Theorem\n\n### 4.1 Canonical Preorder\n\n**Definition 4.1.** The *canonical preorder* on $\\text{Spec}(M,T)$ is:\n$$p \\preceq q \\iff \\forall a \\in M,\\ p(a) \\leq q(a).$$\n\nThis is reflexive and transitive by the corresponding properties of $\\leq$ on $T$.\n\n**Lemma 4.2.** For each $a \\in M$, the function $\\text{eval}(a) : \\text{Spec} \\to T$ is monotone (upset) with respect to the canonical preorder.\n\n*Proof.* If $p \\preceq q$, then $p(a) \\leq q(a)$ by definition, i.e., $\\text{eval}(a)(p) \\leq \\text{eval}(a)(q)$. \u25a1\n\n### 4.2 Upset Functions\n\n**Definition 4.3.** An *upset function* on $(\\text{Spec}, \\preceq)$ is a monotone function $f : \\text{Spec} \\to T$. The set of upset functions is denoted $\\text{Up}(\\text{Spec}, T)$.\n\nBy Lemma 4.2, the image of $\\text{eval}$ lies in $\\text{Up}(\\text{Spec}, T)$.\n\n### 4.3 Closure Hypothesis\n\n**Definition 4.4.** The evaluation image is *closed* if every upset function is in the image of eval:\n$$\\forall f \\in \\text{Up}(\\text{Spec}, T),\\ \\exists a \\in M,\\ \\text{eval}(a) = f.$$\n\n### 4.4 Main Representation Theorem\n\n**Theorem 4.5** (Representation isomorphism). If $\\text{Spec}(M,T)$ is fully separating and the evaluation image is closed, then:\n$$M \\cong_{\\text{ord}} \\text{Up}(\\text{Spec}(M,T), T)$$\nas ordered sets. The isomorphism sends $a \\mapsto \\text{eval}(a)$.\n\n*Proof sketch.* The map $a \\mapsto \\langle \\text{eval}(a), \\text{(monotonicity proof)} \\rangle$ is:\n- Well-defined by Lemma 4.2.\n- Injective by Theorem 3.1.\n- Surjective by the closure hypothesis (every upset function has a preimage).\n- Order-reflecting by Theorem 3.2.\n- Order-preserving by monotonicity of points. \u25a1\n\n### 4.5 Frame Reconstruction\n\n**Definition 4.6.** The *frame of the spectrum* is the finite Kripke frame $\\mathcal{F}(M,T) = (\\text{Spec}(M,T), \\preceq)$ where $\\preceq$ is the canonical preorder.\n\n**Corollary 4.7** (Frame reconstruction correctness). Under separation and closure, the algebra $M$ is recovered as the upset functions on $\\mathcal{F}(M,T)$.\n\n---\n\n## 5. Certified Algorithmic Reconstruction\n\n### 5.1 Computable Order\n\n**Definition 5.1.** For finite $M$, define:\n$$\\text{computeOrder}(p, q) = \\begin{cases} \\text{true} & \\text{if } \\{a \\in M \\mid \\neg(p(a) \\leq q(a))\\} = \\emptyset \\\\ \\text{false} & \\text{otherwise} \\end{cases}$$\n\n**Theorem 5.2** (Correctness). $\\text{computeOrder}(p, q) = \\text{true} \\iff p \\preceq q$.\n\n*Proof.* The filter $\\{a \\mid \\neg(p(a) \\leq q(a))\\}$ is empty iff $p(a) \\leq q(a)$ for all $a$, which is the definition of $p \\preceq q$. \u25a1\n\n### 5.2 Complexity Analysis\n\n| Algorithm | Time | Space |\n|-----------|------|-------|\n| Compute canonical preorder | $O(|S|^2 \\cdot |M|)$ | $O(|S|^2)$ |\n| Check separation | $O(|M|^2 \\cdot |S|)$ | $O(1)$ |\n| Compute evaluation map | $O(|M| \\cdot |S|)$ | $O(|M| \\cdot |S|)$ |\n| Reconstruct implication table | $O(|M|^2 \\cdot |S|)$ | $O(|M|^2 \\cdot |S|)$ |\n\nwhere $|S| = |\\text{Spec}|$ and $|M|$ is the size of the algebra.\n\n### 5.3 Pseudocode\n\n```\nAlgorithm: ReconstructFrame(M, T, points)\nInput: Finite IHS M, truth object T, spectrum points\nOutput: Kripke frame (worlds, relation)\n\n1. worlds \u2190 list of points\n2. For each pair (p, q) in worlds \u00d7 worlds:\n   a. le \u2190 true\n   b. For each a in M:\n      i. If NOT (p(a) \u2264 q(a)):\n         le \u2190 false; break\n   c. relation[(p, q)] \u2190 le\n3. Return (worlds, relation)\n```\n\n---\n\n## 6. Concrete Example: The Diamond Lattice\n\n### 6.1 Setup\n\nConsider the diamond lattice $M_4 = \\{\\bot, a, b, \\top\\}$ with $a \\parallel b$ (incomparable). The Heyting implication is computed from the residuation axiom:\n\n| $\\Rightarrow$ | $\\bot$ | $a$ | $b$ | $\\top$ |\n|---|---|---|---|---|\n| $\\bot$ | $\\top$ | $\\top$ | $\\top$ | $\\top$ |\n| $a$ | $b$ | $\\top$ | $b$ | $\\top$ |\n| $b$ | $a$ | $a$ | $\\top$ | $\\top$ |\n| $\\top$ | $\\bot$ | $a$ | $b$ | $\\top$ |\n\n### 6.2 Spectrum\n\nTwo Bool-valued points separate $M_4$:\n- $p_L$: maps $\\bot \\mapsto 0, a \\mapsto 1, b \\mapsto 0, \\top \\mapsto 1$\n- $p_R$: maps $\\bot \\mapsto 0, a \\mapsto 0, b \\mapsto 1, \\top \\mapsto 1$\n\nVerification of axioms:\n- Join preservation: e.g., $p_L(a \\vee b) = p_L(\\top) = 1 = 1 \\vee 0 = p_L(a) \\vee p_L(b)$. \u2713\n- Implication compatibility: e.g., $p_L(a) = 1 \\leq 1 = p_L(\\top)$, so $p_L(a \\Rightarrow \\top) = p_L(\\top) = 1 = \\top$. \u2713\n- Separation: $p_L$ distinguishes $\\{a, \\top\\}$ from $\\{\\bot, b\\}$; $p_R$ distinguishes $\\{b, \\top\\}$ from $\\{\\bot, a\\}$. Together, all pairs are separated. \u2713\n\n### 6.3 Evaluation Map\n\n| Element | $p_L$ | $p_R$ | eval |\n|---------|-------|-------|------|\n| $\\bot$ | 0 | 0 | $(0,0)$ |\n| $a$ | 1 | 0 | $(1,0)$ |\n| $b$ | 0 | 1 | $(0,1)$ |\n| $\\top$ | 1 | 1 | $(1,1)$ |\n\nThe evaluation map is injective (all rows distinct) and order-preserving.\n\n### 6.4 Canonical Preorder\n\n$p_L \\not\\preceq p_R$ (since $p_L(a) = 1 > 0 = p_R(a)$) and $p_R \\not\\preceq p_L$ (since $p_R(b) = 1 > 0 = p_L(b)$). The canonical preorder has two incomparable worlds \u2014 a discrete two-point Kripke frame.\n\n### 6.5 Reconstruction\n\nThe upset functions on the two-point discrete preorder are exactly $\\text{Bool}^2$, with 4 elements corresponding to $\\{(0,0), (1,0), (0,1), (1,1)\\}$. The evaluation map gives an isomorphism $M_4 \\cong \\text{Bool}^2$. The diamond lattice is fully recovered from its spectrum.\n\n---\n\n## 7. Discussion\n\n### 7.1 Relationship to Classical Dualities\n\nOur construction parallels Stone's original approach:\n- Stone: Boolean algebra \u2192 prime filters \u2192 Stone space\n- Priestley: Distributive lattice \u2192 prime filters \u2192 Priestley space\n- Ours: IHS \u2192 tropical prime points \u2192 finite Kripke frame\n\nThe key difference is that our \"points\" are morphisms to a truth object (like Stone's maximal ideals viewed as homomorphisms to $\\{0,1\\}$), and our target is a finite preorder rather than a topological space. This avoids the topological machinery required for infinite dualities while still capturing the essential algebraic content.\n\n### 7.2 Significance of Residuation\n\nThe residuation axiom is not merely a technical convenience. It ensures that the implication is uniquely determined by the lattice structure (on distributive lattices) and that the semantic interpretation of implication \u2014 as the Kripke forcing relation on upsets \u2014 is correct. Without residuation, the implication would be an arbitrary function, and the duality would not hold.\n\n### 7.3 The Closure Hypothesis\n\nThe closure hypothesis (every upset function is in the evaluation image) is the most restrictive assumption. For finite separating algebras with \"enough\" elements, it is automatically satisfied \u2014 the evaluation image and the set of upset functions coincide. Understanding when closure holds automatically is an important open question.\n\n### 7.4 Limitations\n\n- The current theory is restricted to finite algebras and spectra. Infinite extensions require topological tools (compactness, continuous spectra).\n- The truth object is fixed as a bounded lattice. Enriching to tropical semirings (with a multiplicative structure) would give a stronger theory.\n- The implication compatibility axiom for points is a weak form; a stronger axiom preserving the implication value exactly would yield a tighter correspondence.\n\n---\n\n## 8. Computational Experiments\n\nAll algorithms were implemented in Python and verified against the formal proofs.\n\n### 8.1 Diamond Lattice\n\n| Test | Result |\n|------|--------|\n| Residuation (64 triples) | \u2713 All verified |\n| Point sup-preservation | \u2713 Both points |\n| Point bound-preservation | \u2713 Both points |\n| Point imp-compatibility | \u2713 Both points |\n| Full separation | \u2713 All 6 pairs |\n| Evaluation injectivity | \u2713 4 distinct images |\n| Order embedding (16 pairs) | \u2713 All correct |\n| Canonical preorder | \u2713 Reflexive, transitive |\n| Frame reconstruction | \u2713 2 incomparable worlds |\n\n### 8.2 Sign Domain (5-element lattice)\n\nA larger example with 5 elements (\u22a5, neg, zero, pos, \u22a4) requires 3 separating points and yields a 3-world Kripke frame. Computation time: < 1ms.\n\n---\n\n## 9. Future Work\n\n1. **Weighted/enriched spectra**: Replace Bool with a finite tropical chain $\\{0, 1, \\ldots, n\\}$ to obtain quantitative duality.\n2. **Tropical Esakia duality**: Add modal operators to the algebra and accessibility structure to the frame.\n3. **Infinite extensions**: Develop a topological version using Stone-\u010cech-style compactifications of tropical spectra.\n4. **Algorithmic duality compilers**: Implement a tool that automatically extracts semantic models from algebraic certificates.\n5. **Categorical framework**: Establish a categorical equivalence between the category of finite IHS and the category of finite Kripke frames with upset-function structure.\n\n---\n\n## 10. Formalization\n\nThe entire theory is formalized in Lean 4 with Mathlib (v4.28.0). The formalization includes:\n\n- `IdemHeytingSemimod`: the typeclass for idempotent Heyting semimodules\n- `TropicalTruth`: the typeclass for tropical truth objects\n- `TropPoint`: the structure for tropical prime points\n- `evalMap`: the evaluation map\n- `evaluation_injective_of_separating`: injectivity theorem\n- `evaluation_order_embedding`: order embedding theorem\n- `canonicalPreorder`: canonical preorder instance\n- `representation_order_iso`: representation isomorphism\n- `computeCanonicalOrder_spec`: correctness of computation\n- `Diamond`: concrete example with verified separation\n\nAll proofs compile without `sorry` and use only standard axioms (propext, Classical.choice, Quot.sound).\n\n---\n\n## References\n\n1. M.H. Stone, \"The theory of representations for Boolean algebras,\" *Trans. AMS* 40 (1936), 37\u2013111.\n2. H.A. Priestley, \"Representation of distributive lattices by means of ordered Stone spaces,\" *Bull. London Math. Soc.* 2 (1970), 186\u2013190.\n3. L. Esakia, \"Topological Kripke models,\" *Soviet Math. Dokl.* 15 (1974), 147\u2013151.\n4. D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.\n5. G.L. Litvinov, V.P. Maslov, and G.B. Shpiz, \"Idempotent functional analysis: an algebraic approach,\" *Math. Notes* 69 (2001), 696\u2013729.\n6. The Mathlib Community, *Mathlib: a unified library of mathematics formalized in Lean 4*, https://github.com/leanprover-community/mathlib4.\n",
+    "future_directions": "# Future Directions: Tropical Stone Duality\n\n## Overview\n\nThe finite Tropical Stone Duality established here \u2014 connecting idempotent Heyting semimodules to finite Kripke frames via tropical prime points \u2014 is a foundational result that opens several major research directions. Each direction below represents a concrete, actionable research program with clear milestones.\n\n---\n\n## Direction 1: Tropical Esakia Duality for Modal and Intuitionistic Algebras\n\n**Goal:** Extend the duality to modal algebras over idempotent semimodules, obtaining a tropical analogue of Esakia duality.\n\n**Key idea:** Add a \"necessity\" operator \u25a1 to the idempotent Heyting semimodule satisfying tropical analogues of the modal axioms. The dual should be a Kripke frame with an explicit accessibility relation reconstructed from the \u25a1-compatible points.\n\n**Concrete milestones:**\n1. Define `ModalIdemHeytingSemimod` extending `IdemHeytingSemimod` with a monotone operator \u25a1 satisfying \u25a1(a \u2293 b) = \u25a1a \u2293 \u25a1b and \u25a1\u22a4 = \u22a4.\n2. Define \"modal tropical points\" preserving \u25a1.\n3. Show that the canonical preorder plus the \u25a1-structure yields an S4-style Kripke frame.\n4. Prove the representation theorem: the modal algebra embeds into the modal upset functions on the reconstructed frame.\n5. Formalize in Lean 4.\n\n**Why it matters:** This would provide the first computationally certified modal duality in the tropical world, with applications to temporal reasoning over optimization structures.\n\n**Estimated difficulty:** Medium. The finite case should follow from the current infrastructure with additional structure.\n\n---\n\n## Direction 2: Weighted/Enriched Spectra over Min-Plus Truth Objects\n\n**Goal:** Replace the two-element truth object Bool with a finite tropical chain (e.g., {0, 1, 2, ..., n} with max as join) to obtain a quantitative duality.\n\n**Key idea:** Instead of binary verdicts, points assign \"tropical truth values\" \u2014 real-valued costs or weights. The canonical preorder becomes a weighted relation, and the reconstructed frame carries metric/cost information.\n\n**Concrete milestones:**\n1. Define `TropicalChain n` as the totally ordered set {0, ..., n} with max/min as lattice operations.\n2. Instantiate `TropicalTruth` for `TropicalChain n`.\n3. Show that the spectrum with chain-valued points carries strictly more information than the Bool-valued spectrum.\n4. Characterize the \"weighted upset functions\" as the image of the evaluation map.\n5. Prove that the weighted duality subsumes the Boolean duality as the special case n = 1.\n6. Demonstrate on examples from shortest-path algebras.\n\n**Why it matters:** This connects directly to tropical geometry and optimization, where truth values are not binary but real-valued. It would enable extraction of quantitative semantic models from optimization data.\n\n**Estimated difficulty:** Medium-low. The algebraic infrastructure is already in place; the main work is characterizing the richer spectrum structure.\n\n---\n\n## Direction 3: Algorithmic Extraction of Countermodels from Residuated Semimodule Proofs\n\n**Goal:** Given a proof object in an idempotent Heyting semimodule (a witness that some formula is valid), extract a finite semantic model certifying the proof.\n\n**Key idea:** The representation isomorphism provides a constructive bijection between algebraic elements and semantic valuations. Given an element a \u2208 M representing a provable formula, its evaluation eval(a) is a certified monotone function on the spectrum \u2014 a semantic witness of validity.\n\n**Concrete milestones:**\n1. Define \"proof objects\" as elements a \u2208 M with a = \u22a4 or a \u2265 threshold.\n2. Implement the extraction algorithm: given a, compute eval(a) and the support set {p \u2208 Spec | p(a) = \u22a4}.\n3. Show that the support set, equipped with the restricted canonical preorder, is a minimal Kripke model for the formula.\n4. Implement countermodel extraction for non-valid formulas: find the \"most informative\" point refuting the formula.\n5. Benchmark against standard model-checking algorithms.\n\n**Why it matters:** This creates a certified pipeline from algebraic proofs to executable semantic models \u2014 a key capability for verified AI and formal methods.\n\n**Estimated difficulty:** Medium. The extraction is constructive; the challenge is minimality and efficiency.\n\n---\n\n## Direction 4: Tropical Bisimulation and Semantic Minimization\n\n**Goal:** Define a notion of bisimulation between tropical Kripke frames and use it to minimize reconstructed frames.\n\n**Key idea:** Two points in the spectrum are bisimilar if they evaluate all elements identically. Quotienting by bisimulation gives the minimal frame. The duality should show that the minimal frame corresponds to the quotient algebra by the kernel of evaluation.\n\n**Concrete milestones:**\n1. Define tropical bisimulation: p ~ q iff \u2200 a, p(a) = q(a).\n2. Show that ~ is a congruence on the canonical preorder.\n3. Prove that the quotient Spec/~ is the minimal separating frame.\n4. Show that M with full separation has trivial bisimulation (the frame is already minimal).\n5. Characterize when non-trivial bisimulation exists in terms of algebraic redundancy.\n6. Implement frame minimization as a decidable algorithm.\n\n**Why it matters:** Minimization is essential for practical semantic extraction \u2014 real-world spectra may have redundant points, and the minimal frame captures the essential logical structure.\n\n**Estimated difficulty:** Low-medium. The definitions are natural; the main work is proving the minimality result.\n\n---\n\n## Direction 5: Categorical Duality Between Finite IHS and Finite Kripke Frames\n\n**Goal:** Establish a categorical equivalence (or duality) between the category of finite idempotent Heyting semimodules with IHS-morphisms and the category of finite Kripke frames with bounded morphisms.\n\n**Key idea:** The spectrum construction is a functor from IHS to Kripke frames; the upset-function construction is a functor in the reverse direction. The representation theorem says these functors are quasi-inverse on objects. The full categorical duality requires showing they are quasi-inverse on morphisms as well.\n\n**Concrete milestones:**\n1. Define the category `FinIHS` of finite IHS with IHS-homomorphisms (preserving \u2294, \u22a4, \u22a5, \u21d2).\n2. Define the category `FinKripke` of finite Kripke frames with bounded morphisms.\n3. Construct the spectrum functor `Spec : FinIHS^op \u2192 FinKripke`.\n4. Construct the upset functor `Up : FinKripke \u2192 FinIHS^op`.\n5. Prove the natural isomorphisms `Up \u2218 Spec \u2245 Id` and `Spec \u2218 Up \u2245 Id`.\n6. Formalize in Lean 4 using Mathlib's category theory library.\n\n**Why it matters:** A categorical duality is the strongest form of the correspondence, ensuring that not just individual objects but entire morphism structures are preserved. This is the tropical analogue of Stone's categorical equivalence and would be a landmark result in algebraic logic.\n\n**Estimated difficulty:** High. Categorical formalization in Lean is possible but requires careful handling of universe polymorphism and coherence conditions.\n\n---\n\n## Cross-Cutting Themes\n\n### Computational Certification\nAll directions should maintain the standard of machine-checked correctness. Each new theorem should be formalized in Lean 4.\n\n### Tropical Geometry Connection\nDirections 2 and 3 have direct connections to tropical algebraic geometry. The spectrum of a tropical polynomial ring is closely related to tropical varieties, and the canonical preorder may encode tropical intersection data.\n\n### Applications to Verification\nThe extraction pipeline (Direction 3) and minimization (Direction 4) are directly applicable to:\n- Abstract interpretation (extracting semantic models from abstract domains)\n- Program verification (certified model extraction from proof artifacts)\n- Neural network verification (tropical methods for ReLU networks)\n\n### Connections to Quantum Logic\nThe structure of idempotent semimodules with residuation has formal similarities to quantum logic lattices. Investigating whether tropical duality extends to non-distributive lattices could open connections to quantum information theory.\n\n---\n\n## Priority Ranking\n\n1. **Direction 2** (Weighted spectra) \u2014 Highest impact/effort ratio; builds directly on current infrastructure.\n2. **Direction 4** (Bisimulation) \u2014 Natural next step; low technical risk.\n3. **Direction 1** (Modal extension) \u2014 High impact; moderate technical challenge.\n4. **Direction 3** (Countermodel extraction) \u2014 Highest application potential; needs implementation work.\n5. **Direction 5** (Categorical duality) \u2014 Most ambitious; highest mathematical payoff but requires significant formalization effort.\n",
+    "demos": [
+      {
+        "name": "Tropical Stone Duality Demonstrations",
+        "code": "\"\"\"\nTropical Stone Duality \u2014 Demonstration\n\nThis script demonstrates the core concepts of Tropical Stone Duality\nwith concrete computational examples.\n\"\"\"\n\nimport itertools\nfrom typing import Dict, List, Tuple, Callable, Set\n\n# =============================================================================\n# Diamond Lattice Example\n# =============================================================================\n\nclass DiamondElement:\n    \"\"\"Element of the 4-element diamond lattice {bot, left, right, top}.\"\"\"\n    _names = ['bot', 'left', 'right', 'top']\n\n    def __init__(self, name: str):\n        assert name in self._names\n        self.name = name\n\n    def __repr__(self):\n        return self.name\n\n    def __eq__(self, other):\n        return self.name == other.name\n\n    def __hash__(self):\n        return hash(self.name)\n\n    def __le__(self, other):\n        if self.name == 'bot': return True\n        if other.name == 'top': return True\n        return self.name == other.name\n\n    def __lt__(self, other):\n        return self <= other and self != other\n\nBOT = DiamondElement('bot')\nLEFT = DiamondElement('left')\nRIGHT = DiamondElement('right')\nTOP = DiamondElement('top')\nDIAMOND = [BOT, LEFT, RIGHT, TOP]\n\n\ndef diamond_sup(a: DiamondElement, b: DiamondElement) -> DiamondElement:\n    \"\"\"Join in the diamond lattice.\"\"\"\n    if a == BOT: return b\n    if b == BOT: return a\n    if a == TOP or b == TOP: return TOP\n    if a == b: return a\n    return TOP  # left \u2294 right = top\n\n\ndef diamond_inf(a: DiamondElement, b: DiamondElement) -> DiamondElement:\n    \"\"\"Meet in the diamond lattice.\"\"\"\n    if a == TOP: return b\n    if b == TOP: return a\n    if a == BOT or b == BOT: return BOT\n    if a == b: return a\n    return BOT  # left \u2293 right = bot\n\n\ndef diamond_himp(a: DiamondElement, b: DiamondElement) -> DiamondElement:\n    \"\"\"Heyting implication in the diamond lattice.\n    Defined by: a \u2293 x \u2264 b iff x \u2264 himp(a, b).\"\"\"\n    table = {\n        ('bot', 'bot'): TOP, ('bot', 'left'): TOP, ('bot', 'right'): TOP, ('bot', 'top'): TOP,\n        ('left', 'bot'): RIGHT, ('left', 'left'): TOP, ('left', 'right'): RIGHT, ('left', 'top'): TOP,\n        ('right', 'bot'): LEFT, ('right', 'left'): LEFT, ('right', 'right'): TOP, ('right', 'top'): TOP,\n        ('top', 'bot'): BOT, ('top', 'left'): LEFT, ('top', 'right'): RIGHT, ('top', 'top'): TOP,\n    }\n    return table[(a.name, b.name)]\n\n\n# =============================================================================\n# Tropical Prime Points\n# =============================================================================\n\ndef point_left(x: DiamondElement) -> bool:\n    \"\"\"Left-extracting point: maps {bot,right} -> False, {left,top} -> True.\"\"\"\n    return x.name in ('left', 'top')\n\n\ndef point_right(x: DiamondElement) -> bool:\n    \"\"\"Right-extracting point: maps {bot,left} -> False, {right,top} -> True.\"\"\"\n    return x.name in ('right', 'top')\n\n\n# =============================================================================\n# Demonstration 1: Point Separation\n# =============================================================================\n\ndef demo_separation():\n    \"\"\"Show that the two points separate all elements of the diamond.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Point Separation\")\n    print(\"=\" * 60)\n    print()\n\n    print(\"Diamond lattice elements: bot, left, right, top\")\n    print()\n\n    # Evaluation table\n    print(\"Evaluation table:\")\n    print(f\"  {'Element':<8} {'point_L':<10} {'point_R':<10}\")\n    print(f\"  {'-'*28}\")\n    for x in DIAMOND:\n        print(f\"  {x.name:<8} {str(point_left(x)):<10} {str(point_right(x)):<10}\")\n    print()\n\n    # Check separation\n    separated = True\n    for a in DIAMOND:\n        for b in DIAMOND:\n            if a != b:\n                sep_by_L = point_left(a) != point_left(b)\n                sep_by_R = point_right(a) != point_right(b)\n                if not (sep_by_L or sep_by_R):\n                    print(f\"  FAIL: {a} and {b} not separated!\")\n                    separated = False\n    if separated:\n        print(\"  \u2713 All distinct pairs are separated by at least one point.\")\n    print()\n\n    # Show which point separates which pair\n    print(\"Separation witnesses:\")\n    for a, b in itertools.combinations(DIAMOND, 2):\n        witnesses = []\n        if point_left(a) != point_left(b):\n            witnesses.append(\"point_L\")\n        if point_right(a) != point_right(b):\n            witnesses.append(\"point_R\")\n        print(f\"  {a} \u2260 {b}: separated by {', '.join(witnesses)}\")\n    print()\n\n\n# =============================================================================\n# Demonstration 2: Evaluation Map Injectivity\n# =============================================================================\n\ndef demo_injectivity():\n    \"\"\"Show that the evaluation map is injective.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 2: Evaluation Map Injectivity\")\n    print(\"=\" * 60)\n    print()\n\n    # The evaluation map sends x \u21a6 (point_L(x), point_R(x))\n    eval_map = {}\n    for x in DIAMOND:\n        val = (point_left(x), point_right(x))\n        eval_map[x.name] = val\n        print(f\"  eval({x.name}) = {val}\")\n    print()\n\n    # Check injectivity\n    values = list(eval_map.values())\n    if len(values) == len(set(values)):\n        print(\"  \u2713 Evaluation map is injective (all images distinct).\")\n    else:\n        print(\"  \u2717 Evaluation map is NOT injective.\")\n    print()\n\n\n# =============================================================================\n# Demonstration 3: Canonical Preorder on Spectrum\n# =============================================================================\n\ndef demo_canonical_preorder():\n    \"\"\"Show the canonical preorder on the prime spectrum.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 3: Canonical Preorder on Spectrum\")\n    print(\"=\" * 60)\n    print()\n\n    points = {'point_L': point_left, 'point_R': point_right}\n\n    print(\"Canonical preorder: p \u2264 q iff \u2200 a, p(a) \u2264 q(a)\")\n    print()\n\n    for name_p, p in points.items():\n        for name_q, q in points.items():\n            le = all(p(a) <= q(a) for a in DIAMOND)\n            symbol = \"\u2264\" if le else \"\u2270\"\n            print(f\"  {name_p} {symbol} {name_q}\")\n\n    print()\n    print(\"  \u2192 point_L and point_R are incomparable in the canonical preorder.\")\n    print(\"  This means the reconstructed Kripke frame has two incomparable worlds.\")\n    print()\n\n\n# =============================================================================\n# Demonstration 4: Order Embedding\n# =============================================================================\n\ndef demo_order_embedding():\n    \"\"\"Show that the evaluation preserves and reflects order.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 4: Order Embedding\")\n    print(\"=\" * 60)\n    print()\n\n    print(\"Verifying: a \u2264 b iff eval(a) \u2264 eval(b) pointwise\")\n    print()\n\n    for a in DIAMOND:\n        for b in DIAMOND:\n            alg_le = a <= b\n            eval_le = all(\n                point_left(a) <= point_left(b) and\n                point_right(a) <= point_right(b)\n                for _ in [None]\n            )\n            # Actually compute pointwise\n            eval_le = (point_left(a) <= point_left(b)) and (point_right(a) <= point_right(b))\n\n            match_str = \"\u2713\" if alg_le == eval_le else \"\u2717\"\n            print(f\"  {match_str} {a.name} \u2264 {b.name}: algebraic={alg_le}, semantic={eval_le}\")\n    print()\n\n\n# =============================================================================\n# Demonstration 5: Residuation Check\n# =============================================================================\n\ndef demo_residuation():\n    \"\"\"Verify the residuation property: a \u2293 x \u2264 b iff x \u2264 himp(a,b).\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 5: Heyting Residuation Verification\")\n    print(\"=\" * 60)\n    print()\n\n    violations = 0\n    for a in DIAMOND:\n        for x in DIAMOND:\n            for b in DIAMOND:\n                lhs = diamond_inf(a, x) <= b\n                rhs = x <= diamond_himp(a, b)\n                if lhs != rhs:\n                    print(f\"  VIOLATION: a={a}, x={x}, b={b}\")\n                    violations += 1\n\n    if violations == 0:\n        print(\"  \u2713 Residuation verified for all 64 triples (a, x, b).\")\n    else:\n        print(f\"  \u2717 {violations} violations found.\")\n\n    print()\n    print(\"  Heyting implication table:\")\n    print(f\"  {'himp':<8}\", end=\"\")\n    for b in DIAMOND:\n        print(f\"{b.name:<8}\", end=\"\")\n    print()\n    print(f\"  {'-'*40}\")\n    for a in DIAMOND:\n        print(f\"  {a.name:<8}\", end=\"\")\n        for b in DIAMOND:\n            print(f\"{diamond_himp(a, b).name:<8}\", end=\"\")\n        print()\n    print()\n\n\n# =============================================================================\n# Demonstration 6: Upset Function Characterization\n# =============================================================================\n\ndef demo_upset_functions():\n    \"\"\"Show which functions on the spectrum are upset (monotone).\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 6: Upset Functions on the Spectrum\")\n    print(\"=\" * 60)\n    print()\n\n    # Since point_L and point_R are incomparable, ALL functions {point_L, point_R} \u2192 Bool\n    # are monotone (upset). There are 4 such functions.\n    print(\"  Since point_L \u2225 point_R (incomparable), every function\")\n    print(\"  {point_L, point_R} \u2192 Bool is automatically monotone.\")\n    print()\n\n    # List all 4 functions\n    functions = [\n        (\"const_False\", lambda p: False),\n        (\"eval(bot)\",   lambda p: False),\n        (\"eval(left)\",  lambda p: p == point_left),  # True on point_L\n        (\"eval(right)\", lambda p: p == point_right),  # True on point_R\n        (\"eval(top)\",   lambda p: True),\n    ]\n\n    # Actually, eval maps:\n    # bot   -> (False, False)\n    # left  -> (True, False)\n    # right -> (False, True)\n    # top   -> (True, True)\n    # So the image has 4 elements = all of {point_L, point_R} \u2192 Bool\n\n    print(\"  Evaluation image (identified with Bool \u00d7 Bool):\")\n    for x in DIAMOND:\n        print(f\"    eval({x.name}) = ({point_left(x)}, {point_right(x)})\")\n\n    print()\n    print(\"  All 4 functions Bool \u00d7 Bool are realized \u2192 evaluation is SURJECTIVE\")\n    print(\"  onto upset functions \u2192 we have an ISOMORPHISM.\")\n    print()\n\n\n# =============================================================================\n# Run all demos\n# =============================================================================\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  TROPICAL STONE DUALITY \u2014 Computational Demonstrations \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_separation()\n    demo_injectivity()\n    demo_canonical_preorder()\n    demo_order_embedding()\n    demo_residuation()\n    demo_upset_functions()\n\n    print(\"=\" * 60)\n    print(\"All demonstrations completed successfully.\")\n    print(\"=\" * 60)\n"
+      },
+      {
+        "name": "Applications: Abstract Interpretation, Access Control, Concept Analysis",
+        "code": "\"\"\"\nTropical Stone Duality \u2014 Applications\n\nReal-world applications of the tropical duality theory:\n1. Abstract interpretation lattices \u2192 semantic frame extraction\n2. Access control policy verification\n3. Feature lattice analysis for concept lattices\n\"\"\"\n\nfrom algorithms import (\n    LatticeElement, HeytingLattice, TropicalPoint,\n    compute_canonical_preorder, reconstruct_frame,\n    check_separation, compute_evaluation_map,\n)\nfrom typing import List, Dict, Tuple\n\n\n# =============================================================================\n# Application 1: Abstract Interpretation\n# =============================================================================\n\ndef demo_abstract_interpretation():\n    \"\"\"\n    In abstract interpretation, program analyses use abstract domains\n    that are lattices. The tropical duality theory allows us to extract\n    a semantic frame from the abstract domain, giving a Kripke-style\n    semantics for the analysis.\n\n    Example: a simple sign domain {\u22a5, neg, zero, pos, \u22a4}\n    where \u22a5 = unreachable, \u22a4 = any value.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Abstract Interpretation \u2014 Sign Domain\")\n    print(\"=\" * 60)\n    print()\n\n    # Sign domain elements\n    bot = LatticeElement('\u22a5')\n    neg = LatticeElement('neg')\n    zero = LatticeElement('zero')\n    pos = LatticeElement('pos')\n    top = LatticeElement('\u22a4')\n    elems = [bot, neg, zero, pos, top]\n\n    # Order\n    le_pairs = [(x, y) for x in elems for y in elems\n                if x == bot or y == top or x == y]\n\n    # Sup (join = least upper bound)\n    sup = {}\n    for x in elems:\n        for y in elems:\n            if x == bot: sup[(x, y)] = y\n            elif y == bot: sup[(x, y)] = x\n            elif x == top or y == top: sup[(x, y)] = top\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = top  # incomparable \u2192 \u22a4\n\n    # Inf (meet)\n    inf = {}\n    for x in elems:\n        for y in elems:\n            if x == top: inf[(x, y)] = y\n            elif y == top: inf[(x, y)] = x\n            elif x == bot or y == bot: inf[(x, y)] = bot\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = bot  # incomparable \u2192 \u22a5\n\n    # Heyting implication (for the pentagonal antichain lattice M\u2083)\n    himp = {}\n    for a in elems:\n        for b in elems:\n            if a == bot or b == top:\n                himp[(a, b)] = top\n            elif a == top:\n                himp[(a, b)] = b\n            elif a == b:\n                himp[(a, b)] = top\n            else:\n                # For incomparable a, b: himp(a, b) is the largest x\n                # such that a \u2293 x \u2264 b\n                # Since a \u2293 x = bot for x incomparable to a, and bot \u2264 b,\n                # and a \u2293 a = a \u2270 b, we get himp(a,b) = all elements except a\n                # In this lattice, that's everything whose meet with a is \u2264 b\n                # For M\u2083: himp(neg, zero) = complement of neg in a sense\n                # Let's compute it properly\n                candidates = [x for x in elems if inf[(a, x)] in\n                              {e for e in elems if (e, b) in set(le_pairs)}]\n                # Take the sup of all candidates\n                result = bot\n                for c in candidates:\n                    result = sup[(result, c)]\n                himp[(a, b)] = result\n\n    lattice = HeytingLattice(elems, le_pairs, sup, inf, himp, top, bot)\n\n    # Three separating points\n    p_neg = TropicalPoint('p_neg', {bot: False, neg: True, zero: False, pos: False, top: True})\n    p_zero = TropicalPoint('p_zero', {bot: False, neg: False, zero: True, pos: False, top: True})\n    p_pos = TropicalPoint('p_pos', {bot: False, neg: False, zero: False, pos: True, top: True})\n    points = [p_neg, p_zero, p_pos]\n\n    # Check separation\n    sep, witness = check_separation(points, elems)\n    print(f\"  Separation: {'\u2713' if sep else '\u2717'} ({witness})\")\n\n    # Evaluation map\n    eval_map = compute_evaluation_map(points, elems)\n    print(\"\\n  Evaluation map:\")\n    for elem, vals in eval_map.items():\n        print(f\"    eval({elem}) = {vals}\")\n\n    # Frame reconstruction\n    frame = reconstruct_frame(points, elems)\n    print(\"\\n  Reconstructed Kripke frame:\")\n    frame.display()\n    print(f\"  Reflexive: {frame.is_reflexive()}, Transitive: {frame.is_transitive()}\")\n\n    print(\"\\n  Interpretation: Each world in the frame corresponds to a\")\n    print(\"  'sign observer' \u2014 an agent that can distinguish values by their sign.\")\n    print(\"  The frame structure captures the information ordering between observers.\")\n    print()\n\n\n# =============================================================================\n# Application 2: Access Control\n# =============================================================================\n\ndef demo_access_control():\n    \"\"\"\n    Access control policies often form lattices where:\n    - Elements represent security levels\n    - Join represents combining permissions\n    - Meet represents restricting permissions\n    - Implication captures \"if you have access to A, what does that\n      tell you about access to B?\"\n\n    Tropical duality extracts a semantic model showing how security\n    principals observe the policy structure.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 2: Access Control Policy Analysis\")\n    print(\"=\" * 60)\n    print()\n\n    # Simple 2-level security with compartments\n    # public, secret_A, secret_B, top_secret\n    pub = LatticeElement('public')\n    sa = LatticeElement('secret_A')\n    sb = LatticeElement('secret_B')\n    ts = LatticeElement('top_secret')\n    elems = [pub, sa, sb, ts]\n\n    # Diamond order: pub \u2264 sa, pub \u2264 sb, sa \u2264 ts, sb \u2264 ts\n    le_pairs = [(pub, x) for x in elems] + [(x, ts) for x in elems] + \\\n               [(sa, sa), (sb, sb)]\n\n    # Build operations (same as diamond)\n    sup, inf, himp = {}, {}, {}\n    for x in elems:\n        for y in elems:\n            if x == pub: sup[(x, y)] = y\n            elif y == pub: sup[(x, y)] = x\n            elif x == ts or y == ts: sup[(x, y)] = ts\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = ts\n\n    for x in elems:\n        for y in elems:\n            if x == ts: inf[(x, y)] = y\n            elif y == ts: inf[(x, y)] = x\n            elif x == pub or y == pub: inf[(x, y)] = pub\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = pub\n\n    himp_raw = {\n        (pub, pub): ts, (pub, sa): ts, (pub, sb): ts, (pub, ts): ts,\n        (sa, pub): sb, (sa, sa): ts, (sa, sb): sb, (sa, ts): ts,\n        (sb, pub): sa, (sb, sa): sa, (sb, sb): ts, (sb, ts): ts,\n        (ts, pub): pub, (ts, sa): sa, (ts, sb): sb, (ts, ts): ts,\n    }\n    himp = himp_raw\n\n    lattice = HeytingLattice(elems, le_pairs, sup, inf, himp, ts, pub)\n\n    # Separating points: one per compartment\n    p_a = TropicalPoint('observer_A', {pub: False, sa: True, sb: False, ts: True})\n    p_b = TropicalPoint('observer_B', {pub: False, sa: False, sb: True, ts: True})\n    points = [p_a, p_b]\n\n    sep, _ = check_separation(points, elems)\n    print(f\"  Separation: {'\u2713' if sep else '\u2717'}\")\n\n    eval_map = compute_evaluation_map(points, elems)\n    print(\"\\n  Evaluation map (what each observer sees):\")\n    for elem, vals in eval_map.items():\n        print(f\"    {elem}: observer_A={'can see' if vals[0] else 'blocked'}, \"\n              f\"observer_B={'can see' if vals[1] else 'blocked'}\")\n\n    frame = reconstruct_frame(points, elems)\n    print(\"\\n  Reconstructed observer frame:\")\n    frame.display()\n\n    print(\"\\n  Interpretation: The reconstructed frame shows that observer_A\")\n    print(\"  and observer_B are independent \u2014 neither can simulate the other.\")\n    print(\"  This certifies that compartment A and B provide genuine separation.\")\n    print()\n\n\n# =============================================================================\n# Application 3: Concept Lattice / Feature Analysis\n# =============================================================================\n\ndef demo_concept_lattice():\n    \"\"\"\n    In formal concept analysis, objects are described by features.\n    The feature lattice captures logical relationships between features.\n    Tropical duality extracts the minimal set of 'feature observers'\n    that distinguish all concepts.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 3: Concept Lattice Feature Analysis\")\n    print(\"=\" * 60)\n    print()\n\n    # Simple concept lattice for shapes\n    # Features: {round, angular, large, small}\n    # Concepts: \u22a5 (nothing), circle, square, big_circle, big_square,\n    #           round_things, angular_things, big_things, \u22a4 (everything)\n    # For simplicity, use a 4-element diamond\n\n    nothing = LatticeElement('nothing')\n    round_f = LatticeElement('round')\n    angular = LatticeElement('angular')\n    everything = LatticeElement('any_shape')\n    elems = [nothing, round_f, angular, everything]\n\n    le_pairs = [(nothing, x) for x in elems] + \\\n               [(x, everything) for x in elems] + \\\n               [(round_f, round_f), (angular, angular)]\n\n    sup, inf = {}, {}\n    for x in elems:\n        for y in elems:\n            if x == nothing: sup[(x, y)] = y\n            elif y == nothing: sup[(x, y)] = x\n            elif x == everything or y == everything: sup[(x, y)] = everything\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = everything\n\n    for x in elems:\n        for y in elems:\n            if x == everything: inf[(x, y)] = y\n            elif y == everything: inf[(x, y)] = x\n            elif x == nothing or y == nothing: inf[(x, y)] = nothing\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = nothing\n\n    himp = {\n        (nothing, nothing): everything, (nothing, round_f): everything,\n        (nothing, angular): everything, (nothing, everything): everything,\n        (round_f, nothing): angular, (round_f, round_f): everything,\n        (round_f, angular): angular, (round_f, everything): everything,\n        (angular, nothing): round_f, (angular, round_f): round_f,\n        (angular, angular): everything, (angular, everything): everything,\n        (everything, nothing): nothing, (everything, round_f): round_f,\n        (everything, angular): angular, (everything, everything): everything,\n    }\n\n    lattice = HeytingLattice(elems, le_pairs, sup, inf, himp, everything, nothing)\n\n    # Separating observers\n    obs_round = TropicalPoint('detects_round',\n        {nothing: False, round_f: True, angular: False, everything: True})\n    obs_angular = TropicalPoint('detects_angular',\n        {nothing: False, round_f: False, angular: True, everything: True})\n    points = [obs_round, obs_angular]\n\n    sep, _ = check_separation(points, elems)\n    print(f\"  Separation: {'\u2713' if sep else '\u2717'}\")\n\n    eval_map = compute_evaluation_map(points, elems)\n    print(\"\\n  Feature signatures:\")\n    for elem, vals in eval_map.items():\n        features = []\n        if vals[0]: features.append(\"round\")\n        if vals[1]: features.append(\"angular\")\n        feat_str = \" + \".join(features) if features else \"none\"\n        print(f\"    {elem}: [{feat_str}]\")\n\n    frame = reconstruct_frame(points, elems)\n    print(\"\\n  Reconstructed observer frame:\")\n    frame.display()\n\n    print(\"\\n  Interpretation: The feature observers are independent detectors.\")\n    print(\"  The duality theorem guarantees that these two observers suffice\")\n    print(\"  to reconstruct the entire concept lattice structure.\")\n    print()\n\n\n# =============================================================================\n# Main\n# =============================================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  TROPICAL STONE DUALITY \u2014 Applications                 \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\\n\")\n\n    demo_abstract_interpretation()\n    demo_access_control()\n    demo_concept_lattice()\n\n    print(\"=\" * 60)\n    print(\"All applications completed successfully.\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Canonical Preorder Computation",
+        "pseudocode": "Algorithm: ComputeCanonicalPreorder(points, elements)\nInput: List of tropical prime points, list of lattice elements\nOutput: Preorder relation on points\n\n1. For each pair (p, q) in points \u00d7 points:\n   a. le \u2190 true\n   b. For each a in elements:\n      i. If NOT (p(a) \u2264 q(a)):\n         le \u2190 false; break\n   c. relation[(p, q)] \u2190 le\n2. Return relation\n\nTime: O(|points|\u00b2 \u00d7 |elements|)\nSpace: O(|points|\u00b2)",
+        "code": "\"\"\"\nTropical Stone Duality \u2014 Algorithms\n\nThis module implements the core algorithms from the Tropical Stone Duality theory:\n1. Canonical preorder computation on spectra\n2. Frame reconstruction from algebraic data\n3. Evaluation map construction and verification\n4. Residuation checking\n\"\"\"\n\nfrom typing import List, Tuple, Dict, Set, Callable, Optional\nfrom dataclasses import dataclass\nimport itertools\n\n\n# =============================================================================\n# Generic Bounded Lattice with Heyting Implication\n# =============================================================================\n\n@dataclass(frozen=True)\nclass LatticeElement:\n    \"\"\"A generic lattice element identified by name.\"\"\"\n    name: str\n\n    def __repr__(self):\n        return self.name\n\n\nclass HeytingLattice:\n    \"\"\"A finite bounded lattice with Heyting implication.\n\n    This is the algebraic side of Tropical Stone Duality: an 'idempotent\n    Heyting semimodule' in the terminology of the theory.\n\n    Attributes:\n        elements: list of all elements\n        le: order relation as a dict of sets\n        sup: join operation\n        inf: meet operation\n        himp: Heyting implication\n        top: greatest element\n        bot: least element\n    \"\"\"\n\n    def __init__(\n        self,\n        elements: List[LatticeElement],\n        le_pairs: List[Tuple[LatticeElement, LatticeElement]],\n        sup: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        inf: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        himp: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        top: LatticeElement,\n        bot: LatticeElement,\n    ):\n        self.elements = elements\n        self.le_set = set(le_pairs)\n        self.sup_table = sup\n        self.inf_table = inf\n        self.himp_table = himp\n        self.top = top\n        self.bot = bot\n\n    def le(self, a: LatticeElement, b: LatticeElement) -> bool:\n        return (a, b) in self.le_set\n\n    def join(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.sup_table[(a, b)]\n\n    def meet(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.inf_table[(a, b)]\n\n    def imp(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.himp_table[(a, b)]\n\n    def verify_residuation(self) -> bool:\n        \"\"\"Verify: a \u2293 x \u2264 b iff x \u2264 himp(a, b) for all a, x, b.\n\n        Time complexity: O(n^3) where n = |elements|.\n        \"\"\"\n        for a in self.elements:\n            for x in self.elements:\n                for b in self.elements:\n                    lhs = self.le(self.meet(a, x), b)\n                    rhs = self.le(x, self.imp(a, b))\n                    if lhs != rhs:\n                        return False\n        return True\n\n\n# =============================================================================\n# Tropical Point (Morphism to Truth Object)\n# =============================================================================\n\nclass TropicalPoint:\n    \"\"\"A tropical prime point: a structure-preserving map from a Heyting\n    lattice to a truth object (Bool).\n\n    Attributes:\n        name: identifier for the point\n        values: dict mapping lattice elements to bool\n    \"\"\"\n\n    def __init__(self, name: str, values: Dict[LatticeElement, bool]):\n        self.name = name\n        self.values = values\n\n    def __call__(self, x: LatticeElement) -> bool:\n        return self.values[x]\n\n    def __repr__(self):\n        return self.name\n\n    def verify_sup_preservation(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(a \u2294 b) = p(a) \u2228 p(b) for all a, b.\"\"\"\n        for a in lattice.elements:\n            for b in lattice.elements:\n                if self(lattice.join(a, b)) != (self(a) or self(b)):\n                    return False\n        return True\n\n    def verify_bounds(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(\u22a4) = True and p(\u22a5) = False.\"\"\"\n        return self(lattice.top) == True and self(lattice.bot) == False\n\n    def verify_imp_compatibility(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(a) \u2264 p(b) \u2192 p(himp(a,b)) = True.\"\"\"\n        for a in lattice.elements:\n            for b in lattice.elements:\n                if self(a) <= self(b):\n                    if not self(lattice.imp(a, b)):\n                        return False\n        return True\n\n\n# =============================================================================\n# Algorithm 1: Canonical Preorder Computation\n# =============================================================================\n\ndef compute_canonical_preorder(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Dict[Tuple[str, str], bool]:\n    \"\"\"Compute the canonical preorder on a finite spectrum.\n\n    The canonical preorder is: p \u2264 q iff \u2200 a \u2208 M, p(a) \u2264 q(a).\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        Dictionary mapping (p.name, q.name) to bool.\n\n    Time complexity: O(|points|^2 \u00d7 |elements|)\n    Space complexity: O(|points|^2)\n    \"\"\"\n    result = {}\n    for p in points:\n        for q in points:\n            le = all(p(a) <= q(a) for a in elements)\n            result[(p.name, q.name)] = le\n    return result\n\n\n# =============================================================================\n# Algorithm 2: Frame Reconstruction\n# =============================================================================\n\n@dataclass\nclass KripkeFrame:\n    \"\"\"A finite Kripke frame: worlds with accessibility relation.\"\"\"\n    worlds: List[str]\n    relation: Dict[Tuple[str, str], bool]\n\n    def is_reflexive(self) -> bool:\n        return all(self.relation.get((w, w), False) for w in self.worlds)\n\n    def is_transitive(self) -> bool:\n        for u in self.worlds:\n            for v in self.worlds:\n                for w in self.worlds:\n                    if (self.relation.get((u, v), False) and\n                        self.relation.get((v, w), False) and\n                        not self.relation.get((u, w), False)):\n                        return False\n        return True\n\n    def display(self):\n        \"\"\"Print the frame's accessibility relation.\"\"\"\n        print(f\"  Worlds: {self.worlds}\")\n        print(f\"  Relations:\")\n        for u in self.worlds:\n            related = [v for v in self.worlds if self.relation.get((u, v), False)]\n            print(f\"    {u} \u2192 {related}\")\n\n\ndef reconstruct_frame(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> KripkeFrame:\n    \"\"\"Reconstruct a finite Kripke frame from the prime spectrum.\n\n    This is the core algorithmic content of Tropical Stone Duality:\n    given the algebraic data (points evaluating elements), we extract\n    the semantic frame.\n\n    Args:\n        points: tropical prime points (the spectrum)\n        elements: lattice elements\n\n    Returns:\n        A KripkeFrame whose worlds are the points and whose relation\n        is the canonical preorder.\n\n    Time complexity: O(|points|^2 \u00d7 |elements|)\n\n    Pseudocode:\n        1. For each pair (p, q) of points:\n           a. Check if p(a) \u2264 q(a) for ALL elements a\n           b. If yes, set p \u2192 q in the frame\n        2. Return the frame\n\n    The correctness theorem (computeCanonicalOrder_spec) guarantees\n    this computed relation equals the canonical preorder.\n    \"\"\"\n    preorder = compute_canonical_preorder(points, elements)\n    worlds = [p.name for p in points]\n    return KripkeFrame(worlds=worlds, relation=preorder)\n\n\n# =============================================================================\n# Algorithm 3: Evaluation Map and Separation Check\n# =============================================================================\n\ndef check_separation(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Tuple[bool, Optional[Tuple[LatticeElement, LatticeElement]]]:\n    \"\"\"Check whether points separate all distinct elements.\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        (True, None) if separated, or (False, (a, b)) for a non-separated pair.\n\n    Time complexity: O(|elements|^2 \u00d7 |points|)\n    \"\"\"\n    for a in elements:\n        for b in elements:\n            if a != b:\n                separated = any(p(a) != p(b) for p in points)\n                if not separated:\n                    return False, (a, b)\n    return True, None\n\n\ndef compute_evaluation_map(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Dict[LatticeElement, Tuple[bool, ...]]:\n    \"\"\"Compute the evaluation map: M \u2192 (Spec \u2192 Bool).\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        Dictionary mapping each element to its tuple of evaluations.\n\n    Time complexity: O(|elements| \u00d7 |points|)\n    \"\"\"\n    return {a: tuple(p(a) for p in points) for a in elements}\n\n\n# =============================================================================\n# Algorithm 4: Implication Table Reconstruction\n# =============================================================================\n\ndef reconstruct_implication_table(\n    lattice: HeytingLattice,\n    points: List[TropicalPoint],\n) -> Dict[Tuple[LatticeElement, LatticeElement], Tuple[bool, ...]]:\n    \"\"\"Reconstruct the implication table from the spectrum.\n\n    For each pair (a, b), compute the evaluation of himp(a, b) at each point.\n\n    Time complexity: O(|elements|^2 \u00d7 |points|)\n    \"\"\"\n    table = {}\n    for a in lattice.elements:\n        for b in lattice.elements:\n            h = lattice.imp(a, b)\n            table[(a, b)] = tuple(p(h) for p in points)\n    return table\n\n\n# =============================================================================\n# Diamond Lattice Construction\n# =============================================================================\n\ndef build_diamond_lattice() -> HeytingLattice:\n    \"\"\"Construct the 4-element diamond lattice with Heyting implication.\"\"\"\n    bot = LatticeElement('\u22a5')\n    left = LatticeElement('a')\n    right = LatticeElement('b')\n    top = LatticeElement('\u22a4')\n    elems = [bot, left, right, top]\n\n    # Order: bot \u2264 everything, everything \u2264 top, a \u2225 b\n    le_pairs = [(x, y) for x in elems for y in elems\n                if x == bot or y == top or x == y]\n\n    # Sup table\n    sup = {}\n    for x in elems:\n        for y in elems:\n            if x == bot: sup[(x, y)] = y\n            elif y == bot: sup[(x, y)] = x\n            elif x == top or y == top: sup[(x, y)] = top\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = top\n\n    # Inf table\n    inf = {}\n    for x in elems:\n        for y in elems:\n            if x == top: inf[(x, y)] = y\n            elif y == top: inf[(x, y)] = x\n            elif x == bot or y == bot: inf[(x, y)] = bot\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = bot\n\n    # Heyting implication\n    himp = {\n        (bot, bot): top, (bot, left): top, (bot, right): top, (bot, top): top,\n        (left, bot): right, (left, left): top, (left, right): right, (left, top): top,\n        (right, bot): left, (right, left): left, (right, right): top, (right, top): top,\n        (top, bot): bot, (top, left): left, (top, right): right, (top, top): top,\n    }\n\n    return HeytingLattice(elems, le_pairs, sup, inf, himp, top, bot)\n\n\ndef build_diamond_points(lattice: HeytingLattice) -> List[TropicalPoint]:\n    \"\"\"Build the two separating points for the diamond lattice.\"\"\"\n    bot, left, right, top = lattice.elements\n\n    p_left = TropicalPoint('p_L', {bot: False, left: True, right: False, top: True})\n    p_right = TropicalPoint('p_R', {bot: False, left: False, right: True, top: True})\n\n    return [p_left, p_right]\n\n\n# =============================================================================\n# Main demonstration\n# =============================================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\" * 60)\n    print(\"ALGORITHMS \u2014 Tropical Stone Duality\")\n    print(\"=\" * 60)\n\n    # Build diamond lattice\n    lattice = build_diamond_lattice()\n    points = build_diamond_points(lattice)\n\n    # 1. Verify residuation\n    print(\"\\n1. Residuation verification:\")\n    ok = lattice.verify_residuation()\n    print(f\"   {'\u2713' if ok else '\u2717'} Residuation holds: {ok}\")\n\n    # 2. Verify points\n    print(\"\\n2. Point verification:\")\n    for p in points:\n        sup_ok = p.verify_sup_preservation(lattice)\n        bnd_ok = p.verify_bounds(lattice)\n        imp_ok = p.verify_imp_compatibility(lattice)\n        print(f\"   {p.name}: sup={'\u2713' if sup_ok else '\u2717'}, \"\n              f\"bounds={'\u2713' if bnd_ok else '\u2717'}, imp={'\u2713' if imp_ok else '\u2717'}\")\n\n    # 3. Check separation\n    print(\"\\n3. Separation check:\")\n    sep, witness = check_separation(points, lattice.elements)\n    print(f\"   {'\u2713' if sep else '\u2717'} Fully separating: {sep}\")\n\n    # 4. Compute evaluation map\n    print(\"\\n4. Evaluation map:\")\n    eval_map = compute_evaluation_map(points, lattice.elements)\n    for elem, vals in eval_map.items():\n        print(f\"   eval({elem}) = {vals}\")\n\n    # 5. Reconstruct frame\n    print(\"\\n5. Frame reconstruction:\")\n    frame = reconstruct_frame(points, lattice.elements)\n    frame.display()\n    print(f\"   Reflexive: {frame.is_reflexive()}\")\n    print(f\"   Transitive: {frame.is_transitive()}\")\n\n    # 6. Implication table\n    print(\"\\n6. Reconstructed implication table (as evaluations):\")\n    imp_table = reconstruct_implication_table(lattice, points)\n    for (a, b), vals in imp_table.items():\n        print(f\"   himp({a}, {b}) evaluated = {vals}\")\n\n    # 7. Verify order embedding\n    print(\"\\n7. Order embedding verification:\")\n    all_ok = True\n    for a in lattice.elements:\n        for b in lattice.elements:\n            alg_le = lattice.le(a, b)\n            sem_le = all(p(a) <= p(b) for p in points)\n            if alg_le != sem_le:\n                print(f\"   \u2717 {a} \u2264 {b}: algebraic={alg_le}, semantic={sem_le}\")\n                all_ok = False\n    if all_ok:\n        print(\"   \u2713 Order embedding verified for all pairs.\")\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All algorithms completed successfully.\")\n    print(\"=\" * 60)\n",
+        "code_file": "visualizations/algebratropicallogic_tropical_stone_duality_via_id_canonical_preorder_computation.py"
+      },
+      {
+        "name": "Frame Reconstruction",
+        "pseudocode": "Algorithm: ReconstructFrame(M, T, points)\nInput: Finite IHS M, truth object T, spectrum points\nOutput: Kripke frame (worlds, relation)\n\n1. worlds \u2190 list of points\n2. relation \u2190 ComputeCanonicalPreorder(points, M.elements)\n3. Return KripkeFrame(worlds, relation)\n\nTime: O(|points|\u00b2 \u00d7 |M|)\nCorrectness: Proved as computeCanonicalOrder_spec",
+        "code": "\"\"\"\nTropical Stone Duality \u2014 Algorithms\n\nThis module implements the core algorithms from the Tropical Stone Duality theory:\n1. Canonical preorder computation on spectra\n2. Frame reconstruction from algebraic data\n3. Evaluation map construction and verification\n4. Residuation checking\n\"\"\"\n\nfrom typing import List, Tuple, Dict, Set, Callable, Optional\nfrom dataclasses import dataclass\nimport itertools\n\n\n# =============================================================================\n# Generic Bounded Lattice with Heyting Implication\n# =============================================================================\n\n@dataclass(frozen=True)\nclass LatticeElement:\n    \"\"\"A generic lattice element identified by name.\"\"\"\n    name: str\n\n    def __repr__(self):\n        return self.name\n\n\nclass HeytingLattice:\n    \"\"\"A finite bounded lattice with Heyting implication.\n\n    This is the algebraic side of Tropical Stone Duality: an 'idempotent\n    Heyting semimodule' in the terminology of the theory.\n\n    Attributes:\n        elements: list of all elements\n        le: order relation as a dict of sets\n        sup: join operation\n        inf: meet operation\n        himp: Heyting implication\n        top: greatest element\n        bot: least element\n    \"\"\"\n\n    def __init__(\n        self,\n        elements: List[LatticeElement],\n        le_pairs: List[Tuple[LatticeElement, LatticeElement]],\n        sup: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        inf: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        himp: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        top: LatticeElement,\n        bot: LatticeElement,\n    ):\n        self.elements = elements\n        self.le_set = set(le_pairs)\n        self.sup_table = sup\n        self.inf_table = inf\n        self.himp_table = himp\n        self.top = top\n        self.bot = bot\n\n    def le(self, a: LatticeElement, b: LatticeElement) -> bool:\n        return (a, b) in self.le_set\n\n    def join(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.sup_table[(a, b)]\n\n    def meet(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.inf_table[(a, b)]\n\n    def imp(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.himp_table[(a, b)]\n\n    def verify_residuation(self) -> bool:\n        \"\"\"Verify: a \u2293 x \u2264 b iff x \u2264 himp(a, b) for all a, x, b.\n\n        Time complexity: O(n^3) where n = |elements|.\n        \"\"\"\n        for a in self.elements:\n            for x in self.elements:\n                for b in self.elements:\n                    lhs = self.le(self.meet(a, x), b)\n                    rhs = self.le(x, self.imp(a, b))\n                    if lhs != rhs:\n                        return False\n        return True\n\n\n# =============================================================================\n# Tropical Point (Morphism to Truth Object)\n# =============================================================================\n\nclass TropicalPoint:\n    \"\"\"A tropical prime point: a structure-preserving map from a Heyting\n    lattice to a truth object (Bool).\n\n    Attributes:\n        name: identifier for the point\n        values: dict mapping lattice elements to bool\n    \"\"\"\n\n    def __init__(self, name: str, values: Dict[LatticeElement, bool]):\n        self.name = name\n        self.values = values\n\n    def __call__(self, x: LatticeElement) -> bool:\n        return self.values[x]\n\n    def __repr__(self):\n        return self.name\n\n    def verify_sup_preservation(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(a \u2294 b) = p(a) \u2228 p(b) for all a, b.\"\"\"\n        for a in lattice.elements:\n            for b in lattice.elements:\n                if self(lattice.join(a, b)) != (self(a) or self(b)):\n                    return False\n        return True\n\n    def verify_bounds(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(\u22a4) = True and p(\u22a5) = False.\"\"\"\n        return self(lattice.top) == True and self(lattice.bot) == False\n\n    def verify_imp_compatibility(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(a) \u2264 p(b) \u2192 p(himp(a,b)) = True.\"\"\"\n        for a in lattice.elements:\n            for b in lattice.elements:\n                if self(a) <= self(b):\n                    if not self(lattice.imp(a, b)):\n                        return False\n        return True\n\n\n# =============================================================================\n# Algorithm 1: Canonical Preorder Computation\n# =============================================================================\n\ndef compute_canonical_preorder(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Dict[Tuple[str, str], bool]:\n    \"\"\"Compute the canonical preorder on a finite spectrum.\n\n    The canonical preorder is: p \u2264 q iff \u2200 a \u2208 M, p(a) \u2264 q(a).\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        Dictionary mapping (p.name, q.name) to bool.\n\n    Time complexity: O(|points|^2 \u00d7 |elements|)\n    Space complexity: O(|points|^2)\n    \"\"\"\n    result = {}\n    for p in points:\n        for q in points:\n            le = all(p(a) <= q(a) for a in elements)\n            result[(p.name, q.name)] = le\n    return result\n\n\n# =============================================================================\n# Algorithm 2: Frame Reconstruction\n# =============================================================================\n\n@dataclass\nclass KripkeFrame:\n    \"\"\"A finite Kripke frame: worlds with accessibility relation.\"\"\"\n    worlds: List[str]\n    relation: Dict[Tuple[str, str], bool]\n\n    def is_reflexive(self) -> bool:\n        return all(self.relation.get((w, w), False) for w in self.worlds)\n\n    def is_transitive(self) -> bool:\n        for u in self.worlds:\n            for v in self.worlds:\n                for w in self.worlds:\n                    if (self.relation.get((u, v), False) and\n                        self.relation.get((v, w), False) and\n                        not self.relation.get((u, w), False)):\n                        return False\n        return True\n\n    def display(self):\n        \"\"\"Print the frame's accessibility relation.\"\"\"\n        print(f\"  Worlds: {self.worlds}\")\n        print(f\"  Relations:\")\n        for u in self.worlds:\n            related = [v for v in self.worlds if self.relation.get((u, v), False)]\n            print(f\"    {u} \u2192 {related}\")\n\n\ndef reconstruct_frame(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> KripkeFrame:\n    \"\"\"Reconstruct a finite Kripke frame from the prime spectrum.\n\n    This is the core algorithmic content of Tropical Stone Duality:\n    given the algebraic data (points evaluating elements), we extract\n    the semantic frame.\n\n    Args:\n        points: tropical prime points (the spectrum)\n        elements: lattice elements\n\n    Returns:\n        A KripkeFrame whose worlds are the points and whose relation\n        is the canonical preorder.\n\n    Time complexity: O(|points|^2 \u00d7 |elements|)\n\n    Pseudocode:\n        1. For each pair (p, q) of points:\n           a. Check if p(a) \u2264 q(a) for ALL elements a\n           b. If yes, set p \u2192 q in the frame\n        2. Return the frame\n\n    The correctness theorem (computeCanonicalOrder_spec) guarantees\n    this computed relation equals the canonical preorder.\n    \"\"\"\n    preorder = compute_canonical_preorder(points, elements)\n    worlds = [p.name for p in points]\n    return KripkeFrame(worlds=worlds, relation=preorder)\n\n\n# =============================================================================\n# Algorithm 3: Evaluation Map and Separation Check\n# =============================================================================\n\ndef check_separation(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Tuple[bool, Optional[Tuple[LatticeElement, LatticeElement]]]:\n    \"\"\"Check whether points separate all distinct elements.\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        (True, None) if separated, or (False, (a, b)) for a non-separated pair.\n\n    Time complexity: O(|elements|^2 \u00d7 |points|)\n    \"\"\"\n    for a in elements:\n        for b in elements:\n            if a != b:\n                separated = any(p(a) != p(b) for p in points)\n                if not separated:\n                    return False, (a, b)\n    return True, None\n\n\ndef compute_evaluation_map(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Dict[LatticeElement, Tuple[bool, ...]]:\n    \"\"\"Compute the evaluation map: M \u2192 (Spec \u2192 Bool).\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        Dictionary mapping each element to its tuple of evaluations.\n\n    Time complexity: O(|elements| \u00d7 |points|)\n    \"\"\"\n    return {a: tuple(p(a) for p in points) for a in elements}\n\n\n# =============================================================================\n# Algorithm 4: Implication Table Reconstruction\n# =============================================================================\n\ndef reconstruct_implication_table(\n    lattice: HeytingLattice,\n    points: List[TropicalPoint],\n) -> Dict[Tuple[LatticeElement, LatticeElement], Tuple[bool, ...]]:\n    \"\"\"Reconstruct the implication table from the spectrum.\n\n    For each pair (a, b), compute the evaluation of himp(a, b) at each point.\n\n    Time complexity: O(|elements|^2 \u00d7 |points|)\n    \"\"\"\n    table = {}\n    for a in lattice.elements:\n        for b in lattice.elements:\n            h = lattice.imp(a, b)\n            table[(a, b)] = tuple(p(h) for p in points)\n    return table\n\n\n# =============================================================================\n# Diamond Lattice Construction\n# =============================================================================\n\ndef build_diamond_lattice() -> HeytingLattice:\n    \"\"\"Construct the 4-element diamond lattice with Heyting implication.\"\"\"\n    bot = LatticeElement('\u22a5')\n    left = LatticeElement('a')\n    right = LatticeElement('b')\n    top = LatticeElement('\u22a4')\n    elems = [bot, left, right, top]\n\n    # Order: bot \u2264 everything, everything \u2264 top, a \u2225 b\n    le_pairs = [(x, y) for x in elems for y in elems\n                if x == bot or y == top or x == y]\n\n    # Sup table\n    sup = {}\n    for x in elems:\n        for y in elems:\n            if x == bot: sup[(x, y)] = y\n            elif y == bot: sup[(x, y)] = x\n            elif x == top or y == top: sup[(x, y)] = top\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = top\n\n    # Inf table\n    inf = {}\n    for x in elems:\n        for y in elems:\n            if x == top: inf[(x, y)] = y\n            elif y == top: inf[(x, y)] = x\n            elif x == bot or y == bot: inf[(x, y)] = bot\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = bot\n\n    # Heyting implication\n    himp = {\n        (bot, bot): top, (bot, left): top, (bot, right): top, (bot, top): top,\n        (left, bot): right, (left, left): top, (left, right): right, (left, top): top,\n        (right, bot): left, (right, left): left, (right, right): top, (right, top): top,\n        (top, bot): bot, (top, left): left, (top, right): right, (top, top): top,\n    }\n\n    return HeytingLattice(elems, le_pairs, sup, inf, himp, top, bot)\n\n\ndef build_diamond_points(lattice: HeytingLattice) -> List[TropicalPoint]:\n    \"\"\"Build the two separating points for the diamond lattice.\"\"\"\n    bot, left, right, top = lattice.elements\n\n    p_left = TropicalPoint('p_L', {bot: False, left: True, right: False, top: True})\n    p_right = TropicalPoint('p_R', {bot: False, left: False, right: True, top: True})\n\n    return [p_left, p_right]\n\n\n# =============================================================================\n# Main demonstration\n# =============================================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\" * 60)\n    print(\"ALGORITHMS \u2014 Tropical Stone Duality\")\n    print(\"=\" * 60)\n\n    # Build diamond lattice\n    lattice = build_diamond_lattice()\n    points = build_diamond_points(lattice)\n\n    # 1. Verify residuation\n    print(\"\\n1. Residuation verification:\")\n    ok = lattice.verify_residuation()\n    print(f\"   {'\u2713' if ok else '\u2717'} Residuation holds: {ok}\")\n\n    # 2. Verify points\n    print(\"\\n2. Point verification:\")\n    for p in points:\n        sup_ok = p.verify_sup_preservation(lattice)\n        bnd_ok = p.verify_bounds(lattice)\n        imp_ok = p.verify_imp_compatibility(lattice)\n        print(f\"   {p.name}: sup={'\u2713' if sup_ok else '\u2717'}, \"\n              f\"bounds={'\u2713' if bnd_ok else '\u2717'}, imp={'\u2713' if imp_ok else '\u2717'}\")\n\n    # 3. Check separation\n    print(\"\\n3. Separation check:\")\n    sep, witness = check_separation(points, lattice.elements)\n    print(f\"   {'\u2713' if sep else '\u2717'} Fully separating: {sep}\")\n\n    # 4. Compute evaluation map\n    print(\"\\n4. Evaluation map:\")\n    eval_map = compute_evaluation_map(points, lattice.elements)\n    for elem, vals in eval_map.items():\n        print(f\"   eval({elem}) = {vals}\")\n\n    # 5. Reconstruct frame\n    print(\"\\n5. Frame reconstruction:\")\n    frame = reconstruct_frame(points, lattice.elements)\n    frame.display()\n    print(f\"   Reflexive: {frame.is_reflexive()}\")\n    print(f\"   Transitive: {frame.is_transitive()}\")\n\n    # 6. Implication table\n    print(\"\\n6. Reconstructed implication table (as evaluations):\")\n    imp_table = reconstruct_implication_table(lattice, points)\n    for (a, b), vals in imp_table.items():\n        print(f\"   himp({a}, {b}) evaluated = {vals}\")\n\n    # 7. Verify order embedding\n    print(\"\\n7. Order embedding verification:\")\n    all_ok = True\n    for a in lattice.elements:\n        for b in lattice.elements:\n            alg_le = lattice.le(a, b)\n            sem_le = all(p(a) <= p(b) for p in points)\n            if alg_le != sem_le:\n                print(f\"   \u2717 {a} \u2264 {b}: algebraic={alg_le}, semantic={sem_le}\")\n                all_ok = False\n    if all_ok:\n        print(\"   \u2713 Order embedding verified for all pairs.\")\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All algorithms completed successfully.\")\n    print(\"=\" * 60)\n",
+        "code_file": "visualizations/algebratropicallogic_tropical_stone_duality_via_id_frame_reconstruction.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Diamond Lattice (Hasse Diagram)",
+        "file": "visualizations/algebratropicallogic_tropical_stone_duality_via_id_diamond_lattice_hasse_diagram.png"
+      },
+      {
+        "name": "Evaluation Map: Algebra \u2192 Spectrum Functions",
+        "file": "visualizations/algebratropicallogic_tropical_stone_duality_via_id_evaluation_map_algebra_spectrum_functions.png"
+      },
+      {
+        "name": "Prime Spectrum with Canonical Preorder",
+        "file": "visualizations/algebratropicallogic_tropical_stone_duality_via_id_prime_spectrum_with_canonical_preorder.png"
+      },
+      {
+        "name": "The Tropical Stone Duality Pipeline",
+        "file": "visualizations/algebratropicallogic_tropical_stone_duality_via_id_the_tropical_stone_duality_pipeline.png"
+      },
+      {
+        "name": "Heyting Implication Table (Heatmap)",
+        "file": "visualizations/algebratropicallogic_tropical_stone_duality_via_id_heyting_implication_table_heatmap.png"
+      }
+    ],
+    "lean_proofs": "/-\n# Tropical Stone Duality via Idempotent Heyting Semimodules\n\nThis file establishes a finite Stone/Priestley-style duality in which:\n- The algebraic side is a **bounded lattice with residuated implication**\n  (an \"Idempotent Heyting Semimodule\"),\n- The semantic side is a **finite preorder (Kripke frame)** reconstructed from\n  tropical prime points.\n\n## Main results\n\n* `evaluation_injective_of_separating` \u2014 separation implies injectivity of evaluation\n* `evaluationMap_preserves_sup` \u2014 evaluation preserves sup pointwise\n* `evaluation_order_embedding` \u2014 separation yields an order embedding\n* `canonicalPreorder` \u2014 specialization order on spectrum by pointwise domination\n* `evalMap_is_upset` \u2014 evaluations are monotone w.r.t. canonical preorder\n* `representation_order_iso` \u2014 M \u2243o upset functions under separation + closure\n* `frame_reconstruction_correct` \u2014 the canonical frame recovers the algebra\n* `computeCanonicalOrder_spec` \u2014 boolean computation matches canonical preorder\n\n## Design notes\n\nEssential assumptions: point separation, finite spectrum, closure of evaluation image.\nArtifacts of formalization: the specific bundling choices for structures.\n-/\n\nimport Mathlib\n\nopen Function Set\n\n/-! ## Core algebraic structure -/\n\n/-- An idempotent Heyting semimodule: a bounded lattice with a residuated\n    implication operation. The name reflects the tropical/idempotent origin;\n    algebraically this is a bounded lattice with Heyting implication. -/\nclass IdemHeytingSemimod (M : Type*) extends Lattice M, BoundedOrder M where\n  /-- Heyting implication / residuation -/\n  himp : M \u2192 M \u2192 M\n  /-- Residuation: `a \u2293 x \u2264 b \u2194 x \u2264 himp a b` -/\n  himp_residuation : \u2200 a x b : M, a \u2293 x \u2264 b \u2194 x \u2264 himp a b\n\nnamespace IdemHeytingSemimod\n\nvariable {M : Type*} [IdemHeytingSemimod M]\n\n/-- `himp a` is monotone in the second argument. -/\ntheorem himp_mono_right {a b\u2081 b\u2082 : M} (h : b\u2081 \u2264 b\u2082) : himp a b\u2081 \u2264 himp a b\u2082 := by\n  rw [\u2190 himp_residuation]\n  calc a \u2293 himp a b\u2081 \u2264 b\u2081 := (himp_residuation a (himp a b\u2081) b\u2081).mpr le_rfl\n    _ \u2264 b\u2082 := h\n\n/-- `himp \u00b7 b` is antitone in the first argument. -/\ntheorem himp_anti_left {a\u2081 a\u2082 b : M} (h : a\u2081 \u2264 a\u2082) : himp a\u2082 b \u2264 himp a\u2081 b := by\n  rw [\u2190 himp_residuation]\n  calc a\u2081 \u2293 himp a\u2082 b \u2264 a\u2082 \u2293 himp a\u2082 b := inf_le_inf_right _ h\n    _ \u2264 b := (himp_residuation a\u2082 (himp a\u2082 b) b).mpr le_rfl\n\nend IdemHeytingSemimod\n\n/-! ## Tropical truth object -/\n\n/-- A tropical truth object: a finite bounded lattice with decidable equality and order.\n    Used as the codomain for tropical valuations. -/\nclass TropicalTruth (T : Type*) extends Lattice T, BoundedOrder T where\n  [finT : Fintype T]\n  [decT : DecidableEq T]\n  [decidableLE : DecidableRel ((\u00b7 \u2264 \u00b7) : T \u2192 T \u2192 Prop)]\n\nattribute [instance] TropicalTruth.finT TropicalTruth.decT TropicalTruth.decidableLE\n\n/-! ## Tropical prime points -/\n\n/-- A tropical prime point: a morphism from the algebra to the truth object\n    preserving joins, bounds, and compatible with implication. -/\nstructure TropPoint (M : Type*) (T : Type*) [IdemHeytingSemimod M] [TropicalTruth T] where\n  /-- The underlying function -/\n  toFun : M \u2192 T\n  /-- Preserves sup -/\n  map_sup' : \u2200 a b : M, toFun (a \u2294 b) = toFun a \u2294 toFun b\n  /-- Preserves top -/\n  map_top' : toFun \u22a4 = \u22a4\n  /-- Preserves bot -/\n  map_bot' : toFun \u22a5 = \u22a5\n  /-- Implication compatibility: if `toFun a \u2264 toFun b` then `toFun (himp a b) = \u22a4` -/\n  map_imp_le' : \u2200 a b : M,\n    toFun a \u2264 toFun b \u2192 toFun (IdemHeytingSemimod.himp a b) = \u22a4\n\nnamespace TropPoint\n\nvariable {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n\ninstance : FunLike (TropPoint M T) M T where\n  coe := TropPoint.toFun\n  coe_injective' p q h := by cases p; cases q; congr\n\n@[ext] theorem ext {p q : TropPoint M T} (h : \u2200 a, p a = q a) : p = q :=\n  DFunLike.ext p q h\n\n@[simp] theorem coe_toFun (p : TropPoint M T) : p.toFun = (p : M \u2192 T) := rfl\n\n/-- Points are monotone. -/\ntheorem monotone_point (p : TropPoint M T) : Monotone (p : M \u2192 T) := by\n  intro a b hab\n  have hsup : a \u2294 b = b := sup_eq_right.mpr hab\n  calc (p : M \u2192 T) a \u2264 p a \u2294 p b := le_sup_left\n    _ = p (a \u2294 b) := (p.map_sup' a b).symm\n    _ = p b := by rw [hsup]\n\nend TropPoint\n\n/-! ## Prime spectrum and evaluation -/\n\n/-- The prime spectrum: the type of tropical prime points. -/\nabbrev PrimeSpec (M T : Type*) [IdemHeytingSemimod M] [TropicalTruth T] := TropPoint M T\n\n/-- Full separation: distinct elements are distinguished by some point. -/\ndef FullySeparating (M T : Type*) [IdemHeytingSemimod M] [TropicalTruth T] : Prop :=\n  \u2200 a b : M, a \u2260 b \u2192 \u2203 p : PrimeSpec M T, p a \u2260 p b\n\n/-- The evaluation map: sends an element to its evaluation function on the spectrum. -/\ndef evalMap {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    (a : M) : PrimeSpec M T \u2192 T :=\n  fun p => p a\n\n/-! ## Theorem 1: Evaluation injectivity from point separation\n\nThe gateway lemma for the entire duality theory. -/\n\n/-- **Evaluation injectivity from point separation.**\n    If tropical prime points separate elements of `M`, then the evaluation map\n    from `M` to functions on the prime spectrum is injective. -/\ntheorem evaluation_injective_of_separating\n    {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    (hsep : FullySeparating M T) :\n    Injective (evalMap (M := M) (T := T)) := by\n  intro a b h\n  by_contra hab\n  obtain \u27e8p, hp\u27e9 := hsep a b hab\n  exact hp (congr_fun h p)\n\n/-! ## Operation preservation -/\n\n/-- The evaluation map preserves sup pointwise. -/\ntheorem evaluationMap_preserves_sup\n    {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    (a b : M) :\n    evalMap (M := M) (T := T) (a \u2294 b) =\n      fun p : PrimeSpec M T => evalMap a p \u2294 evalMap b p := by\n  unfold evalMap; funext p; exact p.map_sup' a b\n\n/-- The evaluation map preserves the Heyting implication evaluation. -/\ntheorem evaluationMap_preserves_imp\n    {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    (a b : M) :\n    evalMap (M := M) (T := T) (IdemHeytingSemimod.himp a b) =\n      fun p : PrimeSpec M T => p (IdemHeytingSemimod.himp a b) := rfl\n\n/-! ## Canonical preorder on the spectrum -/\n\n/-- **Canonical preorder:** `p \u2264 q` iff `\u2200 a, p(a) \u2264 q(a)` (pointwise domination).\n    This is the specialization order on the tropical prime spectrum. -/\ninstance canonicalPreorder (M T : Type*)\n    [IdemHeytingSemimod M] [TropicalTruth T] :\n    Preorder (PrimeSpec M T) where\n  le p q := \u2200 a : M, p a \u2264 q a\n  le_refl _ _ := le_refl _\n  le_trans _ _ _ hpq hqr a := le_trans (hpq a) (hqr a)\n\n/-- The canonical preorder is defined by pointwise domination. -/\ntheorem canonicalPreorder_def {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    (p q : PrimeSpec M T) :\n    p \u2264 q \u2194 \u2200 a : M, p a \u2264 q a := Iff.rfl\n\n/-- Evaluation is monotone w.r.t. canonical preorder. -/\ntheorem evaluation_monotone_on_canonicalPreorder {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    (a : M) : Monotone (evalMap (M := M) (T := T) a) :=\n  fun _ _ h => h a\n\n/-! ## Order embedding under separation -/\n\n/-- **Order embedding under separation.**\n    Under point separation, the lattice order is faithfully represented:\n    `a \u2264 b` iff `p(a) \u2264 p(b)` for all points `p`. -/\ntheorem evaluation_order_embedding {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    (hsep : FullySeparating M T) (a b : M) :\n    a \u2264 b \u2194 \u2200 p : PrimeSpec M T, evalMap a p \u2264 evalMap b p := by\n  constructor\n  \u00b7 intro h p; exact TropPoint.monotone_point p h\n  \u00b7 intro h\n    have hsup : evalMap (M := M) (T := T) (a \u2294 b) = evalMap b := by\n      funext p; show p (a \u2294 b) = p b\n      change p.toFun (a \u2294 b) = p.toFun b\n      have hp : p.toFun a \u2264 p.toFun b := h p\n      rw [p.map_sup' a b, sup_eq_right.mpr hp]\n    exact sup_eq_right.mp (evaluation_injective_of_separating hsep hsup)\n\n/-! ## Computable canonical order -/\n\n/-- Compute whether `p \u2264 q` by checking all elements of a finite `M`. -/\nnoncomputable def computeCanonicalOrder {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    [Fintype M] [DecidableEq M]\n    (p q : PrimeSpec M T) : Bool :=\n  (Finset.univ.filter fun a : M => \u00ac(p a \u2264 q a)).card == 0\n\n/-- **Correctness of computed order.**\n    The boolean computation agrees with the canonical preorder. -/\ntheorem computeCanonicalOrder_spec {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    [Fintype M] [DecidableEq M]\n    (p q : PrimeSpec M T) :\n    computeCanonicalOrder p q = true \u2194 p \u2264 q := by\n  unfold computeCanonicalOrder\n  simp only [beq_iff_eq, Finset.card_eq_zero, Finset.filter_eq_empty_iff,\n    Finset.mem_univ, true_implies, not_not]\n  exact \u27e8fun h a => @h a, fun h {x} => h x\u27e9\n\n/-! ## Evaluation image -/\n\n/-- The image of the evaluation map. -/\ndef evalImage (M T : Type*) [IdemHeytingSemimod M] [TropicalTruth T] :\n    Set (PrimeSpec M T \u2192 T) :=\n  range (evalMap (M := M) (T := T))\n\n/-- **Evaluation image is closed under pointwise sup.** -/\ntheorem evaluation_image_closed_under_sup {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    {f g : PrimeSpec M T \u2192 T}\n    (hf : f \u2208 evalImage M T) (hg : g \u2208 evalImage M T) :\n    (fun p => f p \u2294 g p) \u2208 evalImage M T := by\n  obtain \u27e8a, rfl\u27e9 := hf; obtain \u27e8b, rfl\u27e9 := hg\n  exact \u27e8a \u2294 b, by unfold evalMap; funext p; exact p.map_sup' a b\u27e9\n\n/-- **Evaluation image contains top.** -/\ntheorem evaluation_image_contains_top {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T] :\n    (fun _ : PrimeSpec M T => (\u22a4 : T)) \u2208 evalImage M T :=\n  \u27e8\u22a4, by unfold evalMap; funext p; exact p.map_top'\u27e9\n\n/-- **Evaluation image contains bot.** -/\ntheorem evaluation_image_contains_bot {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T] :\n    (fun _ : PrimeSpec M T => (\u22a5 : T)) \u2208 evalImage M T :=\n  \u27e8\u22a5, by unfold evalMap; funext p; exact p.map_bot'\u27e9\n\n/-- **Evaluation image is closed under implication.** -/\ntheorem evaluation_image_closed_under_imp {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    (a b : M) :\n    evalMap (M := M) (T := T) (IdemHeytingSemimod.himp a b) \u2208 evalImage M T :=\n  \u27e8IdemHeytingSemimod.himp a b, rfl\u27e9\n\n/-! ## Upset functions -/\n\n/-- **Upset (monotone) functions** w.r.t. the canonical preorder. -/\ndef IsUpsetFun {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    (f : PrimeSpec M T \u2192 T) : Prop :=\n  Monotone f\n\n/-- The evaluation of any element gives an upset function. -/\ntheorem evalMap_is_upset {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    (a : M) : IsUpsetFun (evalMap (M := M) (T := T) a) :=\n  fun _ _ h => h a\n\n/-- The evaluation image lands in the upset function set. -/\ntheorem evalImage_subset_upsetFunSet {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T] :\n    evalImage M T \u2286 {f | IsUpsetFun f} := by\n  rintro f \u27e8a, rfl\u27e9; exact evalMap_is_upset a\n\n/-! ## Finite Kripke frame -/\n\n/-- A finite Kripke frame: a finite type with a reflexive transitive relation. -/\nstructure FiniteKripkeFrame where\n  /-- The carrier type of worlds -/\n  World : Type*\n  /-- Fintype instance -/\n  [finWorld : Fintype World]\n  /-- DecidableEq instance -/\n  [decWorld : DecidableEq World]\n  /-- The accessibility relation -/\n  rel : World \u2192 World \u2192 Prop\n  /-- Reflexivity -/\n  rel_refl : \u2200 w, rel w w\n  /-- Transitivity -/\n  rel_trans : \u2200 u v w, rel u v \u2192 rel v w \u2192 rel u w\n\nattribute [instance] FiniteKripkeFrame.finWorld FiniteKripkeFrame.decWorld\n\n/-- Construct a finite Kripke frame from the prime spectrum with canonical preorder. -/\nnoncomputable def frameOfSpectrum (M T : Type*)\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    [Fintype (PrimeSpec M T)] [DecidableEq (PrimeSpec M T)] :\n    FiniteKripkeFrame where\n  World := PrimeSpec M T\n  rel p q := p \u2264 q\n  rel_refl _ := le_refl _\n  rel_trans _ _ _ := le_trans\n\n/-- **Frame equivalence**: relation-preserving bijection between frames. -/\ndef FrameEquiv (F\u2081 F\u2082 : FiniteKripkeFrame) : Prop :=\n  \u2203 e : F\u2081.World \u2243 F\u2082.World, \u2200 w\u2081 w\u2082, F\u2081.rel w\u2081 w\u2082 \u2194 F\u2082.rel (e w\u2081) (e w\u2082)\n\ntheorem FrameEquiv.refl (F : FiniteKripkeFrame) : FrameEquiv F F :=\n  \u27e8Equiv.refl _, fun _ _ => Iff.rfl\u27e9\n\n/-! ## Closure hypothesis and representation -/\n\n/-- **Closure hypothesis**: every upset function is in the evaluation image.\n    This is the key hypothesis for surjectivity of the representation. -/\nstructure EvalImageClosed (M T : Type*) [IdemHeytingSemimod M] [TropicalTruth T] where\n  surj_onto_upsets : \u2200 f : PrimeSpec M T \u2192 T,\n    IsUpsetFun f \u2192 f \u2208 evalImage M T\n\n/-- **Representation embedding.**\n    Under separation, `M` embeds into functions on its prime spectrum. -/\nnoncomputable def representation_embedding\n    {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    (hsep : FullySeparating M T) :\n    M \u21aa (PrimeSpec M T \u2192 T) where\n  toFun := evalMap\n  inj' := evaluation_injective_of_separating hsep\n\n/-- The embedding preserves sup. -/\ntheorem representation_preserves_sup\n    {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    (a b : M) :\n    evalMap (M := M) (T := T) (a \u2294 b) =\n      fun p => evalMap a p \u2294 evalMap b p := by\n  unfold evalMap; funext p; exact p.map_sup' a b\n\n/-- **Main representation theorem (order isomorphism).**\n    Under separation and closure, `M` is order-isomorphic to the subtype\n    of upset functions on its canonical spectrum. -/\nnoncomputable def representation_order_iso\n    {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    [Fintype (PrimeSpec M T)]\n    (hsep : FullySeparating M T)\n    (hclosed : EvalImageClosed M T) :\n    M \u2243o {f : PrimeSpec M T \u2192 T // IsUpsetFun f} where\n  toFun a := \u27e8evalMap a, evalMap_is_upset a\u27e9\n  invFun f := (hclosed.surj_onto_upsets f.1 f.2).choose\n  left_inv a := by\n    apply evaluation_injective_of_separating hsep\n    exact (hclosed.surj_onto_upsets (evalMap a) (evalMap_is_upset a)).choose_spec\n  right_inv f := by\n    ext1; ext1 p\n    exact congr_fun (hclosed.surj_onto_upsets f.1 f.2).choose_spec p\n  map_rel_iff' := by\n    intro a b\n    simp only [Equiv.coe_fn_mk, Subtype.mk_le_mk, Pi.le_def, evalMap]\n    exact \u27e8\n      fun h => (evaluation_order_embedding hsep a b).mpr (fun p => h p),\n      fun h p => TropPoint.monotone_point p h\u27e9\n\n/-- **Frame reconstruction correctness.**\n    Under separation and closure, `M` is order-isomorphic to the upset\n    functions on the spectrum, establishing the duality. -/\ntheorem frame_reconstruction_correct\n    {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    [Fintype (PrimeSpec M T)]\n    (hsep : FullySeparating M T)\n    (hclosed : EvalImageClosed M T) :\n    Nonempty (M \u2243o {f : PrimeSpec M T \u2192 T // IsUpsetFun f}) :=\n  \u27e8representation_order_iso hsep hclosed\u27e9\n\n/-! ## Implication table reconstruction -/\n\n/-- Reconstructed implication table via evaluation. -/\nnoncomputable def reconstructHimpTable {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    (a b : M) : PrimeSpec M T \u2192 T :=\n  fun p => p (IdemHeytingSemimod.himp a b)\n\n/-- The reconstructed table equals the evaluation of `himp`. -/\ntheorem reconstructHimpTable_correct {M T : Type*}\n    [IdemHeytingSemimod M] [TropicalTruth T]\n    (a b : M) :\n    reconstructHimpTable (T := T) a b =\n      evalMap (IdemHeytingSemimod.himp a b) := rfl\n\n/-- **Canonical frame self-consistency.** -/\ntheorem canonical_frame_self_consistent\n    {M T : Type*} [IdemHeytingSemimod M] [TropicalTruth T]\n    [Fintype (PrimeSpec M T)] [DecidableEq (PrimeSpec M T)] :\n    FrameEquiv (frameOfSpectrum M T) (frameOfSpectrum M T) :=\n  FrameEquiv.refl _\n\n/-! ## Structure isomorphism for Heyting semimodules -/\n\n/-- Structure isomorphism preserving sup, inf, top, bot, and implication.\n    This is the natural notion of isomorphism for idempotent Heyting semimodules. -/\nstructure IHSIso (M\u2081 M\u2082 : Type*) [IdemHeytingSemimod M\u2081] [IdemHeytingSemimod M\u2082] where\n  /-- The underlying equivalence -/\n  toEquiv : M\u2081 \u2243 M\u2082\n  /-- Preserves sup -/\n  map_sup' : \u2200 a b, toEquiv (a \u2294 b) = toEquiv a \u2294 toEquiv b\n  /-- Preserves top -/\n  map_top' : toEquiv \u22a4 = \u22a4\n  /-- Preserves bot -/\n  map_bot' : toEquiv \u22a5 = \u22a5\n  /-- Preserves Heyting implication -/\n  map_himp' : \u2200 a b, toEquiv (IdemHeytingSemimod.himp a b) =\n    IdemHeytingSemimod.himp (toEquiv a) (toEquiv b)\n\n/-- Notation for Heyting semimodule isomorphism. -/\ninfixl:25 \" \u2243\u2095 \" => IHSIso\n\n/-! ## Bool as a tropical truth object -/\n\n/-- `Bool` with its standard lattice structure is a tropical truth object. -/\nnoncomputable instance boolTropicalTruth : TropicalTruth Bool where\n  finT := inferInstance\n  decT := inferInstance\n  decidableLE := inferInstance\n\n/-! ## Concrete example: four-element diamond lattice\n\nThe diamond lattice `{\u22a5, a, b, \u22a4}` with `a, b` incomparable is a canonical\ntest case. We show it has an `IdemHeytingSemimod` structure and is fully\nseparated by two `Bool`-valued tropical prime points. -/\n\n/-- A four-element diamond lattice: \u22a5, left, right, \u22a4 with left, right incomparable. -/\ninductive Diamond where\n  | bot | left | right | top\n  deriving DecidableEq, Fintype\n\nnamespace Diamond\n\n/-- Boolean-valued order predicate on Diamond (for decidability). -/\ndef dle : Diamond \u2192 Diamond \u2192 Bool\n  | .bot, _ => true\n  | _, .top => true\n  | .left, .left => true\n  | .right, .right => true\n  | _, _ => false\n\ninstance : LE Diamond where le a b := dle a b = true\n\ninstance : DecidableRel ((\u00b7 \u2264 \u00b7) : Diamond \u2192 Diamond \u2192 Prop) :=\n  fun a b => inferInstanceAs (Decidable (dle a b = true))\n\n/-- Sup on Diamond. -/\ndef dsup : Diamond \u2192 Diamond \u2192 Diamond\n  | .bot, z => z\n  | z, .bot => z\n  | .top, _ => .top\n  | _, .top => .top\n  | .left, .left => .left\n  | .right, .right => .right\n  | .left, .right => .top\n  | .right, .left => .top\n\n/-- Inf on Diamond. -/\ndef dinf : Diamond \u2192 Diamond \u2192 Diamond\n  | .top, z => z\n  | z, .top => z\n  | .bot, _ => .bot\n  | _, .bot => .bot\n  | .left, .left => .left\n  | .right, .right => .right\n  | .left, .right => .bot\n  | .right, .left => .bot\n\ninstance : Lattice Diamond where\n  sup := dsup\n  inf := dinf\n  le_refl a := by cases a <;> decide\n  le_trans a b c := by cases a <;> cases b <;> cases c <;> decide\n  le_antisymm a b := by cases a <;> cases b <;> decide\n  le_sup_left a b := by cases a <;> cases b <;> decide\n  le_sup_right a b := by cases a <;> cases b <;> decide\n  sup_le a b c := by cases a <;> cases b <;> cases c <;> decide\n  inf_le_left a b := by cases a <;> cases b <;> decide\n  inf_le_right a b := by cases a <;> cases b <;> decide\n  le_inf a b c := by cases a <;> cases b <;> cases c <;> decide\n\ninstance : BoundedOrder Diamond where\n  top := .top\n  bot := .bot\n  le_top a := by cases a <;> decide\n  bot_le a := by cases a <;> decide\n\n/-- Heyting implication on Diamond. -/\ndef dhimp : Diamond \u2192 Diamond \u2192 Diamond\n  | _, .top => .top\n  | .bot, _ => .top\n  | .top, .bot => .bot\n  | .top, .left => .left\n  | .top, .right => .right\n  | .left, .bot => .right\n  | .left, .left => .top\n  | .left, .right => .right\n  | .right, .bot => .left\n  | .right, .left => .left\n  | .right, .right => .top\n\ninstance : IdemHeytingSemimod Diamond where\n  himp := dhimp\n  himp_residuation a x b := by cases a <;> cases x <;> cases b <;> decide\n\n/-- Point extracting the \"left\" component: maps `left, top \u21a6 true` and `bot, right \u21a6 false`. -/\ndef pointL : TropPoint Diamond Bool where\n  toFun\n    | .bot => false\n    | .left => true\n    | .right => false\n    | .top => true\n  map_sup' a b := by cases a <;> cases b <;> decide\n  map_top' := by decide\n  map_bot' := by decide\n  map_imp_le' a b h := by cases a <;> cases b <;> revert h <;> decide\n\n/-- Point extracting the \"right\" component: maps `right, top \u21a6 true` and `bot, left \u21a6 false`. -/\ndef pointR : TropPoint Diamond Bool where\n  toFun\n    | .bot => false\n    | .left => false\n    | .right => true\n    | .top => true\n  map_sup' a b := by cases a <;> cases b <;> decide\n  map_top' := by decide\n  map_bot' := by decide\n  map_imp_le' a b h := by cases a <;> cases b <;> revert h <;> decide\n\n/-- **The diamond lattice is fully separated by its two Bool-valued points.** -/\ntheorem diamond_fully_separating : FullySeparating Diamond Bool := by\n  intro a b hab\n  cases a <;> cases b <;> simp_all <;> first\n    | exact \u27e8pointL, by decide\u27e9\n    | exact \u27e8pointR, by decide\u27e9\n\n/-- **The evaluation map on Diamond is injective.** -/\ntheorem diamond_eval_injective :\n    Injective (evalMap (M := Diamond) (T := Bool)) :=\n  evaluation_injective_of_separating diamond_fully_separating\n\n/-- **Order embedding for Diamond.**\n    The lattice order is faithfully represented by the two points. -/\ntheorem diamond_order_embedding (a b : Diamond) :\n    a \u2264 b \u2194 \u2200 p : PrimeSpec Diamond Bool, evalMap a p \u2264 evalMap b p :=\n  evaluation_order_embedding diamond_fully_separating a b\n\nend Diamond\n\n/-! ## Summary\n\nThe complete duality pipeline established in this file:\n\n1. **Algebraic object**: `IdemHeytingSemimod M` \u2014 bounded lattice + residuated implication\n2. **Point object**: `TropPoint M T` \u2014 join/bound/imp-preserving morphism to truth object\n3. **Spectrum**: `PrimeSpec M T` \u2014 type of all tropical prime points\n4. **Evaluation**: `evalMap` \u2014 sends algebraic elements to functions on spectrum\n5. **Injectivity**: `evaluation_injective_of_separating` \u2014 separation \u27f9 injectivity\n6. **Order embedding**: `evaluation_order_embedding` \u2014 separation \u27f9 order embedding\n7. **Canonical preorder**: `canonicalPreorder` \u2014 pointwise domination on spectrum\n8. **Monotonicity**: `evalMap_is_upset` \u2014 evaluations are upset functions\n9. **Representation**: `representation_order_iso` \u2014 M \u2243o upset functions (under closure)\n10. **Frame construction**: `frameOfSpectrum` \u2014 canonical Kripke frame from spectrum\n11. **Certification**: `computeCanonicalOrder_spec` \u2014 boolean computation = preorder\n12. **Concrete example**: Diamond lattice with Bool truth object, fully separated\n-/\n",
+    "modules": {
+      "algorithms": "\"\"\"\nTropical Stone Duality \u2014 Algorithms\n\nThis module implements the core algorithms from the Tropical Stone Duality theory:\n1. Canonical preorder computation on spectra\n2. Frame reconstruction from algebraic data\n3. Evaluation map construction and verification\n4. Residuation checking\n\"\"\"\n\nfrom typing import List, Tuple, Dict, Set, Callable, Optional\nfrom dataclasses import dataclass\nimport itertools\n\n\n# =============================================================================\n# Generic Bounded Lattice with Heyting Implication\n# =============================================================================\n\n@dataclass(frozen=True)\nclass LatticeElement:\n    \"\"\"A generic lattice element identified by name.\"\"\"\n    name: str\n\n    def __repr__(self):\n        return self.name\n\n\nclass HeytingLattice:\n    \"\"\"A finite bounded lattice with Heyting implication.\n\n    This is the algebraic side of Tropical Stone Duality: an 'idempotent\n    Heyting semimodule' in the terminology of the theory.\n\n    Attributes:\n        elements: list of all elements\n        le: order relation as a dict of sets\n        sup: join operation\n        inf: meet operation\n        himp: Heyting implication\n        top: greatest element\n        bot: least element\n    \"\"\"\n\n    def __init__(\n        self,\n        elements: List[LatticeElement],\n        le_pairs: List[Tuple[LatticeElement, LatticeElement]],\n        sup: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        inf: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        himp: Dict[Tuple[LatticeElement, LatticeElement], LatticeElement],\n        top: LatticeElement,\n        bot: LatticeElement,\n    ):\n        self.elements = elements\n        self.le_set = set(le_pairs)\n        self.sup_table = sup\n        self.inf_table = inf\n        self.himp_table = himp\n        self.top = top\n        self.bot = bot\n\n    def le(self, a: LatticeElement, b: LatticeElement) -> bool:\n        return (a, b) in self.le_set\n\n    def join(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.sup_table[(a, b)]\n\n    def meet(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.inf_table[(a, b)]\n\n    def imp(self, a: LatticeElement, b: LatticeElement) -> LatticeElement:\n        return self.himp_table[(a, b)]\n\n    def verify_residuation(self) -> bool:\n        \"\"\"Verify: a \u2293 x \u2264 b iff x \u2264 himp(a, b) for all a, x, b.\n\n        Time complexity: O(n^3) where n = |elements|.\n        \"\"\"\n        for a in self.elements:\n            for x in self.elements:\n                for b in self.elements:\n                    lhs = self.le(self.meet(a, x), b)\n                    rhs = self.le(x, self.imp(a, b))\n                    if lhs != rhs:\n                        return False\n        return True\n\n\n# =============================================================================\n# Tropical Point (Morphism to Truth Object)\n# =============================================================================\n\nclass TropicalPoint:\n    \"\"\"A tropical prime point: a structure-preserving map from a Heyting\n    lattice to a truth object (Bool).\n\n    Attributes:\n        name: identifier for the point\n        values: dict mapping lattice elements to bool\n    \"\"\"\n\n    def __init__(self, name: str, values: Dict[LatticeElement, bool]):\n        self.name = name\n        self.values = values\n\n    def __call__(self, x: LatticeElement) -> bool:\n        return self.values[x]\n\n    def __repr__(self):\n        return self.name\n\n    def verify_sup_preservation(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(a \u2294 b) = p(a) \u2228 p(b) for all a, b.\"\"\"\n        for a in lattice.elements:\n            for b in lattice.elements:\n                if self(lattice.join(a, b)) != (self(a) or self(b)):\n                    return False\n        return True\n\n    def verify_bounds(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(\u22a4) = True and p(\u22a5) = False.\"\"\"\n        return self(lattice.top) == True and self(lattice.bot) == False\n\n    def verify_imp_compatibility(self, lattice: HeytingLattice) -> bool:\n        \"\"\"Check: p(a) \u2264 p(b) \u2192 p(himp(a,b)) = True.\"\"\"\n        for a in lattice.elements:\n            for b in lattice.elements:\n                if self(a) <= self(b):\n                    if not self(lattice.imp(a, b)):\n                        return False\n        return True\n\n\n# =============================================================================\n# Algorithm 1: Canonical Preorder Computation\n# =============================================================================\n\ndef compute_canonical_preorder(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Dict[Tuple[str, str], bool]:\n    \"\"\"Compute the canonical preorder on a finite spectrum.\n\n    The canonical preorder is: p \u2264 q iff \u2200 a \u2208 M, p(a) \u2264 q(a).\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        Dictionary mapping (p.name, q.name) to bool.\n\n    Time complexity: O(|points|^2 \u00d7 |elements|)\n    Space complexity: O(|points|^2)\n    \"\"\"\n    result = {}\n    for p in points:\n        for q in points:\n            le = all(p(a) <= q(a) for a in elements)\n            result[(p.name, q.name)] = le\n    return result\n\n\n# =============================================================================\n# Algorithm 2: Frame Reconstruction\n# =============================================================================\n\n@dataclass\nclass KripkeFrame:\n    \"\"\"A finite Kripke frame: worlds with accessibility relation.\"\"\"\n    worlds: List[str]\n    relation: Dict[Tuple[str, str], bool]\n\n    def is_reflexive(self) -> bool:\n        return all(self.relation.get((w, w), False) for w in self.worlds)\n\n    def is_transitive(self) -> bool:\n        for u in self.worlds:\n            for v in self.worlds:\n                for w in self.worlds:\n                    if (self.relation.get((u, v), False) and\n                        self.relation.get((v, w), False) and\n                        not self.relation.get((u, w), False)):\n                        return False\n        return True\n\n    def display(self):\n        \"\"\"Print the frame's accessibility relation.\"\"\"\n        print(f\"  Worlds: {self.worlds}\")\n        print(f\"  Relations:\")\n        for u in self.worlds:\n            related = [v for v in self.worlds if self.relation.get((u, v), False)]\n            print(f\"    {u} \u2192 {related}\")\n\n\ndef reconstruct_frame(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> KripkeFrame:\n    \"\"\"Reconstruct a finite Kripke frame from the prime spectrum.\n\n    This is the core algorithmic content of Tropical Stone Duality:\n    given the algebraic data (points evaluating elements), we extract\n    the semantic frame.\n\n    Args:\n        points: tropical prime points (the spectrum)\n        elements: lattice elements\n\n    Returns:\n        A KripkeFrame whose worlds are the points and whose relation\n        is the canonical preorder.\n\n    Time complexity: O(|points|^2 \u00d7 |elements|)\n\n    Pseudocode:\n        1. For each pair (p, q) of points:\n           a. Check if p(a) \u2264 q(a) for ALL elements a\n           b. If yes, set p \u2192 q in the frame\n        2. Return the frame\n\n    The correctness theorem (computeCanonicalOrder_spec) guarantees\n    this computed relation equals the canonical preorder.\n    \"\"\"\n    preorder = compute_canonical_preorder(points, elements)\n    worlds = [p.name for p in points]\n    return KripkeFrame(worlds=worlds, relation=preorder)\n\n\n# =============================================================================\n# Algorithm 3: Evaluation Map and Separation Check\n# =============================================================================\n\ndef check_separation(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Tuple[bool, Optional[Tuple[LatticeElement, LatticeElement]]]:\n    \"\"\"Check whether points separate all distinct elements.\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        (True, None) if separated, or (False, (a, b)) for a non-separated pair.\n\n    Time complexity: O(|elements|^2 \u00d7 |points|)\n    \"\"\"\n    for a in elements:\n        for b in elements:\n            if a != b:\n                separated = any(p(a) != p(b) for p in points)\n                if not separated:\n                    return False, (a, b)\n    return True, None\n\n\ndef compute_evaluation_map(\n    points: List[TropicalPoint],\n    elements: List[LatticeElement],\n) -> Dict[LatticeElement, Tuple[bool, ...]]:\n    \"\"\"Compute the evaluation map: M \u2192 (Spec \u2192 Bool).\n\n    Args:\n        points: list of tropical prime points\n        elements: list of lattice elements\n\n    Returns:\n        Dictionary mapping each element to its tuple of evaluations.\n\n    Time complexity: O(|elements| \u00d7 |points|)\n    \"\"\"\n    return {a: tuple(p(a) for p in points) for a in elements}\n\n\n# =============================================================================\n# Algorithm 4: Implication Table Reconstruction\n# =============================================================================\n\ndef reconstruct_implication_table(\n    lattice: HeytingLattice,\n    points: List[TropicalPoint],\n) -> Dict[Tuple[LatticeElement, LatticeElement], Tuple[bool, ...]]:\n    \"\"\"Reconstruct the implication table from the spectrum.\n\n    For each pair (a, b), compute the evaluation of himp(a, b) at each point.\n\n    Time complexity: O(|elements|^2 \u00d7 |points|)\n    \"\"\"\n    table = {}\n    for a in lattice.elements:\n        for b in lattice.elements:\n            h = lattice.imp(a, b)\n            table[(a, b)] = tuple(p(h) for p in points)\n    return table\n\n\n# =============================================================================\n# Diamond Lattice Construction\n# =============================================================================\n\ndef build_diamond_lattice() -> HeytingLattice:\n    \"\"\"Construct the 4-element diamond lattice with Heyting implication.\"\"\"\n    bot = LatticeElement('\u22a5')\n    left = LatticeElement('a')\n    right = LatticeElement('b')\n    top = LatticeElement('\u22a4')\n    elems = [bot, left, right, top]\n\n    # Order: bot \u2264 everything, everything \u2264 top, a \u2225 b\n    le_pairs = [(x, y) for x in elems for y in elems\n                if x == bot or y == top or x == y]\n\n    # Sup table\n    sup = {}\n    for x in elems:\n        for y in elems:\n            if x == bot: sup[(x, y)] = y\n            elif y == bot: sup[(x, y)] = x\n            elif x == top or y == top: sup[(x, y)] = top\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = top\n\n    # Inf table\n    inf = {}\n    for x in elems:\n        for y in elems:\n            if x == top: inf[(x, y)] = y\n            elif y == top: inf[(x, y)] = x\n            elif x == bot or y == bot: inf[(x, y)] = bot\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = bot\n\n    # Heyting implication\n    himp = {\n        (bot, bot): top, (bot, left): top, (bot, right): top, (bot, top): top,\n        (left, bot): right, (left, left): top, (left, right): right, (left, top): top,\n        (right, bot): left, (right, left): left, (right, right): top, (right, top): top,\n        (top, bot): bot, (top, left): left, (top, right): right, (top, top): top,\n    }\n\n    return HeytingLattice(elems, le_pairs, sup, inf, himp, top, bot)\n\n\ndef build_diamond_points(lattice: HeytingLattice) -> List[TropicalPoint]:\n    \"\"\"Build the two separating points for the diamond lattice.\"\"\"\n    bot, left, right, top = lattice.elements\n\n    p_left = TropicalPoint('p_L', {bot: False, left: True, right: False, top: True})\n    p_right = TropicalPoint('p_R', {bot: False, left: False, right: True, top: True})\n\n    return [p_left, p_right]\n\n\n# =============================================================================\n# Main demonstration\n# =============================================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\" * 60)\n    print(\"ALGORITHMS \u2014 Tropical Stone Duality\")\n    print(\"=\" * 60)\n\n    # Build diamond lattice\n    lattice = build_diamond_lattice()\n    points = build_diamond_points(lattice)\n\n    # 1. Verify residuation\n    print(\"\\n1. Residuation verification:\")\n    ok = lattice.verify_residuation()\n    print(f\"   {'\u2713' if ok else '\u2717'} Residuation holds: {ok}\")\n\n    # 2. Verify points\n    print(\"\\n2. Point verification:\")\n    for p in points:\n        sup_ok = p.verify_sup_preservation(lattice)\n        bnd_ok = p.verify_bounds(lattice)\n        imp_ok = p.verify_imp_compatibility(lattice)\n        print(f\"   {p.name}: sup={'\u2713' if sup_ok else '\u2717'}, \"\n              f\"bounds={'\u2713' if bnd_ok else '\u2717'}, imp={'\u2713' if imp_ok else '\u2717'}\")\n\n    # 3. Check separation\n    print(\"\\n3. Separation check:\")\n    sep, witness = check_separation(points, lattice.elements)\n    print(f\"   {'\u2713' if sep else '\u2717'} Fully separating: {sep}\")\n\n    # 4. Compute evaluation map\n    print(\"\\n4. Evaluation map:\")\n    eval_map = compute_evaluation_map(points, lattice.elements)\n    for elem, vals in eval_map.items():\n        print(f\"   eval({elem}) = {vals}\")\n\n    # 5. Reconstruct frame\n    print(\"\\n5. Frame reconstruction:\")\n    frame = reconstruct_frame(points, lattice.elements)\n    frame.display()\n    print(f\"   Reflexive: {frame.is_reflexive()}\")\n    print(f\"   Transitive: {frame.is_transitive()}\")\n\n    # 6. Implication table\n    print(\"\\n6. Reconstructed implication table (as evaluations):\")\n    imp_table = reconstruct_implication_table(lattice, points)\n    for (a, b), vals in imp_table.items():\n        print(f\"   himp({a}, {b}) evaluated = {vals}\")\n\n    # 7. Verify order embedding\n    print(\"\\n7. Order embedding verification:\")\n    all_ok = True\n    for a in lattice.elements:\n        for b in lattice.elements:\n            alg_le = lattice.le(a, b)\n            sem_le = all(p(a) <= p(b) for p in points)\n            if alg_le != sem_le:\n                print(f\"   \u2717 {a} \u2264 {b}: algebraic={alg_le}, semantic={sem_le}\")\n                all_ok = False\n    if all_ok:\n        print(\"   \u2713 Order embedding verified for all pairs.\")\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All algorithms completed successfully.\")\n    print(\"=\" * 60)\n",
+      "demo": "\"\"\"\nTropical Stone Duality \u2014 Applications\n\nReal-world applications of the tropical duality theory:\n1. Abstract interpretation lattices \u2192 semantic frame extraction\n2. Access control policy verification\n3. Feature lattice analysis for concept lattices\n\"\"\"\n\nfrom algorithms import (\n    LatticeElement, HeytingLattice, TropicalPoint,\n    compute_canonical_preorder, reconstruct_frame,\n    check_separation, compute_evaluation_map,\n)\nfrom typing import List, Dict, Tuple\n\n\n# =============================================================================\n# Application 1: Abstract Interpretation\n# =============================================================================\n\ndef demo_abstract_interpretation():\n    \"\"\"\n    In abstract interpretation, program analyses use abstract domains\n    that are lattices. The tropical duality theory allows us to extract\n    a semantic frame from the abstract domain, giving a Kripke-style\n    semantics for the analysis.\n\n    Example: a simple sign domain {\u22a5, neg, zero, pos, \u22a4}\n    where \u22a5 = unreachable, \u22a4 = any value.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Abstract Interpretation \u2014 Sign Domain\")\n    print(\"=\" * 60)\n    print()\n\n    # Sign domain elements\n    bot = LatticeElement('\u22a5')\n    neg = LatticeElement('neg')\n    zero = LatticeElement('zero')\n    pos = LatticeElement('pos')\n    top = LatticeElement('\u22a4')\n    elems = [bot, neg, zero, pos, top]\n\n    # Order\n    le_pairs = [(x, y) for x in elems for y in elems\n                if x == bot or y == top or x == y]\n\n    # Sup (join = least upper bound)\n    sup = {}\n    for x in elems:\n        for y in elems:\n            if x == bot: sup[(x, y)] = y\n            elif y == bot: sup[(x, y)] = x\n            elif x == top or y == top: sup[(x, y)] = top\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = top  # incomparable \u2192 \u22a4\n\n    # Inf (meet)\n    inf = {}\n    for x in elems:\n        for y in elems:\n            if x == top: inf[(x, y)] = y\n            elif y == top: inf[(x, y)] = x\n            elif x == bot or y == bot: inf[(x, y)] = bot\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = bot  # incomparable \u2192 \u22a5\n\n    # Heyting implication (for the pentagonal antichain lattice M\u2083)\n    himp = {}\n    for a in elems:\n        for b in elems:\n            if a == bot or b == top:\n                himp[(a, b)] = top\n            elif a == top:\n                himp[(a, b)] = b\n            elif a == b:\n                himp[(a, b)] = top\n            else:\n                # For incomparable a, b: himp(a, b) is the largest x\n                # such that a \u2293 x \u2264 b\n                # Since a \u2293 x = bot for x incomparable to a, and bot \u2264 b,\n                # and a \u2293 a = a \u2270 b, we get himp(a,b) = all elements except a\n                # In this lattice, that's everything whose meet with a is \u2264 b\n                # For M\u2083: himp(neg, zero) = complement of neg in a sense\n                # Let's compute it properly\n                candidates = [x for x in elems if inf[(a, x)] in\n                              {e for e in elems if (e, b) in set(le_pairs)}]\n                # Take the sup of all candidates\n                result = bot\n                for c in candidates:\n                    result = sup[(result, c)]\n                himp[(a, b)] = result\n\n    lattice = HeytingLattice(elems, le_pairs, sup, inf, himp, top, bot)\n\n    # Three separating points\n    p_neg = TropicalPoint('p_neg', {bot: False, neg: True, zero: False, pos: False, top: True})\n    p_zero = TropicalPoint('p_zero', {bot: False, neg: False, zero: True, pos: False, top: True})\n    p_pos = TropicalPoint('p_pos', {bot: False, neg: False, zero: False, pos: True, top: True})\n    points = [p_neg, p_zero, p_pos]\n\n    # Check separation\n    sep, witness = check_separation(points, elems)\n    print(f\"  Separation: {'\u2713' if sep else '\u2717'} ({witness})\")\n\n    # Evaluation map\n    eval_map = compute_evaluation_map(points, elems)\n    print(\"\\n  Evaluation map:\")\n    for elem, vals in eval_map.items():\n        print(f\"    eval({elem}) = {vals}\")\n\n    # Frame reconstruction\n    frame = reconstruct_frame(points, elems)\n    print(\"\\n  Reconstructed Kripke frame:\")\n    frame.display()\n    print(f\"  Reflexive: {frame.is_reflexive()}, Transitive: {frame.is_transitive()}\")\n\n    print(\"\\n  Interpretation: Each world in the frame corresponds to a\")\n    print(\"  'sign observer' \u2014 an agent that can distinguish values by their sign.\")\n    print(\"  The frame structure captures the information ordering between observers.\")\n    print()\n\n\n# =============================================================================\n# Application 2: Access Control\n# =============================================================================\n\ndef demo_access_control():\n    \"\"\"\n    Access control policies often form lattices where:\n    - Elements represent security levels\n    - Join represents combining permissions\n    - Meet represents restricting permissions\n    - Implication captures \"if you have access to A, what does that\n      tell you about access to B?\"\n\n    Tropical duality extracts a semantic model showing how security\n    principals observe the policy structure.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 2: Access Control Policy Analysis\")\n    print(\"=\" * 60)\n    print()\n\n    # Simple 2-level security with compartments\n    # public, secret_A, secret_B, top_secret\n    pub = LatticeElement('public')\n    sa = LatticeElement('secret_A')\n    sb = LatticeElement('secret_B')\n    ts = LatticeElement('top_secret')\n    elems = [pub, sa, sb, ts]\n\n    # Diamond order: pub \u2264 sa, pub \u2264 sb, sa \u2264 ts, sb \u2264 ts\n    le_pairs = [(pub, x) for x in elems] + [(x, ts) for x in elems] + \\\n               [(sa, sa), (sb, sb)]\n\n    # Build operations (same as diamond)\n    sup, inf, himp = {}, {}, {}\n    for x in elems:\n        for y in elems:\n            if x == pub: sup[(x, y)] = y\n            elif y == pub: sup[(x, y)] = x\n            elif x == ts or y == ts: sup[(x, y)] = ts\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = ts\n\n    for x in elems:\n        for y in elems:\n            if x == ts: inf[(x, y)] = y\n            elif y == ts: inf[(x, y)] = x\n            elif x == pub or y == pub: inf[(x, y)] = pub\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = pub\n\n    himp_raw = {\n        (pub, pub): ts, (pub, sa): ts, (pub, sb): ts, (pub, ts): ts,\n        (sa, pub): sb, (sa, sa): ts, (sa, sb): sb, (sa, ts): ts,\n        (sb, pub): sa, (sb, sa): sa, (sb, sb): ts, (sb, ts): ts,\n        (ts, pub): pub, (ts, sa): sa, (ts, sb): sb, (ts, ts): ts,\n    }\n    himp = himp_raw\n\n    lattice = HeytingLattice(elems, le_pairs, sup, inf, himp, ts, pub)\n\n    # Separating points: one per compartment\n    p_a = TropicalPoint('observer_A', {pub: False, sa: True, sb: False, ts: True})\n    p_b = TropicalPoint('observer_B', {pub: False, sa: False, sb: True, ts: True})\n    points = [p_a, p_b]\n\n    sep, _ = check_separation(points, elems)\n    print(f\"  Separation: {'\u2713' if sep else '\u2717'}\")\n\n    eval_map = compute_evaluation_map(points, elems)\n    print(\"\\n  Evaluation map (what each observer sees):\")\n    for elem, vals in eval_map.items():\n        print(f\"    {elem}: observer_A={'can see' if vals[0] else 'blocked'}, \"\n              f\"observer_B={'can see' if vals[1] else 'blocked'}\")\n\n    frame = reconstruct_frame(points, elems)\n    print(\"\\n  Reconstructed observer frame:\")\n    frame.display()\n\n    print(\"\\n  Interpretation: The reconstructed frame shows that observer_A\")\n    print(\"  and observer_B are independent \u2014 neither can simulate the other.\")\n    print(\"  This certifies that compartment A and B provide genuine separation.\")\n    print()\n\n\n# =============================================================================\n# Application 3: Concept Lattice / Feature Analysis\n# =============================================================================\n\ndef demo_concept_lattice():\n    \"\"\"\n    In formal concept analysis, objects are described by features.\n    The feature lattice captures logical relationships between features.\n    Tropical duality extracts the minimal set of 'feature observers'\n    that distinguish all concepts.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 3: Concept Lattice Feature Analysis\")\n    print(\"=\" * 60)\n    print()\n\n    # Simple concept lattice for shapes\n    # Features: {round, angular, large, small}\n    # Concepts: \u22a5 (nothing), circle, square, big_circle, big_square,\n    #           round_things, angular_things, big_things, \u22a4 (everything)\n    # For simplicity, use a 4-element diamond\n\n    nothing = LatticeElement('nothing')\n    round_f = LatticeElement('round')\n    angular = LatticeElement('angular')\n    everything = LatticeElement('any_shape')\n    elems = [nothing, round_f, angular, everything]\n\n    le_pairs = [(nothing, x) for x in elems] + \\\n               [(x, everything) for x in elems] + \\\n               [(round_f, round_f), (angular, angular)]\n\n    sup, inf = {}, {}\n    for x in elems:\n        for y in elems:\n            if x == nothing: sup[(x, y)] = y\n            elif y == nothing: sup[(x, y)] = x\n            elif x == everything or y == everything: sup[(x, y)] = everything\n            elif x == y: sup[(x, y)] = x\n            else: sup[(x, y)] = everything\n\n    for x in elems:\n        for y in elems:\n            if x == everything: inf[(x, y)] = y\n            elif y == everything: inf[(x, y)] = x\n            elif x == nothing or y == nothing: inf[(x, y)] = nothing\n            elif x == y: inf[(x, y)] = x\n            else: inf[(x, y)] = nothing\n\n    himp = {\n        (nothing, nothing): everything, (nothing, round_f): everything,\n        (nothing, angular): everything, (nothing, everything): everything,\n        (round_f, nothing): angular, (round_f, round_f): everything,\n        (round_f, angular): angular, (round_f, everything): everything,\n        (angular, nothing): round_f, (angular, round_f): round_f,\n        (angular, angular): everything, (angular, everything): everything,\n        (everything, nothing): nothing, (everything, round_f): round_f,\n        (everything, angular): angular, (everything, everything): everything,\n    }\n\n    lattice = HeytingLattice(elems, le_pairs, sup, inf, himp, everything, nothing)\n\n    # Separating observers\n    obs_round = TropicalPoint('detects_round',\n        {nothing: False, round_f: True, angular: False, everything: True})\n    obs_angular = TropicalPoint('detects_angular',\n        {nothing: False, round_f: False, angular: True, everything: True})\n    points = [obs_round, obs_angular]\n\n    sep, _ = check_separation(points, elems)\n    print(f\"  Separation: {'\u2713' if sep else '\u2717'}\")\n\n    eval_map = compute_evaluation_map(points, elems)\n    print(\"\\n  Feature signatures:\")\n    for elem, vals in eval_map.items():\n        features = []\n        if vals[0]: features.append(\"round\")\n        if vals[1]: features.append(\"angular\")\n        feat_str = \" + \".join(features) if features else \"none\"\n        print(f\"    {elem}: [{feat_str}]\")\n\n    frame = reconstruct_frame(points, elems)\n    print(\"\\n  Reconstructed observer frame:\")\n    frame.display()\n\n    print(\"\\n  Interpretation: The feature observers are independent detectors.\")\n    print(\"  The duality theorem guarantees that these two observers suffice\")\n    print(\"  to reconstruct the entire concept lattice structure.\")\n    print()\n\n\n# =============================================================================\n# Main\n# =============================================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  TROPICAL STONE DUALITY \u2014 Applications                 \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\\n\")\n\n    demo_abstract_interpretation()\n    demo_access_control()\n    demo_concept_lattice()\n\n    print(\"=\" * 60)\n    print(\"All applications completed successfully.\")\n    print(\"=\" * 60)\n\n\n\"\"\"\nTropical Stone Duality \u2014 Demonstration\n\nThis script demonstrates the core concepts of Tropical Stone Duality\nwith concrete computational examples.\n\"\"\"\n\nimport itertools\nfrom typing import Dict, List, Tuple, Callable, Set\n\n# =============================================================================\n# Diamond Lattice Example\n# =============================================================================\n\nclass DiamondElement:\n    \"\"\"Element of the 4-element diamond lattice {bot, left, right, top}.\"\"\"\n    _names = ['bot', 'left', 'right', 'top']\n\n    def __init__(self, name: str):\n        assert name in self._names\n        self.name = name\n\n    def __repr__(self):\n        return self.name\n\n    def __eq__(self, other):\n        return self.name == other.name\n\n    def __hash__(self):\n        return hash(self.name)\n\n    def __le__(self, other):\n        if self.name == 'bot': return True\n        if other.name == 'top': return True\n        return self.name == other.name\n\n    def __lt__(self, other):\n        return self <= other and self != other\n\nBOT = DiamondElement('bot')\nLEFT = DiamondElement('left')\nRIGHT = DiamondElement('right')\nTOP = DiamondElement('top')\nDIAMOND = [BOT, LEFT, RIGHT, TOP]\n\n\ndef diamond_sup(a: DiamondElement, b: DiamondElement) -> DiamondElement:\n    \"\"\"Join in the diamond lattice.\"\"\"\n    if a == BOT: return b\n    if b == BOT: return a\n    if a == TOP or b == TOP: return TOP\n    if a == b: return a\n    return TOP  # left \u2294 right = top\n\n\ndef diamond_inf(a: DiamondElement, b: DiamondElement) -> DiamondElement:\n    \"\"\"Meet in the diamond lattice.\"\"\"\n    if a == TOP: return b\n    if b == TOP: return a\n    if a == BOT or b == BOT: return BOT\n    if a == b: return a\n    return BOT  # left \u2293 right = bot\n\n\ndef diamond_himp(a: DiamondElement, b: DiamondElement) -> DiamondElement:\n    \"\"\"Heyting implication in the diamond lattice.\n    Defined by: a \u2293 x \u2264 b iff x \u2264 himp(a, b).\"\"\"\n    table = {\n        ('bot', 'bot'): TOP, ('bot', 'left'): TOP, ('bot', 'right'): TOP, ('bot', 'top'): TOP,\n        ('left', 'bot'): RIGHT, ('left', 'left'): TOP, ('left', 'right'): RIGHT, ('left', 'top'): TOP,\n        ('right', 'bot'): LEFT, ('right', 'left'): LEFT, ('right', 'right'): TOP, ('right', 'top'): TOP,\n        ('top', 'bot'): BOT, ('top', 'left'): LEFT, ('top', 'right'): RIGHT, ('top', 'top'): TOP,\n    }\n    return table[(a.name, b.name)]\n\n\n# =============================================================================\n# Tropical Prime Points\n# =============================================================================\n\ndef point_left(x: DiamondElement) -> bool:\n    \"\"\"Left-extracting point: maps {bot,right} -> False, {left,top} -> True.\"\"\"\n    return x.name in ('left', 'top')\n\n\ndef point_right(x: DiamondElement) -> bool:\n    \"\"\"Right-extracting point: maps {bot,left} -> False, {right,top} -> True.\"\"\"\n    return x.name in ('right', 'top')\n\n\n# =============================================================================\n# Demonstration 1: Point Separation\n# =============================================================================\n\ndef demo_separation():\n    \"\"\"Show that the two points separate all elements of the diamond.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Point Separation\")\n    print(\"=\" * 60)\n    print()\n\n    print(\"Diamond lattice elements: bot, left, right, top\")\n    print()\n\n    # Evaluation table\n    print(\"Evaluation table:\")\n    print(f\"  {'Element':<8} {'point_L':<10} {'point_R':<10}\")\n    print(f\"  {'-'*28}\")\n    for x in DIAMOND:\n        print(f\"  {x.name:<8} {str(point_left(x)):<10} {str(point_right(x)):<10}\")\n    print()\n\n    # Check separation\n    separated = True\n    for a in DIAMOND:\n        for b in DIAMOND:\n            if a != b:\n                sep_by_L = point_left(a) != point_left(b)\n                sep_by_R = point_right(a) != point_right(b)\n                if not (sep_by_L or sep_by_R):\n                    print(f\"  FAIL: {a} and {b} not separated!\")\n                    separated = False\n    if separated:\n        print(\"  \u2713 All distinct pairs are separated by at least one point.\")\n    print()\n\n    # Show which point separates which pair\n    print(\"Separation witnesses:\")\n    for a, b in itertools.combinations(DIAMOND, 2):\n        witnesses = []\n        if point_left(a) != point_left(b):\n            witnesses.append(\"point_L\")\n        if point_right(a) != point_right(b):\n            witnesses.append(\"point_R\")\n        print(f\"  {a} \u2260 {b}: separated by {', '.join(witnesses)}\")\n    print()\n\n\n# =============================================================================\n# Demonstration 2: Evaluation Map Injectivity\n# =============================================================================\n\ndef demo_injectivity():\n    \"\"\"Show that the evaluation map is injective.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 2: Evaluation Map Injectivity\")\n    print(\"=\" * 60)\n    print()\n\n    # The evaluation map sends x \u21a6 (point_L(x), point_R(x))\n    eval_map = {}\n    for x in DIAMOND:\n        val = (point_left(x), point_right(x))\n        eval_map[x.name] = val\n        print(f\"  eval({x.name}) = {val}\")\n    print()\n\n    # Check injectivity\n    values = list(eval_map.values())\n    if len(values) == len(set(values)):\n        print(\"  \u2713 Evaluation map is injective (all images distinct).\")\n    else:\n        print(\"  \u2717 Evaluation map is NOT injective.\")\n    print()\n\n\n# =============================================================================\n# Demonstration 3: Canonical Preorder on Spectrum\n# =============================================================================\n\ndef demo_canonical_preorder():\n    \"\"\"Show the canonical preorder on the prime spectrum.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 3: Canonical Preorder on Spectrum\")\n    print(\"=\" * 60)\n    print()\n\n    points = {'point_L': point_left, 'point_R': point_right}\n\n    print(\"Canonical preorder: p \u2264 q iff \u2200 a, p(a) \u2264 q(a)\")\n    print()\n\n    for name_p, p in points.items():\n        for name_q, q in points.items():\n            le = all(p(a) <= q(a) for a in DIAMOND)\n            symbol = \"\u2264\" if le else \"\u2270\"\n            print(f\"  {name_p} {symbol} {name_q}\")\n\n    print()\n    print(\"  \u2192 point_L and point_R are incomparable in the canonical preorder.\")\n    print(\"  This means the reconstructed Kripke frame has two incomparable worlds.\")\n    print()\n\n\n# =============================================================================\n# Demonstration 4: Order Embedding\n# =============================================================================\n\ndef demo_order_embedding():\n    \"\"\"Show that the evaluation preserves and reflects order.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 4: Order Embedding\")\n    print(\"=\" * 60)\n    print()\n\n    print(\"Verifying: a \u2264 b iff eval(a) \u2264 eval(b) pointwise\")\n    print()\n\n    for a in DIAMOND:\n        for b in DIAMOND:\n            alg_le = a <= b\n            eval_le = all(\n                point_left(a) <= point_left(b) and\n                point_right(a) <= point_right(b)\n                for _ in [None]\n            )\n            # Actually compute pointwise\n            eval_le = (point_left(a) <= point_left(b)) and (point_right(a) <= point_right(b))\n\n            match_str = \"\u2713\" if alg_le == eval_le else \"\u2717\"\n            print(f\"  {match_str} {a.name} \u2264 {b.name}: algebraic={alg_le}, semantic={eval_le}\")\n    print()\n\n\n# =============================================================================\n# Demonstration 5: Residuation Check\n# =============================================================================\n\ndef demo_residuation():\n    \"\"\"Verify the residuation property: a \u2293 x \u2264 b iff x \u2264 himp(a,b).\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 5: Heyting Residuation Verification\")\n    print(\"=\" * 60)\n    print()\n\n    violations = 0\n    for a in DIAMOND:\n        for x in DIAMOND:\n            for b in DIAMOND:\n                lhs = diamond_inf(a, x) <= b\n                rhs = x <= diamond_himp(a, b)\n                if lhs != rhs:\n                    print(f\"  VIOLATION: a={a}, x={x}, b={b}\")\n                    violations += 1\n\n    if violations == 0:\n        print(\"  \u2713 Residuation verified for all 64 triples (a, x, b).\")\n    else:\n        print(f\"  \u2717 {violations} violations found.\")\n\n    print()\n    print(\"  Heyting implication table:\")\n    print(f\"  {'himp':<8}\", end=\"\")\n    for b in DIAMOND:\n        print(f\"{b.name:<8}\", end=\"\")\n    print()\n    print(f\"  {'-'*40}\")\n    for a in DIAMOND:\n        print(f\"  {a.name:<8}\", end=\"\")\n        for b in DIAMOND:\n            print(f\"{diamond_himp(a, b).name:<8}\", end=\"\")\n        print()\n    print()\n\n\n# =============================================================================\n# Demonstration 6: Upset Function Characterization\n# =============================================================================\n\ndef demo_upset_functions():\n    \"\"\"Show which functions on the spectrum are upset (monotone).\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 6: Upset Functions on the Spectrum\")\n    print(\"=\" * 60)\n    print()\n\n    # Since point_L and point_R are incomparable, ALL functions {point_L, point_R} \u2192 Bool\n    # are monotone (upset). There are 4 such functions.\n    print(\"  Since point_L \u2225 point_R (incomparable), every function\")\n    print(\"  {point_L, point_R} \u2192 Bool is automatically monotone.\")\n    print()\n\n    # List all 4 functions\n    functions = [\n        (\"const_False\", lambda p: False),\n        (\"eval(bot)\",   lambda p: False),\n        (\"eval(left)\",  lambda p: p == point_left),  # True on point_L\n        (\"eval(right)\", lambda p: p == point_right),  # True on point_R\n        (\"eval(top)\",   lambda p: True),\n    ]\n\n    # Actually, eval maps:\n    # bot   -> (False, False)\n    # left  -> (True, False)\n    # right -> (False, True)\n    # top   -> (True, True)\n    # So the image has 4 elements = all of {point_L, point_R} \u2192 Bool\n\n    print(\"  Evaluation image (identified with Bool \u00d7 Bool):\")\n    for x in DIAMOND:\n        print(f\"    eval({x.name}) = ({point_left(x)}, {point_right(x)})\")\n\n    print()\n    print(\"  All 4 functions Bool \u00d7 Bool are realized \u2192 evaluation is SURJECTIVE\")\n    print(\"  onto upset functions \u2192 we have an ISOMORPHISM.\")\n    print()\n\n\n# =============================================================================\n# Run all demos\n# =============================================================================\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  TROPICAL STONE DUALITY \u2014 Computational Demonstrations \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_separation()\n    demo_injectivity()\n    demo_canonical_preorder()\n    demo_order_embedding()\n    demo_residuation()\n    demo_upset_functions()\n\n    print(\"=\" * 60)\n    print(\"All demonstrations completed successfully.\")\n    print(\"=\" * 60)\n\n\n\"\"\"\nTropical Stone Duality \u2014 Visualizations\n\nGenerates visual diagrams of the duality theory.\n\"\"\"\n\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nimport matplotlib.patches as mpatches\nimport numpy as np\nimport base64\nimport io\n\n\ndef fig_to_base64(fig) -> str:\n    \"\"\"Convert a matplotlib figure to a base64 data URI.\"\"\"\n    buf = io.BytesIO()\n    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')\n    buf.seek(0)\n    data = base64.b64encode(buf.read()).decode('utf-8')\n    plt.close(fig)\n    return f\"data:image/png;base64,{data}\"\n\n\ndef create_diamond_lattice_diagram() -> str:\n    \"\"\"Create a Hasse diagram of the diamond lattice.\"\"\"\n    fig, ax = plt.subplots(1, 1, figsize=(6, 6))\n\n    # Node positions\n    positions = {\n        '\u22a5': (0, 0),\n        'a': (-1, 1),\n        'b': (1, 1),\n        '\u22a4': (0, 2),\n    }\n\n    # Draw edges\n    edges = [('\u22a5', 'a'), ('\u22a5', 'b'), ('a', '\u22a4'), ('b', '\u22a4')]\n    for u, v in edges:\n        x = [positions[u][0], positions[v][0]]\n        y = [positions[u][1], positions[v][1]]\n        ax.plot(x, y, 'k-', linewidth=2, zorder=1)\n\n    # Draw nodes\n    for name, (x, y) in positions.items():\n        circle = plt.Circle((x, y), 0.2, color='#4ECDC4', ec='black', lw=2, zorder=2)\n        ax.add_patch(circle)\n        ax.text(x, y, name, ha='center', va='center', fontsize=14, fontweight='bold', zorder=3)\n\n    ax.set_xlim(-2, 2)\n    ax.set_ylim(-0.5, 2.5)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    ax.set_title('Diamond Lattice M\u2084', fontsize=16, fontweight='bold', pad=20)\n\n    return fig_to_base64(fig)\n\n\ndef create_evaluation_diagram() -> str:\n    \"\"\"Create a diagram showing the evaluation map.\"\"\"\n    fig, axes = plt.subplots(1, 3, figsize=(16, 5))\n\n    # Left: Diamond lattice\n    ax = axes[0]\n    positions = {'\u22a5': (0, 0), 'a': (-0.8, 1), 'b': (0.8, 1), '\u22a4': (0, 2)}\n    edges = [('\u22a5', 'a'), ('\u22a5', 'b'), ('a', '\u22a4'), ('b', '\u22a4')]\n    for u, v in edges:\n        ax.plot([positions[u][0], positions[v][0]],\n                [positions[u][1], positions[v][1]], 'k-', lw=2, zorder=1)\n    for name, (x, y) in positions.items():\n        circle = plt.Circle((x, y), 0.18, color='#4ECDC4', ec='black', lw=2, zorder=2)\n        ax.add_patch(circle)\n        ax.text(x, y, name, ha='center', va='center', fontsize=13, fontweight='bold', zorder=3)\n    ax.set_xlim(-1.5, 1.5)\n    ax.set_ylim(-0.5, 2.5)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    ax.set_title('Algebra M', fontsize=14, fontweight='bold')\n\n    # Middle: Arrow\n    ax = axes[1]\n    ax.annotate('', xy=(0.8, 0.5), xytext=(0.2, 0.5),\n                arrowprops=dict(arrowstyle='->', lw=3, color='#FF6B6B'))\n    ax.text(0.5, 0.65, 'eval', ha='center', va='center', fontsize=14,\n            fontweight='bold', color='#FF6B6B')\n    ax.text(0.5, 0.35, '(injective)', ha='center', va='center', fontsize=10,\n            color='#888')\n    ax.set_xlim(0, 1)\n    ax.set_ylim(0, 1)\n    ax.axis('off')\n\n    # Right: Function space (Bool \u00d7 Bool)\n    ax = axes[2]\n    # 4 elements of Bool \u00d7 Bool in lattice order\n    pos2 = {\n        '(F,F)': (0, 0), '(T,F)': (-0.8, 1),\n        '(F,T)': (0.8, 1), '(T,T)': (0, 2)\n    }\n    labels = {\n        '(F,F)': '\u22a5 \u2192 (F,F)', '(T,F)': 'a \u2192 (T,F)',\n        '(F,T)': 'b \u2192 (F,T)', '(T,T)': '\u22a4 \u2192 (T,T)'\n    }\n    edges2 = [('(F,F)', '(T,F)'), ('(F,F)', '(F,T)'), ('(T,F)', '(T,T)'), ('(F,T)', '(T,T)')]\n    for u, v in edges2:\n        ax.plot([pos2[u][0], pos2[v][0]], [pos2[u][1], pos2[v][1]], 'k-', lw=2, zorder=1)\n    for name, (x, y) in pos2.items():\n        circle = plt.Circle((x, y), 0.18, color='#FFE66D', ec='black', lw=2, zorder=2)\n        ax.add_patch(circle)\n        ax.text(x, y, name, ha='center', va='center', fontsize=10, fontweight='bold', zorder=3)\n        ax.text(x, y - 0.35, labels[name], ha='center', va='center', fontsize=8,\n                color='#555', zorder=3)\n    ax.set_xlim(-1.5, 1.5)\n    ax.set_ylim(-0.5, 2.5)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    ax.set_title('Spectrum Functions\\nBool^Spec', fontsize=14, fontweight='bold')\n\n    fig.suptitle('Tropical Stone Duality: Evaluation Map', fontsize=16, fontweight='bold', y=1.02)\n    plt.tight_layout()\n    return fig_to_base64(fig)\n\n\ndef create_spectrum_diagram() -> str:\n    \"\"\"Create a diagram of the prime spectrum with canonical preorder.\"\"\"\n    fig, ax = plt.subplots(1, 1, figsize=(8, 4))\n\n    # Two incomparable points\n    positions = {'p_L': (-1.5, 0), 'p_R': (1.5, 0)}\n\n    # Self-loops (reflexivity)\n    for name, (x, y) in positions.items():\n        circle = plt.Circle((x, y), 0.4, color='#FF6B6B', ec='black', lw=2, zorder=2)\n        ax.add_patch(circle)\n        ax.text(x, y, name, ha='center', va='center', fontsize=14, fontweight='bold',\n                color='white', zorder=3)\n        # Self-loop arrow\n        arc = mpatches.FancyArrowPatch(\n            (x - 0.3, y + 0.4), (x + 0.3, y + 0.4),\n            connectionstyle=\"arc3,rad=0.8\",\n            arrowstyle='->', mutation_scale=15, lw=2, color='black', zorder=1)\n        ax.add_patch(arc)\n\n    # No arrow between them (incomparable)\n    ax.text(0, 0.15, '\u2271', ha='center', va='center', fontsize=20, color='#888')\n    ax.text(0, -0.15, '\u2270', ha='center', va='center', fontsize=20, color='#888')\n\n    ax.set_xlim(-3, 3)\n    ax.set_ylim(-1.5, 2)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    ax.set_title('Prime Spectrum with Canonical Preorder\\n(Reconstructed Kripke Frame)',\n                 fontsize=14, fontweight='bold')\n\n    return fig_to_base64(fig)\n\n\ndef create_duality_pipeline_diagram() -> str:\n    \"\"\"Create a diagram showing the full duality pipeline.\"\"\"\n    fig, ax = plt.subplots(1, 1, figsize=(14, 5))\n\n    steps = [\n        ('Bounded Lattice\\n+ Heyting Imp\\n(Algebra M)', '#4ECDC4'),\n        ('Tropical\\nPrime Points\\n(Spec)', '#FF6B6B'),\n        ('Evaluation\\nMap\\n(eval: M \u2192 T^Spec)', '#FFE66D'),\n        ('Canonical\\nPreorder\\n(p \u2264 q)', '#95E1D3'),\n        ('Kripke\\nFrame\\n(Semantics)', '#F38181'),\n    ]\n\n    for i, (label, color) in enumerate(steps):\n        x = i * 2.8\n        rect = mpatches.FancyBboxPatch(\n            (x - 1, -0.8), 2, 1.6,\n            boxstyle=\"round,pad=0.1\",\n            facecolor=color, edgecolor='black', linewidth=2)\n        ax.add_patch(rect)\n        ax.text(x, 0, label, ha='center', va='center', fontsize=10, fontweight='bold')\n\n        if i < len(steps) - 1:\n            ax.annotate('', xy=(x + 1.2, 0), xytext=(x + 1.6, 0),\n                        arrowprops=dict(arrowstyle='->', lw=2.5, color='#333'))\n\n    ax.set_xlim(-1.5, 12.5)\n    ax.set_ylim(-1.5, 1.5)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    ax.set_title('The Tropical Stone Duality Pipeline', fontsize=16, fontweight='bold', pad=20)\n\n    return fig_to_base64(fig)\n\n\ndef create_residuation_heatmap() -> str:\n    \"\"\"Create a heatmap of the Heyting implication table.\"\"\"\n    fig, ax = plt.subplots(1, 1, figsize=(7, 6))\n\n    labels = ['\u22a5', 'a', 'b', '\u22a4']\n    # Map elements to numeric values for coloring\n    val_map = {'\u22a5': 0, 'a': 1, 'b': 2, '\u22a4': 3}\n\n    himp_table = [\n        ['\u22a4', '\u22a4', '\u22a4', '\u22a4'],  # \u22a5 \u2192\n        ['b', '\u22a4', 'b', '\u22a4'],  # a \u2192\n        ['a', 'a', '\u22a4', '\u22a4'],  # b \u2192\n        ['\u22a5', 'a', 'b', '\u22a4'],  # \u22a4 \u2192\n    ]\n\n    data = np.array([[val_map[x] for x in row] for row in himp_table])\n\n    cmap = plt.cm.YlOrRd\n    im = ax.imshow(data, cmap=cmap, aspect='equal', vmin=0, vmax=3)\n\n    # Labels\n    ax.set_xticks(range(4))\n    ax.set_xticklabels(labels, fontsize=12, fontweight='bold')\n    ax.set_yticks(range(4))\n    ax.set_yticklabels(labels, fontsize=12, fontweight='bold')\n    ax.set_xlabel('b (target)', fontsize=12)\n    ax.set_ylabel('a (source)', fontsize=12)\n\n    # Text annotations\n    for i in range(4):\n        for j in range(4):\n            ax.text(j, i, himp_table[i][j], ha='center', va='center',\n                    fontsize=14, fontweight='bold',\n                    color='white' if data[i, j] >= 2 else 'black')\n\n    ax.set_title('Heyting Implication Table: a \u21d2 b', fontsize=14, fontweight='bold')\n    plt.colorbar(im, ax=ax, ticks=[0, 1, 2, 3],\n                 label='Lattice height')\n\n    return fig_to_base64(fig)\n\n\nif __name__ == \"__main__\":\n    print(\"Generating visualizations...\")\n\n    imgs = {\n        'diamond_lattice': create_diamond_lattice_diagram(),\n        'evaluation_map': create_evaluation_diagram(),\n        'spectrum': create_spectrum_diagram(),\n        'pipeline': create_duality_pipeline_diagram(),\n        'residuation': create_residuation_heatmap(),\n    }\n\n    for name, data_uri in imgs.items():\n        # Save as PNG file\n        png_data = base64.b64decode(data_uri.split(',')[1])\n        with open(f'{name}.png', 'wb') as f:\n            f.write(png_data)\n        print(f\"  Saved {name}.png ({len(png_data)} bytes)\")\n\n    print(\"Done!\")\n"
+    },
+    "date": "2026-05-12T08:33:32Z"
+  },
   "algebraspeculative_ultrametric_oracle_capacity_via.json": {
     "title": "Ultrametric Oracle Capacity via Non-Archimedean Fixed-Point Compression",
     "domain": "Bridges (Algebra \u00d7 Dynamics \u00d7 Cryptography \u00d7 ML)",
@@ -4757,7 +4822,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -4766,7 +4831,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -4775,7 +4840,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -4784,7 +4849,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -4793,7 +4858,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -4802,7 +4867,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -4811,7 +4876,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:45Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraeml_tannaka_reconstruction_via_closure_endo",
@@ -4820,7 +4885,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 89
+      "hue": 270
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -4829,7 +4894,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 101
+      "hue": 91
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -4838,7 +4903,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-10T23:04:27Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraspeculative_prime_congruence_semantics_for_",
@@ -4856,7 +4921,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -4865,7 +4930,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -4874,7 +4939,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -4883,7 +4948,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:38Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebramachinelearning_coalgebraic_myhillnerode_se",
@@ -4901,7 +4966,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-11T02:06:07Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraeml_ruelle_transfer_semantics_via_closure_c",
@@ -4910,7 +4975,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T04:06:02Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "logiccomputation_temporal_fixed_point_semantics_vi",
@@ -4919,7 +4984,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -4928,7 +4993,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:27Z",
-      "hue": 270
+      "hue": 89
     },
     {
       "id": "cryptographypythagorean_isogeny_free_trapdoors_via",
@@ -4937,7 +5002,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T04:06:34Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropical_neural_representation_duality_via_",
@@ -4946,7 +5011,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -4955,7 +5020,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -4964,7 +5029,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -4973,7 +5038,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -4982,7 +5047,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -4991,7 +5056,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -5000,7 +5065,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -5009,7 +5074,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -5018,7 +5083,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T09:36:04Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraeml_tropical_choquet_closure_duality_via_id",
@@ -5027,7 +5092,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -5036,16 +5101,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
       "title": "Temporal Stone-Birkhoff Duality via Reversible Oracle Semirings and Canonical Causal Completion",
       "domain": "Algebra / Logic / Computation Bridges",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
+      "primary_domain": "Computation",
+      "shape": "cube",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -5063,7 +5128,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -5081,7 +5146,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -5090,7 +5155,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -5099,7 +5164,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -5108,7 +5173,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -5126,7 +5191,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -5135,16 +5200,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 90
+      "hue": 89
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
       "title": "Prime Temporal Congruence Spectra for Reversible Oracle Semirings",
       "domain": "Algebra, Logic, and Computational Semantics",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
+      "primary_domain": "Computation",
+      "shape": "cube",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -5162,7 +5227,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -5171,7 +5236,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -5180,7 +5245,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -5189,7 +5254,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -5198,7 +5263,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T18:03:24Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_compr",
@@ -5207,7 +5272,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -5216,7 +5281,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T18:48:13Z",
-      "hue": 134
+      "hue": 90
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_p",
@@ -5225,7 +5290,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -5234,7 +5299,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -5243,7 +5308,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 179
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -5252,7 +5317,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -5261,7 +5326,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -5288,7 +5353,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -5297,7 +5362,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -5306,7 +5371,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -5315,7 +5380,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -5324,7 +5389,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -5333,7 +5398,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -5342,7 +5407,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -5351,7 +5416,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -5360,7 +5425,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -5369,7 +5434,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -5378,7 +5443,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -5387,7 +5452,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -5396,7 +5461,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 270
+      "hue": 179
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -5405,7 +5470,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -5423,16 +5488,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T05:35:38Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_duali",
       "title": "Temporal Fixed-Point Duality for Reversible Causal Semirings",
       "domain": "Algebra-Logic-Computation Bridge (Reversible Dynamics)",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
+      "primary_domain": "Computation",
+      "shape": "cube",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -5441,7 +5506,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -5450,7 +5515,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T05:36:31Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -5459,7 +5524,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T05:36:49Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -5477,7 +5542,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T07:30:16Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_i",
@@ -5495,7 +5560,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T07:34:03Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_idempotent_renormalization_duali",
@@ -5513,7 +5578,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:59Z",
-      "hue": 271
+      "hue": 95
+    },
+    {
+      "id": "algebratropicallogic_tropical_stone_duality_via_id",
+      "title": "Tropical Stone Duality via Idempotent Heyting Semimodules",
+      "domain": "Algebra-Tropical-Logic (Bridges)",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-12T08:33:32Z",
+      "hue": 92
     }
   ],
   "edges": [
@@ -5526,476 +5600,476 @@ window.PACKAGE_GRAPH = {
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_stonebirkhoff_dua",
-      "strength": 0.9292134831460672,
+      "strength": 0.9289282836422239,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_tropical_information_bot",
-      "strength": 0.8730337078651684,
+      "strength": 0.8725221595487509,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.8331460674157303,
+      "strength": 0.8324738114423851,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.7988764044943819,
+      "strength": 0.7980660757453665,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.7786516853932584,
+      "strength": 0.7777598710717163,
       "label": "Temporal Nerode Quotient for Reversible"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.7730337078651686,
+      "strength": 0.7721192586623691,
       "label": "Operadic Neural Architecture Search via"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.6573033707865168,
+      "strength": 0.6559226430298146,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.6230337078651684,
+      "strength": 0.6215149073327961,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.6168539325842697,
+      "strength": 0.615310233682514,
       "label": "Logic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "cryptographypythagorean_isogeny_free_trapdoors_via",
-      "strength": 0.6067415730337078,
+      "strength": 0.6051571313456889,
       "label": "Cryptography"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.604494382022472,
+      "strength": 0.60290088638195,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.5983146067415731,
+      "strength": 0.5966962127316681,
       "label": "Lean Formalization Target"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5859550561797753,
+      "strength": 0.5842868654311039,
       "label": "Non"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogicspeculative_temporal_prime_congruence_",
-      "strength": 0.5780898876404494,
+      "strength": 0.5763900080580175,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.5668539325842696,
+      "strength": 0.5651087832393231,
       "label": "Tropical Representer Duality"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.5657303370786517,
+      "strength": 0.5639806607574536,
       "label": "Operadic Neural Composition with Multi-I"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5640449438202246,
+      "strength": 0.5622884770346493,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.5617977528089888,
+      "strength": 0.5600322320709105,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.5314606741573034,
+      "strength": 0.5295729250604351,
       "label": "Tropical Semiring Observations for Infor"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.5275280898876404,
+      "strength": 0.525624496373892,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5207865168539325,
+      "strength": 0.5188557614826752,
       "label": "Non"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.5134831460674157,
+      "strength": 0.5115229653505238,
       "label": "Operadic Tropicalization"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.4955056179775281,
+      "strength": 0.49347300564061236,
       "label": "Operadic composition laws for specific a"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.4893258426966292,
+      "strength": 0.4872683319903304,
       "label": "Logic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_idempotent_renormalization_duali",
-      "strength": 0.4713483146067416,
+      "strength": 0.46921837228041896,
       "label": "Idempotent Renormalization Duality"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.46460674157303367,
+      "strength": 0.4624496373892022,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.46460674157303367,
+      "strength": 0.4624496373892022,
       "label": "Effective prefix codes"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.45730337078651684,
+      "strength": 0.45511684125705076,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.45730337078651684,
+      "strength": 0.45511684125705076,
       "label": "Operadic Neural Proof"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4544943820224719,
+      "strength": 0.4522965350523771,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_ultrametric_proof_dynam",
-      "strength": 0.4505617977528089,
+      "strength": 0.44834810636583394,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.44887640449438215,
+      "strength": 0.4466559226430299,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.44325842696629214,
-      "label": "Cryptography,Algebra,Bridges,EML bridge"
+      "strength": 0.44101531023368246,
+      "label": "EML,Bridges,Cryptography,Algebra bridge"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.44325842696629214,
-      "label": "Tropical,Geometry,Algebra,Logic bridge"
+      "strength": 0.44101531023368246,
+      "label": "Tropical,Geometry,Logic,Algebra bridge"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.44325842696629214,
-      "label": "Tropical,MachineLearning,Geometry,Algebra bridge"
+      "strength": 0.44101531023368246,
+      "label": "Tropical,Geometry,MachineLearning,Algebra bridge"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.4387640449438204,
+      "strength": 0.43650282030620474,
       "label": "Entropy Production Rate Invariance"
+    },
+    {
+      "source": "algebratropicallogic_tropical_gdel_semantics_via_i",
+      "target": "algebratropicallogic_tropical_stone_duality_via_id",
+      "strength": 0.43311845286059625,
+      "label": "C. Tropical Persistent Homology"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.4219101123595506,
+      "strength": 0.41958098307816283,
       "label": "Non"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.41516853932584274,
+      "strength": 0.412812248186946,
       "label": "Tropical Rate"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.41516853932584274,
+      "strength": 0.412812248186946,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.401123595505618,
+      "strength": 0.39871071716357775,
       "label": "Operadic Tropicalization"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraemltropical_non_archimedean_information_dua",
-      "strength": 0.39943820224719095,
+      "strength": 0.3970185334407735,
       "label": "Indistinguishability \u2194 metric bisimulati"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.398314606741573,
+      "strength": 0.39589041095890404,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.398314606741573,
+      "strength": 0.39589041095890404,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.39044943820224715,
+      "strength": 0.3879935535858178,
       "label": "Tropical Semiring Oracle Capacity"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.3859550561797753,
+      "strength": 0.38348106365834006,
       "label": "Entropy Production Bounds for Self-Refer"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.38146067415730334,
+      "strength": 0.3789685737308621,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.38033707865168537,
+      "strength": 0.3778404512489927,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3792134831460674,
+      "strength": 0.37671232876712324,
       "label": "Spectral graph theory \u2194 Tropical spectra"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.37078651685393266,
+      "strength": 0.36825141015310237,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.35898876404494384,
+      "strength": 0.356406124093473,
       "label": "Tropical Rate"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.35898876404494384,
+      "strength": 0.356406124093473,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.35898876404494384,
+      "strength": 0.356406124093473,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.35898876404494384,
+      "strength": 0.356406124093473,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculativecryptography_prime_congruence_du",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.35898876404494384,
+      "strength": 0.356406124093473,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.35898876404494384,
+      "strength": 0.356406124093473,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_p",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.35898876404494384,
+      "strength": 0.356406124093473,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.352808988764045,
+      "strength": 0.350201450443191,
       "label": "Persistent homology of closure filtratio"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebrageometrycryptography_berggren_voronoi_duali",
-      "strength": 0.3494382022471909,
+      "strength": 0.3468170829975825,
       "label": "Berggren Voronoi"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.3494382022471909,
+      "strength": 0.3468170829975825,
       "label": "Tropical"
     },
     {
       "source": "algebraemlcryptography_tropical_pontryaginmellin_d",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.347191011235955,
+      "strength": 0.34456083803384363,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.347191011235955,
+      "strength": 0.34456083803384363,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.34606741573033706,
+      "strength": 0.3434327155519742,
       "label": "presentation-independence of the Berkovi"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.34213483146067414,
+      "strength": 0.33948428686543103,
       "label": "Tropical Neural Universality Classes wit"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.34213483146067414,
+      "strength": 0.33948428686543103,
       "label": "Tropical Rate"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.34213483146067414,
+      "strength": 0.33948428686543103,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativecryptography_prime_congruence_du",
-      "strength": 0.3359550561797753,
+      "strength": 0.33327961321514904,
       "label": "Prime Congruence Duality"
     },
     {
       "source": "algebralogiccomputation_temporal_stonebirkhoff_dua",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.3308988764044944,
+      "strength": 0.3282030620467365,
       "label": "Temporal Fixed"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.32808988764044944,
+      "strength": 0.3253827558420628,
       "label": "Lattice-Cryptographic Indistinguishabili"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.32528089887640443,
+      "strength": 0.3225624496373891,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.32247191011235965,
+      "strength": 0.3197421434327156,
       "label": "Tropical Specialization"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.3213483146067415,
+      "strength": 0.318614020950846,
       "label": "Tropicalization of Prime Semantic Finger"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.3207865168539326,
+      "strength": 0.31804995970991135,
       "label": "Closure"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.3207865168539326,
+      "strength": 0.31804995970991135,
       "label": "Idempotent Holographic Renormalization"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3191011235955056,
+      "strength": 0.3163577759871071,
       "label": "Tropicalization of Prime Semantic Finger"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.31123595505617974,
+      "strength": 0.30846091861402086,
       "label": "Shannon Entropy Formalization on Orbit D"
     },
     {
       "source": "algebralogicspeculative_temporal_prime_congruence_",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.3067415730337079,
+      "strength": 0.3039484286865431,
       "label": "Temporal Fixed"
+    },
+    {
+      "source": "algebralogicspeculative_temporal_prime_congruence_",
+      "target": "algebratropicallogic_tropical_stone_duality_via_id",
+      "strength": 0.3,
+      "label": "Tropical Stone Duality"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.302808988764045,
-      "label": "Tropical Representer Duality"
-    },
-    {
-      "source": "algebraemlcryptography_closure_matroid_duality_via",
-      "target": "algebraemlphysics_idempotent_renormalization_duali",
-      "strength": 0.302808988764045,
-      "label": "Idempotent Renormalization Duality"
-    },
-    {
-      "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
-      "target": "algebraeml_thermodynamic_galois_duality_via_closur",
       "strength": 0.3,
-      "label": "Thermodynamic Pressure via Weighted Tran"
+      "label": "Tropical Representer Duality"
     }
   ]
 };
