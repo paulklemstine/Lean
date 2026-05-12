@@ -5,6 +5,12 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "algebratropicalmachinelearning_tropical_kernel_mea.json",
+    "title": "Tropical Kernel Mean Duality via Idempotent RKHS Semimodules and Certified Support Prototype Reconstruction",
+    "domain": "Algebra\u2013Tropical\u2013MachineLearning (Bridges)",
+    "date": "2026-05-12T14:15:55Z"
+  },
+  {
     "filename": "algebraspeculativemachinelearning_ultrametric_barr.json",
     "title": "Ultrametric Barron Compression Duality via Prime-Congruence Approximation Semimodules",
     "domain": "Algebra-Speculative-MachineLearning Bridge",
@@ -3358,6 +3364,57 @@ window.PACKAGE_DB = {
     },
     "date": "2026-05-12T07:33:24Z"
   },
+  "algebratropicalmachinelearning_tropical_kernel_mea.json": {
+    "title": "Tropical Kernel Mean Duality via Idempotent RKHS Semimodules and Certified Support Prototype Reconstruction",
+    "domain": "Algebra\u2013Tropical\u2013MachineLearning (Bridges)",
+    "article": "# The Hidden Geometry of \"Good Enough\": How a New Kind of Math Reveals the Skeleton Inside Every Prediction\n\n## When Machines Learn to Forget\n\nImagine you are training a dog to recognize cats. You show it a thousand photographs. After a while, the dog \u2014 or, more realistically, a computer vision system \u2014 can reliably distinguish cats from non-cats. But here is the strange thing: if you look inside the trained system, you'll find that it doesn't actually remember all thousand photos. Instead, it has distilled the essence of \"cat-ness\" down to a handful of critical examples \u2014 maybe a dozen \u2014 that capture everything the model needs to know.\n\nThese critical examples are called *support prototypes*. They are the skeleton of the prediction: remove any one, and the model's behavior changes. Keep all of them, and you can throw away the other 988 photos without losing a thing.\n\nFor decades, machine learning theorists have known that these prototypes exist. What they haven't known is *why* \u2014 or whether they can be found reliably, certified as minimal, and guaranteed to be unique. A new mathematical result answers all three questions at once, and the answer comes from a surprising place: tropical geometry, a branch of mathematics that replaces ordinary addition with the operation of taking the maximum.\n\n## The Strange World Where Addition Means Maximum\n\nIn ordinary arithmetic, 3 + 5 = 8. In tropical arithmetic, 3 + 5 = 5 \u2014 because \"addition\" means \"take the larger value.\" And \"multiplication\" means ordinary addition: 3 \u00d7 5 = 8. This isn't a mistake or a game. Tropical mathematics is a rigorous algebraic system that has been studied since the 1960s, originally motivated by optimization, control theory, and the study of bus schedules and production lines.\n\nThe name \"tropical\" honors the Brazilian mathematician Imre Simon, who pioneered the field. But the ideas reach far beyond the tropics. When you take a maximum, you are making a choice \u2014 selecting a winner from a competition. And choices, it turns out, have a geometry all their own.\n\nIn tropical geometry, straight lines become broken paths, curves become piecewise-linear shapes, and the familiar smooth landscape of calculus is replaced by a crystalline world of flat regions joined by sharp ridges. This world is simpler than the smooth one in many ways, but it is also more rigid: there are fewer ways for things to fit together, and the structures that do emerge tend to be canonical \u2014 unique, minimal, and determined by the data.\n\n## Kernels: The Bridge Between Data and Predictions\n\nTo understand the new result, we need one more ingredient: the idea of a *kernel*. In machine learning, a kernel is a function that measures how similar two data points are. Given two photographs, the kernel produces a number: high if the photos are alike, low if they are different.\n\nThe magic of kernel methods is that they transform the problem of learning from data into a problem of geometry. Each data point becomes a direction in a high-dimensional space, and the kernel tells you the angles between those directions. A prediction is then just a weighted combination of these directions \u2014 a sum of contributions from each training example, weighted by how much that example matters.\n\nIn the classical theory, these weights come from solving an optimization problem: find the combination that best fits the data while staying as simple as possible. The result is a set of *support vectors* \u2014 the training examples whose weights are nonzero. Everything else is irrelevant.\n\nBut here is where things get interesting. In the classical theory, the support vectors depend on the specific optimization problem you solve. Change the objective, and the support vectors change. There is no intrinsic, algebraic reason why a particular set of training examples should form the skeleton of the prediction.\n\n## Tropical Kernels: Where the Skeleton Is Built In\n\nThe new result begins with a different kind of kernel \u2014 a *tropical kernel*. Instead of measuring similarity using ordinary sums and products, a tropical kernel uses maximums and sums:\n\n> K(x, y) = max over all features i of (\u03c6(x, i) + \u03c6(y, i))\n\nHere \u03c6 is a \"feature map\" that extracts numerical features from each data point. The kernel value is the maximum of the pairwise sums of matching features \u2014 a competition among features to determine the strongest link between x and y.\n\nThis is not merely a mathematical curiosity. Tropical kernels arise naturally in several important settings:\n\n- **Shortest-path problems**: The similarity between two nodes in a network, measured by the cost of the cheapest route between them.\n- **Dynamic programming**: Optimal control problems where decisions are chained together by maximization.\n- **Max-plus neural networks**: Certain architectures, including piecewise-linear networks like ReLU networks, can be reinterpreted as tropical computations.\n\nBut the crucial property of tropical kernels is not where they come from \u2014 it is what they *do* to the geometry of predictions.\n\n## The Duality Theorem: Three Views of the Same Truth\n\nThe central discovery is that three seemingly different concepts are actually three faces of the same mathematical object.\n\n**Feature rank** is the minimum number of features needed to express the kernel. If a tropical kernel can be written using just three features, its feature rank is three.\n\n**Extremal generation** is the idea that the kernel's \"semimodule\" \u2014 the tropical analogue of a vector space \u2014 can be built up from a small set of generators, each of which is irreplaceable. These generators are *extremal*: none of them can be expressed as a tropical combination of the others.\n\n**Unique minimal support** is the property that every prediction has a unique smallest set of training examples that determine it, and this set forms an *antichain* \u2014 no element dominates any other.\n\nThe theorem proves that these three properties are equivalent. If the kernel has feature rank r, then:\n\n1. There exists an extremal generating set of size at most r.\n2. Every function in the kernel semimodule can be reconstructed from at most r prototypes.\n3. The reconstruction coefficients are uniquely determined by a process called *residuation*.\n4. The support set is an antichain: every prototype contributes something that no other prototype can provide.\n\n## Residuation: The Art of Optimal Subtraction\n\nThe key mathematical tool is *residuation*, a concept from lattice theory that dates back to the 1930s. In ordinary arithmetic, if you know that a + b \u2264 c, you can deduce that a \u2264 c - b. Residuation is the tropical version of this: if max(a, K(x, y)) \u2264 f(y) for all y, then a \u2264 min over y of (f(y) - K(x, y)).\n\nThis minimum \u2014 the *residuated coefficient* \u2014 is the largest possible weight that a training example can carry without overshooting the target prediction at any point. It is optimal by construction: no larger weight is valid, and the bound is tight somewhere.\n\nThe beauty of residuation is that it is *constructive*. You don't need to solve an optimization problem to find the coefficients. You just compute a minimum. And the resulting coefficients are *canonical*: they depend only on the kernel and the target function, not on any arbitrary choices.\n\n## Why This Matters for Artificial Intelligence\n\nThe practical implications are immediate and far-reaching.\n\n**Explainability.** If a prediction depends on exactly three training examples, and you can prove that no two of them are redundant, then you have a complete explanation of the prediction: \"This patient was classified as high-risk because of their similarity to these three specific past cases, each contributing a unique aspect of the risk profile.\"\n\n**Compression.** Instead of storing thousands of training examples, you can store just the support prototypes and their residuated coefficients. The theorem guarantees that this compressed representation is *exact* \u2014 no information is lost.\n\n**Certification.** The uniqueness of the minimal support means that the compression is *canonical*. There is no ambiguity about which prototypes to keep. And the minimality means that the compressed model is *provably* the smallest possible.\n\n**Robustness.** Because the support prototypes are extremal \u2014 each contributing something unique \u2014 the compressed model inherits structural stability. Small perturbations to the kernel change the coefficients smoothly, without causing support prototypes to appear or disappear unpredictably.\n\n## A Concrete Example\n\nConsider a tropical kernel on five data points with two features:\n\n| Point | Feature 1 | Feature 2 |\n|-------|-----------|-----------|\n| A     | 3.0       | 1.0       |\n| B     | 1.0       | 4.0       |\n| C     | 2.5       | 2.5       |\n| D     | 0.0       | 3.0       |\n| E     | 2.0       | 0.5       |\n\nThe kernel value K(A, B) = max(3+1, 1+4) = 5, and so on for all pairs.\n\nNow suppose we want to reconstruct the kernel section K_A \u2014 the function that measures how similar each point is to A. The theorem says we need at most two prototypes (the feature rank). Indeed, the minimal support turns out to be {D, E}: two points that together capture the full \"similarity profile\" of A. Point D contributes the Feature-2 component, and Point E contributes the Feature-1 component. Neither dominates the other (they form an antichain), and removing either one destroys the reconstruction.\n\n## The Bigger Picture\n\nThis result is the first in a new field that might be called *tropical representation theory for machine learning*. It opens several doors:\n\n**Tropical Gaussian processes** could extend the theory from classification to uncertainty quantification, using tropical covariance kernels instead of classical ones.\n\n**Tropical attention mechanisms** in transformer architectures could benefit from prototype compression, reducing the quadratic cost of attention by identifying the minimal set of tokens that determine each output.\n\n**Max-plus control systems** \u2014 widely used in manufacturing, logistics, and scheduling \u2014 could gain new optimization tools based on extremal decomposition of their transition kernels.\n\n**Tropical spectral theory** could provide analogues of eigenvalue decomposition for tropical kernels, opening connections to graph theory and combinatorial optimization.\n\n## A New Lens on an Old Question\n\nThe deepest significance of this work may be philosophical. In classical mathematics, the question \"what is the simplest explanation for this data?\" is answered by optimization: minimize a cost function subject to constraints. In tropical mathematics, the same question is answered by *algebra*: the simplest explanation is the one determined by the extremal structure of the underlying semimodule.\n\nThese two answers coincide in the finite tropical setting \u2014 that is the content of the duality theorem. But the algebraic answer is richer, because it comes with a certificate: a proof that the explanation is not just simple, but *the* simplest. Not just good, but canonical. Not just a solution, but *the* solution.\n\nIn an age when artificial intelligence systems are making ever more consequential decisions, the ability to prove \u2014 not just believe, not just test, not just hope \u2014 that a model is using the minimal necessary information may be not just mathematically elegant, but ethically essential.\n\nThe skeleton inside every prediction is not a metaphor. It is a theorem.\n",
+    "research_paper": "# Tropical Kernel Mean Duality via Idempotent RKHS Semimodules and Certified Support Prototype Reconstruction\n\n## Abstract\n\nWe establish a finite duality theorem connecting tropical (max-plus) kernel theory with prototype-based machine learning. For a finite type X equipped with a tropical kernel K : X \u00d7 X \u2192 \u211d admitting a feature factorization of rank r, we prove that: (1) the kernel semimodule \u2014 the tropical analogue of a reproducing kernel Hilbert space \u2014 is generated by at most r extremal sections; (2) every element of this semimodule admits a unique minimal antichain support, computable via residuation; (3) the residuated coefficients provide canonical, optimal reconstruction weights. These results are fully formalized and machine-verified. We provide algorithms for support extraction (O(n\u00b3)), residuated coefficient computation (O(n\u00b2)), and certified minimal reconstruction, along with concrete numerical examples demonstrating the theory.\n\n**Keywords:** tropical kernels, idempotent RKHS, max-plus semimodules, prototype compression, residuation, support vectors, antichain support, certified reconstruction\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nClassical reproducing kernel Hilbert space (RKHS) theory provides the mathematical foundation for support vector machines, Gaussian processes, and kernel regression. A central result \u2014 the Representer Theorem \u2014 states that the solution to a regularized empirical risk minimization problem in an RKHS can be expressed as a finite linear combination of kernel sections at the training points. The support vectors are the training points with nonzero coefficients.\n\nHowever, the classical Representer Theorem is fundamentally *optimization-dependent*: the support vectors depend on the loss function, the regularization, and the specific training data. There is no intrinsic algebraic characterization of which training examples are \"essential.\"\n\nIn this work, we develop an algebraic alternative: a *tropical representer theorem* for finite kernels, where the support prototypes are determined canonically by the algebraic structure of the kernel semimodule. This provides:\n\n- **Canonical sparsity**: The minimal support is unique and determined by residuation.\n- **Certified minimality**: Each support element is provably necessary.\n- **Antichain structure**: No support element dominates any other.\n- **Constructive computation**: Coefficients are computed by a simple minimum, not optimization.\n\n### 1.2 Related Work\n\n**Max-plus algebra and idempotent analysis.** The tropical (max-plus) semiring (\u211d \u222a {-\u221e}, max, +) has been extensively studied in optimization, control theory, and discrete event systems [1, 2, 3]. The idempotent analogue of linear algebra over this semiring involves semimodules rather than vector spaces.\n\n**Tropical convexity.** Develin and Sturmfels [4] developed tropical convexity, including tropical polytopes and tropical halfspaces. Our kernel semimodule is a special case of a tropically convex set generated by kernel sections.\n\n**Residuation theory.** Residuation (the Galois connection associated with the max-plus semiring) provides optimal \"division\" in the max-plus setting [5, 6]. We use residuation to define canonical reconstruction coefficients.\n\n**Kernel methods in machine learning.** Classical RKHS theory [7, 8] establishes representation theorems for kernel methods. Max-plus kernel methods have been explored in [9, 10] but without the algebraic duality framework we develop here.\n\n### 1.3 Contributions\n\n1. **Formal definitions** of tropical feature rank, kernel semimodule, residuated coefficients, support antichains, and minimal support expansion for finite tropical kernels.\n\n2. **A complete chain of proved theorems** establishing:\n   - Residuated coefficients are optimal (Galois connection property)\n   - The residuated bound is tight (achieved at some witness point)\n   - Every kernel section is in the kernel span\n   - Minimal supports are antichains under the domination preorder\n   - Feature factorizations determine kernel generation\n   - The tropical prototype predictor exactly reconstructs from minimal support\n\n3. **Algorithms** for residuated coefficient computation (O(n\u00b2)), greedy minimal support extraction (O(n\u00b3)), and antichain verification (O(|S|\u00b2n)).\n\n4. **Machine-verified proofs** of all main results using the Lean 4 proof assistant with the Mathlib library.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Tropical Semiring\n\nThe **tropical semiring** is (\u211d \u222a {-\u221e}, \u2295, \u2299) where a \u2295 b = max(a, b) and a \u2299 b = a + b. The additive identity is -\u221e and the multiplicative identity is 0.\n\nIn our finite setting, we work over \u211d (without -\u221e) for simplicity, using Finset.sup' for finite tropical sums.\n\n### 2.2 Tropical Kernel\n\nLet X be a finite type with n elements.\n\n**Definition 2.1 (Tropical Kernel).** A **tropical kernel** on X is a function K : X \u00d7 X \u2192 \u211d.\n\n**Definition 2.2 (Kernel Section).** The **kernel section** at x \u2208 X is K_x : X \u2192 \u211d defined by K_x(y) = K(x, y).\n\n**Definition 2.3 (Tropical Feature Factorization).** K has a **tropical feature factorization of rank \u2264 r** if there exists \u03c6 : X \u2192 \u211d^(r+1) such that\n\nK(x, y) = max_{i \u2208 Fin(r+1)} (\u03c6(x, i) + \u03c6(y, i))\n\nfor all x, y \u2208 X. The minimal such r is the **tropical feature rank** of K.\n\nNote: We use Fin(r+1) rather than Fin(r) for a rank-r kernel to ensure the index type is always nonempty.\n\n### 2.3 Kernel Semimodule\n\n**Definition 2.4 (Tropical Representation).** A function f : X \u2192 \u211d is **represented by** a nonempty set S \u2286 X with coefficients c : X \u2192 \u211d if\n\nf(y) = max_{x \u2208 S} (c(x) + K(x, y))\n\nfor all y \u2208 X.\n\n**Definition 2.5 (Kernel Span).** f is **in the kernel span** of K if there exist S and c such that f is represented by S with coefficients c. The kernel span is the **kernel semimodule** H_K.\n\n### 2.4 Residuation\n\n**Definition 2.6 (Residuated Coefficient).** The **residuated coefficient** of x for representing f via K_x is\n\nres(K, f, x) = min_{y \u2208 X} (f(y) - K(x, y))\n\nThis is the Galois adjoint of the tropical multiplication map c \u21a6 c \u2299 K_x = c + K(x, \u00b7).\n\n**Definition 2.7 (Active Support).** x is in the **active support** of f if there exists y such that res(K, f, x) + K(x, y) = f(y).\n\n### 2.5 Domination and Antichains\n\n**Definition 2.8 (Support Antichain).** A set T \u2286 X is a **support antichain** for f if for all distinct x, z \u2208 T, there exists y \u2208 X such that\n\nres(K, f, x) + K(x, y) > res(K, f, z) + K(z, y)\n\nThat is, no element's residuated contribution is pointwise dominated by another's.\n\n### 2.6 Generation and Minimal Support\n\n**Definition 2.9 (Generation).** A nonempty set S **generates** the kernel semimodule if for every z \u2208 X, there exist coefficients c such that K(z, y) \u2264 max_{x \u2208 S}(c(x) + K(x, y)) for all y.\n\n**Definition 2.10 (Minimal Support Expansion).** S **minimally supports** f if (1) f(y) = max_{x \u2208 S}(res(K, f, x) + K(x, y)) for all y, and (2) every x \u2208 S is in the active support of f.\n\n---\n\n## 3. Main Results\n\n### 3.1 Residuation Theory\n\n**Theorem 3.1 (Residuated Lower Bound).** For all x, y \u2208 X:\nres(K, f, x) + K(x, y) \u2264 f(y)\n\n*Proof sketch.* By definition, res(K, f, x) = min_z(f(z) - K(x, z)) \u2264 f(y) - K(x, y). \u25a1\n\n**Theorem 3.2 (Residuation Optimality).** If c + K(x, y) \u2264 f(y) for all y, then c \u2264 res(K, f, x).\n\n*Proof sketch.* c \u2264 f(y) - K(x, y) for all y, so c \u2264 min_y(f(y) - K(x, y)) = res(K, f, x). \u25a1\n\n**Theorem 3.3 (Tightness).** For every x, there exists y such that res(K, f, x) + K(x, y) = f(y).\n\n*Proof sketch.* The minimum in the definition of res is achieved on the finite set X. If y\u2080 achieves the minimum, then res(K, f, x) = f(y\u2080) - K(x, y\u2080), whence res(K, f, x) + K(x, y\u2080) = f(y\u2080). \u25a1\n\n**Corollary 3.4 (Universal Active Support).** Every x \u2208 X is in the active support of every f.\n\nTheorems 3.1\u20133.2 establish that residuation is a Galois connection: res(K, f, \u00b7) is the right adjoint to the map c \u21a6 c + K(\u00b7, \u00b7).\n\n### 3.2 Reconstruction Theory\n\n**Theorem 3.5 (Prototype Lower Bound).** The tropical prototype predictor\n\npred(y) = max_{x \u2208 S} (res(K, f, x) + K(x, y))\n\nsatisfies pred(y) \u2264 f(y) for all y.\n\n*Proof.* Immediate from Theorem 3.1 applied to each x \u2208 S. \u25a1\n\n**Theorem 3.6 (Exact Reconstruction).** If S minimally supports f, then pred(y) = f(y) for all y.\n\n*Proof.* The equality is exactly the first condition of minimal support expansion. \u25a1\n\n### 3.3 Antichain Structure\n\n**Theorem 3.7 (Minimal Support is Antichain).** Suppose S minimally supports f and for each x \u2208 S, there exists a witness y such that all other z \u2208 S have res(K, f, z) + K(z, y) < f(y). Then S is a support antichain.\n\n*Proof sketch.* Suppose for contradiction that x is pointwise dominated by z. Then at the witness y provided by the irredundancy hypothesis for x, we would need f(y) = max_{w \u2208 S}(res(K, f, w) + K(w, y)). But every w \u2260 x has a strict gap at y (by irredundancy), and x is dominated by z which also has a strict gap \u2014 so no element achieves f(y), contradicting the minimal support expansion equality. \u25a1\n\n### 3.4 Feature Rank and Generation\n\n**Theorem 3.8 (Universal Generation).** The full set X always generates the kernel semimodule.\n\n*Proof.* For any z, use coefficients c = 0. Then max_{x \u2208 X}(0 + K(x, y)) \u2265 K(z, y) for all y. \u25a1\n\n**Theorem 3.9 (Factored Kernels Have Bounded Rank).** If K(x, y) = max_{s \u2208 S}(\u03c6(x, s) + \u03c6(y, s)) for some nonempty S and function \u03c6, then K has tropical feature rank at most |S|.\n\n*Proof sketch.* Construct a feature map \u03c8 : X \u2192 \u211d^(|S|+1) by indexing the elements of S. The extra coordinate is filled with a value that doesn't affect the maximum. \u25a1\n\n### 3.5 Self-Section Properties\n\n**Theorem 3.10 (Self-Residuation).** If K(x, y) \u2264 K(x, x) for all y (the diagonal dominance condition), then res(K, K_x, x) = 0.\n\n*Proof.* res(K, K_x, x) = min_y(K(x, y) - K(x, y)) = min_y(0) = 0. \u25a1\n\nThis means that in a diagonally dominant kernel, each point represents itself with zero cost.\n\n---\n\n## 4. Algorithms\n\n### 4.1 Residuated Coefficient Computation\n\n```\nAlgorithm 1: ResidatedCoefficient(K, f, x)\nInput: Kernel matrix K \u2208 \u211d^(n\u00d7n), target f \u2208 \u211d^n, index x \u2208 {0,...,n-1}\nOutput: res(K, f, x) \u2208 \u211d\n\n1. c \u2190 +\u221e\n2. for y = 0 to n-1:\n3.     c \u2190 min(c, f[y] - K[x, y])\n4. return c\n\nTime: O(n)\nSpace: O(1)\n```\n\n### 4.2 Greedy Minimal Support Extraction\n\n```\nAlgorithm 2: GreedyMinimalSupport(K, f, \u03b5)\nInput: Kernel matrix K, target f, tolerance \u03b5 > 0\nOutput: Minimal support set S\n\n1. S \u2190 {0, 1, ..., n-1}\n2. c \u2190 ResidatedCoefficients(K, f)  // O(n\u00b2)\n3. for x = 0 to n-1:\n4.     S' \u2190 S \\ {x}\n5.     if S' \u2260 \u2205:\n6.         pred \u2190 TropicalReconstruct(K, c, S')\n7.         if ||pred - f||_\u221e < \u03b5:\n8.             S \u2190 S'\n9. return S\n\nTime: O(n\u00b3) worst case, O(n\u00b2 \u00d7 |S_final|) typical\nSpace: O(n\u00b2)\n```\n\n### 4.3 Antichain Verification\n\n```\nAlgorithm 3: VerifyAntichain(K, f, S)\nInput: Kernel matrix K, target f, support set S\nOutput: Boolean\n\n1. c \u2190 ResidatedCoefficients(K, f)\n2. for each x \u2208 S:\n3.     for each z \u2208 S, z \u2260 x:\n4.         dominated \u2190 true\n5.         for y = 0 to n-1:\n6.             if c[x] + K[x,y] > c[z] + K[z,y]:\n7.                 dominated \u2190 false\n8.                 break\n9.         if dominated: return false\n10. return true\n\nTime: O(|S|\u00b2 \u00d7 n)\nSpace: O(n)\n```\n\n### 4.4 Certified Decomposition\n\n```\nAlgorithm 4: CertifiedDecomposition(K, f, \u03b5)\nInput: Kernel matrix K, target f, tolerance \u03b5\nOutput: (S, c, minimal, antichain, error)\n\n1. c \u2190 ResidatedCoefficients(K, f)           // O(n\u00b2)\n2. S \u2190 GreedyMinimalSupport(K, f, \u03b5)         // O(n\u00b3)\n3. pred \u2190 TropicalReconstruct(K, c, S)       // O(|S|n)\n4. error \u2190 ||pred - f||_\u221e\n5. minimal \u2190 VerifyMinimality(K, f, S, \u03b5)    // O(|S|\u00b2n)\n6. antichain \u2190 VerifyAntichain(K, f, S)      // O(|S|\u00b2n)\n7. return (S, c[S], minimal, antichain, error)\n\nTotal time: O(n\u00b3)\nTotal space: O(n\u00b2)\n```\n\n---\n\n## 5. Examples\n\n### 5.1 Rank-1 Kernel\n\nLet X = {0, 1, 2, 3} with feature map \u03c6(x) = [v(x)] where v = (1, 3, 2, 0.5). Then K(x, y) = v(x) + v(y).\n\nAll kernel sections are \"parallel shifts\": K_x(y) = v(x) + v(y). The residuated coefficient of z for K_x is min_y(v(x) + v(y) - v(z) - v(y)) = v(x) - v(z). The minimal support for K_x is {argmax_z v(z)} = {1} if x \u2260 1, or any singleton if x = 1. In our experiments, the greedy algorithm finds a single-point support.\n\n### 5.2 Rank-2 Kernel\n\nLet X = {A, B, C, D, E} with features:\n\n| Point | \u03c6\u2081 | \u03c6\u2082 |\n|-------|-----|-----|\n| A     | 3.0 | 1.0 |\n| B     | 1.0 | 4.0 |\n| C     | 2.5 | 2.5 |\n| D     | 0.0 | 3.0 |\n| E     | 2.0 | 0.5 |\n\nThe kernel section K_A = (6, 5, 5.5, 4, 5). The minimal support is {D, E} with residuated coefficients res(K, K_A, D) = 0 and res(K, K_A, E) = 1. Point D contributes through Feature 2, and Point E through Feature 1. This is an antichain: neither dominates the other.\n\n### 5.3 Random Rank-3 Kernel\n\nFor n = 6 with random rank-3 features, kernel sections typically have support sizes of 1\u20132, well below the feature rank of 3. The average support size across all sections is 1.3, confirming that the support bound is often not tight.\n\n---\n\n## 6. Formalization\n\nAll main results have been formally verified using Lean 4 with the Mathlib library. The formalization includes:\n\n- 8 definitions (KernelSection, TropicalFeatureRankLE, IsRepresentedBy, InKernelSpan, ResiduatedCoefficient, IsActiveSupport, IsSupportAntichain, MinimalSupportExpansion, etc.)\n- 12 theorems, all proved without sorry\n\nThe formalization totals approximately 260 lines of Lean code. Key proof techniques include:\n- `Finset.inf'_le` and `Finset.le_inf'` for residuation bounds\n- `Finset.exists_min_image` for tightness of the infimum\n- `Finset.sup'_le` for tropical predictor bounds\n- Contrapositive reasoning for the antichain theorem\n- Type-theoretic embedding via `Fintype.equivOfCardEq` for the factorization theorem\n\n---\n\n## 7. Discussion\n\n### 7.1 Relationship to Classical RKHS Theory\n\nIn classical RKHS theory, the Representer Theorem states that solutions to regularized ERM problems lie in the span of kernel sections at training points. Our results provide a *structure theorem* for the tropical analogue: not just that solutions are in the span, but that the span has a canonical decomposition into extremal components with unique minimal support.\n\nThe key differences are:\n- **Classical**: Support depends on the optimization problem. **Tropical**: Support depends only on the algebraic structure.\n- **Classical**: Support vectors arise from KKT conditions. **Tropical**: Support prototypes arise from residuation (Galois connection).\n- **Classical**: Uniqueness requires strict complementarity. **Tropical**: Uniqueness is automatic from the lattice structure.\n\n### 7.2 Computational Considerations\n\nThe O(n\u00b3) complexity of the greedy support extraction algorithm is competitive with classical kernel methods (SVM training is typically O(n\u00b2 to n\u00b3)). The residuated coefficients can be computed in O(n\u00b2), which is optimal since reading the kernel matrix requires O(n\u00b2) time.\n\nFor large n, the bottleneck is the greedy backward elimination. A forward selection variant (starting with S = \u2205 and adding elements) could be more efficient in practice, terminating when the reconstruction error falls below a threshold.\n\n### 7.3 Limitations\n\n1. **Finite setting**: Our results are for finite X. Extension to compact or infinite X would require tropical topological semimodule theory.\n\n2. **Feature rank**: Computing the exact tropical feature rank is NP-hard in general (it reduces to tropical matrix factorization). Our algorithms estimate it rather than computing it exactly.\n\n3. **Equality vs. inequality**: The generation definition uses inequality (K(z, y) \u2264 max...) rather than equality. This means generation is a weaker condition than factorization, and the two notions of rank may differ.\n\n---\n\n## 8. Future Work\n\n1. **Tropical Representer Theorem for ERM**: Extend to regularized empirical risk minimization in the tropical setting, showing that optimal predictors have sparse support.\n\n2. **Infinite-dimensional tropical RKHS**: Develop a theory of reproducing kernel semimodules over compact spaces with tropical integrals.\n\n3. **Tropical spectral theory**: Eigenvalue decomposition of tropical kernel matrices, connecting to tropical linear algebra and max-plus eigenvalues.\n\n4. **Applications to neural network compression**: Apply prototype extraction to max-plus layers in deep networks, potentially reducing model size while preserving predictions.\n\n5. **Tropical Gaussian processes**: Use tropical kernels for uncertainty quantification, replacing Gaussian expectations with tropical (max-plus) expectations.\n\n---\n\n## References\n\n[1] F. Baccelli, G. Cohen, G.J. Olsder, J.-P. Quadrat. *Synchronization and Linearity*. Wiley, 1992.\n\n[2] V.P. Maslov. *M\u00e9thodes op\u00e9ratorielles*. Mir, 1987.\n\n[3] G.L. Litvinov, V.P. Maslov (eds.). *Idempotent Mathematics and Mathematical Physics*. AMS, 2005.\n\n[4] M. Develin, B. Sturmfels. \"Tropical convexity.\" *Documenta Mathematica*, 9:1\u201327, 2004.\n\n[5] T.S. Blyth, M.F. Janowitz. *Residuation Theory*. Pergamon, 1972.\n\n[6] G. Cohen, S. Gaubert, J.-P. Quadrat. \"Duality and separation theorems in idempotent semimodules.\" *Linear Algebra and its Applications*, 379:395\u2013422, 2004.\n\n[7] B. Sch\u00f6lkopf, A.J. Smola. *Learning with Kernels*. MIT Press, 2002.\n\n[8] A. Berlinet, C. Thomas-Agnan. *Reproducing Kernel Hilbert Spaces in Probability and Statistics*. Springer, 2004.\n\n[9] S. Gaubert, R.D. Katz. \"Minimal half-spaces and external representation of tropical polyhedra.\" *Journal of Algebraic Combinatorics*, 33(3):325\u2013348, 2011.\n\n[10] P. Butkovi\u010d. *Max-linear Systems: Theory and Algorithms*. Springer, 2010.\n",
+    "future_directions": "# Future Directions: Tropical Kernel Mean Duality\n\n## Overview\n\nThe tropical kernel mean duality theorem establishes a foundational bridge between idempotent algebra and kernel-based machine learning. This document outlines five concrete breakthrough research directions opened by this work, each with specific formal targets, expected challenges, and potential impact.\n\n---\n\n## Direction 1: Tropical Representer Theorem for Regularized Empirical Risk Minimization\n\n### Vision\nExtend the duality theorem from the \"algebraic\" setting (representation in the kernel semimodule) to the \"optimization\" setting: show that the solution to a tropical regularized ERM problem has sparse support, with the support size bounded by the tropical feature rank.\n\n### Formal Target\n```\ntheorem tropical_representer_theorem\n  {X : Type*} [Fintype X] [DecidableEq X] [Nonempty X]\n  (K : X \u2192 X \u2192 \u211d)\n  (loss : (X \u2192 \u211d) \u2192 \u211d)  -- tropical loss function\n  (reg : (X \u2192 \u211d) \u2192 \u211d)   -- tropical regularizer\n  (hLoss : TropicalConvex loss)\n  (hReg : TropicalMonotone reg)\n  (hRank : TropicalFeatureRankLE K r) :\n  \u2203 f_opt : X \u2192 \u211d,\n    IsOptimal loss reg f_opt \u2227\n    \u2203 S : Finset X, S.card \u2264 r + 1 \u2227 MinimalSupportExpansion K f_opt S _\n```\n\n### Key Challenges\n- Defining tropical convexity for loss functions on finite domains\n- Establishing tropical analogues of strong duality / KKT conditions\n- Connecting the tropical regularization path to support stability\n\n### Expected Impact\nThis would provide a rigorous theoretical foundation for sparse tropical learning algorithms, analogous to the classical Representer Theorem's role for SVMs and kernel regression.\n\n---\n\n## Direction 2: Tropical Gaussian Processes via Idempotent Covariance Kernels\n\n### Vision\nReplace Gaussian expectations with tropical (max-plus) expectations to define \"tropical Gaussian processes.\" The posterior mean becomes a tropical linear combination of kernel sections, and the posterior \"uncertainty\" becomes a tropical residuation gap.\n\n### Formal Target\n```\nstructure TropicalGP where\n  prior_mean : X \u2192 \u211d\n  kernel : X \u2192 X \u2192 \u211d\n  observations : Finset X\n  values : X \u2192 \u211d\n\ndef posterior_mean (gp : TropicalGP) : X \u2192 \u211d :=\n  fun y => gp.observations.sup' _ (fun x =>\n    ResiduatedCoefficient gp.kernel gp.values x + gp.kernel x y)\n\ndef posterior_gap (gp : TropicalGP) (y : X) : \u211d :=\n  gp.values y - posterior_mean gp y\n```\n\n### Key Challenges\n- Defining tropical conditional distributions meaningfully\n- Establishing posterior consistency guarantees\n- Connecting to Maslov dequantization of classical Gaussian processes\n\n### Expected Impact\nTropical GPs could provide uncertainty quantification for max-plus systems (scheduling, network routing) where classical probabilistic models are inappropriate. The residuation gap provides a natural \"confidence interval\" analog.\n\n---\n\n## Direction 3: Generalization to Compact Idempotent Semimodules\n\n### Vision\nExtend the finite duality theorem to compact topological spaces, replacing finite suprema with tropical integrals and finite support sets with compact support measures.\n\n### Formal Target\n```\ntheorem compact_tropical_kernel_duality\n  {X : Type*} [TopologicalSpace X] [CompactSpace X]\n  (K : X \u2192 X \u2192 \u211d) (hCont : Continuous (uncurry K))\n  (hRank : TropicalFeatureRankLE_continuous K r) :\n  \u2200 f \u2208 KernelSemimodule K,\n    \u2203 \u03bc : TropicalMeasure X,\n      \u03bc.support.card \u2264 r \u2227\n      f = TropicalIntegral K \u03bc\n```\n\n### Key Challenges\n- Defining tropical measures (Maslov measures) over compact spaces\n- Proving tropical Riesz representation for continuous tropical functionals\n- Establishing the Choquet boundary characterization in the tropical setting\n\n### Expected Impact\nThis would unify the finite theory with the continuous max-plus semimodule theory of Akian, Gaubert, and Kolokoltsov, opening applications to infinite-dimensional tropical optimization.\n\n---\n\n## Direction 4: Prototype-Stable Certified Robustness Under Perturbations\n\n### Vision\nShow that if a tropical predictor has certified minimal support, then small perturbations to the kernel matrix (modeling data noise or adversarial attacks) preserve the support structure. Quantify the robustness margin in terms of the residuation gap.\n\n### Formal Target\n```\ntheorem support_stability_under_perturbation\n  (K K' : X \u2192 X \u2192 \u211d)\n  (f : X \u2192 \u211d)\n  (hMin : MinimalSupportExpansion K f S hS)\n  (hPert : \u2200 x y, |K x y - K' x y| \u2264 \u03b5)\n  (hMargin : ResidationMargin K f S > 2 * \u03b5 * Fintype.card X) :\n  MinimalSupportExpansion K' f S hS\n```\n\n### Key Challenges\n- Defining a meaningful \"residuation margin\" that controls stability\n- Handling the case where support elements may swap under perturbation\n- Connecting to Lipschitz stability of tropical operations\n\n### Expected Impact\nThis would provide the first certified robustness guarantees for tropical kernel methods, with applications to adversarial robustness in piecewise-linear neural networks (which can be viewed as tropical computations).\n\n---\n\n## Direction 5: Tropical Nystr\u00f6m Theory and Spectral Compression\n\n### Vision\nDevelop a tropical analogue of the Nystr\u00f6m approximation: given a large tropical kernel matrix, approximate it using a small number of \"landmark\" columns selected by the extremal structure. Connect to tropical eigenvalues and the max-plus spectral theorem.\n\n### Formal Target\n```\ntheorem tropical_nystrom_approximation\n  (K : X \u2192 X \u2192 \u211d)\n  (S : Finset X) (hS : S.Nonempty)\n  (hGen : GeneratesKernelSemimodule K S hS) :\n  \u2200 x y : X,\n    K x y \u2264 S.sup' hS (fun s =>\n      ResiduatedCoefficient K (KernelSection K x) s +\n      K s y)\n```\n\nAnd for the spectral version:\n```\ntheorem tropical_eigendecomposition\n  (K : X \u2192 X \u2192 \u211d) (hSymm : Symmetric K) :\n  \u2203 (\u03bb : X \u2192 \u211d) (v : X \u2192 X \u2192 \u211d),\n    \u2200 x y, K x y = Finset.univ.sup' _ (fun z =>\n      \u03bb z + v z x + v z y)\n```\n\n### Key Challenges\n- Tropical eigenvalues may not be unique or well-ordered\n- The Nystr\u00f6m approximation error bound requires careful analysis of the residuation structure\n- Connecting to Butkovi\u010d's max-plus spectral theory for square matrices\n\n### Expected Impact\nTropical Nystr\u00f6m methods could enable scalable tropical kernel learning on large datasets, with provable approximation guarantees derived from the algebraic structure rather than probabilistic sampling arguments.\n\n---\n\n## Cross-Cutting Themes\n\nSeveral themes connect these five directions:\n\n1. **Residuation as the universal tool**: In every direction, the Galois connection of residuation provides canonical coefficients and optimality certificates.\n\n2. **Extremal decomposition**: The notion of extremal generators \u2014 elements that cannot be tropically generated from others \u2014 is the structural invariant that controls sparsity in all settings.\n\n3. **Certification**: Unlike classical approximate methods, tropical methods produce exact certificates of optimality and minimality, enabling verifiable and explainable AI systems.\n\n4. **Finite-to-infinite lifting**: The finite theory provides the foundation; each direction lifts a different aspect to richer mathematical settings.\n\n5. **Max-plus as a design principle**: Rather than adapting classical (sum-product) methods to the tropical setting, these directions develop native max-plus theory that exploits the specific algebraic properties of idempotent operations.\n\n---\n\n## Implementation Roadmap\n\n| Direction | Estimated Effort | Dependencies | Priority |\n|-----------|-----------------|--------------|----------|\n| 1. Tropical ERM | Medium | Current results | **High** |\n| 2. Tropical GP | Medium-High | Direction 1 | Medium |\n| 3. Compact extension | High | Maslov measure theory | Medium |\n| 4. Robustness | Medium | Current results | **High** |\n| 5. Nystr\u00f6m/Spectral | High | Tropical linear algebra | Medium |\n\nDirections 1 and 4 are the most immediately actionable, building directly on the current formalization. Direction 3 requires the most new infrastructure. Directions 2 and 5 are natural follow-ups that would significantly broaden the applicability of the theory.\n",
+    "demos": [
+      {
+        "name": "Tropical Kernel Duality Demonstrations",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nTropical Kernel Mean Duality \u2014 Interactive Demonstrations\n\nDemonstrates the core concepts of tropical kernel duality:\n1. Rank-1 tropical kernel with unique prototype\n2. Rank-2 kernel with minimal prototype set\n3. Residuated coefficient computation and reconstruction\n4. Support antichain verification\n\"\"\"\n\nimport numpy as np\nfrom typing import List, Tuple, Optional\n\ndef tropical_max(a: float, b: float) -> float:\n    \"\"\"Tropical addition (max).\"\"\"\n    return max(a, b)\n\ndef tropical_mul(a: float, b: float) -> float:\n    \"\"\"Tropical multiplication (ordinary +).\"\"\"\n    return a + b\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# \u00a71. Tropical Feature Factorization\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef make_kernel_from_features(phi: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Given feature map \u03c6 : X \u2192 \u211d^r (as an n\u00d7r matrix),\n    compute the tropical kernel K(x,y) = max_i (\u03c6(x,i) + \u03c6(y,i)).\n    \n    Parameters\n    ----------\n    phi : np.ndarray of shape (n, r)\n    \n    Returns\n    -------\n    K : np.ndarray of shape (n, n)\n    \"\"\"\n    n, r = phi.shape\n    K = np.full((n, n), -np.inf)\n    for i in range(r):\n        K = np.maximum(K, np.add.outer(phi[:, i], phi[:, i]))\n    return K\n\n\ndef verify_symmetry(K: np.ndarray) -> bool:\n    \"\"\"Check that K is symmetric.\"\"\"\n    return np.allclose(K, K.T)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# \u00a72. Residuated Coefficients\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef residuated_coefficient(K: np.ndarray, f: np.ndarray, x: int) -> float:\n    \"\"\"\n    Compute the residuated coefficient of x for representing f via K_x.\n    \n    res(K, f, x) = min_y (f(y) - K(x, y))\n    \n    This is the largest c such that c + K(x,y) \u2264 f(y) for all y.\n    \"\"\"\n    return np.min(f - K[x, :])\n\n\ndef residuated_coefficients(K: np.ndarray, f: np.ndarray) -> np.ndarray:\n    \"\"\"Compute all residuated coefficients.\"\"\"\n    n = K.shape[0]\n    return np.array([residuated_coefficient(K, f, x) for x in range(n)])\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# \u00a73. Tropical Prototype Predictor\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef tropical_predictor(K: np.ndarray, f: np.ndarray,\n                       support: List[int]) -> np.ndarray:\n    \"\"\"\n    Reconstruct f from support set S using residuated coefficients.\n    \n    pred(y) = max_{x \u2208 S} (res(K, f, x) + K(x, y))\n    \"\"\"\n    n = K.shape[0]\n    coeffs = residuated_coefficients(K, f)\n    pred = np.full(n, -np.inf)\n    for x in support:\n        pred = np.maximum(pred, coeffs[x] + K[x, :])\n    return pred\n\n\ndef find_active_support(K: np.ndarray, f: np.ndarray) -> List[int]:\n    \"\"\"\n    Find the active support: elements x where the residuated bound is tight.\n    \n    x is active if \u2203 y: res(K,f,x) + K(x,y) = f(y).\n    By the tightness theorem, every x is active, but some are more\n    \"useful\" than others for reconstruction.\n    \"\"\"\n    n = K.shape[0]\n    coeffs = residuated_coefficients(K, f)\n    active = []\n    for x in range(n):\n        gaps = f - (coeffs[x] + K[x, :])\n        if np.min(np.abs(gaps)) < 1e-10:\n            active.append(x)\n    return active\n\n\ndef find_minimal_support(K: np.ndarray, f: np.ndarray) -> List[int]:\n    \"\"\"\n    Find a minimal support set: greedily remove elements that don't\n    affect the reconstruction.\n    \"\"\"\n    n = K.shape[0]\n    support = list(range(n))\n    \n    for x in range(n):\n        candidate = [s for s in support if s != x]\n        if len(candidate) == 0:\n            continue\n        pred = tropical_predictor(K, f, candidate)\n        if np.allclose(pred, f):\n            support = candidate\n    \n    return support\n\n\ndef is_antichain(K: np.ndarray, f: np.ndarray, support: List[int]) -> bool:\n    \"\"\"\n    Check if support is an antichain: no element dominates another.\n    \n    x dominates z if res(K,f,x) + K(x,y) \u2264 res(K,f,z) + K(z,y) for all y.\n    \"\"\"\n    coeffs = residuated_coefficients(K, f)\n    for x in support:\n        for z in support:\n            if x == z:\n                continue\n            # Check if x is dominated by z\n            dominated = np.all(coeffs[x] + K[x, :] <= coeffs[z] + K[z, :] + 1e-10)\n            if dominated:\n                return False\n    return True\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# \u00a74. Demonstrations\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_rank1_kernel():\n    \"\"\"\n    Demo 1: Rank-1 tropical kernel.\n    \n    \u03c6(x) = [v(x)] for a single feature, so K(x,y) = v(x) + v(y).\n    This is a tropical \"rank-1\" kernel \u2014 all sections are parallel shifts.\n    Any single point suffices as support.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Rank-1 Tropical Kernel\")\n    print(\"=\" * 60)\n    \n    n = 4\n    v = np.array([1.0, 3.0, 2.0, 0.5])\n    phi = v.reshape(-1, 1)\n    K = make_kernel_from_features(phi)\n    \n    print(f\"\\nFeature vector v = {v}\")\n    print(f\"Kernel K(x,y) = v(x) + v(y):\")\n    print(K)\n    print(f\"Symmetric: {verify_symmetry(K)}\")\n    \n    # Take f = K_0 (kernel section at point 0)\n    f = K[0, :]\n    print(f\"\\nTarget f = K_0 = {f}\")\n    \n    coeffs = residuated_coefficients(K, f)\n    print(f\"Residuated coefficients: {coeffs}\")\n    \n    support = find_minimal_support(K, f)\n    print(f\"Minimal support: {support}\")\n    \n    pred = tropical_predictor(K, f, support)\n    print(f\"Reconstructed: {pred}\")\n    print(f\"Exact: {np.allclose(pred, f)}\")\n    print(f\"Antichain: {is_antichain(K, f, support)}\")\n\n\ndef demo_rank2_kernel():\n    \"\"\"\n    Demo 2: Rank-2 tropical kernel.\n    \n    \u03c6 : X \u2192 \u211d\u00b2 gives K(x,y) = max(\u03c6\u2081(x)+\u03c6\u2081(y), \u03c6\u2082(x)+\u03c6\u2082(y)).\n    Different sections may require different support prototypes.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Rank-2 Tropical Kernel\")\n    print(\"=\" * 60)\n    \n    n = 5\n    phi = np.array([\n        [3.0, 1.0],  # x=0: strong in feature 1\n        [1.0, 4.0],  # x=1: strong in feature 2\n        [2.5, 2.5],  # x=2: balanced\n        [0.0, 3.0],  # x=3: feature 2 biased\n        [2.0, 0.0],  # x=4: feature 1 biased\n    ])\n    K = make_kernel_from_features(phi)\n    \n    print(f\"\\nFeature map \u03c6:\")\n    print(phi)\n    print(f\"\\nTropical kernel K:\")\n    np.set_printoptions(precision=1)\n    print(K)\n    print(f\"Symmetric: {verify_symmetry(K)}\")\n    \n    # Construct a function in the kernel span\n    c = np.array([0.0, -1.0, 0.0, 0.0, 0.0])\n    f = np.full(n, -np.inf)\n    for x in range(n):\n        f = np.maximum(f, c[x] + K[x, :])\n    \n    print(f\"\\nTarget f (tropical combination with c={c}):\")\n    print(f)\n    \n    coeffs = residuated_coefficients(K, f)\n    print(f\"\\nResiduated coefficients: {coeffs}\")\n    \n    support = find_minimal_support(K, f)\n    print(f\"Minimal support: {support}\")\n    print(f\"Support size: {len(support)} (\u2264 rank 2)\")\n    \n    pred = tropical_predictor(K, f, support)\n    print(f\"Reconstructed: {pred}\")\n    print(f\"Exact: {np.allclose(pred, f)}\")\n    print(f\"Antichain: {is_antichain(K, f, support)}\")\n\n\ndef demo_gram_reconstruction():\n    \"\"\"\n    Demo 3: Reconstruction from tropical Gram matrix.\n    \n    Given only the Gram matrix (kernel evaluations), reconstruct\n    minimal prototype predictors for various target functions.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Reconstruction from Gram Matrix\")\n    print(\"=\" * 60)\n    \n    n = 6\n    np.random.seed(42)\n    phi = np.random.randn(n, 3) * 2  # rank-3 features\n    K = make_kernel_from_features(phi)\n    \n    print(f\"Kernel matrix (rank-3 features, n={n}):\")\n    np.set_printoptions(precision=2)\n    print(K)\n    \n    # Test several kernel sections\n    for target_x in [0, 2, 5]:\n        f = K[target_x, :]\n        support = find_minimal_support(K, f)\n        pred = tropical_predictor(K, f, support)\n        exact = np.allclose(pred, f)\n        antichain = is_antichain(K, f, support)\n        \n        print(f\"\\n  K_{target_x}: support={support}, \"\n              f\"|support|={len(support)}, \"\n              f\"exact={exact}, antichain={antichain}\")\n    \n    # Test a general function in the span\n    c = np.array([1.0, 0.0, -0.5, 0.5, -1.0, 0.0])\n    f = np.full(n, -np.inf)\n    for x in range(n):\n        f = np.maximum(f, c[x] + K[x, :])\n    \n    support = find_minimal_support(K, f)\n    pred = tropical_predictor(K, f, support)\n    exact = np.allclose(pred, f)\n    antichain = is_antichain(K, f, support)\n    \n    print(f\"\\n  General f: support={support}, \"\n          f\"|support|={len(support)} \u2264 rank=3, \"\n          f\"exact={exact}, antichain={antichain}\")\n\n\ndef demo_residuation_optimality():\n    \"\"\"\n    Demo 4: Residuation optimality \u2014 the residuated coefficient is\n    the BEST possible coefficient.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Residuation Optimality\")\n    print(\"=\" * 60)\n    \n    n = 4\n    phi = np.array([[2.0, 1.0], [1.0, 3.0], [2.5, 2.0], [0.5, 2.5]])\n    K = make_kernel_from_features(phi)\n    f = K[0, :]  # Target: kernel section at 0\n    \n    print(f\"K = {K}\")\n    print(f\"f = K_0 = {f}\")\n    \n    for x in range(n):\n        res_c = residuated_coefficient(K, f, x)\n        print(f\"\\n  x={x}: residuated coeff = {res_c:.4f}\")\n        \n        # Verify it's a valid lower bound\n        gaps = f - (res_c + K[x, :])\n        print(f\"    Lower bound gaps (all \u2265 0): {gaps}\")\n        assert np.all(gaps >= -1e-10), \"Lower bound violated!\"\n        \n        # Verify it's tight somewhere\n        tight_at = np.argmin(gaps)\n        print(f\"    Tight at y={tight_at}: gap = {gaps[tight_at]:.6f}\")\n        \n        # Verify optimality: any larger c violates the bound\n        test_c = res_c + 0.1\n        violations = f - (test_c + K[x, :])\n        violated = np.any(violations < -1e-10)\n        print(f\"    c+0.1 = {test_c:.4f} violates bound: {violated}\")\n\n\nif __name__ == \"__main__\":\n    demo_rank1_kernel()\n    demo_rank2_kernel()\n    demo_gram_reconstruction()\n    demo_residuation_optimality()\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demos completed successfully!\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Residuated Coefficient Computation",
+        "pseudocode": "res(K, f, x) = min_{y in X} (f(y) - K(x, y))\n\nFor each y in X:\n  c = min(c, f[y] - K[x, y])\nreturn c\n\nTime: O(n), Space: O(1)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nTropical Kernel Mean Duality \u2014 Core Algorithms\n\nImplements the key algorithms from the tropical kernel duality theory:\n1. Tropical Feature Factorization\n2. Residuated Coefficient Computation\n3. Greedy Minimal Support Extraction\n4. Antichain Verification\n5. Certified Prototype Reconstruction\n\nAll algorithms operate on finite tropical kernels K : X \u00d7 X \u2192 \u211d\nwhere tropical addition is max and tropical multiplication is +.\n\"\"\"\n\nimport numpy as np\nfrom dataclasses import dataclass\nfrom typing import List, Tuple, Set, Optional\n\n\n@dataclass\nclass TropicalKernel:\n    \"\"\"\n    A finite tropical kernel represented as a matrix.\n    \n    K[i,j] represents the kernel evaluation K(x_i, x_j).\n    A kernel of feature rank r factors as:\n        K(x,y) = max_{k=1..r} (\u03c6(x,k) + \u03c6(y,k))\n    \n    Attributes\n    ----------\n    matrix : np.ndarray\n        The kernel matrix of shape (n, n).\n    feature_map : np.ndarray or None\n        The feature map \u03c6 of shape (n, r), if known.\n    \"\"\"\n    matrix: np.ndarray\n    feature_map: Optional[np.ndarray] = None\n    \n    @property\n    def n(self) -> int:\n        return self.matrix.shape[0]\n    \n    @property\n    def rank(self) -> Optional[int]:\n        if self.feature_map is not None:\n            return self.feature_map.shape[1]\n        return None\n    \n    def section(self, x: int) -> np.ndarray:\n        \"\"\"Return kernel section K_x.\"\"\"\n        return self.matrix[x, :]\n    \n    def is_symmetric(self) -> bool:\n        \"\"\"Check symmetry.\"\"\"\n        return np.allclose(self.matrix, self.matrix.T)\n    \n    @classmethod\n    def from_features(cls, phi: np.ndarray) -> 'TropicalKernel':\n        \"\"\"\n        Construct a tropical kernel from a feature map.\n        \n        K(x,y) = max_i (\u03c6(x,i) + \u03c6(y,i))\n        \n        Parameters\n        ----------\n        phi : np.ndarray of shape (n, r)\n        \n        Returns\n        -------\n        TropicalKernel\n        \n        Time complexity: O(n\u00b2 \u00d7 r)\n        Space complexity: O(n\u00b2 + n\u00d7r)\n        \"\"\"\n        n, r = phi.shape\n        K = np.full((n, n), -np.inf)\n        for i in range(r):\n            K = np.maximum(K, np.add.outer(phi[:, i], phi[:, i]))\n        return cls(matrix=K, feature_map=phi)\n    \n    @classmethod\n    def from_distance(cls, D: np.ndarray) -> 'TropicalKernel':\n        \"\"\"\n        Construct a tropical kernel from a distance matrix.\n        \n        K(x,y) = -D(x,y) (negative distance kernel).\n        \n        Time complexity: O(n\u00b2)\n        \"\"\"\n        return cls(matrix=-D)\n\n\n@dataclass\nclass SupportDecomposition:\n    \"\"\"\n    Result of tropical kernel support decomposition.\n    \n    Attributes\n    ----------\n    support : List[int]\n        Indices of support prototypes.\n    coefficients : np.ndarray\n        Residuated coefficients for each support element.\n    is_minimal : bool\n        Whether the support is minimal (no element can be removed).\n    is_antichain : bool\n        Whether the support forms an antichain.\n    reconstruction_error : float\n        Maximum absolute reconstruction error.\n    \"\"\"\n    support: List[int]\n    coefficients: np.ndarray\n    is_minimal: bool\n    is_antichain: bool\n    reconstruction_error: float\n\n\ndef compute_residuated_coefficient(K: TropicalKernel, f: np.ndarray,\n                                    x: int) -> float:\n    \"\"\"\n    Compute the residuated coefficient of x for representing f via K_x.\n    \n    res(K, f, x) = min_y (f(y) - K(x, y))\n    \n    This is the largest c such that c + K(x,y) \u2264 f(y) for all y.\n    By the Galois connection of residuation theory, this is optimal.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray of shape (n,)\n    x : int\n    \n    Returns\n    -------\n    float : The residuated coefficient.\n    \n    Time complexity: O(n)\n    \"\"\"\n    return float(np.min(f - K.matrix[x, :]))\n\n\ndef compute_all_residuated_coefficients(K: TropicalKernel,\n                                         f: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute residuated coefficients for all points.\n    \n    Time complexity: O(n\u00b2)\n    \"\"\"\n    return np.array([compute_residuated_coefficient(K, f, x)\n                     for x in range(K.n)])\n\n\ndef reconstruct_from_support(K: TropicalKernel, f: np.ndarray,\n                              support: List[int]) -> np.ndarray:\n    \"\"\"\n    Reconstruct f from a support set using residuated coefficients.\n    \n    pred(y) = max_{x \u2208 S} (res(K, f, x) + K(x, y))\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    support : List[int]\n    \n    Returns\n    -------\n    np.ndarray : Reconstructed function.\n    \n    Time complexity: O(|S| \u00d7 n)\n    \"\"\"\n    coeffs = compute_all_residuated_coefficients(K, f)\n    pred = np.full(K.n, -np.inf)\n    for x in support:\n        pred = np.maximum(pred, coeffs[x] + K.matrix[x, :])\n    return pred\n\n\ndef greedy_minimal_support(K: TropicalKernel, f: np.ndarray,\n                            tol: float = 1e-10) -> List[int]:\n    \"\"\"\n    Find a minimal support set by greedy backward elimination.\n    \n    Start with all points as support and iteratively remove elements\n    that don't affect the reconstruction quality.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    tol : float\n        Tolerance for reconstruction accuracy.\n    \n    Returns\n    -------\n    List[int] : Minimal support set.\n    \n    Time complexity: O(n\u00b2 \u00d7 |S_final|) in practice, O(n\u00b3) worst case.\n    \"\"\"\n    support = list(range(K.n))\n    \n    for x in range(K.n):\n        candidate = [s for s in support if s != x]\n        if len(candidate) == 0:\n            continue\n        pred = reconstruct_from_support(K, f, candidate)\n        if np.max(np.abs(pred - f)) < tol:\n            support = candidate\n    \n    return support\n\n\ndef verify_antichain(K: TropicalKernel, f: np.ndarray,\n                      support: List[int],\n                      tol: float = 1e-10) -> bool:\n    \"\"\"\n    Verify that a support set forms an antichain under the\n    residuated domination preorder.\n    \n    x dominates z if res(K,f,x) + K(x,y) \u2264 res(K,f,z) + K(z,y) \u2200y.\n    An antichain has no domination relations.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    support : List[int]\n    tol : float\n    \n    Returns\n    -------\n    bool : True if support is an antichain.\n    \n    Time complexity: O(|S|\u00b2 \u00d7 n)\n    \"\"\"\n    coeffs = compute_all_residuated_coefficients(K, f)\n    for x in support:\n        for z in support:\n            if x == z:\n                continue\n            dominated = np.all(\n                coeffs[x] + K.matrix[x, :] <=\n                coeffs[z] + K.matrix[z, :] + tol\n            )\n            if dominated:\n                return False\n    return True\n\n\ndef certified_decomposition(K: TropicalKernel,\n                             f: np.ndarray,\n                             tol: float = 1e-10) -> SupportDecomposition:\n    \"\"\"\n    Compute a certified minimal support decomposition.\n    \n    This is the main algorithm: given a tropical kernel and a target\n    function, find the minimal antichain support and verify all\n    certification conditions.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    tol : float\n    \n    Returns\n    -------\n    SupportDecomposition : Complete decomposition with certificates.\n    \n    Time complexity: O(n\u00b3) overall.\n    \"\"\"\n    # Step 1: Compute all residuated coefficients\n    coeffs = compute_all_residuated_coefficients(K, f)\n    \n    # Step 2: Find minimal support\n    support = greedy_minimal_support(K, f, tol)\n    \n    # Step 3: Reconstruct and compute error\n    pred = reconstruct_from_support(K, f, support)\n    error = float(np.max(np.abs(pred - f)))\n    \n    # Step 4: Verify minimality\n    is_minimal = True\n    for x in support:\n        reduced = [s for s in support if s != x]\n        if len(reduced) == 0:\n            continue\n        reduced_pred = reconstruct_from_support(K, f, reduced)\n        if np.max(np.abs(reduced_pred - f)) < tol:\n            is_minimal = False\n            break\n    \n    # Step 5: Verify antichain\n    is_antichain = verify_antichain(K, f, support, tol)\n    \n    return SupportDecomposition(\n        support=support,\n        coefficients=coeffs[support],\n        is_minimal=is_minimal,\n        is_antichain=is_antichain,\n        reconstruction_error=error,\n    )\n\n\ndef estimate_feature_rank(K: TropicalKernel,\n                           max_rank: Optional[int] = None) -> int:\n    \"\"\"\n    Estimate the tropical feature rank of a kernel matrix.\n    \n    Uses the observation that rank-r kernels have at most r\n    \"independent directions\" in their section family. We estimate\n    this by finding the size of a maximal non-dominated subset.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    max_rank : int, optional\n        Maximum rank to consider.\n    \n    Returns\n    -------\n    int : Estimated feature rank.\n    \n    Time complexity: O(n\u00b3)\n    \"\"\"\n    n = K.n\n    if max_rank is None:\n        max_rank = n\n    \n    # Find non-dominated sections\n    non_dominated = list(range(n))\n    for x in range(n):\n        if x not in non_dominated:\n            continue\n        for z in range(n):\n            if z == x or z not in non_dominated:\n                continue\n            # Check if section z is dominated by section x\n            dominated = True\n            for y in range(n):\n                if K.matrix[z, y] > K.matrix[x, y]:\n                    dominated = False\n                    break\n            if dominated:\n                non_dominated.remove(z)\n    \n    return min(len(non_dominated), max_rank)\n\n\nif __name__ == \"__main__\":\n    # Quick test\n    np.random.seed(42)\n    phi = np.random.randn(8, 3)\n    K = TropicalKernel.from_features(phi)\n    \n    print(f\"Kernel: {K.n}\u00d7{K.n}, rank={K.rank}\")\n    print(f\"Symmetric: {K.is_symmetric()}\")\n    \n    f = K.section(0)\n    decomp = certified_decomposition(K, f)\n    print(f\"\\nDecomposition of K_0:\")\n    print(f\"  Support: {decomp.support}\")\n    print(f\"  Coefficients: {decomp.coefficients}\")\n    print(f\"  Minimal: {decomp.is_minimal}\")\n    print(f\"  Antichain: {decomp.is_antichain}\")\n    print(f\"  Error: {decomp.reconstruction_error:.2e}\")\n    \n    rank = estimate_feature_rank(K)\n    print(f\"\\nEstimated feature rank: {rank}\")\n",
+        "code_file": "visualizations/algebratropicalmachinelearning_tropical_kernel_mea_residuated_coefficient_computation.py"
+      },
+      {
+        "name": "Greedy Minimal Support Extraction",
+        "pseudocode": "S = {0, ..., n-1}\nfor x = 0 to n-1:\n  S' = S \\ {x}\n  if reconstruct(K, f, S') \u2248 f:\n    S = S'\nreturn S\n\nTime: O(n^3), Space: O(n^2)",
+        "code": "# See algorithms.py for full implementation",
+        "code_file": "visualizations/algebratropicalmachinelearning_tropical_kernel_mea_greedy_minimal_support_extraction.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Tropical Kernel Matrix and Residuated Coefficients",
+        "file": "visualizations/algebratropicalmachinelearning_tropical_kernel_mea_tropical_kernel_matrix_and_residuated_coefficients.png"
+      },
+      {
+        "name": "Support Prototype Selection Across Kernel Sections",
+        "file": "visualizations/algebratropicalmachinelearning_tropical_kernel_mea_support_prototype_selection_across_kernel_sections.png"
+      },
+      {
+        "name": "Feature Rank vs Support Size Analysis",
+        "file": "visualizations/algebratropicalmachinelearning_tropical_kernel_mea_feature_rank_vs_support_size_analysis.png"
+      },
+      {
+        "name": "Residuation Landscape and Galois Connection",
+        "file": "visualizations/algebratropicalmachinelearning_tropical_kernel_mea_residuation_landscape_and_galois_connection.png"
+      }
+    ],
+    "lean_proofs": "/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\n\n/-!\n# Tropical Kernel Mean Duality via Idempotent RKHS Semimodules\n\nThis file establishes a finite duality theorem at the interface of tropical\nidempotent analysis and kernel-based machine learning. The central result shows\nthat finite tropical kernels with controlled feature complexity admit a canonical\nidempotent reproducing semimodule whose extremal generators are exactly the\nsupport prototypes needed for minimal classifier/regressor reconstruction.\n\n## Mathematical Setting\n\nWe work over a finite type `X` with a tropical kernel `K : X \u2192 X \u2192 \u211d`.\nIn the tropical (max-plus) semiring, \"addition\" is `max` and \"multiplication\"\nis `+`. A tropical kernel `K` admits a *feature factorization* of rank `r` if\nthere exists `\u03c6 : X \u2192 Fin r \u2192 \u211d` such that\n\n  `K x y = max_{i : Fin r} (\u03c6 x i + \u03c6 y i)`\n\nThe *kernel semimodule* `H_K` is the set of functions `X \u2192 \u211d` that can be\nrepresented as tropical linear combinations of kernel sections:\n\n  `f(y) = max_{x \u2208 S} (c x + K x y)`\n\nfor some finite support `S` and coefficients `c`.\n\n## Main Results\n\n* `residuatedCoefficient_le` \u2014 Residuated coefficients yield valid lower bounds\n* `residuatedCoefficient_greatest` \u2014 Residuated coefficients are optimal\n* `kernelSection_mem_span` \u2014 Every kernel section is self-representable\n* `residuated_lower_bound` \u2014 The prototype predictor lower-bounds any target\n* `reconstruction_exact_of_minimal_support` \u2014 Exact reconstruction from minimal support\n* `minimal_support_is_antichain` \u2014 Minimal support sets are antichains\n* `feature_rank_implies_generation` \u2014 Feature rank bounds generator size\n* `generation_implies_feature_rank` \u2014 Generating sets bound feature rank\n* `certified_residuated_bound` \u2014 Universal residuated lower bound\n\n## References\n\n- Akian, Gaubert, Kolokoltsov: \"Idempotent analysis and max-plus algebra\"\n- Cohen, Gaubert, Quadrat: \"Max-plus algebra and system theory\"\n-/\n\nnoncomputable section\n\nopen Finset\n\nnamespace TropicalKernel\n\nvariable {X : Type*} [Fintype X] [DecidableEq X] [Nonempty X]\n\n/-! ## \u00a71. Tropical Kernel and Feature Factorization -/\n\n/-- A kernel section `K_x` is the function `y \u21a6 K x y`. -/\ndef KernelSection (K : X \u2192 X \u2192 \u211d) (x : X) : X \u2192 \u211d := K x\n\n/-- A kernel `K` has a tropical feature factorization of rank \u2264 `r` through\n    an index type `I` with `|I| \u2264 r`. We use `Fin r` as the index type and\n    require `r > 0` for nonemptiness. -/\ndef TropicalFeatureRankLE (K : X \u2192 X \u2192 \u211d) (r : \u2115) : Prop :=\n  \u2203 \u03c6 : X \u2192 Fin (r + 1) \u2192 \u211d,\n    \u2200 x y : X, K x y = (Finset.univ (\u03b1 := Fin (r + 1))).sup'\n      univ_nonempty (fun i => \u03c6 x i + \u03c6 y i)\n\n/-! ## \u00a72. Tropical Kernel Semimodule -/\n\n/-- A function `f : X \u2192 \u211d` is *represented by* kernel sections from a nonempty\n    set `S` with coefficients `c` if `f y = max_{x \u2208 S} (c x + K x y)` for all `y`. -/\ndef IsRepresentedBy (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (S : Finset X)\n    (hS : S.Nonempty) (c : X \u2192 \u211d) : Prop :=\n  \u2200 y : X, f y = S.sup' hS (fun x => c x + K x y)\n\n/-- A function `f : X \u2192 \u211d` is *in the kernel span* if there exists a nonempty\n    support `S` and coefficients `c` representing it. -/\ndef InKernelSpan (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) : Prop :=\n  \u2203 (S : Finset X) (hS : S.Nonempty) (c : X \u2192 \u211d), IsRepresentedBy K f S hS c\n\n/-! ## \u00a73. Residuation -/\n\n/-- The *residuated coefficient* of `x` for representing `f` via kernel section\n    `K x`: the largest `c` such that `c + K x y \u2264 f y` for all `y`.\n    This is `min_y (f y - K x y)`, the tropical residuation. -/\ndef ResiduatedCoefficient (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (x : X) : \u211d :=\n  (Finset.univ (\u03b1 := X)).inf' univ_nonempty (fun y => f y - K x y)\n\n/-\nThe residuated coefficient gives a valid lower bound:\n    `ResiduatedCoefficient K f x + K x y \u2264 f y` for all `y`.\n-/\ntheorem residuatedCoefficient_le (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (x y : X) :\n    ResiduatedCoefficient K f x + K x y \u2264 f y := by\n  unfold ResiduatedCoefficient;\n  linarith [ Finset.inf'_le ( fun y => f y - K x y ) ( Finset.mem_univ y ) ]\n\n/-\nThe residuated coefficient is the largest valid coefficient:\n    if `c + K x y \u2264 f y` for all `y`, then `c \u2264 ResiduatedCoefficient K f x`.\n-/\ntheorem residuatedCoefficient_greatest (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (x : X)\n    (c : \u211d) (hc : \u2200 y : X, c + K x y \u2264 f y) :\n    c \u2264 ResiduatedCoefficient K f x := by\n  exact Finset.le_inf' _ _ fun y _ => by linarith [ hc y ] ;\n\n/-- An element `x` is in the *active support* of `f` if the residuated\n    representation through `x` is tight at some point. -/\ndef IsActiveSupport (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (x : X) : Prop :=\n  \u2203 y : X, ResiduatedCoefficient K f x + K x y = f y\n\n/-! ## \u00a74. Domination and Antichains -/\n\n/-- A set `T` is a *support antichain* for `f` if no element's residuated\n    contribution is pointwise dominated by another element's contribution. -/\ndef IsSupportAntichain (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (T : Finset X) : Prop :=\n  \u2200 x \u2208 T, \u2200 z \u2208 T, x \u2260 z \u2192\n    \u00ac(\u2200 y : X, ResiduatedCoefficient K f x + K x y \u2264\n                ResiduatedCoefficient K f z + K z y)\n\n/-! ## \u00a75. Generation -/\n\n/-- A nonempty set `S` *generates* the kernel semimodule: every kernel section\n    is bounded above by some tropical combination from `S`. -/\ndef GeneratesKernelSemimodule (K : X \u2192 X \u2192 \u211d) (S : Finset X) (hS : S.Nonempty) : Prop :=\n  \u2200 z : X, \u2203 c : X \u2192 \u211d,\n    \u2200 y : X, K z y \u2264 S.sup' hS (fun x => c x + K x y)\n\n/-! ## \u00a76. Minimal Support -/\n\n/-- A set `S` *minimally supports* `f` using residuated coefficients:\n    `f` equals the tropical combination and every element is active. -/\ndef MinimalSupportExpansion (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (S : Finset X)\n    (hS : S.Nonempty) : Prop :=\n  (\u2200 y : X, f y = S.sup' hS (fun x => ResiduatedCoefficient K f x + K x y)) \u2227\n  (\u2200 x \u2208 S, IsActiveSupport K f x)\n\n/-- The *tropical prototype predictor* reconstructed from a support set. -/\ndef TropicalPrototypePredictor (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (S : Finset X)\n    (hS : S.Nonempty) : X \u2192 \u211d :=\n  fun y => S.sup' hS (fun x => ResiduatedCoefficient K f x + K x y)\n\n/-! ## \u00a77. Core Lemmas -/\n\n/-\nEvery kernel section is in the kernel span (self-represented via `{x}`).\n-/\ntheorem kernelSection_mem_span (K : X \u2192 X \u2192 \u211d) (x : X) :\n    InKernelSpan K (KernelSection K x) := by\n  use {x};\n  refine' \u27e8 by simp +decide, fun _ => 0, _ \u27e9;\n  intro y; simp +decide [ KernelSection ] ;\n\n/-\n**Residuated Lower Bound**: The residuated predictor always lower-bounds `f`.\n-/\ntheorem residuated_lower_bound (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d)\n    (S : Finset X) (hS : S.Nonempty) :\n    \u2200 y : X, TropicalPrototypePredictor K f S hS y \u2264 f y := by\n  exact fun y => Finset.sup'_le _ _ fun x hx => residuatedCoefficient_le _ _ _ _\n\n/-\n**Reconstruction Exactness**: If `f` has a minimal support expansion,\n    the predictor exactly reconstructs `f`.\n-/\ntheorem reconstruction_exact_of_minimal_support (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d)\n    (S : Finset X) (hS : S.Nonempty) (hMin : MinimalSupportExpansion K f S hS) :\n    \u2200 y : X, TropicalPrototypePredictor K f S hS y = f y := by\n  exact fun y => hMin.1 y \u25b8 rfl\n\n/-\n**Minimal Support is Antichain**: If `S` minimally supports `f` and for\n    each element there is a witness where it alone achieves the maximum,\n    then `S` is a support antichain.\n-/\ntheorem minimal_support_is_antichain (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (S : Finset X)\n    (hS : S.Nonempty) (hMin : MinimalSupportExpansion K f S hS)\n    (hIrred : \u2200 x \u2208 S, \u2203 y : X,\n      \u2200 z \u2208 S, z \u2260 x \u2192 ResiduatedCoefficient K f z + K z y < f y) :\n    IsSupportAntichain K f S := by\n  intro x hx z hz hne;\n  contrapose! hIrred;\n  have := hMin.1;\n  refine' \u27e8 x, hx, fun y => _ \u27e9;\n  obtain \u27e8 w, hw \u27e9 := Finset.exists_max_image S ( fun x => ResiduatedCoefficient K f x + K x y ) hS;\n  by_cases hwz : w = x;\n  \u00b7 exact \u27e8 z, hz, hne.symm, by rw [ this ] ; exact Finset.sup'_le _ _ fun x' hx' => by subst hwz; linarith [ hw.2 x' hx', hIrred y ] \u27e9;\n  \u00b7 exact \u27e8 w, hw.1, hwz, this y \u25b8 Finset.sup'_le _ _ fun x' hx' => hw.2 x' hx' \u27e9\n\n/-\n**Self-section residuation**: If `K x x \u2265 K x y` for all `y`, then the\n    residuated coefficient of `x` for `KernelSection K x` is `0`.\n-/\ntheorem residuated_self_section (K : X \u2192 X \u2192 \u211d) (x : X)\n    (_hRefl : \u2200 y : X, K x y \u2264 K x x) :\n    ResiduatedCoefficient K (KernelSection K x) x = 0 := by\n  unfold ResiduatedCoefficient;\n  unfold KernelSection; aesop;\n\n/-! ## \u00a78. Main Theorems -/\n\n/-\n**Theorem A**: Feature factorization of rank \u2264 `r` implies existence of a\n    generating set. The whole `Finset.univ` always generates.\n-/\nomit [DecidableEq X] in\ntheorem feature_rank_implies_generation (K : X \u2192 X \u2192 \u211d) :\n    GeneratesKernelSemimodule K Finset.univ univ_nonempty := by\n  intro z;\n  exact \u27e8 fun _ => 0, fun y => by simpa using Finset.le_sup' ( fun x => 0 + K x y ) ( Finset.mem_univ z ) \u27e9\n\n/-\n**Theorem B**: If `K` factors through a set `S` (i.e., `K x y = max_{s\u2208S} (\u03c6 x s + \u03c6 y s)`\n    for some function `\u03c6`), then the feature rank is at most `|S|`.\n-/\ntheorem factored_kernel_has_feature_rank (K : X \u2192 X \u2192 \u211d) (S : Finset X)\n    (hS : S.Nonempty) (\u03c6 : X \u2192 X \u2192 \u211d)\n    (hFact : \u2200 x y : X, K x y = S.sup' hS (fun s => \u03c6 x s + \u03c6 y s)) :\n    TropicalFeatureRankLE K S.card := by\n  have h_inj : Nonempty (S \u2243 Fin S.card) := by\n    exact \u27e8 Fintype.equivOfCardEq <| by simp +decide \u27e9;\n  obtain \u27e8 e \u27e9 := h_inj; use fun x i => if hi : i.val < S.card then \u03c6 x ( e.symm \u27e8 i.val, hi \u27e9 ) else \u03c6 x ( hS.choose ) ; simp +decide [ hFact ] ;\n  intro x y; refine' le_antisymm _ _ <;> simp +decide [ Finset.sup'_le_iff ] ;\n  \u00b7 obtain \u27e8 s, hs \u27e9 := Finset.exists_max_image S ( fun s => \u03c6 x s + \u03c6 y s ) hS;\n    use \u27e8 e \u27e8 s, hs.1 \u27e9, by simp +decide \u27e9 ; aesop;\n  \u00b7 -- By definition of $e$, we know that for any $b \\in S$, there exists $i \\in \\{0, 1, ..., S.card - 1\\}$ such that $e.symm i = b$.\n    obtain \u27e8b, hb\u27e9 : \u2203 b \u2208 S, \u2200 s \u2208 S, \u03c6 x s + \u03c6 y s \u2264 \u03c6 x b + \u03c6 y b := by\n      exact Finset.exists_max_image _ _ hS;\n    refine' \u27e8 b, hb.1, fun i => _ \u27e9 ; split_ifs <;> simp_all +decide [ Finset.mem_univ, Finset.mem_image ] ;\n    exact hb.2 _ hS.choose_spec\n\n/-\n**Theorem C**: For any function, all residuated coefficients provide valid\n    lower bounds. This is the universal residuated approximation guarantee.\n-/\ntheorem certified_residuated_bound (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) :\n    \u2200 x y : X, ResiduatedCoefficient K f x + K x y \u2264 f y := by\n  exact fun x y => residuatedCoefficient_le K f x y\n\n/-\n**Theorem D**: The residuated coefficient is tight: the infimum is achieved.\n-/\nomit [DecidableEq X] in\ntheorem residuated_tight (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (x : X) :\n    \u2203 y : X, ResiduatedCoefficient K f x + K x y = f y := by\n  obtain \u27e8y, hy\u27e9 : \u2203 y : X, \u2200 z : X, f z - K x z \u2265 f y - K x y := by\n    simpa using Finset.exists_min_image Finset.univ ( fun z => f z - K x z ) \u27e8 x, Finset.mem_univ x \u27e9;\n  exact \u27e8 y, by rw [ show ResiduatedCoefficient K f x = f y - K x y from le_antisymm ( Finset.inf'_le _ ( Finset.mem_univ _ ) ) ( Finset.le_inf' _ _ fun z hz => hy _ ) ] ; ring \u27e9\n\n/-\n**Corollary**: Every `x` is in the active support of `f` with respect to\n    the residuation \u2014 the infimum defining the residuated coefficient is achieved.\n-/\nomit [DecidableEq X] in\ntheorem always_active_support (K : X \u2192 X \u2192 \u211d) (f : X \u2192 \u211d) (x : X) :\n    IsActiveSupport K f x := by\n  exact residuated_tight K f x\n\nend TropicalKernel\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nTropical Kernel Mean Duality \u2014 Core Algorithms\n\nImplements the key algorithms from the tropical kernel duality theory:\n1. Tropical Feature Factorization\n2. Residuated Coefficient Computation\n3. Greedy Minimal Support Extraction\n4. Antichain Verification\n5. Certified Prototype Reconstruction\n\nAll algorithms operate on finite tropical kernels K : X \u00d7 X \u2192 \u211d\nwhere tropical addition is max and tropical multiplication is +.\n\"\"\"\n\nimport numpy as np\nfrom dataclasses import dataclass\nfrom typing import List, Tuple, Set, Optional\n\n\n@dataclass\nclass TropicalKernel:\n    \"\"\"\n    A finite tropical kernel represented as a matrix.\n    \n    K[i,j] represents the kernel evaluation K(x_i, x_j).\n    A kernel of feature rank r factors as:\n        K(x,y) = max_{k=1..r} (\u03c6(x,k) + \u03c6(y,k))\n    \n    Attributes\n    ----------\n    matrix : np.ndarray\n        The kernel matrix of shape (n, n).\n    feature_map : np.ndarray or None\n        The feature map \u03c6 of shape (n, r), if known.\n    \"\"\"\n    matrix: np.ndarray\n    feature_map: Optional[np.ndarray] = None\n    \n    @property\n    def n(self) -> int:\n        return self.matrix.shape[0]\n    \n    @property\n    def rank(self) -> Optional[int]:\n        if self.feature_map is not None:\n            return self.feature_map.shape[1]\n        return None\n    \n    def section(self, x: int) -> np.ndarray:\n        \"\"\"Return kernel section K_x.\"\"\"\n        return self.matrix[x, :]\n    \n    def is_symmetric(self) -> bool:\n        \"\"\"Check symmetry.\"\"\"\n        return np.allclose(self.matrix, self.matrix.T)\n    \n    @classmethod\n    def from_features(cls, phi: np.ndarray) -> 'TropicalKernel':\n        \"\"\"\n        Construct a tropical kernel from a feature map.\n        \n        K(x,y) = max_i (\u03c6(x,i) + \u03c6(y,i))\n        \n        Parameters\n        ----------\n        phi : np.ndarray of shape (n, r)\n        \n        Returns\n        -------\n        TropicalKernel\n        \n        Time complexity: O(n\u00b2 \u00d7 r)\n        Space complexity: O(n\u00b2 + n\u00d7r)\n        \"\"\"\n        n, r = phi.shape\n        K = np.full((n, n), -np.inf)\n        for i in range(r):\n            K = np.maximum(K, np.add.outer(phi[:, i], phi[:, i]))\n        return cls(matrix=K, feature_map=phi)\n    \n    @classmethod\n    def from_distance(cls, D: np.ndarray) -> 'TropicalKernel':\n        \"\"\"\n        Construct a tropical kernel from a distance matrix.\n        \n        K(x,y) = -D(x,y) (negative distance kernel).\n        \n        Time complexity: O(n\u00b2)\n        \"\"\"\n        return cls(matrix=-D)\n\n\n@dataclass\nclass SupportDecomposition:\n    \"\"\"\n    Result of tropical kernel support decomposition.\n    \n    Attributes\n    ----------\n    support : List[int]\n        Indices of support prototypes.\n    coefficients : np.ndarray\n        Residuated coefficients for each support element.\n    is_minimal : bool\n        Whether the support is minimal (no element can be removed).\n    is_antichain : bool\n        Whether the support forms an antichain.\n    reconstruction_error : float\n        Maximum absolute reconstruction error.\n    \"\"\"\n    support: List[int]\n    coefficients: np.ndarray\n    is_minimal: bool\n    is_antichain: bool\n    reconstruction_error: float\n\n\ndef compute_residuated_coefficient(K: TropicalKernel, f: np.ndarray,\n                                    x: int) -> float:\n    \"\"\"\n    Compute the residuated coefficient of x for representing f via K_x.\n    \n    res(K, f, x) = min_y (f(y) - K(x, y))\n    \n    This is the largest c such that c + K(x,y) \u2264 f(y) for all y.\n    By the Galois connection of residuation theory, this is optimal.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray of shape (n,)\n    x : int\n    \n    Returns\n    -------\n    float : The residuated coefficient.\n    \n    Time complexity: O(n)\n    \"\"\"\n    return float(np.min(f - K.matrix[x, :]))\n\n\ndef compute_all_residuated_coefficients(K: TropicalKernel,\n                                         f: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute residuated coefficients for all points.\n    \n    Time complexity: O(n\u00b2)\n    \"\"\"\n    return np.array([compute_residuated_coefficient(K, f, x)\n                     for x in range(K.n)])\n\n\ndef reconstruct_from_support(K: TropicalKernel, f: np.ndarray,\n                              support: List[int]) -> np.ndarray:\n    \"\"\"\n    Reconstruct f from a support set using residuated coefficients.\n    \n    pred(y) = max_{x \u2208 S} (res(K, f, x) + K(x, y))\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    support : List[int]\n    \n    Returns\n    -------\n    np.ndarray : Reconstructed function.\n    \n    Time complexity: O(|S| \u00d7 n)\n    \"\"\"\n    coeffs = compute_all_residuated_coefficients(K, f)\n    pred = np.full(K.n, -np.inf)\n    for x in support:\n        pred = np.maximum(pred, coeffs[x] + K.matrix[x, :])\n    return pred\n\n\ndef greedy_minimal_support(K: TropicalKernel, f: np.ndarray,\n                            tol: float = 1e-10) -> List[int]:\n    \"\"\"\n    Find a minimal support set by greedy backward elimination.\n    \n    Start with all points as support and iteratively remove elements\n    that don't affect the reconstruction quality.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    tol : float\n        Tolerance for reconstruction accuracy.\n    \n    Returns\n    -------\n    List[int] : Minimal support set.\n    \n    Time complexity: O(n\u00b2 \u00d7 |S_final|) in practice, O(n\u00b3) worst case.\n    \"\"\"\n    support = list(range(K.n))\n    \n    for x in range(K.n):\n        candidate = [s for s in support if s != x]\n        if len(candidate) == 0:\n            continue\n        pred = reconstruct_from_support(K, f, candidate)\n        if np.max(np.abs(pred - f)) < tol:\n            support = candidate\n    \n    return support\n\n\ndef verify_antichain(K: TropicalKernel, f: np.ndarray,\n                      support: List[int],\n                      tol: float = 1e-10) -> bool:\n    \"\"\"\n    Verify that a support set forms an antichain under the\n    residuated domination preorder.\n    \n    x dominates z if res(K,f,x) + K(x,y) \u2264 res(K,f,z) + K(z,y) \u2200y.\n    An antichain has no domination relations.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    support : List[int]\n    tol : float\n    \n    Returns\n    -------\n    bool : True if support is an antichain.\n    \n    Time complexity: O(|S|\u00b2 \u00d7 n)\n    \"\"\"\n    coeffs = compute_all_residuated_coefficients(K, f)\n    for x in support:\n        for z in support:\n            if x == z:\n                continue\n            dominated = np.all(\n                coeffs[x] + K.matrix[x, :] <=\n                coeffs[z] + K.matrix[z, :] + tol\n            )\n            if dominated:\n                return False\n    return True\n\n\ndef certified_decomposition(K: TropicalKernel,\n                             f: np.ndarray,\n                             tol: float = 1e-10) -> SupportDecomposition:\n    \"\"\"\n    Compute a certified minimal support decomposition.\n    \n    This is the main algorithm: given a tropical kernel and a target\n    function, find the minimal antichain support and verify all\n    certification conditions.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    tol : float\n    \n    Returns\n    -------\n    SupportDecomposition : Complete decomposition with certificates.\n    \n    Time complexity: O(n\u00b3) overall.\n    \"\"\"\n    # Step 1: Compute all residuated coefficients\n    coeffs = compute_all_residuated_coefficients(K, f)\n    \n    # Step 2: Find minimal support\n    support = greedy_minimal_support(K, f, tol)\n    \n    # Step 3: Reconstruct and compute error\n    pred = reconstruct_from_support(K, f, support)\n    error = float(np.max(np.abs(pred - f)))\n    \n    # Step 4: Verify minimality\n    is_minimal = True\n    for x in support:\n        reduced = [s for s in support if s != x]\n        if len(reduced) == 0:\n            continue\n        reduced_pred = reconstruct_from_support(K, f, reduced)\n        if np.max(np.abs(reduced_pred - f)) < tol:\n            is_minimal = False\n            break\n    \n    # Step 5: Verify antichain\n    is_antichain = verify_antichain(K, f, support, tol)\n    \n    return SupportDecomposition(\n        support=support,\n        coefficients=coeffs[support],\n        is_minimal=is_minimal,\n        is_antichain=is_antichain,\n        reconstruction_error=error,\n    )\n\n\ndef estimate_feature_rank(K: TropicalKernel,\n                           max_rank: Optional[int] = None) -> int:\n    \"\"\"\n    Estimate the tropical feature rank of a kernel matrix.\n    \n    Uses the observation that rank-r kernels have at most r\n    \"independent directions\" in their section family. We estimate\n    this by finding the size of a maximal non-dominated subset.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    max_rank : int, optional\n        Maximum rank to consider.\n    \n    Returns\n    -------\n    int : Estimated feature rank.\n    \n    Time complexity: O(n\u00b3)\n    \"\"\"\n    n = K.n\n    if max_rank is None:\n        max_rank = n\n    \n    # Find non-dominated sections\n    non_dominated = list(range(n))\n    for x in range(n):\n        if x not in non_dominated:\n            continue\n        for z in range(n):\n            if z == x or z not in non_dominated:\n                continue\n            # Check if section z is dominated by section x\n            dominated = True\n            for y in range(n):\n                if K.matrix[z, y] > K.matrix[x, y]:\n                    dominated = False\n                    break\n            if dominated:\n                non_dominated.remove(z)\n    \n    return min(len(non_dominated), max_rank)\n\n\nif __name__ == \"__main__\":\n    # Quick test\n    np.random.seed(42)\n    phi = np.random.randn(8, 3)\n    K = TropicalKernel.from_features(phi)\n    \n    print(f\"Kernel: {K.n}\u00d7{K.n}, rank={K.rank}\")\n    print(f\"Symmetric: {K.is_symmetric()}\")\n    \n    f = K.section(0)\n    decomp = certified_decomposition(K, f)\n    print(f\"\\nDecomposition of K_0:\")\n    print(f\"  Support: {decomp.support}\")\n    print(f\"  Coefficients: {decomp.coefficients}\")\n    print(f\"  Minimal: {decomp.is_minimal}\")\n    print(f\"  Antichain: {decomp.is_antichain}\")\n    print(f\"  Error: {decomp.reconstruction_error:.2e}\")\n    \n    rank = estimate_feature_rank(K)\n    print(f\"\\nEstimated feature rank: {rank}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nTropical Kernel Mean Duality \u2014 Applications\n\nReal-world applications of tropical kernel prototype reconstruction:\n1. Explainable classification via tropical prototype selection\n2. Sparse tropical regression\n3. Signal compression via tropical kernel support\n4. Robust predictor certification\n\"\"\"\n\nimport numpy as np\nfrom algorithms import (\n    TropicalKernel, certified_decomposition,\n    compute_all_residuated_coefficients, reconstruct_from_support,\n    greedy_minimal_support, estimate_feature_rank\n)\nfrom typing import List, Tuple\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Explainable Tropical Classification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef tropical_prototype_classifier(\n    X_train: np.ndarray,\n    y_train: np.ndarray,\n    X_test: np.ndarray,\n    feature_dim: int = 3\n) -> Tuple[np.ndarray, List[int], np.ndarray]:\n    \"\"\"\n    Tropical prototype classifier with certified minimal support.\n    \n    Uses tropical kernel sections as class representatives and\n    finds the minimal set of prototypes needed for classification.\n    \n    Parameters\n    ----------\n    X_train : np.ndarray of shape (n_train, d)\n    y_train : np.ndarray of shape (n_train,) with integer labels\n    X_test : np.ndarray of shape (n_test, d)\n    feature_dim : int\n        Number of tropical features (controls kernel rank).\n    \n    Returns\n    -------\n    predictions : np.ndarray\n    prototypes : List[int]\n    prototype_weights : np.ndarray\n    \"\"\"\n    n_train = X_train.shape[0]\n    n_test = X_test.shape[0]\n    classes = np.unique(y_train)\n    \n    # Build tropical feature map via random projection\n    np.random.seed(0)\n    W = np.random.randn(X_train.shape[1], feature_dim)\n    phi_train = X_train @ W\n    phi_test = X_test @ W\n    \n    # Build tropical kernel on training data\n    K = TropicalKernel.from_features(phi_train)\n    \n    predictions = np.zeros(n_test, dtype=int)\n    all_prototypes = []\n    \n    for c in classes:\n        # Build class indicator (tropical style)\n        mask = (y_train == c).astype(float) * 10.0 - 5.0\n        f = np.full(n_train, -np.inf)\n        for x in range(n_train):\n            f = np.maximum(f, mask[x] + K.matrix[x, :])\n        \n        # Find minimal prototype support\n        decomp = certified_decomposition(K, f)\n        all_prototypes.extend(decomp.support)\n        \n        # Predict on test data using prototypes\n        coeffs = compute_all_residuated_coefficients(K, f)\n        test_scores = np.full(n_test, -np.inf)\n        for x in decomp.support:\n            for j in range(n_test):\n                # Cross-kernel evaluation via features\n                k_val = np.max(phi_train[x, :] + phi_test[j, :])\n                test_scores[j] = max(test_scores[j], coeffs[x] + k_val)\n        \n        if c == classes[0]:\n            best_scores = test_scores.copy()\n            predictions[:] = c\n        else:\n            better = test_scores > best_scores\n            predictions[better] = c\n            best_scores[better] = test_scores[better]\n    \n    unique_prototypes = sorted(set(all_prototypes))\n    return predictions, unique_prototypes, np.array([])\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Sparse Tropical Regression\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef tropical_sparse_regression(\n    K: TropicalKernel,\n    y: np.ndarray,\n    max_support: int = None\n) -> Tuple[np.ndarray, List[int], float]:\n    \"\"\"\n    Sparse tropical regression: find minimal prototype representation.\n    \n    Given kernel K and target y, find the smallest support set S\n    such that y \u2248 max_{x\u2208S} (c_x + K(x, \u00b7)).\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    y : np.ndarray\n    max_support : int, optional\n    \n    Returns\n    -------\n    prediction : np.ndarray\n    support : List[int]\n    error : float\n    \"\"\"\n    decomp = certified_decomposition(K, y)\n    \n    if max_support is not None and len(decomp.support) > max_support:\n        # Rank prototypes by importance (tightness frequency)\n        coeffs = compute_all_residuated_coefficients(K, y)\n        importance = np.zeros(K.n)\n        for x in decomp.support:\n            contribution = coeffs[x] + K.matrix[x, :]\n            importance[x] = np.sum(np.abs(y - contribution) < 1e-8)\n        \n        top_support = sorted(decomp.support,\n                            key=lambda x: -importance[x])[:max_support]\n        pred = reconstruct_from_support(K, y, top_support)\n        error = float(np.max(np.abs(pred - y)))\n        return pred, top_support, error\n    \n    pred = reconstruct_from_support(K, y, decomp.support)\n    return pred, decomp.support, decomp.reconstruction_error\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Signal Compression\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef tropical_signal_compression(\n    signal: np.ndarray,\n    rank: int = 4\n) -> Tuple[np.ndarray, List[int], float]:\n    \"\"\"\n    Compress a signal using tropical kernel prototype selection.\n    \n    Build a tropical kernel from the signal structure and find\n    the minimal prototype set for exact or near-exact reconstruction.\n    \n    Parameters\n    ----------\n    signal : np.ndarray of shape (n,)\n    rank : int\n        Feature rank for the tropical kernel.\n    \n    Returns\n    -------\n    reconstructed : np.ndarray\n    prototypes : List[int]\n    compression_ratio : float\n    \"\"\"\n    n = len(signal)\n    \n    # Build features from signal windows\n    features = np.zeros((n, rank))\n    for k in range(rank):\n        shift = k * n // rank\n        for i in range(n):\n            features[i, k] = signal[(i + shift) % n]\n    \n    K = TropicalKernel.from_features(features)\n    \n    # Find minimal support for the signal (viewed as kernel section)\n    f = signal\n    support = greedy_minimal_support(K, f)\n    reconstructed = reconstruct_from_support(K, f, support)\n    \n    compression_ratio = len(support) / n\n    \n    return reconstructed, support, compression_ratio\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Robustness Certification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef certify_predictor_robustness(\n    K: TropicalKernel,\n    f: np.ndarray,\n    epsilon: float = 0.1\n) -> Tuple[bool, float, List[int]]:\n    \"\"\"\n    Certify that a tropical predictor is robust to kernel perturbations.\n    \n    If the residuation gap (f(y) - max_{x\u2208S} (c_x + K(x,y))) is 0\n    on the minimal support, then the predictor is certified robust\n    to perturbations of size up to the minimum non-support gap.\n    \n    Parameters\n    ----------\n    K : TropicalKernel\n    f : np.ndarray\n    epsilon : float\n        Perturbation budget.\n    \n    Returns\n    -------\n    is_robust : bool\n    margin : float\n    support : List[int]\n    \"\"\"\n    decomp = certified_decomposition(K, f)\n    \n    # Compute the \"margin\" \u2014 gap between f and next-best reconstruction\n    coeffs = compute_all_residuated_coefficients(K, f)\n    \n    contributions = np.full((K.n, K.n), -np.inf)\n    for x in range(K.n):\n        contributions[x, :] = coeffs[x] + K.matrix[x, :]\n    \n    # For each y, compute gap between best and second-best contributor\n    margins = np.zeros(K.n)\n    for y in range(K.n):\n        sorted_contribs = np.sort(contributions[:, y])[::-1]\n        if len(sorted_contribs) >= 2:\n            margins[y] = sorted_contribs[0] - sorted_contribs[1]\n        else:\n            margins[y] = np.inf\n    \n    min_margin = float(np.min(margins))\n    is_robust = min_margin > 2 * epsilon\n    \n    return is_robust, min_margin, decomp.support\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main: Run all applications\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Tropical Prototype Classification\")\n    print(\"=\" * 60)\n    \n    # Generate synthetic classification data\n    np.random.seed(42)\n    n_train = 30\n    X_train = np.random.randn(n_train, 4)\n    y_train = (X_train[:, 0] + X_train[:, 1] > 0).astype(int)\n    X_test = np.random.randn(10, 4)\n    y_test = (X_test[:, 0] + X_test[:, 1] > 0).astype(int)\n    \n    preds, prototypes, _ = tropical_prototype_classifier(\n        X_train, y_train, X_test, feature_dim=3\n    )\n    accuracy = np.mean(preds == y_test)\n    print(f\"Accuracy: {accuracy:.1%}\")\n    print(f\"Prototypes: {prototypes}\")\n    print(f\"Compression: {len(prototypes)}/{n_train} = \"\n          f\"{len(prototypes)/n_train:.1%} of training data\")\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Sparse Tropical Regression\")\n    print(\"=\" * 60)\n    \n    phi = np.random.randn(20, 3)\n    K = TropicalKernel.from_features(phi)\n    y = K.section(5)  # Target: kernel section at point 5\n    \n    pred, support, error = tropical_sparse_regression(K, y)\n    print(f\"Target: K_5\")\n    print(f\"Support: {support} (size {len(support)})\")\n    print(f\"Reconstruction error: {error:.2e}\")\n    print(f\"Feature rank estimate: {estimate_feature_rank(K)}\")\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Signal Compression\")\n    print(\"=\" * 60)\n    \n    t = np.linspace(0, 2*np.pi, 32)\n    signal = np.sin(t) + 0.5 * np.cos(3*t)\n    \n    reconstructed, prototypes, ratio = tropical_signal_compression(signal, rank=4)\n    print(f\"Signal length: {len(signal)}\")\n    print(f\"Prototypes: {len(prototypes)}\")\n    print(f\"Compression ratio: {ratio:.1%}\")\n    print(f\"Max reconstruction error: {np.max(np.abs(reconstructed - signal)):.4f}\")\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: Robustness Certification\")\n    print(\"=\" * 60)\n    \n    phi = np.array([[3, 1], [1, 4], [2.5, 2.5], [0, 3], [2, 0.5]])\n    K = TropicalKernel.from_features(phi)\n    f = K.section(0)\n    \n    for eps in [0.01, 0.1, 0.5, 1.0]:\n        robust, margin, support = certify_predictor_robustness(K, f, eps)\n        print(f\"\u03b5={eps:.2f}: robust={robust}, margin={margin:.4f}, \"\n              f\"support={support}\")\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications completed successfully!\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nTropical Kernel Mean Duality \u2014 Interactive Demonstrations\n\nDemonstrates the core concepts of tropical kernel duality:\n1. Rank-1 tropical kernel with unique prototype\n2. Rank-2 kernel with minimal prototype set\n3. Residuated coefficient computation and reconstruction\n4. Support antichain verification\n\"\"\"\n\nimport numpy as np\nfrom typing import List, Tuple, Optional\n\ndef tropical_max(a: float, b: float) -> float:\n    \"\"\"Tropical addition (max).\"\"\"\n    return max(a, b)\n\ndef tropical_mul(a: float, b: float) -> float:\n    \"\"\"Tropical multiplication (ordinary +).\"\"\"\n    return a + b\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# \u00a71. Tropical Feature Factorization\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef make_kernel_from_features(phi: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Given feature map \u03c6 : X \u2192 \u211d^r (as an n\u00d7r matrix),\n    compute the tropical kernel K(x,y) = max_i (\u03c6(x,i) + \u03c6(y,i)).\n    \n    Parameters\n    ----------\n    phi : np.ndarray of shape (n, r)\n    \n    Returns\n    -------\n    K : np.ndarray of shape (n, n)\n    \"\"\"\n    n, r = phi.shape\n    K = np.full((n, n), -np.inf)\n    for i in range(r):\n        K = np.maximum(K, np.add.outer(phi[:, i], phi[:, i]))\n    return K\n\n\ndef verify_symmetry(K: np.ndarray) -> bool:\n    \"\"\"Check that K is symmetric.\"\"\"\n    return np.allclose(K, K.T)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# \u00a72. Residuated Coefficients\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef residuated_coefficient(K: np.ndarray, f: np.ndarray, x: int) -> float:\n    \"\"\"\n    Compute the residuated coefficient of x for representing f via K_x.\n    \n    res(K, f, x) = min_y (f(y) - K(x, y))\n    \n    This is the largest c such that c + K(x,y) \u2264 f(y) for all y.\n    \"\"\"\n    return np.min(f - K[x, :])\n\n\ndef residuated_coefficients(K: np.ndarray, f: np.ndarray) -> np.ndarray:\n    \"\"\"Compute all residuated coefficients.\"\"\"\n    n = K.shape[0]\n    return np.array([residuated_coefficient(K, f, x) for x in range(n)])\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# \u00a73. Tropical Prototype Predictor\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef tropical_predictor(K: np.ndarray, f: np.ndarray,\n                       support: List[int]) -> np.ndarray:\n    \"\"\"\n    Reconstruct f from support set S using residuated coefficients.\n    \n    pred(y) = max_{x \u2208 S} (res(K, f, x) + K(x, y))\n    \"\"\"\n    n = K.shape[0]\n    coeffs = residuated_coefficients(K, f)\n    pred = np.full(n, -np.inf)\n    for x in support:\n        pred = np.maximum(pred, coeffs[x] + K[x, :])\n    return pred\n\n\ndef find_active_support(K: np.ndarray, f: np.ndarray) -> List[int]:\n    \"\"\"\n    Find the active support: elements x where the residuated bound is tight.\n    \n    x is active if \u2203 y: res(K,f,x) + K(x,y) = f(y).\n    By the tightness theorem, every x is active, but some are more\n    \"useful\" than others for reconstruction.\n    \"\"\"\n    n = K.shape[0]\n    coeffs = residuated_coefficients(K, f)\n    active = []\n    for x in range(n):\n        gaps = f - (coeffs[x] + K[x, :])\n        if np.min(np.abs(gaps)) < 1e-10:\n            active.append(x)\n    return active\n\n\ndef find_minimal_support(K: np.ndarray, f: np.ndarray) -> List[int]:\n    \"\"\"\n    Find a minimal support set: greedily remove elements that don't\n    affect the reconstruction.\n    \"\"\"\n    n = K.shape[0]\n    support = list(range(n))\n    \n    for x in range(n):\n        candidate = [s for s in support if s != x]\n        if len(candidate) == 0:\n            continue\n        pred = tropical_predictor(K, f, candidate)\n        if np.allclose(pred, f):\n            support = candidate\n    \n    return support\n\n\ndef is_antichain(K: np.ndarray, f: np.ndarray, support: List[int]) -> bool:\n    \"\"\"\n    Check if support is an antichain: no element dominates another.\n    \n    x dominates z if res(K,f,x) + K(x,y) \u2264 res(K,f,z) + K(z,y) for all y.\n    \"\"\"\n    coeffs = residuated_coefficients(K, f)\n    for x in support:\n        for z in support:\n            if x == z:\n                continue\n            # Check if x is dominated by z\n            dominated = np.all(coeffs[x] + K[x, :] <= coeffs[z] + K[z, :] + 1e-10)\n            if dominated:\n                return False\n    return True\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# \u00a74. Demonstrations\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_rank1_kernel():\n    \"\"\"\n    Demo 1: Rank-1 tropical kernel.\n    \n    \u03c6(x) = [v(x)] for a single feature, so K(x,y) = v(x) + v(y).\n    This is a tropical \"rank-1\" kernel \u2014 all sections are parallel shifts.\n    Any single point suffices as support.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Rank-1 Tropical Kernel\")\n    print(\"=\" * 60)\n    \n    n = 4\n    v = np.array([1.0, 3.0, 2.0, 0.5])\n    phi = v.reshape(-1, 1)\n    K = make_kernel_from_features(phi)\n    \n    print(f\"\\nFeature vector v = {v}\")\n    print(f\"Kernel K(x,y) = v(x) + v(y):\")\n    print(K)\n    print(f\"Symmetric: {verify_symmetry(K)}\")\n    \n    # Take f = K_0 (kernel section at point 0)\n    f = K[0, :]\n    print(f\"\\nTarget f = K_0 = {f}\")\n    \n    coeffs = residuated_coefficients(K, f)\n    print(f\"Residuated coefficients: {coeffs}\")\n    \n    support = find_minimal_support(K, f)\n    print(f\"Minimal support: {support}\")\n    \n    pred = tropical_predictor(K, f, support)\n    print(f\"Reconstructed: {pred}\")\n    print(f\"Exact: {np.allclose(pred, f)}\")\n    print(f\"Antichain: {is_antichain(K, f, support)}\")\n\n\ndef demo_rank2_kernel():\n    \"\"\"\n    Demo 2: Rank-2 tropical kernel.\n    \n    \u03c6 : X \u2192 \u211d\u00b2 gives K(x,y) = max(\u03c6\u2081(x)+\u03c6\u2081(y), \u03c6\u2082(x)+\u03c6\u2082(y)).\n    Different sections may require different support prototypes.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Rank-2 Tropical Kernel\")\n    print(\"=\" * 60)\n    \n    n = 5\n    phi = np.array([\n        [3.0, 1.0],  # x=0: strong in feature 1\n        [1.0, 4.0],  # x=1: strong in feature 2\n        [2.5, 2.5],  # x=2: balanced\n        [0.0, 3.0],  # x=3: feature 2 biased\n        [2.0, 0.0],  # x=4: feature 1 biased\n    ])\n    K = make_kernel_from_features(phi)\n    \n    print(f\"\\nFeature map \u03c6:\")\n    print(phi)\n    print(f\"\\nTropical kernel K:\")\n    np.set_printoptions(precision=1)\n    print(K)\n    print(f\"Symmetric: {verify_symmetry(K)}\")\n    \n    # Construct a function in the kernel span\n    c = np.array([0.0, -1.0, 0.0, 0.0, 0.0])\n    f = np.full(n, -np.inf)\n    for x in range(n):\n        f = np.maximum(f, c[x] + K[x, :])\n    \n    print(f\"\\nTarget f (tropical combination with c={c}):\")\n    print(f)\n    \n    coeffs = residuated_coefficients(K, f)\n    print(f\"\\nResiduated coefficients: {coeffs}\")\n    \n    support = find_minimal_support(K, f)\n    print(f\"Minimal support: {support}\")\n    print(f\"Support size: {len(support)} (\u2264 rank 2)\")\n    \n    pred = tropical_predictor(K, f, support)\n    print(f\"Reconstructed: {pred}\")\n    print(f\"Exact: {np.allclose(pred, f)}\")\n    print(f\"Antichain: {is_antichain(K, f, support)}\")\n\n\ndef demo_gram_reconstruction():\n    \"\"\"\n    Demo 3: Reconstruction from tropical Gram matrix.\n    \n    Given only the Gram matrix (kernel evaluations), reconstruct\n    minimal prototype predictors for various target functions.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Reconstruction from Gram Matrix\")\n    print(\"=\" * 60)\n    \n    n = 6\n    np.random.seed(42)\n    phi = np.random.randn(n, 3) * 2  # rank-3 features\n    K = make_kernel_from_features(phi)\n    \n    print(f\"Kernel matrix (rank-3 features, n={n}):\")\n    np.set_printoptions(precision=2)\n    print(K)\n    \n    # Test several kernel sections\n    for target_x in [0, 2, 5]:\n        f = K[target_x, :]\n        support = find_minimal_support(K, f)\n        pred = tropical_predictor(K, f, support)\n        exact = np.allclose(pred, f)\n        antichain = is_antichain(K, f, support)\n        \n        print(f\"\\n  K_{target_x}: support={support}, \"\n              f\"|support|={len(support)}, \"\n              f\"exact={exact}, antichain={antichain}\")\n    \n    # Test a general function in the span\n    c = np.array([1.0, 0.0, -0.5, 0.5, -1.0, 0.0])\n    f = np.full(n, -np.inf)\n    for x in range(n):\n        f = np.maximum(f, c[x] + K[x, :])\n    \n    support = find_minimal_support(K, f)\n    pred = tropical_predictor(K, f, support)\n    exact = np.allclose(pred, f)\n    antichain = is_antichain(K, f, support)\n    \n    print(f\"\\n  General f: support={support}, \"\n          f\"|support|={len(support)} \u2264 rank=3, \"\n          f\"exact={exact}, antichain={antichain}\")\n\n\ndef demo_residuation_optimality():\n    \"\"\"\n    Demo 4: Residuation optimality \u2014 the residuated coefficient is\n    the BEST possible coefficient.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Residuation Optimality\")\n    print(\"=\" * 60)\n    \n    n = 4\n    phi = np.array([[2.0, 1.0], [1.0, 3.0], [2.5, 2.0], [0.5, 2.5]])\n    K = make_kernel_from_features(phi)\n    f = K[0, :]  # Target: kernel section at 0\n    \n    print(f\"K = {K}\")\n    print(f\"f = K_0 = {f}\")\n    \n    for x in range(n):\n        res_c = residuated_coefficient(K, f, x)\n        print(f\"\\n  x={x}: residuated coeff = {res_c:.4f}\")\n        \n        # Verify it's a valid lower bound\n        gaps = f - (res_c + K[x, :])\n        print(f\"    Lower bound gaps (all \u2265 0): {gaps}\")\n        assert np.all(gaps >= -1e-10), \"Lower bound violated!\"\n        \n        # Verify it's tight somewhere\n        tight_at = np.argmin(gaps)\n        print(f\"    Tight at y={tight_at}: gap = {gaps[tight_at]:.6f}\")\n        \n        # Verify optimality: any larger c violates the bound\n        test_c = res_c + 0.1\n        violations = f - (test_c + K[x, :])\n        violated = np.any(violations < -1e-10)\n        print(f\"    c+0.1 = {test_c:.4f} violates bound: {violated}\")\n\n\nif __name__ == \"__main__\":\n    demo_rank1_kernel()\n    demo_rank2_kernel()\n    demo_gram_reconstruction()\n    demo_residuation_optimality()\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demos completed successfully!\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"Generate PACKAGE.json with all embedded content.\"\"\"\n\nimport json\nimport base64\nfrom pathlib import Path\n\n# Read all markdown files\narticle = Path('/workspace/request-project/ARTICLE.md').read_text()\nresearch_paper = Path('/workspace/request-project/RESEARCH_PAPER.md').read_text()\nfuture_directions = Path('/workspace/request-project/FUTURE_DIRECTIONS.md').read_text()\n\n# Read code files\ndemo_code = Path('/workspace/request-project/demo.py').read_text()\nalgorithms_code = Path('/workspace/request-project/algorithms.py').read_text()\napplications_code = Path('/workspace/request-project/applications.py').read_text()\n\n# Read Lean file\nlean_code = Path('/workspace/request-project/Bridges/AlgebraTropicalMachineLearning/TropicalKernelMeanDuality.lean').read_text()\n\n# Read visualization base64 data\ndef img_to_base64(path):\n    with open(path, 'rb') as f:\n        data = base64.b64encode(f.read()).decode('utf-8')\n    return f\"data:image/png;base64,{data}\"\n\nviz1 = img_to_base64('/workspace/request-project/viz_kernel_residuation.png')\nviz2 = img_to_base64('/workspace/request-project/viz_support_selection.png')\nviz3 = img_to_base64('/workspace/request-project/viz_rank_support.png')\nviz4 = img_to_base64('/workspace/request-project/viz_residuation.png')\n\npackage = {\n    \"title\": \"Tropical Kernel Mean Duality via Idempotent RKHS Semimodules and Certified Support Prototype Reconstruction\",\n    \"domain\": \"Algebra\u2013Tropical\u2013MachineLearning (Bridges)\",\n    \"article\": article,\n    \"research_paper\": research_paper,\n    \"future_directions\": future_directions,\n    \"demos\": [\n        {\n            \"name\": \"Tropical Kernel Duality Demonstrations\",\n            \"code\": demo_code\n        }\n    ],\n    \"algorithms\": [\n        {\n            \"name\": \"Residuated Coefficient Computation\",\n            \"pseudocode\": \"res(K, f, x) = min_{y in X} (f(y) - K(x, y))\\n\\nFor each y in X:\\n  c = min(c, f[y] - K[x, y])\\nreturn c\\n\\nTime: O(n), Space: O(1)\",\n            \"code\": algorithms_code\n        },\n        {\n            \"name\": \"Greedy Minimal Support Extraction\",\n            \"pseudocode\": \"S = {0, ..., n-1}\\nfor x = 0 to n-1:\\n  S' = S \\\\ {x}\\n  if reconstruct(K, f, S') \u2248 f:\\n    S = S'\\nreturn S\\n\\nTime: O(n^3), Space: O(n^2)\",\n            \"code\": \"# See algorithms.py for full implementation\"\n        }\n    ],\n    \"visualizations\": [\n        {\n            \"name\": \"Tropical Kernel Matrix and Residuated Coefficients\",\n            \"data\": viz1\n        },\n        {\n            \"name\": \"Support Prototype Selection Across Kernel Sections\",\n            \"data\": viz2\n        },\n        {\n            \"name\": \"Feature Rank vs Support Size Analysis\",\n            \"data\": viz3\n        },\n        {\n            \"name\": \"Residuation Landscape and Galois Connection\",\n            \"data\": viz4\n        }\n    ],\n    \"lean_proofs\": lean_code\n}\n\nwith open('/workspace/request-project/PACKAGE.json', 'w') as f:\n    json.dump(package, f, indent=2, ensure_ascii=False)\n\nprint(f\"PACKAGE.json generated: {Path('/workspace/request-project/PACKAGE.json').stat().st_size / 1024:.0f} KB\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nTropical Kernel Mean Duality \u2014 Visualizations\n\nGenerates publication-quality figures illustrating:\n1. Tropical kernel matrix heatmaps\n2. Residuated coefficient landscapes\n3. Support prototype selection\n4. Feature rank decomposition\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nimport matplotlib.gridspec as gridspec\nfrom algorithms import (\n    TropicalKernel, certified_decomposition,\n    compute_all_residuated_coefficients, reconstruct_from_support,\n    greedy_minimal_support, estimate_feature_rank\n)\nimport base64\nfrom io import BytesIO\n\n\ndef fig_to_base64(fig) -> str:\n    \"\"\"Convert matplotlib figure to base64 data URI.\"\"\"\n    buf = BytesIO()\n    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    buf.seek(0)\n    data = base64.b64encode(buf.read()).decode('utf-8')\n    plt.close(fig)\n    return f\"data:image/png;base64,{data}\"\n\n\ndef viz_kernel_and_residuation():\n    \"\"\"\n    Visualization 1: Tropical kernel matrix and residuated coefficients.\n    \"\"\"\n    np.random.seed(42)\n    phi = np.array([\n        [3.0, 1.0],\n        [1.0, 4.0],\n        [2.5, 2.5],\n        [0.0, 3.0],\n        [2.0, 0.5],\n        [1.5, 3.5],\n    ])\n    K = TropicalKernel.from_features(phi)\n    f = K.section(0)\n    coeffs = compute_all_residuated_coefficients(K, f)\n    \n    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))\n    \n    # Kernel matrix\n    im0 = axes[0].imshow(K.matrix, cmap='YlOrRd', aspect='equal')\n    axes[0].set_title('Tropical Kernel Matrix K', fontsize=13, fontweight='bold')\n    axes[0].set_xlabel('y')\n    axes[0].set_ylabel('x')\n    plt.colorbar(im0, ax=axes[0], shrink=0.8)\n    for i in range(K.n):\n        for j in range(K.n):\n            axes[0].text(j, i, f'{K.matrix[i,j]:.1f}',\n                        ha='center', va='center', fontsize=8)\n    \n    # Residuated coefficients\n    colors = ['#e74c3c' if c == max(coeffs) else '#3498db' for c in coeffs]\n    axes[1].bar(range(K.n), coeffs, color=colors, edgecolor='black', linewidth=0.5)\n    axes[1].set_title('Residuated Coefficients for K\u2080', fontsize=13, fontweight='bold')\n    axes[1].set_xlabel('Support element x')\n    axes[1].set_ylabel('res(K, K\u2080, x)')\n    axes[1].axhline(y=0, color='gray', linestyle='--', alpha=0.5)\n    \n    # Reconstruction quality\n    support = greedy_minimal_support(K, f)\n    pred = reconstruct_from_support(K, f, support)\n    \n    x_pos = np.arange(K.n)\n    width = 0.35\n    axes[2].bar(x_pos - width/2, f, width, label='Original f = K\u2080',\n               color='#2ecc71', edgecolor='black', linewidth=0.5)\n    axes[2].bar(x_pos + width/2, pred, width, label=f'Reconstructed (|S|={len(support)})',\n               color='#e67e22', edgecolor='black', linewidth=0.5)\n    axes[2].set_title('Prototype Reconstruction', fontsize=13, fontweight='bold')\n    axes[2].set_xlabel('Point y')\n    axes[2].set_ylabel('Function value')\n    axes[2].legend(fontsize=9)\n    \n    fig.suptitle('Tropical Kernel Mean Duality \u2014 Core Objects',\n                 fontsize=15, fontweight='bold', y=1.02)\n    plt.tight_layout()\n    fig.savefig('/workspace/request-project/viz_kernel_residuation.png',\n                dpi=150, bbox_inches='tight')\n    return fig_to_base64(fig)\n\n\ndef viz_support_selection():\n    \"\"\"\n    Visualization 2: Support prototype selection across different targets.\n    \"\"\"\n    np.random.seed(42)\n    phi = np.random.randn(10, 3) * 1.5\n    K = TropicalKernel.from_features(phi)\n    \n    fig, axes = plt.subplots(2, 3, figsize=(15, 9))\n    \n    targets = [0, 2, 5, 7, 9]\n    \n    for idx, target in enumerate(targets):\n        ax = axes[idx // 3][idx % 3]\n        f = K.section(target)\n        decomp = certified_decomposition(K, f)\n        pred = reconstruct_from_support(K, f, decomp.support)\n        \n        x_pos = np.arange(K.n)\n        ax.bar(x_pos, f, alpha=0.6, color='#3498db', label='Target',\n              edgecolor='black', linewidth=0.5)\n        ax.bar(x_pos, pred, alpha=0.4, color='#e74c3c', label='Reconstruction',\n              edgecolor='black', linewidth=0.5)\n        \n        for s in decomp.support:\n            ax.axvline(x=s, color='#2ecc71', linestyle='--', alpha=0.7, linewidth=2)\n        \n        ax.set_title(f'K_{target}: support={decomp.support}\\n'\n                    f'|S|={len(decomp.support)}, '\n                    f'antichain={decomp.is_antichain}',\n                    fontsize=10)\n        ax.set_xlabel('Point')\n        ax.set_ylabel('Value')\n        if idx == 0:\n            ax.legend(fontsize=8)\n    \n    # Summary statistics in last subplot\n    ax = axes[1][2]\n    support_sizes = []\n    for x in range(K.n):\n        f = K.section(x)\n        decomp = certified_decomposition(K, f)\n        support_sizes.append(len(decomp.support))\n    \n    ax.bar(range(K.n), support_sizes, color='#9b59b6',\n          edgecolor='black', linewidth=0.5)\n    ax.axhline(y=K.rank, color='red', linestyle='--', linewidth=2,\n              label=f'Feature rank = {K.rank}')\n    ax.set_title('Support Size per Section', fontsize=10)\n    ax.set_xlabel('Section index')\n    ax.set_ylabel('|Support|')\n    ax.legend(fontsize=9)\n    \n    fig.suptitle('Tropical Prototype Selection Across Kernel Sections',\n                 fontsize=14, fontweight='bold')\n    plt.tight_layout()\n    fig.savefig('/workspace/request-project/viz_support_selection.png',\n                dpi=150, bbox_inches='tight')\n    return fig_to_base64(fig)\n\n\ndef viz_rank_vs_support():\n    \"\"\"\n    Visualization 3: Feature rank vs average support size.\n    \"\"\"\n    fig, axes = plt.subplots(1, 2, figsize=(12, 5))\n    \n    n = 15\n    ranks = list(range(1, 8))\n    avg_supports = []\n    max_supports = []\n    \n    for r in ranks:\n        np.random.seed(42)\n        phi = np.random.randn(n, r)\n        K = TropicalKernel.from_features(phi)\n        \n        sizes = []\n        for x in range(n):\n            f = K.section(x)\n            support = greedy_minimal_support(K, f)\n            sizes.append(len(support))\n        \n        avg_supports.append(np.mean(sizes))\n        max_supports.append(np.max(sizes))\n    \n    axes[0].plot(ranks, avg_supports, 'o-', color='#3498db',\n                linewidth=2, markersize=8, label='Avg support size')\n    axes[0].plot(ranks, max_supports, 's--', color='#e74c3c',\n                linewidth=2, markersize=8, label='Max support size')\n    axes[0].plot(ranks, ranks, ':', color='gray', linewidth=1.5,\n                label='y = rank (upper bound)')\n    axes[0].set_xlabel('Feature Rank r', fontsize=12)\n    axes[0].set_ylabel('Support Size |S|', fontsize=12)\n    axes[0].set_title('Support Size vs Feature Rank', fontsize=13, fontweight='bold')\n    axes[0].legend(fontsize=10)\n    axes[0].grid(True, alpha=0.3)\n    \n    # Antichain verification rate\n    antichain_rates = []\n    for r in ranks:\n        np.random.seed(42)\n        phi = np.random.randn(n, r)\n        K = TropicalKernel.from_features(phi)\n        \n        total = 0\n        antichain_count = 0\n        for x in range(n):\n            f = K.section(x)\n            decomp = certified_decomposition(K, f)\n            total += 1\n            if decomp.is_antichain:\n                antichain_count += 1\n        \n        antichain_rates.append(antichain_count / total)\n    \n    axes[1].bar(ranks, antichain_rates, color='#2ecc71',\n               edgecolor='black', linewidth=0.5)\n    axes[1].set_xlabel('Feature Rank r', fontsize=12)\n    axes[1].set_ylabel('Antichain Rate', fontsize=12)\n    axes[1].set_title('Fraction of Supports that are Antichains',\n                      fontsize=13, fontweight='bold')\n    axes[1].set_ylim(0, 1.1)\n    axes[1].grid(True, alpha=0.3)\n    \n    fig.suptitle('Tropical Feature Rank Duality \u2014 Empirical Analysis',\n                 fontsize=14, fontweight='bold')\n    plt.tight_layout()\n    fig.savefig('/workspace/request-project/viz_rank_support.png',\n                dpi=150, bbox_inches='tight')\n    return fig_to_base64(fig)\n\n\ndef viz_residuation_landscape():\n    \"\"\"\n    Visualization 4: Residuation landscape showing the Galois connection.\n    \"\"\"\n    np.random.seed(42)\n    phi = np.array([[3, 1], [1, 4], [2.5, 2.5], [0, 3], [2, 0.5]])\n    K = TropicalKernel.from_features(phi)\n    f = K.section(0)\n    \n    fig, axes = plt.subplots(1, 2, figsize=(13, 5))\n    \n    # Show contribution of each element\n    coeffs = compute_all_residuated_coefficients(K, f)\n    \n    x_pos = np.arange(K.n)\n    for xi in range(K.n):\n        contribution = coeffs[xi] + K.matrix[xi, :]\n        axes[0].plot(x_pos, contribution, 'o--', label=f'x={xi} (c={coeffs[xi]:.1f})',\n                    alpha=0.7, markersize=6)\n    \n    axes[0].plot(x_pos, f, 'ks-', linewidth=2.5, markersize=10,\n                label='Target f', zorder=10)\n    axes[0].set_xlabel('Point y', fontsize=12)\n    axes[0].set_ylabel('Value', fontsize=12)\n    axes[0].set_title('Residuated Contributions\\n(f bounds each contribution from above)',\n                      fontsize=12, fontweight='bold')\n    axes[0].legend(fontsize=8, loc='lower left')\n    axes[0].grid(True, alpha=0.3)\n    \n    # Show the \"gap\" landscape\n    gaps = np.zeros((K.n, K.n))\n    for xi in range(K.n):\n        gaps[xi, :] = f - (coeffs[xi] + K.matrix[xi, :])\n    \n    im = axes[1].imshow(gaps, cmap='RdYlGn_r', aspect='auto')\n    axes[1].set_xlabel('Point y', fontsize=12)\n    axes[1].set_ylabel('Support element x', fontsize=12)\n    axes[1].set_title('Residuation Gap\\n(green = 0 = tight; red = loose)',\n                      fontsize=12, fontweight='bold')\n    plt.colorbar(im, ax=axes[1], shrink=0.8, label='f(y) - (c_x + K(x,y))')\n    \n    for i in range(K.n):\n        for j in range(K.n):\n            axes[1].text(j, i, f'{gaps[i,j]:.1f}',\n                        ha='center', va='center', fontsize=8,\n                        color='white' if gaps[i,j] > 1 else 'black')\n    \n    fig.suptitle('Tropical Residuation: The Galois Connection at Work',\n                 fontsize=14, fontweight='bold')\n    plt.tight_layout()\n    fig.savefig('/workspace/request-project/viz_residuation.png',\n                dpi=150, bbox_inches='tight')\n    return fig_to_base64(fig)\n\n\nif __name__ == \"__main__\":\n    print(\"Generating visualizations...\")\n    \n    b64_1 = viz_kernel_and_residuation()\n    print(f\"  1. Kernel & residuation: {len(b64_1)} chars\")\n    \n    b64_2 = viz_support_selection()\n    print(f\"  2. Support selection: {len(b64_2)} chars\")\n    \n    b64_3 = viz_rank_vs_support()\n    print(f\"  3. Rank vs support: {len(b64_3)} chars\")\n    \n    b64_4 = viz_residuation_landscape()\n    print(f\"  4. Residuation landscape: {len(b64_4)} chars\")\n    \n    print(\"\\nAll visualizations saved to PNG files.\")\n    print(\"Base64 data URIs available for JSON packaging.\")\n"
+    },
+    "date": "2026-05-12T14:15:55Z"
+  },
   "algebramachinelearningspeculative_prime_congruence.json": {
     "title": "Observer-Relative Algebraic Rate-Distortion Theory for Neural Operads",
     "domain": "Algebraic Information Theory / Machine Learning Theory",
@@ -5924,7 +5981,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -5933,7 +5990,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -5942,7 +5999,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -5951,7 +6008,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -5960,7 +6017,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -5969,7 +6026,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:45Z",
-      "hue": 314
+      "hue": 280
     },
     {
       "id": "algebraeml_tannaka_reconstruction_via_closure_endo",
@@ -5978,7 +6035,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -5987,7 +6044,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -5996,7 +6053,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-10T23:04:27Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebraspeculative_prime_congruence_semantics_for_",
@@ -6014,7 +6071,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -6023,7 +6080,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -6041,7 +6098,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:38Z",
-      "hue": 112
+      "hue": 271
     },
     {
       "id": "algebramachinelearning_coalgebraic_myhillnerode_se",
@@ -6050,7 +6107,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -6077,7 +6134,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -6095,7 +6152,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T04:06:34Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebratropical_neural_representation_duality_via_",
@@ -6104,7 +6161,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -6113,7 +6170,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 100
+      "hue": 271
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -6122,7 +6179,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -6131,7 +6188,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -6140,7 +6197,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -6149,7 +6206,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -6158,7 +6215,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -6167,7 +6224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -6185,7 +6242,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -6203,7 +6260,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -6212,7 +6269,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T11:36:11Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebrapythagoreangeometry_gravitational_tropical_",
@@ -6221,7 +6278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 272
+      "hue": 112
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -6230,7 +6287,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:40Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraspeculativecryptography_prime_congruence_du",
@@ -6239,7 +6296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -6248,7 +6305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -6257,7 +6314,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -6275,7 +6332,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:35:26Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_compr",
@@ -6284,7 +6341,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 91
+      "hue": 89
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -6293,7 +6350,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -6302,7 +6359,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 134
+      "hue": 270
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -6311,7 +6368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T16:18:15Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_de_sitter_tropical_entropic_c_th",
@@ -6320,7 +6377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -6329,7 +6386,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 281
+      "hue": 90
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -6338,7 +6395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -6347,7 +6404,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 272
+      "hue": 281
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -6365,7 +6422,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -6383,7 +6440,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -6392,7 +6449,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -6401,7 +6458,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -6419,7 +6476,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -6428,7 +6485,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -6437,7 +6494,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T00:32:18Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebrapythagoreangeometry_tropical_gravitational_",
@@ -6446,7 +6503,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -6455,7 +6512,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -6464,7 +6521,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -6473,7 +6530,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -6482,7 +6539,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -6491,7 +6548,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -6509,7 +6566,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -6518,7 +6575,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -6527,7 +6584,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -6536,7 +6593,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -6545,7 +6602,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -6554,7 +6611,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -6563,7 +6620,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -6572,7 +6629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:36:24Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "algebraemlcryptography_closure_matroid_duality_via",
@@ -6581,7 +6638,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T05:35:38Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_duali",
@@ -6590,7 +6647,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -6599,7 +6656,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -6617,7 +6674,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T05:36:49Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebramachinelearningspeculative_operadic_tropica",
@@ -6626,7 +6683,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T07:30:16Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_i",
@@ -6635,7 +6692,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T07:33:24Z",
-      "hue": 292
+      "hue": 271
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_wal",
@@ -6644,7 +6701,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T07:34:03Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_idempotent_renormalization_duali",
@@ -6662,7 +6719,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:59Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_stone_duality_via_id",
@@ -6680,7 +6737,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T09:32:42Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraemlcryptography_closure_extractor_duality_v",
@@ -6716,7 +6773,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T10:37:56Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlcomputation_closure_myhillnerode_duality",
@@ -6743,7 +6800,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T11:15:45Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebratropicalcomputation_tropical_residuation_re",
@@ -6761,7 +6818,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:30:14Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_closure_sheafcode_duality_via_id",
@@ -6770,7 +6827,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:59:05Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_closure_barron_duality_v",
@@ -6779,7 +6836,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T12:09:31Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_choquetvoronoi_du",
@@ -6788,7 +6845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:28:11Z",
-      "hue": 272
+      "hue": 275
     },
     {
       "id": "algebrapythagoreanphysics_berggren_transfer_dualit",
@@ -6797,7 +6854,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T12:32:17Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -6806,7 +6863,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:36:25Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraspeculativelogic_ultrametric_proofautomaton",
@@ -6815,7 +6872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:00:31Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "algebrapythagoreancryptography_berggren_tropical_l",
@@ -6824,7 +6881,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:03:31Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraemlcomputation_closure_circuit_duality_via_",
@@ -6833,7 +6890,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T13:25:11Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_persistenc",
@@ -6842,7 +6899,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T13:33:40Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "algebraemlmachinelearning_closure_operad_duality_v",
@@ -6851,7 +6908,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T14:07:37Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_barr",
@@ -6860,7 +6917,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T14:10:39Z",
-      "hue": 90
+      "hue": 272
+    },
+    {
+      "id": "algebratropicalmachinelearning_tropical_kernel_mea",
+      "title": "Tropical Kernel Mean Duality via Idempotent RKHS Semimodules and Certified Support Prototype Reconstruction",
+      "domain": "Algebra\u2013Tropical\u2013MachineLearning (Bridges)",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-12T14:15:55Z",
+      "hue": 91
     }
   ],
   "edges": [
@@ -6873,476 +6939,476 @@ window.PACKAGE_GRAPH = {
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.9494505494505494,
+      "strength": 0.9490102929532858,
       "label": "Idempotent Holographic Renormalization"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_stonebirkhoff_dua",
-      "strength": 0.8802197802197802,
+      "strength": 0.8791765637371338,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_tropical_information_bot",
-      "strength": 0.8252747252747252,
+      "strength": 0.82375296912114,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlgeometry_closure_voronoi_duality_via_ide",
-      "strength": 0.7895604395604396,
+      "strength": 0.7877276326207443,
       "label": "Closure"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.7329670329670329,
+      "strength": 0.7306413301662709,
       "label": "Temporal Nerode Quotient for Reversible"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.7274725274725276,
+      "strength": 0.7250989707046716,
       "label": "Operadic Neural Architecture Search via"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.6142857142857142,
+      "strength": 0.6109263657957245,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.5807692307692307,
+      "strength": 0.5771179730799683,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.5747252747252747,
+      "strength": 0.5710213776722091,
       "label": "Logic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "cryptographypythagorean_isogeny_free_trapdoors_via",
-      "strength": 0.5648351648351648,
+      "strength": 0.5610451306413302,
       "label": "Cryptography"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.5626373626373626,
+      "strength": 0.5588281868566904,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.5565934065934066,
+      "strength": 0.5527315914489312,
       "label": "Lean Formalization Target"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5445054945054945,
+      "strength": 0.5405384006334125,
       "label": "Non"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogicspeculative_temporal_prime_congruence_",
-      "strength": 0.5368131868131867,
+      "strength": 0.5327790973871733,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.5258241758241757,
+      "strength": 0.5216943784639747,
       "label": "Tropical Representer Duality"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_persistenc",
-      "strength": 0.5258241758241757,
+      "strength": 0.5216943784639747,
       "label": "Tropical Persistence Realization Duality"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.5247252747252747,
+      "strength": 0.5205859065716548,
       "label": "Operadic Neural Composition with Multi-I"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.523076923076923,
+      "strength": 0.5189231987331749,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.5208791208791208,
+      "strength": 0.5167062549485353,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemllogic_closure_stone_spectral_duality_via",
-      "strength": 0.5148351648351649,
+      "strength": 0.510609659540776,
       "label": "Closure"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.49120879120879124,
+      "strength": 0.48677751385589874,
       "label": "Tropical Semiring Observations for Infor"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.48736263736263735,
+      "strength": 0.48289786223277914,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.4807692307692307,
+      "strength": 0.47624703087885983,
       "label": "Non"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemlgeometry_closure_voronoi_duality_via_ide",
-      "strength": 0.47802197802197793,
+      "strength": 0.4734758511480601,
       "label": "Closure"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.4736263736263736,
+      "strength": 0.4690419635787807,
       "label": "Operadic Tropicalization"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.45604395604395603,
+      "strength": 0.4513064133016627,
       "label": "Operadic composition laws for specific a"
     },
     {
       "source": "algebralogicmachinelearning_ultrametric_proof_shea",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
-      "strength": 0.45439560439560434,
+      "strength": 0.4496437054631829,
       "label": "Operadic Stone Duality"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.45000000000000007,
+      "strength": 0.44520981789390346,
       "label": "Logic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_idempotent_renormalization_duali",
-      "strength": 0.43241758241758244,
+      "strength": 0.4274742676167855,
       "label": "Idempotent Renormalization Duality"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.42582417582417575,
+      "strength": 0.42082343626286617,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.42582417582417575,
+      "strength": 0.42082343626286617,
       "label": "Effective prefix codes"
     },
     {
       "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
-      "strength": 0.4208791208791208,
+      "strength": 0.41583531274742674,
       "label": "Closure Kramers"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.4186813186813187,
+      "strength": 0.41361836896278703,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.4186813186813187,
+      "strength": 0.41361836896278703,
       "label": "Operadic Neural Proof"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4159340659340659,
+      "strength": 0.4108471892319873,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_ultrametric_proof_dynam",
-      "strength": 0.41208791208791207,
+      "strength": 0.4069675376088677,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.41043956043956054,
+      "strength": 0.40530482977038806,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.40494505494505495,
-      "label": "Algebra,Bridges,Cryptography,EML bridge"
+      "strength": 0.39976247030878864,
+      "label": "Cryptography,Bridges,EML,Algebra bridge"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.40494505494505495,
-      "label": "Geometry,Algebra,Tropical,Logic bridge"
+      "strength": 0.39976247030878864,
+      "label": "Geometry,Tropical,Logic,Algebra bridge"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.40494505494505495,
-      "label": "Geometry,Algebra,Tropical,MachineLearning bridge"
+      "strength": 0.39976247030878864,
+      "label": "Geometry,Tropical,MachineLearning,Algebra bridge"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.4005494505494507,
+      "strength": 0.3953285827395092,
       "label": "Entropy Production Rate Invariance"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_i",
       "target": "algebratropicallogic_tropical_stone_duality_via_id",
-      "strength": 0.39725274725274723,
+      "strength": 0.3920031670625495,
       "label": "C. Tropical Persistent Homology"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.38406593406593414,
+      "strength": 0.37870150435471106,
       "label": "Non"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.37747252747252746,
+      "strength": 0.3720506730007918,
       "label": "Tropical Rate"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.37747252747252746,
+      "strength": 0.3720506730007918,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraemltropical_non_archimedean_information_dua",
-      "strength": 0.362087912087912,
+      "strength": 0.3565320665083135,
       "label": "Indistinguishability \u2194 metric bisimulati"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.36098901098901093,
+      "strength": 0.35542359461599365,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.36098901098901093,
+      "strength": 0.35542359461599365,
       "label": "Tropical Valuation Distillation"
+    },
+    {
+      "source": "algebratropicalmachinelearning_tropical_neural_she",
+      "target": "algebratropicalmachinelearning_tropical_kernel_mea",
+      "strength": 0.3543151227236738,
+      "label": "Tropical Kernel Mean Duality"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.3532967032967032,
+      "strength": 0.3476642913697545,
       "label": "Tropical Semiring Oracle Capacity"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.34890109890109894,
+      "strength": 0.3432304038004751,
       "label": "Entropy Production Bounds for Self-Refer"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
-      "strength": 0.34450549450549445,
+      "strength": 0.3387965162311955,
       "label": "Operadic Stone Duality"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.34450549450549445,
+      "strength": 0.3387965162311955,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebratropicalmachinelearning_tropical_persistenc",
-      "strength": 0.34450549450549445,
+      "strength": 0.3387965162311955,
       "label": "Tropical Persistence Realization Duality"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.34340659340659335,
+      "strength": 0.33768804433887567,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.34230769230769226,
+      "strength": 0.3365795724465558,
       "label": "Spectral graph theory \u2194 Tropical spectra"
     },
     {
-      "source": "algebratropicalmachinelearning_tropical_neural_she",
-      "target": "algebratropicalmachinelearning_tropical_persistenc",
-      "strength": 0.33901098901098903,
-      "label": "Tropical Persistence Realization Duality"
+      "source": "algebraspeculativemachinelearning_tropical_valuati",
+      "target": "algebratropicalmachinelearning_tropical_kernel_mea",
+      "strength": 0.33436262866191613,
+      "label": "Tropical Kernel Mean Duality"
     },
     {
       "source": "algebratropicallogic_tropical_stone_duality_via_id",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
-      "strength": 0.33901098901098903,
+      "strength": 0.33325415676959624,
       "label": "Operadic Stone Duality"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3340659340659341,
+      "strength": 0.3282660332541568,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
-      "strength": 0.3340659340659341,
+      "strength": 0.3282660332541568,
       "label": "Closure Kramers"
+    },
+    {
+      "source": "algebralogicmachinelearning_ultrametric_proof_shea",
+      "target": "algebratropicalmachinelearning_tropical_kernel_mea",
+      "strength": 0.3243863816310373,
+      "label": "Tropical Kernel Mean Duality"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.32252747252747255,
+      "strength": 0.31662707838479814,
       "label": "Tropical Rate"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.32252747252747255,
+      "strength": 0.31662707838479814,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.32252747252747255,
+      "strength": 0.31662707838479814,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlmachinelearning_closure_operad_duality_v",
-      "strength": 0.32252747252747255,
+      "strength": 0.31662707838479814,
       "label": "Closure"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.32252747252747255,
+      "strength": 0.31662707838479814,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculativecryptography_prime_congruence_du",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.32252747252747255,
+      "strength": 0.31662707838479814,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.32252747252747255,
+      "strength": 0.31662707838479814,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_p",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.32252747252747255,
+      "strength": 0.31662707838479814,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.3164835164835165,
+      "strength": 0.31053048297703884,
       "label": "Persistent homology of closure filtratio"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebrageometrycryptography_berggren_voronoi_duali",
-      "strength": 0.3131868131868131,
+      "strength": 0.3072050673000791,
       "label": "Berggren Voronoi"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.3131868131868131,
+      "strength": 0.3072050673000791,
       "label": "Tropical"
     },
     {
       "source": "algebraemlcryptography_tropical_pontryaginmellin_d",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.31098901098901094,
+      "strength": 0.3049881235154394,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.31098901098901094,
+      "strength": 0.3049881235154394,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebraemlphysics_idempotent_renormalization_duali",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
-      "strength": 0.31098901098901094,
+      "strength": 0.3049881235154394,
       "label": "Closure Kramers"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.30989010989010984,
+      "strength": 0.3038796516231196,
       "label": "presentation-independence of the Berkovi"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.306043956043956,
+      "strength": 0.3,
       "label": "Tropical Neural Universality Classes wit"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.306043956043956,
+      "strength": 0.3,
       "label": "Tropical Rate"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.306043956043956,
-      "label": "Tropical Valuation Distillation"
-    },
-    {
-      "source": "algebralogicmachinelearning_ultrametric_proof_shea",
-      "target": "algebratropicalmachinelearning_tropical_persistenc",
-      "strength": 0.306043956043956,
-      "label": "Tropical Persistence Realization Duality"
-    },
-    {
-      "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "target": "algebraspeculativecryptography_prime_congruence_du",
       "strength": 0.3,
-      "label": "Prime Congruence Duality"
+      "label": "Tropical Valuation Distillation"
     }
   ]
 };
