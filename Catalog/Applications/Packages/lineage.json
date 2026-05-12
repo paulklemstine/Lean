@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 91
+      "hue": 179
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -16,7 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -34,7 +34,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -43,7 +43,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -52,7 +52,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -61,7 +61,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:45Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraeml_tannaka_reconstruction_via_closure_endo",
@@ -70,7 +70,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 272
+      "hue": 134
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -79,7 +79,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -88,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-10T23:04:27Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraspeculative_prime_congruence_semantics_for_",
@@ -97,7 +97,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:04:40Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "algebraeml_renormalization_semantics_via_closure_f",
@@ -106,7 +106,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -124,7 +124,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -142,7 +142,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -151,7 +151,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-11T02:06:07Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraeml_ruelle_transfer_semantics_via_closure_c",
@@ -169,7 +169,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -178,7 +178,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:27Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "cryptographypythagorean_isogeny_free_trapdoors_via",
@@ -196,7 +196,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -205,7 +205,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -214,7 +214,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -232,7 +232,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 90
+      "hue": 314
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -241,7 +241,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -259,7 +259,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -268,7 +268,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T09:36:04Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_tropical_choquet_closure_duality_via_id",
@@ -277,7 +277,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -286,7 +286,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
@@ -295,7 +295,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -304,7 +304,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T11:36:11Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebrapythagoreangeometry_gravitational_tropical_",
@@ -313,7 +313,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -322,7 +322,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:40Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_prime_congruence_du",
@@ -331,7 +331,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -340,7 +340,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -358,7 +358,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -367,7 +367,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:35:26Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_compr",
@@ -376,7 +376,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -385,7 +385,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -394,7 +394,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -412,7 +412,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 359
+      "hue": 90
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -421,7 +421,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -430,7 +430,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -439,7 +439,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 292
+      "hue": 270
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -448,7 +448,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T18:03:24Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_compr",
@@ -457,7 +457,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -475,7 +475,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -484,7 +484,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 91
+      "hue": 134
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -493,7 +493,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -502,7 +502,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -511,7 +511,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -520,7 +520,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -529,7 +529,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T00:32:18Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebrapythagoreangeometry_tropical_gravitational_",
@@ -538,7 +538,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -547,7 +547,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -565,7 +565,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -574,7 +574,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 89
+      "hue": 95
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -592,7 +592,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -610,7 +610,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -619,7 +619,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 281
+      "hue": 270
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -628,7 +628,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -637,7 +637,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -646,7 +646,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -655,7 +655,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -673,7 +673,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T05:35:38Z",
-      "hue": 101
+      "hue": 91
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_duali",
@@ -682,7 +682,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -691,7 +691,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -736,7 +736,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T07:34:03Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_idempotent_renormalization_duali",
@@ -745,7 +745,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T08:32:37Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_idempotent_causal_holography_via",
@@ -754,7 +754,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:59Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebratropicallogic_tropical_stone_duality_via_id",
@@ -763,7 +763,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T08:33:32Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemllogic_closure_stone_spectral_duality_via",
@@ -772,7 +772,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T09:32:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_closure_extractor_duality_v",
@@ -781,7 +781,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T09:33:03Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -790,7 +790,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T09:48:21Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebramachinelearninglogic_operadic_stone_duality",
@@ -799,7 +799,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T09:51:53Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_closure_vc_duality_via_i",
@@ -817,7 +817,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T10:56:08Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemlgeometry_closure_voronoi_duality_via_ide",
@@ -826,7 +826,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T10:58:54Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_obse",
@@ -835,7 +835,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T11:15:45Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "algebratropicalcomputation_tropical_residuation_re",
@@ -844,7 +844,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T11:29:51Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_closure_kramerswannier_duality_v",
@@ -862,7 +862,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:59:05Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlmachinelearning_closure_barron_duality_v",
@@ -871,7 +871,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T12:09:31Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_choquetvoronoi_du",
@@ -880,7 +880,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:28:11Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebrapythagoreanphysics_berggren_transfer_dualit",
@@ -889,7 +889,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T12:32:17Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -898,7 +898,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:36:25Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraspeculativelogic_ultrametric_proofautomaton",
@@ -907,7 +907,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:00:31Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_tropical_l",
@@ -916,7 +916,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:03:31Z",
-      "hue": 91
+      "hue": 314
     },
     {
       "id": "algebraemlcomputation_closure_circuit_duality_via_",
@@ -925,7 +925,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T13:25:11Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebratropicalmachinelearning_tropical_persistenc",
@@ -934,7 +934,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T13:33:40Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "algebraemlmachinelearning_closure_operad_duality_v",
@@ -943,7 +943,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T14:07:37Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_barr",
@@ -961,7 +961,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T14:15:55Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancomputation_berggren_automaton_r",
@@ -970,7 +970,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T14:16:15Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebratropicalphysics_tropical_scattering_duality",
@@ -988,7 +988,16 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T15:00:53Z",
-      "hue": 270
+      "hue": 280
+    },
+    {
+      "id": "algebraemlphysics_closure_holography_duality_via_i",
+      "title": "Finite Closure Holography Duality: Certified Boundary Reconstruction",
+      "domain": "Algebra-EML-Physics Bridges",
+      "primary_domain": "EML",
+      "shape": "octahedron",
+      "date": "2026-05-12T15:05:11Z",
+      "hue": 271
     }
   ],
   "edges": [
@@ -1002,554 +1011,554 @@
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.9490102929532858,
+      "strength": 0.9487261146496815,
       "label": "Idempotent Holographic Renormalization",
       "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_stonebirkhoff_dua",
-      "strength": 0.8791765637371338,
+      "strength": 0.8785031847133757,
       "label": "Weighted Temporal Constraints and Thermo",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_tropical_information_bot",
-      "strength": 0.82375296912114,
+      "strength": 0.8227707006369427,
       "label": "Tropical Observable Closures and Min-Plu",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlgeometry_closure_voronoi_duality_via_ide",
-      "strength": 0.7877276326207443,
+      "strength": 0.7865445859872612,
       "label": "Closure",
       "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.7306413301662709,
+      "strength": 0.729140127388535,
       "label": "Temporal Nerode Quotient for Reversible",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.7250989707046716,
+      "strength": 0.7235668789808918,
       "label": "Operadic Neural Architecture Search via",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.6109263657957245,
+      "strength": 0.6087579617834394,
       "label": "Optimal Obstruction Certificate Computat",
       "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.5771179730799683,
+      "strength": 0.5747611464968152,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.5710213776722091,
+      "strength": 0.5686305732484076,
       "label": "Logic",
       "type": "heuristic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "cryptographypythagorean_isogeny_free_trapdoors_via",
-      "strength": 0.5610451306413302,
+      "strength": 0.5585987261146497,
       "label": "Cryptography",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.5588281868566904,
+      "strength": 0.5563694267515924,
       "label": "Topological Prime Spectrum Compression L",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.5527315914489312,
+      "strength": 0.5502388535031848,
       "label": "Lean Formalization Target",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5405384006334125,
+      "strength": 0.5379777070063694,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogicspeculative_temporal_prime_congruence_",
-      "strength": 0.5327790973871733,
+      "strength": 0.5301751592356687,
       "label": "Weighted Temporal Constraints and Thermo",
       "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.5216943784639747,
+      "strength": 0.5190286624203821,
       "label": "Tropical Representer Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_persistenc",
-      "strength": 0.5216943784639747,
+      "strength": 0.5190286624203821,
       "label": "Tropical Persistence Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.5205859065716548,
+      "strength": 0.5179140127388535,
       "label": "Operadic Neural Composition with Multi-I",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5189231987331749,
+      "strength": 0.5162420382165605,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.5167062549485353,
+      "strength": 0.5140127388535032,
       "label": "Optimal Obstruction Certificate Computat",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemllogic_closure_stone_spectral_duality_via",
-      "strength": 0.510609659540776,
+      "strength": 0.5078821656050956,
       "label": "Closure",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.48677751385589874,
+      "strength": 0.4839171974522294,
       "label": "Tropical Semiring Observations for Infor",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.48289786223277914,
+      "strength": 0.48001592356687905,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.47624703087885983,
+      "strength": 0.47332802547770697,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemlgeometry_closure_voronoi_duality_via_ide",
-      "strength": 0.4734758511480601,
+      "strength": 0.4705414012738853,
       "label": "Closure",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.4690419635787807,
+      "strength": 0.4660828025477707,
       "label": "Operadic Tropicalization",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.4513064133016627,
+      "strength": 0.4482484076433121,
       "label": "Operadic composition laws for specific a",
       "type": "heuristic"
     },
     {
       "source": "algebralogicmachinelearning_ultrametric_proof_shea",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
-      "strength": 0.4496437054631829,
+      "strength": 0.446576433121019,
       "label": "Operadic Stone Duality",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.44520981789390346,
+      "strength": 0.4421178343949045,
       "label": "Logic",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
+      "target": "algebraemlphysics_closure_holography_duality_via_i",
+      "strength": 0.4281847133757962,
+      "label": "Finite Closure Holography Duality",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlphysics_idempotent_renormalization_duali",
+      "target": "algebraemlphysics_closure_holography_duality_via_i",
+      "strength": 0.4281847133757962,
+      "label": "Finite Closure Holography Duality",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_idempotent_renormalization_duali",
-      "strength": 0.4274742676167855,
+      "strength": 0.4242834394904459,
       "label": "Idempotent Renormalization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.42082343626286617,
+      "strength": 0.41759554140127386,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.42082343626286617,
+      "strength": 0.41759554140127386,
       "label": "Effective prefix codes",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
-      "strength": 0.41583531274742674,
+      "strength": 0.4125796178343949,
       "label": "Closure Kramers",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.41361836896278703,
+      "strength": 0.4103503184713376,
       "label": "Tropical Residuation Trapdoor Duality",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.41361836896278703,
+      "strength": 0.4103503184713376,
       "label": "Operadic Neural Proof",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4108471892319873,
+      "strength": 0.40756369426751593,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_ultrametric_proof_dynam",
-      "strength": 0.4069675376088677,
+      "strength": 0.4036624203821656,
       "label": "Topological Prime Spectrum Compression L",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.40530482977038806,
+      "strength": 0.4019904458598727,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.39976247030878864,
-      "label": "Cryptography,EML,Bridges,Algebra bridge",
+      "strength": 0.3964171974522293,
+      "label": "Bridges,EML,Algebra,Cryptography bridge",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.39976247030878864,
-      "label": "Geometry,Logic,Tropical,Algebra bridge",
+      "strength": 0.3964171974522293,
+      "label": "Algebra,Logic,Geometry,Tropical bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.39976247030878864,
-      "label": "Geometry,MachineLearning,Tropical,Algebra bridge",
+      "strength": 0.3964171974522293,
+      "label": "Algebra,MachineLearning,Geometry,Tropical bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.3953285827395092,
+      "strength": 0.39195859872611477,
       "label": "Entropy Production Rate Invariance",
       "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_i",
       "target": "algebratropicallogic_tropical_stone_duality_via_id",
-      "strength": 0.3920031670625495,
+      "strength": 0.38861464968152865,
       "label": "C. Tropical Persistent Homology",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.37870150435471106,
+      "strength": 0.37523885350318475,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.3720506730007918,
+      "strength": 0.3685509554140127,
       "label": "Tropical Rate",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3720506730007918,
+      "strength": 0.3685509554140127,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraemltropical_non_archimedean_information_dua",
-      "strength": 0.3565320665083135,
+      "strength": 0.3529458598726114,
       "label": "Indistinguishability ↔ metric bisimulati",
       "type": "heuristic"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.35542359461599365,
+      "strength": 0.35183121019108277,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.35542359461599365,
+      "strength": 0.35183121019108277,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebratropicalmachinelearning_tropical_kernel_mea",
-      "strength": 0.3543151227236738,
+      "strength": 0.35071656050955413,
       "label": "Tropical Kernel Mean Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.3476642913697545,
+      "strength": 0.3440286624203821,
       "label": "Tropical Semiring Oracle Capacity",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.3432304038004751,
+      "strength": 0.33957006369426757,
       "label": "Entropy Production Bounds for Self-Refer",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
-      "strength": 0.3387965162311955,
+      "strength": 0.3351114649681528,
       "label": "Operadic Stone Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3387965162311955,
+      "strength": 0.3351114649681528,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebratropicalmachinelearning_tropical_persistenc",
-      "strength": 0.3387965162311955,
+      "strength": 0.3351114649681528,
       "label": "Tropical Persistence Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.33768804433887567,
+      "strength": 0.33399681528662417,
       "label": "Tropical Residuation Trapdoor Duality",
       "type": "heuristic"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3365795724465558,
+      "strength": 0.33288216560509554,
       "label": "Spectral graph theory ↔ Tropical spectra",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebratropicalmachinelearning_tropical_kernel_mea",
-      "strength": 0.33436262866191613,
+      "strength": 0.33065286624203827,
       "label": "Tropical Kernel Mean Duality",
       "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_stone_duality_via_id",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
-      "strength": 0.33325415676959624,
+      "strength": 0.32953821656050963,
       "label": "Operadic Stone Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3282660332541568,
+      "strength": 0.3245222929936306,
       "label": "Tropical Neural Sheaf Sampling",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
-      "strength": 0.3282660332541568,
+      "strength": 0.3245222929936306,
       "label": "Closure Kramers",
       "type": "heuristic"
     },
     {
       "source": "algebralogicmachinelearning_ultrametric_proof_shea",
       "target": "algebratropicalmachinelearning_tropical_kernel_mea",
-      "strength": 0.3243863816310373,
+      "strength": 0.3206210191082803,
       "label": "Tropical Kernel Mean Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.31662707838479814,
+      "strength": 0.3128184713375796,
       "label": "Tropical Rate",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.31662707838479814,
+      "strength": 0.3128184713375796,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.31662707838479814,
+      "strength": 0.3128184713375796,
       "label": "Tropical Residuation Trapdoor Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlmachinelearning_closure_operad_duality_v",
-      "strength": 0.31662707838479814,
+      "strength": 0.3128184713375796,
       "label": "Closure",
       "type": "heuristic"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.31662707838479814,
+      "strength": 0.3128184713375796,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativecryptography_prime_congruence_du",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.31662707838479814,
+      "strength": 0.3128184713375796,
       "label": "Idempotent Stone Completeness",
       "type": "heuristic"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.31662707838479814,
+      "strength": 0.3128184713375796,
       "label": "Idempotent Stone Completeness",
       "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_p",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.31662707838479814,
+      "strength": 0.3128184713375796,
       "label": "Idempotent Stone Completeness",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.31053048297703884,
+      "strength": 0.306687898089172,
       "label": "Persistent homology of closure filtratio",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebrageometrycryptography_berggren_voronoi_duali",
-      "strength": 0.3072050673000791,
+      "strength": 0.3033439490445859,
       "label": "Berggren Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.3072050673000791,
+      "strength": 0.3033439490445859,
       "label": "Tropical",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
+      "target": "algebraemlphysics_closure_holography_duality_via_i",
+      "strength": 0.3011146496815286,
+      "label": "Finite Closure Holography Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_tropical_pontryaginmellin_d",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3049881235154394,
+      "strength": 0.3011146496815286,
       "label": "Tropical Neural Sheaf Sampling",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3049881235154394,
+      "strength": 0.3011146496815286,
       "label": "Tropical Neural Sheaf Sampling",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_renormalization_duali",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
-      "strength": 0.3049881235154394,
+      "strength": 0.3011146496815286,
       "label": "Closure Kramers",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3038796516231196,
+      "strength": 0.3,
       "label": "presentation-independence of the Berkovi",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraeml_renormalization_semantics_via_closure_f",
-      "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.3,
-      "label": "Tropical Neural Universality Classes wit",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraeml_congruence_quotient_reconstruction_via_",
-      "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.3,
-      "label": "Tropical Rate",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
-      "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3,
-      "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     }
   ]
