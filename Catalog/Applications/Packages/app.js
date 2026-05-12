@@ -763,9 +763,12 @@ document.addEventListener('DOMContentLoaded', () => {
             rotSpeed: 0.3 + Math.random() * 0.5,
             rotAngle: Math.random() * Math.PI * 2
         }));
-        // Start with no edges — edges will only appear for future AETHER runs
-        // as the future directions system tracks lineage between packages
-        let graphEdges = [];
+        // Load edges from PACKAGE_GRAPH — provenance edges (factual parent→child)
+        // are solid and bright; heuristic edges (text-similarity) are dashed and subtle
+        let graphEdges = (graphData.edges || []).map(e => ({
+            ...e,
+            edgeType: e.type || 'heuristic'
+        }));
 
         // Fallback: build nodes from PACKAGE_INDEX if no graph data
         if (graphNodes.length === 0 && window.PACKAGE_INDEX) {
@@ -1212,6 +1215,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Edges (glow + line + particles)
+            // Provenance edges: solid, bright, thicker
+            // Heuristic edges: dashed, subtle, thinner
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
@@ -1221,14 +1226,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const colA = nodeColor(a), colB = nodeColor(b);
                 const blendH = (colA.h + colB.h) / 2;
                 const strength = e.strength || 0.5;
-                const lineW = 0.5 + strength * 2;
+                const isProvenance = (e.edgeType || e.type) === 'provenance';
+                const lineW = isProvenance ? (1.5 + strength * 2.5) : (0.5 + strength * 1.5);
+                const glowAlpha = isProvenance ? (0.25 + 0.3 * strength) : (0.1 + 0.15 * strength);
+                const coreAlpha = isProvenance ? (0.7 + 0.3 * strength) : (0.35 + 0.35 * strength);
 
                 // Glow line (thick, semi-transparent)
                 ctx.beginPath();
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
-                ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${0.15 + 0.2 * strength})`;
-                ctx.lineWidth = lineW * 4;
+                ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
+                ctx.lineWidth = lineW * (isProvenance ? 5 : 4);
                 ctx.stroke();
 
                 // Core line
@@ -1236,11 +1244,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
                 const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
-                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${0.5 + 0.4 * strength})`);
-                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${0.5 + 0.4 * strength})`);
+                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
+                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
                 ctx.strokeStyle = edgeGrad;
                 ctx.lineWidth = lineW;
+                if (!isProvenance) {
+                    ctx.setLineDash([6 * camera.zoom, 4 * camera.zoom]);
+                }
                 ctx.stroke();
+                ctx.setLineDash([]);
             });
 
             // Edge particles
@@ -1256,10 +1268,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sp = worldToScreen(wx, wy);
                 const colA = nodeColor(a), colB = nodeColor(b);
                 const blendH = (colA.h + colB.h) / 2;
-                const alpha = 0.4 + 0.4 * Math.sin(p.t * Math.PI);
+                const isProv = (p.edge.edgeType || p.edge.type) === 'provenance';
+                const alpha = isProv ? (0.6 + 0.4 * Math.sin(p.t * Math.PI)) : (0.3 + 0.3 * Math.sin(p.t * Math.PI));
+                const pSize = isProv ? p.size * 1.4 : p.size;
 
                 ctx.beginPath();
-                ctx.arc(sp.x, sp.y, p.size * camera.zoom, 0, Math.PI * 2);
+                ctx.arc(sp.x, sp.y, pSize * camera.zoom, 0, Math.PI * 2);
                 ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
                 ctx.fill();
             });
@@ -1499,6 +1513,8 @@ document.addEventListener('DOMContentLoaded', () => {
             newEdges.forEach(e => {
                 // Avoid duplicates
                 if (graphEdges.some(ge => ge.source === e.source && ge.target === e.target)) return;
+                // Tag with edgeType for visual distinction
+                e.edgeType = e.type || 'heuristic';
                 graphEdges.push(e);
                 // Spawn particles for the new edge
                 const count = 2 + Math.floor(Math.random() * 2);
