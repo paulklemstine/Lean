@@ -159,7 +159,8 @@ def update_index():
             "filename": f,
             "title": data.get("title", "Untitled Research"),
             "domain": data.get("domain", "General"),
-            "date": date_str
+            "date": date_str,
+            "exp_id": data.get("exp_id", ""),
         })
 
         package_db[f] = data

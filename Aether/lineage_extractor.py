@@ -401,12 +401,6 @@ def build_lineage(packages_dir, config_path=None):
             packages[slug] = data
         except Exception as e:
             print(f"Warning: failed to load {f}: {e}")
-        try:
-            with open(f, 'r', encoding='utf-8') as fh:
-                data = json.load(fh)
-            packages[slug] = data
-        except Exception as e:
-            print(f"Warning: failed to load {f}: {e}")
 
     # Sort packages by date for temporal ordering
     sorted_slugs = sorted(
@@ -438,7 +432,71 @@ def build_lineage(packages_dir, config_path=None):
             "hue": slug_to_hue(slug),
         })
 
-    # Build edges from future_directions analysis
+    # ── Phase 1: Provenance-based edges (factual, from source_exp_ids) ──
+    provenance_edges = []
+    provenance_pairs = set()
+
+    # Load exp_id_map for provenance lookups
+    exp_id_map = {}
+    workspace_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".aether_workspace")
+    map_path = os.path.join(workspace_dir, "exp_id_map.json")
+    if os.path.exists(map_path):
+        try:
+            with open(map_path, 'r', encoding='utf-8') as mf:
+                exp_id_map = json.load(mf)
+        except Exception:
+            exp_id_map = {}
+
+    # Also build a reverse map: exp_id → slug from package data
+    pkg_exp_ids = {}  # exp_id → slug
+    for slug, pkg in packages.items():
+        eid = pkg.get("exp_id", "")
+        if eid:
+            pkg_exp_ids[eid] = slug
+
+    for slug, pkg in packages.items():
+        source_ids = pkg.get("source_exp_ids", [])
+        for src_exp_id in source_ids:
+            # Find parent slug: first check exp_id_map, then pkg_exp_ids
+            parent_slug = None
+            parent_filename = exp_id_map.get(src_exp_id, "")
+            if parent_filename:
+                parent_slug = parent_filename.replace('.json', '')
+            if not parent_slug or parent_slug not in packages:
+                parent_slug = pkg_exp_ids.get(src_exp_id)
+            if parent_slug and parent_slug in packages and parent_slug != slug:
+                pair = (parent_slug, slug)
+                if pair not in provenance_pairs:
+                    provenance_pairs.add(pair)
+                    # Try to extract a meaningful label
+                    parent_pkg = packages[parent_slug]
+                    label = "inspired by"
+                    fd_text = parent_pkg.get("future_directions", "")
+                    tgt_title = pkg.get("title", "").lower()
+                    if fd_text and tgt_title:
+                        concepts = extract_concepts_from_future_directions(fd_text)
+                        reasons = []
+                        for ctype, cvalue in concepts:
+                            if ctype == "heading":
+                                ratio = SequenceMatcher(None, cvalue.lower(), tgt_title).ratio()
+                                if ratio > 0.3:
+                                    reasons.append(f"heading_match:{cvalue}")
+                            elif ctype == "theorem":
+                                if cvalue.lower() in tgt_title:
+                                    reasons.append(f"theorem_in_title:{cvalue}")
+                        if reasons:
+                            label = extract_edge_label(reasons, parent_pkg.get("title", ""), pkg.get("title", ""))
+                    provenance_edges.append({
+                        "source": parent_slug,
+                        "target": slug,
+                        "strength": 1.0,
+                        "label": label,
+                        "type": "provenance",
+                    })
+
+    print(f"Provenance edges: {len(provenance_edges)}")
+
+    # ── Phase 2: Heuristic edges from future_directions analysis ──
     edges = []
     for i, source_slug in enumerate(sorted_slugs):
         source_pkg = packages[source_slug]
@@ -494,7 +552,15 @@ def build_lineage(packages_dir, config_path=None):
             outgoing_counts[key] += 1
     edges = filtered_edges
 
-    # Deduplicate transitive edges
+    # ── Phase 3: Merge provenance and heuristic edges ──
+    # Remove heuristic edges that duplicate provenance edges
+    edges = [e for e in edges if (e["source"], e["target"]) not in provenance_pairs]
+    # Tag heuristic edges
+    for e in edges:
+        e["type"] = "heuristic"
+    # Combine: provenance first, then heuristic
+    all_edges = provenance_edges + edges
+    edges = all_edges
     edges = deduplicate_transitive_edges(edges, min_strength=0.3)
 
     # Sort edges by score descending

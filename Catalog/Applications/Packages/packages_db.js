@@ -8,649 +8,757 @@ window.PACKAGE_INDEX = [
     "filename": "algebrapythagoreancomputation_berggren_automaton_r.json",
     "title": "Berggren Automaton Realization: A Myhill-Nerode Theorem for Pythagorean Triple Streams",
     "domain": "Algebra / Automata Theory / Number Theory",
-    "date": "2026-05-12T14:16:15Z"
+    "date": "2026-05-12T14:16:15Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalmachinelearning_tropical_kernel_mea.json",
     "title": "Tropical Kernel Mean Duality via Idempotent RKHS Semimodules and Certified Support Prototype Reconstruction",
     "domain": "Algebra\u2013Tropical\u2013MachineLearning (Bridges)",
-    "date": "2026-05-12T14:15:55Z"
+    "date": "2026-05-12T14:15:55Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativemachinelearning_ultrametric_barr.json",
     "title": "Ultrametric Barron Compression Duality via Prime-Congruence Approximation Semimodules",
     "domain": "Algebra-Speculative-MachineLearning Bridge",
-    "date": "2026-05-12T14:10:39Z"
+    "date": "2026-05-12T14:10:39Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlmachinelearning_closure_operad_duality_v.json",
     "title": "Closure-Operad Duality: Finite Algebraic Reconstruction of Neural Architectures",
     "domain": "Bridges (Algebra-EML-MachineLearning)",
-    "date": "2026-05-12T14:07:37Z"
+    "date": "2026-05-12T14:07:37Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalmachinelearning_tropical_persistenc.json",
     "title": "Tropical Persistence Realization Duality via Idempotent Interleaving Semimodules and Certified Barcode Reconstruction",
     "domain": "Bridges (Algebra\u2013Tropical\u2013Machine Learning)",
-    "date": "2026-05-12T13:33:40Z"
+    "date": "2026-05-12T13:33:40Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlcomputation_closure_circuit_duality_via_.json",
     "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction via Canonical Residual Bases",
     "domain": "Bridges (Algebra \u00d7 Computation \u00d7 Circuit Complexity)",
-    "date": "2026-05-12T13:25:11Z"
+    "date": "2026-05-12T13:25:11Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrapythagoreancryptography_berggren_tropical_l.json",
     "title": "Berggren Tropical Lensing Duality via Min-Plus Semimodules and Certified Shortest-Factor Path Reconstruction",
     "domain": "Bridges: Diophantine Geometry \u00d7 Tropical Optimization \u00d7 Cryptographic Arithmetic",
-    "date": "2026-05-12T13:03:31Z"
+    "date": "2026-05-12T13:03:31Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativelogic_ultrametric_proofautomaton.json",
     "title": "Ultrametric Proof Automaton Duality via Observer-Trace Congruences",
     "domain": "Bridges (Automata Theory \u00d7 Ultrametric Geometry \u00d7 Proof Dynamics)",
-    "date": "2026-05-12T13:00:31Z"
+    "date": "2026-05-12T13:00:31Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlcryptography_closure_secret_sharing_dual.json",
     "title": "Closure\u2013Secret-Sharing Duality via Idempotent Dependency Systems",
     "domain": "Bridges: Algebra \u00d7 Cryptography \u00d7 Closure Geometry",
-    "date": "2026-05-12T12:36:25Z"
+    "date": "2026-05-12T12:36:25Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrapythagoreanphysics_berggren_transfer_dualit.json",
     "title": "Berggren Transfer Duality via Triple-Tree Scattering Semimodules and Certified Resonance Reconstruction",
     "domain": "Number Theory / Weighted Automata / Formal Verification",
-    "date": "2026-05-12T12:32:17Z"
+    "date": "2026-05-12T12:32:17Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalgeometry_tropical_choquetvoronoi_du.json",
     "title": "Tropical Choquet\u2013Voronoi Duality via Idempotent Convex Semimodules and Certified Polyhedral Reconstruction",
     "domain": "Algebra\u2013Tropical\u2013Geometry Bridge",
-    "date": "2026-05-12T12:28:11Z"
+    "date": "2026-05-12T12:28:11Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlmachinelearning_closure_barron_duality_v.json",
     "title": "Closure Barron Duality: Atomic Decomposition for Finite Distributive Lattices",
     "domain": "Lattice Theory / Idempotent Mathematics / Machine Learning",
-    "date": "2026-05-12T12:09:31Z"
+    "date": "2026-05-12T12:09:31Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_closure_sheafcode_duality_via_id.json",
     "title": "Closure-Sheaf Code Duality via Cellular Decoder Reconstruction",
     "domain": "Bridges (Algebra\u2013Coding Theory\u2013Physics)",
-    "date": "2026-05-12T11:59:05Z"
+    "date": "2026-05-12T11:59:05Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_closure_kramerswannier_duality_v.json",
     "title": "Closure Kramers\u2013Wannier Duality via Idempotent Partition Semimodules",
     "domain": "Algebra\u2013EML\u2013Physics / Tropical Geometry / Statistical Mechanics",
-    "date": "2026-05-12T11:30:14Z"
+    "date": "2026-05-12T11:30:14Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalcomputation_tropical_residuation_re.json",
     "title": "Tropical Residuation Realization via Idempotent Hankel Semimodules",
     "domain": "Tropical Algebra / Weighted Automata Theory",
-    "date": "2026-05-12T11:29:51Z"
+    "date": "2026-05-12T11:29:51Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativemachinelearning_ultrametric_obse.json",
     "title": "Ultrametric Observer-Concept Duality via Laminar Hierarchical Classifiers",
     "domain": "Bridges (Algebra-Speculative-MachineLearning)",
-    "date": "2026-05-12T11:15:45Z"
+    "date": "2026-05-12T11:15:45Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlgeometry_closure_voronoi_duality_via_ide.json",
     "title": "Closure-Voronoi Duality via Idempotent Metric Semimodules and Certified Nerve Reconstruction",
     "domain": "Mathematical Bridges: Algebra, Geometry, and Computational Topology",
-    "date": "2026-05-12T10:58:54Z"
+    "date": "2026-05-12T10:58:54Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlcomputation_closure_myhillnerode_duality.json",
     "title": "Closure-Myhill-Nerode Duality via Idempotent Residual Semimodules",
     "domain": "Automata Theory / Abstract Algebra / Formal Methods",
-    "date": "2026-05-12T10:56:08Z"
+    "date": "2026-05-12T10:56:08Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlmachinelearning_closure_vc_duality_via_i.json",
     "title": "Closure-VC Duality: Algebraic Foundations of Finite Learnability",
     "domain": "Bridges (Algebra\u2013EML\u2013Machine Learning)",
-    "date": "2026-05-12T10:37:56Z"
+    "date": "2026-05-12T10:37:56Z",
+    "exp_id": ""
   },
   {
     "filename": "algebramachinelearninglogic_operadic_stone_duality.json",
     "title": "Operadic Stone Duality: Logical Identifiability of Neural Architectures via Heyting Predicate Lattices",
     "domain": "Algebra\u2013Machine Learning\u2013Logic (Bridges)",
-    "date": "2026-05-12T09:51:53Z"
+    "date": "2026-05-12T09:51:53Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativecryptography_ultrametric_proof_c.json",
     "title": "Ultrametric Proof-Code Duality",
     "domain": "Bridges (Algebra\u2013Geometry\u2013Coding Theory)",
-    "date": "2026-05-12T09:48:21Z"
+    "date": "2026-05-12T09:48:21Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlcryptography_closure_extractor_duality_v.json",
     "title": "Closure\u2013Extractor Duality: Finite Separation Theorems for Seeded Randomness Extraction",
     "domain": "Cryptography \u00d7 Closure Theory \u00d7 Idempotent Algebra",
-    "date": "2026-05-12T09:33:03Z"
+    "date": "2026-05-12T09:33:03Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemllogic_closure_stone_spectral_duality_via.json",
     "title": "Closure-Nucleus Spectral Duality via Idempotent Semimodules and Certified Theory Reconstruction",
     "domain": "Algebra, Logic, Spectral Theory, Formal Concept Analysis",
-    "date": "2026-05-12T09:32:42Z"
+    "date": "2026-05-12T09:32:42Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicallogic_tropical_stone_duality_via_id.json",
     "title": "Tropical Stone Duality via Idempotent Heyting Semimodules",
     "domain": "Algebra-Tropical-Logic (Bridges)",
-    "date": "2026-05-12T08:33:32Z"
+    "date": "2026-05-12T08:33:32Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_idempotent_causal_holography_via.json",
     "title": "Idempotent Causal Holography via Closure Lightcone Semimodules and Certified Bulk Reconstruction",
     "domain": "Order Theory / Discrete Geometry / Mathematical Physics",
-    "date": "2026-05-12T08:32:59Z"
+    "date": "2026-05-12T08:32:59Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_idempotent_renormalization_duali.json",
     "title": "Idempotent Renormalization Duality via Closure Scale Semimodules",
     "domain": "Algebra-EML-Physics Bridges",
-    "date": "2026-05-12T08:32:37Z"
+    "date": "2026-05-12T08:32:37Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrapythagoreancomputation_quantum_berggren_wal.json",
     "title": "Berggren\u2013Hecke Spectral Reconstruction on the Pythagorean Tree",
     "domain": "Algebra\u2013Geometry\u2013Computation Bridge",
-    "date": "2026-05-12T07:34:03Z"
+    "date": "2026-05-12T07:34:03Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicallogic_tropical_gdel_semantics_via_i.json",
     "title": "Tropical G\u00f6del\u2013Kripke Reconstruction: Idempotent Modal Semantics",
     "domain": "Algebra\u2013Tropical\u2013Logic Bridge",
-    "date": "2026-05-12T07:33:24Z"
+    "date": "2026-05-12T07:33:24Z",
+    "exp_id": ""
   },
   {
     "filename": "algebramachinelearningspeculative_operadic_tropica.json",
     "title": "Operadic Tropicalization of Neural Architectures",
     "domain": "Algebra \u00d7 Machine Learning \u00d7 Tropical Geometry",
-    "date": "2026-05-12T07:30:16Z"
+    "date": "2026-05-12T07:30:16Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrapythagoreancryptography_berggren_lattice_re.json",
     "title": "Berggren\u2013Lattice Reduction Duality via Triple-Tree Semimodule Flows",
     "domain": "Number Theory / Lattice Cryptography / Arithmetic Dynamics",
-    "date": "2026-05-12T05:36:49Z"
+    "date": "2026-05-12T05:36:49Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_idempotent_holographic_renormali.json",
     "title": "Idempotent Holographic Renormalization via Closure Boundary Flows and Certified Bulk Fixed-Point Reconstruction",
     "domain": "Algebra\u2013EML\u2013Physics Bridges",
-    "date": "2026-05-12T05:36:31Z"
+    "date": "2026-05-12T05:36:31Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_idempotent_blackwellthermodynami.json",
     "title": "Idempotent Blackwell-Thermodynamic Duality via Closure Information Semimodules",
     "domain": "Mathematical Bridges: Information Theory \u00d7 Algebra \u00d7 Thermodynamics",
-    "date": "2026-05-12T05:36:13Z"
+    "date": "2026-05-12T05:36:13Z",
+    "exp_id": ""
   },
   {
     "filename": "algebralogiccomputation_temporal_fixed_point_duali.json",
     "title": "Temporal Fixed-Point Duality for Reversible Causal Semirings",
     "domain": "Algebra-Logic-Computation Bridge (Reversible Dynamics)",
-    "date": "2026-05-12T05:35:56Z"
+    "date": "2026-05-12T05:35:56Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlcryptography_closure_matroid_duality_via.json",
     "title": "Closure\u2013Matroid\u2013Secret Sharing Bridge: Certified Cryptographic Access Structures from Exchange Closures",
     "domain": "Bridges (Algebra\u2013EML\u2013Cryptography)",
-    "date": "2026-05-12T05:35:38Z"
+    "date": "2026-05-12T05:35:38Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalcryptography_tropical_isogeny_rigid.json",
     "title": "Tropical Isogeny Rigidity via Idempotent Jacobian Semimodules",
     "domain": "Tropical Geometry \u00d7 Cryptography \u00d7 Formal Verification",
-    "date": "2026-05-12T04:36:24Z"
+    "date": "2026-05-12T04:36:24Z",
+    "exp_id": ""
   },
   {
     "filename": "algebralogicmachinelearning_ultrametric_proof_shea.json",
     "title": "Non-Archimedean Proof Signal Processing: Ultrametric Sheaf Sampling and Certified Reconstruction",
     "domain": "Bridges (Algebra-Logic-MachineLearning)",
-    "date": "2026-05-12T04:36:07Z"
+    "date": "2026-05-12T04:36:07Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_idempotent_gaugecurvature_dualit.json",
     "title": "Idempotent Gauge-Curvature Duality via Closure Connection Theory",
     "domain": "Algebra, Gauge Theory, Tropical Geometry, Closure Systems",
-    "date": "2026-05-12T04:35:50Z"
+    "date": "2026-05-12T04:35:50Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativemachinelearning_tropical_valuati.json",
     "title": "Tropical Valuation Distillation via Prime-Congruence Neural Sheaves and Certified Observer Compression",
     "domain": "Algebra\u2013Tropical Geometry\u2013Machine Learning Bridges",
-    "date": "2026-05-12T03:05:17Z"
+    "date": "2026-05-12T03:05:17Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalrepresentationtheory_tropical_geome.json",
     "title": "Tropical Geometric Langlands via Idempotent Affine Grassmannian Semirings and Certified MV Polytope Reconstruction",
     "domain": "Algebra\u2013Tropical\u2013RepresentationTheory",
-    "date": "2026-05-12T03:05:01Z"
+    "date": "2026-05-12T03:05:01Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrapythagoreancomputation_quantum_berggren_fou.json",
     "title": "Berggren-Fourier Duality: Harmonic Analysis on Pythagorean Triple Trees",
     "domain": "Arithmetic Dynamics / Harmonic Analysis / Computational Number Theory",
-    "date": "2026-05-12T03:04:48Z"
+    "date": "2026-05-12T03:04:48Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalmachinelearning_tropical_neural_she.json",
     "title": "Tropical Neural Sheaf Sampling via Idempotent Laplacian Semimodules",
     "domain": "Algebra \u00d7 Tropical Geometry \u00d7 Machine Learning",
-    "date": "2026-05-12T03:04:32Z"
+    "date": "2026-05-12T03:04:32Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalcryptography_tropical_choquetradon_.json",
     "title": "Tropical Choquet\u2013Radon Trapdoor Duality via Idempotent Convex Semimodules and Certified Extremal Decomposition",
     "domain": "Tropical Geometry \u00d7 Cryptography \u00d7 Idempotent Analysis",
-    "date": "2026-05-12T02:07:36Z"
+    "date": "2026-05-12T02:07:36Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlcomputation_idempotent_holographic_reali.json",
     "title": "Idempotent Holographic Realization via Closure Boundary Semimodules",
     "domain": "Algebra / Tropical Computation / Systems Theory",
-    "date": "2026-05-12T02:01:36Z"
+    "date": "2026-05-12T02:01:36Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativecryptography_tropical_one_way_mi.json",
     "title": "Tropical One-Way Minors via Valuation Congruence Obstructions and Certified Collision Separation",
     "domain": "Tropical Algebra \u00d7 Cryptography",
-    "date": "2026-05-12T01:05:45Z"
+    "date": "2026-05-12T01:05:45Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalrepresentationtheory_tropical_planc.json",
     "title": "Tropical Plancherel Reconstruction via Idempotent Hecke Semirings",
     "domain": "Tropical Algebra / Representation Theory / Spectral Theory",
-    "date": "2026-05-12T01:05:21Z"
+    "date": "2026-05-12T01:05:21Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemllogic_idempotent_stone_completeness_via_.json",
     "title": "Idempotent Stone Completeness via Closure Nuclei and Tropical Kripke Spectra",
     "domain": "Algebra\u2013Logic\u2013Tropical Geometry Bridge",
-    "date": "2026-05-12T00:35:53Z"
+    "date": "2026-05-12T00:35:53Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalgeometry_tropical_satake_skeleton_v.json",
     "title": "Tropical Satake Skeleton via Idempotent Spherical Hecke Semirings",
     "domain": "Tropical Algebra / Semiring Geometry / Building Theory",
-    "date": "2026-05-12T00:35:30Z"
+    "date": "2026-05-12T00:35:30Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalmachinelearning_tropical_represente.json",
     "title": "Tropical Representer Duality via Idempotent RKHS Semimodules and Certified Min-Plus Kernel Regression",
     "domain": "Algebra\u2013Tropical\u2013MachineLearning (Bridges)",
-    "date": "2026-05-12T00:35:13Z"
+    "date": "2026-05-12T00:35:13Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrapythagoreangeometry_tropical_gravitational_.json",
     "title": "Tropical Gravitational Factorization via Berggren Lens Rigidity",
     "domain": "Tropical Geometry \u00d7 Arithmetic Dynamics \u00d7 Number Theory",
-    "date": "2026-05-12T00:34:54Z"
+    "date": "2026-05-12T00:34:54Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlcryptography_tropical_pontryaginmellin_d.json",
     "title": "Tropical Pontryagin-Mellin Duality via Idempotent Character Semimodules and Certified Min-Plus Inversion",
     "domain": "Tropical Algebra, Harmonic Analysis, Cryptography",
-    "date": "2026-05-12T00:32:18Z"
+    "date": "2026-05-12T00:32:18Z",
+    "exp_id": ""
   },
   {
     "filename": "algebramachinelearningspeculative_prime_congruence.json",
     "title": "Observer-Relative Algebraic Rate-Distortion Theory for Neural Operads",
     "domain": "Algebraic Information Theory / Machine Learning Theory",
-    "date": "2026-05-11T23:42:04Z"
+    "date": "2026-05-11T23:42:04Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalcomputation_tropical_automata_minim.json",
     "title": "Tropical Automata Minimization via Idempotent Myhill-Nerode Congruence and Certified Min-Plus Hankel Rank",
     "domain": "Algebra-Tropical-Computation",
-    "date": "2026-05-11T23:34:43Z"
+    "date": "2026-05-11T23:34:43Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_holographic_closure_duality_via_.json",
     "title": "Idempotent Holographic Closure Duality: Boundary Capacity Profiles as Complete Invariants",
     "domain": "Algebra, Combinatorics, Closure Systems, Mathematical Physics",
-    "date": "2026-05-11T23:34:25Z"
+    "date": "2026-05-11T23:34:25Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrageometrycryptography_berggren_voronoi_duali.json",
     "title": "Berggren Voronoi-CVP Duality via Primitive Triple Delaunay Complexes and Certified Decoding",
     "domain": "Bridges (Algebra-Geometry-Cryptography)",
-    "date": "2026-05-11T22:55:00Z"
+    "date": "2026-05-11T22:55:00Z",
+    "exp_id": ""
   },
   {
     "filename": "algebra_breakthrough_discovery.json",
     "title": "Structural Properties of Finite Difference Sets: Symmetry, Invariance, and Diameter Control",
     "domain": "Additive Combinatorics / Algebra",
-    "date": "2026-05-11T19:08:26Z"
+    "date": "2026-05-11T19:08:26Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicallogic_tropical_gdel_semantics_via_p.json",
     "title": "Tropical Algebraic Logic: Prime-Congruence Semantics for Idempotent Semiring Proof Systems",
     "domain": "Algebra-Tropical-Logic Bridge",
-    "date": "2026-05-11T19:05:38Z"
+    "date": "2026-05-11T19:05:38Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropicalcryptography_tropical_hecke_trapdoo.json",
     "title": "Tropical Hecke Trapdoor Duality via Min-Plus Double-Coset Convolution and Certified Decoding Fibers",
     "domain": "Algebra-Tropical-Cryptography Bridge",
-    "date": "2026-05-11T18:48:13Z"
+    "date": "2026-05-11T18:48:13Z",
+    "exp_id": ""
   },
   {
     "filename": "algebralogiccomputation_temporal_fixed_point_compr.json",
     "title": "Ultrametric Temporal Fixed-Point Compression via Contractive Proof Dynamics",
     "domain": "Non-Archimedean Analysis / Proof Theory / Reversible Computation",
-    "date": "2026-05-11T18:03:42Z"
+    "date": "2026-05-11T18:03:42Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlmachinelearning_tropical_information_bot.json",
     "title": "Tropical Information Bottleneck Duality via Closure Capacities and Neural Operad Rate Regions",
     "domain": "Bridges: Tropical Algebra \u00d7 Information Theory \u00d7 Machine Learning",
-    "date": "2026-05-11T18:03:24Z"
+    "date": "2026-05-11T18:03:24Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemltropical_tropical_tannaka_reconstruction.json",
     "title": "Tropical Tannaka Reconstruction via Idempotent Fiber Functors and Closure Symmetry Semirings",
     "domain": "Algebra / Tropical Geometry / Category Theory",
-    "date": "2026-05-11T17:36:32Z"
+    "date": "2026-05-11T17:36:32Z",
+    "exp_id": ""
   },
   {
     "filename": "algebracryptographypythagorean_berggren_lattice_re.json",
     "title": "Berggren-Lattice Reduction Duality via Primitive Triple Gram Forms",
     "domain": "Number Theory / Lattice Cryptography / Arithmetic Dynamics",
-    "date": "2026-05-11T16:19:44Z"
+    "date": "2026-05-11T16:19:44Z",
+    "exp_id": ""
   },
   {
     "filename": "algebralogicmachinelearning_non_archimedean_lwenhe.json",
     "title": "Non-Archimedean L\u00f6wenheim\u2013Sample Duality via Ultrametric Proof Types and Operadic Compression Cores",
     "domain": "Bridges: Non-Archimedean Geometry \u00d7 Model Theory \u00d7 Learning Theory",
-    "date": "2026-05-11T16:19:23Z"
+    "date": "2026-05-11T16:19:23Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlphysics_de_sitter_tropical_entropic_c_th.json",
     "title": "Tropical de Sitter Entropic c-Theorem via Idempotent Transfer Renormalization and Closure Horizon Capacities",
     "domain": "Tropical Algebra, Renormalization Group Theory, Order Theory, Information Theory",
-    "date": "2026-05-11T16:19:06Z"
+    "date": "2026-05-11T16:19:06Z",
+    "exp_id": ""
   },
   {
     "filename": "algebramachinelearningspeculative_tropical_barron_.json",
     "title": "Tropical Barron Duality via Idempotent Choquet Features and Canonical Min-Plus Compression",
     "domain": "Algebra-MachineLearning Bridge: Tropical Approximation Theory",
-    "date": "2026-05-11T16:18:15Z"
+    "date": "2026-05-11T16:18:15Z",
+    "exp_id": ""
   },
   {
     "filename": "algebralogicspeculative_temporal_prime_congruence_.json",
     "title": "Prime Temporal Congruence Spectra for Reversible Oracle Semirings",
     "domain": "Algebra, Logic, and Computational Semantics",
-    "date": "2026-05-11T14:36:52Z"
+    "date": "2026-05-11T14:36:52Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrapythagoreancryptography_berggren_expander_h.json",
     "title": "Berggren Expander Hashing: Pythagorean Spectral Cryptography",
     "domain": "Number Theory / Cryptography / Algebraic Dynamics",
-    "date": "2026-05-11T13:36:13Z"
+    "date": "2026-05-11T13:36:13Z",
+    "exp_id": ""
   },
   {
     "filename": "machinelearningspeculative_ultrametric_proof_compr.json",
     "title": "Operadic Ultrametric Compression: Non-Archimedean Learning Theory for Proof Dynamics",
     "domain": "Bridges: Operadic Deep Learning \u00d7 Ultrametric Geometry \u00d7 Proof Compression",
-    "date": "2026-05-11T13:35:42Z"
+    "date": "2026-05-11T13:35:42Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemlcryptography_tropical_ratedistortion_tra.json",
     "title": "Tropical Rate\u2013Distortion Trapdoor Duality via Closure Capacities and Certified Decoding Thresholds",
     "domain": "Bridges: Tropical Algebra \u2194 Cryptography \u2194 Information Theory",
-    "date": "2026-05-11T13:35:26Z"
+    "date": "2026-05-11T13:35:26Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativecomputation_stonepriestley_duali.json",
     "title": "Stone-Priestley Duality for Tropical Proof Certificates via Prime Congruence Spectra and Certified Program Extraction",
     "domain": "Algebra / Spectral Geometry / Certified Computation",
-    "date": "2026-05-11T12:37:16Z"
+    "date": "2026-05-11T12:37:16Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativecryptography_prime_stone_duality.json",
     "title": "Tropical Prime\u2013Stone Duality for One-Way Semirings via Congruence Spectra and Canonical Hardness Certificates",
     "domain": "Tropical Algebra, Stone Duality, Spectral Cryptography",
-    "date": "2026-05-11T12:37:01Z"
+    "date": "2026-05-11T12:37:01Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_spectral_tropical_langlands_corresponde.json",
     "title": "Tropical Spectral Langlands Correspondence via Idempotent Hecke Semirings and Closure Eigenmeasures",
     "domain": "Tropical Algebra / Order Theory / Representation Theory",
-    "date": "2026-05-11T12:36:46Z"
+    "date": "2026-05-11T12:36:46Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculativecryptography_prime_congruence_du.json",
     "title": "Prime Congruence Duality for Tropical One-Way Semirings via Observer Spectra and Canonical Hard-Core Quotients",
     "domain": "Tropical Algebra \u00d7 Spectral Geometry \u00d7 Formal Cryptography",
-    "date": "2026-05-11T11:36:54Z"
+    "date": "2026-05-11T11:36:54Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraemltropical_non_archimedean_information_dua.json",
     "title": "Non-Archimedean Information Duality via p-adic Closure Capacities and Min-Plus Rate Functions",
     "domain": "Bridges: Algebra \u00d7 Information Theory \u00d7 Tropical Geometry",
-    "date": "2026-05-11T11:36:40Z"
+    "date": "2026-05-11T11:36:40Z",
+    "exp_id": ""
   },
   {
     "filename": "algebrapythagoreangeometry_gravitational_tropical_.json",
     "title": "Tropical Arithmetic Lensing on the Berggren Tree",
     "domain": "Number Theory / Tropical Geometry / Arithmetic Inverse Problems",
-    "date": "2026-05-11T11:36:27Z"
+    "date": "2026-05-11T11:36:27Z",
+    "exp_id": ""
   },
   {
     "filename": "algebramachinelearninglogic_operadic_tropical_vc_d.json",
     "title": "Tropical VC-Dimension Duality via Neural Semiring Shattering and Canonical Sample Compression",
     "domain": "Algebra-Machine Learning-Logic Bridge (Tropical Geometry, VC Theory, Operads)",
-    "date": "2026-05-11T11:36:11Z"
+    "date": "2026-05-11T11:36:11Z",
+    "exp_id": ""
   },
   {
     "filename": "algebralogiccomputation_temporal_stonebirkhoff_dua.json",
     "title": "Temporal Stone-Birkhoff Duality via Reversible Oracle Semirings and Canonical Causal Completion",
     "domain": "Algebra / Logic / Computation Bridges",
-    "date": "2026-05-11T09:36:49Z"
+    "date": "2026-05-11T09:36:49Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraphysicseml_tropical_holographic_reconstruct.json",
     "title": "Tropical Holographic Reconstruction: Boundary Rigidity and Bulk Recovery for Weighted Closure Systems",
     "domain": "Tropical Algebra / Inverse Problems / Discrete Holography",
-    "date": "2026-05-11T09:36:32Z"
+    "date": "2026-05-11T09:36:32Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_tropical_choquet_closure_duality_via_id.json",
     "title": "Tropical Choquet Closure Duality via Idempotent Capacity Representation",
     "domain": "Tropical Algebra / Closure Theory / Idempotent Analysis",
-    "date": "2026-05-11T09:36:19Z"
+    "date": "2026-05-11T09:36:19Z",
+    "exp_id": ""
   },
   {
     "filename": "tropical_cryptography_breakthrough_bridge.json",
     "title": "Row-Separated Injectivity for Tropical Matrix Action: A Foundation for Min-Plus Cryptographic Primitives",
     "domain": "Cryptography / Tropical Algebra",
-    "date": "2026-05-11T09:36:04Z"
+    "date": "2026-05-11T09:36:04Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculative_stone_duality_for_ultrametric_p.json",
     "title": "Stone Duality for Ultrametric Proof Semirings via Prime Congruence Spectra",
     "domain": "Algebra / Topology / Proof Theory",
-    "date": "2026-05-11T09:35:52Z"
+    "date": "2026-05-11T09:35:52Z",
+    "exp_id": ""
   },
   {
     "filename": "algebracryptographypythagorean_tropical_height_rig.json",
     "title": "Tropical Height Rigidity for Berggren Tree Valuations",
     "domain": "Number Theory \u00d7 Tropical Geometry \u00d7 Cryptography",
-    "date": "2026-05-11T07:33:54Z"
+    "date": "2026-05-11T07:33:54Z",
+    "exp_id": ""
   },
   {
     "filename": "algebracryptography_tropical_min_plus_trapdoor_dua.json",
     "title": "Tropical Residuation Trapdoor Duality via Certified Min-Plus Matrix Compression",
     "domain": "Bridges: Tropical Algebra \u2194 Post-Quantum Cryptography",
-    "date": "2026-05-11T07:33:45Z"
+    "date": "2026-05-11T07:33:45Z",
+    "exp_id": ""
   },
   {
     "filename": "bridges_breakthrough_discovery.json",
     "title": "Fixed-Point Lattice Theorem for Idempotent Monotone Bridge Operators",
     "domain": "Order Theory / Closure Operators / Cross-Domain Bridges",
-    "date": "2026-05-11T07:33:31Z"
+    "date": "2026-05-11T07:33:31Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_thermodynamic_galois_duality_via_closur.json",
     "title": "Thermodynamic Galois Duality via Closure Pressure Spectra and Equilibrium Correspondence",
     "domain": "Bridges (Algebra\u2013EML Thermodynamic Formalism)",
-    "date": "2026-05-11T07:33:14Z"
+    "date": "2026-05-11T07:33:14Z",
+    "exp_id": ""
   },
   {
     "filename": "algebramachinelearning_ultrametric_myhillnerode_di.json",
     "title": "Non-Archimedean Neural Minimization: An Ultrametric Myhill-Nerode Theorem",
     "domain": "Bridges (Algebra-ML-Automata-Dynamics)",
-    "date": "2026-05-11T07:32:57Z"
+    "date": "2026-05-11T07:32:57Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_thermodynamic_formalism_via_tropical_pe.json",
     "title": "Idempotent Thermodynamic Formalism for Closure Dynamics: Tropical Pressure via Max-Plus Spectral Theory",
     "domain": "Tropical Mathematics / Dynamical Systems / Formal Verification",
-    "date": "2026-05-11T07:32:43Z"
+    "date": "2026-05-11T07:32:43Z",
+    "exp_id": ""
   },
   {
     "filename": "algebratropical_neural_representation_duality_via_.json",
     "title": "Tropical Neural Representation Theory: Idempotent Myhill-Nerode and Canonical Tropical Fourier Compression",
     "domain": "Algebra / Tropical Geometry / Machine Learning / Automata Theory",
-    "date": "2026-05-11T07:32:29Z"
+    "date": "2026-05-11T07:32:29Z",
+    "exp_id": ""
   },
   {
     "filename": "cryptographypythagorean_isogeny_free_trapdoors_via.json",
     "title": "Cryptography-Pythagorean Isogeny-Free Trapdoors via Berggren Tree Lattice Minors and Orbit Separation",
     "domain": "Bridges: Cryptography \u00d7 Arithmetic Dynamics \u00d7 Lattice Theory",
-    "date": "2026-05-11T04:06:34Z"
+    "date": "2026-05-11T04:06:34Z",
+    "exp_id": ""
   },
   {
     "filename": "machinelearningspeculative_operadic_diagonalizatio.json",
     "title": "Operadic Neural Proof-Semiring Diagonalization",
     "domain": "Bridges (ML \u00d7 Algebra \u00d7 Cryptography \u00d7 Physics)",
-    "date": "2026-05-11T04:06:27Z"
+    "date": "2026-05-11T04:06:27Z",
+    "exp_id": ""
   },
   {
     "filename": "logiccomputation_temporal_fixed_point_semantics_vi.json",
     "title": "Logic-Computation Temporal Fixed-Point Semantics via Reversible Oracle Groupoids and Novikov Consistency",
     "domain": "Bridges (Logic \u00d7 Computation \u00d7 Physics \u00d7 Cryptography)",
-    "date": "2026-05-11T04:06:15Z"
+    "date": "2026-05-11T04:06:15Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_ruelle_transfer_semantics_via_closure_c.json",
     "title": "Algebra-EML Ruelle Transfer Semantics via Closure Correspondence Operators and Artin-Mazur Rationality",
     "domain": "Bridges (Algebraic Dynamics, EML Semantics, Transfer Operators)",
-    "date": "2026-05-11T04:06:02Z"
+    "date": "2026-05-11T04:06:02Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculative_cobham_invariance_for_oracle_tr.json",
     "title": "Cobham-Style Invariance for Oracle-Trace Semirings via Prefix Ultrametrics",
     "domain": "Bridges/Speculative",
-    "date": "2026-05-11T02:06:07Z"
+    "date": "2026-05-11T02:06:07Z",
+    "exp_id": ""
   },
   {
     "filename": "algebramachinelearning_coalgebraic_myhillnerode_se.json",
     "title": "Coalgebraic Myhill-Nerode Semantics for Neural State Compression",
     "domain": "Algebra-MachineLearning Bridge",
-    "date": "2026-05-11T02:05:52Z"
+    "date": "2026-05-11T02:05:52Z",
+    "exp_id": ""
   },
   {
     "filename": "machinelearningspeculative_ultrametric_proof_dynam.json",
     "title": "Ultrametric Proof Dynamics: p-Adic Neural Compression and Diagonal Stability",
     "domain": "Bridges (Ultrametric Geometry \u00d7 Machine Learning \u00d7 Cryptography)",
-    "date": "2026-05-11T02:05:38Z"
+    "date": "2026-05-11T02:05:38Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_congruence_quotient_reconstruction_via_.json",
     "title": "Quotient Orbit Compression: Sharp Collision Bounds via Congruence Quotients",
     "domain": "Bridges (Algebraic Dynamics \u00d7 Cryptography \u00d7 EML State Compression)",
-    "date": "2026-05-11T02:05:18Z"
+    "date": "2026-05-11T02:05:18Z",
+    "exp_id": ""
   },
   {
     "filename": "berggren_matrix_groupoid_with_sl3_semantics_and_pr.json",
     "title": "Berggren Groupoid: Free Orbit Action on Primitive Pythagorean Triples",
     "domain": "Number Theory \u00d7 Algebraic Dynamics \u00d7 Certified Coding",
-    "date": "2026-05-11T02:05:02Z"
+    "date": "2026-05-11T02:05:02Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_renormalization_semantics_via_closure_f.json",
     "title": "Algebra-EML Renormalization Semantics via Closure Flow Monoids and Universality Classes",
     "domain": "Bridges",
-    "date": "2026-05-11T02:04:48Z"
+    "date": "2026-05-11T02:04:48Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculative_prime_congruence_semantics_for_.json",
     "title": "Prime Congruence Semantics for Neural Proof Compression",
     "domain": "Bridges (Algebra \u00d7 ML \u00d7 Cryptography \u00d7 Proof Theory)",
-    "date": "2026-05-10T23:04:40Z"
+    "date": "2026-05-10T23:04:40Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_symbolic_zeta_semantics_via_closure_end.json",
     "title": "Algebra-EML Symbolic Zeta Semantics via Closure Endomorphism Growth",
     "domain": "Bridges (Symbolic Dynamics / Closure Algebra / Thermodynamic Formalism)",
-    "date": "2026-05-10T23:04:27Z"
+    "date": "2026-05-10T23:04:27Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculative_longest_common_valued_prefix_ul.json",
     "title": "Non-Archimedean Metric Geometry of Oracle Traces: Ultrametric Valuation, Entropy-Capacity Principles, and Post-Quantum Separation",
     "domain": "Bridges (Algebra-Speculative / Information Theory / Cryptography / ML)",
-    "date": "2026-05-10T23:04:14Z"
+    "date": "2026-05-10T23:04:14Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_tannaka_reconstruction_via_closure_endo.json",
     "title": "Tannaka Closure Reconstruction via Observable Semimodules",
     "domain": "Bridges (Algebra-EML-Quantum-ML)",
-    "date": "2026-05-10T23:03:59Z"
+    "date": "2026-05-10T23:03:59Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_lefschetz_trace_semantics_via_closure_e.json",
     "title": "Algebra\u2013EML Lefschetz Trace Semantics via Closure Endomorphism Homology and Periodic Fixed-Point Enumeration",
     "domain": "Bridges (Algebraic Topology \u00d7 Finite Dynamics \u00d7 Cryptography \u00d7 ML)",
-    "date": "2026-05-10T23:03:45Z"
+    "date": "2026-05-10T23:03:45Z",
+    "exp_id": ""
   },
   {
     "filename": "algebramachinelearning_operadic_semiring_semantics.json",
     "title": "Operadic Semiring Semantics for Neural Architectures: Congruence Quotients and Certified Minimization",
     "domain": "Bridges: Universal Algebra \u00d7 Machine Learning \u00d7 Post-Quantum Cryptography",
-    "date": "2026-05-10T23:03:32Z"
+    "date": "2026-05-10T23:03:32Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculative_fixed_point_logic_via_proof_sem.json",
     "title": "Proof-Semiring Diagonalization and Chronometric Incompleteness Bounds",
     "domain": "Bridges (Algebra \u00d7 Temporal Logic \u00d7 Complexity \u00d7 Cryptography \u00d7 Physics)",
-    "date": "2026-05-10T23:00:52Z"
+    "date": "2026-05-10T23:00:52Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_morita_equivalence_via_closure_semimodu.json",
     "title": "Closure-Enriched Morita Equivalence via Semimodule Bimodules and Capacity Invariance",
     "domain": "Bridges (Algebra \u00d7 Order Theory \u00d7 Thermodynamics \u00d7 Cryptography)",
-    "date": "2026-05-10T21:28:58Z"
+    "date": "2026-05-10T21:28:58Z",
+    "exp_id": ""
   },
   {
     "filename": "berggrenchronometric_reversible_automata_via_primi.json",
     "title": "Berggren-Chronometric Reversible Automata via Primitive Triple Orbit Groupoids and Causal Entropy Separation",
     "domain": "Bridges (Number Theory, Automata, Reversible Computation, Cryptography)",
-    "date": "2026-05-10T21:26:08Z"
+    "date": "2026-05-10T21:26:08Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraeml_turingmyhill_reconstruction_via_closure.json",
     "title": "Algebra-EML Turing-Myhill Reconstruction via Closure Semimodule Dynamics",
     "domain": "Bridges (Automata Theory \u00d7 Quantum \u00d7 Cryptography)",
-    "date": "2026-05-10T21:15:21Z"
+    "date": "2026-05-10T21:15:21Z",
+    "exp_id": ""
   },
   {
     "filename": "algebraspeculative_ultrametric_oracle_capacity_via.json",
     "title": "Ultrametric Oracle Capacity via Non-Archimedean Fixed-Point Compression",
     "domain": "Bridges (Algebra \u00d7 Dynamics \u00d7 Cryptography \u00d7 ML)",
-    "date": "2026-05-10T20:31:11Z"
+    "date": "2026-05-10T20:31:11Z",
+    "exp_id": ""
   }
 ];
 
@@ -6031,7 +6139,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -6040,7 +6148,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 272
+      "hue": 275
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -6049,7 +6157,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -6058,7 +6166,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -6067,7 +6175,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -6076,7 +6184,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -6094,7 +6202,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -6103,7 +6211,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -6130,7 +6238,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -6139,7 +6247,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -6148,7 +6256,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -6157,7 +6265,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:38Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebramachinelearning_coalgebraic_myhillnerode_se",
@@ -6166,7 +6274,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -6175,7 +6283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-11T02:06:07Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraeml_ruelle_transfer_semantics_via_closure_c",
@@ -6184,7 +6292,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T04:06:02Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "logiccomputation_temporal_fixed_point_semantics_vi",
@@ -6202,7 +6310,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:27Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "cryptographypythagorean_isogeny_free_trapdoors_via",
@@ -6211,7 +6319,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T04:06:34Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "algebratropical_neural_representation_duality_via_",
@@ -6220,7 +6328,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -6229,7 +6337,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 89
+      "hue": 271
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -6238,7 +6346,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -6247,7 +6355,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -6256,7 +6364,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -6265,7 +6373,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -6283,7 +6391,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -6292,7 +6400,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T09:36:04Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "algebraeml_tropical_choquet_closure_duality_via_id",
@@ -6301,7 +6409,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -6310,7 +6418,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
@@ -6319,7 +6427,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -6328,7 +6436,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T11:36:11Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebrapythagoreangeometry_gravitational_tropical_",
@@ -6337,7 +6445,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -6346,7 +6454,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:40Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraspeculativecryptography_prime_congruence_du",
@@ -6355,7 +6463,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -6364,7 +6472,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -6382,7 +6490,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -6400,7 +6508,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -6418,7 +6526,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -6427,7 +6535,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T16:18:15Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "algebraemlphysics_de_sitter_tropical_entropic_c_th",
@@ -6436,7 +6544,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 271
+      "hue": 101
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -6445,7 +6553,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -6454,7 +6562,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -6463,7 +6571,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -6472,7 +6580,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T18:03:24Z",
-      "hue": 280
+      "hue": 271
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_compr",
@@ -6481,7 +6589,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -6490,7 +6598,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T18:48:13Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_p",
@@ -6499,7 +6607,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -6508,7 +6616,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -6517,7 +6625,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -6535,7 +6643,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -6544,7 +6652,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -6562,7 +6670,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -6571,7 +6679,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -6589,7 +6697,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -6598,7 +6706,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -6607,7 +6715,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -6616,7 +6724,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -6625,7 +6733,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -6634,7 +6742,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -6643,7 +6751,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -6652,7 +6760,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -6661,7 +6769,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -6670,7 +6778,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -6679,7 +6787,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -6688,7 +6796,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:36:24Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraemlcryptography_closure_matroid_duality_via",
@@ -6697,7 +6805,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T05:35:38Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_duali",
@@ -6706,7 +6814,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -6715,7 +6823,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -6724,7 +6832,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T05:36:31Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -6733,7 +6841,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T05:36:49Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebramachinelearningspeculative_operadic_tropica",
@@ -6742,7 +6850,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T07:30:16Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_i",
@@ -6751,7 +6859,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T07:33:24Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_wal",
@@ -6760,7 +6868,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T07:34:03Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_idempotent_renormalization_duali",
@@ -6769,7 +6877,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:37Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "algebraemlphysics_idempotent_causal_holography_via",
@@ -6796,7 +6904,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T09:32:42Z",
-      "hue": 90
+      "hue": 314
     },
     {
       "id": "algebraemlcryptography_closure_extractor_duality_v",
@@ -6805,7 +6913,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T09:33:03Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -6814,7 +6922,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T09:48:21Z",
-      "hue": 281
+      "hue": 92
     },
     {
       "id": "algebramachinelearninglogic_operadic_stone_duality",
@@ -6832,7 +6940,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T10:37:56Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "algebraemlcomputation_closure_myhillnerode_duality",
@@ -6850,7 +6958,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T10:58:54Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_obse",
@@ -6859,7 +6967,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T11:15:45Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropicalcomputation_tropical_residuation_re",
@@ -6868,7 +6976,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T11:29:51Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_closure_kramerswannier_duality_v",
@@ -6886,7 +6994,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:59:05Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_closure_barron_duality_v",
@@ -6895,7 +7003,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T12:09:31Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebratropicalgeometry_tropical_choquetvoronoi_du",
@@ -6904,7 +7012,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:28:11Z",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "algebrapythagoreanphysics_berggren_transfer_dualit",
@@ -6913,7 +7021,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T12:32:17Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -6922,7 +7030,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:36:25Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraspeculativelogic_ultrametric_proofautomaton",
@@ -6931,7 +7039,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:00:31Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_tropical_l",
@@ -6940,7 +7048,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:03:31Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "algebraemlcomputation_closure_circuit_duality_via_",
@@ -6949,7 +7057,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T13:25:11Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebratropicalmachinelearning_tropical_persistenc",
@@ -6958,7 +7066,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T13:33:40Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraemlmachinelearning_closure_operad_duality_v",
@@ -6967,7 +7075,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T14:07:37Z",
-      "hue": 314
+      "hue": 91
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_barr",
@@ -6976,7 +7084,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T14:10:39Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_kernel_mea",
@@ -6985,7 +7093,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T14:15:55Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancomputation_berggren_automaton_r",
@@ -6994,7 +7102,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T14:16:15Z",
-      "hue": 275
+      "hue": 270
     }
   ],
   "edges": [
@@ -7002,481 +7110,561 @@ window.PACKAGE_GRAPH = {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_closure_operad_duality_v",
       "strength": 1.0,
-      "label": "Neural Linear-Probe Reconstruction with"
+      "label": "Neural Linear-Probe Reconstruction with",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
       "strength": 0.9490102929532858,
-      "label": "Idempotent Holographic Renormalization"
+      "label": "Idempotent Holographic Renormalization",
+      "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_stonebirkhoff_dua",
       "strength": 0.8791765637371338,
-      "label": "Weighted Temporal Constraints and Thermo"
+      "label": "Weighted Temporal Constraints and Thermo",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_tropical_information_bot",
       "strength": 0.82375296912114,
-      "label": "Tropical Observable Closures and Min-Plu"
+      "label": "Tropical Observable Closures and Min-Plu",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlgeometry_closure_voronoi_duality_via_ide",
       "strength": 0.7877276326207443,
-      "label": "Closure"
+      "label": "Closure",
+      "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
       "strength": 0.7306413301662709,
-      "label": "Temporal Nerode Quotient for Reversible"
+      "label": "Temporal Nerode Quotient for Reversible",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
       "strength": 0.7250989707046716,
-      "label": "Operadic Neural Architecture Search via"
+      "label": "Operadic Neural Architecture Search via",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
       "strength": 0.6109263657957245,
-      "label": "Optimal Obstruction Certificate Computat"
+      "label": "Optimal Obstruction Certificate Computat",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.5771179730799683,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
       "strength": 0.5710213776722091,
-      "label": "Logic"
+      "label": "Logic",
+      "type": "heuristic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "cryptographypythagorean_isogeny_free_trapdoors_via",
       "strength": 0.5610451306413302,
-      "label": "Cryptography"
+      "label": "Cryptography",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.5588281868566904,
-      "label": "Topological Prime Spectrum Compression L"
+      "label": "Topological Prime Spectrum Compression L",
+      "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebramachinelearningspeculative_operadic_tropica",
       "strength": 0.5527315914489312,
-      "label": "Lean Formalization Target"
+      "label": "Lean Formalization Target",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
       "strength": 0.5405384006334125,
-      "label": "Non"
+      "label": "Non",
+      "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogicspeculative_temporal_prime_congruence_",
       "strength": 0.5327790973871733,
-      "label": "Weighted Temporal Constraints and Thermo"
+      "label": "Weighted Temporal Constraints and Thermo",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_represente",
       "strength": 0.5216943784639747,
-      "label": "Tropical Representer Duality"
+      "label": "Tropical Representer Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_persistenc",
       "strength": 0.5216943784639747,
-      "label": "Tropical Persistence Realization Duality"
+      "label": "Tropical Persistence Realization Duality",
+      "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
       "strength": 0.5205859065716548,
-      "label": "Operadic Neural Composition with Multi-I"
+      "label": "Operadic Neural Composition with Multi-I",
+      "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
       "strength": 0.5189231987331749,
-      "label": "Non"
+      "label": "Non",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "strength": 0.5167062549485353,
-      "label": "Optimal Obstruction Certificate Computat"
+      "label": "Optimal Obstruction Certificate Computat",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemllogic_closure_stone_spectral_duality_via",
       "strength": 0.510609659540776,
-      "label": "Closure"
+      "label": "Closure",
+      "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "strength": 0.48677751385589874,
-      "label": "Tropical Semiring Observations for Infor"
+      "label": "Tropical Semiring Observations for Infor",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.48289786223277914,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
       "strength": 0.47624703087885983,
-      "label": "Non"
+      "label": "Non",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemlgeometry_closure_voronoi_duality_via_ide",
       "strength": 0.4734758511480601,
-      "label": "Closure"
+      "label": "Closure",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebramachinelearningspeculative_operadic_tropica",
       "strength": 0.4690419635787807,
-      "label": "Operadic Tropicalization"
+      "label": "Operadic Tropicalization",
+      "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
       "strength": 0.4513064133016627,
-      "label": "Operadic composition laws for specific a"
+      "label": "Operadic composition laws for specific a",
+      "type": "heuristic"
     },
     {
       "source": "algebralogicmachinelearning_ultrametric_proof_shea",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
       "strength": 0.4496437054631829,
-      "label": "Operadic Stone Duality"
+      "label": "Operadic Stone Duality",
+      "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
       "strength": 0.44520981789390346,
-      "label": "Logic"
+      "label": "Logic",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_idempotent_renormalization_duali",
       "strength": 0.4274742676167855,
-      "label": "Idempotent Renormalization Duality"
+      "label": "Idempotent Renormalization Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
       "strength": 0.42082343626286617,
-      "label": "Non"
+      "label": "Non",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
       "strength": 0.42082343626286617,
-      "label": "Effective prefix codes"
+      "label": "Effective prefix codes",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
       "strength": 0.41583531274742674,
-      "label": "Closure Kramers"
+      "label": "Closure Kramers",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "strength": 0.41361836896278703,
-      "label": "Tropical Residuation Trapdoor Duality"
+      "label": "Tropical Residuation Trapdoor Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
       "strength": 0.41361836896278703,
-      "label": "Operadic Neural Proof"
+      "label": "Operadic Neural Proof",
+      "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.4108471892319873,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_ultrametric_proof_dynam",
       "strength": 0.4069675376088677,
-      "label": "Topological Prime Spectrum Compression L"
+      "label": "Topological Prime Spectrum Compression L",
+      "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.40530482977038806,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
       "strength": 0.39976247030878864,
-      "label": "Cryptography,Algebra,EML,Bridges bridge"
+      "label": "Cryptography,Bridges,Algebra,EML bridge",
+      "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
       "strength": 0.39976247030878864,
-      "label": "Geometry,Algebra,Logic,Tropical bridge"
+      "label": "Geometry,Tropical,Algebra,Logic bridge",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
       "strength": 0.39976247030878864,
-      "label": "MachineLearning,Algebra,Geometry,Tropical bridge"
+      "label": "Geometry,Tropical,Algebra,MachineLearning bridge",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "strength": 0.3953285827395092,
-      "label": "Entropy Production Rate Invariance"
+      "label": "Entropy Production Rate Invariance",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_i",
       "target": "algebratropicallogic_tropical_stone_duality_via_id",
       "strength": 0.3920031670625495,
-      "label": "C. Tropical Persistent Homology"
+      "label": "C. Tropical Persistent Homology",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
       "strength": 0.37870150435471106,
-      "label": "Non"
+      "label": "Non",
+      "type": "heuristic"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
       "strength": 0.3720506730007918,
-      "label": "Tropical Rate"
+      "label": "Tropical Rate",
+      "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.3720506730007918,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraemltropical_non_archimedean_information_dua",
       "strength": 0.3565320665083135,
-      "label": "Indistinguishability \u2194 metric bisimulati"
+      "label": "Indistinguishability \u2194 metric bisimulati",
+      "type": "heuristic"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.35542359461599365,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.35542359461599365,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebratropicalmachinelearning_tropical_kernel_mea",
       "strength": 0.3543151227236738,
-      "label": "Tropical Kernel Mean Duality"
+      "label": "Tropical Kernel Mean Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
       "strength": 0.3476642913697545,
-      "label": "Tropical Semiring Oracle Capacity"
+      "label": "Tropical Semiring Oracle Capacity",
+      "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "strength": 0.3432304038004751,
-      "label": "Entropy Production Bounds for Self-Refer"
+      "label": "Entropy Production Bounds for Self-Refer",
+      "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
       "strength": 0.3387965162311955,
-      "label": "Operadic Stone Duality"
+      "label": "Operadic Stone Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.3387965162311955,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebratropicalmachinelearning_tropical_persistenc",
       "strength": 0.3387965162311955,
-      "label": "Tropical Persistence Realization Duality"
+      "label": "Tropical Persistence Realization Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "strength": 0.33768804433887567,
-      "label": "Tropical Residuation Trapdoor Duality"
+      "label": "Tropical Residuation Trapdoor Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearningspeculative_operadic_tropica",
       "strength": 0.3365795724465558,
-      "label": "Spectral graph theory \u2194 Tropical spectra"
+      "label": "Spectral graph theory \u2194 Tropical spectra",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebratropicalmachinelearning_tropical_kernel_mea",
       "strength": 0.33436262866191613,
-      "label": "Tropical Kernel Mean Duality"
+      "label": "Tropical Kernel Mean Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_stone_duality_via_id",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
       "strength": 0.33325415676959624,
-      "label": "Operadic Stone Duality"
+      "label": "Operadic Stone Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
       "strength": 0.3282660332541568,
-      "label": "Tropical Neural Sheaf Sampling"
+      "label": "Tropical Neural Sheaf Sampling",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
       "strength": 0.3282660332541568,
-      "label": "Closure Kramers"
+      "label": "Closure Kramers",
+      "type": "heuristic"
     },
     {
       "source": "algebralogicmachinelearning_ultrametric_proof_shea",
       "target": "algebratropicalmachinelearning_tropical_kernel_mea",
       "strength": 0.3243863816310373,
-      "label": "Tropical Kernel Mean Duality"
+      "label": "Tropical Kernel Mean Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
       "strength": 0.31662707838479814,
-      "label": "Tropical Rate"
+      "label": "Tropical Rate",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.31662707838479814,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "strength": 0.31662707838479814,
-      "label": "Tropical Residuation Trapdoor Duality"
+      "label": "Tropical Residuation Trapdoor Duality",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlmachinelearning_closure_operad_duality_v",
       "strength": 0.31662707838479814,
-      "label": "Closure"
+      "label": "Closure",
+      "type": "heuristic"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.31662707838479814,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     },
     {
       "source": "algebraspeculativecryptography_prime_congruence_du",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
       "strength": 0.31662707838479814,
-      "label": "Idempotent Stone Completeness"
+      "label": "Idempotent Stone Completeness",
+      "type": "heuristic"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
       "strength": 0.31662707838479814,
-      "label": "Idempotent Stone Completeness"
+      "label": "Idempotent Stone Completeness",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_p",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
       "strength": 0.31662707838479814,
-      "label": "Idempotent Stone Completeness"
+      "label": "Idempotent Stone Completeness",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
       "strength": 0.31053048297703884,
-      "label": "Persistent homology of closure filtratio"
+      "label": "Persistent homology of closure filtratio",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebrageometrycryptography_berggren_voronoi_duali",
       "strength": 0.3072050673000791,
-      "label": "Berggren Voronoi"
+      "label": "Berggren Voronoi",
+      "type": "heuristic"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "strength": 0.3072050673000791,
-      "label": "Tropical"
+      "label": "Tropical",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_tropical_pontryaginmellin_d",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
       "strength": 0.3049881235154394,
-      "label": "Tropical Neural Sheaf Sampling"
+      "label": "Tropical Neural Sheaf Sampling",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
       "strength": 0.3049881235154394,
-      "label": "Tropical Neural Sheaf Sampling"
+      "label": "Tropical Neural Sheaf Sampling",
+      "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_renormalization_duali",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
       "strength": 0.3049881235154394,
-      "label": "Closure Kramers"
+      "label": "Closure Kramers",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebramachinelearningspeculative_operadic_tropica",
       "strength": 0.3038796516231196,
-      "label": "presentation-independence of the Berkovi"
+      "label": "presentation-independence of the Berkovi",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
       "strength": 0.3,
-      "label": "Tropical Neural Universality Classes wit"
+      "label": "Tropical Neural Universality Classes wit",
+      "type": "heuristic"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
       "strength": 0.3,
-      "label": "Tropical Rate"
+      "label": "Tropical Rate",
+      "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
       "strength": 0.3,
-      "label": "Tropical Valuation Distillation"
+      "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
     }
   ]
 };

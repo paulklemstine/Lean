@@ -436,6 +436,17 @@ class FutureDirectionsManager:
                 break
         self._save()
 
+    def get_source_exp_ids_for(self, exp_id: str) -> list:
+        """Return source_exp_ids of all directions consumed by this exp_id.
+
+        This establishes provenance: the experiment with this exp_id was
+        inspired by future directions produced by these source experiments.
+        """
+        return list(set(
+            d.source_exp_id for d in self._directions
+            if d.consumed_by_exp_id == exp_id and d.source_exp_id
+        ))
+
     def mark_direction_completed(self, direction_id: str) -> None:
         """Mark a direction as completed after successful research."""
         for d in self._directions:

@@ -78,6 +78,7 @@ class ResearchJob:
     sorry_count: int = 0
     theorem_count: int = 0
     error_message: Optional[str] = None
+    source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
 
 
 class KnowledgeExtractor:
@@ -969,6 +970,21 @@ Research mode: {concept.research_mode}
             
         return asyncio.run(self.integrate_async(job))
 
+    def _update_exp_id_map(self, job: ResearchJob, package_filename: str) -> None:
+        """Record the mapping from exp_id to package filename for provenance tracking."""
+        if not hasattr(job, 'job_id') or not job.job_id:
+            return
+        map_file = self.workspace / "exp_id_map.json"
+        mapping = {}
+        if map_file.exists():
+            try:
+                mapping = json.loads(map_file.read_text(encoding="utf-8"))
+            except Exception:
+                mapping = {}
+        mapping[job.job_id] = package_filename
+        map_file.parent.mkdir(parents=True, exist_ok=True)
+        map_file.write_text(json.dumps(mapping, indent=2, ensure_ascii=False), encoding="utf-8")
+
     async def integrate_async(self, job: ResearchJob) -> ResearchJob:
         """Pi-Agent integrates Aristotle's output into the Catalog.
 
@@ -1117,6 +1133,9 @@ Research mode: {concept.research_mode}
             if p["type"] == "new":
                 abs_target.write_text(p["content"], encoding="utf-8")
                 print(f"[Integrate] Created {target_path}")
+                # Update exp_id mapping for provenance tracking
+                if target_path.endswith('.json') and 'Packages' in str(target_path):
+                    self._update_exp_id_map(job, os.path.basename(str(target_path)))
             elif p["type"] == "diff":
                 # Write diff to temporary file and use patch
                 import tempfile
@@ -1497,6 +1516,22 @@ Research mode: {concept.research_mode}
         # Inject date from cycle completion time
         if not pkg.get("date"):
             pkg["date"] = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+        # Inject provenance: which experiment produced this package
+        if hasattr(job, 'job_id') and job.job_id:
+            pkg["exp_id"] = job.job_id
+        if hasattr(job, 'source_exp_ids') and job.source_exp_ids:
+            pkg["source_exp_ids"] = job.source_exp_ids
+        elif hasattr(job, 'job_id') and job.job_id:
+            # Fallback: look up source_exp_ids from FutureDirectionsManager
+            try:
+                from research_memory import FutureDirectionsManager
+                fd_path = Path(__file__).parent / ".aether_workspace" / "future_directions.json"
+                if fd_path.exists():
+                    fd_mgr = FutureDirectionsManager(Path(__file__).parent / ".aether_workspace")
+                    pkg["source_exp_ids"] = fd_mgr.get_source_exp_ids_for(job.job_id)
+            except Exception:
+                pass
 
         return json.dumps(pkg, ensure_ascii=False)
 

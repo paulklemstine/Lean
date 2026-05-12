@@ -82,6 +82,7 @@ class InFlightJob:
     complete_time: Optional[float] = None
     retry_of: str = ""       # parent exp_id if this is a retry
     retry_count: int = 0    # how many retries so far
+    source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
 
 
 class GitAutomator:
@@ -472,8 +473,10 @@ class CycleMaster:
                 key_references=best.get("catalog_references", [])[:3],
             )
             # Mark the direction as in-progress
+            source_exp_ids = []
             if available:
                 fd_manager.mark_direction_consumed(available[0].id, exp_id)
+                source_exp_ids = fd_manager.get_source_exp_ids_for(exp_id)
             print(f"[Prepare] Using future direction: {concept.title}")
 
         if concept is None and self.pi_agent:
@@ -552,6 +555,7 @@ class CycleMaster:
             lean_source=lean_source,
             project_dir=project_dir,
             dispatch_time=time.time(),
+            source_exp_ids=source_exp_ids,
         )
 
     async def _dispatch_job(self, job: InFlightJob) -> None:
