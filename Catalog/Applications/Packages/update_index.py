@@ -189,7 +189,117 @@ window.PACKAGE_DB = {json.dumps(package_db, indent=2)};
 
     print(f"Successfully bundled {len(json_files)} packages into packages_db.js ({db_size/1024:.0f} KB)")
     print(f"Extracted {total_viz_extracted} visualizations into visualizations/ ({viz_size/1024:.0f} KB)")
+
+    # Generate knowledge graph data
+    generate_graph_data(script_dir)
+
     os.chdir(original_dir)
+
+
+def generate_graph_data(script_dir):
+    """Read lineage.json and append window.PACKAGE_GRAPH to packages_db.js."""
+    lineage_path = os.path.join(script_dir, "lineage.json")
+    db_path = os.path.join(script_dir, "packages_db.js")
+
+    # Domain → shape mapping for the Knowledge Graph
+    DOMAIN_SHAPES = {
+        "Algebra": "tetrahedron",
+        "Bridges": "icosahedron",
+        "Computation": "cube",
+        "Cryptography": "dodecahedron",
+        "EML": "octahedron",
+        "Geometry": "hexagonal_prism",
+        "Logic": "star_of_david",
+        "MachineLearning": "sphere_rings",
+        "Physics": "diamond",
+        "Pythagorean": "triangular_prism",
+        "Speculative": "pentagonal_prism",
+        "Tropical": "star",
+    }
+
+    def mulberry32(seed):
+        """Seeded PRNG for deterministic hue generation (JS-compatible)."""
+        seed = seed & 0xFFFFFFFF
+        def inner():
+            nonlocal seed
+            seed = (seed + 0x6D2B79F5) & 0xFFFFFFFF
+            t = seed ^ (seed >> 15)
+            t = (t * (t | 1)) & 0xFFFFFFFF
+            t = (t ^ (t + 0x3FB52453)) & 0xFFFFFFFF
+            t = (t ^ (t >> 13)) & 0xFFFFFFFF
+            return t / 4294967296
+        return inner
+
+    def slug_to_hue(slug):
+        rng = mulberry32(hash(slug))
+        return int(rng() * 360)
+
+    def primary_domain(domain_str):
+        """Extract the first matching canonical domain from a freeform domain string."""
+        if not domain_str:
+            return "Bridges"
+        text = domain_str.replace("×", "x").replace("(", " ").replace(")", " ")
+        text = text.replace("/", " ").replace("-", " ").replace("x", " ").replace(",", " ")
+        text_lower = text.lower()
+        for domain in DOMAIN_SHAPES:
+            if domain == "EML":
+                if "eml" in text_lower:
+                    return domain
+            elif domain == "MachineLearning":
+                if "machine learning" in text_lower or "machinelearning" in text_lower:
+                    return domain
+            else:
+                if domain.lower() in text_lower:
+                    return domain
+        return "Bridges"
+
+    # Try to read lineage.json
+    graph_data = None
+    if os.path.exists(lineage_path):
+        try:
+            with open(lineage_path, 'r', encoding='utf-8') as f:
+                graph_data = json.load(f)
+            print(f"Loaded lineage.json: {len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges")
+        except Exception as e:
+            print(f"Warning: failed to load lineage.json: {e}")
+
+    # If no lineage data, build from PACKAGE_INDEX
+    if graph_data is None:
+        # Read the existing PACKAGE_INDEX from packages_db.js
+        nodes = []
+        for pkg in window_PACKAGE_INDEX if 'window_PACKAGE_INDEX' in dir() else []:
+            slug = pkg["filename"].replace('.json', '')
+            domain_str = pkg.get("domain", "Bridges")
+            pd = primary_domain(domain_str)
+            nodes.append({
+                "id": slug,
+                "title": pkg.get("title", slug),
+                "domain": domain_str,
+                "primary_domain": pd,
+                "shape": DOMAIN_SHAPES.get(pd, "icosahedron"),
+                "date": pkg.get("date", ""),
+                "hue": slug_to_hue(slug),
+            })
+        graph_data = {"nodes": nodes, "edges": []}
+    else:
+        # Enrich nodes with shape and hue if missing
+        for node in graph_data.get("nodes", []):
+            if "shape" not in node:
+                pd = node.get("primary_domain", primary_domain(node.get("domain", "")))
+                node["shape"] = DOMAIN_SHAPES.get(pd, "icosahedron")
+            if "hue" not in node:
+                node["hue"] = slug_to_hue(node.get("id", ""))
+
+    # Append to packages_db.js
+    graph_js = f"""
+
+// Knowledge Graph Data (auto-generated from lineage.json)
+window.PACKAGE_GRAPH = {json.dumps(graph_data, indent=2)};
+"""
+    with open(db_path, 'a', encoding='utf-8') as f:
+        f.write(graph_js)
+
+    print(f"Appended PACKAGE_GRAPH to packages_db.js ({len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges)")
 
 if __name__ == "__main__":
     update_index()
