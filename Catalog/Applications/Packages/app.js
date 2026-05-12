@@ -763,11 +763,11 @@ document.addEventListener('DOMContentLoaded', () => {
             rotSpeed: 0.3 + Math.random() * 0.5,
             rotAngle: Math.random() * Math.PI * 2
         }));
-        // Load edges from PACKAGE_GRAPH — provenance edges (factual parent→child)
-        // are solid and bright; heuristic edges (text-similarity) are dashed and subtle
-        let graphEdges = (graphData.edges || []).map(e => ({
+        // Only load provenance edges (factual parent→child from future directions)
+        // Heuristic edges are excluded — they don't represent real lineage
+        let graphEdges = (graphData.edges || []).filter(e => e.type === 'provenance').map(e => ({
             ...e,
-            edgeType: e.type || 'heuristic'
+            edgeType: 'provenance'
         }));
 
         // Fallback: build nodes from PACKAGE_INDEX if no graph data
