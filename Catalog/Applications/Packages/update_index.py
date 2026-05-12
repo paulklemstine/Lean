@@ -263,11 +263,10 @@ def generate_graph_data(script_dir):
         except Exception as e:
             print(f"Warning: failed to load lineage.json: {e}")
 
-    # If no lineage data, build from PACKAGE_INDEX
+    # If no lineage data, build nodes from package_index (already computed above)
     if graph_data is None:
-        # Read the existing PACKAGE_INDEX from packages_db.js
         nodes = []
-        for pkg in window_PACKAGE_INDEX if 'window_PACKAGE_INDEX' in dir() else []:
+        for pkg in package_index:
             slug = pkg["filename"].replace('.json', '')
             domain_str = pkg.get("domain", "Bridges")
             pd = primary_domain(domain_str)
