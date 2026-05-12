@@ -744,7 +744,14 @@ Research mode: {concept.research_mode}
                         idx = rel.parts.index("Catalog")
                         local_equiv = self.catalog_root / Path(*rel.parts[idx+1:])
                     else:
-                        local_equiv = self.catalog_root / rel
+                        # Strip _aristotle project directory prefixes from relative path
+                        # e.g. 47bf2ccd_aristotle/Bridges/file.lean -> Bridges/file.lean
+                        clean_parts = []
+                        for p in rel.parts:
+                            if re.match(r'^[0-9a-f]+_aristotle$', p):
+                                continue
+                            clean_parts.append(p)
+                        local_equiv = self.catalog_root / Path(*clean_parts) if clean_parts else self.catalog_root / rel
 
                     # Deduplicate: if we've already seen a file for this catalog
                     # location, skip the duplicate (prefer the version closer to root).
@@ -1261,6 +1268,9 @@ Research mode: {concept.research_mode}
         domain/filename.
         """
         target_path = self._strip_catalog_prefix(str(requested_path or part.get("path", "")))
+        # Strip any remaining _aristotle path segments (e.g. Bridges/47bf2ccd_aristotle/Bridges/...)
+        import re
+        target_path = re.sub(r'/[0-9a-f]+_aristotle/', '/', target_path)
         suffix = Path(target_path).suffix.lower()
 
         # Safety: reject obviously invalid paths
@@ -1331,6 +1341,10 @@ Research mode: {concept.research_mode}
         for prefix in prefixes:
             if path.startswith(prefix):
                 return path[len(prefix):]
+        # Strip Aristotle project directory prefixes like 47bf2ccd_aristotle/Bridges/...
+        # These are artifacts of the extraction structure, not real Catalog paths
+        import re
+        path = re.sub(r'^[0-9a-f]+_aristotle/', '', path)
         return path
 
     @staticmethod
