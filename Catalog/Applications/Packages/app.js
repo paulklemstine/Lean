@@ -779,7 +779,6 @@ document.addEventListener('DOMContentLoaded', () => {
             rotAngle: Math.random() * Math.PI * 2
         }));
         // Only load provenance edges (factual parent→child from future directions)
-        // Heuristic edges are excluded — they don't represent real lineage
         let graphEdges = (graphData.edges || []).filter(e => e.type === 'provenance').map(e => ({
             ...e,
             edgeType: 'provenance'
@@ -896,6 +895,58 @@ document.addEventListener('DOMContentLoaded', () => {
         const K_GRAVITY = 0.0005;
         const DAMPING = 0.82;
         const NODE_RADIUS = 22;
+        const GALAXY_ROTATION = 0.0003;   // Slow overall galaxy spin
+        const FLOCK_SEPARATION = 0.4;      // Avoid crowding neighbors
+        const FLOCK_ALIGNMENT = 0.02;      // Steer towards average heading
+        const FLOCK_COHESION = 0.001;      // Steer towards center of nearby flock
+        const FLOCK_RADIUS = 200;          // Perception radius for flocking
+
+        // ─── Cluster detection (connected components via provenance edges) ───
+        function findClusters() {
+            const clusters = {};
+            let clusterId = 0;
+            const visited = new Set();
+            // Build adjacency from all edges
+            const adj = {};
+            graphNodes.forEach(n => { adj[n.id] = []; });
+            graphEdges.forEach(e => {
+                if (adj[e.source]) adj[e.source].push(e.target);
+                if (adj[e.target]) adj[e.target].push(e.source);
+            });
+            // BFS to find connected components
+            graphNodes.forEach(n => {
+                if (visited.has(n.id)) return;
+                const component = [];
+                const queue = [n.id];
+                while (queue.length) {
+                    const cur = queue.shift();
+                    if (visited.has(cur)) continue;
+                    visited.add(cur);
+                    component.push(cur);
+                    (adj[cur] || []).forEach(nb => {
+                        if (!visited.has(nb)) queue.push(nb);
+                    });
+                }
+                // Each cluster gets a random rotation direction and speed
+                const rotation = (Math.random() < 0.5 ? 1 : -1) * (0.0001 + Math.random() * 0.0004);
+                component.forEach(id => {
+                    clusters[id] = { clusterId, rotation, cx: 0, cy: 0, count: component.length };
+                });
+                clusterId++;
+            });
+            // Compute cluster centers
+            const clusterSums = {};
+            Object.entries(clusters).forEach(([id, c]) => {
+                if (!clusterSums[c.clusterId]) clusterSums[c.clusterId] = { sx: 0, sy: 0, n: 0 };
+                const node = nodeMap[id];
+                if (node) { clusterSums[c.clusterId].sx += node.x; clusterSums[c.clusterId].sy += node.y; clusterSums[c.clusterId].n++; }
+            });
+            Object.entries(clusters).forEach(([id, c]) => {
+                const s = clusterSums[c.clusterId];
+                if (s && s.n > 0) { c.cx = s.sx / s.n; c.cy = s.sy / s.n; }
+            });
+            return clusters;
+        }
 
         function initPositions() {
             const count = graphNodes.length;
@@ -917,9 +968,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let nodeMap = buildNodeMap();
+        let nodeClusters = findClusters();
+        let clusterUpdateTimer = 0;
 
         function simulate() {
-            // Coulomb repulsion
+            clusterUpdateTimer++;
+            // Recompute cluster centers every 60 frames
+            if (clusterUpdateTimer % 60 === 0) {
+                nodeClusters = findClusters();
+            }
+
+            // ─── Galaxy rotation: slowly rotate entire scene ───
+            const cosG = Math.cos(GALAXY_ROTATION), sinG = Math.sin(GALAXY_ROTATION);
+            graphNodes.forEach(n => {
+                if (n === dragNode) return;
+                const nx = n.x * cosG - n.y * sinG;
+                const ny = n.x * sinG + n.y * cosG;
+                n.x = nx; n.y = ny;
+                // Also rotate velocity
+                const nvx = n.vx * cosG - n.vy * sinG;
+                const nvy = n.vx * sinG + n.vy * cosG;
+                n.vx = nvx; n.vy = nvy;
+            });
+
+            // ─── Cluster rotation: each connected component orbits its center ───
+            graphNodes.forEach(n => {
+                if (n === dragNode) return;
+                const cluster = nodeClusters[n.id];
+                if (!cluster || cluster.count < 2) return;
+                const cx = cluster.cx, cy = cluster.cy;
+                const dx = n.x - cx, dy = n.y - cy;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 1) return;
+                const cosC = Math.cos(cluster.rotation), sinC = Math.sin(cluster.rotation);
+                // Rotate position around cluster center
+                const rx = cx + dx * cosC - dy * sinC;
+                const ry = cy + dx * sinC + dy * cosC;
+                n.x = rx; n.y = ry;
+            });
+
+            // ─── Coulomb repulsion ───
             for (let i = 0; i < graphNodes.length; i++) {
                 for (let j = i + 1; j < graphNodes.length; j++) {
                     const a = graphNodes[i], b = graphNodes[j];
@@ -933,7 +1021,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     b.vx += fx; b.vy += fy;
                 }
             }
-            // Spring edges
+
+            // ─── Spring edges ───
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
@@ -944,12 +1033,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 a.vx += fx; a.vy += fy;
                 b.vx -= fx; b.vy -= fy;
             });
-            // Center gravity
+
+            // ─── Center gravity ───
             graphNodes.forEach(n => {
                 n.vx -= n.x * K_GRAVITY;
                 n.vy -= n.y * K_GRAVITY;
             });
-            // Damping + integrate
+
+            // ─── Flocking behavior ───
+            graphNodes.forEach(n => {
+                if (n === dragNode) return;
+                let sepX = 0, sepY = 0, sepCount = 0;
+                let aliVx = 0, aliVy = 0, aliCount = 0;
+                let cohX = 0, cohY = 0, cohCount = 0;
+                const flockR2 = FLOCK_RADIUS * FLOCK_RADIUS;
+
+                for (let i = 0; i < graphNodes.length; i++) {
+                    const other = graphNodes[i];
+                    if (other === n || other === dragNode) continue;
+                    const dx = other.x - n.x, dy = other.y - n.y;
+                    const d2 = dx * dx + dy * dy;
+                    if (d2 > flockR2 || d2 < 0.01) continue;
+                    const d = Math.sqrt(d2);
+                    // Separation: steer away from very close neighbors
+                    if (d < FLOCK_RADIUS * 0.4) {
+                        sepX -= dx / d; sepY -= dy / d; sepCount++;
+                    }
+                    // Alignment: match velocity of nearby nodes
+                    aliVx += other.vx; aliVy += other.vy; aliCount++;
+                    // Cohesion: steer towards center of nearby flock
+                    cohX += other.x; cohY += other.y; cohCount++;
+                }
+                // Apply separation
+                if (sepCount > 0) {
+                    n.vx += (sepX / sepCount) * FLOCK_SEPARATION;
+                    n.vy += (sepY / sepCount) * FLOCK_SEPARATION;
+                }
+                // Apply alignment — subtle gentle nudge
+                if (aliCount > 0) {
+                    n.vx += ((aliVx / aliCount) - n.vx) * FLOCK_ALIGNMENT;
+                    n.vy += ((aliVy / aliCount) - n.vy) * FLOCK_ALIGNMENT;
+                }
+                // Apply cohesion — gentle attraction to center of neighbors
+                if (cohCount > 0) {
+                    n.vx += ((cohX / cohCount - n.x) * FLOCK_COHESION);
+                    n.vy += ((cohY / cohCount - n.y) * FLOCK_COHESION);
+                }
+            });
+
+            // ─── Damping + integrate ───
             graphNodes.forEach(n => {
                 if (n === dragNode) return;
                 n.vx *= DAMPING;
@@ -1567,6 +1699,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
+            // Refresh clusters since connectivity changed
+            nodeClusters = findClusters();
         };
 
         window.addGraphNode = function(nodeData) {
