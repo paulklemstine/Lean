@@ -1,369 +1,461 @@
 #!/usr/bin/env python3
 """
-Algorithms for Ultrametric Proof Rate-Distortion Theory
+Algorithms for Ultrametric Proof-Learning Representation Duality
 
-Implements the core algorithms from the formalization:
-1. Ultrametric ball partition computation
-2. Observer code generation
-3. Greedy observer basis selection
-4. Certified decoder reconstruction
-5. Rate-distortion curve computation
+Implements the core algorithms from the research paper:
+1. Profile Computation (O(|ι| · T_obs))
+2. Certified Predictor Construction (O(|S| · |ι|))
+3. Canonical Tree Construction (O(|range(C)|²))
+4. Spectral Filtration Construction
+5. Observer Separation Verification
+
+All algorithms include type hints, docstrings, and complexity analysis.
 """
 
-from typing import List, Set, Dict, Tuple, Optional
-import math
+from typing import (
+    TypeVar, Callable, Sequence, Dict, Tuple, Set, List, Optional, Any
+)
+from collections import defaultdict
+from dataclasses import dataclass, field
+
+S = TypeVar('S')
+Score = TypeVar('Score')
 
 
-# ============================================================
-# Algorithm 1: Ultrametric Ball Partition
-# ============================================================
+# =============================================================================
+# §1. Core Data Structures
+# =============================================================================
 
-def ultrametric_ball_partition(
-    d: List[List[float]], epsilon: float
-) -> List[Set[int]]:
-    """Compute the canonical ε-ball partition of an ultrametric space.
+@dataclass
+class UltrametricProofSystem:
+    """A finite ultrametric proof system (S, d, C, obs).
 
-    In an ultrametric space, ε-balls are either disjoint or equal
-    (the Ball Dichotomy Theorem). This means the partition is canonical
-    and unique — there is exactly one way to partition the space at scale ε.
+    Attributes:
+        states: Finite set of proof states
+        compress: Idempotent compression operator C : S → S
+        observers: List of observer functions obs_i : S → Score
+        distance: Ultrametric distance d : S × S → float
+    """
+    states: List[Any]
+    compress: Callable
+    observers: List[Callable]
+    distance: Callable
 
-    Algorithm:
-        For each unassigned point x, compute its ε-ball B(x,ε) = {y | d(x,y) ≤ ε}
-        and mark all points in the ball as assigned.
+    @property
+    def compressed_states(self) -> List[Any]:
+        """range(C) — the set of compressed (fixed-point) states."""
+        return sorted(set(self.compress(x) for x in self.states))
 
-    Time complexity: O(n²) where n = |P|
-    Space complexity: O(n)
+    @property
+    def num_observers(self) -> int:
+        return len(self.observers)
+
+
+@dataclass
+class ObserverProfile:
+    """An observer profile: a tuple of scores, one per observer."""
+    scores: Tuple
+
+    def __hash__(self):
+        return hash(self.scores)
+
+    def __eq__(self, other):
+        return isinstance(other, ObserverProfile) and self.scores == other.scores
+
+
+@dataclass
+class CertifiedPredictor:
+    """A certified predictor with lookup table and correctness certificate.
+
+    Attributes:
+        lookup: Map from observer profiles to compressed states
+        compress: The compression operator
+        observers: The observer family
+        certificate: Description of the correctness guarantee
+    """
+    lookup: Dict[Tuple, Any]
+    compress: Callable
+    observers: List[Callable]
+    certificate: str = "Theorem C: predict ∘ evalProfile ∘ predict = evalProfile"
+
+    def predict(self, profile: Tuple) -> Optional[Any]:
+        """Predict compressed state from observer profile.
+
+        Time: O(1) average (hash table lookup)
+        Space: O(1)
+        """
+        return self.lookup.get(profile, None)
+
+    def eval_and_predict(self, x) -> Any:
+        """Compress, observe, predict.
+
+        Time: O(|ι|) for profile computation + O(1) for lookup
+        """
+        cx = self.compress(x)
+        profile = tuple(obs(cx) for obs in self.observers)
+        return self.predict(profile)
+
+
+@dataclass
+class TreeNode:
+    """A node in the canonical ultrametric tree.
+
+    Attributes:
+        states: Compressed states in this cluster
+        radius: The cluster radius
+        children: Child nodes (finer clusters)
+    """
+    states: List[Any]
+    radius: float
+    children: List['TreeNode'] = field(default_factory=list)
+
+    def is_leaf(self) -> bool:
+        return len(self.children) == 0
+
+    def depth(self) -> int:
+        if self.is_leaf():
+            return 0
+        return 1 + max(c.depth() for c in self.children)
+
+    def to_dict(self) -> dict:
+        """Convert to dictionary for serialization."""
+        return {
+            'states': self.states,
+            'radius': self.radius,
+            'children': [c.to_dict() for c in self.children]
+        }
+
+
+# =============================================================================
+# §2. Algorithm 1: Profile Computation
+# =============================================================================
+
+def compute_profile(x, system: UltrametricProofSystem) -> Tuple:
+    """Compute the observer profile of state x.
+
+    Algorithm: ComputeProfile
+    1. Compress x to C(x)
+    2. Evaluate each observer on C(x)
+    3. Return tuple of scores
+
+    Time:  O(|ι| · T_obs) where T_obs is per-observer evaluation time
+    Space: O(|ι|)
 
     Args:
-        d: Distance matrix (n × n, symmetric, satisfying ultrametric inequality)
-        epsilon: Scale parameter ε ≥ 0
+        x: A proof state
+        system: The ultrametric proof system
 
     Returns:
-        List of disjoint sets partitioning {0, ..., n-1}
+        Tuple of observer scores
     """
-    n = len(d)
-    assigned: Set[int] = set()
-    partition: List[Set[int]] = []
-
-    for i in range(n):
-        if i not in assigned:
-            ball = {j for j in range(n) if d[i][j] <= epsilon}
-            partition.append(ball)
-            assigned |= ball
-
-    return partition
+    cx = system.compress(x)
+    return tuple(obs(cx) for obs in system.observers)
 
 
-# ============================================================
-# Algorithm 2: Observer Code Generation
-# ============================================================
+def compute_all_profiles(system: UltrametricProofSystem) -> Dict[Any, Tuple]:
+    """Compute observer profiles for all compressed states.
 
-def observer_code(
-    obs: List[List[float]], x: int
-) -> Tuple[float, ...]:
-    """Compute the observer code of a point.
+    Time:  O(|S| · |ι| · T_obs)
+    Space: O(|range(C)| · |ι|)
+    """
+    profiles = {}
+    for x in system.compressed_states:
+        profiles[x] = compute_profile(x, system)
+    return profiles
 
-    The observer code maps each proof state to its vector of observation values.
-    Two points have the same code iff they are code-equal (ObsCodeEq).
 
-    Time complexity: O(|O|)
+# =============================================================================
+# §3. Algorithm 2: Certified Predictor Construction
+# =============================================================================
+
+def build_certified_predictor(
+    system: UltrametricProofSystem
+) -> CertifiedPredictor:
+    """Build a certified predictor with correctness guarantee.
+
+    Algorithm: BuildCertifiedPredictor
+    1. For each state x ∈ S, compute profile f = evalProfile(x)
+    2. Store mapping f → C(x) in lookup table
+    3. Return predictor with certificate
+
+    Time:  O(|S| · |ι| · T_obs)
+    Space: O(|range(C)| · |ι|)
+
+    Certificate: By Theorem C (certified_hierarchical_predictor_reconstruction),
+    for all x ∈ S:
+        evalProfile(C, obs)(predict(evalProfile(C, obs)(x))) = evalProfile(C, obs)(x)
 
     Args:
-        obs: Observer matrix (|O| × n), where obs[o][x] = observation value
-        x: Point index
+        system: The ultrametric proof system
 
     Returns:
-        Tuple of observation values (the code)
+        CertifiedPredictor with lookup table and certificate
     """
-    return tuple(obs[o][x] for o in range(len(obs)))
+    lookup = {}
+    for x in system.states:
+        profile = compute_profile(x, system)
+        if profile not in lookup:
+            lookup[profile] = system.compress(x)
+
+    return CertifiedPredictor(
+        lookup=lookup,
+        compress=system.compress,
+        observers=system.observers,
+        certificate=(
+            "Correctness: ∀ x ∈ S, evalProfile(predict(evalProfile(x))) = evalProfile(x)\n"
+            "Proof: By Theorem C. For any x, evalProfile(x) is realizable (witnessed by x),\n"
+            "so predict returns C(s) for some s with evalProfile(s) = evalProfile(x).\n"
+            "By factorization, evalProfile(C(s)) = evalProfile(s) = evalProfile(x). □"
+        )
+    )
 
 
-def code_partition(
-    obs: List[List[float]], n: int
-) -> List[Set[int]]:
-    """Partition points by observer code equality.
+def verify_predictor(
+    predictor: CertifiedPredictor,
+    system: UltrametricProofSystem
+) -> bool:
+    """Verify the certified predictor on all states.
 
-    Time complexity: O(n · |O|)
+    Time: O(|S| · |ι|)
+    """
+    for x in system.states:
+        profile = compute_profile(x, system)
+        predicted = predictor.predict(profile)
+        if predicted is None:
+            return False
+        predicted_profile = tuple(obs(system.compress(predicted))
+                                  for obs in system.observers)
+        if predicted_profile != profile:
+            return False
+    return True
+
+
+# =============================================================================
+# §4. Algorithm 3: Canonical Tree Construction
+# =============================================================================
+
+def build_canonical_tree(system: UltrametricProofSystem) -> TreeNode:
+    """Build the canonical ultrametric tree from the proof system.
+
+    Algorithm: BuildCanonicalTree
+    1. Compute compressed states
+    2. Collect all pairwise distances
+    3. Sort distances in decreasing order
+    4. Build tree top-down by splitting clusters at each distance threshold
+
+    Time:  O(|range(C)|² · T_dist + |range(C)|² · log|range(C)|)
+    Space: O(|range(C)|²) for distance matrix
+
+    The resulting tree satisfies:
+    - Leaves = compressed states
+    - sameCluster(x, y, r) ⟺ d(C(x), C(y)) ≤ r
+    - Unique up to cluster equivalence (Theorem B')
 
     Args:
-        obs: Observer matrix
-        n: Number of points
+        system: The ultrametric proof system
 
     Returns:
-        List of equivalence classes under code equality
+        Root node of the canonical tree
     """
-    codes: Dict[Tuple[float, ...], Set[int]] = {}
-    for i in range(n):
-        c = observer_code(obs, i)
-        if c not in codes:
-            codes[c] = set()
-        codes[c].add(i)
-    return list(codes.values())
+    compressed = system.compressed_states
+    d = system.distance
 
+    if len(compressed) <= 1:
+        return TreeNode(states=compressed, radius=0)
 
-# ============================================================
-# Algorithm 3: Greedy Observer Basis Selection
-# ============================================================
+    # Collect distinct positive distances
+    distances = sorted(set(
+        d(a, b) for a in compressed for b in compressed if a != b
+    ), reverse=True)
 
-def greedy_observer_basis(
-    d: List[List[float]],
-    obs: List[List[float]],
-    epsilon: float
-) -> List[int]:
-    """Select a minimum-cardinality observer basis using the greedy algorithm.
+    if not distances:
+        return TreeNode(states=compressed, radius=0)
 
-    At each step, selects the observer that separates the most currently-
-    unseparated pairs. In the ultrametric setting with laminar partition
-    structure, this greedy strategy achieves optimality.
+    # Start with root containing all states
+    root_radius = max(distances)
 
-    Algorithm:
-        1. Initialize unseparated = {(x,y) | d(x,y) > ε}
-        2. While unseparated ≠ ∅:
-           a. For each available observer o, count how many unseparated
-              pairs it separates
-           b. Select o* = argmax(separation count)
-           c. Add o* to basis, remove separated pairs from unseparated
+    def build_subtree(states_list: List, level: int) -> TreeNode:
+        if level >= len(distances) or len(states_list) <= 1:
+            return TreeNode(states=states_list, radius=0)
 
-    Time complexity: O(|O|² · n²)
-    Space complexity: O(n²)
+        r = distances[level]
 
-    Args:
-        d: Distance matrix
-        obs: Observer matrix
-        epsilon: Scale parameter
+        # Partition by ultrametric balls at radius r
+        remaining = set(states_list)
+        clusters = []
+        while remaining:
+            x = min(remaining)
+            cluster = [y for y in remaining if d(x, y) <= r]
+            clusters.append(sorted(cluster))
+            remaining -= set(cluster)
 
-    Returns:
-        List of selected observer indices forming a certified basis
-    """
-    n = len(d)
-    n_obs = len(obs)
+        if len(clusters) == 1:
+            # No split at this level, try next
+            return build_subtree(states_list, level + 1)
 
-    # Find all pairs needing separation
-    unseparated: Set[Tuple[int, int]] = set()
-    for i in range(n):
-        for j in range(i + 1, n):
-            if d[i][j] > epsilon:
-                unseparated.add((i, j))
+        node = TreeNode(states=states_list, radius=r)
+        for cluster in clusters:
+            child = build_subtree(cluster, level + 1)
+            node.children.append(child)
 
-    basis: List[int] = []
-    available: Set[int] = set(range(n_obs))
+        return node
 
-    while unseparated and available:
-        best_obs = -1
-        best_separated: Set[Tuple[int, int]] = set()
+    root = TreeNode(states=compressed, radius=root_radius)
+    # Find the first level that splits
+    for level, r in enumerate(distances):
+        remaining = set(compressed)
+        clusters = []
+        while remaining:
+            x = min(remaining)
+            cluster = [y for y in remaining if d(x, y) <= r]
+            clusters.append(sorted(cluster))
+            remaining -= set(cluster)
 
-        for o in available:
-            separated = {(i, j) for (i, j) in unseparated
-                        if obs[o][i] != obs[o][j]}
-            if len(separated) > len(best_separated):
-                best_obs = o
-                best_separated = separated
-
-        if not best_separated:
+        if len(clusters) > 1:
+            for cluster in clusters:
+                child = build_subtree(cluster, level + 1)
+                root.children.append(child)
             break
 
-        basis.append(best_obs)
-        available.discard(best_obs)
-        unseparated -= best_separated
-
-    return basis
+    return root
 
 
-# ============================================================
-# Algorithm 4: Certified Decoder
-# ============================================================
+def print_tree(node: TreeNode, indent: int = 0):
+    """Pretty-print a tree node."""
+    prefix = "  " * indent
+    if node.is_leaf():
+        print(f"{prefix}Leaf: {node.states}")
+    else:
+        print(f"{prefix}Node (r={node.radius}): {node.states}")
+        for child in node.children:
+            print_tree(child, indent + 1)
 
-class CertifiedDecoder:
-    """A certified decoder that reconstructs proof states from observer codes.
 
-    Given a spectrally separating observer family at scale ε, the decoder
-    maps each observer code to a representative proof state, with the
-    guarantee that the reconstruction error is at most ε.
+# =============================================================================
+# §5. Algorithm 4: Spectral Filtration
+# =============================================================================
 
-    The decoder is constructed by:
-    1. Computing the code partition
-    2. Selecting a representative from each class
-    3. Building a lookup table from codes to representatives
+def build_spectral_filtration(
+    system: UltrametricProofSystem,
+    thresholds: List[Tuple]
+) -> Dict[Tuple, List]:
+    """Build the spectral filtration from observer thresholds.
+
+    For each threshold t ∈ (ι → σ), compute:
+        F_t = {x ∈ S | ∀ i, obs_i(C(x)) ≤ t_i}
+
+    Time:  O(|thresholds| · |S| · |ι|)
+    Space: O(|thresholds| · |S|)
+
+    Properties (proved formally):
+    - Monotonicity: t ≤ t' ⟹ F_t ⊆ F_{t'} (Theorem 7.1)
+    - Compression stability: x ∈ F_t ⟹ C(x) ∈ F_t (Theorem 7.2)
     """
-
-    def __init__(
-        self,
-        obs: List[List[float]],
-        n: int,
-        epsilon: float,
-        d: Optional[List[List[float]]] = None
-    ):
-        """Initialize the certified decoder.
-
-        Args:
-            obs: Observer matrix
-            n: Number of points
-            epsilon: Distortion budget
-            d: Distance matrix (for verification only)
-        """
-        self.obs = obs
-        self.n = n
-        self.epsilon = epsilon
-        self.d = d
-
-        # Build lookup table
-        self.code_to_representative: Dict[Tuple[float, ...], int] = {}
-        self.code_to_class: Dict[Tuple[float, ...], Set[int]] = {}
-
-        for i in range(n):
-            c = observer_code(obs, i)
-            if c not in self.code_to_representative:
-                self.code_to_representative[c] = i
-                self.code_to_class[c] = set()
-            self.code_to_class[c].add(i)
-
-    def decode(self, code: Tuple[float, ...]) -> int:
-        """Decode an observer code to a representative point.
-
-        Returns:
-            Index of a representative point with the given code.
-            Guaranteed: d(decoded, original) ≤ ε for any original with this code.
-        """
-        return self.code_to_representative.get(code, -1)
-
-    def verify_certification(self) -> bool:
-        """Verify the certification: max intra-class distance ≤ ε.
-
-        Returns:
-            True if all classes satisfy the distortion bound.
-        """
-        if self.d is None:
-            raise ValueError("Distance matrix required for verification")
-
-        for code, members in self.code_to_class.items():
-            for a in members:
-                for b in members:
-                    if self.d[a][b] > self.epsilon + 1e-10:
-                        return False
-        return True
-
-    @property
-    def code_count(self) -> int:
-        """Number of distinct codes (= covering number)."""
-        return len(self.code_to_representative)
-
-    @property
-    def rate(self) -> float:
-        """Proof rate: log₂ of the code count."""
-        return math.log2(self.code_count) if self.code_count > 0 else 0
+    filtration = {}
+    for t in thresholds:
+        sublevel = []
+        for x in system.states:
+            cx = system.compress(x)
+            if all(obs(cx) <= ti for obs, ti in zip(system.observers, t)):
+                sublevel.append(x)
+        filtration[t] = sublevel
+    return filtration
 
 
-# ============================================================
-# Algorithm 5: Rate-Distortion Curve
-# ============================================================
+# =============================================================================
+# §6. Algorithm 5: Observer Separation Verification
+# =============================================================================
 
-def rate_distortion_curve(
-    d: List[List[float]]
-) -> List[Tuple[float, float, int]]:
-    """Compute the complete rate-distortion curve R(ε).
+def verify_observer_separation(
+    system: UltrametricProofSystem
+) -> Tuple[bool, Optional[Tuple]]:
+    """Verify that observers separate all distinct compressed states.
 
-    The rate-distortion function in the ultrametric setting is a step function:
-    R(ε) = log₂(N(ε)) where N(ε) is the covering number.
-
-    Algorithm:
-        1. Collect all distinct positive distances
-        2. For each distance level ε, compute N(ε)
-        3. Return the pairs (ε, R(ε), N(ε))
-
-    Time complexity: O(n² · D) where D = number of distinct distances
-    Space complexity: O(n + D)
+    Time:  O(|range(C)|² · |ι|)
+    Space: O(1)
 
     Returns:
-        List of (epsilon, rate, covering_number) tuples
+        (True, None) if separation holds
+        (False, (a, b)) if states a, b are not separated
     """
-    n = len(d)
-    all_dists = sorted(set(d[i][j] for i in range(n) for j in range(i + 1, n) if d[i][j] > 0))
-
-    results: List[Tuple[float, float, int]] = []
-
-    # At ε = 0, each point is its own class
-    results.append((0.0, math.log2(n), n))
-
-    # At each distance threshold
-    for eps in all_dists:
-        partition = ultrametric_ball_partition(d, eps)
-        n_eps = len(partition)
-        rate = math.log2(n_eps) if n_eps > 0 else 0
-        results.append((eps, rate, n_eps))
-
-    return results
-
-
-# ============================================================
-# Algorithm 6: Ultrametric Verification
-# ============================================================
-
-def verify_ultrametric(d: List[List[float]]) -> Tuple[bool, Optional[Tuple[int, int, int]]]:
-    """Verify the ultrametric inequality for a distance matrix.
-
-    Checks d(x,z) ≤ max(d(x,y), d(y,z)) for all triples.
-
-    Returns:
-        (True, None) if the matrix is ultrametric
-        (False, (x,y,z)) with a violating triple otherwise
-    """
-    n = len(d)
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                if d[i][k] > max(d[i][j], d[j][k]) + 1e-10:
-                    return False, (i, j, k)
+    compressed = system.compressed_states
+    for i, a in enumerate(compressed):
+        for b in compressed[i+1:]:
+            profile_a = tuple(obs(a) for obs in system.observers)
+            profile_b = tuple(obs(b) for obs in system.observers)
+            if profile_a == profile_b:
+                return False, (a, b)
     return True, None
 
 
-# ============================================================
-# Example Usage
-# ============================================================
+def verify_ultrametricity(
+    system: UltrametricProofSystem
+) -> Tuple[bool, Optional[Tuple]]:
+    """Verify the ultrametric inequality on compressed states.
+
+    Time: O(|range(C)|³)
+    """
+    compressed = system.compressed_states
+    d = system.distance
+    for x in compressed:
+        for y in compressed:
+            for z in compressed:
+                if d(x, z) > max(d(x, y), d(y, z)) + 1e-10:
+                    return False, (x, y, z)
+    return True, None
+
+
+# =============================================================================
+# Main demo
+# =============================================================================
 
 if __name__ == "__main__":
-    # Example: 6-point ultrametric space
-    d = [
-        [0, 1, 2, 2, 4, 4],
-        [1, 0, 2, 2, 4, 4],
-        [2, 2, 0, 1, 4, 4],
-        [2, 2, 1, 0, 4, 4],
-        [4, 4, 4, 4, 0, 1],
-        [4, 4, 4, 4, 1, 0],
-    ]
+    # Build the example system
+    def C(x): return x % 4
+    def obs_0(x): return x % 2
+    def obs_1(x): return x // 2
 
-    print("=== Ultrametric Algorithms Demo ===\n")
+    compressed_dist = {
+        (0,0):0, (1,1):0, (2,2):0, (3,3):0,
+        (0,1):1, (1,0):1, (0,2):2, (2,0):2,
+        (0,3):2, (3,0):2, (1,2):2, (2,1):2,
+        (1,3):2, (3,1):2, (2,3):1, (3,2):1,
+    }
+    def d(x, y): return compressed_dist[(C(x), C(y))]
 
-    # Verify ultrametric
-    is_ultra, violation = verify_ultrametric(d)
-    print(f"1. Ultrametric verification: {is_ultra}")
+    system = UltrametricProofSystem(
+        states=list(range(8)),
+        compress=C,
+        observers=[obs_0, obs_1],
+        distance=d
+    )
 
-    # Ball partition at various scales
-    print("\n2. Ball partitions:")
-    for eps in [0.5, 1, 2, 4]:
-        partition = ultrametric_ball_partition(d, eps)
-        print(f"   ε={eps}: {[sorted(c) for c in partition]}")
+    print("=== Algorithms Demo ===\n")
 
-    # Observer codes (using indicator observers)
-    print("\n3. Observer codes at ε=1:")
-    partition_1 = ultrametric_ball_partition(d, 1)
-    obs = [[1.0 if j in cls else 0.0 for j in range(6)] for cls in partition_1]
-    for i in range(6):
-        print(f"   Point {i}: code = {observer_code(obs, i)}")
+    # Algorithm 1: Profiles
+    profiles = compute_all_profiles(system)
+    print("Observer profiles:", profiles)
 
-    # Greedy basis
-    print("\n4. Greedy basis selection at ε=1:")
-    basis = greedy_observer_basis(d, obs, 1)
-    print(f"   Basis: {basis} (size {len(basis)})")
+    # Algorithm 2: Certified Predictor
+    predictor = build_certified_predictor(system)
+    print(f"\nPredictor lookup table: {predictor.lookup}")
+    print(f"Predictor verified: {verify_predictor(predictor, system)}")
+    print(f"Certificate:\n{predictor.certificate}")
 
-    # Certified decoder
-    print("\n5. Certified decoder at ε=1:")
-    decoder = CertifiedDecoder(obs, 6, 1, d)
-    print(f"   Code count (= covering number): {decoder.code_count}")
-    print(f"   Rate: {decoder.rate:.3f} bits")
-    print(f"   Certification verified: {decoder.verify_certification()}")
+    # Algorithm 3: Canonical Tree
+    tree = build_canonical_tree(system)
+    print("\nCanonical tree:")
+    print_tree(tree)
 
-    # Rate-distortion curve
-    print("\n6. Rate-distortion curve:")
-    curve = rate_distortion_curve(d)
-    for eps, rate, n_eps in curve:
-        print(f"   ε={eps:.1f}: N(ε)={n_eps}, R(ε)={rate:.3f}")
+    # Algorithm 4: Spectral Filtration
+    thresholds = [(0,0), (0,1), (1,0), (1,1)]
+    filtration = build_spectral_filtration(system, thresholds)
+    print("\nSpectral filtration:")
+    for t, states in filtration.items():
+        print(f"  F_{t}: {states}")
+
+    # Algorithm 5: Verification
+    sep_ok, _ = verify_observer_separation(system)
+    ultra_ok, _ = verify_ultrametricity(system)
+    print(f"\nObserver separation: {'✓' if sep_ok else '✗'}")
+    print(f"Ultrametricity: {'✓' if ultra_ok else '✗'}")

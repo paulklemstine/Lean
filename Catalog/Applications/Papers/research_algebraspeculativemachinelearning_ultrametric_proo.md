@@ -1,311 +1,397 @@
-# Ultrametric Proof Rate–Distortion Duality via Observer Semimodules and Certified Optimal Decoder Reconstruction
+# Ultrametric Proof-Learning Representation Duality via Prime-Congruence Observer Semimodules and Certified Hierarchical Predictor Reconstruction
 
 ## Abstract
 
-We establish a fully certified rate–distortion duality for proof states in finite non-Archimedean (ultrametric) spaces. The core result is a four-part theorem package: (A) observer code equality coincides with the ultrametric ε-ball partition under spectral separation; (B) the ultrametric dichotomy theorem gives canonical laminar partition structure; (C) the information content of the observer code equals the ultrametric covering entropy; and (D) certified observer bases always exist under spectral separation. All results are machine-verified with no unproven assumptions beyond the standard logical axioms (propext, Classical.choice, Quot.sound). The development bridges non-Archimedean geometry, tropical/idempotent algebra, rate–distortion theory, and certified decoder synthesis into a unified formal framework.
+We establish a finite duality principle for proof dynamics: a proof-learning system with ultrametric contraction, idempotent compression, and observer separation admits a complete finite representation by its observer evaluation semimodule, and this semimodule algorithmically reconstructs a canonical sparse predictor tree with a machine-verified correctness certificate. Concretely, we prove three main theorems:
 
-**Keywords**: non-Archimedean information theory, ultrametric rate–distortion, proof-state compression, certified decoder reconstruction, tropical semimodules, covering entropy, observer semantics, sparse feature selection
+1. **Finite Observer Representation Duality (Theorem A/A'):** The observer evaluation map induces a constructive equivalence between compressed proof states and realizable observer profiles.
+2. **Canonical Ultrametric Tree Reconstruction (Theorem B/B'):** The ultrametric cluster structure on compressed states yields a canonical rooted tree model, unique up to cluster equivalence.
+3. **Certified Hierarchical Predictor Reconstruction (Theorem C/C'):** A computable predictor can be extracted from observer data, with a formal proof that it correctly recovers compressed proof-state profiles.
+
+All results are fully machine-verified in Lean 4 with Mathlib, with zero `sorry` statements. The proofs depend only on standard axioms (propext, Classical.choice, Quot.sound). We formalize 12 novel definitions, 20+ theorems, and complete bridge lemmas connecting to prior work on ultrametric contraction dynamics and prime-congruence neural compression.
+
+**Keywords:** ultrametric learning, proof-state compression, observer semimodules, idempotent algebra, tropical representation theory, hierarchical predictor reconstruction, dendrogram certification, certified latent structure extraction
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Shannon's rate–distortion theory (1959) provides the fundamental limits of lossy data compression: for a source with known statistics and a fidelity criterion, the minimum achievable coding rate at distortion level δ is given by the rate–distortion function R(δ). This theory, while powerful, assumes an Archimedean distance structure and typically yields optimization problems that lack closed-form solutions.
+Modern automated theorem proving systems navigate enormous proof-state spaces without rigorous geometric guidance. Proof search heuristics are typically engineered ad hoc — beam search, priority queues, learned value functions — without formal guarantees that the search representation faithfully captures proof structure.
 
-We observe that when the underlying metric space is *ultrametric*—satisfying the strong triangle inequality d(x,z) ≤ max(d(x,y), d(y,z))—the rate–distortion problem simplifies dramatically. The ultrametric ball structure provides canonical partitions at every scale, turning the compression problem from a variational optimization into a combinatorial counting problem.
+Simultaneously, hierarchical clustering and sparse representation learning have emerged as central tools in machine learning, but typically lack correctness certificates: a learned dendrogram may or may not reflect true data structure.
 
-### 1.2 Contributions
+This work addresses both problems by establishing a mathematically rigorous duality between:
+1. **Dynamical proof systems** with ultrametric geometry and idempotent compression, and
+2. **Finite semimodule representations** carrying observer evaluation data.
 
-1. **Ultrametric Ball Dichotomy** (§3): We prove that in any ultrametric space, two ε-balls are either identical or disjoint. This fundamental structural theorem is the engine behind all subsequent results.
+The duality is not merely existential — it is constructive, computable, and certified.
 
-2. **Spectral Separation Theorem** (§4): We show that when an observer family spectrally separates at scale ε (coherent and complete), the observer code equality relation coincides exactly with the ε-ball equivalence relation.
+### 1.2 Relationship to Prior Work
 
-3. **Rate–Distortion Identity** (§5): The information content of the observer code (number of distinct codewords) equals the ultrametric covering number at scale ε.
+Our work builds on three foundations:
 
-4. **Certified Decoder Reconstruction** (§6): Under spectral separation, the observer code provides certified reconstruction with bounded distortion: any two states with the same code are within distance ε.
+**Ultrametric contraction dynamics** (catalog: `UltrametricProofLearning.lean`): Prior work established that contractive maps on ultrametric spaces enjoy exponential convergence, diagonal stability, and compression threshold existence. We extend this by showing that the compressed limit states admit a finite algebraic representation.
 
-5. **Observer Basis Existence** (§7): A certified observer basis always exists, and the full observer set is always sufficient.
+**Prime-congruence neural compression** (catalog: `PrimeCongruenceNeuralCompression.lean`): Prior work developed the theory of finite observer families (ring congruences) with diagonal avoidance properties, proving encoding respects congruence, cardinality bounds, and collision exclusion. We bridge to this framework via our observer separation → diagonal avoidance lemma.
 
-6. **Machine Verification**: All results are formally verified in Lean 4 with Mathlib, using no custom axioms.
+**Certified Gibbs reconstruction** (catalog: `ClosureKramersWannierDuality.lean`): The theorem `certified_gibbs_reconstruction_from_boundary_partition` establishes that boundary partition data can certifiably reconstruct dual Gibbs weights. We follow the same architectural pattern — finite partition object, reconstruction map, correctness proof, certification theorem — with observer profiles as boundary data and compressed states as the reconstructed object.
 
-### 1.3 Related Work
+### 1.3 Contributions
 
-**Lawvere enriched categories and rate–distortion**: Lawvere (1973) observed that metric spaces can be viewed as enriched categories. Our work on rate–distortion duality builds on the Lawvere-style framework formalized in `LawvereRateDistortionDuality.lean`, specializing the abstract duality to the ultrametric setting where it admits a sharp combinatorial form.
+1. **Definitions** (§2): 12 novel Lean definitions including `evalProfile`, `ObserverSeparatesCompressed`, `compressedProfileEquiv`, `RootedTreeModel`, `CertifiedPredictor`, and `thresholdSublevel`.
 
-**p-adic analysis and ultrametric spaces**: The theory of p-adic numbers (Hensel, 1897; Ostrowski, 1916) provides the prototypical ultrametric spaces. Our `UltrametricDist` predicate captures the essential properties without committing to a specific p-adic valuation.
+2. **Theorem A/A'** (§3): Finite observer representation duality — the evaluation map is a constructive equivalence `Set.range C ≃ Set.range (evalProfile C obs)`.
 
-**Tropical geometry**: The tropical semiring (ℝ ∪ {∞}, min, +) and its dual (ℝ ∪ {-∞}, max, +) provide the natural algebraic framework for optimization over ultrametric spaces. Our observer code lattice is implicitly a tropical/idempotent object.
+3. **Theorem B/B'** (§4): Canonical ultrametric tree reconstruction and uniqueness up to cluster equivalence.
 
-**Observer semantics in formal verification**: The observer family framework generalizes the prime congruence semantics of `PrimeCongruenceNeuralCompression.lean`, where ring congruences act as observers and diagonal avoidance ensures separation.
+4. **Theorem C/C'** (§5): Certified hierarchical predictor reconstruction from observer profiles and finite traces.
+
+5. **Tropical semimodule structure** (§6): Pointwise sup/inf on profiles with algebraic laws (commutativity, associativity, idempotence).
+
+6. **Spectral filtration** (§7): Observer threshold sublevel sets form a monotone, compression-stable filtration.
+
+7. **Bridge lemmas** (§8): Connecting observer separation to diagonal avoidance and the certified Gibbs reconstruction architecture.
+
+---
 
 ## 2. Definitions and Notation
 
-### 2.1 Ultrametric Distance
+### 2.1 Basic Setup
 
-**Definition 2.1** (UltrametricDist). A function d : P × P → ℝ is an *ultrametric distance* if:
-- (Non-negativity) d(x,y) ≥ 0 for all x,y
-- (Identity) d(x,y) = 0 ↔ x = y
-- (Symmetry) d(x,y) = d(y,x)
-- (Strong triangle inequality) d(x,z) ≤ max(d(x,y), d(y,z))
+Let `S` be a finite type (the proof-state space), `ι` a finite type (the observer index set), and `σ` a type with decidable equality (the observer score type).
 
-### 2.2 Ultrametric Balls
+**Definition 2.1 (Idempotent Compression).** A self-map `C : S → S` is *idempotent* if `C(C(x)) = C(x)` for all `x ∈ S`. The set of *compressed states* is `range(C) = {C(x) | x ∈ S}`. Elements of `range(C)` are exactly the fixed points of `C`.
 
-**Definition 2.2** (ultraBall). The closed ε-ball around x:
+**Definition 2.2 (Observer Evaluation Map).** Given `C : S → S` and `obs : ι → S → σ`, the *observer evaluation map* is:
 ```
-ultraBall(d, x, ε) = {y ∈ P | d(x,y) ≤ ε}
+evalProfile(C, obs)(x)(i) := obs(i)(C(x))
 ```
+This compresses first, then observes. The range of `evalProfile` is the set of *realizable profiles*.
 
-### 2.3 Observer Family
-
-**Definition 2.3** (ObserverFamily). An observer family F = (O, obs) consists of:
-- An index type O (the observers)
-- A function obs : O → P → ℝ (observation values)
-
-### 2.4 Code Equality
-
-**Definition 2.4** (ObsCodeEq). Two points x,y are *code-equal* under F if:
+**Definition 2.3 (Observer Separation).** The observer family `obs` *separates compressed states* if for all `x, y ∈ S` with `C(x) = x` and `C(y) = y`:
 ```
-ObsCodeEq(F, x, y) ≡ ∀ o : O, obs(o, x) = obs(o, y)
+(∀ i, obs(i)(x) = obs(i)(y)) → x = y
 ```
 
-### 2.5 Spectral Separation
+**Definition 2.4 (Compressed Ultrametric).** A function `d : S × S → ℝ` is a *compressed ultrametric* if it is nonneg, symmetric, separates compressed states (d(x,y) = 0 iff x = y for fixed points), and satisfies the strong triangle inequality `d(x,z) ≤ max(d(x,y), d(y,z))`.
 
-**Definition 2.5** (SpectralSep). An observer family F *spectrally separates* at scale ε with respect to distance d if:
-- (Coherence) d(x,y) ≤ ε → ObsCodeEq(F, x, y)
-- (Completeness) ObsCodeEq(F, x, y) → d(x,y) ≤ ε
+**Definition 2.5 (Ultrametric Proof System).** A *finite ultrametric proof system* is a tuple `(S, d, C, obs)` where:
+- `S` is finite with decidable equality
+- `d` is a compressed ultrametric
+- `C` is idempotent
+- `d(C(x), C(y)) ≤ d(x,y)` (compression is nonexpansive)
+- `obs` separates compressed states
 
-### 2.6 Observer Basis
+### 2.2 Tropical Semimodule Structure
 
-**Definition 2.6** (CertifiedBasis). A subset B ⊆ O is a *certified basis* at scale ε if:
+**Definition 2.6 (Profile Operations).**
+- *Pointwise sup:* `(f ⊔ g)(i) := max(f(i), g(i))`
+- *Pointwise order:* `f ≤ g ⟺ ∀ i, f(i) ≤ g(i)`
+
+When `σ` is linearly ordered, these operations make `ι → σ` an idempotent semimodule (tropical module).
+
+### 2.3 Cluster and Tree Structures
+
+**Definition 2.7 (Ultrametric Ball Relation).** For radius `r ≥ 0`:
 ```
-∀ x y : P, d(x,y) > ε → ∃ o ∈ B, obs(o,x) ≠ obs(o,y)
+x ~_r y ⟺ d(x,y) ≤ r
 ```
+By ultrametricity, `~_r` is an equivalence relation for every `r ≥ 0`.
 
-## 3. Ultrametric Ball Structure
+**Definition 2.8 (Rooted Tree Model).** A *rooted tree model* for a proof system consists of:
+- A set of leaves (= `range(C)`)
+- A cluster relation `sameCluster(x, y, r)` for each radius `r`
+- A root radius
 
-### 3.1 The Centering Lemma
-
-**Theorem 3.1** (ultraBall_eq_of_mem). In an ultrametric space, if y ∈ ultraBall(d, x, ε), then ultraBall(d, x, ε) = ultraBall(d, y, ε).
-
-*Proof sketch*: For any z, we show z ∈ ultraBall(d, x, ε) ↔ z ∈ ultraBall(d, y, ε) using the strong triangle inequality:
-- d(y,z) ≤ max(d(y,x), d(x,z)) = max(d(x,y), d(x,z)) ≤ max(ε, ε) = ε
-- d(x,z) ≤ max(d(x,y), d(y,z)) ≤ max(ε, ε) = ε □
-
-### 3.2 The Dichotomy Theorem
-
-**Theorem 3.2** (ultraBall_eq_or_disjoint). For any ultrametric space and any x, y, ε:
+**Definition 2.9 (Certified Predictor).** A *certified predictor* is a tuple `(predict, C, obs)` where `predict : (ι → σ) → S` satisfies:
 ```
-ultraBall(d, x, ε) = ultraBall(d, y, ε) ∨ Disjoint(ultraBall(d, x, ε), ultraBall(d, y, ε))
-```
-
-*Proof sketch*: If the balls share any point z, then by the centering lemma, both balls equal ultraBall(d, z, ε). If they share no point, they are disjoint by definition. □
-
-### 3.3 Ball Characterization
-
-**Theorem 3.3** (ultraBall_eq_iff). For ε ≥ 0:
-```
-ultraBall(d, x, ε) = ultraBall(d, y, ε) ↔ d(x,y) ≤ ε
+∀ x, evalProfile(C, obs)(predict(evalProfile(C, obs)(x))) = evalProfile(C, obs)(x)
 ```
 
-*Proof sketch*: (⇐) by the centering lemma. (⇒) since x ∈ ultraBall(d, x, ε), we get x ∈ ultraBall(d, y, ε), hence d(y,x) ≤ ε. □
+---
 
-### 3.4 Ball Membership as Equivalence Relation
+## 3. Theorem A/A': Finite Observer Representation Duality
 
-**Theorem 3.4** (ultraBall_mem_transitive). Ball membership is transitive:
+### 3.1 Injectivity on Compressed States (Theorem A)
+
+**Theorem 3.1.** If `obs` separates compressed states, then `evalProfile(C, obs)` is injective on fixed points of `C`.
+
+*Proof sketch.* Let `x, y` be fixed points with `evalProfile(C, obs)(x) = evalProfile(C, obs)(y)`. Then for all `i`, `obs(i)(C(x)) = obs(i)(C(y))`, i.e., `obs(i)(x) = obs(i)(y)` since `C(x) = x, C(y) = y`. By observer separation, `x = y`. □
+
+### 3.2 Factorization Through Compression
+
+**Theorem 3.2.** For idempotent `C`: `evalProfile(C, obs)(x) = evalProfile(C, obs)(C(x))` for all `x`.
+
+*Proof.* For each observer `i`: `obs(i)(C(x)) = obs(i)(C(C(x)))` by idempotence `C(C(x)) = C(x)`. □
+
+### 3.3 The Duality Equivalence (Theorem A')
+
+**Theorem 3.3.** The restricted evaluation map
 ```
-y ∈ ultraBall(d, x, ε) ∧ z ∈ ultraBall(d, y, ε) → z ∈ ultraBall(d, x, ε)
+evalProfileOnRange : range(C) → range(evalProfile(C, obs))
 ```
+is a bijection.
 
-This is a uniquely ultrametric phenomenon. In Euclidean space, if B lies in a ball around A and C lies in a ball around B, C need not lie in the ball around A (consider A = 0, B = 0.9ε, C = 1.8ε).
+*Proof.*
+- **Injectivity:** Let `C(a), C(b) ∈ range(C)` with equal profiles. By idempotence, `C(a)` and `C(b)` are fixed points. Unfolding the profile equality and using idempotence twice, we get `obs(i)(C(a)) = obs(i)(C(b))` for all `i`. By separation, `C(a) = C(b)`.
+- **Surjectivity:** Any `f ∈ range(evalProfile(C, obs))` equals `evalProfile(C, obs)(x)` for some `x`. Then `C(x) ∈ range(C)` and `evalProfile(C, obs)(C(x)) = evalProfile(C, obs)(x) = f` by the factorization theorem. □
 
-## 4. Spectral Separation Theorem (Theorem A)
+**Corollary 3.4.** `|range(C)| = |range(evalProfile(C, obs))|`.
 
-**Theorem 4.1** (spectral_separation_iff_ball). Under spectral separation at scale ε:
+This is the finite representation duality: the algebraic object (observer profiles) completely classifies the geometric object (compressed proof states).
+
+---
+
+## 4. Theorem B/B': Canonical Ultrametric Tree Reconstruction
+
+### 4.1 Cluster Equivalence Relations
+
+**Theorem 4.1.** For an ultrametric `d` and any `r ≥ 0`, the ball relation `x ~_r y ⟺ d(x,y) ≤ r` is an equivalence relation.
+
+*Proof.*
+- *Reflexive:* `d(x,x) = 0 ≤ r`.
+- *Symmetric:* `d(x,y) = d(y,x)`.
+- *Transitive:* `d(x,z) ≤ max(d(x,y), d(y,z)) ≤ max(r, r) = r`. □
+
+**Theorem 4.2 (Cluster Monotonicity).** If `r ≤ s` and `x ~_r y`, then `x ~_s y`.
+
+### 4.2 The Canonical Tree (Theorem B)
+
+**Theorem 4.3.** Every finite ultrametric proof system admits a canonical rooted tree model whose cluster relation exactly recovers the compressed ultrametric: `sameCluster(x, y, r) ⟺ d(C(x), C(y)) ≤ r`.
+
+*Construction.* Define `canonicalTreeModel(C, d)` with leaves = `range(C)` and `sameCluster(x, y, r) := d(C(x), C(y)) ≤ r`. The equivalence with the ultrametric is tautological by construction. □
+
+### 4.3 Uniqueness (Theorem B')
+
+**Theorem 4.4.** Any two tree models `T₁, T₂` that faithfully represent the compressed ultrametric have equivalent cluster structures: `T₁.sameCluster(x,y,r) ⟺ T₂.sameCluster(x,y,r)` for all `x, y, r`.
+
+*Proof.* If both `T₁` and `T₂` satisfy `sameCluster(x,y,r) ⟺ d(C(x),C(y)) ≤ r`, then they agree by transitivity of biconditionals. □
+
+---
+
+## 5. Theorem C/C': Certified Predictor Reconstruction
+
+### 5.1 Certified Predictor (Theorem C)
+
+**Theorem 5.1.** For a finite ultrametric proof system with nonempty state space, there exists a certified predictor `(predict, C, obs)` such that `predict` correctly recovers compressed profiles:
 ```
-∀ x y : P, ObsCodeEq(F, x, y) ↔ d(x,y) ≤ ε
-```
-
-*Proof*: The forward direction is the completeness axiom; the backward direction is the coherence axiom. □
-
-**Corollary 4.2** (spectral_separation_iff_ultraBall_eq). Under spectral separation:
-```
-∀ x y : P, ObsCodeEq(F, x, y) ↔ ultraBall(d, x, ε) = ultraBall(d, y, ε)
-```
-
-**Corollary 4.3** (codeEq_class_eq_ultraBall). The code-equality class of x equals the ε-ball around x:
-```
-{y | ObsCodeEq(F, x, y)} = ultraBall(d, x, ε)
-```
-
-### 4.1 Interpretation
-
-This theorem says that the observer code is a *complete invariant* of the ε-ball partition. No information is lost and no spurious distinctions are made. The observer code is exactly the right amount of information at scale ε.
-
-In contrast, in a general (non-ultrametric) metric space, there is no guarantee that an observer family's code equality classes coincide with metric balls. The ultrametric structure is essential.
-
-## 5. Rate–Distortion Identity (Theorem C)
-
-**Theorem 5.1** (rate_distortion_duality_ultrametric). Under spectral separation at scale ε with ε ≥ 0, for a finite type P and finite observer type O:
-
-1. Code equality ↔ ε-ball membership: ∀ x y, ObsCodeEq(F, x, y) ↔ d(x,y) ≤ ε
-2. Certified reconstruction: ∀ x y, observerCode(F, x) = observerCode(F, y) → d(x,y) ≤ ε
-3. Basis existence: ∃ basis : Finset O, CertifiedBasis(F, d, ε, basis)
-
-### 5.1 Covering Number Interpretation
-
-The number of distinct observer codes equals the number of ε-equivalence classes in the ball equivalence relation. This is the ultrametric covering number N(ε) = |P / ~_ε|.
-
-The *proof rate* at distortion ε is:
-```
-R(ε) = log N(ε) = log |{ultraBall(d, x, ε) | x ∈ P}|
-```
-
-### 5.2 Monotonicity
-
-**Theorem 5.2** (ultraBall_subset_of_le). If ε₁ ≤ ε₂, then every ε₁-ball is contained in an ε₂-ball. Consequently, N(ε₁) ≥ N(ε₂): the covering number is non-increasing in ε.
-
-This gives a monotonically non-increasing rate–distortion curve, as expected from information theory.
-
-## 6. Certified Decoder Reconstruction (Theorem C, continued)
-
-**Theorem 6.1** (certified_reconstruction). Under spectral separation:
-```
-∀ x y : P, observerCode(F, x) = observerCode(F, y) → d(x,y) ≤ ε
-```
-
-**Theorem 6.2** (reconstruction_converse):
-```
-∀ x y : P, d(x,y) ≤ ε → observerCode(F, x) = observerCode(F, y)
-```
-
-Together, these give a bidirectional certificate: the observer code determines the ε-ball, and the ε-ball determines the code.
-
-### 6.1 Decoder Construction
-
-Given an observer code c = observerCode(F, x), the decoder returns any point in the ε-ball {y | observerCode(F, y) = c}. The reconstruction error is at most ε, certified by Theorem 6.1.
-
-In practice, the decoder can be implemented as a lookup table: for each distinct code c, store a representative point x_c. The number of entries is N(ε), the covering number.
-
-## 7. Observer Basis Existence (Theorem D)
-
-**Theorem 7.1** (full_observer_set_is_basis). Under spectral separation, the full observer set is a certified basis:
-```
-CertifiedBasis(F, d, ε, Finset.univ)
+∀ x, evalProfile(C, obs)(predict(evalProfile(C, obs)(x))) = evalProfile(C, obs)(x)
 ```
 
-**Theorem 7.2** (exists_certified_basis). A certified basis always exists:
+*Proof.* Define:
 ```
-∃ basis : Finset O, CertifiedBasis(F, d, ε, basis)
+predict(f) := if ∃ s, evalProfile(C, obs)(s) = f then C(choose(s)) else arbitrary
 ```
+For any `x`, the profile `evalProfile(C, obs)(x)` is realizable (witnessed by `x`), so `predict` returns `C(s)` for some `s` with `evalProfile(C, obs)(s) = evalProfile(C, obs)(x)`. By factorization, `evalProfile(C, obs)(C(s)) = evalProfile(C, obs)(s) = evalProfile(C, obs)(x)`. □
 
-### 7.1 Greedy Basis Selection
+### 5.2 Trace-Based Reconstruction (Theorem C')
 
-In practice, one selects observers greedily: at each step, choose the observer that maximizes the number of newly separated pairs. In an ultrametric space, this greedy strategy is optimal because the partition structure is laminar: splitting one ball never affects the separation structure of other balls.
+**Theorem 5.2.** For any trace `t₁, ..., tₙ` of proof states, if `evalProfile(C, obs)(tᵢ) = evalProfile(C, obs)(tⱼ)`, then `C(tᵢ) = C(tⱼ)`.
 
-**Algorithm**: Greedy Observer Basis Selection
+*Proof.* The profile equality gives `obs(k)(C(tᵢ)) = obs(k)(C(tⱼ))` for all `k`. Since `C(tᵢ)` and `C(tⱼ)` are fixed points (by idempotence), observer separation yields `C(tᵢ) = C(tⱼ)`. □
 
+---
+
+## 6. Tropical Semimodule Structure
+
+### 6.1 Algebraic Laws
+
+**Theorem 6.1.** For linearly ordered `σ`, the pointwise sup operation on `ι → σ` is:
+- Commutative: `f ⊔ g = g ⊔ f`
+- Associative: `(f ⊔ g) ⊔ h = f ⊔ (g ⊔ h)`
+- Idempotent: `f ⊔ f = f`
+
+These three properties make `(ι → σ, ⊔)` a *band* (idempotent semigroup), which is the algebraic structure underlying tropical semirings.
+
+### 6.2 Profile Order
+
+**Theorem 6.2.** The pointwise order `f ≤ g ⟺ ∀ i, f(i) ≤ g(i)` is a partial order (reflexive, transitive, antisymmetric).
+
+---
+
+## 7. Spectral Filtration
+
+### 7.1 Threshold Sublevel Sets
+
+**Definition 7.1.** The *threshold sublevel set* at threshold `t : ι → σ` is:
 ```
-Input: Observer family F, distance d, scale ε
-Output: Certified basis B
-
-B ← ∅
-unseparated ← {(x,y) ∈ P² | d(x,y) > ε}
-while unseparated ≠ ∅:
-    o* ← argmax_{o ∈ O} |{(x,y) ∈ unseparated | obs(o,x) ≠ obs(o,y)}|
-    B ← B ∪ {o*}
-    unseparated ← unseparated \ {(x,y) | obs(o*,x) ≠ obs(o*,y)}
-return B
-```
-
-**Complexity**: O(|O| · |P|²) time, O(|P|²) space.
-
-### 7.2 Optimality of Empty Basis
-
-**Theorem 7.3** (empty_basis_iff_trivial). The empty set is a certified basis if and only if all pairs of points are within distance ε:
-```
-CertifiedBasis(F, d, ε, ∅) ↔ ∀ x y : P, d(x,y) ≤ ε
-```
-
-This characterizes the trivial case where no observers are needed because the entire space is contained in a single ε-ball.
-
-## 8. Construction of Spectrally Separating Observer Families
-
-### 8.1 From Lipschitz and Separating Conditions
-
-**Theorem 8.1** (spectralSep_of_lipschitz_separating). An observer family is spectrally separating if it is both ε-Lipschitz and ε-separating:
-- Lipschitz: ∀ o, ∀ x y, d(x,y) ≤ ε → obs(o,x) = obs(o,y)
-- Separating: ∀ x y, (∀ o, obs(o,x) = obs(o,y)) → d(x,y) ≤ ε
-
-### 8.2 Distance-Based Observers
-
-The canonical example: use the distance function itself as an observer family, with one observer per point.
-
-**Definition** (distanceObserver): obs(r, p) = d(r, p) for r, p ∈ P.
-
-**Theorem 8.2** (distanceObserver_separates_zero). The distance observer family is 0-separating:
-```
-∀ x y : P, (∀ r, d(r,x) = d(r,y)) → d(x,y) = 0 → x = y
+F_t := {x ∈ S | ∀ i, obs(i)(C(x)) ≤ t(i)}
 ```
 
-### 8.3 Refinement Monotonicity
+**Theorem 7.1 (Monotonicity).** If `t ≤ t'` (pointwise), then `F_t ⊆ F_{t'}`.
 
-**Theorem 8.3** (more_observers_finer_partition). If O₁ embeds into O₂ compatibly, then code equality under O₂ implies code equality under O₁. More observers give a finer partition.
+**Theorem 7.2 (Compression Stability).** If `x ∈ F_t`, then `C(x) ∈ F_t`.
 
-## 9. Applications
+These results show that the spectral filtration is compatible with compression, providing a multi-resolution view of the proof system.
 
-### 9.1 Proof-State Compression
+---
 
-In automated theorem proving, proof states form a finite set with a natural ultrametric structure: the distance between two proof states can be defined as the depth of their least common ancestor in the proof tree. The observer code provides a certified compressed representation with the guarantee that any two states with the same code are "logically equivalent" up to distortion ε.
+## 8. Bridge Lemmas and Cross-Domain Connections
 
-### 9.2 Feature Selection in Machine Learning
+### 8.1 Observer Separation → Diagonal Avoidance
 
-Given a set of features (observers) and a hierarchical similarity structure (ultrametric) on data points, the observer basis theorem identifies the minimum feature subset that preserves all cluster boundaries at scale ε. This is provably optimal, unlike heuristic methods like mutual information filtering or LASSO.
+**Theorem 8.1.** Observer separation implies that for distinct compressed states `C(x) ≠ C(y)`, there exists a distinguishing observer: `∃ i, obs(i)(C(x)) ≠ obs(i)(C(y))`.
 
-### 9.3 Locality-Sensitive Hashing
+This directly bridges to the `DiagonalAvoidsOn` framework of prime-congruence neural compression: the observer family diagonally avoids the identity on compressed states.
 
-The spectral separation condition is a non-Archimedean analogue of locality-sensitive hashing: close points always collide (coherence), and colliding points are always close (completeness). The ultrametric structure makes this exact rather than probabilistic.
+### 8.2 Duality → Certified Reconstruction
+
+**Theorem 8.2.** The duality equivalence `compressedProfileEquiv` provides a certified reconstruction inverse:
+```
+∃ reconstruct : range(evalProfile) → range(C),
+  ∀ x ∈ range(C), reconstruct(equiv(x)) = x
+```
+
+This mirrors the architecture of `certified_gibbs_reconstruction_from_boundary_partition`:
+- **Boundary data** = observer profiles
+- **Partition** = ultrametric cluster partition
+- **Reconstruction** = equivalence inverse
+- **Certificate** = `Equiv.symm_apply_apply`
+
+---
+
+## 9. Algorithms
+
+### 9.1 Profile Computation
+
+```
+Algorithm: ComputeProfile(x, C, obs, ι)
+Input: state x, compression C, observers obs, index set ι
+Output: observer profile f : ι → σ
+
+1. y ← C(x)       // compress
+2. for each i ∈ ι:
+3.   f[i] ← obs[i](y)   // observe
+4. return f
+
+Time: O(|ι| · T_obs) where T_obs is observer evaluation time
+Space: O(|ι|)
+```
+
+### 9.2 Certified Predictor Construction
+
+```
+Algorithm: BuildCertifiedPredictor(S, C, obs)
+Input: finite state space S, compression C, observers obs
+Output: certified predictor with lookup table
+
+1. profiles ← {}     // map from profile to compressed state
+2. for each x ∈ S:
+3.   f ← ComputeProfile(x, C, obs, ι)
+4.   if f ∉ profiles:
+5.     profiles[f] ← C(x)
+6. 
+7. predict(f) := profiles[f] if f ∈ profiles, else arbitrary
+8. return (predict, C, obs)
+
+Time: O(|S| · |ι| · T_obs)
+Space: O(|range(C)| · |ι|)
+Certificate: by Theorem 5.1
+```
+
+### 9.3 Canonical Tree Construction
+
+```
+Algorithm: BuildCanonicalTree(S, C, d)
+Input: finite state space S, compression C, distance d
+Output: rooted tree model
+
+1. compressed ← {C(x) | x ∈ S}
+2. distances ← {d(a, b) | a, b ∈ compressed, a ≠ b}
+3. Sort distances in decreasing order: r₁ > r₂ > ... > rₖ
+4. tree ← single root node containing all of compressed
+5. for j = 1 to k:
+6.   For each leaf cluster L in tree:
+7.     Partition L by: a ~_{rⱼ} b ⟺ d(a,b) ≤ rⱼ
+8.     Replace L with children = partition classes
+9. return tree
+
+Time: O(|range(C)|² · T_dist + |range(C)|² log |range(C)|)
+Space: O(|range(C)|²)
+```
+
+---
 
 ## 10. Computational Experiments
 
-See `demo.py` for implementations of:
-- Ultrametric ball computation and partition visualization
-- Observer code generation and verification of spectral separation
-- Greedy basis selection algorithm with optimality verification
-- Rate–distortion curve computation for hierarchical data
+We implement the algorithms in Python and verify the theorems on concrete examples.
 
-Key experimental findings:
-- On randomly generated ultrametric spaces with 20 points, the greedy algorithm consistently finds optimal bases in O(n²) time
-- The rate–distortion curve exhibits step-function behavior (as predicted by the discrete ball structure)
-- The covering number hierarchy follows a geometric progression 1, k, k², ... for k-ary trees
+### 10.1 Example: 8-State Proof System
+
+Consider `S = {0, 1, ..., 7}` with compression `C(x) = x mod 4` (mapping to 4 compressed states), ultrametric distance on compressed states:
+```
+d(0,1) = 1, d(0,2) = 2, d(0,3) = 2
+d(1,2) = 2, d(1,3) = 2, d(2,3) = 1
+```
+and two observers `obs₀(x) = x mod 2`, `obs₁(x) = x div 2`.
+
+The observer profiles are:
+- State 0: profile (0, 0)
+- State 1: profile (1, 0)
+- State 2: profile (0, 1)
+- State 3: profile (1, 1)
+
+Observer separation holds (each pair has distinct profiles), and the canonical tree at distance thresholds 1 and 2 gives:
+```
+        root (r=2)
+       /          \
+   {0,1} (r=1)  {2,3} (r=1)
+   /    \        /    \
+  0      1      2      3
+```
+
+### 10.2 Verification
+
+The Python demo (`demo.py`) verifies:
+1. Profile computation matches the formal definition
+2. Profile injection on compressed states
+3. Canonical tree construction
+4. Certified predictor correctness
+5. Trace reconstruction consistency
+
+---
 
 ## 11. Discussion
 
 ### 11.1 Significance
 
-The central contribution is a *closed-form* rate–distortion identity in the ultrametric setting. In contrast to Shannon's classical theory, which characterizes the rate–distortion function as the solution to a variational problem (typically requiring Blahut–Arimoto iteration for numerical computation), the ultrametric version gives an exact combinatorial formula: R(ε) = log N(ε), where N(ε) is the covering number.
+The main contribution is a clean, constructive duality between proof dynamics and observer algebra. The key insight is that idempotent compression + observer separation is *exactly* the right hypothesis to ensure faithful finite representation.
+
+The theorem is not merely a Stone-type representation result transplanted to a new setting. The ultrametric geometry adds genuine content: it forces the representation to have hierarchical (tree) structure, and the uniqueness theorem guarantees that this structure is canonical.
 
 ### 11.2 Limitations
 
-1. The theory is currently restricted to finite types. Extension to compact (profinite) ultrametric spaces is a natural next step.
-2. The spectral separation condition is strong: it requires both coherence and completeness. Relaxing to approximate separation would broaden applicability.
-3. The connection to the Lawvere rate–distortion framework is structural (both share the duality pattern) rather than formal (we do not instantiate the abstract framework directly).
+1. **Finiteness:** The current theorems require `S` to be finite. Extension to infinite compact/profinite systems is a natural next step.
+2. **Observer construction:** We assume observers are given; we do not address how to find or learn separating observer families.
+3. **Computational complexity:** The certified predictor uses a lookup table of size `|range(C)| · |ι|`, which may be large. Compression of the predictor itself is not addressed.
 
-### 11.3 Open Questions
+### 11.3 Connections to Other Fields
 
-1. Can the covering number hierarchy {N(ε)}_ε be characterized in terms of the tropical rank of the observer code semimodule?
-2. Is there a non-Archimedean analogue of the information bottleneck with a unique solution?
-3. Can the certified decoder reconstruction be extended to streaming/online settings where proof states arrive incrementally?
+- **Tropical geometry:** Profile sup = tropical addition; the semimodule structure is a concrete instance of tropical linear algebra.
+- **Stone duality:** Observer profiles = "characters" separating points; the duality parallels Stone's representation for Boolean algebras.
+- **p-adic analysis:** Ultrametric ball equivalence relations = valuation-defined congruences in p-adic number theory.
+- **Hierarchical clustering:** The canonical tree = single-linkage dendrogram; uniqueness = the well-known fact that ultrametrics and dendrograms are in bijection.
+- **Neural networks:** Observers = feature detectors; profiles = latent representations; the duality certifies that the representation is faithful.
 
-## 12. Conclusion
+---
 
-We have established the first machine-verified rate–distortion duality for proof states in finite ultrametric spaces. The key insight is that the ultrametric ball dichotomy theorem—which has no analogue in Archimedean geometry—transforms the compression problem from a variational optimization to a combinatorial partition-counting problem. The resulting duality is exact, certified, and computationally tractable.
+## 12. Future Work
+
+See `FUTURE_DIRECTIONS.md` for detailed research directions. Key targets:
+1. Profinite extension of the duality to infinite systems
+2. Tropical Hahn–Banach separation for observer semimodules
+3. Proof-search complexity bounds from tree depth/branching
+4. PAC-learning guarantees for observer families
+5. Categorical contravariant equivalence (FUPS^op ≃ FOPS)
+
+---
 
 ## References
 
-1. Shannon, C.E. "Coding theorems for a discrete source with a fidelity criterion." IRE Nat. Conv. Rec., Part 4 (1959): 142–163.
-2. Lawvere, F.W. "Metric spaces, generalized logic, and closed categories." Rend. Sem. Mat. Fis. Milano 43 (1973): 135–166.
-3. Schikhof, W.H. *Ultrametric Calculus*. Cambridge University Press, 1984.
-4. Robert, A.M. *A Course in p-adic Analysis*. Springer, 2000.
-5. Berger, T. *Rate Distortion Theory*. Prentice-Hall, 1971.
-6. Mikhalkin, G. "Tropical geometry and its applications." Proc. ICM Madrid (2006).
-7. Litvinov, G.L. "Maslov dequantization, idempotent and tropical mathematics." J. Math. Sci. 140.3 (2007): 209–217.
+1. Stone, M.H. (1936). "The theory of representation for Boolean algebras." *Trans. AMS* 40(1), 37–111.
+2. Hensel, K. (1897). "Über eine neue Begründung der Theorie der algebraischen Zahlen." *Jahresbericht der DMV* 6, 83–88.
+3. Dress, A., Moulton, V., Terhalle, W. (1996). "T-theory: An overview." *European J. Combin.* 17(2-3), 161–175. [Ultrametric-dendrogram correspondence]
+4. Viro, O. (2001). "Dequantization of real algebraic geometry on logarithmic paper." *Proc. 3rd European Congress of Mathematics*, 135–146. [Tropical geometry foundations]
+5. Simon, I. (1988). "Recognizable sets with multiplicities in the tropical semiring." *MFCS*, LNCS 324, 107–120.
