@@ -1,1119 +1,940 @@
 #!/usr/bin/env python3
 """
-Applications of Berggren Fourier Analysis
+Berggren–Fourier Duality: Applications
 
-Demonstrates practical applications of the multiresolution analysis:
-1. Efficient search for triples with specific hypotenuse properties
-2. Compression of arithmetic signals on the Berggren tree
-3. Anomaly detection in Pythagorean triple distributions
-4. Period detection in modular arithmetic observables
+Demonstrates real-world applications of the Berggren spectral framework:
+1. Hidden triple identification (cryptographic analogy)
+2. Orbit fingerprinting for triple classification
+3. Spectral compression of triple-tree data
+4. Noisy measurement robustness analysis
 """
 
 import numpy as np
-from collections import defaultdict, Counter
-from algorithms import (
-    berggren_evaluate, berggren_layer, BerggrenWaveletTransform,
-    detect_prefix_depth, energy_spectrum, ROOT_TRIPLE
-)
+from itertools import product
+from collections import defaultdict
 
-GEN_NAMES = ['A', 'B', 'C']
+# Berggren matrices
+A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]], dtype=int)
+B = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]], dtype=int)
+C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]], dtype=int)
+ROOT = np.array([3, 4, 5], dtype=int)
 
 
-# ==============================================================================
-# Application 1: Arithmetic Signal Compression
-# ==============================================================================
+def act_mod(M: np.ndarray, v: tuple, m: int) -> tuple:
+    """Apply matrix M to vector v modulo m."""
+    result = (M @ np.array(v)) % m
+    return tuple(int(x) for x in result)
 
-def demo_signal_compression():
+
+# ============================================================
+# Application 1: Hidden Triple Identification
+# ============================================================
+
+def app_hidden_triple():
     """
-    Compress arithmetic signals on the Berggren tree using wavelet sparsity.
+    Scenario: An oracle holds a secret Pythagorean triple (mod m).
+    Using character queries, identify the triple with certainty.
 
-    If a signal is approximately prefix-constant, most of its wavelet
-    coefficients are near zero. We can achieve lossy compression by
-    keeping only the significant coefficients.
+    This mirrors the quantum hidden subgroup problem but for
+    Berggren semigroup dynamics.
     """
-    print("=" * 70)
-    print("APPLICATION 1: Arithmetic Signal Compression")
-    print("=" * 70)
-
-    depth = 4
-    words = berggren_layer(depth)
-    N = len(words)
-    transform = BerggrenWaveletTransform(depth)
-
-    # Test signal: hypotenuse values
-    hyp = np.array([berggren_evaluate(w)[2] for w in words], dtype=float)
-
-    coeffs = transform.forward(hyp)
-    total_coeffs = len(coeffs)
-
-    # Sort coefficients by magnitude
-    coeff_list = [(k, abs(v)) for k, v in coeffs.items()]
-    coeff_list.sort(key=lambda x: -x[1])
-
-    print(f"\n  Signal: hypotenuse values at depth {depth} ({N} nodes)")
-    print(f"  Total coefficients: {total_coeffs}")
-    print(f"  Signal range: [{int(min(hyp))}, {int(max(hyp))}]")
-
-    # Compression at different levels
-    for keep_frac in [1.0, 0.5, 0.25, 0.1]:
-        n_keep = max(1, int(keep_frac * total_coeffs))
-        kept_keys = set(k for k, _ in coeff_list[:n_keep])
-        sparse_coeffs = {k: v for k, v in coeffs.items() if k in kept_keys}
-
-        f_rec = transform.inverse(sparse_coeffs)
-        error = np.max(np.abs(hyp - f_rec))
-        rel_error = error / np.max(np.abs(hyp))
-        ratio = n_keep / total_coeffs
-
-        print(f"  Keep {100*keep_frac:5.1f}% ({n_keep:3d}/{total_coeffs}): "
-              f"max error = {error:8.2f}, relative = {rel_error:.4f}")
-
+    print("=" * 60)
+    print("APPLICATION 1: Hidden Triple Identification")
+    print("=" * 60)
+    print()
+    print("Scenario: An oracle holds a secret triple modulo m.")
+    print("We identify it using spectral character queries.")
     print()
 
+    m = 5
+    Q = list(product(range(m), repeat=3))
 
-# ==============================================================================
-# Application 2: Period Detection in Modular Observables
-# ==============================================================================
+    # Secret triple
+    secret = (3, 4, 0)  # (3,4,5) mod 5
+    print(f"  Modulus m = {m}, |Q| = {len(Q)}")
+    print(f"  Secret triple: {secret}")
 
-def demo_period_detection():
+    # Use coordinate projection characters
+    # chi_i_v(q) = 1 if q[i] == v else 0
+    queries = 0
+    candidates = list(Q)
+
+    for coord in range(3):
+        for val in range(m):
+            if len(candidates) <= 1:
+                break
+            # Query: does coordinate `coord` equal `val`?
+            answer = 1 if secret[coord] == val else 0
+            queries += 1
+            candidates = [q for q in candidates if
+                         (1 if q[coord] == val else 0) == answer]
+            if answer == 1:
+                break  # found the value for this coordinate
+
+    print(f"  Recovered: {candidates[0]}")
+    print(f"  Correct: {candidates[0] == secret}")
+    print(f"  Queries used: {queries}")
+    print(f"  Theoretical bound: {len(Q)} (exhaustive)")
+    print(f"  Speedup: {len(Q) / queries:.1f}x")
+
+
+# ============================================================
+# Application 2: Orbit Fingerprinting
+# ============================================================
+
+def app_orbit_fingerprint():
     """
-    Detect hidden periodicity in modular arithmetic observables.
-
-    The Berggren tree has interesting modular structure: hypotenuse values
-    modulo small primes exhibit patterns related to the tree structure.
-    The wavelet transform can detect these patterns.
+    Use Berggren orbit structure to fingerprint and classify
+    elements of PQMod(m) by their dynamical behavior.
     """
-    print("=" * 70)
-    print("APPLICATION 2: Period Detection in Modular Observables")
-    print("=" * 70)
-
-    depth = 4
-    words = berggren_layer(depth)
-    N = len(words)
-    transform = BerggrenWaveletTransform(depth)
-
-    for q in [2, 3, 4, 5, 6, 7, 8, 12]:
-        hyp_mod = np.array([berggren_evaluate(w)[2] % q for w in words], dtype=float)
-        coeffs = transform.forward(hyp_mod)
-
-        # Analyze sparsity
-        prefix_depth = detect_prefix_depth(coeffs, threshold=1e-10)
-
-        # Count nonzero coefficients per level
-        level_stats = {}
-        for k in range(depth):
-            level_coeffs = [(key, v) for key, v in coeffs.items()
-                          if isinstance(key, tuple) and key[0] == k]
-            n_nonzero = sum(1 for _, v in level_coeffs if abs(v) > 1e-10)
-            n_total = len(level_coeffs)
-            level_stats[k] = (n_nonzero, n_total)
-
-        total_nonzero = sum(nz for nz, _ in level_stats.values())
-        total = sum(t for _, t in level_stats.values())
-        sparsity = 1 - total_nonzero / total if total > 0 else 0
-
-        # Distribution of residues
-        residue_counts = Counter(int(x) for x in hyp_mod)
-
-        print(f"\n  Hypotenuse mod {q}:")
-        print(f"    Residue distribution: {dict(sorted(residue_counts.items()))}")
-        print(f"    Detected prefix depth: {prefix_depth}")
-        print(f"    Sparsity: {sparsity:.2%} ({total - total_nonzero}/{total} zero coefficients)")
-
+    print()
+    print("=" * 60)
+    print("APPLICATION 2: Orbit Fingerprinting")
+    print("=" * 60)
+    print()
+    print("Classify elements by their Berggren orbit fingerprint.")
     print()
 
+    m = 4
+    Q = list(product(range(m), repeat=3))
 
-# ==============================================================================
-# Application 3: Anomaly Detection
-# ==============================================================================
+    # Compute orbit fingerprint: (actA(q), actB(q), actC(q))
+    fingerprints = defaultdict(list)
+    for q in Q:
+        fp = (act_mod(A, q, m), act_mod(B, q, m), act_mod(C, q, m))
+        fingerprints[fp].append(q)
 
-def demo_anomaly_detection():
+    print(f"  PQMod({m}): {len(Q)} elements")
+    print(f"  Distinct orbit fingerprints: {len(fingerprints)}")
+
+    # Show size distribution
+    sizes = defaultdict(int)
+    for fp, elems in fingerprints.items():
+        sizes[len(elems)] += 1
+
+    print(f"  Fingerprint class sizes:")
+    for size, count in sorted(sizes.items()):
+        print(f"    Size {size}: {count} classes")
+
+    # Fixed points (self-loops under all generators)
+    fixed = [q for q in Q if all(
+        act_mod(M, q, m) == q for M in [A, B, C]
+    )]
+    print(f"  Fixed points (all generators): {len(fixed)}")
+    if fixed:
+        print(f"    Examples: {fixed[:5]}")
+
+
+# ============================================================
+# Application 3: Spectral Compression
+# ============================================================
+
+def app_spectral_compression():
     """
-    Detect anomalous triples by looking for unexpected wavelet energy.
-
-    If a function on the Berggren tree has most of its energy at coarse
-    scales, fine-scale energy indicates local anomalies.
+    Demonstrate spectral compression: represent a sparse observable
+    using far fewer Fourier coefficients than the full dimension.
     """
-    print("=" * 70)
-    print("APPLICATION 3: Anomaly Detection in Triple Distributions")
-    print("=" * 70)
-
-    depth = 4
-    words = berggren_layer(depth)
-    N = len(words)
-    transform = BerggrenWaveletTransform(depth)
-
-    # Signal: log(hypotenuse) - measures growth rate
-    log_hyp = np.array([np.log(berggren_evaluate(w)[2]) for w in words])
-
-    coeffs = transform.forward(log_hyp)
-
-    # Find triples with highest fine-scale wavelet energy
-    fine_energy = np.zeros(N)
-    for k in range(depth):
-        prefixes = sorted(set(w[:k] for w in words))
-        for u in prefixes:
-            for j in range(2):
-                c = coeffs.get((k, u, j), 0)
-                if abs(c) > 0:
-                    psi = transform._wavelet(k, u, j)
-                    fine_energy += abs(c * psi)**2
-
-    # Top anomalous triples (highest fine-scale energy)
-    anomaly_idx = np.argsort(-fine_energy)
-    print(f"\n  Signal: log(hypotenuse) at depth {depth}")
-    print(f"\n  Top 10 triples by fine-scale wavelet energy:")
-    for rank, idx in enumerate(anomaly_idx[:10]):
-        w = words[idx]
-        triple = berggren_evaluate(w)
-        gen_str = ''.join(GEN_NAMES[g] for g in w)
-        print(f"    {rank+1:2d}. {gen_str:>5s} → ({triple[0]:>5}, {triple[1]:>5}, {triple[2]:>5})"
-              f"  energy = {fine_energy[idx]:.4f}")
-
+    print()
+    print("=" * 60)
+    print("APPLICATION 3: Spectral Compression")
+    print("=" * 60)
     print()
 
+    m = 3
+    Q = sorted(list(product(range(m), repeat=3)))
+    n = len(Q)
+    print(f"  PQMod({m}): {n} elements")
 
-# ==============================================================================
-# Application 4: Structural Analysis of the Berggren Tree
-# ==============================================================================
+    # Sparse observable: supported on only 3 elements
+    support = [Q[0], Q[5], Q[20]]
+    f = {q: 0.0 for q in Q}
+    for s in support:
+        f[s] = np.random.uniform(1, 10)
 
-def demo_structural_analysis():
+    sparsity = sum(1 for v in f.values() if abs(v) > 1e-10)
+    print(f"  Observable sparsity: {sparsity}/{n}")
+
+    # Full Fourier expansion needs n coefficients
+    # But sparse observable can be represented with fewer
+
+    # Compute all coefficients
+    # Using indicator basis: coefficients = function values
+    nonzero_coeffs = {q: f[q] for q in Q if abs(f[q]) > 1e-10}
+    print(f"  Non-zero Fourier coefficients: {len(nonzero_coeffs)}")
+    print(f"  Compression ratio: {n}/{len(nonzero_coeffs)} = "
+          f"{n/max(len(nonzero_coeffs),1):.1f}x")
+
+    # Verify reconstruction from sparse coefficients
+    f_recon = {q: 0.0 for q in Q}
+    for q_supp, coeff in nonzero_coeffs.items():
+        for q in Q:
+            if q == q_supp:
+                f_recon[q] += coeff
+
+    max_err = max(abs(f[q] - f_recon[q]) for q in Q)
+    print(f"  Reconstruction error: {max_err:.2e}")
+
+
+# ============================================================
+# Application 4: Noisy Measurement Robustness
+# ============================================================
+
+def app_noisy_reconstruction():
     """
-    Use the wavelet transform to analyze structural properties of the tree.
+    Analyze robustness of reconstruction when character
+    measurements are corrupted by noise.
     """
-    print("=" * 70)
-    print("APPLICATION 4: Structural Analysis of Berggren Tree")
-    print("=" * 70)
-
-    depth = 4
-    words = berggren_layer(depth)
-    N = len(words)
-
-    # Compare energy spectra of different observables
-    observables = {
-        'hypotenuse c': lambda w: berggren_evaluate(w)[2],
-        'side a': lambda w: berggren_evaluate(w)[0],
-        'side b': lambda w: berggren_evaluate(w)[1],
-        'a + b': lambda w: berggren_evaluate(w)[0] + berggren_evaluate(w)[1],
-        'a - b': lambda w: berggren_evaluate(w)[0] - berggren_evaluate(w)[1],
-        'c - a': lambda w: berggren_evaluate(w)[2] - berggren_evaluate(w)[0],
-    }
-
-    print(f"\n  Energy spectrum comparison (depth {depth}, {N} nodes):")
-    print(f"  {'Observable':<15s}  {'Scaling':>8s}", end='')
-    for k in range(depth):
-        print(f"  {'Level '+str(k):>8s}", end='')
     print()
-    print("  " + "-" * (15 + 9 + depth * 10))
-
-    for name, obs_fn in observables.items():
-        signal = np.array([obs_fn(w) for w in words], dtype=float)
-        spectrum = energy_spectrum(signal, words, depth)
-
-        print(f"  {name:<15s}  {spectrum['scaling']:8.4f}", end='')
-        for k in range(depth):
-            print(f"  {spectrum[k]:8.4f}", end='')
-        print()
-
-    # Verify all triples are Pythagorean
-    print(f"\n  Pythagorean verification:")
-    all_pyth = True
-    for w in words:
-        t = berggren_evaluate(w)
-        if t[0]**2 + t[1]**2 != t[2]**2:
-            print(f"    FAILED: {''.join(GEN_NAMES[g] for g in w)} → {tuple(t)}")
-            all_pyth = False
-    print(f"    All {N} triples verified: {'✓' if all_pyth else '✗'}")
-
-    # GCD analysis (primitivity)
-    from math import gcd
-    all_primitive = True
-    for w in words:
-        t = berggren_evaluate(w)
-        g = gcd(gcd(abs(int(t[0])), abs(int(t[1]))), abs(int(t[2])))
-        if g != 1:
-            print(f"    NOT PRIMITIVE: {''.join(GEN_NAMES[g] for g in w)} → {tuple(t)}, gcd={g}")
-            all_primitive = False
-    print(f"    All {N} triples primitive: {'✓' if all_primitive else '✗'}")
-
+    print("=" * 60)
+    print("APPLICATION 4: Noisy Measurement Robustness")
+    print("=" * 60)
     print()
 
+    m = 3
+    Q = sorted(list(product(range(m), repeat=3)))
+    n = len(Q)
 
-# ==============================================================================
+    # Build indicator characters
+    chars = {}
+    for a in Q:
+        chars[a] = lambda q, a=a: 1.0 if q == a else 0.0
+
+    # Compute separation gap
+    # delta = min over distinct x,y of max over chi of |chi(x) - chi(y)|
+    delta = float('inf')
+    for i in range(len(Q)):
+        for j in range(i + 1, len(Q)):
+            x, y = Q[i], Q[j]
+            max_diff = max(abs(chars[a](x) - chars[a](y)) for a in Q)
+            delta = min(delta, max_diff)
+
+    print(f"  PQMod({m}): {n} elements")
+    print(f"  Separation gap δ = {delta}")
+    print(f"  Noise tolerance: ε < δ/2 = {delta/2}")
+
+    # Test reconstruction under various noise levels
+    hidden = Q[13]  # arbitrary hidden point
+    np.random.seed(123)
+
+    print(f"\n  Hidden point: {hidden}")
+    print(f"  {'Noise level':>12} {'Success':>8} {'Error':>8}")
+    print(f"  {'-'*12} {'-'*8} {'-'*8}")
+
+    for noise_level in [0.0, 0.1, 0.2, 0.3, 0.49, 0.5, 0.7, 1.0]:
+        successes = 0
+        trials = 100
+        for _ in range(trials):
+            # Noisy oracle
+            noise = {a: np.random.uniform(-noise_level, noise_level) for a in Q}
+            noisy_oracle = lambda a, h=hidden, n=noise: chars[a](h) + n[a]
+
+            # Nearest-neighbor reconstruction
+            best_q = None
+            best_dist = float('inf')
+            for q in Q:
+                dist = sum((noisy_oracle(a) - chars[a](q))**2 for a in Q)
+                if dist < best_dist:
+                    best_dist = dist
+                    best_q = q
+
+            if best_q == hidden:
+                successes += 1
+
+        rate = successes / trials
+        print(f"  {noise_level:>12.2f} {rate:>7.0%} {'✓' if rate > 0.9 else '✗':>8}")
+
+
+# ============================================================
 # Main
-# ==============================================================================
+# ============================================================
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║   BERGGREN FOURIER ANALYSIS - APPLICATIONS SUITE                   ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Berggren–Fourier Duality: Applications                ║")
+    print("╚══════════════════════════════════════════════════════════╝")
     print()
 
-    demo_signal_compression()
-    demo_period_detection()
-    demo_anomaly_detection()
-    demo_structural_analysis()
+    app_hidden_triple()
+    app_orbit_fingerprint()
+    app_spectral_compression()
+    app_noisy_reconstruction()
 
-    print("All applications demonstrated.")
+    print()
+    print("=" * 60)
+    print("All applications demonstrated successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Quantum Berggren Fourier Duality - Interactive Demonstration
+Berggren–Fourier Duality: Demonstrations and Numerical Examples
 
-This script demonstrates the multiresolution analysis on the Berggren tree
-of primitive Pythagorean triples, including:
-- Berggren tree generation and triple evaluation
-- Haar wavelet decomposition on the ternary tree
-- Forward/inverse wavelet transforms with exact reconstruction
-- Spectral sparsity for prefix-constant observables
-- Certified robust recovery under perturbation
-
-Author: Generated as companion to formal Lean 4 proofs
+This script demonstrates the key theorems of the Berggren–Fourier Duality
+framework with concrete numerical examples:
+1. Berggren generator actions on Pythagorean triples
+2. Finite quotient orbit structure
+3. Character separation verification
+4. Fourier expansion computation
+5. Certified reconstruction algorithm
 """
 
 import numpy as np
 from itertools import product
 
-# ==============================================================================
-# Section 1: Berggren Tree Core
-# ==============================================================================
+# ============================================================
+# Berggren Generators
+# ============================================================
 
-# Berggren generator matrices
-BERG_A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])
-BERG_B = np.array([[1,  2, 2], [2,  1, 2], [2,  2, 3]])
-BERG_C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])
-GENERATORS = [BERG_A, BERG_B, BERG_C]
-GEN_NAMES = ['A', 'B', 'C']
+A = np.array([[1, -2, 2],
+              [2, -1, 2],
+              [2, -2, 3]], dtype=int)
 
-ROOT = np.array([3, 4, 5])
+B = np.array([[1, 2, 2],
+              [2, 1, 2],
+              [2, 2, 3]], dtype=int)
 
-def berggren_eval(word):
-    """Evaluate a Berggren word to get the corresponding Pythagorean triple."""
-    v = ROOT.copy()
-    for letter in word:
-        v = GENERATORS[letter] @ v
-    return v
+C = np.array([[-1, 2, 2],
+              [-2, 1, 2],
+              [-2, 2, 3]], dtype=int)
 
-def generate_layer(n):
-    """Generate all 3^n words of length n."""
-    if n == 0:
-        return [()]
-    return list(product(range(3), repeat=n))
+ROOT = np.array([3, 4, 5], dtype=int)
 
-def verify_pythagorean(triple):
-    """Verify that a triple satisfies a² + b² = c²."""
-    a, b, c = triple
-    return a**2 + b**2 == c**2
 
-# ==============================================================================
-# Section 2: Wavelet Basis on Ternary Tree
-# ==============================================================================
+def generate_berggren_tree(depth=4):
+    """Generate Berggren tree to given depth."""
+    triples = [ROOT]
+    current_level = [ROOT]
+    for d in range(depth):
+        next_level = []
+        for t in current_level:
+            for M, name in [(A, 'A'), (B, 'B'), (C, 'C')]:
+                child = M @ t
+                next_level.append(child)
+                triples.append(child)
+        current_level = next_level
+    return triples
 
-def word_prefix(w, k):
-    """Return the first k letters of word w."""
-    return w[:k]
 
-def is_prefix_constant(f, words, k):
-    """Check if f is constant on k-prefix cylinders."""
-    from collections import defaultdict
-    groups = defaultdict(set)
-    for i, w in enumerate(words):
-        groups[word_prefix(w, k)].add(f[i])
-    return all(len(vals) == 1 for vals in groups.values())
+def verify_pythagorean(t):
+    """Verify that t = (a, b, c) is a Pythagorean triple."""
+    return t[0]**2 + t[1]**2 == t[2]**2
 
-def detail_wavelet_0(words, k, prefix_u):
-    """Detail wavelet flavor 0: distinguishes child 0 from child 1."""
-    n = len(words[0]) if words else 0
-    psi = np.zeros(len(words), dtype=complex)
-    for i, w in enumerate(words):
-        if word_prefix(w, k) == prefix_u:
-            if w[k] == 0:
-                psi[i] = 1.0
-            elif w[k] == 1:
-                psi[i] = -1.0
-    return psi
 
-def detail_wavelet_1(words, k, prefix_u):
-    """Detail wavelet flavor 1: distinguishes children {0,1} from child 2."""
-    psi = np.zeros(len(words), dtype=complex)
-    for i, w in enumerate(words):
-        if word_prefix(w, k) == prefix_u:
-            if w[k] == 0:
-                psi[i] = 1.0
-            elif w[k] == 1:
-                psi[i] = 1.0
-            else:
-                psi[i] = -2.0
-    return psi
+# ============================================================
+# Demo 1: Berggren Tree Generation
+# ============================================================
 
-def scaling_wavelet(n_words):
-    """The global scaling wavelet: constant 1."""
-    return np.ones(n_words, dtype=complex)
-
-# ==============================================================================
-# Section 3: Forward and Inverse Wavelet Transform
-# ==============================================================================
-
-def forward_transform(f, words):
-    """Compute all wavelet coefficients of f."""
-    n = len(words[0]) if words else 0
-    N = len(words)
-    coeffs = {}
-
-    # Scaling coefficient
-    coeffs['scaling'] = np.sum(f) / N
-
-    # Detail coefficients
-    for k in range(n):
-        prefixes = set(word_prefix(w, k) for w in words)
-        for u in sorted(prefixes):
-            psi0 = detail_wavelet_0(words, k, u)
-            psi1 = detail_wavelet_1(words, k, u)
-            norm0_sq = np.sum(np.abs(psi0)**2)
-            norm1_sq = np.sum(np.abs(psi1)**2)
-            if norm0_sq > 0:
-                coeffs[('detail0', k, u)] = np.vdot(psi0, f) / norm0_sq
-            if norm1_sq > 0:
-                coeffs[('detail1', k, u)] = np.vdot(psi1, f) / norm1_sq
-    return coeffs
-
-def inverse_transform(coeffs, words):
-    """Reconstruct f from wavelet coefficients."""
-    n = len(words[0]) if words else 0
-    N = len(words)
-    f_rec = np.zeros(N, dtype=complex)
-
-    # Scaling contribution
-    f_rec += coeffs.get('scaling', 0) * scaling_wavelet(N)
-
-    # Detail contributions
-    for k in range(n):
-        prefixes = set(word_prefix(w, k) for w in words)
-        for u in sorted(prefixes):
-            psi0 = detail_wavelet_0(words, k, u)
-            psi1 = detail_wavelet_1(words, k, u)
-            c0 = coeffs.get(('detail0', k, u), 0)
-            c1 = coeffs.get(('detail1', k, u), 0)
-            f_rec += c0 * psi0 + c1 * psi1
-    return f_rec
-
-# ==============================================================================
-# Section 4: Conditional Expectation
-# ==============================================================================
-
-def conditional_expectation(f, words, k):
-    """Compute conditional expectation at level k."""
-    from collections import defaultdict
-    n = len(words[0]) if words else 0
-    groups = defaultdict(list)
-    for i, w in enumerate(words):
-        groups[word_prefix(w, k)].append(i)
-
-    result = np.zeros(len(words), dtype=complex)
-    for indices in groups.values():
-        avg = np.mean([f[i] for i in indices])
-        for i in indices:
-            result[i] = avg
-    return result
-
-# ==============================================================================
-# Section 5: Demonstrations
-# ==============================================================================
-
-def demo_berggren_tree():
-    """Demonstrate Berggren tree generation."""
-    print("=" * 70)
-    print("DEMO 1: Berggren Tree of Primitive Pythagorean Triples")
-    print("=" * 70)
+def demo_tree_generation():
+    print("=" * 60)
+    print("DEMO 1: Berggren Tree Generation")
+    print("=" * 60)
     print(f"\nRoot triple: {ROOT}")
-    print(f"Pythagorean check: {ROOT[0]}² + {ROOT[1]}² = {ROOT[0]**2 + ROOT[1]**2} = {ROOT[2]}² = {ROOT[2]**2} ✓")
-    print()
+    print(f"  Pythagorean: {ROOT[0]}² + {ROOT[1]}² = {ROOT[0]**2} + {ROOT[1]**2} = {ROOT[2]**2} = {ROOT[2]}² ✓")
 
-    for depth in range(1, 4):
-        words = generate_layer(depth)
-        print(f"Depth {depth}: {len(words)} triples")
-        for w in words[:min(9, len(words))]:
-            triple = berggren_eval(w)
-            gen_str = ''.join(GEN_NAMES[i] for i in w)
-            check = "✓" if verify_pythagorean(triple) else "✗"
-            print(f"  {gen_str:>4s} → ({triple[0]:>5}, {triple[1]:>5}, {triple[2]:>5})  "
-                  f"  {triple[0]}² + {triple[1]}² = {triple[0]**2 + triple[1]**2}  {check}")
-        if len(words) > 9:
-            print(f"  ... ({len(words) - 9} more)")
-        print()
+    print("\nFirst generation:")
+    for M, name in [(A, 'A'), (B, 'B'), (C, 'C')]:
+        child = M @ ROOT
+        check = "✓" if verify_pythagorean(child) else "✗"
+        print(f"  {name} · (3,4,5) = ({child[0]},{child[1]},{child[2]})  "
+              f"  {child[0]}² + {child[1]}² = {child[0]**2 + child[1]**2} = {child[2]**2} = {child[2]}² {check}")
 
-def demo_wavelet_reconstruction():
-    """Demonstrate exact wavelet reconstruction."""
-    print("=" * 70)
-    print("DEMO 2: Wavelet Perfect Reconstruction")
-    print("=" * 70)
+    triples = generate_berggren_tree(3)
+    print(f"\nTotal triples generated (depth 3): {len(triples)}")
+    print(f"All Pythagorean: {all(verify_pythagorean(t) for t in triples)}")
+    all_distinct = len(set(tuple(t) for t in triples)) == len(triples)
+    print(f"All distinct: {all_distinct}")
 
-    for depth in range(1, 5):
-        words = generate_layer(depth)
-        N = len(words)
 
-        # Random complex signal
-        np.random.seed(42 + depth)
-        f = np.random.randn(N) + 1j * np.random.randn(N)
+# ============================================================
+# Demo 2: Finite Quotient Orbits
+# ============================================================
 
-        # Forward → Inverse
-        coeffs = forward_transform(f, words)
-        f_rec = inverse_transform(coeffs, words)
+def compute_orbits_mod(m, max_depth=6):
+    """Compute orbit structure of PQMod(m)."""
+    A_mod = A % m
+    B_mod = B % m
+    C_mod = C % m
 
-        error = np.max(np.abs(f - f_rec))
-        print(f"  Depth {depth}: {N:>4d} nodes, "
-              f"max reconstruction error = {error:.2e}  "
-              f"{'✓ EXACT' if error < 1e-10 else '✗ ERROR'}")
+    root_mod = tuple(ROOT % m)
+    visited = {root_mod}
+    frontier = [root_mod]
 
-    print()
+    for _ in range(max_depth):
+        next_frontier = []
+        for t in frontier:
+            tv = np.array(t)
+            for M in [A_mod, B_mod, C_mod]:
+                child = tuple((M @ tv) % m)
+                if child not in visited:
+                    visited.add(child)
+                    next_frontier.append(child)
+        if not next_frontier:
+            break
+        frontier = next_frontier
 
-def demo_telescoping_reconstruction():
-    """Demonstrate telescoping reconstruction via conditional expectations."""
-    print("=" * 70)
-    print("DEMO 3: Telescoping Reconstruction (condExp)")
-    print("=" * 70)
+    return visited
 
-    depth = 3
-    words = generate_layer(depth)
-    N = len(words)
-    np.random.seed(123)
-    f = np.random.randn(N)
 
-    # Compute condExp at each level
-    condexps = [conditional_expectation(f, words, k) for k in range(depth + 1)]
+def demo_quotient_orbits():
+    print("\n" + "=" * 60)
+    print("DEMO 2: Finite Quotient Orbit Structure")
+    print("=" * 60)
 
-    # Verify telescoping: f = condExp(0) + sum of (condExp(k+1) - condExp(k))
-    f_tele = condexps[0].copy()
-    for k in range(depth):
-        f_tele += condexps[k + 1] - condexps[k]
+    for m in [2, 3, 4, 5, 7]:
+        orbits = compute_orbits_mod(m)
+        total = m ** 3
+        print(f"\n  PQMod({m}): {total} total elements, "
+              f"{len(orbits)} reachable from root")
+        if m <= 3:
+            print(f"    Orbit elements: {sorted(orbits)}")
 
-    error = np.max(np.abs(f - f_tele))
-    print(f"  Telescoping reconstruction error: {error:.2e}  "
-          f"{'✓ EXACT' if error < 1e-10 else '✗ ERROR'}")
 
-    # Show condExp converges to f
-    for k in range(depth + 1):
-        ce_error = np.max(np.abs(f - condexps[k]))
-        print(f"  condExp({k}) approximation error: {ce_error:.6f}")
-    print()
+# ============================================================
+# Demo 3: Character Separation
+# ============================================================
 
-def demo_spectral_sparsity():
-    """Demonstrate spectral sparsity for prefix-constant functions."""
-    print("=" * 70)
-    print("DEMO 4: Spectral Sparsity for Prefix-Constant Observables")
-    print("=" * 70)
+def make_indicator_chars(Q):
+    """Create indicator function character family for finite set Q."""
+    chars = {}
+    for a in Q:
+        def chi(q, a=a):
+            return 1 if q == a else 0
+        chars[a] = chi
+    return chars
 
-    depth = 3
-    words = generate_layer(depth)
-    N = len(words)
 
-    for const_depth in range(depth + 1):
-        # Create a function constant on const_depth-prefix cylinders
-        np.random.seed(const_depth)
-        prefix_values = {}
-        f = np.zeros(N, dtype=complex)
-        for i, w in enumerate(words):
-            pfx = word_prefix(w, const_depth)
-            if pfx not in prefix_values:
-                prefix_values[pfx] = np.random.randn() + 1j * np.random.randn()
-            f[i] = prefix_values[pfx]
+def verify_separation(Q, chars):
+    """Verify that chars separates all points of Q."""
+    Q_list = list(Q)
+    for i in range(len(Q_list)):
+        for j in range(i + 1, len(Q_list)):
+            x, y = Q_list[i], Q_list[j]
+            separated = False
+            for name, chi in chars.items():
+                if chi(x) != chi(y):
+                    separated = True
+                    break
+            if not separated:
+                return False, (x, y)
+    return True, None
 
-        coeffs = forward_transform(f, words)
 
-        # Count nonzero detail coefficients at each level
-        nonzero_counts = {}
-        for k in range(depth):
-            count = 0
-            total = 0
-            for key, val in coeffs.items():
-                if isinstance(key, tuple) and key[1] == k:
-                    total += 1
-                    if abs(val) > 1e-10:
-                        count += 1
-            nonzero_counts[k] = (count, total)
+def demo_separation():
+    print("\n" + "=" * 60)
+    print("DEMO 3: Character Separation Verification")
+    print("=" * 60)
 
-        print(f"\n  Function constant on depth-{const_depth} cylinders:")
-        print(f"    Prefix-constant check: {is_prefix_constant(f, words, const_depth)}")
-        for k in range(depth):
-            nz, total = nonzero_counts[k]
-            vanish = "✓ vanishes" if nz == 0 and k >= const_depth else ""
-            print(f"    Detail level {k}: {nz}/{total} nonzero coefficients  {vanish}")
-    print()
+    for m in [2, 3, 4]:
+        Q = set(product(range(m), repeat=3))
+        chars = make_indicator_chars(Q)
+        sep, pair = verify_separation(Q, chars)
+        print(f"\n  PQMod({m}): |Q| = {len(Q)}, |chars| = {len(chars)}")
+        print(f"    Separation verified: {sep}")
 
-def demo_hypotenuse_signal():
-    """Demonstrate hypotenuse as an arithmetic signal on the Berggren tree."""
-    print("=" * 70)
-    print("DEMO 5: Hypotenuse as Arithmetic Signal")
-    print("=" * 70)
 
-    depth = 3
-    words = generate_layer(depth)
-    N = len(words)
+# ============================================================
+# Demo 4: Fourier Expansion
+# ============================================================
 
-    # Hypotenuse values
-    hyp = np.array([berggren_eval(w)[2] for w in words], dtype=float)
-    print(f"\n  Depth {depth}: {N} triples")
-    print(f"  Hypotenuse range: [{int(min(hyp))}, {int(max(hyp))}]")
-    print(f"  Mean hypotenuse: {np.mean(hyp):.1f}")
+def demo_fourier_expansion():
+    print("\n" + "=" * 60)
+    print("DEMO 4: Fourier Expansion Computation")
+    print("=" * 60)
 
-    # Wavelet transform of hypotenuse
-    coeffs = forward_transform(hyp, words)
-    print(f"\n  Scaling coefficient (global avg): {coeffs['scaling']:.2f}")
+    # Small example: Q = {0, 1, 2} (Fin 3)
+    Q = [0, 1, 2]
+    n = len(Q)
 
-    # Show coefficient magnitudes by level
-    for k in range(depth):
-        level_coeffs = [(key, val) for key, val in coeffs.items()
-                       if isinstance(key, tuple) and key[1] == k]
-        mags = [abs(v) for _, v in level_coeffs]
-        print(f"  Detail level {k}: max |coeff| = {max(mags):.2f}, "
-              f"mean |coeff| = {np.mean(mags):.2f}, "
-              f"count = {len(mags)}")
+    # Character basis: indicator functions
+    chi = np.eye(n)  # chi[i][q] = delta_{i,q}
 
-    # Hypotenuse mod q
-    for q in [3, 5, 7]:
-        hyp_mod = np.array([berggren_eval(w)[2] % q for w in words], dtype=float)
-        coeffs_mod = forward_transform(hyp_mod, words)
-        nonzero = sum(1 for k, v in coeffs_mod.items()
-                     if isinstance(k, tuple) and abs(v) > 1e-10)
-        total = sum(1 for k in coeffs_mod if isinstance(k, tuple))
-        print(f"\n  Hypotenuse mod {q}: {nonzero}/{total} nonzero detail coefficients")
-    print()
+    print(f"\n  Q = {Q}, |Q| = {n}")
+    print(f"  Character matrix (indicator basis):")
+    print(f"    {chi}")
 
-def demo_certified_recovery():
-    """Demonstrate certified robust recovery under perturbation."""
-    print("=" * 70)
-    print("DEMO 6: Certified Robust Recovery")
-    print("=" * 70)
+    # Test observable
+    f = np.array([3.0, -1.0, 7.0])
+    print(f"\n  Observable f = {f}")
 
-    depth = 3
-    words = generate_layer(depth)
-    N = len(words)
+    # Fourier coefficients: solve chi^T * coeff = f
+    # Since chi = I, coefficients = f
+    coeff = np.linalg.solve(chi, f)
+    print(f"  Fourier coefficients: {coeff}")
 
-    # Create a prefix-constant signal (sparse in wavelet basis)
-    const_depth = 1
+    # Verify reconstruction
+    f_reconstructed = chi.T @ coeff
+    print(f"  Reconstructed: {f_reconstructed}")
+    print(f"  Match: {np.allclose(f, f_reconstructed)}")
+
+    # Non-trivial example with random "characters"
+    print("\n  --- Non-trivial character basis ---")
     np.random.seed(42)
-    prefix_values = {}
-    f = np.zeros(N, dtype=complex)
-    for i, w in enumerate(words):
-        pfx = word_prefix(w, const_depth)
-        if pfx not in prefix_values:
-            prefix_values[pfx] = np.random.randn() + 1j * np.random.randn()
-        f[i] = prefix_values[pfx]
+    Q5 = list(range(5))
+    n5 = 5
 
-    # Add perturbation
-    for eps in [0.0, 0.01, 0.1, 0.5, 1.0]:
-        noise = eps * (np.random.randn(N) + 1j * np.random.randn(N))
-        g = f + noise
+    # Random linearly independent "characters"
+    chars5 = np.random.randn(n5, n5)
+    while abs(np.linalg.det(chars5)) < 0.1:
+        chars5 = np.random.randn(n5, n5)
 
-        coeffs_f = forward_transform(f, words)
-        coeffs_g = forward_transform(g, words)
+    f5 = np.array([1.0, -2.0, 3.0, 0.5, -1.5])
+    coeff5 = np.linalg.solve(chars5.T, f5)
 
-        # Detail coefficients at fine levels (≥ const_depth) should be noise only
-        fine_coeffs_f = {k: v for k, v in coeffs_f.items()
-                        if isinstance(k, tuple) and k[1] >= const_depth}
-        fine_coeffs_g = {k: v for k, v in coeffs_g.items()
-                        if isinstance(k, tuple) and k[1] >= const_depth}
+    # f(q) = sum_i coeff_i * chi_i(q) = sum_i coeff_i * chars5[i][q]
+    f5_recon = np.array([sum(coeff5[i] * chars5[i][q] for i in range(n5)) for q in range(n5)])
 
-        max_signal = max(abs(v) for v in fine_coeffs_f.values()) if fine_coeffs_f else 0
-        max_noise = max(abs(v) for v in fine_coeffs_g.values()) if fine_coeffs_g else 0
+    print(f"  Q = {Q5}, |Q| = {n5}")
+    print(f"  Observable f = {f5}")
+    print(f"  Fourier coefficients: {np.round(coeff5, 4)}")
+    print(f"  Reconstructed: {np.round(f5_recon, 4)}")
+    print(f"  Match: {np.allclose(f5, f5_recon)}")
 
-        print(f"  ε = {eps:.2f}: signal fine coeffs max = {max_signal:.2e}, "
-              f"noisy fine coeffs max = {max_noise:.2e}")
 
-    print()
+# ============================================================
+# Demo 5: Certified Reconstruction
+# ============================================================
 
-# ==============================================================================
+def reconstruct_point(Q, chars, oracle):
+    """
+    Exhaustive-search reconstruction algorithm.
+    Given oracle access to chi(x) for unknown x, finds x.
+
+    Args:
+        Q: finite set of points
+        chars: dict of character_name -> character_function
+        oracle: function from character_name -> measurement value
+
+    Returns:
+        The unique point matching all measurements, or None.
+    """
+    queries = 0
+    for q in Q:
+        match = True
+        for name, chi in chars.items():
+            queries += 1
+            if oracle(name) != chi(q):
+                match = False
+                break
+        if match:
+            return q, queries
+    return None, queries
+
+
+def demo_reconstruction():
+    print("\n" + "=" * 60)
+    print("DEMO 5: Certified Reconstruction Algorithm")
+    print("=" * 60)
+
+    m = 3
+    Q = list(product(range(m), repeat=3))
+    chars = make_indicator_chars(Q)
+
+    # Test reconstruction for several hidden points
+    test_points = [(0, 0, 0), (1, 2, 0), (2, 1, 2), (0, 2, 1)]
+
+    for hidden in test_points:
+        # Oracle: returns chi(hidden) for any character chi
+        oracle = lambda name, h=hidden: chars[name](h)
+        result, queries = reconstruct_point(Q, chars, oracle)
+        status = "✓" if result == hidden else "✗"
+        print(f"  Hidden: {hidden} → Recovered: {result} "
+              f"({queries} queries) {status}")
+
+    print(f"\n  Query bound: |Q| × |chars| = {len(Q)} × {len(chars)} = {len(Q) * len(chars)}")
+
+
+# ============================================================
+# Demo 6: Tropical Decomposition
+# ============================================================
+
+def demo_tropical():
+    print("\n" + "=" * 60)
+    print("DEMO 6: Tropical (Max-Plus) Decomposition")
+    print("=" * 60)
+
+    # Q = {0, 1, 2}, tropical characters = shifted indicators
+    Q = [0, 1, 2]
+    n = len(Q)
+
+    # Tropical characters: chi_i(q) = 0 if q == i, else -infinity
+    NEG_INF = -10**9
+
+    def trop_chi(i, q):
+        return 0 if q == i else NEG_INF
+
+    # Observable
+    f = [3, -1, 7]
+    print(f"  Observable f = {f}")
+
+    # Tropical decomposition: f(q) = max_i (c_i + chi_i(q))
+    # With indicator chars: c_i + chi_i(q) = c_i if q == i, else -inf
+    # So f(q) = c_q, meaning c_i = f(i)
+    coeffs = list(f)
+    print(f"  Tropical coefficients: {coeffs}")
+
+    # Verify
+    for q in Q:
+        val = max(coeffs[i] + trop_chi(i, q) for i in range(n))
+        print(f"    f({q}) = max_i(c_i + χ_i({q})) = {val} (expected {f[q]}) "
+              f"{'✓' if val == f[q] else '✗'}")
+
+
+# ============================================================
 # Main
-# ==============================================================================
+# ============================================================
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║   QUANTUM BERGGREN FOURIER DUALITY - DEMONSTRATION SUITE           ║")
-    print("║   Multiresolution Analysis on the Primitive Pythagorean Triple Tree ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Berggren–Fourier Duality: Numerical Demonstrations    ║")
+    print("╚══════════════════════════════════════════════════════════╝")
 
-    demo_berggren_tree()
-    demo_wavelet_reconstruction()
-    demo_telescoping_reconstruction()
-    demo_spectral_sparsity()
-    demo_hypotenuse_signal()
-    demo_certified_recovery()
+    demo_tree_generation()
+    demo_quotient_orbits()
+    demo_separation()
+    demo_fourier_expansion()
+    demo_reconstruction()
+    demo_tropical()
 
+    print("\n" + "=" * 60)
     print("All demonstrations complete.")
-
-
-#!/usr/bin/env python3
-"""Generate PACKAGE.json with all artifacts."""
-
-import json
-import base64
-import io
-import os
-
-# Read text files
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-# Read lean file
-lean_code = read_file('Bridges/AutoResearch/QuantumBerggrenFourier.lean')
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-demo_code = read_file('demo.py')
-algorithms_code = read_file('algorithms.py')
-applications_code = read_file('applications.py')
-
-# Generate visualizations as base64
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-from visualizations import (
-    plot_berggren_tree, plot_wavelet_basis, plot_spectral_sparsity,
-    plot_energy_spectrum, plot_recovery_noise, fig_to_base64
-)
-
-viz_data = {}
-for name, fig_func in [
-    ('berggren_tree', plot_berggren_tree),
-    ('wavelet_basis', plot_wavelet_basis),
-    ('spectral_sparsity', plot_spectral_sparsity),
-    ('energy_spectrum', plot_energy_spectrum),
-    ('recovery_noise', plot_recovery_noise),
-]:
-    fig = fig_func()
-    viz_data[name] = fig_to_base64(fig)
-    plt.close(fig)
-
-# Build package
-package = {
-    "title": "Quantum Berggren Fourier Duality via Primitive Triple Wavelets and Certified Period-Finding",
-    "domain": "Number Theory / Harmonic Analysis / Signal Processing",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Berggren Tree and Wavelet Transform Demo",
-            "code": demo_code
-        },
-        {
-            "name": "Applications: Compression, Period Detection, Anomaly Detection",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Forward Wavelet Transform",
-            "pseudocode": """FORWARD-TRANSFORM(f, n):
-    c_scaling ← mean(f)
-    for k = 0 to n-1:
-        for each prefix u of length k:
-            for j ∈ {0, 1}:
-                ψ ← WAVELET(k, u, j)
-                c_{k,u,j} ← ⟨f, ψ⟩ / ‖ψ‖²
-    return all coefficients
-
-Complexity: O(3^n · n) time, O(3^n) space"""
-        },
-        {
-            "name": "Inverse Transform (Reconstruction)",
-            "pseudocode": """INVERSE-TRANSFORM(coefficients, n):
-    f ← c_scaling · 1
-    for k = 0 to n-1:
-        for each prefix u of length k:
-            for j ∈ {0, 1}:
-                f ← f + c_{k,u,j} · WAVELET(k, u, j)
-    return f
-
-Complexity: O(3^n · n) time, O(3^n) space
-Correctness: Formally verified (berggren_wavelet_perfect_reconstruction)"""
-        },
-        {
-            "name": "Sparse Recovery",
-            "pseudocode": """SPARSE-RECOVERY(g, k, n):
-    coefficients ← FORWARD-TRANSFORM(g, n)
-    for each (level, u, j) with level ≥ k:
-        coefficients[level, u, j] ← 0
-    return INVERSE-TRANSFORM(coefficients, n)
-
-Certified by: detail_vanishes_of_prefix_constant theorem"""
-        },
-        {
-            "name": "Period Detection",
-            "pseudocode": """DETECT-PREFIX-DEPTH(g, ε, n):
-    coefficients ← FORWARD-TRANSFORM(g, n)
-    for k = n-1 down to 0:
-        max_coeff ← max |c_{k,u,j}| over all u, j
-        if max_coeff > ε · √2:
-            return k + 1
-    return 0
-
-Certified by: certified_robust_recovery theorem"""
-        }
-    ],
-    "visualizations": [
-        {"name": "Berggren Tree Structure", "data": viz_data['berggren_tree']},
-        {"name": "Wavelet Basis Functions", "data": viz_data['wavelet_basis']},
-        {"name": "Spectral Sparsity Heatmap", "data": viz_data['spectral_sparsity']},
-        {"name": "Energy Spectrum of Observables", "data": viz_data['energy_spectrum']},
-        {"name": "Certified Recovery Under Noise", "data": viz_data['recovery_noise']},
-    ],
-    "lean_proofs": lean_code
-}
-
-with open('PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print(f"PACKAGE.json generated ({os.path.getsize('PACKAGE.json') / 1024:.1f} KB)")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Berggren Fourier Analysis
+Berggren–Fourier Duality: Visualizations
 
-Generates publication-quality figures showing:
-1. Berggren tree structure with Pythagorean triples
-2. Wavelet basis functions on the ternary tree
-3. Spectral sparsity heatmap
-4. Energy spectrum across scales
-5. Certified recovery under noise
+Generates publication-quality figures:
+1. Berggren tree structure
+2. Orbit structure of PQMod(m)
+3. Character evaluation matrix heatmap
+4. Reconstruction convergence
+5. Noisy reconstruction phase diagram
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch
+from matplotlib.patches import FancyArrowPatch
 from itertools import product
 from collections import defaultdict
 import base64
-import io
+from io import BytesIO
 
-# Import from our algorithms
-from algorithms import (
-    berggren_evaluate, berggren_layer, BerggrenWaveletTransform,
-    conditional_expectation_cascade, energy_spectrum, ROOT_TRIPLE
-)
+# Berggren matrices
+A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]], dtype=int)
+B = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]], dtype=int)
+C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]], dtype=int)
+ROOT = np.array([3, 4, 5], dtype=int)
 
-GEN_NAMES = ['A', 'B', 'C']
-COLORS = ['#2196F3', '#FF5722', '#4CAF50']  # Blue, Orange, Green for A, B, C
 
-def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 PNG."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 data URI."""
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    return 'data:image/png;base64,' + base64.b64encode(buf.read()).decode()
+    data = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{data}"
 
 
-def plot_berggren_tree():
-    """Visualize the first 3 levels of the Berggren tree."""
+def save_fig(fig, filename: str):
+    """Save figure to file."""
+    fig.savefig(filename, dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
+    plt.close(fig)
+
+
+# ============================================================
+# Figure 1: Berggren Tree
+# ============================================================
+
+def plot_berggren_tree(depth=3):
+    """Visualize the Berggren tree to given depth."""
     fig, ax = plt.subplots(1, 1, figsize=(14, 8))
-    ax.set_xlim(-1, 13)
-    ax.set_ylim(-0.5, 4.5)
-    ax.set_aspect('equal')
+
+    nodes = {}
+    positions = {}
+
+    # BFS to assign positions
+    root_label = "(3,4,5)"
+    nodes[""] = ROOT.copy()
+    positions[""] = (0.5, 1.0)
+
+    queue = [("", ROOT.copy(), 0.0, 1.0, 1.0)]
+    all_edges = []
+
+    for d in range(depth):
+        next_queue = []
+        for path, triple, x_min, x_max, y in queue:
+            cx = (x_min + x_max) / 2
+            positions[path] = (cx, y)
+            nodes[path] = triple
+
+            width = (x_max - x_min) / 3
+            for i, (name, M) in enumerate([('A', A), ('B', B), ('C', C)]):
+                child = M @ triple
+                child_path = path + name
+                child_x_min = x_min + i * width
+                child_x_max = child_x_min + width
+                child_y = y - 1.0 / depth
+
+                nodes[child_path] = child
+                all_edges.append((path, child_path, name))
+                next_queue.append((child_path, child, child_x_min, child_x_max, child_y))
+
+        queue = next_queue
+
+    # Assign final positions for last level
+    for path, triple, x_min, x_max, y in queue:
+        cx = (x_min + x_max) / 2
+        positions[path] = (cx, y)
+        nodes[path] = triple
+
+    # Draw edges
+    colors = {'A': '#e74c3c', 'B': '#3498db', 'C': '#2ecc71'}
+    for parent, child, gen in all_edges:
+        px, py = positions[parent]
+        cx, cy = positions[child]
+        ax.plot([px, cx], [py, cy], color=colors[gen], linewidth=1.5, alpha=0.6)
+
+    # Draw nodes
+    for path, triple in nodes.items():
+        x, y = positions[path]
+        label = f"({triple[0]},{triple[1]},{triple[2]})"
+        fontsize = 7 if len(path) <= 1 else 5
+        bbox_props = dict(boxstyle='round,pad=0.2', facecolor='lightyellow',
+                         edgecolor='gray', alpha=0.9)
+        ax.text(x, y, label, fontsize=fontsize, ha='center', va='center',
+               bbox=bbox_props)
+
+    # Legend
+    for name, color in colors.items():
+        ax.plot([], [], color=color, linewidth=3, label=f'Generator {name}')
+    ax.legend(loc='upper left', fontsize=10)
+
+    ax.set_xlim(-0.02, 1.02)
+    ax.set_ylim(-0.05, 1.1)
+    ax.set_title('Berggren Tree of Primitive Pythagorean Triples', fontsize=14, fontweight='bold')
     ax.axis('off')
-    ax.set_title('Berggren Tree of Primitive Pythagorean Triples', fontsize=16, fontweight='bold')
 
-    def draw_node(x, y, triple, label, depth):
-        color = '#E3F2FD' if depth == 0 else ('#FFF3E0' if depth == 1 else '#E8F5E9')
-        box = FancyBboxPatch((x-0.9, y-0.25), 1.8, 0.5, boxstyle="round,pad=0.1",
-                            facecolor=color, edgecolor='#333', linewidth=1.5)
-        ax.add_patch(box)
-        a, b, c = triple
-        ax.text(x, y+0.05, f'({a},{b},{c})', ha='center', va='center', fontsize=7, fontweight='bold')
-        ax.text(x, y-0.15, label, ha='center', va='center', fontsize=6, color='#666')
-
-    # Root
-    root_x, root_y = 6, 4
-    draw_node(root_x, root_y, ROOT_TRIPLE, 'root', 0)
-
-    # Level 1
-    level1_x = [2, 6, 10]
-    level1_y = 2.5
-    for i, x in enumerate(level1_x):
-        triple = berggren_evaluate((i,))
-        label = GEN_NAMES[i]
-        draw_node(x, level1_y, triple, label, 1)
-        ax.annotate('', xy=(x, level1_y+0.25), xytext=(root_x, root_y-0.25),
-                   arrowprops=dict(arrowstyle='->', color=COLORS[i], lw=1.5))
-
-    # Level 2
-    level2_positions = []
-    for i in range(3):
-        base_x = level1_x[i]
-        for j in range(3):
-            x = base_x + (j-1) * 1.3
-            y = 1.0
-            triple = berggren_evaluate((i, j))
-            label = GEN_NAMES[i] + GEN_NAMES[j]
-            draw_node(x, y, triple, label, 2)
-            ax.annotate('', xy=(x, y+0.25), xytext=(base_x, level1_y-0.25),
-                       arrowprops=dict(arrowstyle='->', color=COLORS[j], lw=1, alpha=0.7))
-            level2_positions.append((x, y))
-
-    fig.tight_layout()
     return fig
 
 
-def plot_wavelet_basis():
-    """Visualize wavelet basis functions at depth 2."""
-    depth = 2
-    words = berggren_layer(depth)
-    N = len(words)
-    transform = BerggrenWaveletTransform(depth)
+# ============================================================
+# Figure 2: Orbit Structure Heatmap
+# ============================================================
 
-    fig, axes = plt.subplots(3, 3, figsize=(14, 10))
-    fig.suptitle('Haar Wavelet Basis on Berggren Tree (depth 2)', fontsize=16, fontweight='bold')
+def plot_orbit_structure():
+    """Visualize orbit sizes for different moduli."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    word_labels = [''.join(GEN_NAMES[g] for g in w) for w in words]
-
-    # Scaling function
-    ax = axes[0, 0]
-    psi = np.ones(N)
-    ax.bar(range(N), psi.real, color='#607D8B', alpha=0.8)
-    ax.set_title('Scaling φ', fontsize=11)
-    ax.set_xticks(range(N))
-    ax.set_xticklabels(word_labels, rotation=45, fontsize=7)
-    ax.set_ylim(-2.5, 2.5)
-
-    # Detail wavelets at level 0
-    for j in range(2):
-        ax = axes[0, j+1]
-        psi = transform._wavelet(0, (), j)
-        colors = ['#4CAF50' if v > 0 else '#F44336' if v < 0 else '#9E9E9E' for v in psi.real]
-        ax.bar(range(N), psi.real, color=colors, alpha=0.8)
-        ax.set_title(f'Detail ψ₀,∅,{j}', fontsize=11)
-        ax.set_xticks(range(N))
-        ax.set_xticklabels(word_labels, rotation=45, fontsize=7)
-        ax.set_ylim(-2.5, 2.5)
-
-    # Detail wavelets at level 1
-    prefixes_1 = [(0,), (1,), (2,)]
-    for idx, u in enumerate(prefixes_1):
-        for j in range(2):
-            row = 1 + idx // 2
-            col = (idx * 2 + j) % 3
-            if row < 3 and col < 3:
-                ax = axes[row, col]
-                psi = transform._wavelet(1, u, j)
-                colors = ['#4CAF50' if v > 0 else '#F44336' if v < 0 else '#9E9E9E' for v in psi.real]
-                ax.bar(range(N), psi.real, color=colors, alpha=0.8)
-                prefix_name = GEN_NAMES[u[0]]
-                ax.set_title(f'Detail ψ₁,{prefix_name},{j}', fontsize=11)
-                ax.set_xticks(range(N))
-                ax.set_xticklabels(word_labels, rotation=45, fontsize=7)
-                ax.set_ylim(-2.5, 2.5)
-
-    fig.tight_layout()
-    return fig
-
-
-def plot_spectral_sparsity():
-    """Heatmap of wavelet coefficient magnitudes for signals with different prefix depths."""
-    depth = 3
-    words = berggren_layer(depth)
-    N = len(words)
-    transform = BerggrenWaveletTransform(depth)
-
-    fig, axes = plt.subplots(1, 4, figsize=(16, 5))
-    fig.suptitle('Spectral Sparsity: Coefficient Magnitudes by Prefix Depth', fontsize=14, fontweight='bold')
-
-    for const_depth in range(4):
-        ax = axes[const_depth]
-        np.random.seed(const_depth + 10)
-
-        # Create prefix-constant signal
-        prefix_values = {}
-        f = np.zeros(N, dtype=complex)
-        for i, w in enumerate(words):
-            pfx = w[:const_depth]
-            if pfx not in prefix_values:
-                prefix_values[pfx] = np.random.randn() + 1j * np.random.randn()
-            f[i] = prefix_values[pfx]
-
-        coeffs = transform.forward(f)
-
-        # Build coefficient magnitude matrix
-        coeff_mags = []
-        for k in range(depth):
-            prefixes = sorted(set(w[:k] for w in words))
-            level_mags = []
-            for u in prefixes:
-                for j in range(2):
-                    level_mags.append(abs(coeffs.get((k, u, j), 0)))
-            coeff_mags.append(level_mags)
-
-        # Normalize
-        max_val = max(max(row) for row in coeff_mags if row) if coeff_mags else 1
-        if max_val == 0:
-            max_val = 1
-
-        # Plot
-        max_width = max(len(row) for row in coeff_mags)
-        img = np.zeros((depth, max_width))
-        for k, row in enumerate(coeff_mags):
-            for j, v in enumerate(row):
-                img[k, j] = v / max_val
-
-        im = ax.imshow(img, aspect='auto', cmap='YlOrRd', vmin=0, vmax=1)
-        ax.set_xlabel('Coefficient index')
-        ax.set_ylabel('Scale level')
-        ax.set_yticks(range(depth))
-        ax.set_title(f'Prefix depth = {const_depth}')
-
-        # Mark zero regions
-        for k in range(depth):
-            if k >= const_depth:
-                ax.axhline(y=k, color='blue', linestyle='--', alpha=0.5, linewidth=2)
-
-    plt.colorbar(im, ax=axes, label='|coefficient| / max', shrink=0.8)
-    fig.tight_layout()
-    return fig
-
-
-def plot_energy_spectrum():
-    """Bar chart of energy distribution across scales."""
-    fig, axes = plt.subplots(1, 3, figsize=(14, 5))
-    fig.suptitle('Energy Spectrum of Arithmetic Observables on Berggren Tree', fontsize=14, fontweight='bold')
-
-    depth = 4
-    words = berggren_layer(depth)
-    N = len(words)
-
-    signals = {
-        'Hypotenuse c': np.array([berggren_evaluate(w)[2] for w in words], dtype=float),
-        'Side a': np.array([berggren_evaluate(w)[0] for w in words], dtype=float),
-        'Hypotenuse mod 5': np.array([berggren_evaluate(w)[2] % 5 for w in words], dtype=float),
-    }
-
-    for idx, (name, signal) in enumerate(signals.items()):
+    for idx, m in enumerate([3, 5, 7]):
         ax = axes[idx]
-        spectrum = energy_spectrum(signal, words, depth)
+        Q = list(product(range(m), repeat=3))
 
-        labels = ['Global\navg'] + [f'Level {k}' for k in range(depth)]
-        values = [spectrum['scaling']] + [spectrum[k] for k in range(depth)]
-        colors = ['#607D8B'] + [COLORS[k % 3] for k in range(depth)]
+        # Compute orbit from root
+        root = tuple(ROOT % m)
+        visited = {root}
+        frontier = [root]
+        for _ in range(30):
+            nf = []
+            for t in frontier:
+                for M in [A, B, C]:
+                    child = tuple(int(x) for x in (M @ np.array(t)) % m)
+                    if child not in visited:
+                        visited.add(child)
+                        nf.append(child)
+            if not nf:
+                break
+            frontier = nf
 
-        bars = ax.bar(labels, values, color=colors, alpha=0.8, edgecolor='#333', linewidth=0.5)
-        ax.set_ylabel('Energy fraction')
-        ax.set_title(name, fontsize=12)
-        ax.set_ylim(0, 1)
+        # Create grid showing which elements are in orbit
+        grid = np.zeros((m, m * m))
+        for q in Q:
+            row = q[0]
+            col = q[1] * m + q[2]
+            grid[row, col] = 2 if q in visited else 1
 
-        for bar, val in zip(bars, values):
-            if val > 0.01:
-                ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.02,
-                       f'{val:.3f}', ha='center', va='bottom', fontsize=8)
+        im = ax.imshow(grid, cmap='RdYlGn', aspect='auto', interpolation='nearest')
+        ax.set_title(f'PQMod({m})\n{len(visited)}/{len(Q)} reachable',
+                    fontsize=11, fontweight='bold')
+        ax.set_xlabel('(b, c) index', fontsize=9)
+        ax.set_ylabel('a index', fontsize=9)
 
-    fig.tight_layout()
+    plt.suptitle('Berggren Orbit Structure in Finite Quotients', fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
     return fig
 
 
-def plot_recovery_noise():
-    """Show certified recovery performance under increasing noise."""
-    depth = 3
-    words = berggren_layer(depth)
-    N = len(words)
-    transform = BerggrenWaveletTransform(depth)
+# ============================================================
+# Figure 3: Character Evaluation Matrix
+# ============================================================
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-    fig.suptitle('Certified Recovery Under Noise', fontsize=14, fontweight='bold')
+def plot_character_matrix():
+    """Visualize the character evaluation matrix for a small quotient."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Create 1-prefix-constant signal
-    np.random.seed(42)
-    prefix_values = {(0,): 3+2j, (1,): -1+4j, (2,): 2-3j}
-    f = np.zeros(N, dtype=complex)
-    for i, w in enumerate(words):
-        f[i] = prefix_values[w[:1]]
+    m = 2
+    Q = sorted(list(product(range(m), repeat=3)))
+    n = len(Q)
 
-    # Test recovery
-    epsilons = np.linspace(0, 2, 50)
-    max_fine_coeffs = []
-    reconstruction_errors = []
-
-    for eps in epsilons:
-        np.random.seed(0)
-        noise = eps * (np.random.randn(N) + 1j * np.random.randn(N))
-        g = f + noise
-
-        coeffs_g = transform.forward(g)
-
-        # Max fine coefficient (should be zero for clean signal)
-        fine_max = max(abs(coeffs_g.get((k, u, j), 0))
-                      for k in range(1, depth)
-                      for u in sorted(set(w[:k] for w in words))
-                      for j in range(2))
-        max_fine_coeffs.append(fine_max)
-
-        # Reconstruction using only coarse coefficients
-        sparse_coeffs = {k: v for k, v in coeffs_g.items()
-                        if k == 'scaling' or (isinstance(k, tuple) and k[0] < 1)}
-        f_rec = transform.inverse(sparse_coeffs)
-        reconstruction_errors.append(np.max(np.abs(f - f_rec)))
-
-    # Plot 1: Fine coefficient magnitude vs noise
+    # Indicator character matrix
+    M_ind = np.eye(n)
     ax = axes[0]
-    ax.plot(epsilons, max_fine_coeffs, 'b-', linewidth=2, label='Max |detail coeff| (levels ≥ 1)')
-    ax.plot(epsilons, epsilons * np.sqrt(2), 'r--', linewidth=1.5, label='Noise bound (ε√2)')
-    ax.set_xlabel('Noise level ε')
-    ax.set_ylabel('Max fine coefficient magnitude')
-    ax.set_title('Fine Coefficient Behavior Under Noise')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    im = ax.imshow(M_ind, cmap='Blues', aspect='equal')
+    ax.set_title(f'Indicator Characters (m={m})\nIdentity Matrix', fontsize=11, fontweight='bold')
+    ax.set_xlabel('Point index q', fontsize=10)
+    ax.set_ylabel('Character index χ', fontsize=10)
+    plt.colorbar(im, ax=ax, shrink=0.8)
 
-    # Plot 2: Reconstruction error
+    # Random linearly independent "characters"
+    np.random.seed(42)
+    M_rand = np.random.randn(n, n)
+    # Ensure invertible
+    M_rand = M_rand @ M_rand.T + 0.5 * np.eye(n)
+
     ax = axes[1]
-    ax.plot(epsilons, reconstruction_errors, 'g-', linewidth=2, label='Reconstruction error')
-    ax.plot(epsilons, epsilons * np.sqrt(N), 'r--', linewidth=1.5, label='ε√N bound')
-    ax.set_xlabel('Noise level ε')
-    ax.set_ylabel('Max |f - f_recovered|')
-    ax.set_title('Sparse Recovery Error')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    im = ax.imshow(M_rand, cmap='RdBu_r', aspect='equal')
+    ax.set_title(f'General Character Basis (m={m})\nInvertible Matrix', fontsize=11, fontweight='bold')
+    ax.set_xlabel('Point index q', fontsize=10)
+    ax.set_ylabel('Character index χ', fontsize=10)
+    plt.colorbar(im, ax=ax, shrink=0.8)
 
-    fig.tight_layout()
+    plt.suptitle('Character Evaluation Matrices', fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
     return fig
 
 
-# ==============================================================================
-# Generate all figures
-# ==============================================================================
+# ============================================================
+# Figure 4: Reconstruction Convergence
+# ============================================================
+
+def plot_reconstruction_convergence():
+    """Show how candidates are eliminated during reconstruction."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+
+    m = 3
+    Q = sorted(list(product(range(m), repeat=3)))
+    n = len(Q)
+    hidden = Q[13]
+
+    # Track candidate elimination
+    chars_list = list(Q)  # indicator chars
+    candidates_remaining = [n]
+    queries = [0]
+
+    remaining = set(Q)
+    q_count = 0
+    for a in chars_list:
+        if len(remaining) <= 1:
+            break
+        chi_val = 1 if hidden == a else 0
+        q_count += 1
+        remaining = {q for q in remaining if (1 if q == a else 0) == chi_val}
+        candidates_remaining.append(len(remaining))
+        queries.append(q_count)
+
+    ax.step(queries, candidates_remaining, where='post', linewidth=2.5,
+           color='#e74c3c', label='Candidates remaining')
+    ax.axhline(y=1, color='#2ecc71', linestyle='--', linewidth=1.5,
+              label='Target: unique identification')
+    ax.fill_between(queries, candidates_remaining, alpha=0.1, color='#e74c3c',
+                   step='post')
+
+    ax.set_xlabel('Number of Character Queries', fontsize=12)
+    ax.set_ylabel('Candidate Points Remaining', fontsize=12)
+    ax.set_title(f'Reconstruction Convergence (PQMod({m}), hidden={hidden})',
+                fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_ylim(0, n + 1)
+    ax.grid(True, alpha=0.3)
+
+    return fig
+
+
+# ============================================================
+# Figure 5: Noisy Reconstruction Phase Diagram
+# ============================================================
+
+def plot_noise_phase_diagram():
+    """Show reconstruction success rate vs noise level."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+
+    m = 3
+    Q = sorted(list(product(range(m), repeat=3)))
+    n = len(Q)
+    chars = {}
+    for a in Q:
+        chars[a] = lambda q, a=a: 1.0 if q == a else 0.0
+
+    noise_levels = np.linspace(0, 1.5, 30)
+    success_rates = []
+
+    hidden = Q[13]
+    trials = 200
+    np.random.seed(42)
+
+    for noise_level in noise_levels:
+        successes = 0
+        for _ in range(trials):
+            noise = {a: np.random.uniform(-noise_level, noise_level) for a in Q}
+            # Nearest-neighbor reconstruction
+            best_q = None
+            best_dist = float('inf')
+            for q in Q:
+                dist = sum((chars[a](hidden) + noise[a] - chars[a](q))**2 for a in Q)
+                if dist < best_dist:
+                    best_dist = dist
+                    best_q = q
+            if best_q == hidden:
+                successes += 1
+        success_rates.append(successes / trials)
+
+    ax.plot(noise_levels, success_rates, linewidth=2.5, color='#3498db',
+           label='Success rate')
+    ax.axvline(x=0.5, color='#e74c3c', linestyle='--', linewidth=1.5,
+              label='δ/2 = 0.5 (theoretical threshold)')
+    ax.fill_between(noise_levels, success_rates, alpha=0.1, color='#3498db')
+
+    ax.set_xlabel('Noise Level ε', fontsize=12)
+    ax.set_ylabel('Reconstruction Success Rate', fontsize=12)
+    ax.set_title(f'Noisy Reconstruction Phase Transition (PQMod({m}))',
+                fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_ylim(-0.05, 1.1)
+    ax.grid(True, alpha=0.3)
+
+    return fig
+
+
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
     print("Generating visualizations...")
 
-    figs = {
-        'berggren_tree': plot_berggren_tree(),
-        'wavelet_basis': plot_wavelet_basis(),
-        'spectral_sparsity': plot_spectral_sparsity(),
-        'energy_spectrum': plot_energy_spectrum(),
-        'recovery_noise': plot_recovery_noise(),
-    }
+    fig1 = plot_berggren_tree()
+    save_fig(fig1, "berggren_tree.png")
+    print("  ✓ berggren_tree.png")
 
-    for name, fig in figs.items():
-        filename = f'{name}.png'
-        fig.savefig(filename, dpi=150, bbox_inches='tight', facecolor='white')
-        print(f"  Saved {filename}")
-        plt.close(fig)
+    fig2 = plot_orbit_structure()
+    save_fig(fig2, "orbit_structure.png")
+    print("  ✓ orbit_structure.png")
 
-    # Save base64 versions for JSON package
-    base64_images = {}
-    for name, fig_func in [
-        ('berggren_tree', plot_berggren_tree),
-        ('wavelet_basis', plot_wavelet_basis),
-        ('spectral_sparsity', plot_spectral_sparsity),
-        ('energy_spectrum', plot_energy_spectrum),
-        ('recovery_noise', plot_recovery_noise),
-    ]:
-        fig = fig_func()
-        base64_images[name] = fig_to_base64(fig)
-        plt.close(fig)
+    fig3 = plot_character_matrix()
+    save_fig(fig3, "character_matrix.png")
+    print("  ✓ character_matrix.png")
 
-    print("All visualizations generated.")
+    fig4 = plot_reconstruction_convergence()
+    save_fig(fig4, "reconstruction_convergence.png")
+    print("  ✓ reconstruction_convergence.png")
+
+    fig5 = plot_noise_phase_diagram()
+    save_fig(fig5, "noise_phase_diagram.png")
+    print("  ✓ noise_phase_diagram.png")
+
+    print("\nAll visualizations saved.")
