@@ -892,7 +892,25 @@ Research mode: {concept.research_mode}
             parts = []
             for f in sorted(json_package_files):
                 parts.append(f.read_text(encoding='utf-8', errors='ignore'))
-            job.result_json_package = "\n\n".join(parts)
+            # If multiple JSON package files were produced, merge them
+            # instead of concatenating (which creates invalid JSON)
+            if len(parts) == 1:
+                job.result_json_package = parts[0]
+            else:
+                merged = {}
+                for part in parts:
+                    try:
+                        obj = json.loads(part)
+                        if isinstance(obj, dict):
+                            # Later files override earlier ones
+                            merged.update(obj)
+                    except json.JSONDecodeError:
+                        pass
+                if merged:
+                    job.result_json_package = json.dumps(merged, ensure_ascii=False)
+                else:
+                    # Fallback: use first file only
+                    job.result_json_package = parts[0]
 
         # Summary
         job.result_summary = summary
@@ -1454,7 +1472,15 @@ Research mode: {concept.research_mode}
         try:
             pkg = json.loads(json_pkg_str)
         except (json.JSONDecodeError, ValueError):
-            return json_pkg_str
+            # Try to extract the first valid JSON object from concatenated data
+            try:
+                decoder = json.JSONDecoder()
+                pos = 0
+                while pos < len(json_pkg_str) and json_pkg_str[pos] in ' \t\n\r':
+                    pos += 1
+                pkg, _ = decoder.raw_decode(json_pkg_str, pos)
+            except (json.JSONDecodeError, ValueError):
+                return json_pkg_str
 
         # Build modules dict from all Python artifacts
         modules = {}
