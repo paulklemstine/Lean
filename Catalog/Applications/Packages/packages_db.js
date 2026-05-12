@@ -4044,7 +4044,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -4062,7 +4062,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -4071,7 +4071,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -4080,7 +4080,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -4089,7 +4089,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 91
+      "hue": 89
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -4107,7 +4107,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -4116,7 +4116,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -4143,7 +4143,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -4152,7 +4152,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -4161,7 +4161,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -4179,7 +4179,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -4197,7 +4197,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T04:06:02Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "logiccomputation_temporal_fixed_point_semantics_vi",
@@ -4224,7 +4224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T04:06:34Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebratropical_neural_representation_duality_via_",
@@ -4233,7 +4233,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -4242,7 +4242,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -4251,7 +4251,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -4260,7 +4260,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -4269,7 +4269,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -4278,7 +4278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -4287,7 +4287,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -4296,7 +4296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -4305,7 +4305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T09:36:04Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraeml_tropical_choquet_closure_duality_via_id",
@@ -4314,7 +4314,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -4323,7 +4323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
@@ -4332,7 +4332,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -4341,7 +4341,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T11:36:11Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebrapythagoreangeometry_gravitational_tropical_",
@@ -4359,7 +4359,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:40Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "algebraspeculativecryptography_prime_congruence_du",
@@ -4368,7 +4368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -4377,7 +4377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -4386,7 +4386,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -4395,7 +4395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 179
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -4404,7 +4404,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:35:26Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_compr",
@@ -4413,7 +4413,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -4422,7 +4422,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -4431,7 +4431,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -4440,7 +4440,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T16:18:15Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_de_sitter_tropical_entropic_c_th",
@@ -4449,7 +4449,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -4458,7 +4458,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -4476,7 +4476,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -4494,7 +4494,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -4503,7 +4503,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T18:48:13Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_p",
@@ -4512,7 +4512,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -4521,7 +4521,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -4539,7 +4539,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -4548,7 +4548,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -4557,7 +4557,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -4566,7 +4566,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T00:32:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebrapythagoreangeometry_tropical_gravitational_",
@@ -4575,7 +4575,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -4584,7 +4584,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -4593,7 +4593,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -4602,7 +4602,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -4611,7 +4611,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -4620,7 +4620,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 271
+      "hue": 112
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -4629,7 +4629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -4638,7 +4638,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_proo",
@@ -4647,7 +4647,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T03:03:55Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -4656,7 +4656,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -4665,7 +4665,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -4683,7 +4683,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 272
+      "hue": 270
     }
   ],
   "edges": [
@@ -4865,7 +4865,7 @@ window.PACKAGE_GRAPH = {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
       "strength": 0.5016460905349794,
-      "label": "Logic,Algebra,Geometry,Tropical bridge"
+      "label": "Algebra,Logic,Tropical,Geometry bridge"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -5045,7 +5045,7 @@ window.PACKAGE_GRAPH = {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
       "strength": 0.38641975308641974,
-      "label": "MachineLearning,Algebra,Geometry,Tropical bridge"
+      "label": "MachineLearning,Geometry,Tropical,Algebra bridge"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
@@ -5123,7 +5123,7 @@ window.PACKAGE_GRAPH = {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebrageometrycryptography_berggren_voronoi_duali",
       "strength": 0.3288065843621399,
-      "label": "Bridges,Algebra,Cryptography bridge"
+      "label": "Algebra,Bridges,Cryptography bridge"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
