@@ -266,7 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pkgArray.forEach(pkg => {
             const li = document.createElement('li');
             li.className = 'nav-item';
-            
+            li.dataset.slug = pkg.filename.replace('.json', '');
+
             // Format date and time nicely
             const d = new Date(pkg.date);
             const dateStr = !isNaN(d) ? d.toLocaleDateString() : 'Recent';
@@ -279,14 +280,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="nav-item-datetime">${dateStr}${timeStr ? `<br><span class="nav-item-time">${timeStr}</span>` : ''}</span>
                 </div>
             `;
-            
+
             li.addEventListener('click', () => {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 li.classList.add('active');
                 loadPackage(pkg.filename);
                 if (window.innerWidth <= 768) closeSidebar();
             });
-            
+
+            // Sidebar hover → highlight graph node
+            li.addEventListener('mouseenter', () => {
+                // Clear any graph-originated sidebar highlights
+                document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
+                const node = (window._graphNodes || []).find(n => n.id === li.dataset.slug);
+                if (window._setHoveredNode) window._setHoveredNode(node || null);
+            });
+            li.addEventListener('mouseleave', () => {
+                const current = window._getHoveredNode ? window._getHoveredNode() : null;
+                if (current && current.id === li.dataset.slug && window._setHoveredNode) {
+                    window._setHoveredNode(null);
+                }
+            });
+
             packageList.appendChild(li);
         });
     }
@@ -806,6 +821,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (graphNodes.length === 0) return;
 
+        // Expose to sidebar hover handlers
+        window._graphNodes = graphNodes;
+        window._setHoveredNode = function(node) { hoveredNode = node; };
+        window._getHoveredNode = function() { return hoveredNode; };
+
         // ─── Colors by domain ───
         const DOMAIN_COLORS = {
             'Algebra': { h: 220, s: 80, l: 60 },
@@ -1296,6 +1316,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 node.rotAngle += node.rotSpeed * 0.016;
 
                 drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, isHovered);
+
+                // Highlight ring for hovered node (from sidebar hover or graph hover)
+                if (isHovered) {
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, r + 6 * camera.zoom, 0, Math.PI * 2);
+                    ctx.strokeStyle = `hsla(${col.h}, 100%, 75%, ${0.5 + 0.3 * Math.sin(time * 4)})`;
+                    ctx.lineWidth = 2.5 * camera.zoom;
+                    ctx.stroke();
+                }
             });
 
             requestAnimationFrame(render);
@@ -1381,6 +1410,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 hoveredNode = node;
                 canvas.style.cursor = node ? 'pointer' : 'grab';
 
+                // Graph node hover → highlight sidebar item
+                document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
+                if (node) {
+                    const sidebarItem = document.querySelector(`.nav-item[data-slug="${node.id}"]`);
+                    if (sidebarItem) {
+                        sidebarItem.classList.add('graph-highlight');
+                        sidebarItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    }
+                }
+
                 if (tooltip) {
                     if (node) {
                         tooltip.classList.remove('tooltip-hidden');
@@ -1408,6 +1447,7 @@ document.addEventListener('DOMContentLoaded', () => {
             hoveredNode = null;
             if (tooltip) tooltip.classList.add('tooltip-hidden');
             canvas.style.cursor = 'grab';
+            document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
         });
 
         canvas.addEventListener('click', e => {

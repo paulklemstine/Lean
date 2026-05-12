@@ -228,6 +228,15 @@ body {
     opacity: 0.15;
 }
 
+.nav-item.graph-highlight {
+    background-color: rgba(0, 212, 255, 0.08);
+    border-left-color: rgba(0, 212, 255, 0.6);
+}
+
+.nav-item.graph-highlight::before {
+    opacity: 0.12;
+}
+
 .nav-item-content {
     position: relative;
     z-index: 1;
