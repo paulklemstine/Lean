@@ -1,0 +1,1 @@
+# See algorithms.py - extract_meet_irreducibles function

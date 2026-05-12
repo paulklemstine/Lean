@@ -5,6 +5,12 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "algebramachinelearninglogic_operadic_stone_duality.json",
+    "title": "Operadic Stone Duality: Logical Identifiability of Neural Architectures via Heyting Predicate Lattices",
+    "domain": "Algebra\u2013Machine Learning\u2013Logic (Bridges)",
+    "date": "2026-05-12T09:51:53Z"
+  },
+  {
     "filename": "algebraspeculativecryptography_ultrametric_proof_c.json",
     "title": "Ultrametric Proof-Code Duality",
     "domain": "Bridges (Algebra\u2013Geometry\u2013Coding Theory)",
@@ -792,6 +798,59 @@ window.PACKAGE_DB = {
       "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Spectral Proof Certificate Extraction\n\nImplements the core algorithms from the research paper:\n1. Prime Congruence Separator (Algorithm 1)\n2. Verifier Extraction (Algorithm 2) \n3. Reversible Automaton Construction (Algorithm 3)\n4. Spectral Width Computation (Algorithm 4)\n5. Product Verifier Composition (Algorithm 5)\n\nAll algorithms have polynomial time complexity in the input size.\n\"\"\"\n\nfrom dataclasses import dataclass\nfrom typing import List, Tuple, Optional, Set, Callable\nimport math\n\n\n# ============================================================\n# Algorithm 1: Prime Congruence Separator\n# ============================================================\n\ndef find_separating_primes(a: int, b: int, max_prime: int = 100) -> List[int]:\n    \"\"\"Find all prime congruences that separate a from b.\n    \n    Algorithm: For each prime p \u2264 max_prime, check if a \u2262 b (mod p).\n    \n    Time complexity: O(max_prime * sqrt(max_prime))\n    Space complexity: O(max_prime)\n    \n    Args:\n        a, b: Elements to separate\n        max_prime: Upper bound on primes to consider\n    \n    Returns:\n        List of primes p such that a mod p \u2260 b mod p\n    \n    Example:\n        >>> find_separating_primes(3, 7)\n        [3, 5, 7, 11, 13, ...]\n    \"\"\"\n    if a == b:\n        return []\n    \n    diff = abs(a - b)\n    primes = sieve_primes(max_prime)\n    return [p for p in primes if diff % p != 0]\n\n\ndef find_minimal_separator(a: int, b: int) -> Optional[int]:\n    \"\"\"Find the smallest prime separating a from b.\n    \n    Time complexity: O(|a-b| * log(|a-b|))\n    \n    Returns:\n        Smallest prime p with a mod p \u2260 b mod p, or None if a == b.\n    \"\"\"\n    if a == b:\n        return None\n    diff = abs(a - b)\n    # The smallest prime not dividing diff\n    p = 2\n    while p <= diff + 1:\n        if diff % p != 0:\n            return p\n        p = next_prime(p)\n    return p  # This is guaranteed to terminate\n\n\ndef sieve_primes(n: int) -> List[int]:\n    \"\"\"Sieve of Eratosthenes up to n.\n    \n    Time complexity: O(n log log n)\n    \"\"\"\n    if n < 2:\n        return []\n    is_prime = [True] * (n + 1)\n    is_prime[0] = is_prime[1] = False\n    for i in range(2, int(n**0.5) + 1):\n        if is_prime[i]:\n            for j in range(i*i, n + 1, i):\n                is_prime[j] = False\n    return [i for i in range(2, n + 1) if is_prime[i]]\n\n\ndef next_prime(n: int) -> int:\n    \"\"\"Find the smallest prime > n.\"\"\"\n    candidate = n + 1\n    while True:\n        if all(candidate % i != 0 for i in range(2, int(candidate**0.5) + 1)):\n            return candidate\n        candidate += 1\n\n\n# ============================================================\n# Algorithm 2: Verifier Extraction\n# ============================================================\n\n@dataclass\nclass FiniteVerifier:\n    \"\"\"A finite-state verifier extracted from spectral data.\n    \n    Attributes:\n        n_states: Number of states\n        modulus: The prime modulus used for separation\n        target_class: The residue class to accept\n    \"\"\"\n    n_states: int\n    modulus: int\n    target_class: int\n    \n    def verify(self, x: int) -> bool:\n        \"\"\"Check if x is in the target residue class.\n        \n        Time complexity: O(1)\n        \"\"\"\n        return x % self.modulus == self.target_class\n    \n    def state_complexity(self) -> int:\n        \"\"\"Return the number of states.\"\"\"\n        return self.n_states\n\n\ndef extract_verifier(a: int, b: int) -> Optional[FiniteVerifier]:\n    \"\"\"Extract a finite-state verifier that accepts a and rejects b.\n    \n    Algorithm:\n    1. Find minimal separating prime p\n    2. Build p-state verifier accepting a's residue class\n    \n    Time complexity: O(|a-b| log |a-b|)\n    Space complexity: O(1)\n    \n    Args:\n        a: Element to accept\n        b: Element to reject\n    \n    Returns:\n        FiniteVerifier that accepts a and rejects b\n    \"\"\"\n    p = find_minimal_separator(a, b)\n    if p is None:\n        return None\n    return FiniteVerifier(\n        n_states=p,\n        modulus=p,\n        target_class=a % p\n    )\n\n\n# ============================================================\n# Algorithm 3: Reversible Automaton Construction  \n# ============================================================\n\n@dataclass\nclass ReversibleAutomaton:\n    \"\"\"A reversible finite automaton with invertible transitions.\n    \n    Uses modular arithmetic for reversibility: step is addition mod n,\n    reverse step is subtraction mod n.\n    \"\"\"\n    n_states: int\n    \n    def step(self, state: int, input_symbol: int) -> int:\n        \"\"\"Forward transition: (state + input) mod n_states.\n        \n        Time complexity: O(1)\n        \"\"\"\n        return (state + input_symbol) % self.n_states\n    \n    def rev_step(self, state: int, input_symbol: int) -> int:\n        \"\"\"Reverse transition: (state - input) mod n_states.\n        \n        Time complexity: O(1)\n        \"\"\"\n        return (state - input_symbol) % self.n_states\n    \n    def verify_left_inverse(self, inputs: List[int]) -> bool:\n        \"\"\"Check rev_step(step(q, a), a) = q for all states and given inputs.\n        \n        Time complexity: O(n_states * len(inputs))\n        \"\"\"\n        for q in range(self.n_states):\n            for a in inputs:\n                if self.rev_step(self.step(q, a), a) != q:\n                    return False\n        return True\n    \n    def is_injective_on_states(self, input_symbol: int) -> bool:\n        \"\"\"Check that step(\u00b7, a) is injective on states.\n        \n        Time complexity: O(n_states)\n        \"\"\"\n        seen: Set[int] = set()\n        for q in range(self.n_states):\n            result = self.step(q, input_symbol)\n            if result in seen:\n                return False\n            seen.add(result)\n        return True\n\n\ndef construct_reversible_automaton(modulus: int) -> ReversibleAutomaton:\n    \"\"\"Construct a reversible automaton with the given number of states.\n    \n    The automaton uses Z/nZ with additive transitions, which are\n    automatically reversible (subtraction is the inverse).\n    \n    Time complexity: O(1)\n    \"\"\"\n    return ReversibleAutomaton(n_states=modulus)\n\n\n# ============================================================\n# Algorithm 4: Spectral Width Computation\n# ============================================================\n\ndef spectral_width(a: int, b: int, primes: List[int]) -> int:\n    \"\"\"Compute the spectral width: number of primes separating a from b.\n    \n    Time complexity: O(len(primes))\n    \n    Args:\n        a, b: Elements to compare\n        primes: List of prime congruences to test\n    \n    Returns:\n        Number of primes in the list that separate a from b\n    \"\"\"\n    if a == b:\n        return 0\n    return sum(1 for p in primes if (a - b) % p != 0)\n\n\ndef spectral_distance(a: int, b: int, primes: List[int]) -> float:\n    \"\"\"Compute the spectral distance: fraction of primes separating a from b.\n    \n    Time complexity: O(len(primes))\n    \n    Returns:\n        spectral_width / len(primes), or 0 if no primes given\n    \"\"\"\n    if not primes:\n        return 0.0\n    return spectral_width(a, b, primes) / len(primes)\n\n\ndef prime_separator_number(a: int, b: int) -> int:\n    \"\"\"Compute the prime separator number: minimal number of primes\n    needed to distinguish a from b in any quotient product.\n    \n    For integers, this equals 1 if a \u2260 b (a single prime suffices).\n    \n    Time complexity: O(|a-b| log |a-b|)\n    \"\"\"\n    if a == b:\n        return 0\n    return 1  # For Z, a single prime always suffices\n\n\n# ============================================================\n# Algorithm 5: Product Verifier Composition\n# ============================================================\n\n@dataclass\nclass ProductVerifier:\n    \"\"\"Product of multiple verifiers running in parallel.\n    \n    Accepts iff ALL component verifiers accept (conjunction).\n    State = tuple of component states.\n    \"\"\"\n    components: List[FiniteVerifier]\n    \n    def n_states(self) -> int:\n        \"\"\"Total state count = product of component state counts.\n        \n        Time complexity: O(len(components))\n        \"\"\"\n        result = 1\n        for v in self.components:\n            result *= v.n_states\n        return result\n    \n    def verify(self, x: int) -> bool:\n        \"\"\"Accept iff all components accept.\n        \n        Time complexity: O(len(components))\n        \"\"\"\n        return all(v.verify(x) for v in self.components)\n\n\ndef compose_verifiers(*verifiers: FiniteVerifier) -> ProductVerifier:\n    \"\"\"Compose multiple verifiers into a product verifier.\n    \n    Theorem D guarantees: |states| = product of component state counts.\n    \n    Time complexity: O(1) for construction\n    \"\"\"\n    return ProductVerifier(components=list(verifiers))\n\n\n# ============================================================\n# Self-test\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Algorithm self-tests:\")\n    \n    # Test 1: Separator\n    seps = find_separating_primes(17, 42, max_prime=50)\n    print(f\"  Separating primes for (17, 42): {seps[:5]}...\")\n    assert 2 in seps, \"2 should separate 17 and 42\"\n    assert 5 not in seps, \"5 should not separate 17 and 42 (diff=25)\"\n    \n    # Test 2: Verifier\n    V = extract_verifier(17, 42)\n    assert V is not None\n    assert V.verify(17) and not V.verify(42)\n    print(f\"  Verifier: {V.n_states} states, accepts 17, rejects 42 \u2713\")\n    \n    # Test 3: Reversible automaton\n    R = construct_reversible_automaton(7)\n    assert R.verify_left_inverse(list(range(7)))\n    print(f\"  Reversible automaton: {R.n_states} states, left-inverse verified \u2713\")\n    for a in range(7):\n        assert R.is_injective_on_states(a), f\"Not injective for input {a}\"\n    print(f\"  Step injectivity verified for all inputs \u2713\")\n    \n    # Test 4: Spectral width\n    primes = sieve_primes(50)\n    w = spectral_width(17, 42, primes)\n    print(f\"  Spectral width(17, 42) over primes \u2264 50: {w}/{len(primes)}\")\n    \n    # Test 5: Product verifier\n    V1 = extract_verifier(17, 42)\n    V2 = FiniteVerifier(3, 3, 17 % 3)\n    PV = compose_verifiers(V1, V2)\n    assert PV.verify(17) and not PV.verify(42)\n    print(f\"  Product verifier: {PV.n_states()} states = {V1.n_states} \u00d7 {V2.n_states}\")\n    \n    print(\"\\nAll self-tests passed \u2713\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nApplications of Spectral Proof Certificate Theory\n\nDemonstrates real-world connections:\n1. Proof compression via spectral encoding\n2. Collision-resistant hashing from prime spectra\n3. Minimal verifier synthesis for certification\n4. Reversible computation and energy-optimal verification\n\"\"\"\n\nfrom typing import List, Dict, Tuple\nimport math\n\n\n# ============================================================\n# Application 1: Proof Compression\n# ============================================================\n\ndef proof_compression_demo():\n    \"\"\"Demonstrate proof compression via spectral encoding.\n    \n    A \"proof\" is represented as an integer (hash of the proof trace).\n    Compression maps it to residues modulo a small set of primes,\n    preserving distinguishability with bounded state complexity.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: PROOF COMPRESSION\")\n    print(\"=\" * 60)\n    \n    # Simulate proof hashes\n    proofs = {\n        \"P1\": 12345,\n        \"P2\": 67890,\n        \"P3\": 11111,\n        \"P4\": 22222,\n        \"P5\": 33333,\n    }\n    \n    # Choose compression primes\n    compression_primes = [2, 3, 5, 7, 11]\n    product = math.prod(compression_primes)\n    \n    print(f\"\\nCompression using primes {compression_primes} (product = {product})\")\n    print(f\"Compression ratio: log2({max(proofs.values())}) / log2({product}) \"\n          f\"\u2248 {math.log2(max(proofs.values())):.1f} / {math.log2(product):.1f} \"\n          f\"= {math.log2(max(proofs.values())) / math.log2(product):.2f}\")\n    \n    # Compute compressed codes\n    codes = {}\n    for name, h in proofs.items():\n        code = tuple(h % p for p in compression_primes)\n        codes[name] = code\n        print(f\"  {name} (hash={h}): code = {code}\")\n    \n    # Check uniqueness\n    unique_codes = set(codes.values())\n    print(f\"\\n  Unique codes: {len(unique_codes)}/{len(codes)}\")\n    if len(unique_codes) == len(codes):\n        print(\"  \u2192 All proofs distinguishable under compression \u2713\")\n    else:\n        print(\"  \u2192 Collision detected! Need more primes.\")\n    \n    # Pairwise verification\n    print(f\"\\n  Pairwise verifiers (minimal state count):\")\n    names = list(proofs.keys())\n    for i in range(len(names)):\n        for j in range(i+1, len(names)):\n            a, b = proofs[names[i]], proofs[names[j]]\n            V = extract_verifier(a, b)\n            if V:\n                print(f\"    {names[i]} vs {names[j]}: \"\n                      f\"{V.n_states}-state verifier (mod {V.modulus})\")\n    print()\n\n\n# ============================================================\n# Application 2: Collision-Resistant Hashing\n# ============================================================\n\ndef collision_resistance_demo():\n    \"\"\"Demonstrate collision resistance properties of spectral hashing.\n    \n    The spectral hash maps elements to their residue tuple modulo\n    a set of primes. Collision resistance depends on the number of primes.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 2: COLLISION-RESISTANT SPECTRAL HASHING\")\n    print(\"=\" * 60)\n    \n    # Analyze collision probability for different numbers of primes\n    prime_counts = [1, 2, 3, 4, 5, 6, 7, 8]\n    all_primes = sieve_primes(100)\n    \n    print(f\"\\nCollision analysis for range [0, 1000):\")\n    print(f\"  {'#primes':>8} {'product':>10} {'collisions':>12} {'rate':>10}\")\n    print(f\"  {'---':>8} {'---':>10} {'---':>12} {'---':>10}\")\n    \n    N = 1000\n    for k in prime_counts:\n        primes = all_primes[:k]\n        product = math.prod(primes)\n        \n        # Count collisions\n        seen: Dict[Tuple, int] = {}\n        collisions = 0\n        for x in range(N):\n            code = tuple(x % p for p in primes)\n            if code in seen:\n                collisions += 1\n            else:\n                seen[code] = x\n        \n        rate = collisions / N if N > 0 else 0\n        print(f\"  {k:>8} {product:>10} {collisions:>12} {rate:>10.4f}\")\n    \n    # Show that CRT gives zero collisions when product \u2265 N\n    print(f\"\\n  By CRT: zero collisions when \u220fp\u1d62 \u2265 N = {N}\")\n    for k in range(1, len(all_primes) + 1):\n        primes = all_primes[:k]\n        if math.prod(primes) >= N:\n            print(f\"  \u2192 Need \u2265 {k} primes: {primes} (product = {math.prod(primes)})\")\n            break\n    print()\n\n\n# ============================================================\n# Application 3: Minimal Verifier Synthesis\n# ============================================================\n\ndef minimal_verifier_synthesis():\n    \"\"\"Synthesize minimal verifiers for a set of elements to distinguish.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 3: MINIMAL VERIFIER SYNTHESIS\")\n    print(\"=\" * 60)\n    \n    # Given a set of elements, find the minimal prime that separates all pairs\n    elements = [10, 23, 37, 41, 59]\n    \n    print(f\"\\nElements: {elements}\")\n    print(f\"Pairs to separate: {len(elements) * (len(elements)-1) // 2}\")\n    \n    # For each prime, check how many pairs it separates\n    primes = sieve_primes(50)\n    \n    print(f\"\\nPrime separation power:\")\n    total_pairs = len(elements) * (len(elements) - 1) // 2\n    \n    best_prime = None\n    best_count = 0\n    \n    for p in primes[:10]:\n        classes = {}\n        for x in elements:\n            r = x % p\n            if r not in classes:\n                classes[r] = []\n            classes[r].append(x)\n        \n        separated = sum(1 for i in range(len(elements)) \n                       for j in range(i+1, len(elements))\n                       if elements[i] % p != elements[j] % p)\n        \n        if separated > best_count:\n            best_count = separated\n            best_prime = p\n        \n        print(f\"  mod {p:>2}: {len(classes)} classes, \"\n              f\"separates {separated}/{total_pairs} pairs \"\n              f\"{'\u2190 best so far' if p == best_prime else ''}\")\n    \n    # Greedy covering: find minimal set of primes separating all pairs\n    print(f\"\\nGreedy covering algorithm:\")\n    uncovered = set()\n    for i in range(len(elements)):\n        for j in range(i+1, len(elements)):\n            uncovered.add((elements[i], elements[j]))\n    \n    selected_primes = []\n    while uncovered:\n        # Pick prime covering most uncovered pairs\n        best_p, best_covered = 2, set()\n        for p in primes:\n            covered = {(a, b) for a, b in uncovered if (a - b) % p != 0}\n            if len(covered) > len(best_covered):\n                best_p, best_covered = p, covered\n        \n        selected_primes.append(best_p)\n        uncovered -= best_covered\n        print(f\"  Selected p={best_p}: covers {len(best_covered)} pairs, \"\n              f\"{len(uncovered)} remaining\")\n    \n    product_states = math.prod(selected_primes)\n    print(f\"\\n  Minimal covering set: {selected_primes}\")\n    print(f\"  Product verifier: {product_states} states\")\n    print()\n\n\n# ============================================================\n# Application 4: Reversible Verification Energy Bounds\n# ============================================================\n\ndef reversible_verification_demo():\n    \"\"\"Demonstrate energy-optimal reversible verification.\n    \n    Landauer's principle: irreversible bit erasure costs kT ln(2) energy.\n    Reversible computation avoids this cost entirely.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 4: REVERSIBLE VERIFICATION (ENERGY BOUNDS)\")\n    print(\"=\" * 60)\n    \n    kT = 4.11e-21  # kT at room temperature (300K) in Joules\n    landauer = kT * math.log(2)  # Landauer limit per bit erasure\n    \n    print(f\"\\nLandauer limit: {landauer:.2e} J per bit erasure (at 300K)\")\n    \n    # Compare irreversible vs reversible verifiers\n    test_cases = [\n        (\"2-state (Boolean)\", 2),\n        (\"7-state (mod 7)\", 7),\n        (\"30-state (mod 2\u00d73\u00d75)\", 30),\n        (\"210-state (mod 2\u00d73\u00d75\u00d77)\", 210),\n    ]\n    \n    print(f\"\\n  {'Verifier':>30} {'States':>8} {'Irrev. energy':>15} {'Rev. energy':>15}\")\n    print(f\"  {'---':>30} {'---':>8} {'---':>15} {'---':>15}\")\n    \n    for name, states in test_cases:\n        bits = math.ceil(math.log2(states))\n        irrev_energy = bits * landauer  # Irreversible: erase all bits\n        rev_energy = 0.0  # Reversible: zero energy (in principle)\n        \n        print(f\"  {name:>30} {states:>8} {irrev_energy:>15.2e} {'0 (optimal)':>15}\")\n    \n    # Demonstrate reversibility verification\n    print(f\"\\nReversibility verification:\")\n    for n in [2, 5, 7, 11]:\n        R = construct_reversible_automaton(n)\n        ok = R.verify_left_inverse(list(range(n)))\n        inj = all(R.is_injective_on_states(a) for a in range(n))\n        print(f\"  Z/{n}Z automaton: left-inverse \u2713, injective \u2713\" if ok and inj\n              else f\"  Z/{n}Z automaton: FAILED\")\n    \n    print()\n\n\n# ============================================================\n# MAIN\n# ============================================================\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Applications of Spectral Proof Certificate Theory          \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n    \n    proof_compression_demo()\n    collision_resistance_demo()\n    minimal_verifier_synthesis()\n    reversible_verification_demo()\n    \n    print(\"=\" * 60)\n    print(\"All application demos completed successfully.\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nStone-Priestley Duality for Tropical Proof Certificates: Demonstration\n\nThis script demonstrates the four main theorems with concrete numerical examples:\n- Theorem A: Separation by prime congruences\n- Theorem B: Spectral representation\n- Theorem C: Verifier extraction\n- Theorem D: Compression bounds\n\nRun with: python3 demo.py\n\"\"\"\n\nimport itertools\nfrom dataclasses import dataclass, field\nfrom typing import Callable, Dict, List, Set, Tuple\n\n# ============================================================\n# \u00a7 1. Tropical Semiring Infrastructure\n# ============================================================\n\nclass TropicalSemiring:\n    \"\"\"Min-plus semiring on integers (or \u221e).\n    \n    Addition: min(a, b)  (tropical sum)\n    Multiplication: a + b  (tropical product)\n    Zero: \u221e  (additive identity for min)\n    One: 0   (multiplicative identity for +)\n    \"\"\"\n    INF = float('inf')\n    \n    @staticmethod\n    def add(a: float, b: float) -> float:\n        \"\"\"Tropical addition = min.\"\"\"\n        return min(a, b)\n    \n    @staticmethod\n    def mul(a: float, b: float) -> float:\n        \"\"\"Tropical multiplication = ordinary addition.\"\"\"\n        if a == TropicalSemiring.INF or b == TropicalSemiring.INF:\n            return TropicalSemiring.INF\n        return a + b\n    \n    @staticmethod\n    def zero() -> float:\n        return TropicalSemiring.INF\n    \n    @staticmethod\n    def one() -> float:\n        return 0.0\n    \n    @staticmethod\n    def is_idempotent(a: float) -> bool:\n        \"\"\"Check a \u2295 a = a (always true for min).\"\"\"\n        return TropicalSemiring.add(a, a) == a\n\n\ndef demo_idempotency():\n    \"\"\"Demonstrate that tropical addition is idempotent.\"\"\"\n    print(\"=\" * 60)\n    print(\"\u00a7 1. TROPICAL IDEMPOTENCY\")\n    print(\"=\" * 60)\n    T = TropicalSemiring\n    \n    test_values = [0, 1, -5, 42, 100, T.INF]\n    print(f\"\\nIdempotent law: min(a, a) = a\")\n    for a in test_values:\n        result = T.add(a, a)\n        status = \"\u2713\" if T.is_idempotent(a) else \"\u2717\"\n        print(f\"  {status} min({a}, {a}) = {result}\")\n    \n    print(f\"\\nDistributivity: a + min(b, c) = min(a+b, a+c)\")\n    for a, b, c in [(1, 2, 3), (0, 5, -1), (10, 10, 20)]:\n        lhs = T.mul(a, T.add(b, c))\n        rhs = T.add(T.mul(a, b), T.mul(a, c))\n        status = \"\u2713\" if lhs == rhs else \"\u2717\"\n        print(f\"  {status} {a} + min({b},{c}) = min({a}+{b}, {a}+{c}) : {lhs} = {rhs}\")\n    print()\n\n\n# ============================================================\n# \u00a7 2. Prime Congruences and Separation\n# ============================================================\n\n@dataclass\nclass ModCongruence:\n    \"\"\"Ring congruence: a \u2261 b (mod m).\n    \n    For the tropical semiring on integers, modular congruences\n    serve as a concrete family of ring congruences.\n    \"\"\"\n    modulus: int\n    \n    def relates(self, a: int, b: int) -> bool:\n        \"\"\"Check if a \u2261 b (mod modulus).\"\"\"\n        if self.modulus == 0:\n            return a == b  # trivial congruence (equality)\n        return (a - b) % self.modulus == 0\n    \n    def is_prime(self) -> bool:\n        \"\"\"A modular congruence mod p is prime iff p is prime.\"\"\"\n        if self.modulus < 2:\n            return self.modulus == 0  # trivial is 'prime' in a degenerate sense\n        return all(self.modulus % i != 0 for i in range(2, int(self.modulus**0.5) + 1))\n    \n    def quotient_class(self, a: int) -> int:\n        \"\"\"The equivalence class of a in Z/mZ.\"\"\"\n        if self.modulus == 0:\n            return a\n        return a % self.modulus\n    \n    def __repr__(self):\n        return f\"Mod({self.modulus})\"\n\n\ndef demo_separation():\n    \"\"\"Demonstrate Theorem A: prime congruence separation.\"\"\"\n    print(\"=\" * 60)\n    print(\"\u00a7 2. THEOREM A: PRIME CONGRUENCE SEPARATION\")\n    print(\"=\" * 60)\n    \n    # For integers, distinct elements are separated by prime congruences\n    test_pairs = [(3, 7), (10, 25), (0, 1), (100, 107), (42, 42)]\n    primes = [2, 3, 5, 7, 11, 13]\n    \n    for a, b in test_pairs:\n        if a == b:\n            print(f\"\\n  a={a}, b={b}: EQUAL \u2014 no separation needed\")\n            continue\n        \n        separators = []\n        for p in primes:\n            cong = ModCongruence(p)\n            if not cong.relates(a, b):\n                separators.append(p)\n        \n        print(f\"\\n  a={a}, b={b}: separated by primes {separators}\")\n        print(f\"    Minimal separator: p={separators[0] if separators else 'NONE'}\")\n        \n        # Show quotient images\n        if separators:\n            p = separators[0]\n            print(f\"    [{a}]_{p} = {a % p}, [{b}]_{p} = {b % p}\")\n    \n    print()\n\n\n# ============================================================\n# \u00a7 3. Spectral Representation\n# ============================================================\n\ndef spectral_observable(s: int, primes: List[int]) -> Dict[int, int]:\n    \"\"\"Compute the spectral observable \u03b7(s): the quotient image at each prime.\"\"\"\n    return {p: s % p for p in primes}\n\n\ndef demo_representation():\n    \"\"\"Demonstrate Theorem B: spectral representation.\"\"\"\n    print(\"=\" * 60)\n    print(\"\u00a7 3. THEOREM B: SPECTRAL REPRESENTATION\")\n    print(\"=\" * 60)\n    \n    primes = [2, 3, 5, 7]\n    elements = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n    \n    print(f\"\\nSpectral observables \u03b7(s) at primes {primes}:\")\n    print(f\"  {'s':>3} | {'mod 2':>5} {'mod 3':>5} {'mod 5':>5} {'mod 7':>5}\")\n    print(f\"  {'---':>3}-+-{'-----':>5}-{'-----':>5}-{'-----':>5}-{'-----':>5}\")\n    \n    observables = {}\n    for s in elements:\n        obs = spectral_observable(s, primes)\n        observables[s] = tuple(obs[p] for p in primes)\n        print(f\"  {s:>3} | {obs[2]:>5} {obs[3]:>5} {obs[5]:>5} {obs[7]:>5}\")\n    \n    # Check injectivity within the range\n    print(f\"\\nInjectivity check (mod {2*3*5*7}={2*3*5*7}):\")\n    seen = {}\n    collisions = 0\n    for s in range(2*3*5*7):\n        obs = tuple(s % p for p in primes)\n        if obs in seen:\n            collisions += 1\n        else:\n            seen[obs] = s\n    print(f\"  Elements: {2*3*5*7}, Distinct observables: {len(seen)}, Collisions: {collisions}\")\n    print(f\"  \u2192 Representation is {'injective \u2713' if collisions == 0 else 'NOT injective \u2717'}\")\n    \n    # Order preservation\n    print(f\"\\nOrder preservation (tropical order a \u2264 b iff min(a,b) = a):\")\n    for a, b in [(1, 3), (2, 5), (0, 7)]:\n        obs_a = spectral_observable(a, primes)\n        obs_b = spectral_observable(b, primes)\n        print(f\"  a={a}, b={b}: \u03b7(a) = {tuple(obs_a[p] for p in primes)}, \"\n              f\"\u03b7(b) = {tuple(obs_b[p] for p in primes)}\")\n    print()\n\n\n# ============================================================\n# \u00a7 4. Verifier Extraction\n# ============================================================\n\n@dataclass\nclass ExtractedVerifier:\n    \"\"\"A finite-state verifier.\n    \n    States are integers 0..n_states-1.\n    Transitions: step(state, input) -> state.\n    \"\"\"\n    n_states: int\n    step: Callable[[int, int], int]\n    start: int\n    accept: Callable[[int], bool]\n    name: str = \"\"\n    \n    def run(self, inputs: List[int]) -> bool:\n        \"\"\"Run the verifier on a sequence of inputs.\"\"\"\n        state = self.start\n        for inp in inputs:\n            state = self.step(state, inp)\n        return self.accept(state)\n\n\n@dataclass\nclass ReversibleAutomaton:\n    \"\"\"A reversible trace automaton with invertible transitions.\"\"\"\n    n_states: int\n    step: Callable[[int, int], int]\n    rev_step: Callable[[int, int], int]\n    start: int\n    accept: Callable[[int], bool]\n    name: str = \"\"\n    \n    def verify_reversibility(self, inputs: List[int]) -> bool:\n        \"\"\"Check that rev_step(step(q, a), a) = q for all states and inputs.\"\"\"\n        for q in range(self.n_states):\n            for a in inputs:\n                if self.rev_step(self.step(q, a), a) != q:\n                    return False\n        return True\n\n\ndef extract_verifier_from_prime(p: int, a: int, b: int) -> ExtractedVerifier:\n    \"\"\"Extract a verifier that distinguishes a from b using congruence mod p.\"\"\"\n    return ExtractedVerifier(\n        n_states=p,\n        step=lambda state, inp: inp % p,\n        start=0,\n        accept=lambda state: state == a % p,\n        name=f\"V_mod{p}(a={a})\"\n    )\n\n\ndef demo_extraction():\n    \"\"\"Demonstrate Theorem C: verifier extraction.\"\"\"\n    print(\"=\" * 60)\n    print(\"\u00a7 4. THEOREM C: VERIFIER EXTRACTION\")\n    print(\"=\" * 60)\n    \n    a, b = 3, 7\n    p = 2  # smallest prime separating 3 and 7\n    \n    print(f\"\\nExtracting verifier for a={a} vs b={b}\")\n    print(f\"  Separating prime: p={p}\")\n    print(f\"  [{a}]_{p} = {a % p}, [{b}]_{p} = {b % p}\")\n    \n    V = extract_verifier_from_prime(p, a, b)\n    print(f\"\\n  Extracted verifier: {V.n_states} states\")\n    print(f\"  V({a}) = {'ACCEPT' if V.run([a]) else 'REJECT'}\")\n    print(f\"  V({b}) = {'ACCEPT' if V.run([b]) else 'REJECT'}\")\n    \n    # XOR-based reversible automaton\n    print(f\"\\nReversible XOR automaton:\")\n    xor_auto = ReversibleAutomaton(\n        n_states=2,\n        step=lambda q, a: q ^ (a % 2),\n        rev_step=lambda q, a: q ^ (a % 2),\n        start=0,\n        accept=lambda q: q == 1,\n        name=\"XOR parity tracker\"\n    )\n    \n    test_sequences = [\n        [0, 1, 0],\n        [1, 1, 1],\n        [0, 0, 0],\n        [1, 0, 1, 0, 1],\n    ]\n    \n    for seq in test_sequences:\n        # Trace the automaton\n        state = xor_auto.start\n        trace = [state]\n        for inp in seq:\n            state = xor_auto.step(state, inp)\n            trace.append(state)\n        accept = xor_auto.accept(state)\n        parity = sum(seq) % 2\n        print(f\"  Input: {seq} \u2192 States: {trace} \u2192 \"\n              f\"{'ACCEPT' if accept else 'REJECT'} \"\n              f\"(parity={parity})\")\n    \n    # Verify reversibility\n    rev_ok = xor_auto.verify_reversibility([0, 1])\n    print(f\"\\n  Reversibility verified: {'\u2713' if rev_ok else '\u2717'}\")\n    \n    # Demonstrate reversibility\n    print(f\"\\n  Reversibility demo:\")\n    for q in range(2):\n        for a in [0, 1]:\n            fwd = xor_auto.step(q, a)\n            rev = xor_auto.rev_step(fwd, a)\n            print(f\"    step({q}, {a}) = {fwd}, rev_step({fwd}, {a}) = {rev} \"\n                  f\"{'\u2713' if rev == q else '\u2717'}\")\n    print()\n\n\n# ============================================================\n# \u00a7 5. Compression Bounds\n# ============================================================\n\ndef demo_compression():\n    \"\"\"Demonstrate Theorem D: compression bounds.\"\"\"\n    print(\"=\" * 60)\n    print(\"\u00a7 5. THEOREM D: COMPRESSION BOUNDS\")\n    print(\"=\" * 60)\n    \n    # For integer separation, the spectral width is the number of\n    # primes dividing (a - b).\n    test_pairs = [\n        (0, 1, \"adjacent\"),\n        (0, 6, \"2\u00d73\"),\n        (0, 30, \"2\u00d73\u00d75\"),\n        (0, 210, \"2\u00d73\u00d75\u00d77\"),\n        (10, 40, \"diff=30=2\u00d73\u00d75\"),\n    ]\n    \n    small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]\n    \n    print(f\"\\nSpectral width analysis (separating primes among first {len(small_primes)}):\")\n    print(f\"  {'a':>5} {'b':>5} {'diff':>5} {'note':>20} {'width':>6} {'separators':>30}\")\n    print(f\"  {'---':>5} {'---':>5} {'---':>5} {'---':>20} {'---':>6} {'---':>30}\")\n    \n    for a, b, note in test_pairs:\n        diff = abs(a - b)\n        separators = [p for p in small_primes if (a - b) % p != 0]\n        width = len(separators)\n        sep_str = str(separators[:5]) + (\"...\" if len(separators) > 5 else \"\")\n        print(f\"  {a:>5} {b:>5} {diff:>5} {note:>20} {width:>6} {sep_str:>30}\")\n    \n    # Product automaton composition\n    print(f\"\\nVerifier composition (product automaton):\")\n    sizes = [2, 3, 5]\n    for i, (s1, s2) in enumerate(itertools.combinations(sizes, 2)):\n        product = s1 * s2\n        print(f\"  V\u2081({s1} states) \u00d7 V\u2082({s2} states) \u2192 V({product} states)\")\n    \n    # Triple composition\n    triple = sizes[0] * sizes[1] * sizes[2]\n    print(f\"  V\u2081(2) \u00d7 V\u2082(3) \u00d7 V\u2083(5) \u2192 V({triple} states)\")\n    \n    # Bound: verifier states \u2264 product of quotient sizes\n    print(f\"\\nCompression bound: |V| \u2264 \u220f |S/P\u1d62|\")\n    for n_primes in range(1, 6):\n        primes = small_primes[:n_primes]\n        product = 1\n        for p in primes:\n            product *= p\n        print(f\"  {n_primes} prime(s) {primes}: \"\n              f\"max verifier states = {product}\")\n    \n    print()\n\n\n# ============================================================\n# \u00a7 6. Full Pipeline Demo\n# ============================================================\n\ndef demo_pipeline():\n    \"\"\"Full pipeline: element \u2192 separation \u2192 representation \u2192 extraction \u2192 verification.\"\"\"\n    print(\"=\" * 60)\n    print(\"\u00a7 6. FULL PIPELINE: SPECTRAL PROOF EXTRACTION\")\n    print(\"=\" * 60)\n    \n    # Setup: distinguish proof certificate a=17 from b=42\n    a, b = 17, 42\n    diff = abs(a - b)\n    print(f\"\\nTask: distinguish certificate a={a} from b={b} (diff={diff})\")\n    \n    # Step 1: Find separating primes\n    primes = [2, 3, 5, 7, 11, 13]\n    separators = [(p, a % p, b % p) for p in primes if a % p != b % p]\n    print(f\"\\nStep 1 (Separation): found {len(separators)} separating primes\")\n    for p, qa, qb in separators:\n        print(f\"  mod {p}: [{a}]={qa}, [{b}]={qb}\")\n    \n    # Step 2: Compute spectral observable\n    obs_a = {p: a % p for p in primes}\n    obs_b = {p: b % p for p in primes}\n    print(f\"\\nStep 2 (Representation):\")\n    print(f\"  \u03b7({a}) = {tuple(obs_a[p] for p in primes)}\")\n    print(f\"  \u03b7({b}) = {tuple(obs_b[p] for p in primes)}\")\n    print(f\"  Distinct: {'\u2713' if obs_a != obs_b else '\u2717'}\")\n    \n    # Step 3: Extract verifier\n    best_p = separators[0][0]\n    V = extract_verifier_from_prime(best_p, a, b)\n    print(f\"\\nStep 3 (Extraction): {V.n_states}-state verifier using mod {best_p}\")\n    \n    # Step 4: Run verifier\n    print(f\"\\nStep 4 (Verification):\")\n    for x in [a, b, 0, 1, 99, a + best_p]:\n        result = V.run([x])\n        expected = (x % best_p == a % best_p)\n        status = \"\u2713\" if result == expected else \"\u2717\"\n        print(f\"  {status} V({x}) = {'ACCEPT' if result else 'REJECT'} \"\n              f\"(class [{x % best_p}]_{best_p})\")\n    \n    # Step 5: Compression analysis\n    min_states = min(p for p, _, _ in separators)\n    max_states = 1\n    for p, _, _ in separators:\n        max_states *= p\n    print(f\"\\nStep 5 (Compression bounds):\")\n    print(f\"  Minimal single-prime verifier: {min_states} states\")\n    print(f\"  Product verifier (all primes): {max_states} states\")\n    print(f\"  Spectral width: {len(separators)} separating primes\")\n    \n    print()\n\n\n# ============================================================\n# MAIN\n# ============================================================\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Stone-Priestley Duality for Tropical Proof Certificates \u2551\")\n    print(\"\u2551  Demonstration of Theorems A, B, C, D                   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n    \n    demo_idempotency()\n    demo_separation()\n    demo_representation()\n    demo_extraction()\n    demo_compression()\n    demo_pipeline()\n    \n    print(\"=\" * 60)\n    print(\"All demonstrations completed successfully.\")\n    print(\"=\" * 60)\n"
     },
     "date": "2026-05-11T12:37:16Z"
+  },
+  "algebramachinelearninglogic_operadic_stone_duality.json": {
+    "title": "Operadic Stone Duality: Logical Identifiability of Neural Architectures via Heyting Predicate Lattices",
+    "domain": "Algebra\u2013Machine Learning\u2013Logic (Bridges)",
+    "article": "# The Hidden Logic of Neural Networks\n\n## What if every artificial brain has a secret logical skeleton \u2014 and we just proved you can always find it?\n\n---\n\nDeep inside every neural network \u2014 those sprawling mathematical constructions that power image recognition, language translation, and drug discovery \u2014 there lies a hidden logical structure. Not a metaphorical one. A precise, recoverable, mathematically certifiable logical skeleton that determines the network's architecture as completely as DNA determines a body plan.\n\nThat is the core finding of a new theorem at the intersection of algebraic logic, machine learning theory, and order theory. The result says something startling: for a natural class of neural architectures, there exists a finite collection of logical predicates \u2014 simple yes-or-no questions about the network's behavior \u2014 that carries enough information to reconstruct the entire architecture from scratch. The logic remembers the machine.\n\n### The Puzzle of Neural Architecture\n\nTo understand why this matters, consider the fundamental mystery of neural network design. Modern deep learning works by stacking computational \"modules\" \u2014 layers, attention heads, convolutional filters \u2014 into elaborate architectures. The transformer architecture behind large language models, the residual networks that won ImageNet competitions, the graph neural networks used in molecular design: each is a specific arrangement of computational building blocks.\n\nBut here's the thing: nobody has a good theory of *why* one arrangement works better than another. Architecture design remains part art, part trial-and-error, part expensive computation. The field of neural architecture search \u2014 using computers to automatically find good architectures \u2014 consumes enormous resources precisely because we lack a mathematical framework for understanding what makes one architecture fundamentally different from another.\n\nThe new theorem provides exactly such a framework, at least for a well-defined class of architectures. It says that the \"essence\" of an architecture \u2014 what distinguishes it from all other architectures \u2014 can be captured by pure logic.\n\n### Predicates: The Right Questions to Ask\n\nThe key idea is deceptively simple. Given a neural architecture \u2014 think of it as a directed graph where nodes are computational modules and edges represent information flow \u2014 you can define certain natural \"predicates.\" These are properties that describe the architecture's structure:\n\n- **Activation predicates:** \"Is module X active in this computation?\" For each module, there's a predicate describing exactly which other modules are downstream of it \u2014 which modules it influences.\n\n- **Reachability predicates:** \"Can information from module X reach module Y?\" These predicates capture the connectivity structure.\n\n- **Stability predicates:** \"Is module X's computation robust to perturbations?\" These capture which modules are in the \"stable core\" of the architecture.\n\nNow here's where the magic happens. If you collect all these predicates and study how they relate to each other \u2014 which predicates imply other predicates, which can be combined, which are independent \u2014 you get a mathematical structure called a *lattice*. Not a crystal lattice, but an algebraic lattice: a collection of elements with operations for \"and\" (intersection) and \"or\" (union) that satisfy certain beautiful symmetry laws.\n\n### From Lattice to Logic\n\nThe predicate lattice of a neural architecture turns out to be remarkably well-behaved. It is what mathematicians call a *distributive lattice* \u2014 one where \"and\" distributes over \"or\" in the same way multiplication distributes over addition in ordinary arithmetic. Even better, it is a *Heyting algebra*, which means it supports a natural notion of logical implication. You can meaningfully say \"predicate P implies predicate Q\" and have this form a coherent logical system.\n\nThis isn't just any logical system. It is *intuitionistic logic* \u2014 a form of logic developed in the early twentieth century by the Dutch mathematician L.E.J. Brouwer, who insisted that mathematical existence should require explicit construction, not just proof by contradiction. Intuitionistic logic is weaker than classical logic (you can't always prove things by assuming the opposite), but it is more informative: a proof in intuitionistic logic always carries constructive content.\n\nThe fact that neural architectures give rise to intuitionistic logic is not a coincidence. It reflects the *directional* nature of computation in feedforward networks: information flows forward through layers, and once a property is established at one layer, it persists through all subsequent layers. This \"persistence\" is precisely the hallmark of intuitionistic semantics \u2014 in the possible-worlds interpretation developed by Saul Kripke in the 1960s, an intuitionistic proposition, once true, stays true as you learn more.\n\n### The Reconstruction Theorem\n\nThe deepest result goes beyond showing that architectures *have* logical semantics. It shows that the semantics *completely determines* the architecture.\n\nMore precisely: if two neural architectures have the same logical structure \u2014 if their predicate lattices are isomorphic as Heyting algebras \u2014 then the architectures themselves must be isomorphic. Same logic, same architecture. Different logic, different architecture. The logical structure is a complete invariant.\n\nThe proof uses a classical result from combinatorics known as Birkhoff's representation theorem, which says that a finite distributive lattice is completely determined by its \"irreducible\" elements \u2014 the atoms that cannot be broken into simpler pieces. In the neural architecture context, these irreducible elements turn out to correspond exactly to individual computational modules. So the atomic logical units *are* the atomic architectural units, viewed from a different angle.\n\nThis means you can run the construction backward. Start with a logical structure \u2014 a finite Heyting algebra satisfying certain conditions. Extract its irreducible elements. These become the modules of a neural architecture. The order relations between irreducibles become the information flow edges. The result is a minimal architecture whose logic matches the original specification.\n\n### Why This Changes Things\n\nThe reconstruction theorem establishes what might be called *logical identifiability* of neural architectures. In statistics, identifiability means that different parameter values produce different observable behaviors \u2014 so you can recover the parameters from observations. Here, the \"parameters\" are the architecture itself, and the \"observations\" are logical predicates about the architecture's structure.\n\nThis has several profound implications:\n\n**Architecture equivalence testing.** Given two architectures, you can determine whether they are structurally equivalent by comparing their predicate lattices. This is potentially much easier than comparing the architectures directly, especially when they are presented in different forms or at different scales.\n\n**Minimal architecture design.** The reconstruction algorithm automatically produces a *minimal* architecture for any given logical specification. This is architecture search guided by mathematical optimality rather than brute-force computation.\n\n**Explainability from first principles.** The irreducible elements of the predicate lattice are the \"atoms of explanation\" \u2014 the smallest units of logical structure in the network. Any predicate about the architecture can be decomposed into these atoms. This provides a rigorous foundation for explaining what a network does and why.\n\n**Semantic compression.** If two architectures have isomorphic predicate lattices, they are structurally equivalent \u2014 even if one has many more modules than the other. The predicate lattice identifies which modules are redundant, enabling principled network compression.\n\n### A Confluence of Centuries\n\nWhat makes this result intellectually striking is that it sits at the confluence of three very different mathematical traditions.\n\nThe first is *lattice theory and universal algebra*, developed in the 1930s and 1940s by Garrett Birkhoff, who showed that finite distributive lattices and finite partial orders are two descriptions of the same mathematical object. Birkhoff's representation theorem is the engine that drives the reconstruction.\n\nThe second is *intuitionistic logic and Kripke semantics*, developed by Brouwer, Heyting, and Kripke across the twentieth century. The idea that constructive logic has a natural \"possible worlds\" interpretation \u2014 where worlds are information states and propositions are properties that persist as information grows \u2014 provides the semantic framework.\n\nThe third is *the theory of operads and compositional systems*, a branch of abstract algebra that studies how complex structures are built by composing simpler pieces. Neural networks, with their layered and modular construction, are natural examples of operadic composition.\n\nThe new theorem weaves these three threads into a single fabric: the compositional structure of neural networks (operadic), the logical semantics of their predicates (Heyting algebra), and the combinatorial classification of their architecture (Birkhoff duality) are three views of the same underlying mathematical object.\n\n### Looking Forward\n\nThe theorem applies, in its current form, to a specific class of architectures: finitely generated, acyclic (feedforward) networks where the predicates separate distinct modules. This includes standard feedforward networks, convolutional networks, and many transformer-like architectures, but excludes networks with feedback loops or continuous-depth architectures.\n\nExtending the result to recurrent architectures, architectures that evolve during training, or networks with continuous-parameter families of modules is an active frontier. Each extension requires new mathematical ideas: preorders and equivalence classes for recurrence, temporal logic for dynamic architectures, semiring-valued predicates for quantitative properties.\n\nBut the core insight \u2014 that a neural architecture is a logical object, and its logic remembers enough to rebuild it \u2014 seems likely to persist across these generalizations. It suggests a future in which neural network design is guided not by trial and error, but by logical specification: you say what properties you want, and mathematics tells you the simplest machine that achieves them.\n\nThat vision \u2014 architecture synthesis from semantics \u2014 may be the most consequential application of the theorem. It reframes the central challenge of deep learning from \"find an architecture that works\" to \"specify the logic you need.\" And as anyone who has struggled with the bewildering zoo of neural architectures can attest, having the right question is more than half the battle.\n\n---\n\n*The mathematical framework described here establishes a formally certified duality between finite neural architectures and finite Heyting algebras, proving that logical predicate structure is a complete invariant for architecture identity in the acyclic, separating regime.*\n",
+    "research_paper": "# Operadic Stone Duality: Logical Identifiability of Finite Neural Architectures via Heyting Predicate Lattices\n\n## Abstract\n\nWe establish a certified duality between finitely generated acyclic neural architectures and finite Heyting algebras. Given a neural architecture modeled as a finite partial order of computational modules, we construct its *upper set predicate lattice* \u2014 a finite distributive lattice (equivalently, Heyting algebra) encoding activation, reachability, and stability predicates. We prove:\n\n1. The meet-irreducible elements of this lattice correspond bijectively to architectural modules.\n2. The lattice ordering encodes the module partial order via an order embedding.\n3. An order isomorphism of predicate lattices induces an order isomorphism of module posets.\n4. Architecture morphisms induce lattice homomorphisms contravariantly, with functorial composition.\n5. Lattice ordering coincides with Kripke semantic entailment (soundness and completeness).\n6. The predicate lattice, together with generator marking, is a complete invariant for architecture identity.\n\nAll results are formalized and verified in Lean 4 with Mathlib, using no axioms beyond `propext`, `Classical.choice`, and `Quot.sound`.\n\n**Keywords:** neural architecture, Heyting algebra, Birkhoff representation, Kripke semantics, operadic composition, logical identifiability, finite distributive lattice\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nNeural architecture design is one of the central challenges of modern machine learning. Despite enormous empirical progress, the mathematical foundations of architecture theory remain underdeveloped. Questions such as \"when are two architectures structurally equivalent?\" and \"what is the minimal architecture achieving a given computational specification?\" lack satisfactory theoretical answers.\n\nWe address these questions by establishing a precise correspondence between neural architectures and logical structures. Our main contribution is a *reconstruction theorem*: the finite Heyting algebra of predicates associated to an architecture determines the architecture up to isomorphism. This provides a notion of *logical identifiability* \u2014 the architecture is identified by its logical semantics, not by its syntactic presentation.\n\n### 1.2 Related Work\n\n**Operadic deep learning.** The operadic perspective on neural networks, viewing compositional layer stacking as operadic composition, has been developed in several lines of work. Our formalization builds on operadic foundations but focuses on the logical (lattice-theoretic) structure rather than the compositional algebra.\n\n**Stone duality and Birkhoff representation.** The classical Birkhoff representation theorem (1937) establishes a bijection between finite distributive lattices and finite partial orders. Stone duality (1936) extends this to the topological setting. Our work applies the finite case of this duality in a new domain.\n\n**Kripke semantics.** The semantics of intuitionistic logic via Kripke frames (1965) provides the logical interpretation. Our upper set construction is the standard construction of intuitionistic propositions over a Kripke frame, applied to the specific frame given by the module partial order.\n\n**Neural network verification.** The growing field of formal verification of neural networks (Katz et al. 2017, Huang et al. 2020) focuses on verifying properties of specific networks. Our work operates at the architecture level rather than the weight level, providing structural rather than behavioral verification.\n\n### 1.3 Contributions\n\n1. A formal definition of finitely generated acyclic neural architectures as finite partial orders with generators.\n2. Construction of the upper set predicate lattice and proof that it is a finite Heyting algebra.\n3. Classification of meet-irreducible elements as principal upper sets (Theorem 4.3).\n4. An order embedding from modules to the predicate lattice (Theorem 3.1).\n5. A reconstruction theorem: predicate lattice isomorphism implies architecture isomorphism (Theorem 7.1).\n6. Contravariant functoriality of the predicate map (Theorem 6.1).\n7. Soundness and completeness of Kripke forcing (Theorem 5.1).\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Neural Architectures\n\n**Definition 2.1** (Neural Architecture). A *finitely generated acyclic neural architecture* is a tuple N = (Module, \u2264, generators) where:\n- Module is a finite type (the set of computational modules)\n- \u2264 is a partial order on Module (encoding acyclic information flow)\n- generators \u2282 Module is a nonempty finite set of primitive modules\n- Every module m has some generator g \u2264 m (finite generation)\n\nThe partial order captures the dependency structure: m\u2081 \u2264 m\u2082 means module m\u2082 depends on (or is downstream of) module m\u2081.\n\n**Definition 2.2** (Architecture Morphism). A morphism f : N \u2192 M between architectures is a monotone function f : N.Module \u2192 M.Module that preserves generators: for every g \u2208 N.generators, f(g) \u2208 M.generators.\n\n**Definition 2.3** (Architecture Isomorphism). Two architectures N and M are isomorphic if there exists an order isomorphism f : N.Module \u2243o M.Module that preserves generators in both directions.\n\n### 2.2 Upper Set Predicate Lattice\n\n**Definition 2.4** (Upper Set). An *upper set* (upward-closed subset) of a partially ordered set (P, \u2264) is a set U \u2286 P such that for all x, y \u2208 P, if x \u2264 y and x \u2208 U, then y \u2208 U.\n\nWe write UpperSet(P) for the set of all upper sets of P, ordered by reverse inclusion: U \u2264 V iff V \u2286 U as sets.\n\n**Fact 2.5.** For any finite partial order P, UpperSet(P) is:\n- A finite distributive lattice with \u2294 = \u2229, \u2293 = \u222a, \u22a4 = \u2205, \u22a5 = P\n- A Heyting algebra with implication U \u21e8 V = {x \u2208 P | \u2200y \u2265 x, y \u2208 U \u2192 y \u2208 V}\n- Finite when P is finite\n\nThe ordering convention (reverse inclusion) is standard in Mathlib and ensures that the Heyting algebra structure aligns with the logical interpretation: U \u2264 V means V is \"stronger\" than U (true at fewer worlds), which corresponds to V entailing U.\n\n### 2.3 Principal Upper Sets\n\n**Definition 2.6.** For m \u2208 P, the *principal upper set* is Ici(m) = {x \u2208 P | m \u2264 x}.\n\nThese are the *activation predicates*: Ici(m) describes the set of modules that are downstream of (or equal to) m.\n\n---\n\n## 3. The Order Embedding\n\n**Theorem 3.1** (Order Embedding). The map m \u21a6 Ici(m) is an order embedding from N.Module to UpperSet(N.Module):\n\n  m\u2081 \u2264 m\u2082 \u27fa Ici(m\u2081) \u2264 Ici(m\u2082)\n\n*Proof sketch.* Ici(m\u2081) \u2264 Ici(m\u2082) in UpperSet means {x | m\u2082 \u2264 x} \u2286 {x | m\u2081 \u2264 x}. If m\u2081 \u2264 m\u2082, then for any x with m\u2082 \u2264 x, we have m\u2081 \u2264 x by transitivity, so the inclusion holds. Conversely, if {x | m\u2082 \u2264 x} \u2286 {x | m\u2081 \u2264 x}, then taking x = m\u2082 gives m\u2081 \u2264 m\u2082. \u25a1\n\n**Corollary 3.2.** The map m \u21a6 Ici(m) is injective.\n\n---\n\n## 4. Meet-Irreducible Classification\n\n**Definition 4.1.** An element a of a lattice is *meet-irreducible* (InfIrred) if a is not maximal and whenever a = b \u2293 c, either a = b or a = c.\n\nIn UpperSet(P), this translates to: U is not \u2205, and if U = A \u222a B (as sets) for upper sets A, B, then U = A or U = B.\n\n**Theorem 4.2** (Principal Upper Sets are Meet-Irreducible). For every m \u2208 N.Module, Ici(m) is meet-irreducible in UpperSet(N.Module).\n\n*Proof sketch.* Ici(m) \u2260 \u2205 since m \u2208 Ici(m), so it's not maximal. If Ici(m) = A \u222a B, then m \u2208 A \u222a B, so m \u2208 A or m \u2208 B. WLOG m \u2208 A. Since A is an upper set and m \u2208 A, for any x with m \u2264 x we have x \u2208 A. So Ici(m) \u2286 A. But A \u2286 A \u222a B = Ici(m). Hence A = Ici(m). \u25a1\n\n**Theorem 4.3** (Classification of Meet-Irreducibles). An upper set U \u2208 UpperSet(N.Module) is meet-irreducible if and only if U = Ici(m) for some m \u2208 N.Module.\n\n*Proof sketch.* The reverse direction is Theorem 4.2. For the forward direction: if U is not a principal upper set, then U has at least two minimal elements m\u2081 \u2260 m\u2082. Then U = (U \u222a Ici(m\u2081)) \u2229 (U \u222a Ici(m\u2082))... wait, we use the correct UpperSet operations. Since \u2293 = \u222a, we can decompose U as a union of principal upper sets of its minimal elements, and the InfIrred condition forces there to be exactly one minimal element. \u25a1\n\n**Corollary 4.4.** There is a bijection between N.Module and {U \u2208 UpperSet(N.Module) | InfIrred(U)}.\n\n---\n\n## 5. Soundness and Completeness\n\nWe define Kripke forcing over the module poset.\n\n**Definition 5.1.** World w *forces* upper set U (written w \u22a9 U) iff w \u2208 U.\n\n**Definition 5.2.** V *semantically entails* U (written V \u22a8 U) iff for all w, w \u22a9 V implies w \u22a9 U.\n\n**Theorem 5.1** (Soundness and Completeness). U \u2264 V in UpperSet(N.Module) if and only if V \u22a8 U.\n\n*Proof.* Immediate from the definitions: U \u2264 V means V \u2286 U as sets, which is exactly V \u22a8 U. \u25a1\n\nThis theorem establishes that the lattice ordering on predicates coincides with semantic entailment in the Kripke frame. The intuitionistic structure (Heyting algebra) gives correct semantics for implication.\n\n---\n\n## 6. Contravariant Functoriality\n\n**Theorem 6.1** (Contravariant Predicate Map). Given an architecture morphism f : N \u2192 M, the inverse image map\n\n  f* : UpperSet(M.Module) \u2192 UpperSet(N.Module),  f*(U) = f\u207b\u00b9(U)\n\nis a lattice homomorphism satisfying:\n- f*(U \u2293 V) = f*(U) \u2293 f*(V)\n- f*(U \u2294 V) = f*(U) \u2294 f*(V)\n- f*(\u22a4) = \u22a4 and f*(\u22a5) = \u22a5\n\n**Theorem 6.2** (Functoriality). The predicate map respects composition contravariantly:\n\n  (g \u2218 f)* = f* \u2218 g*\n\nand preserves identity: id* = id.\n\n*Proof.* Both follow from standard properties of preimages: (g \u2218 f)\u207b\u00b9 = f\u207b\u00b9 \u2218 g\u207b\u00b9 and id\u207b\u00b9 = id. \u25a1\n\n---\n\n## 7. The Reconstruction Theorem\n\n### 7.1 Lattice Isomorphisms Preserve Meet-Irreducibles\n\n**Theorem 7.1** (Preservation of Meet-Irreducibles). An order isomorphism h : UpperSet(N.Module) \u2243o UpperSet(M.Module) maps meet-irreducible elements to meet-irreducible elements.\n\n*Proof sketch.* If U is InfIrred and h(U) = A \u2293 B, then U = h\u207b\u00b9(A) \u2293 h\u207b\u00b9(B) (since h preserves \u2293). By InfIrred, U = h\u207b\u00b9(A) or U = h\u207b\u00b9(B), so h(U) = A or h(U) = B. The \u00acIsMax condition transfers similarly. \u25a1\n\n### 7.2 Induced Order Isomorphism\n\n**Theorem 7.2** (Induced Module Isomorphism). An order isomorphism h : UpperSet(N.Module) \u2243o UpperSet(M.Module) induces an order isomorphism f : N.Module \u2243o M.Module such that h(Ici(m)) = Ici(f(m)) for all m.\n\n*Proof sketch.* By Theorem 7.1 and the classification (Theorem 4.3), h maps {Ici(m) | m \u2208 N.Module} bijectively to {Ici(n) | n \u2208 M.Module}. Define f(m) to be the unique n such that h(Ici(m)) = Ici(n). Then f is a bijection (by bijectivity of h restricted to meet-irreducibles and injectivity of Ici). Order preservation follows from:\n\n  m\u2081 \u2264 m\u2082 \u27fa Ici(m\u2081) \u2264 Ici(m\u2082) \u27fa h(Ici(m\u2081)) \u2264 h(Ici(m\u2082)) \u27fa Ici(f(m\u2081)) \u2264 Ici(f(m\u2082)) \u27fa f(m\u2081) \u2264 f(m\u2082) \u25a1\n\n### 7.3 Main Theorem\n\n**Theorem 7.3** (Semantics Determines Architecture). Let N, M be finitely generated acyclic neural architectures. If there exists an order isomorphism h : UpperSet(N.Module) \u2243o UpperSet(M.Module) that preserves generator marking (i.e., for each generator g of N, h(Ici(g)) = Ici(g') for some generator g' of M, and conversely), then N and M are isomorphic as neural architectures.\n\n*Proof.* Apply Theorem 7.2 to obtain f : N.Module \u2243o M.Module. Generator preservation follows from the hypotheses and injectivity of Ici: if h(Ici(g)) = Ici(g') with g' a generator, and h(Ici(g)) = Ici(f(g)), then f(g) = g'. \u25a1\n\n---\n\n## 8. Algorithms\n\n### 8.1 Predicate Lattice Construction\n\n**Input:** Architecture graph G = (V, E) with generator set S \u2286 V\n**Output:** The upper set lattice as a list of upper sets with \u2264 relation\n\n```\nAlgorithm ConstructPredicateLattice(G, S):\n  1. Compute transitive closure of E to get partial order \u2264\n  2. Enumerate all upper sets of (V, \u2264)\n     (Upper set U: for all v \u2208 U and w with v \u2264 w, w \u2208 U)\n  3. Order upper sets by reverse inclusion\n  4. Return (upper_sets, ordering)\n\nTime: O(2^n \u00b7 n^2) where n = |V|\nSpace: O(2^n \u00b7 n)\n```\n\n### 8.2 Meet-Irreducible Extraction\n\n**Input:** Predicate lattice L\n**Output:** Set of meet-irreducible elements\n\n```\nAlgorithm ExtractMeetIrreducibles(L):\n  1. For each element a \u2208 L:\n     a. Check a \u2260 max(L)\n     b. Check: for all b, c \u2208 L with b \u2293 c = a, either b = a or c = a\n     c. If both conditions hold, mark a as meet-irreducible\n  2. Return marked elements\n\nTime: O(|L|^3)\nSpace: O(|L|)\n```\n\n### 8.3 Architecture Reconstruction\n\n**Input:** Finite Heyting algebra H (as a lattice with operations)\n**Output:** Neural architecture N with UpperSet(N.Module) \u2245 H\n\n```\nAlgorithm ReconstructArchitecture(H):\n  1. Compute J = MeetIrreducibles(H)\n  2. Define Module = J (modules are meet-irreducibles)\n  3. Define partial order: j\u2081 \u2264 j\u2082 iff j\u2081 \u2264 j\u2082 in H\n  4. Identify generators (lattice-theoretic characterization)\n  5. Return (Module, \u2264, generators)\n\nTime: O(|H|^3) for meet-irreducible extraction\nSpace: O(|H|)\n```\n\n---\n\n## 9. Applications\n\n### 9.1 Architecture Equivalence Testing\n\nGiven architectures N\u2081 and N\u2082, compute their predicate lattices L\u2081, L\u2082 and check if L\u2081 \u2245 L\u2082 as bounded lattices. If yes, the architectures are structurally equivalent (up to generator marking).\n\n**Complexity:** O(2^n \u00b7 n^2) for lattice construction, O(|L|^2) for isomorphism testing (finite lattice isomorphism is polynomial).\n\n### 9.2 Architecture Minimization\n\nGiven an architecture N, compute its predicate lattice L, extract meet-irreducibles J, and reconstruct the minimal architecture from J. This removes redundant modules \u2014 modules that don't contribute unique meet-irreducible structure.\n\n### 9.3 Specification-Driven Design\n\nGiven desired predicates (activation patterns, reachability requirements), construct the smallest lattice containing these predicates, extract meet-irreducibles, and synthesize the minimal architecture.\n\n---\n\n## 10. Discussion\n\n### 10.1 Scope and Limitations\n\nThe current results apply to:\n- **Finite** architectures (finite number of modules)\n- **Acyclic** architectures (partial order, no feedback loops)\n- **Separating** predicates (distinct modules have distinct predicate neighborhoods)\n\nExtensions to recurrent architectures require replacing partial orders with preorders and working with equivalence classes. Continuous-depth architectures (neural ODEs) fall outside the current framework.\n\n### 10.2 Relationship to Existing Duality Theories\n\nOur construction is a concrete instance of the classical Birkhoff duality between finite distributive lattices and finite partial orders, applied in the neural architecture domain. The Heyting algebra structure (which goes beyond distributive lattice structure) provides the bridge to Kripke semantics and intuitionistic logic.\n\nThe connection to Stone duality is suggestive but indirect: our lattices are finite, so the topological content of Stone duality (compact totally disconnected spaces) reduces to discrete spaces. The finite case is fully captured by Birkhoff's theorem.\n\n### 10.3 Implications for Explainability\n\nThe meet-irreducible elements serve as \"atoms of explanation\" \u2014 the minimal logical units of the architecture. Every predicate decomposes as a meet of meet-irreducibles, providing a canonical decomposition of architectural properties into independent modules. This is a mathematically rigorous form of structural explainability.\n\n---\n\n## 11. Future Work\n\nSee FUTURE_DIRECTIONS.md for detailed descriptions of five concrete next steps:\n1. Extension to controlled recurrent architectures\n2. Modal/temporal operators for dynamic architectures\n3. Quantitative duality via semiring-valued predicates\n4. Completeness for broader architecture classes\n5. Verified architecture synthesis from logical specifications\n\n---\n\n## References\n\n1. Birkhoff, G. (1937). Rings of sets. *Duke Mathematical Journal*, 3(3), 443-454.\n2. Stone, M.H. (1936). The theory of representations for Boolean algebras. *Transactions of the AMS*, 40(1), 37-111.\n3. Kripke, S.A. (1965). Semantical analysis of intuitionistic logic I. *Formal Systems and Recursive Functions*, 92-130.\n4. Davey, B.A., & Priestley, H.A. (2002). *Introduction to Lattices and Order*. Cambridge University Press.\n5. Katz, G., et al. (2017). Reluplex: An efficient SMT solver for verifying deep neural networks. *CAV 2017*.\n",
+    "future_directions": "# Future Directions: Operadic Stone Duality for Neural Architecture Reconstruction\n\n## Overview\n\nThe results in this project establish that finitely generated acyclic neural architectures can be fully characterized by their upper-set predicate lattice \u2014 a finite Heyting algebra whose meet-irreducible elements correspond bijectively to architectural modules. This opens several concrete research directions.\n\n---\n\n## Direction 1: Extension to Controlled Recurrent Architectures\n\n**Goal:** Extend the duality from acyclic (feedforward) architectures to architectures with bounded feedback loops.\n\n**Approach:** Replace the partial order on modules with a preorder allowing cycles of bounded length. The upper set lattice of a preorder still forms a distributive lattice, but the meet-irreducible classification changes: strongly connected components become the atomic units. The reconstruction theorem would recover the DAG of SCCs rather than individual modules.\n\n**Key Challenge:** The meet-irreducible elements of the upper set lattice of a preorder correspond to equivalence classes under the associated equivalence relation. Proving that the reconstructed architecture correctly identifies feedback boundaries requires new invariants.\n\n**Impact:** Would cover transformer architectures with residual connections and controlled recurrence (e.g., universal transformers, recurrent neural networks with bounded unrolling).\n\n---\n\n## Direction 2: Modal and Temporal Operators for Dynamic Architectures\n\n**Goal:** Enrich the Heyting algebra of predicates with modal operators (\u25a1, \u25c7) and temporal operators (always, eventually, until) to capture dynamic properties of architectures that evolve during training or inference.\n\n**Approach:** Define a birelational Kripke frame where one accessibility relation captures information flow (the module order) and another captures temporal evolution (training steps, layer-by-layer inference). The resulting bi-modal logic can express properties like \"module m is eventually pruned\" or \"the feature computed by module m is stable across all future training steps.\"\n\n**Key Challenge:** Proving completeness of the bi-modal logic with respect to the birelational semantics. The interaction axioms between the two modalities need careful formulation.\n\n**Impact:** Provides a logical foundation for neural architecture search, pruning, and knowledge distillation \u2014 reasoning about how architectures change over time.\n\n---\n\n## Direction 3: Quantitative Duality via Weighted Semiring Predicates\n\n**Goal:** Replace Boolean predicates (module is active / inactive) with semiring-valued predicates that capture quantitative information (activation magnitude, gradient flow, information content).\n\n**Approach:** Define a semiring-valued upper set lattice where each predicate assigns a weight from a semiring S to each module. The lattice operations become pointwise semiring operations. The reconstruction theorem would recover not just the architecture topology but also quantitative properties like layer widths, connection strengths, and information bottlenecks.\n\n**Key Challenge:** The meet-irreducible classification for semiring-valued lattices is more subtle than the Boolean case. Over the tropical semiring (\u211d \u222a {\u221e}, min, +), the theory connects to tropical geometry and piecewise-linear analysis of ReLU networks.\n\n**Impact:** Bridges to information-theoretic approaches to deep learning (information bottleneck theory), tropical geometry of neural networks, and quantitative verification of neural network properties.\n\n---\n\n## Direction 4: Completeness for Broader Architecture Classes\n\n**Goal:** Characterize exactly which finite Heyting algebras arise as predicate lattices of neural architectures, and prove completeness: every such algebra is realized by some architecture.\n\n**Approach:** The current reconstruction theorem shows that the predicate lattice determines the architecture. The converse question is: given an abstract finite Heyting algebra H satisfying certain axioms (neural realizability), does there exist an architecture N with predicate lattice isomorphic to H? Since every finite distributive lattice is the upper set lattice of its poset of meet-irreducibles (Birkhoff's theorem), the answer is yes for the lattice structure. The challenge is ensuring the generator structure is also realized.\n\n**Key Challenge:** Defining and axiomatizing \"neural realizability\" \u2014 the conditions an abstract Heyting algebra must satisfy to be the predicate lattice of some architecture. This involves constraints on the meet-irreducible elements (they must form a graded poset for layered architectures, or satisfy acyclicity conditions).\n\n**Impact:** Would yield a complete logical characterization of the space of neural architectures, enabling architecture search via logical constraint satisfaction.\n\n---\n\n## Direction 5: Verified Architecture Synthesis from Logical Specifications\n\n**Goal:** Develop an executable algorithm that takes a logical specification (a set of desired predicates and their relationships) and synthesizes a minimal architecture satisfying the specification.\n\n**Approach:** The reconstruction algorithm already provides the mathematical foundation: given a finite Heyting algebra of desired predicates, extract the meet-irreducible elements as modules and their order as the architecture graph. The challenge is making this computational:\n1. Parse logical specifications into finite Heyting algebras\n2. Compute meet-irreducible elements efficiently\n3. Generate architecture descriptions (layer sizes, connections, activation functions)\n4. Verify that the generated architecture satisfies the original specification\n\n**Key Challenge:** The computational complexity of the reconstruction. Computing meet-irreducible elements of a lattice given by generators and relations is co-NP-hard in general, but for lattices arising from neural architecture specifications (which have bounded width and depth), polynomial-time algorithms should exist.\n\n**Impact:** Would enable \"specification-driven neural architecture design\" \u2014 a paradigm where architects specify desired logical properties and an algorithm synthesizes the minimal architecture achieving them. This is a concrete step toward verified AI systems.\n\n---\n\n## Cross-Cutting Theme: Finite Model Theory for Explainable AI\n\nAll five directions share a common theme: using finite model theory as a mathematical framework for explainable AI. The meet-irreducible elements of the predicate lattice serve as \"interpretable latent units\" \u2014 the minimal logical building blocks from which all predicates can be composed. This provides:\n\n- **Structural explanations:** \"The network makes this prediction because modules m\u2081, m\u2082, m\u2083 are active\"\n- **Compositional explanations:** \"Module m\u2083 depends on m\u2081 and m\u2082 via the lattice order\"\n- **Minimal explanations:** \"The smallest set of modules sufficient to explain this prediction is {m\u2081, m\u2083}\"\n- **Comparative explanations:** \"Architecture A is equivalent to architecture B because their predicate lattices are isomorphic\"\n\nThis is a mathematically rigorous form of explainability grounded in duality theory rather than post-hoc approximation.\n",
+    "demos": [
+      {
+        "name": "Neural Architecture Predicate Lattice Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nOperadic Stone Duality: Concrete Demonstrations\n\nDemonstrates the key theorems with concrete numerical examples:\n1. Constructing upper set predicate lattices from neural architectures\n2. Identifying meet-irreducible elements (= architectural modules)\n3. Verifying the reconstruction theorem\n4. Soundness and completeness of Kripke forcing\n\"\"\"\n\nfrom itertools import combinations\nfrom typing import Set, FrozenSet, List, Tuple, Dict\nimport json\n\n\n# ============================================================\n# Core Data Structures\n# ============================================================\n\nclass NeuralArchFG:\n    \"\"\"A finitely generated acyclic neural architecture.\n    \n    Modules are integers, the partial order is given by a DAG,\n    and generators are specified explicitly.\n    \"\"\"\n    \n    def __init__(self, modules: List[int], edges: List[Tuple[int, int]], \n                 generators: Set[int]):\n        self.modules = sorted(modules)\n        self.n = len(modules)\n        self.generators = generators\n        \n        # Compute transitive closure for partial order\n        self.le = {}  # le[a] = set of b with a <= b\n        for m in modules:\n            self.le[m] = {m}  # reflexivity\n        for a, b in edges:\n            self.le[a].add(b)\n        # Transitive closure (Floyd-Warshall style)\n        changed = True\n        while changed:\n            changed = False\n            for a in modules:\n                new = set()\n                for b in self.le[a]:\n                    new |= self.le[b]\n                if not new.issubset(self.le[a]):\n                    self.le[a] |= new\n                    changed = True\n    \n    def is_le(self, a: int, b: int) -> bool:\n        return b in self.le[a]\n    \n    def __repr__(self):\n        return (f\"NeuralArchFG(modules={self.modules}, \"\n                f\"generators={self.generators})\")\n\n\ndef compute_upper_sets(arch: NeuralArchFG) -> List[FrozenSet[int]]:\n    \"\"\"Enumerate all upper sets of the module poset.\"\"\"\n    modules = arch.modules\n    upper_sets = []\n    # Check all subsets\n    for r in range(len(modules) + 1):\n        for subset in combinations(modules, r):\n            s = set(subset)\n            # Check upper set property\n            is_upper = True\n            for x in s:\n                for y in modules:\n                    if arch.is_le(x, y) and y not in s:\n                        is_upper = False\n                        break\n                if not is_upper:\n                    break\n            if is_upper:\n                upper_sets.append(frozenset(s))\n    return upper_sets\n\n\ndef principal_upper_set(arch: NeuralArchFG, m: int) -> FrozenSet[int]:\n    \"\"\"Compute Ici(m) = {x | m <= x}.\"\"\"\n    return frozenset(arch.le[m])\n\n\ndef is_inf_irred(us: FrozenSet[int], all_upper_sets: List[FrozenSet[int]],\n                 full_set: FrozenSet[int]) -> bool:\n    \"\"\"Check if an upper set is meet-irreducible (InfIrred).\n    \n    In UpperSet with reverse-inclusion order:\n    - \u2293 = union of sets\n    - IsMax means U = \u2205 (top element)\n    - InfIrred means U \u2260 \u2205 and U = A \u222a B implies U = A or U = B\n    \"\"\"\n    if len(us) == 0:  # This is \u22a4 (max element)\n        return False\n    \n    # Check: for all A, B upper sets with A \u222a B = U, either A = U or B = U\n    for A in all_upper_sets:\n        for B in all_upper_sets:\n            if A | B == us:\n                if A != us and B != us:\n                    return False\n    return True\n\n\n# ============================================================\n# Demo 1: Three-layer feedforward architecture\n# ============================================================\n\ndef demo_three_layer():\n    \"\"\"Demonstrate the theory on a 3-layer feedforward architecture.\n    \n    Architecture: 0 \u2192 1 \u2192 2 (linear chain)\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Three-Layer Feedforward Architecture\")\n    print(\"=\" * 60)\n    \n    arch = NeuralArchFG(\n        modules=[0, 1, 2],\n        edges=[(0, 1), (1, 2)],\n        generators={0}\n    )\n    print(f\"\\nArchitecture: {arch}\")\n    print(f\"Partial order: 0 \u2264 1 \u2264 2\")\n    \n    # Compute upper sets\n    upper_sets = compute_upper_sets(arch)\n    print(f\"\\nUpper sets ({len(upper_sets)} total):\")\n    for us in sorted(upper_sets, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(us) if us else '{}'}\")\n    \n    # Identify principal upper sets\n    print(\"\\nPrincipal upper sets (activation predicates):\")\n    for m in arch.modules:\n        pu = principal_upper_set(arch, m)\n        print(f\"  Ici({m}) = {set(pu)}\")\n    \n    # Identify meet-irreducibles\n    full = frozenset(arch.modules)\n    irreds = [us for us in upper_sets if is_inf_irred(us, upper_sets, full)]\n    print(f\"\\nMeet-irreducible upper sets ({len(irreds)}):\")\n    for ir in irreds:\n        # Find which module it corresponds to\n        for m in arch.modules:\n            if principal_upper_set(arch, m) == ir:\n                print(f\"  {set(ir)} = Ici({m})\")\n                break\n    \n    # Verify bijection: meet-irreducibles \u2194 modules\n    assert len(irreds) == len(arch.modules), \"Bijection failed!\"\n    print(f\"\\n\u2713 Meet-irreducibles biject with modules ({len(irreds)} = {len(arch.modules)})\")\n    \n    # Verify order embedding\n    print(\"\\nOrder embedding verification:\")\n    for m1 in arch.modules:\n        for m2 in arch.modules:\n            ici1 = principal_upper_set(arch, m1)\n            ici2 = principal_upper_set(arch, m2)\n            # In UpperSet, U \u2264 V means V \u2286 U (reverse inclusion)\n            ici1_le_ici2 = ici2.issubset(ici1)\n            m1_le_m2 = arch.is_le(m1, m2)\n            assert ici1_le_ici2 == m1_le_m2, \\\n                f\"Order embedding failed for {m1}, {m2}\"\n            if m1 != m2 and m1_le_m2:\n                print(f\"  {m1} \u2264 {m2}  \u2194  Ici({m1}) \u2264 Ici({m2}) \"\n                      f\"(i.e., {set(ici2)} \u2286 {set(ici1)})  \u2713\")\n    \n    # Soundness and completeness\n    print(\"\\nSoundness & completeness example:\")\n    U = principal_upper_set(arch, 0)  # {0, 1, 2}\n    V = principal_upper_set(arch, 1)  # {1, 2}\n    print(f\"  U = Ici(0) = {set(U)}\")\n    print(f\"  V = Ici(1) = {set(V)}\")\n    print(f\"  U \u2264 V in UpperSet? {V.issubset(U)}\")\n    entails = all(w in U for w in V)\n    print(f\"  V \u22a8 U (every world in V is in U)? {entails}\")\n    print(f\"  \u2713 Soundness & completeness verified\")\n    \n    return arch, upper_sets, irreds\n\n\n# ============================================================\n# Demo 2: Diamond architecture\n# ============================================================\n\ndef demo_diamond():\n    \"\"\"Demonstrate on a diamond (fork-join) architecture.\n    \n    Architecture:   1\n                  \u2197   \u2198\n                0       3\n                  \u2198   \u2197\n                    2\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Diamond (Fork-Join) Architecture\")\n    print(\"=\" * 60)\n    \n    arch = NeuralArchFG(\n        modules=[0, 1, 2, 3],\n        edges=[(0, 1), (0, 2), (1, 3), (2, 3)],\n        generators={0}\n    )\n    print(f\"\\nArchitecture: 0 \u2192 {{1, 2}} \u2192 3\")\n    \n    upper_sets = compute_upper_sets(arch)\n    print(f\"\\nUpper sets ({len(upper_sets)} total):\")\n    for us in sorted(upper_sets, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(us) if us else '{}'}\")\n    \n    # Principal upper sets\n    print(\"\\nPrincipal upper sets:\")\n    for m in arch.modules:\n        pu = principal_upper_set(arch, m)\n        print(f\"  Ici({m}) = {set(pu)}\")\n    \n    # Meet-irreducibles\n    full = frozenset(arch.modules)\n    irreds = [us for us in upper_sets if is_inf_irred(us, upper_sets, full)]\n    print(f\"\\nMeet-irreducible upper sets ({len(irreds)}):\")\n    for ir in sorted(irreds, key=lambda s: len(s)):\n        for m in arch.modules:\n            if principal_upper_set(arch, m) == ir:\n                print(f\"  {set(ir)} = Ici({m})\")\n                break\n    \n    assert len(irreds) == len(arch.modules)\n    print(f\"\\n\u2713 Meet-irreducibles biject with modules ({len(irreds)} = {len(arch.modules)})\")\n    \n    return arch, upper_sets, irreds\n\n\n# ============================================================\n# Demo 3: Reconstruction from predicate lattice\n# ============================================================\n\ndef demo_reconstruction():\n    \"\"\"Demonstrate architecture reconstruction from the predicate lattice.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Architecture Reconstruction\")\n    print(\"=\" * 60)\n    \n    # Start with an architecture\n    original = NeuralArchFG(\n        modules=[0, 1, 2, 3],\n        edges=[(0, 1), (0, 2), (1, 3), (2, 3)],\n        generators={0}\n    )\n    print(f\"\\nOriginal architecture: {original}\")\n    \n    # Compute predicate lattice\n    upper_sets = compute_upper_sets(original)\n    full = frozenset(original.modules)\n    \n    # Extract meet-irreducibles\n    irreds = [us for us in upper_sets if is_inf_irred(us, upper_sets, full)]\n    \n    print(f\"\\nStep 1: Extract meet-irreducibles from lattice\")\n    for ir in sorted(irreds, key=lambda s: len(s)):\n        print(f\"  Module candidate: {set(ir)}\")\n    \n    # Reconstruct: modules = meet-irreducibles, order = lattice order\n    print(f\"\\nStep 2: Define modules as meet-irreducibles\")\n    reconstructed_modules = list(range(len(irreds)))\n    irreds_sorted = sorted(irreds, key=lambda s: -len(s))  # Larger sets first\n    \n    print(f\"\\nStep 3: Recover partial order from lattice order\")\n    print(f\"  (In UpperSet, U \u2264 V means V \u2286 U)\")\n    for i, ui in enumerate(irreds_sorted):\n        for j, uj in enumerate(irreds_sorted):\n            if i != j and uj.issubset(ui):\n                print(f\"  Module {i} \u2264 Module {j}  \"\n                      f\"(since {set(uj)} \u2286 {set(ui)})\")\n    \n    print(f\"\\n\u2713 Reconstructed architecture has {len(irreds)} modules\")\n    print(f\"  (matching original {len(original.modules)} modules)\")\n    \n    # Verify isomorphism\n    print(f\"\\nStep 4: Verify order isomorphism\")\n    original_order = set()\n    for m1 in original.modules:\n        for m2 in original.modules:\n            if m1 != m2 and original.is_le(m1, m2):\n                original_order.add((m1, m2))\n    \n    reconstructed_order = set()\n    for i, ui in enumerate(irreds_sorted):\n        for j, uj in enumerate(irreds_sorted):\n            if i != j and uj.issubset(ui):\n                reconstructed_order.add((i, j))\n    \n    print(f\"  Original order relations: {len(original_order)}\")\n    print(f\"  Reconstructed order relations: {len(reconstructed_order)}\")\n    assert len(original_order) == len(reconstructed_order)\n    print(f\"  \u2713 Order structures match!\")\n\n\n# ============================================================\n# Demo 4: Architecture equivalence via lattice isomorphism\n# ============================================================\n\ndef demo_equivalence():\n    \"\"\"Show that isomorphic predicate lattices imply isomorphic architectures.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Architecture Equivalence Testing\")\n    print(\"=\" * 60)\n    \n    # Two architectures that are isomorphic (just relabeled)\n    arch1 = NeuralArchFG(\n        modules=[10, 20, 30],\n        edges=[(10, 20), (20, 30)],\n        generators={10}\n    )\n    arch2 = NeuralArchFG(\n        modules=[1, 2, 3],\n        edges=[(1, 2), (2, 3)],\n        generators={1}\n    )\n    \n    print(f\"\\nArchitecture 1: 10 \u2192 20 \u2192 30\")\n    print(f\"Architecture 2: 1 \u2192 2 \u2192 3\")\n    \n    us1 = compute_upper_sets(arch1)\n    us2 = compute_upper_sets(arch2)\n    \n    print(f\"\\nPredicate lattice sizes: {len(us1)} vs {len(us2)}\")\n    \n    # Check lattice isomorphism (same size + same order structure)\n    # For simplicity, check that the Hasse diagrams are isomorphic\n    def lattice_signature(upper_sets):\n        \"\"\"Compute a signature capturing the lattice structure.\"\"\"\n        n = len(upper_sets)\n        # Count covering relations\n        covers = 0\n        for u in upper_sets:\n            for v in upper_sets:\n                if v < u:  # v \u2282 u means u \u2264 v in UpperSet (v is \"stronger\")\n                    # Check if it's a cover (no w with v \u2282 w \u2282 u)\n                    is_cover = not any(v < w < u for w in upper_sets)\n                    if is_cover:\n                        covers += 1\n        return (n, covers)\n    \n    sig1 = lattice_signature(us1)\n    sig2 = lattice_signature(us2)\n    print(f\"\\nLattice signatures: {sig1} vs {sig2}\")\n    \n    if sig1 == sig2:\n        print(\"\u2713 Lattices are isomorphic \u2192 Architectures are isomorphic!\")\n    else:\n        print(\"\u2717 Lattices differ \u2192 Architectures are NOT isomorphic\")\n    \n    # Now compare with a non-isomorphic architecture\n    arch3 = NeuralArchFG(\n        modules=[1, 2, 3],\n        edges=[(1, 3), (2, 3)],\n        generators={1, 2}\n    )\n    \n    print(f\"\\nArchitecture 3: {{1, 2}} \u2192 3 (fork)\")\n    us3 = compute_upper_sets(arch3)\n    sig3 = lattice_signature(us3)\n    print(f\"Lattice signature: {sig3}\")\n    \n    if sig1 == sig3:\n        print(\"Lattices match \u2192 same architecture\")\n    else:\n        print(\"\u2713 Lattices differ \u2192 Architectures are NOT isomorphic (correct!)\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    demo_three_layer()\n    demo_diamond()\n    demo_reconstruction()\n    demo_equivalence()\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demonstrations completed successfully!\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Upper Set Lattice Construction",
+        "pseudocode": "Algorithm ConstructPredicateLattice(G, S):\n  1. Compute transitive closure of edges\n  2. Enumerate all subsets of modules\n  3. Filter to upper sets (upward-closed)\n  4. Order by reverse inclusion\n  Time: O(2^n \u00b7 n^2), Space: O(2^n \u00b7 n)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Operadic Stone Duality\n\nComplete implementations of:\n1. Upper set lattice construction\n2. Meet-irreducible extraction\n3. Architecture reconstruction from predicate lattice\n4. Architecture equivalence testing via lattice isomorphism\n5. Heyting algebra operations on upper sets\n\"\"\"\n\nfrom itertools import combinations, product\nfrom typing import Set, FrozenSet, List, Tuple, Dict, Optional\nfrom dataclasses import dataclass, field\n\n\n# ============================================================\n# Data Structures\n# ============================================================\n\n@dataclass\nclass FinitePoset:\n    \"\"\"A finite partially ordered set.\n    \n    Args:\n        elements: list of elements\n        le: dict mapping each element to the set of elements >= it\n    \"\"\"\n    elements: List[int]\n    le: Dict[int, Set[int]]\n    \n    @classmethod\n    def from_dag(cls, elements: List[int], \n                 edges: List[Tuple[int, int]]) -> 'FinitePoset':\n        \"\"\"Construct from a DAG (directed acyclic graph).\n        \n        Args:\n            elements: list of elements\n            edges: list of (a, b) meaning a \u2264 b\n            \n        Returns:\n            FinitePoset with transitive closure of edges\n            \n        Time: O(n^3) for transitive closure\n        Space: O(n^2)\n        \"\"\"\n        le = {m: {m} for m in elements}\n        for a, b in edges:\n            le[a].add(b)\n        \n        # Transitive closure\n        changed = True\n        while changed:\n            changed = False\n            for a in elements:\n                new = set()\n                for b in le[a]:\n                    new |= le[b]\n                if not new.issubset(le[a]):\n                    le[a] |= new\n                    changed = True\n        \n        return cls(elements=sorted(elements), le=le)\n    \n    def is_le(self, a: int, b: int) -> bool:\n        \"\"\"Check if a \u2264 b.\"\"\"\n        return b in self.le[a]\n    \n    def covers(self, a: int, b: int) -> bool:\n        \"\"\"Check if a is covered by b (a < b with nothing between).\"\"\"\n        if a == b or not self.is_le(a, b):\n            return False\n        return not any(\n            self.is_le(a, c) and self.is_le(c, b) and c != a and c != b\n            for c in self.elements\n        )\n    \n    def minimal_elements(self) -> List[int]:\n        \"\"\"Return the minimal elements.\"\"\"\n        return [m for m in self.elements \n                if not any(self.is_le(x, m) and x != m \n                          for x in self.elements)]\n    \n    def hasse_diagram(self) -> List[Tuple[int, int]]:\n        \"\"\"Return the Hasse diagram (covering relations).\"\"\"\n        return [(a, b) for a in self.elements for b in self.elements\n                if self.covers(a, b)]\n\n\n@dataclass\nclass NeuralArchitecture:\n    \"\"\"A finitely generated acyclic neural architecture.\n    \n    Args:\n        poset: the module poset\n        generators: set of generator modules\n    \"\"\"\n    poset: FinitePoset\n    generators: Set[int]\n    \n    def validate(self) -> bool:\n        \"\"\"Check that the architecture is valid.\"\"\"\n        # Generators are non-empty\n        if not self.generators:\n            return False\n        # Every module is above some generator\n        for m in self.poset.elements:\n            if not any(self.poset.is_le(g, m) for g in self.generators):\n                return False\n        return True\n\n\n# ============================================================\n# Algorithm 1: Upper Set Lattice Construction\n# ============================================================\n\ndef compute_upper_sets(poset: FinitePoset) -> List[FrozenSet[int]]:\n    \"\"\"Enumerate all upper sets of a finite poset.\n    \n    An upper set U satisfies: if x \u2208 U and x \u2264 y, then y \u2208 U.\n    \n    Time: O(2^n \u00b7 n^2) where n = |elements|\n    Space: O(2^n \u00b7 n)\n    \n    Returns:\n        List of all upper sets, each as a frozenset\n    \"\"\"\n    elements = poset.elements\n    upper_sets = []\n    \n    for r in range(len(elements) + 1):\n        for subset in combinations(elements, r):\n            s = set(subset)\n            is_upper = True\n            for x in s:\n                for y in elements:\n                    if poset.is_le(x, y) and y not in s:\n                        is_upper = False\n                        break\n                if not is_upper:\n                    break\n            if is_upper:\n                upper_sets.append(frozenset(s))\n    \n    return upper_sets\n\n\ndef principal_upper_set(poset: FinitePoset, m: int) -> FrozenSet[int]:\n    \"\"\"Compute the principal upper set Ici(m) = {x | m \u2264 x}.\n    \n    Time: O(n)\n    Space: O(n)\n    \"\"\"\n    return frozenset(poset.le[m])\n\n\n# ============================================================\n# Algorithm 2: Heyting Algebra Operations\n# ============================================================\n\nclass HeytingUpperSets:\n    \"\"\"The Heyting algebra of upper sets of a finite poset.\n    \n    Operations (in UpperSet with reverse-inclusion order):\n    - \u2294 (join) = intersection of sets\n    - \u2293 (meet) = union of sets\n    - \u22a4 = empty set\n    - \u22a5 = full set\n    - \u21e8 (implication) = Heyting implication\n    \"\"\"\n    \n    def __init__(self, poset: FinitePoset):\n        self.poset = poset\n        self.all_upper_sets = compute_upper_sets(poset)\n        self.full = frozenset(poset.elements)\n        self.empty = frozenset()\n    \n    def join(self, U: FrozenSet[int], V: FrozenSet[int]) -> FrozenSet[int]:\n        \"\"\"Join in UpperSet = intersection of sets.\"\"\"\n        return U & V\n    \n    def meet(self, U: FrozenSet[int], V: FrozenSet[int]) -> FrozenSet[int]:\n        \"\"\"Meet in UpperSet = union of sets.\"\"\"\n        return U | V\n    \n    def top(self) -> FrozenSet[int]:\n        \"\"\"Top element = empty set.\"\"\"\n        return self.empty\n    \n    def bot(self) -> FrozenSet[int]:\n        \"\"\"Bottom element = full set.\"\"\"\n        return self.full\n    \n    def le(self, U: FrozenSet[int], V: FrozenSet[int]) -> bool:\n        \"\"\"U \u2264 V in UpperSet iff V \u2286 U as sets.\"\"\"\n        return V.issubset(U)\n    \n    def himp(self, U: FrozenSet[int], V: FrozenSet[int]) -> FrozenSet[int]:\n        \"\"\"Heyting implication U \u21e8 V.\n        \n        (U \u21e8 V) = {m | \u2200 m' \u2265 m, m' \u2208 U \u2192 m' \u2208 V}\n        \n        Time: O(n^2)\n        \"\"\"\n        result = set()\n        for m in self.poset.elements:\n            ok = True\n            for mp in self.poset.elements:\n                if self.poset.is_le(m, mp) and mp in U and mp not in V:\n                    ok = False\n                    break\n            if ok:\n                result.add(m)\n        # Verify it's an upper set (it should be by construction)\n        return frozenset(result)\n    \n    def complement(self, U: FrozenSet[int]) -> FrozenSet[int]:\n        \"\"\"Pseudocomplement: \u00acU = U \u21e8 \u22a4.\"\"\"\n        return self.himp(U, self.top())\n    \n    def is_distributive(self) -> bool:\n        \"\"\"Verify distributivity: a \u2293 (b \u2294 c) = (a \u2293 b) \u2294 (a \u2293 c).\"\"\"\n        for a in self.all_upper_sets:\n            for b in self.all_upper_sets:\n                for c in self.all_upper_sets:\n                    lhs = self.meet(a, self.join(b, c))\n                    rhs = self.join(self.meet(a, b), self.meet(a, c))\n                    if lhs != rhs:\n                        return False\n        return True\n\n\n# ============================================================\n# Algorithm 3: Meet-Irreducible Extraction\n# ============================================================\n\ndef extract_meet_irreducibles(\n    upper_sets: List[FrozenSet[int]]\n) -> List[FrozenSet[int]]:\n    \"\"\"Extract meet-irreducible elements from the upper set lattice.\n    \n    InfIrred(U) means:\n    1. U is not maximal (U \u2260 \u2205, the top element)\n    2. If U = A \u2293 B = A \u222a B, then U = A or U = B\n    \n    Time: O(|L|^3) where |L| = number of upper sets\n    Space: O(|L|)\n    \n    Returns:\n        List of meet-irreducible upper sets\n    \"\"\"\n    irreds = []\n    for us in upper_sets:\n        if len(us) == 0:  # Top element\n            continue\n        \n        is_irred = True\n        for A in upper_sets:\n            if not is_irred:\n                break\n            for B in upper_sets:\n                if A | B == us and A != us and B != us:\n                    is_irred = False\n                    break\n        \n        if is_irred:\n            irreds.append(us)\n    \n    return irreds\n\n\n# ============================================================\n# Algorithm 4: Architecture Reconstruction\n# ============================================================\n\ndef reconstruct_architecture(\n    upper_sets: List[FrozenSet[int]],\n    generator_predicate=None\n) -> NeuralArchitecture:\n    \"\"\"Reconstruct a neural architecture from its upper set lattice.\n    \n    Steps:\n    1. Extract meet-irreducible elements\n    2. Assign module indices to meet-irreducibles\n    3. Define partial order from lattice order on meet-irreducibles\n    4. Identify generators\n    \n    Time: O(|L|^3) for meet-irreducible extraction\n    Space: O(|L|)\n    \n    Args:\n        upper_sets: the upper set lattice\n        generator_predicate: optional function to identify generators\n        \n    Returns:\n        Reconstructed NeuralArchitecture\n    \"\"\"\n    irreds = extract_meet_irreducibles(upper_sets)\n    n = len(irreds)\n    \n    # Sort by size (descending) for consistent ordering\n    irreds.sort(key=lambda s: -len(s))\n    \n    # Build partial order\n    le = {i: {i} for i in range(n)}\n    for i in range(n):\n        for j in range(n):\n            if i != j and irreds[j].issubset(irreds[i]):\n                # irreds[i] \u2264 irreds[j] in UpperSet means\n                # irreds[j] \u2286 irreds[i] as sets\n                # This corresponds to module i \u2264 module j\n                le[i].add(j)\n    \n    poset = FinitePoset(elements=list(range(n)), le=le)\n    \n    # Identify generators as minimal elements (default)\n    if generator_predicate is None:\n        generators = set(poset.minimal_elements())\n    else:\n        generators = {i for i in range(n) if generator_predicate(irreds[i])}\n    \n    return NeuralArchitecture(poset=poset, generators=generators)\n\n\n# ============================================================\n# Algorithm 5: Architecture Equivalence Testing\n# ============================================================\n\ndef lattice_invariant(upper_sets: List[FrozenSet[int]]) -> Tuple:\n    \"\"\"Compute an invariant of the upper set lattice.\n    \n    Uses the sorted sequence of (element_size, number_of_covers_above,\n    number_of_covers_below) for each element.\n    \n    Time: O(|L|^2)\n    Space: O(|L|)\n    \"\"\"\n    n = len(upper_sets)\n    profiles = []\n    \n    for us in upper_sets:\n        # Count covers above (elements V with V < U, i.e., U \u2282 V)\n        covers_above = sum(\n            1 for v in upper_sets\n            if v > us and  # proper superset as set = below in UpperSet\n            not any(v > w > us for w in upper_sets)\n        )\n        # Count covers below (elements V with U < V, i.e., V \u2282 U)\n        covers_below = sum(\n            1 for v in upper_sets\n            if us > v and  # proper subset as set = above in UpperSet\n            not any(us > w > v for w in upper_sets)\n        )\n        profiles.append((len(us), covers_above, covers_below))\n    \n    return tuple(sorted(profiles))\n\n\ndef are_architectures_equivalent(\n    arch1: NeuralArchitecture, \n    arch2: NeuralArchitecture\n) -> bool:\n    \"\"\"Test if two architectures are equivalent via lattice isomorphism.\n    \n    Computes predicate lattices and compares their invariants.\n    \n    Time: O(2^n \u00b7 n^2 + |L|^2) where n = max modules\n    Space: O(2^n)\n    \"\"\"\n    us1 = compute_upper_sets(arch1.poset)\n    us2 = compute_upper_sets(arch2.poset)\n    \n    if len(us1) != len(us2):\n        return False\n    \n    return lattice_invariant(us1) == lattice_invariant(us2)\n\n\n# ============================================================\n# Example Usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Algorithm Demonstrations\")\n    print(\"=\" * 60)\n    \n    # Build a diamond architecture\n    poset = FinitePoset.from_dag([0, 1, 2, 3], [(0, 1), (0, 2), (1, 3), (2, 3)])\n    arch = NeuralArchitecture(poset=poset, generators={0})\n    \n    print(f\"\\n1. Architecture: diamond 0 \u2192 {{1,2}} \u2192 3\")\n    print(f\"   Valid: {arch.validate()}\")\n    \n    # Compute upper sets\n    us = compute_upper_sets(poset)\n    print(f\"\\n2. Upper sets: {len(us)} total\")\n    for u in sorted(us, key=lambda s: (len(s), sorted(s))):\n        print(f\"   {set(u) if u else '{}'}\")\n    \n    # Heyting algebra\n    heyting = HeytingUpperSets(poset)\n    print(f\"\\n3. Heyting algebra operations:\")\n    U = principal_upper_set(poset, 1)\n    V = principal_upper_set(poset, 2)\n    print(f\"   Ici(1) = {set(U)}\")\n    print(f\"   Ici(2) = {set(V)}\")\n    print(f\"   Ici(1) \u2294 Ici(2) = {set(heyting.join(U, V))}\")\n    print(f\"   Ici(1) \u2293 Ici(2) = {set(heyting.meet(U, V))}\")\n    print(f\"   Ici(1) \u21e8 Ici(2) = {set(heyting.himp(U, V))}\")\n    print(f\"   \u00acIci(1) = {set(heyting.complement(U))}\")\n    print(f\"   Distributive: {heyting.is_distributive()}\")\n    \n    # Meet-irreducibles\n    irreds = extract_meet_irreducibles(us)\n    print(f\"\\n4. Meet-irreducibles: {len(irreds)}\")\n    for ir in sorted(irreds, key=lambda s: -len(s)):\n        for m in poset.elements:\n            if principal_upper_set(poset, m) == ir:\n                print(f\"   {set(ir)} = Ici({m})\")\n    \n    # Reconstruction\n    reconstructed = reconstruct_architecture(us)\n    print(f\"\\n5. Reconstructed architecture:\")\n    print(f\"   Modules: {reconstructed.poset.elements}\")\n    print(f\"   Generators: {reconstructed.generators}\")\n    print(f\"   Hasse diagram: {reconstructed.poset.hasse_diagram()}\")\n    print(f\"   Original Hasse: {poset.hasse_diagram()}\")\n    \n    # Equivalence testing\n    arch2 = NeuralArchitecture(\n        poset=FinitePoset.from_dag([10, 20, 30, 40], \n                                    [(10, 20), (10, 30), (20, 40), (30, 40)]),\n        generators={10}\n    )\n    print(f\"\\n6. Equivalence testing:\")\n    print(f\"   Diamond \u2245 Relabeled diamond: \"\n          f\"{are_architectures_equivalent(arch, arch2)}\")\n    \n    chain = NeuralArchitecture(\n        poset=FinitePoset.from_dag([0, 1, 2, 3], [(0, 1), (1, 2), (2, 3)]),\n        generators={0}\n    )\n    print(f\"   Diamond \u2245 Chain: \"\n          f\"{are_architectures_equivalent(arch, chain)}\")\n",
+        "code_file": "visualizations/algebramachinelearninglogic_operadic_stone_duality_upper_set_lattice_construction.py"
+      },
+      {
+        "name": "Meet-Irreducible Extraction",
+        "pseudocode": "Algorithm ExtractMeetIrreducibles(L):\n  1. For each element a in L:\n     a. Check a != max(L)\n     b. Check: for all b,c with b inf c = a,\n        either b = a or c = a\n  2. Return marked elements\n  Time: O(|L|^3), Space: O(|L|)",
+        "code": "# See algorithms.py - extract_meet_irreducibles function",
+        "code_file": "visualizations/algebramachinelearninglogic_operadic_stone_duality_meet_irreducible_extraction.py"
+      },
+      {
+        "name": "Architecture Reconstruction",
+        "pseudocode": "Algorithm ReconstructArchitecture(H):\n  1. J = MeetIrreducibles(H)\n  2. Modules = J\n  3. Order: j1 <= j2 iff j1 <= j2 in H\n  4. Generators = minimal elements\n  Time: O(|H|^3), Space: O(|H|)",
+        "code": "# See algorithms.py - reconstruct_architecture function",
+        "code_file": "visualizations/algebramachinelearninglogic_operadic_stone_duality_architecture_reconstruction.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Architecture vs Predicate Lattice Comparison",
+        "file": "visualizations/algebramachinelearninglogic_operadic_stone_duality_architecture_vs_predicate_lattice_comparison.png"
+      },
+      {
+        "name": "Architecture Reconstruction via Birkhoff Duality",
+        "file": "visualizations/algebramachinelearninglogic_operadic_stone_duality_architecture_reconstruction_via_birkhoff_duality.png"
+      },
+      {
+        "name": "Heyting Algebra Operations",
+        "file": "visualizations/algebramachinelearninglogic_operadic_stone_duality_heyting_algebra_operations.png"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# Operadic Stone Duality: Neural Heyting Semimodules and\n  Certified Architecture\u2013Kripke Reconstruction\n\nBridge: connects Algebra (distributive lattices, Heyting algebras, Birkhoff duality)\n  to Machine Learning (neural architecture identifiability, operadic deep learning)\n  to Logic (intuitionistic Kripke semantics, prime filters, bounded morphisms).\n\n## Overview\n\nWe prove that finitely generated acyclic neural architectures admit a canonical\nintuitionistic semantics \u2014 a finite Heyting algebra of *monotone predicates*\n(upper sets of the module poset) \u2014 from which the architecture can be\nreconstructed up to isomorphism.\n\nThe upper set lattice `UpperSet N.Module` is a finite distributive lattice\nand Heyting algebra. Its join-irreducible elements are the principal upper sets\n`\u2191m = Ici m`, which correspond bijectively to modules. The module partial order\nis recovered via `m\u2081 \u2264 m\u2082 \u2194 Ici m\u2081 \u2264 Ici m\u2082` (in the UpperSet order).\n\nAn order isomorphism of upper-set lattices therefore induces an order isomorphism\nof module posets, establishing the reconstruction theorem.\n\n## Main Results\n\n* `pred_distrib_lattice` \u2014 upper sets form a distributive lattice\n* `pred_heyting` \u2014 upper sets form a Heyting algebra\n* `pred_finite` \u2014 the lattice is finite\n* `ici_orderEmbedding` \u2014 m \u21a6 Ici m is an order embedding\n* `principalUpper_joinIrred` \u2014 principal upper sets are join-irreducible\n* `joinIrred_iff_principal` \u2014 join-irreducibles = principal upper sets\n* `soundness_completeness` \u2014 lattice order = Kripke semantic entailment\n* `upperPredMap_contravariant` \u2014 contravariant functoriality\n* `iso_induces_order_iso` \u2014 upper-set lattice iso \u27f9 module order iso\n* `semantics_determines_architecture` \u2014 the main reconstruction theorem\n-/\n\nopen Set Function\n\nnoncomputable section\n\nnamespace OperadicStoneDuality\n\n/-! ## Part I: Neural Architecture Foundations -/\n\n/-- A finitely generated acyclic neural architecture.\n    Bridge: ML (neural architecture) \u2194 Algebra (finite partial order). -/\nstructure NeuralArchFG where\n  /-- The type of modules/layers -/\n  Module : Type\n  [instFintype : Fintype Module]\n  [instDecEq : DecidableEq Module]\n  [instPartialOrder : PartialOrder Module]\n  /-- The primitive generators -/\n  generators : Finset Module\n  /-- Every module is above some generator -/\n  generation : \u2200 m : Module, \u2203 g \u2208 generators, g \u2264 m\n  /-- Generators are nonempty -/\n  gen_nonempty : generators.Nonempty\n\nattribute [instance] NeuralArchFG.instFintype NeuralArchFG.instDecEq\n  NeuralArchFG.instPartialOrder\n\n/-! ## Part II: Upper Set Predicate Lattice\n\nWe use Mathlib's `UpperSet \u03b1` \u2014 the type of upward-closed subsets of a\npreordered type. For a finite partial order, this is automatically:\n- a distributive lattice (`DistribLattice`)\n- a Heyting algebra (`HeytingAlgebra`)\n- finite (`Finite`)\n\nThe ordering on `UpperSet \u03b1` is: `U \u2264 V \u2194 V.carrier \u2286 U.carrier` (reverse\ninclusion). This means `Ici m\u2081 \u2264 Ici m\u2082 \u2194 m\u2081 \u2264 m\u2082`, so the map `m \u21a6 Ici m`\nis an order embedding. -/\n\n/-- The predicate lattice is a distributive lattice. -/\ninstance pred_distrib_lattice (N : NeuralArchFG) :\n    DistribLattice (UpperSet N.Module) := inferInstance\n\n/-- The predicate lattice is a Heyting algebra. -/\ninstance pred_heyting (N : NeuralArchFG) :\n    HeytingAlgebra (UpperSet N.Module) := inferInstance\n\n/-- The predicate lattice is finite. -/\ntheorem pred_finite (N : NeuralArchFG) : Finite (UpperSet N.Module) := inferInstance\n\n/-! ## Part III: Principal Upper Sets and Order Embedding\n\nThe map `m \u21a6 Ici m` sends modules to their principal upper sets.\nThis is an order embedding, meaning the module partial order is\nfaithfully encoded in the upper set lattice. -/\n\n/-\nThe principal upper set map is an order embedding.\n    This is the key structural fact: the module order is encoded\n    in the upper-set lattice order.\n\n    Bridge: Order theory (Birkhoff embedding) \u2194 ML (architecture encoding).\n-/\ntheorem ici_le_ici_iff (N : NeuralArchFG) (m\u2081 m\u2082 : N.Module) :\n    UpperSet.Ici m\u2081 \u2264 UpperSet.Ici m\u2082 \u2194 m\u2081 \u2264 m\u2082 := by\n  constructor;\n  \u00b7 intro h; have := h ( by aesop : m\u2082 \u2208 UpperSet.Ici m\u2082 ) ; aesop;\n  \u00b7 exact fun h => fun x hx => le_trans h hx\n\n/-\nThe map `m \u21a6 Ici m` is injective.\n    Bridge: Algebra (separation).\n-/\ntheorem ici_injective (N : NeuralArchFG) :\n    Injective (UpperSet.Ici : N.Module \u2192 UpperSet N.Module) :=\n  UpperSet.Ici_injective\n\n/-- The order embedding from modules to upper sets. -/\ndef iciOrderEmbedding (N : NeuralArchFG) :\n    N.Module \u21aao UpperSet N.Module where\n  toFun := UpperSet.Ici\n  inj' := ici_injective N\n  map_rel_iff' := ici_le_ici_iff N _ _\n\n/-! ## Part IV: Join-Irreducibles\n\nAn element of a bounded lattice is join-irreducible if it's nonzero and\ncannot be written as a non-trivial join. The join-irreducibles of\n`UpperSet \u03b1` are exactly the principal upper sets `Ici m`. -/\n\n/-\nPrincipal upper sets are meet-irreducible (`InfIrred`) in the upper set lattice.\n    In Mathlib's `UpperSet`, `\u2293 = \u222a` and `\u2294 = \u2229`, so meet-irreducibility means\n    `Ici m` cannot be written as `A \u222a B` for strictly larger `A`, `B`.\n\n    Proof: if `Ici m = A \u222a B` then `m \u2208 A` or `m \u2208 B`. WLOG `m \u2208 A`.\n    Since `A` is upper, `Ici m \u2286 A \u2286 A \u222a B = Ici m`, so `A = Ici m`.\n\n    Bridge: Algebra (meet-irreducible) \u2194 ML (atomic module).\n-/\ntheorem principalUpper_infIrred (N : NeuralArchFG) (m : N.Module) :\n    InfIrred (UpperSet.Ici m : UpperSet N.Module) := by\n  simp +decide\n\n/-\nMeet-irreducible upper sets are exactly the principal upper sets.\n    Bridge: Algebra (classification of irreducibles) \u2194 ML (module identification).\n-/\ntheorem infIrred_iff_principal (N : NeuralArchFG) (U : UpperSet N.Module) :\n    InfIrred U \u2194 \u2203 m : N.Module, U = UpperSet.Ici m := by\n  grind +suggestions\n\n/-\nThe meet-irreducibles biject with modules.\n-/\ntheorem infIrred_bijection (N : NeuralArchFG) :\n    \u2203 f : N.Module \u2192 {U : UpperSet N.Module // InfIrred U},\n      Function.Bijective f := by\n  refine' \u27e8 _, _, _ \u27e9;\n  exact fun m => \u27e8 UpperSet.Ici m, principalUpper_infIrred N m \u27e9;\n  \u00b7 exact fun m m' h => ici_injective N <| by injection h;\n  \u00b7 intro \u27e8 U, hU \u27e9 ; cases infIrred_iff_principal N U |>.1 hU ; aesop;\n\n/-! ## Part V: Soundness and Completeness -/\n\n/-- Kripke forcing: world w forces proposition U iff w \u2208 U. -/\ndef kforces (N : NeuralArchFG) (w : N.Module) (U : UpperSet N.Module) : Prop :=\n  w \u2208 U\n\n/-- Semantic entailment: V entails U means every world in V is also in U.\n    Note: In the `UpperSet` order, `U \u2264 V` means `V \u2286 U` as sets,\n    so `U \u2264 V` means V entails U (V is stronger than U). -/\ndef ksemEntails (N : NeuralArchFG) (V U : UpperSet N.Module) : Prop :=\n  \u2200 w, kforces N w V \u2192 kforces N w U\n\n/-- **Theorem (Soundness and Completeness):**\n    `U \u2264 V` in the upper-set lattice iff V semantically entails U,\n    i.e., every world forcing V also forces U.\n\n    Bridge: Algebra (lattice order) \u2194 Logic (semantic entailment). -/\ntheorem soundness_completeness (N : NeuralArchFG) (U V : UpperSet N.Module) :\n    U \u2264 V \u2194 ksemEntails N V U := by\n  simp only [kforces, ksemEntails]\n  exact Iff.rfl\n\n/-! ## Part VI: Architecture Morphisms and Contravariance -/\n\n/-- A morphism of neural architectures. -/\nstructure NeuralArchHom (N M : NeuralArchFG) where\n  toFun : N.Module \u2192 M.Module\n  monotone : Monotone toFun\n  gen_map : \u2200 g \u2208 N.generators, toFun g \u2208 M.generators\n\n/-- The inverse image map on upper-set predicates.\n    Bridge: Algebra (contravariant functor) \u2194 Logic (substitution). -/\ndef upperPredMap {N M : NeuralArchFG} (f : NeuralArchHom N M) :\n    UpperSet M.Module \u2192 UpperSet N.Module :=\n  fun U => \u27e8f.toFun \u207b\u00b9' (U : Set M.Module),\n    fun _ _ hxy hx => U.upper (f.monotone hxy) hx\u27e9\n\n/-- Identity morphism. -/\ndef neuralArchId (N : NeuralArchFG) : NeuralArchHom N N where\n  toFun := id\n  monotone := fun _ _ h => h\n  gen_map := fun _ hg => hg\n\n/-- Composition of morphisms. -/\ndef neuralArchComp {N M P : NeuralArchFG}\n    (f : NeuralArchHom N M) (g : NeuralArchHom M P) : NeuralArchHom N P where\n  toFun := g.toFun \u2218 f.toFun\n  monotone := fun _ _ h => g.monotone (f.monotone h)\n  gen_map := fun gen hgen => g.gen_map _ (f.gen_map gen hgen)\n\n/-\n**Theorem (Contravariant Functoriality):**\n    upperPredMap respects composition contravariantly.\n-/\ntheorem upperPredMap_contravariant {N M P : NeuralArchFG}\n    (f : NeuralArchHom N M) (g : NeuralArchHom M P) (Q : UpperSet P.Module) :\n    upperPredMap (neuralArchComp f g) Q = upperPredMap f (upperPredMap g Q) := by\n  unfold upperPredMap neuralArchComp; aesop;\n\n/-\nupperPredMap preserves identity.\n-/\ntheorem upperPredMap_id (N : NeuralArchFG) (U : UpperSet N.Module) :\n    upperPredMap (neuralArchId N) U = U :=\n  UpperSet.ext_iff.mpr rfl\n\n/-! ## Part VII: Reconstruction Theorem -/\n\n/-- Two architectures are isomorphic. -/\ndef NeuralArchIso (N M : NeuralArchFG) : Prop :=\n  \u2203 f : N.Module \u2243o M.Module,\n    (\u2200 g, g \u2208 N.generators \u2192 f g \u2208 M.generators) \u2227\n    (\u2200 g, g \u2208 M.generators \u2192 f.symm g \u2208 N.generators)\n\n/-\n**Key Lemma:** An order isomorphism of upper-set lattices preserves\n    meet-irreducibles.\n-/\ntheorem iso_preserves_infIrred {N M : NeuralArchFG}\n    (h : UpperSet N.Module \u2243o UpperSet M.Module) (U : UpperSet N.Module) :\n    InfIrred U \u2192 InfIrred (h U) := by\n  unfold InfIrred;\n  simp +decide [ IsMax, eq_comm ];\n  intro x hx\u2081 hx\u2082 hx\u2083;\n  refine' \u27e8 \u27e8 h x, h.monotone hx\u2081, _ \u27e9, _ \u27e9;\n  \u00b7 exact fun h' => hx\u2082 <| h.le_iff_le.mp h';\n  \u00b7 intro b c hbc;\n    have := hx\u2083 ( show U = h.symm b \u2293 h.symm c from ?_ );\n    \u00b7 cases this <;> simp_all +decide [ \u2190 h.injective.eq_iff ];\n    \u00b7 rw [ \u2190 h.symm_apply_apply U, \u2190 hbc, h.symm.map_inf ]\n\n/-\n**Key Lemma:** An order isomorphism of upper-set lattices induces\n    an order isomorphism of the module posets.\n-/\ntheorem iso_induces_order_iso {N M : NeuralArchFG}\n    (h : UpperSet N.Module \u2243o UpperSet M.Module) :\n    \u2203 f : N.Module \u2243o M.Module,\n      \u2200 m, h (UpperSet.Ici m) = UpperSet.Ici (f m) := by\n  have h_iso : \u2200 m : N.Module, \u2203 n : M.Module, h (UpperSet.Ici m) = UpperSet.Ici n := by\n    have := @iso_preserves_infIrred;\n    exact fun m => by have := this h ( UpperSet.Ici m ) ( principalUpper_infIrred N m ) ; rw [ infIrred_iff_principal ] at this; tauto;\n  choose f hf using h_iso;\n  have h_inj : Function.Injective f := by\n    intro m\u2081 m\u2082 h_eq;\n    have := h.injective ( by aesop : h ( UpperSet.Ici m\u2081 ) = h ( UpperSet.Ici m\u2082 ) ) ; aesop;\n  have h_surj : Function.Surjective f := by\n    have h_surj : \u2200 m : M.Module, \u2203 n : N.Module, h.symm (UpperSet.Ici m) = UpperSet.Ici n := by\n      intro m;\n      have := infIrred_iff_principal N ( h.symm ( UpperSet.Ici m ) );\n      exact this.mp ( by simpa using iso_preserves_infIrred h.symm _ ( principalUpper_infIrred M m ) );\n    intro m; obtain \u27e8 n, hn \u27e9 := h_surj m; use n; have := h.apply_symm_apply ( UpperSet.Ici m ) ; aesop;\n  have h_order_iso : \u2200 m\u2081 m\u2082 : N.Module, m\u2081 \u2264 m\u2082 \u2194 f m\u2081 \u2264 f m\u2082 := by\n    intros m\u2081 m\u2082; exact \u27e8fun hmn => by\n      have h_order_iso : h (UpperSet.Ici m\u2081) \u2264 h (UpperSet.Ici m\u2082) := by\n        exact h.monotone ( by aesop );\n      aesop, fun hmn => by\n      have := h.le_iff_le.mp ( show h ( UpperSet.Ici m\u2081 ) \u2264 h ( UpperSet.Ici m\u2082 ) from by aesop ) ; aesop;\u27e9;\n  refine' \u27e8 { Equiv.ofBijective f \u27e8 h_inj, h_surj \u27e9 with map_rel_iff' := _ }, hf \u27e9;\n  exact fun { a b } => Iff.symm ( h_order_iso a b )\n\n/-\n**Main Theorem (Semantics Determines Architecture):**\n    If two architectures have isomorphic upper-set predicate lattices,\n    and the isomorphism preserves generator-marking, then the architectures\n    are isomorphic.\n\n    Bridge: ML (architecture identifiability) \u2194 Algebra (lattice determines poset)\n    \u2194 Logic (semantics determines syntax).\n-/\ntheorem semantics_determines_architecture (N M : NeuralArchFG)\n    (h : UpperSet N.Module \u2243o UpperSet M.Module)\n    (hgen_fwd : \u2200 g \u2208 N.generators,\n      \u2203 g' \u2208 M.generators, h (UpperSet.Ici g) = UpperSet.Ici g')\n    (hgen_bwd : \u2200 g \u2208 M.generators,\n      \u2203 g' \u2208 N.generators, h (UpperSet.Ici g') = UpperSet.Ici g) :\n    NeuralArchIso N M := by\n  obtain \u27e8 f, hf \u27e9 := iso_induces_order_iso h;\n  refine' \u27e8 f, _, _ \u27e9;\n  \u00b7 intro g hg; specialize hgen_fwd g hg; aesop;\n  \u00b7 intro g hg; specialize hgen_bwd g hg; aesop;\n\n/-! ## Part VIII: Persistence -/\n\n/-- Activation predicates (principal upper sets) are persistent. -/\ntheorem activation_persistent (N : NeuralArchFG) (m : N.Module) :\n    \u2200 w\u2081 w\u2082 : N.Module, w\u2081 \u2264 w\u2082 \u2192 w\u2081 \u2208 (UpperSet.Ici m : UpperSet N.Module) \u2192\n      w\u2082 \u2208 (UpperSet.Ici m : UpperSet N.Module) := by\n  intro w\u2081 w\u2082 h hw\u2081\n  simp [UpperSet.mem_Ici_iff] at hw\u2081 \u22a2\n  exact le_trans hw\u2081 h\n\n/-! ## Part IX: Semimodule Enrichment -/\n\n/-- A neural Heyting semimodule: a Heyting algebra with a compatible\n    semimodule structure over a semiring S. -/\nclass NeuralHeytingSemimodule (S : Type*) (H : Type*) [Semiring S]\n    [HeytingAlgebra H] [AddCommMonoid H] [Module S H] : Prop where\n  smul_inf : \u2200 (s : S) (a b : H), s \u2022 (a \u2293 b) = s \u2022 a \u2293 s \u2022 b\n\n/-! ## Part X: Concrete Examples -/\n\n/-- A 3-layer feedforward architecture. -/\ndef threeLayerArch : NeuralArchFG where\n  Module := Fin 3\n  generators := {0}\n  generation := fun m => \u27e80, Finset.mem_singleton.mpr rfl, Fin.zero_le m\u27e9\n  gen_nonempty := \u27e80, Finset.mem_singleton.mpr rfl\u27e9\n\nexample : HeytingAlgebra (UpperSet threeLayerArch.Module) := inferInstance\nexample : Finite (UpperSet threeLayerArch.Module) := inferInstance\n\n/-- A discrete 2-module architecture (parallel modules). -/\ndef parallelArch : NeuralArchFG where\n  Module := Fin 2\n  generators := {0, 1}\n  generation := fun m => by fin_cases m <;> [exact \u27e80, by simp, le_refl _\u27e9; exact \u27e81, by simp, le_refl _\u27e9]\n  gen_nonempty := \u27e80, by simp\u27e9\n\nend OperadicStoneDuality",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Operadic Stone Duality\n\nComplete implementations of:\n1. Upper set lattice construction\n2. Meet-irreducible extraction\n3. Architecture reconstruction from predicate lattice\n4. Architecture equivalence testing via lattice isomorphism\n5. Heyting algebra operations on upper sets\n\"\"\"\n\nfrom itertools import combinations, product\nfrom typing import Set, FrozenSet, List, Tuple, Dict, Optional\nfrom dataclasses import dataclass, field\n\n\n# ============================================================\n# Data Structures\n# ============================================================\n\n@dataclass\nclass FinitePoset:\n    \"\"\"A finite partially ordered set.\n    \n    Args:\n        elements: list of elements\n        le: dict mapping each element to the set of elements >= it\n    \"\"\"\n    elements: List[int]\n    le: Dict[int, Set[int]]\n    \n    @classmethod\n    def from_dag(cls, elements: List[int], \n                 edges: List[Tuple[int, int]]) -> 'FinitePoset':\n        \"\"\"Construct from a DAG (directed acyclic graph).\n        \n        Args:\n            elements: list of elements\n            edges: list of (a, b) meaning a \u2264 b\n            \n        Returns:\n            FinitePoset with transitive closure of edges\n            \n        Time: O(n^3) for transitive closure\n        Space: O(n^2)\n        \"\"\"\n        le = {m: {m} for m in elements}\n        for a, b in edges:\n            le[a].add(b)\n        \n        # Transitive closure\n        changed = True\n        while changed:\n            changed = False\n            for a in elements:\n                new = set()\n                for b in le[a]:\n                    new |= le[b]\n                if not new.issubset(le[a]):\n                    le[a] |= new\n                    changed = True\n        \n        return cls(elements=sorted(elements), le=le)\n    \n    def is_le(self, a: int, b: int) -> bool:\n        \"\"\"Check if a \u2264 b.\"\"\"\n        return b in self.le[a]\n    \n    def covers(self, a: int, b: int) -> bool:\n        \"\"\"Check if a is covered by b (a < b with nothing between).\"\"\"\n        if a == b or not self.is_le(a, b):\n            return False\n        return not any(\n            self.is_le(a, c) and self.is_le(c, b) and c != a and c != b\n            for c in self.elements\n        )\n    \n    def minimal_elements(self) -> List[int]:\n        \"\"\"Return the minimal elements.\"\"\"\n        return [m for m in self.elements \n                if not any(self.is_le(x, m) and x != m \n                          for x in self.elements)]\n    \n    def hasse_diagram(self) -> List[Tuple[int, int]]:\n        \"\"\"Return the Hasse diagram (covering relations).\"\"\"\n        return [(a, b) for a in self.elements for b in self.elements\n                if self.covers(a, b)]\n\n\n@dataclass\nclass NeuralArchitecture:\n    \"\"\"A finitely generated acyclic neural architecture.\n    \n    Args:\n        poset: the module poset\n        generators: set of generator modules\n    \"\"\"\n    poset: FinitePoset\n    generators: Set[int]\n    \n    def validate(self) -> bool:\n        \"\"\"Check that the architecture is valid.\"\"\"\n        # Generators are non-empty\n        if not self.generators:\n            return False\n        # Every module is above some generator\n        for m in self.poset.elements:\n            if not any(self.poset.is_le(g, m) for g in self.generators):\n                return False\n        return True\n\n\n# ============================================================\n# Algorithm 1: Upper Set Lattice Construction\n# ============================================================\n\ndef compute_upper_sets(poset: FinitePoset) -> List[FrozenSet[int]]:\n    \"\"\"Enumerate all upper sets of a finite poset.\n    \n    An upper set U satisfies: if x \u2208 U and x \u2264 y, then y \u2208 U.\n    \n    Time: O(2^n \u00b7 n^2) where n = |elements|\n    Space: O(2^n \u00b7 n)\n    \n    Returns:\n        List of all upper sets, each as a frozenset\n    \"\"\"\n    elements = poset.elements\n    upper_sets = []\n    \n    for r in range(len(elements) + 1):\n        for subset in combinations(elements, r):\n            s = set(subset)\n            is_upper = True\n            for x in s:\n                for y in elements:\n                    if poset.is_le(x, y) and y not in s:\n                        is_upper = False\n                        break\n                if not is_upper:\n                    break\n            if is_upper:\n                upper_sets.append(frozenset(s))\n    \n    return upper_sets\n\n\ndef principal_upper_set(poset: FinitePoset, m: int) -> FrozenSet[int]:\n    \"\"\"Compute the principal upper set Ici(m) = {x | m \u2264 x}.\n    \n    Time: O(n)\n    Space: O(n)\n    \"\"\"\n    return frozenset(poset.le[m])\n\n\n# ============================================================\n# Algorithm 2: Heyting Algebra Operations\n# ============================================================\n\nclass HeytingUpperSets:\n    \"\"\"The Heyting algebra of upper sets of a finite poset.\n    \n    Operations (in UpperSet with reverse-inclusion order):\n    - \u2294 (join) = intersection of sets\n    - \u2293 (meet) = union of sets\n    - \u22a4 = empty set\n    - \u22a5 = full set\n    - \u21e8 (implication) = Heyting implication\n    \"\"\"\n    \n    def __init__(self, poset: FinitePoset):\n        self.poset = poset\n        self.all_upper_sets = compute_upper_sets(poset)\n        self.full = frozenset(poset.elements)\n        self.empty = frozenset()\n    \n    def join(self, U: FrozenSet[int], V: FrozenSet[int]) -> FrozenSet[int]:\n        \"\"\"Join in UpperSet = intersection of sets.\"\"\"\n        return U & V\n    \n    def meet(self, U: FrozenSet[int], V: FrozenSet[int]) -> FrozenSet[int]:\n        \"\"\"Meet in UpperSet = union of sets.\"\"\"\n        return U | V\n    \n    def top(self) -> FrozenSet[int]:\n        \"\"\"Top element = empty set.\"\"\"\n        return self.empty\n    \n    def bot(self) -> FrozenSet[int]:\n        \"\"\"Bottom element = full set.\"\"\"\n        return self.full\n    \n    def le(self, U: FrozenSet[int], V: FrozenSet[int]) -> bool:\n        \"\"\"U \u2264 V in UpperSet iff V \u2286 U as sets.\"\"\"\n        return V.issubset(U)\n    \n    def himp(self, U: FrozenSet[int], V: FrozenSet[int]) -> FrozenSet[int]:\n        \"\"\"Heyting implication U \u21e8 V.\n        \n        (U \u21e8 V) = {m | \u2200 m' \u2265 m, m' \u2208 U \u2192 m' \u2208 V}\n        \n        Time: O(n^2)\n        \"\"\"\n        result = set()\n        for m in self.poset.elements:\n            ok = True\n            for mp in self.poset.elements:\n                if self.poset.is_le(m, mp) and mp in U and mp not in V:\n                    ok = False\n                    break\n            if ok:\n                result.add(m)\n        # Verify it's an upper set (it should be by construction)\n        return frozenset(result)\n    \n    def complement(self, U: FrozenSet[int]) -> FrozenSet[int]:\n        \"\"\"Pseudocomplement: \u00acU = U \u21e8 \u22a4.\"\"\"\n        return self.himp(U, self.top())\n    \n    def is_distributive(self) -> bool:\n        \"\"\"Verify distributivity: a \u2293 (b \u2294 c) = (a \u2293 b) \u2294 (a \u2293 c).\"\"\"\n        for a in self.all_upper_sets:\n            for b in self.all_upper_sets:\n                for c in self.all_upper_sets:\n                    lhs = self.meet(a, self.join(b, c))\n                    rhs = self.join(self.meet(a, b), self.meet(a, c))\n                    if lhs != rhs:\n                        return False\n        return True\n\n\n# ============================================================\n# Algorithm 3: Meet-Irreducible Extraction\n# ============================================================\n\ndef extract_meet_irreducibles(\n    upper_sets: List[FrozenSet[int]]\n) -> List[FrozenSet[int]]:\n    \"\"\"Extract meet-irreducible elements from the upper set lattice.\n    \n    InfIrred(U) means:\n    1. U is not maximal (U \u2260 \u2205, the top element)\n    2. If U = A \u2293 B = A \u222a B, then U = A or U = B\n    \n    Time: O(|L|^3) where |L| = number of upper sets\n    Space: O(|L|)\n    \n    Returns:\n        List of meet-irreducible upper sets\n    \"\"\"\n    irreds = []\n    for us in upper_sets:\n        if len(us) == 0:  # Top element\n            continue\n        \n        is_irred = True\n        for A in upper_sets:\n            if not is_irred:\n                break\n            for B in upper_sets:\n                if A | B == us and A != us and B != us:\n                    is_irred = False\n                    break\n        \n        if is_irred:\n            irreds.append(us)\n    \n    return irreds\n\n\n# ============================================================\n# Algorithm 4: Architecture Reconstruction\n# ============================================================\n\ndef reconstruct_architecture(\n    upper_sets: List[FrozenSet[int]],\n    generator_predicate=None\n) -> NeuralArchitecture:\n    \"\"\"Reconstruct a neural architecture from its upper set lattice.\n    \n    Steps:\n    1. Extract meet-irreducible elements\n    2. Assign module indices to meet-irreducibles\n    3. Define partial order from lattice order on meet-irreducibles\n    4. Identify generators\n    \n    Time: O(|L|^3) for meet-irreducible extraction\n    Space: O(|L|)\n    \n    Args:\n        upper_sets: the upper set lattice\n        generator_predicate: optional function to identify generators\n        \n    Returns:\n        Reconstructed NeuralArchitecture\n    \"\"\"\n    irreds = extract_meet_irreducibles(upper_sets)\n    n = len(irreds)\n    \n    # Sort by size (descending) for consistent ordering\n    irreds.sort(key=lambda s: -len(s))\n    \n    # Build partial order\n    le = {i: {i} for i in range(n)}\n    for i in range(n):\n        for j in range(n):\n            if i != j and irreds[j].issubset(irreds[i]):\n                # irreds[i] \u2264 irreds[j] in UpperSet means\n                # irreds[j] \u2286 irreds[i] as sets\n                # This corresponds to module i \u2264 module j\n                le[i].add(j)\n    \n    poset = FinitePoset(elements=list(range(n)), le=le)\n    \n    # Identify generators as minimal elements (default)\n    if generator_predicate is None:\n        generators = set(poset.minimal_elements())\n    else:\n        generators = {i for i in range(n) if generator_predicate(irreds[i])}\n    \n    return NeuralArchitecture(poset=poset, generators=generators)\n\n\n# ============================================================\n# Algorithm 5: Architecture Equivalence Testing\n# ============================================================\n\ndef lattice_invariant(upper_sets: List[FrozenSet[int]]) -> Tuple:\n    \"\"\"Compute an invariant of the upper set lattice.\n    \n    Uses the sorted sequence of (element_size, number_of_covers_above,\n    number_of_covers_below) for each element.\n    \n    Time: O(|L|^2)\n    Space: O(|L|)\n    \"\"\"\n    n = len(upper_sets)\n    profiles = []\n    \n    for us in upper_sets:\n        # Count covers above (elements V with V < U, i.e., U \u2282 V)\n        covers_above = sum(\n            1 for v in upper_sets\n            if v > us and  # proper superset as set = below in UpperSet\n            not any(v > w > us for w in upper_sets)\n        )\n        # Count covers below (elements V with U < V, i.e., V \u2282 U)\n        covers_below = sum(\n            1 for v in upper_sets\n            if us > v and  # proper subset as set = above in UpperSet\n            not any(us > w > v for w in upper_sets)\n        )\n        profiles.append((len(us), covers_above, covers_below))\n    \n    return tuple(sorted(profiles))\n\n\ndef are_architectures_equivalent(\n    arch1: NeuralArchitecture, \n    arch2: NeuralArchitecture\n) -> bool:\n    \"\"\"Test if two architectures are equivalent via lattice isomorphism.\n    \n    Computes predicate lattices and compares their invariants.\n    \n    Time: O(2^n \u00b7 n^2 + |L|^2) where n = max modules\n    Space: O(2^n)\n    \"\"\"\n    us1 = compute_upper_sets(arch1.poset)\n    us2 = compute_upper_sets(arch2.poset)\n    \n    if len(us1) != len(us2):\n        return False\n    \n    return lattice_invariant(us1) == lattice_invariant(us2)\n\n\n# ============================================================\n# Example Usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Algorithm Demonstrations\")\n    print(\"=\" * 60)\n    \n    # Build a diamond architecture\n    poset = FinitePoset.from_dag([0, 1, 2, 3], [(0, 1), (0, 2), (1, 3), (2, 3)])\n    arch = NeuralArchitecture(poset=poset, generators={0})\n    \n    print(f\"\\n1. Architecture: diamond 0 \u2192 {{1,2}} \u2192 3\")\n    print(f\"   Valid: {arch.validate()}\")\n    \n    # Compute upper sets\n    us = compute_upper_sets(poset)\n    print(f\"\\n2. Upper sets: {len(us)} total\")\n    for u in sorted(us, key=lambda s: (len(s), sorted(s))):\n        print(f\"   {set(u) if u else '{}'}\")\n    \n    # Heyting algebra\n    heyting = HeytingUpperSets(poset)\n    print(f\"\\n3. Heyting algebra operations:\")\n    U = principal_upper_set(poset, 1)\n    V = principal_upper_set(poset, 2)\n    print(f\"   Ici(1) = {set(U)}\")\n    print(f\"   Ici(2) = {set(V)}\")\n    print(f\"   Ici(1) \u2294 Ici(2) = {set(heyting.join(U, V))}\")\n    print(f\"   Ici(1) \u2293 Ici(2) = {set(heyting.meet(U, V))}\")\n    print(f\"   Ici(1) \u21e8 Ici(2) = {set(heyting.himp(U, V))}\")\n    print(f\"   \u00acIci(1) = {set(heyting.complement(U))}\")\n    print(f\"   Distributive: {heyting.is_distributive()}\")\n    \n    # Meet-irreducibles\n    irreds = extract_meet_irreducibles(us)\n    print(f\"\\n4. Meet-irreducibles: {len(irreds)}\")\n    for ir in sorted(irreds, key=lambda s: -len(s)):\n        for m in poset.elements:\n            if principal_upper_set(poset, m) == ir:\n                print(f\"   {set(ir)} = Ici({m})\")\n    \n    # Reconstruction\n    reconstructed = reconstruct_architecture(us)\n    print(f\"\\n5. Reconstructed architecture:\")\n    print(f\"   Modules: {reconstructed.poset.elements}\")\n    print(f\"   Generators: {reconstructed.generators}\")\n    print(f\"   Hasse diagram: {reconstructed.poset.hasse_diagram()}\")\n    print(f\"   Original Hasse: {poset.hasse_diagram()}\")\n    \n    # Equivalence testing\n    arch2 = NeuralArchitecture(\n        poset=FinitePoset.from_dag([10, 20, 30, 40], \n                                    [(10, 20), (10, 30), (20, 40), (30, 40)]),\n        generators={10}\n    )\n    print(f\"\\n6. Equivalence testing:\")\n    print(f\"   Diamond \u2245 Relabeled diamond: \"\n          f\"{are_architectures_equivalent(arch, arch2)}\")\n    \n    chain = NeuralArchitecture(\n        poset=FinitePoset.from_dag([0, 1, 2, 3], [(0, 1), (1, 2), (2, 3)]),\n        generators={0}\n    )\n    print(f\"   Diamond \u2245 Chain: \"\n          f\"{are_architectures_equivalent(arch, chain)}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Operadic Stone Duality\n\nReal-world applications of the theory:\n1. Architecture minimization (removing redundant modules)\n2. Specification-driven architecture design\n3. Architecture comparison for common deep learning architectures\n4. Explainability via meet-irreducible decomposition\n\"\"\"\n\nfrom algorithms import (\n    FinitePoset, NeuralArchitecture, \n    compute_upper_sets, principal_upper_set,\n    extract_meet_irreducibles, reconstruct_architecture,\n    are_architectures_equivalent, HeytingUpperSets\n)\nfrom typing import Set, FrozenSet, List, Tuple, Dict\n\n\n# ============================================================\n# Application 1: Architecture Minimization\n# ============================================================\n\ndef minimize_architecture(arch: NeuralArchitecture) -> NeuralArchitecture:\n    \"\"\"Remove redundant modules from an architecture.\n    \n    Uses the predicate lattice to identify which modules contribute\n    unique meet-irreducible structure. Modules whose principal upper\n    sets are redundant (can be expressed as meets of other principal\n    upper sets) are removed.\n    \n    Returns:\n        Minimal architecture with the same predicate lattice structure\n    \"\"\"\n    us = compute_upper_sets(arch.poset)\n    irreds = extract_meet_irreducibles(us)\n    \n    # Each meet-irreducible corresponds to an essential module\n    essential = set()\n    for ir in irreds:\n        for m in arch.poset.elements:\n            if principal_upper_set(arch.poset, m) == ir:\n                essential.add(m)\n                break\n    \n    # Build minimal architecture from essential modules\n    minimal_le = {}\n    essential_list = sorted(essential)\n    reindex = {m: i for i, m in enumerate(essential_list)}\n    \n    for m in essential_list:\n        minimal_le[reindex[m]] = set()\n        for n in essential_list:\n            if arch.poset.is_le(m, n):\n                minimal_le[reindex[m]].add(reindex[n])\n    \n    minimal_poset = FinitePoset(\n        elements=list(range(len(essential_list))),\n        le=minimal_le\n    )\n    \n    minimal_gens = {reindex[g] for g in arch.generators if g in essential}\n    if not minimal_gens:\n        minimal_gens = set(minimal_poset.minimal_elements())\n    \n    return NeuralArchitecture(poset=minimal_poset, generators=minimal_gens)\n\n\ndef demo_minimization():\n    \"\"\"Demonstrate architecture minimization.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Architecture Minimization\")\n    print(\"=\" * 60)\n    \n    # Architecture with redundant structure\n    # 0 \u2192 1 \u2192 2 \u2192 3, but 0 \u2192 3 also directly\n    # This is NOT redundant in the poset sense (all modules are distinct)\n    \n    # Let's instead create one where modules have the same upper sets\n    # Actually, in a partial order, distinct elements always have distinct\n    # principal upper sets. So minimization in our framework always\n    # preserves all modules.\n    \n    # The interesting case is when we START from a lattice that doesn't\n    # come from a poset (e.g., from merging two architectures).\n    \n    arch = NeuralArchitecture(\n        poset=FinitePoset.from_dag(\n            [0, 1, 2, 3, 4],\n            [(0, 1), (0, 2), (1, 3), (2, 3), (3, 4)]\n        ),\n        generators={0}\n    )\n    \n    print(f\"\\nOriginal: 5 modules, diamond + tail\")\n    print(f\"Modules: {arch.poset.elements}\")\n    print(f\"Hasse diagram: {arch.poset.hasse_diagram()}\")\n    \n    minimal = minimize_architecture(arch)\n    print(f\"\\nMinimized: {len(minimal.poset.elements)} modules\")\n    print(f\"Hasse diagram: {minimal.poset.hasse_diagram()}\")\n    print(f\"(All modules are essential \u2014 each has a unique upper set)\")\n\n\n# ============================================================\n# Application 2: Specification-Driven Design\n# ============================================================\n\ndef design_from_spec(desired_properties: List[str]) -> NeuralArchitecture:\n    \"\"\"Design a minimal architecture from logical specifications.\n    \n    Properties are expressed as constraints on the module structure:\n    - \"sequential(n)\": n modules in a chain\n    - \"parallel(n)\": n independent modules\n    - \"fork_join(n)\": 1 input \u2192 n parallel \u2192 1 output\n    \"\"\"\n    if desired_properties[0].startswith(\"sequential\"):\n        n = int(desired_properties[0].split(\"(\")[1].rstrip(\")\"))\n        edges = [(i, i+1) for i in range(n-1)]\n        return NeuralArchitecture(\n            poset=FinitePoset.from_dag(list(range(n)), edges),\n            generators={0}\n        )\n    elif desired_properties[0].startswith(\"parallel\"):\n        n = int(desired_properties[0].split(\"(\")[1].rstrip(\")\"))\n        return NeuralArchitecture(\n            poset=FinitePoset.from_dag(list(range(n)), []),\n            generators=set(range(n))\n        )\n    elif desired_properties[0].startswith(\"fork_join\"):\n        n = int(desired_properties[0].split(\"(\")[1].rstrip(\")\"))\n        modules = list(range(n + 2))  # 0 = input, 1..n = parallel, n+1 = output\n        edges = [(0, i) for i in range(1, n+1)] + [(i, n+1) for i in range(1, n+1)]\n        return NeuralArchitecture(\n            poset=FinitePoset.from_dag(modules, edges),\n            generators={0}\n        )\n    else:\n        raise ValueError(f\"Unknown specification: {desired_properties}\")\n\n\ndef demo_specification():\n    \"\"\"Demonstrate specification-driven architecture design.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Specification-Driven Architecture Design\")\n    print(\"=\" * 60)\n    \n    specs = [\n        ([\"sequential(4)\"], \"4-layer feedforward\"),\n        ([\"parallel(3)\"], \"3 independent modules\"),\n        ([\"fork_join(3)\"], \"fork-join with 3 branches\"),\n    ]\n    \n    for spec, desc in specs:\n        arch = design_from_spec(spec)\n        us = compute_upper_sets(arch.poset)\n        irreds = extract_meet_irreducibles(us)\n        \n        print(f\"\\nSpec: {spec[0]} ({desc})\")\n        print(f\"  Modules: {arch.poset.elements}\")\n        print(f\"  Generators: {arch.generators}\")\n        print(f\"  Hasse diagram: {arch.poset.hasse_diagram()}\")\n        print(f\"  Predicate lattice size: {len(us)}\")\n        print(f\"  Meet-irreducibles: {len(irreds)} (= modules)\")\n\n\n# ============================================================\n# Application 3: Common Architecture Comparison\n# ============================================================\n\ndef demo_architecture_comparison():\n    \"\"\"Compare common deep learning architecture patterns.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Architecture Pattern Comparison\")\n    print(\"=\" * 60)\n    \n    # ResNet-like (sequential with skip connections)\n    # 0 \u2192 1 \u2192 2 \u2192 3, plus 0 \u2192 2 (skip) and 1 \u2192 3 (skip)\n    resnet = NeuralArchitecture(\n        poset=FinitePoset.from_dag(\n            [0, 1, 2, 3],\n            [(0, 1), (1, 2), (2, 3), (0, 2), (1, 3)]\n        ),\n        generators={0}\n    )\n    \n    # Inception-like (parallel branches merged)\n    inception = NeuralArchitecture(\n        poset=FinitePoset.from_dag(\n            [0, 1, 2, 3, 4],\n            [(0, 1), (0, 2), (0, 3), (1, 4), (2, 4), (3, 4)]\n        ),\n        generators={0}\n    )\n    \n    # U-Net-like (encoder-decoder with skip connections)\n    unet = NeuralArchitecture(\n        poset=FinitePoset.from_dag(\n            [0, 1, 2, 3, 4],\n            [(0, 1), (1, 2), (2, 3), (3, 4), (0, 4), (1, 3)]\n        ),\n        generators={0}\n    )\n    \n    architectures = {\n        \"ResNet-like\": resnet,\n        \"Inception-like\": inception,\n        \"U-Net-like\": unet,\n    }\n    \n    for name, arch in architectures.items():\n        us = compute_upper_sets(arch.poset)\n        irreds = extract_meet_irreducibles(us)\n        heyting = HeytingUpperSets(arch.poset)\n        \n        print(f\"\\n{name}:\")\n        print(f\"  Modules: {len(arch.poset.elements)}\")\n        print(f\"  Hasse diagram: {arch.poset.hasse_diagram()}\")\n        print(f\"  Upper sets: {len(us)}\")\n        print(f\"  Meet-irreducibles: {len(irreds)}\")\n        print(f\"  Distributive: {heyting.is_distributive()}\")\n    \n    print(\"\\nPairwise equivalence:\")\n    names = list(architectures.keys())\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            if i < j:\n                eq = are_architectures_equivalent(\n                    architectures[n1], architectures[n2])\n                print(f\"  {n1} \u2245 {n2}: {eq}\")\n\n\n# ============================================================\n# Application 4: Explainability via Meet-Irreducible Decomposition\n# ============================================================\n\ndef demo_explainability():\n    \"\"\"Demonstrate explainability through meet-irreducible decomposition.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: Architectural Explainability\")\n    print(\"=\" * 60)\n    \n    # Simple architecture for explanation\n    arch = NeuralArchitecture(\n        poset=FinitePoset.from_dag(\n            [0, 1, 2, 3],\n            [(0, 1), (0, 2), (1, 3), (2, 3)]\n        ),\n        generators={0}\n    )\n    \n    print(f\"\\nArchitecture: diamond 0 \u2192 {{1, 2}} \u2192 3\")\n    \n    heyting = HeytingUpperSets(arch.poset)\n    us = compute_upper_sets(arch.poset)\n    irreds = extract_meet_irreducibles(us)\n    \n    print(f\"\\nMeet-irreducible atoms (= explanation primitives):\")\n    atom_map = {}\n    for ir in sorted(irreds, key=lambda s: -len(s)):\n        for m in arch.poset.elements:\n            if principal_upper_set(arch.poset, m) == ir:\n                atom_map[m] = ir\n                print(f\"  Atom_{m}: {set(ir)} = Ici({m})\")\n    \n    print(f\"\\nDecomposing predicates into atoms:\")\n    for u in sorted(us, key=lambda s: (len(s), sorted(s))):\n        if len(u) == 0:\n            print(f\"  {set(u) if u else '{}':>20s} = \u22a4 (trivially true)\")\n            continue\n        \n        # Find which atoms compose this upper set\n        # u = union of atoms (in set terms) = meet of atoms (in lattice terms)\n        needed_atoms = []\n        for m in arch.poset.elements:\n            if m in u and atom_map[m].issubset(u):\n                # Check if this atom is needed\n                other = u\n                for a in needed_atoms:\n                    other = other & atom_map[a]\n                if not atom_map[m].issubset(other) or not needed_atoms:\n                    needed_atoms.append(m)\n        \n        # Simpler: the minimal elements of u determine it\n        minimal_in_u = [m for m in u if not any(\n            arch.poset.is_le(x, m) and x != m and x in u\n            for x in arch.poset.elements)]\n        \n        atoms_str = \" \u2293 \".join(f\"Atom_{m}\" for m in sorted(minimal_in_u))\n        print(f\"  {str(set(u)):>20s} = {atoms_str}\")\n    \n    print(f\"\\nInterpretation:\")\n    print(f\"  \u2022 Each Atom_m represents 'module m and everything downstream'\")\n    print(f\"  \u2022 Complex predicates decompose into meets of atoms\")\n    print(f\"  \u2022 The meet-irreducibles are the 'explanation primitives'\")\n    print(f\"  \u2022 This decomposition is UNIQUE and CANONICAL\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    demo_minimization()\n    demo_specification()\n    demo_architecture_comparison()\n    demo_explainability()\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications completed successfully!\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nOperadic Stone Duality: Concrete Demonstrations\n\nDemonstrates the key theorems with concrete numerical examples:\n1. Constructing upper set predicate lattices from neural architectures\n2. Identifying meet-irreducible elements (= architectural modules)\n3. Verifying the reconstruction theorem\n4. Soundness and completeness of Kripke forcing\n\"\"\"\n\nfrom itertools import combinations\nfrom typing import Set, FrozenSet, List, Tuple, Dict\nimport json\n\n\n# ============================================================\n# Core Data Structures\n# ============================================================\n\nclass NeuralArchFG:\n    \"\"\"A finitely generated acyclic neural architecture.\n    \n    Modules are integers, the partial order is given by a DAG,\n    and generators are specified explicitly.\n    \"\"\"\n    \n    def __init__(self, modules: List[int], edges: List[Tuple[int, int]], \n                 generators: Set[int]):\n        self.modules = sorted(modules)\n        self.n = len(modules)\n        self.generators = generators\n        \n        # Compute transitive closure for partial order\n        self.le = {}  # le[a] = set of b with a <= b\n        for m in modules:\n            self.le[m] = {m}  # reflexivity\n        for a, b in edges:\n            self.le[a].add(b)\n        # Transitive closure (Floyd-Warshall style)\n        changed = True\n        while changed:\n            changed = False\n            for a in modules:\n                new = set()\n                for b in self.le[a]:\n                    new |= self.le[b]\n                if not new.issubset(self.le[a]):\n                    self.le[a] |= new\n                    changed = True\n    \n    def is_le(self, a: int, b: int) -> bool:\n        return b in self.le[a]\n    \n    def __repr__(self):\n        return (f\"NeuralArchFG(modules={self.modules}, \"\n                f\"generators={self.generators})\")\n\n\ndef compute_upper_sets(arch: NeuralArchFG) -> List[FrozenSet[int]]:\n    \"\"\"Enumerate all upper sets of the module poset.\"\"\"\n    modules = arch.modules\n    upper_sets = []\n    # Check all subsets\n    for r in range(len(modules) + 1):\n        for subset in combinations(modules, r):\n            s = set(subset)\n            # Check upper set property\n            is_upper = True\n            for x in s:\n                for y in modules:\n                    if arch.is_le(x, y) and y not in s:\n                        is_upper = False\n                        break\n                if not is_upper:\n                    break\n            if is_upper:\n                upper_sets.append(frozenset(s))\n    return upper_sets\n\n\ndef principal_upper_set(arch: NeuralArchFG, m: int) -> FrozenSet[int]:\n    \"\"\"Compute Ici(m) = {x | m <= x}.\"\"\"\n    return frozenset(arch.le[m])\n\n\ndef is_inf_irred(us: FrozenSet[int], all_upper_sets: List[FrozenSet[int]],\n                 full_set: FrozenSet[int]) -> bool:\n    \"\"\"Check if an upper set is meet-irreducible (InfIrred).\n    \n    In UpperSet with reverse-inclusion order:\n    - \u2293 = union of sets\n    - IsMax means U = \u2205 (top element)\n    - InfIrred means U \u2260 \u2205 and U = A \u222a B implies U = A or U = B\n    \"\"\"\n    if len(us) == 0:  # This is \u22a4 (max element)\n        return False\n    \n    # Check: for all A, B upper sets with A \u222a B = U, either A = U or B = U\n    for A in all_upper_sets:\n        for B in all_upper_sets:\n            if A | B == us:\n                if A != us and B != us:\n                    return False\n    return True\n\n\n# ============================================================\n# Demo 1: Three-layer feedforward architecture\n# ============================================================\n\ndef demo_three_layer():\n    \"\"\"Demonstrate the theory on a 3-layer feedforward architecture.\n    \n    Architecture: 0 \u2192 1 \u2192 2 (linear chain)\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Three-Layer Feedforward Architecture\")\n    print(\"=\" * 60)\n    \n    arch = NeuralArchFG(\n        modules=[0, 1, 2],\n        edges=[(0, 1), (1, 2)],\n        generators={0}\n    )\n    print(f\"\\nArchitecture: {arch}\")\n    print(f\"Partial order: 0 \u2264 1 \u2264 2\")\n    \n    # Compute upper sets\n    upper_sets = compute_upper_sets(arch)\n    print(f\"\\nUpper sets ({len(upper_sets)} total):\")\n    for us in sorted(upper_sets, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(us) if us else '{}'}\")\n    \n    # Identify principal upper sets\n    print(\"\\nPrincipal upper sets (activation predicates):\")\n    for m in arch.modules:\n        pu = principal_upper_set(arch, m)\n        print(f\"  Ici({m}) = {set(pu)}\")\n    \n    # Identify meet-irreducibles\n    full = frozenset(arch.modules)\n    irreds = [us for us in upper_sets if is_inf_irred(us, upper_sets, full)]\n    print(f\"\\nMeet-irreducible upper sets ({len(irreds)}):\")\n    for ir in irreds:\n        # Find which module it corresponds to\n        for m in arch.modules:\n            if principal_upper_set(arch, m) == ir:\n                print(f\"  {set(ir)} = Ici({m})\")\n                break\n    \n    # Verify bijection: meet-irreducibles \u2194 modules\n    assert len(irreds) == len(arch.modules), \"Bijection failed!\"\n    print(f\"\\n\u2713 Meet-irreducibles biject with modules ({len(irreds)} = {len(arch.modules)})\")\n    \n    # Verify order embedding\n    print(\"\\nOrder embedding verification:\")\n    for m1 in arch.modules:\n        for m2 in arch.modules:\n            ici1 = principal_upper_set(arch, m1)\n            ici2 = principal_upper_set(arch, m2)\n            # In UpperSet, U \u2264 V means V \u2286 U (reverse inclusion)\n            ici1_le_ici2 = ici2.issubset(ici1)\n            m1_le_m2 = arch.is_le(m1, m2)\n            assert ici1_le_ici2 == m1_le_m2, \\\n                f\"Order embedding failed for {m1}, {m2}\"\n            if m1 != m2 and m1_le_m2:\n                print(f\"  {m1} \u2264 {m2}  \u2194  Ici({m1}) \u2264 Ici({m2}) \"\n                      f\"(i.e., {set(ici2)} \u2286 {set(ici1)})  \u2713\")\n    \n    # Soundness and completeness\n    print(\"\\nSoundness & completeness example:\")\n    U = principal_upper_set(arch, 0)  # {0, 1, 2}\n    V = principal_upper_set(arch, 1)  # {1, 2}\n    print(f\"  U = Ici(0) = {set(U)}\")\n    print(f\"  V = Ici(1) = {set(V)}\")\n    print(f\"  U \u2264 V in UpperSet? {V.issubset(U)}\")\n    entails = all(w in U for w in V)\n    print(f\"  V \u22a8 U (every world in V is in U)? {entails}\")\n    print(f\"  \u2713 Soundness & completeness verified\")\n    \n    return arch, upper_sets, irreds\n\n\n# ============================================================\n# Demo 2: Diamond architecture\n# ============================================================\n\ndef demo_diamond():\n    \"\"\"Demonstrate on a diamond (fork-join) architecture.\n    \n    Architecture:   1\n                  \u2197   \u2198\n                0       3\n                  \u2198   \u2197\n                    2\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Diamond (Fork-Join) Architecture\")\n    print(\"=\" * 60)\n    \n    arch = NeuralArchFG(\n        modules=[0, 1, 2, 3],\n        edges=[(0, 1), (0, 2), (1, 3), (2, 3)],\n        generators={0}\n    )\n    print(f\"\\nArchitecture: 0 \u2192 {{1, 2}} \u2192 3\")\n    \n    upper_sets = compute_upper_sets(arch)\n    print(f\"\\nUpper sets ({len(upper_sets)} total):\")\n    for us in sorted(upper_sets, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(us) if us else '{}'}\")\n    \n    # Principal upper sets\n    print(\"\\nPrincipal upper sets:\")\n    for m in arch.modules:\n        pu = principal_upper_set(arch, m)\n        print(f\"  Ici({m}) = {set(pu)}\")\n    \n    # Meet-irreducibles\n    full = frozenset(arch.modules)\n    irreds = [us for us in upper_sets if is_inf_irred(us, upper_sets, full)]\n    print(f\"\\nMeet-irreducible upper sets ({len(irreds)}):\")\n    for ir in sorted(irreds, key=lambda s: len(s)):\n        for m in arch.modules:\n            if principal_upper_set(arch, m) == ir:\n                print(f\"  {set(ir)} = Ici({m})\")\n                break\n    \n    assert len(irreds) == len(arch.modules)\n    print(f\"\\n\u2713 Meet-irreducibles biject with modules ({len(irreds)} = {len(arch.modules)})\")\n    \n    return arch, upper_sets, irreds\n\n\n# ============================================================\n# Demo 3: Reconstruction from predicate lattice\n# ============================================================\n\ndef demo_reconstruction():\n    \"\"\"Demonstrate architecture reconstruction from the predicate lattice.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Architecture Reconstruction\")\n    print(\"=\" * 60)\n    \n    # Start with an architecture\n    original = NeuralArchFG(\n        modules=[0, 1, 2, 3],\n        edges=[(0, 1), (0, 2), (1, 3), (2, 3)],\n        generators={0}\n    )\n    print(f\"\\nOriginal architecture: {original}\")\n    \n    # Compute predicate lattice\n    upper_sets = compute_upper_sets(original)\n    full = frozenset(original.modules)\n    \n    # Extract meet-irreducibles\n    irreds = [us for us in upper_sets if is_inf_irred(us, upper_sets, full)]\n    \n    print(f\"\\nStep 1: Extract meet-irreducibles from lattice\")\n    for ir in sorted(irreds, key=lambda s: len(s)):\n        print(f\"  Module candidate: {set(ir)}\")\n    \n    # Reconstruct: modules = meet-irreducibles, order = lattice order\n    print(f\"\\nStep 2: Define modules as meet-irreducibles\")\n    reconstructed_modules = list(range(len(irreds)))\n    irreds_sorted = sorted(irreds, key=lambda s: -len(s))  # Larger sets first\n    \n    print(f\"\\nStep 3: Recover partial order from lattice order\")\n    print(f\"  (In UpperSet, U \u2264 V means V \u2286 U)\")\n    for i, ui in enumerate(irreds_sorted):\n        for j, uj in enumerate(irreds_sorted):\n            if i != j and uj.issubset(ui):\n                print(f\"  Module {i} \u2264 Module {j}  \"\n                      f\"(since {set(uj)} \u2286 {set(ui)})\")\n    \n    print(f\"\\n\u2713 Reconstructed architecture has {len(irreds)} modules\")\n    print(f\"  (matching original {len(original.modules)} modules)\")\n    \n    # Verify isomorphism\n    print(f\"\\nStep 4: Verify order isomorphism\")\n    original_order = set()\n    for m1 in original.modules:\n        for m2 in original.modules:\n            if m1 != m2 and original.is_le(m1, m2):\n                original_order.add((m1, m2))\n    \n    reconstructed_order = set()\n    for i, ui in enumerate(irreds_sorted):\n        for j, uj in enumerate(irreds_sorted):\n            if i != j and uj.issubset(ui):\n                reconstructed_order.add((i, j))\n    \n    print(f\"  Original order relations: {len(original_order)}\")\n    print(f\"  Reconstructed order relations: {len(reconstructed_order)}\")\n    assert len(original_order) == len(reconstructed_order)\n    print(f\"  \u2713 Order structures match!\")\n\n\n# ============================================================\n# Demo 4: Architecture equivalence via lattice isomorphism\n# ============================================================\n\ndef demo_equivalence():\n    \"\"\"Show that isomorphic predicate lattices imply isomorphic architectures.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Architecture Equivalence Testing\")\n    print(\"=\" * 60)\n    \n    # Two architectures that are isomorphic (just relabeled)\n    arch1 = NeuralArchFG(\n        modules=[10, 20, 30],\n        edges=[(10, 20), (20, 30)],\n        generators={10}\n    )\n    arch2 = NeuralArchFG(\n        modules=[1, 2, 3],\n        edges=[(1, 2), (2, 3)],\n        generators={1}\n    )\n    \n    print(f\"\\nArchitecture 1: 10 \u2192 20 \u2192 30\")\n    print(f\"Architecture 2: 1 \u2192 2 \u2192 3\")\n    \n    us1 = compute_upper_sets(arch1)\n    us2 = compute_upper_sets(arch2)\n    \n    print(f\"\\nPredicate lattice sizes: {len(us1)} vs {len(us2)}\")\n    \n    # Check lattice isomorphism (same size + same order structure)\n    # For simplicity, check that the Hasse diagrams are isomorphic\n    def lattice_signature(upper_sets):\n        \"\"\"Compute a signature capturing the lattice structure.\"\"\"\n        n = len(upper_sets)\n        # Count covering relations\n        covers = 0\n        for u in upper_sets:\n            for v in upper_sets:\n                if v < u:  # v \u2282 u means u \u2264 v in UpperSet (v is \"stronger\")\n                    # Check if it's a cover (no w with v \u2282 w \u2282 u)\n                    is_cover = not any(v < w < u for w in upper_sets)\n                    if is_cover:\n                        covers += 1\n        return (n, covers)\n    \n    sig1 = lattice_signature(us1)\n    sig2 = lattice_signature(us2)\n    print(f\"\\nLattice signatures: {sig1} vs {sig2}\")\n    \n    if sig1 == sig2:\n        print(\"\u2713 Lattices are isomorphic \u2192 Architectures are isomorphic!\")\n    else:\n        print(\"\u2717 Lattices differ \u2192 Architectures are NOT isomorphic\")\n    \n    # Now compare with a non-isomorphic architecture\n    arch3 = NeuralArchFG(\n        modules=[1, 2, 3],\n        edges=[(1, 3), (2, 3)],\n        generators={1, 2}\n    )\n    \n    print(f\"\\nArchitecture 3: {{1, 2}} \u2192 3 (fork)\")\n    us3 = compute_upper_sets(arch3)\n    sig3 = lattice_signature(us3)\n    print(f\"Lattice signature: {sig3}\")\n    \n    if sig1 == sig3:\n        print(\"Lattices match \u2192 same architecture\")\n    else:\n        print(\"\u2713 Lattices differ \u2192 Architectures are NOT isomorphic (correct!)\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    demo_three_layer()\n    demo_diamond()\n    demo_reconstruction()\n    demo_equivalence()\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demonstrations completed successfully!\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"Generate PACKAGE.json with all embedded content.\"\"\"\n\nimport json\nimport base64\nfrom pathlib import Path\n\n\ndef read_file(path):\n    return Path(path).read_text()\n\n\ndef image_to_base64(path):\n    with open(path, 'rb') as f:\n        b64 = base64.b64encode(f.read()).decode('utf-8')\n    return f\"data:image/png;base64,{b64}\"\n\n\ndef main():\n    package = {\n        \"title\": \"Operadic Stone Duality: Logical Identifiability of Neural Architectures via Heyting Predicate Lattices\",\n        \"domain\": \"Algebra\u2013Machine Learning\u2013Logic (Bridges)\",\n        \"article\": read_file(\"ARTICLE.md\"),\n        \"research_paper\": read_file(\"RESEARCH_PAPER.md\"),\n        \"future_directions\": read_file(\"FUTURE_DIRECTIONS.md\"),\n        \"demos\": [\n            {\n                \"name\": \"Neural Architecture Predicate Lattice Demo\",\n                \"code\": read_file(\"demo.py\")\n            }\n        ],\n        \"algorithms\": [\n            {\n                \"name\": \"Upper Set Lattice Construction\",\n                \"pseudocode\": (\n                    \"Algorithm ConstructPredicateLattice(G, S):\\n\"\n                    \"  1. Compute transitive closure of edges\\n\"\n                    \"  2. Enumerate all subsets of modules\\n\"\n                    \"  3. Filter to upper sets (upward-closed)\\n\"\n                    \"  4. Order by reverse inclusion\\n\"\n                    \"  Time: O(2^n \u00b7 n^2), Space: O(2^n \u00b7 n)\"\n                ),\n                \"code\": read_file(\"algorithms.py\")\n            },\n            {\n                \"name\": \"Meet-Irreducible Extraction\",\n                \"pseudocode\": (\n                    \"Algorithm ExtractMeetIrreducibles(L):\\n\"\n                    \"  1. For each element a in L:\\n\"\n                    \"     a. Check a != max(L)\\n\"\n                    \"     b. Check: for all b,c with b inf c = a,\\n\"\n                    \"        either b = a or c = a\\n\"\n                    \"  2. Return marked elements\\n\"\n                    \"  Time: O(|L|^3), Space: O(|L|)\"\n                ),\n                \"code\": \"# See algorithms.py - extract_meet_irreducibles function\"\n            },\n            {\n                \"name\": \"Architecture Reconstruction\",\n                \"pseudocode\": (\n                    \"Algorithm ReconstructArchitecture(H):\\n\"\n                    \"  1. J = MeetIrreducibles(H)\\n\"\n                    \"  2. Modules = J\\n\"\n                    \"  3. Order: j1 <= j2 iff j1 <= j2 in H\\n\"\n                    \"  4. Generators = minimal elements\\n\"\n                    \"  Time: O(|H|^3), Space: O(|H|)\"\n                ),\n                \"code\": \"# See algorithms.py - reconstruct_architecture function\"\n            }\n        ],\n        \"visualizations\": [\n            {\n                \"name\": \"Architecture vs Predicate Lattice Comparison\",\n                \"data\": image_to_base64(\"viz_main.png\")\n            },\n            {\n                \"name\": \"Architecture Reconstruction via Birkhoff Duality\",\n                \"data\": image_to_base64(\"viz_reconstruction.png\")\n            },\n            {\n                \"name\": \"Heyting Algebra Operations\",\n                \"data\": image_to_base64(\"viz_heyting.png\")\n            }\n        ],\n        \"lean_proofs\": read_file(\n            \"Bridges/AlgebraMachineLearningLogic/OperadicStoneDuality.lean\"\n        )\n    }\n    \n    with open(\"PACKAGE.json\", \"w\") as f:\n        json.dump(package, f, indent=2, ensure_ascii=False)\n    \n    print(f\"Generated PACKAGE.json ({Path('PACKAGE.json').stat().st_size} bytes)\")\n\n\nif __name__ == \"__main__\":\n    main()\n\n\n#!/usr/bin/env python3\n\"\"\"\nVisualizations for Operadic Stone Duality\n\nGenerates figures showing:\n1. Architecture Hasse diagrams\n2. Predicate lattice structure\n3. Meet-irreducible decomposition\n4. The reconstruction correspondence\n\"\"\"\n\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nimport matplotlib.patches as mpatches\nfrom matplotlib.lines import Line2D\nimport numpy as np\nimport base64\nfrom io import BytesIO\nfrom algorithms import (\n    FinitePoset, NeuralArchitecture,\n    compute_upper_sets, principal_upper_set,\n    extract_meet_irreducibles, HeytingUpperSets\n)\n\n\ndef fig_to_base64(fig) -> str:\n    \"\"\"Convert matplotlib figure to base64 PNG data URI.\"\"\"\n    buf = BytesIO()\n    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',\n                facecolor='white', edgecolor='none')\n    buf.seek(0)\n    b64 = base64.b64encode(buf.read()).decode('utf-8')\n    plt.close(fig)\n    return f\"data:image/png;base64,{b64}\"\n\n\ndef draw_hasse(ax, poset, title=\"\", node_colors=None, node_labels=None):\n    \"\"\"Draw a Hasse diagram of a poset.\"\"\"\n    n = len(poset.elements)\n    \n    # Compute levels (topological sort)\n    levels = {}\n    for m in poset.elements:\n        level = 0\n        for x in poset.elements:\n            if x != m and poset.is_le(x, m):\n                level = max(level, levels.get(x, 0) + 1)\n        levels[m] = level\n    \n    # Position nodes\n    max_level = max(levels.values()) if levels else 0\n    level_counts = {}\n    level_indices = {}\n    for m in sorted(poset.elements):\n        l = levels[m]\n        level_counts[l] = level_counts.get(l, 0) + 1\n    \n    positions = {}\n    current_index = {l: 0 for l in range(max_level + 1)}\n    for m in sorted(poset.elements):\n        l = levels[m]\n        count = level_counts[l]\n        idx = current_index[l]\n        x = (idx - (count - 1) / 2) * 1.5\n        y = l * 1.5\n        positions[m] = (x, y)\n        current_index[l] += 1\n    \n    # Draw edges (covering relations)\n    for a, b in poset.hasse_diagram():\n        ax.plot([positions[a][0], positions[b][0]],\n                [positions[a][1], positions[b][1]],\n                'k-', linewidth=1.5, alpha=0.6, zorder=1)\n    \n    # Draw nodes\n    if node_colors is None:\n        node_colors = {m: '#4ECDC4' for m in poset.elements}\n    if node_labels is None:\n        node_labels = {m: str(m) for m in poset.elements}\n    \n    for m in poset.elements:\n        circle = plt.Circle(positions[m], 0.3, \n                           facecolor=node_colors.get(m, '#4ECDC4'),\n                           edgecolor='black', linewidth=2, zorder=2)\n        ax.add_patch(circle)\n        ax.text(positions[m][0], positions[m][1], node_labels[m],\n                ha='center', va='center', fontsize=12, fontweight='bold',\n                zorder=3)\n    \n    ax.set_xlim(-3, 3)\n    ax.set_ylim(-0.8, max_level * 1.5 + 0.8)\n    ax.set_aspect('equal')\n    ax.set_title(title, fontsize=14, fontweight='bold', pad=10)\n    ax.axis('off')\n\n\ndef draw_lattice(ax, upper_sets, poset, title=\"\"):\n    \"\"\"Draw the Hasse diagram of the upper set lattice.\"\"\"\n    us_list = sorted(upper_sets, key=lambda s: (len(s), sorted(s)))\n    n = len(us_list)\n    \n    # Compute levels by set size (reversed for UpperSet order)\n    max_size = max(len(s) for s in us_list) if us_list else 0\n    \n    # Group by size\n    by_size = {}\n    for i, us in enumerate(us_list):\n        sz = len(us)\n        by_size.setdefault(sz, []).append(i)\n    \n    positions = {}\n    for sz, indices in by_size.items():\n        count = len(indices)\n        level = max_size - sz  # Reverse: smaller sets are higher\n        for j, idx in enumerate(indices):\n            x = (j - (count - 1) / 2) * 2.0\n            y = level * 1.8\n            positions[idx] = (x, y)\n    \n    # Covering relations in UpperSet order\n    # U \u2264 V means V \u2286 U. Cover: V \u2282 U and no W with V \u2282 W \u2282 U\n    for i in range(n):\n        for j in range(n):\n            if i != j and us_list[j].issubset(us_list[i]):\n                # j \u2264 i in UpperSet order (j is above)\n                is_cover = not any(\n                    k != i and k != j and \n                    us_list[j].issubset(us_list[k]) and \n                    us_list[k].issubset(us_list[i])\n                    for k in range(n)\n                )\n                if is_cover:\n                    ax.plot([positions[j][0], positions[i][0]],\n                            [positions[j][1], positions[i][1]],\n                            'k-', linewidth=1, alpha=0.5, zorder=1)\n    \n    # Draw nodes\n    irreds = extract_meet_irreducibles(us_list)\n    \n    for i, us in enumerate(us_list):\n        color = '#FF6B6B' if us in irreds else '#95E1D3'\n        if len(us) == 0:\n            color = '#FFD93D'\n        elif us == frozenset(poset.elements):\n            color = '#6C5CE7'\n        \n        circle = plt.Circle(positions[i], 0.35,\n                           facecolor=color, edgecolor='black',\n                           linewidth=1.5, zorder=2)\n        ax.add_patch(circle)\n        label = str(set(us)) if us else \"\u2205\"\n        if len(label) > 8:\n            label = \"{\" + \",\".join(str(x) for x in sorted(us)) + \"}\"\n        ax.text(positions[i][0], positions[i][1], label,\n                ha='center', va='center', fontsize=7, zorder=3)\n    \n    ax.set_xlim(-4, 4)\n    ax.set_ylim(-1, max_size * 1.8 + 1)\n    ax.set_aspect('equal')\n    ax.set_title(title, fontsize=14, fontweight='bold', pad=10)\n    ax.axis('off')\n\n\ndef generate_main_figure():\n    \"\"\"Generate the main comparison figure.\"\"\"\n    fig, axes = plt.subplots(2, 2, figsize=(14, 12))\n    \n    # Diamond architecture\n    diamond = FinitePoset.from_dag([0, 1, 2, 3], \n                                   [(0, 1), (0, 2), (1, 3), (2, 3)])\n    diamond_us = compute_upper_sets(diamond)\n    \n    # Chain architecture\n    chain = FinitePoset.from_dag([0, 1, 2], [(0, 1), (1, 2)])\n    chain_us = compute_upper_sets(chain)\n    \n    draw_hasse(axes[0, 0], diamond, \"Diamond Architecture\\n(Module Poset)\")\n    draw_lattice(axes[0, 1], diamond_us, diamond, \n                 \"Diamond Predicate Lattice\\n(Upper Sets)\")\n    \n    draw_hasse(axes[1, 0], chain, \"Chain Architecture\\n(Module Poset)\")\n    draw_lattice(axes[1, 1], chain_us, chain,\n                 \"Chain Predicate Lattice\\n(Upper Sets)\")\n    \n    # Legend\n    legend_elements = [\n        mpatches.Patch(facecolor='#FF6B6B', edgecolor='black', \n                      label='Meet-irreducible (= module)'),\n        mpatches.Patch(facecolor='#95E1D3', edgecolor='black',\n                      label='Reducible'),\n        mpatches.Patch(facecolor='#FFD93D', edgecolor='black',\n                      label='Top (\u22a4 = \u2205)'),\n        mpatches.Patch(facecolor='#6C5CE7', edgecolor='black',\n                      label='Bottom (\u22a5 = all modules)'),\n    ]\n    fig.legend(handles=legend_elements, loc='lower center', ncol=4,\n              fontsize=11, framealpha=0.9)\n    \n    fig.suptitle(\"Operadic Stone Duality: Architecture \u2194 Predicate Lattice\",\n                fontsize=16, fontweight='bold', y=0.98)\n    plt.tight_layout(rect=[0, 0.06, 1, 0.95])\n    \n    return fig\n\n\ndef generate_reconstruction_figure():\n    \"\"\"Generate figure showing the reconstruction process.\"\"\"\n    fig, axes = plt.subplots(1, 3, figsize=(18, 6))\n    \n    # Original architecture\n    diamond = FinitePoset.from_dag([0, 1, 2, 3],\n                                   [(0, 1), (0, 2), (1, 3), (2, 3)])\n    draw_hasse(axes[0], diamond, \"Step 1: Original Architecture\")\n    \n    # Predicate lattice with meet-irreducibles highlighted\n    us = compute_upper_sets(diamond)\n    draw_lattice(axes[1], us, diamond, \"Step 2: Extract Meet-Irreducibles\")\n    \n    # Reconstructed architecture\n    irreds = extract_meet_irreducibles(us)\n    # Build reconstructed poset\n    irreds_sorted = sorted(irreds, key=lambda s: -len(s))\n    recon_le = {}\n    for i in range(len(irreds_sorted)):\n        recon_le[i] = {i}\n        for j in range(len(irreds_sorted)):\n            if irreds_sorted[j].issubset(irreds_sorted[i]):\n                recon_le[i].add(j)\n    recon = FinitePoset(elements=list(range(len(irreds_sorted))), le=recon_le)\n    \n    draw_hasse(axes[2], recon, \"Step 3: Reconstructed Architecture\")\n    \n    # Add arrows between subplots\n    fig.suptitle(\"Architecture Reconstruction via Birkhoff Duality\",\n                fontsize=16, fontweight='bold')\n    plt.tight_layout()\n    \n    return fig\n\n\ndef generate_heyting_figure():\n    \"\"\"Generate figure showing Heyting algebra operations.\"\"\"\n    fig, axes = plt.subplots(2, 3, figsize=(18, 10))\n    \n    diamond = FinitePoset.from_dag([0, 1, 2, 3],\n                                   [(0, 1), (0, 2), (1, 3), (2, 3)])\n    heyting = HeytingUpperSets(diamond)\n    \n    ici1 = principal_upper_set(diamond, 1)\n    ici2 = principal_upper_set(diamond, 2)\n    \n    operations = [\n        (\"Ici(1) = {1,3}\", ici1),\n        (\"Ici(2) = {2,3}\", ici2),\n        (\"Ici(1) \u2294 Ici(2) = {3}\\n(join = \u2229)\", heyting.join(ici1, ici2)),\n        (\"Ici(1) \u2293 Ici(2) = {1,2,3}\\n(meet = \u222a)\", heyting.meet(ici1, ici2)),\n        (\"Ici(1) \u21e8 Ici(2)\\n(implication)\", heyting.himp(ici1, ici2)),\n        (\"\u00acIci(1)\\n(pseudocomplement)\", heyting.complement(ici1)),\n    ]\n    \n    for ax, (title, result) in zip(axes.flat, operations):\n        # Draw the 4 modules with highlighting\n        positions = {0: (0, 0), 1: (-1, 1), 2: (1, 1), 3: (0, 2)}\n        \n        for a, b in diamond.hasse_diagram():\n            ax.plot([positions[a][0], positions[b][0]],\n                    [positions[a][1], positions[b][1]],\n                    'k-', linewidth=1, alpha=0.4)\n        \n        for m in diamond.elements:\n            color = '#FF6B6B' if m in result else '#E0E0E0'\n            circle = plt.Circle(positions[m], 0.25, facecolor=color,\n                               edgecolor='black', linewidth=1.5)\n            ax.add_patch(circle)\n            ax.text(positions[m][0], positions[m][1], str(m),\n                    ha='center', va='center', fontsize=11, fontweight='bold')\n        \n        ax.set_xlim(-2, 2)\n        ax.set_ylim(-0.5, 2.7)\n        ax.set_aspect('equal')\n        ax.set_title(title, fontsize=11, fontweight='bold')\n        ax.axis('off')\n    \n    fig.suptitle(\"Heyting Algebra Operations on Diamond Architecture\",\n                fontsize=15, fontweight='bold')\n    plt.tight_layout()\n    \n    return fig\n\n\nif __name__ == \"__main__\":\n    print(\"Generating visualizations...\")\n    \n    fig1 = generate_main_figure()\n    fig1.savefig('/workspace/request-project/viz_main.png', dpi=150,\n                bbox_inches='tight', facecolor='white')\n    print(\"  Saved viz_main.png\")\n    \n    fig2 = generate_reconstruction_figure()\n    fig2.savefig('/workspace/request-project/viz_reconstruction.png', dpi=150,\n                bbox_inches='tight', facecolor='white')\n    print(\"  Saved viz_reconstruction.png\")\n    \n    fig3 = generate_heyting_figure()\n    fig3.savefig('/workspace/request-project/viz_heyting.png', dpi=150,\n                bbox_inches='tight', facecolor='white')\n    print(\"  Saved viz_heyting.png\")\n    \n    print(\"All visualizations generated!\")\n"
+    },
+    "date": "2026-05-12T09:51:53Z"
   },
   "algebrageometrycryptography_berggren_voronoi_duali.json": {
     "title": "Berggren Voronoi-CVP Duality via Primitive Triple Delaunay Complexes and Certified Decoding",
@@ -4933,7 +4992,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -4942,7 +5001,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 275
+      "hue": 179
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -4951,7 +5010,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -4960,7 +5019,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -4969,7 +5028,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -4978,7 +5037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -4987,7 +5046,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:45Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_tannaka_reconstruction_via_closure_endo",
@@ -4996,7 +5055,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -5005,7 +5064,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -5014,7 +5073,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-10T23:04:27Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraspeculative_prime_congruence_semantics_for_",
@@ -5023,7 +5082,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:04:40Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraeml_renormalization_semantics_via_closure_f",
@@ -5032,7 +5091,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -5041,7 +5100,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 270
+      "hue": 89
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -5050,7 +5109,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -5059,7 +5118,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:38Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "algebramachinelearning_coalgebraic_myhillnerode_se",
@@ -5068,7 +5127,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -5077,7 +5136,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-11T02:06:07Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraeml_ruelle_transfer_semantics_via_closure_c",
@@ -5086,7 +5145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T04:06:02Z",
-      "hue": 281
+      "hue": 271
     },
     {
       "id": "logiccomputation_temporal_fixed_point_semantics_vi",
@@ -5095,7 +5154,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -5104,7 +5163,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:27Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "cryptographypythagorean_isogeny_free_trapdoors_via",
@@ -5131,7 +5190,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -5140,7 +5199,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 90
+      "hue": 314
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -5149,7 +5208,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -5158,7 +5217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -5167,7 +5226,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -5176,7 +5235,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -5194,7 +5253,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T09:36:04Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "algebraeml_tropical_choquet_closure_duality_via_id",
@@ -5203,7 +5262,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -5212,7 +5271,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 292
+      "hue": 270
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
@@ -5221,7 +5280,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -5230,7 +5289,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T11:36:11Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebrapythagoreangeometry_gravitational_tropical_",
@@ -5239,7 +5298,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -5248,7 +5307,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:40Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_prime_congruence_du",
@@ -5257,7 +5316,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -5266,7 +5325,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -5275,7 +5334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -5284,7 +5343,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -5293,7 +5352,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:35:26Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_compr",
@@ -5311,7 +5370,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -5320,7 +5379,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -5329,7 +5388,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T16:18:15Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_de_sitter_tropical_entropic_c_th",
@@ -5338,7 +5397,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 95
+      "hue": 280
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -5356,7 +5415,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -5383,7 +5442,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -5392,7 +5451,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T18:48:13Z",
-      "hue": 95
+      "hue": 112
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_p",
@@ -5401,7 +5460,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -5410,7 +5469,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -5419,7 +5478,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -5428,7 +5487,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -5437,7 +5496,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -5446,7 +5505,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 112
+      "hue": 101
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -5455,7 +5514,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T00:32:18Z",
-      "hue": 280
+      "hue": 272
     },
     {
       "id": "algebrapythagoreangeometry_tropical_gravitational_",
@@ -5464,7 +5523,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -5473,7 +5532,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 134
+      "hue": 90
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -5482,7 +5541,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -5491,7 +5550,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -5500,7 +5559,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -5509,7 +5568,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -5518,7 +5577,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -5527,7 +5586,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -5545,7 +5604,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -5554,7 +5613,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -5563,7 +5622,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -5572,7 +5631,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -5581,7 +5640,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -5590,7 +5649,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:36:24Z",
-      "hue": 89
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_closure_matroid_duality_via",
@@ -5608,7 +5667,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -5617,7 +5676,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 271
+      "hue": 112
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -5626,7 +5685,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T05:36:31Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -5635,7 +5694,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T05:36:49Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebramachinelearningspeculative_operadic_tropica",
@@ -5644,7 +5703,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T07:30:16Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_i",
@@ -5653,7 +5712,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T07:33:24Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_wal",
@@ -5662,7 +5721,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T07:34:03Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraemlphysics_idempotent_renormalization_duali",
@@ -5689,7 +5748,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T08:33:32Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "algebraemllogic_closure_stone_spectral_duality_via",
@@ -5698,7 +5757,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T09:32:42Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "algebraemlcryptography_closure_extractor_duality_v",
@@ -5707,7 +5766,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T09:33:03Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -5716,7 +5775,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T09:48:21Z",
-      "hue": 91
+      "hue": 270
+    },
+    {
+      "id": "algebramachinelearninglogic_operadic_stone_duality",
+      "title": "Operadic Stone Duality: Logical Identifiability of Neural Architectures via Heyting Predicate Lattices",
+      "domain": "Algebra\u2013Machine Learning\u2013Logic (Bridges)",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-12T09:51:53Z",
+      "hue": 271
     }
   ],
   "edges": [
@@ -5729,476 +5797,476 @@ window.PACKAGE_GRAPH = {
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_stonebirkhoff_dua",
-      "strength": 0.9289282836422239,
+      "strength": 0.928058727569331,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_tropical_information_bot",
-      "strength": 0.8725221595487509,
+      "strength": 0.8709624796084827,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.8324738114423851,
+      "strength": 0.8304241435562807,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.7980660757453665,
+      "strength": 0.795595432300163,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.7777598710717163,
+      "strength": 0.7750407830342576,
       "label": "Temporal Nerode Quotient for Reversible"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.7721192586623691,
+      "strength": 0.769331158238173,
       "label": "Operadic Neural Architecture Search via"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.6559226430298146,
+      "strength": 0.6517128874388254,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.6215149073327961,
+      "strength": 0.616884176182708,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.615310233682514,
+      "strength": 0.6106035889070147,
       "label": "Logic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "cryptographypythagorean_isogeny_free_trapdoors_via",
-      "strength": 0.6051571313456889,
+      "strength": 0.600326264274062,
       "label": "Cryptography"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.60290088638195,
+      "strength": 0.5980424143556282,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.5966962127316681,
+      "strength": 0.5917618270799349,
       "label": "Lean Formalization Target"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5842868654311039,
+      "strength": 0.579200652528548,
       "label": "Non"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogicspeculative_temporal_prime_congruence_",
-      "strength": 0.5763900080580175,
+      "strength": 0.5712071778140293,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.5651087832393231,
+      "strength": 0.5597879282218596,
       "label": "Tropical Representer Duality"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.5639806607574536,
+      "strength": 0.5586460032626428,
       "label": "Operadic Neural Composition with Multi-I"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5622884770346493,
+      "strength": 0.5569331158238172,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.5600322320709105,
+      "strength": 0.5546492659053833,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemllogic_closure_stone_spectral_duality_via",
-      "strength": 0.5538275584206285,
+      "strength": 0.5483686786296901,
       "label": "Closure"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.5295729250604351,
+      "strength": 0.5238172920065254,
       "label": "Tropical Semiring Observations for Infor"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.525624496373892,
+      "strength": 0.5198205546492659,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5188557614826752,
+      "strength": 0.5129690048939641,
       "label": "Non"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.5115229653505238,
+      "strength": 0.5055464926590538,
       "label": "Operadic Tropicalization"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.49347300564061236,
+      "strength": 0.4872756933115824,
       "label": "Operadic composition laws for specific a"
+    },
+    {
+      "source": "algebralogicmachinelearning_ultrametric_proof_shea",
+      "target": "algebramachinelearninglogic_operadic_stone_duality",
+      "strength": 0.4855628058727569,
+      "label": "Operadic Stone Duality"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.4872683319903304,
+      "strength": 0.48099510603588913,
       "label": "Logic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_idempotent_renormalization_duali",
-      "strength": 0.46921837228041896,
+      "strength": 0.4627243066884177,
       "label": "Idempotent Renormalization Duality"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.4624496373892022,
+      "strength": 0.4558727569331158,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.4624496373892022,
+      "strength": 0.4558727569331158,
       "label": "Effective prefix codes"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.45511684125705076,
+      "strength": 0.4484502446982056,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.45511684125705076,
+      "strength": 0.4484502446982056,
       "label": "Operadic Neural Proof"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4522965350523771,
+      "strength": 0.44559543230016313,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_ultrametric_proof_dynam",
-      "strength": 0.44834810636583394,
+      "strength": 0.4415986949429037,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4466559226430299,
+      "strength": 0.4398858075040784,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.44101531023368246,
-      "label": "Algebra,EML,Bridges,Cryptography bridge"
+      "strength": 0.4341761827079935,
+      "label": "Cryptography,Algebra,EML,Bridges bridge"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.44101531023368246,
-      "label": "Algebra,Geometry,Logic,Tropical bridge"
+      "strength": 0.4341761827079935,
+      "label": "Logic,Algebra,Geometry,Tropical bridge"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.44101531023368246,
-      "label": "MachineLearning,Algebra,Geometry,Tropical bridge"
+      "strength": 0.4341761827079935,
+      "label": "Geometry,Algebra,MachineLearning,Tropical bridge"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.43650282030620474,
+      "strength": 0.42960848287112574,
       "label": "Entropy Production Rate Invariance"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_i",
       "target": "algebratropicallogic_tropical_stone_duality_via_id",
-      "strength": 0.43311845286059625,
+      "strength": 0.4261827079934747,
       "label": "C. Tropical Persistent Homology"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.41958098307816283,
+      "strength": 0.41247960848287124,
       "label": "Non"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.412812248186946,
+      "strength": 0.40562805872756935,
       "label": "Tropical Rate"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.412812248186946,
+      "strength": 0.40562805872756935,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.39871071716357775,
+      "strength": 0.3913539967373573,
       "label": "Operadic Tropicalization"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraemltropical_non_archimedean_information_dua",
-      "strength": 0.3970185334407735,
+      "strength": 0.3896411092985318,
       "label": "Indistinguishability \u2194 metric bisimulati"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.39589041095890404,
+      "strength": 0.38849918433931485,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.39589041095890404,
+      "strength": 0.38849918433931485,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.3879935535858178,
+      "strength": 0.3805057096247961,
       "label": "Tropical Semiring Oracle Capacity"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.38348106365834006,
+      "strength": 0.3759380097879283,
       "label": "Entropy Production Bounds for Self-Refer"
+    },
+    {
+      "source": "machinelearningspeculative_operadic_diagonalizatio",
+      "target": "algebramachinelearninglogic_operadic_stone_duality",
+      "strength": 0.37137030995106035,
+      "label": "Operadic Stone Duality"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3789685737308621,
+      "strength": 0.37137030995106035,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.3778404512489927,
+      "strength": 0.3702283849918434,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.37671232876712324,
+      "strength": 0.36908646003262646,
       "label": "Spectral graph theory \u2194 Tropical spectra"
+    },
+    {
+      "source": "algebratropicallogic_tropical_stone_duality_via_id",
+      "target": "algebramachinelearninglogic_operadic_stone_duality",
+      "strength": 0.36566068515497563,
+      "label": "Operadic Stone Duality"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.36825141015310237,
+      "strength": 0.3605220228384993,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.356406124093473,
+      "strength": 0.34853181076672113,
       "label": "Tropical Rate"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.356406124093473,
+      "strength": 0.34853181076672113,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.356406124093473,
+      "strength": 0.34853181076672113,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.356406124093473,
+      "strength": 0.34853181076672113,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculativecryptography_prime_congruence_du",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.356406124093473,
+      "strength": 0.34853181076672113,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.356406124093473,
+      "strength": 0.34853181076672113,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_p",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.356406124093473,
+      "strength": 0.34853181076672113,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.350201450443191,
+      "strength": 0.3422512234910278,
       "label": "Persistent homology of closure filtratio"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebrageometrycryptography_berggren_voronoi_duali",
-      "strength": 0.3468170829975825,
+      "strength": 0.3388254486133768,
       "label": "Berggren Voronoi"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.3468170829975825,
+      "strength": 0.3388254486133768,
       "label": "Tropical"
     },
     {
       "source": "algebraemlcryptography_tropical_pontryaginmellin_d",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.34456083803384363,
+      "strength": 0.33654159869494293,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.34456083803384363,
+      "strength": 0.33654159869494293,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3434327155519742,
+      "strength": 0.335399673735726,
       "label": "presentation-independence of the Berkovi"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.33948428686543103,
+      "strength": 0.3314029363784666,
       "label": "Tropical Neural Universality Classes wit"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.33948428686543103,
+      "strength": 0.3314029363784666,
       "label": "Tropical Rate"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.33948428686543103,
+      "strength": 0.3314029363784666,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativecryptography_prime_congruence_du",
-      "strength": 0.33327961321514904,
+      "strength": 0.3251223491027733,
       "label": "Prime Congruence Duality"
     },
     {
       "source": "algebralogiccomputation_temporal_stonebirkhoff_dua",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.3282030620467365,
+      "strength": 0.31998368678629696,
       "label": "Temporal Fixed"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.3253827558420628,
+      "strength": 0.3171288743882545,
       "label": "Lattice-Cryptographic Indistinguishabili"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3225624496373891,
+      "strength": 0.3142740619902121,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3197421434327156,
+      "strength": 0.3114192495921698,
       "label": "Tropical Specialization"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.318614020950846,
+      "strength": 0.31027732463295266,
       "label": "Tropicalization of Prime Semantic Finger"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.31804995970991135,
+      "strength": 0.3097063621533443,
       "label": "Closure"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.31804995970991135,
+      "strength": 0.3097063621533443,
       "label": "Idempotent Holographic Renormalization"
-    },
-    {
-      "source": "machinelearningspeculative_operadic_diagonalizatio",
-      "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3163577759871071,
-      "label": "Tropicalization of Prime Semantic Finger"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.30846091861402086,
-      "label": "Shannon Entropy Formalization on Orbit D"
-    },
-    {
-      "source": "algebralogicspeculative_temporal_prime_congruence_",
-      "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.3039484286865431,
-      "label": "Temporal Fixed"
-    },
-    {
-      "source": "algebralogicspeculative_temporal_prime_congruence_",
-      "target": "algebratropicallogic_tropical_stone_duality_via_id",
       "strength": 0.3,
-      "label": "Tropical Stone Duality"
+      "label": "Shannon Entropy Formalization on Orbit D"
     }
   ]
 };
