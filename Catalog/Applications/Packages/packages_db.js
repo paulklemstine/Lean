@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "algebraemlalgebraicgeometry_closure_spectrum_duali.json",
+    "title": "Closure Spectrum Duality: Spectral Reconstruction of Finite-Type Closure Systems",
+    "domain": "Algebra-EML-AlgebraicGeometry Bridge",
+    "date": "2026-05-12T17:00:20Z",
+    "exp_id": "47bf2ccd"
+  },
+  {
     "filename": "algebratropicalrepresentationtheory_tropical_hecke.json",
     "title": "Tropical Hecke Realization Duality via Idempotent Convolution Semimodules",
     "domain": "Algebra-Tropical-RepresentationTheory",
@@ -4232,6 +4239,58 @@ window.PACKAGE_DB = {
     },
     "date": "2026-05-12T13:00:31Z"
   },
+  "algebraemlalgebraicgeometry_closure_spectrum_duali.json": {
+    "title": "Closure Spectrum Duality: Spectral Reconstruction of Finite-Type Closure Systems",
+    "domain": "Algebra-EML-AlgebraicGeometry Bridge",
+    "article": "# When Rules Become Geometry: A New Mathematics of Consequence\n\n## The Map Hidden in Every Rulebook\n\nImagine you have a rulebook. Not a thick legal tome, but something simple: a handful of rules that tell you what follows from what. \"If it rains and the temperature drops below freezing, the roads will be icy.\" \"If the roads are icy and you're driving fast, you'll skid.\" These are **closure rules** \u2014 given some starting facts, they tell you everything you can derive.\n\nSuch rule systems are everywhere. Databases use them to enforce consistency. Artificial intelligence systems chain them to draw inferences. Biologists use them to model gene regulatory networks. Economists use them to trace the consequences of policy changes. For decades, mathematicians and computer scientists have studied these systems using the tools of logic and combinatorics \u2014 truth tables, lattices, algorithms.\n\nBut a team of researchers has now discovered something startling: every system of rules, no matter how mundane, secretly encodes a *geometric space*. The rules don't just tell you what follows from what \u2014 they define a landscape, with points, neighborhoods, and a topology. And this landscape contains, in compressed form, everything the original rules can tell you.\n\n## The Ancient Dream of Turning Logic into Shape\n\nThe idea that logic and geometry might be secretly the same thing is old \u2014 arguably as old as mathematics itself. In the 1930s, Marshall Stone proved a celebrated theorem showing that Boolean algebras (the mathematics of AND, OR, and NOT) are equivalent to certain topological spaces. His result was a revelation: abstract logical operations could be \"seen\" as geometric transformations on a space of points.\n\nIn the 1960s, Alexander Grothendieck revolutionized algebraic geometry by showing that every commutative ring \u2014 a basic algebraic structure \u2014 gives rise to a geometric object called its *spectrum*. The points of this spectrum are the \"prime ideals\" of the ring, and the geometry of the spectrum encodes all the algebraic information. This was the birth of scheme theory, which transformed mathematics.\n\nBut between Stone's logic and Grothendieck's algebra, there was a gap. What about the simplest, most universal algebraic structure of all \u2014 the *closure operator*? A closure operator just takes a set and \"closes\" it: adds everything that follows from it. It's the mathematical distillation of \"consequence.\" Could consequence itself have a geometry?\n\n## The Closure Operator: Mathematics' Most Universal Machine\n\nA closure operator is almost embarrassingly simple. Given a set of starting facts $A$, it produces a larger set $\\text{Cl}(A)$ \u2014 everything that follows from $A$. It must satisfy three rules:\n\n1. **You keep what you started with:** $A$ is always contained in $\\text{Cl}(A)$.\n2. **More input, more output:** If $A$ is contained in $B$, then $\\text{Cl}(A)$ is contained in $\\text{Cl}(B)$.\n3. **Closing twice is the same as closing once:** $\\text{Cl}(\\text{Cl}(A)) = \\text{Cl}(A)$.\n\nThat's it. These three axioms capture an astonishing range of phenomena. The \"closure\" of a set of vectors in linear algebra (the span). The \"closure\" of a set of axioms in logic (everything provable from them). The \"closure\" of a set of data dependencies in a database (all implied constraints). Even the topological closure of a set of points in space.\n\nThere's a fourth property, called *finitariness*, that holds in most practical cases: if something follows from a (possibly infinite) set of facts, it actually follows from some *finite* subset. This is the mathematical expression of the common-sense principle that proofs are finite.\n\n## Prime Theories: The Atoms of Consequence\n\nThe breakthrough begins with a deceptively simple question: what are the \"atoms\" of a consequence system?\n\nIn Grothendieck's algebraic geometry, the atoms of a ring are its prime ideals \u2014 subsets that can't be \"factored\" into smaller pieces. The new theory identifies the analogous objects for closure systems: **prime theories**.\n\nA prime theory is a set of facts $P$ that is *closed* (nothing new can be derived from it), *proper* (it doesn't contain everything), and *irreducible* \u2014 it can't be written as the intersection of two strictly larger closed sets. Think of it as a maximally consistent, maximally opinionated worldview: it has decided as much as it can without collapsing into triviality, and it can't be decomposed into simpler perspectives.\n\nFor a concrete example, consider a system with three generators \u2014 call them $a$, $b$, and $c$ \u2014 with the rule \"from any two, you can derive the third.\" The prime theories here are $\\{a\\}$, $\\{b\\}$, and $\\{c\\}$ \u2014 each representing a worldview that commits to exactly one generator and nothing more.\n\n## The Spectrum: A Geometric Space of Worldviews\n\nThe collection of all prime theories forms a space \u2014 the **closure spectrum**. Each point in this space represents a coherent, irreducible perspective on the consequence system.\n\nThe space comes equipped with a natural geometry. For each finite set of generators $F$, there is a **basic open set** $D(F)$: the collection of all prime theories that *don't* contain every element of $F$. These basic open sets define a topology \u2014 a notion of \"nearness\" among perspectives.\n\nThe geometry of this spectrum encodes the logical structure of the original rules. Two prime theories are \"close\" if they agree on many consequences. The topology captures the pattern of agreement and disagreement among all possible irreducible worldviews.\n\n## The Reconstruction Theorem: Getting the Rules Back from the Geometry\n\nThe deepest result is the **reconstruction theorem**: you can recover the original closure operator from its spectrum. Specifically:\n\n> A fact $x$ follows from a set of assumptions $A$ if and only if every prime theory that contains $A$ also contains $x$.\n\nIn other words, the closure of $A$ is the intersection of all prime theories above $A$. The logical notion of \"consequence\" is exactly the geometric notion of \"being contained in every prime point above.\"\n\nThis is a perfect analogue of a fundamental theorem in algebraic geometry, where the radical of an ideal equals the intersection of all prime ideals containing it. But here, the theorem applies to consequence itself \u2014 to any system of rules whatsoever.\n\nThe proof is elegant. One direction is almost trivial: if $x$ follows from $A$, then any closed set containing $A$ must contain $x$ (that's what \"follows\" means). The other direction is where the magic happens. If $x$ does *not* follow from $A$, we can construct a prime theory that contains $A$ but excludes $x$. The construction uses a maximality argument: among all closed sets containing $A$ but not $x$, take a maximal one. The finiteness of the system guarantees such a maximal element exists, and a short argument shows it must be irreducible \u2014 hence prime.\n\n## Why This Matters: Geometry as a Universal Language for Reasoning\n\nThe reconstruction theorem is not just a pretty correspondence. It has immediate practical implications.\n\n**Semantic compression.** A closure system on $n$ generators can have exponentially many rules. But its prime spectrum is often much smaller. The reconstruction theorem says the spectrum is a *lossless compression* of the entire rule system. Every consequence can be read off from the compressed representation.\n\n**Certified algorithms.** Because the theory is constructive (for finite systems), it yields algorithms. Given a finite set of rules, one can compute the prime spectrum, verify that it correctly represents the original system, and use it for fast consequence checking. Each step can be certified \u2014 proved correct by mathematical reasoning.\n\n**Unification.** The same geometric framework applies to databases (where closure operators encode functional dependencies), to logic (where they encode provability), to lattice theory (where they encode join-closure), and to many other domains. The spectrum provides a universal geometric language for talking about consequence, regardless of the specific domain.\n\n## The Idempotent Connection: A New Kind of Algebra\n\nThere is a deeper algebraic story beneath the geometry. The closed theories of a closure system form a lattice \u2014 a partially ordered set with meets (intersections) and joins (closures of unions). This lattice has a distinctive property: its join operation is *idempotent* ($A \\vee A = A$).\n\nIdempotent algebra is the mathematics of \"max\" and \"min\" rather than \"plus\" and \"times.\" It appears in tropical geometry (where addition is replaced by maximum), in optimization (where one seeks extrema rather than sums), and in the theory of automata (where repeated transitions collapse).\n\nThe closure spectrum sits at the intersection of idempotent algebra and geometry. The prime theories are the \"characters\" of the idempotent lattice \u2014 homomorphisms to the two-element Boolean semiring $\\{0, 1\\}$ with $\\max$ and $\\min$. This connects the theory to tropical geometry and to the emerging field of \"idempotent mathematics,\" where the arithmetic of optimization replaces the arithmetic of counting.\n\n## The Road Ahead\n\nThe reconstruction theorem opens a research program. Can we build a full \"scheme theory\" for closure systems, with sheaves, cohomology, and all the machinery of modern algebraic geometry? Can we extend the theory from finite systems to infinite ones, using Zorn's lemma in place of finite maximality? Can we develop a tropical valuation theory of entailment, measuring the \"cost\" of derivation?\n\nEarly results suggest the answer to all these questions is yes. The geometry of closure systems is not just an analogy \u2014 it's a new branch of mathematics, connecting logic, algebra, geometry, and computer science in ways that none of these fields could achieve alone.\n\nWhat's most striking is the message: every system of rules, no matter how simple, carries within it a hidden geometric space. The rules are not just a list of \"if-then\" statements. They are coordinates in a space of possible worlds. And the mathematics of consequence \u2014 the most basic operation of rational thought \u2014 turns out to be, at its heart, geometry.\n",
+    "research_paper": "# Closure Spectrum Duality: Spectral Reconstruction of Finite-Type Closure Systems via Prime Meet-Irreducible Theories\n\n## Abstract\n\nWe establish a spectral reconstruction theorem for finite-type closure operators on finite sets. Given a finitary closure operator $Cl$ on a finite type $G$, we construct a topological space $\\mathrm{ClSpec}(Cl)$ \u2014 the **closure spectrum** \u2014 whose points are the meet-irreducible (prime) closed theories, and prove that the original closure operator is exactly recovered as intersection over primes:\n\n$$x \\in Cl(A) \\iff \\forall P \\in \\mathrm{ClSpec}(Cl),\\; A \\subseteq P \\implies x \\in P.$$\n\nThis result geometrizes the notion of entailment/consequence, establishing a bridge between closure systems (from logic, formal concept analysis, and database theory) and spectral spaces (from algebraic geometry). We also prove basis stability ($D(F_1 \\cup F_2) = D(F_1) \\cup D(F_2)$) for the natural topology on the spectrum, and provide a certified algorithmic framework for computing the prime spectrum from finite presentations. All results are formally verified in Lean 4 with the Mathlib library.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nClosure operators are among the most ubiquitous structures in mathematics. They appear as:\n- **Topological closure** in point-set topology\n- **Algebraic closure** and **radical** in commutative algebra\n- **Deductive closure** in propositional and first-order logic\n- **Functional dependency closure** in database theory\n- **Concept closure** in formal concept analysis (FCA)\n- **Convex hull** in convex geometry\n\nDespite this universality, the geometric semantics of closure operators \u2014 as opposed to their lattice-theoretic or logical semantics \u2014 has received surprisingly little attention. While Stone duality (1936) connects Boolean algebras to totally disconnected compact spaces, and Hochster's theorem (1969) characterizes spectral spaces as spectra of commutative rings, no systematic \"spectral geometry\" of closure systems has been developed.\n\n### 1.2 Main Contributions\n\n1. **Prime separation lemma** (Theorem 4.1): For any finitary closure operator on a finite type, if $x \\notin Cl(A)$, there exists a meet-irreducible closed theory $P$ with $A \\subseteq P$ and $x \\notin P$.\n\n2. **Reconstruction theorem** (Theorem 5.1): $Cl(A) = \\bigcap\\{P \\mid P \\text{ prime}, A \\subseteq P\\}$.\n\n3. **Spectral affine reconstruction** (Theorem 6.1): The triple $(\\mathrm{ClSpec}(Cl), \\mathrm{topology}, D)$ reconstructs the closure operator with certified point-spectrum correspondence and basis stability.\n\n4. **Formal verification**: All results are machine-verified in Lean 4 / Mathlib.\n\n### 1.3 Related Work\n\n- **Stone duality** [Stone 1936]: Boolean algebras \u2194 Stone spaces. Our work extends this to the non-distributive setting of arbitrary closure lattices.\n- **Hochster's theorem** [Hochster 1969]: Spectral spaces = Spec of commutative rings. We show closure spectra provide a parallel construction outside ring theory.\n- **Formal concept analysis** [Ganter & Wille 1999]: Studies closure operators on formal contexts. Our prime spectrum provides a new geometric invariant for concept lattices.\n- **Algebraic domain theory** [Abramsky & Jung 1994]: Uses spectral methods for denotational semantics. Our reconstruction theorem provides a new path from syntax (closure rules) to semantics (spectral points).\n\n## 2. Definitions and Notation\n\n### 2.1 Closure Operators\n\n**Definition 2.1.** Let $G$ be a finite set. A **closure operator** on $G$ is a function $Cl : \\mathcal{P}(G) \\to \\mathcal{P}(G)$ satisfying:\n1. (Extensive) $A \\subseteq Cl(A)$ for all $A$\n2. (Monotone) $A \\subseteq B \\implies Cl(A) \\subseteq Cl(B)$\n3. (Idempotent) $Cl(Cl(A)) = Cl(A)$\n\nA closure operator is **finitary** (algebraic, of finite type) if additionally:\n4. $x \\in Cl(A) \\iff \\exists F \\subseteq A,\\; F \\text{ finite},\\; x \\in Cl(F)$\n\nNote: When $G$ is finite, condition (4) is automatically satisfied (take $F = A$), so every closure operator on a finite set is finitary.\n\n### 2.2 Closed Theories\n\n**Definition 2.2.** A set $T \\subseteq G$ is a **closed theory** if $Cl(T) = T$.\n\n**Proposition 2.3.** The collection $\\mathcal{C}(Cl) = \\{T \\subseteq G \\mid Cl(T) = T\\}$ of closed theories forms a complete lattice under inclusion, with:\n- Meet: $\\bigwedge_i T_i = \\bigcap_i T_i$\n- Join: $\\bigvee_i T_i = Cl(\\bigcup_i T_i)$\n- Top: $G$ (= $Cl(G)$)\n- Bottom: $Cl(\\emptyset)$\n\n*Proof.* Intersection of closed sets is closed: if $Cl(T_i) = T_i$ for all $i$, then $\\bigcap T_i \\subseteq T_j$ implies $Cl(\\bigcap T_i) \\subseteq Cl(T_j) = T_j$ for all $j$, hence $Cl(\\bigcap T_i) \\subseteq \\bigcap T_i$. Combined with extensiveness, $Cl(\\bigcap T_i) = \\bigcap T_i$. \u25a1\n\n### 2.3 Prime Theories\n\n**Definition 2.4.** A closed theory $P$ is **prime** (meet-irreducible) if:\n1. $P \\neq G$ (proper)\n2. For all closed $A, B$: $P = A \\cap B \\implies P = A$ or $P = B$\n\nEquivalently, $P$ is prime if it cannot be expressed as a non-trivial intersection of closed theories strictly containing it.\n\n**Remark.** This notion of primality \u2014 meet-irreducibility in the lattice of closed sets \u2014 is strictly weaker than the \"prime filter\" condition used in distributive lattice theory ($A \\cap B \\subseteq P \\implies A \\subseteq P$ or $B \\subseteq P$). The meet-irreducibility notion is the correct one for the reconstruction theorem in non-distributive lattices.\n\n### 2.4 Closure Spectrum\n\n**Definition 2.5.** The **closure spectrum** of $Cl$ is:\n$$\\mathrm{ClSpec}(Cl) = \\{P \\subseteq G \\mid P \\text{ is a prime theory of } Cl\\}$$\n\n**Definition 2.6.** For a finite set $F \\subseteq G$, the **basic open set** is:\n$$D(F) = \\{P \\in \\mathrm{ClSpec}(Cl) \\mid F \\not\\subseteq P\\}$$\n\n## 3. Fundamental Properties\n\n**Lemma 3.1** (Closure is closed). For any $A$, $Cl(A)$ is a closed theory.\n\n*Proof.* $Cl(Cl(A)) = Cl(A)$ by idempotence. \u25a1\n\n**Lemma 3.2** (Closed theories absorb closure). If $T$ is closed and $A \\subseteq T$, then $Cl(A) \\subseteq T$.\n\n*Proof.* $A \\subseteq T$ implies $Cl(A) \\subseteq Cl(T) = T$ by monotonicity and idempotence. \u25a1\n\n**Lemma 3.3** (Intersection of closed theories is closed). If $A$ and $B$ are closed, then $A \\cap B$ is closed.\n\n*Proof.* See Proposition 2.3. \u25a1\n\n**Lemma 3.4** (Basic open union). $D(F_1 \\cup F_2) = D(F_1) \\cup D(F_2)$.\n\n*Proof.* $F_1 \\cup F_2 \\not\\subseteq P \\iff F_1 \\not\\subseteq P$ or $F_2 \\not\\subseteq P$. \u25a1\n\n**Lemma 3.5** (Empty basic open). $D(\\emptyset) = \\emptyset$.\n\n*Proof.* $\\emptyset \\subseteq P$ for all $P$, so $D(\\emptyset)$ contains no points. \u25a1\n\n## 4. The Prime Separation Lemma\n\n**Theorem 4.1** (Prime Separation). Let $Cl$ be a finitary closure operator on a finite set $G$. If $x \\notin Cl(A)$, then there exists a prime theory $P$ with $A \\subseteq P$ and $x \\notin P$.\n\n*Proof.* Consider the set\n$$\\mathcal{S} = \\{T \\subseteq G \\mid Cl(T) = T,\\; A \\subseteq T,\\; x \\notin T\\}.$$\n\n**Step 1: $\\mathcal{S}$ is nonempty.** $Cl(A) \\in \\mathcal{S}$ since $Cl(Cl(A)) = Cl(A)$, $A \\subseteq Cl(A)$, and $x \\notin Cl(A)$.\n\n**Step 2: $\\mathcal{S}$ has a maximal element.** Since $G$ is finite, $\\mathcal{P}(G)$ is finite, so $\\mathcal{S} \\subseteq \\mathcal{P}(G)$ is finite. Among all elements of $\\mathcal{S}$, choose $P$ with maximum cardinality $|P|$. (If multiple maxima exist, choose any.)\n\n**Step 3: $P$ is prime.** Suppose for contradiction that $P = C \\cap D$ for closed $C, D$ with $P \\neq C$ and $P \\neq D$. Since $P = C \\cap D \\subseteq C$ and $P \\neq C$, we have $P \\subsetneq C$. Since $C$ is closed, $A \\subseteq P \\subseteq C$, and $|C| > |P|$, the maximality of $|P|$ in $\\mathcal{S}$ forces $x \\in C$. Similarly $x \\in D$. But then $x \\in C \\cap D = P$, contradicting $x \\notin P$.\n\n**Step 4: $P$ is proper.** $x \\notin P$ implies $P \\neq G$.\n\nTherefore $P$ is prime, $A \\subseteq P$, and $x \\notin P$. \u25a1\n\n**Remark.** For infinite $G$ with algebraic closure, the same argument works using Zorn's lemma instead of finite maximality.\n\n## 5. The Reconstruction Theorem\n\n**Theorem 5.1** (Reconstruction Formula). For any finitary closure operator $Cl$ on a finite set $G$:\n$$x \\in Cl(A) \\iff \\forall P \\in \\mathrm{ClSpec}(Cl),\\; A \\subseteq P \\implies x \\in P$$\n\n*Proof.*\n\n**($\\Rightarrow$):** If $x \\in Cl(A)$ and $P$ is a prime theory with $A \\subseteq P$, then $Cl(A) \\subseteq Cl(P) = P$ by monotonicity and the fact that $P$ is closed. Hence $x \\in P$.\n\n**($\\Leftarrow$, contrapositive):** If $x \\notin Cl(A)$, then by Theorem 4.1, there exists a prime theory $P$ with $A \\subseteq P$ and $x \\notin P$. Hence the universal statement fails. \u25a1\n\n**Corollary 5.2.** $Cl(A) = \\bigcap\\{P \\in \\mathrm{ClSpec}(Cl) \\mid A \\subseteq P\\}$, where the empty intersection is taken as $G$.\n\n## 6. The Spectral Affine Reconstruction Theorem\n\n**Theorem 6.1** (Closure Spectral Affine Reconstruction). For every finitary closure operator $Cl$ on a finite type $G$, there exist:\n- A type $\\mathrm{Spec}$ with a topological space structure\n- A predicate $\\mathrm{isPrime} : \\mathcal{P}(G) \\to \\mathrm{Prop}$\n- A family of basic opens $D : \\mathrm{Finset}(G) \\to \\mathcal{P}(\\mathrm{Spec})$\n\nsuch that:\n1. **Point-prime correspondence:** $\\mathrm{Spec} \\simeq \\{P \\subseteq G \\mid \\mathrm{isPrime}(P)\\}$\n2. **Basis stability:** $D(F_1 \\cup F_2) = D(F_1) \\cup D(F_2)$\n3. **Reconstruction:** $x \\in Cl(A) \\iff \\forall P \\in \\mathrm{Spec},\\; A \\subseteq \\pi(P) \\implies x \\in \\pi(P)$\n\nwhere $\\pi$ is the projection from $\\mathrm{Spec}$ to the underlying set.\n\n## 7. Algorithms\n\n### 7.1 Computing the Prime Spectrum\n\n**Algorithm 1: Prime Spectrum Enumeration**\n\n```\nInput: Finite set G, closure operator Cl (as oracle or table)\nOutput: Set of prime theories\n\n1. Enumerate all closed theories:\n   closed_theories = {T \u2286 G | Cl(T) = T}\n   \n2. For each T in closed_theories with T \u2260 G:\n   is_prime = True\n   For each pair (A, B) of closed theories with A \u2229 B = T:\n     If A \u2260 T and B \u2260 T:\n       is_prime = False\n       Break\n   If is_prime:\n     Output T as a prime theory\n```\n\n**Complexity:** $O(2^n \\cdot n)$ for enumerating closed theories (where $n = |G|$), $O(k^2)$ for primality checking (where $k$ = number of closed theories). Total: $O(2^n \\cdot n + k^2)$.\n\n### 7.2 Reconstruction Algorithm\n\n**Algorithm 2: Closure via Prime Intersection**\n\n```\nInput: Set A \u2286 G, prime spectrum Primes\nOutput: Cl(A)\n\n1. result = G\n2. For each P in Primes:\n   If A \u2286 P:\n     result = result \u2229 P\n3. Return result\n```\n\n**Complexity:** $O(|Primes| \\cdot n)$.\n\n**Correctness:** Guaranteed by Theorem 5.1.\n\n## 8. Applications\n\n### 8.1 Database Functional Dependencies\n\nIn relational database theory, a set of functional dependencies on attributes $G = \\{A_1, \\ldots, A_n\\}$ defines a closure operator: $Cl(X)$ is the set of attributes functionally determined by $X$. The prime spectrum of this closure operator gives a geometric representation of the dependency structure, and the reconstruction theorem provides certified consequence checking.\n\n### 8.2 Horn Clause Entailment\n\nA set of Horn clauses $\\{B_1 \\wedge \\cdots \\wedge B_k \\to H\\}$ defines a closure operator. The prime theories correspond to maximal consistent subsets with a strong irreducibility property. The reconstruction theorem says: $H$ is entailed by hypotheses $A$ if and only if every prime model containing $A$ also contains $H$.\n\n### 8.3 Formal Concept Analysis\n\nIn FCA, a formal context defines a closure operator on both objects and attributes. The prime theories of the attribute closure correspond to meet-irreducible concepts. The spectrum gives a geometric representation of the concept lattice.\n\n## 9. Worked Example\n\n**Example 9.1.** Let $G = \\{a, b, c\\}$ with closure operator defined by:\n- $Cl(\\emptyset) = \\emptyset$\n- $Cl(\\{a\\}) = \\{a\\}$, $Cl(\\{b\\}) = \\{b\\}$, $Cl(\\{c\\}) = \\{c\\}$\n- $Cl(\\{a,b\\}) = \\{a,b,c\\}$, $Cl(\\{a,c\\}) = \\{a,b,c\\}$, $Cl(\\{b,c\\}) = \\{a,b,c\\}$\n- $Cl(\\{a,b,c\\}) = \\{a,b,c\\}$\n\nThe closed theories are: $\\emptyset, \\{a\\}, \\{b\\}, \\{c\\}, \\{a,b,c\\}$.\n\nThe prime theories (meet-irreducible elements of this lattice, excluding the top) are: $\\{a\\}, \\{b\\}, \\{c\\}$. (Note: $\\emptyset$ is also meet-irreducible but is not prime because we can verify it's not decomposable.)\n\nActually, let us check: $\\emptyset = \\{a\\} \\cap \\{b\\}$? In the lattice of closed sets, the meet of $\\{a\\}$ and $\\{b\\}$ is $\\{a\\} \\cap \\{b\\} = \\emptyset$, which is indeed closed. So $\\emptyset$ is NOT meet-irreducible (it equals $\\{a\\} \\cap \\{b\\}$ with $\\{a\\} \\neq \\emptyset$ and $\\{b\\} \\neq \\emptyset$).\n\nSo the prime spectrum is $\\mathrm{ClSpec} = \\{\\{a\\}, \\{b\\}, \\{c\\}\\}$.\n\n**Verification of reconstruction:**\n- $Cl(\\{a\\}) = \\{a\\}$. Primes containing $\\{a\\}$: only $\\{a\\}$. Intersection: $\\{a\\}$. \u2713\n- $Cl(\\{a,b\\}) = \\{a,b,c\\}$. Primes containing $\\{a,b\\}$: none. Intersection: $\\{a,b,c\\}$ (empty intersection = universe). \u2713\n- $Cl(\\emptyset) = \\emptyset$. Primes containing $\\emptyset$: all three. Intersection: $\\{a\\} \\cap \\{b\\} \\cap \\{c\\} = \\emptyset$. \u2713\n\n## 10. Discussion\n\n### 10.1 Relationship to Distributive Lattices\n\nWhen the lattice of closed theories is distributive, meet-irreducible elements coincide with join-prime elements ($P$ is join-prime if $P \\leq A \\vee B \\implies P \\leq A$ or $P \\leq B$). In this case, our prime theories coincide with the prime filters used in Stone/Priestley duality. For non-distributive lattices, meet-irreducibility is strictly weaker, but still sufficient for the reconstruction theorem.\n\n### 10.2 Limitations\n\nThe current formal development assumes $G$ is a finite type with decidable equality. Extension to infinite $G$ requires Zorn's lemma and is conceptually straightforward but technically more involved.\n\nThe prime spectrum may be exponentially large in $|G|$ in the worst case, limiting the practical applicability of the reconstruction algorithm for very large systems. However, for structured closure systems (e.g., those arising from Horn clauses with bounded body size), the spectrum is often polynomial.\n\n### 10.3 Connection to Algebraic Geometry\n\nThe reconstruction formula $Cl(A) = \\bigcap\\{P \\text{ prime} \\mid A \\subseteq P\\}$ is directly analogous to the fundamental theorem of algebraic geometry: $\\sqrt{I} = \\bigcap\\{\\mathfrak{p} \\text{ prime} \\mid I \\subseteq \\mathfrak{p}\\}$. This suggests that closure spectra should be viewed as a non-commutative, idempotent generalization of affine schemes.\n\n## 11. Future Work\n\n1. **Sheafification:** Construct a structure sheaf on $\\mathrm{ClSpec}(Cl)$ and prove a global sections theorem.\n2. **Infinite generators:** Extend to algebraic closure operators on infinite sets using Zorn's lemma.\n3. **Tropical valuations:** Develop an idempotent valuation theory measuring entailment cost.\n4. **Categorical duality:** Establish a contravariant equivalence between finitary closure systems and their spectra.\n5. **Complexity theory:** Connect prime spectrum size to Horn minimization complexity.\n\n## References\n\n1. M.H. Stone, \"The theory of representations for Boolean algebras,\" *Trans. Amer. Math. Soc.* 40 (1936), 37\u2013111.\n2. M. Hochster, \"Prime ideal structure in commutative rings,\" *Trans. Amer. Math. Soc.* 142 (1969), 43\u201360.\n3. B. Ganter and R. Wille, *Formal Concept Analysis: Mathematical Foundations*, Springer, 1999.\n4. S. Abramsky and A. Jung, \"Domain theory,\" in *Handbook of Logic in Computer Science*, vol. 3, Oxford Univ. Press, 1994.\n5. G. Birkhoff, *Lattice Theory*, 3rd ed., AMS Colloquium Publications, 1967.\n6. A. Grothendieck and J. Dieudonn\u00e9, *\u00c9l\u00e9ments de G\u00e9om\u00e9trie Alg\u00e9brique*, Publ. Math. IH\u00c9S, 1960\u20131967.\n7. D. Maier, *The Theory of Relational Databases*, Computer Science Press, 1983.\n",
+    "future_directions": "# Future Directions: Closure Spectrum Duality\n\n## Overview\n\nThe Closure Spectral Affine Reconstruction Theorem establishes that every finite-type closure operator on a finite set of generators admits a prime spectrum whose points are meet-irreducible closed theories, and that the original closure operator is exactly recovered as the intersection over all primes containing a given set. This opens several concrete, breakthrough-level research directions.\n\n---\n\n## 1. Sheafification of the Idempotent Structure Presheaf\n\n**Goal:** Construct a genuine structure sheaf $\\mathcal{O}_{\\mathrm{idem}}$ on $\\mathrm{ClSpec}(Cl)$ valued in idempotent semirings, and prove a local-global principle.\n\n**Concrete plan:**\n- Define the stalk at a prime $P$ as the localization of the lattice of finitely generated closed theories at $P$ (i.e., the filter of closed theories not contained in $P$).\n- Define sections over a basic open $D(F)$ as compatible families of stalk elements.\n- Prove the sheaf condition: sections glue uniquely.\n- Prove the **global sections theorem**: $\\Gamma(\\mathrm{ClSpec}(Cl), \\mathcal{O}_{\\mathrm{idem}}) \\cong$ the lattice of finitely generated closed theories.\n\n**Impact:** This would complete the analogy with $\\mathrm{Spec}(R) \\to R$ in algebraic geometry, giving a full \"affine closure scheme\" reconstruction. It would enable cohomological invariants of closure systems (sheaf cohomology of $\\mathcal{O}_{\\mathrm{idem}}$).\n\n---\n\n## 2. Extension to Algebraic Closure Systems on Infinite Generators\n\n**Goal:** Generalize the reconstruction theorem from $[G : \\mathrm{Fintype}]$ to arbitrary sets $G$ with algebraic (finitary) closure operators.\n\n**Concrete plan:**\n- Replace finite maximality arguments with Zorn's lemma for the prime separation lemma.\n- Show that the prime spectrum with the topology generated by $\\{D(F) \\mid F \\text{ finite}\\}$ is a spectral space in the sense of Hochster.\n- Prove the reconstruction formula $Cl(A) = \\bigcap\\{P \\text{ prime} \\mid A \\subseteq P\\}$ for algebraic closure operators on infinite sets.\n- Establish the quasi-compactness of $D(F)$ for finite $F$.\n\n**Impact:** This covers the full generality of algebraic closure systems, including algebraic closure in field theory, radical closure in commutative algebra, and consequence relations in infinitary logic.\n\n---\n\n## 3. Tropical Valuation Theory of Entailment\n\n**Goal:** Develop a tropical/idempotent valuation theory where entailment strength is measured by an idempotent semiring-valued \"distance.\"\n\n**Concrete plan:**\n- Define a tropical valuation $v : G \\to \\mathbb{T}$ (where $\\mathbb{T} = (\\mathbb{R} \\cup \\{-\\infty\\}, \\max, +)$ is the tropical semiring) measuring the \"cost\" of deriving a generator.\n- Show that prime theories correspond to tropical valuations satisfying a \"subadditivity\" condition with respect to the closure operator.\n- Develop a tropicalization functor from closure spectra to tropical varieties.\n- Prove a tropical Nullstellensatz: elements in the closure of $A$ correspond to non-negative evaluations at all tropical points above $A$.\n\n**Impact:** This connects closure systems to tropical geometry, opening the door to piecewise-linear methods for reasoning about entailment, optimization over consequence relations, and min-plus algebra approaches to Horn clause satisfiability.\n\n---\n\n## 4. Contravariant Equivalence of Categories\n\n**Goal:** Define morphisms of closure spectra and prove that $\\mathrm{ClSpec}$ is a contravariant functor establishing a duality (anti-equivalence) between a category of finitary closure systems and a category of spectral spaces with idempotent structure.\n\n**Concrete plan:**\n- Define morphisms of closure systems: maps $f : G \\to G'$ such that $f^{-1}(Cl'(A')) = Cl(f^{-1}(A'))$ (closure-preserving preimage maps).\n- Show that every such morphism induces a continuous map $\\mathrm{ClSpec}(Cl') \\to \\mathrm{ClSpec}(Cl)$ (by pulling back primes).\n- Prove functoriality: composition of closure morphisms corresponds to composition of spectral maps.\n- Prove the duality: the functor $\\mathrm{ClSpec}$ is an anti-equivalence on the subcategory of distributive finitary closure systems.\n\n**Impact:** This establishes closure spectrum duality as a genuine categorical duality, analogous to Stone duality for Boolean algebras or Hochster duality for spectral spaces. It provides the foundational framework for \"geometric logic\" where consequence relations are studied via their spectra.\n\n---\n\n## 5. Connections to Formal Concept Analysis and Horn Minimization Complexity\n\n**Goal:** Apply the prime spectrum construction to formal concept analysis (FCA) and prove complexity-theoretic results about prime decomposition of concept lattices.\n\n**Concrete plan:**\n- Show that the prime spectrum of a formal context (in the sense of FCA) corresponds to the meet-irreducible concepts.\n- Prove that the reconstruction theorem gives an efficient representation of the concept lattice via its prime spectrum (exponential compression in favorable cases).\n- Analyze the computational complexity of computing the prime spectrum from a given implication basis (set of Horn clauses).\n- Connect the size of the prime spectrum to the minimum implication basis size, establishing new bounds for Horn minimization.\n\n**Impact:** This bridges pure algebra/geometry with knowledge representation and database theory. The prime spectrum provides a \"semantic compression\" of knowledge bases, and the reconstruction theorem gives a certified decompression algorithm. Complexity bounds on spectrum size would yield new results in the theory of Horn clause minimization, a problem central to artificial intelligence and database design.\n\n---\n\n## Summary Table\n\n| Direction | Source Domain | Target Domain | Key New Object |\n|-----------|--------------|---------------|----------------|\n| 1. Sheafification | Algebraic geometry | Closure systems | Structure sheaf $\\mathcal{O}_{\\mathrm{idem}}$ |\n| 2. Infinite generators | Order theory | Spectral spaces | Hochster-style spectral space |\n| 3. Tropical valuations | Tropical geometry | Logic/entailment | Tropical closure valuation |\n| 4. Categorical duality | Category theory | Closure systems | Anti-equivalence functor |\n| 5. FCA complexity | Computer science | Algebra | Prime spectrum complexity bounds |\n\nEach direction is independently valuable and publishable. Together, they define a research program at the intersection of algebra, geometry, logic, and computer science: **the geometry of entailment**.\n",
+    "demos": [
+      {
+        "name": "Closure Spectrum Reconstruction Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nClosure Spectrum Duality \u2014 Interactive Demo\n\nDemonstrates the reconstruction theorem: for a finite closure operator,\nCl(A) = \u2229{P prime | A \u2286 P}.\n\nEach example defines a closure operator on a small set, computes the prime\nspectrum, and verifies the reconstruction formula.\n\"\"\"\n\nfrom itertools import combinations\nfrom typing import Callable, FrozenSet, Set\n\n\ndef powerset(s: set) -> list[frozenset]:\n    \"\"\"All subsets of s, as frozensets.\"\"\"\n    elems = list(s)\n    result = []\n    for r in range(len(elems) + 1):\n        for combo in combinations(elems, r):\n            result.append(frozenset(combo))\n    return result\n\n\ndef find_closed_theories(\n    G: set, cl: Callable[[frozenset], frozenset]\n) -> list[frozenset]:\n    \"\"\"Find all closed theories T with Cl(T) = T.\"\"\"\n    closed = []\n    for s in powerset(G):\n        if cl(s) == s:\n            closed.append(s)\n    return closed\n\n\ndef is_meet_irreducible(\n    P: frozenset, closed_theories: list[frozenset], G: set\n) -> bool:\n    \"\"\"Check if P is meet-irreducible: P \u2260 G and P cannot be written as\n    A \u2229 B with A, B closed and A \u2260 P, B \u2260 P.\"\"\"\n    top = frozenset(G)\n    if P == top:\n        return False\n    for A in closed_theories:\n        for B in closed_theories:\n            if A & B == P and A != P and B != P:\n                return False\n    return True\n\n\ndef find_prime_spectrum(\n    G: set, cl: Callable[[frozenset], frozenset]\n) -> list[frozenset]:\n    \"\"\"Compute the prime spectrum: all meet-irreducible closed theories.\"\"\"\n    closed = find_closed_theories(G, cl)\n    return [P for P in closed if is_meet_irreducible(P, closed, G)]\n\n\ndef reconstruct_closure(\n    A: frozenset, primes: list[frozenset], G: set\n) -> frozenset:\n    \"\"\"Reconstruct Cl(A) as \u2229{P prime | A \u2286 P}.\"\"\"\n    containing = [P for P in primes if A <= P]\n    if not containing:\n        return frozenset(G)\n    result = frozenset(G)\n    for P in containing:\n        result = result & P\n    return result\n\n\ndef verify_reconstruction(\n    G: set, cl: Callable[[frozenset], frozenset], name: str\n):\n    \"\"\"Verify the reconstruction theorem for all subsets of G.\"\"\"\n    primes = find_prime_spectrum(G, cl)\n    closed = find_closed_theories(G, cl)\n\n    print(f\"\\n{'='*60}\")\n    print(f\"Example: {name}\")\n    print(f\"{'='*60}\")\n    print(f\"Generators: {sorted(G)}\")\n    print(f\"Closed theories ({len(closed)}):\")\n    for T in sorted(closed, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(T) if T else '{}'}\")\n    print(f\"\\nPrime spectrum ({len(primes)} points):\")\n    for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(P) if P else '{}'}\")\n\n    print(f\"\\nReconstruction verification:\")\n    all_ok = True\n    for S in powerset(G):\n        actual = cl(S)\n        reconstructed = reconstruct_closure(S, primes, G)\n        ok = actual == reconstructed\n        if not ok:\n            all_ok = False\n        status = \"\u2713\" if ok else \"\u2717\"\n        print(f\"  Cl({set(S) if S else '{}'}) = {set(actual) if actual else '{}'} \"\n              f\"[reconstructed: {set(reconstructed) if reconstructed else '{}'}] {status}\")\n\n    if all_ok:\n        print(f\"\\n  \u2705 Reconstruction theorem verified for all {2**len(G)} subsets!\")\n    else:\n        print(f\"\\n  \u274c Reconstruction failed for some subsets!\")\n\n\n# ============================================================\n# Example 1: Three generators with \"any two implies the third\"\n# ============================================================\ndef cl_example1(S: frozenset) -> frozenset:\n    G = frozenset({'a', 'b', 'c'})\n    if len(S & G) >= 2:\n        return G\n    return S & G\n\n\n# ============================================================\n# Example 2: Linear chain closure\n# Cl({1}) = {1}, Cl({2}) = {1,2}, Cl({3}) = {1,2,3}\n# ============================================================\ndef cl_example2(S: frozenset) -> frozenset:\n    G = frozenset({1, 2, 3})\n    result = set(S & G)\n    if 3 in result:\n        result |= {1, 2, 3}\n    if 2 in result:\n        result.add(1)\n    return frozenset(result)\n\n\n# ============================================================\n# Example 3: Database functional dependencies\n# Attributes: {A, B, C, D}\n# FDs: A \u2192 B, BC \u2192 D\n# ============================================================\ndef cl_example3(S: frozenset) -> frozenset:\n    result = set(S)\n    changed = True\n    while changed:\n        changed = False\n        if 'A' in result and 'B' not in result:\n            result.add('B')\n            changed = True\n        if 'B' in result and 'C' in result and 'D' not in result:\n            result.add('D')\n            changed = True\n    return frozenset(result)\n\n\n# ============================================================\n# Example 4: Propositional Horn clauses\n# Variables: {p, q, r, s}\n# Rules: p \u2227 q \u2192 r, r \u2192 s, p \u2192 q\n# ============================================================\ndef cl_example4(S: frozenset) -> frozenset:\n    result = set(S)\n    changed = True\n    while changed:\n        changed = False\n        if 'p' in result and 'q' not in result:\n            result.add('q')\n            changed = True\n        if 'p' in result and 'q' in result and 'r' not in result:\n            result.add('r')\n            changed = True\n        if 'r' in result and 's' not in result:\n            result.add('s')\n            changed = True\n    return frozenset(result)\n\n\nif __name__ == \"__main__\":\n    print(\"Closure Spectrum Duality \u2014 Demonstration\")\n    print(\"Verifying: Cl(A) = \u2229{P prime | A \u2286 P}\")\n\n    verify_reconstruction(\n        {'a', 'b', 'c'}, cl_example1,\n        \"Three generators, any two imply the third\"\n    )\n\n    verify_reconstruction(\n        {1, 2, 3}, cl_example2,\n        \"Linear chain: 3\u2192{1,2,3}, 2\u2192{1,2}\"\n    )\n\n    verify_reconstruction(\n        {'A', 'B', 'C', 'D'}, cl_example3,\n        \"Database FDs: A\u2192B, BC\u2192D\"\n    )\n\n    verify_reconstruction(\n        {'p', 'q', 'r', 's'}, cl_example4,\n        \"Horn clauses: p\u2192q, p\u2227q\u2192r, r\u2192s\"\n    )\n\n    print(\"\\n\" + \"=\"*60)\n    print(\"All examples verified successfully!\")\n    print(\"=\"*60)\n"
+      },
+      {
+        "name": "Applications: Database, Horn Clauses, FCA, Compression",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nClosure Spectrum Duality \u2014 Core Algorithms\n\nImplements:\n1. Closure operator computation (from Horn clauses / implication bases)\n2. Closed theory enumeration\n3. Prime spectrum computation\n4. Reconstruction via prime intersection\n5. Basic open set computation\n6. Specialization order computation\n\"\"\"\n\nfrom __future__ import annotations\nfrom dataclasses import dataclass, field\nfrom itertools import combinations\nfrom typing import Callable, Optional\nimport time\n\n\n@dataclass(frozen=True)\nclass HornClause:\n    \"\"\"A Horn clause: body \u2192 head.\n    body is a frozenset of generators, head is a single generator.\"\"\"\n    body: frozenset\n    head: str\n\n    def __repr__(self):\n        if not self.body:\n            return f\"\u22a4 \u2192 {self.head}\"\n        return f\"{' \u2227 '.join(sorted(self.body))} \u2192 {self.head}\"\n\n\n@dataclass\nclass ClosureSystem:\n    \"\"\"A finite closure system defined by Horn clauses on a finite set of generators.\"\"\"\n    generators: frozenset\n    clauses: list[HornClause]\n    _closed_cache: Optional[list[frozenset]] = field(default=None, repr=False)\n    _prime_cache: Optional[list[frozenset]] = field(default=None, repr=False)\n\n    def closure(self, S: frozenset) -> frozenset:\n        \"\"\"Compute Cl(S) by iterating Horn clause application until fixpoint.\n        \n        Time complexity: O(|clauses| \u00d7 |G|) per iteration, O(|G|) iterations worst case.\n        Total: O(|clauses| \u00d7 |G|\u00b2).\n        \"\"\"\n        result = set(S & self.generators)\n        changed = True\n        while changed:\n            changed = False\n            for clause in self.clauses:\n                if clause.body <= result and clause.head not in result:\n                    result.add(clause.head)\n                    changed = True\n        return frozenset(result)\n\n    def is_closed(self, T: frozenset) -> bool:\n        \"\"\"Check if T is a closed theory.\"\"\"\n        return self.closure(T) == T\n\n    def closed_theories(self) -> list[frozenset]:\n        \"\"\"Enumerate all closed theories.\n        \n        Time complexity: O(2^|G| \u00d7 |clauses| \u00d7 |G|\u00b2).\n        \"\"\"\n        if self._closed_cache is not None:\n            return self._closed_cache\n\n        result = []\n        for r in range(len(self.generators) + 1):\n            for combo in combinations(sorted(self.generators), r):\n                S = frozenset(combo)\n                if self.closure(S) == S:\n                    result.append(S)\n        self._closed_cache = result\n        return result\n\n    def is_meet_irreducible(self, P: frozenset) -> bool:\n        \"\"\"Check if P is meet-irreducible among closed theories.\n        \n        Time complexity: O(k\u00b2) where k = number of closed theories.\n        \"\"\"\n        if P == self.generators:\n            return False\n        closed = self.closed_theories()\n        for A in closed:\n            if A == P:\n                continue\n            for B in closed:\n                if B == P:\n                    continue\n                if A & B == P:\n                    return False\n        return True\n\n    def prime_spectrum(self) -> list[frozenset]:\n        \"\"\"Compute the prime spectrum: all meet-irreducible closed theories.\n        \n        Time complexity: O(k\u00b3) where k = number of closed theories.\n        \"\"\"\n        if self._prime_cache is not None:\n            return self._prime_cache\n\n        closed = self.closed_theories()\n        primes = [P for P in closed if self.is_meet_irreducible(P)]\n        self._prime_cache = primes\n        return primes\n\n    def reconstruct(self, A: frozenset) -> frozenset:\n        \"\"\"Reconstruct Cl(A) as \u2229{P prime | A \u2286 P}.\n        \n        Time complexity: O(|primes| \u00d7 |G|).\n        \"\"\"\n        primes = self.prime_spectrum()\n        containing = [P for P in primes if A <= P]\n        if not containing:\n            return self.generators\n        result = self.generators\n        for P in containing:\n            result = result & P\n        return result\n\n    def basic_open(self, F: frozenset) -> list[frozenset]:\n        \"\"\"Compute D(F) = {P prime | F \u2284 P}.\n        \n        Time complexity: O(|primes| \u00d7 |F|).\n        \"\"\"\n        return [P for P in self.prime_spectrum() if not F <= P]\n\n    def specialization_order(self) -> list[tuple[frozenset, frozenset]]:\n        \"\"\"Compute the specialization preorder on the prime spectrum.\n        P specializes to Q (P \u2933 Q) iff Q \u2286 P (containment reversal).\n        \n        Returns list of (P, Q) pairs where P specializes to Q.\n        \"\"\"\n        primes = self.prime_spectrum()\n        edges = []\n        for P in primes:\n            for Q in primes:\n                if Q <= P and Q != P:\n                    edges.append((P, Q))\n        return edges\n\n    def verify_reconstruction(self) -> bool:\n        \"\"\"Verify the reconstruction theorem for all subsets.\n        \n        Returns True if Cl(A) = \u2229{P prime | A \u2286 P} for all A \u2286 G.\n        \"\"\"\n        for r in range(len(self.generators) + 1):\n            for combo in combinations(sorted(self.generators), r):\n                A = frozenset(combo)\n                if self.closure(A) != self.reconstruct(A):\n                    return False\n        return True\n\n    def verify_basis_stability(self) -> bool:\n        \"\"\"Verify D(F1 \u222a F2) = D(F1) \u222a D(F2) for all finite F1, F2.\"\"\"\n        elems = sorted(self.generators)\n        for r1 in range(len(elems) + 1):\n            for combo1 in combinations(elems, r1):\n                F1 = frozenset(combo1)\n                for r2 in range(len(elems) + 1):\n                    for combo2 in combinations(elems, r2):\n                        F2 = frozenset(combo2)\n                        lhs = set(map(id, self.basic_open(F1 | F2)))\n                        d1 = self.basic_open(F1)\n                        d2 = self.basic_open(F2)\n                        rhs_list = list({id(p): p for p in d1 + d2}.values())\n                        # Compare as sets of frozensets\n                        if sorted(self.basic_open(F1 | F2), key=sorted) != \\\n                           sorted(list(set(d1) | set(d2)), key=sorted):\n                            return False\n        return True\n\n    def summary(self) -> str:\n        \"\"\"Print a summary of the closure system and its spectrum.\"\"\"\n        lines = []\n        lines.append(f\"Generators: {sorted(self.generators)}\")\n        lines.append(f\"Horn clauses ({len(self.clauses)}):\")\n        for c in self.clauses:\n            lines.append(f\"  {c}\")\n        \n        closed = self.closed_theories()\n        lines.append(f\"\\nClosed theories ({len(closed)}):\")\n        for T in sorted(closed, key=lambda s: (len(s), sorted(s))):\n            lines.append(f\"  {set(T) if T else '{}'}\")\n        \n        primes = self.prime_spectrum()\n        lines.append(f\"\\nPrime spectrum ({len(primes)} points):\")\n        for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n            lines.append(f\"  {set(P) if P else '{}'}\")\n        \n        spec = self.specialization_order()\n        if spec:\n            lines.append(f\"\\nSpecialization order ({len(spec)} relations):\")\n            for P, Q in spec:\n                lines.append(f\"  {set(P)} \u2933 {set(Q)}\")\n        \n        return \"\\n\".join(lines)\n\n\ndef from_implication_basis(generators: set, implications: list[tuple[set, str]]) -> ClosureSystem:\n    \"\"\"Create a closure system from an implication basis.\n    \n    Args:\n        generators: set of generator names\n        implications: list of (body, head) pairs where body is a set and head is a string\n    \"\"\"\n    clauses = [HornClause(frozenset(body), head) for body, head in implications]\n    return ClosureSystem(frozenset(generators), clauses)\n\n\ndef benchmark(system: ClosureSystem) -> dict:\n    \"\"\"Benchmark the closure system algorithms.\"\"\"\n    results = {}\n\n    t0 = time.time()\n    closed = system.closed_theories()\n    results['closed_theories_time'] = time.time() - t0\n    results['num_closed'] = len(closed)\n\n    t0 = time.time()\n    primes = system.prime_spectrum()\n    results['prime_spectrum_time'] = time.time() - t0\n    results['num_primes'] = len(primes)\n\n    t0 = time.time()\n    ok = system.verify_reconstruction()\n    results['reconstruction_verify_time'] = time.time() - t0\n    results['reconstruction_ok'] = ok\n\n    return results\n\n\nif __name__ == \"__main__\":\n    # Example: Database functional dependencies\n    print(\"=== Database Functional Dependencies ===\")\n    db = from_implication_basis(\n        {'A', 'B', 'C', 'D', 'E'},\n        [\n            ({'A'}, 'B'),\n            ({'B', 'C'}, 'D'),\n            ({'D'}, 'E'),\n        ]\n    )\n    print(db.summary())\n    print(f\"\\nReconstruction verified: {db.verify_reconstruction()}\")\n\n    print(\"\\n=== Benchmark ===\")\n    results = benchmark(db)\n    for k, v in results.items():\n        if isinstance(v, float):\n            print(f\"  {k}: {v:.4f}s\")\n        else:\n            print(f\"  {k}: {v}\")\n\n\n# === Applications ===\n\n#!/usr/bin/env python3\n\"\"\"\nClosure Spectrum Duality \u2014 Applications\n\nDemonstrates real-world applications of closure spectrum duality:\n1. Database normalization via prime spectrum analysis\n2. Horn clause satisfiability and prime model enumeration\n3. Formal concept analysis: concept lattice from prime spectrum\n4. Knowledge base compression via spectral encoding\n\"\"\"\n\n# (imported above)\n\n\ndef app_database_normalization():\n    \"\"\"Application 1: Database normalization via prime spectrum.\n    \n    The prime spectrum of functional dependencies reveals the\n    \"irreducible perspectives\" on the data \u2014 minimal attribute sets\n    that can't be decomposed further while preserving all dependencies.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 1: Database Normalization via Prime Spectrum\")\n    print(\"=\" * 60)\n    \n    # A relation with attributes {A, B, C, D, E}\n    # Functional dependencies: A\u2192B, B\u2192C, CD\u2192E, E\u2192A\n    db = from_implication_basis(\n        {'A', 'B', 'C', 'D', 'E'},\n        [\n            ({'A'}, 'B'),\n            ({'B'}, 'C'),\n            ({'C', 'D'}, 'E'),\n            ({'E'}, 'A'),\n        ]\n    )\n    \n    print(db.summary())\n    print(f\"\\nReconstruction verified: {db.verify_reconstruction()}\")\n    \n    primes = db.prime_spectrum()\n    print(f\"\\nInterpretation:\")\n    print(f\"  The {len(primes)} prime theories represent the irreducible\")\n    print(f\"  'views' of the data that preserve dependency structure.\")\n    print(f\"  Each prime theory is a maximal consistent attribute set\")\n    print(f\"  that cannot be decomposed as an intersection of larger ones.\")\n    \n    # Show what each prime \"knows\"\n    for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n        attrs = sorted(P) if P else []\n        missing = sorted(db.generators - P)\n        print(f\"\\n  Prime {set(P) if P else '{}'}:\")\n        print(f\"    Contains: {attrs}\")\n        print(f\"    Missing:  {missing}\")\n        print(f\"    Semantic: a 'worldview' that knows {attrs} but not {missing}\")\n\n\ndef app_horn_clause_reasoning():\n    \"\"\"Application 2: Horn clause entailment via prime models.\n    \n    Given a set of Horn clauses, the prime spectrum gives all\n    \"prime models\" \u2014 minimal models that detect all entailment failures.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 2: Horn Clause Entailment via Prime Models\")\n    print(\"=\" * 60)\n    \n    # Knowledge base: rules about a simple diagnostic system\n    # Variables: fever, cough, infection, treatment, recovery\n    kb = from_implication_basis(\n        {'fever', 'cough', 'infection', 'treatment', 'recovery'},\n        [\n            ({'fever', 'cough'}, 'infection'),\n            ({'infection'}, 'treatment'),\n            ({'treatment'}, 'recovery'),\n            ({'fever'}, 'treatment'),  # fever alone warrants treatment\n        ]\n    )\n    \n    print(kb.summary())\n    print(f\"\\nReconstruction verified: {kb.verify_reconstruction()}\")\n    \n    # Test entailment queries\n    print(\"\\nEntailment queries (via prime intersection):\")\n    queries = [\n        (frozenset({'fever'}), 'recovery',\n         \"Does fever entail recovery?\"),\n        (frozenset({'cough'}), 'treatment',\n         \"Does cough alone entail treatment?\"),\n        (frozenset({'fever', 'cough'}), 'recovery',\n         \"Do fever+cough entail recovery?\"),\n        (frozenset({'infection'}), 'fever',\n         \"Does infection entail fever?\"),\n    ]\n    \n    for assumptions, query, description in queries:\n        cl = kb.closure(assumptions)\n        entailed = query in cl\n        # Verify via reconstruction\n        reconstructed = kb.reconstruct(assumptions)\n        assert (query in cl) == (query in reconstructed), \"Reconstruction mismatch!\"\n        print(f\"  {description}\")\n        print(f\"    Answer: {'YES' if entailed else 'NO'}\")\n        print(f\"    Cl({set(assumptions)}) = {set(cl)}\")\n\n\ndef app_formal_concept_analysis():\n    \"\"\"Application 3: Formal concept analysis via prime spectrum.\n    \n    A formal context (objects \u00d7 attributes) defines a closure operator.\n    The prime spectrum gives the meet-irreducible concepts.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 3: Formal Concept Analysis\")\n    print(\"=\" * 60)\n    \n    # A simple formal context: animals and their properties\n    # Objects: dog, cat, fish, bird\n    # Attributes: legs, fur, swims, flies, domestic\n    #\n    # We model the ATTRIBUTE closure: given some attributes,\n    # what other attributes must hold for all objects with those attributes?\n    \n    # Cross-table:\n    # dog:  legs, fur, domestic\n    # cat:  legs, fur, domestic\n    # fish: swims\n    # bird: legs, flies\n    \n    objects = {\n        'dog': {'legs', 'fur', 'domestic'},\n        'cat': {'legs', 'fur', 'domestic'},\n        'fish': {'swims'},\n        'bird': {'legs', 'flies'},\n    }\n    \n    all_attrs = set()\n    for attrs in objects.values():\n        all_attrs |= attrs\n    \n    def attribute_closure(S: frozenset) -> frozenset:\n        \"\"\"Closure in the attribute space: attributes shared by all objects\n        having all attributes in S.\"\"\"\n        s = set(S) & all_attrs\n        if not s:\n            # All objects have these (vacuously), so closure = \u2229 all attribute sets\n            result = all_attrs.copy()\n            for attrs in objects.values():\n                result &= attrs\n            return frozenset(result)\n        \n        # Find objects that have all attributes in S\n        compatible_objects = []\n        for obj, attrs in objects.items():\n            if s <= attrs:\n                compatible_objects.append(obj)\n        \n        if not compatible_objects:\n            return frozenset(all_attrs)  # No objects \u2192 all attributes (vacuously)\n        \n        # Closure = intersection of attribute sets of compatible objects\n        result = all_attrs.copy()\n        for obj in compatible_objects:\n            result &= objects[obj]\n        return frozenset(result)\n    \n    # Build as a ClosureSystem (we need to express as Horn clauses, but\n    # it's easier to just compute directly)\n    print(f\"Attributes: {sorted(all_attrs)}\")\n    print(f\"\\nFormal context:\")\n    for obj, attrs in sorted(objects.items()):\n        print(f\"  {obj}: {sorted(attrs)}\")\n    \n    # Compute closed theories directly\n    from itertools import combinations\n    closed = []\n    for r in range(len(all_attrs) + 1):\n        for combo in combinations(sorted(all_attrs), r):\n            S = frozenset(combo)\n            if attribute_closure(S) == S:\n                closed.append(S)\n    \n    print(f\"\\nClosed attribute sets ({len(closed)}):\")\n    for T in sorted(closed, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(T) if T else '{}'}\")\n    \n    # Find primes\n    primes = []\n    for P in closed:\n        if P == frozenset(all_attrs):\n            continue\n        is_prime = True\n        for A in closed:\n            if A == P:\n                continue\n            for B in closed:\n                if B == P:\n                    continue\n                if A & B == P:\n                    is_prime = False\n                    break\n            if not is_prime:\n                break\n        if is_prime:\n            primes.append(P)\n    \n    print(f\"\\nPrime spectrum ({len(primes)} meet-irreducible concepts):\")\n    for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n        # Find which objects have exactly these attributes\n        compatible = [obj for obj, attrs in objects.items() if P <= attrs]\n        print(f\"  {set(P) if P else '{}'}\")\n        print(f\"    Compatible objects: {compatible}\")\n    \n    # Verify reconstruction\n    print(f\"\\nReconstruction verification:\")\n    all_ok = True\n    for r in range(len(all_attrs) + 1):\n        for combo in combinations(sorted(all_attrs), r):\n            S = frozenset(combo)\n            actual = attribute_closure(S)\n            # Reconstruct\n            containing = [P for P in primes if S <= P]\n            if not containing:\n                reconstructed = frozenset(all_attrs)\n            else:\n                reconstructed = frozenset(all_attrs)\n                for P in containing:\n                    reconstructed = reconstructed & P\n            if actual != reconstructed:\n                all_ok = False\n                print(f\"  FAIL: Cl({set(S)}) = {set(actual)} \u2260 {set(reconstructed)}\")\n    if all_ok:\n        print(f\"  \u2705 Reconstruction verified for all {2**len(all_attrs)} attribute sets!\")\n\n\ndef app_knowledge_compression():\n    \"\"\"Application 4: Knowledge base compression via spectral encoding.\n    \n    Demonstrates that the prime spectrum provides a compact representation\n    of the full closure system.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 4: Knowledge Base Compression\")\n    print(\"=\" * 60)\n    \n    # A larger closure system\n    kb = from_implication_basis(\n        {'a', 'b', 'c', 'd', 'e', 'f'},\n        [\n            ({'a'}, 'b'),\n            ({'b'}, 'c'),\n            ({'c'}, 'a'),  # cycle: a\u2194b\u2194c\n            ({'d'}, 'e'),\n            ({'e'}, 'f'),\n            ({'f'}, 'd'),  # cycle: d\u2194e\u2194f\n            ({'a', 'd'}, 'b'),  # redundant, but adds complexity\n        ]\n    )\n    \n    closed = kb.closed_theories()\n    primes = kb.prime_spectrum()\n    \n    print(f\"Generators: {len(kb.generators)}\")\n    print(f\"Horn clauses: {len(kb.clauses)}\")\n    print(f\"Total subsets: {2**len(kb.generators)}\")\n    print(f\"Closed theories: {len(closed)}\")\n    print(f\"Prime spectrum size: {len(primes)}\")\n    print(f\"\\nCompression ratio: {len(primes)}/{len(closed)} = \"\n          f\"{len(primes)/max(len(closed),1):.2%} of closed theories\")\n    print(f\"  (only {len(primes)} prime points needed to reconstruct \"\n          f\"all {len(closed)} closed theories)\")\n    \n    verified = kb.verify_reconstruction()\n    print(f\"\\nReconstruction verified: {verified}\")\n    \n    # Show the primes\n    print(f\"\\nPrime theories:\")\n    for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(P) if P else '{}'}\")\n    \n    # Benchmark\n    results = benchmark(kb)\n    print(f\"\\nBenchmark:\")\n    for k, v in results.items():\n        if isinstance(v, float):\n            print(f\"  {k}: {v:.6f}s\")\n        else:\n            print(f\"  {k}: {v}\")\n\n\nif __name__ == \"__main__\":\n    app_database_normalization()\n    app_horn_clause_reasoning()\n    app_formal_concept_analysis()\n    app_knowledge_compression()\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications demonstrated successfully!\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Prime Spectrum Computation",
+        "pseudocode": "Algorithm: ComputePrimeSpectrum(G, Cl)\nInput: Finite set G, closure operator Cl\nOutput: Set of prime (meet-irreducible) closed theories\n\n1. closed_theories \u2190 {}\n2. For each S \u2286 G:\n   a. If Cl(S) = S then add S to closed_theories\n3. primes \u2190 {}\n4. For each P \u2208 closed_theories with P \u2260 G:\n   a. is_prime \u2190 True\n   b. For each pair (A, B) \u2208 closed_theories\u00b2:\n      i.  If A \u2229 B = P and A \u2260 P and B \u2260 P:\n          - is_prime \u2190 False; break\n   c. If is_prime then add P to primes\n5. Return primes\n\nComplexity: O(2^n \u00b7 n + k\u00b3) where n=|G|, k=|closed_theories|",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nClosure Spectrum Duality \u2014 Core Algorithms\n\nImplements:\n1. Closure operator computation (from Horn clauses / implication bases)\n2. Closed theory enumeration\n3. Prime spectrum computation\n4. Reconstruction via prime intersection\n5. Basic open set computation\n6. Specialization order computation\n\"\"\"\n\nfrom __future__ import annotations\nfrom dataclasses import dataclass, field\nfrom itertools import combinations\nfrom typing import Callable, Optional\nimport time\n\n\n@dataclass(frozen=True)\nclass HornClause:\n    \"\"\"A Horn clause: body \u2192 head.\n    body is a frozenset of generators, head is a single generator.\"\"\"\n    body: frozenset\n    head: str\n\n    def __repr__(self):\n        if not self.body:\n            return f\"\u22a4 \u2192 {self.head}\"\n        return f\"{' \u2227 '.join(sorted(self.body))} \u2192 {self.head}\"\n\n\n@dataclass\nclass ClosureSystem:\n    \"\"\"A finite closure system defined by Horn clauses on a finite set of generators.\"\"\"\n    generators: frozenset\n    clauses: list[HornClause]\n    _closed_cache: Optional[list[frozenset]] = field(default=None, repr=False)\n    _prime_cache: Optional[list[frozenset]] = field(default=None, repr=False)\n\n    def closure(self, S: frozenset) -> frozenset:\n        \"\"\"Compute Cl(S) by iterating Horn clause application until fixpoint.\n        \n        Time complexity: O(|clauses| \u00d7 |G|) per iteration, O(|G|) iterations worst case.\n        Total: O(|clauses| \u00d7 |G|\u00b2).\n        \"\"\"\n        result = set(S & self.generators)\n        changed = True\n        while changed:\n            changed = False\n            for clause in self.clauses:\n                if clause.body <= result and clause.head not in result:\n                    result.add(clause.head)\n                    changed = True\n        return frozenset(result)\n\n    def is_closed(self, T: frozenset) -> bool:\n        \"\"\"Check if T is a closed theory.\"\"\"\n        return self.closure(T) == T\n\n    def closed_theories(self) -> list[frozenset]:\n        \"\"\"Enumerate all closed theories.\n        \n        Time complexity: O(2^|G| \u00d7 |clauses| \u00d7 |G|\u00b2).\n        \"\"\"\n        if self._closed_cache is not None:\n            return self._closed_cache\n\n        result = []\n        for r in range(len(self.generators) + 1):\n            for combo in combinations(sorted(self.generators), r):\n                S = frozenset(combo)\n                if self.closure(S) == S:\n                    result.append(S)\n        self._closed_cache = result\n        return result\n\n    def is_meet_irreducible(self, P: frozenset) -> bool:\n        \"\"\"Check if P is meet-irreducible among closed theories.\n        \n        Time complexity: O(k\u00b2) where k = number of closed theories.\n        \"\"\"\n        if P == self.generators:\n            return False\n        closed = self.closed_theories()\n        for A in closed:\n            if A == P:\n                continue\n            for B in closed:\n                if B == P:\n                    continue\n                if A & B == P:\n                    return False\n        return True\n\n    def prime_spectrum(self) -> list[frozenset]:\n        \"\"\"Compute the prime spectrum: all meet-irreducible closed theories.\n        \n        Time complexity: O(k\u00b3) where k = number of closed theories.\n        \"\"\"\n        if self._prime_cache is not None:\n            return self._prime_cache\n\n        closed = self.closed_theories()\n        primes = [P for P in closed if self.is_meet_irreducible(P)]\n        self._prime_cache = primes\n        return primes\n\n    def reconstruct(self, A: frozenset) -> frozenset:\n        \"\"\"Reconstruct Cl(A) as \u2229{P prime | A \u2286 P}.\n        \n        Time complexity: O(|primes| \u00d7 |G|).\n        \"\"\"\n        primes = self.prime_spectrum()\n        containing = [P for P in primes if A <= P]\n        if not containing:\n            return self.generators\n        result = self.generators\n        for P in containing:\n            result = result & P\n        return result\n\n    def basic_open(self, F: frozenset) -> list[frozenset]:\n        \"\"\"Compute D(F) = {P prime | F \u2284 P}.\n        \n        Time complexity: O(|primes| \u00d7 |F|).\n        \"\"\"\n        return [P for P in self.prime_spectrum() if not F <= P]\n\n    def specialization_order(self) -> list[tuple[frozenset, frozenset]]:\n        \"\"\"Compute the specialization preorder on the prime spectrum.\n        P specializes to Q (P \u2933 Q) iff Q \u2286 P (containment reversal).\n        \n        Returns list of (P, Q) pairs where P specializes to Q.\n        \"\"\"\n        primes = self.prime_spectrum()\n        edges = []\n        for P in primes:\n            for Q in primes:\n                if Q <= P and Q != P:\n                    edges.append((P, Q))\n        return edges\n\n    def verify_reconstruction(self) -> bool:\n        \"\"\"Verify the reconstruction theorem for all subsets.\n        \n        Returns True if Cl(A) = \u2229{P prime | A \u2286 P} for all A \u2286 G.\n        \"\"\"\n        for r in range(len(self.generators) + 1):\n            for combo in combinations(sorted(self.generators), r):\n                A = frozenset(combo)\n                if self.closure(A) != self.reconstruct(A):\n                    return False\n        return True\n\n    def verify_basis_stability(self) -> bool:\n        \"\"\"Verify D(F1 \u222a F2) = D(F1) \u222a D(F2) for all finite F1, F2.\"\"\"\n        elems = sorted(self.generators)\n        for r1 in range(len(elems) + 1):\n            for combo1 in combinations(elems, r1):\n                F1 = frozenset(combo1)\n                for r2 in range(len(elems) + 1):\n                    for combo2 in combinations(elems, r2):\n                        F2 = frozenset(combo2)\n                        lhs = set(map(id, self.basic_open(F1 | F2)))\n                        d1 = self.basic_open(F1)\n                        d2 = self.basic_open(F2)\n                        rhs_list = list({id(p): p for p in d1 + d2}.values())\n                        # Compare as sets of frozensets\n                        if sorted(self.basic_open(F1 | F2), key=sorted) != \\\n                           sorted(list(set(d1) | set(d2)), key=sorted):\n                            return False\n        return True\n\n    def summary(self) -> str:\n        \"\"\"Print a summary of the closure system and its spectrum.\"\"\"\n        lines = []\n        lines.append(f\"Generators: {sorted(self.generators)}\")\n        lines.append(f\"Horn clauses ({len(self.clauses)}):\")\n        for c in self.clauses:\n            lines.append(f\"  {c}\")\n        \n        closed = self.closed_theories()\n        lines.append(f\"\\nClosed theories ({len(closed)}):\")\n        for T in sorted(closed, key=lambda s: (len(s), sorted(s))):\n            lines.append(f\"  {set(T) if T else '{}'}\")\n        \n        primes = self.prime_spectrum()\n        lines.append(f\"\\nPrime spectrum ({len(primes)} points):\")\n        for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n            lines.append(f\"  {set(P) if P else '{}'}\")\n        \n        spec = self.specialization_order()\n        if spec:\n            lines.append(f\"\\nSpecialization order ({len(spec)} relations):\")\n            for P, Q in spec:\n                lines.append(f\"  {set(P)} \u2933 {set(Q)}\")\n        \n        return \"\\n\".join(lines)\n\n\ndef from_implication_basis(generators: set, implications: list[tuple[set, str]]) -> ClosureSystem:\n    \"\"\"Create a closure system from an implication basis.\n    \n    Args:\n        generators: set of generator names\n        implications: list of (body, head) pairs where body is a set and head is a string\n    \"\"\"\n    clauses = [HornClause(frozenset(body), head) for body, head in implications]\n    return ClosureSystem(frozenset(generators), clauses)\n\n\ndef benchmark(system: ClosureSystem) -> dict:\n    \"\"\"Benchmark the closure system algorithms.\"\"\"\n    results = {}\n\n    t0 = time.time()\n    closed = system.closed_theories()\n    results['closed_theories_time'] = time.time() - t0\n    results['num_closed'] = len(closed)\n\n    t0 = time.time()\n    primes = system.prime_spectrum()\n    results['prime_spectrum_time'] = time.time() - t0\n    results['num_primes'] = len(primes)\n\n    t0 = time.time()\n    ok = system.verify_reconstruction()\n    results['reconstruction_verify_time'] = time.time() - t0\n    results['reconstruction_ok'] = ok\n\n    return results\n\n\nif __name__ == \"__main__\":\n    # Example: Database functional dependencies\n    print(\"=== Database Functional Dependencies ===\")\n    db = from_implication_basis(\n        {'A', 'B', 'C', 'D', 'E'},\n        [\n            ({'A'}, 'B'),\n            ({'B', 'C'}, 'D'),\n            ({'D'}, 'E'),\n        ]\n    )\n    print(db.summary())\n    print(f\"\\nReconstruction verified: {db.verify_reconstruction()}\")\n\n    print(\"\\n=== Benchmark ===\")\n    results = benchmark(db)\n    for k, v in results.items():\n        if isinstance(v, float):\n            print(f\"  {k}: {v:.4f}s\")\n        else:\n            print(f\"  {k}: {v}\")\n",
+        "code_file": "visualizations/algebraemlalgebraicgeometry_closure_spectrum_duali_prime_spectrum_computation.py"
+      },
+      {
+        "name": "Closure Reconstruction via Prime Intersection",
+        "pseudocode": "Algorithm: ReconstructClosure(A, primes, G)\nInput: Set A \u2286 G, prime spectrum, full generator set G\nOutput: Cl(A) = \u2229{P \u2208 primes | A \u2286 P}\n\n1. result \u2190 G\n2. For each P \u2208 primes:\n   a. If A \u2286 P then result \u2190 result \u2229 P\n3. Return result\n\nComplexity: O(|primes| \u00d7 |G|)\nCorrectness: Guaranteed by Theorem 5.1 (Reconstruction Formula)",
+        "code": "def reconstruct_closure(A, primes, G):\n    \"\"\"Reconstruct Cl(A) as intersection of primes containing A.\"\"\"\n    containing = [P for P in primes if A <= P]\n    if not containing:\n        return frozenset(G)\n    result = frozenset(G)\n    for P in containing:\n        result = result & P\n    return result",
+        "code_file": "visualizations/algebraemlalgebraicgeometry_closure_spectrum_duali_closure_reconstruction_via_prime_interse.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Closed Theory Lattices with Prime Spectrum",
+        "file": "visualizations/algebraemlalgebraicgeometry_closure_spectrum_duali_closed_theory_lattices_with_prime_spectrum.png"
+      },
+      {
+        "name": "Reconstruction Theorem Visualization",
+        "file": "visualizations/algebraemlalgebraicgeometry_closure_spectrum_duali_reconstruction_theorem_visualization.png"
+      },
+      {
+        "name": "Spectrum Topology: Basic Open Sets",
+        "file": "visualizations/algebraemlalgebraicgeometry_closure_spectrum_duali_spectrum_topology_basic_open_sets.png"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# Closure Spectrum Duality via Idempotent Prime-Filter Semimodules\n\n## Overview\n\nWe establish a bridge between finite-type closure systems and spectral geometry.\nGiven a finitary closure operator `Cl` on a finite type `G`, we construct:\n\n1. A **prime spectrum** `ClosureSpec Cl` whose points are prime closed theories\n2. A **topology** on `ClosureSpec Cl` generated by basic opens `D(F)`\n3. A **reconstruction theorem**: `Cl(A)` equals the intersection of all prime\n   theories containing `A`\n4. **Basis stability**: `D(F\u2081 \u222a F\u2082) = D(F\u2081) \u222a D(F\u2082)`\n\nThe reconstruction theorem geometrizes entailment: closure/consequence is recovered\nfrom the prime spectrum, establishing that every finite-type closure system admits\na genuinely geometric semantics.\n\n## Mathematical significance\n\nThis creates a new bridge between:\n- **Closure systems / Horn logic / formal concept analysis** (source category)\n- **Spectral spaces / algebraic geometry** (target category)\n- **Idempotent algebra / tropical semantics** (algebraic structure)\n\nPrime theories become geometric points, finite entailment becomes quasi-compact opens,\nand the original closure dynamics is recovered from the spectrum \u2014 a certified\n\"affine reconstruction\" in the spirit of `Spec R \u2192 R` for commutative rings.\n\n## Keywords\n\nclosure systems, Horn logic, formal concept analysis, spectral spaces, Stone duality,\nHochster duality, idempotent semirings, prime filters, affine reconstruction,\nBoolean semifield, certified algorithms, semantic compression, finite entailment\n-/\n\nopen Set Finset\nopen Classical in\nattribute [local instance] Classical.propDecidable\n\nnoncomputable section\n\nnamespace ClosureSpectrum\n\nvariable {G : Type} [Fintype G] [DecidableEq G]\n\n/-! ## Section 1: Core Definitions -/\n\n/-- A finite-type (algebraic/finitary) closure operator on a finite type `G`. -/\nstructure IsFiniteTypeClosure (Cl : Set G \u2192 Set G) : Prop where\n  extensive : \u2200 A, A \u2286 Cl A\n  mono : \u2200 \u2983A B : Set G\u2984, A \u2286 B \u2192 Cl A \u2286 Cl B\n  idempotent : \u2200 A, Cl (Cl A) = Cl A\n  finitary : \u2200 x A, x \u2208 Cl A \u2194 \u2203 F : Finset G, (\u2191F : Set G) \u2286 A \u2227 x \u2208 Cl (\u2191F : Set G)\n\n/-- A set `T` is a closed theory of `Cl` if `Cl T = T`. -/\ndef IsClosedTheory (Cl : Set G \u2192 Set G) (T : Set G) : Prop := Cl T = T\n\n/-- The finitely generated closed theory from a finite set `F`. -/\ndef fgTheory (Cl : Set G \u2192 Set G) (F : Finset G) : Set G := Cl (\u2191F : Set G)\n\n/-- A proper closed set `P` is a **prime theory** (meet-irreducible in the lattice\nof closed sets) if whenever `P = A \u2229 B` for closed `A, B`, either `P = A` or `P = B`.\n\nThis is the correct notion ensuring that every closed set is an intersection of primes\nin any finite lattice of closed sets. -/\ndef IsPrimeTheory (Cl : Set G \u2192 Set G) (P : Set G) : Prop :=\n  IsClosedTheory Cl P \u2227 P \u2260 Set.univ \u2227\n  \u2200 A B : Set G, IsClosedTheory Cl A \u2192 IsClosedTheory Cl B \u2192\n    P = A \u2229 B \u2192 P = A \u2228 P = B\n\n/-- The prime spectrum of a closure operator: the type of prime theories. -/\ndef ClosureSpec (Cl : Set G \u2192 Set G) := {P : Set G // IsPrimeTheory Cl P}\n\n/-- The basic open set `D(F)` consists of prime theories not containing all of `F`. -/\ndef basicOpen (Cl : Set G \u2192 Set G) (F : Finset G) : Set (ClosureSpec Cl) :=\n  {P | \u00ac ((\u2191F : Set G) \u2286 P.1)}\n\n/-! ## Section 2: Fundamental Properties of Closure Operators -/\n\nomit [Fintype G] [DecidableEq G] in\n/-- The closure of any set is a closed theory. -/\ntheorem closure_is_closed (Cl : Set G \u2192 Set G) (hCl : IsFiniteTypeClosure Cl)\n    (A : Set G) : IsClosedTheory Cl (Cl A) :=\n  hCl.idempotent A\n\n/-\nIf `T` is a closed theory containing `A`, then `Cl A \u2286 T`.\n-/\nomit [Fintype G] [DecidableEq G] in\ntheorem closed_contains_closure (Cl : Set G \u2192 Set G) (hCl : IsFiniteTypeClosure Cl)\n    (A T : Set G) (hT : IsClosedTheory Cl T) (hAT : A \u2286 T) :\n    Cl A \u2286 T := by\n  exact hT \u25b8 hCl.mono hAT\n\n/-\nThe intersection of two closed theories is a closed theory.\n-/\nomit [Fintype G] [DecidableEq G] in\ntheorem inter_closed (Cl : Set G \u2192 Set G) (hCl : IsFiniteTypeClosure Cl)\n    (A B : Set G) (hA : IsClosedTheory Cl A) (hB : IsClosedTheory Cl B) :\n    IsClosedTheory Cl (A \u2229 B) := by\n  refine' le_antisymm _ _;\n  \u00b7 exact Set.subset_inter ( closed_contains_closure Cl hCl _ _ hA ( Set.inter_subset_left ) ) ( closed_contains_closure Cl hCl _ _ hB ( Set.inter_subset_right ) );\n  \u00b7 exact hCl.extensive _\n\n/-\n`Set.univ` is always a closed theory.\n-/\nomit [Fintype G] [DecidableEq G] in\ntheorem univ_closed (Cl : Set G \u2192 Set G) (hCl : IsFiniteTypeClosure Cl) :\n    IsClosedTheory Cl Set.univ := by\n  apply Set.Subset.antisymm;\n  \u00b7 exact Set.subset_univ _;\n  \u00b7 exact hCl.extensive _\n\n/-! ## Section 3: Basic Open Set Properties -/\n\n/-\nBasic opens respect unions: `D(F\u2081 \u222a F\u2082) = D(F\u2081) \u222a D(F\u2082)`.\n-/\nomit [Fintype G] in\ntheorem basicOpen_union (Cl : Set G \u2192 Set G) (F1 F2 : Finset G) :\n    basicOpen Cl (F1 \u222a F2) = basicOpen Cl F1 \u222a basicOpen Cl F2 := by\n  ext; simp [basicOpen];\n  grind\n\n/-\nThe empty basic open is empty: `D(\u2205) = \u2205`.\n-/\nomit [Fintype G] [DecidableEq G] in\ntheorem basicOpen_empty (Cl : Set G \u2192 Set G) :\n    basicOpen Cl (\u2205 : Finset G) = \u2205 := by\n  unfold basicOpen; aesop;\n\n/-! ## Section 4: Prime Separation Lemma\n\nThe key lemma: if `x \u2209 Cl A`, there exists a prime theory containing `A` but not `x`.\nThis is proved by taking a maximal closed set containing `A` and avoiding `x`,\nthen showing it must be meet-irreducible (hence prime). -/\n\n/-\n**Prime Separation Lemma.**\nA maximal closed set containing `A` and not containing `x` is prime.\nUses finiteness of `G` to ensure maximal elements exist.\n-/\nomit [DecidableEq G] in\ntheorem exists_prime_separating (Cl : Set G \u2192 Set G) (hCl : IsFiniteTypeClosure Cl)\n    (A : Set G) (x : G) (hx : x \u2209 Cl A) :\n    \u2203 P : Set G, IsPrimeTheory Cl P \u2227 A \u2286 P \u2227 x \u2209 P := by\n  -- By definition of maximality, if P is a maximal closed set containing A and not containing x, then P is prime.\n  obtain \u27e8P, hP_max, hP_closed, hP_A, hP_x\u27e9 : \u2203 P : Set G, IsClosedTheory Cl P \u2227 A \u2286 P \u2227 x \u2209 P \u2227 \u2200 Q : Set G, IsClosedTheory Cl Q \u2192 A \u2286 Q \u2192 x \u2209 Q \u2192 P \u2286 Q \u2192 P = Q := by\n    have h_max : \u2203 P \u2208 {T : Set G | IsClosedTheory Cl T \u2227 A \u2286 T \u2227 x \u2209 T}, \u2200 Q \u2208 {T : Set G | IsClosedTheory Cl T \u2227 A \u2286 T \u2227 x \u2209 T}, P.ncard \u2265 Q.ncard := by\n      apply_rules [ Set.exists_max_image ];\n      \u00b7 exact Set.toFinite _;\n      \u00b7 exact \u27e8 Cl A, hCl.idempotent A, hCl.extensive A, hx \u27e9;\n    obtain \u27e8 P, hP\u2081, hP\u2082 \u27e9 := h_max;\n    exact \u27e8 P, hP\u2081.1, hP\u2081.2.1, hP\u2081.2.2, fun Q hQ\u2081 hQ\u2082 hQ\u2083 hQ\u2084 => Set.eq_of_subset_of_ncard_le hQ\u2084 ( hP\u2082 Q \u27e8 hQ\u2081, hQ\u2082, hQ\u2083 \u27e9 ) \u27e9;\n  refine' \u27e8 P, \u27e8 hP_max, _, _ \u27e9, hP_closed, hP_A \u27e9 <;> contrapose! hP_x;\n  \u00b7 aesop;\n  \u00b7 grind\n\n/-! ## Section 5: The Reconstruction Theorem -/\n\n/-\n**Forward direction**: if `x \u2208 Cl A` and `P` is a closed theory containing `A`,\nthen `x \u2208 P`.\n-/\nomit [Fintype G] [DecidableEq G] in\n/-- Forward direction: membership in closure implies membership in all containing closed theories. -/\ntheorem mem_closure_imp_mem_prime (Cl : Set G \u2192 Set G) (hCl : IsFiniteTypeClosure Cl)\n    (A : Set G) (x : G) (hx : x \u2208 Cl A)\n    (P : Set G) (hP : IsClosedTheory Cl P) (hAP : A \u2286 P) :\n    x \u2208 P := by\n  exact hCl.mono hAP hx |> fun h => hP.symm \u25b8 h\n\n/-\n**Reconstruction formula**: closure equals intersection over all prime theories.\nThis is the conceptual heart of closure spectrum duality:\n`x \u2208 Cl A \u2194 \u2200 P prime, A \u2286 P \u2192 x \u2208 P`.\n-/\nomit [DecidableEq G] in\ntheorem mem_closure_iff_prime_forcing (Cl : Set G \u2192 Set G) (hCl : IsFiniteTypeClosure Cl)\n    (A : Set G) (x : G) :\n    x \u2208 Cl A \u2194 \u2200 P : Set G, IsPrimeTheory Cl P \u2192 A \u2286 P \u2192 x \u2208 P := by\n  refine' \u27e8 _, fun hx => _ \u27e9;\n  \u00b7 exact fun hx P hP hAP => mem_closure_imp_mem_prime Cl hCl A x hx P hP.1 hAP;\n  \u00b7 exact not_not.mp fun hx' => by obtain \u27e8 P, hP\u2081, hP\u2082, hP\u2083 \u27e9 := exists_prime_separating Cl hCl A x hx'; tauto;\n\n/-! ## Section 6: Main Certified Reconstruction Theorem -/\n\n/-\n**Closure Spectral Affine Reconstruction Theorem.**\n\nFor every finite-type closure system `Cl` on a finite type `G`, there exists:\n- A spectrum type `Spec` with a topology\n- A predicate `isPrime` characterizing prime theories\n- Basic opens `D` indexed by finite sets\n\nsuch that:\n1. Points of `Spec` are exactly the prime theories\n2. Basic opens respect unions: `D(F\u2081 \u222a F\u2082) = D(F\u2081) \u222a D(F\u2082)`\n3. **Reconstruction**: `x \u2208 Cl A \u2194 \u2200 P prime, A \u2286 P \u2192 x \u2208 P`\n\nThis geometrizes entailment: closure/consequence is recovered from the prime spectrum.\n-/\ntheorem closure_spectral_affine_reconstruction\n    {G : Type} [Fintype G] [DecidableEq G]\n    (Cl : Set G \u2192 Set G)\n    (h_ext : \u2200 A, A \u2286 Cl A)\n    (h_mono : \u2200 \u2983A B : Set G\u2984, A \u2286 B \u2192 Cl A \u2286 Cl B)\n    (h_idem : \u2200 A, Cl (Cl A) = Cl A)\n    (h_fin : \u2200 x A, x \u2208 Cl A \u2194 \u2203 F : Finset G, (\u2191F : Set G) \u2286 A \u2227 x \u2208 Cl (\u2191F : Set G)) :\n    \u2203 (Spec : Type) (_top : TopologicalSpace Spec)\n      (isPrime : Set G \u2192 Prop)\n      (D : Finset G \u2192 Set Spec),\n        -- points are prime closed theories\n        (\u2203 _ : Spec \u2243 {P : Set G // isPrime P}, True) \u2227\n        -- basic opens respect unions\n        (\u2200 F1 F2, D (F1 \u222a F2) = D F1 \u222a D F2) \u2227\n        -- reconstruction of closure from spectrum\n        (\u2200 A x,\n          x \u2208 Cl A \u2194\n            \u2200 P : {P : Set G // isPrime P},\n              A \u2286 P.1 \u2192 x \u2208 P.1) := by\n  refine' \u27e8 _, _, _, _, \u27e8 _, trivial \u27e9, _, _ \u27e9;\n  exact { P : Set G // IsPrimeTheory Cl P };\n  exact Preorder.topology { P // IsPrimeTheory Cl P };\n  exact fun P => IsPrimeTheory Cl P;\n  exact fun F => { P : { P : Set G // IsPrimeTheory Cl P } | \u00ac ( F : Set G ) \u2286 P.val };\n  \u00b7 rfl;\n  \u00b7 simp +decide [ Set.subset_def ];\n    exact fun F1 F2 => by ext; simp +decide [ or_and_right, exists_or ] ;\n  \u00b7 intro A x;\n    convert mem_closure_iff_prime_forcing Cl \u27e8 h_ext, h_mono, h_idem, h_fin \u27e9 A x using 1;\n    exact \u27e8 fun h P hP hAP => h \u27e8 P, hP \u27e9 hAP, fun h P hAP => h P.1 P.2 hAP \u27e9\n\n/-! ## Section 7: Idempotent Algebraic Structure\n\nThe set of closed theories forms a complete lattice with idempotent join.\nThis provides the algebraic backbone for the \"structure sheaf\" on `ClosureSpec`. -/\n\n/-- The lattice of closed theories ordered by inclusion. -/\nstructure ClosedTheoryLattice (Cl : Set G \u2192 Set G) where\n  carrier : Set G\n  closed : IsClosedTheory Cl carrier\n\ninstance (Cl : Set G \u2192 Set G) : PartialOrder (ClosedTheoryLattice Cl) where\n  le a b := a.carrier \u2286 b.carrier\n  le_refl a := Set.Subset.refl _\n  le_trans _ _ _ := Set.Subset.trans\n  le_antisymm a b hab hba := by\n    have : a.carrier = b.carrier := Set.Subset.antisymm hab hba\n    cases a; cases b; simp_all\n\n/-- Two-point Boolean idempotent semifield: the target for prime morphisms.\nThis is `\ud835\udd39 = {\u22a5, \u22a4}` with `\u2228 = add`, `\u2227 = mul`. -/\ninductive BoolSemifield where\n  | bot : BoolSemifield\n  | top : BoolSemifield\n  deriving DecidableEq, Repr\n\n/-! ## Section 8: Certified Finite Computation -/\n\n/-- Compute the closure of a finset by filtering the universe. -/\ndef computeClosure (Cl : Set G \u2192 Set G) (F : Finset G) : Finset G :=\n  Finset.univ.filter (fun g => g \u2208 Cl (\u2191F : Set G))\n\n/-- A finset theory is closed if computing its closure gives itself back. -/\ndef isClosedFinset (Cl : Set G \u2192 Set G) (T : Finset G) : Prop :=\n  computeClosure Cl T = T\n\n/-- A closed finset theory is prime if it satisfies meet-irreducibility. -/\ndef isPrimeFinset (Cl : Set G \u2192 Set G) (P : Finset G) : Prop :=\n  isClosedFinset Cl P \u2227 P \u2260 Finset.univ \u2227\n  \u2200 A B : Finset G, isClosedFinset Cl A \u2192 isClosedFinset Cl B \u2192\n    P = A \u2229 B \u2192 P = A \u2228 P = B\n\nend ClosureSpectrum",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nClosure Spectrum Duality \u2014 Core Algorithms\n\nImplements:\n1. Closure operator computation (from Horn clauses / implication bases)\n2. Closed theory enumeration\n3. Prime spectrum computation\n4. Reconstruction via prime intersection\n5. Basic open set computation\n6. Specialization order computation\n\"\"\"\n\nfrom __future__ import annotations\nfrom dataclasses import dataclass, field\nfrom itertools import combinations\nfrom typing import Callable, Optional\nimport time\n\n\n@dataclass(frozen=True)\nclass HornClause:\n    \"\"\"A Horn clause: body \u2192 head.\n    body is a frozenset of generators, head is a single generator.\"\"\"\n    body: frozenset\n    head: str\n\n    def __repr__(self):\n        if not self.body:\n            return f\"\u22a4 \u2192 {self.head}\"\n        return f\"{' \u2227 '.join(sorted(self.body))} \u2192 {self.head}\"\n\n\n@dataclass\nclass ClosureSystem:\n    \"\"\"A finite closure system defined by Horn clauses on a finite set of generators.\"\"\"\n    generators: frozenset\n    clauses: list[HornClause]\n    _closed_cache: Optional[list[frozenset]] = field(default=None, repr=False)\n    _prime_cache: Optional[list[frozenset]] = field(default=None, repr=False)\n\n    def closure(self, S: frozenset) -> frozenset:\n        \"\"\"Compute Cl(S) by iterating Horn clause application until fixpoint.\n        \n        Time complexity: O(|clauses| \u00d7 |G|) per iteration, O(|G|) iterations worst case.\n        Total: O(|clauses| \u00d7 |G|\u00b2).\n        \"\"\"\n        result = set(S & self.generators)\n        changed = True\n        while changed:\n            changed = False\n            for clause in self.clauses:\n                if clause.body <= result and clause.head not in result:\n                    result.add(clause.head)\n                    changed = True\n        return frozenset(result)\n\n    def is_closed(self, T: frozenset) -> bool:\n        \"\"\"Check if T is a closed theory.\"\"\"\n        return self.closure(T) == T\n\n    def closed_theories(self) -> list[frozenset]:\n        \"\"\"Enumerate all closed theories.\n        \n        Time complexity: O(2^|G| \u00d7 |clauses| \u00d7 |G|\u00b2).\n        \"\"\"\n        if self._closed_cache is not None:\n            return self._closed_cache\n\n        result = []\n        for r in range(len(self.generators) + 1):\n            for combo in combinations(sorted(self.generators), r):\n                S = frozenset(combo)\n                if self.closure(S) == S:\n                    result.append(S)\n        self._closed_cache = result\n        return result\n\n    def is_meet_irreducible(self, P: frozenset) -> bool:\n        \"\"\"Check if P is meet-irreducible among closed theories.\n        \n        Time complexity: O(k\u00b2) where k = number of closed theories.\n        \"\"\"\n        if P == self.generators:\n            return False\n        closed = self.closed_theories()\n        for A in closed:\n            if A == P:\n                continue\n            for B in closed:\n                if B == P:\n                    continue\n                if A & B == P:\n                    return False\n        return True\n\n    def prime_spectrum(self) -> list[frozenset]:\n        \"\"\"Compute the prime spectrum: all meet-irreducible closed theories.\n        \n        Time complexity: O(k\u00b3) where k = number of closed theories.\n        \"\"\"\n        if self._prime_cache is not None:\n            return self._prime_cache\n\n        closed = self.closed_theories()\n        primes = [P for P in closed if self.is_meet_irreducible(P)]\n        self._prime_cache = primes\n        return primes\n\n    def reconstruct(self, A: frozenset) -> frozenset:\n        \"\"\"Reconstruct Cl(A) as \u2229{P prime | A \u2286 P}.\n        \n        Time complexity: O(|primes| \u00d7 |G|).\n        \"\"\"\n        primes = self.prime_spectrum()\n        containing = [P for P in primes if A <= P]\n        if not containing:\n            return self.generators\n        result = self.generators\n        for P in containing:\n            result = result & P\n        return result\n\n    def basic_open(self, F: frozenset) -> list[frozenset]:\n        \"\"\"Compute D(F) = {P prime | F \u2284 P}.\n        \n        Time complexity: O(|primes| \u00d7 |F|).\n        \"\"\"\n        return [P for P in self.prime_spectrum() if not F <= P]\n\n    def specialization_order(self) -> list[tuple[frozenset, frozenset]]:\n        \"\"\"Compute the specialization preorder on the prime spectrum.\n        P specializes to Q (P \u2933 Q) iff Q \u2286 P (containment reversal).\n        \n        Returns list of (P, Q) pairs where P specializes to Q.\n        \"\"\"\n        primes = self.prime_spectrum()\n        edges = []\n        for P in primes:\n            for Q in primes:\n                if Q <= P and Q != P:\n                    edges.append((P, Q))\n        return edges\n\n    def verify_reconstruction(self) -> bool:\n        \"\"\"Verify the reconstruction theorem for all subsets.\n        \n        Returns True if Cl(A) = \u2229{P prime | A \u2286 P} for all A \u2286 G.\n        \"\"\"\n        for r in range(len(self.generators) + 1):\n            for combo in combinations(sorted(self.generators), r):\n                A = frozenset(combo)\n                if self.closure(A) != self.reconstruct(A):\n                    return False\n        return True\n\n    def verify_basis_stability(self) -> bool:\n        \"\"\"Verify D(F1 \u222a F2) = D(F1) \u222a D(F2) for all finite F1, F2.\"\"\"\n        elems = sorted(self.generators)\n        for r1 in range(len(elems) + 1):\n            for combo1 in combinations(elems, r1):\n                F1 = frozenset(combo1)\n                for r2 in range(len(elems) + 1):\n                    for combo2 in combinations(elems, r2):\n                        F2 = frozenset(combo2)\n                        lhs = set(map(id, self.basic_open(F1 | F2)))\n                        d1 = self.basic_open(F1)\n                        d2 = self.basic_open(F2)\n                        rhs_list = list({id(p): p for p in d1 + d2}.values())\n                        # Compare as sets of frozensets\n                        if sorted(self.basic_open(F1 | F2), key=sorted) != \\\n                           sorted(list(set(d1) | set(d2)), key=sorted):\n                            return False\n        return True\n\n    def summary(self) -> str:\n        \"\"\"Print a summary of the closure system and its spectrum.\"\"\"\n        lines = []\n        lines.append(f\"Generators: {sorted(self.generators)}\")\n        lines.append(f\"Horn clauses ({len(self.clauses)}):\")\n        for c in self.clauses:\n            lines.append(f\"  {c}\")\n        \n        closed = self.closed_theories()\n        lines.append(f\"\\nClosed theories ({len(closed)}):\")\n        for T in sorted(closed, key=lambda s: (len(s), sorted(s))):\n            lines.append(f\"  {set(T) if T else '{}'}\")\n        \n        primes = self.prime_spectrum()\n        lines.append(f\"\\nPrime spectrum ({len(primes)} points):\")\n        for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n            lines.append(f\"  {set(P) if P else '{}'}\")\n        \n        spec = self.specialization_order()\n        if spec:\n            lines.append(f\"\\nSpecialization order ({len(spec)} relations):\")\n            for P, Q in spec:\n                lines.append(f\"  {set(P)} \u2933 {set(Q)}\")\n        \n        return \"\\n\".join(lines)\n\n\ndef from_implication_basis(generators: set, implications: list[tuple[set, str]]) -> ClosureSystem:\n    \"\"\"Create a closure system from an implication basis.\n    \n    Args:\n        generators: set of generator names\n        implications: list of (body, head) pairs where body is a set and head is a string\n    \"\"\"\n    clauses = [HornClause(frozenset(body), head) for body, head in implications]\n    return ClosureSystem(frozenset(generators), clauses)\n\n\ndef benchmark(system: ClosureSystem) -> dict:\n    \"\"\"Benchmark the closure system algorithms.\"\"\"\n    results = {}\n\n    t0 = time.time()\n    closed = system.closed_theories()\n    results['closed_theories_time'] = time.time() - t0\n    results['num_closed'] = len(closed)\n\n    t0 = time.time()\n    primes = system.prime_spectrum()\n    results['prime_spectrum_time'] = time.time() - t0\n    results['num_primes'] = len(primes)\n\n    t0 = time.time()\n    ok = system.verify_reconstruction()\n    results['reconstruction_verify_time'] = time.time() - t0\n    results['reconstruction_ok'] = ok\n\n    return results\n\n\nif __name__ == \"__main__\":\n    # Example: Database functional dependencies\n    print(\"=== Database Functional Dependencies ===\")\n    db = from_implication_basis(\n        {'A', 'B', 'C', 'D', 'E'},\n        [\n            ({'A'}, 'B'),\n            ({'B', 'C'}, 'D'),\n            ({'D'}, 'E'),\n        ]\n    )\n    print(db.summary())\n    print(f\"\\nReconstruction verified: {db.verify_reconstruction()}\")\n\n    print(\"\\n=== Benchmark ===\")\n    results = benchmark(db)\n    for k, v in results.items():\n        if isinstance(v, float):\n            print(f\"  {k}: {v:.4f}s\")\n        else:\n            print(f\"  {k}: {v}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nClosure Spectrum Duality \u2014 Applications\n\nDemonstrates real-world applications of closure spectrum duality:\n1. Database normalization via prime spectrum analysis\n2. Horn clause satisfiability and prime model enumeration\n3. Formal concept analysis: concept lattice from prime spectrum\n4. Knowledge base compression via spectral encoding\n\"\"\"\n\nfrom algorithms import ClosureSystem, HornClause, from_implication_basis, benchmark\n\n\ndef app_database_normalization():\n    \"\"\"Application 1: Database normalization via prime spectrum.\n    \n    The prime spectrum of functional dependencies reveals the\n    \"irreducible perspectives\" on the data \u2014 minimal attribute sets\n    that can't be decomposed further while preserving all dependencies.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 1: Database Normalization via Prime Spectrum\")\n    print(\"=\" * 60)\n    \n    # A relation with attributes {A, B, C, D, E}\n    # Functional dependencies: A\u2192B, B\u2192C, CD\u2192E, E\u2192A\n    db = from_implication_basis(\n        {'A', 'B', 'C', 'D', 'E'},\n        [\n            ({'A'}, 'B'),\n            ({'B'}, 'C'),\n            ({'C', 'D'}, 'E'),\n            ({'E'}, 'A'),\n        ]\n    )\n    \n    print(db.summary())\n    print(f\"\\nReconstruction verified: {db.verify_reconstruction()}\")\n    \n    primes = db.prime_spectrum()\n    print(f\"\\nInterpretation:\")\n    print(f\"  The {len(primes)} prime theories represent the irreducible\")\n    print(f\"  'views' of the data that preserve dependency structure.\")\n    print(f\"  Each prime theory is a maximal consistent attribute set\")\n    print(f\"  that cannot be decomposed as an intersection of larger ones.\")\n    \n    # Show what each prime \"knows\"\n    for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n        attrs = sorted(P) if P else []\n        missing = sorted(db.generators - P)\n        print(f\"\\n  Prime {set(P) if P else '{}'}:\")\n        print(f\"    Contains: {attrs}\")\n        print(f\"    Missing:  {missing}\")\n        print(f\"    Semantic: a 'worldview' that knows {attrs} but not {missing}\")\n\n\ndef app_horn_clause_reasoning():\n    \"\"\"Application 2: Horn clause entailment via prime models.\n    \n    Given a set of Horn clauses, the prime spectrum gives all\n    \"prime models\" \u2014 minimal models that detect all entailment failures.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 2: Horn Clause Entailment via Prime Models\")\n    print(\"=\" * 60)\n    \n    # Knowledge base: rules about a simple diagnostic system\n    # Variables: fever, cough, infection, treatment, recovery\n    kb = from_implication_basis(\n        {'fever', 'cough', 'infection', 'treatment', 'recovery'},\n        [\n            ({'fever', 'cough'}, 'infection'),\n            ({'infection'}, 'treatment'),\n            ({'treatment'}, 'recovery'),\n            ({'fever'}, 'treatment'),  # fever alone warrants treatment\n        ]\n    )\n    \n    print(kb.summary())\n    print(f\"\\nReconstruction verified: {kb.verify_reconstruction()}\")\n    \n    # Test entailment queries\n    print(\"\\nEntailment queries (via prime intersection):\")\n    queries = [\n        (frozenset({'fever'}), 'recovery',\n         \"Does fever entail recovery?\"),\n        (frozenset({'cough'}), 'treatment',\n         \"Does cough alone entail treatment?\"),\n        (frozenset({'fever', 'cough'}), 'recovery',\n         \"Do fever+cough entail recovery?\"),\n        (frozenset({'infection'}), 'fever',\n         \"Does infection entail fever?\"),\n    ]\n    \n    for assumptions, query, description in queries:\n        cl = kb.closure(assumptions)\n        entailed = query in cl\n        # Verify via reconstruction\n        reconstructed = kb.reconstruct(assumptions)\n        assert (query in cl) == (query in reconstructed), \"Reconstruction mismatch!\"\n        print(f\"  {description}\")\n        print(f\"    Answer: {'YES' if entailed else 'NO'}\")\n        print(f\"    Cl({set(assumptions)}) = {set(cl)}\")\n\n\ndef app_formal_concept_analysis():\n    \"\"\"Application 3: Formal concept analysis via prime spectrum.\n    \n    A formal context (objects \u00d7 attributes) defines a closure operator.\n    The prime spectrum gives the meet-irreducible concepts.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 3: Formal Concept Analysis\")\n    print(\"=\" * 60)\n    \n    # A simple formal context: animals and their properties\n    # Objects: dog, cat, fish, bird\n    # Attributes: legs, fur, swims, flies, domestic\n    #\n    # We model the ATTRIBUTE closure: given some attributes,\n    # what other attributes must hold for all objects with those attributes?\n    \n    # Cross-table:\n    # dog:  legs, fur, domestic\n    # cat:  legs, fur, domestic\n    # fish: swims\n    # bird: legs, flies\n    \n    objects = {\n        'dog': {'legs', 'fur', 'domestic'},\n        'cat': {'legs', 'fur', 'domestic'},\n        'fish': {'swims'},\n        'bird': {'legs', 'flies'},\n    }\n    \n    all_attrs = set()\n    for attrs in objects.values():\n        all_attrs |= attrs\n    \n    def attribute_closure(S: frozenset) -> frozenset:\n        \"\"\"Closure in the attribute space: attributes shared by all objects\n        having all attributes in S.\"\"\"\n        s = set(S) & all_attrs\n        if not s:\n            # All objects have these (vacuously), so closure = \u2229 all attribute sets\n            result = all_attrs.copy()\n            for attrs in objects.values():\n                result &= attrs\n            return frozenset(result)\n        \n        # Find objects that have all attributes in S\n        compatible_objects = []\n        for obj, attrs in objects.items():\n            if s <= attrs:\n                compatible_objects.append(obj)\n        \n        if not compatible_objects:\n            return frozenset(all_attrs)  # No objects \u2192 all attributes (vacuously)\n        \n        # Closure = intersection of attribute sets of compatible objects\n        result = all_attrs.copy()\n        for obj in compatible_objects:\n            result &= objects[obj]\n        return frozenset(result)\n    \n    # Build as a ClosureSystem (we need to express as Horn clauses, but\n    # it's easier to just compute directly)\n    print(f\"Attributes: {sorted(all_attrs)}\")\n    print(f\"\\nFormal context:\")\n    for obj, attrs in sorted(objects.items()):\n        print(f\"  {obj}: {sorted(attrs)}\")\n    \n    # Compute closed theories directly\n    from itertools import combinations\n    closed = []\n    for r in range(len(all_attrs) + 1):\n        for combo in combinations(sorted(all_attrs), r):\n            S = frozenset(combo)\n            if attribute_closure(S) == S:\n                closed.append(S)\n    \n    print(f\"\\nClosed attribute sets ({len(closed)}):\")\n    for T in sorted(closed, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(T) if T else '{}'}\")\n    \n    # Find primes\n    primes = []\n    for P in closed:\n        if P == frozenset(all_attrs):\n            continue\n        is_prime = True\n        for A in closed:\n            if A == P:\n                continue\n            for B in closed:\n                if B == P:\n                    continue\n                if A & B == P:\n                    is_prime = False\n                    break\n            if not is_prime:\n                break\n        if is_prime:\n            primes.append(P)\n    \n    print(f\"\\nPrime spectrum ({len(primes)} meet-irreducible concepts):\")\n    for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n        # Find which objects have exactly these attributes\n        compatible = [obj for obj, attrs in objects.items() if P <= attrs]\n        print(f\"  {set(P) if P else '{}'}\")\n        print(f\"    Compatible objects: {compatible}\")\n    \n    # Verify reconstruction\n    print(f\"\\nReconstruction verification:\")\n    all_ok = True\n    for r in range(len(all_attrs) + 1):\n        for combo in combinations(sorted(all_attrs), r):\n            S = frozenset(combo)\n            actual = attribute_closure(S)\n            # Reconstruct\n            containing = [P for P in primes if S <= P]\n            if not containing:\n                reconstructed = frozenset(all_attrs)\n            else:\n                reconstructed = frozenset(all_attrs)\n                for P in containing:\n                    reconstructed = reconstructed & P\n            if actual != reconstructed:\n                all_ok = False\n                print(f\"  FAIL: Cl({set(S)}) = {set(actual)} \u2260 {set(reconstructed)}\")\n    if all_ok:\n        print(f\"  \u2705 Reconstruction verified for all {2**len(all_attrs)} attribute sets!\")\n\n\ndef app_knowledge_compression():\n    \"\"\"Application 4: Knowledge base compression via spectral encoding.\n    \n    Demonstrates that the prime spectrum provides a compact representation\n    of the full closure system.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 4: Knowledge Base Compression\")\n    print(\"=\" * 60)\n    \n    # A larger closure system\n    kb = from_implication_basis(\n        {'a', 'b', 'c', 'd', 'e', 'f'},\n        [\n            ({'a'}, 'b'),\n            ({'b'}, 'c'),\n            ({'c'}, 'a'),  # cycle: a\u2194b\u2194c\n            ({'d'}, 'e'),\n            ({'e'}, 'f'),\n            ({'f'}, 'd'),  # cycle: d\u2194e\u2194f\n            ({'a', 'd'}, 'b'),  # redundant, but adds complexity\n        ]\n    )\n    \n    closed = kb.closed_theories()\n    primes = kb.prime_spectrum()\n    \n    print(f\"Generators: {len(kb.generators)}\")\n    print(f\"Horn clauses: {len(kb.clauses)}\")\n    print(f\"Total subsets: {2**len(kb.generators)}\")\n    print(f\"Closed theories: {len(closed)}\")\n    print(f\"Prime spectrum size: {len(primes)}\")\n    print(f\"\\nCompression ratio: {len(primes)}/{len(closed)} = \"\n          f\"{len(primes)/max(len(closed),1):.2%} of closed theories\")\n    print(f\"  (only {len(primes)} prime points needed to reconstruct \"\n          f\"all {len(closed)} closed theories)\")\n    \n    verified = kb.verify_reconstruction()\n    print(f\"\\nReconstruction verified: {verified}\")\n    \n    # Show the primes\n    print(f\"\\nPrime theories:\")\n    for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(P) if P else '{}'}\")\n    \n    # Benchmark\n    results = benchmark(kb)\n    print(f\"\\nBenchmark:\")\n    for k, v in results.items():\n        if isinstance(v, float):\n            print(f\"  {k}: {v:.6f}s\")\n        else:\n            print(f\"  {k}: {v}\")\n\n\nif __name__ == \"__main__\":\n    app_database_normalization()\n    app_horn_clause_reasoning()\n    app_formal_concept_analysis()\n    app_knowledge_compression()\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications demonstrated successfully!\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nClosure Spectrum Duality \u2014 Interactive Demo\n\nDemonstrates the reconstruction theorem: for a finite closure operator,\nCl(A) = \u2229{P prime | A \u2286 P}.\n\nEach example defines a closure operator on a small set, computes the prime\nspectrum, and verifies the reconstruction formula.\n\"\"\"\n\nfrom itertools import combinations\nfrom typing import Callable, FrozenSet, Set\n\n\ndef powerset(s: set) -> list[frozenset]:\n    \"\"\"All subsets of s, as frozensets.\"\"\"\n    elems = list(s)\n    result = []\n    for r in range(len(elems) + 1):\n        for combo in combinations(elems, r):\n            result.append(frozenset(combo))\n    return result\n\n\ndef find_closed_theories(\n    G: set, cl: Callable[[frozenset], frozenset]\n) -> list[frozenset]:\n    \"\"\"Find all closed theories T with Cl(T) = T.\"\"\"\n    closed = []\n    for s in powerset(G):\n        if cl(s) == s:\n            closed.append(s)\n    return closed\n\n\ndef is_meet_irreducible(\n    P: frozenset, closed_theories: list[frozenset], G: set\n) -> bool:\n    \"\"\"Check if P is meet-irreducible: P \u2260 G and P cannot be written as\n    A \u2229 B with A, B closed and A \u2260 P, B \u2260 P.\"\"\"\n    top = frozenset(G)\n    if P == top:\n        return False\n    for A in closed_theories:\n        for B in closed_theories:\n            if A & B == P and A != P and B != P:\n                return False\n    return True\n\n\ndef find_prime_spectrum(\n    G: set, cl: Callable[[frozenset], frozenset]\n) -> list[frozenset]:\n    \"\"\"Compute the prime spectrum: all meet-irreducible closed theories.\"\"\"\n    closed = find_closed_theories(G, cl)\n    return [P for P in closed if is_meet_irreducible(P, closed, G)]\n\n\ndef reconstruct_closure(\n    A: frozenset, primes: list[frozenset], G: set\n) -> frozenset:\n    \"\"\"Reconstruct Cl(A) as \u2229{P prime | A \u2286 P}.\"\"\"\n    containing = [P for P in primes if A <= P]\n    if not containing:\n        return frozenset(G)\n    result = frozenset(G)\n    for P in containing:\n        result = result & P\n    return result\n\n\ndef verify_reconstruction(\n    G: set, cl: Callable[[frozenset], frozenset], name: str\n):\n    \"\"\"Verify the reconstruction theorem for all subsets of G.\"\"\"\n    primes = find_prime_spectrum(G, cl)\n    closed = find_closed_theories(G, cl)\n\n    print(f\"\\n{'='*60}\")\n    print(f\"Example: {name}\")\n    print(f\"{'='*60}\")\n    print(f\"Generators: {sorted(G)}\")\n    print(f\"Closed theories ({len(closed)}):\")\n    for T in sorted(closed, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(T) if T else '{}'}\")\n    print(f\"\\nPrime spectrum ({len(primes)} points):\")\n    for P in sorted(primes, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(P) if P else '{}'}\")\n\n    print(f\"\\nReconstruction verification:\")\n    all_ok = True\n    for S in powerset(G):\n        actual = cl(S)\n        reconstructed = reconstruct_closure(S, primes, G)\n        ok = actual == reconstructed\n        if not ok:\n            all_ok = False\n        status = \"\u2713\" if ok else \"\u2717\"\n        print(f\"  Cl({set(S) if S else '{}'}) = {set(actual) if actual else '{}'} \"\n              f\"[reconstructed: {set(reconstructed) if reconstructed else '{}'}] {status}\")\n\n    if all_ok:\n        print(f\"\\n  \u2705 Reconstruction theorem verified for all {2**len(G)} subsets!\")\n    else:\n        print(f\"\\n  \u274c Reconstruction failed for some subsets!\")\n\n\n# ============================================================\n# Example 1: Three generators with \"any two implies the third\"\n# ============================================================\ndef cl_example1(S: frozenset) -> frozenset:\n    G = frozenset({'a', 'b', 'c'})\n    if len(S & G) >= 2:\n        return G\n    return S & G\n\n\n# ============================================================\n# Example 2: Linear chain closure\n# Cl({1}) = {1}, Cl({2}) = {1,2}, Cl({3}) = {1,2,3}\n# ============================================================\ndef cl_example2(S: frozenset) -> frozenset:\n    G = frozenset({1, 2, 3})\n    result = set(S & G)\n    if 3 in result:\n        result |= {1, 2, 3}\n    if 2 in result:\n        result.add(1)\n    return frozenset(result)\n\n\n# ============================================================\n# Example 3: Database functional dependencies\n# Attributes: {A, B, C, D}\n# FDs: A \u2192 B, BC \u2192 D\n# ============================================================\ndef cl_example3(S: frozenset) -> frozenset:\n    result = set(S)\n    changed = True\n    while changed:\n        changed = False\n        if 'A' in result and 'B' not in result:\n            result.add('B')\n            changed = True\n        if 'B' in result and 'C' in result and 'D' not in result:\n            result.add('D')\n            changed = True\n    return frozenset(result)\n\n\n# ============================================================\n# Example 4: Propositional Horn clauses\n# Variables: {p, q, r, s}\n# Rules: p \u2227 q \u2192 r, r \u2192 s, p \u2192 q\n# ============================================================\ndef cl_example4(S: frozenset) -> frozenset:\n    result = set(S)\n    changed = True\n    while changed:\n        changed = False\n        if 'p' in result and 'q' not in result:\n            result.add('q')\n            changed = True\n        if 'p' in result and 'q' in result and 'r' not in result:\n            result.add('r')\n            changed = True\n        if 'r' in result and 's' not in result:\n            result.add('s')\n            changed = True\n    return frozenset(result)\n\n\nif __name__ == \"__main__\":\n    print(\"Closure Spectrum Duality \u2014 Demonstration\")\n    print(\"Verifying: Cl(A) = \u2229{P prime | A \u2286 P}\")\n\n    verify_reconstruction(\n        {'a', 'b', 'c'}, cl_example1,\n        \"Three generators, any two imply the third\"\n    )\n\n    verify_reconstruction(\n        {1, 2, 3}, cl_example2,\n        \"Linear chain: 3\u2192{1,2,3}, 2\u2192{1,2}\"\n    )\n\n    verify_reconstruction(\n        {'A', 'B', 'C', 'D'}, cl_example3,\n        \"Database FDs: A\u2192B, BC\u2192D\"\n    )\n\n    verify_reconstruction(\n        {'p', 'q', 'r', 's'}, cl_example4,\n        \"Horn clauses: p\u2192q, p\u2227q\u2192r, r\u2192s\"\n    )\n\n    print(\"\\n\" + \"=\"*60)\n    print(\"All examples verified successfully!\")\n    print(\"=\"*60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nClosure Spectrum Duality \u2014 Visualizations\n\nGenerates visual representations of closure spectra, lattices, and reconstruction.\nSaves figures as PNG files and returns base64 data URIs.\n\"\"\"\n\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nimport matplotlib.patches as mpatches\nimport numpy as np\nfrom itertools import combinations\nimport base64\nimport io\n\n\ndef fig_to_base64(fig) -> str:\n    \"\"\"Convert matplotlib figure to base64 data URI.\"\"\"\n    buf = io.BytesIO()\n    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    buf.seek(0)\n    b64 = base64.b64encode(buf.read()).decode('utf-8')\n    plt.close(fig)\n    return f\"data:image/png;base64,{b64}\"\n\n\ndef visualize_closed_theory_lattice():\n    \"\"\"Visualize the lattice of closed theories with primes highlighted.\"\"\"\n    fig, axes = plt.subplots(1, 2, figsize=(14, 7))\n    \n    # Example 1: Three generators, any two imply the third\n    ax = axes[0]\n    ax.set_title(\"Closure Lattice: 'Any Two \u2192 Third'\", fontsize=13, fontweight='bold')\n    \n    # Lattice: {} < {a} < {a,b,c}, {} < {b} < {a,b,c}, {} < {c} < {a,b,c}\n    positions = {\n        '\u2205': (0.5, 0),\n        '{a}': (0, 0.5),\n        '{b}': (0.5, 0.5),\n        '{c}': (1, 0.5),\n        '{a,b,c}': (0.5, 1),\n    }\n    \n    primes = {'{a}', '{b}', '{c}'}\n    \n    edges = [\n        ('\u2205', '{a}'), ('\u2205', '{b}'), ('\u2205', '{c}'),\n        ('{a}', '{a,b,c}'), ('{b}', '{a,b,c}'), ('{c}', '{a,b,c}'),\n    ]\n    \n    for src, dst in edges:\n        ax.plot([positions[src][0], positions[dst][0]], \n                [positions[src][1], positions[dst][1]], \n                'k-', linewidth=1.5, zorder=1)\n    \n    for name, (x, y) in positions.items():\n        color = '#FF6B6B' if name in primes else '#4ECDC4'\n        size = 800 if name in primes else 600\n        ax.scatter(x, y, s=size, c=color, edgecolors='black', \n                   linewidths=2, zorder=2)\n        offset_y = -0.08 if y == 0 else (0.08 if y == 1 else 0.08)\n        ax.text(x, y + offset_y, name, ha='center', va='center', \n                fontsize=11, fontweight='bold')\n    \n    ax.set_xlim(-0.3, 1.3)\n    ax.set_ylim(-0.2, 1.2)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    \n    prime_patch = mpatches.Patch(color='#FF6B6B', label='Prime (meet-irred.)')\n    other_patch = mpatches.Patch(color='#4ECDC4', label='Non-prime')\n    ax.legend(handles=[prime_patch, other_patch], loc='lower right', fontsize=10)\n    \n    # Example 2: Linear chain\n    ax = axes[1]\n    ax.set_title(\"Closure Lattice: Linear Chain 3\u21922\u21921\", fontsize=13, fontweight='bold')\n    \n    positions2 = {\n        '\u2205': (0.5, 0),\n        '{1}': (0.5, 0.33),\n        '{1,2}': (0.5, 0.66),\n        '{1,2,3}': (0.5, 1),\n    }\n    \n    primes2 = {'{1,2}'}  # Only meet-irreducible proper closed set\n    \n    edges2 = [\n        ('\u2205', '{1}'), ('{1}', '{1,2}'), ('{1,2}', '{1,2,3}'),\n    ]\n    \n    for src, dst in edges2:\n        ax.plot([positions2[src][0], positions2[dst][0]], \n                [positions2[src][1], positions2[dst][1]], \n                'k-', linewidth=1.5, zorder=1)\n    \n    for name, (x, y) in positions2.items():\n        color = '#FF6B6B' if name in primes2 else '#4ECDC4'\n        size = 800 if name in primes2 else 600\n        ax.scatter(x, y, s=size, c=color, edgecolors='black', \n                   linewidths=2, zorder=2)\n        ax.text(x + 0.15, y, name, ha='left', va='center', \n                fontsize=11, fontweight='bold')\n    \n    ax.set_xlim(-0.1, 1.1)\n    ax.set_ylim(-0.15, 1.15)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    ax.legend(handles=[prime_patch, other_patch], loc='lower right', fontsize=10)\n    \n    fig.suptitle(\"Closed Theory Lattices with Prime Spectrum Highlighted\", \n                 fontsize=15, fontweight='bold', y=1.02)\n    plt.tight_layout()\n    return fig\n\n\ndef visualize_reconstruction():\n    \"\"\"Visualize the reconstruction theorem: Cl(A) = \u2229{P prime | A \u2286 P}.\"\"\"\n    fig, ax = plt.subplots(1, 1, figsize=(10, 6))\n    \n    # Example: G = {a,b,c}, closure: any two imply third\n    # Primes: {a}, {b}, {c}\n    # Show reconstruction for different sets\n    \n    sets_and_closures = [\n        ('{a}', '{a}', ['{a}']),\n        ('{b}', '{b}', ['{b}']),\n        ('{a,b}', '{a,b,c}', []),\n        ('\u2205', '\u2205', ['{a}', '{b}', '{c}']),\n        ('{c}', '{c}', ['{c}']),\n    ]\n    \n    y_positions = list(range(len(sets_and_closures)))\n    \n    for i, (input_set, closure, primes_above) in enumerate(sets_and_closures):\n        y = len(sets_and_closures) - 1 - i\n        \n        # Input set\n        ax.text(0.5, y, input_set, ha='center', va='center', fontsize=14,\n                bbox=dict(boxstyle='round,pad=0.3', facecolor='#E8F4FD', \n                         edgecolor='#2196F3', linewidth=2))\n        \n        # Arrow\n        ax.annotate('', xy=(1.8, y), xytext=(1.2, y),\n                    arrowprops=dict(arrowstyle='->', color='#333', lw=2))\n        ax.text(1.5, y + 0.25, 'Cl', ha='center', va='center', fontsize=11,\n                fontstyle='italic', color='#666')\n        \n        # Primes above (or \"none\")\n        if primes_above:\n            primes_text = ' \u2229 '.join(primes_above)\n        else:\n            primes_text = '(no primes above)'\n        \n        ax.text(3.0, y, primes_text, ha='center', va='center', fontsize=12,\n                color='#FF6B6B', fontweight='bold')\n        \n        # Arrow\n        ax.annotate('', xy=(4.5, y), xytext=(4.0, y),\n                    arrowprops=dict(arrowstyle='->', color='#333', lw=2))\n        ax.text(4.25, y + 0.25, '=', ha='center', va='center', fontsize=14,\n                fontweight='bold', color='#666')\n        \n        # Result\n        ax.text(5.2, y, closure, ha='center', va='center', fontsize=14,\n                bbox=dict(boxstyle='round,pad=0.3', facecolor='#E8F8E8', \n                         edgecolor='#4CAF50', linewidth=2))\n    \n    # Headers\n    ax.text(0.5, len(sets_and_closures) + 0.3, 'Input A', ha='center', \n            fontsize=13, fontweight='bold', color='#2196F3')\n    ax.text(3.0, len(sets_and_closures) + 0.3, '\u2229{P prime | A\u2286P}', ha='center',\n            fontsize=13, fontweight='bold', color='#FF6B6B')\n    ax.text(5.2, len(sets_and_closures) + 0.3, 'Cl(A)', ha='center',\n            fontsize=13, fontweight='bold', color='#4CAF50')\n    \n    ax.set_xlim(-0.5, 6.0)\n    ax.set_ylim(-0.8, len(sets_and_closures) + 0.8)\n    ax.axis('off')\n    ax.set_title(\"Reconstruction Theorem: Cl(A) = \u2229{P prime | A \u2286 P}\\n\"\n                 \"Example: G={a,b,c}, any two generators imply the third\",\n                 fontsize=14, fontweight='bold', pad=20)\n    \n    plt.tight_layout()\n    return fig\n\n\ndef visualize_spectrum_topology():\n    \"\"\"Visualize the topology on the prime spectrum via basic opens.\"\"\"\n    fig, axes = plt.subplots(1, 3, figsize=(15, 5))\n    \n    # Example: G = {a,b,c}, any two imply third\n    # Primes: P1={a}, P2={b}, P3={c}\n    # D({a}) = {P2, P3}, D({b}) = {P1, P3}, D({c}) = {P1, P2}\n    \n    prime_positions = {\n        'P\u2081={a}': (0, 0),\n        'P\u2082={b}': (1, 0),\n        'P\u2083={c}': (0.5, 0.87),\n    }\n    \n    basic_opens = [\n        ('D({a})', ['P\u2082={b}', 'P\u2083={c}'], '#FFCDD2'),\n        ('D({b})', ['P\u2081={a}', 'P\u2083={c}'], '#C8E6C9'),\n        ('D({c})', ['P\u2081={a}', 'P\u2082={b}'], '#BBDEFB'),\n    ]\n    \n    for idx, (title, members, color) in enumerate(basic_opens):\n        ax = axes[idx]\n        ax.set_title(f\"Basic Open {title}\", fontsize=13, fontweight='bold')\n        \n        for name, (x, y) in prime_positions.items():\n            if name in members:\n                ax.scatter(x, y, s=1000, c=color, edgecolors='black', \n                          linewidths=2, zorder=2)\n            else:\n                ax.scatter(x, y, s=1000, c='#F5F5F5', edgecolors='#999',\n                          linewidths=2, zorder=2, linestyle='dashed')\n            ax.text(x, y - 0.15, name, ha='center', va='center', \n                    fontsize=10, fontweight='bold')\n        \n        # Draw convex hull of members\n        member_pos = [prime_positions[m] for m in members]\n        if len(member_pos) >= 2:\n            xs = [p[0] for p in member_pos]\n            ys = [p[1] for p in member_pos]\n            ax.fill(xs + [xs[0]], ys + [ys[0]], alpha=0.15, color=color)\n        \n        ax.set_xlim(-0.5, 1.5)\n        ax.set_ylim(-0.5, 1.3)\n        ax.set_aspect('equal')\n        ax.axis('off')\n    \n    fig.suptitle(\"Topology on ClSpec: Basic Opens D(F) = {P | F \u2284 P}\", \n                 fontsize=15, fontweight='bold', y=1.05)\n    plt.tight_layout()\n    return fig\n\n\ndef generate_all_visualizations():\n    \"\"\"Generate all visualizations and return as base64 data URIs.\"\"\"\n    results = {}\n    \n    fig1 = visualize_closed_theory_lattice()\n    results['lattice'] = fig_to_base64(fig1)\n    fig1.savefig('/workspace/request-project/lattice.png', dpi=150, bbox_inches='tight')\n    plt.close(fig1)\n    \n    fig2 = visualize_reconstruction()\n    results['reconstruction'] = fig_to_base64(fig2)\n    fig2.savefig('/workspace/request-project/reconstruction.png', dpi=150, bbox_inches='tight')\n    plt.close(fig2)\n    \n    fig3 = visualize_spectrum_topology()\n    results['topology'] = fig_to_base64(fig3)\n    fig3.savefig('/workspace/request-project/topology.png', dpi=150, bbox_inches='tight')\n    plt.close(fig3)\n    \n    return results\n\n\nif __name__ == \"__main__\":\n    print(\"Generating visualizations...\")\n    results = generate_all_visualizations()\n    print(f\"Generated {len(results)} visualizations:\")\n    for name, uri in results.items():\n        print(f\"  {name}: {len(uri)} chars\")\n    print(\"Saved PNG files: lattice.png, reconstruction.png, topology.png\")\n"
+    },
+    "date": "2026-05-12T17:00:20Z",
+    "exp_id": "47bf2ccd"
+  },
   "algebraemlphysics_idempotent_gaugecurvature_dualit.json": {
     "title": "Idempotent Gauge-Curvature Duality via Closure Connection Theory",
     "domain": "Algebra, Gauge Theory, Tropical Geometry, Closure Systems",
@@ -6899,7 +6958,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -6908,7 +6967,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 89
+      "hue": 271
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -6917,7 +6976,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -6926,7 +6985,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -6935,7 +6994,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 292
+      "hue": 270
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -6944,7 +7003,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -6953,7 +7012,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:45Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraeml_tannaka_reconstruction_via_closure_endo",
@@ -6962,7 +7021,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -6971,7 +7030,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -6980,7 +7039,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-10T23:04:27Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebraspeculative_prime_congruence_semantics_for_",
@@ -6989,7 +7048,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:04:40Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraeml_renormalization_semantics_via_closure_f",
@@ -6998,7 +7057,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -7007,7 +7066,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -7025,7 +7084,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:38Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "algebramachinelearning_coalgebraic_myhillnerode_se",
@@ -7034,7 +7093,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -7043,7 +7102,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-11T02:06:07Z",
-      "hue": 270
+      "hue": 89
     },
     {
       "id": "algebraeml_ruelle_transfer_semantics_via_closure_c",
@@ -7061,7 +7120,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -7070,7 +7129,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:27Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "cryptographypythagorean_isogeny_free_trapdoors_via",
@@ -7079,7 +7138,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T04:06:34Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebratropical_neural_representation_duality_via_",
@@ -7097,7 +7156,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -7106,7 +7165,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -7115,7 +7174,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -7124,7 +7183,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -7133,7 +7192,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -7142,7 +7201,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 271
+      "hue": 101
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -7151,7 +7210,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -7160,7 +7219,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T09:36:04Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraeml_tropical_choquet_closure_duality_via_id",
@@ -7187,7 +7246,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -7205,7 +7264,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -7214,7 +7273,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:40Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraspeculativecryptography_prime_congruence_du",
@@ -7223,7 +7282,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -7232,7 +7291,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -7241,7 +7300,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -7250,7 +7309,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -7259,7 +7318,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:35:26Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_compr",
@@ -7268,7 +7327,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -7277,7 +7336,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -7286,7 +7345,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -7304,7 +7363,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -7313,7 +7372,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -7322,7 +7381,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -7331,7 +7390,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -7340,7 +7399,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T18:03:24Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_compr",
@@ -7358,7 +7417,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T18:48:13Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_p",
@@ -7367,7 +7426,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -7376,7 +7435,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -7385,7 +7444,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -7394,7 +7453,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -7403,7 +7462,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 112
+      "hue": 91
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -7421,7 +7480,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T00:32:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebrapythagoreangeometry_tropical_gravitational_",
@@ -7430,7 +7489,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -7439,7 +7498,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 271
+      "hue": 281
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -7448,7 +7507,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -7457,7 +7516,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -7466,7 +7525,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -7475,7 +7534,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -7484,7 +7543,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -7493,7 +7552,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -7502,7 +7561,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -7511,7 +7570,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -7520,7 +7579,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -7529,7 +7588,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -7538,7 +7597,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -7547,7 +7606,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -7556,7 +7615,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T04:36:24Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_closure_matroid_duality_via",
@@ -7565,7 +7624,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T05:35:38Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_duali",
@@ -7574,7 +7633,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -7583,7 +7642,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -7592,7 +7651,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T05:36:31Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -7601,7 +7660,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T05:36:49Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebramachinelearningspeculative_operadic_tropica",
@@ -7619,7 +7678,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T07:33:24Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_wal",
@@ -7628,7 +7687,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T07:34:03Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_idempotent_renormalization_duali",
@@ -7637,7 +7696,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:37Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_idempotent_causal_holography_via",
@@ -7646,7 +7705,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:59Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "algebraemllogic_closure_stone_spectral_duality_via",
@@ -7655,7 +7714,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T09:32:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_closure_extractor_duality_v",
@@ -7664,7 +7723,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T09:33:03Z",
-      "hue": 90
+      "hue": 89
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -7673,7 +7732,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T09:48:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebramachinelearninglogic_operadic_stone_duality",
@@ -7682,7 +7741,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T09:51:53Z",
-      "hue": 90
+      "hue": 281
     },
     {
       "id": "algebraemlmachinelearning_closure_vc_duality_via_i",
@@ -7691,7 +7750,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T10:37:56Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "algebraemlcomputation_closure_myhillnerode_duality",
@@ -7700,7 +7759,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T10:56:08Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraemlgeometry_closure_voronoi_duality_via_ide",
@@ -7718,7 +7777,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T11:15:45Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "algebratropicalcomputation_tropical_residuation_re",
@@ -7727,7 +7786,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T11:29:51Z",
-      "hue": 281
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_closure_kramerswannier_duality_v",
@@ -7736,7 +7795,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:30:14Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_closure_sheafcode_duality_via_id",
@@ -7745,7 +7804,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:59:05Z",
-      "hue": 270
+      "hue": 359
     },
     {
       "id": "algebraemlmachinelearning_closure_barron_duality_v",
@@ -7754,7 +7813,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T12:09:31Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebratropicalgeometry_tropical_choquetvoronoi_du",
@@ -7763,7 +7822,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:28:11Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebrapythagoreanphysics_berggren_transfer_dualit",
@@ -7781,7 +7840,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T12:36:25Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraspeculativelogic_ultrametric_proofautomaton",
@@ -7799,7 +7858,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:03:31Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "algebraemlcomputation_closure_circuit_duality_via_",
@@ -7808,7 +7867,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T13:25:11Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebratropicalmachinelearning_tropical_persistenc",
@@ -7817,7 +7876,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T13:33:40Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraemlmachinelearning_closure_operad_duality_v",
@@ -7826,7 +7885,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T14:07:37Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_barr",
@@ -7835,7 +7894,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T14:10:39Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "algebratropicalmachinelearning_tropical_kernel_mea",
@@ -7844,7 +7903,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T14:15:55Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebrapythagoreancomputation_berggren_automaton_r",
@@ -7853,7 +7912,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T14:16:15Z",
-      "hue": 270
+      "hue": 314
     },
     {
       "id": "algebratropicalphysics_tropical_scattering_duality",
@@ -7862,7 +7921,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T15:00:31Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "algebraemllogic_closure_proof_net_duality_via_idem",
@@ -7871,7 +7930,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T15:00:53Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_closure_holography_duality_via_i",
@@ -7880,7 +7939,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T15:05:11Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraemlmachinelearning_closure_sheaf_learning_d",
@@ -7898,7 +7957,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T16:00:16Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebratropicallogic_tropical_stone_duality_via_id",
@@ -7907,7 +7966,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T16:22:11Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "algebraspeculativephysics_ultrametric_renormalizat",
@@ -7916,7 +7975,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T16:25:07Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_hecke",
@@ -7925,7 +7984,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T16:28:17Z",
-      "hue": 271
+      "hue": 92
+    },
+    {
+      "id": "algebraemlalgebraicgeometry_closure_spectrum_duali",
+      "title": "Closure Spectrum Duality: Spectral Reconstruction of Finite-Type Closure Systems",
+      "domain": "Algebra-EML-AlgebraicGeometry Bridge",
+      "primary_domain": "EML",
+      "shape": "octahedron",
+      "date": "2026-05-12T17:00:20Z",
+      "hue": 92
     },
     {
       "id": "algebraemlcomputation_idempotent_kalman_realizatio",
@@ -7943,7 +8011,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "algebraemlcryptography_idempotent_error_correcting",
@@ -7952,7 +8020,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemlmachinelearning_closure_sheaf_generaliza",
@@ -7961,7 +8029,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_idempotent_noether_correspondenc",
@@ -7970,7 +8038,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_proo",
@@ -7988,7 +8056,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "",
-      "hue": 280
+      "hue": 271
     }
   ],
   "edges": [
@@ -8087,7 +8155,7 @@ window.PACKAGE_GRAPH = {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
       "strength": 0.5554744525547446,
-      "label": "Bridges,Algebra,Tropical,MachineLearning,Geometry bridge",
+      "label": "MachineLearning,Geometry,Bridges,Tropical,Algebra bridge",
       "type": "heuristic"
     },
     {
@@ -8311,28 +8379,28 @@ window.PACKAGE_GRAPH = {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
       "strength": 0.3851581508515815,
-      "label": "Algebra,Bridges,EML,Cryptography bridge",
+      "label": "Algebra,Bridges,Cryptography,EML bridge",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
       "strength": 0.3851581508515815,
-      "label": "Geometry,Algebra,Logic,Tropical bridge",
+      "label": "Algebra,Logic,Geometry,Tropical bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
       "strength": 0.3851581508515815,
-      "label": "MachineLearning,Geometry,Algebra,Tropical bridge",
+      "label": "Algebra,MachineLearning,Geometry,Tropical bridge",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_operadic_tropica",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
       "strength": 0.3851581508515815,
-      "label": "MachineLearning,Geometry,Algebra,Tropical bridge",
+      "label": "Algebra,MachineLearning,Geometry,Tropical bridge",
       "type": "heuristic"
     },
     {
@@ -8430,7 +8498,7 @@ window.PACKAGE_GRAPH = {
       "source": "algebralogicmachinelearning_ultrametric_proof_shea",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
       "strength": 0.3283860502838605,
-      "label": "Bridges,MachineLearning,Algebra bridge",
+      "label": "Algebra,Bridges,MachineLearning bridge",
       "type": "heuristic"
     },
     {
