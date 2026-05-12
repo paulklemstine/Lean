@@ -762,7 +762,6 @@ Research mode: {concept.research_mode}
                         
                     if local_equiv.exists():
                         # Read text and ignore whitespace/CRLF differences
-                        import re
                         fp_text = fp.read_text(encoding='utf-8', errors='ignore')
                         local_text = local_equiv.read_text(encoding='utf-8', errors='ignore')
                         
@@ -1044,7 +1043,6 @@ Research mode: {concept.research_mode}
         # 1. Parse out the diffs and new files
         parts = []
         if job.result_lean:
-            import re
             # Split by either -- DIFF: or -- NEW_FILE:
             blocks = re.split(r'(?=-- DIFF: |-- NEW_FILE: )', job.result_lean)
             for block in blocks:
@@ -1146,7 +1144,6 @@ Research mode: {concept.research_mode}
                 try:
                     existing_content = abs_target.read_text(encoding='utf-8', errors='ignore')
                     new_content = p.get("content", "")
-                    import re
                     if re.sub(r'\s+', ' ', existing_content).strip() == re.sub(r'\s+', ' ', new_content).strip():
                         print(f"[Integrate] Skipped (unchanged): {target_path}")
                         continue
@@ -1269,7 +1266,6 @@ Research mode: {concept.research_mode}
         """
         target_path = self._strip_catalog_prefix(str(requested_path or part.get("path", "")))
         # Strip any remaining _aristotle path segments (e.g. Bridges/47bf2ccd_aristotle/Bridges/...)
-        import re
         target_path = re.sub(r'/[0-9a-f]+_aristotle/', '/', target_path)
         suffix = Path(target_path).suffix.lower()
 
@@ -1343,13 +1339,11 @@ Research mode: {concept.research_mode}
                 return path[len(prefix):]
         # Strip Aristotle project directory prefixes like 47bf2ccd_aristotle/Bridges/...
         # These are artifacts of the extraction structure, not real Catalog paths
-        import re
         path = re.sub(r'^[0-9a-f]+_aristotle/', '', path)
         return path
 
     @staticmethod
     def _lean_contains_sorry(content: str) -> bool:
-        import re
         return bool(re.search(r'(?<![A-Za-z0-9_])sorry(?![A-Za-z0-9_])', content))
 
     @staticmethod
@@ -1582,7 +1576,6 @@ Research mode: {concept.research_mode}
         """
         base = concept.title.replace(" ", "_").replace("-", "_").lower()
         # Remove any characters that aren't filename-safe
-        import re
         base = re.sub(r'[^a-z0-9_]', '', base)
         # Ensure it's not too long
         base = base[:50]
