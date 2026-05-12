@@ -207,6 +207,45 @@ document.addEventListener('DOMContentLoaded', () => {
         packageList.innerHTML = '<li class="nav-item"><div class="nav-item-title text-red">Please run update_index.py to bundle packages</div></li>';
     }
 
+    // Periodic refresh: check for new packages every 60 seconds
+    setInterval(async () => {
+        try {
+            const response = await fetch('packages_db.js', { cache: 'no-store' });
+            if (!response.ok) return;
+            const text = await response.text();
+            // Extract PACKAGE_INDEX and PACKAGE_DB via eval in a sandboxed way
+            const prevCount = (window.PACKAGE_INDEX || []).length;
+            const prevGraphNodes = (window.PACKAGE_GRAPH || {}).nodes?.length || 0;
+            // Use Function constructor to eval the new data
+            const fn = new Function(text + '; return { INDEX: window.PACKAGE_INDEX, DB: window.PACKAGE_DB, GRAPH: window.PACKAGE_GRAPH };');
+            const newData = fn();
+            if (newData.INDEX && newData.INDEX.length > prevCount) {
+                window.PACKAGE_INDEX = newData.INDEX;
+                window.PACKAGE_DB = newData.DB;
+                packages = newData.INDEX;
+                renderSidebar(packages);
+                // Add new graph nodes
+                if (newData.GRAPH && newData.GRAPH.nodes) {
+                    newData.GRAPH.nodes.forEach(n => {
+                        if (window.addGraphNode) window.addGraphNode(n);
+                    });
+                }
+            }
+            // Always update graph edges (new connections may appear)
+            if (newData.GRAPH && newData.GRAPH.edges && newData.GRAPH.edges.length > 0) {
+                const newEdges = newData.GRAPH.edges.filter(e =>
+                    !(window.PACKAGE_GRAPH?.edges || []).some(oe => oe.source === e.source && oe.target === e.target)
+                );
+                if (newEdges.length > 0 && window.addGraphEdges) {
+                    window.addGraphEdges(newEdges);
+                }
+                window.PACKAGE_GRAPH = newData.GRAPH;
+            }
+        } catch (err) {
+            // Silently fail — refresh is best-effort
+        }
+    }, 60000);
+
     // Search filter
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
@@ -719,12 +758,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const graphNodes = (graphData.nodes || []).map(n => ({
             ...n,
             x: 0, y: 0, vx: 0, vy: 0,
-            radius: 18,
+            radius: 22,
             phase: Math.random() * Math.PI * 2,
             rotSpeed: 0.3 + Math.random() * 0.5,
             rotAngle: Math.random() * Math.PI * 2
         }));
-        const graphEdges = graphData.edges || [];
+        // Start with no edges — edges will only appear for future AETHER runs
+        // as the future directions system tracks lineage between packages
+        let graphEdges = [];
 
         // Fallback: build nodes from PACKAGE_INDEX if no graph data
         if (graphNodes.length === 0 && window.PACKAGE_INDEX) {
@@ -831,7 +872,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const REST_LENGTH = 150;
         const K_GRAVITY = 0.0005;
         const DAMPING = 0.82;
-        const NODE_RADIUS = 18;
+        const NODE_RADIUS = 22;
 
         function initPositions() {
             const count = graphNodes.length;
@@ -920,10 +961,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const h = color.h, s = color.s, l = color.l;
             const strokeColor = `hsl(${h}, ${s}%, ${l}%)`;
-            const glowColor = `hsla(${h}, ${s}%, ${Math.min(l + 30, 95)}%, 0.6)`;
             const innerGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
-            innerGlow.addColorStop(0, `hsla(${h}, ${s}%, ${Math.min(l + 40, 98)}%, 0.7)`);
-            innerGlow.addColorStop(0.5, `hsla(${h}, ${s}%, ${l}%, 0.3)`);
+            innerGlow.addColorStop(0, `hsla(${h}, ${s}%, ${Math.min(l + 40, 98)}%, 0.9)`);
+            innerGlow.addColorStop(0.4, `hsla(${h}, ${s}%, ${l + 10}%, 0.5)`);
             innerGlow.addColorStop(1, `hsla(${h}, ${s}%, ${l}%, 0.0)`);
 
             // Inner glow
@@ -1183,11 +1223,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const strength = e.strength || 0.5;
                 const lineW = 0.5 + strength * 2;
 
-                // Glow line (thick, transparent)
+                // Glow line (thick, semi-transparent)
                 ctx.beginPath();
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
-                ctx.strokeStyle = `hsla(${blendH}, 60%, 60%, ${0.08 * strength})`;
+                ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${0.15 + 0.2 * strength})`;
                 ctx.lineWidth = lineW * 4;
                 ctx.stroke();
 
@@ -1196,8 +1236,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
                 const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
-                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${colA.l}%, ${0.3 * strength})`);
-                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${colB.l}%, ${0.3 * strength})`);
+                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${0.5 + 0.4 * strength})`);
+                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${0.5 + 0.4 * strength})`);
                 ctx.strokeStyle = edgeGrad;
                 ctx.lineWidth = lineW;
                 ctx.stroke();
@@ -1231,12 +1271,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sp = worldToScreen(node.x, node.y);
                 const col = nodeColor(node);
                 const isHovered = node === hoveredNode;
-                const pulse = 1 + 0.03 * Math.sin(time * 1.5 + node.phase);
+                const pulse = 1 + 0.04 * Math.sin(time * 1.5 + node.phase);
                 const r = node.radius * pulse * camera.zoom;
 
                 // Pulsing brightness
-                const brightPulse = 0.85 + 0.15 * Math.sin(time * 2 + node.phase);
-                const adjustedL = Math.min(col.l * brightPulse, 95);
+                const brightPulse = 0.8 + 0.2 * Math.sin(time * 2 + node.phase);
+                const adjustedL = Math.min(col.l * brightPulse + 15, 95);
                 const adjColor = { h: col.h, s: col.s, l: adjustedL };
 
                 node.rotAngle += node.rotSpeed * 0.016;
@@ -1452,6 +1492,43 @@ document.addEventListener('DOMContentLoaded', () => {
             lastTouchDist = 0;
             hasDragged = false;
         });
+
+        // ─── AETHER integration: add nodes/edges at runtime ───
+        window.addGraphEdges = function(newEdges) {
+            if (!Array.isArray(newEdges)) return;
+            newEdges.forEach(e => {
+                // Avoid duplicates
+                if (graphEdges.some(ge => ge.source === e.source && ge.target === e.target)) return;
+                graphEdges.push(e);
+                // Spawn particles for the new edge
+                const count = 2 + Math.floor(Math.random() * 2);
+                for (let i = 0; i < count; i++) {
+                    edgeParticles.push({
+                        edge: e,
+                        t: Math.random(),
+                        speed: 0.002 + Math.random() * 0.004,
+                        size: 1 + Math.random() * 1.5
+                    });
+                }
+            });
+        };
+
+        window.addGraphNode = function(nodeData) {
+            if (!nodeData || !nodeData.id) return;
+            if (graphNodes.some(n => n.id === nodeData.id)) return;
+            const node = {
+                ...nodeData,
+                x: (Math.random() - 0.5) * 200,
+                y: (Math.random() - 0.5) * 200,
+                vx: 0, vy: 0,
+                radius: 22,
+                phase: Math.random() * Math.PI * 2,
+                rotSpeed: 0.3 + Math.random() * 0.5,
+                rotAngle: Math.random() * Math.PI * 2
+            };
+            graphNodes.push(node);
+            nodeMap[node.id] = node;
+        };
 
         // Resize handler
         window.addEventListener('resize', resize);

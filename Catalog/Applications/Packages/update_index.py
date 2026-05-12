@@ -234,24 +234,34 @@ def generate_graph_data(script_dir):
         rng = mulberry32(hash(slug))
         return int(rng() * 360)
 
-    def primary_domain(domain_str):
-        """Extract the first matching canonical domain from a freeform domain string."""
+    def canonicalize_domain(domain_str):
+        """Extract all canonical domain labels from a freeform domain string."""
         if not domain_str:
-            return "Bridges"
+            return ["Bridges"]
         text = domain_str.replace("×", "x").replace("(", " ").replace(")", " ")
         text = text.replace("/", " ").replace("-", " ").replace("x", " ").replace(",", " ")
         text_lower = text.lower()
+        found = []
         for domain in DOMAIN_SHAPES:
             if domain == "EML":
                 if "eml" in text_lower:
-                    return domain
+                    found.append(domain)
             elif domain == "MachineLearning":
                 if "machine learning" in text_lower or "machinelearning" in text_lower:
-                    return domain
+                    found.append(domain)
             else:
                 if domain.lower() in text_lower:
-                    return domain
-        return "Bridges"
+                    found.append(domain)
+        return found if found else ["Bridges"]
+
+    def primary_domain(domain_str):
+        """Pick the least-common domain for visual variety."""
+        domains = canonicalize_domain(domain_str)
+        if not domains:
+            return "Bridges"
+        if hasattr(primary_domain, 'domain_counts'):
+            return min(domains, key=lambda d: primary_domain.domain_counts.get(d, 0))
+        return domains[0]
 
     # Try to read lineage.json
     graph_data = None
@@ -265,6 +275,14 @@ def generate_graph_data(script_dir):
 
     # If no lineage data, build nodes from package_index (already computed above)
     if graph_data is None:
+        # Compute domain frequency for variety
+        from collections import Counter
+        domain_counts = Counter()
+        for pkg in package_index:
+            for d in canonicalize_domain(pkg.get("domain", "")):
+                domain_counts[d] += 1
+        primary_domain.domain_counts = dict(domain_counts)
+
         nodes = []
         for pkg in package_index:
             slug = pkg["filename"].replace('.json', '')

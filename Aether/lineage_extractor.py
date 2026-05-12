@@ -11,7 +11,7 @@ import re
 import glob
 import yaml
 from difflib import SequenceMatcher
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 # 12 canonical domains mapped to shapes for the Knowledge Graph
 DOMAIN_SHAPES = {
@@ -72,8 +72,18 @@ def canonicalize_domain(domain_str):
 
 
 def primary_domain(domain_str):
-    """Return the single primary domain for a package (first canonical match, or 'Bridges')."""
+    """Return the single primary domain for a package.
+
+    Picks the least-common domain across all packages for visual variety,
+    falling back to the first match if no frequency data is available.
+    """
     domains = canonicalize_domain(domain_str)
+    if not domains:
+        return "Bridges"
+    # Prefer the least common domain for visual variety
+    # This is computed once during build_lineage and passed via global
+    if hasattr(primary_domain, 'domain_counts'):
+        return min(domains, key=lambda d: primary_domain.domain_counts.get(d, 0))
     return domains[0]
 
 
@@ -404,6 +414,13 @@ def build_lineage(packages_dir, config_path=None):
         key=lambda s: packages[s].get("date", "9999")
     )
 
+    # Compute domain frequency counts for primary_domain variety
+    domain_counter = Counter()
+    for slug in sorted_slugs:
+        for d in canonicalize_domain(packages[slug].get("domain", "")):
+            domain_counter[d] += 1
+    primary_domain.domain_counts = dict(domain_counter)
+
     # Build nodes
     nodes = []
     for slug in sorted_slugs:
@@ -466,8 +483,8 @@ def build_lineage(packages_dir, config_path=None):
 
     # Limit outgoing edges per node to avoid hairballs
     # Keep top 3 outgoing edges per source
-    from collections import Counter
-    outgoing_counts = Counter()
+    from collections import Counter as EdgeCounter
+    outgoing_counts = EdgeCounter()
     filtered_edges = []
     edges.sort(key=lambda e: e["score"], reverse=True)
     for e in edges:

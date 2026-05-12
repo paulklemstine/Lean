@@ -1177,6 +1177,35 @@ Research mode: {concept.research_mode}
                 
                 (packages_dir / "packages_db.js").write_text(js_content, encoding="utf-8")
                 print(f"[Integrate] Updated packages_db.js with {len(package_index)} packages.")
+
+                # Also update lineage graph and append PACKAGE_GRAPH
+                try:
+                    import subprocess
+                    aether_root = Path(__file__).parent
+                    lineage_script = aether_root / "lineage_extractor.py"
+                    if lineage_script.exists():
+                        result = subprocess.run(
+                            [__import__("sys").executable, str(lineage_script)],
+                            capture_output=True, text=True, cwd=str(aether_root)
+                        )
+                        if result.returncode == 0:
+                            print(f"[Integrate] Updated lineage.json")
+                        else:
+                            print(f"[Integrate] Warning: lineage_extractor failed: {result.stderr[:200]}")
+
+                    # Run update_index.py which adds PACKAGE_GRAPH to packages_db.js
+                    update_script = packages_dir / "update_index.py"
+                    if update_script.exists():
+                        result = subprocess.run(
+                            [__import__("sys").executable, str(update_script)],
+                            capture_output=True, text=True, cwd=str(packages_dir)
+                        )
+                        if result.returncode == 0:
+                            print(f"[Integrate] Updated packages_db.js with PACKAGE_GRAPH")
+                        else:
+                            print(f"[Integrate] Warning: update_index failed: {result.stderr[:200]}")
+                except Exception as e:
+                    print(f"[Integrate] Warning: Failed to update graph data: {e}")
             except Exception as e:
                 print(f"[Integrate] Warning: Failed to update packages_db.js: {e}")
 
