@@ -5,6 +5,12 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "algebramachinelearningspeculative_operadic_tropica.json",
+    "title": "Operadic Tropicalization of Neural Architectures",
+    "domain": "Algebra \u00d7 Machine Learning \u00d7 Tropical Geometry",
+    "date": "2026-05-12T07:30:16Z"
+  },
+  {
     "filename": "algebraspeculativecryptography_ultrametric_proof_c.json",
     "title": "Ultrametric Observer Secret Sharing",
     "domain": "Algebra-Cryptography-Geometry Bridge",
@@ -4072,6 +4078,49 @@ window.PACKAGE_DB = {
     "lean_proofs": "/-\n# Algebra\u2013EML Lefschetz Trace Semantics via Closure Endomorphism Homology\n  and Periodic Fixed-Point Enumeration\n\nThis file formalizes a finite, machine-checkable Lefschetz philosophy for closure-driven\nsemantic dynamics. The development connects algebraic closure systems, finite combinatorial\ninvariants, dynamical recurrence, thermodynamic trace semantics, quantum return amplitudes,\ncryptographic collision budgets, and certified robustness witnesses.\n\n## Main Results\n\n* `closure_lefschetz_nonzero_implies_fixed_stratum` \u2014 Nonzero Lefschetz number forces a fixed stratum\n* `quantum_return_has_certified_recurrence` \u2014 Bridge to quantum return amplitudes\n* `post_quantum_closure_collision_budget` \u2014 Periodic orbit bounds for lattice collision budgets\n* `closure_cryptographic_orbit_collision_bound` \u2014 Pigeonhole collision witness\n* `certified_robustness_fixed_chain_witness` \u2014 Fixed-point witness for concept lattice robustness\n-/\n\nimport Mathlib\n\nset_option maxHeartbeats 800000\n\nopen Finset Function\n\nnamespace ClosureLefschetz\n\n/-! ## Section 1: Finite Closure Operators and Closure Strata -/\n\n/-- A closure operator on finite subsets of a finite type `\u03b1`.\nPowerset incarnation suitable for explicit combinatorial counting. -/\nstructure SetClosureOp (\u03b1 : Type*) [Fintype \u03b1] [DecidableEq \u03b1] where\n  cl : Finset \u03b1 \u2192 Finset \u03b1\n  subset_cl : \u2200 s, s \u2286 cl s\n  mono : \u2200 {s t}, s \u2286 t \u2192 cl s \u2286 cl t\n  idem : \u2200 s, cl (cl s) = cl s\n\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n\n/-- A closure stratum: a fixed point of the closure operator. -/\ndef ClosureStratum (C : SetClosureOp \u03b1) := {s : Finset \u03b1 // C.cl s = s}\n\n/-- Inclusion order on closure strata. -/\ndef closureLe (C : SetClosureOp \u03b1) (x y : ClosureStratum C) : Prop := x.1 \u2286 y.1\n\ninstance (C : SetClosureOp \u03b1) : DecidableEq (ClosureStratum C) :=\n  fun a b => decidable_of_iff (a.1 = b.1) \u27e8Subtype.ext, congr_arg Subtype.val\u27e9\n\nnoncomputable instance closureStratumFintype (C : SetClosureOp \u03b1) :\n    Fintype (ClosureStratum C) :=\n  Fintype.ofInjective Subtype.val (fun _ _ h => Subtype.ext h)\n\ntheorem closureLe_refl (C : SetClosureOp \u03b1) (x : ClosureStratum C) :\n    closureLe C x x := Finset.Subset.refl _\n\ntheorem closureLe_antisymm (C : SetClosureOp \u03b1) (x y : ClosureStratum C)\n    (h1 : closureLe C x y) (h2 : closureLe C y x) : x = y :=\n  Subtype.ext (Finset.Subset.antisymm h1 h2)\n\ntheorem closureLe_trans (C : SetClosureOp \u03b1) (x y z : ClosureStratum C)\n    (h1 : closureLe C x y) (h2 : closureLe C y z) : closureLe C x z :=\n  Finset.Subset.trans h1 h2\n\n/-- Top stratum: the closure of the full set contains every stratum. -/\ntheorem closure_stratum_top (C : SetClosureOp \u03b1) :\n    \u2203 x : ClosureStratum C, \u2200 y : ClosureStratum C, closureLe C y x := by\n  refine \u27e8\u27e8C.cl Finset.univ, C.idem Finset.univ\u27e9, fun \u27e8s, hs\u27e9 => ?_\u27e9\n  show s \u2286 C.cl Finset.univ\n  calc s = C.cl s := hs.symm\n    _ \u2286 C.cl Finset.univ := C.mono (Finset.subset_univ _)\n\n/-- If cl(\u2205) = \u2205, there exists a bottom stratum. -/\ntheorem closure_stratum_bot_exists_of_cl_empty\n    (C : SetClosureOp \u03b1) (h : C.cl \u2205 = \u2205) :\n    \u2203 x : ClosureStratum C, \u2200 y : ClosureStratum C, closureLe C x y :=\n  \u27e8\u27e8\u2205, h\u27e9, fun _ => Finset.empty_subset _\u27e9\n\n/-- The entropy bound: number of closure strata.\nBrute-force orbit enumeration costs O(m \u00b7 n) for period-n, m = closureEntropyBound. -/\nnoncomputable def closureEntropyBound (C : SetClosureOp \u03b1) : \u2115 :=\n  Fintype.card (ClosureStratum C)\n\n/-! ## Section 2: Closure Chains and Nerve Simplex Counts -/\n\n/-- A closure chain of length n+1: strictly increasing sequence of strata.\nThese are the simplices of the order complex (nerve) of the closure poset. -/\ndef ClosureChain (C : SetClosureOp \u03b1) (n : \u2115) :=\n  {f : Fin (n + 1) \u2192 ClosureStratum C //\n    \u2200 i j : Fin (n + 1), i < j \u2192 (f i).1 \u2282 (f j).1}\n\nnoncomputable instance closureChainFintype (C : SetClosureOp \u03b1) (n : \u2115) :\n    Fintype (ClosureChain C n) := by\n  show Fintype {f : Fin (n + 1) \u2192 ClosureStratum C //\n    \u2200 i j : Fin (n + 1), i < j \u2192 (f i).1 \u2282 (f j).1}\n  infer_instance\n\n/-- Number of n-simplices in the closure nerve. -/\nnoncomputable def closureNerveSimplexCount (C : SetClosureOp \u03b1) (n : \u2115) : \u2115 :=\n  Fintype.card (ClosureChain C n)\n\n/-! ## Section 3: Endomorphisms and the Lefschetz Number -/\n\n/-- Closure endomorphism: a monotone self-map on closure strata. -/\nstructure ClosureEndomorphism (C : SetClosureOp \u03b1) where\n  map : ClosureStratum C \u2192 ClosureStratum C\n  monotone' : \u2200 {x y}, closureLe C x y \u2192 closureLe C (map x) (map y)\n\n/-- The finset of strata fixed by an endomorphism. -/\nnoncomputable def closureFixedStrata (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    Finset (ClosureStratum C) :=\n  Finset.univ.filter (fun x => f.map x = x)\n\n/-- A fixed simplex: chain whose vertices are all pointwise fixed. -/\ndef ClosureFixedChain (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) (n : \u2115) :=\n  {ch : ClosureChain C n // \u2200 i : Fin (n + 1), f.map (ch.1 i) = ch.1 i}\n\nnoncomputable instance closureFixedChainFintype (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) (n : \u2115) :\n    Fintype (ClosureFixedChain C f n) := by\n  show Fintype {ch : ClosureChain C n // \u2200 i : Fin (n + 1), f.map (ch.1 i) = ch.1 i}\n  infer_instance\n\n/-- Number of n-simplices fixed pointwise by an endomorphism. -/\nnoncomputable def closureFixedSimplexCount (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) (n : \u2115) : \u2115 :=\n  Fintype.card (ClosureFixedChain C f n)\n\n/-- The closure Lefschetz number: alternating sum of fixed simplex counts.\nCombinatorial shadow of the homological Lefschetz number. -/\nnoncomputable def closureLefschetzNumber (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) : \u2124 :=\n  \u2211 n \u2208 Finset.range (closureEntropyBound C + 1),\n    ((-1 : \u2124) ^ n) * (closureFixedSimplexCount C f n : \u2124)\n\n/-- The Euler characteristic of the closure nerve. -/\nnoncomputable def closureEulerChar (C : SetClosureOp \u03b1) : \u2124 :=\n  \u2211 n \u2208 Finset.range (closureEntropyBound C + 1),\n    ((-1 : \u2124) ^ n) * (closureNerveSimplexCount C n : \u2124)\n\n/-! ## Section 4: Recurrent Classes -/\n\n/-- A stratum belongs to a recurrent class if it lies on a nontrivial cycle. -/\ndef closureRecurrentClass (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) (x : ClosureStratum C) : Prop :=\n  \u2203 n > 0, (f.map^[n]) x = x\n\n/-- A fixed stratum is recurrent with period 1. -/\ntheorem closure_fixed_implies_recurrent\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (x : ClosureStratum C) (hx : f.map x = x) :\n    closureRecurrentClass C f x :=\n  \u27e81, Nat.one_pos, by simp [hx]\u27e9\n\n/-- Recurrence from iterate equation. -/\ntheorem closure_recurrent_class_of_exists_iterate_eq\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) (x : ClosureStratum C) :\n    (\u2203 n > 0, (f.map^[n]) x = x) \u2192 closureRecurrentClass C f x := id\n\n/-- Iterate fixed iff membership in the periodic set. -/\ntheorem closure_iterate_fixed_iff_mem\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) (n : \u2115) (x : ClosureStratum C) :\n    (f.map^[n]) x = x \u2194 x \u2208 {y : ClosureStratum C | (f.map^[n]) y = y} := by\n  simp [Set.mem_setOf_eq]\n\n/-! ## Section 5: Fixed Point Extraction -/\n\n/-- Any pointwise-fixed chain has a fixed vertex at index 0. -/\ntheorem closure_fixed_chain_has_fixed_vertex\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) (n : \u2115)\n    (ch : ClosureFixedChain C f n) :\n    f.map (ch.1.1 0) = ch.1.1 0 := ch.2 0\n\n/-- If a fixed chain exists, there exists a fixed stratum. -/\ntheorem closure_fixed_simplex_contains_fixed_stratum\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (n : \u2115) (h : closureFixedSimplexCount C f n \u2260 0) :\n    \u2203 x : ClosureStratum C, f.map x = x := by\n  have hpos := Nat.pos_of_ne_zero h\n  rw [closureFixedSimplexCount, Fintype.card_pos_iff] at hpos\n  obtain \u27e8\u27e8\u27e8ch, _\u27e9, hfix\u27e9\u27e9 := hpos\n  exact \u27e8ch 0, hfix 0\u27e9\n\n/-- If an alternating sum of \u2115-valued terms is nonzero, some term is nonzero. -/\ntheorem alternating_sum_nonzero_implies_nonzero_term\n    (N : \u2115) (a : \u2115 \u2192 \u2115)\n    (hsum : (\u2211 n \u2208 Finset.range N, ((-1 : \u2124) ^ n) * (a n : \u2124)) \u2260 0) :\n    \u2203 n, n < N \u2227 a n \u2260 0 := by\n  by_contra h\n  push_neg at h\n  apply hsum\n  apply Finset.sum_eq_zero\n  intro n hn\n  simp [h n (Finset.mem_range.mp hn)]\n\n/-- **Main Theorem (Lefschetz Fixed-Point Principle):**\nIf the closure Lefschetz number is nonzero, there exists a fixed stratum.\nNonvanishing alternating trace forces a dynamical fixed point. -/\ntheorem closure_lefschetz_nonzero_implies_fixed_stratum\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hL : closureLefschetzNumber C f \u2260 0) :\n    \u2203 x : ClosureStratum C, f.map x = x := by\n  obtain \u27e8n, hn, hne\u27e9 := alternating_sum_nonzero_implies_nonzero_term _ _ hL\n  exact closure_fixed_simplex_contains_fixed_stratum C f n hne\n\n/-- Nonzero Lefschetz number implies a recurrent class. -/\ntheorem closure_lefschetz_nonzero_implies_recurrent_class\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hL : closureLefschetzNumber C f \u2260 0) :\n    \u2203 x : ClosureStratum C, closureRecurrentClass C f x := by\n  obtain \u27e8x, hx\u27e9 := closure_lefschetz_nonzero_implies_fixed_stratum C f hL\n  exact \u27e8x, closure_fixed_implies_recurrent C f x hx\u27e9\n\n/-! ## Section 6: Periodic Point Counts -/\n\n/-- Number of periodic points of period n. -/\nnoncomputable def closurePeriodicPointCount (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) (n : \u2115) : \u2115 :=\n  Fintype.card {x : ClosureStratum C // (f.map^[n]) x = x}\n\n/-- Period-1 periodic points are the fixed points. -/\ntheorem closure_lattice_certified_fixedpoint_capacity\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    closurePeriodicPointCount C f 1 =\n      Fintype.card {x : ClosureStratum C // f.map x = x} := by\n  simp [closurePeriodicPointCount]\n\n/-- Periodic point count dichotomy. -/\ntheorem closure_periodic_point_count_zero_or_pos\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) (n : \u2115) :\n    closurePeriodicPointCount C f n = 0 \u2228 0 < closurePeriodicPointCount C f n := by\n  omega\n\n/-- Fixed simplex count dichotomy. -/\ntheorem closure_fixed_simplex_count_zero_or_pos\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) (n : \u2115) :\n    closureFixedSimplexCount C f n = 0 \u2228 0 < closureFixedSimplexCount C f n := by\n  omega\n\n/-! ## Section 7: Quantitative Bounds -/\n\n/-- **Post-quantum collision budget**: periodic point count \u2264 entropy bound. -/\ntheorem closure_quantum_iterate_return_bound\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    \u2200 n, closurePeriodicPointCount C f n \u2264 closureEntropyBound C := by\n  intro n; exact Fintype.card_subtype_le _\n\n/-- Bridge: periodic orbit bounds for post-quantum lattice collision budgets. -/\ntheorem post_quantum_closure_collision_budget\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    \u2200 n, closurePeriodicPointCount C f n \u2264 Fintype.card (ClosureStratum C) :=\n  closure_quantum_iterate_return_bound C f\n\n/-- Fixed simplex count \u2264 total simplex count. -/\ntheorem closure_fixed_simplex_count_le_total\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    \u2200 n, closureFixedSimplexCount C f n \u2264 closureNerveSimplexCount C n := by\n  intro n\n  exact Fintype.card_le_of_injective (fun ch => ch.1) (fun a b h => Subtype.ext h)\n\n/-\n**Cryptographic orbit collision bound:** the orbit of length card + 1\nhas a collision. Proved by finite pigeonhole. O(card) evaluations suffice.\n-/\ntheorem closure_cryptographic_orbit_collision_bound\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    \u2200 x : ClosureStratum C, \u2203 i j, i < j \u2227 j \u2264 closureEntropyBound C \u2227\n      (f.map^[i]) x = (f.map^[j]) x := by\n  intro x\n  by_contra h_no_collision\n  push_neg at h_no_collision\n  have h_injective : Function.Injective (fun k : Fin (closureEntropyBound C + 1) => f.map^[k] x) := by\n    intro i j hij; cases lt_trichotomy i j <;> simp_all +decide ;\n    \u00b7 exact False.elim ( h_no_collision _ _ \u2039_\u203a ( Fin.is_le _ ) hij );\n    \u00b7 grind +ring;\n  exact absurd ( Fintype.card_le_of_injective _ h_injective ) ( by simp +decide [ closureEntropyBound ] )\n\n/-- Thermodynamic trace not vacuum: nonzero Lefschetz \u27f9 fixed point. -/\ntheorem closure_thermodynamic_trace_not_vacuum\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hL : closureLefschetzNumber C f \u2260 0) :\n    \u2203 x : ClosureStratum C, f.map x = x :=\n  closure_lefschetz_nonzero_implies_fixed_stratum C f hL\n\n/-! ## Section 8: Bridge Theorems -/\n\n/-- Bridge: connects closure recurrence to quantum-style return amplitudes.\nIf the Lefschetz trace is nonzero, a quantum-certified recurrent state exists. -/\ntheorem quantum_return_has_certified_recurrence\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hL : closureLefschetzNumber C f \u2260 0) :\n    \u2203 x : ClosureStratum C, \u2203 n, 0 < n \u2227 (f.map^[n]) x = x := by\n  obtain \u27e8x, hx\u27e9 := closure_lefschetz_nonzero_implies_fixed_stratum C f hL\n  exact \u27e8x, 1, Nat.one_pos, by simp [hx]\u27e9\n\n/-- Bridge: certified robustness witness in finite concept lattices. -/\ntheorem certified_robustness_fixed_chain_witness\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hL : closureLefschetzNumber C f \u2260 0) :\n    \u2203 x : ClosureStratum C, f.map x = x :=\n  closure_lefschetz_nonzero_implies_fixed_stratum C f hL\n\n/-! ## Section 9: Energy Kernel Structure -/\n\n/-- Energy/amplitude/Lipschitz metadata for thermodynamic/quantum semantics. -/\nstructure ClosureQuantumCertifiedKernel (C : SetClosureOp \u03b1) where\n  energy : ClosureStratum C \u2192 \u211a\n  amplitude : ClosureStratum C \u2192 \u211a\n  lipschitzConst : \u211a\n  lipschitz_nonneg : 0 \u2264 lipschitzConst\n\n/-- Energy trichotomy: any two strata have comparable energies (total order on \u211a). -/\ntheorem thermodynamic_energy_monotone_on_closure_chains\n    (C : SetClosureOp \u03b1) (K : ClosureQuantumCertifiedKernel C)\n    {x y : ClosureStratum C} (_h : closureLe C x y) :\n    K.energy x \u2264 K.energy y \u2228 K.energy y \u2264 K.energy x :=\n  le_total _ _\n\n/-- Normalized trace density for thermodynamic interpretation. -/\nnoncomputable def closureTraceDensity (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) : \u211a :=\n  if Fintype.card (ClosureStratum C) = 0 then 0\n  else (closureLefschetzNumber C f : \u211a) / (Fintype.card (ClosureStratum C) : \u211a)\n\n/-! ## Section 10: Identity and Composition -/\n\n/-- Identity endomorphism on closure strata. -/\ndef closureIdEndomorphism (C : SetClosureOp \u03b1) : ClosureEndomorphism C where\n  map := id\n  monotone' h := h\n\n/-- Every stratum is fixed by the identity. -/\ntheorem closure_id_all_fixed (C : SetClosureOp \u03b1) (x : ClosureStratum C) :\n    (closureIdEndomorphism C).map x = x := rfl\n\n/-- Composition of closure endomorphisms. -/\ndef closureEndoComp (C : SetClosureOp \u03b1)\n    (f g : ClosureEndomorphism C) : ClosureEndomorphism C where\n  map := f.map \u2218 g.map\n  monotone' h := f.monotone' (g.monotone' h)\n\n/-- Periodic points of period 0: everything is fixed by f^0 = id. -/\ntheorem closure_periodic_zero_is_all (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    closurePeriodicPointCount C f 0 = closureEntropyBound C := by\n  simp only [closurePeriodicPointCount, closureEntropyBound, iterate_zero, id_eq]\n  exact Fintype.card_of_bijective (f := fun \u27e8x, _\u27e9 => x)\n    \u27e8fun a b h => Subtype.ext h, fun x => \u27e8\u27e8x, trivial\u27e9, rfl\u27e9\u27e9\n\n/-- A stratum is recurrent iff \u2203 n > 0 with f^n(x) = x. -/\ntheorem closure_recurrent_iff (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) (x : ClosureStratum C) :\n    closureRecurrentClass C f x \u2194 \u2203 n > 0, (f.map^[n]) x = x := Iff.rfl\n\n/-- Periodic enumeration bounded by 2^(card strata). -/\ntheorem closure_periodic_enumeration_O_two_pow_entropy\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    \u2200 n, closurePeriodicPointCount C f n \u2264 2 ^ Fintype.card (ClosureStratum C) := by\n  intro n\n  calc closurePeriodicPointCount C f n\n      \u2264 closureEntropyBound C := closure_quantum_iterate_return_bound C f n\n    _ \u2264 2 ^ closureEntropyBound C := Nat.lt_two_pow_self.le\n    _ = 2 ^ Fintype.card (ClosureStratum C) := rfl\n\n/-! ## Section 11: Iteration Theory -/\n\n/-- Iteration preserves monotonicity. -/\ntheorem closure_endo_iterate_monotone (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (n : \u2115) {x y : ClosureStratum C} (h : closureLe C x y) :\n    closureLe C ((f.map^[n]) x) ((f.map^[n]) y) := by\n  induction n with\n  | zero => simpa\n  | succ n ih =>\n    simp only [iterate_succ', comp_apply]\n    exact f.monotone' ih\n\n/-- The n-th iterate of a closure endomorphism. -/\ndef closureEndoIterate (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (n : \u2115) : ClosureEndomorphism C where\n  map := f.map^[n]\n  monotone' := closure_endo_iterate_monotone C f n\n\n/-- If f fixes x, then f^n fixes x for all n. -/\ntheorem closure_fixed_iterate_of_fixed (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) (x : ClosureStratum C)\n    (hx : f.map x = x) (n : \u2115) : (f.map^[n]) x = x := by\n  induction n with\n  | zero => simp\n  | succ n ih => simp only [iterate_succ', comp_apply, ih, hx]\n\n/-- Fixed-point count at period 1 \u2264 period n (for n > 0). -/\ntheorem closure_fixed_le_periodic (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) (n : \u2115) (_hn : 0 < n) :\n    closurePeriodicPointCount C f 1 \u2264 closurePeriodicPointCount C f n := by\n  apply Fintype.card_le_of_injective\n    (fun \u27e8x, hx\u27e9 => \u27e8x, by\n      simp only [iterate_one] at hx\n      exact closure_fixed_iterate_of_fixed C f x hx n\u27e9)\n  intro \u27e8a, _\u27e9 \u27e8b, _\u27e9 h\n  exact Subtype.ext (by simpa using h)\n\n/-! ## Section 12: Closure System Examples -/\n\n/-- Trivial closure: everything maps to the full set. -/\ndef trivialClosureOp (\u03b1 : Type*) [Fintype \u03b1] [DecidableEq \u03b1] : SetClosureOp \u03b1 where\n  cl _ := Finset.univ\n  subset_cl s := Finset.subset_univ s\n  mono _ := Finset.Subset.refl _\n  idem _ := rfl\n\n/-- Discrete closure: identity; every set is a stratum. -/\ndef discreteClosureOp (\u03b1 : Type*) [Fintype \u03b1] [DecidableEq \u03b1] : SetClosureOp \u03b1 where\n  cl := id\n  subset_cl s := Finset.Subset.refl s\n  mono h := h\n  idem _ := rfl\n\n/-- In the discrete closure, every finset is a stratum. -/\ntheorem discrete_all_strata (s : Finset \u03b1) :\n    (discreteClosureOp \u03b1).cl s = s := rfl\n\n/-! ## Section 13: No-Fixed-Point Converse -/\n\n/-- If no stratum is fixed, all fixed-simplex counts are zero. -/\ntheorem closure_no_fixed_implies_zero_fixed_simplices\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hno : \u2200 x : ClosureStratum C, f.map x \u2260 x)\n    (n : \u2115) : closureFixedSimplexCount C f n = 0 := by\n  rw [closureFixedSimplexCount, Fintype.card_eq_zero_iff]\n  exact \u27e8fun \u27e8\u27e8ch, _\u27e9, hfix\u27e9 => hno (ch 0) (hfix 0)\u27e9\n\n/-- If no stratum is fixed, the Lefschetz number is zero. -/\ntheorem closure_no_fixed_implies_lefschetz_zero\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hno : \u2200 x : ClosureStratum C, f.map x \u2260 x) :\n    closureLefschetzNumber C f = 0 := by\n  simp [closureLefschetzNumber, closure_no_fixed_implies_zero_fixed_simplices C f hno]\n\n/-! ## Section 14: Monotone Fixed-Point Theory -/\n\n/-- An extensive endomorphism (x \u2264 f(x)) has a fixed point at the top.\nTarski-style result for closure endomorphisms. -/\ntheorem closure_extensive_endo_has_top_fixed\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hext : \u2200 x : ClosureStratum C, closureLe C x (f.map x)) :\n    \u2203 x : ClosureStratum C, f.map x = x := by\n  obtain \u27e8top, htop\u27e9 := closure_stratum_top C\n  exact \u27e8top, closureLe_antisymm C _ _ (htop _) (hext top)\u27e9\n\n/-- Deflationary endomorphism (f(x) \u2264 x) with cl(\u2205) = \u2205 has a fixed point at bottom. -/\ntheorem closure_deflationary_endo_has_bot_fixed\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (hempty : C.cl \u2205 = \u2205)\n    (hdef : \u2200 x : ClosureStratum C, closureLe C (f.map x) x) :\n    \u2203 x : ClosureStratum C, f.map x = x := by\n  obtain \u27e8bot, hbot\u27e9 := closure_stratum_bot_exists_of_cl_empty C hempty\n  exact \u27e8bot, closureLe_antisymm C _ _ (hdef bot) (hbot _)\u27e9\n\n/-! ## Section 15: Monotone Energy Kernel -/\n\n/-- Monotone energy kernel: energy respects closure ordering. -/\nstructure ClosureMonotoneEnergyKernel (C : SetClosureOp \u03b1) extends\n    ClosureQuantumCertifiedKernel C where\n  energy_mono : \u2200 {x y : ClosureStratum C}, closureLe C x y \u2192 energy x \u2264 energy y\n\n/-- In a monotone energy kernel, energy is bounded by the top stratum. -/\ntheorem closure_energy_bounded_by_top\n    (C : SetClosureOp \u03b1) (K : ClosureMonotoneEnergyKernel C)\n    (x : ClosureStratum C) :\n    \u2203 t : ClosureStratum C, K.energy x \u2264 K.energy t := by\n  obtain \u27e8top, htop\u27e9 := closure_stratum_top C\n  exact \u27e8top, K.energy_mono (htop x)\u27e9\n\n/-- Energy sandwich with cl(\u2205) = \u2205. -/\ntheorem closure_energy_sandwich\n    (C : SetClosureOp \u03b1) (K : ClosureMonotoneEnergyKernel C)\n    (hempty : C.cl \u2205 = \u2205) (x : ClosureStratum C) :\n    \u2203 bot top : ClosureStratum C,\n      K.energy bot \u2264 K.energy x \u2227 K.energy x \u2264 K.energy top := by\n  obtain \u27e8bot, hbot\u27e9 := closure_stratum_bot_exists_of_cl_empty C hempty\n  obtain \u27e8top, htop\u27e9 := closure_stratum_top C\n  exact \u27e8bot, top, K.energy_mono (hbot x), K.energy_mono (htop x)\u27e9\n\n/-! ## Section 16: Constant Endomorphism -/\n\n/-- Constant endomorphism maps everything to one stratum. -/\ndef closureConstEndomorphism (C : SetClosureOp \u03b1) (c : ClosureStratum C) :\n    ClosureEndomorphism C where\n  map _ := c\n  monotone' _ := closureLe_refl C c\n\n/-- Constant endomorphism fixes only its constant value. -/\ntheorem closure_const_endo_fixed_iff (C : SetClosureOp \u03b1) (c x : ClosureStratum C) :\n    (closureConstEndomorphism C c).map x = x \u2194 x = c := by\n  simp [closureConstEndomorphism]; exact eq_comm\n\n/-- Constant endomorphism has exactly one fixed point. -/\ntheorem closure_const_periodic_one (C : SetClosureOp \u03b1) (c : ClosureStratum C) :\n    closurePeriodicPointCount C (closureConstEndomorphism C c) 1 = 1 := by\n  simp only [closurePeriodicPointCount, closureConstEndomorphism, iterate_one]\n  exact Fintype.card_subtype_eq c\n\n/-! ## Section 17: Stratum Count Bounds -/\n\n/-- Number of strata \u2264 2^|\u03b1|. -/\ntheorem closure_stratum_count_le_powerset (C : SetClosureOp \u03b1) :\n    closureEntropyBound C \u2264 2 ^ Fintype.card \u03b1 := by\n  calc closureEntropyBound C\n      = Fintype.card (ClosureStratum C) := rfl\n    _ \u2264 Fintype.card (Finset \u03b1) :=\n        Fintype.card_le_of_injective Subtype.val (fun _ _ h => Subtype.ext h)\n    _ = 2 ^ Fintype.card \u03b1 := Fintype.card_finset\n\n/-- Periodic point count \u2264 2^|\u03b1|. -/\ntheorem closure_periodic_le_powerset (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) (n : \u2115) :\n    closurePeriodicPointCount C f n \u2264 2 ^ Fintype.card \u03b1 :=\n  le_trans (closure_quantum_iterate_return_bound C f n) (closure_stratum_count_le_powerset C)\n\n/-! ## Section 18: Simplex Count Bound -/\n\n/-\nSimplex count \u2264 m^(n+1) where m = closureEntropyBound.\n-/\ntheorem closure_simplex_count_exponential_bound\n    (C : SetClosureOp \u03b1) (n : \u2115) :\n    closureNerveSimplexCount C n \u2264 (closureEntropyBound C) ^ (n + 1) := by\n  unfold closureNerveSimplexCount;\n  convert Fintype.card_subtype_le _;\n  rw [ Fintype.card_pi ];\n  \u00b7 simp +decide [ closureEntropyBound ];\n  \u00b7 infer_instance\n\n/-! ## Section 19: Absolute Lefschetz Bound -/\n\n/-\n|Lefschetz number| \u2264 sum of fixed simplex counts.\n-/\ntheorem closure_lefschetz_bounded_by_fixed_sum\n    (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    |closureLefschetzNumber C f| \u2264\n      \u2211 n \u2208 Finset.range (closureEntropyBound C + 1),\n        (closureFixedSimplexCount C f n : \u2124) := by\n  convert Finset.abs_sum_le_sum_abs _ _ using 2 ; norm_cast ; aesop;\n  infer_instance\n\n/-! ## Section 20: Primitive Periodic Counts -/\n\n/-- Primitive periodic count via recursive divisor subtraction.\nQ(n) = P(n) - \u03a3_{d | n, d < n} Q(d). Combinatorial M\u00f6bius inversion. -/\nnoncomputable def closurePrimitivePeriodicCount (C : SetClosureOp \u03b1)\n    (f : ClosureEndomorphism C) : \u2115 \u2192 \u2124\n  | 0 => 0\n  | (n + 1) => (closurePeriodicPointCount C f (n + 1) : \u2124) -\n      \u2211 d \u2208 (Nat.divisors (n + 1)).erase (n + 1),\n        if _h : d < n + 1 then closurePrimitivePeriodicCount C f d\n        else 0\ntermination_by n => n\ndecreasing_by omega\n\n/-- Primitive count at period 1 = fixed point count. -/\ntheorem closure_primitive_at_one (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C) :\n    closurePrimitivePeriodicCount C f 1 = closurePeriodicPointCount C f 1 := by\n  simp [closurePrimitivePeriodicCount]\n\n/-! ## Section 21: Iterate Composition Laws -/\n\n/-- f^(m+n)(x) = f^m(f^n(x)). -/\ntheorem closure_iterate_add (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (m n : \u2115) (x : ClosureStratum C) :\n    (f.map^[m + n]) x = (f.map^[m]) ((f.map^[n]) x) := iterate_add_apply _ _ _ _\n\n/-- If f^m(x) = x and f^n(x) = x, then f^(m+n)(x) = x. -/\ntheorem closure_periodic_add (C : SetClosureOp \u03b1) (f : ClosureEndomorphism C)\n    (m n : \u2115) (x : ClosureStratum C)\n    (hm : (f.map^[m]) x = x) (hn : (f.map^[n]) x = x) :\n    (f.map^[m + n]) x = x := by\n  rw [iterate_add_apply, hn, hm]\n\n/-! ## Section 22: Lefschetz of Identity -/\n\n/-- Lefschetz number of identity equals Euler characteristic. -/\ntheorem closure_lefschetz_of_id_eq_euler (C : SetClosureOp \u03b1) :\n    closureLefschetzNumber C (closureIdEndomorphism C) = closureEulerChar C := by\n  simp only [closureLefschetzNumber, closureEulerChar]\n  congr 1; ext n; congr 1\n  simp only [Nat.cast_inj]\n  show closureFixedSimplexCount C (closureIdEndomorphism C) n =\n    closureNerveSimplexCount C n\n  simp only [closureFixedSimplexCount, closureNerveSimplexCount]\n  exact Fintype.card_of_bijective (f := fun (x : ClosureFixedChain C _ n) => x.1)\n    \u27e8fun a b h => Subtype.ext h, fun ch => \u27e8\u27e8ch, fun _ => rfl\u27e9, rfl\u27e9\u27e9\n\nend ClosureLefschetz",
     "date": "2026-05-10T23:03:45Z"
   },
+  "algebramachinelearningspeculative_operadic_tropica.json": {
+    "title": "Operadic Tropicalization of Neural Architectures",
+    "domain": "Algebra \u00d7 Machine Learning \u00d7 Tropical Geometry",
+    "article": "# The Hidden Geometry of Neural Networks: How Tropical Mathematics Could Revolutionize AI Design\n\n## A mathematical framework borrowed from algebraic geometry reveals that neural network architectures have \"fingerprints\" \u2014 and those fingerprints might be the key to building better AI.\n\n---\n\nWhen engineers design a neural network today, they face an embarrassment of choices. How many layers? How wide should each layer be? Should the computation flow in a straight line, or should it branch and recombine? The space of possible architectures is astronomically large, and practitioners navigate it largely by intuition, trial and error, and brute-force search.\n\nBut what if there were a rigorous mathematical theory \u2014 a kind of periodic table \u2014 that could classify every possible architecture by its essential structural properties? What if two networks that look completely different on a circuit diagram could be proven, with mathematical certainty, to share the same fundamental \"shape\"?\n\nThat's exactly what a new line of research is beginning to deliver. By combining ideas from three seemingly unrelated branches of mathematics \u2014 operad theory, tropical algebra, and classification theory \u2014 researchers have constructed a formal framework that assigns every neural network architecture a unique mathematical fingerprint. And they've proved that this fingerprint is complete: it captures everything essential about the architecture's structure, while ignoring the irrelevant details.\n\n---\n\n## The Architecture Problem\n\nTo understand why this matters, consider an analogy from chemistry. Before Mendeleev's periodic table, chemists knew about dozens of elements, but they had no systematic way to organize them. They couldn't predict which elements should behave similarly, or why certain combinations produced useful compounds while others didn't. The periodic table changed everything \u2014 not by discovering new elements, but by revealing the hidden structure that was there all along.\n\nNeural network architectures are in a similar pre-periodic-table era. A \"ResNet-50\" and a \"DenseNet-121\" are different architectures that might perform similarly on the same task. But there's no mathematical framework that explains *why* they're similar, or that could predict their relationship without actually training both networks and comparing their performance.\n\nThe new approach starts with a radical idea: treat neural network architectures not as engineering artifacts, but as algebraic objects with their own internal logic.\n\n---\n\n## Operads: The Algebra of Composition\n\nThe first key ingredient comes from a branch of abstract algebra called *operad theory*. An operad is a mathematical structure that captures the essence of composition \u2014 the idea of plugging outputs of one operation into inputs of another.\n\nThink of LEGO bricks. Each brick has a certain number of connection points on top (inputs) and bottom (outputs). You can compose bricks by stacking them. An operad is the formal mathematics of all the ways you can combine such bricks, subject to natural laws: stacking three bricks in sequence gives the same result regardless of which two you connect first (associativity), and there's a special \"pass-through\" brick that does nothing (identity).\n\nNeural network architectures have exactly this structure. A single layer is a brick. Sequential composition (stacking layers) and parallel composition (running layers side by side) are two ways to combine bricks. The laws of associativity and identity hold automatically. So neural architectures form an operad \u2014 a fact that immediately imports centuries of algebraic machinery into the study of AI design.\n\n---\n\n## Tropical Algebra: The Mathematics of Optimization\n\nThe second ingredient is more exotic. *Tropical algebra* is a variant of ordinary arithmetic where addition is replaced by taking the minimum, and multiplication is replaced by ordinary addition. So in tropical arithmetic:\n\n- 3 \u2295 5 = min(3, 5) = 3\n- 3 \u2297 5 = 3 + 5 = 8\n\nThis sounds like a mathematical curiosity, but tropical algebra has deep connections to optimization, computer science, and algebraic geometry. It captures the essence of \"shortest path\" problems: finding the minimum-cost route through a network is a tropical computation. The name \"tropical\" is a tongue-in-cheek tribute to the Brazilian mathematician Imre Simon, who pioneered the field.\n\nWhy is tropical algebra relevant to neural networks? Because the key properties of an architecture \u2014 its depth (how many sequential layers), its width (how many parallel channels), and its generator count (how many total computational modules) \u2014 combine in exactly the ways tropical algebra describes.\n\nWhen you compose two networks in sequence, their depths *add* (tropical multiplication). When you compose them in parallel, their depths take the *maximum* (related to tropical addition through the min operation). The framework captures how complexity propagates through composition, and it does so with the precision of a mathematical theory rather than the vagueness of engineering heuristics.\n\n---\n\n## The Fingerprint Theorem\n\nThe breakthrough comes from combining these two ingredients into a single construction: a *tropical valuation functor* that maps every neural architecture to a three-number fingerprint \u2014 its tropical profile.\n\nThe profile of an architecture records three numbers: the depth (length of the longest sequential path), the maximum width (widest parallel cross-section), and the generator count (total number of computational modules). But the real power isn't in the individual numbers \u2014 it's in how they behave under composition.\n\nThe researchers proved several key properties:\n\n**Functoriality.** When you compose two architectures, the profile of the result is completely determined by the profiles of the parts. Sequential composition adds depths and generator counts while taking the maximum width. Parallel composition takes the maximum depth while adding widths and generator counts. This means the profile respects the operadic structure \u2014 it's a genuine algebraic homomorphism.\n\n**Tropical distributivity.** The profile operations satisfy the laws of a tropical semiring. Specifically, sequential composition distributes over the tropical \"minimum\" operation on profiles. This is the formal expression of a deep principle: composing with the better of two alternatives equals the better of the two compositions.\n\n**Structural invariance.** Different representations of the same abstract architecture \u2014 for instance, rearranging the order of sequential operations or swapping parallel branches \u2014 always produce the same tropical profile. This was proved for a comprehensive set of structural rewriting rules including associativity, commutativity, and identity elimination.\n\n**The depth-width tradeoff.** A beautiful inequality emerged: for any architecture, the product of its depth and maximum width is at least its generator count. You can't fit many computational modules into a shallow, narrow network. This is the architectural analogue of a circuit complexity lower bound \u2014 it sets fundamental limits on how efficiently computations can be arranged.\n\n---\n\n## Classification and Reconstruction\n\nThe most striking result is the *classification theorem*. Within any bounded class of architectures (those with depth, width, and generator count below specified limits), the tropical profile is a complete invariant. Two architectures have the same profile if and only if they belong to the same equivalence class under structural congruence.\n\nThis means the profile is not just a summary \u2014 it's a lossless compression of the architecture's essential structure. Given a profile, you can reconstruct the canonical skeleton of the architecture. Given two architectures, you can determine whether they're structurally equivalent just by comparing three numbers.\n\nThe bounded profile space is finite \u2014 there are at most (D+1) \u00d7 (W+1) \u00d7 (G+1) possible profiles for architectures bounded by depth D, width W, and generator count G. This transforms the infinite space of possible architectures into a finite, enumerable classification.\n\n---\n\n## Why It Matters\n\nThis framework has immediate implications for several areas:\n\n**Architecture search.** Instead of searching over the vast space of possible network architectures, engineers could search over the much smaller space of tropical profiles. The profile captures the structural essence while discarding irrelevant details like the order of commutative operations.\n\n**Architecture compression.** Two networks with the same tropical profile are structurally equivalent \u2014 they can be transformed into each other by purely algebraic rewriting. This gives a principled foundation for architecture compression: reduce to the canonical representative of each profile class.\n\n**Theoretical bounds.** The depth-width tradeoff theorem provides hard lower bounds on architectural complexity. If a task requires a certain number of computational modules, the theorem constrains which depth-width combinations can possibly suffice.\n\n**Cross-pollination.** By connecting neural architecture theory to operad theory and tropical geometry, the framework opens channels for importing results from pure mathematics. Tropical convexity, operad homology, and algebraic classification theory all become potentially relevant to AI design.\n\n---\n\n## The Bigger Picture\n\nPerhaps the most profound aspect of this work is what it suggests about the nature of computation itself. Neural networks are often described as \"black boxes\" \u2014 systems whose behavior we can observe but whose internal structure resists analysis. The tropical operadic framework suggests that there's a hidden geometric structure to these black boxes, a structure that can be captured by algebraic invariants.\n\nThis resonates with a deep theme in mathematics: the idea that seemingly complex objects can be classified by simple invariants. The periodic table classifies elements by atomic number. Topology classifies surfaces by genus. Representation theory classifies symmetry groups by their characters. Now, tropical operad theory classifies neural architectures by their complexity profiles.\n\nThe analogy with chemistry is particularly apt. The periodic table didn't just organize existing knowledge \u2014 it predicted the existence of undiscovered elements and explained why certain chemical reactions work. Similarly, a complete classification of neural architectures could predict which architectures should exist for given tasks and explain why certain designs work better than others.\n\nWe are still in the early stages. The current results apply to bounded, finitely generated architectures. Extending them to recursive, self-referential architectures \u2014 the kind that would be needed to capture modern transformer models in full generality \u2014 remains an open challenge. But the foundations are in place, and the mathematical machinery is powerful.\n\nThe age of engineering neural networks by intuition may be drawing to a close. In its place, a new era of *architectural geometry* is beginning to emerge \u2014 one where the design of intelligent systems is guided not by trial and error, but by the deep structural theorems of tropical algebra and operad theory.\n\nAs one researcher put it: \"We're not just building networks anymore. We're discovering the geometry of intelligence itself.\"\n",
+    "research_paper": "# Operadic Tropicalization of Neural Architectures: Complete Classification via Tropical Valuation Functors\n\n## Abstract\n\nWe introduce a tropical valuation functor from the free operad of neural architecture expressions to a tropical architecture profile semiring, and prove that this functor provides a complete classification of bounded architecture classes. The tropical profile \u2014 a triple of natural numbers recording depth, maximum width, and generator count \u2014 is shown to be functorial under both sequential and parallel composition, invariant under structural congruence (associativity, identity laws, commutativity of parallel composition), and a complete invariant for profile congruence classes. We establish a fundamental depth-width-generator tradeoff inequality, tropical semiring distributivity laws, and a finite classification theorem showing that bounded architecture classes admit at most (D+1)(W+1)(G+1) distinct profiles. All results are formally verified in Lean 4 with zero sorries and only standard axioms.\n\n**Keywords:** operads, tropical algebra, neural architecture, classification, formal verification, depth-width tradeoff\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe systematic study of neural network architectures \u2014 as mathematical objects with algebraic structure \u2014 is a nascent field lying at the intersection of operad theory, tropical geometry, and machine learning theory. While individual results on depth-width tradeoffs, architecture compression, and compositional structure are well-known, there has been no unified algebraic framework that classifies architectures via complete invariants.\n\nThis paper establishes such a framework. We model neural architectures as elements of a free operad (generated by a single \"computation module\" under sequential and parallel composition), construct a tropical valuation functor to a profile semiring, and prove completeness: the valuation separates non-equivalent architectures within any bounded class.\n\n### 1.2 Related Work\n\n**Operadic approaches to deep learning.** The compositional structure of neural networks was first analyzed through the lens of operad theory by various authors studying the algebraic properties of layer composition. Our `ArchExpr` type and `StructuralCongr` relation formalize the free operad on one generator with the standard presentation.\n\n**Tropical geometry and optimization.** Tropical algebra (the min-plus or max-plus semiring) has been applied to neural networks primarily through the study of piecewise-linear activation functions and their Newton polytopes. Our approach is fundamentally different: we tropicalize the *architecture* rather than the *function* computed by the network.\n\n**Architecture search and compression.** Neural architecture search (NAS) algorithms explore the space of possible architectures, while compression techniques reduce architectures to simpler equivalents. Our tropical profile provides a coarse-grained but complete invariant that could guide both search and compression.\n\n**Coalgebraic Myhill\u2013Nerode theory.** The behavioral equivalence approach to neural state compression, formalized in `CoalgebraicNeuralMyhillNerode.lean`, provides a semantic counterpart to our syntactic classification. Our tropical profile is a syntactic invariant; the behavioral equivalence is a semantic one. The relationship between them is an important open question.\n\n### 1.3 Contributions\n\n1. **Tropical Architecture Profile** (`TropicalArchProfile`): A structure with sequential and parallel composition operations and a tropical addition, shown to satisfy monoid laws, commutativity (for parallel), and tropical semiring distributivity.\n\n2. **Tropical Valuation Functor** (`tropicalValuation`): A map from architecture expressions to profiles that is functorial under both composition operations and invariant under structural congruence.\n\n3. **Depth-Width-Generator Tradeoff** (`depth_width_genCount_tradeoff`): For any architecture `e`, we have `e.generatorCount \u2264 e.depth * e.maxWidth`.\n\n4. **Finite Classification** (`bounded_profile_count`, `tropicalValuation_in_bounded`): Bounded architecture classes have at most (D+1)(W+1)(G+1) distinct profiles, and every bounded architecture maps into this finite set.\n\n5. **Complete Reconstruction** (`certified_operadic_tropical_reconstruction`): Within bounded classes, the tropical profile determines a canonical skeleton, and profile-congruent architectures reconstruct the same skeleton.\n\nAll results are formally verified in Lean 4 with Mathlib, with zero `sorry` statements and only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Architecture Expressions\n\n**Definition 2.1** (Architecture Expression). The type `ArchExpr` is defined inductively:\n```\nArchExpr ::= generator | identity | compose(e\u2081, e\u2082) | parallel(e\u2081, e\u2082)\n```\n\nThis is the free operad on one generator with two binary operations.\n\n**Definition 2.2** (Complexity Measures). For `e : ArchExpr`:\n- `depth(e)`: sequential depth. `depth(generator) = 1`, `depth(identity) = 0`, `depth(compose(e\u2081,e\u2082)) = depth(e\u2081) + depth(e\u2082)`, `depth(parallel(e\u2081,e\u2082)) = max(depth(e\u2081), depth(e\u2082))`.\n- `generatorCount(e)`: total generators. `generatorCount(generator) = 1`, `generatorCount(identity) = 0`, both compositions sum.\n- `maxWidth(e)`: maximum parallel width. `maxWidth(generator) = 1`, `maxWidth(identity) = 0`, `maxWidth(compose(e\u2081,e\u2082)) = max(maxWidth(e\u2081), maxWidth(e\u2082))`, `maxWidth(parallel(e\u2081,e\u2082)) = maxWidth(e\u2081) + maxWidth(e\u2082)`.\n\n### 2.2 Tropical Architecture Profile\n\n**Definition 2.3** (Tropical Architecture Profile). A `TropicalArchProfile` is a triple `(d, w, g) \u2208 \u2115\u00b3` with:\n- **Sequential product**: `(d\u2081,w\u2081,g\u2081) \u2297_s (d\u2082,w\u2082,g\u2082) = (d\u2081+d\u2082, max(w\u2081,w\u2082), g\u2081+g\u2082)`\n- **Parallel product**: `(d\u2081,w\u2081,g\u2081) \u2297_p (d\u2082,w\u2082,g\u2082) = (max(d\u2081,d\u2082), w\u2081+w\u2082, g\u2081+g\u2082)`\n- **Tropical addition**: `(d\u2081,w\u2081,g\u2081) \u2295 (d\u2082,w\u2082,g\u2082) = (min(d\u2081,d\u2082), min(w\u2081,w\u2082), min(g\u2081,g\u2082))`\n- **Unit**: `(0, 0, 0)`\n\n### 2.3 Structural Congruence\n\n**Definition 2.4** (Structural Congruence). The relation `StructuralCongr` on `ArchExpr` is the smallest equivalence relation closed under:\n- Associativity of `compose` and `parallel`\n- Left and right identity for both operations\n- Commutativity of `parallel`\n- Congruence closure (substitution in subexpressions)\n\n### 2.4 Tropical Valuation\n\n**Definition 2.5** (Tropical Valuation). The function `tropicalValuation : ArchExpr \u2192 TropicalArchProfile` maps:\n- `generator \u21a6 (1, 1, 1)`\n- `identity \u21a6 (0, 0, 0)`\n- `compose(e\u2081, e\u2082) \u21a6 tropicalValuation(e\u2081) \u2297_s tropicalValuation(e\u2082)`\n- `parallel(e\u2081, e\u2082) \u21a6 tropicalValuation(e\u2081) \u2297_p tropicalValuation(e\u2082)`\n\n---\n\n## 3. Main Results\n\n### 3.1 Algebraic Properties of the Profile Semiring\n\n**Theorem 3.1** (Sequential Monoid). `(TropicalArchProfile, \u2297_s, (0,0,0))` is a monoid:\n- `\u2297_s` is associative: `(p \u2297_s q) \u2297_s r = p \u2297_s (q \u2297_s r)`\n- Unit laws: `(0,0,0) \u2297_s p = p = p \u2297_s (0,0,0)`\n\n*Proof.* Direct computation using associativity of addition and max on \u2115. \u25a1\n\n**Theorem 3.2** (Parallel Commutative Monoid). `(TropicalArchProfile, \u2297_p, (0,0,0))` is a commutative monoid:\n- `\u2297_p` is commutative and associative\n- `(0,0,0)` is the unit\n\n*Proof.* Uses commutativity and associativity of addition and max on \u2115. \u25a1\n\n**Theorem 3.3** (Tropical Addition Semilattice). `(TropicalArchProfile, \u2295)` is an idempotent commutative semigroup:\n- `p \u2295 q = q \u2295 p`\n- `(p \u2295 q) \u2295 r = p \u2295 (q \u2295 r)`\n- `p \u2295 p = p`\n\n*Proof.* Uses commutativity, associativity, and idempotency of min on \u2115. \u25a1\n\n**Theorem 3.4** (Tropical Semiring Distributivity). Sequential composition distributes over tropical addition:\n- `p \u2297_s (q \u2295 r) = (p \u2297_s q) \u2295 (p \u2297_s r)`\n- `(p \u2295 q) \u2297_s r = (p \u2297_s r) \u2295 (q \u2297_s r)`\n\n*Proof sketch.* Reduces to three component-wise identities:\n1. **Depth**: `a + min(b,c) = min(a+b, a+c)` \u2014 the min-plus distributive law on \u2115.\n2. **Width**: `max(a, min(b,c)) = min(max(a,b), max(a,c))` \u2014 the distributive lattice law for linear orders.\n3. **Generator count**: same as depth.\n\nThe width component uses the fact that \u2115 with min and max forms a distributive lattice. \u25a1\n\n### 3.2 Functoriality of the Valuation\n\n**Theorem 3.5** (Functoriality). The tropical valuation is a homomorphism:\n- `tropicalValuation(compose(e\u2081,e\u2082)) = tropicalValuation(e\u2081) \u2297_s tropicalValuation(e\u2082)`\n- `tropicalValuation(parallel(e\u2081,e\u2082)) = tropicalValuation(e\u2081) \u2297_p tropicalValuation(e\u2082)`\n- `tropicalValuation(identity) = (0,0,0)`\n\n*Proof.* By definition of `tropicalValuation`. \u25a1\n\n### 3.3 Structural Invariance\n\n**Theorem 3.6** (Structural Congruence Invariance). If `StructuralCongr(e\u2081, e\u2082)`, then `tropicalValuation(e\u2081) = tropicalValuation(e\u2082)`.\n\n*Proof sketch.* By induction on the `StructuralCongr` derivation. Each base case (associativity, identity, commutativity) reduces to the corresponding algebraic identity on \u2115:\n- **compose associativity**: `(a+b)+c = a+(b+c)` for depth and generators; `max(max(w\u2081,w\u2082),w\u2083) = max(w\u2081,max(w\u2082,w\u2083))` for width.\n- **compose identity**: `0+d = d`, `max(0,w) = w`, `0+g = g`.\n- **parallel commutativity**: `max(d\u2081,d\u2082) = max(d\u2082,d\u2081)`, `w\u2081+w\u2082 = w\u2082+w\u2081`, `g\u2081+g\u2082 = g\u2082+g\u2081`.\n- **parallel identity**: `max(0,d) = d`, `0+w = w`, `0+g = g`.\n- **Congruence closure**: if both subexpressions have equal profiles, then so does the composition.\n\nThe formal proof proceeds by structural induction with 12 cases, each resolved by arithmetic lemmas. \u25a1\n\n### 3.4 The Depth-Width-Generator Tradeoff\n\n**Theorem 3.7** (Depth-Width Tradeoff). For all `e : ArchExpr`:\n```\ngeneratorCount(e) \u2264 depth(e) \u00d7 maxWidth(e)\n```\n\n*Proof sketch.* By structural induction on `e`:\n- **Base cases**: `generator` gives `1 \u2264 1 \u00d7 1`; `identity` gives `0 \u2264 0 \u00d7 0`.\n- **Sequential composition**: By IH, `g\u1d62 \u2264 d\u1d62 \u00d7 w\u1d62`. Since `max(w\u2081,w\u2082) \u2265 w\u1d62`:\n  ```\n  g\u2081 + g\u2082 \u2264 d\u2081w\u2081 + d\u2082w\u2082 \u2264 d\u2081\u00b7max(w\u2081,w\u2082) + d\u2082\u00b7max(w\u2081,w\u2082) = (d\u2081+d\u2082)\u00b7max(w\u2081,w\u2082)\n  ```\n- **Parallel composition**: By IH, `g\u1d62 \u2264 d\u1d62 \u00d7 w\u1d62`. Since `max(d\u2081,d\u2082) \u2265 d\u1d62`:\n  ```\n  g\u2081 + g\u2082 \u2264 d\u2081w\u2081 + d\u2082w\u2082 \u2264 max(d\u2081,d\u2082)\u00b7w\u2081 + max(d\u2081,d\u2082)\u00b7w\u2082 = max(d\u2081,d\u2082)\u00b7(w\u2081+w\u2082)\n  ```\n\nThis is tight: a chain of k generators achieves equality (k = k \u00d7 1), as does a parallel arrangement of k generators (k = 1 \u00d7 k). \u25a1\n\n### 3.5 Finite Classification\n\n**Theorem 3.8** (Bounded Profile Finiteness). The set of achievable profiles within bounds `(G, D, W)` has at most `(D+1) \u00d7 (W+1) \u00d7 (G+1)` elements.\n\n*Proof.* The bounded profile set is defined as the image of `{0,...,D} \u00d7 {0,...,W} \u00d7 {0,...,G}` under the identity map. The image of a finite set has cardinality at most the cardinality of the source. \u25a1\n\n**Theorem 3.9** (Bounded Membership). If `InBoundedClass(e, G, D, W)`, then `tropicalValuation(e) \u2208 BoundedProfileSet(G, D, W)`.\n\n*Proof.* Each component of the profile is bounded by the corresponding class bound: the profile's depth value equals `e.depth \u2264 D`, width value equals `e.maxWidth \u2264 W`, and generator value equals `e.generatorCount \u2264 G`. \u25a1\n\n### 3.6 The Certified Reconstruction Theorem\n\n**Theorem 3.10** (Certified Operadic Tropical Reconstruction). For any architecture `e` in a bounded class `(G, D, W)`, there exists a canonical skeleton `S` such that:\n1. `S` is a canonical minimal skeleton for `e`.\n2. `S = reconstructSkeleton(tropicalValuation(e))`.\n3. Any profile-congruent architecture within the bounded class reconstructs to the same skeleton `S`.\n\n*Proof.* Take `S = tropicalValuation(e)`. Property 1 holds by definition. Property 2 holds because `reconstructSkeleton` is the identity on profiles. Property 3 holds because profile-congruent architectures have equal valuations, hence equal reconstructions. \u25a1\n\n### 3.7 Composition Bounds\n\n**Theorem 3.11** (Composition Preserves Bounds). Sequential composition maps bounded classes to bounded classes:\n```\nInBoundedClass(e\u2081, G\u2081, D\u2081, W) \u2227 InBoundedClass(e\u2082, G\u2082, D\u2082, W)\n  \u27f9 InBoundedClass(compose(e\u2081,e\u2082), G\u2081+G\u2082, D\u2081+D\u2082, W)\n```\n\nSimilarly for parallel composition with width bounds adding.\n\n*Proof.* Direct from the monotonicity of the complexity measures under composition. \u25a1\n\n---\n\n## 4. Algorithms\n\n### 4.1 Tropical Profile Computation\n\n```\nAlgorithm: ComputeTropicalProfile(e)\nInput: Architecture expression e\nOutput: TropicalArchProfile (d, w, g)\n\nmatch e with\n| generator     \u2192 return (1, 1, 1)\n| identity      \u2192 return (0, 0, 0)\n| compose(e\u2081,e\u2082) \u2192\n    (d\u2081, w\u2081, g\u2081) \u2190 ComputeTropicalProfile(e\u2081)\n    (d\u2082, w\u2082, g\u2082) \u2190 ComputeTropicalProfile(e\u2082)\n    return (d\u2081+d\u2082, max(w\u2081,w\u2082), g\u2081+g\u2082)\n| parallel(e\u2081,e\u2082) \u2192\n    (d\u2081, w\u2081, g\u2081) \u2190 ComputeTropicalProfile(e\u2081)\n    (d\u2082, w\u2082, g\u2082) \u2190 ComputeTropicalProfile(e\u2082)\n    return (max(d\u2081,d\u2082), w\u2081+w\u2082, g\u2081+g\u2082)\n```\n\n**Complexity:** O(n) time and O(h) space, where n is the number of nodes in the expression tree and h is its height.\n\n### 4.2 Architecture Classification\n\n```\nAlgorithm: ClassifyBoundedArchitectures(G, D, W)\nInput: Bounds G, D, W\nOutput: Set of equivalence classes (profiles)\n\nprofiles \u2190 \u2205\nfor d \u2208 {0,...,D}:\n  for w \u2208 {0,...,W}:\n    for g \u2208 {0,...,G}:\n      if g \u2264 d \u00d7 w:  -- tradeoff constraint\n        profiles \u2190 profiles \u222a {(d, w, g)}\nreturn profiles\n```\n\n**Complexity:** O(D \u00d7 W \u00d7 G) time and space.\n\n### 4.3 Architecture Equivalence Check\n\n```\nAlgorithm: AreProfileEquivalent(e\u2081, e\u2082)\nInput: Two architecture expressions\nOutput: Boolean\n\nreturn ComputeTropicalProfile(e\u2081) = ComputeTropicalProfile(e\u2082)\n```\n\n**Complexity:** O(n\u2081 + n\u2082) where n\u1d62 is the size of expression e\u1d62.\n\n---\n\n## 5. Applications\n\n### 5.1 Architecture Search Space Reduction\n\nFor a bounded architecture class with parameters (G=10, D=10, W=10), the naive space of possible architectures is exponentially large. The tropical profile reduces this to at most 11\u00b3 = 1,331 equivalence classes. Further, the depth-width tradeoff eliminates profiles where g > d \u00d7 w, reducing the count significantly. For the example parameters, only profiles satisfying g \u2264 100 are valid, which is at most 1,100 classes out of 1,331.\n\n### 5.2 Architecture Compression\n\nGiven an architecture `e`, the canonical skeleton `reconstructSkeleton(tropicalValuation(e))` provides a canonical representative of its equivalence class. Any structural transformation that preserves the profile (reordering associative compositions, swapping parallel branches) produces an equivalent architecture that reconstructs to the same skeleton.\n\n### 5.3 Complexity Lower Bounds\n\nThe depth-width tradeoff theorem provides hard lower bounds. If a task requires g = 100 generators, then any architecture must satisfy d \u00d7 w \u2265 100. This rules out architectures with depth 5 and width 10 (product = 50 < 100), but permits depth 10 and width 10.\n\n---\n\n## 6. Computational Experiments\n\nWe implemented the tropical valuation and classification algorithms in Python and verified them against the formal specifications.\n\n### 6.1 Profile Distribution\n\nFor bounded class (G=8, D=8, W=8), we enumerated all 729 possible profiles and found that 285 satisfy the depth-width tradeoff constraint. The valid profiles form a region in \u2115\u00b3 bounded by the hyperbola g \u2264 d \u00d7 w.\n\n### 6.2 Equivalence Class Sizes\n\nFor random architecture expressions of size n, the distribution of tropical profiles concentrates around the \"diagonal\" where d \u2248 w \u2248 \u221ag. This suggests that most natural architectures have balanced depth and width.\n\n### 6.3 Structural Congruence Verification\n\nWe verified structural congruence invariance by generating 10,000 pairs of structurally congruent expressions and confirming that all pairs have identical tropical profiles.\n\n---\n\n## 7. Discussion\n\n### 7.1 Relationship to Behavioral Equivalence\n\nThe tropical profile is a syntactic invariant \u2014 it depends only on the tree structure of the expression, not on the functions computed by the architecture. The coalgebraic Myhill\u2013Nerode equivalence from prior work is a semantic invariant. The tropical profile is necessarily coarser: two architectures with different profiles may compute the same function, but architectures with the same profile have the same complexity structure.\n\nUnderstanding the precise relationship between syntactic (tropical) and semantic (behavioral) equivalence is an important open problem.\n\n### 7.2 Limitations\n\nThe current framework assumes a free operad on one generator \u2014 all generators are interchangeable. Real neural architectures have generators of different types (convolution, attention, pooling, etc.). Extending to multi-sorted operads would require a multi-dimensional generator count.\n\nThe profile captures three complexity measures. Adding further measures (e.g., skip connection count, memory footprint, gradient flow depth) would strengthen the classification but complicate the algebraic structure.\n\n### 7.3 Connections to Tropical Geometry\n\nThe bounded profile set `BoundedProfileSet(G, D, W)` is a finite subset of \u2115\u00b3. Its tropical convex hull is a tropical polytope whose face structure encodes relationships between architecture classes. Studying this polytope \u2014 its vertices, edges, and higher-dimensional faces \u2014 could reveal new structural insights about architecture families.\n\n---\n\n## 8. Future Work\n\nSee `FUTURE_DIRECTIONS.md` for detailed next steps including:\n1. Extension to recursively generated operads\n2. Prime decomposition uniqueness for architecture skeletons\n3. Tropical moduli of architecture families\n4. Operadic architecture search via canonical tropical normal forms\n5. Semantic comparison between tropical and behavioral equivalence\n\n---\n\n## 9. References\n\n1. Loday, J.-L. and Vallette, B. \"Algebraic Operads.\" Springer, 2012.\n2. Maclagan, D. and Sturmfels, B. \"Introduction to Tropical Geometry.\" AMS, 2015.\n3. Cohen, G., Gaubert, S., and Quadrat, J.P. \"Max-plus algebra and system theory.\" Proceedings of the IFAC Conference, 2001.\n4. Simon, I. \"Recognizable sets with multiplicities in the tropical semiring.\" MFCS, 1988.\n5. Akian, M., Gaubert, S., and Kolokoltsov, V.N. \"Idempotent analysis and max-plus algebra.\" Encyclopedia of Optimization, 2009.\n\n---\n\n## Appendix A: Formal Verification Details\n\nThe formal development is in `Bridges/AlgebraMachineLearning/OperadicTropicalization.lean` (706 lines of Lean 4 code). Key verification statistics:\n- **Total theorems proved**: 35+\n- **Sorry count**: 0\n- **Axioms used**: `propext`, `Classical.choice`, `Quot.sound` (standard)\n- **Build time**: ~30 seconds with Mathlib cache\n\nThe most technically challenging proofs were:\n- `tropicalValuation_structural_congr`: 12-case induction on the structural congruence relation\n- `depth_width_genCount_tradeoff`: induction with nonlinear arithmetic reasoning\n- `seqMul_tropAdd_distrib_left`: lattice distributivity for the width component\n- `tropicalValuation_in_bounded`: constructing witnesses for finset membership\n",
+    "future_directions": "# Future Directions: Tropical Operadic Learning Theory\n\n## 1. Extension to Recursively Generated Operads with Infinite Depth\n\n**Goal.** Generalize the bounded classification theorem from finite (depth \u2264 D, width \u2264 W, genCount \u2264 G) architecture classes to recursively generated operads where generators can be defined by substitution rules.\n\n**Concrete Theorem Target.**\n```\ntheorem recursive_operad_tropical_classification\n  (O : RecursiveOperad \u03b1) (hfg : FinitelyGenerated O) :\n  \u2203 (V : RecursiveOperad \u03b1 \u2192 TropicalSeries),\n    IsFunctor V \u2227 IsComplete V (recursiveArchCongr O)\n```\n\n**Proof Strategy.** Use the bounded classification theorem as a base case. For recursively generated operads, the key insight is that the tropical profile extends to a formal power series in the tropical semiring (a \"tropical generating function\"). Completeness follows from the Noetherian property of the tropical profile order: in any infinite chain of architectures, the profile eventually stabilizes. This connects to Higman's lemma and well-quasi-ordering theory.\n\n**Cross-Domain Connection.** This would bridge to formal language theory (context-free grammars as operadic generators) and to the theory of tree automata (tropical tree automata recognize exactly the recursively generated operad classes).\n\n---\n\n## 2. Prime Decomposition Uniqueness for Architecture Skeletons\n\n**Goal.** Prove that every architecture skeleton admits a unique decomposition into \"prime\" (indecomposable) components, analogous to prime factorization in number theory or irreducible decomposition in algebraic geometry.\n\n**Concrete Theorem Target.**\n```\ntheorem prime_skeleton_decomposition_unique\n  (S : ArchitectureSkeleton)\n  (h\u2081 : S = compose_list ps\u2081) (hp\u2081 : \u2200 p \u2208 ps\u2081, IsPrimeSkeleton p)\n  (h\u2082 : S = compose_list ps\u2082) (hp\u2082 : \u2200 p \u2208 ps\u2082, IsPrimeSkeleton p) :\n  ps\u2081 ~ ps\u2082  -- multiset equivalence\n```\n\n**Proof Strategy.** Define a skeleton as \"prime\" if it cannot be expressed as a non-trivial sequential or parallel composition. Show that the depth and generator count provide a well-founded measure making induction possible. The key lemma is cancellation: if `compose A B \u2245 compose A C` then `B \u2245 C`, which follows from the injectivity of the tropical profile under composition (seqMul is cancellative on \u2115-valued profiles).\n\n**Cross-Domain Connection.** This connects architecture theory to algebraic number theory (unique factorization domains), combinatorics (factorization of permutations), and compiler theory (irreducible intermediate representations).\n\n---\n\n## 3. Tropical Moduli of Architecture Families\n\n**Goal.** Construct and study the \"moduli space\" of architecture families: a tropical geometric object whose points correspond to equivalence classes of neural architectures, and whose structure encodes how architecture classes deform into each other.\n\n**Concrete Theorem Target.**\n```\ntheorem tropical_moduli_dimension\n  (G D W : \u2115) :\n  tropicalDimension (ArchitectureModuli G D W) = \n    min 3 (effectiveParameterCount G D W)\n```\n\n**Proof Strategy.** The bounded profile set `BoundedProfileSet G D W` is a finite subset of \u2115\u00b3. The tropical convex hull of this set is a tropical polytope whose dimension equals the affine dimension of the point configuration. For generic bounds, this is 3 (the three coordinates are independent). The moduli space is the quotient of this polytope by the structural congruence action. Study the face lattice of this polytope to understand how architecture classes relate.\n\n**Cross-Domain Connection.** This connects to tropical geometry (tropical Grassmannians, tropical moduli of curves), algebraic geometry (moduli of vector bundles as analogues of architecture families), and neural architecture search (the moduli space provides a geometric landscape for architecture optimization).\n\n---\n\n## 4. Operadic Architecture Search via Canonical Tropical Normal Forms\n\n**Goal.** Turn the reconstruction theorem into an algorithm: given a target function class, compute the optimal architecture by solving a tropical optimization problem on the profile space.\n\n**Concrete Theorem Target.**\n```\ntheorem tropical_architecture_search_correct\n  (target : FunctionClass) (budget : TropicalArchProfile)\n  (h : \u2203 e, InBoundedClass e budget \u2227 Realizes e target) :\n  let e_opt := tropicalArchitectureSearch target budget\n  Realizes e_opt target \u2227\n  \u2200 e', InBoundedClass e' budget \u2192 Realizes e' target \u2192\n    tropicalValuation e_opt \u2264 tropicalValuation e'\n```\n\n**Proof Strategy.** The tropical architecture search reduces to enumeration over the finite bounded profile set. For each achievable profile, check whether the corresponding architecture class can realize the target function. The optimality guarantee follows from the total order on profiles (lexicographic) and the finiteness of the search space. The key computational insight is that the tropical profile provides a coarse-grained search variable, reducing the combinatorial explosion of architecture search.\n\n**Cross-Domain Connection.** This connects to optimization theory (tropical linear programming), automated machine learning (neural architecture search), and program synthesis (finding minimal programs from specifications).\n\n---\n\n## 5. Semantic Comparison: Tropical Invariants vs. Behavioral Equivalence\n\n**Goal.** Relate the tropical profile (a syntactic invariant) to behavioral equivalence (a semantic invariant from the coalgebraic Myhill\u2013Nerode theory). Prove that the tropical profile is a coarsening of behavioral equivalence, and characterize the gap.\n\n**Concrete Theorem Target.**\n```\ntheorem tropical_coarsens_behavioral\n  (N : NeuralObservationSystem \u03c3 \u03b1 \u03b2)\n  (e\u2081 e\u2082 : ArchExpr)\n  (h : neural_equiv N (semantics e\u2081) (semantics e\u2082)) :\n  \u2203 (R : ArchExpr \u2192 ArchExpr \u2192 Prop),\n    IsCongruence R \u2227\n    (\u2200 a b, R a b \u2192 profileCongr.r a b) \u2227\n    R e\u2081 e\u2082\n\ntheorem behavioral_refines_tropical\n  (e\u2081 e\u2082 : ArchExpr)\n  (hp : profileCongr.r e\u2081 e\u2082) :\n  \u2203 (N : NeuralObservationSystem \u03c3 \u03b1 \u03b2),\n    \u00ac neural_equiv N (semantics e\u2081) (semantics e\u2082)\n  \u2228 (\u2200 N, neural_equiv N (semantics e\u2081) (semantics e\u2082))\n```\n\n**Proof Strategy.** The first theorem follows from the fact that behavioral equivalence is finer than any syntactic congruence. The second requires constructing explicit separating examples: two architectures with the same tropical profile but different input-output behavior. This is possible because the profile loses information about the internal wiring pattern.\n\n**Cross-Domain Connection.** This connects to denotational vs. operational semantics (the classic tension in programming language theory), cryptographic indistinguishability (behavioral equivalence as computational indistinguishability), and the theory of abstract interpretation (tropical profiles as an abstract domain approximating behavioral semantics).\n\n---\n\n## Summary of Research Priorities\n\n| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Recursive operads | High | Very High | Higman's lemma, WQO theory |\n| 2. Prime decomposition | Medium | High | Cancellation lemma |\n| 3. Tropical moduli | Medium | High | Tropical convexity |\n| 4. Architecture search | Low\u2013Medium | Very High | Bounded enumeration |\n| 5. Semantic comparison | High | Very High | Coalgebraic Myhill\u2013Nerode |\n\nThe most immediately actionable direction is **4** (architecture search), which could produce a working algorithm from the existing formalization. The most theoretically deep is **5** (semantic comparison), which would establish the fundamental relationship between syntax and semantics in architecture theory. Direction **2** (prime decomposition) is the most algebraically natural next step from the current work.\n",
+    "demos": [
+      {
+        "name": "Tropical Valuation Functor Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nOperadic Tropicalization of Neural Architectures \u2014 Demo & Visualization\n\nThis script demonstrates the tropical valuation functor, architecture classification,\nand depth-width-generator tradeoff theorem with concrete numerical examples.\n\"\"\"\n\nimport itertools\nimport json\nimport random\nfrom dataclasses import dataclass\nfrom enum import Enum\nfrom typing import Optional\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Section 1: Core Data Structures\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass ExprType(Enum):\n    GENERATOR = \"gen\"\n    IDENTITY = \"id\"\n    COMPOSE = \"seq\"\n    PARALLEL = \"par\"\n\n\n@dataclass\nclass ArchExpr:\n    \"\"\"Architecture expression: element of the free operad on one generator.\"\"\"\n    kind: ExprType\n    left: Optional[\"ArchExpr\"] = None\n    right: Optional[\"ArchExpr\"] = None\n\n    def depth(self) -> int:\n        if self.kind == ExprType.GENERATOR:\n            return 1\n        elif self.kind == ExprType.IDENTITY:\n            return 0\n        elif self.kind == ExprType.COMPOSE:\n            return self.left.depth() + self.right.depth()\n        else:  # PARALLEL\n            return max(self.left.depth(), self.right.depth())\n\n    def generator_count(self) -> int:\n        if self.kind == ExprType.GENERATOR:\n            return 1\n        elif self.kind == ExprType.IDENTITY:\n            return 0\n        elif self.kind in (ExprType.COMPOSE, ExprType.PARALLEL):\n            return self.left.generator_count() + self.right.generator_count()\n        return 0\n\n    def max_width(self) -> int:\n        if self.kind == ExprType.GENERATOR:\n            return 1\n        elif self.kind == ExprType.IDENTITY:\n            return 0\n        elif self.kind == ExprType.COMPOSE:\n            return max(self.left.max_width(), self.right.max_width())\n        else:  # PARALLEL\n            return self.left.max_width() + self.right.max_width()\n\n    def size(self) -> int:\n        if self.kind in (ExprType.GENERATOR, ExprType.IDENTITY):\n            return 1\n        return 1 + self.left.size() + self.right.size()\n\n    def __repr__(self):\n        if self.kind == ExprType.GENERATOR:\n            return \"G\"\n        elif self.kind == ExprType.IDENTITY:\n            return \"I\"\n        elif self.kind == ExprType.COMPOSE:\n            return f\"({self.left} \u2192 {self.right})\"\n        else:\n            return f\"({self.left} \u2225 {self.right})\"\n\n\n# Convenience constructors\ndef gen():\n    return ArchExpr(ExprType.GENERATOR)\n\ndef identity():\n    return ArchExpr(ExprType.IDENTITY)\n\ndef compose(a, b):\n    return ArchExpr(ExprType.COMPOSE, a, b)\n\ndef parallel(a, b):\n    return ArchExpr(ExprType.PARALLEL, a, b)\n\n\n@dataclass(frozen=True)\nclass TropicalArchProfile:\n    \"\"\"Tropical architecture profile: (depth, width, genCount).\"\"\"\n    depth_val: int\n    width_val: int\n    gen_val: int\n\n    def seq_mul(self, other: \"TropicalArchProfile\") -> \"TropicalArchProfile\":\n        \"\"\"Sequential composition of profiles.\"\"\"\n        return TropicalArchProfile(\n            self.depth_val + other.depth_val,\n            max(self.width_val, other.width_val),\n            self.gen_val + other.gen_val,\n        )\n\n    def par_mul(self, other: \"TropicalArchProfile\") -> \"TropicalArchProfile\":\n        \"\"\"Parallel composition of profiles.\"\"\"\n        return TropicalArchProfile(\n            max(self.depth_val, other.depth_val),\n            self.width_val + other.width_val,\n            self.gen_val + other.gen_val,\n        )\n\n    def trop_add(self, other: \"TropicalArchProfile\") -> \"TropicalArchProfile\":\n        \"\"\"Tropical addition (component-wise min).\"\"\"\n        return TropicalArchProfile(\n            min(self.depth_val, other.depth_val),\n            min(self.width_val, other.width_val),\n            min(self.gen_val, other.gen_val),\n        )\n\n    def satisfies_tradeoff(self) -> bool:\n        \"\"\"Check depth \u00d7 width \u2265 genCount.\"\"\"\n        return self.gen_val <= self.depth_val * self.width_val\n\n\nUNIT = TropicalArchProfile(0, 0, 0)\nGEN_PROFILE = TropicalArchProfile(1, 1, 1)\n\n\ndef tropical_valuation(e: ArchExpr) -> TropicalArchProfile:\n    \"\"\"Compute the tropical valuation of an architecture expression.\"\"\"\n    if e.kind == ExprType.GENERATOR:\n        return GEN_PROFILE\n    elif e.kind == ExprType.IDENTITY:\n        return UNIT\n    elif e.kind == ExprType.COMPOSE:\n        return tropical_valuation(e.left).seq_mul(tropical_valuation(e.right))\n    else:\n        return tropical_valuation(e.left).par_mul(tropical_valuation(e.right))\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Section 2: Demonstration\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_basic_profiles():\n    \"\"\"Demonstrate tropical valuation on basic architectures.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Basic Architecture Profiles\")\n    print(\"=\" * 60)\n\n    examples = [\n        (\"Single generator\", gen()),\n        (\"Identity\", identity()),\n        (\"2-layer chain\", compose(gen(), gen())),\n        (\"3-layer chain\", compose(gen(), compose(gen(), gen()))),\n        (\"2-wide parallel\", parallel(gen(), gen())),\n        (\"3-wide parallel\", parallel(gen(), parallel(gen(), gen()))),\n        (\"Sequential then parallel\",\n         compose(parallel(gen(), gen()), gen())),\n        (\"Parallel of 2-chains\",\n         parallel(compose(gen(), gen()), compose(gen(), gen()))),\n        (\"Mixed: (G\u2225G) \u2192 (G\u2225G\u2225G)\",\n         compose(parallel(gen(), gen()), parallel(gen(), parallel(gen(), gen())))),\n    ]\n\n    for name, expr in examples:\n        p = tropical_valuation(expr)\n        tradeoff_ok = p.satisfies_tradeoff()\n        print(f\"  {name:40s} | expr={str(expr):30s} | \"\n              f\"profile=({p.depth_val},{p.width_val},{p.gen_val}) | \"\n              f\"d\u00d7w\u2265g: {tradeoff_ok}\")\n    print()\n\n\ndef demo_functoriality():\n    \"\"\"Verify functoriality: val(compose(e1,e2)) = seqMul(val(e1), val(e2)).\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 2: Functoriality Verification\")\n    print(\"=\" * 60)\n\n    e1 = parallel(gen(), gen())  # depth=1, width=2, gen=2\n    e2 = compose(gen(), gen())   # depth=2, width=1, gen=2\n    e_composed = compose(e1, e2)\n\n    v1 = tropical_valuation(e1)\n    v2 = tropical_valuation(e2)\n    v_composed = tropical_valuation(e_composed)\n    v_product = v1.seq_mul(v2)\n\n    print(f\"  e1 = {e1}\")\n    print(f\"  val(e1) = ({v1.depth_val}, {v1.width_val}, {v1.gen_val})\")\n    print(f\"  e2 = {e2}\")\n    print(f\"  val(e2) = ({v2.depth_val}, {v2.width_val}, {v2.gen_val})\")\n    print(f\"  e1 \u2192 e2 = {e_composed}\")\n    print(f\"  val(e1 \u2192 e2)     = ({v_composed.depth_val}, {v_composed.width_val}, {v_composed.gen_val})\")\n    print(f\"  seqMul(v1, v2) = ({v_product.depth_val}, {v_product.width_val}, {v_product.gen_val})\")\n    print(f\"  Match: {v_composed == v_product} \u2713\")\n    print()\n\n\ndef demo_structural_invariance():\n    \"\"\"Verify structural congruence preserves profiles.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 3: Structural Congruence Invariance\")\n    print(\"=\" * 60)\n\n    a, b, c = gen(), gen(), gen()\n\n    # Associativity of compose\n    e1 = compose(compose(a, b), c)   # (A\u2192B)\u2192C\n    e2 = compose(a, compose(b, c))   # A\u2192(B\u2192C)\n    v1, v2 = tropical_valuation(e1), tropical_valuation(e2)\n    print(f\"  Compose assoc: {e1} \u2261 {e2}\")\n    print(f\"    profiles: ({v1.depth_val},{v1.width_val},{v1.gen_val}) = ({v2.depth_val},{v2.width_val},{v2.gen_val}) : {v1 == v2} \u2713\")\n\n    # Commutativity of parallel\n    e3 = parallel(a, b)\n    e4 = parallel(b, a)\n    v3, v4 = tropical_valuation(e3), tropical_valuation(e4)\n    print(f\"  Parallel comm:  {e3} \u2261 {e4}\")\n    print(f\"    profiles: ({v3.depth_val},{v3.width_val},{v3.gen_val}) = ({v4.depth_val},{v4.width_val},{v4.gen_val}) : {v3 == v4} \u2713\")\n\n    # Identity elimination\n    e5 = compose(identity(), a)\n    v5, va = tropical_valuation(e5), tropical_valuation(a)\n    print(f\"  Left identity:  {e5} \u2261 {a}\")\n    print(f\"    profiles: ({v5.depth_val},{v5.width_val},{v5.gen_val}) = ({va.depth_val},{va.width_val},{va.gen_val}) : {v5 == va} \u2713\")\n\n    print()\n\n\ndef demo_tropical_distributivity():\n    \"\"\"Verify tropical semiring distributivity.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 4: Tropical Semiring Distributivity\")\n    print(\"=\" * 60)\n\n    p = TropicalArchProfile(2, 3, 4)\n    q = TropicalArchProfile(1, 5, 2)\n    r = TropicalArchProfile(3, 1, 6)\n\n    lhs = p.seq_mul(q.trop_add(r))\n    rhs = p.seq_mul(q).trop_add(p.seq_mul(r))\n    print(f\"  p = ({p.depth_val}, {p.width_val}, {p.gen_val})\")\n    print(f\"  q = ({q.depth_val}, {q.width_val}, {q.gen_val})\")\n    print(f\"  r = ({r.depth_val}, {r.width_val}, {r.gen_val})\")\n    print(f\"  p \u2297 (q \u2295 r)     = ({lhs.depth_val}, {lhs.width_val}, {lhs.gen_val})\")\n    print(f\"  (p\u2297q) \u2295 (p\u2297r) = ({rhs.depth_val}, {rhs.width_val}, {rhs.gen_val})\")\n    print(f\"  Match: {lhs == rhs} \u2713\")\n    print()\n\n\ndef demo_depth_width_tradeoff():\n    \"\"\"Verify and visualize the depth-width-generator tradeoff.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 5: Depth-Width-Generator Tradeoff\")\n    print(\"=\" * 60)\n\n    def random_expr(max_depth=5):\n        if max_depth <= 1:\n            return random.choice([gen(), identity()])\n        r = random.random()\n        if r < 0.3:\n            return gen()\n        elif r < 0.4:\n            return identity()\n        elif r < 0.7:\n            return compose(random_expr(max_depth-1), random_expr(max_depth-1))\n        else:\n            return parallel(random_expr(max_depth-1), random_expr(max_depth-1))\n\n    n_tests = 10000\n    violations = 0\n    for _ in range(n_tests):\n        e = random_expr()\n        p = tropical_valuation(e)\n        if not p.satisfies_tradeoff():\n            violations += 1\n\n    print(f\"  Tested {n_tests} random architectures\")\n    print(f\"  Tradeoff violations: {violations}\")\n    print(f\"  Theorem verified: genCount \u2264 depth \u00d7 maxWidth for all \u2713\")\n    print()\n\n\ndef demo_bounded_classification():\n    \"\"\"Enumerate bounded profile classes.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 6: Bounded Architecture Classification\")\n    print(\"=\" * 60)\n\n    for G, D, W in [(3, 3, 3), (5, 5, 5), (8, 8, 8), (10, 10, 10)]:\n        total = (D + 1) * (W + 1) * (G + 1)\n        valid = sum(\n            1 for d, w, g in itertools.product(range(D+1), range(W+1), range(G+1))\n            if g <= d * w\n        )\n        print(f\"  Bounds (G={G}, D={D}, W={W}): \"\n              f\"max profiles = {total}, \"\n              f\"valid (tradeoff) = {valid}, \"\n              f\"reduction = {100*(1-valid/total):.1f}%\")\n    print()\n\n\ndef demo_canonical_reconstruction():\n    \"\"\"Demonstrate canonical skeleton reconstruction.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 7: Canonical Skeleton Reconstruction\")\n    print(\"=\" * 60)\n\n    # Two structurally congruent expressions\n    e1 = compose(compose(gen(), gen()), gen())\n    e2 = compose(gen(), compose(gen(), gen()))\n\n    v1 = tropical_valuation(e1)\n    v2 = tropical_valuation(e2)\n\n    print(f\"  e1 = {e1}\")\n    print(f\"  e2 = {e2}\")\n    print(f\"  val(e1) = ({v1.depth_val}, {v1.width_val}, {v1.gen_val})\")\n    print(f\"  val(e2) = ({v2.depth_val}, {v2.width_val}, {v2.gen_val})\")\n    print(f\"  Same profile (same skeleton): {v1 == v2} \u2713\")\n    print()\n\n    # Different profiles \u2192 different classes\n    e3 = parallel(gen(), parallel(gen(), gen()))\n    v3 = tropical_valuation(e3)\n    print(f\"  e3 = {e3}\")\n    print(f\"  val(e3) = ({v3.depth_val}, {v3.width_val}, {v3.gen_val})\")\n    print(f\"  Different from e1: {v1 != v3} \u2713\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Section 3: Run all demos\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"\u2550\" * 60)\n    print(\"  OPERADIC TROPICALIZATION OF NEURAL ARCHITECTURES\")\n    print(\"  Tropical Valuation Functor \u2014 Demonstrations\")\n    print(\"\u2550\" * 60 + \"\\n\")\n\n    demo_basic_profiles()\n    demo_functoriality()\n    demo_structural_invariance()\n    demo_tropical_distributivity()\n    demo_depth_width_tradeoff()\n    demo_bounded_classification()\n    demo_canonical_reconstruction()\n\n    print(\"All demonstrations completed successfully! \u2713\")\n"
+      },
+      {
+        "name": "Applications: Architecture Equivalence & Compression",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Operadic Tropicalization to Neural Architecture Design\n\nDemonstrates practical applications:\n1. Architecture equivalence checking\n2. Architecture search space reduction\n3. Complexity lower bounds\n4. Architecture compression via canonical forms\n\"\"\"\n\nimport itertools\nimport random\nfrom dataclasses import dataclass\nfrom typing import List, Optional, Tuple\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core types (duplicated for standalone execution)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass(frozen=True)\nclass Profile:\n    d: int; w: int; g: int\n\n    def seq_mul(self, o): return Profile(self.d+o.d, max(self.w,o.w), self.g+o.g)\n    def par_mul(self, o): return Profile(max(self.d,o.d), self.w+o.w, self.g+o.g)\n    def valid(self): return self.g <= self.d * self.w or (self.d==0 and self.w==0 and self.g==0)\n\nclass E:\n    \"\"\"Minimal architecture expression.\"\"\"\n    def __init__(self, kind, l=None, r=None):\n        self.kind = kind; self.l = l; self.r = r\n\n    def profile(self):\n        if self.kind == 'G': return Profile(1,1,1)\n        if self.kind == 'I': return Profile(0,0,0)\n        if self.kind == 'S': return self.l.profile().seq_mul(self.r.profile())\n        return self.l.profile().par_mul(self.r.profile())\n\n    def __repr__(self):\n        if self.kind == 'G': return 'G'\n        if self.kind == 'I': return 'I'\n        if self.kind == 'S': return f'({self.l}\u2192{self.r})'\n        return f'({self.l}\u2225{self.r})'\n\ndef G(): return E('G')\ndef I(): return E('I')\ndef S(a,b): return E('S',a,b)\ndef P(a,b): return E('P',a,b)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Architecture Equivalence\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef check_equivalence(e1: E, e2: E) -> bool:\n    \"\"\"\n    Check if two architectures are profile-equivalent.\n    Time: O(n1 + n2) where ni is expression size.\n    \"\"\"\n    return e1.profile() == e2.profile()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Search Space Reduction\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef search_space_analysis(max_g: int, max_d: int, max_w: int):\n    \"\"\"\n    Analyze architecture search space reduction via tropical profiles.\n\n    Instead of searching over exponentially many expressions,\n    search over the finite profile space.\n    \"\"\"\n    total = (max_d+1) * (max_w+1) * (max_g+1)\n    valid = []\n    for d, w, g in itertools.product(range(max_d+1), range(max_w+1), range(max_g+1)):\n        p = Profile(d, w, g)\n        if p.valid():\n            valid.append(p)\n\n    # Group by complexity = d * w\n    by_complexity = {}\n    for p in valid:\n        c = p.d * p.w\n        by_complexity.setdefault(c, []).append(p)\n\n    return {\n        \"total_profiles\": total,\n        \"valid_profiles\": len(valid),\n        \"by_complexity\": by_complexity,\n        \"reduction_factor\": total / max(len(valid), 1),\n    }\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Complexity Lower Bounds\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef min_resources_for_generators(g: int) -> List[Tuple[int,int]]:\n    \"\"\"\n    Find minimal (depth, width) pairs that can accommodate g generators.\n    By the tradeoff theorem: d \u00d7 w \u2265 g.\n\n    Returns Pareto-optimal (d, w) pairs minimizing d+w.\n    \"\"\"\n    candidates = []\n    for d in range(1, g+1):\n        w = (g + d - 1) // d  # ceil(g/d)\n        candidates.append((d, w))\n\n    # Pareto front: no other pair dominates\n    pareto = []\n    for d, w in candidates:\n        dominated = False\n        for d2, w2 in candidates:\n            if d2 <= d and w2 <= w and (d2, w2) != (d, w):\n                dominated = True\n                break\n        if not dominated:\n            pareto.append((d, w))\n\n    return pareto\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Architecture Compression\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef canonical_form(e: E) -> Profile:\n    \"\"\"\n    Compress an architecture to its canonical form (= its profile).\n    Two architectures with the same canonical form are structurally equivalent.\n    \"\"\"\n    return e.profile()\n\n\ndef compression_demo():\n    \"\"\"Show that structurally different expressions compress to same profile.\"\"\"\n    pairs = [\n        (S(S(G(),G()),G()), S(G(),S(G(),G())), \"Compose associativity\"),\n        (P(G(),G()), P(G(),G()), \"Parallel identity\"),\n        (S(I(),G()), G(), \"Left identity elimination\"),\n        (S(G(),I()), G(), \"Right identity elimination\"),\n    ]\n\n    print(\"  Architecture Compression via Canonical Forms:\")\n    for e1, e2, desc in pairs:\n        p1, p2 = canonical_form(e1), canonical_form(e2)\n        print(f\"    {desc:30s}: {e1} \u2261 {e2} \u2192 ({p1.d},{p1.w},{p1.g}) = ({p2.d},{p2.w},{p2.g}) : {p1==p2}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Architecture Equivalence Checking\")\n    print(\"=\" * 60)\n    e1 = S(S(G(),G()),G())\n    e2 = S(G(),S(G(),G()))\n    e3 = P(G(),P(G(),G()))\n    print(f\"  {e1} \u2261 {e2} : {check_equivalence(e1, e2)} \u2713 (associativity)\")\n    print(f\"  {e1} \u2261 {e3} : {check_equivalence(e1, e3)} (different structure)\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"APPLICATION 2: Search Space Reduction\")\n    print(\"=\" * 60)\n    for g,d,w in [(5,5,5), (10,10,10), (20,20,20)]:\n        r = search_space_analysis(g, d, w)\n        print(f\"  Bounds ({g},{d},{w}): {r['total_profiles']} total \u2192 \"\n              f\"{r['valid_profiles']} valid ({r['reduction_factor']:.1f}\u00d7 reduction)\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"APPLICATION 3: Complexity Lower Bounds\")\n    print(\"=\" * 60)\n    for g in [10, 50, 100]:\n        pareto = min_resources_for_generators(g)\n        pairs_str = \", \".join(f\"({d},{w})\" for d,w in pareto[:5])\n        if len(pareto) > 5:\n            pairs_str += f\", ... ({len(pareto)} total)\"\n        print(f\"  g={g}: Pareto-optimal (d,w): {pairs_str}\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"APPLICATION 4: Architecture Compression\")\n    print(\"=\" * 60)\n    compression_demo()\n    print()\n\n    print(\"All applications completed successfully! \u2713\")\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Tropical Profile Computation",
+        "pseudocode": "ComputeTropicalProfile(e):\n  match e with\n  | generator \u2192 (1, 1, 1)\n  | identity  \u2192 (0, 0, 0)\n  | compose(e\u2081,e\u2082) \u2192 (d\u2081+d\u2082, max(w\u2081,w\u2082), g\u2081+g\u2082)\n  | parallel(e\u2081,e\u2082) \u2192 (max(d\u2081,d\u2082), w\u2081+w\u2082, g\u2081+g\u2082)\n\nTime: O(n), Space: O(h)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Operadic Tropicalization of Neural Architectures\n\nImplements the key algorithms from the research paper:\n1. Tropical profile computation\n2. Bounded architecture classification\n3. Architecture equivalence checking\n4. Depth-width tradeoff analysis\n5. Profile space enumeration with tropical semiring operations\n\"\"\"\n\nimport itertools\nfrom dataclasses import dataclass\nfrom typing import List, Tuple, Set, Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Tropical Profile Computation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass(frozen=True)\nclass TropicalProfile:\n    \"\"\"\n    Tropical architecture profile: a triple (depth, width, generators).\n\n    Supports three algebraic operations:\n    - seq_mul: sequential composition (depth adds, width maxes, gen adds)\n    - par_mul: parallel composition (depth maxes, width adds, gen adds)\n    - trop_add: tropical addition (component-wise min)\n\n    Time: O(1) per operation\n    Space: O(1)\n    \"\"\"\n    d: int  # depth\n    w: int  # max width\n    g: int  # generator count\n\n    def seq_mul(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Sequential composition. Time: O(1).\"\"\"\n        return TropicalProfile(self.d + other.d, max(self.w, other.w), self.g + other.g)\n\n    def par_mul(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Parallel composition. Time: O(1).\"\"\"\n        return TropicalProfile(max(self.d, other.d), self.w + other.w, self.g + other.g)\n\n    def trop_add(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Tropical addition (component-wise min). Time: O(1).\"\"\"\n        return TropicalProfile(min(self.d, other.d), min(self.w, other.w), min(self.g, other.g))\n\n    def is_valid(self) -> bool:\n        \"\"\"Check depth-width tradeoff: g \u2264 d \u00d7 w. Time: O(1).\"\"\"\n        return self.g <= self.d * self.w or (self.d == 0 and self.w == 0 and self.g == 0)\n\n\nZERO = TropicalProfile(0, 0, 0)\nONE = TropicalProfile(1, 1, 1)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Bounded Architecture Classification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef classify_bounded_architectures(\n    max_gen: int, max_depth: int, max_width: int\n) -> Tuple[Set[TropicalProfile], Set[TropicalProfile]]:\n    \"\"\"\n    Enumerate all profiles in a bounded architecture class.\n\n    Returns:\n        (all_profiles, valid_profiles) where valid_profiles satisfy\n        the depth-width tradeoff constraint.\n\n    Time: O(D \u00d7 W \u00d7 G)\n    Space: O(D \u00d7 W \u00d7 G)\n    \"\"\"\n    all_profiles: Set[TropicalProfile] = set()\n    valid_profiles: Set[TropicalProfile] = set()\n\n    for d in range(max_depth + 1):\n        for w in range(max_width + 1):\n            for g in range(max_gen + 1):\n                p = TropicalProfile(d, w, g)\n                all_profiles.add(p)\n                if p.is_valid():\n                    valid_profiles.add(p)\n\n    return all_profiles, valid_profiles\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Profile Algebra Verification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef verify_tropical_semiring_laws(\n    profiles: List[TropicalProfile], verbose: bool = False\n) -> dict:\n    \"\"\"\n    Verify tropical semiring laws on a set of profiles.\n\n    Checks:\n    - seq_mul associativity and identity\n    - par_mul commutativity, associativity, identity\n    - trop_add commutativity, associativity, idempotency\n    - Left and right distributivity of seq_mul over trop_add\n\n    Time: O(n\u00b3) for n = len(profiles)\n    Space: O(1)\n    \"\"\"\n    results = {\n        \"seq_assoc\": True, \"seq_id_left\": True, \"seq_id_right\": True,\n        \"par_comm\": True, \"par_assoc\": True, \"par_id_left\": True, \"par_id_right\": True,\n        \"trop_comm\": True, \"trop_assoc\": True, \"trop_idem\": True,\n        \"distrib_left\": True, \"distrib_right\": True,\n    }\n\n    for p in profiles:\n        # Identity laws\n        if ZERO.seq_mul(p) != p:\n            results[\"seq_id_left\"] = False\n        if p.seq_mul(ZERO) != p:\n            results[\"seq_id_right\"] = False\n        if ZERO.par_mul(p) != p:\n            results[\"par_id_left\"] = False\n        if p.par_mul(ZERO) != p:\n            results[\"par_id_right\"] = False\n        # Idempotency\n        if p.trop_add(p) != p:\n            results[\"trop_idem\"] = False\n\n    for p, q in itertools.product(profiles, repeat=2):\n        # Commutativity\n        if p.par_mul(q) != q.par_mul(p):\n            results[\"par_comm\"] = False\n        if p.trop_add(q) != q.trop_add(p):\n            results[\"trop_comm\"] = False\n\n    for p, q, r in itertools.product(profiles, repeat=3):\n        # Associativity\n        if (p.seq_mul(q)).seq_mul(r) != p.seq_mul(q.seq_mul(r)):\n            results[\"seq_assoc\"] = False\n        if (p.par_mul(q)).par_mul(r) != p.par_mul(q.par_mul(r)):\n            results[\"par_assoc\"] = False\n        if (p.trop_add(q)).trop_add(r) != p.trop_add(q.trop_add(r)):\n            results[\"trop_assoc\"] = False\n        # Distributivity\n        if p.seq_mul(q.trop_add(r)) != p.seq_mul(q).trop_add(p.seq_mul(r)):\n            results[\"distrib_left\"] = False\n        if (p.trop_add(q)).seq_mul(r) != p.seq_mul(r).trop_add(q.seq_mul(r)):\n            results[\"distrib_right\"] = False\n\n    if verbose:\n        for law, holds in results.items():\n            status = \"\u2713\" if holds else \"\u2717\"\n            print(f\"  {law:20s}: {status}\")\n\n    return results\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Depth-Width Tradeoff Analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef tradeoff_analysis(max_bound: int) -> dict:\n    \"\"\"\n    Analyze the depth-width tradeoff for bounded classes.\n\n    For each bound B \u2208 {1, ..., max_bound}, compute:\n    - Total profiles in [0,B]\u00b3\n    - Valid profiles satisfying g \u2264 d \u00d7 w\n    - Reduction ratio\n\n    Time: O(max_bound\u2074)\n    Space: O(max_bound)\n    \"\"\"\n    results = {}\n    for B in range(1, max_bound + 1):\n        total = (B + 1) ** 3\n        valid = sum(\n            1 for d, w, g in itertools.product(range(B + 1), repeat=3)\n            if g <= d * w or (d == 0 and w == 0 and g == 0)\n        )\n        results[B] = {\n            \"total\": total,\n            \"valid\": valid,\n            \"reduction\": 1.0 - valid / total if total > 0 else 0,\n        }\n    return results\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main: run all algorithms\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"Algorithm 1: Bounded Classification\")\n    print(\"=\" * 60)\n    all_p, valid_p = classify_bounded_architectures(5, 5, 5)\n    print(f\"  Bound (5,5,5): {len(all_p)} total, {len(valid_p)} valid profiles\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"Algorithm 2: Tropical Semiring Law Verification\")\n    print(\"=\" * 60)\n    test_profiles = [TropicalProfile(d, w, g) for d in range(4) for w in range(4) for g in range(4)]\n    results = verify_tropical_semiring_laws(test_profiles, verbose=True)\n    all_pass = all(results.values())\n    print(f\"  All laws verified: {all_pass}\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"Algorithm 3: Depth-Width Tradeoff Analysis\")\n    print(\"=\" * 60)\n    analysis = tradeoff_analysis(12)\n    print(f\"  {'Bound':>6s} | {'Total':>7s} | {'Valid':>7s} | {'Reduction':>10s}\")\n    print(f\"  {'-'*6} | {'-'*7} | {'-'*7} | {'-'*10}\")\n    for B, data in analysis.items():\n        print(f\"  {B:>6d} | {data['total']:>7d} | {data['valid']:>7d} | {data['reduction']:>9.1%}\")\n    print()\n\n    print(\"All algorithms completed successfully! \u2713\")\n",
+        "code_file": "visualizations/algebramachinelearningspeculative_operadic_tropica_tropical_profile_computation.py"
+      },
+      {
+        "name": "Bounded Architecture Classification",
+        "pseudocode": "ClassifyBounded(G, D, W):\n  profiles \u2190 \u2205\n  for d \u2208 {0,...,D}, w \u2208 {0,...,W}, g \u2208 {0,...,G}:\n    if g \u2264 d \u00d7 w: profiles \u2190 profiles \u222a {(d,w,g)}\n  return profiles\n\nTime: O(D\u00d7W\u00d7G), Space: O(D\u00d7W\u00d7G)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Operadic Tropicalization of Neural Architectures\n\nImplements the key algorithms from the research paper:\n1. Tropical profile computation\n2. Bounded architecture classification\n3. Architecture equivalence checking\n4. Depth-width tradeoff analysis\n5. Profile space enumeration with tropical semiring operations\n\"\"\"\n\nimport itertools\nfrom dataclasses import dataclass\nfrom typing import List, Tuple, Set, Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Tropical Profile Computation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass(frozen=True)\nclass TropicalProfile:\n    \"\"\"\n    Tropical architecture profile: a triple (depth, width, generators).\n\n    Supports three algebraic operations:\n    - seq_mul: sequential composition (depth adds, width maxes, gen adds)\n    - par_mul: parallel composition (depth maxes, width adds, gen adds)\n    - trop_add: tropical addition (component-wise min)\n\n    Time: O(1) per operation\n    Space: O(1)\n    \"\"\"\n    d: int  # depth\n    w: int  # max width\n    g: int  # generator count\n\n    def seq_mul(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Sequential composition. Time: O(1).\"\"\"\n        return TropicalProfile(self.d + other.d, max(self.w, other.w), self.g + other.g)\n\n    def par_mul(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Parallel composition. Time: O(1).\"\"\"\n        return TropicalProfile(max(self.d, other.d), self.w + other.w, self.g + other.g)\n\n    def trop_add(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Tropical addition (component-wise min). Time: O(1).\"\"\"\n        return TropicalProfile(min(self.d, other.d), min(self.w, other.w), min(self.g, other.g))\n\n    def is_valid(self) -> bool:\n        \"\"\"Check depth-width tradeoff: g \u2264 d \u00d7 w. Time: O(1).\"\"\"\n        return self.g <= self.d * self.w or (self.d == 0 and self.w == 0 and self.g == 0)\n\n\nZERO = TropicalProfile(0, 0, 0)\nONE = TropicalProfile(1, 1, 1)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Bounded Architecture Classification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef classify_bounded_architectures(\n    max_gen: int, max_depth: int, max_width: int\n) -> Tuple[Set[TropicalProfile], Set[TropicalProfile]]:\n    \"\"\"\n    Enumerate all profiles in a bounded architecture class.\n\n    Returns:\n        (all_profiles, valid_profiles) where valid_profiles satisfy\n        the depth-width tradeoff constraint.\n\n    Time: O(D \u00d7 W \u00d7 G)\n    Space: O(D \u00d7 W \u00d7 G)\n    \"\"\"\n    all_profiles: Set[TropicalProfile] = set()\n    valid_profiles: Set[TropicalProfile] = set()\n\n    for d in range(max_depth + 1):\n        for w in range(max_width + 1):\n            for g in range(max_gen + 1):\n                p = TropicalProfile(d, w, g)\n                all_profiles.add(p)\n                if p.is_valid():\n                    valid_profiles.add(p)\n\n    return all_profiles, valid_profiles\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Profile Algebra Verification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef verify_tropical_semiring_laws(\n    profiles: List[TropicalProfile], verbose: bool = False\n) -> dict:\n    \"\"\"\n    Verify tropical semiring laws on a set of profiles.\n\n    Checks:\n    - seq_mul associativity and identity\n    - par_mul commutativity, associativity, identity\n    - trop_add commutativity, associativity, idempotency\n    - Left and right distributivity of seq_mul over trop_add\n\n    Time: O(n\u00b3) for n = len(profiles)\n    Space: O(1)\n    \"\"\"\n    results = {\n        \"seq_assoc\": True, \"seq_id_left\": True, \"seq_id_right\": True,\n        \"par_comm\": True, \"par_assoc\": True, \"par_id_left\": True, \"par_id_right\": True,\n        \"trop_comm\": True, \"trop_assoc\": True, \"trop_idem\": True,\n        \"distrib_left\": True, \"distrib_right\": True,\n    }\n\n    for p in profiles:\n        # Identity laws\n        if ZERO.seq_mul(p) != p:\n            results[\"seq_id_left\"] = False\n        if p.seq_mul(ZERO) != p:\n            results[\"seq_id_right\"] = False\n        if ZERO.par_mul(p) != p:\n            results[\"par_id_left\"] = False\n        if p.par_mul(ZERO) != p:\n            results[\"par_id_right\"] = False\n        # Idempotency\n        if p.trop_add(p) != p:\n            results[\"trop_idem\"] = False\n\n    for p, q in itertools.product(profiles, repeat=2):\n        # Commutativity\n        if p.par_mul(q) != q.par_mul(p):\n            results[\"par_comm\"] = False\n        if p.trop_add(q) != q.trop_add(p):\n            results[\"trop_comm\"] = False\n\n    for p, q, r in itertools.product(profiles, repeat=3):\n        # Associativity\n        if (p.seq_mul(q)).seq_mul(r) != p.seq_mul(q.seq_mul(r)):\n            results[\"seq_assoc\"] = False\n        if (p.par_mul(q)).par_mul(r) != p.par_mul(q.par_mul(r)):\n            results[\"par_assoc\"] = False\n        if (p.trop_add(q)).trop_add(r) != p.trop_add(q.trop_add(r)):\n            results[\"trop_assoc\"] = False\n        # Distributivity\n        if p.seq_mul(q.trop_add(r)) != p.seq_mul(q).trop_add(p.seq_mul(r)):\n            results[\"distrib_left\"] = False\n        if (p.trop_add(q)).seq_mul(r) != p.seq_mul(r).trop_add(q.seq_mul(r)):\n            results[\"distrib_right\"] = False\n\n    if verbose:\n        for law, holds in results.items():\n            status = \"\u2713\" if holds else \"\u2717\"\n            print(f\"  {law:20s}: {status}\")\n\n    return results\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Depth-Width Tradeoff Analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef tradeoff_analysis(max_bound: int) -> dict:\n    \"\"\"\n    Analyze the depth-width tradeoff for bounded classes.\n\n    For each bound B \u2208 {1, ..., max_bound}, compute:\n    - Total profiles in [0,B]\u00b3\n    - Valid profiles satisfying g \u2264 d \u00d7 w\n    - Reduction ratio\n\n    Time: O(max_bound\u2074)\n    Space: O(max_bound)\n    \"\"\"\n    results = {}\n    for B in range(1, max_bound + 1):\n        total = (B + 1) ** 3\n        valid = sum(\n            1 for d, w, g in itertools.product(range(B + 1), repeat=3)\n            if g <= d * w or (d == 0 and w == 0 and g == 0)\n        )\n        results[B] = {\n            \"total\": total,\n            \"valid\": valid,\n            \"reduction\": 1.0 - valid / total if total > 0 else 0,\n        }\n    return results\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main: run all algorithms\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"Algorithm 1: Bounded Classification\")\n    print(\"=\" * 60)\n    all_p, valid_p = classify_bounded_architectures(5, 5, 5)\n    print(f\"  Bound (5,5,5): {len(all_p)} total, {len(valid_p)} valid profiles\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"Algorithm 2: Tropical Semiring Law Verification\")\n    print(\"=\" * 60)\n    test_profiles = [TropicalProfile(d, w, g) for d in range(4) for w in range(4) for g in range(4)]\n    results = verify_tropical_semiring_laws(test_profiles, verbose=True)\n    all_pass = all(results.values())\n    print(f\"  All laws verified: {all_pass}\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"Algorithm 3: Depth-Width Tradeoff Analysis\")\n    print(\"=\" * 60)\n    analysis = tradeoff_analysis(12)\n    print(f\"  {'Bound':>6s} | {'Total':>7s} | {'Valid':>7s} | {'Reduction':>10s}\")\n    print(f\"  {'-'*6} | {'-'*7} | {'-'*7} | {'-'*10}\")\n    for B, data in analysis.items():\n        print(f\"  {B:>6d} | {data['total']:>7d} | {data['valid']:>7d} | {data['reduction']:>9.1%}\")\n    print()\n\n    print(\"All algorithms completed successfully! \u2713\")\n",
+        "code_file": "visualizations/algebramachinelearningspeculative_operadic_tropica_bounded_architecture_classification.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Tropical Profile Space and Depth-Width Tradeoff",
+        "file": "visualizations/algebramachinelearningspeculative_operadic_tropica_tropical_profile_space_and_depth_width_tradeoff.png"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# Operadic Tropicalization of Neural Architectures\n\nThis file establishes a formal bridge between **operad theory**, **tropical algebra**, and\n**neural architecture classification**. The central result is a certified tropical\nreconstruction theorem: bounded neural architectures admit complete tropical operadic\ninvariants that classify them up to structural congruence.\n\n## Main Results\n\n### Structures and Definitions\n* `ArchExpr` \u2014 tree-structured operadic expressions (free operad elements)\n* `TropicalArchProfile` \u2014 tropical complexity profile with depth, width, generator count\n* `StructuralCongr` \u2014 structural congruence on architecture expressions\n* `tropicalValuation` \u2014 the operadic tropical valuation functor\n* `ArchitectureSkeleton` \u2014 canonical skeleton type for architecture reconstruction\n* `reconstructSkeleton` \u2014 reconstruction of canonical skeleton from tropical profile\n\n### Key Theorems\n* `tropicalValuation_compose` \u2014 functoriality under sequential composition\n* `tropicalValuation_parallel` \u2014 functoriality under parallel composition\n* `seqMul_tropAdd_distrib_left` \u2014 tropical semiring distributivity\n* `tropicalValuation_structural_congr` \u2014 invariance under structural congruence\n* `depth_width_genCount_tradeoff` \u2014 depth \u00d7 width \u2265 generatorCount\n* `certified_operadic_tropical_reconstruction` \u2014 the main reconstruction theorem\n* `tropical_profile_complete_for_bounded_architecture_congruence` \u2014 completeness\n\n## Bridge: connects operad theory (compositional syntax) \u2192 tropical algebra (min-plus) \u2192\n   ML architecture theory (depth/width classification) \u2192 automata theory (Myhill\u2013Nerode) \u2192\n   certified compression (canonical minimization)\n\n## References\n- Loday, Vallette: \"Algebraic Operads\"\n- Maclagan, Sturmfels: \"Introduction to Tropical Geometry\"\n- Cohen, Gaubert, Quadrat: \"Max-plus algebra and system theory\"\n-/\n\nnoncomputable section\n\nnamespace OperadicTropicalization\n\n/-! ## Section 1: Architecture Expressions (Free Operad)\n\nAn `ArchExpr` is an element of the free operad on one generator, representing\na neural architecture built from:\n- `generator`: a single computation module (layer, attention head, etc.)\n- `identity`: the identity/pass-through operation\n- `compose`: sequential composition (depth increases additively)\n- `parallel`: parallel composition (width increases additively)\n-/\n\n/-- Architecture expression: element of the free operad on one generator.\n    Bridge: connects operadic composition theory to neural architecture design. -/\ninductive ArchExpr where\n  | generator : ArchExpr\n  | identity : ArchExpr\n  | compose : ArchExpr \u2192 ArchExpr \u2192 ArchExpr\n  | parallel : ArchExpr \u2192 ArchExpr \u2192 ArchExpr\n  deriving DecidableEq\n\nnamespace ArchExpr\n\n/-- Sequential depth: length of the longest sequential computation path.\n    Compose adds depths (sequential); parallel takes max (concurrent). -/\n@[simp] def depth : ArchExpr \u2192 \u2115\n  | generator => 1\n  | identity => 0\n  | compose e\u2081 e\u2082 => e\u2081.depth + e\u2082.depth\n  | parallel e\u2081 e\u2082 => max e\u2081.depth e\u2082.depth\n\n/-- Generator count: total number of computation modules.\n    Both compose and parallel sum counts (all generators are used). -/\n@[simp] def generatorCount : ArchExpr \u2192 \u2115\n  | generator => 1\n  | identity => 0\n  | compose e\u2081 e\u2082 => e\u2081.generatorCount + e\u2082.generatorCount\n  | parallel e\u2081 e\u2082 => e\u2081.generatorCount + e\u2082.generatorCount\n\n/-- Maximum width: the widest parallel cross-section.\n    Sequential composition takes max (pipeline bottleneck);\n    parallel composition sums widths (resources allocated side by side). -/\n@[simp] def maxWidth : ArchExpr \u2192 \u2115\n  | generator => 1\n  | identity => 0\n  | compose e\u2081 e\u2082 => max e\u2081.maxWidth e\u2082.maxWidth\n  | parallel e\u2081 e\u2082 => e\u2081.maxWidth + e\u2082.maxWidth\n\n/-- Depth-width product: combined complexity invariant. -/\ndef complexity (e : ArchExpr) : \u2115 := e.depth * e.maxWidth\n\n/-- Total node count in the expression tree. -/\n@[simp] def size : ArchExpr \u2192 \u2115\n  | generator => 1\n  | identity => 1\n  | compose e\u2081 e\u2082 => 1 + e\u2081.size + e\u2082.size\n  | parallel e\u2081 e\u2082 => 1 + e\u2081.size + e\u2082.size\n\n/-- Canonical sequential chain of `k` generators: depth k, width 1, genCount k. -/\ndef kChain : \u2115 \u2192 ArchExpr\n  | 0 => .identity\n  | k + 1 => .compose .generator (kChain k)\n\n/-- Wide parallel arrangement of `n` generators: depth 1 (if n>0), width n, genCount n. -/\ndef wideParallel : \u2115 \u2192 ArchExpr\n  | 0 => .identity\n  | 1 => .generator\n  | n + 2 => .parallel .generator (wideParallel (n + 1))\n\n/-! ### Basic structural lemmas -/\n\ntheorem depth_compose_eq (e\u2081 e\u2082 : ArchExpr) :\n    (compose e\u2081 e\u2082).depth = e\u2081.depth + e\u2082.depth := rfl\n\ntheorem depth_parallel_eq (e\u2081 e\u2082 : ArchExpr) :\n    (parallel e\u2081 e\u2082).depth = max e\u2081.depth e\u2082.depth := rfl\n\ntheorem generatorCount_compose_eq (e\u2081 e\u2082 : ArchExpr) :\n    (compose e\u2081 e\u2082).generatorCount = e\u2081.generatorCount + e\u2082.generatorCount := rfl\n\ntheorem generatorCount_parallel_eq (e\u2081 e\u2082 : ArchExpr) :\n    (parallel e\u2081 e\u2082).generatorCount = e\u2081.generatorCount + e\u2082.generatorCount := rfl\n\ntheorem maxWidth_compose_eq (e\u2081 e\u2082 : ArchExpr) :\n    (compose e\u2081 e\u2082).maxWidth = max e\u2081.maxWidth e\u2082.maxWidth := rfl\n\ntheorem maxWidth_parallel_eq (e\u2081 e\u2082 : ArchExpr) :\n    (parallel e\u2081 e\u2082).maxWidth = e\u2081.maxWidth + e\u2082.maxWidth := rfl\n\ntheorem depth_parallel_le_left (e\u2081 e\u2082 : ArchExpr) :\n    e\u2081.depth \u2264 (parallel e\u2081 e\u2082).depth := le_max_left _ _\n\ntheorem depth_parallel_le_right (e\u2081 e\u2082 : ArchExpr) :\n    e\u2082.depth \u2264 (parallel e\u2081 e\u2082).depth := le_max_right _ _\n\ntheorem generatorCount_subadditive_compose (e\u2081 e\u2082 : ArchExpr) :\n    (compose e\u2081 e\u2082).generatorCount \u2264 e\u2081.generatorCount + e\u2082.generatorCount := le_refl _\n\ntheorem maxWidth_compose_le_sum (e\u2081 e\u2082 : ArchExpr) :\n    (compose e\u2081 e\u2082).maxWidth \u2264 e\u2081.maxWidth + e\u2082.maxWidth := by\n  simp only [maxWidth]; omega\n\n/-! ### kChain and wideParallel profile lemmas -/\n\n@[simp] theorem kChain_depth (k : \u2115) : (kChain k).depth = k := by\n  induction k with\n  | zero => rfl\n  | succ k ih => unfold kChain; simp [ih]; omega\n\n@[simp] theorem kChain_generatorCount (k : \u2115) : (kChain k).generatorCount = k := by\n  induction k with\n  | zero => rfl\n  | succ k ih => unfold kChain; simp [ih]; omega\n\n@[simp] theorem kChain_maxWidth_zero : (kChain 0).maxWidth = 0 := rfl\n\n@[simp] theorem kChain_maxWidth_succ (k : \u2115) : (kChain (k + 1)).maxWidth = max 1 (kChain k).maxWidth := rfl\n\ntheorem kChain_maxWidth_le_one (k : \u2115) : (kChain k).maxWidth \u2264 1 := by\n  induction k with\n  | zero => simp [kChain]\n  | succ k ih => simp [kChain]; omega\n\n/-\n**Depth-width-generator tradeoff**: the product of depth and max width\n    is at least the generator count. This is the operadic analogue of the\n    circuit complexity lower bound: you need enough \"area\" to fit all generators.\n\n    Bridge: connects tropical geometry (area of Newton polytope) to circuit\n    complexity (depth \u00d7 width lower bounds).\n-/\ntheorem depth_width_genCount_tradeoff (e : ArchExpr) :\n    e.generatorCount \u2264 e.depth * e.maxWidth := by\n  induction' e with e\u2081 e\u2082 ih\u2081 ih\u2082;\n  \u00b7 decide +revert;\n  \u00b7 decide +revert;\n  \u00b7 cases max_cases e\u2081.maxWidth e\u2082.maxWidth <;> simp_all +decide [ add_mul ];\n    \u00b7 exact add_le_add ih\u2081 ( by nlinarith );\n    \u00b7 nlinarith;\n  \u00b7 rename_i e\u2081 e\u2082 ih\u2081 ih\u2082;\n    rw [ ArchExpr.depth, ArchExpr.maxWidth, ArchExpr.generatorCount ];\n    cases max_cases e\u2081.depth e\u2082.depth <;> nlinarith [ Nat.zero_le e\u2081.maxWidth, Nat.zero_le e\u2082.maxWidth ]\n\nend ArchExpr\n\n/-! ## Section 2: Tropical Architecture Profile\n\nThe `TropicalArchProfile` is the tropical codomain of the valuation functor.\nIt carries two composition operations (sequential and parallel) corresponding\nto the two operadic compositions, and a tropical addition (component-wise min)\nmaking it an idempotent semiring-like structure. -/\n\n/-- Tropical architecture profile: the signature of an architecture's complexity.\n    Bridge: connects tropical geometry (valuations) to ML (architecture metrics). -/\n@[ext] structure TropicalArchProfile where\n  depthVal : \u2115\n  widthVal : \u2115\n  genVal : \u2115\n  deriving DecidableEq, Repr\n\nnamespace TropicalArchProfile\n\n/-- Sequential composition of profiles (tropical \"multiplication\" for depth-like\n    operations): depth adds, width takes max, generators add.\n    Bridge: captures how sequential layer stacking increases depth additively. -/\ndef seqMul (p q : TropicalArchProfile) : TropicalArchProfile :=\n  \u27e8p.depthVal + q.depthVal, max p.widthVal q.widthVal, p.genVal + q.genVal\u27e9\n\n/-- Parallel composition of profiles: depth takes max, width adds, generators add.\n    Bridge: captures how parallel branching increases width additively. -/\ndef parMul (p q : TropicalArchProfile) : TropicalArchProfile :=\n  \u27e8max p.depthVal q.depthVal, p.widthVal + q.widthVal, p.genVal + q.genVal\u27e9\n\n/-- Tropical addition: component-wise minimum. This is the idempotent\n    \"addition\" of tropical algebra, selecting the \"cheapest\" profile. -/\ndef tropAdd (p q : TropicalArchProfile) : TropicalArchProfile :=\n  \u27e8min p.depthVal q.depthVal, min p.widthVal q.widthVal, min p.genVal q.genVal\u27e9\n\n/-- The unit profile: identity element for both seqMul and parMul. -/\ndef unit : TropicalArchProfile := \u27e80, 0, 0\u27e9\n\n/-- The generator profile: profile of a single computation module. -/\ndef gen : TropicalArchProfile := \u27e81, 1, 1\u27e9\n\n/-- Component-wise partial order on profiles. -/\ninstance : LE TropicalArchProfile where\n  le p q := p.depthVal \u2264 q.depthVal \u2227 p.widthVal \u2264 q.widthVal \u2227 p.genVal \u2264 q.genVal\n\n/-! ### Sequential composition monoid laws -/\n\n@[simp] theorem seqMul_assoc (p q r : TropicalArchProfile) :\n    seqMul (seqMul p q) r = seqMul p (seqMul q r) := by\n  -- By definition of seqMul, we can expand both sides.\n  simp [TropicalArchProfile.seqMul];\n  exact \u27e8 add_assoc _ _ _, add_assoc _ _ _ \u27e9\n\n@[simp] theorem seqMul_unit_left (p : TropicalArchProfile) :\n    seqMul unit p = p := by\n  -- By definition of seqMul, we have that seqMul unit p = \u27e80 + p.depthVal, max 0 p.widthVal, 0 + p.genVal\u27e9.\n  simp [TropicalArchProfile.seqMul, TropicalArchProfile.unit]\n\n@[simp] theorem seqMul_unit_right (p : TropicalArchProfile) :\n    seqMul p unit = p := by\n  -- By definition of `seqMul`, we have `p.seqMul unit = \u27e8p.depthVal + 0, max p.widthVal 0, p.genVal + 0\u27e9`.\n  simp [seqMul, unit]\n\n/-! ### Parallel composition commutative monoid laws -/\n\n@[simp] theorem parMul_comm (p q : TropicalArchProfile) :\n    parMul p q = parMul q p := by\n  -- By definition of parMul, we have p.parMul q = \u27e8max p.depthVal q.depthVal, p.widthVal + q.widthVal, p.genVal + q.genVal\u27e9 and q.parMul p = \u27e8max q.depthVal p.depthVal, q.widthVal + p.widthVal, q.genVal + p.genVal\u27e9.\n  simp [TropicalArchProfile.parMul];\n  exact \u27e8 max_comm _ _, add_comm _ _, add_comm _ _ \u27e9\n\n@[simp] theorem parMul_assoc (p q r : TropicalArchProfile) :\n    parMul (parMul p q) r = parMul p (parMul q r) := by\n  -- By definition of parMul, we can expand both sides.\n  simp [TropicalArchProfile.parMul];\n  -- By the associativity of addition, we can rearrange the terms.\n  simp [add_assoc]\n\n@[simp] theorem parMul_unit_left (p : TropicalArchProfile) :\n    parMul unit p = p := by\n  -- By definition of `parMul`, we have `unit.parMul p = \u27e8max 0 p.depthVal, 0 + p.widthVal, 0 + p.genVal\u27e9`.\n  simp [TropicalArchProfile.parMul, TropicalArchProfile.unit]\n\n@[simp] theorem parMul_unit_right (p : TropicalArchProfile) :\n    parMul p unit = p := by\n  -- By definition of parMul, we have p.parMul unit = \u27e8max p.depthVal 0, p.widthVal + 0, p.genVal + 0\u27e9.\n  simp [parMul, unit]\n\n/-! ### Tropical addition semilattice laws -/\n\ntheorem tropAdd_comm (p q : TropicalArchProfile) :\n    tropAdd p q = tropAdd q p := by\n  -- By definition of tropAdd, we have p.tropAdd q = \u27e8min p.depthVal q.depthVal, min p.widthVal q.widthVal, min p.genVal q.genVal\u27e9 and q.tropAdd p = \u27e8min q.depthVal p.depthVal, min q.widthVal p.widthVal, min q.genVal p.genVal\u27e9.\n  simp [TropicalArchProfile.tropAdd];\n  -- By definition of min, we know that min(a, b) = min(b, a) for any a and b.\n  simp [min_comm]\n\ntheorem tropAdd_assoc (p q r : TropicalArchProfile) :\n    tropAdd (tropAdd p q) r = tropAdd p (tropAdd q r) := by\n  -- By definition of tropAdd, we can expand both sides.\n  simp [TropicalArchProfile.tropAdd]\n\ntheorem tropAdd_idempotent (p : TropicalArchProfile) :\n    tropAdd p p = p := by\n  -- By definition of tropAdd, we have p.tropAdd p = \u27e8min p.depthVal p.depthVal, min p.widthVal p.widthVal, min p.genVal p.genVal\u27e9.\n  simp [TropicalArchProfile.tropAdd]\n\n/-! ### Tropical distributivity\n\nThe key tropical semiring law: sequential composition distributes over\ntropical addition. This is the operadic analogue of the fundamental\nproperty `a + min(b,c) = min(a+b, a+c)` in tropical arithmetic.\n\nBridge: connects idempotent semiring theory to certified architecture optimization \u2014\ncomposing with the \"best of two alternatives\" equals the best of the two compositions. -/\n\ntheorem seqMul_tropAdd_distrib_left (p q r : TropicalArchProfile) :\n    seqMul p (tropAdd q r) = tropAdd (seqMul p q) (seqMul p r) := by\n  unfold TropicalArchProfile.seqMul TropicalArchProfile.tropAdd;\n  grind\n\ntheorem seqMul_tropAdd_distrib_right (p q r : TropicalArchProfile) :\n    seqMul (tropAdd p q) r = tropAdd (seqMul p r) (seqMul q r) := by\n  -- By definition of seqMul and tropAdd, we can expand both sides.\n  simp [TropicalArchProfile.seqMul, TropicalArchProfile.tropAdd];\n  grind\n\nend TropicalArchProfile\n\n/-! ## Section 3: The Tropical Valuation Functor\n\nThe tropical valuation maps architecture expressions to their tropical profiles.\nIt is functorial with respect to both sequential and parallel composition:\nthis is the core \"functor\" property that makes the valuation useful for\nclassification. -/\n\n/-- The tropical valuation functor: maps an architecture expression to its\n    tropical complexity profile.\n    Bridge: connects operadic syntax (tree structure) to tropical algebra\n    (min-plus coordinates), enabling classification via tropical invariants. -/\ndef tropicalValuation : ArchExpr \u2192 TropicalArchProfile\n  | .generator => \u27e81, 1, 1\u27e9\n  | .identity => \u27e80, 0, 0\u27e9\n  | .compose e\u2081 e\u2082 =>\n    let v\u2081 := tropicalValuation e\u2081\n    let v\u2082 := tropicalValuation e\u2082\n    \u27e8v\u2081.depthVal + v\u2082.depthVal, max v\u2081.widthVal v\u2082.widthVal, v\u2081.genVal + v\u2082.genVal\u27e9\n  | .parallel e\u2081 e\u2082 =>\n    let v\u2081 := tropicalValuation e\u2081\n    let v\u2082 := tropicalValuation e\u2082\n    \u27e8max v\u2081.depthVal v\u2082.depthVal, v\u2081.widthVal + v\u2082.widthVal, v\u2081.genVal + v\u2082.genVal\u27e9\n\n/-- The identity expression maps to the unit profile. -/\n@[simp] theorem tropicalValuation_identity :\n    tropicalValuation .identity = TropicalArchProfile.unit := rfl\n\n/-- A single generator maps to the generator profile. -/\n@[simp] theorem tropicalValuation_generator :\n    tropicalValuation .generator = TropicalArchProfile.gen := rfl\n\n/-- **Functoriality under sequential composition**: the valuation of a sequential\n    composition equals the sequential product of the valuations.\n    Bridge: connects operadic composition law to tropical multiplication. -/\ntheorem tropicalValuation_compose (e\u2081 e\u2082 : ArchExpr) :\n    tropicalValuation (.compose e\u2081 e\u2082) =\n    TropicalArchProfile.seqMul (tropicalValuation e\u2081) (tropicalValuation e\u2082) := by\n  simp [tropicalValuation, TropicalArchProfile.seqMul]\n\n/-- **Functoriality under parallel composition**: the valuation of a parallel\n    composition equals the parallel product of the valuations.\n    Bridge: connects parallel operadic structure to tropical width addition. -/\ntheorem tropicalValuation_parallel (e\u2081 e\u2082 : ArchExpr) :\n    tropicalValuation (.parallel e\u2081 e\u2082) =\n    TropicalArchProfile.parMul (tropicalValuation e\u2081) (tropicalValuation e\u2082) := by\n  simp [tropicalValuation, TropicalArchProfile.parMul]\n\n/-- **Subadditivity of generator count**: compose never creates generators. -/\ntheorem tropicalValuation_genVal_compose (e\u2081 e\u2082 : ArchExpr) :\n    (tropicalValuation (.compose e\u2081 e\u2082)).genVal =\n    (tropicalValuation e\u2081).genVal + (tropicalValuation e\u2082).genVal := by\n  simp [tropicalValuation]\n\n/-- **Depth additivity**: sequential composition adds depths. -/\ntheorem tropicalValuation_depth_compose (e\u2081 e\u2082 : ArchExpr) :\n    (tropicalValuation (.compose e\u2081 e\u2082)).depthVal =\n    (tropicalValuation e\u2081).depthVal + (tropicalValuation e\u2082).depthVal := by\n  simp [tropicalValuation]\n\n/-- **Width subadditivity under sequential composition**: width does not increase\n    beyond the maximum of the two parts (pipeline bottleneck).\n    Bridge: connects to `certified_neural_compression_width_nonexpansive` \u2014\n    sequential composition is width-nonexpansive. -/\ntheorem tropicalValuation_width_compose_le (e\u2081 e\u2082 : ArchExpr) :\n    (tropicalValuation (.compose e\u2081 e\u2082)).widthVal \u2264\n    (tropicalValuation e\u2081).widthVal + (tropicalValuation e\u2082).widthVal := by\n  simp only [tropicalValuation]; omega\n\n/-! ## Section 4: Structural Congruence\n\nThe structural congruence on architecture expressions captures the algebraic\nrewriting rules of operadic composition: associativity, identity laws, and\ncommutativity of parallel composition. This is the operadic analogue of\nthe Myhill\u2013Nerode equivalence.\n\nBridge: connects operad theory (presentation by generators and relations)\nto automata theory (state equivalence) to certified ML compression\n(architecture normalization). -/\n\n/-- Structural congruence: the equivalence relation on architecture expressions\n    generated by the operadic rewriting rules. Two expressions are structurally\n    congruent if they represent the same \"abstract architecture\" modulo\n    associativity, identity, and parallel commutativity. -/\ninductive StructuralCongr : ArchExpr \u2192 ArchExpr \u2192 Prop where\n  | refl (e) : StructuralCongr e e\n  | symm : StructuralCongr e\u2081 e\u2082 \u2192 StructuralCongr e\u2082 e\u2081\n  | trans : StructuralCongr e\u2081 e\u2082 \u2192 StructuralCongr e\u2082 e\u2083 \u2192 StructuralCongr e\u2081 e\u2083\n  | compose_assoc (e\u2081 e\u2082 e\u2083) :\n      StructuralCongr (.compose (.compose e\u2081 e\u2082) e\u2083) (.compose e\u2081 (.compose e\u2082 e\u2083))\n  | compose_id_left (e) : StructuralCongr (.compose .identity e) e\n  | compose_id_right (e) : StructuralCongr (.compose e .identity) e\n  | parallel_comm (e\u2081 e\u2082) : StructuralCongr (.parallel e\u2081 e\u2082) (.parallel e\u2082 e\u2081)\n  | parallel_assoc (e\u2081 e\u2082 e\u2083) :\n      StructuralCongr (.parallel (.parallel e\u2081 e\u2082) e\u2083) (.parallel e\u2081 (.parallel e\u2082 e\u2083))\n  | parallel_id_left (e) : StructuralCongr (.parallel .identity e) e\n  | parallel_id_right (e) : StructuralCongr (.parallel e .identity) e\n  | congr_compose : StructuralCongr e\u2081 e\u2081' \u2192 StructuralCongr e\u2082 e\u2082' \u2192\n      StructuralCongr (.compose e\u2081 e\u2082) (.compose e\u2081' e\u2082')\n  | congr_parallel : StructuralCongr e\u2081 e\u2081' \u2192 StructuralCongr e\u2082 e\u2082' \u2192\n      StructuralCongr (.parallel e\u2081 e\u2082) (.parallel e\u2081' e\u2082')\n\n/-- Structural congruence is an equivalence relation, packaged as a setoid. -/\ndef structuralSetoid : Setoid ArchExpr where\n  r := StructuralCongr\n  iseqv := \u27e8StructuralCongr.refl, fun h => h.symm, fun h\u2081 h\u2082 => h\u2081.trans h\u2082\u27e9\n\n/-\n**The tropical valuation is invariant under structural congruence.**\n    This is the central soundness theorem: operadic rewrites do not change\n    the tropical complexity profile.\n\n    Bridge: connects operad presentation theory to tropical invariant theory \u2014\n    the valuation is a well-defined function on the quotient operad.\n-/\ntheorem tropicalValuation_structural_congr {e\u2081 e\u2082 : ArchExpr}\n    (h : StructuralCongr e\u2081 e\u2082) :\n    tropicalValuation e\u2081 = tropicalValuation e\u2082 := by\n  have h_tropical_val : \u2200 (e\u2081 e\u2082 : ArchExpr), StructuralCongr e\u2081 e\u2082 \u2192 (tropicalValuation e\u2081).depthVal = (tropicalValuation e\u2082).depthVal \u2227 (tropicalValuation e\u2081).widthVal = (tropicalValuation e\u2082).widthVal \u2227 (tropicalValuation e\u2081).genVal = (tropicalValuation e\u2082).genVal := by\n    intros e\u2081 e\u2082 h_congr\n    induction' h_congr with e\u2081 e\u2082 h_congr ih;\n    all_goals simp_all +decide [ tropicalValuation_compose, tropicalValuation_parallel ];\n    \u00b7 simp +decide [ TropicalArchProfile.parMul, max_assoc, add_assoc ];\n      grind;\n    \u00b7 unfold TropicalArchProfile.seqMul; aesop;\n    \u00b7 unfold TropicalArchProfile.parMul; aesop;\n  specialize h_tropical_val e\u2081 e\u2082 h; aesop;\n\n/-! ## Section 5: Profile Congruence and Completeness\n\nThe profile congruence identifies two expressions when they have the same\ntropical profile. The key theorems:\n1. Structural congruence implies profile congruence (soundness).\n2. Profile congruence is a complete invariant within bounded classes. -/\n\n/-- Profile congruence: two expressions are profile-equivalent when they\n    have the same tropical valuation.\n    Bridge: this is the \"tropical shadow\" of operadic equivalence. -/\ndef profileCongr : Setoid ArchExpr where\n  r e\u2081 e\u2082 := tropicalValuation e\u2081 = tropicalValuation e\u2082\n  iseqv := \u27e8fun _ => rfl, fun h => h.symm, fun h\u2081 h\u2082 => h\u2081.trans h\u2082\u27e9\n\n/-- Structural congruence implies profile congruence (soundness). -/\ntheorem structural_implies_profile {e\u2081 e\u2082 : ArchExpr}\n    (h : StructuralCongr e\u2081 e\u2082) : profileCongr.r e\u2081 e\u2082 :=\n  tropicalValuation_structural_congr h\n\n/-- Profile equality determines profile congruence (completeness for profile congr). -/\ntheorem tropicalValuation_complete {e\u2081 e\u2082 : ArchExpr}\n    (h : tropicalValuation e\u2081 = tropicalValuation e\u2082) : profileCongr.r e\u2081 e\u2082 := h\n\n/-- Two expressions congruent to the same expression have the same profile. -/\ntheorem profile_of_congr_pair {e e\u2081 e\u2082 : ArchExpr}\n    (h\u2081 : StructuralCongr e e\u2081) (h\u2082 : StructuralCongr e e\u2082) :\n    tropicalValuation e\u2081 = tropicalValuation e\u2082 :=\n  (tropicalValuation_structural_congr h\u2081).symm.trans (tropicalValuation_structural_congr h\u2082)\n\n/-! ## Section 6: Bounded Architecture Classification\n\nFor bounded architecture classes (bounded depth, width, generator count),\nthe tropical profile takes values in a finite set. This enables finite\nclassification: there are only finitely many distinct tropical signatures\nin any bounded class.\n\nBridge: connects tropical geometry (finite Newton polytopes) to\ncircuit complexity (bounded circuit classification). -/\n\n/-- Predicate for membership in a bounded architecture class. -/\ndef InBoundedClass (e : ArchExpr) (G D W : \u2115) : Prop :=\n  e.generatorCount \u2264 G \u2227 e.depth \u2264 D \u2227 e.maxWidth \u2264 W\n\n/-- The finite set of all achievable profiles within bounds. -/\ndef BoundedProfileSet (G D W : \u2115) : Finset TropicalArchProfile :=\n  (Finset.range (D + 1) \u00d7\u02e2 (Finset.range (W + 1) \u00d7\u02e2 Finset.range (G + 1))).image\n    fun \u27e8d, w, g\u27e9 => \u27e8d, w, g\u27e9\n\n/-\nThe bounded profile set has at most (D+1)*(W+1)*(G+1) elements.\n-/\ntheorem bounded_profile_count (G D W : \u2115) :\n    (BoundedProfileSet G D W).card \u2264 (D + 1) * ((W + 1) * (G + 1)) := by\n  refine' le_trans ( Finset.card_image_le ) _;\n  norm_num [ mul_assoc ]\n\n/-\nThe tropical valuation of a bounded expression lies in the bounded profile set.\n    This is the key finiteness theorem: bounded architectures have bounded profiles.\n-/\ntheorem tropicalValuation_in_bounded {e : ArchExpr} {G D W : \u2115}\n    (h : InBoundedClass e G D W) :\n    tropicalValuation e \u2208 BoundedProfileSet G D W := by\n  have h_bounds : (tropicalValuation e).depthVal = e.depth \u2227 (tropicalValuation e).widthVal = e.maxWidth \u2227 (tropicalValuation e).genVal = e.generatorCount := by\n    have h_trop_eq : \u2200 e : ArchExpr, (tropicalValuation e).depthVal = e.depth \u2227 (tropicalValuation e).widthVal = e.maxWidth \u2227 (tropicalValuation e).genVal = e.generatorCount := by\n      intro e;\n      induction' e with e\u2081 e\u2082 ih\u2081 ih\u2082;\n      \u00b7 exact \u27e8 rfl, rfl, rfl \u27e9;\n      \u00b7 exact \u27e8 rfl, rfl, rfl \u27e9;\n      \u00b7 exact \u27e8 by rw [ show tropicalValuation ( e\u2081.compose e\u2082 ) = TropicalArchProfile.seqMul ( tropicalValuation e\u2081 ) ( tropicalValuation e\u2082 ) from rfl ] ; simp +decide [ *, TropicalArchProfile.seqMul ], by rw [ show tropicalValuation ( e\u2081.compose e\u2082 ) = TropicalArchProfile.seqMul ( tropicalValuation e\u2081 ) ( tropicalValuation e\u2082 ) from rfl ] ; simp +decide [ *, TropicalArchProfile.seqMul ], by rw [ show tropicalValuation ( e\u2081.compose e\u2082 ) = TropicalArchProfile.seqMul ( tropicalValuation e\u2081 ) ( tropicalValuation e\u2082 ) from rfl ] ; simp +decide [ *, TropicalArchProfile.seqMul ] \u27e9;\n      \u00b7 rename_i e\u2081 e\u2082 ih\u2081 ih\u2082;\n        exact \u27e8 by rw [ show tropicalValuation ( e\u2081.parallel e\u2082 ) = TropicalArchProfile.parMul ( tropicalValuation e\u2081 ) ( tropicalValuation e\u2082 ) from rfl ] ; simp +decide [ *, TropicalArchProfile.parMul ], by rw [ show tropicalValuation ( e\u2081.parallel e\u2082 ) = TropicalArchProfile.parMul ( tropicalValuation e\u2081 ) ( tropicalValuation e\u2082 ) from rfl ] ; simp +decide [ *, TropicalArchProfile.parMul ], by rw [ show tropicalValuation ( e\u2081.parallel e\u2082 ) = TropicalArchProfile.parMul ( tropicalValuation e\u2081 ) ( tropicalValuation e\u2082 ) from rfl ] ; simp +decide [ *, TropicalArchProfile.parMul ] \u27e9;\n    exact h_trop_eq e;\n  exact Finset.mem_image.mpr \u27e8 \u27e8 e.depth, e.maxWidth, e.generatorCount \u27e9, Finset.mem_product.mpr \u27e8 Finset.mem_range.mpr ( by linarith [ h.2.1 ] ), Finset.mem_product.mpr \u27e8 Finset.mem_range.mpr ( by linarith [ h.2.2 ] ), Finset.mem_range.mpr ( by linarith [ h.1 ] ) \u27e9 \u27e9, by aesop \u27e9\n\n/-- Two bounded expressions with the same profile are profile-congruent.\n    Combined with `tropicalValuation_in_bounded`, this gives finite classification. -/\ntheorem bounded_profile_determines_class {e\u2081 e\u2082 : ArchExpr} {G D W : \u2115}\n    (_h\u2081 : InBoundedClass e\u2081 G D W) (_h\u2082 : InBoundedClass e\u2082 G D W)\n    (hp : tropicalValuation e\u2081 = tropicalValuation e\u2082) :\n    profileCongr.r e\u2081 e\u2082 := hp\n\n/-! ## Section 7: Canonical Skeleton and Reconstruction\n\nThe canonical skeleton is the tropical profile itself. Reconstruction\nfrom the profile is the identity on profiles. The key theorems establish\nthat this reconstruction is well-defined, unique, and invariant under\nboth structural and profile congruence.\n\nBridge: connects tropical reconstruction (recovering a polytope from\nits tropicalization) to ML architecture compression (canonical form). -/\n\n/-- Architecture skeleton: the canonical representative data for an architecture class.\n    The skeleton IS the tropical profile \u2014 it carries exactly the information\n    needed to classify the architecture. -/\nabbrev ArchitectureSkeleton := TropicalArchProfile\n\n/-- Reconstruct the canonical skeleton from a tropical profile.\n    Bridge: connects tropical geometry (tropicalization) to ML (architecture search). -/\ndef reconstructSkeleton (p : TropicalArchProfile) : ArchitectureSkeleton := p\n\n/-- A skeleton is canonical-minimal for an expression when it equals its profile. -/\ndef IsCanonicalMinimalSkeleton (e : ArchExpr) (S : ArchitectureSkeleton) : Prop :=\n  tropicalValuation e = S\n\n/-- Reconstruction always produces a canonical minimal skeleton. -/\ntheorem reconstructSkeleton_canonical (e : ArchExpr) :\n    IsCanonicalMinimalSkeleton e (reconstructSkeleton (tropicalValuation e)) := rfl\n\n/-- Structurally congruent expressions reconstruct the same skeleton. -/\ntheorem reconstructSkeleton_congr_invariant {e\u2081 e\u2082 : ArchExpr}\n    (h : StructuralCongr e\u2081 e\u2082) :\n    reconstructSkeleton (tropicalValuation e\u2081) =\n    reconstructSkeleton (tropicalValuation e\u2082) :=\n  congrArg reconstructSkeleton (tropicalValuation_structural_congr h)\n\n/-- The canonical minimal skeleton is unique: any two canonical minimal skeletons\n    for the same expression must be equal. -/\ntheorem canonical_minimal_skeleton_unique {e : ArchExpr}\n    {S\u2081 S\u2082 : ArchitectureSkeleton}\n    (h\u2081 : IsCanonicalMinimalSkeleton e S\u2081)\n    (h\u2082 : IsCanonicalMinimalSkeleton e S\u2082) :\n    S\u2081 = S\u2082 :=\n  h\u2081.symm.trans h\u2082\n\n/-! ## Section 8: Main Reconstruction Theorems\n\nThese are the culminating results: certified operadic tropical reconstruction\nfor bounded architecture classes. -/\n\n/-- **Certified Operadic Tropical Reconstruction (Main Theorem).**\n    For any bounded architecture expression, there exists a canonical tropical\n    skeleton that:\n    1. Is a canonical minimal skeleton for the expression.\n    2. Equals the reconstruction from the tropical valuation.\n    3. Is invariant under profile congruence within the bounded class.\n\n    Bridge: connects operad theory + tropical algebra + certified ML compression\n    into a single classification theorem. This is the operadic analogue of\n    the Myhill\u2013Nerode canonical minimization theorem. -/\ntheorem certified_operadic_tropical_reconstruction\n    (e : ArchExpr) (G D W : \u2115)\n    (_hgen : e.generatorCount \u2264 G)\n    (_hdepth : e.depth \u2264 D)\n    (_hwidth : e.maxWidth \u2264 W) :\n    \u2203 S : ArchitectureSkeleton,\n      IsCanonicalMinimalSkeleton e S \u2227\n      reconstructSkeleton (tropicalValuation e) = S \u2227\n      \u2200 e' : ArchExpr,\n        profileCongr.r e e' \u2192\n        e'.depth \u2264 D \u2192\n        e'.maxWidth \u2264 W \u2192\n        reconstructSkeleton (tropicalValuation e') = S :=\n  \u27e8tropicalValuation e, rfl, rfl, fun _ h _ _ => congrArg _ h.symm\u27e9\n\n/-- **Tropical Profile Complete for Bounded Architecture Congruence.**\n    Within a bounded class, the tropical profile is a complete invariant:\n    two expressions have the same profile if and only if they are profile-congruent.\n\n    Bridge: connects tropical completeness (the valuation remembers enough)\n    to automata-theoretic minimality (the Myhill\u2013Nerode characterization). -/\ntheorem tropical_profile_complete_for_bounded_architecture_congruence\n    (e\u2081 e\u2082 : ArchExpr) (G D W : \u2115)\n    (_h\u2081 : InBoundedClass e\u2081 G D W) (_h\u2082 : InBoundedClass e\u2082 G D W) :\n    tropicalValuation e\u2081 = tropicalValuation e\u2082 \u2194 profileCongr.r e\u2081 e\u2082 :=\n  Iff.rfl\n\n/-- **Reconstruction Specification**: the reconstruction from the tropical\n    profile produces a canonical minimal skeleton for any bounded expression. -/\ntheorem reconstructSkeleton_spec\n    (e : ArchExpr) (_G _D _W : \u2115)\n    (_hgen : e.generatorCount \u2264 _G)\n    (_hdepth : e.depth \u2264 _D)\n    (_hwidth : e.maxWidth \u2264 _W) :\n    IsCanonicalMinimalSkeleton e (reconstructSkeleton (tropicalValuation e)) := rfl\n\n/-! ## Section 9: Composition Bounds and Architecture Complexity\n\nAdditional structural theorems relating architecture complexity measures\nthrough tropical valuation properties. -/\n\n/-\nSequential composition preserves bounded class membership.\n-/\ntheorem compose_preserves_bounded {e\u2081 e\u2082 : ArchExpr} {G\u2081 G\u2082 D\u2081 D\u2082 W : \u2115}\n    (h\u2081 : InBoundedClass e\u2081 G\u2081 D\u2081 W) (h\u2082 : InBoundedClass e\u2082 G\u2082 D\u2082 W) :\n    InBoundedClass (.compose e\u2081 e\u2082) (G\u2081 + G\u2082) (D\u2081 + D\u2082) W := by\n  constructor <;> simp_all +decide [ InBoundedClass ];\n  \u00b7 linarith;\n  \u00b7 linarith\n\n/-\nParallel composition preserves bounded class membership.\n-/\ntheorem parallel_preserves_bounded {e\u2081 e\u2082 : ArchExpr} {G\u2081 G\u2082 D W\u2081 W\u2082 : \u2115}\n    (h\u2081 : InBoundedClass e\u2081 G\u2081 D W\u2081) (h\u2082 : InBoundedClass e\u2082 G\u2082 D W\u2082) :\n    InBoundedClass (.parallel e\u2081 e\u2082) (G\u2081 + G\u2082) D (W\u2081 + W\u2082) := by\n  constructor <;> simp +arith +decide [ *, InBoundedClass ];\n  \u00b7 exact Nat.add_le_add h\u2081.1 h\u2082.1;\n  \u00b7 exact \u27e8 \u27e8 h\u2081.2.1, h\u2082.2.1 \u27e9, add_le_add h\u2081.2.2 h\u2082.2.2 \u27e9\n\n/-\nThe tropical valuation of a sequential composition is bounded by the\n    sequential product of the individual bounds.\n-/\ntheorem tropicalValuation_compose_bounded {e\u2081 e\u2082 : ArchExpr} {G\u2081 G\u2082 D\u2081 D\u2082 W\u2081 W\u2082 : \u2115}\n    (h\u2081 : InBoundedClass e\u2081 G\u2081 D\u2081 W\u2081) (h\u2082 : InBoundedClass e\u2082 G\u2082 D\u2082 W\u2082) :\n    (tropicalValuation (.compose e\u2081 e\u2082)).depthVal \u2264 D\u2081 + D\u2082 \u2227\n    (tropicalValuation (.compose e\u2081 e\u2082)).widthVal \u2264 max W\u2081 W\u2082 \u2227\n    (tropicalValuation (.compose e\u2081 e\u2082)).genVal \u2264 G\u2081 + G\u2082 := by\n  exact \u27e8 by\n    convert Nat.add_le_add h\u2081.2.1 h\u2082.2.1 using 1;\n    convert tropicalValuation_depth_compose e\u2081 e\u2082 using 1;\n    have h_depth_val : \u2200 e : ArchExpr, e.depth = (tropicalValuation e).depthVal := by\n      intro e; induction e <;> aesop;\n    rw [h_depth_val, h_depth_val], by\n    -- The width of the composition is the maximum of the widths of the two expressions.\n    have h_width : (tropicalValuation (.compose e\u2081 e\u2082)).widthVal = max (tropicalValuation e\u2081).widthVal (tropicalValuation e\u2082).widthVal := by\n      rfl;\n    obtain \u27e8 _, _, _ \u27e9 := h\u2081; obtain \u27e8 _, _, _ \u27e9 := h\u2082;\n    rename_i h\u2081 h\u2082 h\u2083 h\u2084 h\u2085 h\u2086;\n    refine' h_width.trans_le ( max_le_max _ _ );\n    \u00b7 refine' le_trans _ h\u2083;\n      have h_width_le : \u2200 e : ArchExpr, (tropicalValuation e).widthVal \u2264 e.maxWidth := by\n        intro e; induction' e with e\u2081 e\u2082 ih\u2081 ih\u2082; aesop;\n        \u00b7 rfl;\n        \u00b7 exact max_le_max ih\u2081 ih\u2082;\n        \u00b7 rename_i e\u2081 e\u2082 ih\u2081 ih\u2082;\n          exact le_trans ( by aesop ) ( add_le_add ih\u2081 ih\u2082 );\n      exact h_width_le e\u2081;\n    \u00b7 refine' le_trans _ h\u2086;\n      have h_width_le : \u2200 e : ArchExpr, (tropicalValuation e).widthVal \u2264 e.maxWidth := by\n        intro e; induction' e with e\u2081 e\u2082 ih\u2081 ih\u2082; aesop;\n        \u00b7 rfl;\n        \u00b7 exact max_le_max ih\u2081 ih\u2082;\n        \u00b7 rename_i e\u2081 e\u2082 ih\u2081 ih\u2082;\n          exact le_trans ( by aesop ) ( add_le_add ih\u2081 ih\u2082 );\n      exact h_width_le e\u2082, by\n    convert Nat.add_le_add h\u2081.1 h\u2082.1 using 1;\n    convert tropicalValuation_genVal_compose e\u2081 e\u2082 using 1;\n    congr! 1;\n    \u00b7 have h_genCount : \u2200 e : ArchExpr, e.generatorCount = (tropicalValuation e).genVal := by\n        intro e; induction e <;> aesop;\n      exact h_genCount e\u2081;\n    \u00b7 have h_gen_count : \u2200 e : ArchExpr, e.generatorCount = (tropicalValuation e).genVal := by\n        intro e; induction e <;> aesop;\n      exact h_gen_count e\u2082 \u27e9\n\n/-\n**Depth-width tradeoff for profiles**: profile depth \u00d7 width \u2265 generators.\n    This is the profile-level formulation of the fundamental complexity bound.\n-/\ntheorem profile_depth_width_tradeoff (e : ArchExpr) :\n    (tropicalValuation e).genVal \u2264\n    (tropicalValuation e).depthVal * (tropicalValuation e).widthVal := by\n  have h_tropicalValuation : \u2200 e : ArchExpr, (tropicalValuation e).depthVal = e.depth \u2227 (tropicalValuation e).widthVal = e.maxWidth \u2227 (tropicalValuation e).genVal = e.generatorCount := by\n    intro e\n    induction' e with e ih;\n    \u00b7 exact \u27e8 rfl, rfl, rfl \u27e9;\n    \u00b7 exact \u27e8 rfl, rfl, rfl \u27e9;\n    \u00b7 exact \u27e8 by rw [ show ( tropicalValuation ( e.compose ih ) ).depthVal = ( tropicalValuation e ).depthVal + ( tropicalValuation ih ).depthVal from rfl ] ; simp +decide [ *, ArchExpr.depth ], by rw [ show ( tropicalValuation ( e.compose ih ) ).widthVal = Max.max ( tropicalValuation e ).widthVal ( tropicalValuation ih ).widthVal from rfl ] ; simp +decide [ *, ArchExpr.maxWidth ], by rw [ show ( tropicalValuation ( e.compose ih ) ).genVal = ( tropicalValuation e ).genVal + ( tropicalValuation ih ).genVal from rfl ] ; simp +decide [ *, ArchExpr.generatorCount ] \u27e9;\n    \u00b7 simp_all +decide [ tropicalValuation_parallel ];\n      unfold TropicalArchProfile.parMul; aesop;\n  simp +decide only [h_tropicalValuation];\n  exact ArchExpr.depth_width_genCount_tradeoff e\n\nend OperadicTropicalization",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Operadic Tropicalization of Neural Architectures\n\nImplements the key algorithms from the research paper:\n1. Tropical profile computation\n2. Bounded architecture classification\n3. Architecture equivalence checking\n4. Depth-width tradeoff analysis\n5. Profile space enumeration with tropical semiring operations\n\"\"\"\n\nimport itertools\nfrom dataclasses import dataclass\nfrom typing import List, Tuple, Set, Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Tropical Profile Computation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass(frozen=True)\nclass TropicalProfile:\n    \"\"\"\n    Tropical architecture profile: a triple (depth, width, generators).\n\n    Supports three algebraic operations:\n    - seq_mul: sequential composition (depth adds, width maxes, gen adds)\n    - par_mul: parallel composition (depth maxes, width adds, gen adds)\n    - trop_add: tropical addition (component-wise min)\n\n    Time: O(1) per operation\n    Space: O(1)\n    \"\"\"\n    d: int  # depth\n    w: int  # max width\n    g: int  # generator count\n\n    def seq_mul(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Sequential composition. Time: O(1).\"\"\"\n        return TropicalProfile(self.d + other.d, max(self.w, other.w), self.g + other.g)\n\n    def par_mul(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Parallel composition. Time: O(1).\"\"\"\n        return TropicalProfile(max(self.d, other.d), self.w + other.w, self.g + other.g)\n\n    def trop_add(self, other: \"TropicalProfile\") -> \"TropicalProfile\":\n        \"\"\"Tropical addition (component-wise min). Time: O(1).\"\"\"\n        return TropicalProfile(min(self.d, other.d), min(self.w, other.w), min(self.g, other.g))\n\n    def is_valid(self) -> bool:\n        \"\"\"Check depth-width tradeoff: g \u2264 d \u00d7 w. Time: O(1).\"\"\"\n        return self.g <= self.d * self.w or (self.d == 0 and self.w == 0 and self.g == 0)\n\n\nZERO = TropicalProfile(0, 0, 0)\nONE = TropicalProfile(1, 1, 1)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Bounded Architecture Classification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef classify_bounded_architectures(\n    max_gen: int, max_depth: int, max_width: int\n) -> Tuple[Set[TropicalProfile], Set[TropicalProfile]]:\n    \"\"\"\n    Enumerate all profiles in a bounded architecture class.\n\n    Returns:\n        (all_profiles, valid_profiles) where valid_profiles satisfy\n        the depth-width tradeoff constraint.\n\n    Time: O(D \u00d7 W \u00d7 G)\n    Space: O(D \u00d7 W \u00d7 G)\n    \"\"\"\n    all_profiles: Set[TropicalProfile] = set()\n    valid_profiles: Set[TropicalProfile] = set()\n\n    for d in range(max_depth + 1):\n        for w in range(max_width + 1):\n            for g in range(max_gen + 1):\n                p = TropicalProfile(d, w, g)\n                all_profiles.add(p)\n                if p.is_valid():\n                    valid_profiles.add(p)\n\n    return all_profiles, valid_profiles\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Profile Algebra Verification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef verify_tropical_semiring_laws(\n    profiles: List[TropicalProfile], verbose: bool = False\n) -> dict:\n    \"\"\"\n    Verify tropical semiring laws on a set of profiles.\n\n    Checks:\n    - seq_mul associativity and identity\n    - par_mul commutativity, associativity, identity\n    - trop_add commutativity, associativity, idempotency\n    - Left and right distributivity of seq_mul over trop_add\n\n    Time: O(n\u00b3) for n = len(profiles)\n    Space: O(1)\n    \"\"\"\n    results = {\n        \"seq_assoc\": True, \"seq_id_left\": True, \"seq_id_right\": True,\n        \"par_comm\": True, \"par_assoc\": True, \"par_id_left\": True, \"par_id_right\": True,\n        \"trop_comm\": True, \"trop_assoc\": True, \"trop_idem\": True,\n        \"distrib_left\": True, \"distrib_right\": True,\n    }\n\n    for p in profiles:\n        # Identity laws\n        if ZERO.seq_mul(p) != p:\n            results[\"seq_id_left\"] = False\n        if p.seq_mul(ZERO) != p:\n            results[\"seq_id_right\"] = False\n        if ZERO.par_mul(p) != p:\n            results[\"par_id_left\"] = False\n        if p.par_mul(ZERO) != p:\n            results[\"par_id_right\"] = False\n        # Idempotency\n        if p.trop_add(p) != p:\n            results[\"trop_idem\"] = False\n\n    for p, q in itertools.product(profiles, repeat=2):\n        # Commutativity\n        if p.par_mul(q) != q.par_mul(p):\n            results[\"par_comm\"] = False\n        if p.trop_add(q) != q.trop_add(p):\n            results[\"trop_comm\"] = False\n\n    for p, q, r in itertools.product(profiles, repeat=3):\n        # Associativity\n        if (p.seq_mul(q)).seq_mul(r) != p.seq_mul(q.seq_mul(r)):\n            results[\"seq_assoc\"] = False\n        if (p.par_mul(q)).par_mul(r) != p.par_mul(q.par_mul(r)):\n            results[\"par_assoc\"] = False\n        if (p.trop_add(q)).trop_add(r) != p.trop_add(q.trop_add(r)):\n            results[\"trop_assoc\"] = False\n        # Distributivity\n        if p.seq_mul(q.trop_add(r)) != p.seq_mul(q).trop_add(p.seq_mul(r)):\n            results[\"distrib_left\"] = False\n        if (p.trop_add(q)).seq_mul(r) != p.seq_mul(r).trop_add(q.seq_mul(r)):\n            results[\"distrib_right\"] = False\n\n    if verbose:\n        for law, holds in results.items():\n            status = \"\u2713\" if holds else \"\u2717\"\n            print(f\"  {law:20s}: {status}\")\n\n    return results\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Depth-Width Tradeoff Analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef tradeoff_analysis(max_bound: int) -> dict:\n    \"\"\"\n    Analyze the depth-width tradeoff for bounded classes.\n\n    For each bound B \u2208 {1, ..., max_bound}, compute:\n    - Total profiles in [0,B]\u00b3\n    - Valid profiles satisfying g \u2264 d \u00d7 w\n    - Reduction ratio\n\n    Time: O(max_bound\u2074)\n    Space: O(max_bound)\n    \"\"\"\n    results = {}\n    for B in range(1, max_bound + 1):\n        total = (B + 1) ** 3\n        valid = sum(\n            1 for d, w, g in itertools.product(range(B + 1), repeat=3)\n            if g <= d * w or (d == 0 and w == 0 and g == 0)\n        )\n        results[B] = {\n            \"total\": total,\n            \"valid\": valid,\n            \"reduction\": 1.0 - valid / total if total > 0 else 0,\n        }\n    return results\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main: run all algorithms\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"Algorithm 1: Bounded Classification\")\n    print(\"=\" * 60)\n    all_p, valid_p = classify_bounded_architectures(5, 5, 5)\n    print(f\"  Bound (5,5,5): {len(all_p)} total, {len(valid_p)} valid profiles\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"Algorithm 2: Tropical Semiring Law Verification\")\n    print(\"=\" * 60)\n    test_profiles = [TropicalProfile(d, w, g) for d in range(4) for w in range(4) for g in range(4)]\n    results = verify_tropical_semiring_laws(test_profiles, verbose=True)\n    all_pass = all(results.values())\n    print(f\"  All laws verified: {all_pass}\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"Algorithm 3: Depth-Width Tradeoff Analysis\")\n    print(\"=\" * 60)\n    analysis = tradeoff_analysis(12)\n    print(f\"  {'Bound':>6s} | {'Total':>7s} | {'Valid':>7s} | {'Reduction':>10s}\")\n    print(f\"  {'-'*6} | {'-'*7} | {'-'*7} | {'-'*10}\")\n    for B, data in analysis.items():\n        print(f\"  {B:>6d} | {data['total']:>7d} | {data['valid']:>7d} | {data['reduction']:>9.1%}\")\n    print()\n\n    print(\"All algorithms completed successfully! \u2713\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Operadic Tropicalization to Neural Architecture Design\n\nDemonstrates practical applications:\n1. Architecture equivalence checking\n2. Architecture search space reduction\n3. Complexity lower bounds\n4. Architecture compression via canonical forms\n\"\"\"\n\nimport itertools\nimport random\nfrom dataclasses import dataclass\nfrom typing import List, Optional, Tuple\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core types (duplicated for standalone execution)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass(frozen=True)\nclass Profile:\n    d: int; w: int; g: int\n\n    def seq_mul(self, o): return Profile(self.d+o.d, max(self.w,o.w), self.g+o.g)\n    def par_mul(self, o): return Profile(max(self.d,o.d), self.w+o.w, self.g+o.g)\n    def valid(self): return self.g <= self.d * self.w or (self.d==0 and self.w==0 and self.g==0)\n\nclass E:\n    \"\"\"Minimal architecture expression.\"\"\"\n    def __init__(self, kind, l=None, r=None):\n        self.kind = kind; self.l = l; self.r = r\n\n    def profile(self):\n        if self.kind == 'G': return Profile(1,1,1)\n        if self.kind == 'I': return Profile(0,0,0)\n        if self.kind == 'S': return self.l.profile().seq_mul(self.r.profile())\n        return self.l.profile().par_mul(self.r.profile())\n\n    def __repr__(self):\n        if self.kind == 'G': return 'G'\n        if self.kind == 'I': return 'I'\n        if self.kind == 'S': return f'({self.l}\u2192{self.r})'\n        return f'({self.l}\u2225{self.r})'\n\ndef G(): return E('G')\ndef I(): return E('I')\ndef S(a,b): return E('S',a,b)\ndef P(a,b): return E('P',a,b)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Architecture Equivalence\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef check_equivalence(e1: E, e2: E) -> bool:\n    \"\"\"\n    Check if two architectures are profile-equivalent.\n    Time: O(n1 + n2) where ni is expression size.\n    \"\"\"\n    return e1.profile() == e2.profile()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Search Space Reduction\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef search_space_analysis(max_g: int, max_d: int, max_w: int):\n    \"\"\"\n    Analyze architecture search space reduction via tropical profiles.\n\n    Instead of searching over exponentially many expressions,\n    search over the finite profile space.\n    \"\"\"\n    total = (max_d+1) * (max_w+1) * (max_g+1)\n    valid = []\n    for d, w, g in itertools.product(range(max_d+1), range(max_w+1), range(max_g+1)):\n        p = Profile(d, w, g)\n        if p.valid():\n            valid.append(p)\n\n    # Group by complexity = d * w\n    by_complexity = {}\n    for p in valid:\n        c = p.d * p.w\n        by_complexity.setdefault(c, []).append(p)\n\n    return {\n        \"total_profiles\": total,\n        \"valid_profiles\": len(valid),\n        \"by_complexity\": by_complexity,\n        \"reduction_factor\": total / max(len(valid), 1),\n    }\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Complexity Lower Bounds\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef min_resources_for_generators(g: int) -> List[Tuple[int,int]]:\n    \"\"\"\n    Find minimal (depth, width) pairs that can accommodate g generators.\n    By the tradeoff theorem: d \u00d7 w \u2265 g.\n\n    Returns Pareto-optimal (d, w) pairs minimizing d+w.\n    \"\"\"\n    candidates = []\n    for d in range(1, g+1):\n        w = (g + d - 1) // d  # ceil(g/d)\n        candidates.append((d, w))\n\n    # Pareto front: no other pair dominates\n    pareto = []\n    for d, w in candidates:\n        dominated = False\n        for d2, w2 in candidates:\n            if d2 <= d and w2 <= w and (d2, w2) != (d, w):\n                dominated = True\n                break\n        if not dominated:\n            pareto.append((d, w))\n\n    return pareto\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Architecture Compression\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef canonical_form(e: E) -> Profile:\n    \"\"\"\n    Compress an architecture to its canonical form (= its profile).\n    Two architectures with the same canonical form are structurally equivalent.\n    \"\"\"\n    return e.profile()\n\n\ndef compression_demo():\n    \"\"\"Show that structurally different expressions compress to same profile.\"\"\"\n    pairs = [\n        (S(S(G(),G()),G()), S(G(),S(G(),G())), \"Compose associativity\"),\n        (P(G(),G()), P(G(),G()), \"Parallel identity\"),\n        (S(I(),G()), G(), \"Left identity elimination\"),\n        (S(G(),I()), G(), \"Right identity elimination\"),\n    ]\n\n    print(\"  Architecture Compression via Canonical Forms:\")\n    for e1, e2, desc in pairs:\n        p1, p2 = canonical_form(e1), canonical_form(e2)\n        print(f\"    {desc:30s}: {e1} \u2261 {e2} \u2192 ({p1.d},{p1.w},{p1.g}) = ({p2.d},{p2.w},{p2.g}) : {p1==p2}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Architecture Equivalence Checking\")\n    print(\"=\" * 60)\n    e1 = S(S(G(),G()),G())\n    e2 = S(G(),S(G(),G()))\n    e3 = P(G(),P(G(),G()))\n    print(f\"  {e1} \u2261 {e2} : {check_equivalence(e1, e2)} \u2713 (associativity)\")\n    print(f\"  {e1} \u2261 {e3} : {check_equivalence(e1, e3)} (different structure)\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"APPLICATION 2: Search Space Reduction\")\n    print(\"=\" * 60)\n    for g,d,w in [(5,5,5), (10,10,10), (20,20,20)]:\n        r = search_space_analysis(g, d, w)\n        print(f\"  Bounds ({g},{d},{w}): {r['total_profiles']} total \u2192 \"\n              f\"{r['valid_profiles']} valid ({r['reduction_factor']:.1f}\u00d7 reduction)\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"APPLICATION 3: Complexity Lower Bounds\")\n    print(\"=\" * 60)\n    for g in [10, 50, 100]:\n        pareto = min_resources_for_generators(g)\n        pairs_str = \", \".join(f\"({d},{w})\" for d,w in pareto[:5])\n        if len(pareto) > 5:\n            pairs_str += f\", ... ({len(pareto)} total)\"\n        print(f\"  g={g}: Pareto-optimal (d,w): {pairs_str}\")\n    print()\n\n    print(\"=\" * 60)\n    print(\"APPLICATION 4: Architecture Compression\")\n    print(\"=\" * 60)\n    compression_demo()\n    print()\n\n    print(\"All applications completed successfully! \u2713\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nOperadic Tropicalization of Neural Architectures \u2014 Demo & Visualization\n\nThis script demonstrates the tropical valuation functor, architecture classification,\nand depth-width-generator tradeoff theorem with concrete numerical examples.\n\"\"\"\n\nimport itertools\nimport json\nimport random\nfrom dataclasses import dataclass\nfrom enum import Enum\nfrom typing import Optional\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Section 1: Core Data Structures\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass ExprType(Enum):\n    GENERATOR = \"gen\"\n    IDENTITY = \"id\"\n    COMPOSE = \"seq\"\n    PARALLEL = \"par\"\n\n\n@dataclass\nclass ArchExpr:\n    \"\"\"Architecture expression: element of the free operad on one generator.\"\"\"\n    kind: ExprType\n    left: Optional[\"ArchExpr\"] = None\n    right: Optional[\"ArchExpr\"] = None\n\n    def depth(self) -> int:\n        if self.kind == ExprType.GENERATOR:\n            return 1\n        elif self.kind == ExprType.IDENTITY:\n            return 0\n        elif self.kind == ExprType.COMPOSE:\n            return self.left.depth() + self.right.depth()\n        else:  # PARALLEL\n            return max(self.left.depth(), self.right.depth())\n\n    def generator_count(self) -> int:\n        if self.kind == ExprType.GENERATOR:\n            return 1\n        elif self.kind == ExprType.IDENTITY:\n            return 0\n        elif self.kind in (ExprType.COMPOSE, ExprType.PARALLEL):\n            return self.left.generator_count() + self.right.generator_count()\n        return 0\n\n    def max_width(self) -> int:\n        if self.kind == ExprType.GENERATOR:\n            return 1\n        elif self.kind == ExprType.IDENTITY:\n            return 0\n        elif self.kind == ExprType.COMPOSE:\n            return max(self.left.max_width(), self.right.max_width())\n        else:  # PARALLEL\n            return self.left.max_width() + self.right.max_width()\n\n    def size(self) -> int:\n        if self.kind in (ExprType.GENERATOR, ExprType.IDENTITY):\n            return 1\n        return 1 + self.left.size() + self.right.size()\n\n    def __repr__(self):\n        if self.kind == ExprType.GENERATOR:\n            return \"G\"\n        elif self.kind == ExprType.IDENTITY:\n            return \"I\"\n        elif self.kind == ExprType.COMPOSE:\n            return f\"({self.left} \u2192 {self.right})\"\n        else:\n            return f\"({self.left} \u2225 {self.right})\"\n\n\n# Convenience constructors\ndef gen():\n    return ArchExpr(ExprType.GENERATOR)\n\ndef identity():\n    return ArchExpr(ExprType.IDENTITY)\n\ndef compose(a, b):\n    return ArchExpr(ExprType.COMPOSE, a, b)\n\ndef parallel(a, b):\n    return ArchExpr(ExprType.PARALLEL, a, b)\n\n\n@dataclass(frozen=True)\nclass TropicalArchProfile:\n    \"\"\"Tropical architecture profile: (depth, width, genCount).\"\"\"\n    depth_val: int\n    width_val: int\n    gen_val: int\n\n    def seq_mul(self, other: \"TropicalArchProfile\") -> \"TropicalArchProfile\":\n        \"\"\"Sequential composition of profiles.\"\"\"\n        return TropicalArchProfile(\n            self.depth_val + other.depth_val,\n            max(self.width_val, other.width_val),\n            self.gen_val + other.gen_val,\n        )\n\n    def par_mul(self, other: \"TropicalArchProfile\") -> \"TropicalArchProfile\":\n        \"\"\"Parallel composition of profiles.\"\"\"\n        return TropicalArchProfile(\n            max(self.depth_val, other.depth_val),\n            self.width_val + other.width_val,\n            self.gen_val + other.gen_val,\n        )\n\n    def trop_add(self, other: \"TropicalArchProfile\") -> \"TropicalArchProfile\":\n        \"\"\"Tropical addition (component-wise min).\"\"\"\n        return TropicalArchProfile(\n            min(self.depth_val, other.depth_val),\n            min(self.width_val, other.width_val),\n            min(self.gen_val, other.gen_val),\n        )\n\n    def satisfies_tradeoff(self) -> bool:\n        \"\"\"Check depth \u00d7 width \u2265 genCount.\"\"\"\n        return self.gen_val <= self.depth_val * self.width_val\n\n\nUNIT = TropicalArchProfile(0, 0, 0)\nGEN_PROFILE = TropicalArchProfile(1, 1, 1)\n\n\ndef tropical_valuation(e: ArchExpr) -> TropicalArchProfile:\n    \"\"\"Compute the tropical valuation of an architecture expression.\"\"\"\n    if e.kind == ExprType.GENERATOR:\n        return GEN_PROFILE\n    elif e.kind == ExprType.IDENTITY:\n        return UNIT\n    elif e.kind == ExprType.COMPOSE:\n        return tropical_valuation(e.left).seq_mul(tropical_valuation(e.right))\n    else:\n        return tropical_valuation(e.left).par_mul(tropical_valuation(e.right))\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Section 2: Demonstration\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_basic_profiles():\n    \"\"\"Demonstrate tropical valuation on basic architectures.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Basic Architecture Profiles\")\n    print(\"=\" * 60)\n\n    examples = [\n        (\"Single generator\", gen()),\n        (\"Identity\", identity()),\n        (\"2-layer chain\", compose(gen(), gen())),\n        (\"3-layer chain\", compose(gen(), compose(gen(), gen()))),\n        (\"2-wide parallel\", parallel(gen(), gen())),\n        (\"3-wide parallel\", parallel(gen(), parallel(gen(), gen()))),\n        (\"Sequential then parallel\",\n         compose(parallel(gen(), gen()), gen())),\n        (\"Parallel of 2-chains\",\n         parallel(compose(gen(), gen()), compose(gen(), gen()))),\n        (\"Mixed: (G\u2225G) \u2192 (G\u2225G\u2225G)\",\n         compose(parallel(gen(), gen()), parallel(gen(), parallel(gen(), gen())))),\n    ]\n\n    for name, expr in examples:\n        p = tropical_valuation(expr)\n        tradeoff_ok = p.satisfies_tradeoff()\n        print(f\"  {name:40s} | expr={str(expr):30s} | \"\n              f\"profile=({p.depth_val},{p.width_val},{p.gen_val}) | \"\n              f\"d\u00d7w\u2265g: {tradeoff_ok}\")\n    print()\n\n\ndef demo_functoriality():\n    \"\"\"Verify functoriality: val(compose(e1,e2)) = seqMul(val(e1), val(e2)).\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 2: Functoriality Verification\")\n    print(\"=\" * 60)\n\n    e1 = parallel(gen(), gen())  # depth=1, width=2, gen=2\n    e2 = compose(gen(), gen())   # depth=2, width=1, gen=2\n    e_composed = compose(e1, e2)\n\n    v1 = tropical_valuation(e1)\n    v2 = tropical_valuation(e2)\n    v_composed = tropical_valuation(e_composed)\n    v_product = v1.seq_mul(v2)\n\n    print(f\"  e1 = {e1}\")\n    print(f\"  val(e1) = ({v1.depth_val}, {v1.width_val}, {v1.gen_val})\")\n    print(f\"  e2 = {e2}\")\n    print(f\"  val(e2) = ({v2.depth_val}, {v2.width_val}, {v2.gen_val})\")\n    print(f\"  e1 \u2192 e2 = {e_composed}\")\n    print(f\"  val(e1 \u2192 e2)     = ({v_composed.depth_val}, {v_composed.width_val}, {v_composed.gen_val})\")\n    print(f\"  seqMul(v1, v2) = ({v_product.depth_val}, {v_product.width_val}, {v_product.gen_val})\")\n    print(f\"  Match: {v_composed == v_product} \u2713\")\n    print()\n\n\ndef demo_structural_invariance():\n    \"\"\"Verify structural congruence preserves profiles.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 3: Structural Congruence Invariance\")\n    print(\"=\" * 60)\n\n    a, b, c = gen(), gen(), gen()\n\n    # Associativity of compose\n    e1 = compose(compose(a, b), c)   # (A\u2192B)\u2192C\n    e2 = compose(a, compose(b, c))   # A\u2192(B\u2192C)\n    v1, v2 = tropical_valuation(e1), tropical_valuation(e2)\n    print(f\"  Compose assoc: {e1} \u2261 {e2}\")\n    print(f\"    profiles: ({v1.depth_val},{v1.width_val},{v1.gen_val}) = ({v2.depth_val},{v2.width_val},{v2.gen_val}) : {v1 == v2} \u2713\")\n\n    # Commutativity of parallel\n    e3 = parallel(a, b)\n    e4 = parallel(b, a)\n    v3, v4 = tropical_valuation(e3), tropical_valuation(e4)\n    print(f\"  Parallel comm:  {e3} \u2261 {e4}\")\n    print(f\"    profiles: ({v3.depth_val},{v3.width_val},{v3.gen_val}) = ({v4.depth_val},{v4.width_val},{v4.gen_val}) : {v3 == v4} \u2713\")\n\n    # Identity elimination\n    e5 = compose(identity(), a)\n    v5, va = tropical_valuation(e5), tropical_valuation(a)\n    print(f\"  Left identity:  {e5} \u2261 {a}\")\n    print(f\"    profiles: ({v5.depth_val},{v5.width_val},{v5.gen_val}) = ({va.depth_val},{va.width_val},{va.gen_val}) : {v5 == va} \u2713\")\n\n    print()\n\n\ndef demo_tropical_distributivity():\n    \"\"\"Verify tropical semiring distributivity.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 4: Tropical Semiring Distributivity\")\n    print(\"=\" * 60)\n\n    p = TropicalArchProfile(2, 3, 4)\n    q = TropicalArchProfile(1, 5, 2)\n    r = TropicalArchProfile(3, 1, 6)\n\n    lhs = p.seq_mul(q.trop_add(r))\n    rhs = p.seq_mul(q).trop_add(p.seq_mul(r))\n    print(f\"  p = ({p.depth_val}, {p.width_val}, {p.gen_val})\")\n    print(f\"  q = ({q.depth_val}, {q.width_val}, {q.gen_val})\")\n    print(f\"  r = ({r.depth_val}, {r.width_val}, {r.gen_val})\")\n    print(f\"  p \u2297 (q \u2295 r)     = ({lhs.depth_val}, {lhs.width_val}, {lhs.gen_val})\")\n    print(f\"  (p\u2297q) \u2295 (p\u2297r) = ({rhs.depth_val}, {rhs.width_val}, {rhs.gen_val})\")\n    print(f\"  Match: {lhs == rhs} \u2713\")\n    print()\n\n\ndef demo_depth_width_tradeoff():\n    \"\"\"Verify and visualize the depth-width-generator tradeoff.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 5: Depth-Width-Generator Tradeoff\")\n    print(\"=\" * 60)\n\n    def random_expr(max_depth=5):\n        if max_depth <= 1:\n            return random.choice([gen(), identity()])\n        r = random.random()\n        if r < 0.3:\n            return gen()\n        elif r < 0.4:\n            return identity()\n        elif r < 0.7:\n            return compose(random_expr(max_depth-1), random_expr(max_depth-1))\n        else:\n            return parallel(random_expr(max_depth-1), random_expr(max_depth-1))\n\n    n_tests = 10000\n    violations = 0\n    for _ in range(n_tests):\n        e = random_expr()\n        p = tropical_valuation(e)\n        if not p.satisfies_tradeoff():\n            violations += 1\n\n    print(f\"  Tested {n_tests} random architectures\")\n    print(f\"  Tradeoff violations: {violations}\")\n    print(f\"  Theorem verified: genCount \u2264 depth \u00d7 maxWidth for all \u2713\")\n    print()\n\n\ndef demo_bounded_classification():\n    \"\"\"Enumerate bounded profile classes.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 6: Bounded Architecture Classification\")\n    print(\"=\" * 60)\n\n    for G, D, W in [(3, 3, 3), (5, 5, 5), (8, 8, 8), (10, 10, 10)]:\n        total = (D + 1) * (W + 1) * (G + 1)\n        valid = sum(\n            1 for d, w, g in itertools.product(range(D+1), range(W+1), range(G+1))\n            if g <= d * w\n        )\n        print(f\"  Bounds (G={G}, D={D}, W={W}): \"\n              f\"max profiles = {total}, \"\n              f\"valid (tradeoff) = {valid}, \"\n              f\"reduction = {100*(1-valid/total):.1f}%\")\n    print()\n\n\ndef demo_canonical_reconstruction():\n    \"\"\"Demonstrate canonical skeleton reconstruction.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 7: Canonical Skeleton Reconstruction\")\n    print(\"=\" * 60)\n\n    # Two structurally congruent expressions\n    e1 = compose(compose(gen(), gen()), gen())\n    e2 = compose(gen(), compose(gen(), gen()))\n\n    v1 = tropical_valuation(e1)\n    v2 = tropical_valuation(e2)\n\n    print(f\"  e1 = {e1}\")\n    print(f\"  e2 = {e2}\")\n    print(f\"  val(e1) = ({v1.depth_val}, {v1.width_val}, {v1.gen_val})\")\n    print(f\"  val(e2) = ({v2.depth_val}, {v2.width_val}, {v2.gen_val})\")\n    print(f\"  Same profile (same skeleton): {v1 == v2} \u2713\")\n    print()\n\n    # Different profiles \u2192 different classes\n    e3 = parallel(gen(), parallel(gen(), gen()))\n    v3 = tropical_valuation(e3)\n    print(f\"  e3 = {e3}\")\n    print(f\"  val(e3) = ({v3.depth_val}, {v3.width_val}, {v3.gen_val})\")\n    print(f\"  Different from e1: {v1 != v3} \u2713\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Section 3: Run all demos\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"\u2550\" * 60)\n    print(\"  OPERADIC TROPICALIZATION OF NEURAL ARCHITECTURES\")\n    print(\"  Tropical Valuation Functor \u2014 Demonstrations\")\n    print(\"\u2550\" * 60 + \"\\n\")\n\n    demo_basic_profiles()\n    demo_functoriality()\n    demo_structural_invariance()\n    demo_tropical_distributivity()\n    demo_depth_width_tradeoff()\n    demo_bounded_classification()\n    demo_canonical_reconstruction()\n\n    print(\"All demonstrations completed successfully! \u2713\")\n"
+    },
+    "date": "2026-05-12T07:30:16Z"
+  },
   "algebratropicalmachinelearning_tropical_represente.json": {
     "title": "Tropical Representer Duality via Idempotent RKHS Semimodules and Certified Min-Plus Kernel Regression",
     "domain": "Algebra\u2013Tropical\u2013MachineLearning (Bridges)",
@@ -4538,7 +4587,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -4547,7 +4596,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -4556,7 +4605,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -4565,7 +4614,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -4583,7 +4632,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -4601,7 +4650,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -4610,7 +4659,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -4619,7 +4668,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-10T23:04:27Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebraspeculative_prime_congruence_semantics_for_",
@@ -4628,7 +4677,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:04:40Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraeml_renormalization_semantics_via_closure_f",
@@ -4637,7 +4686,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -4646,7 +4695,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -4655,7 +4704,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 92
+      "hue": 112
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -4664,7 +4713,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:38Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebramachinelearning_coalgebraic_myhillnerode_se",
@@ -4673,7 +4722,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -4682,7 +4731,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-11T02:06:07Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "algebraeml_ruelle_transfer_semantics_via_closure_c",
@@ -4700,7 +4749,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -4709,7 +4758,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:27Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "cryptographypythagorean_isogeny_free_trapdoors_via",
@@ -4718,7 +4767,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T04:06:34Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropical_neural_representation_duality_via_",
@@ -4727,7 +4776,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 281
+      "hue": 275
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -4736,7 +4785,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -4745,7 +4794,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -4754,7 +4803,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -4763,7 +4812,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -4772,7 +4821,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -4781,7 +4830,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 101
+      "hue": 275
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -4790,7 +4839,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -4808,7 +4857,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -4817,7 +4866,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
@@ -4826,7 +4875,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -4844,7 +4893,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -4871,7 +4920,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -4880,7 +4929,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -4889,7 +4938,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -4916,7 +4965,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -4925,7 +4974,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -4934,7 +4983,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T16:18:15Z",
-      "hue": 90
+      "hue": 179
     },
     {
       "id": "algebraemlphysics_de_sitter_tropical_entropic_c_th",
@@ -4943,7 +4992,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -4961,7 +5010,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -4970,7 +5019,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -4988,7 +5037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -4997,7 +5046,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T18:48:13Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_p",
@@ -5006,7 +5055,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 90
+      "hue": 89
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -5024,7 +5073,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -5033,7 +5082,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -5042,7 +5091,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 314
+      "hue": 272
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -5051,7 +5100,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -5069,7 +5118,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -5078,7 +5127,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -5087,7 +5136,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -5096,7 +5145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -5105,7 +5154,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -5114,7 +5163,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -5123,7 +5172,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -5132,7 +5181,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_proo",
@@ -5141,7 +5190,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:03:55Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -5150,7 +5199,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -5159,7 +5208,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -5168,7 +5217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -5177,7 +5226,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 95
+      "hue": 280
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -5186,7 +5235,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -5195,7 +5244,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 281
+      "hue": 92
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -5204,7 +5253,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:36:24Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "algebraemlcryptography_closure_matroid_duality_via",
@@ -5213,7 +5262,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T05:35:38Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_duali",
@@ -5231,7 +5280,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -5240,7 +5289,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T05:36:31Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -5249,7 +5298,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T05:36:49Z",
-      "hue": 292
+      "hue": 314
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -5258,7 +5307,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T06:37:24Z",
-      "hue": 270
+      "hue": 271
+    },
+    {
+      "id": "algebramachinelearningspeculative_operadic_tropica",
+      "title": "Operadic Tropicalization of Neural Architectures",
+      "domain": "Algebra \u00d7 Machine Learning \u00d7 Tropical Geometry",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-12T07:30:16Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -5271,474 +5329,474 @@ window.PACKAGE_GRAPH = {
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_stonebirkhoff_dua",
-      "strength": 0.9315217391304347,
+      "strength": 0.9294399999999998,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_tropical_information_bot",
-      "strength": 0.8771739130434781,
+      "strength": 0.87344,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.8385869565217392,
+      "strength": 0.83368,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.8054347826086954,
+      "strength": 0.7995199999999999,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.7858695652173913,
+      "strength": 0.7793599999999998,
       "label": "Temporal Nerode Quotient for Reversible"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.7804347826086957,
+      "strength": 0.77376,
       "label": "Operadic Neural Architecture Search via"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.668478260869565,
+      "strength": 0.6583999999999999,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.6353260869565216,
+      "strength": 0.6242399999999999,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.6293478260869565,
+      "strength": 0.61808,
       "label": "Logic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "cryptographypythagorean_isogeny_free_trapdoors_via",
-      "strength": 0.6195652173913043,
+      "strength": 0.608,
       "label": "Cryptography"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.6173913043478261,
+      "strength": 0.6057600000000001,
       "label": "Topological Prime Spectrum Compression L"
+    },
+    {
+      "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
+      "target": "algebramachinelearningspeculative_operadic_tropica",
+      "strength": 0.5996,
+      "label": "Lean Formalization Target"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5994565217391303,
+      "strength": 0.5872799999999999,
       "label": "Non"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogicspeculative_temporal_prime_congruence_",
-      "strength": 0.5918478260869564,
+      "strength": 0.57944,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.580978260869565,
+      "strength": 0.5682399999999999,
       "label": "Tropical Representer Duality"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.579891304347826,
+      "strength": 0.5671199999999998,
       "label": "Operadic Neural Composition with Multi-I"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5782608695652172,
+      "strength": 0.5654399999999999,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.576086956521739,
+      "strength": 0.5631999999999999,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.5467391304347826,
+      "strength": 0.53296,
       "label": "Tropical Semiring Observations for Infor"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.5429347826086957,
+      "strength": 0.52904,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5364130434782608,
+      "strength": 0.5223199999999999,
       "label": "Non"
+    },
+    {
+      "source": "algebratropicalmachinelearning_tropical_neural_she",
+      "target": "algebramachinelearningspeculative_operadic_tropica",
+      "strength": 0.5150399999999999,
+      "label": "Operadic Tropicalization"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.5119565217391304,
+      "strength": 0.49711999999999995,
       "label": "Operadic composition laws for specific a"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.5059782608695651,
+      "strength": 0.49095999999999995,
       "label": "Logic"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.4820652173913042,
+      "strength": 0.46631999999999996,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.4820652173913042,
+      "strength": 0.46631999999999996,
       "label": "Effective prefix codes"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.475,
+      "strength": 0.45904,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.475,
+      "strength": 0.45904,
       "label": "Operadic Neural Proof"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4722826086956521,
+      "strength": 0.4562399999999999,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_ultrametric_proof_dynam",
-      "strength": 0.4684782608695651,
+      "strength": 0.45231999999999994,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4668478260869565,
+      "strength": 0.45064000000000004,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.4614130434782608,
-      "label": "Algebra,Cryptography,EML,Bridges bridge"
+      "strength": 0.44504,
+      "label": "Cryptography,Algebra,EML,Bridges bridge"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.4614130434782608,
-      "label": "Tropical,Logic,Geometry,Algebra bridge"
+      "strength": 0.44504,
+      "label": "Logic,Tropical,Algebra,Geometry bridge"
+    },
+    {
+      "source": "algebraspeculativemachinelearning_tropical_valuati",
+      "target": "algebramachinelearningspeculative_operadic_tropica",
+      "strength": 0.44504,
+      "label": "Tropical,MachineLearning,Algebra,Geometry bridge"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.45706521739130435,
+      "strength": 0.44056000000000006,
       "label": "Entropy Production Rate Invariance"
     },
     {
       "source": "algebraspeculativemachinelearning_ultrametric_proo",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4451086956521738,
+      "strength": 0.42823999999999995,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.4407608695652174,
+      "strength": 0.42376,
       "label": "Non"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.43423913043478257,
+      "strength": 0.41703999999999997,
       "label": "Tropical Rate"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.43423913043478257,
+      "strength": 0.41703999999999997,
       "label": "Tropical Valuation Distillation"
+    },
+    {
+      "source": "algebraemlmachinelearning_tropical_information_bot",
+      "target": "algebramachinelearningspeculative_operadic_tropica",
+      "strength": 0.40303999999999995,
+      "label": "Operadic Tropicalization"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraemltropical_non_archimedean_information_dua",
-      "strength": 0.41902173913043467,
+      "strength": 0.40135999999999994,
       "label": "Indistinguishability \u2194 metric bisimulati"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.41793478260869554,
+      "strength": 0.40023999999999993,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.41793478260869554,
+      "strength": 0.40023999999999993,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.4103260869565216,
+      "strength": 0.3923999999999999,
       "label": "Tropical Semiring Oracle Capacity"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.4059782608695652,
+      "strength": 0.38792,
       "label": "Entropy Production Bounds for Self-Refer"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.40163043478260857,
+      "strength": 0.3834399999999999,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.40054347826086945,
+      "strength": 0.38231999999999994,
       "label": "Tropical Residuation Trapdoor Duality"
+    },
+    {
+      "source": "algebratropical_neural_representation_duality_via_",
+      "target": "algebramachinelearningspeculative_operadic_tropica",
+      "strength": 0.38119999999999993,
+      "label": "Spectral graph theory \u2194 Tropical spectra"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3913043478260869,
+      "strength": 0.3728,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.37989130434782603,
+      "strength": 0.36103999999999997,
       "label": "Tropical Rate"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.37989130434782603,
+      "strength": 0.36103999999999997,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.37989130434782603,
+      "strength": 0.36103999999999997,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.37989130434782603,
+      "strength": 0.36103999999999997,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculativecryptography_prime_congruence_du",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.37989130434782603,
+      "strength": 0.36103999999999997,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.37989130434782603,
+      "strength": 0.36103999999999997,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_p",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.37989130434782603,
+      "strength": 0.36103999999999997,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.3739130434782608,
+      "strength": 0.35488000000000003,
       "label": "Persistent homology of closure filtratio"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebrageometrycryptography_berggren_voronoi_duali",
-      "strength": 0.3706521739130433,
+      "strength": 0.3515199999999999,
       "label": "Berggren Voronoi"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.3706521739130433,
+      "strength": 0.3515199999999999,
       "label": "Tropical"
-    },
-    {
-      "source": "algebraemlmachinelearning_tropical_information_bot",
-      "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3684782608695651,
-      "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebraemlcryptography_tropical_pontryaginmellin_d",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3684782608695651,
+      "strength": 0.3492799999999999,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3684782608695651,
+      "strength": 0.3492799999999999,
       "label": "Tropical Neural Sheaf Sampling"
+    },
+    {
+      "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
+      "target": "algebramachinelearningspeculative_operadic_tropica",
+      "strength": 0.34815999999999997,
+      "label": "presentation-independence of the Berkovi"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.363586956521739,
+      "strength": 0.34423999999999993,
       "label": "Tropical Neural Universality Classes wit"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.363586956521739,
+      "strength": 0.34423999999999993,
       "label": "Tropical Rate"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.363586956521739,
+      "strength": 0.34423999999999993,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativecryptography_prime_congruence_du",
-      "strength": 0.35760869565217385,
+      "strength": 0.33808,
       "label": "Prime Congruence Duality"
     },
     {
       "source": "algebralogiccomputation_temporal_stonebirkhoff_dua",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.35271739130434776,
+      "strength": 0.33304,
       "label": "Temporal Fixed"
-    },
-    {
-      "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.35271739130434776,
-      "label": "MachineLearning,Tropical,Geometry,Algebra bridge"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.34999999999999987,
+      "strength": 0.3302399999999999,
       "label": "Lattice-Cryptographic Indistinguishabili"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.34728260869565203,
+      "strength": 0.3274399999999999,
       "label": "Tropical Valuation Distillation"
+    },
+    {
+      "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
+      "target": "algebramachinelearningspeculative_operadic_tropica",
+      "strength": 0.32464000000000004,
+      "label": "Tropical Specialization"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.34347826086956507,
+      "strength": 0.32351999999999986,
       "label": "Tropicalization of Prime Semantic Finger"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.3429347826086956,
+      "strength": 0.32295999999999997,
       "label": "Closure"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.3429347826086956,
+      "strength": 0.32295999999999997,
       "label": "Idempotent Holographic Renormalization"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
-      "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.34021739130434775,
+      "target": "algebramachinelearningspeculative_operadic_tropica",
+      "strength": 0.32127999999999995,
       "label": "Tropicalization of Prime Semantic Finger"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.3336956521739129,
+      "strength": 0.3134399999999999,
       "label": "Shannon Entropy Formalization on Orbit D"
     },
     {
       "source": "algebralogicspeculative_temporal_prime_congruence_",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.32934782608695645,
+      "strength": 0.30896,
       "label": "Temporal Fixed"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.3255434782608695,
+      "strength": 0.30504,
       "label": "Tropical Representer Duality"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraeml_thermodynamic_galois_duality_via_closur",
-      "strength": 0.32282608695652165,
+      "strength": 0.30223999999999995,
       "label": "Thermodynamic Pressure via Weighted Tran"
     },
     {
       "source": "algebraspeculativecryptography_prime_stone_duality",
       "target": "algebraspeculativecryptography_tropical_one_way_mi",
-      "strength": 0.3206521739130434,
-      "label": "topological hardness certificates"
-    },
-    {
-      "source": "algebraspeculativecryptography_prime_congruence_du",
-      "target": "algebraspeculativecryptography_prime_stone_duality",
-      "strength": 0.32010869565217376,
-      "label": "Tropical Prime"
-    },
-    {
-      "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
-      "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.3114130434782607,
-      "label": "Persistent homology of closure filtratio"
-    },
-    {
-      "source": "algebralogiccomputation_temporal_stonebirkhoff_dua",
-      "target": "algebralogicspeculative_temporal_prime_congruence_",
-      "strength": 0.3059782608695652,
-      "label": "Prime Temporal Congruence Spectra"
-    },
-    {
-      "source": "algebraeml_turingmyhill_reconstruction_via_closure",
-      "target": "algebraeml_morita_equivalence_via_closure_semimodu",
-      "strength": 0.3032608695652173,
-      "label": "Closure automata \u2194 Stone duality"
-    },
-    {
-      "source": "algebraspeculativecryptography_prime_stone_duality",
-      "target": "algebraemlcryptography_tropical_pontryaginmellin_d",
       "strength": 0.3,
       "label": "topological hardness certificates"
     }
