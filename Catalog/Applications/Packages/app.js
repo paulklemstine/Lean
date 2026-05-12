@@ -706,551 +706,772 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ═══════════════════════════════════════════════
-    // AETHER — Crystal City of Heaven
+    // AETHER — Knowledge Graph Visualization
     // ═══════════════════════════════════════════════
-    (function initBackrooms() {
-        const canvas = document.getElementById('backrooms-canvas');
+    (function initKnowledgeGraph() {
+        const canvas = document.getElementById('knowledge-graph-canvas') || document.getElementById('backrooms-canvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
+        // ─── Data ───
+        const graphData = window.PACKAGE_GRAPH || { nodes: [], edges: [] };
+        const graphNodes = (graphData.nodes || []).map(n => ({
+            ...n,
+            x: 0, y: 0, vx: 0, vy: 0,
+            radius: 18,
+            phase: Math.random() * Math.PI * 2,
+            rotSpeed: 0.3 + Math.random() * 0.5,
+            rotAngle: Math.random() * Math.PI * 2
+        }));
+        const graphEdges = graphData.edges || [];
+
+        // Fallback: build nodes from PACKAGE_INDEX if no graph data
+        if (graphNodes.length === 0 && window.PACKAGE_INDEX) {
+            const DOMAIN_SHAPES = {
+                'Algebra': 'tetrahedron', 'Bridges': 'icosahedron', 'Computation': 'cube',
+                'Cryptography': 'dodecahedron', 'EML': 'octahedron', 'Geometry': 'hexagonal_prism',
+                'Logic': 'star_of_david', 'MachineLearning': 'sphere_rings', 'Physics': 'diamond',
+                'Pythagorean': 'triangular_prism', 'Speculative': 'pentagonal_prism', 'Tropical': 'star'
+            };
+            function mulberry32(seed) {
+                seed = seed >>> 0;
+                return function() {
+                    seed = (seed + 0x6D2B79F5) >>> 0;
+                    let t = seed ^ (seed >>> 15);
+                    t = (t * (t | 1)) >>> 0;
+                    t = (t ^ (t + 0x3FB52453)) >>> 0;
+                    t = (t ^ (t >>> 13)) >>> 0;
+                    return t >>> 0;
+                };
+            }
+            window.PACKAGE_INDEX.forEach(pkg => {
+                const slug = pkg.filename.replace('.json', '');
+                const rng = mulberry32(slug.split('').reduce((a, c) => a + c.charCodeAt(0), 0));
+                graphNodes.push({
+                    id: slug, title: pkg.title || slug, domain: pkg.domain || 'Bridges',
+                    primary_domain: 'Bridges', shape: DOMAIN_SHAPES[pkg.domain] || 'icosahedron',
+                    date: pkg.date || '', hue: (rng() % 360),
+                    x: 0, y: 0, vx: 0, vy: 0, radius: 18,
+                    phase: rng() / 4294967296 * Math.PI * 2,
+                    rotSpeed: 0.3 + (rng() / 4294967296) * 0.5,
+                    rotAngle: rng() / 4294967296 * Math.PI * 2
+                });
+            });
+        }
+
+        if (graphNodes.length === 0) return;
+
+        // ─── Colors by domain ───
+        const DOMAIN_COLORS = {
+            'Algebra': { h: 220, s: 80, l: 60 },
+            'Bridges': { h: 280, s: 70, l: 65 },
+            'Computation': { h: 160, s: 70, l: 50 },
+            'Cryptography': { h: 45, s: 80, l: 55 },
+            'EML': { h: 190, s: 75, l: 55 },
+            'Geometry': { h: 120, s: 60, l: 50 },
+            'Logic': { h: 300, s: 70, l: 60 },
+            'MachineLearning': { h: 30, s: 80, l: 55 },
+            'Physics': { h: 200, s: 80, l: 55 },
+            'Pythagorean': { h: 340, s: 70, l: 55 },
+            'Speculative': { h: 260, s: 65, l: 60 },
+            'Tropical': { h: 10, s: 75, l: 55 }
+        };
+        function nodeColor(node) {
+            const d = node.primary_domain || 'Bridges';
+            const c = DOMAIN_COLORS[d] || DOMAIN_COLORS['Bridges'];
+            return c;
+        }
+
+        // ─── Canvas state ───
         let W, H;
         let animating = false;
+        let camera = { x: 0, y: 0, zoom: 1 };
+        let dragNode = null;
+        let isPanning = false;
+        let panStart = { x: 0, y: 0 };
+        let mouseDownPos = { x: 0, y: 0 };
+        let hasDragged = false;
+        let welcomeFaded = false;
+        let mouseWorld = { x: 0, y: 0 };
+        let mouseScreen = { x: 0, y: 0 };
+        let hoveredNode = null;
+        let time = 0;
+
+        // ─── Stars (background) ───
+        const stars = [];
+        for (let i = 0; i < 250; i++) {
+            stars.push({
+                x: Math.random() * 8000 - 4000,
+                y: Math.random() * 8000 - 4000,
+                r: 0.3 + Math.random() * 1.2,
+                brightness: 0.3 + Math.random() * 0.7,
+                twinkleSpeed: 0.5 + Math.random() * 2,
+                twinklePhase: Math.random() * Math.PI * 2
+            });
+        }
+
+        // ─── Edge particles ───
+        const edgeParticles = [];
+        graphEdges.forEach(e => {
+            const count = 2 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < count; i++) {
+                edgeParticles.push({
+                    edge: e,
+                    t: Math.random(),
+                    speed: 0.002 + Math.random() * 0.004,
+                    size: 1 + Math.random() * 1.5
+                });
+            }
+        });
+
+        // ─── Physics ───
+        const K_REPEL = 8000;
+        const K_SPRING = 0.008;
+        const REST_LENGTH = 150;
+        const K_GRAVITY = 0.0005;
+        const DAMPING = 0.82;
+        const NODE_RADIUS = 18;
+
+        function initPositions() {
+            const count = graphNodes.length;
+            const radius = Math.sqrt(count) * 60;
+            graphNodes.forEach((node, i) => {
+                const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
+                const r = radius * (0.5 + Math.random() * 0.5);
+                node.x = Math.cos(angle) * r;
+                node.y = Math.sin(angle) * r;
+                node.vx = 0;
+                node.vy = 0;
+            });
+        }
+
+        function buildNodeMap() {
+            const map = {};
+            graphNodes.forEach(n => { map[n.id] = n; });
+            return map;
+        }
+
+        let nodeMap = buildNodeMap();
+
+        function simulate() {
+            // Coulomb repulsion
+            for (let i = 0; i < graphNodes.length; i++) {
+                for (let j = i + 1; j < graphNodes.length; j++) {
+                    const a = graphNodes[i], b = graphNodes[j];
+                    let dx = b.x - a.x, dy = b.y - a.y;
+                    let d2 = dx * dx + dy * dy;
+                    if (d2 < 1) d2 = 1;
+                    const f = K_REPEL / d2;
+                    const d = Math.sqrt(d2);
+                    const fx = (dx / d) * f, fy = (dy / d) * f;
+                    a.vx -= fx; a.vy -= fy;
+                    b.vx += fx; b.vy += fy;
+                }
+            }
+            // Spring edges
+            graphEdges.forEach(e => {
+                const a = nodeMap[e.source], b = nodeMap[e.target];
+                if (!a || !b) return;
+                const dx = b.x - a.x, dy = b.y - a.y;
+                const d = Math.sqrt(dx * dx + dy * dy) || 1;
+                const f = K_SPRING * (d - REST_LENGTH);
+                const fx = (dx / d) * f, fy = (dy / d) * f;
+                a.vx += fx; a.vy += fy;
+                b.vx -= fx; b.vy -= fy;
+            });
+            // Center gravity
+            graphNodes.forEach(n => {
+                n.vx -= n.x * K_GRAVITY;
+                n.vy -= n.y * K_GRAVITY;
+            });
+            // Damping + integrate
+            graphNodes.forEach(n => {
+                if (n === dragNode) return;
+                n.vx *= DAMPING;
+                n.vy *= DAMPING;
+                n.x += n.vx;
+                n.y += n.vy;
+            });
+        }
+
+        // Warmup: run 300 iterations
+        initPositions();
+        for (let i = 0; i < 300; i++) simulate();
+
+        // ─── Shape renderers ───
+        function project3D(points3d, rotX, rotY) {
+            const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+            const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+            return points3d.map(([x, y, z]) => {
+                const y1 = y * cosX - z * sinX;
+                const z1 = y * sinX + z * cosX;
+                const x2 = x * cosY - z1 * sinY;
+                const z2 = x * sinY + z1 * cosY;
+                return [x2, y1];
+            });
+        }
+
+        function drawShape(ctx, x, y, r, shape, rot, color, isHovered) {
+            ctx.save();
+            ctx.translate(x, y);
+            const scale = isHovered ? 1.25 : 1.0;
+            ctx.scale(scale, scale);
+
+            const h = color.h, s = color.s, l = color.l;
+            const strokeColor = `hsl(${h}, ${s}%, ${l}%)`;
+            const glowColor = `hsla(${h}, ${s}%, ${Math.min(l + 30, 95)}%, 0.6)`;
+            const innerGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+            innerGlow.addColorStop(0, `hsla(${h}, ${s}%, ${Math.min(l + 40, 98)}%, 0.7)`);
+            innerGlow.addColorStop(0.5, `hsla(${h}, ${s}%, ${l}%, 0.3)`);
+            innerGlow.addColorStop(1, `hsla(${h}, ${s}%, ${l}%, 0.0)`);
+
+            // Inner glow
+            ctx.beginPath();
+            ctx.arc(0, 0, r * 1.1, 0, Math.PI * 2);
+            ctx.fillStyle = innerGlow;
+            ctx.fill();
+
+            const rotX = rot * 0.7;
+            const rotY = rot;
+
+            // Define 3D vertices for each shape
+            let edges3d = [];
+            const S = r * 0.75; // shape scale
+
+            switch (shape) {
+                case 'tetrahedron': {
+                    const v = [[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]];
+                    edges3d = [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
+                    const p = project3D(v.map(c => c.map(c2 => c2 * S)), rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
+                    edges3d.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'cube': {
+                    const v = [];
+                    for (let sx = -1; sx <= 1; sx += 2) for (let sy = -1; sy <= 1; sy += 2) for (let sz = -1; sz <= 1; sz += 2) v.push([sx, sy, sz]);
+                    const edgePairs = [[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
+                    const p = project3D(v.map(c => c.map(c2 => c2 * S * 0.7)), rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
+                    edgePairs.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'octahedron': {
+                    const v = [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
+                    const edgePairs = [[0,2],[0,3],[0,4],[0,5],[1,2],[1,3],[1,4],[1,5],[2,4],[2,5],[3,4],[3,5]];
+                    const p = project3D(v.map(c => c.map(c2 => c2 * S)), rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
+                    edgePairs.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'dodecahedron': {
+                    const phi = (1 + Math.sqrt(5)) / 2;
+                    const v = [];
+                    for (let sx = -1; sx <= 1; sx += 2) for (let sy = -1; sy <= 1; sy += 2) for (let sz = -1; sz <= 1; sz += 2) v.push([sx, sy, sz]);
+                    for (let sx = -1; sx <= 1; sx += 2) for (let sy = -1; sy <= 1; sy += 2) { v.push([0, sx / phi, sy * phi]); v.push([sx / phi, sy * phi, 0]); v.push([sy * phi, 0, sx / phi]); }
+                    const edgePairs = [];
+                    for (let i = 0; i < v.length; i++) for (let j = i + 1; j < v.length; j++) {
+                        const dx = v[i][0] - v[j][0], dy = v[i][1] - v[j][1], dz = v[i][2] - v[j][2];
+                        if (Math.abs(Math.sqrt(dx*dx+dy*dy+dz*dz) - 2/phi) < 0.01) edgePairs.push([i, j]);
+                    }
+                    const p = project3D(v.map(c => c.map(c2 => c2 * S * 0.55)), rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.2;
+                    edgePairs.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'icosahedron': {
+                    const phi = (1 + Math.sqrt(5)) / 2;
+                    const v = [[0,1,phi],[0,1,-phi],[0,-1,phi],[0,-1,-phi],[1,phi,0],[1,-phi,0],[-1,phi,0],[-1,-phi,0],[phi,0,1],[phi,0,-1],[-phi,0,1],[-phi,0,-1]];
+                    const edgePairs = [[0,2],[0,4],[0,6],[0,8],[0,10],[1,3],[1,4],[1,6],[1,9],[1,11],[2,5],[2,7],[2,8],[2,10],[3,5],[3,7],[3,9],[3,11],[4,6],[4,8],[4,9],[5,7],[5,8],[5,9],[6,10],[6,11],[7,10],[7,11],[8,9],[10,11]];
+                    const p = project3D(v.map(c => c.map(c2 => c2 * S * 0.5)), rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
+                    edgePairs.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'star': {
+                    // 5-pointed star
+                    const spikes = 5, outerR = S, innerR = S * 0.4;
+                    ctx.beginPath();
+                    for (let i = 0; i < spikes * 2; i++) {
+                        const r2 = i % 2 === 0 ? outerR : innerR;
+                        const angle = (i * Math.PI / spikes) - Math.PI / 2 + rot;
+                        const sx = Math.cos(angle) * r2, sy = Math.sin(angle) * r2;
+                        if (i === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
+                    }
+                    ctx.closePath();
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.8;
+                    ctx.stroke();
+                    // Inner glow fill
+                    const starGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, innerR);
+                    starGlow.addColorStop(0, `hsla(${h}, ${s}%, ${Math.min(l+30,95)}%, 0.5)`);
+                    starGlow.addColorStop(1, `hsla(${h}, ${s}%, ${l}%, 0.0)`);
+                    ctx.fillStyle = starGlow; ctx.fill();
+                    break;
+                }
+                case 'hexagonal_prism': {
+                    const v = [], edgeP = [];
+                    for (let i = 0; i < 6; i++) {
+                        const a = Math.PI / 3 * i;
+                        v.push([Math.cos(a)*S, S*0.6, Math.sin(a)*S]);
+                        v.push([Math.cos(a)*S, -S*0.6, Math.sin(a)*S]);
+                    }
+                    for (let i = 0; i < 6; i++) { edgeP.push([i*2, i*2+1]); edgeP.push([i*2, ((i+1)%6)*2]); edgeP.push([i*2+1, ((i+1)%6)*2+1]); }
+                    const p = project3D(v, rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.3;
+                    edgeP.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'sphere_rings': {
+                    // Circle with orbital ring
+                    ctx.beginPath(); ctx.arc(0, 0, S * 0.7, 0, Math.PI * 2);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5; ctx.stroke();
+                    // Ring (ellipse)
+                    const ringPts = [];
+                    for (let i = 0; i <= 36; i++) {
+                        const a = (i / 36) * Math.PI * 2;
+                        ringPts.push(project3D([[Math.cos(a)*S*1.1, 0, Math.sin(a)*S*1.1]], rotX*1.3, rotY*0.7)[0]);
+                    }
+                    ctx.beginPath();
+                    ringPts.forEach((p2, i) => i === 0 ? ctx.moveTo(p2[0], p2[1]) : ctx.lineTo(p2[0], p2[1]));
+                    ctx.strokeStyle = `hsla(${h}, ${s}%, ${Math.min(l+20,90)}%, 0.6)`;
+                    ctx.lineWidth = 1; ctx.stroke();
+                    break;
+                }
+                case 'diamond': {
+                    // Elongated octahedron (top/bottom points)
+                    const v = [[0,1.3*S,0],[S*0.7,0,0],[0,0,S*0.7],[-S*0.7,0,0],[0,0,-S*0.7],[0,-1.3*S,0]];
+                    const edgeP = [[0,1],[0,2],[0,3],[0,4],[1,2],[2,3],[3,4],[4,1],[1,5],[2,5],[3,5],[4,5]];
+                    const p = project3D(v, rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
+                    edgeP.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'triangular_prism': {
+                    const v = [];
+                    for (let i = 0; i < 3; i++) {
+                        const a = (i / 3) * Math.PI * 2 - Math.PI / 2;
+                        v.push([Math.cos(a)*S, S*0.6, Math.sin(a)*S]);
+                        v.push([Math.cos(a)*S, -S*0.6, Math.sin(a)*S]);
+                    }
+                    const edgeP = [[0,1],[2,3],[4,5],[0,2],[2,4],[0,4],[1,3],[3,5],[1,5]];
+                    const p = project3D(v, rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.3;
+                    edgeP.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'pentagonal_prism': {
+                    const v = [], edgeP = [];
+                    for (let i = 0; i < 5; i++) {
+                        const a = (i / 5) * Math.PI * 2 - Math.PI / 2;
+                        v.push([Math.cos(a)*S, S*0.6, Math.sin(a)*S]);
+                        v.push([Math.cos(a)*S, -S*0.6, Math.sin(a)*S]);
+                    }
+                    for (let i = 0; i < 5; i++) { edgeP.push([i*2, i*2+1]); edgeP.push([i*2, ((i+1)%5)*2]); edgeP.push([i*2+1, ((i+1)%5)*2+1]); }
+                    const p = project3D(v, rotX, rotY);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.3;
+                    edgeP.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
+                    break;
+                }
+                case 'star_of_david': {
+                    // Two overlapping triangles
+                    for (let t = 0; t < 2; t++) {
+                        ctx.beginPath();
+                        for (let i = 0; i < 3; i++) {
+                            const a = (i / 3) * Math.PI * 2 + t * Math.PI / 3 + rot;
+                            const px = Math.cos(a) * S, py = Math.sin(a) * S;
+                            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                        }
+                        ctx.closePath();
+                        ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5; ctx.stroke();
+                    }
+                    const sdGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, S * 0.5);
+                    sdGlow.addColorStop(0, `hsla(${h}, ${s}%, ${Math.min(l+30,95)}%, 0.4)`);
+                    sdGlow.addColorStop(1, `hsla(${h}, ${s}%, ${l}%, 0.0)`);
+                    ctx.fillStyle = sdGlow; ctx.fill();
+                    break;
+                }
+                default: {
+                    // Fallback: circle
+                    ctx.beginPath(); ctx.arc(0, 0, S * 0.7, 0, Math.PI * 2);
+                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5; ctx.stroke();
+                    break;
+                }
+            }
+
+            // Outer glow ring
+            if (isHovered) {
+                ctx.beginPath();
+                ctx.arc(0, 0, r * 1.3, 0, Math.PI * 2);
+                ctx.strokeStyle = `hsla(${h}, ${s}%, ${Math.min(l+20,90)}%, 0.4)`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        // ─── Render ───
         function resize() {
             W = canvas.width = canvas.offsetWidth;
             H = canvas.height = canvas.offsetHeight;
         }
-        resize();
-        window.addEventListener('resize', resize);
 
-        let _seed = 0xAE7BE11;
-        function rand() {
-            _seed |= 0; _seed = _seed + 0x6D2B79F5 | 0;
-            let t = Math.imul(_seed ^ _seed >>> 15, 1 | _seed);
-            t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-            return ((t ^ t >>> 14) >>> 0) / 4294967296;
-        }
-        function rr(a, b) { return a + rand() * (b - a); }
-
-        // ═══════════════════════════════════════
-        // CRYSTAL CITY — maze with grand rooms, spirals, tendrils
-        // ═══════════════════════════════════════
-        const CELL = 90;
-        const COLS = 36, ROWS = 36;
-        const worldW = COLS * CELL, worldH = ROWS * CELL;
-
-        // Maze grid
-        const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
-        const vis = Array.from({ length: ROWS }, () => Array(COLS).fill(false));
-
-        // Recursive backtracker
-        (function carveMaze(sx, sy) {
-            const stack = [[sx, sy]];
-            vis[sy][sx] = true; grid[sy][sx] = 1;
-            while (stack.length) {
-                const [cx, cy] = stack[stack.length - 1];
-                const dirs = [[0,-2],[0,2],[-2,0],[2,0]];
-                for (let i = dirs.length - 1; i > 0; i--) {
-                    const j = Math.floor(rand() * (i + 1));
-                    [dirs[i], dirs[j]] = [dirs[j], dirs[i]];
-                }
-                let ok = false;
-                for (const [dx, dy] of dirs) {
-                    const nx = cx + dx, ny = cy + dy;
-                    if (nx >= 1 && nx < COLS - 1 && ny >= 1 && ny < ROWS - 1 && !vis[ny][nx]) {
-                        grid[cy + dy / 2][cx + dx / 2] = 2;
-                        grid[ny][nx] = 1; vis[ny][nx] = true;
-                        stack.push([nx, ny]); ok = true; break;
-                    }
-                }
-                if (!ok) stack.pop();
-            }
-        })(1, 1);
-
-        // Create grand halls — large open spaces
-        for (let i = 0; i < 8; i++) {
-            const cx = Math.floor(rr(4, COLS - 4));
-            const cy = Math.floor(rr(4, ROWS - 4));
-            const r = Math.floor(rr(2, 4));
-            for (let dy = -r; dy <= r; dy++)
-                for (let dx = -r; dx <= r; dx++)
-                    if (cx+dx > 0 && cx+dx < COLS-1 && cy+dy > 0 && cy+dy < ROWS-1)
-                        grid[cy+dy][cx+dx] = 1;
-        }
-
-        // Remove awkward single-cell walls
-        for (let y = 1; y < ROWS - 1; y++)
-            for (let x = 1; x < COLS - 1; x++) {
-                if (grid[y][x] !== 0) continue;
-                let n = 0;
-                for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0]])
-                    if (grid[y+dy][x+dx] !== 0) n++;
-                if (n >= 3 && rand() > 0.25) grid[y][x] = 2;
-            }
-
-        // ═══════════════════════════════════════
-        // RAINBOW PALETTE
-        // ═══════════════════════════════════════
-        const RAINBOW = [
-            '#ff4466', '#ff8844', '#ffcc22', '#44ff88',
-            '#22ccff', '#8844ff', '#ff44cc', '#ffffff'
-        ];
-        function hslStr(h, s, l) { return `hsl(${h}, ${s}%, ${l}%)`; }
-        function cellHue(x, y) {
-            const a = Math.atan2(y - ROWS / 2, x - COLS / 2);
-            const d = Math.hypot(x - COLS / 2, y - ROWS / 2);
-            return ((a / Math.PI * 180) + 360 + d * 4 + time * 8) % 360;
-        }
-
-        // ═══════════════════════════════════════
-        // CRYSTALS — big, beautiful, prismatic
-        // ═══════════════════════════════════════
-        const crystals = [];
-        for (let y = 1; y < ROWS - 1; y++) {
-            for (let x = 1; x < COLS - 1; x++) {
-                if (grid[y][x] === 0) continue;
-                const hash = ((x * 73856093) ^ (y * 19349663)) >>> 0;
-                // ~15% of cells get crystals
-                if (hash % 7 !== 0) continue;
-                const cx = x * CELL + CELL / 2;
-                const cy = y * CELL + CELL / 2;
-                const isGrandHall = grid[y][x] === 1 &&
-                    y > 2 && y < ROWS - 3 && x > 2 && x < COLS - 3 &&
-                    grid[y-1][x] === 1 && grid[y+1][x] === 1 &&
-                    grid[y][x-1] === 1 && grid[y][x+1] === 1;
-
-                if (isGrandHall && rand() > 0.4) {
-                    // Grand crystal cluster — 3-6 large crystals
-                    const n = Math.floor(rr(3, 7));
-                    for (let c = 0; c < n; c++) {
-                        crystals.push({
-                            x: cx + rr(-CELL * 0.6, CELL * 0.6),
-                            y: cy + rr(-CELL * 0.6, CELL * 0.6),
-                            size: rr(25, 70),
-                            hue: (hash + c * 47) % 360,
-                            facets: Math.floor(rr(5, 9)),
-                            rot: rr(0, Math.PI * 2),
-                            rays: Math.floor(rr(6, 14)),
-                            grand: true
-                        });
-                    }
-                } else {
-                    // Solitary crystal
-                    crystals.push({
-                        x: cx + rr(-CELL * 0.2, CELL * 0.2),
-                        y: cy + rr(-CELL * 0.2, CELL * 0.2),
-                        size: rr(12, 40),
-                        hue: (hash * 3) % 360,
-                        facets: Math.floor(rr(4, 7)),
-                        rot: rr(0, Math.PI * 2),
-                        rays: Math.floor(rr(4, 8)),
-                        grand: false
-                    });
-                }
-            }
-        }
-
-        // ═══════════════════════════════════════
-        // LIGHT SOURCES — prismatic god rays
-        // ═══════════════════════════════════════
-        const lightSources = [];
-        for (let y = 1; y < ROWS - 1; y++) {
-            for (let x = 1; x < COLS - 1; x++) {
-                if (grid[y][x] === 0) continue;
-                const hash = ((x * 73856093) ^ (y * 19349663)) >>> 0;
-                if (hash % 3 !== 0) continue; // ~33%
-                const cx = x * CELL + CELL / 2;
-                const cy = y * CELL + CELL / 2;
-                lightSources.push({
-                    x: cx, y: cy,
-                    hue: ((hash >>> 4) * 37) % 360,
-                    horiz: hash % 2 === 0,
-                    len: rr(CELL * 0.5, CELL * 0.85),
-                    intensity: rr(0.6, 1.0)
-                });
-            }
-        }
-
-        // ═══════════════════════════════════════
-        // SPIRALS & TENDRILS
-        // ═══════════════════════════════════════
-        const spirals = [];
-        for (let s = 0; s < 5; s++) {
-            const cx = Math.floor(rr(4, COLS - 4));
-            const cy = Math.floor(rr(4, ROWS - 4));
-            const maxR = Math.floor(rr(3, 6));
-            const turns = rr(1.5, 3.5);
-            const arms = Math.floor(rr(2, 5));
-            const hue = (s * 72) % 360;
-            for (let a = 0; a < arms; a++) {
-                const offset = (a / arms) * Math.PI * 2;
-                for (let i = 0; i < 60; i++) {
-                    const t = i / 60;
-                    const angle = t * turns * Math.PI * 2 + offset;
-                    const r = t * maxR;
-                    const gx = Math.round(cx + Math.cos(angle) * r);
-                    const gy = Math.round(cy + Math.sin(angle) * r);
-                    if (gx >= 1 && gx < COLS - 1 && gy >= 1 && gy < ROWS - 1)
-                        grid[gy][gx] = 1;
-                }
-            }
-            spirals.push({ cx: cx * CELL + CELL / 2, cy: cy * CELL + CELL / 2, maxR: maxR * CELL, arms, hue });
-        }
-
-        // Tendril tunnels
-        const tendrils = [];
-        for (let t = 0; t < 10; t++) {
-            const sx = Math.floor(rr(3, COLS - 3));
-            const sy = Math.floor(rr(3, ROWS - 3));
-            const ex = Math.floor(rr(3, COLS - 3));
-            const ey = Math.floor(rr(3, ROWS - 3));
-            const pts = [];
-            let px = sx, py = sy;
-            for (let i = 0; i < 50; i++) {
-                const frac = i / 50;
-                const tx = sx + (ex - sx) * frac;
-                const ty = sy + (ey - sy) * frac;
-                px += (tx - px) * 0.25 + (rand() - 0.5) * 2.8;
-                py += (ty - py) * 0.25 + (rand() - 0.5) * 2.8;
-                const gx = Math.round(Math.max(1, Math.min(COLS - 2, px)));
-                const gy = Math.round(Math.max(1, Math.min(ROWS - 2, py)));
-                grid[gy][gx] = 2;
-                if (rand() > 0.5) {
-                    for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]])
-                        if (gy+dy > 0 && gy+dy < ROWS-1 && gx+dx > 0 && gx+dx < COLS-1)
-                            grid[gy+dy][gx+dx] = 2;
-                }
-                pts.push({ x: gx * CELL + CELL / 2, y: gy * CELL + CELL / 2 });
-            }
-            tendrils.push(pts);
-        }
-
-        // ═══════════════════════════════════════
-        // CAMERA — sweeping flyover
-        // ═══════════════════════════════════════
-        let camX = worldW / 2, camY = worldH / 2, camZoom = 0.5, time = 0;
-
-        function getCameraState(t) {
-            const c = t * 0.018, z = t * 0.009;
+        function worldToScreen(wx, wy) {
             return {
-                x: worldW / 2 + Math.sin(c * 0.7) * worldW * 0.38 + Math.sin(c * 1.4) * worldW * 0.08,
-                y: worldH / 2 + Math.cos(c * 0.55) * worldH * 0.38 + Math.cos(c * 1.2) * worldH * 0.08,
-                zoom: Math.max(0.15, 0.4 + Math.sin(z) * 0.35 + Math.sin(z * 2.3) * 0.12)
+                x: (wx - camera.x) * camera.zoom + W / 2,
+                y: (wy - camera.y) * camera.zoom + H / 2
             };
         }
 
-        // ═══════════════════════════════════════
-        // DRAWING
-        // ═══════════════════════════════════════
-        const VOID = '#04020a';
-
-        function drawFloor(vl, vr, vt, vb) {
-            const minC = Math.max(0, Math.floor(vl / CELL));
-            const maxC = Math.min(COLS - 1, Math.ceil(vr / CELL));
-            const minR = Math.max(0, Math.floor(vt / CELL));
-            const maxR = Math.min(ROWS - 1, Math.ceil(vb / CELL));
-
-            for (let y = minR; y <= maxR; y++) {
-                for (let x = minC; x <= maxC; x++) {
-                    if (grid[y][x] === 0) continue;
-                    const px = x * CELL, py = y * CELL;
-                    const isRoom = grid[y][x] === 1;
-                    // Rainbow-tinted floor with animated hue shift
-                    const hue = cellHue(x, y);
-                    ctx.fillStyle = hslStr(hue, isRoom ? 22 : 14, isRoom ? 16 : 10);
-                    ctx.fillRect(px, py, CELL, CELL);
-                    // Grid lines
-                    ctx.strokeStyle = hslStr((hue + 30) % 360, 25, 22);
-                    ctx.lineWidth = 0.5;
-                    ctx.strokeRect(px, py, CELL, CELL);
-                    ctx.beginPath();
-                    ctx.moveTo(px + CELL / 2, py); ctx.lineTo(px + CELL / 2, py + CELL);
-                    ctx.moveTo(px, py + CELL / 2); ctx.lineTo(px + CELL, py + CELL / 2);
-                    ctx.stroke();
-                    // Reflective floor: faint horizontal gradient stripe
-                    ctx.fillStyle = `hsla(${hue}, 30%, 30%, 0.03)`;
-                    ctx.fillRect(px, py, CELL, CELL * 0.15);
-                }
-            }
+        function screenToWorld(sx, sy) {
+            return {
+                x: (sx - W / 2) / camera.zoom + camera.x,
+                y: (sy - H / 2) / camera.zoom + camera.y
+            };
         }
 
-        function drawTendrils() {
-            for (const pts of tendrils) {
-                if (pts.length < 3) continue;
-                // 3-pass glow: wide faint → narrow bright
-                for (const pass of [{w: 28, a: 0.025}, {w: 12, a: 0.05}, {w: 3, a: 0.15}]) {
-                    ctx.strokeStyle = `rgba(160, 100, 255, ${pass.a})`;
-                    ctx.lineWidth = pass.w;
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-                    ctx.beginPath();
-                    ctx.moveTo(pts[0].x, pts[0].y);
-                    for (let i = 1; i < pts.length; i++) {
-                        const prev = pts[i - 1], cur = pts[i];
-                        ctx.quadraticCurveTo(prev.x, prev.y, (prev.x + cur.x) / 2, (prev.y + cur.y) / 2);
-                    }
-                    ctx.stroke();
-                }
-            }
+        function isInView(wx, wy, margin) {
+            const s = worldToScreen(wx, wy);
+            return s.x > -margin && s.x < W + margin && s.y > -margin && s.y < H + margin;
         }
 
-        function drawSpirals() {
-            for (const sp of spirals) {
-                // Spiral arm lines
-                for (let arm = 0; arm < sp.arms; arm++) {
-                    const offset = (arm / sp.arms) * Math.PI * 2;
-                    ctx.strokeStyle = `hsla(${sp.hue}, 50%, 40%, 0.04)`;
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    for (let i = 0; i <= 80; i++) {
-                        const t = i / 80;
-                        const angle = t * 3.5 * Math.PI * 2 + offset;
-                        const r = t * sp.maxR;
-                        const px = sp.cx + Math.cos(angle) * r;
-                        const py = sp.cy + Math.sin(angle) * r;
-                        if (i === 0) ctx.moveTo(px, py);
-                        else ctx.lineTo(px, py);
-                    }
-                    ctx.stroke();
-                }
-                // Center bloom
-                const grd = ctx.createRadialGradient(sp.cx, sp.cy, 0, sp.cx, sp.cy, sp.maxR * 0.35);
-                grd.addColorStop(0, `hsla(${sp.hue}, 60%, 50%, 0.08)`);
-                grd.addColorStop(1, `hsla(${sp.hue}, 60%, 50%, 0)`);
-                ctx.fillStyle = grd;
-                ctx.beginPath();
-                ctx.arc(sp.cx, sp.cy, sp.maxR * 0.35, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function drawWalls(vl, vr, vt, vb) {
-            const minC = Math.max(0, Math.floor(vl / CELL) - 1);
-            const maxC = Math.min(COLS - 1, Math.ceil(vr / CELL) + 1);
-            const minR = Math.max(0, Math.floor(vt / CELL) - 1);
-            const maxR = Math.min(ROWS - 1, Math.ceil(vb / CELL) + 1);
-            const segs = [];
-            for (let y = minR; y <= maxR; y++)
-                for (let x = minC; x <= maxC; x++) {
-                    if (grid[y][x] === 0) continue;
-                    const px = x * CELL, py = y * CELL;
-                    if (y === 0 || grid[y - 1][x] === 0) segs.push([px, py, px + CELL, py, x, y]);
-                    if (y === ROWS - 1 || grid[y + 1][x] === 0) segs.push([px, py + CELL, px + CELL, py + CELL, x, y]);
-                    if (x === 0 || grid[y][x - 1] === 0) segs.push([px, py, px, py + CELL, x, y]);
-                    if (x === COLS - 1 || grid[y][x + 1] === 0) segs.push([px + CELL, py, px + CELL, py + CELL, x, y]);
-                }
-            // Deep shadow
-            ctx.strokeStyle = 'rgba(2, 1, 8, 0.8)';
-            ctx.lineWidth = 14; ctx.lineCap = 'square';
-            ctx.beginPath();
-            for (const s of segs) { ctx.moveTo(s[0] + 4, s[1] + 4); ctx.lineTo(s[2] + 4, s[3] + 4); }
-            ctx.stroke();
-            // Prismatic wall face
-            for (const s of segs) {
-                const angle = Math.atan2(s[3] - s[1], s[2] - s[0]);
-                const hue = ((angle / Math.PI * 180) + 360 + s[4] * 7) % 360;
-                ctx.strokeStyle = hslStr(hue, 20, 15);
-                ctx.lineWidth = 8;
-                ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[2], s[3]); ctx.stroke();
-                // Inner prismatic highlight
-                ctx.strokeStyle = hslStr((hue + 40) % 360, 45, 38);
-                ctx.lineWidth = 2.5;
-                ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[2], s[3]); ctx.stroke();
-            }
-        }
-
-        function drawLights() {
-            for (const l of lightSources) {
-                const cx = l.x, cy = l.y;
-                // Tube
-                ctx.save();
-                ctx.translate(cx, cy);
-                if (!l.horiz) ctx.rotate(Math.PI / 2);
-                ctx.fillStyle = `hsla(${l.hue}, 80%, 90%, ${0.7 + l.intensity * 0.3})`;
-                ctx.fillRect(-l.len / 2, -2, l.len, 4);
-                // Brackets
-                ctx.fillStyle = '#555';
-                ctx.fillRect(-l.len / 2 - 2, -4, 4, 8);
-                ctx.fillRect(l.len / 2 - 2, -4, 4, 8);
-                ctx.restore();
-
-                // === GOD RAYS — thick volumetric beams ===
-                const rayLen = CELL * 3.5;
-                ctx.save();
-                ctx.translate(cx, cy);
-                // Main radial glow
-                const grd = ctx.createRadialGradient(0, 0, 10, 0, 0, rayLen);
-                grd.addColorStop(0, `hsla(${l.hue}, 70%, 80%, ${0.06 * l.intensity})`);
-                grd.addColorStop(0.25, `hsla(${l.hue}, 60%, 70%, ${0.03 * l.intensity})`);
-                grd.addColorStop(0.6, `hsla(${(l.hue + 30) % 360}, 50%, 60%, ${0.01 * l.intensity})`);
-                grd.addColorStop(1, 'rgba(0,0,0,0)');
-                ctx.fillStyle = grd;
-                ctx.beginPath();
-                ctx.ellipse(0, 0, rayLen, rayLen * 0.65, 0, 0, Math.PI * 2);
-                ctx.fill();
-                // Bright center pool
-                const poolGrd = ctx.createRadialGradient(0, 0, 5, 0, 0, CELL * 0.8);
-                poolGrd.addColorStop(0, `hsla(${l.hue}, 80%, 90%, ${0.15 * l.intensity})`);
-                poolGrd.addColorStop(1, 'rgba(0,0,0,0)');
-                ctx.fillStyle = poolGrd;
-                ctx.beginPath();
-                ctx.ellipse(0, 0, CELL * 0.8, CELL * 0.5, 0, 0, Math.PI * 2);
-                ctx.fill();
-                // Prismatic rays — 8 beams with rainbow color spread
-                for (let r = 0; r < 8; r++) {
-                    const a = r * Math.PI / 4 + (l.horiz ? 0 : Math.PI / 8);
-                    const rayHue = (l.hue + r * 45) % 360;
-                    ctx.strokeStyle = `hsla(${rayHue}, 80%, 70%, ${0.035 * l.intensity})`;
-                    ctx.lineWidth = 2.5;
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(Math.cos(a) * rayLen * 0.75, Math.sin(a) * rayLen * 0.75);
-                    ctx.stroke();
-                }
-                ctx.restore();
-            }
-        }
-
-        function drawCrystals() {
-            for (const c of crystals) {
-                ctx.save();
-                ctx.translate(c.x, c.y);
-                ctx.rotate(c.rot);
-
-                // === OUTER GLOW — multiple layers for bloom ===
-                const bloom = c.grand ? 4 : 2.5;
-                for (let layer = 0; layer < 3; layer++) {
-                    const r = c.size * (bloom - layer * 0.8);
-                    const alpha = [0.06, 0.12, 0.22][layer] * (c.grand ? 1.5 : 1);
-                    const grd = ctx.createRadialGradient(0, 0, c.size * 0.2, 0, 0, r);
-                    grd.addColorStop(0, `hsla(${c.hue}, 80%, 75%, ${alpha})`);
-                    grd.addColorStop(0.5, `hsla(${(c.hue + 60) % 360}, 60%, 55%, ${alpha * 0.4})`);
-                    grd.addColorStop(1, 'rgba(0,0,0,0)');
-                    ctx.fillStyle = grd;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, r, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                // === CRYSTAL BODY — faceted gem shape ===
-                const inner = c.size * 0.35;
-                ctx.fillStyle = `hsla(${c.hue}, 85%, 65%, 0.75)`;
-                ctx.beginPath();
-                for (let i = 0; i < c.facets; i++) {
-                    const a = (i / c.facets) * Math.PI * 2;
-                    const r = i % 2 === 0 ? c.size : inner;
-                    if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
-                    else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
-                }
-                ctx.closePath();
-                ctx.fill();
-
-                // Specular highlight facet
-                ctx.fillStyle = `hsla(${(c.hue + 30) % 360}, 60%, 90%, 0.45)`;
-                ctx.beginPath();
-                for (let i = 0; i < c.facets; i++) {
-                    const a = (i / c.facets) * Math.PI * 2 + 0.25;
-                    const r = (i % 2 === 0 ? c.size : inner) * 0.4;
-                    if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
-                    else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
-                }
-                ctx.closePath();
-                ctx.fill();
-
-                // Bright core point
-                const coreGrd = ctx.createRadialGradient(0, 0, 0, 0, 0, c.size * 0.3);
-                coreGrd.addColorStop(0, `hsla(${c.hue}, 100%, 95%, 0.6)`);
-                coreGrd.addColorStop(1, 'rgba(0,0,0,0)');
-                ctx.fillStyle = coreGrd;
-                ctx.beginPath();
-                ctx.arc(0, 0, c.size * 0.3, 0, Math.PI * 2);
-                ctx.fill();
-
-                // === REFRACTION RAYS — rainbow fan ===
-                for (let r = 0; r < c.rays; r++) {
-                    const a = c.rot + r * (Math.PI * 2 / c.rays);
-                    const rayHue = (c.hue + r * (360 / c.rays)) % 360;
-                    const len = c.size * (c.grand ? 5 : 3.5);
-                    ctx.strokeStyle = `hsla(${rayHue}, 90%, 70%, ${c.grand ? 0.06 : 0.04})`;
-                    ctx.lineWidth = c.grand ? 2 : 1.2;
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(Math.cos(a) * len, Math.sin(a) * len);
-                    ctx.stroke();
-                }
-
-                // === REFLECTION — ghost mirror below ===
-                ctx.globalAlpha = 0.08;
-                ctx.scale(1, -0.35);
-                ctx.fillStyle = `hsla(${(c.hue + 120) % 360}, 70%, 60%, 1)`;
-                ctx.beginPath();
-                for (let i = 0; i < c.facets; i++) {
-                    const a = (i / c.facets) * Math.PI * 2;
-                    const r = (i % 2 === 0 ? c.size : inner) * 1.3;
-                    if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
-                    else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
-                }
-                ctx.closePath();
-                ctx.fill();
-                ctx.globalAlpha = 1;
-
-                ctx.restore();
-            }
-        }
-
-        // === RENDER ===
         function render() {
             if (!animating) return;
             time += 0.016;
-            const cam = getCameraState(time);
-            camX = cam.x; camY = cam.y; camZoom = cam.zoom;
+
+            simulate();
 
             ctx.clearRect(0, 0, W, H);
-            ctx.fillStyle = VOID;
+
+            // Background: dark navy with subtle nebula
+            const bgGrad = ctx.createRadialGradient(W * 0.3, H * 0.4, 0, W * 0.5, H * 0.5, Math.max(W, H) * 0.8);
+            bgGrad.addColorStop(0, '#0d0d2b');
+            bgGrad.addColorStop(0.5, '#0a0a1a');
+            bgGrad.addColorStop(1, '#050510');
+            ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, W, H);
 
-            ctx.save();
-            ctx.translate(W / 2, H / 2);
-            ctx.scale(camZoom, camZoom);
-            ctx.translate(-camX, -camY);
+            // Second nebula glow
+            const neb2 = ctx.createRadialGradient(W * 0.7, H * 0.6, 0, W * 0.7, H * 0.6, Math.max(W, H) * 0.5);
+            neb2.addColorStop(0, 'rgba(60, 20, 80, 0.15)');
+            neb2.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+            ctx.fillStyle = neb2;
+            ctx.fillRect(0, 0, W, H);
 
-            const m = CELL * 4;
-            const vl = camX - W / (2 * camZoom) - m;
-            const vr = camX + W / (2 * camZoom) + m;
-            const vt = camY - H / (2 * camZoom) - m;
-            const vb = camY + H / (2 * camZoom) + m;
+            // Stars
+            stars.forEach(s => {
+                const sp = worldToScreen(s.x, s.y);
+                if (sp.x < -5 || sp.x > W + 5 || sp.y < -5 || sp.y > H + 5) return;
+                const twinkle = 0.5 + 0.5 * Math.sin(time * s.twinkleSpeed + s.twinklePhase);
+                const alpha = s.brightness * twinkle;
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, s.r * camera.zoom, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200, 200, 255, ${alpha})`;
+                ctx.fill();
+            });
 
-            drawFloor(vl, vr, vt, vb);
-            drawTendrils();
-            drawSpirals();
-            drawWalls(vl, vr, vt, vb);
-            drawLights();
-            drawCrystals();
+            // Edges (glow + line + particles)
+            graphEdges.forEach(e => {
+                const a = nodeMap[e.source], b = nodeMap[e.target];
+                if (!a || !b) return;
+                if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
 
-            // Atmospheric depth fog — deep indigo
-            const fogR = Math.max(W, H) * 0.5 / camZoom;
-            const fg = ctx.createRadialGradient(camX, camY, 0, camX, camY, fogR);
-            fg.addColorStop(0, 'rgba(4, 2, 10, 0)');
-            fg.addColorStop(0.35, 'rgba(4, 2, 10, 0)');
-            fg.addColorStop(0.7, 'rgba(4, 2, 10, 0.5)');
-            fg.addColorStop(1, 'rgba(4, 2, 10, 0.97)');
-            ctx.fillStyle = fg;
-            ctx.fillRect(vl, vt, vr - vl, vb - vt);
+                const sa = worldToScreen(a.x, a.y), sb = worldToScreen(b.x, b.y);
+                const colA = nodeColor(a), colB = nodeColor(b);
+                const blendH = (colA.h + colB.h) / 2;
+                const strength = e.strength || 0.5;
+                const lineW = 0.5 + strength * 2;
 
-            ctx.restore();
+                // Glow line (thick, transparent)
+                ctx.beginPath();
+                ctx.moveTo(sa.x, sa.y);
+                ctx.lineTo(sb.x, sb.y);
+                ctx.strokeStyle = `hsla(${blendH}, 60%, 60%, ${0.08 * strength})`;
+                ctx.lineWidth = lineW * 4;
+                ctx.stroke();
+
+                // Core line
+                ctx.beginPath();
+                ctx.moveTo(sa.x, sa.y);
+                ctx.lineTo(sb.x, sb.y);
+                const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
+                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${colA.l}%, ${0.3 * strength})`);
+                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${colB.l}%, ${0.3 * strength})`);
+                ctx.strokeStyle = edgeGrad;
+                ctx.lineWidth = lineW;
+                ctx.stroke();
+            });
+
+            // Edge particles
+            edgeParticles.forEach(p => {
+                p.t += p.speed;
+                if (p.t > 1) p.t -= 1;
+                const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
+                if (!a || !b) return;
+                if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
+
+                const wx = a.x + (b.x - a.x) * p.t;
+                const wy = a.y + (b.y - a.y) * p.t;
+                const sp = worldToScreen(wx, wy);
+                const colA = nodeColor(a), colB = nodeColor(b);
+                const blendH = (colA.h + colB.h) / 2;
+                const alpha = 0.4 + 0.4 * Math.sin(p.t * Math.PI);
+
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, p.size * camera.zoom, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
+                ctx.fill();
+            });
+
+            // Nodes
+            graphNodes.forEach(node => {
+                if (!isInView(node.x, node.y, 60)) return;
+
+                const sp = worldToScreen(node.x, node.y);
+                const col = nodeColor(node);
+                const isHovered = node === hoveredNode;
+                const pulse = 1 + 0.03 * Math.sin(time * 1.5 + node.phase);
+                const r = node.radius * pulse * camera.zoom;
+
+                // Pulsing brightness
+                const brightPulse = 0.85 + 0.15 * Math.sin(time * 2 + node.phase);
+                const adjustedL = Math.min(col.l * brightPulse, 95);
+                const adjColor = { h: col.h, s: col.s, l: adjustedL };
+
+                node.rotAngle += node.rotSpeed * 0.016;
+
+                drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, isHovered);
+            });
+
             requestAnimationFrame(render);
         }
 
-        const observer = new MutationObserver(() => {
-            if (!welcomeScreen.classList.contains('hidden')) {
-                resize(); animating = true; requestAnimationFrame(render);
+        // ─── Welcome text fade-out ───
+        function fadeWelcome() {
+            if (welcomeFaded) return;
+            welcomeFaded = true;
+            const overlay = welcomeScreen.querySelector('.welcome-overlay');
+            const content = welcomeScreen.querySelector('.welcome-content');
+            const footer = welcomeScreen.querySelector('.welcome-footer');
+            if (overlay) overlay.style.transition = 'opacity 0.8s ease-out';
+            if (overlay) overlay.style.opacity = '0';
+            if (content) content.style.transition = 'opacity 0.8s ease-out';
+            if (content) content.style.opacity = '0';
+            if (footer) footer.style.transition = 'opacity 0.8s ease-out';
+            if (footer) footer.style.opacity = '0';
+            // Remove them after transition so they don't block canvas clicks
+            setTimeout(() => {
+                if (overlay) overlay.style.display = 'none';
+                if (content) content.style.display = 'none';
+                if (footer) footer.style.display = 'none';
+            }, 900);
+        }
+
+        // ─── Interaction ───
+        function findNodeAt(sx, sy) {
+            const w = screenToWorld(sx, sy);
+            let closest = null, closestDist = Infinity;
+            graphNodes.forEach(n => {
+                const dx = w.x - n.x, dy = w.y - n.y;
+                const d = Math.sqrt(dx * dx + dy * dy);
+                if (d < n.radius * 1.5 && d < closestDist) {
+                    closest = n;
+                    closestDist = d;
+                }
+            });
+            return closest;
+        }
+
+        const tooltip = document.getElementById('graph-tooltip');
+
+        canvas.addEventListener('mousedown', e => {
+            mouseDownPos = { x: e.offsetX, y: e.offsetY };
+            hasDragged = false;
+            const node = findNodeAt(e.offsetX, e.offsetY);
+            if (node) {
+                dragNode = node;
+                canvas.style.cursor = 'grabbing';
             } else {
+                isPanning = true;
+                panStart = { x: e.clientX, y: e.clientY };
+                canvas.style.cursor = 'grabbing';
+            }
+            fadeWelcome();
+        });
+
+        canvas.addEventListener('mousemove', e => {
+            mouseScreen = { x: e.offsetX, y: e.offsetY };
+            mouseWorld = screenToWorld(e.offsetX, e.offsetY);
+
+            // Detect drag (mouse moved more than 4px from mousedown)
+            const dx = e.offsetX - mouseDownPos.x;
+            const dy = e.offsetY - mouseDownPos.y;
+            if (Math.abs(dx) > 4 || Math.abs(dy) > 4) hasDragged = true;
+
+            if (dragNode) {
+                dragNode.x = mouseWorld.x;
+                dragNode.y = mouseWorld.y;
+                dragNode.vx = 0;
+                dragNode.vy = 0;
+                // Hide tooltip while dragging a node
+                if (tooltip) tooltip.classList.add('tooltip-hidden');
+            } else if (isPanning) {
+                const pdx = e.clientX - panStart.x;
+                const pdy = e.clientY - panStart.y;
+                camera.x -= pdx / camera.zoom;
+                camera.y -= pdy / camera.zoom;
+                panStart = { x: e.clientX, y: e.clientY };
+            } else {
+                const node = findNodeAt(e.offsetX, e.offsetY);
+                hoveredNode = node;
+                canvas.style.cursor = node ? 'pointer' : 'grab';
+
+                if (tooltip) {
+                    if (node) {
+                        tooltip.classList.remove('tooltip-hidden');
+                        tooltip.querySelector('.tooltip-title').textContent = node.title || node.id;
+                        tooltip.querySelector('.tooltip-domain').textContent = node.primary_domain || node.domain || '';
+                        tooltip.querySelector('.tooltip-date').textContent = node.date ? new Date(node.date).toLocaleDateString() : '';
+                        tooltip.style.left = (e.offsetX + 15) + 'px';
+                        tooltip.style.top = (e.offsetY - 10) + 'px';
+                    } else {
+                        tooltip.classList.add('tooltip-hidden');
+                    }
+                }
+            }
+        });
+
+        canvas.addEventListener('mouseup', e => {
+            dragNode = null;
+            isPanning = false;
+            canvas.style.cursor = hoveredNode ? 'pointer' : 'grab';
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            dragNode = null;
+            isPanning = false;
+            hoveredNode = null;
+            if (tooltip) tooltip.classList.add('tooltip-hidden');
+            canvas.style.cursor = 'grab';
+        });
+
+        canvas.addEventListener('click', e => {
+            if (hasDragged) return; // Don't navigate after dragging
+            const node = findNodeAt(e.offsetX, e.offsetY);
+            if (node) {
+                const filename = node.id + '.json';
+                if (window.PACKAGE_DB && window.PACKAGE_DB[filename]) {
+                    loadPackage(filename);
+                }
+            }
+        });
+
+        canvas.addEventListener('wheel', e => {
+            e.preventDefault();
+            fadeWelcome();
+            const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+            const newZoom = Math.max(0.2, Math.min(5, camera.zoom * zoomFactor));
+
+            // Zoom toward mouse position
+            const wBefore = screenToWorld(e.offsetX, e.offsetY);
+            camera.zoom = newZoom;
+            const wAfter = screenToWorld(e.offsetX, e.offsetY);
+            camera.x += wBefore.x - wAfter.x;
+            camera.y += wBefore.y - wAfter.y;
+        }, { passive: false });
+
+        // Touch support
+        let lastTouchDist = 0;
+        canvas.addEventListener('touchstart', e => {
+            fadeWelcome();
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const node = findNodeAt(touch.clientX - rect.left, touch.clientY - rect.top);
+                if (node) {
+                    dragNode = node;
+                } else {
+                    isPanning = true;
+                    panStart = { x: touch.clientX, y: touch.clientY };
+                }
+            } else if (e.touches.length === 2) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                lastTouchDist = Math.sqrt(dx * dx + dy * dy);
+            }
+            e.preventDefault();
+        }, { passive: false });
+
+        canvas.addEventListener('touchmove', e => {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const sx = touch.clientX - rect.left;
+                const sy = touch.clientY - rect.top;
+                mouseWorld = screenToWorld(sx, sy);
+
+                if (dragNode) {
+                    dragNode.x = mouseWorld.x;
+                    dragNode.y = mouseWorld.y;
+                    dragNode.vx = 0;
+                    dragNode.vy = 0;
+                } else if (isPanning) {
+                    const dx = touch.clientX - panStart.x;
+                    const dy = touch.clientY - panStart.y;
+                    camera.x -= dx / camera.zoom;
+                    camera.y -= dy / camera.zoom;
+                    panStart = { x: touch.clientX, y: touch.clientY };
+                }
+            } else if (e.touches.length === 2) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (lastTouchDist > 0) {
+                    camera.zoom = Math.max(0.2, Math.min(5, camera.zoom * (dist / lastTouchDist)));
+                }
+                lastTouchDist = dist;
+            }
+            e.preventDefault();
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', e => {
+            if (dragNode && e.changedTouches.length === 1 && !hasDragged) {
+                const touch = e.changedTouches[0];
+                const rect = canvas.getBoundingClientRect();
+                const node = findNodeAt(touch.clientX - rect.left, touch.clientY - rect.top);
+                if (node) {
+                    const filename = node.id + '.json';
+                    if (window.PACKAGE_DB && window.PACKAGE_DB[filename]) {
+                        loadPackage(filename);
+                    }
+                }
+            }
+            dragNode = null;
+            isPanning = false;
+            lastTouchDist = 0;
+            hasDragged = false;
+        });
+
+        // Resize handler
+        window.addEventListener('resize', resize);
+
+        // MutationObserver to pause/resume animation
+        const observer = new MutationObserver(() => {
+            if (welcomeScreen.classList.contains('hidden')) {
                 animating = false;
+            } else {
+                resize();
+                animating = true;
+                requestAnimationFrame(render);
             }
         });
         observer.observe(welcomeScreen, { attributes: true, attributeFilter: ['class'] });
 
         if (!welcomeScreen.classList.contains('hidden')) {
-            animating = true; requestAnimationFrame(render);
+            resize();
+            animating = true;
+            requestAnimationFrame(render);
         }
-    })();});
+    })();
+});

@@ -87,9 +87,12 @@ def extract_concepts_from_future_directions(text):
 
     concepts = []
 
-    # Extract theorem names: theorem xxx or lemma xxx
+    # Extract theorem names: theorem xxx or lemma xxx (skip common words)
+    STOP_THEOREMS = {"follows", "targets", "to", "by", "if", "let", "have", "show", "from"}
     for match in re.finditer(r'(?:theorem|lemma)\s+(\w+)', text):
-        concepts.append(("theorem", match.group(1)))
+        name = match.group(1)
+        if name not in STOP_THEOREMS and len(name) > 3:
+            concepts.append(("theorem", name))
 
     # Extract section headings (### level) as concept indicators
     for match in re.finditer(r'###\s+\d*\.?\s*(.+)', text):
@@ -313,13 +316,14 @@ def extract_edge_label(reasons, source_title="", target_title=""):
 
     Prefers specific concept matches over generic domain overlap.
     """
+    STOP_WORDS = {"for", "in", "to", "of", "via", "and", "the", "a", "an", "is", "on", "by", "with", "from"}
+
     # Prefer heading matches (most specific)
     for r in reasons:
         if r.startswith("heading_match:"):
             label = r.split(":", 1)[1].strip()
-            # Clean up common prefixes
             label = re.sub(r'^\d+\.\s*', '', label)
-            if len(label) > 5:
+            if len(label) > 5 and label.lower() not in STOP_WORDS:
                 return label[:60]
 
     # Then theorem matches
@@ -332,19 +336,31 @@ def extract_edge_label(reasons, source_title="", target_title=""):
         if r.startswith("cross_domain_match:"):
             return r.split(":", 1)[1][:60]
 
-    # Then title-fd overlap
+    # Then title-fd overlap — try to extract a meaningful phrase from target title
     for r in reasons:
         if r.startswith("title_fd_overlap:"):
-            return f"related concepts"
+            # Use first meaningful words from target title
+            words = re.findall(r'[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*', target_title)
+            if words:
+                return words[0][:60]
+            return ""
 
-    # Fall back to domain overlap — just list the shared domains
+    # Then domain overlap — list the shared domains
     for r in reasons:
         if r.startswith("domain_overlap:"):
             domains = r.split(":", 1)[1]
             return f"{domains} bridge"
 
+    # Then arc matches
+    for r in reasons:
+        if r.startswith("arc:"):
+            return ""
+
     if reasons:
-        return reasons[0][:60]
+        label = reasons[0][:60]
+        if label.lower() in STOP_WORDS:
+            return ""
+        return label
     return ""
 
 
