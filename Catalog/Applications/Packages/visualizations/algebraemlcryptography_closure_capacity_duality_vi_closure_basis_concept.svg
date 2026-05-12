@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="350" viewBox="0 0 500 350">
+  <style>
+    .set { fill: #ecf0f1; stroke: #2c3e50; stroke-width: 2; }
+    .closure { fill: #dfe6e9; stroke: #2c3e50; stroke-width: 2; stroke-dasharray: 6,3; }
+    .point { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+    .gen-point { fill: #2ecc71; stroke: #27ae60; stroke-width: 2; }
+    .title { font-family: sans-serif; font-size: 14px; text-anchor: middle; fill: #2c3e50; font-weight: bold; }
+    .text { font-family: sans-serif; font-size: 11px; fill: #2c3e50; }
+    .eq { font-family: serif; font-size: 16px; fill: #2c3e50; font-style: italic; }
+  </style>
+
+  <text x="250" y="25" class="title">Minimal Authorized Set = Closure Basis</text>
+
+  <!-- Left: basis B = {a, b, c} -->
+  <text x="130" y="55" class="text" style="text-anchor: middle; font-weight: bold;">Basis B = {a, b, c}</text>
+  <ellipse cx="130" cy="180" rx="100" ry="120" class="closure"/>
+  <text x="130" y="310" class="text" style="text-anchor: middle;">cl(B) = C (closed set)</text>
+
+  <circle cx="90" cy="150" r="10" class="gen-point"/>
+  <text x="90" y="135" class="text" style="text-anchor: middle;">a</text>
+  <circle cx="160" cy="140" r="10" class="gen-point"/>
+  <text x="160" y="125" class="text" style="text-anchor: middle;">b</text>
+  <circle cx="120" cy="200" r="10" class="gen-point"/>
+  <text x="120" y="225" class="text" style="text-anchor: middle;">c</text>
+
+  <!-- Generated elements -->
+  <circle cx="130" cy="170" r="6" class="point"/>
+  <circle cx="100" cy="220" r="6" class="point"/>
+  <circle cx="155" cy="190" r="6" class="point"/>
+  <circle cx="110" cy="250" r="6" class="point"/>
+  <circle cx="150" cy="240" r="6" class="point"/>
+
+  <!-- Right: removing one element -->
+  <text x="370" y="55" class="text" style="text-anchor: middle; font-weight: bold;">Remove c → {a, b}</text>
+  <ellipse cx="370" cy="160" rx="70" ry="80" class="closure" style="fill: #fadbd8;"/>
+  <text x="370" y="260" class="text" style="text-anchor: middle; fill: #e74c3c;">cl({a,b}) ⊊ C</text>
+  <text x="370" y="280" class="text" style="text-anchor: middle; fill: #e74c3c;">cap drops below t!</text>
+
+  <circle cx="340" cy="140" r="10" class="gen-point"/>
+  <text x="340" y="125" class="text" style="text-anchor: middle;">a</text>
+  <circle cx="395" cy="135" r="10" class="gen-point"/>
+  <text x="395" y="120" class="text" style="text-anchor: middle;">b</text>
+  <circle cx="365" cy="170" r="6" class="point"/>
+  <circle cx="380" cy="190" r="6" class="point"/>
+
+  <!-- Arrow -->
+  <line x1="240" y1="180" x2="280" y2="180" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7f8c8d"/>
+    </marker>
+  </defs>
+</svg>

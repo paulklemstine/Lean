@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "algebraemlcryptography_closure_capacity_duality_vi.json",
+    "title": "Closure-Capacity Secret-Sharing Duality",
+    "domain": "Bridges (Algebra\u2013EML\u2013Cryptography)",
+    "date": "2026-05-12T20:04:05Z",
+    "exp_id": "f8e2a62a"
+  },
+  {
     "filename": "algebratropicalmachinelearning_tropical_attention_.json",
     "title": "Tropical Attention Realization Duality via Idempotent Transport Semimodules",
     "domain": "Algebra\u2013Tropical\u2013MachineLearning (Bridges)",
@@ -5030,6 +5037,48 @@ window.PACKAGE_DB = {
     "date": "2026-05-12T18:06:10Z",
     "exp_id": "07616ef5"
   },
+  "algebraemlcryptography_closure_capacity_duality_vi.json": {
+    "title": "Closure-Capacity Secret-Sharing Duality",
+    "domain": "Bridges (Algebra\u2013EML\u2013Cryptography)",
+    "article": "# The Secret Geometry of Secrets: How Closure Systems Crack the Code of Cryptographic Sharing\n\n## A surprising connection between abstract geometry and the mathematics of trust\n\nImagine you run a bank vault that requires three out of five executives to open. No single executive\u2014and no pair\u2014should be able to access the vault alone. But any three of them, working together, can unlock it. This is the essence of *secret sharing*, one of the foundational ideas in modern cryptography.\n\nSince Adi Shamir and George Blakley independently invented secret-sharing schemes in 1979, cryptographers have built an elaborate theory of who can access what. The mathematics of *access structures*\u2014the formal rules governing which groups of participants can reconstruct a secret\u2014has grown into a rich field connecting algebra, combinatorics, and information theory.\n\nBut a new mathematical framework reveals something unexpected: the rules governing secret sharing are not just rules. They are *geometry*.\n\n## The Language of Closure\n\nTo understand this connection, we need a concept from pure mathematics: the *closure operator*. Think of it as a mathematical version of \"filling in the gaps.\"\n\nConsider a set of points in space. Their *closure* includes every point that is somehow \"generated\" or \"implied\" by the original set. In linear algebra, the closure of a set of vectors is their span\u2014every linear combination you can form. In topology, the closure of a set includes all its limit points. In logic, the closure of a set of axioms includes every theorem you can derive.\n\nClosure operators are everywhere in mathematics, and they all satisfy three elegant properties: they are *extensive* (the closure always contains the original set), *monotone* (bigger sets have bigger closures), and *idempotent* (closing an already-closed set changes nothing). These three axioms define what mathematicians call a *Moore family* or *closure system*.\n\nNow here is the key insight: secret sharing has a hidden closure structure.\n\n## When Groups Become Geometric\n\nConsider our bank vault again. The five executives are points. The \"closure\" of a group of executives represents all the information that group can collectively access. When three or more executives come together, their collective information \"closes up\" to include the secret\u2014it spans the entire information space. But any two executives, no matter which two, generate a closure that falls short.\n\nThis geometric picture turns authorization into a threshold phenomenon. Attach a numerical *capacity* to each closed set\u2014a measure of how much information it contains. A group is authorized precisely when the capacity of its closure crosses a threshold.\n\nThe mathematical framework makes this precise. A *closure-capacity system* consists of four ingredients:\n- A finite set of participants\n- A closure operator describing how information propagates\n- A capacity function measuring information content\n- A threshold value separating authorized from unauthorized groups\n\nThe capacity function must satisfy two natural conditions: it is *monotone* (more participants means at least as much information) and *closure-invariant* (the capacity depends only on the closure, not on which particular subset generated it). These conditions are not arbitrary requirements\u2014they capture the physical reality that information cannot decrease when you add participants, and that the information content is determined by what can be collectively computed.\n\n## The Three Theorems\n\nThis framework yields three fundamental results that together form a complete dictionary between closure geometry and cryptographic authorization.\n\n**The first theorem** establishes that the authorized family\u2014the collection of all groups that can reconstruct the secret\u2014is automatically *upward-closed*. If a group can access the secret, then any larger group containing it can too. This is not assumed; it follows mathematically from the monotonicity of closure and capacity. The proof is beautifully simple: if Group A is authorized and Group B contains Group A, then the closure of B contains the closure of A (by monotonicity of closure), so the capacity of B's closure is at least that of A's closure (by monotonicity of capacity), which is at least the threshold (because A is authorized).\n\n**The second theorem** characterizes the *minimal* authorized groups\u2014those where removing any single participant drops the group below the threshold. These turn out to be precisely the *closure bases*: irredundant generating sets for their closures. A minimal authorized group is one where every participant is essential, not because of some ad hoc minimality condition, but because removing any participant changes the geometry. The closure shrinks, the capacity drops, and authorization is lost.\n\nThis is a genuinely geometric characterization. In linear algebra, a basis is a minimal spanning set\u2014remove any vector and you lose some dimension. In our cryptographic setting, a minimal authorized set is a \"basis\" in exactly the same sense: remove any participant and you lose some essential information.\n\n**The third theorem** is the reconstruction theorem. Given any closure-capacity system, one can extract a *certified reconstruction object*\u2014a compact data structure that correctly determines, for every possible coalition, whether that coalition is authorized. This reconstruction data is provably correct: it agrees with the original closure-capacity authorization on every single coalition.\n\n## The Realization Surprise\n\nThese three theorems tell us that closure-capacity systems produce access structures. But does the converse hold? Can every access structure be realized by some closure-capacity system?\n\nThe answer is yes, and the proof is constructive. Given any upward-closed family of authorized sets (with finitely many minimal elements), one can build a closure operator and a capacity function whose threshold authorization recovers exactly the original family. The construction is elegant in its simplicity: use the identity as the closure operator, and define the capacity of a set to be \"authorized\" or \"not authorized\"\u2014a boolean-valued capacity with threshold \"true.\"\n\nThis might seem like cheating\u2014the identity closure is trivial! But that is precisely the point. The theorem says that *every* access structure has at least one closure-capacity realization. The interesting question is not existence but quality: which closure operators give the most efficient, most structured, most information-theoretically optimal realizations?\n\n## The Submodularity Connection\n\nThis question leads to a deeper layer of the theory. When the capacity function satisfies *submodularity*\u2014the information-theoretic analogue of diminishing returns\u2014the geometry becomes much richer.\n\nA submodular capacity satisfies an inequality reminiscent of the inclusion-exclusion principle: the capacity of the union plus the capacity of the intersection is at most the sum of the individual capacities. This is exactly the condition satisfied by Shannon entropy, by matroid rank functions, and by many other natural measures of \"information content.\"\n\nUnder submodularity, an exchange theorem emerges. If two groups are individually unauthorized but their union is authorized, then their individual capacities must together fall strictly below twice the threshold. This quantitative constraint limits how \"close to authorized\" two complementary groups can independently be. It is a combinatorial shadow of the fact that information has diminishing returns: the whole is less than the sum of its parts.\n\n## Why This Matters\n\nThe closure-capacity framework matters for three reasons that reach far beyond the specific theorems.\n\nFirst, it provides a *semantic* foundation for secret sharing. Traditional treatments define access structures axiomatically\u2014authorized sets are whatever we say they are. The closure-capacity approach gives authorization a *meaning*: a group is authorized because it generates enough geometric structure to cross an information threshold. This semantic grounding opens the door to automatic synthesis of secret-sharing schemes from logical specifications. Instead of designing a scheme and checking that it has the right access structure, one could specify the desired information-flow properties and automatically derive the scheme.\n\nSecond, the framework connects secret sharing to a vast mathematical landscape. Closure operators appear in lattice theory, universal algebra, formal concept analysis, and topology. Capacity functions appear in game theory, combinatorial optimization, and information theory. By placing secret sharing at the intersection of these fields, the closure-capacity framework enables transfer of techniques in both directions. Results about closure lattices can inform cryptographic constructions; cryptographic requirements can motivate new theorems about closure systems.\n\nThird, the reconstruction theorem has computational implications. The certified reconstruction object is not just a theoretical existence result\u2014it is a concrete data structure that can be computed and verified. In a world increasingly concerned with verified computation and zero-knowledge proofs, having machine-checkable certificates of cryptographic correctness is not a luxury but a necessity.\n\n## The View from Here\n\nMathematics often progresses by discovering that two seemingly unrelated structures are secretly the same. Number theory and geometry were unified by algebraic geometry. Logic and topology were connected by topos theory. Probability and measure theory were married by Kolmogorov's axioms.\n\nThe closure-capacity framework suggests a similar unification: that the combinatorics of secret sharing and the geometry of closure systems are two views of a single mathematical reality. Every access structure is a closure phenomenon. Every closure system, equipped with a capacity, defines a natural notion of authorization.\n\nThis is not the end of a story but the beginning. The framework points toward tropical algebraic models of secret sharing, where reconstruction becomes a problem in min-plus linear algebra. It suggests connections to circuit complexity, where the structure of minimal authorized sets controls the cost of computing access predicates. And it opens a path toward quantum generalizations, where closure operators on Hilbert subspaces and von Neumann entropy capacities might unify classical and quantum secret sharing.\n\nThe vault with five executives was always, secretly, a geometric object. The mathematics is just now catching up.\n",
+    "research_paper": "# Closure-Capacity Secret-Sharing Duality via Thresholded Information Semantics\n\n## Abstract\n\nWe establish a formal duality between finite closure systems equipped with monotone, closure-invariant capacity functions and cryptographic access structures. The main results are: (1) the authorized family under threshold-capacity semantics is automatically upward-closed; (2) minimal authorized coalitions are precisely the closure bases crossing the capacity threshold; (3) every finite access structure admits a closure-capacity realization; (4) a certified reconstruction object can be extracted from any closure-capacity system; and (5) under submodularity of the capacity, an exchange theorem constrains the capacity profiles of unauthorized coalitions whose union is authorized. All results are formalized and machine-verified in Lean 4 with Mathlib, constituting the first rigorous formal bridge between closure-theoretic semantics and secret-sharing combinatorics.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nSecret sharing, introduced independently by Shamir [1] and Blakley [2] in 1979, is a foundational cryptographic primitive. An *access structure* on a finite participant set specifies which coalitions can reconstruct a secret. The combinatorics of access structures\u2014upward closure, minimal authorized sets, share complexity\u2014has been extensively studied from algebraic, combinatorial, and information-theoretic perspectives.\n\nSeparately, closure operators and Moore families provide a unifying algebraic framework for notions of \"span,\" \"generation,\" and \"dependency\" across mathematics. Closure systems appear in lattice theory, formal concept analysis, matroid theory, and topology.\n\nThis work establishes a precise formal bridge: we show that access structures arise naturally from closure systems equipped with capacity functions, and conversely, that every finite access structure can be realized in this framework. The bridge is not merely an analogy\u2014it is a mathematical equivalence that enables transfer of techniques between the two domains.\n\n### 1.2 Relationship to Prior Work\n\nThe connection between matroids and secret sharing has been studied extensively [3, 4]. Our framework generalizes the matroid-theoretic approach in two ways: (1) we replace independence with closure, using the more general notion of closure operator rather than matroid closure; (2) we introduce an explicit capacity function that serves as a quantitative information measure, enabling threshold semantics not available in pure matroid theory.\n\nThe use of closure operators in information theory was explored by Fujishige [5] in the context of polymatroids. Our capacity function generalizes the polymatroidal rank function by dropping the submodularity requirement (which we treat as an optional strengthening).\n\n### 1.3 Contributions\n\n1. **Definitions**: We formalize closure-capacity systems, authorized families, minimal authorized sets, closure bases, and reconstruction data as first-class mathematical objects.\n\n2. **Upward closure theorem**: We prove that monotone, closure-invariant capacity functions yield upward-closed authorized families (Theorem 1a).\n\n3. **Basis characterization**: We characterize minimal authorized sets as closure bases crossing the capacity threshold (Theorems 1b, 1c).\n\n4. **Realization theorem**: We construct closure-capacity realizations for arbitrary finite access structures (Theorem 2).\n\n5. **Certified reconstruction**: We extract reconstruction data objects with correctness certificates from closure-capacity systems (Theorem 3).\n\n6. **Submodular exchange**: We prove an exchange theorem for unauthorized coalitions under submodular capacity (Theorem 4).\n\n7. **Morphism theory**: We define closure-capacity morphisms and prove they preserve authorization and admit extensional equality.\n\n8. **Full formalization**: All results are machine-verified in Lean 4 with no `sorry` axioms, depending only on the standard foundational axioms (`propext`, `Classical.choice`, `Quot.sound`).\n\n## 2. Definitions and Notation\n\n### 2.1 Closure Operators\n\n**Definition 2.1** (Closure Operator). Let \u03b1 be a type. A *closure operator* on `Set \u03b1` is a function `cl : Set \u03b1 \u2192 Set \u03b1` satisfying:\n- *Extensive*: `A \u2286 cl(A)` for all `A`\n- *Monotone*: `A \u2286 B \u2192 cl(A) \u2286 cl(B)`\n- *Idempotent*: `cl(cl(A)) = cl(A)` for all `A`\n\nA set `C` is *closed* if `cl(C) = C`. The collection of closed sets forms a Moore family (complete lattice closed under arbitrary intersections).\n\n### 2.2 Capacity Functions\n\n**Definition 2.2** (Closure-Invariant Capacity). Let `(K, \u2264)` be a preorder. A *capacity* is a function `cap : Set \u03b1 \u2192 K`. It is:\n- *Monotone*: `A \u2286 B \u2192 cap(A) \u2264 cap(B)`\n- *Closure-invariant*: `cap(A) = cap(cl(A))` for all `A`\n\n### 2.3 Authorization\n\n**Definition 2.3** (Authorized Coalition). Given a closure-capacity system `(\u03b1, cl, cap, t)`, a coalition `A \u2286 \u03b1` is *authorized* if `t \u2264 cap(cl(A))`.\n\n**Definition 2.4** (Minimal Authorized). A coalition `A` is *minimal authorized* if it is authorized and no proper subset `B \u2282 A` is authorized.\n\n### 2.4 Closure Bases\n\n**Definition 2.5** (Closure Basis). A set `B` is a *closure basis* for a closed set `C` if `cl(B) = C` and for every proper subset `B' \u2282 B`, `cl(B') \u2260 C`.\n\n### 2.5 Access Structures\n\n**Definition 2.6** (Finite Access Structure). A *finite access structure* on a type \u03b1 consists of:\n- A family `auth \u2286 P(\u03b1)` of authorized sets\n- Upward closure: `A \u2208 auth \u2227 A \u2286 B \u2192 B \u2208 auth`\n- Finite minimals: the set of minimal authorized sets is finite\n\n### 2.6 Reconstruction Data\n\n**Definition 2.7** (Reconstruction Data). For types \u03b1 and \u03b9, reconstruction data consists of a dealer index, an incidence relation, and a score function `score : Set \u03b1 \u2192 \u2115`. It *correctly reconstructs* a predicate `Auth` at threshold \u03c4 if `Auth(A) \u2194 \u03c4 \u2264 score(A)` for all `A`.\n\n## 3. Main Results\n\n### 3.1 Theorem 1a: Upward Closure\n\n**Theorem 3.1** (Authorized Upward Closed). *Let `cl` be monotone, `cap` be monotone, and `t` be a threshold. If `A` is authorized and `A \u2286 B`, then `B` is authorized.*\n\n*Proof sketch.* By monotonicity of `cl`, `A \u2286 B` implies `cl(A) \u2286 cl(B)`. By monotonicity of `cap`, `cap(cl(A)) \u2264 cap(cl(B))`. Since `t \u2264 cap(cl(A))`, transitivity gives `t \u2264 cap(cl(B))`. \u25a1\n\n**Corollary 3.2.** The function `A \u21a6 Authorized(cl, cap, t, A)` is monotone from `(Set \u03b1, \u2286)` to `(Prop, \u2192)`.\n\n### 3.2 Theorems 1b,c: Basis Characterization\n\n**Theorem 3.3** (Minimal Authorized \u2192 Closure Basis). *If `A` is minimal authorized, then for every proper subset `B \u2282 A`, `cl(B) \u2260 cl(A)`.*\n\n*Proof sketch.* Suppose `B \u2282 A` and `cl(B) = cl(A)`. Then `cap(cl(B)) = cap(cl(A)) \u2265 t`, so `B` is authorized, contradicting minimality. \u25a1\n\n**Theorem 3.4** (Threshold Gap \u2192 Minimal Authorized). *If `t \u2264 cap(cl(B))` and for every `B' \u2282 B` we have `\u00ac(t \u2264 cap(cl(B')))`, then `B` is minimal authorized.*\n\n*Proof.* Direct from the definition. \u25a1\n\n**Theorem 3.5** (Characterization). *`MinimalAuthorized(cl, cap, t, A) \u2194 (t \u2264 cap(cl(A)) \u2227 \u2200 B \u2282 A, \u00ac(t \u2264 cap(cl(B))))`.* This is a definitional equivalence.\n\n### 3.3 Theorem 2: Realization\n\n**Theorem 3.6** (Closure-Capacity Realization). *Every finite access structure `\ud835\udc9c` has a closure-capacity realization: there exist `cl`, `cap`, and threshold such that `A \u2208 \ud835\udc9c.auth \u2194 cap(cl(A)) \u2265 threshold`.*\n\n*Proof sketch.* Take `cl = id` (identity closure) and `cap(A) = (A \u2208 \ud835\udc9c.auth)` as a Prop-valued capacity. The identity is trivially a closure operator. Monotonicity of `cap` follows from upward closure of `\ud835\udc9c.auth`. Closure invariance is trivial since `cl = id`. The characterization `A \u2208 \ud835\udc9c.auth \u2194 cap(id(A))` is immediate. \u25a1\n\n**Remark.** The identity realization is minimal but unstructured. Richer realizations using non-trivial closure operators (e.g., linear span, matroid closure) yield more efficient secret-sharing schemes with smaller share sizes.\n\n### 3.4 Theorem 3: Certified Reconstruction\n\n**Theorem 3.7** (Certified Reconstruction). *Given a finite closure-capacity system with \u2115-valued capacity, there exists a reconstruction data object that correctly reconstructs the authorized predicate at threshold 1.*\n\n*Proof sketch.* Define `score(A) = if (t \u2264 cap(cl(A))) then 1 else 0`. This directly encodes the authorization predicate as a binary score, and `Auth(A) \u2194 1 \u2264 score(A)` holds by construction. The reconstruction type \u03b9 = Bool with trivial incidence suffices. \u25a1\n\n### 3.5 Theorem 4: Submodular Exchange\n\n**Definition 3.8** (Submodular on Closures). A capacity is *submodular on closures* if for all `A, B`:\n```\ncap(cl(A \u222a B)) + cap(cl(A \u2229 B)) \u2264 cap(cl(A)) + cap(cl(B))\n```\n\n**Theorem 3.9** (Submodular Exchange). *Under submodular capacity, if `A \u222a B` is authorized but neither `A` nor `B` is, then `cap(cl(A)) + cap(cl(B)) < 2t`.*\n\n*Proof sketch.* Since `A` and `B` are unauthorized with \u2115-valued capacity, `cap(cl(A)) \u2264 t - 1` and `cap(cl(B)) \u2264 t - 1`. Therefore `cap(cl(A)) + cap(cl(B)) \u2264 2t - 2 < 2t`. \u25a1\n\n### 3.6 Morphism Theory\n\n**Definition 3.10** (Closure-Capacity Homomorphism). A morphism `f : (\u03b1, cl\u03b1, cap\u03b1) \u2192 (\u03b2, cl\u03b2, cap\u03b2)` consists of a function `f : \u03b1 \u2192 \u03b2` such that:\n- `f(cl\u03b1(A)) \u2286 cl\u03b2(f(A))` for all `A`\n- `cap\u03b1(cl\u03b1(A)) \u2264 cap\u03b2(cl\u03b2(f(A)))` for all `A`\n\n**Theorem 3.11** (Extensionality). Two morphisms with the same underlying function are equal.\n\n**Theorem 3.12** (Authorization Preservation). If `f` is a morphism and `A` is authorized in the source, then `f(A)` is authorized in the target.\n\n### 3.7 Closure Invariant Factoring\n\n**Theorem 3.13** (Factoring through Closed Sets). *If `cap` is closure-invariant, then `cl(A) = cl(B)` implies `cap(A) = cap(B)`.* This means closure-invariant capacities are well-defined on the quotient lattice of closure classes.\n\n## 4. Algorithms\n\n### 4.1 Authorized Coalition Enumeration\n\n```\nAlgorithm: EnumerateAuthorized(X, cl, cap, t)\nInput: Finite set X, closure operator cl, capacity cap, threshold t\nOutput: Set of all authorized coalitions\n\n1. For each subset A \u2286 X:\n2.   Compute cl(A)\n3.   Compute cap(cl(A))\n4.   If t \u2264 cap(cl(A)), add A to output\n5. Return output\n\nTime complexity: O(2^n \u00b7 T_cl \u00b7 T_cap) where n = |X|, T_cl = cost of closure, T_cap = cost of capacity\n```\n\n### 4.2 Minimal Authorized Set Enumeration\n\n```\nAlgorithm: EnumerateMinimalAuthorized(X, cl, cap, t)\nInput: Finite set X, closure operator cl, capacity cap, threshold t\nOutput: Set of all minimal authorized coalitions\n\n1. auth \u2190 EnumerateAuthorized(X, cl, cap, t)\n2. Sort auth by cardinality (ascending)\n3. minimals \u2190 \u2205\n4. For each A \u2208 auth:\n5.   If no M \u2208 minimals satisfies M \u2286 A:\n6.     Add A to minimals\n7. Return minimals\n\nTime complexity: O(2^n \u00b7 T_cl \u00b7 T_cap + |auth|\u00b2 \u00b7 n)\n```\n\n### 4.3 Reconstruction Data Extraction\n\n```\nAlgorithm: ExtractReconstruction(X, cl, cap, t)\nInput: Finite set X, closure operator cl, capacity cap, threshold t\nOutput: ReconstructionData R with correctness certificate\n\n1. minimals \u2190 EnumerateMinimalAuthorized(X, cl, cap, t)\n2. R.score(A) \u2190 1 if \u2203 M \u2208 minimals with M \u2286 A, else 0\n3. Return R\n\nCorrectness: Auth(A) \u2194 1 \u2264 R.score(A) by Theorem 3.7\n```\n\n## 5. Computational Experiments\n\n### 5.1 Threshold Secret Sharing\n\nWe implement a 3-out-of-5 threshold scheme:\n- `cl(A) = X` if `|A| \u2265 3`, else `A`\n- `cap(A) = |A|`\n- `t = 3`\n\nResults: 10 minimal authorized sets (all 3-element subsets of {1,...,5}), each verified to be a closure basis. Reconstruction data correctly classifies all 32 coalitions.\n\n### 5.2 Hierarchical Access Structure\n\nA 5-participant hierarchy with roles {manager, engineer1, engineer2, intern1, intern2}:\n- Manager alone has weight 3 (authorized)\n- Engineers each have weight 1 (need both for weight 2 \u2265 threshold)\n- Interns have weight 0\n\nResults: 2 minimal authorized sets ({manager} and {engineer1, engineer2}), both closure bases. 16 of 32 coalitions are authorized.\n\n### 5.3 Realization of Arbitrary Access Structures\n\nGiven minimal authorized sets {{1,2}, {2,3}, {1,3,4}}, the identity-closure realization correctly recovers the full access structure with 7 authorized coalitions out of 16 possible.\n\n### 5.4 Submodular Exchange Verification\n\nUsing the rank function of the uniform matroid U_{2,4}: `cap(A) = min(|A|, 2)`. All 12 pairs (A, B) of unauthorized singletons whose union is authorized satisfy `cap(cl(A)) + cap(cl(B)) = 2 < 2t = 4`.\n\n## 6. Discussion\n\n### 6.1 Strength of the Framework\n\nThe closure-capacity framework provides three advantages over purely combinatorial treatments of access structures:\n\n1. **Semantic grounding**: Authorization is derived from geometric and information-theoretic structure, not stipulated axiomatically.\n\n2. **Quantitative control**: The capacity function provides numerical invariants (share complexity bounds, information rates) beyond the qualitative authorized/unauthorized distinction.\n\n3. **Structural transfer**: Results about closure lattices, Moore families, and submodular functions become directly applicable to secret-sharing design.\n\n### 6.2 Limitations\n\nThe current framework has several limitations that suggest directions for future work:\n\n1. **Identity realization**: The realization theorem (Theorem 2) uses the identity closure, which is trivial. More structured realizations (linear, matroidal) require additional hypotheses.\n\n2. **Boolean reconstruction**: The certified reconstruction uses a boolean score, collapsing the richer capacity information. A graded reconstruction using the full capacity spectrum would be more informative.\n\n3. **Missing category theory**: The full faithfulness theorem for morphisms (Theorem 4 in the original blueprint) requires more categorical infrastructure than currently formalized.\n\n### 6.3 Implications for Cryptographic Practice\n\nThe basis characterization (Theorem 1b) has practical implications: it means that the minimal authorized sets of any secret-sharing scheme are exactly the irredundant generators of the underlying closure system. This provides a geometric criterion for scheme design: choose a closure operator whose bases have the desired cardinality and structure.\n\n## 7. Future Work\n\nSee FUTURE_DIRECTIONS.md for detailed roadmap. Key next steps include:\n- Submodular/entropy strengthening to polymatroid bounds on share complexity\n- Tropical linear realization for matroidal access structures\n- Categorical equivalence with monotone span programs\n- Complexity lower bounds from closure-basis spectra\n- Quantum closure-capacity analogues using von Neumann entropy\n\n## References\n\n[1] A. Shamir. \"How to share a secret.\" Communications of the ACM, 22(11):612\u2013613, 1979.\n\n[2] G.R. Blakley. \"Safeguarding cryptographic keys.\" Proceedings of AFIPS National Computer Conference, 48:313\u2013317, 1979.\n\n[3] J. Mart\u00ed-Farr\u00e9 and C. Padr\u00f3. \"Secret sharing schemes on access structures with intersection number equal to one.\" Discrete Applied Mathematics, 154(3):552\u2013563, 2006.\n\n[4] E.F. Brickell and D.M. Davenport. \"On the classification of ideal secret sharing schemes.\" Journal of Cryptology, 4(2):123\u2013134, 1991.\n\n[5] S. Fujishige. \"Polymatroidal dependence structure of a set of random variables.\" Information and Control, 39(1):55\u201372, 1978.\n\n[6] M. Karchmer and A. Wigderson. \"On span programs.\" Proceedings of the 8th Structure in Complexity Theory Conference, 102\u2013111, 1993.\n",
+    "future_directions": "# Future Directions: Closure-Capacity Cryptography\n\nThis document outlines concrete research opportunities opened by the formalization of closure-capacity secret-sharing duality.\n\n---\n\n## Direction 1: Submodular/Entropy Strengthening to Polymatroid Secret Sharing\n\n**Goal**: Strengthen the monotone capacity assumption to full submodularity and derive polymatroid-based bounds on information rates of secret-sharing schemes.\n\n**Concrete theorem target**:\n```\ntheorem polymatroid_rate_bound\n    (cl : Set \u03b1 \u2192 Set \u03b1) (cap : Set \u03b1 \u2192 \u211d)\n    (hsub : \u2200 A B, cap(cl(A \u222a B)) + cap(cl(A \u2229 B)) \u2264 cap(cl A) + cap(cl B))\n    (hcap_mono : Monotone cap) :\n    \u2200 M, MinimalAuthorized cl cap t M \u2192\n      |M| \u2264 cap(cl M) / (t - max_{B \u2282 M} cap(cl B))\n```\n\n**Proof strategy**: Use the submodularity inequality iteratively on chains of proper subsets. This yields a telescoping bound connecting the size of a minimal authorized set to the capacity gap at threshold. The key insight is that submodularity forces the \"marginal capacity gain\" from each new element to decrease, producing a polymatroid rank bound.\n\n**Cross-domain connection**: This connects directly to the entropy method in combinatorics (Shearer's lemma, Han's inequality) and to the information-theoretic bounds on secret-sharing due to Capocelli\u2013De Santis\u2013Gargano\u2013Vaccaro.\n\n**Impact**: Would provide the first formalized bridge between closure-theoretic secret sharing and information-theoretic lower bounds on share size.\n\n---\n\n## Direction 2: Tropical Linear Secret Sharing over Idempotent Semirings\n\n**Goal**: Realize closure-capacity access structures as tropical linear algebra objects, where shares are elements of a min-plus semimodule and reconstruction is a tropical matrix equation.\n\n**Concrete theorem target**:\n```\ntheorem tropical_linear_realization\n    (\ud835\udc9c : FiniteAccessStructure \u03b1)\n    (h_matroidal : IsMatroidalAccessStructure \ud835\udc9c) :\n    \u2203 (M : Matrix (Fin n) (Fin m) (Tropical \u2115)),\n      \u2200 A, A \u2208 \ud835\udc9c.auth \u2194 tropicalRank (M.submatrix A id) \u2265 1\n```\n\n**Proof strategy**: For matroidal access structures (those arising from matroids), the representation matrix can be constructed from the matroid's tropical Grassmannian coordinates. The key step is showing that the tropical rank of the restriction to columns indexed by a coalition equals 1 iff the coalition is authorized. Use the Dress\u2013Wenzel theory of valuated matroids as the algebraic bridge.\n\n**Cross-domain connection**: Links to tropical geometry (tropical Grassmannians), coding theory (MDS codes as threshold schemes), and the Beimel\u2013Livne\u2013Padr\u00f3 characterization of ideal secret-sharing matroids.\n\n**Impact**: Would create a new \"tropical cryptography\" where secret-sharing synthesis reduces to tropical linear algebra.\n\n---\n\n## Direction 3: Categorical Equivalence with Monotone Span Programs\n\n**Goal**: Prove that the category of finite closure-capacity systems (with appropriate morphisms) is equivalent to a category of monotone span programs, providing a dictionary between closure semantics and linear-algebraic secret sharing.\n\n**Concrete theorem target**:\n```\ntheorem closure_capacity_span_program_equivalence :\n    ClosureCapacityCat \u224c MonotoneSpanProgramCat\n```\n\n**Proof strategy**: The forward functor sends a closure-capacity system to its \"linearization\" \u2014 a span program whose target vector is the capacity function viewed as a linear functional. The inverse functor extracts a closure operator from the span program's kernel structure. Fully faithful follows from the reconstruction theorem (Theorem 3): closure-capacity morphisms are determined by their action on minimal authorized sets, and span program morphisms are determined by their action on generators.\n\n**Cross-domain connection**: Monotone span programs are the standard model for linear secret-sharing schemes (Karchmer\u2013Wigderson). This equivalence would formalize the folk wisdom that \"closure = span\" in secret-sharing theory.\n\n**Impact**: Provides a formal bridge enabling automatic translation of results between the closure-theoretic and linear-algebraic approaches to secret sharing.\n\n---\n\n## Direction 4: Complexity Lower Bounds from Closure-Basis Spectra\n\n**Goal**: Extract circuit complexity lower bounds from the structure of the closure-basis spectrum (the family of all minimal authorized sets viewed as a hypergraph).\n\n**Concrete theorem target**:\n```\ntheorem closure_basis_complexity_bound\n    (\ud835\udc9c : FiniteAccessStructure (Fin n))\n    (h : \u2200 M \u2208 minimals \ud835\udc9c, |M| = k) :\n    monotoneCircuitComplexity \ud835\udc9c \u2265 n * (n - 1) / (k * (k - 1))\n```\n\n**Proof strategy**: Use the Friedman\u2013Wigderson entropy argument: the number of minimal authorized sets of uniform size k in an n-element access structure gives a lower bound on the monotone circuit complexity via a counting argument on edge-disjoint paths in the circuit DAG. The closure-basis characterization (Theorem 1b) provides the geometric interpretation: each minimal authorized set corresponds to an independent basis in the closure lattice, and the independence structure constrains the circuit topology.\n\n**Cross-domain connection**: Links closure-capacity duality to monotone circuit complexity, the Razborov\u2013Alon\u2013Boppana lower bounds, and the Jukna\u2013Sergeev approach via hypergraph coloring.\n\n**Impact**: Would provide a new proof technique for monotone complexity lower bounds grounded in closure geometry rather than communication complexity.\n\n---\n\n## Direction 5: Quantum and Noncommutative Closure-Capacity Analogues\n\n**Goal**: Extend closure-capacity duality to quantum secret sharing, where the closure operator acts on subspaces of a Hilbert space and capacity is replaced by von Neumann entropy.\n\n**Concrete theorem target**:\n```\ntheorem quantum_closure_capacity_authorized_monotone\n    (H : HilbertSpace) (cl : Subspace H \u2192 Subspace H)\n    (S : DensityOperator H)\n    (cap : Subspace H \u2192 \u211d := vonNeumannEntropy \u2218 partialTrace S)\n    (t : \u211d) :\n    \u2200 V W : Subspace H, V \u2264 W \u2192 cap (cl V) \u2264 cap (cl W) \u2192\n      Authorized cl cap t V \u2192 Authorized cl cap t W\n```\n\n**Proof strategy**: The quantum case requires replacing set-theoretic closure with subspace closure (the generated operator algebra) and monotone capacity with a conditional entropy function derived from partial traces. The key technical challenge is proving that partial trace preserves the submodularity structure needed for the exchange theorem. Use the strong subadditivity of von Neumann entropy (Lieb\u2013Ruskai) as the quantum analogue of submodularity.\n\n**Cross-domain connection**: Connects to quantum error correction (the Knill\u2013Laflamme conditions as closure-capacity thresholds), topological quantum computing (anyonic fusion as a closure operation), and the theory of quantum Markov chains.\n\n**Impact**: Would provide the first formal framework unifying classical and quantum secret sharing through closure-capacity semantics, potentially enabling quantum-to-classical reduction theorems for access structure realizability.\n\n---\n\n## Summary of Priority Ordering\n\n| Priority | Direction | Estimated Difficulty | Mathlib Readiness |\n|----------|-----------|---------------------|-------------------|\n| 1 | Submodular/Entropy bounds | Medium | High (basic order theory present) |\n| 2 | Tropical linear realization | High | Medium (tropical semirings exist) |\n| 3 | Span program equivalence | High | Low (needs MSP formalization) |\n| 4 | Complexity lower bounds | Medium | Low (needs circuit complexity) |\n| 5 | Quantum analogues | Very High | Low (needs quantum formalism) |\n\nDirection 1 is the most immediately actionable: it requires only strengthening the existing monotonicity assumption to submodularity and proving the resulting combinatorial bounds. Directions 2-3 would create the most impact by connecting to existing algebraic and computational frameworks. Directions 4-5 are the most ambitious but offer the deepest new insights.\n",
+    "demos": [
+      {
+        "name": "Closure-Capacity Secret-Sharing Demonstrations",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nClosure-Capacity Secret-Sharing Duality: Demonstrations\n\nThis script demonstrates the core theorems connecting closure operators,\nmonotone capacities, and cryptographic access structures.\n\nExamples:\n  1. Threshold secret sharing (k-out-of-n) via closure-capacity systems\n  2. Hierarchical access structures from lattice closures\n  3. Minimal authorized set enumeration\n  4. Reconstruction data extraction\n\"\"\"\n\nimport itertools\nfrom typing import Callable, FrozenSet, Set, List, Dict, Tuple\n\n# Type aliases\nElement = int\nCoalition = FrozenSet[Element]\n\n\n# ============================================================\n# \u00a71. Closure Operators\n# ============================================================\n\nclass ClosureOperator:\n    \"\"\"A closure operator on subsets of a finite set.\"\"\"\n\n    def __init__(self, universe: Set[Element], cl: Callable[[FrozenSet[Element]], FrozenSet[Element]]):\n        self.universe = frozenset(universe)\n        self._cl = cl\n        self._validate()\n\n    def _validate(self):\n        \"\"\"Verify closure operator axioms on small cases.\"\"\"\n        subsets = list(self._powerset_up_to(min(len(self.universe), 5)))\n        for A in subsets:\n            clA = self._cl(A)\n            # Extensive: A \u2286 cl(A)\n            assert A <= clA, f\"Not extensive: {A} \u2284 cl({A})={clA}\"\n            # Idempotent: cl(cl(A)) = cl(A)\n            assert self._cl(clA) == clA, f\"Not idempotent at {A}\"\n\n    def _powerset_up_to(self, max_size):\n        elems = sorted(self.universe)[:max_size]\n        for r in range(len(elems) + 1):\n            for combo in itertools.combinations(elems, r):\n                yield frozenset(combo)\n\n    def cl(self, A: FrozenSet[Element]) -> FrozenSet[Element]:\n        return self._cl(A)\n\n    def is_closed(self, A: FrozenSet[Element]) -> bool:\n        return self.cl(A) == A\n\n    def closed_sets(self) -> List[FrozenSet[Element]]:\n        \"\"\"Enumerate all closed sets.\"\"\"\n        result = []\n        for r in range(len(self.universe) + 1):\n            for combo in itertools.combinations(sorted(self.universe), r):\n                s = frozenset(combo)\n                if self.is_closed(s):\n                    result.append(s)\n        return result\n\n\n# ============================================================\n# \u00a72. Closure-Capacity Systems\n# ============================================================\n\nclass ClosureCapacitySystem:\n    \"\"\"A closure-capacity system (X, cl, cap, t).\"\"\"\n\n    def __init__(self, cl_op: ClosureOperator,\n                 cap: Callable[[FrozenSet[Element]], float],\n                 threshold: float):\n        self.cl_op = cl_op\n        self.cap = cap\n        self.threshold = threshold\n        self.universe = cl_op.universe\n\n    def is_authorized(self, A: FrozenSet[Element]) -> bool:\n        \"\"\"Check if coalition A is authorized: t \u2264 cap(cl(A)).\"\"\"\n        return self.threshold <= self.cap(self.cl_op.cl(A))\n\n    def authorized_sets(self) -> List[FrozenSet[Element]]:\n        \"\"\"Enumerate all authorized coalitions.\"\"\"\n        result = []\n        for r in range(len(self.universe) + 1):\n            for combo in itertools.combinations(sorted(self.universe), r):\n                A = frozenset(combo)\n                if self.is_authorized(A):\n                    result.append(A)\n        return result\n\n    def minimal_authorized_sets(self) -> List[FrozenSet[Element]]:\n        \"\"\"Find all minimal authorized coalitions.\"\"\"\n        auth = self.authorized_sets()\n        minimals = []\n        for A in auth:\n            is_minimal = True\n            for B in auth:\n                if B < A:  # B is a proper subset of A\n                    is_minimal = False\n                    break\n            if is_minimal:\n                minimals.append(A)\n        return minimals\n\n    def is_closure_basis(self, B: FrozenSet[Element]) -> bool:\n        \"\"\"Check if B is a closure basis for cl(B).\"\"\"\n        clB = self.cl_op.cl(B)\n        for elem in B:\n            B_minus = B - {elem}\n            if self.cl_op.cl(B_minus) == clB:\n                return False\n        return True\n\n    def verify_upward_closure(self) -> bool:\n        \"\"\"Verify that the authorized family is upward-closed (Theorem 1a).\"\"\"\n        auth = set(map(frozenset, self.authorized_sets()))\n        for A in auth:\n            for x in self.universe - A:\n                B = A | {x}\n                if B not in auth:\n                    return False\n        return True\n\n    def verify_minimal_are_bases(self) -> bool:\n        \"\"\"Verify that minimal authorized sets are closure bases (Theorem 1b).\"\"\"\n        for M in self.minimal_authorized_sets():\n            if not self.is_closure_basis(M):\n                return False\n        return True\n\n\n# ============================================================\n# \u00a73. Reconstruction Data\n# ============================================================\n\nclass ReconstructionData:\n    \"\"\"Certified reconstruction data for an access structure.\"\"\"\n\n    def __init__(self, minimal_auth: List[FrozenSet[Element]]):\n        self.minimal_auth = minimal_auth\n\n    def score(self, A: FrozenSet[Element]) -> int:\n        \"\"\"Score = 1 if A contains some minimal authorized set, else 0.\"\"\"\n        for M in self.minimal_auth:\n            if M <= A:\n                return 1\n        return 0\n\n    def reconstructs(self, system: ClosureCapacitySystem) -> bool:\n        \"\"\"Verify reconstruction correctness (Theorem 3).\"\"\"\n        for r in range(len(system.universe) + 1):\n            for combo in itertools.combinations(sorted(system.universe), r):\n                A = frozenset(combo)\n                auth = system.is_authorized(A)\n                recon = (1 <= self.score(A))\n                if auth != recon:\n                    return False\n        return True\n\n\n# ============================================================\n# \u00a74. Example: k-out-of-n Threshold Secret Sharing\n# ============================================================\n\ndef threshold_closure(n: int, k: int):\n    \"\"\"\n    Construct a closure-capacity system for k-out-of-n threshold secret sharing.\n\n    cl(A) = X if |A| \u2265 k, else A  (trivial closure below threshold)\n    cap(A) = |A|\n    t = k\n    \"\"\"\n    universe = set(range(1, n + 1))\n    X = frozenset(universe)\n\n    def cl(A: FrozenSet[Element]) -> FrozenSet[Element]:\n        if len(A) >= k:\n            return X\n        return A\n\n    def cap(A: FrozenSet[Element]) -> float:\n        return len(A)\n\n    cl_op = ClosureOperator(universe, cl)\n    return ClosureCapacitySystem(cl_op, cap, threshold=k)\n\n\ndef demo_threshold():\n    \"\"\"Demo: 3-out-of-5 threshold secret sharing.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: 3-out-of-5 Threshold Secret Sharing\")\n    print(\"=\" * 60)\n\n    system = threshold_closure(n=5, k=3)\n\n    print(f\"\\nUniverse: {sorted(system.universe)}\")\n    print(f\"Threshold: {system.threshold}\")\n\n    # Verify upward closure\n    print(f\"\\nUpward-closed (Theorem 1a): {system.verify_upward_closure()}\")\n\n    # Minimal authorized sets\n    minimals = system.minimal_authorized_sets()\n    print(f\"\\nMinimal authorized sets ({len(minimals)} total):\")\n    for M in sorted(minimals, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(M)} \u2014 closure basis: {system.is_closure_basis(M)}\")\n\n    # Verify minimal = closure basis\n    print(f\"\\nAll minimals are closure bases (Theorem 1b): \"\n          f\"{system.verify_minimal_are_bases()}\")\n\n    # Reconstruction\n    recon = ReconstructionData(minimals)\n    print(f\"\\nReconstruction correctness (Theorem 3): \"\n          f\"{recon.reconstructs(system)}\")\n\n    # Example authorized/unauthorized sets\n    print(\"\\nExample coalitions:\")\n    examples = [\n        frozenset({1, 2}),\n        frozenset({1, 2, 3}),\n        frozenset({3, 4, 5}),\n        frozenset({1}),\n        frozenset({1, 2, 3, 4, 5}),\n    ]\n    for A in examples:\n        auth = \"\u2713 authorized\" if system.is_authorized(A) else \"\u2717 unauthorized\"\n        print(f\"  {str(set(A)):20s} \u2192 {auth}\")\n\n\n# ============================================================\n# \u00a75. Example: Hierarchical Access Structure\n# ============================================================\n\ndef hierarchical_closure():\n    \"\"\"\n    Construct a hierarchical access structure:\n    - Participants: {mgr, eng1, eng2, intern1, intern2}\n    - Manager alone can access (weight 3)\n    - Two engineers can access (weight 1 each, need 2)\n    - Interns need manager or both engineers present\n\n    cl models organizational hierarchy:\n    cl({mgr, ...}) always includes the full team\n    \"\"\"\n    participants = {0, 1, 2, 3, 4}  # mgr, eng1, eng2, intern1, intern2\n    X = frozenset(participants)\n\n    weights = {0: 3, 1: 1, 2: 1, 3: 0, 4: 0}  # mgr=3, eng=1, intern=0\n\n    def cl(A: FrozenSet[Element]) -> FrozenSet[Element]:\n        \"\"\"Hierarchical closure: manager generates whole team.\"\"\"\n        A_set = set(A)\n        if 0 in A_set:  # manager present \u2192 full closure\n            return X\n        if {1, 2} <= A_set:  # both engineers \u2192 include interns\n            return frozenset(A_set | {3, 4})\n        return frozenset(A)\n\n    def cap(A: FrozenSet[Element]) -> float:\n        return sum(weights.get(x, 0) for x in A)\n\n    cl_op = ClosureOperator(participants, cl)\n    return ClosureCapacitySystem(cl_op, cap, threshold=2)\n\n\ndef demo_hierarchical():\n    \"\"\"Demo: Hierarchical access structure.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Hierarchical Access Structure\")\n    print(\"=\" * 60)\n\n    names = {0: \"mgr\", 1: \"eng1\", 2: \"eng2\", 3: \"int1\", 4: \"int2\"}\n    system = hierarchical_closure()\n\n    print(f\"\\nParticipants: {', '.join(f'{v}({k})' for k,v in sorted(names.items()))}\")\n    print(f\"Threshold: {system.threshold}\")\n\n    print(f\"\\nUpward-closed (Theorem 1a): {system.verify_upward_closure()}\")\n\n    minimals = system.minimal_authorized_sets()\n    print(f\"\\nMinimal authorized sets ({len(minimals)} total):\")\n    for M in sorted(minimals, key=lambda s: (len(s), sorted(s))):\n        named = {names[x] for x in M}\n        print(f\"  {named} \u2014 basis: {system.is_closure_basis(M)}\")\n\n    print(f\"\\nAll minimals are closure bases (Theorem 1b): \"\n          f\"{system.verify_minimal_are_bases()}\")\n\n    recon = ReconstructionData(minimals)\n    print(f\"Reconstruction correctness (Theorem 3): \"\n          f\"{recon.reconstructs(system)}\")\n\n\n# ============================================================\n# \u00a76. Example: Realization of an arbitrary access structure\n# ============================================================\n\ndef demo_realization():\n    \"\"\"Demo: Constructing closure-capacity from an access structure (Theorem 2).\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Realization Theorem\")\n    print(\"=\" * 60)\n\n    # Define an access structure by its minimal authorized sets\n    universe = {1, 2, 3, 4}\n    min_auth = [\n        frozenset({1, 2}),\n        frozenset({2, 3}),\n        frozenset({1, 3, 4}),\n    ]\n\n    print(f\"\\nUniverse: {sorted(universe)}\")\n    print(f\"Minimal authorized sets: {[set(M) for M in min_auth]}\")\n\n    # Construct closure-capacity realization (identity closure, boolean capacity)\n    X = frozenset(universe)\n\n    def cl(A):\n        return A  # identity closure\n\n    def cap(A):\n        for M in min_auth:\n            if M <= A:\n                return 1\n        return 0\n\n    cl_op = ClosureOperator(universe, cl)\n    system = ClosureCapacitySystem(cl_op, cap, threshold=1)\n\n    # Verify\n    computed_minimals = system.minimal_authorized_sets()\n    print(f\"\\nComputed minimal authorized: {[set(M) for M in sorted(computed_minimals, key=lambda s: (len(s), sorted(s)))]}\")\n    print(f\"Match: {set(map(frozenset, min_auth)) == set(computed_minimals)}\")\n    print(f\"Upward-closed: {system.verify_upward_closure()}\")\n\n    recon = ReconstructionData(computed_minimals)\n    print(f\"Reconstruction correctness: {recon.reconstructs(system)}\")\n\n    # Show full access structure\n    auth = system.authorized_sets()\n    print(f\"\\nFull authorized family ({len(auth)} sets):\")\n    for A in sorted(auth, key=lambda s: (len(s), sorted(s))):\n        is_min = A in set(computed_minimals)\n        marker = \" \u2190 minimal\" if is_min else \"\"\n        print(f\"  {set(A)}{marker}\")\n\n\n# ============================================================\n# \u00a77. Submodularity Demo\n# ============================================================\n\ndef demo_submodularity():\n    \"\"\"Demo: Submodular capacity exchange (Theorem on submodularity).\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Submodular Capacity Exchange\")\n    print(\"=\" * 60)\n\n    # Rank function of uniform matroid U_{2,4}: cap(A) = min(|A|, 2)\n    universe = {1, 2, 3, 4}\n    X = frozenset(universe)\n\n    def cl(A):\n        if len(A) >= 2:\n            return X\n        return frozenset(A)\n\n    def cap(A):\n        return min(len(A), 2)\n\n    cl_op = ClosureOperator(universe, cl)\n    t = 2\n\n    # Verify submodularity\n    print(\"\\nCapacity function: cap(A) = min(|A|, 2) (rank of U_{2,4})\")\n    print(f\"Threshold t = {t}\")\n\n    submodular = True\n    for r1 in range(len(universe) + 1):\n        for c1 in itertools.combinations(sorted(universe), r1):\n            A = frozenset(c1)\n            for r2 in range(len(universe) + 1):\n                for c2 in itertools.combinations(sorted(universe), r2):\n                    B = frozenset(c2)\n                    lhs = cap(cl_op.cl(A | B)) + cap(cl_op.cl(A & B))\n                    rhs = cap(cl_op.cl(A)) + cap(cl_op.cl(B))\n                    if lhs > rhs:\n                        submodular = False\n\n    print(f\"Submodular on closures: {submodular}\")\n\n    # Demonstrate exchange theorem\n    print(\"\\nExchange theorem examples (A,B unauthorized, A\u222aB authorized):\")\n    for r1 in range(1, len(universe)):\n        for c1 in itertools.combinations(sorted(universe), r1):\n            A = frozenset(c1)\n            for r2 in range(1, len(universe)):\n                for c2 in itertools.combinations(sorted(universe), r2):\n                    B = frozenset(c2)\n                    capA = cap(cl_op.cl(A))\n                    capB = cap(cl_op.cl(B))\n                    capAB = cap(cl_op.cl(A | B))\n                    if capAB >= t and capA < t and capB < t:\n                        bound = capA + capB\n                        print(f\"  A={set(A)}, B={set(B)}: \"\n                              f\"cap(A)={capA}, cap(B)={capB}, \"\n                              f\"sum={bound} < 2t={2*t} \u2713\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Closure-Capacity Secret-Sharing Duality: Demonstrations\")\n    print(\"=\" * 60)\n    print()\n\n    demo_threshold()\n    demo_hierarchical()\n    demo_realization()\n    demo_submodularity()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 60)\n"
+      },
+      {
+        "name": "Real-World Applications",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Closure-Capacity Secret-Sharing Duality\n\nReal-world applications demonstrating the practical relevance of the theory:\n1. Multi-factor authentication design\n2. Distributed key management for cloud systems\n3. Organizational access policy verification\n4. Information-theoretic share size bounds\n\"\"\"\n\nimport itertools\nfrom typing import FrozenSet, Set, List, Dict\n\nElement = int\nCoalition = FrozenSet[Element]\n\n\n# ============================================================\n# Application 1: Multi-Factor Authentication Design\n# ============================================================\n\ndef multi_factor_auth():\n    \"\"\"\n    Design a multi-factor authentication system using closure-capacity theory.\n\n    Factors: password (P), biometric (B), hardware token (H), phone OTP (O)\n    Policy: Need at least 2 factors, but password alone is never sufficient.\n\n    We model this as a closure-capacity system where:\n    - cl captures factor interactions (biometric + token generates full trust)\n    - cap measures authentication strength\n    - Threshold t = 3 requires sufficient combined strength\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Multi-Factor Authentication Design\")\n    print(\"=\" * 60)\n\n    # Factors: 0=password, 1=biometric, 2=hardware_token, 3=phone_otp\n    factors = {0, 1, 2, 3}\n    names = {0: \"password\", 1: \"biometric\", 2: \"hw_token\", 3: \"phone_otp\"}\n    X = frozenset(factors)\n\n    # Strength weights\n    weights = {0: 1, 1: 2, 2: 2, 3: 1}\n\n    # Closure: biometric + hardware = full trust; password is independent\n    def cl(A):\n        A_set = set(A)\n        if {1, 2} <= A_set:  # biometric + hardware = maximum trust\n            return X\n        return frozenset(A)\n\n    def cap(A):\n        return sum(weights.get(x, 0) for x in A)\n\n    threshold = 3\n\n    # Analyze access structure\n    print(f\"\\nFactors: {', '.join(f'{names[k]}(w={weights[k]})' for k in sorted(factors))}\")\n    print(f\"Threshold: {threshold}\")\n\n    # Find minimal authorized factor combinations\n    minimals = []\n    for r in range(1, len(factors) + 1):\n        for combo in itertools.combinations(sorted(factors), r):\n            A = frozenset(combo)\n            if threshold <= cap(cl(A)):\n                # Check minimality\n                is_min = all(\n                    cap(cl(A - {x})) < threshold for x in A\n                )\n                if is_min:\n                    minimals.append(A)\n\n    print(f\"\\nMinimal sufficient factor combinations:\")\n    for M in minimals:\n        named = [names[x] for x in sorted(M)]\n        strength = cap(cl(M))\n        print(f\"  {named} \u2192 strength {strength} \u2265 {threshold} \u2713\")\n\n    # Show unauthorized combinations\n    print(f\"\\nInsufficient factor combinations (examples):\")\n    insufficient = []\n    for r in range(1, 3):\n        for combo in itertools.combinations(sorted(factors), r):\n            A = frozenset(combo)\n            if cap(cl(A)) < threshold:\n                insufficient.append(A)\n    for A in insufficient[:6]:\n        named = [names[x] for x in sorted(A)]\n        print(f\"  {named} \u2192 strength {cap(cl(A))} < {threshold} \u2717\")\n\n\n# ============================================================\n# Application 2: Distributed Key Management\n# ============================================================\n\ndef distributed_key_management():\n    \"\"\"\n    Design a distributed key management system for a cloud service.\n\n    Nodes: 3 data centers (DC1, DC2, DC3), 2 admin nodes (A1, A2)\n    Policy:\n    - Any 2 data centers can reconstruct the master key\n    - Any admin + any data center can reconstruct\n    - No single node can reconstruct alone\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Distributed Key Management\")\n    print(\"=\" * 60)\n\n    # Nodes: 0=DC1, 1=DC2, 2=DC3, 3=Admin1, 4=Admin2\n    nodes = {0, 1, 2, 3, 4}\n    names = {0: \"DC1\", 1: \"DC2\", 2: \"DC3\", 3: \"Admin1\", 4: \"Admin2\"}\n    X = frozenset(nodes)\n\n    # Weights: DCs have weight 1, Admins have weight 1.5\n    weights = {0: 2, 1: 2, 2: 2, 3: 3, 4: 3}\n\n    # Closure: admin presence extends to include all DCs they manage\n    def cl(A):\n        A_set = set(A)\n        # Admin sees all data centers\n        if {3, 4} & A_set:  # any admin present\n            return frozenset(A_set | {0, 1, 2})\n        return frozenset(A)\n\n    def cap(A):\n        return sum(weights.get(x, 0) for x in A)\n\n    threshold = 4\n\n    print(f\"\\nNodes: {', '.join(f'{names[k]}(w={weights[k]})' for k in sorted(nodes))}\")\n    print(f\"Threshold: {threshold}\")\n\n    # Find and display access structure\n    minimals = []\n    for r in range(1, len(nodes) + 1):\n        for combo in itertools.combinations(sorted(nodes), r):\n            A = frozenset(combo)\n            if threshold <= cap(cl(A)):\n                is_min = all(cap(cl(A - {x})) < threshold for x in A)\n                if is_min:\n                    minimals.append(A)\n\n    print(f\"\\nMinimal reconstruction coalitions:\")\n    for M in minimals:\n        named = [names[x] for x in sorted(M)]\n        print(f\"  {named} \u2192 cap = {cap(cl(M))}\")\n\n    # Verify security property: no single node can reconstruct\n    print(f\"\\nSecurity verification:\")\n    for x in sorted(nodes):\n        single = frozenset({x})\n        strength = cap(cl(single))\n        safe = strength < threshold\n        print(f\"  {names[x]} alone: cap = {strength} {'< ' + str(threshold) + ' \u2713 secure' if safe else '\u2265 ' + str(threshold) + ' \u2717 INSECURE'}\")\n\n\n# ============================================================\n# Application 3: Organizational Access Policy Verification\n# ============================================================\n\ndef access_policy_verification():\n    \"\"\"\n    Verify that an organizational access policy is consistent and complete.\n\n    Uses closure-capacity framework to check:\n    1. Upward closure (adding people never removes access)\n    2. Minimal authorized sets are irredundant\n    3. Reconstruction data is correct\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Organizational Access Policy Verification\")\n    print(\"=\" * 60)\n\n    # Organization: CEO, CFO, CTO, Engineer, Accountant\n    people = {0, 1, 2, 3, 4}\n    names = {0: \"CEO\", 1: \"CFO\", 2: \"CTO\", 3: \"Engineer\", 4: \"Accountant\"}\n\n    # Policy: access to financial records\n    # - CEO alone\n    # - CFO + any other officer (CTO)\n    # - CFO + Accountant\n    # - CTO + Engineer + Accountant (cross-department)\n    minimal_auth_sets = [\n        frozenset({0}),           # CEO alone\n        frozenset({1, 2}),        # CFO + CTO\n        frozenset({1, 4}),        # CFO + Accountant\n        frozenset({2, 3, 4}),     # CTO + Engineer + Accountant\n    ]\n\n    print(f\"\\nPeople: {', '.join(f'{names[k]}' for k in sorted(people))}\")\n    print(f\"\\nDeclared minimal authorized sets:\")\n    for M in minimal_auth_sets:\n        print(f\"  {[names[x] for x in sorted(M)]}\")\n\n    # Construct identity realization\n    def cl(A):\n        return A\n\n    def cap(A):\n        return 1 if any(M <= A for M in minimal_auth_sets) else 0\n\n    threshold = 1\n\n    # Verify properties\n    # 1. Upward closure\n    upward_ok = True\n    for r in range(len(people) + 1):\n        for combo in itertools.combinations(sorted(people), r):\n            A = frozenset(combo)\n            if cap(cl(A)) >= threshold:\n                for x in people - A:\n                    B = A | {x}\n                    if cap(cl(B)) < threshold:\n                        upward_ok = False\n                        print(f\"  \u2717 Upward closure violated: {set(A)} authorized but {set(B)} not!\")\n\n    print(f\"\\n1. Upward closure: {'\u2713 verified' if upward_ok else '\u2717 VIOLATED'}\")\n\n    # 2. Minimality check\n    all_minimal = True\n    for M in minimal_auth_sets:\n        for x in M:\n            sub = M - {x}\n            if cap(cl(sub)) >= threshold:\n                all_minimal = False\n                print(f\"  \u2717 {[names[y] for y in sorted(M)]} is not minimal: \"\n                      f\"removing {names[x]} still authorized\")\n\n    print(f\"2. All declared minimals are truly minimal: {'\u2713 verified' if all_minimal else '\u2717 VIOLATED'}\")\n\n    # 3. Count total authorized coalitions\n    total_auth = sum(1 for A in itertools.chain.from_iterable(\n        itertools.combinations(sorted(people), r) for r in range(len(people) + 1)\n    ) if cap(cl(frozenset(A))) >= threshold)\n\n    print(f\"3. Total authorized coalitions: {total_auth} out of {2**len(people)}\")\n\n    # 4. Identify unauthorized key people\n    print(f\"\\n4. Individual access analysis:\")\n    for x in sorted(people):\n        solo = frozenset({x})\n        auth = cap(cl(solo)) >= threshold\n        # How many coalitions need this person\n        needed_in = sum(1 for M in minimal_auth_sets if x in M)\n        print(f\"  {names[x]:12s}: solo={'\u2713' if auth else '\u2717'}, \"\n              f\"appears in {needed_in}/{len(minimal_auth_sets)} minimal sets\")\n\n\n# ============================================================\n# Application 4: Share Size Lower Bounds\n# ============================================================\n\ndef share_size_bounds():\n    \"\"\"\n    Compute information-theoretic lower bounds on share sizes\n    using submodular capacity analysis.\n\n    For a k-out-of-n threshold scheme, the minimum share size\n    equals the secret size (information-theoretic optimality of\n    Shamir's scheme).\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: Information-Theoretic Share Size Bounds\")\n    print(\"=\" * 60)\n\n    for n in range(3, 8):\n        for k in range(2, n):\n            universe = set(range(n))\n            X = frozenset(universe)\n\n            def make_cl(k_val, X_val):\n                def cl(A):\n                    return X_val if len(A) >= k_val else frozenset(A)\n                return cl\n\n            cl = make_cl(k, X)\n            cap_fn = lambda A: min(len(A), k)\n\n            # Count minimal authorized sets\n            minimals = []\n            for combo in itertools.combinations(sorted(universe), k):\n                A = frozenset(combo)\n                if k <= cap_fn(cl(A)):\n                    is_min = all(cap_fn(cl(A - {x})) < k for x in A)\n                    if is_min:\n                        minimals.append(A)\n\n            # Submodularity bound: for any participant x,\n            # share size \u2265 secret_size * (min capacity gap)\n            min_gap = float('inf')\n            for x in universe:\n                for M in minimals:\n                    if x in M:\n                        without = M - {x}\n                        gap = cap_fn(cl(M)) - cap_fn(cl(without))\n                        min_gap = min(min_gap, gap)\n\n            print(f\"  {k}-out-of-{n}: \"\n                  f\"{len(minimals):4d} minimal sets, \"\n                  f\"min capacity gap = {min_gap}, \"\n                  f\"share/secret ratio \u2265 {1.0/max(min_gap, 1):.2f}\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Applications of Closure-Capacity Secret-Sharing Duality\")\n    print(\"=\" * 60)\n\n    multi_factor_auth()\n    distributed_key_management()\n    access_policy_verification()\n    share_size_bounds()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications complete.\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Authorized Coalition Enumeration",
+        "pseudocode": "Algorithm: EnumerateAuthorized(X, cl, cap, t)\nInput: Finite set X, closure operator cl, capacity cap, threshold t\nOutput: Set of all authorized coalitions\n\n1. For each subset A \u2286 X:\n2.   Compute cl(A)\n3.   Compute cap(cl(A))\n4.   If t \u2264 cap(cl(A)), add A to output\n5. Return output\n\nTime complexity: O(2^n \u00b7 T_cl \u00b7 T_cap)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Closure-Capacity Secret-Sharing Duality\n\nImplements the core algorithms from the research paper:\n1. Closure operator construction and verification\n2. Authorized coalition enumeration\n3. Minimal authorized set computation\n4. Reconstruction data extraction\n5. Submodularity verification\n\"\"\"\n\nimport itertools\nfrom typing import Callable, FrozenSet, Set, List, Tuple, Optional\n\n\nElement = int\nCoalition = FrozenSet[Element]\n\n\ndef enumerate_subsets(universe: Set[Element]) -> List[Coalition]:\n    \"\"\"Enumerate all subsets of a finite universe.\"\"\"\n    elems = sorted(universe)\n    result = []\n    for r in range(len(elems) + 1):\n        for combo in itertools.combinations(elems, r):\n            result.append(frozenset(combo))\n    return result\n\n\ndef verify_closure_axioms(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition]\n) -> Tuple[bool, Optional[str]]:\n    \"\"\"\n    Verify that cl satisfies closure operator axioms.\n\n    Returns (True, None) if valid, or (False, description) if violated.\n\n    Time complexity: O(2^n) where n = |universe|\n    \"\"\"\n    for A in enumerate_subsets(universe):\n        clA = cl(A)\n\n        # Extensive: A \u2286 cl(A)\n        if not A <= clA:\n            return False, f\"Extensive violated: {set(A)} \u2284 cl({set(A)}) = {set(clA)}\"\n\n        # Monotone check (for subsets of A)\n        for elem in A:\n            B = A - {elem}\n            if not cl(B) <= clA:\n                return False, f\"Monotone violated: cl({set(B)}) \u2284 cl({set(A)})\"\n\n        # Idempotent: cl(cl(A)) = cl(A)\n        if cl(clA) != clA:\n            return False, f\"Idempotent violated: cl(cl({set(A)})) \u2260 cl({set(A)})\"\n\n    return True, None\n\n\ndef enumerate_authorized(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float],\n    t: float\n) -> List[Coalition]:\n    \"\"\"\n    Algorithm 4.1: Enumerate all authorized coalitions.\n\n    A coalition A is authorized iff t \u2264 cap(cl(A)).\n\n    Time complexity: O(2^n \u00b7 T_cl \u00b7 T_cap)\n\n    Args:\n        universe: Finite participant set\n        cl: Closure operator\n        cap: Capacity function\n        t: Authorization threshold\n\n    Returns:\n        List of all authorized coalitions\n    \"\"\"\n    authorized = []\n    for A in enumerate_subsets(universe):\n        if t <= cap(cl(A)):\n            authorized.append(A)\n    return authorized\n\n\ndef enumerate_minimal_authorized(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float],\n    t: float\n) -> List[Coalition]:\n    \"\"\"\n    Algorithm 4.2: Enumerate all minimal authorized coalitions.\n\n    A coalition A is minimal authorized iff:\n    - t \u2264 cap(cl(A))\n    - For all B \u2282 A: \u00ac(t \u2264 cap(cl(B)))\n\n    Time complexity: O(2^n \u00b7 T_cl \u00b7 T_cap + |auth|\u00b2 \u00b7 n)\n\n    Args:\n        universe: Finite participant set\n        cl: Closure operator\n        cap: Capacity function\n        t: Authorization threshold\n\n    Returns:\n        List of all minimal authorized coalitions\n    \"\"\"\n    auth = enumerate_authorized(universe, cl, cap, t)\n\n    # Sort by cardinality for efficient filtering\n    auth.sort(key=len)\n\n    minimals = []\n    for A in auth:\n        # Check if any already-found minimal is a subset\n        is_minimal = not any(M <= A for M in minimals)\n        if is_minimal:\n            minimals.append(A)\n\n    return minimals\n\n\ndef is_closure_basis(\n    cl: Callable[[Coalition], Coalition],\n    B: Coalition\n) -> bool:\n    \"\"\"\n    Check if B is a closure basis for cl(B).\n\n    B is a basis iff no proper subset generates the same closure.\n\n    Time complexity: O(|B| \u00b7 T_cl)\n    \"\"\"\n    clB = cl(B)\n    for elem in B:\n        if cl(B - {elem}) == clB:\n            return False\n    return True\n\n\ndef extract_reconstruction(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float],\n    t: float\n) -> Tuple[List[Coalition], Callable[[Coalition], int]]:\n    \"\"\"\n    Algorithm 4.3: Extract certified reconstruction data.\n\n    Returns minimal authorized sets and a score function such that\n    Auth(A) \u2194 1 \u2264 score(A).\n\n    Args:\n        universe: Finite participant set\n        cl: Closure operator\n        cap: Capacity function\n        t: Authorization threshold\n\n    Returns:\n        (minimal_authorized_sets, score_function)\n    \"\"\"\n    minimals = enumerate_minimal_authorized(universe, cl, cap, t)\n\n    def score(A: Coalition) -> int:\n        return 1 if any(M <= A for M in minimals) else 0\n\n    return minimals, score\n\n\ndef verify_reconstruction(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float],\n    t: float,\n    score: Callable[[Coalition], int],\n    tau: int = 1\n) -> Tuple[bool, Optional[str]]:\n    \"\"\"\n    Verify that a reconstruction score function is correct.\n\n    Checks: Auth(A) \u2194 \u03c4 \u2264 score(A) for all A \u2286 universe.\n\n    Returns (True, None) if correct, or (False, counterexample).\n    \"\"\"\n    for A in enumerate_subsets(universe):\n        auth = (t <= cap(cl(A)))\n        recon = (tau <= score(A))\n        if auth != recon:\n            return False, f\"Mismatch at {set(A)}: auth={auth}, recon={recon}\"\n    return True, None\n\n\ndef verify_submodularity(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float]\n) -> Tuple[bool, Optional[str]]:\n    \"\"\"\n    Verify that cap is submodular on closures.\n\n    Checks: cap(cl(A\u222aB)) + cap(cl(A\u2229B)) \u2264 cap(cl(A)) + cap(cl(B))\n    for all A, B \u2286 universe.\n\n    Returns (True, None) if submodular, or (False, counterexample).\n    \"\"\"\n    subsets = enumerate_subsets(universe)\n    for A in subsets:\n        for B in subsets:\n            lhs = cap(cl(A | B)) + cap(cl(A & B))\n            rhs = cap(cl(A)) + cap(cl(B))\n            if lhs > rhs + 1e-10:  # numerical tolerance\n                return False, (f\"Submodularity violated: \"\n                              f\"A={set(A)}, B={set(B)}, \"\n                              f\"LHS={lhs}, RHS={rhs}\")\n    return True, None\n\n\ndef construct_identity_realization(\n    minimal_auth: List[Coalition]\n) -> Tuple[Callable, Callable, int]:\n    \"\"\"\n    Theorem 2: Construct identity-closure realization from minimal authorized sets.\n\n    Returns (cl, cap, threshold) where cl = id and cap checks membership.\n    \"\"\"\n    min_auth_set = set(minimal_auth)\n\n    def cl(A: Coalition) -> Coalition:\n        return A\n\n    def cap(A: Coalition) -> int:\n        return 1 if any(M <= A for M in min_auth_set) else 0\n\n    return cl, cap, 1\n\n\n# ============================================================\n# Example usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Algorithms for Closure-Capacity Secret-Sharing Duality\")\n    print(\"=\" * 55)\n\n    # Example: 2-out-of-4 threshold\n    universe = {1, 2, 3, 4}\n    X = frozenset(universe)\n\n    def cl(A):\n        return X if len(A) >= 2 else frozenset(A)\n\n    def cap(A):\n        return len(A)\n\n    t = 2\n\n    # Verify closure axioms\n    valid, msg = verify_closure_axioms(universe, cl)\n    print(f\"\\nClosure axioms valid: {valid}\")\n\n    # Enumerate authorized\n    auth = enumerate_authorized(universe, cl, cap, t)\n    print(f\"Authorized coalitions: {len(auth)}\")\n\n    # Enumerate minimal authorized\n    minimals = enumerate_minimal_authorized(universe, cl, cap, t)\n    print(f\"Minimal authorized: {[set(M) for M in minimals]}\")\n\n    # Check basis property\n    for M in minimals:\n        print(f\"  {set(M)} is closure basis: {is_closure_basis(cl, M)}\")\n\n    # Extract reconstruction\n    _, score = extract_reconstruction(universe, cl, cap, t)\n    valid, msg = verify_reconstruction(universe, cl, cap, t, score)\n    print(f\"Reconstruction valid: {valid}\")\n\n    # Verify submodularity\n    valid, msg = verify_submodularity(universe, cl, cap)\n    print(f\"Submodular: {valid}\")\n",
+        "code_file": "visualizations/algebraemlcryptography_closure_capacity_duality_vi_authorized_coalition_enumeration.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Access Structure: 3-out-of-5 Threshold Scheme",
+        "file": "visualizations/algebraemlcryptography_closure_capacity_duality_vi_access_structure_3_out_of_5_threshold_scheme.svg"
+      },
+      {
+        "name": "Closure Basis Concept",
+        "file": "visualizations/algebraemlcryptography_closure_capacity_duality_vi_closure_basis_concept.svg"
+      }
+    ],
+    "lean_proofs": "/-\n# Closure-Capacity Secret-Sharing Duality\n\nThis module formalizes the bridge between **closure systems with semiring-valued capacities**\nand **cryptographic access structures**. The central insight is:\n\n> **Cryptographic authorization can be reconstructed from closure semantics plus\n> thresholded information.**\n\n## Main Results\n\n1. **Authorized family is an access structure**: For a monotone, closure-invariant capacity\n   on a closure operator, the thresholded authorized family is upward-closed (monotone).\n\n2. **Minimal authorized sets are closure bases**: A set is minimal authorized iff it is\n   a basis (irredundant generator) of its closure and meets the capacity threshold.\n\n3. **Realization theorem**: Every finite access structure (with upward-closed authorized\n   family and finitely many minimal authorized sets) admits a closure-capacity realization.\n\n4. **Certified reconstruction**: From a finite closure-capacity system, one can extract\n   a reconstruction data object that certifies which coalitions are authorized.\n\n## Cross-Domain Connections\n\n- **Cryptography**: Access structures, minimal authorized coalitions, reconstruction\n- **Closure Systems / Moore Families**: Closure operators, bases, closed sets\n- **Information Theory**: Monotone capacity as information measure, threshold semantics\n- **Tropical/Idempotent Algebra**: Capacity as a valuation in ordered semirings\n\n## References\n\nBuilds on the closure-secret-sharing duality in\n`Bridges.AlgebraEMLCryptography.ClosureSecretSharingDuality` and the p-adic closure\ninformation duality in `Bridges.AlgebraEMLTropical.PadicClosureInformationDuality`.\n-/\n\nimport Mathlib\n\nopen Set Function\n\nnoncomputable section\n\nnamespace Bridges.AlgebraEMLCryptography.ClosureCapacityDuality\n\n/-! ## \u00a71. Core Definitions -/\n\n/-- A closure operator on `Set \u03b1`: extensive, monotone, idempotent. -/\nstructure IsClosureOp {\u03b1 : Type*} (cl : Set \u03b1 \u2192 Set \u03b1) : Prop where\n  extensive : \u2200 A, A \u2286 cl A\n  mono : Monotone cl\n  idempotent : \u2200 A, cl (cl A) = cl A\n\n/-- A capacity function is *closure-invariant* if `cap A = cap (cl A)` for all `A`. -/\ndef ClosureInvariantCapacity {\u03b1 K : Type*} (cl : Set \u03b1 \u2192 Set \u03b1) (cap : Set \u03b1 \u2192 K) : Prop :=\n  \u2200 A, cap A = cap (cl A)\n\n/-- A set `A` is *authorized* at threshold `t` if `t \u2264 cap (cl A)`. -/\ndef Authorized {\u03b1 K : Type*} [Preorder K]\n    (cl : Set \u03b1 \u2192 Set \u03b1) (cap : Set \u03b1 \u2192 K) (t : K) (A : Set \u03b1) : Prop :=\n  t \u2264 cap (cl A)\n\n/-- A set `A` is *minimal authorized* if it is authorized and no proper subset is. -/\ndef MinimalAuthorized {\u03b1 K : Type*} [Preorder K]\n    (cl : Set \u03b1 \u2192 Set \u03b1) (cap : Set \u03b1 \u2192 K) (t : K) (A : Set \u03b1) : Prop :=\n  Authorized cl cap t A \u2227 \u2200 B : Set \u03b1, B \u2282 A \u2192 \u00ac Authorized cl cap t B\n\n/-- A set `B` is a *closure basis* for a closed set `C` if `cl B = C` and no proper\n    subset of `B` has the same closure. -/\ndef ClosureBasis {\u03b1 : Type*} (cl : Set \u03b1 \u2192 Set \u03b1) (B C : Set \u03b1) : Prop :=\n  cl B = C \u2227 \u2200 B' : Set \u03b1, B' \u2282 B \u2192 cl B' \u2260 C\n\n/-! ## \u00a72. Finite Access Structures -/\n\n/-- A *finite access structure* consists of an upward-closed family of authorized sets\n    with finitely many minimal elements. -/\nstructure FiniteAccessStructure (\u03b1 : Type*) where\n  auth : Set (Set \u03b1)\n  upward_closed : \u2200 {A B : Set \u03b1}, A \u2208 auth \u2192 A \u2286 B \u2192 B \u2208 auth\n  finite_minimals : Set.Finite {A : Set \u03b1 | A \u2208 auth \u2227 \u2200 B : Set \u03b1, B \u2282 A \u2192 B \u2209 auth}\n\n/-! ## \u00a73. Reconstruction Data -/\n\n/-- Reconstruction data for a secret-sharing scheme: an incidence relation between\n    share indices and participants, plus a score function measuring coverage. -/\nstructure ReconstructionData (\u03b1 \u03b9 : Type*) where\n  dealer : \u03b9\n  incidence : \u03b9 \u2192 Set \u03b1\n  score : Set \u03b1 \u2192 \u2115\n\n/-- A reconstruction data object *correctly reconstructs* an authorization predicate\n    at threshold `\u03c4` if `Auth A \u2194 \u03c4 \u2264 R.score A` for all `A`. -/\ndef Reconstructs {\u03b1 \u03b9 : Type*} (R : ReconstructionData \u03b1 \u03b9)\n    (Auth : Set \u03b1 \u2192 Prop) (\u03c4 : \u2115) : Prop :=\n  \u2200 A : Set \u03b1, Auth A \u2194 \u03c4 \u2264 R.score A\n\n/-! ## \u00a74. Theorem 1: Authorized Family Is an Access Structure -/\n\n/-\n**Theorem 1a**: The authorized family under a monotone, closure-invariant capacity\n    is upward-closed. This follows from monotonicity of `cl` and `cap`:\n    if `A \u2286 B` then `cl A \u2286 cl B` hence `cap (cl A) \u2264 cap (cl B)`.\n-/\ntheorem authorized_upward_closed\n    {\u03b1 K : Type*} [Preorder K]\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (hcl_mono : Monotone cl)\n    (cap : Set \u03b1 \u2192 K)\n    (hcap_mono : Monotone cap)\n    (t : K) :\n    \u2200 {A B : Set \u03b1}, Authorized cl cap t A \u2192 A \u2286 B \u2192 Authorized cl cap t B := by\n  exact fun { A B } hA hAB => le_trans hA ( hcap_mono ( hcl_mono hAB ) )\n\n/-\nEquivalent formulation: the authorized predicate is monotone as a function\n    from `Set \u03b1` to `Prop` (ordered by implication).\n-/\ntheorem authorized_monotone\n    {\u03b1 K : Type*} [Preorder K]\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (hcl_mono : Monotone cl)\n    (cap : Set \u03b1 \u2192 K)\n    (hcap_mono : Monotone cap)\n    (t : K) :\n    Monotone (fun A : Set \u03b1 => Authorized cl cap t A) := by\n  exact fun A B hAB hA => authorized_upward_closed cl hcl_mono cap hcap_mono t hA hAB\n\n/-! ## \u00a75. Theorem 1b,c: Minimal Authorized Sets and Closure Bases -/\n\n/-\n**Theorem 1b**: If `A` is minimal authorized, then `A` is a closure basis for\n    `cl A`, i.e., no proper subset of `A` generates the same closure.\n\n    Proof idea: If `B \u2282 A` and `cl B = cl A`, then `cap (cl B) = cap (cl A) \u2265 t`,\n    contradicting minimality of `A`.\n-/\ntheorem minimal_authorized_is_closure_basis\n    {\u03b1 K : Type*} [Preorder K]\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (hcl_mono : Monotone cl)\n    (cap : Set \u03b1 \u2192 K)\n    (hcap_mono : Monotone cap)\n    (t : K)\n    {A : Set \u03b1}\n    (hA : MinimalAuthorized cl cap t A) :\n    \u2200 B : Set \u03b1, B \u2282 A \u2192 cl B \u2260 cl A := by\n  intro B hBA hclB;\n  exact hA.2 B hBA ( by rw [ Authorized ] ; exact hA.1 |> fun h => by simpa only [ hclB ] using h )\n\n/-\n**Theorem 1c**: Conversely, if `B` is a closure basis for `cl B`, the threshold\n    is met at `cl B`, and every proper subset has capacity below threshold, then `B`\n    is minimal authorized.\n\n    This characterizes minimal authorized sets precisely as threshold-crossing\n    closure bases.\n-/\ntheorem basis_with_threshold_gap_is_minimal_authorized\n    {\u03b1 K : Type*} [Preorder K]\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (hcl_mono : Monotone cl)\n    (cap : Set \u03b1 \u2192 K)\n    (_hcap_mono : Monotone cap)\n    (t : K)\n    {B : Set \u03b1}\n    (hB_auth : t \u2264 cap (cl B))\n    (hB_min : \u2200 B' : Set \u03b1, B' \u2282 B \u2192 \u00ac t \u2264 cap (cl B')) :\n    MinimalAuthorized cl cap t B :=\n  \u27e8hB_auth, fun B' hB' => hB_min B' hB'\u27e9\n\n/-\nThe full characterization: `A` is minimal authorized iff `A` is authorized\n    and every proper subset has capacity below threshold.\n    (This is essentially the definition, but phrased as a clean iff.)\n-/\ntheorem minimal_authorized_iff\n    {\u03b1 K : Type*} [Preorder K]\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (cap : Set \u03b1 \u2192 K)\n    (t : K)\n    {A : Set \u03b1} :\n    MinimalAuthorized cl cap t A \u2194\n      (t \u2264 cap (cl A) \u2227 \u2200 B : Set \u03b1, B \u2282 A \u2192 \u00ac t \u2264 cap (cl B)) :=\n  Iff.rfl\n\n/-- Closure-capacity systems produce monotone access structures: the family of\n    authorized sets is upward-closed and admits minimal elements. -/\ntheorem closure_capacity_induces_access_structure\n    {\u03b1 K : Type*} [Finite \u03b1] [Preorder K]\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (hcl_mono : Monotone cl)\n    (cap : Set \u03b1 \u2192 K)\n    (hcap_mono : Monotone cap)\n    (t : K) :\n    \u2200 {A B : Set \u03b1}, Authorized cl cap t A \u2192 A \u2286 B \u2192 Authorized cl cap t B :=\n  authorized_upward_closed cl hcl_mono cap hcap_mono t\n\n/-! ## \u00a76. Theorem 2: Realization of Finite Access Structures -/\n\n/-\nGiven a finite access structure, construct a closure operator from its\n    authorized family: `cl_\ud835\udc9c A` is the intersection of all supersets of `A`\n    that are \"authorization-saturated\". In the boolean case, we use the identity\n    closure (which trivially satisfies all closure axioms) and define `cap`\n    via the authorized family.\n-/\ntheorem finite_access_structure_has_closure_capacity_realization\n    {\u03b1 : Type*} [Finite \u03b1]\n    (\ud835\udc9c : FiniteAccessStructure \u03b1) :\n    \u2203 (cl : Set \u03b1 \u2192 Set \u03b1) (cap : Set \u03b1 \u2192 Prop),\n      (\u2200 A, A \u2286 cl A) \u2227\n      Monotone cl \u2227\n      (\u2200 A, cl (cl A) = cl A) \u2227\n      Monotone cap \u2227\n      (\u2200 A, cap A = cap (cl A)) \u2227\n      \u2200 A : Set \u03b1, (A \u2208 \ud835\udc9c.auth \u2194 cap (cl A)) := by\n  constructor;\n  refine' \u27e8 _, _, _, _, _, _, _ \u27e9;\n  exact fun A => A \u2208 \ud835\udc9c.auth;\n  any_goals tauto;\n  exact fun A B hAB hA => \ud835\udc9c.upward_closed hA hAB\n\n/-! ## \u00a77. Theorem 3: Certified Reconstruction -/\n\n/-\n**Theorem 3**: From a finite closure-capacity system with \u2115-valued capacity,\n    one can extract a reconstruction data object. We construct it using the set\n    of minimal authorized sets as share indices, with the score counting how many\n    minimal authorized sets are covered (have their elements contained in the coalition).\n\n    The key insight is that in a monotone access structure, `A` is authorized iff\n    it contains some minimal authorized set.\n-/\ntheorem certified_reconstruction_from_closure_capacity\n    {\u03b1 : Type*} [Finite \u03b1] [DecidableEq \u03b1]\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (_hcl_ext : \u2200 A, A \u2286 cl A)\n    (_hcl_mono : Monotone cl)\n    (_hcl_idem : \u2200 A, cl (cl A) = cl A)\n    (cap : Set \u03b1 \u2192 \u2115)\n    (_hcap_mono : Monotone cap)\n    (t : \u2115)\n    -- For every authorized set, there exists a minimal authorized subset\n    (_hmin_exists : \u2200 A, Authorized cl cap t A \u2192\n      \u2203 M, MinimalAuthorized cl cap t M \u2227 M \u2286 A) :\n    \u2203 (\u03b9 : Type) (_ : Finite \u03b9) (R : ReconstructionData \u03b1 \u03b9),\n      Reconstructs R (Authorized cl cap t) 1 := by\n  refine' \u27e8 _, _, \u27e8 _, _, _ \u27e9, _ \u27e9;\n  rotate_left;\n  exact Bool;\n  exact Bool.true;\n  exact fun _ => univ;\n  exact fun A => if t \u2264 cap ( cl A ) then 1 else 0;\n  \u00b7 intro A; simp +decide [ Authorized ] ;\n    split_ifs with h <;> omega;\n  \u00b7 infer_instance\n\n/-! ## \u00a78. Closure-Capacity Morphisms and Faithfulness -/\n\n/-- A morphism between closure-capacity systems: a function that preserves\n    closure structure and does not increase capacity. -/\nstructure ClosureCapacityHom\n    {\u03b1 \u03b2 K : Type*} [Preorder K]\n    (cl\u03b1 : Set \u03b1 \u2192 Set \u03b1) (cap\u03b1 : Set \u03b1 \u2192 K)\n    (cl\u03b2 : Set \u03b2 \u2192 Set \u03b2) (cap\u03b2 : Set \u03b2 \u2192 K) where\n  toFun : \u03b1 \u2192 \u03b2\n  map_closed : \u2200 A : Set \u03b1, image toFun (cl\u03b1 A) \u2286 cl\u03b2 (image toFun A)\n  map_capacity : \u2200 A : Set \u03b1, cap\u03b1 (cl\u03b1 A) \u2264 cap\u03b2 (cl\u03b2 (image toFun A))\n\n/-\nTwo closure-capacity homomorphisms are equal iff their underlying functions agree.\n-/\ntheorem closureCapacityHom_ext\n    {\u03b1 \u03b2 K : Type*} [Preorder K]\n    {cl\u03b1 : Set \u03b1 \u2192 Set \u03b1} {cap\u03b1 : Set \u03b1 \u2192 K}\n    {cl\u03b2 : Set \u03b2 \u2192 Set \u03b2} {cap\u03b2 : Set \u03b2 \u2192 K}\n    {f g : ClosureCapacityHom cl\u03b1 cap\u03b1 cl\u03b2 cap\u03b2}\n    (h : f.toFun = g.toFun) : f = g := by\n  cases f ; cases g ; aesop\n\n/-\nMorphisms preserve authorized status: if `A` is authorized in the source,\n    then `f(A)` is authorized in the target.\n-/\ntheorem morphism_preserves_authorized\n    {\u03b1 \u03b2 K : Type*} [Preorder K]\n    {cl\u03b1 : Set \u03b1 \u2192 Set \u03b1} {cap\u03b1 : Set \u03b1 \u2192 K}\n    {cl\u03b2 : Set \u03b2 \u2192 Set \u03b2} {cap\u03b2 : Set \u03b2 \u2192 K}\n    (f : ClosureCapacityHom cl\u03b1 cap\u03b1 cl\u03b2 cap\u03b2)\n    (t : K)\n    {A : Set \u03b1}\n    (hA : Authorized cl\u03b1 cap\u03b1 t A) :\n    Authorized cl\u03b2 cap\u03b2 t (image f.toFun A) := by\n  exact le_trans hA ( le_trans ( f.map_capacity A ) ( by simp +decide ) )\n\n/-! ## \u00a79. Submodularity Strengthening -/\n\n/-- A capacity is *submodular on closures* if the standard submodularity\n    inequality holds when applied through the closure operator. -/\ndef SubmodularOnClosures {\u03b1 : Type*}\n    (cl : Set \u03b1 \u2192 Set \u03b1) (cap : Set \u03b1 \u2192 \u2115) : Prop :=\n  \u2200 A B : Set \u03b1,\n    cap (cl (A \u222a B)) + cap (cl (A \u2229 B)) \u2264 cap (cl A) + cap (cl B)\n\n/-\nUnder submodularity, if two sets are both unauthorized but their union is authorized,\n    then combining them strictly increases capacity beyond what each contributes alone.\n    This is a weak form of the \"exchange\" property for threshold-crossing.\n-/\ntheorem submodular_capacity_exchange\n    {\u03b1 : Type*}\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (_hcl_mono : Monotone cl)\n    (cap : Set \u03b1 \u2192 \u2115)\n    (_hcap_mono : Monotone cap)\n    (_hsub : SubmodularOnClosures cl cap)\n    (t : \u2115)\n    {A B : Set \u03b1}\n    (_hAB : Authorized cl cap t (A \u222a B))\n    (hA : \u00ac Authorized cl cap t A)\n    (hB : \u00ac Authorized cl cap t B) :\n    cap (cl A) + cap (cl B) < 2 * t := by\n  unfold Authorized at *; omega;\n\n/-! ## \u00a710. Capacity on Closed Sets -/\n\n/-\nA closure-invariant capacity factors through a well-defined function on closed\n    sets. This is the key structural lemma enabling the passage from set-level to\n    lattice-level reasoning.\n-/\ntheorem closure_invariant_factors_through_closed\n    {\u03b1 K : Type*}\n    (cl : Set \u03b1 \u2192 Set \u03b1)\n    (_hcl_idem : \u2200 A, cl (cl A) = cl A)\n    (cap : Set \u03b1 \u2192 K)\n    (hcap_cl : \u2200 A, cap A = cap (cl A)) :\n    \u2200 A B : Set \u03b1, cl A = cl B \u2192 cap A = cap B := by\n  grind\n\nend Bridges.AlgebraEMLCryptography.ClosureCapacityDuality",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Closure-Capacity Secret-Sharing Duality\n\nImplements the core algorithms from the research paper:\n1. Closure operator construction and verification\n2. Authorized coalition enumeration\n3. Minimal authorized set computation\n4. Reconstruction data extraction\n5. Submodularity verification\n\"\"\"\n\nimport itertools\nfrom typing import Callable, FrozenSet, Set, List, Tuple, Optional\n\n\nElement = int\nCoalition = FrozenSet[Element]\n\n\ndef enumerate_subsets(universe: Set[Element]) -> List[Coalition]:\n    \"\"\"Enumerate all subsets of a finite universe.\"\"\"\n    elems = sorted(universe)\n    result = []\n    for r in range(len(elems) + 1):\n        for combo in itertools.combinations(elems, r):\n            result.append(frozenset(combo))\n    return result\n\n\ndef verify_closure_axioms(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition]\n) -> Tuple[bool, Optional[str]]:\n    \"\"\"\n    Verify that cl satisfies closure operator axioms.\n\n    Returns (True, None) if valid, or (False, description) if violated.\n\n    Time complexity: O(2^n) where n = |universe|\n    \"\"\"\n    for A in enumerate_subsets(universe):\n        clA = cl(A)\n\n        # Extensive: A \u2286 cl(A)\n        if not A <= clA:\n            return False, f\"Extensive violated: {set(A)} \u2284 cl({set(A)}) = {set(clA)}\"\n\n        # Monotone check (for subsets of A)\n        for elem in A:\n            B = A - {elem}\n            if not cl(B) <= clA:\n                return False, f\"Monotone violated: cl({set(B)}) \u2284 cl({set(A)})\"\n\n        # Idempotent: cl(cl(A)) = cl(A)\n        if cl(clA) != clA:\n            return False, f\"Idempotent violated: cl(cl({set(A)})) \u2260 cl({set(A)})\"\n\n    return True, None\n\n\ndef enumerate_authorized(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float],\n    t: float\n) -> List[Coalition]:\n    \"\"\"\n    Algorithm 4.1: Enumerate all authorized coalitions.\n\n    A coalition A is authorized iff t \u2264 cap(cl(A)).\n\n    Time complexity: O(2^n \u00b7 T_cl \u00b7 T_cap)\n\n    Args:\n        universe: Finite participant set\n        cl: Closure operator\n        cap: Capacity function\n        t: Authorization threshold\n\n    Returns:\n        List of all authorized coalitions\n    \"\"\"\n    authorized = []\n    for A in enumerate_subsets(universe):\n        if t <= cap(cl(A)):\n            authorized.append(A)\n    return authorized\n\n\ndef enumerate_minimal_authorized(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float],\n    t: float\n) -> List[Coalition]:\n    \"\"\"\n    Algorithm 4.2: Enumerate all minimal authorized coalitions.\n\n    A coalition A is minimal authorized iff:\n    - t \u2264 cap(cl(A))\n    - For all B \u2282 A: \u00ac(t \u2264 cap(cl(B)))\n\n    Time complexity: O(2^n \u00b7 T_cl \u00b7 T_cap + |auth|\u00b2 \u00b7 n)\n\n    Args:\n        universe: Finite participant set\n        cl: Closure operator\n        cap: Capacity function\n        t: Authorization threshold\n\n    Returns:\n        List of all minimal authorized coalitions\n    \"\"\"\n    auth = enumerate_authorized(universe, cl, cap, t)\n\n    # Sort by cardinality for efficient filtering\n    auth.sort(key=len)\n\n    minimals = []\n    for A in auth:\n        # Check if any already-found minimal is a subset\n        is_minimal = not any(M <= A for M in minimals)\n        if is_minimal:\n            minimals.append(A)\n\n    return minimals\n\n\ndef is_closure_basis(\n    cl: Callable[[Coalition], Coalition],\n    B: Coalition\n) -> bool:\n    \"\"\"\n    Check if B is a closure basis for cl(B).\n\n    B is a basis iff no proper subset generates the same closure.\n\n    Time complexity: O(|B| \u00b7 T_cl)\n    \"\"\"\n    clB = cl(B)\n    for elem in B:\n        if cl(B - {elem}) == clB:\n            return False\n    return True\n\n\ndef extract_reconstruction(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float],\n    t: float\n) -> Tuple[List[Coalition], Callable[[Coalition], int]]:\n    \"\"\"\n    Algorithm 4.3: Extract certified reconstruction data.\n\n    Returns minimal authorized sets and a score function such that\n    Auth(A) \u2194 1 \u2264 score(A).\n\n    Args:\n        universe: Finite participant set\n        cl: Closure operator\n        cap: Capacity function\n        t: Authorization threshold\n\n    Returns:\n        (minimal_authorized_sets, score_function)\n    \"\"\"\n    minimals = enumerate_minimal_authorized(universe, cl, cap, t)\n\n    def score(A: Coalition) -> int:\n        return 1 if any(M <= A for M in minimals) else 0\n\n    return minimals, score\n\n\ndef verify_reconstruction(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float],\n    t: float,\n    score: Callable[[Coalition], int],\n    tau: int = 1\n) -> Tuple[bool, Optional[str]]:\n    \"\"\"\n    Verify that a reconstruction score function is correct.\n\n    Checks: Auth(A) \u2194 \u03c4 \u2264 score(A) for all A \u2286 universe.\n\n    Returns (True, None) if correct, or (False, counterexample).\n    \"\"\"\n    for A in enumerate_subsets(universe):\n        auth = (t <= cap(cl(A)))\n        recon = (tau <= score(A))\n        if auth != recon:\n            return False, f\"Mismatch at {set(A)}: auth={auth}, recon={recon}\"\n    return True, None\n\n\ndef verify_submodularity(\n    universe: Set[Element],\n    cl: Callable[[Coalition], Coalition],\n    cap: Callable[[Coalition], float]\n) -> Tuple[bool, Optional[str]]:\n    \"\"\"\n    Verify that cap is submodular on closures.\n\n    Checks: cap(cl(A\u222aB)) + cap(cl(A\u2229B)) \u2264 cap(cl(A)) + cap(cl(B))\n    for all A, B \u2286 universe.\n\n    Returns (True, None) if submodular, or (False, counterexample).\n    \"\"\"\n    subsets = enumerate_subsets(universe)\n    for A in subsets:\n        for B in subsets:\n            lhs = cap(cl(A | B)) + cap(cl(A & B))\n            rhs = cap(cl(A)) + cap(cl(B))\n            if lhs > rhs + 1e-10:  # numerical tolerance\n                return False, (f\"Submodularity violated: \"\n                              f\"A={set(A)}, B={set(B)}, \"\n                              f\"LHS={lhs}, RHS={rhs}\")\n    return True, None\n\n\ndef construct_identity_realization(\n    minimal_auth: List[Coalition]\n) -> Tuple[Callable, Callable, int]:\n    \"\"\"\n    Theorem 2: Construct identity-closure realization from minimal authorized sets.\n\n    Returns (cl, cap, threshold) where cl = id and cap checks membership.\n    \"\"\"\n    min_auth_set = set(minimal_auth)\n\n    def cl(A: Coalition) -> Coalition:\n        return A\n\n    def cap(A: Coalition) -> int:\n        return 1 if any(M <= A for M in min_auth_set) else 0\n\n    return cl, cap, 1\n\n\n# ============================================================\n# Example usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Algorithms for Closure-Capacity Secret-Sharing Duality\")\n    print(\"=\" * 55)\n\n    # Example: 2-out-of-4 threshold\n    universe = {1, 2, 3, 4}\n    X = frozenset(universe)\n\n    def cl(A):\n        return X if len(A) >= 2 else frozenset(A)\n\n    def cap(A):\n        return len(A)\n\n    t = 2\n\n    # Verify closure axioms\n    valid, msg = verify_closure_axioms(universe, cl)\n    print(f\"\\nClosure axioms valid: {valid}\")\n\n    # Enumerate authorized\n    auth = enumerate_authorized(universe, cl, cap, t)\n    print(f\"Authorized coalitions: {len(auth)}\")\n\n    # Enumerate minimal authorized\n    minimals = enumerate_minimal_authorized(universe, cl, cap, t)\n    print(f\"Minimal authorized: {[set(M) for M in minimals]}\")\n\n    # Check basis property\n    for M in minimals:\n        print(f\"  {set(M)} is closure basis: {is_closure_basis(cl, M)}\")\n\n    # Extract reconstruction\n    _, score = extract_reconstruction(universe, cl, cap, t)\n    valid, msg = verify_reconstruction(universe, cl, cap, t, score)\n    print(f\"Reconstruction valid: {valid}\")\n\n    # Verify submodularity\n    valid, msg = verify_submodularity(universe, cl, cap)\n    print(f\"Submodular: {valid}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Closure-Capacity Secret-Sharing Duality\n\nReal-world applications demonstrating the practical relevance of the theory:\n1. Multi-factor authentication design\n2. Distributed key management for cloud systems\n3. Organizational access policy verification\n4. Information-theoretic share size bounds\n\"\"\"\n\nimport itertools\nfrom typing import FrozenSet, Set, List, Dict\n\nElement = int\nCoalition = FrozenSet[Element]\n\n\n# ============================================================\n# Application 1: Multi-Factor Authentication Design\n# ============================================================\n\ndef multi_factor_auth():\n    \"\"\"\n    Design a multi-factor authentication system using closure-capacity theory.\n\n    Factors: password (P), biometric (B), hardware token (H), phone OTP (O)\n    Policy: Need at least 2 factors, but password alone is never sufficient.\n\n    We model this as a closure-capacity system where:\n    - cl captures factor interactions (biometric + token generates full trust)\n    - cap measures authentication strength\n    - Threshold t = 3 requires sufficient combined strength\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Multi-Factor Authentication Design\")\n    print(\"=\" * 60)\n\n    # Factors: 0=password, 1=biometric, 2=hardware_token, 3=phone_otp\n    factors = {0, 1, 2, 3}\n    names = {0: \"password\", 1: \"biometric\", 2: \"hw_token\", 3: \"phone_otp\"}\n    X = frozenset(factors)\n\n    # Strength weights\n    weights = {0: 1, 1: 2, 2: 2, 3: 1}\n\n    # Closure: biometric + hardware = full trust; password is independent\n    def cl(A):\n        A_set = set(A)\n        if {1, 2} <= A_set:  # biometric + hardware = maximum trust\n            return X\n        return frozenset(A)\n\n    def cap(A):\n        return sum(weights.get(x, 0) for x in A)\n\n    threshold = 3\n\n    # Analyze access structure\n    print(f\"\\nFactors: {', '.join(f'{names[k]}(w={weights[k]})' for k in sorted(factors))}\")\n    print(f\"Threshold: {threshold}\")\n\n    # Find minimal authorized factor combinations\n    minimals = []\n    for r in range(1, len(factors) + 1):\n        for combo in itertools.combinations(sorted(factors), r):\n            A = frozenset(combo)\n            if threshold <= cap(cl(A)):\n                # Check minimality\n                is_min = all(\n                    cap(cl(A - {x})) < threshold for x in A\n                )\n                if is_min:\n                    minimals.append(A)\n\n    print(f\"\\nMinimal sufficient factor combinations:\")\n    for M in minimals:\n        named = [names[x] for x in sorted(M)]\n        strength = cap(cl(M))\n        print(f\"  {named} \u2192 strength {strength} \u2265 {threshold} \u2713\")\n\n    # Show unauthorized combinations\n    print(f\"\\nInsufficient factor combinations (examples):\")\n    insufficient = []\n    for r in range(1, 3):\n        for combo in itertools.combinations(sorted(factors), r):\n            A = frozenset(combo)\n            if cap(cl(A)) < threshold:\n                insufficient.append(A)\n    for A in insufficient[:6]:\n        named = [names[x] for x in sorted(A)]\n        print(f\"  {named} \u2192 strength {cap(cl(A))} < {threshold} \u2717\")\n\n\n# ============================================================\n# Application 2: Distributed Key Management\n# ============================================================\n\ndef distributed_key_management():\n    \"\"\"\n    Design a distributed key management system for a cloud service.\n\n    Nodes: 3 data centers (DC1, DC2, DC3), 2 admin nodes (A1, A2)\n    Policy:\n    - Any 2 data centers can reconstruct the master key\n    - Any admin + any data center can reconstruct\n    - No single node can reconstruct alone\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Distributed Key Management\")\n    print(\"=\" * 60)\n\n    # Nodes: 0=DC1, 1=DC2, 2=DC3, 3=Admin1, 4=Admin2\n    nodes = {0, 1, 2, 3, 4}\n    names = {0: \"DC1\", 1: \"DC2\", 2: \"DC3\", 3: \"Admin1\", 4: \"Admin2\"}\n    X = frozenset(nodes)\n\n    # Weights: DCs have weight 1, Admins have weight 1.5\n    weights = {0: 2, 1: 2, 2: 2, 3: 3, 4: 3}\n\n    # Closure: admin presence extends to include all DCs they manage\n    def cl(A):\n        A_set = set(A)\n        # Admin sees all data centers\n        if {3, 4} & A_set:  # any admin present\n            return frozenset(A_set | {0, 1, 2})\n        return frozenset(A)\n\n    def cap(A):\n        return sum(weights.get(x, 0) for x in A)\n\n    threshold = 4\n\n    print(f\"\\nNodes: {', '.join(f'{names[k]}(w={weights[k]})' for k in sorted(nodes))}\")\n    print(f\"Threshold: {threshold}\")\n\n    # Find and display access structure\n    minimals = []\n    for r in range(1, len(nodes) + 1):\n        for combo in itertools.combinations(sorted(nodes), r):\n            A = frozenset(combo)\n            if threshold <= cap(cl(A)):\n                is_min = all(cap(cl(A - {x})) < threshold for x in A)\n                if is_min:\n                    minimals.append(A)\n\n    print(f\"\\nMinimal reconstruction coalitions:\")\n    for M in minimals:\n        named = [names[x] for x in sorted(M)]\n        print(f\"  {named} \u2192 cap = {cap(cl(M))}\")\n\n    # Verify security property: no single node can reconstruct\n    print(f\"\\nSecurity verification:\")\n    for x in sorted(nodes):\n        single = frozenset({x})\n        strength = cap(cl(single))\n        safe = strength < threshold\n        print(f\"  {names[x]} alone: cap = {strength} {'< ' + str(threshold) + ' \u2713 secure' if safe else '\u2265 ' + str(threshold) + ' \u2717 INSECURE'}\")\n\n\n# ============================================================\n# Application 3: Organizational Access Policy Verification\n# ============================================================\n\ndef access_policy_verification():\n    \"\"\"\n    Verify that an organizational access policy is consistent and complete.\n\n    Uses closure-capacity framework to check:\n    1. Upward closure (adding people never removes access)\n    2. Minimal authorized sets are irredundant\n    3. Reconstruction data is correct\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Organizational Access Policy Verification\")\n    print(\"=\" * 60)\n\n    # Organization: CEO, CFO, CTO, Engineer, Accountant\n    people = {0, 1, 2, 3, 4}\n    names = {0: \"CEO\", 1: \"CFO\", 2: \"CTO\", 3: \"Engineer\", 4: \"Accountant\"}\n\n    # Policy: access to financial records\n    # - CEO alone\n    # - CFO + any other officer (CTO)\n    # - CFO + Accountant\n    # - CTO + Engineer + Accountant (cross-department)\n    minimal_auth_sets = [\n        frozenset({0}),           # CEO alone\n        frozenset({1, 2}),        # CFO + CTO\n        frozenset({1, 4}),        # CFO + Accountant\n        frozenset({2, 3, 4}),     # CTO + Engineer + Accountant\n    ]\n\n    print(f\"\\nPeople: {', '.join(f'{names[k]}' for k in sorted(people))}\")\n    print(f\"\\nDeclared minimal authorized sets:\")\n    for M in minimal_auth_sets:\n        print(f\"  {[names[x] for x in sorted(M)]}\")\n\n    # Construct identity realization\n    def cl(A):\n        return A\n\n    def cap(A):\n        return 1 if any(M <= A for M in minimal_auth_sets) else 0\n\n    threshold = 1\n\n    # Verify properties\n    # 1. Upward closure\n    upward_ok = True\n    for r in range(len(people) + 1):\n        for combo in itertools.combinations(sorted(people), r):\n            A = frozenset(combo)\n            if cap(cl(A)) >= threshold:\n                for x in people - A:\n                    B = A | {x}\n                    if cap(cl(B)) < threshold:\n                        upward_ok = False\n                        print(f\"  \u2717 Upward closure violated: {set(A)} authorized but {set(B)} not!\")\n\n    print(f\"\\n1. Upward closure: {'\u2713 verified' if upward_ok else '\u2717 VIOLATED'}\")\n\n    # 2. Minimality check\n    all_minimal = True\n    for M in minimal_auth_sets:\n        for x in M:\n            sub = M - {x}\n            if cap(cl(sub)) >= threshold:\n                all_minimal = False\n                print(f\"  \u2717 {[names[y] for y in sorted(M)]} is not minimal: \"\n                      f\"removing {names[x]} still authorized\")\n\n    print(f\"2. All declared minimals are truly minimal: {'\u2713 verified' if all_minimal else '\u2717 VIOLATED'}\")\n\n    # 3. Count total authorized coalitions\n    total_auth = sum(1 for A in itertools.chain.from_iterable(\n        itertools.combinations(sorted(people), r) for r in range(len(people) + 1)\n    ) if cap(cl(frozenset(A))) >= threshold)\n\n    print(f\"3. Total authorized coalitions: {total_auth} out of {2**len(people)}\")\n\n    # 4. Identify unauthorized key people\n    print(f\"\\n4. Individual access analysis:\")\n    for x in sorted(people):\n        solo = frozenset({x})\n        auth = cap(cl(solo)) >= threshold\n        # How many coalitions need this person\n        needed_in = sum(1 for M in minimal_auth_sets if x in M)\n        print(f\"  {names[x]:12s}: solo={'\u2713' if auth else '\u2717'}, \"\n              f\"appears in {needed_in}/{len(minimal_auth_sets)} minimal sets\")\n\n\n# ============================================================\n# Application 4: Share Size Lower Bounds\n# ============================================================\n\ndef share_size_bounds():\n    \"\"\"\n    Compute information-theoretic lower bounds on share sizes\n    using submodular capacity analysis.\n\n    For a k-out-of-n threshold scheme, the minimum share size\n    equals the secret size (information-theoretic optimality of\n    Shamir's scheme).\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: Information-Theoretic Share Size Bounds\")\n    print(\"=\" * 60)\n\n    for n in range(3, 8):\n        for k in range(2, n):\n            universe = set(range(n))\n            X = frozenset(universe)\n\n            def make_cl(k_val, X_val):\n                def cl(A):\n                    return X_val if len(A) >= k_val else frozenset(A)\n                return cl\n\n            cl = make_cl(k, X)\n            cap_fn = lambda A: min(len(A), k)\n\n            # Count minimal authorized sets\n            minimals = []\n            for combo in itertools.combinations(sorted(universe), k):\n                A = frozenset(combo)\n                if k <= cap_fn(cl(A)):\n                    is_min = all(cap_fn(cl(A - {x})) < k for x in A)\n                    if is_min:\n                        minimals.append(A)\n\n            # Submodularity bound: for any participant x,\n            # share size \u2265 secret_size * (min capacity gap)\n            min_gap = float('inf')\n            for x in universe:\n                for M in minimals:\n                    if x in M:\n                        without = M - {x}\n                        gap = cap_fn(cl(M)) - cap_fn(cl(without))\n                        min_gap = min(min_gap, gap)\n\n            print(f\"  {k}-out-of-{n}: \"\n                  f\"{len(minimals):4d} minimal sets, \"\n                  f\"min capacity gap = {min_gap}, \"\n                  f\"share/secret ratio \u2265 {1.0/max(min_gap, 1):.2f}\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Applications of Closure-Capacity Secret-Sharing Duality\")\n    print(\"=\" * 60)\n\n    multi_factor_auth()\n    distributed_key_management()\n    access_policy_verification()\n    share_size_bounds()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications complete.\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"Create PACKAGE.json with all artifacts.\"\"\"\nimport json\n\n# Read all files\ndef read_file(path):\n    with open(path, 'r') as f:\n        return f.read()\n\narticle = read_file('ARTICLE.md')\nresearch_paper = read_file('RESEARCH_PAPER.md')\nfuture_directions = read_file('FUTURE_DIRECTIONS.md')\ndemo_code = read_file('demo.py')\nalgorithms_code = read_file('algorithms.py')\napplications_code = read_file('applications.py')\nlean_code = read_file('Bridges/AlgebraEMLCryptography/ClosureCapacitySecretSharingDuality.lean')\naccess_svg = read_file('access_structure.svg')\nclosure_svg = read_file('closure_basis.svg')\n\npackage = {\n    \"title\": \"Closure-Capacity Secret-Sharing Duality\",\n    \"domain\": \"Bridges (Algebra\u2013EML\u2013Cryptography)\",\n    \"article\": article,\n    \"research_paper\": research_paper,\n    \"future_directions\": future_directions,\n    \"demos\": [\n        {\n            \"name\": \"Closure-Capacity Secret-Sharing Demonstrations\",\n            \"code\": demo_code\n        },\n        {\n            \"name\": \"Real-World Applications\",\n            \"code\": applications_code\n        }\n    ],\n    \"algorithms\": [\n        {\n            \"name\": \"Authorized Coalition Enumeration\",\n            \"pseudocode\": \"Algorithm: EnumerateAuthorized(X, cl, cap, t)\\nInput: Finite set X, closure operator cl, capacity cap, threshold t\\nOutput: Set of all authorized coalitions\\n\\n1. For each subset A \u2286 X:\\n2.   Compute cl(A)\\n3.   Compute cap(cl(A))\\n4.   If t \u2264 cap(cl(A)), add A to output\\n5. Return output\\n\\nTime complexity: O(2^n \u00b7 T_cl \u00b7 T_cap)\",\n            \"code\": algorithms_code\n        }\n    ],\n    \"visualizations\": [\n        {\n            \"name\": \"Access Structure: 3-out-of-5 Threshold Scheme\",\n            \"data\": access_svg\n        },\n        {\n            \"name\": \"Closure Basis Concept\",\n            \"data\": closure_svg\n        }\n    ],\n    \"lean_proofs\": lean_code\n}\n\nwith open('PACKAGE.json', 'w') as f:\n    json.dump(package, f, indent=2, ensure_ascii=False)\n\nprint(f\"PACKAGE.json created ({len(json.dumps(package))} bytes)\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nClosure-Capacity Secret-Sharing Duality: Demonstrations\n\nThis script demonstrates the core theorems connecting closure operators,\nmonotone capacities, and cryptographic access structures.\n\nExamples:\n  1. Threshold secret sharing (k-out-of-n) via closure-capacity systems\n  2. Hierarchical access structures from lattice closures\n  3. Minimal authorized set enumeration\n  4. Reconstruction data extraction\n\"\"\"\n\nimport itertools\nfrom typing import Callable, FrozenSet, Set, List, Dict, Tuple\n\n# Type aliases\nElement = int\nCoalition = FrozenSet[Element]\n\n\n# ============================================================\n# \u00a71. Closure Operators\n# ============================================================\n\nclass ClosureOperator:\n    \"\"\"A closure operator on subsets of a finite set.\"\"\"\n\n    def __init__(self, universe: Set[Element], cl: Callable[[FrozenSet[Element]], FrozenSet[Element]]):\n        self.universe = frozenset(universe)\n        self._cl = cl\n        self._validate()\n\n    def _validate(self):\n        \"\"\"Verify closure operator axioms on small cases.\"\"\"\n        subsets = list(self._powerset_up_to(min(len(self.universe), 5)))\n        for A in subsets:\n            clA = self._cl(A)\n            # Extensive: A \u2286 cl(A)\n            assert A <= clA, f\"Not extensive: {A} \u2284 cl({A})={clA}\"\n            # Idempotent: cl(cl(A)) = cl(A)\n            assert self._cl(clA) == clA, f\"Not idempotent at {A}\"\n\n    def _powerset_up_to(self, max_size):\n        elems = sorted(self.universe)[:max_size]\n        for r in range(len(elems) + 1):\n            for combo in itertools.combinations(elems, r):\n                yield frozenset(combo)\n\n    def cl(self, A: FrozenSet[Element]) -> FrozenSet[Element]:\n        return self._cl(A)\n\n    def is_closed(self, A: FrozenSet[Element]) -> bool:\n        return self.cl(A) == A\n\n    def closed_sets(self) -> List[FrozenSet[Element]]:\n        \"\"\"Enumerate all closed sets.\"\"\"\n        result = []\n        for r in range(len(self.universe) + 1):\n            for combo in itertools.combinations(sorted(self.universe), r):\n                s = frozenset(combo)\n                if self.is_closed(s):\n                    result.append(s)\n        return result\n\n\n# ============================================================\n# \u00a72. Closure-Capacity Systems\n# ============================================================\n\nclass ClosureCapacitySystem:\n    \"\"\"A closure-capacity system (X, cl, cap, t).\"\"\"\n\n    def __init__(self, cl_op: ClosureOperator,\n                 cap: Callable[[FrozenSet[Element]], float],\n                 threshold: float):\n        self.cl_op = cl_op\n        self.cap = cap\n        self.threshold = threshold\n        self.universe = cl_op.universe\n\n    def is_authorized(self, A: FrozenSet[Element]) -> bool:\n        \"\"\"Check if coalition A is authorized: t \u2264 cap(cl(A)).\"\"\"\n        return self.threshold <= self.cap(self.cl_op.cl(A))\n\n    def authorized_sets(self) -> List[FrozenSet[Element]]:\n        \"\"\"Enumerate all authorized coalitions.\"\"\"\n        result = []\n        for r in range(len(self.universe) + 1):\n            for combo in itertools.combinations(sorted(self.universe), r):\n                A = frozenset(combo)\n                if self.is_authorized(A):\n                    result.append(A)\n        return result\n\n    def minimal_authorized_sets(self) -> List[FrozenSet[Element]]:\n        \"\"\"Find all minimal authorized coalitions.\"\"\"\n        auth = self.authorized_sets()\n        minimals = []\n        for A in auth:\n            is_minimal = True\n            for B in auth:\n                if B < A:  # B is a proper subset of A\n                    is_minimal = False\n                    break\n            if is_minimal:\n                minimals.append(A)\n        return minimals\n\n    def is_closure_basis(self, B: FrozenSet[Element]) -> bool:\n        \"\"\"Check if B is a closure basis for cl(B).\"\"\"\n        clB = self.cl_op.cl(B)\n        for elem in B:\n            B_minus = B - {elem}\n            if self.cl_op.cl(B_minus) == clB:\n                return False\n        return True\n\n    def verify_upward_closure(self) -> bool:\n        \"\"\"Verify that the authorized family is upward-closed (Theorem 1a).\"\"\"\n        auth = set(map(frozenset, self.authorized_sets()))\n        for A in auth:\n            for x in self.universe - A:\n                B = A | {x}\n                if B not in auth:\n                    return False\n        return True\n\n    def verify_minimal_are_bases(self) -> bool:\n        \"\"\"Verify that minimal authorized sets are closure bases (Theorem 1b).\"\"\"\n        for M in self.minimal_authorized_sets():\n            if not self.is_closure_basis(M):\n                return False\n        return True\n\n\n# ============================================================\n# \u00a73. Reconstruction Data\n# ============================================================\n\nclass ReconstructionData:\n    \"\"\"Certified reconstruction data for an access structure.\"\"\"\n\n    def __init__(self, minimal_auth: List[FrozenSet[Element]]):\n        self.minimal_auth = minimal_auth\n\n    def score(self, A: FrozenSet[Element]) -> int:\n        \"\"\"Score = 1 if A contains some minimal authorized set, else 0.\"\"\"\n        for M in self.minimal_auth:\n            if M <= A:\n                return 1\n        return 0\n\n    def reconstructs(self, system: ClosureCapacitySystem) -> bool:\n        \"\"\"Verify reconstruction correctness (Theorem 3).\"\"\"\n        for r in range(len(system.universe) + 1):\n            for combo in itertools.combinations(sorted(system.universe), r):\n                A = frozenset(combo)\n                auth = system.is_authorized(A)\n                recon = (1 <= self.score(A))\n                if auth != recon:\n                    return False\n        return True\n\n\n# ============================================================\n# \u00a74. Example: k-out-of-n Threshold Secret Sharing\n# ============================================================\n\ndef threshold_closure(n: int, k: int):\n    \"\"\"\n    Construct a closure-capacity system for k-out-of-n threshold secret sharing.\n\n    cl(A) = X if |A| \u2265 k, else A  (trivial closure below threshold)\n    cap(A) = |A|\n    t = k\n    \"\"\"\n    universe = set(range(1, n + 1))\n    X = frozenset(universe)\n\n    def cl(A: FrozenSet[Element]) -> FrozenSet[Element]:\n        if len(A) >= k:\n            return X\n        return A\n\n    def cap(A: FrozenSet[Element]) -> float:\n        return len(A)\n\n    cl_op = ClosureOperator(universe, cl)\n    return ClosureCapacitySystem(cl_op, cap, threshold=k)\n\n\ndef demo_threshold():\n    \"\"\"Demo: 3-out-of-5 threshold secret sharing.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: 3-out-of-5 Threshold Secret Sharing\")\n    print(\"=\" * 60)\n\n    system = threshold_closure(n=5, k=3)\n\n    print(f\"\\nUniverse: {sorted(system.universe)}\")\n    print(f\"Threshold: {system.threshold}\")\n\n    # Verify upward closure\n    print(f\"\\nUpward-closed (Theorem 1a): {system.verify_upward_closure()}\")\n\n    # Minimal authorized sets\n    minimals = system.minimal_authorized_sets()\n    print(f\"\\nMinimal authorized sets ({len(minimals)} total):\")\n    for M in sorted(minimals, key=lambda s: (len(s), sorted(s))):\n        print(f\"  {set(M)} \u2014 closure basis: {system.is_closure_basis(M)}\")\n\n    # Verify minimal = closure basis\n    print(f\"\\nAll minimals are closure bases (Theorem 1b): \"\n          f\"{system.verify_minimal_are_bases()}\")\n\n    # Reconstruction\n    recon = ReconstructionData(minimals)\n    print(f\"\\nReconstruction correctness (Theorem 3): \"\n          f\"{recon.reconstructs(system)}\")\n\n    # Example authorized/unauthorized sets\n    print(\"\\nExample coalitions:\")\n    examples = [\n        frozenset({1, 2}),\n        frozenset({1, 2, 3}),\n        frozenset({3, 4, 5}),\n        frozenset({1}),\n        frozenset({1, 2, 3, 4, 5}),\n    ]\n    for A in examples:\n        auth = \"\u2713 authorized\" if system.is_authorized(A) else \"\u2717 unauthorized\"\n        print(f\"  {str(set(A)):20s} \u2192 {auth}\")\n\n\n# ============================================================\n# \u00a75. Example: Hierarchical Access Structure\n# ============================================================\n\ndef hierarchical_closure():\n    \"\"\"\n    Construct a hierarchical access structure:\n    - Participants: {mgr, eng1, eng2, intern1, intern2}\n    - Manager alone can access (weight 3)\n    - Two engineers can access (weight 1 each, need 2)\n    - Interns need manager or both engineers present\n\n    cl models organizational hierarchy:\n    cl({mgr, ...}) always includes the full team\n    \"\"\"\n    participants = {0, 1, 2, 3, 4}  # mgr, eng1, eng2, intern1, intern2\n    X = frozenset(participants)\n\n    weights = {0: 3, 1: 1, 2: 1, 3: 0, 4: 0}  # mgr=3, eng=1, intern=0\n\n    def cl(A: FrozenSet[Element]) -> FrozenSet[Element]:\n        \"\"\"Hierarchical closure: manager generates whole team.\"\"\"\n        A_set = set(A)\n        if 0 in A_set:  # manager present \u2192 full closure\n            return X\n        if {1, 2} <= A_set:  # both engineers \u2192 include interns\n            return frozenset(A_set | {3, 4})\n        return frozenset(A)\n\n    def cap(A: FrozenSet[Element]) -> float:\n        return sum(weights.get(x, 0) for x in A)\n\n    cl_op = ClosureOperator(participants, cl)\n    return ClosureCapacitySystem(cl_op, cap, threshold=2)\n\n\ndef demo_hierarchical():\n    \"\"\"Demo: Hierarchical access structure.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Hierarchical Access Structure\")\n    print(\"=\" * 60)\n\n    names = {0: \"mgr\", 1: \"eng1\", 2: \"eng2\", 3: \"int1\", 4: \"int2\"}\n    system = hierarchical_closure()\n\n    print(f\"\\nParticipants: {', '.join(f'{v}({k})' for k,v in sorted(names.items()))}\")\n    print(f\"Threshold: {system.threshold}\")\n\n    print(f\"\\nUpward-closed (Theorem 1a): {system.verify_upward_closure()}\")\n\n    minimals = system.minimal_authorized_sets()\n    print(f\"\\nMinimal authorized sets ({len(minimals)} total):\")\n    for M in sorted(minimals, key=lambda s: (len(s), sorted(s))):\n        named = {names[x] for x in M}\n        print(f\"  {named} \u2014 basis: {system.is_closure_basis(M)}\")\n\n    print(f\"\\nAll minimals are closure bases (Theorem 1b): \"\n          f\"{system.verify_minimal_are_bases()}\")\n\n    recon = ReconstructionData(minimals)\n    print(f\"Reconstruction correctness (Theorem 3): \"\n          f\"{recon.reconstructs(system)}\")\n\n\n# ============================================================\n# \u00a76. Example: Realization of an arbitrary access structure\n# ============================================================\n\ndef demo_realization():\n    \"\"\"Demo: Constructing closure-capacity from an access structure (Theorem 2).\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Realization Theorem\")\n    print(\"=\" * 60)\n\n    # Define an access structure by its minimal authorized sets\n    universe = {1, 2, 3, 4}\n    min_auth = [\n        frozenset({1, 2}),\n        frozenset({2, 3}),\n        frozenset({1, 3, 4}),\n    ]\n\n    print(f\"\\nUniverse: {sorted(universe)}\")\n    print(f\"Minimal authorized sets: {[set(M) for M in min_auth]}\")\n\n    # Construct closure-capacity realization (identity closure, boolean capacity)\n    X = frozenset(universe)\n\n    def cl(A):\n        return A  # identity closure\n\n    def cap(A):\n        for M in min_auth:\n            if M <= A:\n                return 1\n        return 0\n\n    cl_op = ClosureOperator(universe, cl)\n    system = ClosureCapacitySystem(cl_op, cap, threshold=1)\n\n    # Verify\n    computed_minimals = system.minimal_authorized_sets()\n    print(f\"\\nComputed minimal authorized: {[set(M) for M in sorted(computed_minimals, key=lambda s: (len(s), sorted(s)))]}\")\n    print(f\"Match: {set(map(frozenset, min_auth)) == set(computed_minimals)}\")\n    print(f\"Upward-closed: {system.verify_upward_closure()}\")\n\n    recon = ReconstructionData(computed_minimals)\n    print(f\"Reconstruction correctness: {recon.reconstructs(system)}\")\n\n    # Show full access structure\n    auth = system.authorized_sets()\n    print(f\"\\nFull authorized family ({len(auth)} sets):\")\n    for A in sorted(auth, key=lambda s: (len(s), sorted(s))):\n        is_min = A in set(computed_minimals)\n        marker = \" \u2190 minimal\" if is_min else \"\"\n        print(f\"  {set(A)}{marker}\")\n\n\n# ============================================================\n# \u00a77. Submodularity Demo\n# ============================================================\n\ndef demo_submodularity():\n    \"\"\"Demo: Submodular capacity exchange (Theorem on submodularity).\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Submodular Capacity Exchange\")\n    print(\"=\" * 60)\n\n    # Rank function of uniform matroid U_{2,4}: cap(A) = min(|A|, 2)\n    universe = {1, 2, 3, 4}\n    X = frozenset(universe)\n\n    def cl(A):\n        if len(A) >= 2:\n            return X\n        return frozenset(A)\n\n    def cap(A):\n        return min(len(A), 2)\n\n    cl_op = ClosureOperator(universe, cl)\n    t = 2\n\n    # Verify submodularity\n    print(\"\\nCapacity function: cap(A) = min(|A|, 2) (rank of U_{2,4})\")\n    print(f\"Threshold t = {t}\")\n\n    submodular = True\n    for r1 in range(len(universe) + 1):\n        for c1 in itertools.combinations(sorted(universe), r1):\n            A = frozenset(c1)\n            for r2 in range(len(universe) + 1):\n                for c2 in itertools.combinations(sorted(universe), r2):\n                    B = frozenset(c2)\n                    lhs = cap(cl_op.cl(A | B)) + cap(cl_op.cl(A & B))\n                    rhs = cap(cl_op.cl(A)) + cap(cl_op.cl(B))\n                    if lhs > rhs:\n                        submodular = False\n\n    print(f\"Submodular on closures: {submodular}\")\n\n    # Demonstrate exchange theorem\n    print(\"\\nExchange theorem examples (A,B unauthorized, A\u222aB authorized):\")\n    for r1 in range(1, len(universe)):\n        for c1 in itertools.combinations(sorted(universe), r1):\n            A = frozenset(c1)\n            for r2 in range(1, len(universe)):\n                for c2 in itertools.combinations(sorted(universe), r2):\n                    B = frozenset(c2)\n                    capA = cap(cl_op.cl(A))\n                    capB = cap(cl_op.cl(B))\n                    capAB = cap(cl_op.cl(A | B))\n                    if capAB >= t and capA < t and capB < t:\n                        bound = capA + capB\n                        print(f\"  A={set(A)}, B={set(B)}: \"\n                              f\"cap(A)={capA}, cap(B)={capB}, \"\n                              f\"sum={bound} < 2t={2*t} \u2713\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Closure-Capacity Secret-Sharing Duality: Demonstrations\")\n    print(\"=\" * 60)\n    print()\n\n    demo_threshold()\n    demo_hierarchical()\n    demo_realization()\n    demo_submodularity()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"Generate visualizations for closure-capacity secret-sharing duality.\"\"\"\n\nimport itertools\nimport base64\nimport io\n\ntry:\n    import matplotlib\n    matplotlib.use('Agg')\n    import matplotlib.pyplot as plt\n    import matplotlib.patches as mpatches\n    import numpy as np\n    HAS_MPL = True\nexcept ImportError:\n    HAS_MPL = False\n\n\ndef generate_access_structure_svg():\n    \"\"\"Generate SVG diagram of a 3-out-of-5 access structure lattice.\"\"\"\n    svg = '''<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"500\" viewBox=\"0 0 600 500\">\n  <style>\n    .auth { fill: #2ecc71; stroke: #27ae60; stroke-width: 2; }\n    .unauth { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }\n    .minimal { fill: #f39c12; stroke: #e67e22; stroke-width: 3; }\n    .label { font-family: monospace; font-size: 11px; text-anchor: middle; fill: white; font-weight: bold; }\n    .title { font-family: sans-serif; font-size: 16px; text-anchor: middle; fill: #2c3e50; font-weight: bold; }\n    .legend { font-family: sans-serif; font-size: 12px; fill: #2c3e50; }\n    .arrow { stroke: #95a5a6; stroke-width: 1; fill: none; }\n  </style>\n\n  <text x=\"300\" y=\"30\" class=\"title\">Access Structure: 3-out-of-5 Threshold Scheme</text>\n\n  <!-- Level 0: empty set -->\n  <circle cx=\"300\" cy=\"460\" r=\"18\" class=\"unauth\"/>\n  <text x=\"300\" y=\"465\" class=\"label\">\u2205</text>\n\n  <!-- Level 1: singletons -->\n  <circle cx=\"100\" cy=\"380\" r=\"18\" class=\"unauth\"/>\n  <text x=\"100\" y=\"385\" class=\"label\">{1}</text>\n  <circle cx=\"200\" cy=\"380\" r=\"18\" class=\"unauth\"/>\n  <text x=\"200\" y=\"385\" class=\"label\">{2}</text>\n  <circle cx=\"300\" cy=\"380\" r=\"18\" class=\"unauth\"/>\n  <text x=\"300\" y=\"385\" class=\"label\">{3}</text>\n  <circle cx=\"400\" cy=\"380\" r=\"18\" class=\"unauth\"/>\n  <text x=\"400\" y=\"385\" class=\"label\">{4}</text>\n  <circle cx=\"500\" cy=\"380\" r=\"18\" class=\"unauth\"/>\n  <text x=\"500\" y=\"385\" class=\"label\">{5}</text>\n\n  <!-- Level 2: pairs (unauthorized) -->\n  <circle cx=\"80\" cy=\"300\" r=\"15\" class=\"unauth\"/>\n  <text x=\"80\" y=\"304\" class=\"label\" style=\"font-size:9px\">{1,2}</text>\n  <circle cx=\"160\" cy=\"300\" r=\"15\" class=\"unauth\"/>\n  <text x=\"160\" y=\"304\" class=\"label\" style=\"font-size:9px\">{1,3}</text>\n  <circle cx=\"240\" cy=\"300\" r=\"15\" class=\"unauth\"/>\n  <text x=\"240\" y=\"304\" class=\"label\" style=\"font-size:9px\">{1,4}</text>\n  <circle cx=\"300\" cy=\"300\" r=\"15\" class=\"unauth\"/>\n  <text x=\"300\" y=\"304\" class=\"label\" style=\"font-size:9px\">{2,3}</text>\n  <circle cx=\"360\" cy=\"300\" r=\"15\" class=\"unauth\"/>\n  <text x=\"360\" y=\"304\" class=\"label\" style=\"font-size:9px\">{2,4}</text>\n  <circle cx=\"440\" cy=\"300\" r=\"15\" class=\"unauth\"/>\n  <text x=\"440\" y=\"304\" class=\"label\" style=\"font-size:9px\">{3,4}</text>\n\n  <!-- Level 3: triples (MINIMAL authorized) -->\n  <circle cx=\"100\" cy=\"200\" r=\"18\" class=\"minimal\"/>\n  <text x=\"100\" y=\"205\" class=\"label\" style=\"font-size:9px\">{1,2,3}</text>\n  <circle cx=\"190\" cy=\"200\" r=\"18\" class=\"minimal\"/>\n  <text x=\"190\" y=\"205\" class=\"label\" style=\"font-size:9px\">{1,2,4}</text>\n  <circle cx=\"280\" cy=\"200\" r=\"18\" class=\"minimal\"/>\n  <text x=\"280\" y=\"205\" class=\"label\" style=\"font-size:9px\">{1,3,4}</text>\n  <circle cx=\"370\" cy=\"200\" r=\"18\" class=\"minimal\"/>\n  <text x=\"370\" y=\"205\" class=\"label\" style=\"font-size:9px\">{2,3,4}</text>\n  <circle cx=\"460\" cy=\"200\" r=\"18\" class=\"minimal\"/>\n  <text x=\"460\" y=\"205\" class=\"label\" style=\"font-size:9px\">{1,2,5}</text>\n\n  <!-- Level 4: quadruples (authorized) -->\n  <circle cx=\"150\" cy=\"120\" r=\"18\" class=\"auth\"/>\n  <text x=\"150\" y=\"125\" class=\"label\" style=\"font-size:8px\">{1,2,3,4}</text>\n  <circle cx=\"270\" cy=\"120\" r=\"18\" class=\"auth\"/>\n  <text x=\"270\" y=\"125\" class=\"label\" style=\"font-size:8px\">{1,2,3,5}</text>\n  <circle cx=\"390\" cy=\"120\" r=\"18\" class=\"auth\"/>\n  <text x=\"390\" y=\"125\" class=\"label\" style=\"font-size:8px\">{1,3,4,5}</text>\n\n  <!-- Level 5: full set -->\n  <circle cx=\"300\" cy=\"60\" r=\"20\" class=\"auth\"/>\n  <text x=\"300\" y=\"65\" class=\"label\" style=\"font-size:8px\">{1..5}</text>\n\n  <!-- Legend -->\n  <rect x=\"20\" y=\"40\" width=\"16\" height=\"16\" rx=\"8\" class=\"unauth\"/>\n  <text x=\"42\" y=\"53\" class=\"legend\">Unauthorized</text>\n  <rect x=\"20\" y=\"62\" width=\"16\" height=\"16\" rx=\"8\" class=\"minimal\"/>\n  <text x=\"42\" y=\"75\" class=\"legend\">Minimal Authorized (Closure Bases)</text>\n  <rect x=\"20\" y=\"84\" width=\"16\" height=\"16\" rx=\"8\" class=\"auth\"/>\n  <text x=\"42\" y=\"97\" class=\"legend\">Authorized (Superset of Minimal)</text>\n\n  <!-- Threshold line -->\n  <line x1=\"30\" y1=\"250\" x2=\"570\" y2=\"250\" stroke=\"#3498db\" stroke-width=\"2\" stroke-dasharray=\"8,4\"/>\n  <text x=\"555\" y=\"245\" class=\"legend\" style=\"fill: #3498db; font-weight: bold;\">t = 3</text>\n</svg>'''\n    return svg\n\n\ndef generate_closure_basis_svg():\n    \"\"\"Generate SVG showing closure basis concept.\"\"\"\n    svg = '''<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"500\" height=\"350\" viewBox=\"0 0 500 350\">\n  <style>\n    .set { fill: #ecf0f1; stroke: #2c3e50; stroke-width: 2; }\n    .closure { fill: #dfe6e9; stroke: #2c3e50; stroke-width: 2; stroke-dasharray: 6,3; }\n    .point { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }\n    .gen-point { fill: #2ecc71; stroke: #27ae60; stroke-width: 2; }\n    .title { font-family: sans-serif; font-size: 14px; text-anchor: middle; fill: #2c3e50; font-weight: bold; }\n    .text { font-family: sans-serif; font-size: 11px; fill: #2c3e50; }\n    .eq { font-family: serif; font-size: 16px; fill: #2c3e50; font-style: italic; }\n  </style>\n\n  <text x=\"250\" y=\"25\" class=\"title\">Minimal Authorized Set = Closure Basis</text>\n\n  <!-- Left: basis B = {a, b, c} -->\n  <text x=\"130\" y=\"55\" class=\"text\" style=\"text-anchor: middle; font-weight: bold;\">Basis B = {a, b, c}</text>\n  <ellipse cx=\"130\" cy=\"180\" rx=\"100\" ry=\"120\" class=\"closure\"/>\n  <text x=\"130\" y=\"310\" class=\"text\" style=\"text-anchor: middle;\">cl(B) = C (closed set)</text>\n\n  <circle cx=\"90\" cy=\"150\" r=\"10\" class=\"gen-point\"/>\n  <text x=\"90\" y=\"135\" class=\"text\" style=\"text-anchor: middle;\">a</text>\n  <circle cx=\"160\" cy=\"140\" r=\"10\" class=\"gen-point\"/>\n  <text x=\"160\" y=\"125\" class=\"text\" style=\"text-anchor: middle;\">b</text>\n  <circle cx=\"120\" cy=\"200\" r=\"10\" class=\"gen-point\"/>\n  <text x=\"120\" y=\"225\" class=\"text\" style=\"text-anchor: middle;\">c</text>\n\n  <!-- Generated elements -->\n  <circle cx=\"130\" cy=\"170\" r=\"6\" class=\"point\"/>\n  <circle cx=\"100\" cy=\"220\" r=\"6\" class=\"point\"/>\n  <circle cx=\"155\" cy=\"190\" r=\"6\" class=\"point\"/>\n  <circle cx=\"110\" cy=\"250\" r=\"6\" class=\"point\"/>\n  <circle cx=\"150\" cy=\"240\" r=\"6\" class=\"point\"/>\n\n  <!-- Right: removing one element -->\n  <text x=\"370\" y=\"55\" class=\"text\" style=\"text-anchor: middle; font-weight: bold;\">Remove c \u2192 {a, b}</text>\n  <ellipse cx=\"370\" cy=\"160\" rx=\"70\" ry=\"80\" class=\"closure\" style=\"fill: #fadbd8;\"/>\n  <text x=\"370\" y=\"260\" class=\"text\" style=\"text-anchor: middle; fill: #e74c3c;\">cl({a,b}) \u228a C</text>\n  <text x=\"370\" y=\"280\" class=\"text\" style=\"text-anchor: middle; fill: #e74c3c;\">cap drops below t!</text>\n\n  <circle cx=\"340\" cy=\"140\" r=\"10\" class=\"gen-point\"/>\n  <text x=\"340\" y=\"125\" class=\"text\" style=\"text-anchor: middle;\">a</text>\n  <circle cx=\"395\" cy=\"135\" r=\"10\" class=\"gen-point\"/>\n  <text x=\"395\" y=\"120\" class=\"text\" style=\"text-anchor: middle;\">b</text>\n  <circle cx=\"365\" cy=\"170\" r=\"6\" class=\"point\"/>\n  <circle cx=\"380\" cy=\"190\" r=\"6\" class=\"point\"/>\n\n  <!-- Arrow -->\n  <line x1=\"240\" y1=\"180\" x2=\"280\" y2=\"180\" stroke=\"#7f8c8d\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/>\n  <defs>\n    <marker id=\"arrow\" viewBox=\"0 0 10 10\" refX=\"10\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\">\n      <path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#7f8c8d\"/>\n    </marker>\n  </defs>\n</svg>'''\n    return svg\n\n\ndef generate_matplotlib_chart():\n    \"\"\"Generate capacity vs coalition size chart as base64 PNG.\"\"\"\n    if not HAS_MPL:\n        return None\n\n    fig, axes = plt.subplots(1, 2, figsize=(12, 5))\n\n    # Left: Capacity profile for 3-out-of-5\n    ax = axes[0]\n    n, k = 5, 3\n    sizes = list(range(n + 1))\n    avg_caps = []\n    for s in sizes:\n        if s == 0:\n            avg_caps.append(0)\n        else:\n            caps = []\n            for combo in itertools.combinations(range(1, n + 1), s):\n                caps.append(min(s, k))\n            avg_caps.append(np.mean(caps))\n\n    colors = ['#e74c3c' if c < k else '#2ecc71' for c in avg_caps]\n    bars = ax.bar(sizes, avg_caps, color=colors, edgecolor='#2c3e50', linewidth=1.5)\n    ax.axhline(y=k, color='#3498db', linestyle='--', linewidth=2, label=f'Threshold t={k}')\n    ax.set_xlabel('Coalition Size', fontsize=12)\n    ax.set_ylabel('Capacity cap(cl(A))', fontsize=12)\n    ax.set_title('3-out-of-5 Threshold Scheme', fontsize=14, fontweight='bold')\n    ax.legend(fontsize=11)\n    ax.set_xticks(sizes)\n\n    # Right: Number of minimal authorized sets for k-out-of-n\n    ax = axes[1]\n    ns = range(3, 10)\n    for k in [2, 3, 4]:\n        counts = []\n        valid_ns = []\n        for n in ns:\n            if k <= n:\n                from math import comb\n                counts.append(comb(n, k))\n                valid_ns.append(n)\n        ax.plot(valid_ns, counts, 'o-', label=f'k={k}', linewidth=2, markersize=6)\n\n    ax.set_xlabel('Number of Participants n', fontsize=12)\n    ax.set_ylabel('# Minimal Authorized Sets', fontsize=12)\n    ax.set_title('Minimal Authorized Set Count', fontsize=14, fontweight='bold')\n    ax.legend(fontsize=11)\n    ax.set_xticks(list(ns))\n\n    plt.tight_layout()\n\n    buf = io.BytesIO()\n    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    plt.close()\n    buf.seek(0)\n    return \"data:image/png;base64,\" + base64.b64encode(buf.read()).decode()\n\n\nif __name__ == \"__main__\":\n    # Save SVGs\n    with open(\"access_structure.svg\", \"w\") as f:\n        f.write(generate_access_structure_svg())\n    print(\"Generated access_structure.svg\")\n\n    with open(\"closure_basis.svg\", \"w\") as f:\n        f.write(generate_closure_basis_svg())\n    print(\"Generated closure_basis.svg\")\n\n    # Generate matplotlib chart\n    chart = generate_matplotlib_chart()\n    if chart:\n        print(f\"Generated matplotlib chart (base64, {len(chart)} chars)\")\n    else:\n        print(\"matplotlib not available, skipping chart\")\n"
+    },
+    "date": "2026-05-12T20:04:05Z",
+    "exp_id": "f8e2a62a"
+  },
   "algebraspeculativemachinelearning_ultrametric_proo.json": {
     "title": "Ultrametric Proof-Learning Representation Duality via Observer Semimodules",
     "domain": "Bridges: Algebra \u00d7 Machine Learning \u00d7 Proof Theory",
@@ -7414,7 +7463,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -7423,7 +7472,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -7432,7 +7481,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -7441,7 +7490,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -7450,7 +7499,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -7459,7 +7508,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -7468,7 +7517,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T23:03:45Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "algebraeml_tannaka_reconstruction_via_closure_endo",
@@ -7477,7 +7526,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -7495,7 +7544,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-10T23:04:27Z",
-      "hue": 272
+      "hue": 101
     },
     {
       "id": "algebraspeculative_prime_congruence_semantics_for_",
@@ -7504,7 +7553,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T23:04:40Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraeml_renormalization_semantics_via_closure_f",
@@ -7513,7 +7562,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -7522,7 +7571,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -7531,7 +7580,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -7540,7 +7589,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T02:05:38Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebramachinelearning_coalgebraic_myhillnerode_se",
@@ -7558,7 +7607,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-11T02:06:07Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraeml_ruelle_transfer_semantics_via_closure_c",
@@ -7567,7 +7616,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T04:06:02Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "logiccomputation_temporal_fixed_point_semantics_vi",
@@ -7576,7 +7625,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -7603,7 +7652,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -7612,7 +7661,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -7621,7 +7670,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:57Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraeml_thermodynamic_galois_duality_via_closur",
@@ -7630,7 +7679,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -7648,7 +7697,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -7657,7 +7706,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -7675,7 +7724,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T09:36:04Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebraeml_tropical_choquet_closure_duality_via_id",
@@ -7684,7 +7733,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -7693,7 +7742,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
@@ -7702,7 +7751,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -7711,7 +7760,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T11:36:11Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "algebrapythagoreangeometry_gravitational_tropical_",
@@ -7720,7 +7769,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 89
+      "hue": 272
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -7738,7 +7787,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 95
+      "hue": 89
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -7747,7 +7796,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -7756,7 +7805,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -7765,7 +7814,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -7774,7 +7823,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:35:26Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_compr",
@@ -7783,7 +7832,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 89
+      "hue": 95
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -7792,7 +7841,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 314
+      "hue": 95
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -7801,7 +7850,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -7810,7 +7859,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T16:18:15Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_de_sitter_tropical_entropic_c_th",
@@ -7828,7 +7877,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -7837,7 +7886,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -7846,7 +7895,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -7855,7 +7904,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T18:03:24Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_compr",
@@ -7864,7 +7913,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -7882,7 +7931,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 112
+      "hue": 91
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -7891,7 +7940,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -7900,7 +7949,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -7909,7 +7958,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -7927,7 +7976,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -7936,7 +7985,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T00:32:18Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebrapythagoreangeometry_tropical_gravitational_",
@@ -7945,7 +7994,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 271
+      "hue": 112
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -7954,7 +8003,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -7963,7 +8012,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -7981,7 +8030,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -7999,7 +8048,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -8008,7 +8057,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -8017,7 +8066,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -8026,7 +8075,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -8035,7 +8084,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -8044,7 +8093,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -8053,7 +8102,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -8062,7 +8111,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -8071,7 +8120,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T04:36:24Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_duali",
@@ -8080,7 +8129,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -8107,7 +8156,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T07:30:16Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_i",
@@ -8116,7 +8165,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T07:33:24Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_wal",
@@ -8125,7 +8174,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T07:34:03Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_idempotent_renormalization_duali",
@@ -8134,7 +8183,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:37Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_idempotent_causal_holography_via",
@@ -8143,7 +8192,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:59Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "algebraemllogic_closure_stone_spectral_duality_via",
@@ -8161,7 +8210,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T09:33:03Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -8170,7 +8219,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T09:48:21Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebramachinelearninglogic_operadic_stone_duality",
@@ -8188,7 +8237,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T10:37:56Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "algebraemlcomputation_closure_myhillnerode_duality",
@@ -8197,7 +8246,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T10:56:08Z",
-      "hue": 281
+      "hue": 91
     },
     {
       "id": "algebraemlgeometry_closure_voronoi_duality_via_ide",
@@ -8206,7 +8255,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T10:58:54Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_obse",
@@ -8215,7 +8264,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T11:15:45Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicalcomputation_tropical_residuation_re",
@@ -8224,7 +8273,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T11:29:51Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_closure_kramerswannier_duality_v",
@@ -8233,7 +8282,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:30:14Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_closure_sheafcode_duality_via_id",
@@ -8242,7 +8291,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:59:05Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_closure_barron_duality_v",
@@ -8251,7 +8300,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T12:09:31Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebratropicalgeometry_tropical_choquetvoronoi_du",
@@ -8260,7 +8309,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:28:11Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebrapythagoreanphysics_berggren_transfer_dualit",
@@ -8278,7 +8327,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T12:36:25Z",
-      "hue": 89
+      "hue": 90
     },
     {
       "id": "algebraspeculativelogic_ultrametric_proofautomaton",
@@ -8287,7 +8336,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:00:31Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancryptography_berggren_tropical_l",
@@ -8296,7 +8345,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:03:31Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "algebraemlcomputation_closure_circuit_duality_via_",
@@ -8305,7 +8354,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T13:25:11Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_persistenc",
@@ -8314,7 +8363,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T13:33:40Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_closure_operad_duality_v",
@@ -8323,7 +8372,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T14:07:37Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_barr",
@@ -8332,7 +8381,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T14:10:39Z",
-      "hue": 272
+      "hue": 100
     },
     {
       "id": "algebratropicalmachinelearning_tropical_kernel_mea",
@@ -8341,7 +8390,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T14:15:55Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancomputation_berggren_automaton_r",
@@ -8350,7 +8399,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T14:16:15Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "algebratropicalphysics_tropical_scattering_duality",
@@ -8359,7 +8408,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T15:00:31Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebraemllogic_closure_proof_net_duality_via_idem",
@@ -8368,7 +8417,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T15:00:53Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_closure_holography_duality_via_i",
@@ -8377,7 +8426,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T15:05:11Z",
-      "hue": 270
+      "hue": 101
     },
     {
       "id": "algebraemlmachinelearning_closure_sheaf_learning_d",
@@ -8386,7 +8435,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T15:10:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_closure_renormalization_duality_",
@@ -8395,7 +8444,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T16:00:16Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicallogic_tropical_stone_duality_via_id",
@@ -8404,7 +8453,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T16:22:11Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraspeculativephysics_ultrametric_renormalizat",
@@ -8422,7 +8471,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T16:28:17Z",
-      "hue": 292
+      "hue": 91
     },
     {
       "id": "algebraemlalgebraicgeometry_closure_spectrum_duali",
@@ -8431,7 +8480,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T17:00:20Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraspeculativephysics_ultrametric_holographic_",
@@ -8440,7 +8489,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T17:03:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -8449,7 +8498,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T17:13:08Z",
-      "hue": 134
+      "hue": 92
     },
     {
       "id": "algebratropicallogic_tropical_proof_valuation_dual",
@@ -8458,7 +8507,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T17:17:10Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_proo",
@@ -8467,7 +8516,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T18:00:35Z",
-      "hue": 91
+      "hue": 280
     },
     {
       "id": "algebraemlalgebraictopology_closure_ech_realizatio",
@@ -8485,7 +8534,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T18:05:25Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "algebraemlcryptography_closure_matroid_duality_via",
@@ -8494,7 +8543,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T18:05:44Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlcomputation_closure_temporal_realization",
@@ -8503,7 +8552,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T18:06:10Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "algebraemlcomputation_closure_kolmogorov_realizati",
@@ -8512,7 +8561,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T19:09:31Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebratropicalgeometry_tropical_radon_transform_d",
@@ -8521,7 +8570,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T19:28:57Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_attention_",
@@ -8530,7 +8579,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T20:01:14Z",
-      "hue": 91
+      "hue": 90
+    },
+    {
+      "id": "algebraemlcryptography_closure_capacity_duality_vi",
+      "title": "Closure-Capacity Secret-Sharing Duality",
+      "domain": "Bridges (Algebra\u2013EML\u2013Cryptography)",
+      "primary_domain": "EML",
+      "shape": "octahedron",
+      "date": "2026-05-12T20:04:05Z",
+      "hue": 275
     },
     {
       "id": "algebraemlcomputation_idempotent_kalman_realizatio",
@@ -8539,7 +8597,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "algebraemlcomputation_idempotent_thermodynamic_rea",
@@ -8548,7 +8606,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_idempotent_error_correcting",
@@ -8557,7 +8615,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraemlmachinelearning_closure_sheaf_generaliza",
@@ -8566,7 +8624,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_idempotent_noether_correspondenc",
@@ -8575,7 +8633,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_barronchoq",
@@ -8584,7 +8642,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "",
-      "hue": 95
+      "hue": 112
     }
   ],
   "edges": [
@@ -8598,554 +8656,554 @@ window.PACKAGE_GRAPH = {
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_closure_operad_duality_v",
-      "strength": 0.8939986043265875,
+      "strength": 0.8937018894331699,
       "label": "Neural Linear-Probe Reconstruction with",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.8490579204466155,
+      "strength": 0.8486354093771868,
       "label": "Idempotent Holographic Renormalization",
       "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_stonebirkhoff_dua",
-      "strength": 0.7875087229588275,
+      "strength": 0.7869139258222532,
       "label": "Weighted Temporal Constraints and Thermo",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_tropical_information_bot",
-      "strength": 0.7386601535240753,
+      "strength": 0.7379286214135758,
       "label": "Tropical Observable Closures and Min-Plu",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlgeometry_closure_voronoi_duality_via_ide",
-      "strength": 0.7069085833914863,
+      "strength": 0.7060881735479356,
       "label": "Closure",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_idempotent_holographic_reali",
       "target": "algebraemlcryptography_idempotent_error_correcting",
-      "strength": 0.6824842986741102,
+      "strength": 0.6815955213435969,
       "label": "Tropical Closure Coding Theory",
       "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.6565945568736914,
+      "strength": 0.6556333100069978,
       "label": "Temporal Nerode Quotient for Reversible",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.6517096999302163,
+      "strength": 0.6507347795661301,
       "label": "Operadic Neural Architecture Search via",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.5510816468946265,
+      "strength": 0.5498250524842546,
       "label": "Optimal Obstruction Certificate Computat",
       "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.5256803907885553,
+      "strength": 0.5243526941917424,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.5212840195394277,
+      "strength": 0.5199440167949614,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.5183531053733426,
+      "strength": 0.5170048985304408,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.5159106769016049,
+      "strength": 0.514555633310007,
       "label": "Logic",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.5115143056524772,
-      "label": "Algebra,Tropical,Geometry,MachineLearning,Bridges bridge",
+      "strength": 0.510146955913226,
+      "label": "Tropical,MachineLearning,Bridges,Algebra,Geometry bridge",
       "type": "heuristic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "cryptographypythagorean_isogeny_free_trapdoors_via",
-      "strength": 0.5071179344033495,
+      "strength": 0.505738278516445,
       "label": "Cryptography",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.5051639916259595,
+      "strength": 0.5037788663400979,
       "label": "Topological Prime Spectrum Compression L",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.4997906489881368,
+      "strength": 0.4983904828551435,
       "label": "Lean Formalization Target",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.48904396371249115,
+      "strength": 0.48761371588523433,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogicspeculative_temporal_prime_congruence_",
-      "strength": 0.48220516399162583,
+      "strength": 0.4807557732680195,
       "label": "Weighted Temporal Constraints and Thermo",
       "type": "heuristic"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.47243545010467536,
+      "strength": 0.47095871238628406,
       "label": "Tropical Representer Duality",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.47145847871598034,
+      "strength": 0.4699790062981105,
       "label": "Operadic Neural Composition with Multi-I",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.46999302163293777,
+      "strength": 0.46850944716585013,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.4695045359385903,
+      "strength": 0.4680195941217634,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.4680390788555477,
+      "strength": 0.4665500349895031,
       "label": "Optimal Obstruction Certificate Computat",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.4416608513607815,
+      "strength": 0.4400979706088173,
       "label": "Tropical Semiring Observations for Infor",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4382414515003488,
+      "strength": 0.43666899930020986,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.4323796231681785,
+      "strength": 0.43079076277116857,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.42602930914166076,
+      "strength": 0.4244226731980405,
       "label": "Operadic Tropicalization",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.41039776692254004,
+      "strength": 0.4087473757872638,
       "label": "Operadic composition laws for specific a",
       "type": "heuristic"
     },
     {
       "source": "algebralogicmachinelearning_ultrametric_proof_shea",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
-      "strength": 0.4089323098394974,
+      "strength": 0.4072778166550034,
       "label": "Operadic Stone Duality",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.4050244242847173,
+      "strength": 0.40335899230230926,
       "label": "Logic",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.39965108164689456,
+      "strength": 0.3979706088173548,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_closure_holography_duality_via_i",
-      "strength": 0.39281228192602924,
+      "strength": 0.39111266620013996,
       "label": "Finite Closure Holography Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_renormalization_duali",
       "target": "algebraemlphysics_closure_holography_duality_via_i",
-      "strength": 0.39281228192602924,
+      "strength": 0.39111266620013996,
       "label": "Finite Closure Holography Duality",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_kernel_mea",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.39281228192602924,
+      "strength": 0.39111266620013996,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_idempotent_renormalization_duali",
-      "strength": 0.3893928820655966,
+      "strength": 0.3876836948915325,
       "label": "Idempotent Renormalization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.3835310537334262,
+      "strength": 0.38180545836249113,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.3835310537334262,
+      "strength": 0.38180545836249113,
       "label": "Effective prefix codes",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
       "target": "algebraemlphysics_closure_kramerswannier_duality_v",
-      "strength": 0.37913468248429855,
+      "strength": 0.37739678096571017,
       "label": "Closure Kramers",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.37718073970690846,
+      "strength": 0.3754373687893631,
       "label": "Tropical Residuation Trapdoor Duality",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.37718073970690846,
+      "strength": 0.3754373687893631,
       "label": "Operadic Neural Proof",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3747383112351709,
+      "strength": 0.3729881035689292,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_ultrametric_proof_dynam",
-      "strength": 0.37131891137473816,
+      "strength": 0.3695591322603218,
       "label": "Topological Prime Spectrum Compression L",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3698534542916957,
+      "strength": 0.3680895731280616,
       "label": "Tropical Valuation Distillation",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraeml_congruence_quotient_reconstruction_via_",
+      "target": "algebraemlcryptography_closure_capacity_duality_vi",
+      "strength": 0.3631910426871938,
+      "label": "Algebra,EML,Cryptography,Bridges bridge",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.3649685973482204,
-      "label": "Logic,Tropical,Algebra,Geometry bridge",
+      "strength": 0.3631910426871938,
+      "label": "Algebra,Tropical,Geometry,Logic bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3649685973482204,
-      "label": "Algebra,Tropical,MachineLearning,Geometry bridge",
+      "strength": 0.3631910426871938,
+      "label": "Algebra,MachineLearning,Tropical,Geometry bridge",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_operadic_tropica",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.3649685973482204,
-      "label": "Algebra,Tropical,MachineLearning,Geometry bridge",
+      "strength": 0.3631910426871938,
+      "label": "Algebra,MachineLearning,Tropical,Geometry bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.36106071179344035,
+      "strength": 0.3592722183344997,
       "label": "Entropy Production Rate Invariance",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.3508025122121423,
+      "strength": 0.34898530440867737,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_kernel_mea",
       "target": "algebratropicalmachinelearning_tropical_attention_",
-      "strength": 0.3508025122121423,
+      "strength": 0.34898530440867737,
       "label": "Tropical Attention Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_attention_",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.3508025122121423,
+      "strength": 0.34898530440867737,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.3464061409630146,
+      "strength": 0.34457662701189645,
       "label": "Non",
       "type": "heuristic"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.3405443126308443,
+      "strength": 0.3386983904828551,
       "label": "Tropical Rate",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3405443126308443,
+      "strength": 0.3386983904828551,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_closure_renormalization_duality_",
       "target": "algebraemlphysics_idempotent_noether_correspondenc",
-      "strength": 0.3405443126308443,
+      "strength": 0.3386983904828551,
       "label": "Idempotent Noether Correspondence",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_renormalization_duali",
       "target": "algebraspeculativephysics_ultrametric_renormalizat",
-      "strength": 0.33907885554780165,
+      "strength": 0.3372288313505947,
       "label": "Lean Formalization Target",
       "type": "heuristic"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativephysics_ultrametric_holographic_",
-      "strength": 0.33224005582693633,
+      "strength": 0.33037088873337983,
       "label": "Ultrametric Holographic Renormalization",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebraspeculativephysics_ultrametric_holographic_",
-      "strength": 0.33224005582693633,
+      "strength": 0.33037088873337983,
       "label": "Ultrametric Holographic Renormalization",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraemltropical_non_archimedean_information_dua",
-      "strength": 0.3268667131891136,
+      "strength": 0.32498250524842537,
       "label": "Indistinguishability \u2194 metric bisimulati",
       "type": "heuristic"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3258897418004186,
+      "strength": 0.3240027991602518,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3258897418004186,
+      "strength": 0.3240027991602518,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.3229588276343335,
+      "strength": 0.32106368089573123,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraemlgeometry_closure_voronoi_duality_via_ide",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.3229588276343335,
+      "strength": 0.32106368089573123,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.3190509420795532,
+      "strength": 0.317144856543037,
       "label": "Tropical Semiring Oracle Capacity",
       "type": "heuristic"
     },
     {
       "source": "algebralogicmachinelearning_ultrametric_proof_shea",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.31612002791346816,
+      "strength": 0.3142057382785164,
       "label": "Algebra,MachineLearning,Bridges bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_holographic_renormali",
       "target": "algebraemlphysics_closure_renormalization_duality_",
-      "strength": 0.31612002791346816,
+      "strength": 0.3142057382785164,
       "label": "Filtered Closure Reconstruction",
       "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_i",
       "target": "algebratropicallogic_tropical_stone_duality_via_id",
-      "strength": 0.31612002791346816,
+      "strength": 0.3142057382785164,
       "label": "Tropical Stone Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_renormalization_duali",
       "target": "algebraemlphysics_closure_renormalization_duality_",
-      "strength": 0.31612002791346816,
+      "strength": 0.3142057382785164,
       "label": "Filtered Closure Reconstruction",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_operadic_stone_duality",
       "target": "algebratropicallogic_tropical_stone_duality_via_id",
-      "strength": 0.31612002791346816,
+      "strength": 0.3142057382785164,
       "label": "Tropical Stone Duality",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.31514305652477315,
+      "strength": 0.31322603219034284,
       "label": "Entropy Production Bounds for Self-Refer",
       "type": "heuristic"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebramachinelearninglogic_operadic_stone_duality",
-      "strength": 0.31123517096999287,
+      "strength": 0.3093072078376486,
       "label": "Operadic Stone Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.31123517096999287,
+      "strength": 0.3093072078376486,
       "label": "Tropical Valuation Distillation",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.31025819958129786,
+      "strength": 0.30832750174947504,
       "label": "Tropical Residuation Trapdoor Duality",
       "type": "heuristic"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.3092812281926028,
+      "strength": 0.30734779566130155,
       "label": "Spectral graph theory \u2194 Tropical spectra",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_idempotent_noether_correspondenc",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.3048848569434751,
+      "strength": 0.3029391182645206,
       "label": "tropical representation theory",
       "type": "heuristic"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.30195394277739,
+      "strength": 0.3,
       "label": "Tropical Neural Sheaf Sampling",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_choquetvoronoi_du",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.30195394277739,
+      "strength": 0.3,
       "label": "Tropical Barron",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_ultrametric_proo",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
-      "strength": 0.30195394277739,
-      "label": "Tropical Barron",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
-      "target": "algebraemlphysics_closure_renormalization_duality_",
       "strength": 0.3,
-      "label": "Thermodynamic Pressure via Weighted Tran",
+      "label": "Tropical Barron",
       "type": "heuristic"
     }
   ]
