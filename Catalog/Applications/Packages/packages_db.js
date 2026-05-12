@@ -95,12 +95,6 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-12T03:04:32Z"
   },
   {
-    "filename": "algebraspeculativemachinelearning_ultrametric_proo.json",
-    "title": "Non-Archimedean Proof Information Theory: Ultrametric Observer Rate-Distortion via Congruence Spectra",
-    "domain": "Bridges (Ultrametric Geometry \u00d7 Information Theory \u00d7 Machine Learning \u00d7 Proof Theory)",
-    "date": "2026-05-12T03:03:55Z"
-  },
-  {
     "filename": "algebratropicalcryptography_tropical_choquetradon_.json",
     "title": "Tropical Choquet\u2013Radon Trapdoor Duality via Idempotent Convex Semimodules and Certified Extremal Decomposition",
     "domain": "Tropical Geometry \u00d7 Cryptography \u00d7 Idempotent Analysis",
@@ -3099,49 +3093,6 @@ window.PACKAGE_DB = {
     "lean_proofs": "/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the project LICENSE file.\n-/\nimport Mathlib\n\n/-!\n# Quotient Orbit Compression: Core Theory\n\n## Bridge: Algebraic Dynamics \u2194 Cryptographic Collision Bounds \u2194 EML State Compression\n\nThis file develops a theory of **quotient-observable dynamics** for finite iterates.\nThe central result is that any deterministic trajectory on a finite type `\u03b1` must\nproduce a collision (under a decidable setoid `\u03c1`) within at most `|\u03b1/\u03c1|` steps.\n\nThis simultaneously serves as:\n- An **algebraic dynamical system** theorem on finite quotient recurrence,\n- An **EML-style observable-state compression** principle,\n- A **cryptographic collision certificate** on quotient states,\n- A **certified robustness** statement for quotient-observable trajectories.\n\n## Main results\n\n- `quotient_eq_implies_rel`: Quotient equality implies setoid relation.\n- `exists_lt_lt_iterate_quotient_eq`: Pigeonhole gives distinct iterates with equal quotient.\n- `exists_iterate_rel_of_card_quotient`: Core theorem \u2014 bounded-horizon quotient collision.\n- `eml_observable_orbit_bound`: Observable orbit count \u2264 quotient cardinality.\n- `post_quantum_security_collision_upper_bound`: Crypto-facing collision certificate.\n- `certified_robustness_via_quotient_compression`: Universal certified robustness.\n-/\n\nopen Function Finset Fintype\n\nnamespace QuotientOrbitCompression\n\n/-! ## \u00a71. Foundational quotient-relation lemmas -/\n\n/-- **Bridge: quotient algebra \u2192 setoid relation.**\n    Equality in the quotient `\u03b1/\u03c1` implies the underlying setoid relation `\u03c1.r`. -/\ntheorem quotient_eq_implies_rel\n    {\u03b1 : Type*} (\u03c1 : Setoid \u03b1) {a b : \u03b1} :\n    Quotient.mk (s := \u03c1) a = Quotient.mk (s := \u03c1) b \u2192 \u03c1.r a b := by\n  intro h; exact Quotient.exact h\n\n/-! ## \u00a72. Pigeonhole on quotient traces -/\n\n/-- **Core pigeonhole on quotient traces**: there exist distinct indices `m < n \u2264 |\u03b1/\u03c1|`\n    such that the quotient images of `f^[m](x)` and `f^[n](x)` coincide.\n    Bridge: finite combinatorics \u2192 quotient dynamical systems. -/\ntheorem exists_lt_lt_iterate_quotient_eq\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) :\n    \u2203 m n : \u2115, m < n \u2227 n \u2264 Fintype.card (Quotient \u03c1) \u2227\n      Quotient.mk (s := \u03c1) ((f^[m]) x) = Quotient.mk (s := \u03c1) ((f^[n]) x) := by\n  have hcard : Fintype.card (Quotient \u03c1) < Fintype.card (Fin (Fintype.card (Quotient \u03c1) + 1)) := by\n    simp [Fintype.card_fin]\n  let g : Fin (Fintype.card (Quotient \u03c1) + 1) \u2192 Quotient \u03c1 :=\n    fun i => Quotient.mk (s := \u03c1) ((f^[i.1]) x)\n  obtain \u27e8i, j, hne, heq\u27e9 := Fintype.exists_ne_map_eq_of_card_lt g hcard\n  rcases Nat.lt_or_gt_of_ne (Fin.val_ne_of_ne hne) with h | h\n  \u00b7 exact \u27e8i.1, j.1, h, Nat.le_of_lt_succ j.isLt, heq\u27e9\n  \u00b7 exact \u27e8j.1, i.1, h, Nat.le_of_lt_succ i.isLt, heq.symm\u27e9\n\n/-- **Core theorem \u2014 quotient-cardinality recurrence.**\n    For any endomorphism `f` on a finite type `\u03b1` with decidable setoid `\u03c1`,\n    every point `x` has iterates `f^[m](x)` and `f^[n](x)` that are `\u03c1`-related\n    with `m < n \u2264 |\u03b1/\u03c1|`.\n\n    **Bridge: algebraic dynamics \u2194 cryptographic collision bounds.**\n    Complexity: O(|\u03b1/\u03c1|) observations suffice for collision detection.\n\n    **Bridge: quotient cardinality \u2194 certified robustness observables.** -/\ntheorem exists_iterate_rel_of_card_quotient\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) :\n    \u2203 m n : \u2115, m < n \u2227 n \u2264 Fintype.card (Quotient \u03c1) \u2227\n      \u03c1.r ((f^[m]) x) ((f^[n]) x) := by\n  obtain \u27e8m, n, hmn, hbound, heq\u27e9 := exists_lt_lt_iterate_quotient_eq \u03c1 f x\n  exact \u27e8m, n, hmn, hbound, quotient_eq_implies_rel \u03c1 heq\u27e9\n\n/-! ## \u00a73. Observable orbit definitions and bounds -/\n\n/-- The **quotient-observable trace** maps each step `i \u2208 {0, ..., N}` to the\n    quotient class of `f^[i](x)`. -/\ndef quotientObservableTrace\n    {\u03b1 : Type*} (\u03c1 : Setoid \u03b1) (f : \u03b1 \u2192 \u03b1) (x : \u03b1) (N : \u2115) :\n    Fin (N + 1) \u2192 Quotient \u03c1 :=\n  fun i => Quotient.mk (s := \u03c1) ((f^[i.1]) x)\n\n/-- The **observable orbit set**: distinct quotient classes visited in first `N+1` iterates. -/\ndef observableOrbitSet\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) (N : \u2115) :\n    Finset (Quotient \u03c1) :=\n  Finset.univ.image (quotientObservableTrace \u03c1 f x N)\n\n/-- The **observable orbit count**: number of distinct quotient classes visited. -/\ndef observableOrbitCount\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) (N : \u2115) : \u2115 :=\n  (observableOrbitSet \u03c1 f x N).card\n\n/-- **EML observable orbit bound**: the number of distinct quotient classes\n    visited in any window is at most `|\u03b1/\u03c1|`.\n\n    **Bridge: finite orbit theory \u2194 EML state compression.**\n    O(|\u03b1/\u03c1|) upper bound on observable state space complexity. -/\ntheorem eml_observable_orbit_bound\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) (N : \u2115) :\n    observableOrbitCount \u03c1 f x N \u2264 Fintype.card (Quotient \u03c1) := by\n  unfold observableOrbitCount observableOrbitSet\n  exact Finset.card_le_univ _\n\n/-- **Compressed horizon bound**: specializing to `N = |\u03b1/\u03c1|`. -/\ntheorem eml_observable_orbit_bound_at_quotient_card\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) :\n    observableOrbitCount \u03c1 f x (Fintype.card (Quotient \u03c1)) \u2264\n      Fintype.card (Quotient \u03c1) :=\n  eml_observable_orbit_bound \u03c1 f x _\n\n/-! ## \u00a74. Compression statistics -/\n\n/-- The **compression gap** between collision indices: `n - m`. -/\ndef quotientCompressionGap (m n : \u2115) : \u2115 := n - m\n\n/-- **Quotient collision entropy**: `|\u03b1| - |\u03b1/\u03c1|`, the information discarded.\n    Bridge: information theory \u2192 algebraic compression. -/\nnoncomputable def quotientCollisionEntropy\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r] : \u2115 :=\n  Fintype.card \u03b1 - Fintype.card (Quotient \u03c1)\n\n/-- **Orbit compression ratio**: `|\u03b1/\u03c1| / |\u03b1|` measuring compression efficiency. -/\nnoncomputable def orbitCompressionRatio\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r] : \u211a :=\n  (Fintype.card (Quotient \u03c1) : \u211a) / (Fintype.card \u03b1 : \u211a)\n\n/-- **Observable diameter**: one less than the observable orbit count. -/\ndef quotientObservableDiameter\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) (N : \u2115) : \u2115 :=\n  observableOrbitCount \u03c1 f x N - 1\n\n/-- The collision entropy is nonneg (trivially, since it's \u2115). -/\ntheorem quotientCollisionEntropy_nonneg\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r] :\n    0 \u2264 quotientCollisionEntropy \u03c1 :=\n  Nat.zero_le _\n\n/-\n**Orbit compression ratio is at most 1**: the quotient never has more states\n    than the ambient type. Bridge: information theory \u2192 algebraic compression.\n-/\ntheorem orbitCompressionRatio_le_one\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r] :\n    orbitCompressionRatio \u03c1 \u2264 1 := by\n  refine' div_le_one_of_le\u2080 _ ( Nat.cast_nonneg _ );\n  exact_mod_cast Fintype.card_le_of_surjective _ Quotient.mk_surjective\n\n/-- Observable diameter + 1 is bounded by quotient card + 1. -/\ntheorem quotientObservableDiameter_bound\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) (N : \u2115) :\n    quotientObservableDiameter \u03c1 f x N + 1 \u2264 Fintype.card (Quotient \u03c1) + 1 := by\n  unfold quotientObservableDiameter\n  have h := eml_observable_orbit_bound \u03c1 f x N\n  omega\n\n/-! ## \u00a75. Cryptographic collision certificates -/\n\n/-- A **lattice-crypto collision certificate**: existence of quotient collision\n    within the cardinality horizon.\n    Bridge: algebraic dynamics \u2192 post-quantum security analysis. -/\ndef lattice_crypto_collision_certificate\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) : Prop :=\n  \u2203 m n : \u2115, m < n \u2227 n \u2264 Fintype.card (Quotient \u03c1) \u2227\n    \u03c1.r ((f^[m]) x) ((f^[n]) x)\n\n/-- **Post-quantum security collision upper bound**: every trajectory has a\n    deterministic collision certificate within `|\u03b1/\u03c1|` steps.\n    O(|\u03b1/\u03c1|) deterministic collision bound for post-quantum analysis.\n\n    Bridge: finite orbit recurrence \u2192 post_quantum_security collision analysis. -/\ntheorem post_quantum_security_collision_upper_bound\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) :\n    lattice_crypto_collision_certificate \u03c1 f x :=\n  exists_iterate_rel_of_card_quotient \u03c1 f x\n\n/-- **Certified robustness for observables**: \u2200 starting points,\n    quotient collisions exist within the cardinality bound.\n    Bridge: quotient cardinality \u2192 certified_robustness for ML observables. -/\ndef certified_robustness_observable\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) : Prop :=\n  \u2200 x : \u03b1, \u2203 m n : \u2115, m < n \u2227\n    n \u2264 Fintype.card (Quotient \u03c1) \u2227\n    \u03c1.r ((f^[m]) x) ((f^[n]) x)\n\n/-- **Certified robustness via quotient compression**: \u2200x, \u2203m, \u2203n quantifier alternation.\n    Bridge: quotient compression \u2192 certified_robustness for observable trajectories. -/\ntheorem certified_robustness_via_quotient_compression\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) :\n    certified_robustness_observable \u03c1 f :=\n  fun x => exists_iterate_rel_of_card_quotient \u03c1 f x\n\n/-! ## \u00a76. First-repeat and certificate structures -/\n\n/-- Predicate for the **first quotient repeat**: `(m, n)` is the earliest\n    pair witnessing a quotient collision with terminal index `n`. -/\ndef isFirstQuotientRepeat\n    {\u03b1 : Type*} (\u03c1 : Setoid \u03b1) (f : \u03b1 \u2192 \u03b1) (x : \u03b1) (m n : \u2115) : Prop :=\n  m < n \u2227\n  \u03c1.r ((f^[m]) x) ((f^[n]) x) \u2227\n  \u2200 a b : \u2115, a < b \u2192 b < n \u2192 \u00ac \u03c1.r ((f^[a]) x) ((f^[b]) x)\n\n/-- A **quotient repeat certificate** packages collision data with proofs.\n    Bridge: algebraic orbit theory \u2192 certified collision extraction. -/\nstructure QuotientRepeatCertificate\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) where\n  m : \u2115\n  n : \u2115\n  strictMonoWitness : m < n\n  horizonWitness : n \u2264 Fintype.card (Quotient \u03c1)\n  relatedWitness : \u03c1.r ((f^[m]) x) ((f^[n]) x)\n\n/-- **Existence of quotient repeat certificates.** -/\ntheorem exists_QuotientRepeatCertificate\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) :\n    Nonempty (QuotientRepeatCertificate \u03c1 f x) := by\n  obtain \u27e8m, n, hmn, hbound, hrel\u27e9 := exists_iterate_rel_of_card_quotient \u03c1 f x\n  exact \u27e8\u27e8m, n, hmn, hbound, hrel\u27e9\u27e9\n\n/-\n**Existence of first quotient repeat within the horizon.**\n    Upgrades pigeonhole into a genuine orbit-structure theorem with minimality.\n    Bridge: orbit structure theory \u2192 minimal collision extraction.\n-/\ntheorem exists_first_quotient_repeat\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) :\n    \u2203 m n, isFirstQuotientRepeat \u03c1 f x m n \u2227 n \u2264 Fintype.card (Quotient \u03c1) := by\n  -- Let's denote the set of indices where the quotient repeat occurs as S.\n  set S := {n | \u2203 m < n, \u03c1.r ((f^[m]) x) ((f^[n]) x)} with hS_def;\n  -- By the well-ordering principle, S has a least element n\u2080.\n  obtain \u27e8n\u2080, hn\u2080\u27e9 : \u2203 n\u2080 \u2208 S, \u2200 n \u2208 S, n\u2080 \u2264 n := by\n    have h_nonempty : S.Nonempty := by\n      exact Exists.elim ( exists_iterate_rel_of_card_quotient \u03c1 f x ) fun m hm => Exists.elim hm fun n hn => \u27e8 n, m, hn.1, hn.2.2 \u27e9;\n    exact \u27e8 Nat.find h_nonempty, Nat.find_spec h_nonempty, fun n hn => Nat.find_min' h_nonempty hn \u27e9;\n  obtain \u27e8 \u27e8 m, hm\u2081, hm\u2082 \u27e9, hm\u2083 \u27e9 := hn\u2080;\n  refine' \u27e8 m, n\u2080, \u27e8 hm\u2081, hm\u2082, _ \u27e9, _ \u27e9;\n  \u00b7 exact fun a b hab hbn\u2080 h => not_lt_of_ge ( hm\u2083 b \u27e8 a, hab, h \u27e9 ) hbn\u2080;\n  \u00b7 have := exists_iterate_rel_of_card_quotient \u03c1 f x;\n    exact le_trans ( hm\u2083 _ \u27e8 _, this.choose_spec.choose_spec.1, this.choose_spec.choose_spec.2.2 \u27e9 ) this.choose_spec.choose_spec.2.1\n\n/-! ## \u00a77. Setoid-respecting dynamics and semiconjugacy -/\n\n/-- `f` **respects** setoid `\u03c1` if it preserves the equivalence relation.\n    Bridge: semiring congruence functoriality \u2192 quotient dynamical systems. -/\ndef RespectsSetoid\n    {\u03b1 : Type*} (\u03c1 : Setoid \u03b1) (f : \u03b1 \u2192 \u03b1) : Prop :=\n  \u2200 \u2983a b : \u03b1\u2984, \u03c1.r a b \u2192 \u03c1.r (f a) (f b)\n\n/-\n**Iterated stability**: if `f` respects `\u03c1`, then `f^[n]` respects `\u03c1` for all `n`.\n    Bridge: congruence algebra \u2192 iterated dynamical stability.\n-/\ntheorem respectsSetoid_iterate\n    {\u03b1 : Type*} (\u03c1 : Setoid \u03b1) (f : \u03b1 \u2192 \u03b1)\n    (hf : RespectsSetoid \u03c1 f) :\n    \u2200 n : \u2115, \u2200 \u2983a b : \u03b1\u2984, \u03c1.r a b \u2192 \u03c1.r ((f^[n]) a) ((f^[n]) b) := by\n  intro n;\n  induction n <;> aesop\n\n/-- The **quotient lift map**: when `f` respects `\u03c1`, it induces an endomorphism\n    on `Quotient \u03c1`. -/\ndef quotientLiftMap\n    {\u03b1 : Type*} (\u03c1 : Setoid \u03b1) (f : \u03b1 \u2192 \u03b1)\n    (hf : RespectsSetoid \u03c1 f) :\n    Quotient \u03c1 \u2192 Quotient \u03c1 :=\n  Quotient.map f (fun _a _b hab => hf hab)\n\n/-\n**Semiconjugacy of iteration**: iteration commutes with quotient projection.\n    `(quotientLiftMap \u03c1 f hf)^[n] (\u27e6x\u27e7) = \u27e6f^[n](x)\u27e7`\n\n    Bridge: semiring congruence functoriality \u2194 quotient dynamical systems.\n-/\ntheorem quotientLiftMap_iterate_commutes\n    {\u03b1 : Type*} (\u03c1 : Setoid \u03b1) (f : \u03b1 \u2192 \u03b1)\n    (hf : RespectsSetoid \u03c1 f) (x : \u03b1) (n : \u2115) :\n    ((quotientLiftMap \u03c1 f hf)^[n]) (Quotient.mk (s := \u03c1) x) =\n      Quotient.mk (s := \u03c1) ((f^[n]) x) := by\n  induction n <;> simp_all +decide [ Function.iterate_succ_apply', quotientLiftMap ]\n\n/-! ## \u00a78. Saturation and exactness -/\n\n/-- An orbit is **quotient-saturated** if it visits every quotient class\n    within the cardinality horizon. -/\ndef QuotientOrbitSaturated\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) : Prop :=\n  \u2200 q : Quotient \u03c1, \u2203 n : \u2115, n \u2264 Fintype.card (Quotient \u03c1) \u2227\n    Quotient.mk (s := \u03c1) ((f^[n]) x) = q\n\n/-\n**Saturation implies maximal observable count**: the upper bound is tight\n    under saturation. Bridge: saturation analysis \u2192 sharp compression bounds.\n-/\ntheorem quotient_orbit_saturated_cardinality_exact\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1)\n    (hsat : QuotientOrbitSaturated \u03c1 f x) :\n    observableOrbitCount \u03c1 f x (Fintype.card (Quotient \u03c1)) =\n      Fintype.card (Quotient \u03c1) := by\n  refine' le_antisymm _ _;\n  \u00b7 exact eml_observable_orbit_bound \u03c1 f x _;\n  \u00b7 refine' Finset.card_le_card _;\n    intro q hq;\n    rcases hsat q with \u27e8 n, hn, rfl \u27e9 ; exact Finset.mem_image.mpr \u27e8 \u27e8 n, by linarith \u27e9, Finset.mem_univ _, rfl \u27e9\n\n/-! ## \u00a79. Monotonicity of observable orbit count -/\n\n/-\nObservable orbit set is monotone in the horizon.\n-/\ntheorem observableOrbitSet_mono\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) {M N : \u2115} (h : M \u2264 N) :\n    observableOrbitSet \u03c1 f x M \u2286 observableOrbitSet \u03c1 f x N := by\n  intro q;\n  simp +decide [ observableOrbitSet, mem_image ];\n  exact fun i hi => \u27e8 \u27e8 i, by linarith [ Fin.is_lt i ] \u27e9, hi \u27e9\n\n/-- Observable orbit count is monotone in the horizon. -/\ntheorem observableOrbitCount_mono\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) {M N : \u2115} (h : M \u2264 N) :\n    observableOrbitCount \u03c1 f x M \u2264 observableOrbitCount \u03c1 f x N :=\n  Finset.card_le_card (observableOrbitSet_mono \u03c1 f x h)\n\n/-\nObservable orbit count at step 0 is exactly 1.\n-/\ntheorem observableOrbitCount_zero\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) :\n    observableOrbitCount \u03c1 f x 0 = 1 := by\n  convert Finset.card_singleton ( Quotient.mk ( s := \u03c1 ) x )\n\n/-- Compression gap is positive for any collision. -/\ntheorem quotientCompressionGap_pos {m n : \u2115} (h : m < n) :\n    0 < quotientCompressionGap m n := by\n  unfold quotientCompressionGap; omega\n\n/-- Compression gap bounded by quotient cardinality. -/\ntheorem quotientCompressionGap_le_card\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r]\n    {m n : \u2115} (_hm : m < n) (hn : n \u2264 Fintype.card (Quotient \u03c1)) :\n    quotientCompressionGap m n \u2264 Fintype.card (Quotient \u03c1) := by\n  unfold quotientCompressionGap; omega\n\n/-! ## \u00a710. Concrete models -/\n\n/-- Discrete setoid on `Bool`: equality. -/\ndef boolDiscreteSetoid : Setoid Bool where\n  r := (\u00b7 = \u00b7)\n  iseqv := \u27e8fun _ => rfl, fun h => h.symm, fun h1 h2 => h1.trans h2\u27e9\n\ninstance : DecidableRel boolDiscreteSetoid.r := fun a b => Bool.decEq a b\n\n/-\nQuotient of `Bool` by discrete setoid has cardinality 2.\n-/\ntheorem bool_discrete_quotient_card :\n    Fintype.card (Quotient boolDiscreteSetoid) = 2 := by\n  convert Fintype.card_congr ( Equiv.ofBijective _ ?_ );\n  convert rfl;\n  convert Fintype.card_fin 2;\n  exact fun x => Quotient.liftOn' x ( fun x => if x = Bool.true then 1 else 0 ) fun x y h => by cases x <;> cases y <;> simp_all +decide ;\n  constructor <;> intro x <;> simp_all +decide [ Function.Injective ];\n  \u00b7 intro y h; rcases Quotient.exists_rep x with \u27e8 x, rfl \u27e9 ; rcases Quotient.exists_rep y with \u27e8 y, rfl \u27e9 ; aesop;\n  \u00b7 fin_cases x <;> [ exact \u27e8 Quotient.mk _ Bool.false, rfl \u27e9 ; exact \u27e8 Quotient.mk _ Bool.true, rfl \u27e9 ]\n\n/-- `Bool.not` collision: `not^[0](true) = true = not^[2](true)`. -/\ntheorem bool_not_collision :\n    \u2203 m n : \u2115, m < n \u2227 n \u2264 2 \u2227\n      boolDiscreteSetoid.r ((Bool.not^[m]) true) ((Bool.not^[n]) true) :=\n  \u27e80, 2, by omega, le_refl _, by native_decide\u27e9\n\n/-- Identity on `Bool` collides at steps 0 and 1. -/\ntheorem bool_id_immediate_collision (b : Bool) :\n    \u2203 m n : \u2115, m < n \u2227 n \u2264 1 \u2227\n      boolDiscreteSetoid.r ((id^[m]) b) ((id^[n]) b) :=\n  \u27e80, 1, by omega, le_refl _, by simp [boolDiscreteSetoid]\u27e9\n\n/-\n`|\u03b1/\u03c1| \u2264 |\u03b1|` for any setoid.\n-/\ntheorem quotient_card_le_card\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r] :\n    Fintype.card (Quotient \u03c1) \u2264 Fintype.card \u03b1 := by\n  exact card_quotient_le \u03c1\n\n/-- Collision horizon is positive when \u03b1 is nonempty. -/\ntheorem quotient_card_pos\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [h : Nonempty \u03b1]\n    (\u03c1 : Setoid \u03b1) [DecidableRel \u03c1.r] :\n    0 < Fintype.card (Quotient \u03c1) := by\n  haveI : Nonempty (Quotient \u03c1) := h.map (Quotient.mk (s := \u03c1))\n  exact Fintype.card_pos\n\nend QuotientOrbitCompression",
     "date": "2026-05-11T02:05:18Z"
   },
-  "algebraspeculativemachinelearning_ultrametric_proo.json": {
-    "title": "Non-Archimedean Proof Information Theory: Ultrametric Observer Rate-Distortion via Congruence Spectra",
-    "domain": "Bridges (Ultrametric Geometry \u00d7 Information Theory \u00d7 Machine Learning \u00d7 Proof Theory)",
-    "article": "# The Hidden Law of Lossy Compression\n\n## When \"close enough\" becomes exact science\n\nImagine you're writing a summary of a 400-page legal brief. You can't include everything \u2014 you need to compress. But different readers care about different things: the judge wants the legal arguments, the client wants the bottom line, the press wants the drama. How short can your summary be while still satisfying every reader?\n\nThis question \u2014 how much can you compress while preserving what matters to all observers \u2014 sits at the heart of information theory. Claude Shannon answered a version of it in 1959 with his rate-distortion theorem, one of the most elegant results in mathematics. But Shannon's answer requires probability distributions, continuous variables, and optimization over infinite-dimensional spaces. It's beautiful but unwieldy.\n\nNow a new mathematical result reveals something startling: in certain highly structured spaces, the entire optimization problem *collapses*. The answer isn't approximately right \u2014 it's *exactly* right, computed by simple counting. And the spaces where this happens aren't exotic mathematical curiosities. They're the spaces that arise naturally when you organize information hierarchically \u2014 which is to say, they're everywhere.\n\n## The ultrametric secret\n\nThe key structure is called an *ultrametric*. In an ordinary metric space, the triangle inequality says the direct route between two points is never longer than a detour: *d(A, C) \u2264 d(A, B) + d(B, C)*. An ultrametric strengthens this dramatically: *d(A, C) \u2264 max(d(A, B), d(B, C))*. The longest leg of any triangle determines the whole triangle.\n\nThis sounds abstract, but ultrametric spaces are hiding in plain sight. Every taxonomy is one. Consider biological classification: two species of beetle are \"closer\" to each other than either is to a butterfly, and all insects are closer to each other than any is to a mammal. The \"distance\" between organisms \u2014 measured by how far back you must go to find a common ancestor \u2014 satisfies the ultrametric inequality. The same structure appears in file systems (folder hierarchies), language families (Romance languages are closer to each other than to Germanic ones), corporate org charts, and the branching structure of rivers.\n\nThe revolutionary property of ultrametric spaces is that \"closeness\" is *transitive* in a way it isn't for ordinary distances. If Alice is within 5 miles of Bob, and Bob is within 5 miles of Carol, then Alice might be 10 miles from Carol. But in an ultrametric space, Alice must be within 5 miles of Carol too. Being \"within \u03b5\" is not just a fuzzy notion \u2014 it's a precise equivalence relation, carving the space into clean, non-overlapping clusters.\n\n## The observer problem\n\nNow add observers. In the legal brief analogy, each observer is a reader with their own way of measuring whether two summaries are \"close enough.\" The judge uses one metric, the client another, the journalist a third. The *observer distortion* between two documents is the worst-case difference across all observers \u2014 the document pair is only \"equivalent\" if *every* reader agrees they're interchangeable.\n\nThe fundamental question becomes: given a tolerance level \u03b5, how many distinct summaries do you need in your codebook so that every original document has a summary within \u03b5 of it, according to every observer?\n\nIn general metric spaces, answering this question requires solving an optimization problem. You need to search over all possible codebooks, computing the coverage of each one, and find the smallest that works. This is computationally hard and conceptually messy \u2014 the answer depends on the precise geometry of the space in complex ways.\n\n## The theorem that changes everything\n\nThe new result proves that in ultrametric spaces, the optimization problem disappears entirely.\n\nThe minimum codebook size at tolerance \u03b5 equals *exactly* the number of equivalence classes under \u03b5-observer-congruence. No optimization needed. No searching. Just count the clusters.\n\nWhy? Because ultrametric transitivity means the \u03b5-balls are precisely the equivalence classes. Any codebook must contain at least one representative per class (otherwise some class goes uncovered). And one representative per class suffices (because every point in a class is within \u03b5 of the representative). So the minimum is exactly the class count.\n\nThis isn't an approximation or a bound. It's an equality. The compression problem has been reduced to pure algebra.\n\n## A staircase of phase transitions\n\nThe theorem has a spectacular corollary about the *rate function* \u2014 the curve showing how codebook size varies with tolerance.\n\nIn general, rate-distortion curves are smooth, requiring calculus and optimization to compute. But in the ultrametric observer setting, the rate function is a *step function*. It's constant between critical scales and jumps only at the specific tolerance values where two points become equivalent \u2014 that is, where their observer distortion exactly equals \u03b5.\n\nSince there are only finitely many pairs of points, there are only finitely many critical scales. The entire compression profile is determined by these breakpoints: a finite staircase descending from \"every point needs its own code\" (maximum rate) to \"one code suffices for everything\" (zero rate).\n\nThe breakpoints form what might be called a *compression spectrum* \u2014 a finite signature that completely characterizes the lossy coding properties of the space. Two spaces have the same compression behavior if and only if they have the same spectrum. This is the kind of clean, algebraic invariant that mathematicians dream about.\n\n## Why this matters beyond mathematics\n\nThe result bridges several fields in unexpected ways.\n\n**Machine learning and AI.** Neural networks learn internal representations of data \u2014 compressed codes that preserve task-relevant information while discarding noise. The theorem provides a rigorous framework for understanding this compression. Observers correspond to downstream tasks, the ultrametric structure captures hierarchical feature organization, and the compression spectrum characterizes the \"semantic phase diagram\" of the representation. The codebook at each tolerance level is a certified lossy compression of the neural code.\n\n**Data compression.** Standard compression algorithms (JPEG, MP3, video codecs) use heuristics to balance quality and file size. The theorem shows that for hierarchically structured data \u2014 which includes taxonomies, organizational data, and tree-structured databases \u2014 there exists an exact, certifiably optimal compression. The greedy algorithm (pick one representative per cluster) is provably optimal, not just a good heuristic.\n\n**Cryptography and security.** The observer family framework connects to collision-resistant hash functions. If observers cannot distinguish two inputs, those inputs are interchangeable \u2014 they \"collide\" under the hash family. The covering number bounds the minimum number of distinct hash outputs needed to avoid collisions at a given resolution.\n\n**Logic and program verification.** Two programs are \"observationally equivalent\" if no test can distinguish them. The theorem quantifies this: the number of genuinely distinct programs, up to observer tolerance \u03b5, equals the number of congruence classes. This gives a principled way to measure the complexity of a software system from the outside \u2014 not by counting lines of code, but by counting distinguishable behaviors.\n\n## The tree inside every hierarchy\n\nThere's a deep geometric reason why ultrametric spaces behave so cleanly: every finite ultrametric space is isometric to the leaves of a weighted tree.\n\nDraw a tree where each internal node has a height equal to the distance at which its descendant leaves merge into one equivalence class. The critical scales of the compression spectrum are exactly the node heights. The congruence classes at scale \u03b5 are exactly the subtrees rooted at nodes just below height \u03b5. The step function staircase traces the dendrogram from root to leaves.\n\nThis tree structure means ultrametric compression is not just algebraically clean \u2014 it's *algorithmically* efficient. Finding the optimal codebook reduces to selecting representatives from tree nodes, which can be done in time proportional to the number of leaves times the number of observers. No NP-hard optimization, no approximation algorithms, no relaxations. The exact answer falls out of the tree structure.\n\n## A new field takes shape\n\nWhat's been described here is not just a theorem but the opening chapter of what might be called *non-Archimedean information theory* \u2014 information theory in spaces where the triangle inequality is replaced by its stronger ultrametric cousin.\n\nThe classical information theory of Shannon lives in probabilistic metric spaces. The new theory lives in hierarchical, tree-like spaces with algebraic structure. The two theories share the same conceptual architecture \u2014 rate functions, distortion, codebooks, phase transitions \u2014 but the ultrametric version is dramatically more rigid and computable.\n\nThe natural next questions cascade outward. What happens when you add probability distributions on proof states? (A Shannon-style theorem for ultrametric sources.) What happens when you compose compressed representations? (An operadic composition law for coding rates.) Can you reconstruct the algebraic structure of a system from its compression profile alone? (A spectral rigidity theorem.)\n\nEach of these questions connects to active research frontiers. The probabilistic extension touches PAC-Bayesian learning theory. The composition law connects to neural network architecture design. The spectral rigidity question echoes the famous Gel'fand-Naimark theorem in functional analysis, which reconstructs a space from its algebra of functions.\n\n## The punchline\n\nHere is the sentence that the theorem earns:\n\n> Proof semantics has an ultrametric coding law, and its compression curve is literally the congruence spectrum.\n\nUnpacked: if you organize mathematical reasoning hierarchically and measure distinguishability through observers, then the problem of lossy summarization \u2014 \"how short can I make this while preserving what matters?\" \u2014 has an exact algebraic answer. The answer is a step function. Its jumps are the structural transitions in your equivalence classes. And it can be computed by counting, not optimizing.\n\nThat's the kind of result that opens a field.\n",
-    "research_paper": "# Non-Archimedean Proof Information Theory: Ultrametric Observer Rate\u2013Distortion via Congruence Spectra\n\n## Abstract\n\nWe establish a rate\u2013distortion theorem for finite ultrametric spaces equipped with observer families. The central result shows that the minimal \u03b5-cover cardinality under observer distortion equals the congruence index \u2014 the number of equivalence classes in the observer \u03b5-congruence relation. This converts a variational optimization problem into exact combinatorics, yielding a non-Archimedean analogue of Shannon's rate\u2013distortion theory. We prove the rate function is antitone and piecewise constant with finitely many breakpoints (the compression spectrum), derive a certified greedy codebook algorithm, and establish a full rate\u2013distortion existence theorem. All results are formalized and machine-verified.\n\n**Keywords:** ultrametric spaces, rate\u2013distortion theory, observer congruence, covering numbers, compression spectra, certified algorithms, non-Archimedean geometry\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nRate\u2013distortion theory, introduced by Shannon (1959), characterizes the fundamental limits of lossy data compression. Given a source distribution and a distortion measure, the rate\u2013distortion function R(D) gives the minimum bit rate achievable at distortion level D. Computing R(D) generally requires solving a variational problem over conditional distributions.\n\nWe consider a different regime: *nonprobabilistic* compression in *ultrametric* spaces, where the distortion is measured by a family of observers. This setting arises naturally in:\n\n- **Proof theory**: proof states equipped with hierarchical distance and observational semantics\n- **Machine learning**: neural representations with hierarchical feature structure and multiple downstream tasks\n- **Taxonomy**: classification systems where distance reflects hierarchical depth\n- **p-adic analysis**: non-Archimedean valued fields\n\n### 1.2 Main Results\n\nLet P be a finite set, let O = (O\u2081, ..., O\u2099) be a family of ultrametric distance functions on P, and define the observer distortion \u03b4_O(p,q) = max_i O_i(p,q). For \u03b5 \u2265 0, define:\n\n- The **observer \u03b5-congruence**: p \u223c_\u03b5 q \u27fa \u03b4_O(p,q) \u2264 \u03b5\n- The **covering number**: N_O(\u03b5) = min{|C| : C \u2286 P, \u2200p \u2203c\u2208C, \u03b4_O(p,c) \u2264 \u03b5}\n- The **congruence index**: \u03ba_O(\u03b5) = |P/\u223c_\u03b5|\n\nOur main results are:\n\n**Theorem A** (Core Identity). *N_O(\u03b5) = \u03ba_O(\u03b5) for all \u03b5 \u2265 0.*\n\n**Theorem B** (Antitonicity). *The function \u03b5 \u21a6 N_O(\u03b5) is antitone (non-increasing).*\n\n**Theorem C** (Spectral Structure). *N_O(\u03b5) is piecewise constant, changing only at the finitely many critical scales {\u03b4_O(p,q) : p,q \u2208 P}.*\n\n**Theorem D** (Certified Codebook). *The greedy codebook (one representative per congruence class) is an optimal \u03b5-cover.*\n\n**Theorem E** (Rate\u2013Distortion Existence). *There exists an antitone function R: [0,\u221e) \u2192 \u211d satisfying R(\u03b5) = log \u03ba_O(\u03b5) and R(\u03b5) = inf{log|C| : C is an \u03b5-cover}.*\n\n### 1.3 Relationship to Prior Work\n\nOur results are closest in spirit to:\n\n- **Shannon's rate\u2013distortion theory** (1959): we obtain the same structural result (rate = log of covering number) but in a nonprobabilistic, ultrametric setting where the answer is exact rather than asymptotic.\n- **Metric covering/packing** (Kolmogorov\u2013Tikhomirov, 1959): our covering numbers specialize classical metric entropy to the ultrametric observer setting, where they become algebraic invariants.\n- **Ultrametric clustering** (Rammal et al., 1986): the connection between ultrametric balls and equivalence classes is classical; our contribution is the rate\u2013distortion interpretation and the observer-family framework.\n\n---\n\n## 2. Definitions and Setup\n\n### 2.1 Ultrametric Observer Families\n\n**Definition 2.1.** An *ultrametric observer family* on a finite set P is a tuple O = (O\u2081, ..., O\u2099) of functions O_i: P \u00d7 P \u2192 [0,\u221e] satisfying, for each i:\n\n1. O_i(x,x) = 0 (diagonal zero)\n2. O_i(x,y) = O_i(y,x) (symmetry)\n3. O_i(x,z) \u2264 max(O_i(x,y), O_i(y,z)) (strong triangle inequality)\n\n**Definition 2.2.** The *observer distortion* is \u03b4_O(p,q) = max_{1\u2264i\u2264n} O_i(p,q).\n\n**Lemma 2.3.** The observer distortion \u03b4_O is itself an ultrametric:\n- \u03b4_O(x,x) = 0\n- \u03b4_O(x,y) = \u03b4_O(y,x)\n- \u03b4_O(x,z) \u2264 max(\u03b4_O(x,y), \u03b4_O(y,z))\n\n*Proof.* The first two properties follow pointwise. For the third:\n\n\u03b4_O(x,z) = max_i O_i(x,z) \u2264 max_i max(O_i(x,y), O_i(y,z))\n           \u2264 max(max_i O_i(x,y), max_i O_i(y,z)) = max(\u03b4_O(x,y), \u03b4_O(y,z)).  \u25a1\n\n### 2.2 Observer Congruence\n\n**Definition 2.4.** The *observer \u03b5-congruence* is the relation \u223c_\u03b5 defined by:\np \u223c_\u03b5 q \u27fa \u03b4_O(p,q) \u2264 \u03b5.\n\n**Proposition 2.5.** For each \u03b5 \u2265 0, the relation \u223c_\u03b5 is an equivalence relation on P.\n\n*Proof.* Reflexivity: \u03b4_O(p,p) = 0 \u2264 \u03b5. Symmetry: \u03b4_O(p,q) = \u03b4_O(q,p). Transitivity: if \u03b4_O(p,q) \u2264 \u03b5 and \u03b4_O(q,r) \u2264 \u03b5, then \u03b4_O(p,r) \u2264 max(\u03b4_O(p,q), \u03b4_O(q,r)) \u2264 \u03b5. \u25a1\n\n**Remark.** This is the crucial structural fact. In ordinary metric spaces, the relation \"d(p,q) \u2264 \u03b5\" is reflexive and symmetric but NOT transitive. The ultrametric property is exactly what makes it transitive, producing genuine equivalence classes rather than fuzzy neighborhoods.\n\n### 2.3 Observer Covers\n\n**Definition 2.6.** An *observer \u03b5-cover* (or *codebook*) is a subset C \u2286 P such that for every p \u2208 P, there exists c \u2208 C with \u03b4_O(p,c) \u2264 \u03b5.\n\n**Definition 2.7.** The *covering number* N_O(\u03b5) = min{|C| : C \u2286 P is an \u03b5-cover}.\n\n**Definition 2.8.** The *congruence index* \u03ba_O(\u03b5) = |P/\u223c_\u03b5| (number of equivalence classes).\n\n---\n\n## 3. Main Results\n\n### 3.1 Core Identity (Theorem A)\n\n**Theorem 3.1.** N_O(\u03b5) = \u03ba_O(\u03b5) for all \u03b5 \u2265 0.\n\n*Proof.* We show both inequalities.\n\n**Upper bound (N_O(\u03b5) \u2264 \u03ba_O(\u03b5)):** Choose one representative from each equivalence class of \u223c_\u03b5, forming a set C with |C| = \u03ba_O(\u03b5). For any p \u2208 P, let c be the representative of the class [p]_\u03b5. Then p \u223c_\u03b5 c, i.e., \u03b4_O(p,c) \u2264 \u03b5. So C is an \u03b5-cover.\n\n**Lower bound (\u03ba_O(\u03b5) \u2264 N_O(\u03b5)):** Let C be any \u03b5-cover. For each equivalence class [p]_\u03b5, the covering condition gives some c \u2208 C with \u03b4_O(p,c) \u2264 \u03b5, which means c \u2208 [p]_\u03b5. So C intersects every equivalence class. Since the classes are disjoint and each element of C belongs to exactly one class, we need |C| \u2265 \u03ba_O(\u03b5). \u25a1\n\n**Corollary 3.2.** The covering number equals the index of the observer congruence quotient:\nN_O(\u03b5) = |P/\u223c_\u03b5| = Fintype.card(Quotient(observerCongruence O \u03b5)).\n\n### 3.2 Antitonicity (Theorem B)\n\n**Theorem 3.3.** The map \u03b5 \u21a6 N_O(\u03b5) is antitone: if \u03b5\u2081 \u2264 \u03b5\u2082, then N_O(\u03b5\u2082) \u2264 N_O(\u03b5\u2081).\n\n*Proof.* If \u03b5\u2081 \u2264 \u03b5\u2082, then \u223c_{\u03b5\u2081} \u2286 \u223c_{\u03b5\u2082} (the \u03b5\u2082-congruence is coarser). Define f: P/\u223c_{\u03b5\u2081} \u2192 P/\u223c_{\u03b5\u2082} by f([p]_{\u03b5\u2081}) = [p]_{\u03b5\u2082}. This is well-defined (if p \u223c_{\u03b5\u2081} q then p \u223c_{\u03b5\u2082} q) and surjective. So \u03ba_O(\u03b5\u2082) = |im(f)| \u2264 |P/\u223c_{\u03b5\u2081}| = \u03ba_O(\u03b5\u2081). \u25a1\n\n### 3.3 Spectral Structure (Theorem C)\n\n**Definition 3.4.** The *critical scales* are S_O = {\u03b4_O(p,q) : p,q \u2208 P, p \u2260 q}.\n\n**Theorem 3.5.** If the interval (\u03b5\u2081, \u03b5\u2082] contains no critical scale, then N_O(\u03b5\u2081) = N_O(\u03b5\u2082).\n\n*Proof.* We show \u223c_{\u03b5\u2081} = \u223c_{\u03b5\u2082}. The inclusion \u223c_{\u03b5\u2081} \u2286 \u223c_{\u03b5\u2082} holds by antitonicity. For the converse, suppose \u03b4_O(p,q) \u2264 \u03b5\u2082. If \u03b4_O(p,q) > \u03b5\u2081, then \u03b4_O(p,q) \u2208 (\u03b5\u2081, \u03b5\u2082], contradicting the hypothesis. So \u03b4_O(p,q) \u2264 \u03b5\u2081, i.e., p \u223c_{\u03b5\u2081} q. \u25a1\n\n**Corollary 3.6.** The rate function R_O(\u03b5) = log N_O(\u03b5) is a non-increasing step function with at most |S_O| \u2264 |P|\u00b2 breakpoints.\n\n### 3.4 Certified Codebook (Theorem D)\n\n**Definition 3.7.** The *greedy codebook* at tolerance \u03b5 is C_\u03b5 = {Quotient.out(q) : q \u2208 P/\u223c_\u03b5} \u2014 one representative per congruence class.\n\n**Theorem 3.8.** C_\u03b5 is an \u03b5-cover with |C_\u03b5| = N_O(\u03b5).\n\n*Proof.* By construction, |C_\u03b5| = \u03ba_O(\u03b5) = N_O(\u03b5). For coverage: for any p, the element Quotient.out([p]_\u03b5) is in [p]_\u03b5, hence within distortion \u03b5 of p. \u25a1\n\n### 3.5 Congruence Filtration\n\n**Proposition 3.9.** The observer congruences form a nested filtration: if \u03b5\u2081 \u2264 \u03b5\u2082, every \u03b5\u2081-class is contained in some \u03b5\u2082-class.\n\nThis filtration is the *ultrametric analogue of a Rips filtration* in topological data analysis. The filtration parameter \u03b5 plays the role of the scale parameter, and the congruence classes at each scale form a partition that coarsens as \u03b5 increases.\n\n---\n\n## 4. Algorithms\n\n### 4.1 Greedy Codebook Construction\n\n```\nAlgorithm: GreedyCodebook(P, O, \u03b5)\nInput: Finite set P, observer family O = (O\u2081,...,O\u2099), tolerance \u03b5\nOutput: Optimal \u03b5-cover C\n\n1. Compute distortion matrix: D[p,q] = max_i O_i(p,q) for all p,q \u2208 P\n2. Compute congruence classes via Union-Find:\n   - Initialize UF with |P| singletons\n   - For each pair (p,q) with D[p,q] \u2264 \u03b5: Union(p,q)\n3. Return one representative from each connected component\n\nComplexity: O(|P|\u00b2 \u00b7 n) time, O(|P|) space\nCorrectness: Guaranteed by Theorem 3.8\n```\n\n### 4.2 Compression Spectrum Computation\n\n```\nAlgorithm: CompressionSpectrum(P, O)\nInput: Finite set P, observer family O\nOutput: Step function N_O(\u00b7) as list of (scale, covering_number) pairs\n\n1. Compute all critical scales: S = {D[p,q] : p \u2260 q}\n2. Sort S = {s\u2081 < s\u2082 < ... < s_m}\n3. For each s_k: compute N_O(s_k) via GreedyCodebook\n4. Return [(0, |P|), (s\u2081, N_O(s\u2081)), ..., (s_m, N_O(s_m))]\n\nComplexity: O(|P|\u00b2 \u00b7 n \u00b7 |S|) time, O(|P|\u00b2) space\n```\n\n---\n\n## 5. Applications\n\n### 5.1 Certified Neural Code Compression\n\nConsider a neural network with internal representation space P (discretized to finite states) and n downstream task heads acting as observers. Each observer O_i measures task-relevant distinguishability between representations.\n\n**Application:** Theorem A gives the exact minimum number of distinct codes needed at distortion tolerance \u03b5. The compression spectrum reveals the \"semantic phase diagram\" \u2014 the scales at which task-relevant distinctions appear.\n\n### 5.2 Proof Trace Summarization\n\nIn automated theorem proving, proof traces can be modeled as elements of an ultrametric space (reflecting the tree structure of proof search). Observers correspond to proof properties (correctness, method, dependencies).\n\n**Application:** The greedy codebook gives a certified proof summary \u2014 a minimal set of representative proof states that captures all observer-relevant distinctions up to tolerance \u03b5.\n\n### 5.3 Hierarchical Database Compression\n\nTaxonomic databases (biological classification, library catalogues, corporate org charts) have natural ultrametric structure. Observers correspond to different query patterns.\n\n**Application:** The covering number gives the minimum database size after lossy compression that preserves query answers up to tolerance \u03b5.\n\n### 5.4 Worked Example\n\nConsider P = {0,1,...,7} with the tree structure:\n- Merge {0,1} at height 1, {2,3} at height 1, {4,5} at height 2\n- Merge {0,1,2,3} at height 3\n- Merge all at height 5\n\nWith two observers at scales 0.8 and 0.6:\n\n| \u03b5 | N_O(\u03b5) | R_O(\u03b5) | Codebook |\n|---|--------|--------|----------|\n| 0.0 | 8 | 2.08 | {0,1,2,3,4,5,6,7} |\n| 0.7 | 6 | 1.79 | {0,2,4,5,6,7} |\n| 1.0 | 5 | 1.61 | {0,2,4,6,7} |\n| 2.5 | 3 | 1.10 | {0,4,6} |\n| 4.0 | 1 | 0.00 | {0} |\n\nThe step function structure is clearly visible: the rate drops only at the critical scales (0.6, 0.8, 1.6, 2.4, 4.0).\n\n---\n\n## 6. Computational Experiments\n\nWe implemented the algorithms in Python and verified the theorems numerically on randomly generated ultrametric spaces.\n\n**Setup:** Ultrametric spaces with 8\u201312 points generated from random binary trees. Observer families with 2\u20134 scaled sub-ultrametrics.\n\n**Results:** In all 1000 random instances:\n- Theorem A (N_O(\u03b5) = \u03ba_O(\u03b5)) verified at all tested scales \u2713\n- Theorem B (antitonicity) verified \u2713\n- Theorem C (piecewise constancy) verified \u2014 rate changes only at critical scales \u2713\n- Greedy codebook achieves optimal size in all cases \u2713\n- Computation time scales as O(n\u00b2 \u00b7 k) as predicted \u2713\n\nThe rate\u2013distortion curve consistently shows the step function structure predicted by Theorem C, with breakpoints exactly at the critical scales.\n\n---\n\n## 7. Discussion\n\n### 7.1 The Ultrametric Rigidity Phenomenon\n\nThe core mathematical phenomenon is that ultrametricity converts a variational problem (minimize codebook size subject to coverage constraint) into an algebraic computation (count equivalence classes). This rigidity is unique to non-Archimedean geometry \u2014 in ordinary metric spaces, the covering number depends on the geometric arrangement of balls and cannot be computed by counting classes.\n\n### 7.2 Comparison with Classical Rate\u2013Distortion Theory\n\n| Property | Classical (Shannon) | Ultrametric (this work) |\n|----------|-------------------|----------------------|\n| Setting | Probabilistic | Combinatorial |\n| Distortion | Expected | Worst-case (max) |\n| Rate function | Smooth, convex | Step function |\n| Computation | Variational (hard) | Counting (easy) |\n| Optimality | Asymptotic | Exact |\n| Algorithm | Random coding | Greedy (deterministic) |\n\n### 7.3 Limitations\n\n1. The finite setting is essential \u2014 infinite ultrametric spaces require topological completions.\n2. The worst-case (max) aggregation of observers is restrictive; average-case would require probabilistic methods.\n3. The theory assumes exact ultrametricity; approximate ultrametric spaces would require perturbation analysis.\n\n### 7.4 Connections to Other Work\n\n- **Persistent homology**: The congruence filtration is a 0-dimensional analogue of the Rips filtration. Extending to higher-dimensional persistence is a natural direction.\n- **Lawvere enriched categories**: The observer distortion can be viewed as a Lawvere metric, connecting to the enriched categorical framework.\n- **Tropical geometry**: The max aggregation of observers is a tropical (max-plus) operation, placing the theory in the framework of tropical algebra.\n\n---\n\n## 8. Future Work\n\n1. **Probabilistic extension**: Add distributions on P and prove a Shannon-style coding theorem for ultrametric sources, obtaining R_\u03bc(\u03b5) = H(P | class_\u03b5(P)).\n\n2. **Compositional rate laws**: Show rate spectra are sub-additive (or sub-maximal) under proof composition, connecting to operadic deep learning.\n\n3. **Spectral reconstruction**: Prove the congruence lattice is determined by the rate\u2013distortion profile (a non-Archimedean Gel'fand\u2013Naimark theorem).\n\n4. **Approximate ultrametricity**: Quantify how the exact identity N_O(\u03b5) = \u03ba_O(\u03b5) degrades when the ultrametric property holds only approximately.\n\n5. **Algorithmic applications**: Implement the certified codebook construction for real proof traces and neural network representations.\n\n---\n\n## References\n\n1. Shannon, C.E. (1959). Coding theorems for a discrete source with a fidelity criterion. *IRE National Convention Record*, Part 4, 142\u2013163.\n\n2. Kolmogorov, A.N. & Tikhomirov, V.M. (1959). \u03b5-entropy and \u03b5-capacity of sets in functional spaces. *Uspekhi Mat. Nauk*, 14(2), 3\u201386.\n\n3. Lawvere, F.W. (1973). Metric spaces, generalized logic, and closed categories. *Rendiconti del Seminario Matematico e Fisico di Milano*, 43, 135\u2013166.\n\n4. Rammal, R., Toulouse, G., & Virasoro, M.A. (1986). Ultrametricity for physicists. *Reviews of Modern Physics*, 58(3), 765\u2013788.\n\n5. Berger, T. (1971). *Rate Distortion Theory: A Mathematical Basis for Data Compression*. Prentice-Hall.\n\n---\n\n## Appendix: Formal Verification\n\nAll theorems in this paper have been formalized and machine-verified. The formalization consists of approximately 430 lines of code with zero unproven statements. The key verified declarations are:\n\n- `observerDistortion_ultra` \u2014 ultrametric inequality for observer distortion\n- `observerCongRel_trans` \u2014 transitivity of observer congruence (using ultrametricity)\n- `class_rep_gives_cover` \u2014 upper bound: representatives form a cover\n- `cover_card_ge_quotient_card` \u2014 lower bound: any cover \u2265 #classes\n- `finite_ultrametric_covering_number_eq_congruence_index` \u2014 main theorem\n- `observerCoverCard_antitone` \u2014 antitonicity\n- `observerCoverCard_constant_between_critical` \u2014 piecewise constancy\n- `greedy_ultrametric_codebook_certified` \u2014 certified algorithm\n- `finite_ultrametric_observer_rate_distortion_exists` \u2014 existence theorem\n\nThe axioms used are: propext, Classical.choice, Quot.sound (standard foundations).\n",
-    "future_directions": "# Future Directions: Non-Archimedean Proof Information Theory\n\n## Overview\n\nThis document outlines five concrete research directions opened by the ultrametric\nobserver rate\u2013distortion theory formalized in this project. Each direction includes\nspecific theorem targets, proof strategies, and cross-domain connections.\n\n---\n\n## 1. Probabilistic Ultrametric Proof Coding Theorem\n\n**Goal:** Extend the combinatorial rate\u2013distortion identity to a probabilistic setting\nwith distributions over proof states, obtaining a Shannon-style coding theorem for\nultrametric proof sources.\n\n**Specific Theorem Target:**\n\nGiven a probability measure \u03bc on the finite ultrametric proof space (P, d) and an\nobserver family O, define the mutual-information rate\u2013distortion function:\n\n```\nR_\u03bc(\u03b5) = inf { I(P; C) : E[\u03b4_O(P, C)] \u2264 \u03b5 }\n```\n\n**Prove:** In the ultrametric regime, R_\u03bc(\u03b5) = H(P | class_\u03b5(P)), i.e., the rate\nequals the conditional entropy of P given its \u03b5-congruence class. This collapses\nthe variational problem to a single entropy computation.\n\n**Proof Strategy:**\n1. Show that optimal encoders in ultrametric spaces always map to class representatives\n   (by the transitive \u03b5-ball structure).\n2. Use the identity between covering number and congruence index to reduce the\n   infimum to class-conditional coding.\n3. Apply classical source coding arguments within each congruence class.\n\n**Formalization Path:**\n- Define `MeasureSpace P` with finite support\n- Define mutual information via `MeasureTheory.entropy`\n- Prove the conditional entropy identity using the quotient structure\n\n**Cross-Domain Connection:** This would give the first rigorous PAC-Bayes-style\ngeneralization bound for proof strategies \u2014 compressed proof policies with bounded\nobserver loss are exactly those that factor through the congruence quotient.\n\n---\n\n## 2. Berkovich Proof Space Semantics\n\n**Goal:** Upgrade from finite ultrametric proof spaces to analytic/non-Archimedean\nspaces, defining observer sheaves over the Berkovich analytification.\n\n**Specific Theorem Target:**\n\nDefine the Berkovich spectrum of the observer distortion algebra as the space of\nbounded multiplicative seminorms on the observer function ring. Prove:\n\n```\ntheorem berkovich_observer_spectrum_recovers_congruence_filtration :\n  \u2200 \u03b5, the fiber of the Berkovich projection at radius \u03b5\n       is homeomorphic to the quotient by \u03b5-congruence\n```\n\n**Proof Strategy:**\n1. Model the finite case as a totally disconnected space (tree).\n2. Define the observer sheaf: to each open ball B(x, \u03b5), assign the ring of\n   observer functions that are constant on \u03b5-congruence classes within B.\n3. Show the stalk at x recovers the full observer information at x.\n4. Prove the Berkovich spectrum (as a pro-finite limit) recovers the full\n   congruence filtration.\n\n**Cross-Domain Connection:** This connects proof compression to rigid analytic\ngeometry and p-adic Hodge theory. The observer sheaf becomes a \"semantic sheaf\"\nwhose cohomology measures the obstruction to global proof compression.\n\n---\n\n## 3. Tropical Operadic Composition Laws for Compressed Proofs\n\n**Goal:** Show that rate\u2013distortion spectra are functorial under proof composition,\nestablishing that compressed proofs compose via tropical algebra.\n\n**Specific Theorem Target:**\n\nGiven proof systems P\u2081, P\u2082 with observer families O\u2081, O\u2082, and a composition\noperation \u2218 : P\u2081 \u00d7 P\u2082 \u2192 P\u2083 that is Lipschitz with respect to observer distortion:\n\n```\ntheorem rate_spectrum_subadditive_under_composition :\n  \u2200 \u03b5, R_{O\u2083}(\u03b5) \u2264 R_{O\u2081}(\u03b5) + R_{O\u2082}(\u03b5)\n```\n\nand under ultrametricity:\n\n```\ntheorem rate_spectrum_max_under_ultrametric_composition :\n  \u2200 \u03b5, R_{O\u2083}(\u03b5) \u2264 max(R_{O\u2081}(\u03b5), R_{O\u2082}(\u03b5))\n```\n\n**Proof Strategy:**\n1. Show that Lipschitz composition maps \u03b5-congruence classes to \u03b5-congruence classes.\n2. Bound the number of composed classes by the product (or max) of component classes.\n3. Use the log-cardinality identity to derive the rate bound.\n\n**Cross-Domain Connection:** This connects to the operadic deep learning framework\nin `MachineLearning/OperadicDeepLearning/Foundations.lean`. The composition law\ngives formal bounds on how lossy layer-wise compression accumulates through a\nneural network architecture.\n\n---\n\n## 4. Prime Spectrum Reconstruction from Rate Data\n\n**Goal:** Prove that the observer congruence lattice (and hence the prime-spectral\nstructure from `PrimeCongruenceNeuralCompression`) is determined by the full\nrate\u2013distortion profile.\n\n**Specific Theorem Target:**\n\n```\ntheorem congruence_lattice_determined_by_rate_profile :\n  (\u2200 \u03b5, R_{O\u2081}(\u03b5) = R_{O\u2082}(\u03b5)) \u2192\n  (\u2200 \u03b5, observerCongruence O\u2081 \u03b5 = observerCongruence O\u2082 \u03b5)\n```\n\nThis is a \"spectral rigidity\" theorem: the compression curve determines the\nalgebraic structure.\n\n**Proof Strategy:**\n1. The rate function R(\u03b5) = log(N(\u03b5)) determines N(\u03b5) = number of congruence classes.\n2. The jumps in N(\u03b5) occur at critical scales, which are the pairwise observer\n   distortion values.\n3. Reconstruct the congruence relation from knowledge of which pairs merge at\n   each critical scale.\n4. Show this reconstruction is unique up to permutation of observers.\n\n**Cross-Domain Connection:** This is analogous to the Gel'fand\u2013Naimark theorem\n(recovering a space from its function algebra). Here, we recover the \"semantic\ngeometry\" of proofs from their compression profile \u2014 an information-theoretic\nreconstruction theorem.\n\n---\n\n## 5. Certified Proof Summarization with Approximation Guarantees\n\n**Goal:** Turn the rate\u2013distortion theory into a practical algorithm for\nsummarizing formal proof traces with certified quality bounds.\n\n**Specific Theorem Target:**\n\n```\ntheorem certified_proof_summarizer :\n  \u2203 (summarize : ProofTrace \u2192 \u03b5 \u2192 CompressedProof),\n    \u2200 trace \u03b5,\n      (summarize trace \u03b5).length \u2264 R_O(\u03b5) \u2227\n      observerDistortion O trace (expand (summarize trace \u03b5)) \u2264 \u03b5 \u2227\n      (\u2200 observer \u2208 O, observer.verify (expand (summarize trace \u03b5)) = true)\n```\n\n**Proof Strategy:**\n1. Use the greedy codebook algorithm (already formalized) as the core.\n2. Define proof traces as sequences of proof states.\n3. Apply the codebook independently at each step (or use the tree structure\n   for dynamic programming).\n4. Derive the length bound from the rate function identity.\n5. Prove the observer verification property from the cover guarantee.\n\n**Implementation Path:**\n- Define `ProofTrace := List P` and `CompressedProof := List (Fin N)`\n- Implement the greedy encoder as a computable function\n- Prove the triple guarantee (size, distortion, verification)\n\n**Cross-Domain Connection:** This connects to certified machine learning\n(the compressed proof is a \"certified model distillation\") and to proof\nmining in mathematical logic (extracting computational content from proofs\nwhile preserving observable behavior).\n\n---\n\n## Priority Ordering\n\n1. **Direction 5** (Certified Summarization) \u2014 most immediately applicable,\n   builds directly on existing formalization\n2. **Direction 1** (Probabilistic Coding) \u2014 highest theoretical impact,\n   opens connection to statistical learning theory\n3. **Direction 3** (Operadic Composition) \u2014 connects to existing operadic\n   infrastructure, high synergy value\n4. **Direction 4** (Spectral Reconstruction) \u2014 deepest theoretical result,\n   requires mature infrastructure\n5. **Direction 2** (Berkovich Semantics) \u2014 most ambitious, requires significant\n   new mathematical infrastructure in Lean\n\n---\n\n## Cross-Cutting Technical Needs\n\n- **Entropy and information theory in Mathlib**: Directions 1 and 5 need\n  Shannon entropy for finite types, which may need to be formalized.\n- **Operadic composition framework**: Direction 3 needs integration with\n  the operadic deep learning infrastructure.\n- **Proof trace representation**: Direction 5 needs a concrete formalization\n  of proof traces compatible with the ultrametric structure.\n- **Lattice theory for congruences**: Direction 4 needs the congruence lattice\n  structure formalized, potentially using Mathlib's `ConLat` or similar.\n",
-    "demos": [
-      {
-        "name": "Core Theorem Demo: Cover Size = Congruence Index",
-        "code": "#!/usr/bin/env python3\n\"\"\"\nDemo: Ultrametric Observer Rate-Distortion Theory\n\nDemonstrates the core theorem: in a finite ultrametric space with observers,\nthe minimal \u03b5-cover size equals the number of equivalence classes under\nobserver \u03b5-congruence.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom collections import defaultdict\nimport base64\nfrom io import BytesIO\n\n\ndef make_ultrametric_tree(n_leaves=8, seed=42):\n    \"\"\"Generate a valid ultrametric distance matrix from a binary merge tree.\n    \n    Build bottom-up: start with singletons, merge pairs at increasing heights.\n    All inter-cluster distances equal the merge height (ultrametric property).\n    \"\"\"\n    rng = np.random.RandomState(seed)\n    n = n_leaves\n    d = np.zeros((n, n))\n    \n    # Merge heights (increasing)\n    heights = sorted(rng.uniform(1, 10, n - 1))\n    \n    # Start with each point in its own cluster\n    clusters = [[i] for i in range(n)]\n    \n    for h in heights:\n        if len(clusters) < 2:\n            break\n        # Pick two random clusters to merge\n        idx = rng.choice(len(clusters), 2, replace=False)\n        i, j = min(idx), max(idx)\n        c1, c2 = clusters[i], clusters[j]\n        \n        # Set distance between all cross-cluster pairs to h\n        for a in c1:\n            for b in c2:\n                d[a, b] = h\n                d[b, a] = h\n        \n        # Merge clusters\n        new_cluster = c1 + c2\n        clusters = [c for k, c in enumerate(clusters) if k not in (i, j)]\n        clusters.append(new_cluster)\n    \n    return d\n\n\ndef verify_ultrametric(d):\n    \"\"\"Verify the strong triangle inequality.\"\"\"\n    n = d.shape[0]\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                if d[i, k] > max(d[i, j], d[j, k]) + 1e-10:\n                    return False\n    return True\n\n\ndef observer_distortion(observers, p, q):\n    \"\"\"Compute max observer distortion.\"\"\"\n    return max(o[p, q] for o in observers)\n\n\ndef compute_congruence_classes(observers, n, epsilon):\n    \"\"\"Compute equivalence classes under observer \u03b5-congruence via Union-Find.\"\"\"\n    parent = list(range(n))\n    \n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]\n            x = parent[x]\n        return x\n    \n    def union(x, y):\n        px, py = find(x), find(y)\n        if px != py:\n            parent[px] = py\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if observer_distortion(observers, i, j) <= epsilon + 1e-10:\n                union(i, j)\n    \n    classes = defaultdict(list)\n    for i in range(n):\n        classes[find(i)].append(i)\n    \n    return list(classes.values())\n\n\ndef minimal_cover(observers, n, epsilon):\n    \"\"\"One representative per congruence class.\"\"\"\n    classes = compute_congruence_classes(observers, n, epsilon)\n    return [cls[0] for cls in classes]\n\n\ndef compute_critical_scales(observers, n):\n    \"\"\"All distinct pairwise observer distortion values.\"\"\"\n    scales = set()\n    for i in range(n):\n        for j in range(i + 1, n):\n            scales.add(round(observer_distortion(observers, i, j), 10))\n    return sorted(scales)\n\n\ndef demo_core_theorem():\n    \"\"\"Demonstrate: cover size = congruence index (the main theorem).\"\"\"\n    print(\"=\" * 70)\n    print(\"CORE THEOREM: Minimal \u03b5-cover = Observer Congruence Index\")\n    print(\"=\" * 70)\n    \n    n = 8\n    d = make_ultrametric_tree(n, seed=42)\n    assert verify_ultrametric(d), \"Distance matrix must be ultrametric\"\n    \n    print(f\"\\nUltrametric space with {n} proof states\")\n    print(f\"Ultrametric property verified: {verify_ultrametric(d)}\")\n    \n    # Create observers as scaled sub-ultrametrics\n    rng = np.random.RandomState(123)\n    observers = []\n    for k in range(3):\n        scale = rng.uniform(0.5, 1.0)\n        obs = d * scale\n        np.fill_diagonal(obs, 0)\n        observers.append(obs)\n    \n    # Verify observers are ultrametric\n    for k, obs in enumerate(observers):\n        assert verify_ultrametric(obs), f\"Observer {k} must be ultrametric\"\n    \n    print(f\"Number of observers: {len(observers)}\")\n    \n    critical = compute_critical_scales(observers, n)\n    print(f\"\\nCritical scales ({len(critical)} breakpoints):\")\n    for i, s in enumerate(critical[:10]):\n        print(f\"  \u03b5_{i} = {s:.4f}\")\n    \n    # Test at various scales\n    test_eps = sorted(set([0.0] + [s - 0.01 for s in critical if s > 0.01] + critical + [critical[-1] + 1]))\n    \n    print(f\"\\n{'\u03b5':>10} | {'#Classes':>10} | {'Cover':>10} | {'Covers?':>8} | {'Match':>6}\")\n    print(\"-\" * 60)\n    \n    all_match = True\n    for eps in test_eps:\n        classes = compute_congruence_classes(observers, n, eps)\n        cover = minimal_cover(observers, n, eps)\n        n_classes = len(classes)\n        n_cover = len(cover)\n        \n        # Verify cover property\n        covers = all(\n            any(observer_distortion(observers, p, c) <= eps + 1e-10 for c in cover)\n            for p in range(n)\n        )\n        \n        match = n_classes == n_cover\n        all_match = all_match and match\n        print(f\"{eps:10.4f} | {n_classes:10d} | {n_cover:10d} | {'\u2713' if covers else '\u2717':>8} | {'\u2713' if match else '\u2717':>6}\")\n    \n    print(f\"\\nTheorem verified at all scales: {'\u2713' if all_match else '\u2717'}\")\n    return d, observers\n\n\ndef plot_rate_distortion(observers, n, filename=\"rate_distortion.png\"):\n    \"\"\"Plot the rate-distortion step function.\"\"\"\n    critical = compute_critical_scales(observers, n)\n    eps_max = max(critical) * 1.3 if critical else 1\n    epsilons = np.linspace(0, eps_max, 500)\n    \n    cover_numbers = []\n    rates = []\n    for eps in epsilons:\n        classes = compute_congruence_classes(observers, n, eps)\n        nc = len(classes)\n        cover_numbers.append(nc)\n        rates.append(np.log(nc) if nc > 0 else 0)\n    \n    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))\n    \n    ax1.plot(epsilons, rates, 'b-', linewidth=2, label='R(\u03b5) = log N(\u03b5)')\n    for s in critical:\n        ax1.axvline(x=s, color='red', linestyle='--', alpha=0.3)\n    ax1.set_xlabel('Distortion tolerance \u03b5', fontsize=12)\n    ax1.set_ylabel('Rate R(\u03b5)', fontsize=12)\n    ax1.set_title('Observer Rate\u2013Distortion Function\\n(Antitone Step Function)', fontsize=13)\n    ax1.legend(fontsize=11)\n    ax1.grid(True, alpha=0.3)\n    \n    ax2.step(epsilons, cover_numbers, 'r-', linewidth=2, where='post',\n             label='N(\u03b5) = #congruence classes')\n    for s in critical:\n        ax2.axvline(x=s, color='blue', linestyle='--', alpha=0.3)\n    ax2.set_xlabel('Distortion tolerance \u03b5', fontsize=12)\n    ax2.set_ylabel('Covering number N(\u03b5)', fontsize=12)\n    ax2.set_title('Covering Number = Congruence Index\\n(Core Theorem)', fontsize=13)\n    ax2.legend(fontsize=11)\n    ax2.grid(True, alpha=0.3)\n    \n    plt.tight_layout()\n    plt.savefig(filename, dpi=150, bbox_inches='tight')\n    plt.close()\n    print(f\"\\nPlot saved to {filename}\")\n    return filename\n\n\ndef plot_congruence_filtration(observers, n, filename=\"filtration.png\"):\n    \"\"\"Visualize the congruence filtration at different scales.\"\"\"\n    critical = compute_critical_scales(observers, n)\n    \n    # Pick representative scales\n    scales = [0.0] + critical[:min(len(critical), 7)]\n    \n    fig, ax = plt.subplots(figsize=(12, 5))\n    \n    for si, eps in enumerate(scales):\n        classes = compute_congruence_classes(observers, n, eps)\n        for ci, cls in enumerate(classes):\n            color = plt.cm.tab10(ci % 10)\n            for p in cls:\n                ax.barh(si, 0.7, left=p - 0.35, height=0.5, color=color,\n                       alpha=0.7, edgecolor='black', linewidth=0.5)\n                ax.text(p, si, str(p), ha='center', va='center', fontsize=8, fontweight='bold')\n    \n    ax.set_yticks(range(len(scales)))\n    labels = []\n    for s in scales:\n        nc = len(compute_congruence_classes(observers, n, s))\n        labels.append(f'\u03b5={s:.2f}\\n({nc} classes)')\n    ax.set_yticklabels(labels, fontsize=9)\n    ax.set_xlabel('Proof State', fontsize=12)\n    ax.set_title('Observer Congruence Filtration\\n(Nested Equivalence Classes at Increasing \u03b5)', fontsize=13)\n    ax.set_xlim(-1, n)\n    \n    plt.tight_layout()\n    plt.savefig(filename, dpi=150, bbox_inches='tight')\n    plt.close()\n    print(f\"Filtration plot saved to {filename}\")\n    return filename\n\n\ndef demo_greedy_codebook():\n    \"\"\"Demonstrate the certified greedy codebook.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"CERTIFIED GREEDY CODEBOOK\")\n    print(\"=\" * 70)\n    \n    n = 10\n    d = make_ultrametric_tree(n, seed=99)\n    assert verify_ultrametric(d)\n    \n    rng = np.random.RandomState(456)\n    observers = [d * rng.uniform(0.5, 1.0) for _ in range(3)]\n    for o in observers:\n        np.fill_diagonal(o, 0)\n    \n    critical = compute_critical_scales(observers, n)\n    print(f\"\\nSpace: {n} states, {len(observers)} observers, {len(critical)} critical scales\\n\")\n    \n    for eps in [critical[0] - 0.01] + [critical[len(critical)//3], critical[2*len(critical)//3], critical[-1] + 0.1]:\n        if eps < 0:\n            eps = 0\n        classes = compute_congruence_classes(observers, n, eps)\n        cover = minimal_cover(observers, n, eps)\n        covers_all = all(\n            any(observer_distortion(observers, p, c) <= eps + 1e-10 for c in cover)\n            for p in range(n)\n        )\n        \n        print(f\"\u03b5 = {eps:.4f}: {len(classes)} classes, codebook = {cover}, \"\n              f\"covers all: {covers_all}, ratio: {len(cover)}/{n} = {len(cover)/n:.0%}\")\n\n\nif __name__ == \"__main__\":\n    d, observers = demo_core_theorem()\n    demo_greedy_codebook()\n    plot_rate_distortion(observers, d.shape[0])\n    plot_congruence_filtration(observers, d.shape[0])\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"KEY INSIGHT: In ultrametric spaces, lossy compression is EXACT.\")\n    print(\"The minimal codebook size = the number of equivalence classes.\")\n    print(\"This is NOT true in general metric spaces!\")\n    print(\"=\" * 70)\n"
-      }
-    ],
-    "algorithms": [
-      {
-        "name": "Greedy Codebook Construction",
-        "pseudocode": "Algorithm: GreedyCodebook(P, O, \u03b5)\nInput: Finite set P, observer family O = (O\u2081,...,O\u2099), tolerance \u03b5\nOutput: Optimal \u03b5-cover C\n\n1. Compute distortion matrix: D[p,q] = max_i O_i(p,q) for all p,q\n2. Compute congruence classes via Union-Find:\n   - Initialize UF with |P| singletons\n   - For each pair (p,q) with D[p,q] \u2264 \u03b5: Union(p,q)\n3. Return one representative from each connected component\n\nComplexity: O(|P|\u00b2 \u00b7 n) time, O(|P|) space\nCorrectness: Proven optimal by Theorem greedy_ultrametric_codebook_certified",
-        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Ultrametric Observer Rate-Distortion Theory\n\nImplements the core algorithms from the formalized theory:\n1. Greedy codebook construction (O(n\u00b2 \u00b7 k) where k = #observers)\n2. Congruence class computation via Union-Find (O(n\u00b2 \u00b7 k \u00b7 \u03b1(n)))\n3. Rate-distortion spectrum computation\n4. Critical scale extraction\n5. Compression spectrum comparison\n\nAll algorithms have formal correctness guarantees backed by the\nLean 4 proofs in UltrametricProofObserverRateDistortion.lean.\n\"\"\"\n\nfrom typing import List, Dict, Tuple, Set, Optional, Callable\nfrom dataclasses import dataclass, field\nfrom collections import defaultdict\nimport numpy as np\n\n\n@dataclass\nclass UltrametricObserverFamily:\n    \"\"\"A family of ultrametric observer distance functions.\n    \n    Each observer O_i : P \u00d7 P \u2192 R\u22650 satisfies:\n    - O_i(x, x) = 0  (diagonal zero)\n    - O_i(x, y) = O_i(y, x)  (symmetry)\n    - O_i(x, z) \u2264 max(O_i(x, y), O_i(y, z))  (ultrametric inequality)\n    \n    Attributes:\n        n_points: Number of proof states |P|\n        observers: List of distance matrices, one per observer\n    \"\"\"\n    n_points: int\n    observers: List[np.ndarray]\n    \n    def __post_init__(self):\n        for k, obs in enumerate(self.observers):\n            assert obs.shape == (self.n_points, self.n_points), \\\n                f\"Observer {k} has wrong shape\"\n            assert np.allclose(np.diag(obs), 0), \\\n                f\"Observer {k} violates diagonal zero\"\n            assert np.allclose(obs, obs.T), \\\n                f\"Observer {k} violates symmetry\"\n    \n    @property\n    def n_observers(self) -> int:\n        return len(self.observers)\n    \n    def distortion(self, p: int, q: int) -> float:\n        \"\"\"Observer distortion: max over all observers.\"\"\"\n        if not self.observers:\n            return 0.0\n        return max(obs[p, q] for obs in self.observers)\n    \n    def distortion_matrix(self) -> np.ndarray:\n        \"\"\"Full observer distortion matrix.\"\"\"\n        if not self.observers:\n            return np.zeros((self.n_points, self.n_points))\n        return np.max(np.stack(self.observers), axis=0)\n\n\nclass UnionFind:\n    \"\"\"Union-Find data structure with path compression and union by rank.\n    \n    Time complexity: O(\u03b1(n)) amortized per operation,\n    where \u03b1 is the inverse Ackermann function.\n    \"\"\"\n    \n    def __init__(self, n: int):\n        self.parent = list(range(n))\n        self.rank = [0] * n\n        self.size = [1] * n\n        self.n_components = n\n    \n    def find(self, x: int) -> int:\n        while self.parent[x] != x:\n            self.parent[x] = self.parent[self.parent[x]]\n            x = self.parent[x]\n        return x\n    \n    def union(self, x: int, y: int) -> bool:\n        px, py = self.find(x), self.find(y)\n        if px == py:\n            return False\n        if self.rank[px] < self.rank[py]:\n            px, py = py, px\n        self.parent[py] = px\n        self.size[px] += self.size[py]\n        if self.rank[px] == self.rank[py]:\n            self.rank[px] += 1\n        self.n_components -= 1\n        return True\n    \n    def components(self) -> Dict[int, List[int]]:\n        groups = defaultdict(list)\n        for i in range(len(self.parent)):\n            groups[self.find(i)].append(i)\n        return dict(groups)\n\n\ndef compute_congruence_classes(\n    family: UltrametricObserverFamily, \n    epsilon: float\n) -> List[List[int]]:\n    \"\"\"Compute equivalence classes under observer \u03b5-congruence.\n    \n    Two points p, q are \u03b5-congruent iff \u03b4_O(p, q) \u2264 \u03b5,\n    where \u03b4_O = max over observers.\n    \n    In ultrametric spaces, this is a genuine equivalence relation\n    (transitivity follows from the strong triangle inequality).\n    \n    Time: O(n\u00b2 \u00b7 k) where k = number of observers\n    Space: O(n)\n    \n    Returns:\n        List of equivalence classes (each a list of point indices)\n    \"\"\"\n    n = family.n_points\n    uf = UnionFind(n)\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if family.distortion(i, j) <= epsilon + 1e-12:\n                uf.union(i, j)\n    \n    return list(uf.components().values())\n\n\ndef greedy_codebook(\n    family: UltrametricObserverFamily, \n    epsilon: float\n) -> List[int]:\n    \"\"\"Construct a certified optimal \u03b5-codebook.\n    \n    THEOREM (greedy_ultrametric_codebook_certified):\n    The returned codebook C satisfies:\n    1. ObserverCovers: every point p has some c \u2208 C with \u03b4_O(p, c) \u2264 \u03b5\n    2. Optimality: |C| = N_O(\u03b5) = number of \u03b5-congruence classes\n    \n    Algorithm: Pick one representative from each congruence class.\n    \n    Time: O(n\u00b2 \u00b7 k) for congruence computation\n    Space: O(n)\n    \n    Returns:\n        List of codebook point indices (one per congruence class)\n    \"\"\"\n    classes = compute_congruence_classes(family, epsilon)\n    return [cls[0] for cls in classes]\n\n\ndef compute_critical_scales(family: UltrametricObserverFamily) -> List[float]:\n    \"\"\"Extract the critical scales (compression breakpoints).\n    \n    These are all distinct pairwise observer distortion values.\n    The covering number changes only at these thresholds.\n    \n    THEOREM (observerCoverCard_constant_between_critical):\n    Between consecutive critical scales, the covering number is constant.\n    \n    Time: O(n\u00b2 \u00b7 k)\n    Space: O(n\u00b2) worst case\n    \n    Returns:\n        Sorted list of critical scale values\n    \"\"\"\n    n = family.n_points\n    scales = set()\n    for i in range(n):\n        for j in range(i + 1, n):\n            scales.add(family.distortion(i, j))\n    return sorted(scales)\n\n\n@dataclass\nclass CompressionSpectrum:\n    \"\"\"The compression spectrum of an observer family.\n    \n    Encodes the complete rate-distortion profile as a step function:\n    - critical_scales: the \u03b5 values where the covering number changes\n    - covering_numbers: N(\u03b5) at each critical scale (and \u03b5=0)\n    - rates: R(\u03b5) = log(N(\u03b5)) at each critical scale\n    \n    THEOREM (finite_ultrametric_covering_number_eq_congruence_index):\n    Each covering number equals the congruence class count.\n    \n    THEOREM (observerCoverCard_antitone):\n    The covering numbers are monotonically non-increasing.\n    \"\"\"\n    critical_scales: List[float]\n    covering_numbers: List[int]\n    rates: List[float]\n    \n    def evaluate_N(self, epsilon: float) -> int:\n        \"\"\"Evaluate covering number at arbitrary \u03b5.\"\"\"\n        for i, s in enumerate(self.critical_scales):\n            if epsilon < s - 1e-12:\n                return self.covering_numbers[i]\n        return self.covering_numbers[-1] if self.covering_numbers else 1\n    \n    def evaluate_R(self, epsilon: float) -> float:\n        \"\"\"Evaluate rate function at arbitrary \u03b5.\"\"\"\n        N = self.evaluate_N(epsilon)\n        return np.log(N) if N > 0 else 0.0\n\n\ndef compute_compression_spectrum(\n    family: UltrametricObserverFamily\n) -> CompressionSpectrum:\n    \"\"\"Compute the full compression spectrum.\n    \n    Time: O(n\u00b2 \u00b7 k \u00b7 S) where S = number of critical scales (\u2264 n\u00b2)\n    \n    Returns:\n        CompressionSpectrum containing the step function data\n    \"\"\"\n    critical = compute_critical_scales(family)\n    \n    # Compute covering number at \u03b5=0 and at each critical scale\n    scales = [0.0] + critical\n    numbers = []\n    rates = []\n    \n    for eps in scales:\n        classes = compute_congruence_classes(family, eps)\n        n = len(classes)\n        numbers.append(n)\n        rates.append(np.log(n) if n > 0 else 0.0)\n    \n    return CompressionSpectrum(\n        critical_scales=scales,\n        covering_numbers=numbers,\n        rates=rates\n    )\n\n\ndef verify_ultrametric(d: np.ndarray, tol: float = 1e-10) -> bool:\n    \"\"\"Verify that a distance matrix satisfies the ultrametric inequality.\n    \n    Checks: d(x,z) \u2264 max(d(x,y), d(y,z)) for all x, y, z.\n    \n    Time: O(n\u00b3)\n    \"\"\"\n    n = d.shape[0]\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                if d[i, k] > max(d[i, j], d[j, k]) + tol:\n                    return False\n    return True\n\n\ndef compare_spectra(\n    s1: CompressionSpectrum, \n    s2: CompressionSpectrum\n) -> Dict[str, any]:\n    \"\"\"Compare two compression spectra.\n    \n    Returns a dictionary with:\n    - 'equal': whether the spectra are identical\n    - 'max_rate_diff': maximum difference in rate functions\n    - 'breakpoint_diff': symmetric difference of critical scales\n    \"\"\"\n    all_scales = sorted(set(s1.critical_scales + s2.critical_scales))\n    \n    max_diff = 0.0\n    for eps in all_scales:\n        diff = abs(s1.evaluate_R(eps) - s2.evaluate_R(eps))\n        max_diff = max(max_diff, diff)\n    \n    bp1 = set(round(s, 10) for s in s1.critical_scales)\n    bp2 = set(round(s, 10) for s in s2.critical_scales)\n    \n    return {\n        'equal': max_diff < 1e-10,\n        'max_rate_diff': max_diff,\n        'breakpoint_symmetric_diff': bp1.symmetric_difference(bp2),\n        'n_breakpoints_1': len(s1.critical_scales),\n        'n_breakpoints_2': len(s2.critical_scales),\n    }\n\n\n# ============================================================\n# Example usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Ultrametric Observer Rate-Distortion Algorithms\")\n    print(\"=\" * 60)\n    \n    # Create example ultrametric space\n    n = 6\n    # Manual ultrametric: points organized in a tree\n    # Tree: ((0,1), (2,3)), ((4,5))\n    # Heights: 1 (leaves), 3 (mid), 5 (root)\n    d = np.zeros((n, n))\n    for i, j, h in [(0,1,1), (2,3,1), (4,5,2), (0,2,3), (0,3,3), (1,2,3), (1,3,3),\n                     (0,4,5), (0,5,5), (1,4,5), (1,5,5), (2,4,5), (2,5,5), (3,4,5), (3,5,5)]:\n        d[i,j] = d[j,i] = h\n    \n    print(f\"Ultrametric verified: {verify_ultrametric(d)}\")\n    \n    # Create observers (scaled versions of d)\n    obs1 = d * 0.8\n    obs2 = d * 0.6\n    for o in [obs1, obs2]:\n        np.fill_diagonal(o, 0)\n    \n    family = UltrametricObserverFamily(n, [obs1, obs2])\n    \n    # Compute spectrum\n    spectrum = compute_compression_spectrum(family)\n    print(f\"\\nCompression Spectrum:\")\n    print(f\"  Critical scales: {spectrum.critical_scales}\")\n    print(f\"  Covering numbers: {spectrum.covering_numbers}\")\n    print(f\"  Rates: {[f'{r:.3f}' for r in spectrum.rates]}\")\n    \n    # Greedy codebook at various scales\n    for eps in [0.5, 1.5, 3.0, 5.0]:\n        codebook = greedy_codebook(family, eps)\n        print(f\"\\n  \u03b5={eps}: codebook={codebook}, size={len(codebook)}, \"\n              f\"spectrum N(\u03b5)={spectrum.evaluate_N(eps)}\")\n",
-        "code_file": "visualizations/algebraspeculativemachinelearning_ultrametric_proo_greedy_codebook_construction.py"
-      },
-      {
-        "name": "Compression Spectrum Computation",
-        "pseudocode": "Algorithm: CompressionSpectrum(P, O)\nInput: Finite set P, observer family O\nOutput: Step function N_O(\u00b7) as (scale, covering_number) pairs\n\n1. Compute all critical scales: S = {max_i O_i(p,q) : p \u2260 q}\n2. Sort S = {s\u2081 < s\u2082 < ... < s_m}\n3. For each s_k: compute N_O(s_k) via GreedyCodebook\n4. Return [(0, |P|), (s\u2081, N_O(s\u2081)), ..., (s_m, N_O(s_m))]\n\nComplexity: O(|P|\u00b2 \u00b7 n \u00b7 |S|) time\nTheorem: N_O changes only at critical scales (observerCoverCard_constant_between_critical)",
-        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Ultrametric Observer Rate-Distortion Theory\n\nImplements the core algorithms from the formalized theory:\n1. Greedy codebook construction (O(n\u00b2 \u00b7 k) where k = #observers)\n2. Congruence class computation via Union-Find (O(n\u00b2 \u00b7 k \u00b7 \u03b1(n)))\n3. Rate-distortion spectrum computation\n4. Critical scale extraction\n5. Compression spectrum comparison\n\nAll algorithms have formal correctness guarantees backed by the\nLean 4 proofs in UltrametricProofObserverRateDistortion.lean.\n\"\"\"\n\nfrom typing import List, Dict, Tuple, Set, Optional, Callable\nfrom dataclasses import dataclass, field\nfrom collections import defaultdict\nimport numpy as np\n\n\n@dataclass\nclass UltrametricObserverFamily:\n    \"\"\"A family of ultrametric observer distance functions.\n    \n    Each observer O_i : P \u00d7 P \u2192 R\u22650 satisfies:\n    - O_i(x, x) = 0  (diagonal zero)\n    - O_i(x, y) = O_i(y, x)  (symmetry)\n    - O_i(x, z) \u2264 max(O_i(x, y), O_i(y, z))  (ultrametric inequality)\n    \n    Attributes:\n        n_points: Number of proof states |P|\n        observers: List of distance matrices, one per observer\n    \"\"\"\n    n_points: int\n    observers: List[np.ndarray]\n    \n    def __post_init__(self):\n        for k, obs in enumerate(self.observers):\n            assert obs.shape == (self.n_points, self.n_points), \\\n                f\"Observer {k} has wrong shape\"\n            assert np.allclose(np.diag(obs), 0), \\\n                f\"Observer {k} violates diagonal zero\"\n            assert np.allclose(obs, obs.T), \\\n                f\"Observer {k} violates symmetry\"\n    \n    @property\n    def n_observers(self) -> int:\n        return len(self.observers)\n    \n    def distortion(self, p: int, q: int) -> float:\n        \"\"\"Observer distortion: max over all observers.\"\"\"\n        if not self.observers:\n            return 0.0\n        return max(obs[p, q] for obs in self.observers)\n    \n    def distortion_matrix(self) -> np.ndarray:\n        \"\"\"Full observer distortion matrix.\"\"\"\n        if not self.observers:\n            return np.zeros((self.n_points, self.n_points))\n        return np.max(np.stack(self.observers), axis=0)\n\n\nclass UnionFind:\n    \"\"\"Union-Find data structure with path compression and union by rank.\n    \n    Time complexity: O(\u03b1(n)) amortized per operation,\n    where \u03b1 is the inverse Ackermann function.\n    \"\"\"\n    \n    def __init__(self, n: int):\n        self.parent = list(range(n))\n        self.rank = [0] * n\n        self.size = [1] * n\n        self.n_components = n\n    \n    def find(self, x: int) -> int:\n        while self.parent[x] != x:\n            self.parent[x] = self.parent[self.parent[x]]\n            x = self.parent[x]\n        return x\n    \n    def union(self, x: int, y: int) -> bool:\n        px, py = self.find(x), self.find(y)\n        if px == py:\n            return False\n        if self.rank[px] < self.rank[py]:\n            px, py = py, px\n        self.parent[py] = px\n        self.size[px] += self.size[py]\n        if self.rank[px] == self.rank[py]:\n            self.rank[px] += 1\n        self.n_components -= 1\n        return True\n    \n    def components(self) -> Dict[int, List[int]]:\n        groups = defaultdict(list)\n        for i in range(len(self.parent)):\n            groups[self.find(i)].append(i)\n        return dict(groups)\n\n\ndef compute_congruence_classes(\n    family: UltrametricObserverFamily, \n    epsilon: float\n) -> List[List[int]]:\n    \"\"\"Compute equivalence classes under observer \u03b5-congruence.\n    \n    Two points p, q are \u03b5-congruent iff \u03b4_O(p, q) \u2264 \u03b5,\n    where \u03b4_O = max over observers.\n    \n    In ultrametric spaces, this is a genuine equivalence relation\n    (transitivity follows from the strong triangle inequality).\n    \n    Time: O(n\u00b2 \u00b7 k) where k = number of observers\n    Space: O(n)\n    \n    Returns:\n        List of equivalence classes (each a list of point indices)\n    \"\"\"\n    n = family.n_points\n    uf = UnionFind(n)\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if family.distortion(i, j) <= epsilon + 1e-12:\n                uf.union(i, j)\n    \n    return list(uf.components().values())\n\n\ndef greedy_codebook(\n    family: UltrametricObserverFamily, \n    epsilon: float\n) -> List[int]:\n    \"\"\"Construct a certified optimal \u03b5-codebook.\n    \n    THEOREM (greedy_ultrametric_codebook_certified):\n    The returned codebook C satisfies:\n    1. ObserverCovers: every point p has some c \u2208 C with \u03b4_O(p, c) \u2264 \u03b5\n    2. Optimality: |C| = N_O(\u03b5) = number of \u03b5-congruence classes\n    \n    Algorithm: Pick one representative from each congruence class.\n    \n    Time: O(n\u00b2 \u00b7 k) for congruence computation\n    Space: O(n)\n    \n    Returns:\n        List of codebook point indices (one per congruence class)\n    \"\"\"\n    classes = compute_congruence_classes(family, epsilon)\n    return [cls[0] for cls in classes]\n\n\ndef compute_critical_scales(family: UltrametricObserverFamily) -> List[float]:\n    \"\"\"Extract the critical scales (compression breakpoints).\n    \n    These are all distinct pairwise observer distortion values.\n    The covering number changes only at these thresholds.\n    \n    THEOREM (observerCoverCard_constant_between_critical):\n    Between consecutive critical scales, the covering number is constant.\n    \n    Time: O(n\u00b2 \u00b7 k)\n    Space: O(n\u00b2) worst case\n    \n    Returns:\n        Sorted list of critical scale values\n    \"\"\"\n    n = family.n_points\n    scales = set()\n    for i in range(n):\n        for j in range(i + 1, n):\n            scales.add(family.distortion(i, j))\n    return sorted(scales)\n\n\n@dataclass\nclass CompressionSpectrum:\n    \"\"\"The compression spectrum of an observer family.\n    \n    Encodes the complete rate-distortion profile as a step function:\n    - critical_scales: the \u03b5 values where the covering number changes\n    - covering_numbers: N(\u03b5) at each critical scale (and \u03b5=0)\n    - rates: R(\u03b5) = log(N(\u03b5)) at each critical scale\n    \n    THEOREM (finite_ultrametric_covering_number_eq_congruence_index):\n    Each covering number equals the congruence class count.\n    \n    THEOREM (observerCoverCard_antitone):\n    The covering numbers are monotonically non-increasing.\n    \"\"\"\n    critical_scales: List[float]\n    covering_numbers: List[int]\n    rates: List[float]\n    \n    def evaluate_N(self, epsilon: float) -> int:\n        \"\"\"Evaluate covering number at arbitrary \u03b5.\"\"\"\n        for i, s in enumerate(self.critical_scales):\n            if epsilon < s - 1e-12:\n                return self.covering_numbers[i]\n        return self.covering_numbers[-1] if self.covering_numbers else 1\n    \n    def evaluate_R(self, epsilon: float) -> float:\n        \"\"\"Evaluate rate function at arbitrary \u03b5.\"\"\"\n        N = self.evaluate_N(epsilon)\n        return np.log(N) if N > 0 else 0.0\n\n\ndef compute_compression_spectrum(\n    family: UltrametricObserverFamily\n) -> CompressionSpectrum:\n    \"\"\"Compute the full compression spectrum.\n    \n    Time: O(n\u00b2 \u00b7 k \u00b7 S) where S = number of critical scales (\u2264 n\u00b2)\n    \n    Returns:\n        CompressionSpectrum containing the step function data\n    \"\"\"\n    critical = compute_critical_scales(family)\n    \n    # Compute covering number at \u03b5=0 and at each critical scale\n    scales = [0.0] + critical\n    numbers = []\n    rates = []\n    \n    for eps in scales:\n        classes = compute_congruence_classes(family, eps)\n        n = len(classes)\n        numbers.append(n)\n        rates.append(np.log(n) if n > 0 else 0.0)\n    \n    return CompressionSpectrum(\n        critical_scales=scales,\n        covering_numbers=numbers,\n        rates=rates\n    )\n\n\ndef verify_ultrametric(d: np.ndarray, tol: float = 1e-10) -> bool:\n    \"\"\"Verify that a distance matrix satisfies the ultrametric inequality.\n    \n    Checks: d(x,z) \u2264 max(d(x,y), d(y,z)) for all x, y, z.\n    \n    Time: O(n\u00b3)\n    \"\"\"\n    n = d.shape[0]\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                if d[i, k] > max(d[i, j], d[j, k]) + tol:\n                    return False\n    return True\n\n\ndef compare_spectra(\n    s1: CompressionSpectrum, \n    s2: CompressionSpectrum\n) -> Dict[str, any]:\n    \"\"\"Compare two compression spectra.\n    \n    Returns a dictionary with:\n    - 'equal': whether the spectra are identical\n    - 'max_rate_diff': maximum difference in rate functions\n    - 'breakpoint_diff': symmetric difference of critical scales\n    \"\"\"\n    all_scales = sorted(set(s1.critical_scales + s2.critical_scales))\n    \n    max_diff = 0.0\n    for eps in all_scales:\n        diff = abs(s1.evaluate_R(eps) - s2.evaluate_R(eps))\n        max_diff = max(max_diff, diff)\n    \n    bp1 = set(round(s, 10) for s in s1.critical_scales)\n    bp2 = set(round(s, 10) for s in s2.critical_scales)\n    \n    return {\n        'equal': max_diff < 1e-10,\n        'max_rate_diff': max_diff,\n        'breakpoint_symmetric_diff': bp1.symmetric_difference(bp2),\n        'n_breakpoints_1': len(s1.critical_scales),\n        'n_breakpoints_2': len(s2.critical_scales),\n    }\n\n\n# ============================================================\n# Example usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Ultrametric Observer Rate-Distortion Algorithms\")\n    print(\"=\" * 60)\n    \n    # Create example ultrametric space\n    n = 6\n    # Manual ultrametric: points organized in a tree\n    # Tree: ((0,1), (2,3)), ((4,5))\n    # Heights: 1 (leaves), 3 (mid), 5 (root)\n    d = np.zeros((n, n))\n    for i, j, h in [(0,1,1), (2,3,1), (4,5,2), (0,2,3), (0,3,3), (1,2,3), (1,3,3),\n                     (0,4,5), (0,5,5), (1,4,5), (1,5,5), (2,4,5), (2,5,5), (3,4,5), (3,5,5)]:\n        d[i,j] = d[j,i] = h\n    \n    print(f\"Ultrametric verified: {verify_ultrametric(d)}\")\n    \n    # Create observers (scaled versions of d)\n    obs1 = d * 0.8\n    obs2 = d * 0.6\n    for o in [obs1, obs2]:\n        np.fill_diagonal(o, 0)\n    \n    family = UltrametricObserverFamily(n, [obs1, obs2])\n    \n    # Compute spectrum\n    spectrum = compute_compression_spectrum(family)\n    print(f\"\\nCompression Spectrum:\")\n    print(f\"  Critical scales: {spectrum.critical_scales}\")\n    print(f\"  Covering numbers: {spectrum.covering_numbers}\")\n    print(f\"  Rates: {[f'{r:.3f}' for r in spectrum.rates]}\")\n    \n    # Greedy codebook at various scales\n    for eps in [0.5, 1.5, 3.0, 5.0]:\n        codebook = greedy_codebook(family, eps)\n        print(f\"\\n  \u03b5={eps}: codebook={codebook}, size={len(codebook)}, \"\n              f\"spectrum N(\u03b5)={spectrum.evaluate_N(eps)}\")\n",
-        "code_file": "visualizations/algebraspeculativemachinelearning_ultrametric_proo_compression_spectrum_computation.py"
-      }
-    ],
-    "visualizations": [
-      {
-        "name": "Rate-Distortion Function (Step Function Structure)",
-        "file": "visualizations/algebraspeculativemachinelearning_ultrametric_proo_rate_distortion_function_step_function_structure.png"
-      },
-      {
-        "name": "Observer Congruence Filtration",
-        "file": "visualizations/algebraspeculativemachinelearning_ultrametric_proo_observer_congruence_filtration.png"
-      }
-    ],
-    "lean_proofs": "import Mathlib\n\n/-!\n# Non-Archimedean Proof Information Theory:\n# Ultrametric Observer Rate\u2013Distortion via Congruence Spectra\n\nThis file establishes a bridge between ultrametric geometry, observer-based\nproof compression, and rate\u2013distortion theory. The central result shows that in a\nfinite ultrametric proof space, the minimal lossy codebook size under observer distortion\nequals the number of equivalence classes in the observer congruence \u2014 converting an\noptimization problem into exact combinatorics.\n\n## Main Results\n\n* `observerDistortion_ultra` \u2014 Observer distortion (sup over observers) is ultrametric\n* `finite_ultrametric_covering_number_eq_congruence_index` \u2014 **Core theorem**: minimal\n  \u03b5-cover size = number of \u03b5-congruence classes\n* `class_rep_gives_cover` \u2014 Quotient representatives form an optimal cover\n* `cover_card_ge_quotient_card` \u2014 Lower bound: any cover has \u2265 #classes elements\n* `observerCoverCard_antitone` \u2014 The covering number is antitone in \u03b5\n* `observerCoverCard_constant_between_critical` \u2014 Covering number is locally constant\n  away from critical distortion values\n* `greedy_ultrametric_codebook_certified` \u2014 Certified greedy codebook algorithm\n\n## Mathematical Significance\n\nThis is a **non-Archimedean rate\u2013distortion theorem**: proof compression under bounded\nobserver loss is governed by an ultrametric congruence spectrum. The compression curve\nis not a smooth optimization artifact but a step function whose jumps correspond to\nstructural changes in the observer congruence lattice.\n\n## Cross-Domain Bridges\n\n* **Proof theory \u2194 Information theory**: observer congruence = quantitative contextual\n  equivalence\n* **Ultrametric geometry \u2194 ML**: clustering in proof space = certified representation\n  compression\n* **Tropical algebra \u2194 Coding theory**: max-plus distortion = tropical rate function\n* **Algebraic geometry \u2194 Compression**: congruence spectrum = semantic phase diagram\n-/\n\nopen Finset Function\n\nattribute [local instance] Classical.propDecidable\n\nnoncomputable section\n\nnamespace UltrametricObserver\n\n/-! ## \u00a71. Core Definitions -/\n\nvariable {P : Type*} [Fintype P] [DecidableEq P]\n\n/-- **Ultrametric observer family**: a family of `n` observer distance functions,\neach satisfying the ultrametric axioms (diagonal zero, symmetry, strong triangle\ninequality). Each observer `O i` measures proof-state distinguishability from\na particular observational perspective.\n\nBridge: observers are quantitative analogues of contextual equivalence tests;\nthe family is an algebraic hash family for proof states. -/\nstructure IsUltrametricObserverFamily {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal) : Prop where\n  /-- Each observer assigns zero distortion to identical states -/\n  diag_zero : \u2200 i x, O i x x = 0\n  /-- Each observer is symmetric -/\n  symm : \u2200 i x y, O i x y = O i y x\n  /-- Each observer satisfies the ultrametric (strong) triangle inequality -/\n  ultra : \u2200 i x y z, O i x z \u2264 O i x y \u2294 O i y z\n\n/-- **Observer distortion**: the maximum distortion across all observers.\nThis is the worst-case distinguishability \u2014 two proof states are \u03b5-indistinguishable\nonly if every observer agrees they are within \u03b5.\n\nIn tropical/max-plus language, this is the tropical norm of the observer vector. -/\ndef observerDistortion {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal) (p q : P) : ENNReal :=\n  Finset.sup Finset.univ (fun i => O i p q)\n\n/-- **Observer \u03b5-congruence**: the relation identifying proof states that are\n\u03b5-indistinguishable to all observers. In the ultrametric setting, this is\na genuine equivalence relation (not just a tolerance relation). -/\ndef observerCongRel {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal) (\u03b5 : ENNReal)\n    (p q : P) : Prop :=\n  observerDistortion O p q \u2264 \u03b5\n\n/-- **Observer \u03b5-cover**: a codebook `C \u2286 P` such that every proof state is\nwithin observer distortion \u03b5 of some codeword. This is a lossy semantic\ncodebook \u2014 it preserves observer-visible behavior up to threshold \u03b5. -/\ndef ObserverCovers {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal) (\u03b5 : ENNReal)\n    (C : Finset P) : Prop :=\n  \u2200 p : P, \u2203 c \u2208 C, observerDistortion O p c \u2264 \u03b5\n\n/-! ## \u00a72. Observer Distortion is Ultrametric -/\n\nomit [Fintype P] [DecidableEq P] in\n/-- The observer distortion is zero on the diagonal. -/\nlemma observerDistortion_self {n : \u2115} {O : Fin n \u2192 P \u2192 P \u2192 ENNReal}\n    (hO : IsUltrametricObserverFamily O) (x : P) :\n    observerDistortion O x x = 0 := by\n  unfold observerDistortion;\n  simp +decide [ hO.diag_zero ]\n\nomit [Fintype P] [DecidableEq P] in\n/-- The observer distortion is symmetric. -/\nlemma observerDistortion_symm {n : \u2115} {O : Fin n \u2192 P \u2192 P \u2192 ENNReal}\n    (hO : IsUltrametricObserverFamily O) (x y : P) :\n    observerDistortion O x y = observerDistortion O y x := by\n  exact Finset.sup_congr rfl fun i _ => hO.symm i x y\n\nomit [Fintype P] [DecidableEq P] in\n/-\n**Ultrametric inequality for observer distortion**: the sup of ultrametrics\nis ultrametric. This is the key structural fact enabling the rate\u2013distortion\ntheorem \u2014 it makes \u03b5-indistinguishability transitive.\n-/\nlemma observerDistortion_ultra {n : \u2115} {O : Fin n \u2192 P \u2192 P \u2192 ENNReal}\n    (hO : IsUltrametricObserverFamily O) (x y z : P) :\n    observerDistortion O x z \u2264 observerDistortion O x y \u2294 observerDistortion O y z := by\n  refine' Finset.sup_le fun i _ => _;\n  exact le_trans ( hO.ultra i x y z ) ( max_le_max ( Finset.le_sup ( f := fun i => O i x y ) ( Finset.mem_univ i ) ) ( Finset.le_sup ( f := fun i => O i y z ) ( Finset.mem_univ i ) ) )\n\n/-! ## \u00a73. Observer Congruence is an Equivalence Relation -/\n\nomit [Fintype P] [DecidableEq P] in\nlemma observerCongRel_refl {n : \u2115} {O : Fin n \u2192 P \u2192 P \u2192 ENNReal}\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) (x : P) :\n    observerCongRel O \u03b5 x x := by\n  unfold observerCongRel\n  rw [observerDistortion_self hO]\n  exact zero_le \u03b5\n\nomit [Fintype P] [DecidableEq P] in\nlemma observerCongRel_symm {n : \u2115} {O : Fin n \u2192 P \u2192 P \u2192 ENNReal}\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) {x y : P}\n    (h : observerCongRel O \u03b5 x y) : observerCongRel O \u03b5 y x := by\n  unfold observerCongRel at *\n  rwa [observerDistortion_symm hO]\n\nomit [Fintype P] [DecidableEq P] in\nlemma observerCongRel_trans {n : \u2115} {O : Fin n \u2192 P \u2192 P \u2192 ENNReal}\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) {x y z : P}\n    (hxy : observerCongRel O \u03b5 x y) (hyz : observerCongRel O \u03b5 y z) :\n    observerCongRel O \u03b5 x z := by\n  unfold observerCongRel at *\n  exact le_trans (observerDistortion_ultra hO x y z) (sup_le hxy hyz)\n\n/-- **Observer congruence setoid**: at each scale \u03b5, observer \u03b5-congruence\nis an equivalence relation on proof states. This is the fundamental\ndifference from general metric spaces, where \u03b5-closeness is not transitive.\nThe ultrametric structure makes it transitive, yielding clean quotients. -/\ndef observerCongruence {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) : Setoid P where\n  r := observerCongRel O \u03b5\n  iseqv := \u27e8observerCongRel_refl hO \u03b5,\n            fun h => observerCongRel_symm hO \u03b5 h,\n            fun h1 h2 => observerCongRel_trans hO \u03b5 h1 h2\u27e9\n\n/-! ## \u00a74. Cover \u2194 Quotient Cardinality -/\n\n/-\n**Upper bound**: choosing one representative per congruence class yields\nan \u03b5-cover of optimal size. This is the constructive half of the main theorem.\n\nProof: Take C = {Quotient.out q | q : Quotient}. Then |C| = #classes (since\nQuotient.out is injective). For any p, the representative Quotient.out \u27e6p\u27e7\nis in the same class as p, hence within distortion \u03b5.\n-/\ntheorem class_rep_gives_cover {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) :\n    \u2203 C : Finset P,\n      C.card = Fintype.card (Quotient (observerCongruence O hO \u03b5)) \u2227\n      ObserverCovers O \u03b5 C := by\n  by_contra h_contra';\n  push_neg at h_contra';\n  apply h_contra';\n  rw [ Finset.card_image_of_injective ];\n  convert Finset.card_univ;\n  convert Quotient.out_injective;\n  intro p\n  use Quotient.out (\u27e6p\u27e7 : Quotient (observerCongruence O hO \u03b5));\n  simp +decide [ observerCongruence ];\n  have := Quotient.out_eq' ( \u27e6p\u27e7 : Quotient ( observerCongruence O hO \u03b5 ) );\n  rw [ Quotient.eq'' ] at this;\n  exact observerCongRel_symm hO \u03b5 this\n\n/-\n**Lower bound**: any \u03b5-cover must contain at least as many elements as\nthere are congruence classes. This follows because the quotient map restricted\nto C must be surjective (each class has a covering element in C, which belongs\nto that class), so |C| \u2265 |image of C under quotient map| = #classes.\n\nThis is the information-theoretic half: you cannot compress below the\ncongruence index without exceeding the distortion threshold.\n-/\nomit [DecidableEq P] in\ntheorem cover_card_ge_quotient_card {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal)\n    (C : Finset P) (hC : ObserverCovers O \u03b5 C) :\n    Fintype.card (Quotient (observerCongruence O hO \u03b5)) \u2264 C.card := by\n  refine' le_trans _ ( Finset.card_le_card _ );\n  rotate_left;\n  exact C;\n  \u00b7 exact Finset.Subset.refl _;\n  \u00b7 -- Let $s$ be the setoid defined by the observer congruence.\n    set s : Setoid P := observerCongruence O hO \u03b5;\n    -- Let $q : P \u2192 Quotient s$ be the quotient map.\n    set q : P \u2192 Quotient s := fun p => Quotient.mk'' p;\n    -- By definition of $q$, we know that for any $p \\in P$, there exists $c \\in C$ such that $q(p) = q(c)$.\n    have h_q_surjective : \u2200 p : P, \u2203 c \u2208 C, q p = q c := by\n      intro p\n      obtain \u27e8c, hc\u27e9 := hC p\n      use c;\n      exact \u27e8 hc.1, Quotient.sound hc.2 \u27e9;\n    have h_q_surjective : Set.range q \u2286 Set.image q C := by\n      exact Set.range_subset_iff.2 fun p => by obtain \u27e8 c, hc, hpc \u27e9 := h_q_surjective p; exact \u27e8 c, hc, hpc.symm \u27e9 ;\n    have h_q_surjective : Set.range q = Set.univ := by\n      exact Set.eq_univ_of_forall fun x => by obtain \u27e8 p, rfl \u27e9 := Quotient.exists_rep x; exact Set.mem_range_self p;\n    simp_all +decide;\n    have h_q_surjective : Set.ncard (Set.image q C) \u2264 Set.ncard (C : Set P) := by\n      exact Set.ncard_image_le;\n    convert h_q_surjective using 1;\n    \u00b7 rw [ \u2039q '' \u2191C = Set.univ\u203a, Set.ncard_univ ];\n      exact Fintype.card_eq_nat_card;\n    \u00b7 rw [ Set.ncard_coe_finset ]\n\n/-! ## \u00a75. Main Theorem -/\n\n/-- **Non-Archimedean Observer Rate\u2013Distortion Theorem** (finite case):\n\nThe minimal observer \u03b5-cover cardinality equals the congruence index\n(number of equivalence classes under observer \u03b5-congruence).\n\nThis converts the optimization problem (find the smallest codebook) into\nexact combinatorics (count equivalence classes). The proof combines:\n- **Upper bound** (`class_rep_gives_cover`): quotient representatives form a cover\n- **Lower bound** (`cover_card_ge_quotient_card`): any cover must intersect every class\n\nThis is the structural heart of non-Archimedean proof information theory:\nproof compression is not an optimization problem but an algebraic invariant. -/\ntheorem finite_ultrametric_covering_number_eq_congruence_index\n    {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) :\n    (\u2203 C : Finset P,\n      ObserverCovers O \u03b5 C \u2227\n      C.card = Fintype.card (Quotient (observerCongruence O hO \u03b5))) \u2227\n    (\u2200 C : Finset P, ObserverCovers O \u03b5 C \u2192\n      Fintype.card (Quotient (observerCongruence O hO \u03b5)) \u2264 C.card) :=\n  \u27e8by obtain \u27e8C, hcard, hcov\u27e9 := class_rep_gives_cover O hO \u03b5\n      exact \u27e8C, hcov, hcard\u27e9,\n   cover_card_ge_quotient_card O hO \u03b5\u27e9\n\n/-! ## \u00a76. Covering Number Function and Monotonicity -/\n\n/-- The observer covering number at scale \u03b5: the number of congruence classes.\nBy the main theorem, this equals the minimal \u03b5-cover cardinality. -/\ndef observerCoverCard {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) : \u2115 :=\n  Fintype.card (Quotient (observerCongruence O hO \u03b5))\n\nomit [Fintype P] [DecidableEq P] in\n/-- Congruence refinement: smaller \u03b5 gives finer (more restrictive) congruence. -/\nlemma observerCongRel_mono {n : \u2115} {O : Fin n \u2192 P \u2192 P \u2192 ENNReal}\n    {\u03b5\u2081 \u03b5\u2082 : ENNReal} (hle : \u03b5\u2081 \u2264 \u03b5\u2082)\n    {x y : P} (h : observerCongRel O \u03b5\u2081 x y) : observerCongRel O \u03b5\u2082 x y :=\n  le_trans h hle\n\n/-\n**Antitone covering number**: increasing \u03b5 makes the congruence coarser,\nso there are fewer or equal classes. The covering number is antitone.\n\nThis is the fundamental monotonicity of the rate\u2013distortion curve:\nmore distortion tolerance \u2192 fewer codebook entries needed.\n-/\nomit [DecidableEq P] in\ntheorem observerCoverCard_antitone {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) :\n    Antitone (observerCoverCard O hO) := by\n  intro \u03b5\u2081 \u03b5\u2082 h\u03b5;\n  apply_rules [ Fintype.card_le_of_surjective ];\n  swap;\n  exact fun q => Quotient.map' id ( fun x y hxy => observerCongRel_mono h\u03b5 hxy ) q;\n  exact fun q => \u27e8 Quotient.mk'' ( Quotient.out q ), by aesop \u27e9\n\n/-! ## \u00a77. Critical Scales and Spectral Structure -/\n\n/-- The set of critical scales: all pairwise observer distortion values.\nThe covering number can only change at these thresholds. This is a finite\nset (since P is finite), giving the rate\u2013distortion curve finitely many\nbreakpoints \u2014 the **compression spectrum**. -/\ndef criticalScales {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal) : Finset ENNReal :=\n  (Finset.univ.product Finset.univ).image\n    (fun pq : P \u00d7 P => observerDistortion O pq.1 pq.2)\n\n/-\n**Locally constant off critical scales**: the covering number does not change\nbetween consecutive critical values. This means the rate\u2013distortion curve is a\nstep function with finitely many jumps \u2014 the **observer compression spectrum**.\n\nProof idea: if no pair (p,q) has observerDistortion O p q \u2208 (\u03b5\u2081, \u03b5\u2082], then\nthe \u03b5\u2081-congruence and \u03b5\u2082-congruence coincide (same pairs are identified).\n-/\nomit [DecidableEq P] in\ntheorem observerCoverCard_constant_between_critical {n : \u2115}\n    (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O)\n    (\u03b5\u2081 \u03b5\u2082 : ENNReal) (hle : \u03b5\u2081 \u2264 \u03b5\u2082)\n    (hno_critical : \u2200 p q : P,\n      \u00ac(\u03b5\u2081 < observerDistortion O p q \u2227 observerDistortion O p q \u2264 \u03b5\u2082)) :\n    observerCoverCard O hO \u03b5\u2081 = observerCoverCard O hO \u03b5\u2082 := by\n  -- Show that the two congruences are equal by showing they have the same relation.\n  have h_congr_eq : observerCongruence O hO \u03b5\u2081 = observerCongruence O hO \u03b5\u2082 := by\n    ext p q;\n    exact \u27e8 fun h => le_trans h hle, fun h => le_of_not_gt fun h' => hno_critical p q \u27e8 h', h \u27e9 \u27e9;\n  unfold observerCoverCard;\n  rw [ h_congr_eq ]\n\n/-! ## \u00a78. Congruence Filtration Nesting -/\n\nomit [Fintype P] [DecidableEq P] in\n/-- The observer congruences form a nested filtration: finer at smaller \u03b5,\ncoarser at larger \u03b5. Formally, every \u03b5\u2081-equivalent pair is also \u03b5\u2082-equivalent\nwhen \u03b5\u2081 \u2264 \u03b5\u2082. This is the **ultrametric filtration** \u2014 the non-Archimedean\nanalogue of a Rips filtration in persistent homology. -/\ntheorem observerCongruence_nested {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O)\n    {\u03b5\u2081 \u03b5\u2082 : ENNReal} (hle : \u03b5\u2081 \u2264 \u03b5\u2082) (x y : P)\n    (h : (observerCongruence O hO \u03b5\u2081).r x y) :\n    (observerCongruence O hO \u03b5\u2082).r x y :=\n  observerCongRel_mono hle h\n\n/-! ## \u00a79. Greedy Codebook Algorithm -/\n\n/-- Greedy codebook: one representative per congruence class. -/\ndef greedyObserverCodebook {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) : Finset P :=\n  (Finset.univ : Finset (Quotient (observerCongruence O hO \u03b5))).image Quotient.out\n\n/-\n**Certified greedy codebook theorem**: the greedy codebook is an optimal\n\u03b5-cover \u2014 it covers all proof states and has minimal cardinality.\n\nThis is the algorithmic version of the main theorem: not just existence\nof an optimal codebook, but an explicit construction with a correctness\ncertificate.\n-/\ntheorem greedy_ultrametric_codebook_certified {n : \u2115}\n    (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) :\n    let C := greedyObserverCodebook O hO \u03b5\n    ObserverCovers O \u03b5 C \u2227\n    C.card = observerCoverCard O hO \u03b5 := by\n  unfold observerCoverCard greedyObserverCodebook;\n  refine' \u27e8 fun p => _, _ \u27e9;\n  \u00b7 simp +decide [ observerCongruence ];\n    refine' \u27e8 Quotient.mk'' p, _ \u27e9;\n    have := Quotient.out_eq' ( Quotient.mk'' p : Quotient ( observerCongruence O hO \u03b5 ) );\n    rw [ Quotient.eq'' ] at this;\n    exact observerCongRel_symm hO \u03b5 this;\n  \u00b7 rw [ Finset.card_image_of_injective ];\n    \u00b7 rfl;\n    \u00b7 exact Quotient.out_injective\n\n/-! ## \u00a710. Observer Rate Function -/\n\n/-- The observer rate function: the natural logarithm of the covering number.\nThis is the non-Archimedean analogue of the Shannon rate\u2013distortion function. -/\ndef observerRateFunction {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) : \u211d :=\n  Real.log (observerCoverCard O hO \u03b5 : \u211d)\n\n/-\nThe rate function is antitone: more distortion tolerance \u2192 lower rate.\n-/\nomit [DecidableEq P] in\ntheorem observerRateFunction_antitone {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) :\n    Antitone (observerRateFunction O hO) := by\n  intro \u03b5\u2081 \u03b5\u2082 hle; exact (by\n  -- The covering number is antitone, so observerCoverCard O hO \u03b5\u2082 \u2264 observerCoverCard O hO \u03b5\u2081.\n  have h_covering_antitone : observerCoverCard O hO \u03b5\u2082 \u2264 observerCoverCard O hO \u03b5\u2081 := by\n    exact observerCoverCard_antitone O hO hle\n  generalize_proofs at *; (\n  by_cases h : observerCoverCard O hO \u03b5\u2082 = 0 <;> simp_all +decide [ observerRateFunction ];\n  \u00b7 exact Real.log_natCast_nonneg _;\n  \u00b7 exact Real.log_le_log ( Nat.cast_pos.mpr ( Nat.pos_of_ne_zero h ) ) ( Nat.cast_le.mpr h_covering_antitone )));\n\n/-! ## \u00a711. Rate\u2013Distortion Existence Theorem -/\n\n/-\n**Full rate\u2013distortion existence theorem**: there exists a rate function R\nsatisfying:\n1. R is antitone (more tolerance \u2192 lower rate)\n2. R equals log of the congruence index at every scale\n3. R equals the infimum of log-cardinalities of \u03b5-covers\n\nThis packages the main results into a single existence statement matching\nthe classical rate\u2013distortion function interface.\n-/\ntheorem finite_ultrametric_observer_rate_distortion_exists\n    {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) :\n    \u2203 R : ENNReal \u2192 \u211d,\n      Antitone R \u2227\n      (\u2200 \u03b5, R \u03b5 = Real.log\n        (Fintype.card (Quotient (observerCongruence O hO \u03b5)) : \u211d)) \u2227\n      (\u2200 \u03b5, \u2203 C : Finset P, ObserverCovers O \u03b5 C \u2227\n        R \u03b5 = Real.log (C.card : \u211d)) := by\n  refine' \u27e8 _, _, fun \u03b5 => rfl, fun \u03b5 => _ \u27e9;\n  \u00b7 convert observerRateFunction_antitone O hO using 1;\n  \u00b7 exact Exists.elim ( class_rep_gives_cover O hO \u03b5 ) fun C hC => \u27e8 C, hC.2, by rw [ hC.1 ] \u27e9\n\n/-! ## \u00a712. Bridge: Observer Separation -/\n\n/-- Two proof states are observer-separated at scale \u03b5 if they are in distinct\ncongruence classes. -/\ndef ObserverSeparated {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) (x y : P) : Prop :=\n  \u00ac(observerCongruence O hO \u03b5).r x y\n\nomit [Fintype P] [DecidableEq P] in\n/-- Observer separation is equivalent to exceeding the distortion threshold. -/\nlemma observerSeparated_iff {n : \u2115} (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal) (x y : P) :\n    ObserverSeparated O hO \u03b5 x y \u2194 \u03b5 < observerDistortion O x y := by\n  simp [ObserverSeparated, observerCongruence, observerCongRel, not_le]\n\nomit [DecidableEq P] in\n/-- **Covering number bounds codebook**: any valid \u03b5-cover has cardinality\nat least the covering number (the congruence index). -/\ntheorem observerCoverCard_le_card_of_covers {n : \u2115}\n    (O : Fin n \u2192 P \u2192 P \u2192 ENNReal)\n    (hO : IsUltrametricObserverFamily O) (\u03b5 : ENNReal)\n    (C : Finset P) (hC : ObserverCovers O \u03b5 C) :\n    observerCoverCard O hO \u03b5 \u2264 C.card :=\n  cover_card_ge_quotient_card O hO \u03b5 C hC\n\nend UltrametricObserver",
-    "modules": {
-      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Ultrametric Observer Rate-Distortion Theory\n\nImplements the core algorithms from the formalized theory:\n1. Greedy codebook construction (O(n\u00b2 \u00b7 k) where k = #observers)\n2. Congruence class computation via Union-Find (O(n\u00b2 \u00b7 k \u00b7 \u03b1(n)))\n3. Rate-distortion spectrum computation\n4. Critical scale extraction\n5. Compression spectrum comparison\n\nAll algorithms have formal correctness guarantees backed by the\nLean 4 proofs in UltrametricProofObserverRateDistortion.lean.\n\"\"\"\n\nfrom typing import List, Dict, Tuple, Set, Optional, Callable\nfrom dataclasses import dataclass, field\nfrom collections import defaultdict\nimport numpy as np\n\n\n@dataclass\nclass UltrametricObserverFamily:\n    \"\"\"A family of ultrametric observer distance functions.\n    \n    Each observer O_i : P \u00d7 P \u2192 R\u22650 satisfies:\n    - O_i(x, x) = 0  (diagonal zero)\n    - O_i(x, y) = O_i(y, x)  (symmetry)\n    - O_i(x, z) \u2264 max(O_i(x, y), O_i(y, z))  (ultrametric inequality)\n    \n    Attributes:\n        n_points: Number of proof states |P|\n        observers: List of distance matrices, one per observer\n    \"\"\"\n    n_points: int\n    observers: List[np.ndarray]\n    \n    def __post_init__(self):\n        for k, obs in enumerate(self.observers):\n            assert obs.shape == (self.n_points, self.n_points), \\\n                f\"Observer {k} has wrong shape\"\n            assert np.allclose(np.diag(obs), 0), \\\n                f\"Observer {k} violates diagonal zero\"\n            assert np.allclose(obs, obs.T), \\\n                f\"Observer {k} violates symmetry\"\n    \n    @property\n    def n_observers(self) -> int:\n        return len(self.observers)\n    \n    def distortion(self, p: int, q: int) -> float:\n        \"\"\"Observer distortion: max over all observers.\"\"\"\n        if not self.observers:\n            return 0.0\n        return max(obs[p, q] for obs in self.observers)\n    \n    def distortion_matrix(self) -> np.ndarray:\n        \"\"\"Full observer distortion matrix.\"\"\"\n        if not self.observers:\n            return np.zeros((self.n_points, self.n_points))\n        return np.max(np.stack(self.observers), axis=0)\n\n\nclass UnionFind:\n    \"\"\"Union-Find data structure with path compression and union by rank.\n    \n    Time complexity: O(\u03b1(n)) amortized per operation,\n    where \u03b1 is the inverse Ackermann function.\n    \"\"\"\n    \n    def __init__(self, n: int):\n        self.parent = list(range(n))\n        self.rank = [0] * n\n        self.size = [1] * n\n        self.n_components = n\n    \n    def find(self, x: int) -> int:\n        while self.parent[x] != x:\n            self.parent[x] = self.parent[self.parent[x]]\n            x = self.parent[x]\n        return x\n    \n    def union(self, x: int, y: int) -> bool:\n        px, py = self.find(x), self.find(y)\n        if px == py:\n            return False\n        if self.rank[px] < self.rank[py]:\n            px, py = py, px\n        self.parent[py] = px\n        self.size[px] += self.size[py]\n        if self.rank[px] == self.rank[py]:\n            self.rank[px] += 1\n        self.n_components -= 1\n        return True\n    \n    def components(self) -> Dict[int, List[int]]:\n        groups = defaultdict(list)\n        for i in range(len(self.parent)):\n            groups[self.find(i)].append(i)\n        return dict(groups)\n\n\ndef compute_congruence_classes(\n    family: UltrametricObserverFamily, \n    epsilon: float\n) -> List[List[int]]:\n    \"\"\"Compute equivalence classes under observer \u03b5-congruence.\n    \n    Two points p, q are \u03b5-congruent iff \u03b4_O(p, q) \u2264 \u03b5,\n    where \u03b4_O = max over observers.\n    \n    In ultrametric spaces, this is a genuine equivalence relation\n    (transitivity follows from the strong triangle inequality).\n    \n    Time: O(n\u00b2 \u00b7 k) where k = number of observers\n    Space: O(n)\n    \n    Returns:\n        List of equivalence classes (each a list of point indices)\n    \"\"\"\n    n = family.n_points\n    uf = UnionFind(n)\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if family.distortion(i, j) <= epsilon + 1e-12:\n                uf.union(i, j)\n    \n    return list(uf.components().values())\n\n\ndef greedy_codebook(\n    family: UltrametricObserverFamily, \n    epsilon: float\n) -> List[int]:\n    \"\"\"Construct a certified optimal \u03b5-codebook.\n    \n    THEOREM (greedy_ultrametric_codebook_certified):\n    The returned codebook C satisfies:\n    1. ObserverCovers: every point p has some c \u2208 C with \u03b4_O(p, c) \u2264 \u03b5\n    2. Optimality: |C| = N_O(\u03b5) = number of \u03b5-congruence classes\n    \n    Algorithm: Pick one representative from each congruence class.\n    \n    Time: O(n\u00b2 \u00b7 k) for congruence computation\n    Space: O(n)\n    \n    Returns:\n        List of codebook point indices (one per congruence class)\n    \"\"\"\n    classes = compute_congruence_classes(family, epsilon)\n    return [cls[0] for cls in classes]\n\n\ndef compute_critical_scales(family: UltrametricObserverFamily) -> List[float]:\n    \"\"\"Extract the critical scales (compression breakpoints).\n    \n    These are all distinct pairwise observer distortion values.\n    The covering number changes only at these thresholds.\n    \n    THEOREM (observerCoverCard_constant_between_critical):\n    Between consecutive critical scales, the covering number is constant.\n    \n    Time: O(n\u00b2 \u00b7 k)\n    Space: O(n\u00b2) worst case\n    \n    Returns:\n        Sorted list of critical scale values\n    \"\"\"\n    n = family.n_points\n    scales = set()\n    for i in range(n):\n        for j in range(i + 1, n):\n            scales.add(family.distortion(i, j))\n    return sorted(scales)\n\n\n@dataclass\nclass CompressionSpectrum:\n    \"\"\"The compression spectrum of an observer family.\n    \n    Encodes the complete rate-distortion profile as a step function:\n    - critical_scales: the \u03b5 values where the covering number changes\n    - covering_numbers: N(\u03b5) at each critical scale (and \u03b5=0)\n    - rates: R(\u03b5) = log(N(\u03b5)) at each critical scale\n    \n    THEOREM (finite_ultrametric_covering_number_eq_congruence_index):\n    Each covering number equals the congruence class count.\n    \n    THEOREM (observerCoverCard_antitone):\n    The covering numbers are monotonically non-increasing.\n    \"\"\"\n    critical_scales: List[float]\n    covering_numbers: List[int]\n    rates: List[float]\n    \n    def evaluate_N(self, epsilon: float) -> int:\n        \"\"\"Evaluate covering number at arbitrary \u03b5.\"\"\"\n        for i, s in enumerate(self.critical_scales):\n            if epsilon < s - 1e-12:\n                return self.covering_numbers[i]\n        return self.covering_numbers[-1] if self.covering_numbers else 1\n    \n    def evaluate_R(self, epsilon: float) -> float:\n        \"\"\"Evaluate rate function at arbitrary \u03b5.\"\"\"\n        N = self.evaluate_N(epsilon)\n        return np.log(N) if N > 0 else 0.0\n\n\ndef compute_compression_spectrum(\n    family: UltrametricObserverFamily\n) -> CompressionSpectrum:\n    \"\"\"Compute the full compression spectrum.\n    \n    Time: O(n\u00b2 \u00b7 k \u00b7 S) where S = number of critical scales (\u2264 n\u00b2)\n    \n    Returns:\n        CompressionSpectrum containing the step function data\n    \"\"\"\n    critical = compute_critical_scales(family)\n    \n    # Compute covering number at \u03b5=0 and at each critical scale\n    scales = [0.0] + critical\n    numbers = []\n    rates = []\n    \n    for eps in scales:\n        classes = compute_congruence_classes(family, eps)\n        n = len(classes)\n        numbers.append(n)\n        rates.append(np.log(n) if n > 0 else 0.0)\n    \n    return CompressionSpectrum(\n        critical_scales=scales,\n        covering_numbers=numbers,\n        rates=rates\n    )\n\n\ndef verify_ultrametric(d: np.ndarray, tol: float = 1e-10) -> bool:\n    \"\"\"Verify that a distance matrix satisfies the ultrametric inequality.\n    \n    Checks: d(x,z) \u2264 max(d(x,y), d(y,z)) for all x, y, z.\n    \n    Time: O(n\u00b3)\n    \"\"\"\n    n = d.shape[0]\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                if d[i, k] > max(d[i, j], d[j, k]) + tol:\n                    return False\n    return True\n\n\ndef compare_spectra(\n    s1: CompressionSpectrum, \n    s2: CompressionSpectrum\n) -> Dict[str, any]:\n    \"\"\"Compare two compression spectra.\n    \n    Returns a dictionary with:\n    - 'equal': whether the spectra are identical\n    - 'max_rate_diff': maximum difference in rate functions\n    - 'breakpoint_diff': symmetric difference of critical scales\n    \"\"\"\n    all_scales = sorted(set(s1.critical_scales + s2.critical_scales))\n    \n    max_diff = 0.0\n    for eps in all_scales:\n        diff = abs(s1.evaluate_R(eps) - s2.evaluate_R(eps))\n        max_diff = max(max_diff, diff)\n    \n    bp1 = set(round(s, 10) for s in s1.critical_scales)\n    bp2 = set(round(s, 10) for s in s2.critical_scales)\n    \n    return {\n        'equal': max_diff < 1e-10,\n        'max_rate_diff': max_diff,\n        'breakpoint_symmetric_diff': bp1.symmetric_difference(bp2),\n        'n_breakpoints_1': len(s1.critical_scales),\n        'n_breakpoints_2': len(s2.critical_scales),\n    }\n\n\n# ============================================================\n# Example usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Ultrametric Observer Rate-Distortion Algorithms\")\n    print(\"=\" * 60)\n    \n    # Create example ultrametric space\n    n = 6\n    # Manual ultrametric: points organized in a tree\n    # Tree: ((0,1), (2,3)), ((4,5))\n    # Heights: 1 (leaves), 3 (mid), 5 (root)\n    d = np.zeros((n, n))\n    for i, j, h in [(0,1,1), (2,3,1), (4,5,2), (0,2,3), (0,3,3), (1,2,3), (1,3,3),\n                     (0,4,5), (0,5,5), (1,4,5), (1,5,5), (2,4,5), (2,5,5), (3,4,5), (3,5,5)]:\n        d[i,j] = d[j,i] = h\n    \n    print(f\"Ultrametric verified: {verify_ultrametric(d)}\")\n    \n    # Create observers (scaled versions of d)\n    obs1 = d * 0.8\n    obs2 = d * 0.6\n    for o in [obs1, obs2]:\n        np.fill_diagonal(o, 0)\n    \n    family = UltrametricObserverFamily(n, [obs1, obs2])\n    \n    # Compute spectrum\n    spectrum = compute_compression_spectrum(family)\n    print(f\"\\nCompression Spectrum:\")\n    print(f\"  Critical scales: {spectrum.critical_scales}\")\n    print(f\"  Covering numbers: {spectrum.covering_numbers}\")\n    print(f\"  Rates: {[f'{r:.3f}' for r in spectrum.rates]}\")\n    \n    # Greedy codebook at various scales\n    for eps in [0.5, 1.5, 3.0, 5.0]:\n        codebook = greedy_codebook(family, eps)\n        print(f\"\\n  \u03b5={eps}: codebook={codebook}, size={len(codebook)}, \"\n              f\"spectrum N(\u03b5)={spectrum.evaluate_N(eps)}\")\n",
-      "demo": "#!/usr/bin/env python3\n\"\"\"\nDemo: Ultrametric Observer Rate-Distortion Theory\n\nDemonstrates the core theorem: in a finite ultrametric space with observers,\nthe minimal \u03b5-cover size equals the number of equivalence classes under\nobserver \u03b5-congruence.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom collections import defaultdict\nimport base64\nfrom io import BytesIO\n\n\ndef make_ultrametric_tree(n_leaves=8, seed=42):\n    \"\"\"Generate a valid ultrametric distance matrix from a binary merge tree.\n    \n    Build bottom-up: start with singletons, merge pairs at increasing heights.\n    All inter-cluster distances equal the merge height (ultrametric property).\n    \"\"\"\n    rng = np.random.RandomState(seed)\n    n = n_leaves\n    d = np.zeros((n, n))\n    \n    # Merge heights (increasing)\n    heights = sorted(rng.uniform(1, 10, n - 1))\n    \n    # Start with each point in its own cluster\n    clusters = [[i] for i in range(n)]\n    \n    for h in heights:\n        if len(clusters) < 2:\n            break\n        # Pick two random clusters to merge\n        idx = rng.choice(len(clusters), 2, replace=False)\n        i, j = min(idx), max(idx)\n        c1, c2 = clusters[i], clusters[j]\n        \n        # Set distance between all cross-cluster pairs to h\n        for a in c1:\n            for b in c2:\n                d[a, b] = h\n                d[b, a] = h\n        \n        # Merge clusters\n        new_cluster = c1 + c2\n        clusters = [c for k, c in enumerate(clusters) if k not in (i, j)]\n        clusters.append(new_cluster)\n    \n    return d\n\n\ndef verify_ultrametric(d):\n    \"\"\"Verify the strong triangle inequality.\"\"\"\n    n = d.shape[0]\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                if d[i, k] > max(d[i, j], d[j, k]) + 1e-10:\n                    return False\n    return True\n\n\ndef observer_distortion(observers, p, q):\n    \"\"\"Compute max observer distortion.\"\"\"\n    return max(o[p, q] for o in observers)\n\n\ndef compute_congruence_classes(observers, n, epsilon):\n    \"\"\"Compute equivalence classes under observer \u03b5-congruence via Union-Find.\"\"\"\n    parent = list(range(n))\n    \n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]\n            x = parent[x]\n        return x\n    \n    def union(x, y):\n        px, py = find(x), find(y)\n        if px != py:\n            parent[px] = py\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if observer_distortion(observers, i, j) <= epsilon + 1e-10:\n                union(i, j)\n    \n    classes = defaultdict(list)\n    for i in range(n):\n        classes[find(i)].append(i)\n    \n    return list(classes.values())\n\n\ndef minimal_cover(observers, n, epsilon):\n    \"\"\"One representative per congruence class.\"\"\"\n    classes = compute_congruence_classes(observers, n, epsilon)\n    return [cls[0] for cls in classes]\n\n\ndef compute_critical_scales(observers, n):\n    \"\"\"All distinct pairwise observer distortion values.\"\"\"\n    scales = set()\n    for i in range(n):\n        for j in range(i + 1, n):\n            scales.add(round(observer_distortion(observers, i, j), 10))\n    return sorted(scales)\n\n\ndef demo_core_theorem():\n    \"\"\"Demonstrate: cover size = congruence index (the main theorem).\"\"\"\n    print(\"=\" * 70)\n    print(\"CORE THEOREM: Minimal \u03b5-cover = Observer Congruence Index\")\n    print(\"=\" * 70)\n    \n    n = 8\n    d = make_ultrametric_tree(n, seed=42)\n    assert verify_ultrametric(d), \"Distance matrix must be ultrametric\"\n    \n    print(f\"\\nUltrametric space with {n} proof states\")\n    print(f\"Ultrametric property verified: {verify_ultrametric(d)}\")\n    \n    # Create observers as scaled sub-ultrametrics\n    rng = np.random.RandomState(123)\n    observers = []\n    for k in range(3):\n        scale = rng.uniform(0.5, 1.0)\n        obs = d * scale\n        np.fill_diagonal(obs, 0)\n        observers.append(obs)\n    \n    # Verify observers are ultrametric\n    for k, obs in enumerate(observers):\n        assert verify_ultrametric(obs), f\"Observer {k} must be ultrametric\"\n    \n    print(f\"Number of observers: {len(observers)}\")\n    \n    critical = compute_critical_scales(observers, n)\n    print(f\"\\nCritical scales ({len(critical)} breakpoints):\")\n    for i, s in enumerate(critical[:10]):\n        print(f\"  \u03b5_{i} = {s:.4f}\")\n    \n    # Test at various scales\n    test_eps = sorted(set([0.0] + [s - 0.01 for s in critical if s > 0.01] + critical + [critical[-1] + 1]))\n    \n    print(f\"\\n{'\u03b5':>10} | {'#Classes':>10} | {'Cover':>10} | {'Covers?':>8} | {'Match':>6}\")\n    print(\"-\" * 60)\n    \n    all_match = True\n    for eps in test_eps:\n        classes = compute_congruence_classes(observers, n, eps)\n        cover = minimal_cover(observers, n, eps)\n        n_classes = len(classes)\n        n_cover = len(cover)\n        \n        # Verify cover property\n        covers = all(\n            any(observer_distortion(observers, p, c) <= eps + 1e-10 for c in cover)\n            for p in range(n)\n        )\n        \n        match = n_classes == n_cover\n        all_match = all_match and match\n        print(f\"{eps:10.4f} | {n_classes:10d} | {n_cover:10d} | {'\u2713' if covers else '\u2717':>8} | {'\u2713' if match else '\u2717':>6}\")\n    \n    print(f\"\\nTheorem verified at all scales: {'\u2713' if all_match else '\u2717'}\")\n    return d, observers\n\n\ndef plot_rate_distortion(observers, n, filename=\"rate_distortion.png\"):\n    \"\"\"Plot the rate-distortion step function.\"\"\"\n    critical = compute_critical_scales(observers, n)\n    eps_max = max(critical) * 1.3 if critical else 1\n    epsilons = np.linspace(0, eps_max, 500)\n    \n    cover_numbers = []\n    rates = []\n    for eps in epsilons:\n        classes = compute_congruence_classes(observers, n, eps)\n        nc = len(classes)\n        cover_numbers.append(nc)\n        rates.append(np.log(nc) if nc > 0 else 0)\n    \n    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))\n    \n    ax1.plot(epsilons, rates, 'b-', linewidth=2, label='R(\u03b5) = log N(\u03b5)')\n    for s in critical:\n        ax1.axvline(x=s, color='red', linestyle='--', alpha=0.3)\n    ax1.set_xlabel('Distortion tolerance \u03b5', fontsize=12)\n    ax1.set_ylabel('Rate R(\u03b5)', fontsize=12)\n    ax1.set_title('Observer Rate\u2013Distortion Function\\n(Antitone Step Function)', fontsize=13)\n    ax1.legend(fontsize=11)\n    ax1.grid(True, alpha=0.3)\n    \n    ax2.step(epsilons, cover_numbers, 'r-', linewidth=2, where='post',\n             label='N(\u03b5) = #congruence classes')\n    for s in critical:\n        ax2.axvline(x=s, color='blue', linestyle='--', alpha=0.3)\n    ax2.set_xlabel('Distortion tolerance \u03b5', fontsize=12)\n    ax2.set_ylabel('Covering number N(\u03b5)', fontsize=12)\n    ax2.set_title('Covering Number = Congruence Index\\n(Core Theorem)', fontsize=13)\n    ax2.legend(fontsize=11)\n    ax2.grid(True, alpha=0.3)\n    \n    plt.tight_layout()\n    plt.savefig(filename, dpi=150, bbox_inches='tight')\n    plt.close()\n    print(f\"\\nPlot saved to {filename}\")\n    return filename\n\n\ndef plot_congruence_filtration(observers, n, filename=\"filtration.png\"):\n    \"\"\"Visualize the congruence filtration at different scales.\"\"\"\n    critical = compute_critical_scales(observers, n)\n    \n    # Pick representative scales\n    scales = [0.0] + critical[:min(len(critical), 7)]\n    \n    fig, ax = plt.subplots(figsize=(12, 5))\n    \n    for si, eps in enumerate(scales):\n        classes = compute_congruence_classes(observers, n, eps)\n        for ci, cls in enumerate(classes):\n            color = plt.cm.tab10(ci % 10)\n            for p in cls:\n                ax.barh(si, 0.7, left=p - 0.35, height=0.5, color=color,\n                       alpha=0.7, edgecolor='black', linewidth=0.5)\n                ax.text(p, si, str(p), ha='center', va='center', fontsize=8, fontweight='bold')\n    \n    ax.set_yticks(range(len(scales)))\n    labels = []\n    for s in scales:\n        nc = len(compute_congruence_classes(observers, n, s))\n        labels.append(f'\u03b5={s:.2f}\\n({nc} classes)')\n    ax.set_yticklabels(labels, fontsize=9)\n    ax.set_xlabel('Proof State', fontsize=12)\n    ax.set_title('Observer Congruence Filtration\\n(Nested Equivalence Classes at Increasing \u03b5)', fontsize=13)\n    ax.set_xlim(-1, n)\n    \n    plt.tight_layout()\n    plt.savefig(filename, dpi=150, bbox_inches='tight')\n    plt.close()\n    print(f\"Filtration plot saved to {filename}\")\n    return filename\n\n\ndef demo_greedy_codebook():\n    \"\"\"Demonstrate the certified greedy codebook.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"CERTIFIED GREEDY CODEBOOK\")\n    print(\"=\" * 70)\n    \n    n = 10\n    d = make_ultrametric_tree(n, seed=99)\n    assert verify_ultrametric(d)\n    \n    rng = np.random.RandomState(456)\n    observers = [d * rng.uniform(0.5, 1.0) for _ in range(3)]\n    for o in observers:\n        np.fill_diagonal(o, 0)\n    \n    critical = compute_critical_scales(observers, n)\n    print(f\"\\nSpace: {n} states, {len(observers)} observers, {len(critical)} critical scales\\n\")\n    \n    for eps in [critical[0] - 0.01] + [critical[len(critical)//3], critical[2*len(critical)//3], critical[-1] + 0.1]:\n        if eps < 0:\n            eps = 0\n        classes = compute_congruence_classes(observers, n, eps)\n        cover = minimal_cover(observers, n, eps)\n        covers_all = all(\n            any(observer_distortion(observers, p, c) <= eps + 1e-10 for c in cover)\n            for p in range(n)\n        )\n        \n        print(f\"\u03b5 = {eps:.4f}: {len(classes)} classes, codebook = {cover}, \"\n              f\"covers all: {covers_all}, ratio: {len(cover)}/{n} = {len(cover)/n:.0%}\")\n\n\nif __name__ == \"__main__\":\n    d, observers = demo_core_theorem()\n    demo_greedy_codebook()\n    plot_rate_distortion(observers, d.shape[0])\n    plot_congruence_filtration(observers, d.shape[0])\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"KEY INSIGHT: In ultrametric spaces, lossy compression is EXACT.\")\n    print(\"The minimal codebook size = the number of equivalence classes.\")\n    print(\"This is NOT true in general metric spaces!\")\n    print(\"=\" * 70)\n"
-    },
-    "date": "2026-05-12T03:03:55Z"
-  },
   "machinelearningspeculative_ultrametric_proof_compr.json": {
     "title": "Operadic Ultrametric Compression: Non-Archimedean Learning Theory for Proof Dynamics",
     "domain": "Bridges: Operadic Deep Learning \u00d7 Ultrametric Geometry \u00d7 Proof Compression",
@@ -4639,7 +4590,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -4648,7 +4599,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -4657,7 +4608,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -4675,7 +4626,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -4693,7 +4644,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:03:45Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraeml_tannaka_reconstruction_via_closure_endo",
@@ -4702,7 +4653,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -4711,7 +4662,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-10T23:04:14Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "algebraeml_symbolic_zeta_semantics_via_closure_end",
@@ -4729,7 +4680,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-10T23:04:40Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebraeml_renormalization_semantics_via_closure_f",
@@ -4738,7 +4689,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -4747,7 +4698,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -4756,7 +4707,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -4774,7 +4725,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -4792,7 +4743,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T04:06:02Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "logiccomputation_temporal_fixed_point_semantics_vi",
@@ -4801,7 +4752,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -4810,7 +4761,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:27Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "cryptographypythagorean_isogeny_free_trapdoors_via",
@@ -4819,7 +4770,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T04:06:34Z",
-      "hue": 281
+      "hue": 95
     },
     {
       "id": "algebratropical_neural_representation_duality_via_",
@@ -4828,7 +4779,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -4837,7 +4788,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -4855,7 +4806,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T07:33:14Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "bridges_breakthrough_discovery",
@@ -4864,7 +4815,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 292
+      "hue": 100
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -4873,7 +4824,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:45Z",
-      "hue": 100
+      "hue": 271
     },
     {
       "id": "algebracryptographypythagorean_tropical_height_rig",
@@ -4882,7 +4833,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -4891,7 +4842,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -4909,7 +4860,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -4918,7 +4869,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
@@ -4927,7 +4878,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 112
+      "hue": 91
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -4945,7 +4896,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -4954,7 +4905,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:40Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "algebraspeculativecryptography_prime_congruence_du",
@@ -4963,7 +4914,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -4972,7 +4923,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -4981,7 +4932,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -4990,7 +4941,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -4999,7 +4950,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:35:26Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_compr",
@@ -5008,7 +4959,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -5017,7 +4968,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -5044,7 +4995,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -5053,7 +5004,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -5062,7 +5013,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -5071,7 +5022,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -5080,7 +5031,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T18:03:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_compr",
@@ -5089,7 +5040,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -5098,7 +5049,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T18:48:13Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_p",
@@ -5107,7 +5058,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -5116,7 +5067,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -5125,7 +5076,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T22:55:00Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_holographic_closure_duality_via_",
@@ -5134,7 +5085,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -5143,7 +5094,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -5152,7 +5103,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -5161,7 +5112,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T00:32:18Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "algebrapythagoreangeometry_tropical_gravitational_",
@@ -5170,7 +5121,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -5179,7 +5130,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -5188,7 +5139,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 270
+      "hue": 314
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -5206,7 +5157,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T01:05:21Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraspeculativecryptography_tropical_one_way_mi",
@@ -5215,7 +5166,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -5224,7 +5175,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -5233,16 +5184,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T02:07:36Z",
-      "hue": 91
-    },
-    {
-      "id": "algebraspeculativemachinelearning_ultrametric_proo",
-      "title": "Non-Archimedean Proof Information Theory: Ultrametric Observer Rate-Distortion via Congruence Spectra",
-      "domain": "Bridges (Ultrametric Geometry \u00d7 Information Theory \u00d7 Machine Learning \u00d7 Proof Theory)",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-05-12T03:03:55Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_she",
@@ -5251,7 +5193,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -5260,7 +5202,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -5269,7 +5211,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -5287,7 +5229,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -5296,7 +5238,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 92
+      "hue": 280
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -5305,7 +5247,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:36:24Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraemlcryptography_closure_matroid_duality_via",
@@ -5323,7 +5265,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -5332,7 +5274,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -5341,7 +5283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T05:36:31Z",
-      "hue": 101
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -5350,7 +5292,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T05:36:49Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -5359,7 +5301,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T06:37:24Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebramachinelearningspeculative_operadic_tropica",
@@ -5368,7 +5310,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T07:30:16Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_i",
@@ -5377,7 +5319,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T07:33:24Z",
-      "hue": 271
+      "hue": 90
     }
   ],
   "edges": [
@@ -5390,476 +5332,476 @@ window.PACKAGE_GRAPH = {
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_stonebirkhoff_dua",
-      "strength": 0.9294399999999998,
+      "strength": 0.9294964028776977,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlmachinelearning_tropical_information_bot",
-      "strength": 0.87344,
+      "strength": 0.8735411670663469,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.83368,
+      "strength": 0.8338129496402877,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "algebraeml_tannaka_reconstruction_via_closure_endo",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.7995199999999999,
+      "strength": 0.7996802557953636,
       "label": "Tropical Observable Closures and Min-Plu"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.7793599999999998,
+      "strength": 0.7795363709032772,
       "label": "Temporal Nerode Quotient for Reversible"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.77376,
+      "strength": 0.7739408473221423,
       "label": "Operadic Neural Architecture Search via"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.6583999999999999,
+      "strength": 0.6586730615507593,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.6242399999999999,
+      "strength": 0.6245403677058353,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.61808,
+      "strength": 0.6183852917665867,
       "label": "Logic"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "cryptographypythagorean_isogeny_free_trapdoors_via",
-      "strength": 0.608,
+      "strength": 0.6083133493205436,
       "label": "Cryptography"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.6057600000000001,
+      "strength": 0.6060751398880896,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.5996,
+      "strength": 0.5999200639488411,
       "label": "Lean Formalization Target"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5872799999999999,
+      "strength": 0.5876099120703437,
       "label": "Non"
     },
     {
       "source": "logiccomputation_temporal_fixed_point_semantics_vi",
       "target": "algebralogicspeculative_temporal_prime_congruence_",
-      "strength": 0.57944,
+      "strength": 0.5797761790567546,
       "label": "Weighted Temporal Constraints and Thermo"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.5682399999999999,
+      "strength": 0.5685851318944843,
       "label": "Tropical Representer Duality"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.5671199999999998,
+      "strength": 0.5674660271782574,
       "label": "Operadic Neural Composition with Multi-I"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5654399999999999,
+      "strength": 0.5657873701039168,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_fixed_point_logic_via_proof_sem",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.5631999999999999,
+      "strength": 0.5635491606714629,
       "label": "Optimal Obstruction Certificate Computat"
     },
     {
       "source": "algebramachinelearning_coalgebraic_myhillnerode_se",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.53296,
+      "strength": 0.5333333333333334,
       "label": "Tropical Semiring Observations for Infor"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.52904,
+      "strength": 0.5294164668265388,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.5223199999999999,
+      "strength": 0.5227018385291766,
       "label": "Non"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_she",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.5150399999999999,
+      "strength": 0.515427657873701,
       "label": "Operadic Tropicalization"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.49711999999999995,
+      "strength": 0.49752198241406875,
       "label": "Operadic composition laws for specific a"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "logiccomputation_temporal_fixed_point_semantics_vi",
-      "strength": 0.49095999999999995,
+      "strength": 0.4913669064748202,
       "label": "Logic"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.46631999999999996,
+      "strength": 0.46674660271782575,
       "label": "Non"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.46631999999999996,
+      "strength": 0.46674660271782575,
       "label": "Effective prefix codes"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.45904,
+      "strength": 0.45947242206235017,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebramachinelearning_operadic_semiring_semantics",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.45904,
+      "strength": 0.45947242206235017,
       "label": "Operadic Neural Proof"
     },
     {
       "source": "machinelearningspeculative_ultrametric_proof_dynam",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.4562399999999999,
+      "strength": 0.4566746602717826,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_prime_congruence_semantics_for_",
       "target": "machinelearningspeculative_ultrametric_proof_dynam",
-      "strength": 0.45231999999999994,
+      "strength": 0.452757793764988,
       "label": "Topological Prime Spectrum Compression L"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.45064000000000004,
+      "strength": 0.4510791366906476,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.44504,
-      "label": "Algebra,Cryptography,EML,Bridges bridge"
+      "strength": 0.44548361310951246,
+      "label": "Bridges,Cryptography,EML,Algebra bridge"
     },
     {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.44504,
-      "label": "Algebra,Logic,Tropical,Geometry bridge"
+      "strength": 0.44548361310951246,
+      "label": "Logic,Tropical,Algebra,Geometry bridge"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.44504,
-      "label": "Algebra,Geometry,Tropical,MachineLearning bridge"
+      "strength": 0.44548361310951246,
+      "label": "MachineLearning,Geometry,Tropical,Algebra bridge"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.44056000000000006,
+      "strength": 0.44100719424460444,
       "label": "Entropy Production Rate Invariance"
-    },
-    {
-      "source": "algebraspeculativemachinelearning_ultrametric_proo",
-      "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.42823999999999995,
-      "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraspeculative_longest_common_valued_prefix_ul",
-      "strength": 0.42376,
+      "strength": 0.42422062350119916,
       "label": "Non"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.41703999999999997,
+      "strength": 0.41750599520383697,
       "label": "Tropical Rate"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.41703999999999997,
+      "strength": 0.41750599520383697,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraemlmachinelearning_tropical_information_bot",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.40303999999999995,
+      "strength": 0.40351718625099925,
       "label": "Operadic Tropicalization"
     },
     {
       "source": "algebraeml_turingmyhill_reconstruction_via_closure",
       "target": "algebraemltropical_non_archimedean_information_dua",
-      "strength": 0.40135999999999994,
+      "strength": 0.40183852917665863,
       "label": "Indistinguishability \u2194 metric bisimulati"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.40023999999999993,
+      "strength": 0.4007194244604317,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebratropicalmachinelearning_tropical_represente",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.40023999999999993,
+      "strength": 0.4007194244604317,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_ultrametric_oracle_capacity_via",
       "target": "machinelearningspeculative_operadic_diagonalizatio",
-      "strength": 0.3923999999999999,
+      "strength": 0.3928856914468425,
       "label": "Tropical Semiring Oracle Capacity"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.38792,
+      "strength": 0.38840927258193453,
       "label": "Entropy Production Bounds for Self-Refer"
     },
     {
       "source": "algebraemltropical_non_archimedean_information_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3834399999999999,
+      "strength": 0.38393285371702635,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.38231999999999994,
+      "strength": 0.38281374900079934,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.38119999999999993,
+      "strength": 0.38169464428457234,
       "label": "Spectral graph theory \u2194 Tropical spectra"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3728,
+      "strength": 0.3733013589128698,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.36103999999999997,
+      "strength": 0.36155075939248604,
       "label": "Tropical Rate"
     },
     {
       "source": "algebraspeculative_longest_common_valued_prefix_ul",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.36103999999999997,
+      "strength": 0.36155075939248604,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.36103999999999997,
+      "strength": 0.36155075939248604,
       "label": "Tropical Residuation Trapdoor Duality"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.36103999999999997,
+      "strength": 0.36155075939248604,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraspeculativecryptography_prime_congruence_du",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.36103999999999997,
+      "strength": 0.36155075939248604,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.36103999999999997,
+      "strength": 0.36155075939248604,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebratropicallogic_tropical_gdel_semantics_via_p",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
-      "strength": 0.36103999999999997,
+      "strength": 0.36155075939248604,
       "label": "Idempotent Stone Completeness"
     },
     {
       "source": "algebraeml_lefschetz_trace_semantics_via_closure_e",
       "target": "algebraspeculative_prime_congruence_semantics_for_",
-      "strength": 0.35488000000000003,
+      "strength": 0.3553956834532375,
       "label": "Persistent homology of closure filtratio"
     },
     {
       "source": "algebraeml_morita_equivalence_via_closure_semimodu",
       "target": "algebrageometrycryptography_berggren_voronoi_duali",
-      "strength": 0.3515199999999999,
+      "strength": 0.35203836930455634,
       "label": "Berggren Voronoi"
     },
     {
       "source": "algebratropical_neural_representation_duality_via_",
       "target": "algebramachinelearninglogic_operadic_tropical_vc_d",
-      "strength": 0.3515199999999999,
+      "strength": 0.35203836930455634,
       "label": "Tropical"
     },
     {
       "source": "algebraemlcryptography_tropical_pontryaginmellin_d",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3492799999999999,
+      "strength": 0.34980015987210233,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebratropicalmachinelearning_tropical_neural_she",
-      "strength": 0.3492799999999999,
+      "strength": 0.34980015987210233,
       "label": "Tropical Neural Sheaf Sampling"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.34815999999999997,
+      "strength": 0.34868105515587533,
       "label": "presentation-independence of the Berkovi"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.34423999999999993,
+      "strength": 0.34476418864908076,
       "label": "Tropical Neural Universality Classes wit"
     },
     {
       "source": "algebraeml_congruence_quotient_reconstruction_via_",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.34423999999999993,
+      "strength": 0.34476418864908076,
       "label": "Tropical Rate"
     },
     {
       "source": "algebratropicalgeometry_tropical_satake_skeleton_v",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.34423999999999993,
+      "strength": 0.34476418864908076,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebracryptography_tropical_min_plus_trapdoor_dua",
       "target": "algebraspeculativecryptography_prime_congruence_du",
-      "strength": 0.33808,
+      "strength": 0.3386091127098322,
       "label": "Prime Congruence Duality"
     },
     {
       "source": "algebralogiccomputation_temporal_stonebirkhoff_dua",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.33304,
+      "strength": 0.3335731414868106,
       "label": "Temporal Fixed"
     },
     {
       "source": "algebraeml_renormalization_semantics_via_closure_f",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.3302399999999999,
+      "strength": 0.33077537969624304,
       "label": "Lattice-Cryptographic Indistinguishabili"
     },
     {
       "source": "algebraemltropical_tropical_tannaka_reconstruction",
       "target": "algebraspeculativemachinelearning_tropical_valuati",
-      "strength": 0.3274399999999999,
+      "strength": 0.3279776179056754,
       "label": "Tropical Valuation Distillation"
     },
     {
       "source": "algebraemlphysics_idempotent_gaugecurvature_dualit",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.32464000000000004,
+      "strength": 0.3251798561151081,
       "label": "Tropical Specialization"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebraemlcryptography_tropical_ratedistortion_tra",
-      "strength": 0.32351999999999986,
+      "strength": 0.32406075139888085,
       "label": "Tropicalization of Prime Semantic Finger"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlcryptography_closure_matroid_duality_via",
-      "strength": 0.32295999999999997,
+      "strength": 0.32350119904076746,
       "label": "Closure"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraemlphysics_idempotent_holographic_renormali",
-      "strength": 0.32295999999999997,
+      "strength": 0.32350119904076746,
       "label": "Idempotent Holographic Renormalization"
     },
     {
       "source": "machinelearningspeculative_operadic_diagonalizatio",
       "target": "algebramachinelearningspeculative_operadic_tropica",
-      "strength": 0.32127999999999995,
+      "strength": 0.3218225419664269,
       "label": "Tropicalization of Prime Semantic Finger"
     },
     {
       "source": "berggrenchronometric_reversible_automata_via_primi",
       "target": "algebracryptography_tropical_min_plus_trapdoor_dua",
-      "strength": 0.3134399999999999,
+      "strength": 0.3139888089528377,
       "label": "Shannon Entropy Formalization on Orbit D"
     },
     {
       "source": "algebralogicspeculative_temporal_prime_congruence_",
       "target": "algebralogiccomputation_temporal_fixed_point_duali",
-      "strength": 0.30896,
+      "strength": 0.30951239008792975,
       "label": "Temporal Fixed"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_barron_",
       "target": "algebratropicalmachinelearning_tropical_represente",
-      "strength": 0.30504,
+      "strength": 0.3055955235811352,
       "label": "Tropical Representer Duality"
     },
     {
       "source": "algebraeml_ruelle_transfer_semantics_via_closure_c",
       "target": "algebraeml_thermodynamic_galois_duality_via_closur",
-      "strength": 0.30223999999999995,
+      "strength": 0.30279776179056755,
       "label": "Thermodynamic Pressure via Weighted Tran"
     },
     {
       "source": "algebraspeculativecryptography_prime_stone_duality",
       "target": "algebraspeculativecryptography_tropical_one_way_mi",
-      "strength": 0.3,
+      "strength": 0.3005595523581136,
       "label": "topological hardness certificates"
+    },
+    {
+      "source": "algebraspeculativecryptography_prime_congruence_du",
+      "target": "algebraspeculativecryptography_prime_stone_duality",
+      "strength": 0.3,
+      "label": "Tropical Prime"
     }
   ]
 };
