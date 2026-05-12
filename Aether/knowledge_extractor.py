@@ -1154,7 +1154,7 @@ Research mode: {concept.research_mode}
                 package_db = {}
                 
                 for fp in json_files:
-                    if fp.name in ("index.json", "package.json"): continue
+                    if fp.name in ("index.json", "package.json", "lineage.json"): continue
                     try:
                         data = json.loads(fp.read_text(encoding='utf-8'))
                         date_str = data.get("date", __import__("time").strftime('%Y-%m-%dT%H:%M:%SZ', __import__("time").gmtime(os.path.getmtime(str(fp)))))
