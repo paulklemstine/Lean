@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 420" width="400" height="420">
+  <style>
+    text { font-family: 'Georgia', serif; }
+    .title { font-size: 16px; font-weight: bold; fill: #333; }
+    .info { font-size: 12px; fill: #555; }
+  </style>
+  <text x="200" y="25" text-anchor="middle" class="title">Sensor Network Ring Detection</text>
+  <!-- Hole indicator -->
+  <circle cx="200" cy="200" r="60" fill="none" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+  <text x="200" y="204" text-anchor="middle" style="font-size: 11px; fill: #e74c3c;">hole (β₁=1)</text>
+  <line x1="200.0" y1="70.0" x2="291.9238815542512" y2="108.07611844574883" stroke="#3498db" stroke-width="3" opacity="0.7"/>
+  <line x1="291.9238815542512" y1="108.07611844574883" x2="330.0" y2="200.0" stroke="#3498db" stroke-width="3" opacity="0.7"/>
+  <line x1="330.0" y1="200.0" x2="291.9238815542512" y2="291.9238815542512" stroke="#3498db" stroke-width="3" opacity="0.7"/>
+  <line x1="291.9238815542512" y1="291.9238815542512" x2="200.0" y2="330.0" stroke="#3498db" stroke-width="3" opacity="0.7"/>
+  <line x1="200.0" y1="330.0" x2="108.07611844574883" y2="291.9238815542512" stroke="#3498db" stroke-width="3" opacity="0.7"/>
+  <line x1="108.07611844574883" y1="291.9238815542512" x2="70.0" y2="200.00000000000003" stroke="#3498db" stroke-width="3" opacity="0.7"/>
+  <line x1="70.0" y1="200.00000000000003" x2="108.0761184457488" y2="108.07611844574883" stroke="#3498db" stroke-width="3" opacity="0.7"/>
+  <line x1="108.0761184457488" y1="108.07611844574883" x2="200.0" y2="70.0" stroke="#3498db" stroke-width="3" opacity="0.7"/>
+  <circle cx="200.0" cy="70.0" r="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="291.9238815542512" cy="108.07611844574883" r="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="330.0" cy="200.0" r="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="291.9238815542512" cy="291.9238815542512" r="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="200.0" cy="330.0" r="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="108.07611844574883" cy="291.9238815542512" r="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="70.0" cy="200.00000000000003" r="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="108.0761184457488" cy="108.07611844574883" r="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <text x="200.0" y="49.0" text-anchor="middle" style="font-family: Georgia; font-size: 11px; fill: #1a5276; font-weight: bold;">S1</text>
+  <text x="309.60155108391484" y="94.39844891608514" text-anchor="middle" style="font-family: Georgia; font-size: 11px; fill: #1a5276; font-weight: bold;">S2</text>
+  <text x="355.0" y="204.0" text-anchor="middle" style="font-family: Georgia; font-size: 11px; fill: #1a5276; font-weight: bold;">S3</text>
+  <text x="309.60155108391484" y="313.60155108391484" text-anchor="middle" style="font-family: Georgia; font-size: 11px; fill: #1a5276; font-weight: bold;">S4</text>
+  <text x="200.0" y="359.0" text-anchor="middle" style="font-family: Georgia; font-size: 11px; fill: #1a5276; font-weight: bold;">S5</text>
+  <text x="90.39844891608514" y="313.60155108391484" text-anchor="middle" style="font-family: Georgia; font-size: 11px; fill: #1a5276; font-weight: bold;">S6</text>
+  <text x="45.0" y="204.00000000000003" text-anchor="middle" style="font-family: Georgia; font-size: 11px; fill: #1a5276; font-weight: bold;">S7</text>
+  <text x="90.39844891608512" y="94.39844891608514" text-anchor="middle" style="font-family: Georgia; font-size: 11px; fill: #1a5276; font-weight: bold;">S8</text>
+
+  <text x="200" y="370" text-anchor="middle" class="info">f-vector = (8, 8) · χ = 0 · β₀ = 1, β₁ = 1</text>
+  <text x="200" y="390" text-anchor="middle" class="info">Ring topology correctly detected from sensor overlaps</text>
+</svg>

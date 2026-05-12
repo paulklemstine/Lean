@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 380" width="400" height="380">
+  <style>
+    text { font-family: 'Georgia', serif; }
+    .title { font-size: 16px; font-weight: bold; fill: #333; }
+    .vertex-label { font-size: 14px; fill: #1a5276; font-weight: bold; }
+    .info { font-size: 12px; fill: #555; }
+  </style>
+  <text x="200" y="25" text-anchor="middle" class="title">Full 2-Simplex (All Sets Equal)</text>
+  <!-- Filled triangle -->
+  <polygon points="200.0,60.0 303.92304845413264,239.99999999999997 96.07695154586739,240.00000000000006"
+           fill="#3498db" fill-opacity="0.3" stroke="#3498db" stroke-width="3"/>
+  <!-- Vertices -->
+  <circle cx="200.0" cy="60.0" r="12" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="303.92304845413264" cy="239.99999999999997" r="12" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="96.07695154586739" cy="240.00000000000006" r="12" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <!-- Labels -->
+  <text x="200.0" y="40.0" text-anchor="middle" class="vertex-label">U₁</text>
+  <text x="328.92304845413264" y="244.99999999999997" text-anchor="start" class="vertex-label">U₂</text>
+  <text x="71.07695154586739" y="245.00000000000006" text-anchor="end" class="vertex-label">U₃</text>
+  <!-- Info -->
+  <text x="200" y="340" text-anchor="middle" class="info">f-vector = (3, 3, 1) · χ = 1 · Triple overlap → filled triangle</text>
+  <text x="200" y="360" text-anchor="middle" class="info">Topology: contractible (disk) — no holes</text>
+</svg>
