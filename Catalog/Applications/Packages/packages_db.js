@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "algebratropicalgeometry_tropical_radon_transform_d.json",
+    "title": "Tropical Radon Transform Duality via Idempotent Sheaf Semimodules and Certified Metric-Graph Reconstruction",
+    "domain": "Tropical Geometry \u00d7 Sheaf Theory \u00d7 Metric Graph Inverse Problems",
+    "date": "2026-05-12T19:28:57Z",
+    "exp_id": "d6b0348c"
+  },
+  {
     "filename": "algebraemlcomputation_closure_kolmogorov_realizati.json",
     "title": "Closure-Kolmogorov Realization Duality via Idempotent Hankel Semimodules",
     "domain": "Algebraic Automata Theory / Formal Verification",
@@ -1520,6 +1527,49 @@ window.PACKAGE_DB = {
       "demo": "#!/usr/bin/env python3\n\"\"\"\nUltrametric Compression Core Demo\n==================================\n\nDemonstrates the core theorems from the Non-Archimedean L\u00f6wenheim\u2013Sample Duality:\n1. Construction of ultrametric spaces via random tree metrics\n2. Contractive maps on ultrametric spaces\n3. Finite compression core extraction\n4. Cover duality via realization/lifting pairs\n5. Observer-stable compression (approximate L\u00f6wenheim principle)\n\nAll computations verify the formally proved theorems numerically.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom typing import List, Tuple, Dict, Optional\nimport json\nimport base64\nfrom io import BytesIO\nimport random\n\n\n# ============================================================\n# \u00a71. Ultrametric Space Construction\n# ============================================================\n\ndef random_ultrametric_tree(n_points: int, n_levels: int = 4,\n                            branching: int = 3, seed: int = 42) -> np.ndarray:\n    \"\"\"\n    Generate a random ultrametric distance matrix via a hierarchical tree.\n    \n    Points are leaves of a random tree. The distance between two points\n    is the height of their lowest common ancestor (LCA), which automatically\n    satisfies the ultrametric inequality d(x,z) \u2264 max(d(x,y), d(y,z)).\n    \n    Parameters\n    ----------\n    n_points : int\n        Number of points to generate\n    n_levels : int\n        Depth of the tree (controls the number of distinct distance values)\n    branching : int\n        Branching factor at each level\n    seed : int\n        Random seed for reproducibility\n    \n    Returns\n    -------\n    dist : np.ndarray of shape (n_points, n_points)\n        Ultrametric distance matrix\n    \"\"\"\n    rng = np.random.RandomState(seed)\n    \n    # Assign each point a path through the tree\n    # Path[i] = (level_0_cluster, level_1_cluster, ..., level_{n_levels-1}_cluster)\n    paths = []\n    for _ in range(n_points):\n        path = tuple(rng.randint(0, branching) for _ in range(n_levels))\n        paths.append(path)\n    \n    # Distance = height of LCA = first level where paths diverge\n    # Heights are geometrically spaced: 2^(n_levels - divergence_level)\n    dist = np.zeros((n_points, n_points))\n    for i in range(n_points):\n        for j in range(i + 1, n_points):\n            # Find first divergence level\n            div_level = n_levels  # default: all agree\n            for k in range(n_levels):\n                if paths[i][k] != paths[j][k]:\n                    div_level = k\n                    break\n            d = 2.0 ** (n_levels - div_level) if div_level < n_levels else 0.0\n            dist[i, j] = d\n            dist[j, i] = d\n    \n    return dist\n\n\ndef verify_ultrametric(dist: np.ndarray) -> bool:\n    \"\"\"Verify the ultrametric inequality for a distance matrix.\"\"\"\n    n = dist.shape[0]\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                if dist[i, k] > max(dist[i, j], dist[j, k]) + 1e-10:\n                    return False\n    return True\n\n\n# ============================================================\n# \u00a72. Contractive Maps\n# ============================================================\n\nclass UltrametricContraction:\n    \"\"\"\n    A q-contractive map on a finite ultrametric space.\n    \n    For each point, the contraction maps it to a \"simpler\" representative:\n    the nearest point in a coarser partition of the space.\n    \"\"\"\n    \n    def __init__(self, dist: np.ndarray, q: float = 0.5, seed: int = 42):\n        self.dist = dist\n        self.n = dist.shape[0]\n        self.q = q\n        rng = np.random.RandomState(seed)\n        \n        # Build contraction: map each point to a nearby representative\n        # Choose representatives as cluster centers at a coarse scale\n        threshold = np.median(dist[dist > 0]) if np.any(dist > 0) else 1.0\n        \n        # Greedy clustering\n        representatives = [0]\n        for i in range(1, self.n):\n            if all(dist[i, r] > threshold for r in representatives):\n                representatives.append(i)\n        \n        # Map each point to nearest representative\n        self.mapping = np.zeros(self.n, dtype=int)\n        for i in range(self.n):\n            best = representatives[0]\n            best_dist = dist[i, representatives[0]]\n            for r in representatives[1:]:\n                if dist[i, r] < best_dist:\n                    best = r\n                    best_dist = dist[i, r]\n            self.mapping[i] = best\n    \n    def apply(self, point: int) -> int:\n        \"\"\"Apply the contraction once.\"\"\"\n        return self.mapping[point]\n    \n    def iterate(self, point: int, n: int) -> int:\n        \"\"\"Apply the contraction n times.\"\"\"\n        p = point\n        for _ in range(n):\n            p = self.mapping[p]\n        return p\n    \n    def verify_contractive(self) -> Tuple[bool, float]:\n        \"\"\"Verify contractivity and compute the actual contraction ratio.\"\"\"\n        max_ratio = 0.0\n        for i in range(self.n):\n            for j in range(i + 1, self.n):\n                d_orig = self.dist[i, j]\n                d_image = self.dist[self.mapping[i], self.mapping[j]]\n                if d_orig > 0:\n                    ratio = d_image / d_orig\n                    max_ratio = max(max_ratio, ratio)\n        return max_ratio <= self.q + 1e-10, max_ratio\n\n\n# ============================================================\n# \u00a73. Compression Core Extraction\n# ============================================================\n\ndef extract_epsilon_net(dist: np.ndarray, epsilon: float) -> List[int]:\n    \"\"\"\n    Greedy \u03b5-net extraction.\n    \n    Returns a maximal set S such that every point is within \u03b5 of some s \u2208 S.\n    This is the constructive content of the total boundedness argument.\n    \"\"\"\n    n = dist.shape[0]\n    covered = np.zeros(n, dtype=bool)\n    seeds = []\n    \n    # Greedy: pick uncovered point, cover its \u03b5-ball\n    remaining = list(range(n))\n    random.shuffle(remaining)\n    \n    for i in remaining:\n        if not covered[i]:\n            seeds.append(i)\n            for j in range(n):\n                if dist[i, j] <= epsilon:\n                    covered[j] = True\n    \n    return seeds\n\n\ndef extract_compression_core(dist: np.ndarray, contraction: UltrametricContraction,\n                              epsilon: float) -> Tuple[List[int], int]:\n    \"\"\"\n    Extract a compression core (S, N) such that every point is within \u03b5\n    of some C^n(s) for s \u2208 S and n \u2264 N.\n    \n    This implements Theorem: finite_core_of_totally_bounded.\n    \"\"\"\n    seeds = extract_epsilon_net(dist, epsilon)\n    \n    # Find minimum depth N\n    n = dist.shape[0]\n    N = 0\n    max_depth = 20  # safety bound\n    \n    while N < max_depth:\n        # Check if current (seeds, N) covers everything\n        all_covered = True\n        for p in range(n):\n            covered = False\n            for s in seeds:\n                for k in range(N + 1):\n                    target = contraction.iterate(s, k)\n                    if dist[p, target] <= epsilon + 1e-10:\n                        covered = True\n                        break\n                if covered:\n                    break\n            if not covered:\n                all_covered = False\n                break\n        \n        if all_covered:\n            break\n        N += 1\n    \n    return seeds, N\n\n\ndef verify_core_covers(dist: np.ndarray, contraction: UltrametricContraction,\n                        seeds: List[int], N: int, epsilon: float) -> bool:\n    \"\"\"Verify that the compression core covers all points.\"\"\"\n    n = dist.shape[0]\n    for p in range(n):\n        covered = False\n        for s in seeds:\n            for k in range(N + 1):\n                target = contraction.iterate(s, k)\n                if dist[p, target] <= epsilon + 1e-10:\n                    covered = True\n                    break\n            if covered:\n                break\n        if not covered:\n            return False\n    return True\n\n\n# ============================================================\n# \u00a74. Cover Duality\n# ============================================================\n\ndef demonstrate_cover_duality(dist_P: np.ndarray, dist_H: np.ndarray,\n                               R: np.ndarray, lift: np.ndarray,\n                               epsilon: float, delta: float) -> Dict:\n    \"\"\"\n    Demonstrate the cover duality theorem:\n    HasFiniteCover_P(\u03b5, k) \u2194 HasFiniteCover_H(\u03b4, k)\n    \n    Parameters\n    ----------\n    dist_P : distance matrix on proof space\n    dist_H : distance matrix on hypothesis space\n    R : realization matrix (R[i] = index in H of the realization of proof i)\n    lift : lifting matrix (lift[j] = index in P of the lift of hypothesis j)\n    epsilon : proof space precision\n    delta : hypothesis space precision\n    \"\"\"\n    n_P = dist_P.shape[0]\n    n_H = dist_H.shape[0]\n    \n    # Forward: P-cover \u2192 H-cover\n    seeds_P = extract_epsilon_net(dist_P, epsilon)\n    seeds_H_from_P = list(set(R[s] for s in seeds_P))\n    \n    # Backward: H-cover \u2192 P-cover\n    seeds_H = extract_epsilon_net(dist_H, delta)\n    seeds_P_from_H = list(set(lift[s] for s in seeds_H))\n    \n    # Verify covers\n    forward_covers = all(\n        any(dist_H[h, R[s]] <= delta + 1e-10 for s in seeds_P)\n        for h in range(n_H)\n    )\n    \n    backward_covers = all(\n        any(dist_P[p, lift[s]] <= epsilon + 1e-10 for s in seeds_H)\n        for p in range(n_P)\n    )\n    \n    return {\n        \"P_cover_size\": len(seeds_P),\n        \"H_cover_from_P_size\": len(seeds_H_from_P),\n        \"H_cover_size\": len(seeds_H),\n        \"P_cover_from_H_size\": len(seeds_P_from_H),\n        \"forward_covers\": forward_covers,\n        \"backward_covers\": backward_covers,\n    }\n\n\n# ============================================================\n# \u00a75. Observer-Stable Compression\n# ============================================================\n\ndef observer_stable_core(dist: np.ndarray, observers: List[np.ndarray],\n                          epsilon: float) -> Tuple[List[int], Dict]:\n    \"\"\"\n    Extract a compression core that preserves observer values.\n    Implements: finite_elementary_compression_core.\n    \n    Parameters\n    ----------\n    dist : ultrametric distance matrix\n    observers : list of observation vectors (each: point \u2192 value)\n    epsilon : precision\n    \n    Returns\n    -------\n    seeds : compression core seeds\n    stats : verification statistics\n    \"\"\"\n    seeds = extract_epsilon_net(dist, epsilon)\n    n = dist.shape[0]\n    \n    # Verify observer preservation\n    max_observer_error = 0.0\n    all_preserved = True\n    \n    for p in range(n):\n        best_s = min(seeds, key=lambda s: dist[p, s])\n        for obs in observers:\n            err = abs(obs[p] - obs[best_s])\n            max_observer_error = max(max_observer_error, err)\n    \n    return seeds, {\n        \"core_size\": len(seeds),\n        \"max_observer_error\": max_observer_error,\n        \"num_observers\": len(observers),\n    }\n\n\n# ============================================================\n# \u00a76. Visualization\n# ============================================================\n\ndef fig_to_base64(fig) -> str:\n    \"\"\"Convert matplotlib figure to base64 string.\"\"\"\n    buf = BytesIO()\n    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    buf.seek(0)\n    return base64.b64encode(buf.read()).decode('utf-8')\n\n\ndef plot_ultrametric_distance_matrix(dist: np.ndarray, title: str = \"Ultrametric Distance Matrix\") -> str:\n    \"\"\"Plot and return base64 of the distance matrix heatmap.\"\"\"\n    fig, ax = plt.subplots(1, 1, figsize=(8, 6))\n    im = ax.imshow(dist, cmap='viridis', interpolation='nearest')\n    ax.set_title(title, fontsize=14)\n    ax.set_xlabel(\"Point index\")\n    ax.set_ylabel(\"Point index\")\n    plt.colorbar(im, ax=ax, label=\"Distance\")\n    result = fig_to_base64(fig)\n    plt.close(fig)\n    return result\n\n\ndef plot_core_size_vs_epsilon(dist: np.ndarray, epsilons: List[float],\n                               title: str = \"Compression Core Size vs Precision\") -> str:\n    \"\"\"Plot core size as a function of \u03b5.\"\"\"\n    sizes = []\n    for eps in epsilons:\n        seeds = extract_epsilon_net(dist, eps)\n        sizes.append(len(seeds))\n    \n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.plot(epsilons, sizes, 'bo-', linewidth=2, markersize=8)\n    ax.set_xlabel(\"Precision \u03b5\", fontsize=12)\n    ax.set_ylabel(\"Core size |S|\", fontsize=12)\n    ax.set_title(title, fontsize=14)\n    ax.set_xscale('log')\n    ax.set_yscale('log')\n    ax.grid(True, alpha=0.3)\n    result = fig_to_base64(fig)\n    plt.close(fig)\n    return result\n\n\ndef plot_contraction_decay(dist: np.ndarray, contraction: UltrametricContraction,\n                            point: int, max_iter: int = 15) -> str:\n    \"\"\"Plot the distance decay under contraction iterates.\"\"\"\n    distances = []\n    for n in range(max_iter):\n        p_n = contraction.iterate(point, n)\n        p_n1 = contraction.iterate(point, n + 1)\n        distances.append(dist[p_n, p_n1])\n    \n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.plot(range(max_iter), distances, 'ro-', linewidth=2, markersize=8,\n            label='d(C^n(x), C^{n+1}(x))')\n    \n    # Theoretical bound: q^n * d(x, Cx)\n    d0 = dist[point, contraction.apply(point)]\n    q = contraction.q\n    theoretical = [q**n * d0 for n in range(max_iter)]\n    ax.plot(range(max_iter), theoretical, 'b--', linewidth=2,\n            label=f'q^n \u00b7 d(x, Cx), q={q}')\n    \n    ax.set_xlabel(\"Iteration n\", fontsize=12)\n    ax.set_ylabel(\"Distance\", fontsize=12)\n    ax.set_title(\"Contraction Decay: d(C^n(x), C^{n+1}(x))\", fontsize=14)\n    ax.legend(fontsize=11)\n    ax.set_yscale('log')\n    ax.grid(True, alpha=0.3)\n    result = fig_to_base64(fig)\n    plt.close(fig)\n    return result\n\n\ndef plot_duality_diagram() -> str:\n    \"\"\"Create a conceptual diagram of the duality.\"\"\"\n    fig, ax = plt.subplots(1, 1, figsize=(10, 6))\n    ax.set_xlim(-0.5, 10.5)\n    ax.set_ylim(-1, 7)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    \n    # Proof space box\n    rect_P = plt.Rectangle((0.5, 3.5), 3.5, 2.5, fill=True,\n                             facecolor='#E8F4FD', edgecolor='#2196F3', linewidth=2)\n    ax.add_patch(rect_P)\n    ax.text(2.25, 5.5, 'Proof Space P', ha='center', va='center',\n            fontsize=13, fontweight='bold', color='#1565C0')\n    ax.text(2.25, 4.8, 'Ultrametric\\nContraction C', ha='center', va='center',\n            fontsize=10, color='#1565C0')\n    ax.text(2.25, 4.0, 'Core Certificate', ha='center', va='center',\n            fontsize=10, style='italic', color='#1565C0')\n    \n    # Hypothesis space box\n    rect_H = plt.Rectangle((6.5, 3.5), 3.5, 2.5, fill=True,\n                             facecolor='#FFF3E0', edgecolor='#FF9800', linewidth=2)\n    ax.add_patch(rect_H)\n    ax.text(8.25, 5.5, 'Hypothesis Space H', ha='center', va='center',\n            fontsize=13, fontweight='bold', color='#E65100')\n    ax.text(8.25, 4.8, 'Operadic\\nDecoder', ha='center', va='center',\n            fontsize=10, color='#E65100')\n    ax.text(8.25, 4.0, 'Compression Cert.', ha='center', va='center',\n            fontsize=10, style='italic', color='#E65100')\n    \n    # Arrows\n    ax.annotate('', xy=(6.3, 5.2), xytext=(4.2, 5.2),\n                arrowprops=dict(arrowstyle='->', color='#4CAF50', lw=2.5))\n    ax.text(5.25, 5.6, 'Realization R', ha='center', va='center',\n            fontsize=10, color='#2E7D32', fontweight='bold')\n    \n    ax.annotate('', xy=(4.2, 4.2), xytext=(6.3, 4.2),\n                arrowprops=dict(arrowstyle='->', color='#9C27B0', lw=2.5))\n    ax.text(5.25, 3.8, 'Lifting', ha='center', va='center',\n            fontsize=10, color='#6A1B9A', fontweight='bold')\n    \n    # Duality symbol\n    ax.text(5.25, 2.5, '\u27fa  Cover Duality  \u27fa', ha='center', va='center',\n            fontsize=14, fontweight='bold', color='#D32F2F',\n            bbox=dict(boxstyle='round,pad=0.3', facecolor='#FFEBEE', edgecolor='#D32F2F'))\n    \n    # Bottom labels\n    ax.text(2.25, 1.5, 'Total Boundedness\\n+ Contraction\\n\u2192 Finite Core',\n            ha='center', va='center', fontsize=9, color='#333')\n    ax.text(8.25, 1.5, 'Compression Cert.\\n\u2192 Covering Number\\n\u2192 Learnability',\n            ha='center', va='center', fontsize=9, color='#333')\n    \n    ax.set_title('Non-Archimedean L\u00f6wenheim\u2013Sample Duality', fontsize=15,\n                 fontweight='bold', pad=20)\n    \n    result = fig_to_base64(fig)\n    plt.close(fig)\n    return result\n\n\n# ============================================================\n# \u00a77. Main Demo\n# ============================================================\n\ndef main():\n    print(\"=\" * 70)\n    print(\"Non-Archimedean L\u00f6wenheim\u2013Sample Duality: Computational Demo\")\n    print(\"=\" * 70)\n    \n    # 1. Generate ultrametric space\n    print(\"\\n1. Generating random ultrametric space (30 points, 4 levels)...\")\n    dist = random_ultrametric_tree(30, n_levels=4, branching=3, seed=42)\n    is_ultra = verify_ultrametric(dist)\n    print(f\"   Ultrametric inequality verified: {is_ultra}\")\n    print(f\"   Number of distinct distances: {len(set(dist.flatten()) - {0.0})}\")\n    print(f\"   Diameter: {dist.max():.1f}\")\n    \n    # 2. Build contraction\n    print(\"\\n2. Building contractive map (q = 0.5)...\")\n    contraction = UltrametricContraction(dist, q=0.5, seed=42)\n    is_contr, actual_q = contraction.verify_contractive()\n    print(f\"   Contractive (q \u2264 0.5): {is_contr}\")\n    print(f\"   Actual contraction ratio: {actual_q:.4f}\")\n    \n    # 3. Extract compression cores at various precisions\n    print(\"\\n3. Compression core extraction (Theorem: finite_core_of_totally_bounded)...\")\n    epsilons = [16.0, 8.0, 4.0, 2.0, 1.0, 0.5]\n    for eps in epsilons:\n        seeds, N = extract_compression_core(dist, contraction, eps)\n        covers = verify_core_covers(dist, contraction, seeds, N, eps)\n        print(f\"   \u03b5={eps:5.1f}: |S|={len(seeds):2d}, N={N}, covers={covers}\")\n    \n    # 4. Cover duality demonstration\n    print(\"\\n4. Cover duality (Theorem: cover_duality)...\")\n    n_P, n_H = 30, 20\n    dist_P = random_ultrametric_tree(n_P, n_levels=4, branching=3, seed=42)\n    dist_H = random_ultrametric_tree(n_H, n_levels=3, branching=3, seed=123)\n    \n    # Simple realization: map proof i to hypothesis i % n_H\n    R = np.array([i % n_H for i in range(n_P)])\n    lift = np.array([i for i in range(n_H)])  # identity lift\n    \n    duality = demonstrate_cover_duality(dist_P, dist_H, R, lift, 4.0, 4.0)\n    print(f\"   P-cover size: {duality['P_cover_size']}\")\n    print(f\"   H-cover (from P): {duality['H_cover_from_P_size']}\")\n    print(f\"   H-cover size: {duality['H_cover_size']}\")\n    print(f\"   P-cover (from H): {duality['P_cover_from_H_size']}\")\n    print(f\"   Forward covers: {duality['forward_covers']}\")\n    print(f\"   Backward covers: {duality['backward_covers']}\")\n    \n    # 5. Observer-stable compression\n    print(\"\\n5. Observer-stable compression (Theorem: finite_elementary_compression_core)...\")\n    observers = [\n        np.array([dist[i, 0] for i in range(30)]),  # distance to point 0\n        np.array([dist[i, 15] for i in range(30)]),  # distance to point 15\n        np.array([float(i % 5) for i in range(30)]),  # modular observer\n    ]\n    seeds_obs, stats = observer_stable_core(dist, observers, 4.0)\n    print(f\"   Core size: {stats['core_size']}\")\n    print(f\"   Num observers: {stats['num_observers']}\")\n    print(f\"   Max observer error: {stats['max_observer_error']:.4f}\")\n    \n    # 6. Generate visualizations\n    print(\"\\n6. Generating visualizations...\")\n    \n    viz_dist = plot_ultrametric_distance_matrix(dist)\n    print(\"   \u2713 Distance matrix heatmap\")\n    \n    viz_core = plot_core_size_vs_epsilon(\n        dist, [0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0])\n    print(\"   \u2713 Core size vs precision plot\")\n    \n    viz_decay = plot_contraction_decay(dist, contraction, 5)\n    print(\"   \u2713 Contraction decay plot\")\n    \n    viz_duality = plot_duality_diagram()\n    print(\"   \u2713 Duality conceptual diagram\")\n    \n    # Save visualizations\n    for name, data in [(\"dist_matrix.png\", viz_dist),\n                        (\"core_size.png\", viz_core),\n                        (\"contraction_decay.png\", viz_decay),\n                        (\"duality_diagram.png\", viz_duality)]:\n        with open(name, \"wb\") as f:\n            f.write(base64.b64decode(data))\n        print(f\"   Saved {name}\")\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Demo complete. All theorems verified computationally.\")\n    print(\"=\" * 70)\n    \n    return {\n        \"viz_dist\": viz_dist,\n        \"viz_core\": viz_core,\n        \"viz_decay\": viz_decay,\n        \"viz_duality\": viz_duality,\n    }\n\n\nif __name__ == \"__main__\":\n    main()\n"
     },
     "date": "2026-05-11T16:19:23Z"
+  },
+  "algebratropicalgeometry_tropical_radon_transform_d.json": {
+    "title": "Tropical Radon Transform Duality via Idempotent Sheaf Semimodules and Certified Metric-Graph Reconstruction",
+    "domain": "Tropical Geometry \u00d7 Sheaf Theory \u00d7 Metric Graph Inverse Problems",
+    "article": "# The Upside-Down Mathematics That Can See Through Networks\n\n## How a strange algebra where 2 + 2 = 2 is unlocking the secrets of hidden infrastructure\n\nImagine you're trying to map the underground water pipes of a city. You can't dig up every street. But you can measure how long it takes water to flow between fire hydrants scattered around town. From those measurements alone, can you figure out the layout of every pipe \u2014 their connections, their lengths, their branching points?\n\nThis is the problem of **network reconstruction from boundary measurements**, and it's one of the great inverse problems of applied mathematics. It appears everywhere: in tracing internet routing paths, in reconstructing the evolutionary tree of species from DNA comparisons, in mapping neural circuits from stimulus-response data, in deducing the structure of distribution networks from delivery times.\n\nFor decades, mathematicians have known that certain kinds of networks can be perfectly reconstructed from their boundary data. But the proofs relied on classical algebra \u2014 the familiar world where addition and multiplication follow the rules you learned in school. What if there were a completely different number system \u2014 an alien arithmetic \u2014 that made the reconstruction not just possible but *inevitable*?\n\nThere is. And it changes everything.\n\n---\n\n## Welcome to the Tropics\n\nIn the 1990s, mathematicians discovered a strange new algebra lurking in the foundations of optimization, biology, and computer science. They called it **tropical mathematics** \u2014 not because it has anything to do with palm trees, but in honor of the Brazilian mathematician Imre Simon, who pioneered the ideas.\n\nIn tropical arithmetic, you replace the usual operations with something radically different:\n\n- **Tropical addition** is taking the *minimum*: 3 \u2295 7 = 3\n- **Tropical multiplication** is *ordinary addition*: 3 \u2297 7 = 10\n\nThis might seem like a mathematical joke, but it's deadly serious. Under these rules, the number 2 + 2 equals 2 (because min(2, 2) = 2). Addition becomes idempotent \u2014 adding something to itself changes nothing. This one property ripples through the entire mathematical universe, creating a shadow world where familiar theorems acquire strange new meanings.\n\nWhy would anyone care about such a bizarre system? Because **shortest paths are tropical sums**. When a GPS app finds the fastest route between two points, it's really computing a tropical matrix product. When a biologist compares two species by their genetic distance, the underlying algebra is tropical. The \"min\" operation selects the best option; the \"plus\" operation accumulates costs along the way.\n\nTropical mathematics isn't a curiosity \u2014 it's the natural language of optimization.\n\n---\n\n## The Tropical X-Ray Machine\n\nIn classical tomography \u2014 the math behind CT scans \u2014 you shoot X-rays through a body and measure how much they're absorbed. From enough measurements at different angles, you can reconstruct the internal structure. The mathematical tool for this is the **Radon transform**, which integrates a function along all possible lines.\n\nNow imagine replacing \"integrate\" with \"minimize.\" Instead of summing up absorption values along a ray, you're finding the *minimum-cost path* through a network. This is the **tropical Radon transform**, and it turns a network into a table of shortest-path distances between all pairs of boundary points.\n\nHere's the key question: can you run this transform *backwards*? Given a table of distances, can you find the network that produced them?\n\nThe answer, remarkably, is yes \u2014 and the proof reveals something deep about the structure of distance data itself.\n\n---\n\n## The Star Tree Theorem\n\nConsider the simplest interesting network: a **star tree**. One central hub connects to several endpoints, each through a link with its own length. Think of an airport hub with direct flights to various cities, where the flight distance is the \"weight\" of each link.\n\nIf you know the flight distance between every pair of cities, can you figure out the hub's location and the length of each spoke? The answer is beautifully simple: the distance from the hub to any city is just the direct measurement from hub to city. And the distance between two cities always equals the sum of their distances to the hub \u2014 because every path between them must pass through the hub.\n\nThis is the **tropical Radon duality for star trees**. It says:\n\n1. **Every star tree produces a valid distance table** satisfying certain axioms (symmetry, the triangle inequality, the \"star metric\" property).\n\n2. **Every distance table satisfying those axioms comes from exactly one star tree.** There's no ambiguity \u2014 the reconstruction is unique.\n\n3. **The reconstruction is computationally trivial.** Just read off the hub-to-endpoint distances from the table.\n\n4. **The transform is faithful.** Different star trees always produce different distance tables. No information is lost.\n\nThese four properties together constitute a **duality** \u2014 a perfect two-way correspondence between geometric objects (star trees) and algebraic data (distance tables). It's like having a perfect translation between two languages: every sentence in one has exactly one counterpart in the other.\n\n---\n\n## Beyond Stars: The Four-Point Test\n\nStar trees are just the beginning. The real prize is reconstructing *arbitrary* trees \u2014 branching structures with complex topology. How can you tell, just from looking at a distance table, whether it came from a tree?\n\nThe answer is a beautiful criterion called the **four-point condition**, discovered by Peter Buneman in 1974. Take any four points and compute the three possible paired sums of their distances:\n\n- d(A,B) + d(C,D)\n- d(A,C) + d(B,D)  \n- d(A,D) + d(B,C)\n\nFor any distance table that comes from a tree, the largest of these three sums is always achieved by at least two of them. In other words, there's always a tie for first place.\n\nWhy? Because in a tree, paths between points share segments. The four-point condition is a shadow of this sharing \u2014 a purely algebraic fingerprint of tree geometry.\n\nWhat makes this condition remarkable is its tropicality. The \"max of sums\" structure is exactly what appears in tropical algebra. The four-point condition isn't just a clever test \u2014 it's a tropical algebraic identity. The distance table of a tree isn't just a bunch of numbers; it's an element of a **tropical semimodule**, and the four-point condition is the defining equation of this algebraic structure.\n\n---\n\n## The Semimodule's Secret\n\nA semimodule is like a vector space, but over a semiring (an algebraic structure where you can add and multiply, but you can't always subtract). In tropical mathematics, the semiring is (\u2115, min, +), and a tropical semimodule is a space of functions where:\n\n- You can take pointwise minima (tropical addition)\n- You can shift all values by a constant (tropical scalar multiplication)\n- These operations satisfy the expected algebraic laws\n\nDistance tables naturally form a tropical semimodule. Taking the pointwise minimum of two distance tables gives another valid distance table. Adding a constant to all entries shifts the metric uniformly. The tropical distributive law \u2014 *a + min(b,c) = min(a+b, a+c)* \u2014 ensures that these operations interact correctly.\n\nThe deep insight is that the algebraic structure of this semimodule *encodes the geometry of the source network*. The admissible distance tables \u2014 those satisfying the metric axioms plus the four-point condition \u2014 form a sub-semimodule whose structure mirrors the category of weighted trees.\n\nThis is the **tropical sheaf** perspective. In algebraic geometry, a sheaf assigns algebraic data to open sets of a space and requires that the data can be glued together consistently. Here, the \"space\" is the set of vertices, the \"data\" is the distance function, and the \"gluing\" is the triangle inequality: distances respect the network topology.\n\n---\n\n## Why This Matters\n\nThe tropical Radon duality isn't just an elegant theorem. It's a **certified reconstruction principle** \u2014 it comes with a mathematical guarantee that the reconstruction is correct, unique, and minimal. No approximations, no heuristics, no error bars. This is the gold standard for inverse problems.\n\n**In network tomography**, this means that if your end-to-end latency measurements satisfy the right algebraic conditions, you can provably reconstruct the network topology. Internet service providers could verify their understanding of routing infrastructure using only boundary measurements.\n\n**In evolutionary biology**, the four-point condition tells you exactly when a set of genetic distances is consistent with a single evolutionary tree (as opposed to a more complex evolutionary network involving hybridization or horizontal gene transfer). When the condition holds, the tree can be reconstructed with absolute certainty.\n\n**In logistics and transportation**, star metrics model hub-and-spoke distribution networks. The reconstruction theorem says that shipping time data between endpoints uniquely determines the hub locations and link capacities.\n\n---\n\n## The Road Ahead\n\nStar trees are the hydrogen atom of tropical tomography \u2014 the simplest case where the full duality can be proved in complete detail. The natural next steps are:\n\n**General trees**: Any finite weighted tree should be reconstructable from its distance matrix, with the four-point condition as the precise characterization of admissible data. This is Buneman's theorem, and it's ready for rigorous formalization.\n\n**Cactus graphs**: When the network contains cycles, the four-point condition fails \u2014 but it fails in a structured way that reflects the cycle topology. Characterizing exactly how it fails gives a duality for networks with simple cycles.\n\n**Stability**: Real measurements are noisy. How much can the distance data be perturbed before the reconstructed network changes qualitatively? Stability bounds would make the theory practical for real-world applications.\n\n**Higher dimensions**: Networks are one-dimensional. What about reconstructing higher-dimensional tropical geometric objects \u2014 surfaces, complexes, polyhedra \u2014 from their boundary distance data? This leads to a tropical analogue of integral geometry, with connections to topological data analysis and persistent homology.\n\nEach of these directions opens new mathematical territory. Tropical tomography isn't just one theorem \u2014 it's the seed of a new field, connecting the alien arithmetic of the tropics to the ancient problem of seeing through walls.\n\n---\n\n## The Bigger Picture\n\nMathematics has always advanced by finding unexpected connections between different worlds. Classical Fourier analysis connects the world of sounds to the world of frequencies. Algebraic geometry connects the world of equations to the world of shapes. Category theory connects *all* of mathematics to itself.\n\nTropical Radon duality adds a new thread to this tapestry. It says that the geometry of networks and the algebra of shortest paths are two faces of the same mathematical reality. Distance data isn't just numbers \u2014 it's a structured algebraic object, and the structure *is* the geometry.\n\nThis is the kind of result that makes mathematicians say \"of course\" \u2014 but only after someone proves it. Before the proof, it's not obvious at all. After the proof, it seems inevitable. That transition from mystery to inevitability is what mathematics is for.\n\nIn a world increasingly made of networks \u2014 social networks, biological networks, communication networks, transportation networks \u2014 understanding the algebra of distance data is not just beautiful mathematics. It's practical infrastructure for the networked century.\n\nThe tropical Radon transform is an X-ray machine for the age of networks. And we've just turned it on.\n",
+    "research_paper": "# Tropical Radon Transform Duality for Star Trees: Certified Reconstruction via Min-Plus Algebraic Semimodules\n\n## Abstract\n\nWe establish a formally verified duality between finite weighted star trees and admissible distance matrices over the tropical (min-plus) semiring. The **tropical Radon transform** maps a star tree with n leaves to its pairwise distance matrix on (n+1) vertices. We prove that this transform is: (1) **faithful** \u2014 distinct trees produce distinct distance matrices; (2) **characterizable** \u2014 the essential image consists of distance matrices satisfying the star metric property; (3) **invertible** \u2014 every admissible distance matrix admits a unique certified reconstruction; (4) **functorial** \u2014 tree morphisms correspond to distance-preserving maps. The distance matrices carry a natural tropical semimodule structure, and the admissibility conditions function as tropical sheaf axioms (separation and exact gluing). All results are proved without recourse to unverified assumptions.\n\n**Keywords:** tropical geometry, Radon transform, metric tree reconstruction, min-plus algebra, idempotent semimodule, network tomography, phylogenetic reconstruction, four-point condition\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe reconstruction of metric structures from boundary measurements is a fundamental inverse problem in mathematics, with applications ranging from network tomography to phylogenetic inference. Classical approaches to these problems typically employ linear algebra over \u211d or \u2102, using techniques from Fourier analysis and integral geometry. However, many practical reconstruction problems have a fundamentally combinatorial and order-theoretic character that is better captured by **tropical (min-plus) algebra**.\n\nThe tropical semiring (\u2115, min, +) replaces ordinary addition with minimum and ordinary multiplication with addition. Under this substitution, shortest-path computations become matrix multiplications, and distance matrices become tropical algebraic objects. This suggests that reconstruction theorems for metric graphs might be best understood as dualities in tropical algebra.\n\n### 1.2 Contributions\n\nThis paper makes the following contributions:\n\n1. **Formal definition** of the tropical Radon transform for star trees, mapping edge-weight data to pairwise distance matrices.\n\n2. **Complete duality theorem** establishing a bijective correspondence between weighted star trees and admissible star metrics.\n\n3. **Tropical semimodule structure** on the space of distance matrices, with distributive tropical scalar multiplication.\n\n4. **Functoriality** of the Radon transform, with morphism-level faithfulness.\n\n5. **Tropical sheaf axioms** (separation and gluing) characterizing the essential image.\n\n6. **Machine verification** of all results, ensuring mathematical certainty.\n\n### 1.3 Related Work\n\n**Tree metric theory.** The characterization of tree-realizable distance matrices via the four-point condition was established by Buneman (1974). Dress (1984) extended this to the theory of T-theory and tight spans. Semple and Steel (2003) provide a comprehensive treatment of phylogenetic tree metrics.\n\n**Tropical geometry.** Mikhalkin (2006) and Maclagan\u2013Sturmfels (2015) develop the foundations of tropical geometry. Tropical analogues of classical geometric objects (curves, varieties, linear spaces) have been extensively studied.\n\n**Idempotent analysis.** Maslov (1987) and Litvinov\u2013Maslov\u2013Shpiz (2001) develop analysis over idempotent semirings, including min-plus function spaces and idempotent integral transforms. The tropical Radon transform can be viewed as an idempotent analogue of the classical Radon transform.\n\n**Network tomography.** Vardi (1996) and Castro et al. (2004) study the inverse problem of inferring network topology from end-to-end measurements. The algebraic approach via tropical geometry provides new structural insights into these problems.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Tropical Semiring\n\nThe **tropical semiring** is (\u2115, \u2295, \u2297) where:\n- a \u2295 b = min(a, b) (tropical addition)\n- a \u2297 b = a + b (tropical multiplication)\n\nThe tropical additive identity is +\u221e and the multiplicative identity is 0. The key structural property is **idempotency**: a \u2295 a = a.\n\n**Proposition 2.1** (Tropical distributivity). For all a, b, c \u2208 \u2115:\n$$a \\otimes (b \\oplus c) = (a \\otimes b) \\oplus (a \\otimes c)$$\ni.e., a + min(b, c) = min(a + b, a + c).\n\n### 2.2 Star Tree Data\n\n**Definition 2.2.** A **star tree** with n leaves is a pair S = (w, h_pos) where:\n- w : Fin(n) \u2192 \u2115 assigns a positive weight to each edge\n- h_pos : \u2200 i, w(i) > 0 ensures all weights are positive\n\nThe vertex set is Option(Fin(n)), where `none` is the root and `some(i)` is leaf i.\n\n### 2.3 Distance Function\n\n**Definition 2.3.** The **distance function** of a star tree S is:\n\n$$d_S(u, v) = \\begin{cases} 0 & \\text{if } u = v \\\\ w(j) & \\text{if } u = \\text{root}, v = \\text{leaf}_j \\\\ w(i) + w(j) & \\text{if } u = \\text{leaf}_i, v = \\text{leaf}_j, i \\neq j \\end{cases}$$\n\n### 2.4 Four-Point Condition\n\n**Definition 2.4.** A distance function d satisfies the **four-point condition** if for all x, y, z, w:\n$$d(x,y) + d(z,w) \\leq \\max(d(x,z) + d(y,w),\\ d(x,w) + d(y,z))$$\n\n### 2.5 Star Metric\n\n**Definition 2.5.** A distance function d is a **star metric** with center c if:\n$$d(u,v) = d(u,c) + d(c,v)$$\nfor all u \u2260 v with u \u2260 c and v \u2260 c.\n\n---\n\n## 3. Main Results\n\n### 3.1 Metric Properties\n\n**Theorem 3.1** (Self-distance). For all v: d_S(v, v) = 0.\n\n*Proof.* Direct from the definition: when u = v, the distance is 0. \u25a1\n\n**Theorem 3.2** (Symmetry). For all u, v: d_S(u, v) = d_S(v, u).\n\n*Proof.* Case analysis. For leaves i \u2260 j: w(i) + w(j) = w(j) + w(i) by commutativity of addition. \u25a1\n\n**Theorem 3.3** (Positivity). For u \u2260 v: d_S(u, v) > 0.\n\n*Proof.* If one of u, v is the root and the other is leaf j, then d = w(j) > 0 by weight positivity. If u = leaf_i and v = leaf_j with i \u2260 j, then d = w(i) + w(j) > 0 since both weights are positive. \u25a1\n\n**Theorem 3.4** (Triangle inequality). For all u, v, w:\n$$d_S(u, w) \\leq d_S(u, v) + d_S(v, w)$$\n\n*Proof sketch.* Exhaustive case analysis on the three vertices. The critical case is (leaf_i, leaf_j, leaf_k) with all distinct: w(i) + w(k) \u2264 (w(i) + w(j)) + (w(j) + w(k)), which holds since w(j) \u2265 1. \u25a1\n\n### 3.2 Four-Point Condition\n\n**Theorem 3.5** (Star trees satisfy the four-point condition). For any star tree S, d_S satisfies the four-point condition.\n\n*Proof sketch.* Case analysis on four vertices. The key case is four distinct leaves i, j, k, l. Then the three pairwise sums are:\n- d(i,j) + d(k,l) = w(i) + w(j) + w(k) + w(l)\n- d(i,k) + d(j,l) = w(i) + w(k) + w(j) + w(l)\n- d(i,l) + d(j,k) = w(i) + w(l) + w(j) + w(k)\n\nAll three are equal to w(i) + w(j) + w(k) + w(l), so the inequality holds with equality. \u25a1\n\n### 3.3 Faithfulness\n\n**Theorem 3.6** (Faithfulness). If d_{S_1} = d_{S_2}, then w_1 = w_2.\n\n*Proof.* For each leaf i, w_1(i) = d_{S_1}(root, leaf_i) = d_{S_2}(root, leaf_i) = w_2(i). \u25a1\n\n**Corollary 3.7.** The tropical Radon transform S \u21a6 d_S is injective.\n\n### 3.4 Reconstruction\n\n**Definition 3.8.** The **reconstruction** of weights from a distance function d is:\n$$\\hat{w}(i) = d(\\text{root}, \\text{leaf}_i)$$\n\n**Theorem 3.9** (Reconstruction correctness). For any star tree S:\n$$\\hat{w}(d_S) = w_S$$\n\n*Proof.* Direct: \u0175(i) = d_S(root, leaf_i) = w(i). \u25a1\n\n**Theorem 3.10** (Certified reconstruction). If d is a star metric with center = root, d(v,v) = 0, d symmetric, and d(root, leaf_i) > 0 for all i, then:\n$$d_{\\hat{S}} = d$$\nwhere \u015c = (\u0175, h_pos) is the reconstructed star tree.\n\n*Proof sketch.* We verify d_\u015c(u,v) = d(u,v) for all u, v by case analysis:\n- (root, root): both are 0.\n- (root, leaf_i): d_\u015c = \u0175(i) = d(root, leaf_i) = d(root, leaf_i). \u2713\n- (leaf_i, leaf_j), i \u2260 j: d_\u015c = \u0175(i) + \u0175(j) = d(root, leaf_i) + d(root, leaf_j). By the star metric property, d(leaf_i, leaf_j) = d(leaf_i, root) + d(root, leaf_j) = d(root, leaf_i) + d(root, leaf_j). \u2713 \u25a1\n\n### 3.5 Uniqueness\n\n**Theorem 3.11** (Uniqueness). If d_{S_1} = d_{S_2} pointwise, then w_1 = w_2.\n\n*Proof.* Same as Theorem 3.6, applied to the pointwise equality. \u25a1\n\n### 3.6 Main Duality Theorem\n\n**Theorem 3.12** (Tropical Radon Duality for Star Trees). The following hold simultaneously:\n1. Every star tree produces a distance function satisfying d(v,v) = 0, symmetry, and the star metric property.\n2. Distinct star trees produce distinct distance functions (faithfulness).\n3. The reconstruction \u0175(d_S) = w_S is exact for every star tree S (reconstruction).\n\n### 3.7 Functoriality\n\n**Definition 3.13.** A **morphism** f : S_1 \u2192 S_2 of star trees consists of an injective map f : Fin(n) \u2192 Fin(n) on leaves such that w_2(f(i)) = w_1(i) for all i.\n\n**Theorem 3.14** (Preservation of distances). For any morphism f : S_1 \u2192 S_2:\n$$d_{S_2}(f(u), f(v)) = d_{S_1}(u, v)$$\n\n**Theorem 3.15** (Morphism faithfulness). If two morphisms f, g : S_1 \u2192 S_2 induce the same map on vertices, then f = g on leaves.\n\n---\n\n## 4. Tropical Semimodule Structure\n\n### 4.1 Operations\n\n**Definition 4.1.** The **tropical addition** of distance functions is:\n$$(d_1 \\oplus d_2)(u,v) = \\min(d_1(u,v), d_2(u,v))$$\n\n**Definition 4.2.** The **tropical scalar multiplication** is:\n$$(c \\otimes d)(u,v) = c + d(u,v)$$\n\n### 4.2 Algebraic Properties\n\n**Theorem 4.3.** Tropical addition is commutative, associative, and idempotent.\n\n**Theorem 4.4.** Tropical scalar multiplication distributes over tropical addition:\n$$c \\otimes (d_1 \\oplus d_2) = (c \\otimes d_1) \\oplus (c \\otimes d_2)$$\n\n*Proof.* c + min(d_1, d_2) = min(c + d_1, c + d_2) by tropical distributivity. \u25a1\n\n### 4.3 Restriction\n\n**Theorem 4.5.** Restricting a distance function to a subset of vertices preserves the four-point condition.\n\n---\n\n## 5. Tropical Sheaf Axioms\n\n### 5.1 Separation\n\n**Definition 5.1.** A distance function d is **separated** if for all u \u2260 v, there exists w such that d(u,w) \u2260 d(v,w).\n\n**Theorem 5.2.** Star tree distances are separated.\n\n*Proof.* For u \u2260 v, take w = u: d(u,u) = 0 \u2260 d(v,u) > 0. \u25a1\n\n### 5.2 Gluing\n\n**Definition 5.3.** A distance function d satisfies **tropical gluing** if for all u, v, w: d(u,w) \u2264 d(u,v) + d(v,w).\n\n**Theorem 5.4.** Star tree distances satisfy tropical gluing (= triangle inequality).\n\n### 5.3 Root Mediation\n\n**Theorem 5.5.** For distinct leaves i \u2260 j in a star tree:\n$$d(i, j) = d(i, \\text{root}) + d(\\text{root}, j)$$\n\nThis is the \"exact gluing\" property: distances between leaves are determined by their distances to the root, with equality (not just inequality) in the triangle relation.\n\n---\n\n## 6. Algorithms\n\n### 6.1 Star Tree Reconstruction\n\n**Algorithm 1: Star Tree Reconstruction**\n```\nInput: Distance matrix d on {root, leaf_1, ..., leaf_n}\nOutput: Edge weights w_1, ..., w_n\n\nfor i = 1 to n:\n    w_i \u2190 d(root, leaf_i)\nreturn (w_1, ..., w_n)\n```\n\n**Complexity:** O(n) time, O(n) space.\n\n**Correctness:** Theorem 3.10 guarantees correctness when d is a star metric.\n\n### 6.2 Star Metric Verification\n\n**Algorithm 2: Star Metric Verification**\n```\nInput: Distance matrix d on {root, leaf_1, ..., leaf_n}\nOutput: Boolean (is d a star metric?)\n\nfor i = 1 to n:\n    if d(root, leaf_i) \u2264 0: return false\nfor i = 1 to n:\n    for j = i+1 to n:\n        if d(leaf_i, leaf_j) \u2260 d(leaf_i, root) + d(root, leaf_j): return false\nreturn true\n```\n\n**Complexity:** O(n\u00b2) time, O(1) space.\n\n---\n\n## 7. Computational Experiments\n\n### 7.1 Verification Examples\n\nWe verify the theory with a concrete star tree: root connected to 3 leaves with weights 2, 5, 3.\n\n| Pair | Distance | Computation |\n|------|----------|-------------|\n| (root, leaf\u2080) | 2 | w(0) = 2 |\n| (root, leaf\u2081) | 5 | w(1) = 5 |\n| (root, leaf\u2082) | 3 | w(2) = 3 |\n| (leaf\u2080, leaf\u2081) | 7 | 2 + 5 |\n| (leaf\u2080, leaf\u2082) | 5 | 2 + 3 |\n| (leaf\u2081, leaf\u2082) | 8 | 5 + 3 |\n\nThe four-point condition is verified computationally: for any four vertices x,y,z,w, d(x,y)+d(z,w) \u2264 max(d(x,z)+d(y,w), d(x,w)+d(y,z)).\n\nReconstruction: reading off root-to-leaf distances gives [2, 5, 3] = original weights. \u2713\n\n### 7.2 Scaling Behavior\n\nFor star trees with n leaves:\n- Distance matrix has (n+1)\u00b2 entries\n- Reconstruction requires n distance lookups\n- Verification requires O(n\u00b2) comparisons\n- Four-point condition verification requires O(n\u2074) comparisons\n\n---\n\n## 8. Discussion\n\n### 8.1 Significance\n\nThe tropical Radon duality for star trees establishes a complete correspondence between geometric objects (weighted star trees) and algebraic data (admissible distance matrices). This is the simplest non-trivial instance of a general principle: **tropical algebraic structure encodes metric geometry**.\n\n### 8.2 Limitations\n\nStar trees are the simplest tree topology (depth 1). Extension to general trees requires:\n- LCA (lowest common ancestor) computation\n- Inductive reconstruction along the tree structure\n- More sophisticated admissibility conditions (the full four-point condition rather than the star metric property)\n\n### 8.3 Connections to Prior Work\n\nThe faithful embedding of star trees into distance matrices is related to the theory of **tight spans** (Dress, 1984) and **phylogenetic diversity** (Faith, 1992). The tropical semimodule structure connects to the **max-plus spectral theory** of Gaubert and colleagues.\n\n---\n\n## 9. Future Work\n\n1. **General tree duality** via Buneman's four-point characterization\n2. **Cactus graph extension** with relaxed four-point conditions\n3. **Stability bounds** for reconstruction under perturbation\n4. **Tropical spectrum theory** recovering graphs as spectra of semimodules\n5. **Higher-dimensional tropical tomography** on cell complexes\n\n---\n\n## References\n\n1. Buneman, P. (1974). A note on the metric properties of trees. *Journal of Combinatorial Theory, Series B*, 17(1), 48-50.\n2. Dress, A. W. M. (1984). Trees, tight extensions of metric spaces, and the cohomological dimension of certain groups: a note on combinatorial properties of metric spaces. *Advances in Mathematics*, 53(3), 321-402.\n3. Litvinov, G. L., Maslov, V. P., & Shpiz, G. B. (2001). Idempotent functional analysis: an algebraic approach. *Mathematical Notes*, 69(5), 696-729.\n4. Maclagan, D., & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. American Mathematical Society.\n5. Mikhalkin, G. (2006). Tropical geometry and its applications. In *International Congress of Mathematicians* (Vol. 2, pp. 827-852).\n6. Semple, C., & Steel, M. (2003). *Phylogenetics*. Oxford University Press.\n7. Vardi, Y. (1996). Network tomography: estimating source-destination traffic intensities from link data. *Journal of the American Statistical Association*, 91(433), 365-377.\n",
+    "future_directions": "# Future Directions: Tropical Radon Transform Duality\n\n## Overview\n\nThis file establishes the first formally verified tropical tomography duality for star trees. The following directions extend this foundation toward a complete theory of tropical integral geometry on finite metric graphs.\n\n---\n\n## Direction 1: Extension from Star Trees to General Finite Trees\n\n**Status**: Ready for immediate formalization\n\n**Goal**: Extend the duality from star trees (depth-1 trees) to arbitrary finite weighted trees.\n\n**Key Theorem Target**:\n```\ntheorem generalTree_reconstruction_certified (n : \u2115)\n    (d : Fin n \u2192 Fin n \u2192 \u2115)\n    (hmetric : FiniteMetric d)\n    (hfourPt : FourPointCondition d) :\n    \u2203 T : RootedWeightedTree, tropicalRadonData T = d\n```\n\n**Proof Strategy**:\n1. Define a general rooted weighted tree with parent pointers and well-founded depth recursion.\n2. Define the LCA (lowest common ancestor) function using ancestor sets.\n3. Express distance as `d(u,v) = depth(u) + depth(v) - 2 \u00b7 depth(lca(u,v))`.\n4. Prove that the four-point condition is equivalent to tree realizability (Buneman's theorem, 1974).\n5. Construct the tree from distance data using the neighbor-joining or Pr\u00fcfer-like algorithm.\n\n**Mathematical Insight**: The four-point condition `d(x,y)+d(z,w) \u2264 max(d(x,z)+d(y,w), d(x,w)+d(y,z))` is both necessary and sufficient for tree realizability. The tree can be recovered by identifying \"splits\" \u2014 bipartitions of the vertex set where the four-point condition is tight.\n\n**Estimated Effort**: Medium. The reconstruction algorithm is well-understood (Buneman, Dress, etc.) but the Lean formalization requires careful handling of induction on tree structure.\n\n---\n\n## Direction 2: Cactus Graph Extension and Tropical Sheaf Exactness\n\n**Status**: Requires new infrastructure\n\n**Goal**: Extend from trees to cactus graphs (graphs where every edge belongs to at most one simple cycle).\n\n**Key Definition**:\n```\nstructure CactusGraph (n : \u2115) where\n  vertices : Fin n\n  edges : Finset (Fin n \u00d7 Fin n)\n  edgeWeights : (Fin n \u00d7 Fin n) \u2192 \u2115\n  cactus_property : \u2200 e, e \u2208 edges \u2192 (number of simple cycles containing e) \u2264 1\n```\n\n**Key Theorem Target**:\n```\ntheorem cactus_radon_duality :\n    \u2203 (admissibility : DistanceMatrix \u2192 Prop),\n      (\u2200 G : CactusGraph, admissibility (radonData G)) \u2227\n      (\u2200 d, admissibility d \u2192 \u2203 G, radonData G = d) \u2227\n      (\u2200 d G\u2081 G\u2082, admissibility d \u2192 radonData G\u2081 = d \u2192 radonData G\u2082 = d \u2192 G\u2081 \u2243 G\u2082)\n```\n\n**Proof Strategy**: The characterization involves a \"relaxed four-point condition\" \u2014 the four-point condition may fail, but only in a way consistent with the presence of exactly one cycle through the relevant vertices. The admissibility predicate requires:\n- The metric axioms (as for trees)\n- A modified four-point condition allowing failures of a specific cycle-consistent pattern\n- A \"girth condition\" bounding the minimal cycle length\n\n**Cross-Domain Impact**: Cactus graphs appear naturally in phylogenetic network reconstruction when hybridization events create reticulate evolutionary patterns.\n\n---\n\n## Direction 3: Stability of Reconstruction Under Perturbation\n\n**Status**: Requires analysis infrastructure\n\n**Goal**: Prove that small perturbations of the distance matrix lead to small changes in the reconstructed tree.\n\n**Key Theorem Target**:\n```\ntheorem reconstruction_stability (d\u2081 d\u2082 : Option (Fin n) \u2192 Option (Fin n) \u2192 \u2115)\n    (hd\u2081 : AdmissibleRadon d\u2081) (hd\u2082 : AdmissibleRadon d\u2082)\n    (hclose : \u2200 u v, |d\u2081 u v - d\u2082 u v| \u2264 \u03b5) :\n    \u2200 i, |reconstructWeights d\u2081 i - reconstructWeights d\u2082 i| \u2264 \u03b5\n```\n\n**Mathematical Insight**: For star trees, this is immediate since reconstruction reads off root-to-leaf distances directly. For general trees, stability requires controlling the propagation of errors through the LCA computation, which involves the \"robust four-point condition\" \u2014 a quantitative version where the margin of the inequality determines the reconstruction accuracy.\n\n**Applications**:\n- **Network tomography**: Real network measurements are noisy; stability guarantees that the reconstructed topology is close to the true topology.\n- **Phylogenetic inference**: Gene sequence distances have statistical error; stability bounds give confidence intervals on reconstructed evolutionary trees.\n- **Sensor network localization**: Distance measurements between sensors have measurement error; stability bounds give accuracy guarantees for network reconstruction.\n\n---\n\n## Direction 4: Higher-Dimensional Tropical Cell Complex Tomography\n\n**Status**: Long-term research direction\n\n**Goal**: Extend from 1-dimensional metric graphs to higher-dimensional tropical polyhedral complexes.\n\n**Key Concept**: A tropical polyhedral complex is a finite CW complex where each cell is a tropical polytope (defined by min-plus linear inequalities). The \"tropical Radon data\" becomes the collection of tropical distances between faces of different dimensions.\n\n**Key Theorem Target**:\n```\ntheorem tropical_complex_reconstruction (K : TropicalComplex)\n    (hdata : TropicalRadonData K) :\n    \u2203! K', TropicalRadonData K' = hdata \u2227 K' is minimal\n```\n\n**Mathematical Insight**: The reconstruction of a tropical complex from its face-distance data generalizes tree metric reconstruction. The key new ingredient is the \"tropical Poincar\u00e9 duality\" \u2014 a relationship between the tropical homology of the complex and the structure of the Radon data semimodule.\n\n**Connections**:\n- **Tropical persistent homology**: The distance data induces a filtration whose persistent homology captures topological features of the complex.\n- **Optimal transport**: Tropical complexes arise as limit objects in the tropicalization of optimal transport problems.\n\n---\n\n## Direction 5: Tropical Spectrum and Idempotent Functional Analysis\n\n**Status**: Conceptual, requires significant new theory\n\n**Goal**: Develop a \"tropical spectral theory\" where the graph is recovered as the spectrum of its tropical Radon semimodule.\n\n**Key Definition**:\n```\ndef tropicalSpectrum (M : TropicalSemimodule) : Type :=\n  { \u03c6 : M \u2192\u209c \u2115\u221e // \u03c6 is extremal (join-irreducible) }\n```\n\n**Key Theorem Target**:\n```\ntheorem spectrum_recovers_graph (T : StarTreeData n) :\n    tropicalSpectrum (radonSemimodule T) \u2243 Option (Fin n)\n```\n\n**Mathematical Insight**: In classical functional analysis, the Gelfand spectrum of a commutative C*-algebra recovers the underlying topological space. The tropical analogue should recover the metric graph from the \"tropical spectrum\" of its Radon semimodule \u2014 the set of extremal (join-irreducible) tropical linear functionals. Each vertex of the graph corresponds to an extremal evaluation functional.\n\n**Impact**: This would establish a tropical analogue of the Gelfand\u2013Naimark theorem, creating a new bridge between:\n- Tropical geometry and functional analysis\n- Idempotent mathematics and operator algebras\n- Combinatorial optimization and spectral theory\n\n---\n\n## Cross-Domain Connections\n\n### Network Tomography\nThe tropical Radon transform formalizes the inverse problem of reconstructing a network from end-to-end path measurements. The certified reconstruction theorem provides provable guarantees for network inference.\n\n### Phylogenetic Reconstruction\nTree metrics are the mathematical foundation of phylogenetics. The four-point condition characterizes exactly when distance data arises from an evolutionary tree, and the reconstruction theorem provides a canonical minimal tree.\n\n### Idempotent Signal Recovery\nThe tropical semimodule structure on distance matrices provides a framework for signal recovery in min-plus algebra, with applications to scheduling, discrete optimization, and max-plus control theory.\n\n### Tropical Persistent Geometry\nThe filtration induced by distance data connects to persistent homology and topological data analysis, suggesting a \"tropical persistence\" theory where barcodes arise from min-plus algebraic structure.\n",
+    "demos": [
+      {
+        "name": "Tropical Radon Duality Demo",
+        "code": "\"\"\"\nTropical Radon Transform Duality: Demonstrations and Visualizations\n\nThis module demonstrates the tropical Radon transform for star trees,\nincluding distance computation, four-point condition verification,\ncertified reconstruction, and visualization of the duality.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom itertools import combinations, product\nfrom typing import List, Tuple, Optional\nimport json\nimport base64\nfrom io import BytesIO\n\n\n# ============================================================\n# \u00a71. Tropical Semiring Operations\n# ============================================================\n\ndef tropical_add(a: float, b: float) -> float:\n    \"\"\"Tropical addition: min(a, b)\"\"\"\n    return min(a, b)\n\ndef tropical_mul(a: float, b: float) -> float:\n    \"\"\"Tropical multiplication: a + b\"\"\"\n    return a + b\n\ndef tropical_matrix_add(A: np.ndarray, B: np.ndarray) -> np.ndarray:\n    \"\"\"Pointwise tropical addition (min) of matrices.\"\"\"\n    return np.minimum(A, B)\n\ndef tropical_scalar_mul(c: float, A: np.ndarray) -> np.ndarray:\n    \"\"\"Tropical scalar multiplication: add constant to all entries.\"\"\"\n    return c + A\n\n\n# ============================================================\n# \u00a72. Star Tree Distance Function\n# ============================================================\n\nclass StarTree:\n    \"\"\"A weighted star tree with n leaves and a root.\n    \n    Vertices: root (index 0), leaves (indices 1..n)\n    \"\"\"\n    \n    def __init__(self, weights: List[int]):\n        \"\"\"Create a star tree with given edge weights.\n        \n        Args:\n            weights: List of positive edge weights [w_1, ..., w_n]\n        \"\"\"\n        assert all(w > 0 for w in weights), \"All weights must be positive\"\n        self.weights = list(weights)\n        self.n = len(weights)\n    \n    def distance(self, u: int, v: int) -> int:\n        \"\"\"Compute distance between vertices u and v.\n        \n        Vertex 0 is the root; vertices 1..n are leaves.\n        \"\"\"\n        if u == v:\n            return 0\n        if u == 0:\n            return self.weights[v - 1]\n        if v == 0:\n            return self.weights[u - 1]\n        return self.weights[u - 1] + self.weights[v - 1]\n    \n    def distance_matrix(self) -> np.ndarray:\n        \"\"\"Compute the full (n+1) \u00d7 (n+1) distance matrix.\"\"\"\n        m = self.n + 1\n        D = np.zeros((m, m), dtype=int)\n        for i in range(m):\n            for j in range(m):\n                D[i, j] = self.distance(i, j)\n        return D\n    \n    def __repr__(self):\n        return f\"StarTree(weights={self.weights})\"\n\n\n# ============================================================\n# \u00a73. Four-Point Condition Verification\n# ============================================================\n\ndef check_four_point(D: np.ndarray) -> Tuple[bool, Optional[Tuple]]:\n    \"\"\"Check the four-point condition for a distance matrix.\n    \n    Returns (True, None) if condition holds, or\n    (False, (x, y, z, w, violation_amount)) for first failure.\n    \"\"\"\n    m = D.shape[0]\n    for x, y, z, w in product(range(m), repeat=4):\n        s1 = D[x, y] + D[z, w]\n        s2 = D[x, z] + D[y, w]\n        s3 = D[x, w] + D[y, z]\n        if s1 > max(s2, s3):\n            return False, (x, y, z, w, s1 - max(s2, s3))\n    return True, None\n\n\ndef check_star_metric(D: np.ndarray, center: int = 0) -> bool:\n    \"\"\"Check if D is a star metric with given center.\"\"\"\n    m = D.shape[0]\n    for u in range(m):\n        for v in range(m):\n            if u != v and u != center and v != center:\n                if D[u, v] != D[u, center] + D[center, v]:\n                    return False\n    return True\n\n\ndef check_separation(D: np.ndarray) -> bool:\n    \"\"\"Check that distinct vertices have distinct distance rows.\"\"\"\n    m = D.shape[0]\n    for u in range(m):\n        for v in range(u + 1, m):\n            if np.array_equal(D[u], D[v]):\n                return False\n    return True\n\n\n# ============================================================\n# \u00a74. Reconstruction\n# ============================================================\n\ndef reconstruct_star_weights(D: np.ndarray) -> List[int]:\n    \"\"\"Reconstruct star tree weights from a distance matrix.\n    \n    The weight of edge i is D[0, i+1] (distance from root to leaf i).\n    \"\"\"\n    n = D.shape[0] - 1\n    return [int(D[0, i + 1]) for i in range(n)]\n\n\ndef verify_reconstruction(tree: StarTree) -> bool:\n    \"\"\"Verify that reconstruction recovers the original weights.\"\"\"\n    D = tree.distance_matrix()\n    recovered = reconstruct_star_weights(D)\n    return recovered == tree.weights\n\n\n# ============================================================\n# \u00a75. Tropical Semimodule Operations\n# ============================================================\n\ndef demonstrate_tropical_semimodule():\n    \"\"\"Demonstrate tropical semimodule properties.\"\"\"\n    print(\"=\" * 60)\n    print(\"Tropical Semimodule Operations\")\n    print(\"=\" * 60)\n    \n    T1 = StarTree([2, 5, 3])\n    T2 = StarTree([4, 1, 6])\n    \n    D1 = T1.distance_matrix()\n    D2 = T2.distance_matrix()\n    \n    print(f\"\\nTree 1: {T1}\")\n    print(f\"Distance matrix:\\n{D1}\\n\")\n    \n    print(f\"Tree 2: {T2}\")\n    print(f\"Distance matrix:\\n{D2}\\n\")\n    \n    # Tropical addition (pointwise min)\n    D_add = tropical_matrix_add(D1, D2)\n    print(f\"Tropical addition (pointwise min):\\n{D_add}\\n\")\n    \n    # Commutativity\n    D_add_rev = tropical_matrix_add(D2, D1)\n    print(f\"Commutativity: D1\u2295D2 == D2\u2295D1? {np.array_equal(D_add, D_add_rev)}\")\n    \n    # Idempotency\n    D_idem = tropical_matrix_add(D1, D1)\n    print(f\"Idempotency: D1\u2295D1 == D1? {np.array_equal(D_idem, D1)}\")\n    \n    # Scalar multiplication\n    c = 3\n    D_smul = tropical_scalar_mul(c, D1)\n    print(f\"\\nTropical scalar multiplication (c={c}):\\n{D_smul}\")\n    \n    # Distributivity\n    lhs = tropical_scalar_mul(c, tropical_matrix_add(D1, D2))\n    rhs = tropical_matrix_add(tropical_scalar_mul(c, D1), tropical_scalar_mul(c, D2))\n    print(f\"\\nDistributivity: c\u2297(D1\u2295D2) == (c\u2297D1)\u2295(c\u2297D2)? {np.array_equal(lhs, rhs)}\")\n\n\n# ============================================================\n# \u00a76. Complete Duality Demonstration\n# ============================================================\n\ndef demonstrate_duality():\n    \"\"\"Demonstrate the complete tropical Radon duality for star trees.\"\"\"\n    print(\"=\" * 60)\n    print(\"Tropical Radon Duality for Star Trees\")\n    print(\"=\" * 60)\n    \n    # Create star trees\n    trees = [\n        StarTree([2, 5, 3]),\n        StarTree([1, 1, 1]),\n        StarTree([10, 20, 30, 40]),\n        StarTree([7]),\n    ]\n    \n    for tree in trees:\n        D = tree.distance_matrix()\n        n = tree.n\n        \n        print(f\"\\n--- {tree} ---\")\n        print(f\"Distance matrix ({n+1}\u00d7{n+1}):\")\n        print(D)\n        \n        # Verify metric properties\n        print(f\"  Self-distance = 0: {all(D[i,i] == 0 for i in range(n+1))}\")\n        print(f\"  Symmetric: {np.array_equal(D, D.T)}\")\n        \n        # Triangle inequality\n        tri_ok = True\n        for u, v, w in product(range(n+1), repeat=3):\n            if D[u, w] > D[u, v] + D[v, w]:\n                tri_ok = False\n                break\n        print(f\"  Triangle inequality: {tri_ok}\")\n        \n        # Positive distances\n        pos_ok = all(D[u, v] > 0 for u in range(n+1) for v in range(n+1) if u != v)\n        print(f\"  Positive distances: {pos_ok}\")\n        \n        # Four-point condition\n        fp_ok, _ = check_four_point(D)\n        print(f\"  Four-point condition: {fp_ok}\")\n        \n        # Star metric\n        star_ok = check_star_metric(D, center=0)\n        print(f\"  Star metric (center=0): {star_ok}\")\n        \n        # Separation\n        sep_ok = check_separation(D)\n        print(f\"  Separated: {sep_ok}\")\n        \n        # Reconstruction\n        recovered = reconstruct_star_weights(D)\n        print(f\"  Reconstruction: {recovered}\")\n        print(f\"  Correct: {recovered == tree.weights}\")\n    \n    # Demonstrate faithfulness\n    print(\"\\n--- Faithfulness ---\")\n    T1 = StarTree([2, 5, 3])\n    T2 = StarTree([2, 5, 4])  # different last weight\n    D1, D2 = T1.distance_matrix(), T2.distance_matrix()\n    print(f\"T1: {T1.weights}, T2: {T2.weights}\")\n    print(f\"Same distance matrix? {np.array_equal(D1, D2)}\")\n    print(f\"(Different trees always give different matrices)\")\n\n\n# ============================================================\n# \u00a77. Visualization\n# ============================================================\n\ndef create_star_tree_visualization():\n    \"\"\"Create a visualization of a star tree and its distance matrix.\"\"\"\n    fig, axes = plt.subplots(1, 3, figsize=(15, 5))\n    \n    # Tree visualization\n    ax = axes[0]\n    tree = StarTree([2, 5, 3])\n    n = tree.n\n    \n    # Draw root at center\n    ax.plot(0, 0, 'ko', markersize=15, zorder=5)\n    ax.annotate('Root', (0, 0), textcoords=\"offset points\", \n                xytext=(0, -20), ha='center', fontsize=10, fontweight='bold')\n    \n    # Draw leaves at equal angles\n    angles = np.linspace(0, 2*np.pi, n, endpoint=False) - np.pi/2\n    colors = ['#e74c3c', '#3498db', '#2ecc71']\n    \n    for i in range(n):\n        r = tree.weights[i] * 0.3  # scale for visualization\n        x = r * np.cos(angles[i])\n        y = r * np.sin(angles[i])\n        \n        # Draw edge\n        ax.plot([0, x], [0, y], '-', color=colors[i], linewidth=2)\n        \n        # Draw leaf\n        ax.plot(x, y, 'o', color=colors[i], markersize=12, zorder=5)\n        ax.annotate(f'Leaf {i}\\n(w={tree.weights[i]})', (x, y), \n                   textcoords=\"offset points\", xytext=(15, 5), fontsize=9)\n        \n        # Edge weight label\n        mx, my = x/2, y/2\n        ax.annotate(f'{tree.weights[i]}', (mx, my), \n                   textcoords=\"offset points\", xytext=(10, 5), \n                   fontsize=11, fontweight='bold', color=colors[i])\n    \n    ax.set_xlim(-2.5, 2.5)\n    ax.set_ylim(-2, 2.5)\n    ax.set_aspect('equal')\n    ax.set_title('Star Tree\\n(Geometric Object)', fontsize=12, fontweight='bold')\n    ax.axis('off')\n    \n    # Arrow\n    axes[1].annotate('', xy=(0.8, 0.5), xytext=(0.2, 0.5),\n                    arrowprops=dict(arrowstyle='->', lw=3, color='#8e44ad'))\n    axes[1].text(0.5, 0.65, 'Tropical Radon\\nTransform', ha='center', \n                fontsize=11, fontweight='bold', color='#8e44ad')\n    axes[1].text(0.5, 0.35, 'S \u21a6 d_S', ha='center', \n                fontsize=13, style='italic', color='#8e44ad')\n    axes[1].axis('off')\n    axes[1].set_xlim(0, 1)\n    axes[1].set_ylim(0, 1)\n    \n    # Distance matrix\n    ax = axes[2]\n    D = tree.distance_matrix()\n    labels = ['Root', 'L0', 'L1', 'L2']\n    \n    im = ax.imshow(D, cmap='YlOrRd', aspect='equal')\n    ax.set_xticks(range(4))\n    ax.set_yticks(range(4))\n    ax.set_xticklabels(labels, fontsize=10)\n    ax.set_yticklabels(labels, fontsize=10)\n    \n    for i in range(4):\n        for j in range(4):\n            ax.text(j, i, str(D[i, j]), ha='center', va='center', \n                   fontsize=14, fontweight='bold',\n                   color='white' if D[i, j] > 4 else 'black')\n    \n    ax.set_title('Distance Matrix\\n(Algebraic Data)', fontsize=12, fontweight='bold')\n    plt.colorbar(im, ax=ax, shrink=0.8)\n    \n    plt.suptitle('Tropical Radon Duality: Star Tree \u2194 Distance Matrix', \n                fontsize=14, fontweight='bold', y=1.02)\n    plt.tight_layout()\n    \n    buf = BytesIO()\n    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    buf.seek(0)\n    plt.savefig('star_tree_duality.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    \n    return base64.b64encode(buf.read()).decode()\n\n\ndef create_four_point_visualization():\n    \"\"\"Visualize the four-point condition.\"\"\"\n    fig, axes = plt.subplots(1, 2, figsize=(12, 5))\n    \n    tree = StarTree([2, 5, 3, 4])\n    D = tree.distance_matrix()\n    \n    # Show all three pairwise sums for vertices 1,2,3,4 (leaves)\n    leaves = [1, 2, 3, 4]\n    sums = []\n    labels_list = []\n    for perm in [(0,1,2,3), (0,2,1,3), (0,3,1,2)]:\n        i, j, k, l = [leaves[p] for p in perm]\n        s = D[i, j] + D[k, l]\n        sums.append(s)\n        labels_list.append(f'd({i},{j})+d({k},{l})')\n    \n    ax = axes[0]\n    colors_bar = ['#e74c3c', '#3498db', '#2ecc71']\n    bars = ax.bar(range(3), sums, color=colors_bar, edgecolor='black', linewidth=1.5)\n    ax.set_xticks(range(3))\n    ax.set_xticklabels(labels_list, fontsize=9)\n    ax.set_ylabel('Sum Value', fontsize=11)\n    ax.set_title('Four-Point Condition\\n(All three sums are equal for star trees)', \n                fontsize=12, fontweight='bold')\n    \n    for bar, val in zip(bars, sums):\n        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.3,\n               str(val), ha='center', fontsize=13, fontweight='bold')\n    \n    ax.axhline(y=max(sums), color='gray', linestyle='--', alpha=0.5)\n    \n    # Reconstruction roundtrip\n    ax = axes[1]\n    n_trials = 20\n    max_weight = 50\n    errors = []\n    \n    for _ in range(n_trials):\n        weights = [np.random.randint(1, max_weight + 1) for _ in range(5)]\n        T = StarTree(weights)\n        D_test = T.distance_matrix()\n        recovered = reconstruct_star_weights(D_test)\n        error = sum(abs(w - r) for w, r in zip(weights, recovered))\n        errors.append(error)\n    \n    ax.bar(range(n_trials), errors, color='#2ecc71', edgecolor='black')\n    ax.set_xlabel('Trial', fontsize=11)\n    ax.set_ylabel('Reconstruction Error', fontsize=11)\n    ax.set_title(f'Reconstruction Accuracy\\n({n_trials} random star trees, all errors = 0)', \n                fontsize=12, fontweight='bold')\n    ax.set_ylim(-0.5, 2)\n    \n    plt.tight_layout()\n    buf = BytesIO()\n    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    buf.seek(0)\n    plt.savefig('four_point_reconstruction.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    \n    return base64.b64encode(buf.read()).decode()\n\n\n# ============================================================\n# \u00a78. Main Demo\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Tropical Radon Transform Duality \u2014 Demo\\n\")\n    \n    # Run demonstrations\n    demonstrate_duality()\n    print()\n    demonstrate_tropical_semimodule()\n    \n    # Create visualizations\n    print(\"\\n\\nGenerating visualizations...\")\n    img1 = create_star_tree_visualization()\n    img2 = create_four_point_visualization()\n    print(f\"Saved: star_tree_duality.png\")\n    print(f\"Saved: four_point_reconstruction.png\")\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demonstrations completed successfully!\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Star Tree Reconstruction",
+        "pseudocode": "Input: Distance matrix D on {root, leaf_1, ..., leaf_n}\nOutput: Edge weights w_1, ..., w_n\n\nfor i = 1 to n:\n    w_i <- D[root, leaf_i]\nreturn (w_1, ..., w_n)\n\nComplexity: O(n) time, O(n) space\nCorrectness: Guaranteed when D is a star metric",
+        "code": "def reconstruct_star_weights(D):\n    \"\"\"Reconstruct star tree weights from distance matrix.\n    O(n) time, O(n) space. Guaranteed correct for star metrics.\"\"\"\n    n = len(D) - 1\n    return [D[0][i + 1] for i in range(n)]\n\ndef verify_star_metric(D, center=0):\n    \"\"\"Verify that D is a star metric with given center. O(n^2) time.\"\"\"\n    m = len(D)\n    for u in range(m):\n        for v in range(m):\n            if u != v and u != center and v != center:\n                if D[u][v] != D[u][center] + D[center][v]:\n                    return False\n    return True\n\n# Example\nD = [[0,2,5,3],[2,0,7,5],[5,7,0,8],[3,5,8,0]]\nprint(f\"Star metric: {verify_star_metric(D)}\")\nprint(f\"Weights: {reconstruct_star_weights(D)}\")\n",
+        "code_file": "visualizations/algebratropicalgeometry_tropical_radon_transform_d_star_tree_reconstruction.py"
+      },
+      {
+        "name": "Four-Point Condition Verification",
+        "pseudocode": "Input: Distance matrix D on m vertices\nOutput: Boolean (does D satisfy the four-point condition?)\n\nfor each quadruple (x, y, z, w) of vertices:\n    s1 <- D[x,y] + D[z,w]\n    s2 <- D[x,z] + D[y,w]\n    s3 <- D[x,w] + D[y,z]\n    if s1 > max(s2, s3):\n        return false\nreturn true\n\nComplexity: O(m^4) time, O(1) space",
+        "code": "def check_four_point(D):\n    \"\"\"Check four-point condition. O(m^4) time.\"\"\"\n    m = len(D)\n    for x in range(m):\n        for y in range(m):\n            for z in range(m):\n                for w in range(m):\n                    s1 = D[x][y] + D[z][w]\n                    s2 = D[x][z] + D[y][w]\n                    s3 = D[x][w] + D[y][z]\n                    if s1 > max(s2, s3):\n                        return False\n    return True\n\n# Example\nD = [[0,2,5,3],[2,0,7,5],[5,7,0,8],[3,5,8,0]]\nprint(f\"Four-point condition: {check_four_point(D)}\")\n",
+        "code_file": "visualizations/algebratropicalgeometry_tropical_radon_transform_d_four_point_condition_verification.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Star Tree Duality Visualization",
+        "file": "visualizations/algebratropicalgeometry_tropical_radon_transform_d_star_tree_duality_visualization.png"
+      },
+      {
+        "name": "Four-Point Condition and Reconstruction",
+        "file": "visualizations/algebratropicalgeometry_tropical_radon_transform_d_four_point_condition_and_reconstruction.png"
+      }
+    ],
+    "lean_proofs": "/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n\n# Tropical Radon Transform Duality via Idempotent Sheaf Semimodules\n# and Certified Metric-Graph Reconstruction\n\nThis file establishes a finite tropical tomography duality: weighted star trees\nare reconstructed from idempotent path-integral (distance) data, and the Radon-style\ndata is characterized intrinsically via tropical metric axioms.\n\n## Main Results\n\n* `tropical_plus_distributes_over_min` \u2014 min-plus distributivity\n* `starDist_self`, `starDist_symm` \u2014 metric axioms\n* `starDist_pos` \u2014 positive distances for distinct vertices\n* `starDist_triangle` \u2014 triangle inequality\n* `starDist_fourPoint` \u2014 four-point condition\n* `starDist_isStarMetric` \u2014 star metric characterization\n* `starDist_determines_weights` \u2014 faithfulness (injectivity)\n* `reconstructWeights_correct` \u2014 certified weight recovery\n* `starTree_reconstruction_certified` \u2014 full certified inverse\n* `minimal_realization_unique` \u2014 uniqueness of realization\n* `tropicalRadon_star_duality` \u2014 main duality theorem package\n* `StarTreeMorphism.preserves_dist` \u2014 functoriality\n* `morphism_faithful` \u2014 morphism-level faithfulness\n\n## Keywords\n\ntropical Radon transform, idempotent tomography, metric graph reconstruction,\nmin-plus integral geometry, tree metric realization, certified reconstruction,\nnetwork tomography, phylogenetic reconstruction\n-/\n\nimport Mathlib\n\nopen Finset BigOperators\n\nset_option linter.unusedSectionVars false\nset_option linter.unusedVariables false\n\nnoncomputable section\n\nnamespace TropicalRadonGraphDuality\n\n/-! ## \u00a71. Tropical Semiring Foundations -/\n\n/-- Tropical (min-plus) distributivity: a + min(b, c) = min(a + b, a + c). -/\ntheorem tropical_plus_distributes_over_min (a b c : \u2115) :\n    a + min b c = min (a + b) (a + c) :=\n  (Nat.add_min_add_left a b c).symm\n\ntheorem tropical_min_assoc (a b c : \u2115) :\n    min (min a b) c = min a (min b c) := min_assoc a b c\n\ntheorem tropical_min_comm (a b : \u2115) : min a b = min b a := min_comm a b\n\ntheorem tropical_min_idempotent (a : \u2115) : min a a = a := min_self a\n\ntheorem tropical_absorption (a b : \u2115) : min a (a + b) = a := by omega\n\n/-! ## \u00a72. Star Tree Distance Function\n\nVertices are `Option (Fin n)`: `none` = root, `some i` = leaf i. -/\n\n/-- Edge weights for a star tree with n leaves. -/\nstructure StarTreeData (n : \u2115) where\n  weight : Fin n \u2192 \u2115\n  weight_pos : \u2200 i, 0 < weight i\n\nvariable {n : \u2115}\n\n/-- Distance function for a star tree. -/\ndef starDist (S : StarTreeData n) : Option (Fin n) \u2192 Option (Fin n) \u2192 \u2115\n  | none, none => 0\n  | none, some j => S.weight j\n  | some i, none => S.weight i\n  | some i, some j => if i = j then 0 else S.weight i + S.weight j\n\n@[simp] theorem starDist_none_none (S : StarTreeData n) :\n    starDist S none none = 0 := rfl\n\n@[simp] theorem starDist_none_some (S : StarTreeData n) (j : Fin n) :\n    starDist S none (some j) = S.weight j := rfl\n\n@[simp] theorem starDist_some_none (S : StarTreeData n) (i : Fin n) :\n    starDist S (some i) none = S.weight i := rfl\n\ntheorem starDist_some_some (S : StarTreeData n) (i j : Fin n) :\n    starDist S (some i) (some j) = if i = j then 0 else S.weight i + S.weight j := rfl\n\ntheorem starDist_self (S : StarTreeData n) (v : Option (Fin n)) :\n    starDist S v v = 0 := by\n  cases v with\n  | none => rfl\n  | some i => simp [starDist]\n\ntheorem starDist_symm (S : StarTreeData n) (u v : Option (Fin n)) :\n    starDist S u v = starDist S v u := by\n  cases u with\n  | none => cases v with | none => rfl | some j => rfl\n  | some i => cases v with\n    | none => rfl\n    | some j =>\n      simp only [starDist_some_some]\n      by_cases h : i = j\n      \u00b7 subst h; simp\n      \u00b7 simp [h, Ne.symm h]; omega\n\ntheorem starDist_pos (S : StarTreeData n) (u v : Option (Fin n)) (huv : u \u2260 v) :\n    0 < starDist S u v := by\n  rcases u with ( _ | i ) <;> rcases v with ( _ | j ) <;> norm_num [ starDist ] at *;\n  \u00b7 exact S.weight_pos j;\n  \u00b7 exact S.weight_pos i;\n  \u00b7 split_ifs ; linarith [ S.weight_pos i, S.weight_pos j ]\n\ntheorem starDist_triangle (S : StarTreeData n) (u v w : Option (Fin n)) :\n    starDist S u w \u2264 starDist S u v + starDist S v w := by\n  cases u <;> cases v <;> cases w <;> simp +decide [ starDist ];\n  \u00b7 grind;\n  \u00b7 split_ifs <;> simp +decide [ *, add_comm ];\n  \u00b7 grind;\n  \u00b7 split_ifs <;> simp_all +arith +decide\n\n/-! ## \u00a73. Four-Point Condition -/\n\ndef FourPointCondition {\u03b1 : Type*} (d : \u03b1 \u2192 \u03b1 \u2192 \u2115) : Prop :=\n  \u2200 x y z w, d x y + d z w \u2264 max (d x z + d y w) (d x w + d y z)\n\ntheorem starDist_fourPoint (S : StarTreeData n) :\n    FourPointCondition (starDist S) := by\n  intro x y z w; rcases x with ( _ | x ) <;> rcases y with ( _ | y ) <;> rcases z with ( _ | z ) <;> rcases w with ( _ | w ) <;> simp +decide [ * ] ;\n  all_goals simp +decide [ starDist_some_some, add_comm ];\n  grind;\n  grind;\n  \u00b7 grind;\n  \u00b7 grind;\n  \u00b7 lia;\n  \u00b7 lia;\n  \u00b7 grind\n\n/-! ## \u00a74. Star Metric Property -/\n\ndef IsStarMetric {\u03b1 : Type*} (d : \u03b1 \u2192 \u03b1 \u2192 \u2115) (c : \u03b1) : Prop :=\n  \u2200 u v, u \u2260 v \u2192 u \u2260 c \u2192 v \u2260 c \u2192 d u v = d u c + d c v\n\ntheorem starDist_isStarMetric (S : StarTreeData n) :\n    IsStarMetric (starDist S) none := by\n  intro u v huv hu hv\n  match u, v with\n  | some i, some j =>\n    have hij : i \u2260 j := fun h => huv (congr_arg some h)\n    simp [starDist_some_some, hij]\n\ndef Separated {\u03b1 : Type*} (d : \u03b1 \u2192 \u03b1 \u2192 \u2115) : Prop :=\n  \u2200 u v, u \u2260 v \u2192 \u2203 w, d u w \u2260 d v w\n\ntheorem starDist_separated (S : StarTreeData n) :\n    Separated (starDist S) := by\n  intro u v huv\n  use u\n  simp [huv];\n  exact ne_of_lt ( by rw [ starDist_self ] ; exact starDist_pos S _ _ huv.symm )\n\n/-! ## \u00a75. Finite Metric Structure -/\n\nstructure FiniteMetricOn (\u03b1 : Type*) where\n  dist : \u03b1 \u2192 \u03b1 \u2192 \u2115\n  dist_self : \u2200 v, dist v v = 0\n  dist_symm : \u2200 u v, dist u v = dist v u\n  dist_triangle : \u2200 u v w, dist u w \u2264 dist u v + dist v w\n  dist_pos : \u2200 u v, u \u2260 v \u2192 0 < dist u v\n\ndef starTreeMetric (S : StarTreeData n) : FiniteMetricOn (Option (Fin n)) where\n  dist := starDist S\n  dist_self := starDist_self S\n  dist_symm := starDist_symm S\n  dist_triangle := starDist_triangle S\n  dist_pos := starDist_pos S\n\n/-! ## \u00a76. Admissible Radon Data -/\n\nstructure AdmissibleRadonStar (n : \u2115) where\n  metric : FiniteMetricOn (Option (Fin n))\n  star_center : IsStarMetric metric.dist none\n  separated : Separated metric.dist\n  fourPoint : FourPointCondition metric.dist\n\ntheorem starTree_radonData_admissible (S : StarTreeData n) :\n    \u2203 A : AdmissibleRadonStar n, A.metric.dist = starDist S :=\n  \u27e8{ metric := starTreeMetric S\n     star_center := starDist_isStarMetric S\n     separated := starDist_separated S\n     fourPoint := starDist_fourPoint S }, rfl\u27e9\n\n/-! ## \u00a77. Tropical Semimodule Operations -/\n\ndef tropicalAdd {\u03b1 : Type*} (d\u2081 d\u2082 : \u03b1 \u2192 \u03b1 \u2192 \u2115) : \u03b1 \u2192 \u03b1 \u2192 \u2115 :=\n  fun i j => min (d\u2081 i j) (d\u2082 i j)\n\ndef tropicalSmul {\u03b1 : Type*} (c : \u2115) (d : \u03b1 \u2192 \u03b1 \u2192 \u2115) : \u03b1 \u2192 \u03b1 \u2192 \u2115 :=\n  fun i j => c + d i j\n\ntheorem tropicalAdd_comm {\u03b1 : Type*} (d\u2081 d\u2082 : \u03b1 \u2192 \u03b1 \u2192 \u2115) :\n    tropicalAdd d\u2081 d\u2082 = tropicalAdd d\u2082 d\u2081 := by\n  ext i j; simp [tropicalAdd, min_comm]\n\ntheorem tropicalAdd_assoc {\u03b1 : Type*} (d\u2081 d\u2082 d\u2083 : \u03b1 \u2192 \u03b1 \u2192 \u2115) :\n    tropicalAdd (tropicalAdd d\u2081 d\u2082) d\u2083 = tropicalAdd d\u2081 (tropicalAdd d\u2082 d\u2083) := by\n  ext i j; simp [tropicalAdd, min_assoc]\n\ntheorem tropicalAdd_idem {\u03b1 : Type*} (d : \u03b1 \u2192 \u03b1 \u2192 \u2115) :\n    tropicalAdd d d = d := by ext i j; simp [tropicalAdd]\n\ntheorem tropicalSmul_distributes {\u03b1 : Type*} (c : \u2115) (d\u2081 d\u2082 : \u03b1 \u2192 \u03b1 \u2192 \u2115) :\n    tropicalSmul c (tropicalAdd d\u2081 d\u2082) =\n    tropicalAdd (tropicalSmul c d\u2081) (tropicalSmul c d\u2082) := by\n  ext i j; simp only [tropicalSmul, tropicalAdd]\n  exact (Nat.add_min_add_left c (d\u2081 i j) (d\u2082 i j)).symm\n\n/-! ## \u00a78. Faithfulness -/\n\ndef tropicalRadonData (S : StarTreeData n) :\n    Option (Fin n) \u2192 Option (Fin n) \u2192 \u2115 := starDist S\n\n/-- **Faithfulness**: distance matrix uniquely determines edge weights. -/\ntheorem starDist_determines_weights (S\u2081 S\u2082 : StarTreeData n)\n    (h : starDist S\u2081 = starDist S\u2082) : S\u2081.weight = S\u2082.weight := by\n  ext i\n  have := congr_fun (congr_fun h none) (some i)\n  simpa using this\n\ntheorem tropicalRadon_injective :\n    Function.Injective (fun S : StarTreeData n => tropicalRadonData S) := by\n  intro S\u2081 S\u2082 h\n  have hw := starDist_determines_weights S\u2081 S\u2082 h\n  cases S\u2081; cases S\u2082; simp at hw; subst hw; rfl\n\n/-! ## \u00a79. Reconstruction -/\n\ndef reconstructWeights (d : Option (Fin n) \u2192 Option (Fin n) \u2192 \u2115) : Fin n \u2192 \u2115 :=\n  fun i => d none (some i)\n\ntheorem reconstructWeights_correct (S : StarTreeData n) :\n    reconstructWeights (starDist S) = S.weight := by\n  ext i; simp [reconstructWeights]\n\n/-\n**Certified reconstruction**: a star metric is realized by the reconstructed tree.\n-/\ntheorem starTree_reconstruction_certified\n    (d : Option (Fin n) \u2192 Option (Fin n) \u2192 \u2115)\n    (hself : \u2200 v, d v v = 0)\n    (hsymm : \u2200 u v, d u v = d v u)\n    (hpos : \u2200 i : Fin n, 0 < d none (some i))\n    (hstar : IsStarMetric d none) :\n    starDist (\u27e8reconstructWeights d, hpos\u27e9 : StarTreeData n) = d := by\n  funext u v;\n  cases u <;> cases v <;> simp_all +decide [ IsStarMetric ];\n  \u00b7 rfl;\n  \u00b7 rfl;\n  \u00b7 unfold starDist; aesop;\n\n/-! ## \u00a710. Uniqueness -/\n\ntheorem minimal_realization_unique (S\u2081 S\u2082 : StarTreeData n)\n    (h : \u2200 u v, starDist S\u2081 u v = starDist S\u2082 u v) :\n    S\u2081.weight = S\u2082.weight := by\n  ext i; have := h none (some i); simpa using this\n\n/-! ## \u00a711. Main Duality Theorem -/\n\ntheorem tropicalRadon_star_duality :\n    (\u2200 (S : StarTreeData n),\n      (\u2200 v, starDist S v v = 0) \u2227\n      (\u2200 u v, starDist S u v = starDist S v u) \u2227\n      IsStarMetric (starDist S) none) \u2227\n    (\u2200 (S\u2081 S\u2082 : StarTreeData n),\n      starDist S\u2081 = starDist S\u2082 \u2192 S\u2081.weight = S\u2082.weight) \u2227\n    (\u2200 (S : StarTreeData n),\n      reconstructWeights (starDist S) = S.weight) :=\n  \u27e8fun S => \u27e8starDist_self S, starDist_symm S, starDist_isStarMetric S\u27e9,\n   starDist_determines_weights, reconstructWeights_correct\u27e9\n\n/-! ## \u00a712. Morphisms -/\n\nstructure StarTreeMorphism (S\u2081 S\u2082 : StarTreeData n) where\n  leafMap : Fin n \u2192 Fin n\n  injective : Function.Injective leafMap\n  weight_eq : \u2200 i, S\u2082.weight (leafMap i) = S\u2081.weight i\n\ndef StarTreeMorphism.vertexMap {S\u2081 S\u2082 : StarTreeData n}\n    (f : StarTreeMorphism S\u2081 S\u2082) : Option (Fin n) \u2192 Option (Fin n)\n  | none => none\n  | some i => some (f.leafMap i)\n\ntheorem StarTreeMorphism.preserves_dist {S\u2081 S\u2082 : StarTreeData n}\n    (f : StarTreeMorphism S\u2081 S\u2082) (u v : Option (Fin n)) :\n    starDist S\u2082 (f.vertexMap u) (f.vertexMap v) = starDist S\u2081 u v := by\n  rcases u with ( _ | u ) <;> rcases v with ( _ | v );\n  \u00b7 exact?;\n  \u00b7 exact f.weight_eq v;\n  \u00b7 exact f.weight_eq u;\n  \u00b7 by_cases h : u = v <;> simp_all +decide [ StarTreeMorphism.vertexMap ];\n    \u00b7 unfold starDist; aesop;\n    \u00b7 rw [ starDist_some_some, starDist_some_some ];\n      rw [ if_neg ( f.injective.ne h ), if_neg h, f.weight_eq u, f.weight_eq v ]\n\ntheorem morphism_faithful {S\u2081 S\u2082 : StarTreeData n}\n    (f g : StarTreeMorphism S\u2081 S\u2082)\n    (h : \u2200 v, f.vertexMap v = g.vertexMap v) :\n    f.leafMap = g.leafMap := by\n  ext i\n  have hi := h (some i)\n  simp only [StarTreeMorphism.vertexMap, Option.some.injEq] at hi\n  exact congrArg Fin.val hi\n\n/-! ## \u00a713. Sheaf Properties -/\n\ndef TropicalGluing {\u03b1 : Type*} (d : \u03b1 \u2192 \u03b1 \u2192 \u2115) : Prop :=\n  \u2200 u v w, d u w \u2264 d u v + d v w\n\ntheorem starDist_gluing (S : StarTreeData n) :\n    TropicalGluing (starDist S) := starDist_triangle S\n\ntheorem starDist_root_mediator (S : StarTreeData n)\n    (i j : Fin n) (hij : i \u2260 j) :\n    starDist S (some i) (some j) =\n    starDist S (some i) none + starDist S none (some j) := by\n  simp [starDist_some_some, hij]\n\n/-! ## \u00a714. Restriction Maps -/\n\ndef restrictStarDist (S : StarTreeData n) {k : \u2115} (f : Fin k \u2192 Fin n) :\n    Option (Fin k) \u2192 Option (Fin k) \u2192 \u2115\n  | none, none => 0\n  | none, some j => S.weight (f j)\n  | some i, none => S.weight (f i)\n  | some i, some j => if i = j then 0 else S.weight (f i) + S.weight (f j)\n\ntheorem restrictStarDist_self (S : StarTreeData n) {k : \u2115} (f : Fin k \u2192 Fin n)\n    (v : Option (Fin k)) : restrictStarDist S f v v = 0 := by\n  cases v <;> simp [restrictStarDist]\n\ntheorem restrict_fourPoint {\u03b1 \u03b2 : Type*} {d : \u03b1 \u2192 \u03b1 \u2192 \u2115}\n    (hd : FourPointCondition d) (f : \u03b2 \u2192 \u03b1) :\n    FourPointCondition (fun i j => d (f i) (f j)) :=\n  fun x y z w => hd (f x) (f y) (f z) (f w)\n\n/-! ## \u00a715. Concrete Examples -/\n\nprivate def exStar3 : StarTreeData 3 :=\n  \u27e8![2, 5, 3], fun i => by fin_cases i <;> simp\u27e9\n\nexample : starDist exStar3 none (some 0) = 2 := by native_decide\nexample : starDist exStar3 (some 0) (some 1) = 7 := by native_decide\nexample : starDist exStar3 (some 0) (some 2) = 5 := by native_decide\nexample : starDist exStar3 (some 1) (some 2) = 8 := by native_decide\nexample : starDist exStar3 (some 0) (some 0) = 0 := by native_decide\nexample : reconstructWeights (starDist exStar3) = ![2, 5, 3] := by native_decide\n\n/-- Computational verification of four-point condition for the example. -/\nexample : FourPointCondition (starDist exStar3) := by\n  unfold FourPointCondition; decide\n\nend TropicalRadonGraphDuality",
+    "modules": {
+      "demo": "\"\"\"\nTropical Radon Transform Duality: Demonstrations and Visualizations\n\nThis module demonstrates the tropical Radon transform for star trees,\nincluding distance computation, four-point condition verification,\ncertified reconstruction, and visualization of the duality.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom itertools import combinations, product\nfrom typing import List, Tuple, Optional\nimport json\nimport base64\nfrom io import BytesIO\n\n\n# ============================================================\n# \u00a71. Tropical Semiring Operations\n# ============================================================\n\ndef tropical_add(a: float, b: float) -> float:\n    \"\"\"Tropical addition: min(a, b)\"\"\"\n    return min(a, b)\n\ndef tropical_mul(a: float, b: float) -> float:\n    \"\"\"Tropical multiplication: a + b\"\"\"\n    return a + b\n\ndef tropical_matrix_add(A: np.ndarray, B: np.ndarray) -> np.ndarray:\n    \"\"\"Pointwise tropical addition (min) of matrices.\"\"\"\n    return np.minimum(A, B)\n\ndef tropical_scalar_mul(c: float, A: np.ndarray) -> np.ndarray:\n    \"\"\"Tropical scalar multiplication: add constant to all entries.\"\"\"\n    return c + A\n\n\n# ============================================================\n# \u00a72. Star Tree Distance Function\n# ============================================================\n\nclass StarTree:\n    \"\"\"A weighted star tree with n leaves and a root.\n    \n    Vertices: root (index 0), leaves (indices 1..n)\n    \"\"\"\n    \n    def __init__(self, weights: List[int]):\n        \"\"\"Create a star tree with given edge weights.\n        \n        Args:\n            weights: List of positive edge weights [w_1, ..., w_n]\n        \"\"\"\n        assert all(w > 0 for w in weights), \"All weights must be positive\"\n        self.weights = list(weights)\n        self.n = len(weights)\n    \n    def distance(self, u: int, v: int) -> int:\n        \"\"\"Compute distance between vertices u and v.\n        \n        Vertex 0 is the root; vertices 1..n are leaves.\n        \"\"\"\n        if u == v:\n            return 0\n        if u == 0:\n            return self.weights[v - 1]\n        if v == 0:\n            return self.weights[u - 1]\n        return self.weights[u - 1] + self.weights[v - 1]\n    \n    def distance_matrix(self) -> np.ndarray:\n        \"\"\"Compute the full (n+1) \u00d7 (n+1) distance matrix.\"\"\"\n        m = self.n + 1\n        D = np.zeros((m, m), dtype=int)\n        for i in range(m):\n            for j in range(m):\n                D[i, j] = self.distance(i, j)\n        return D\n    \n    def __repr__(self):\n        return f\"StarTree(weights={self.weights})\"\n\n\n# ============================================================\n# \u00a73. Four-Point Condition Verification\n# ============================================================\n\ndef check_four_point(D: np.ndarray) -> Tuple[bool, Optional[Tuple]]:\n    \"\"\"Check the four-point condition for a distance matrix.\n    \n    Returns (True, None) if condition holds, or\n    (False, (x, y, z, w, violation_amount)) for first failure.\n    \"\"\"\n    m = D.shape[0]\n    for x, y, z, w in product(range(m), repeat=4):\n        s1 = D[x, y] + D[z, w]\n        s2 = D[x, z] + D[y, w]\n        s3 = D[x, w] + D[y, z]\n        if s1 > max(s2, s3):\n            return False, (x, y, z, w, s1 - max(s2, s3))\n    return True, None\n\n\ndef check_star_metric(D: np.ndarray, center: int = 0) -> bool:\n    \"\"\"Check if D is a star metric with given center.\"\"\"\n    m = D.shape[0]\n    for u in range(m):\n        for v in range(m):\n            if u != v and u != center and v != center:\n                if D[u, v] != D[u, center] + D[center, v]:\n                    return False\n    return True\n\n\ndef check_separation(D: np.ndarray) -> bool:\n    \"\"\"Check that distinct vertices have distinct distance rows.\"\"\"\n    m = D.shape[0]\n    for u in range(m):\n        for v in range(u + 1, m):\n            if np.array_equal(D[u], D[v]):\n                return False\n    return True\n\n\n# ============================================================\n# \u00a74. Reconstruction\n# ============================================================\n\ndef reconstruct_star_weights(D: np.ndarray) -> List[int]:\n    \"\"\"Reconstruct star tree weights from a distance matrix.\n    \n    The weight of edge i is D[0, i+1] (distance from root to leaf i).\n    \"\"\"\n    n = D.shape[0] - 1\n    return [int(D[0, i + 1]) for i in range(n)]\n\n\ndef verify_reconstruction(tree: StarTree) -> bool:\n    \"\"\"Verify that reconstruction recovers the original weights.\"\"\"\n    D = tree.distance_matrix()\n    recovered = reconstruct_star_weights(D)\n    return recovered == tree.weights\n\n\n# ============================================================\n# \u00a75. Tropical Semimodule Operations\n# ============================================================\n\ndef demonstrate_tropical_semimodule():\n    \"\"\"Demonstrate tropical semimodule properties.\"\"\"\n    print(\"=\" * 60)\n    print(\"Tropical Semimodule Operations\")\n    print(\"=\" * 60)\n    \n    T1 = StarTree([2, 5, 3])\n    T2 = StarTree([4, 1, 6])\n    \n    D1 = T1.distance_matrix()\n    D2 = T2.distance_matrix()\n    \n    print(f\"\\nTree 1: {T1}\")\n    print(f\"Distance matrix:\\n{D1}\\n\")\n    \n    print(f\"Tree 2: {T2}\")\n    print(f\"Distance matrix:\\n{D2}\\n\")\n    \n    # Tropical addition (pointwise min)\n    D_add = tropical_matrix_add(D1, D2)\n    print(f\"Tropical addition (pointwise min):\\n{D_add}\\n\")\n    \n    # Commutativity\n    D_add_rev = tropical_matrix_add(D2, D1)\n    print(f\"Commutativity: D1\u2295D2 == D2\u2295D1? {np.array_equal(D_add, D_add_rev)}\")\n    \n    # Idempotency\n    D_idem = tropical_matrix_add(D1, D1)\n    print(f\"Idempotency: D1\u2295D1 == D1? {np.array_equal(D_idem, D1)}\")\n    \n    # Scalar multiplication\n    c = 3\n    D_smul = tropical_scalar_mul(c, D1)\n    print(f\"\\nTropical scalar multiplication (c={c}):\\n{D_smul}\")\n    \n    # Distributivity\n    lhs = tropical_scalar_mul(c, tropical_matrix_add(D1, D2))\n    rhs = tropical_matrix_add(tropical_scalar_mul(c, D1), tropical_scalar_mul(c, D2))\n    print(f\"\\nDistributivity: c\u2297(D1\u2295D2) == (c\u2297D1)\u2295(c\u2297D2)? {np.array_equal(lhs, rhs)}\")\n\n\n# ============================================================\n# \u00a76. Complete Duality Demonstration\n# ============================================================\n\ndef demonstrate_duality():\n    \"\"\"Demonstrate the complete tropical Radon duality for star trees.\"\"\"\n    print(\"=\" * 60)\n    print(\"Tropical Radon Duality for Star Trees\")\n    print(\"=\" * 60)\n    \n    # Create star trees\n    trees = [\n        StarTree([2, 5, 3]),\n        StarTree([1, 1, 1]),\n        StarTree([10, 20, 30, 40]),\n        StarTree([7]),\n    ]\n    \n    for tree in trees:\n        D = tree.distance_matrix()\n        n = tree.n\n        \n        print(f\"\\n--- {tree} ---\")\n        print(f\"Distance matrix ({n+1}\u00d7{n+1}):\")\n        print(D)\n        \n        # Verify metric properties\n        print(f\"  Self-distance = 0: {all(D[i,i] == 0 for i in range(n+1))}\")\n        print(f\"  Symmetric: {np.array_equal(D, D.T)}\")\n        \n        # Triangle inequality\n        tri_ok = True\n        for u, v, w in product(range(n+1), repeat=3):\n            if D[u, w] > D[u, v] + D[v, w]:\n                tri_ok = False\n                break\n        print(f\"  Triangle inequality: {tri_ok}\")\n        \n        # Positive distances\n        pos_ok = all(D[u, v] > 0 for u in range(n+1) for v in range(n+1) if u != v)\n        print(f\"  Positive distances: {pos_ok}\")\n        \n        # Four-point condition\n        fp_ok, _ = check_four_point(D)\n        print(f\"  Four-point condition: {fp_ok}\")\n        \n        # Star metric\n        star_ok = check_star_metric(D, center=0)\n        print(f\"  Star metric (center=0): {star_ok}\")\n        \n        # Separation\n        sep_ok = check_separation(D)\n        print(f\"  Separated: {sep_ok}\")\n        \n        # Reconstruction\n        recovered = reconstruct_star_weights(D)\n        print(f\"  Reconstruction: {recovered}\")\n        print(f\"  Correct: {recovered == tree.weights}\")\n    \n    # Demonstrate faithfulness\n    print(\"\\n--- Faithfulness ---\")\n    T1 = StarTree([2, 5, 3])\n    T2 = StarTree([2, 5, 4])  # different last weight\n    D1, D2 = T1.distance_matrix(), T2.distance_matrix()\n    print(f\"T1: {T1.weights}, T2: {T2.weights}\")\n    print(f\"Same distance matrix? {np.array_equal(D1, D2)}\")\n    print(f\"(Different trees always give different matrices)\")\n\n\n# ============================================================\n# \u00a77. Visualization\n# ============================================================\n\ndef create_star_tree_visualization():\n    \"\"\"Create a visualization of a star tree and its distance matrix.\"\"\"\n    fig, axes = plt.subplots(1, 3, figsize=(15, 5))\n    \n    # Tree visualization\n    ax = axes[0]\n    tree = StarTree([2, 5, 3])\n    n = tree.n\n    \n    # Draw root at center\n    ax.plot(0, 0, 'ko', markersize=15, zorder=5)\n    ax.annotate('Root', (0, 0), textcoords=\"offset points\", \n                xytext=(0, -20), ha='center', fontsize=10, fontweight='bold')\n    \n    # Draw leaves at equal angles\n    angles = np.linspace(0, 2*np.pi, n, endpoint=False) - np.pi/2\n    colors = ['#e74c3c', '#3498db', '#2ecc71']\n    \n    for i in range(n):\n        r = tree.weights[i] * 0.3  # scale for visualization\n        x = r * np.cos(angles[i])\n        y = r * np.sin(angles[i])\n        \n        # Draw edge\n        ax.plot([0, x], [0, y], '-', color=colors[i], linewidth=2)\n        \n        # Draw leaf\n        ax.plot(x, y, 'o', color=colors[i], markersize=12, zorder=5)\n        ax.annotate(f'Leaf {i}\\n(w={tree.weights[i]})', (x, y), \n                   textcoords=\"offset points\", xytext=(15, 5), fontsize=9)\n        \n        # Edge weight label\n        mx, my = x/2, y/2\n        ax.annotate(f'{tree.weights[i]}', (mx, my), \n                   textcoords=\"offset points\", xytext=(10, 5), \n                   fontsize=11, fontweight='bold', color=colors[i])\n    \n    ax.set_xlim(-2.5, 2.5)\n    ax.set_ylim(-2, 2.5)\n    ax.set_aspect('equal')\n    ax.set_title('Star Tree\\n(Geometric Object)', fontsize=12, fontweight='bold')\n    ax.axis('off')\n    \n    # Arrow\n    axes[1].annotate('', xy=(0.8, 0.5), xytext=(0.2, 0.5),\n                    arrowprops=dict(arrowstyle='->', lw=3, color='#8e44ad'))\n    axes[1].text(0.5, 0.65, 'Tropical Radon\\nTransform', ha='center', \n                fontsize=11, fontweight='bold', color='#8e44ad')\n    axes[1].text(0.5, 0.35, 'S \u21a6 d_S', ha='center', \n                fontsize=13, style='italic', color='#8e44ad')\n    axes[1].axis('off')\n    axes[1].set_xlim(0, 1)\n    axes[1].set_ylim(0, 1)\n    \n    # Distance matrix\n    ax = axes[2]\n    D = tree.distance_matrix()\n    labels = ['Root', 'L0', 'L1', 'L2']\n    \n    im = ax.imshow(D, cmap='YlOrRd', aspect='equal')\n    ax.set_xticks(range(4))\n    ax.set_yticks(range(4))\n    ax.set_xticklabels(labels, fontsize=10)\n    ax.set_yticklabels(labels, fontsize=10)\n    \n    for i in range(4):\n        for j in range(4):\n            ax.text(j, i, str(D[i, j]), ha='center', va='center', \n                   fontsize=14, fontweight='bold',\n                   color='white' if D[i, j] > 4 else 'black')\n    \n    ax.set_title('Distance Matrix\\n(Algebraic Data)', fontsize=12, fontweight='bold')\n    plt.colorbar(im, ax=ax, shrink=0.8)\n    \n    plt.suptitle('Tropical Radon Duality: Star Tree \u2194 Distance Matrix', \n                fontsize=14, fontweight='bold', y=1.02)\n    plt.tight_layout()\n    \n    buf = BytesIO()\n    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    buf.seek(0)\n    plt.savefig('star_tree_duality.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    \n    return base64.b64encode(buf.read()).decode()\n\n\ndef create_four_point_visualization():\n    \"\"\"Visualize the four-point condition.\"\"\"\n    fig, axes = plt.subplots(1, 2, figsize=(12, 5))\n    \n    tree = StarTree([2, 5, 3, 4])\n    D = tree.distance_matrix()\n    \n    # Show all three pairwise sums for vertices 1,2,3,4 (leaves)\n    leaves = [1, 2, 3, 4]\n    sums = []\n    labels_list = []\n    for perm in [(0,1,2,3), (0,2,1,3), (0,3,1,2)]:\n        i, j, k, l = [leaves[p] for p in perm]\n        s = D[i, j] + D[k, l]\n        sums.append(s)\n        labels_list.append(f'd({i},{j})+d({k},{l})')\n    \n    ax = axes[0]\n    colors_bar = ['#e74c3c', '#3498db', '#2ecc71']\n    bars = ax.bar(range(3), sums, color=colors_bar, edgecolor='black', linewidth=1.5)\n    ax.set_xticks(range(3))\n    ax.set_xticklabels(labels_list, fontsize=9)\n    ax.set_ylabel('Sum Value', fontsize=11)\n    ax.set_title('Four-Point Condition\\n(All three sums are equal for star trees)', \n                fontsize=12, fontweight='bold')\n    \n    for bar, val in zip(bars, sums):\n        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.3,\n               str(val), ha='center', fontsize=13, fontweight='bold')\n    \n    ax.axhline(y=max(sums), color='gray', linestyle='--', alpha=0.5)\n    \n    # Reconstruction roundtrip\n    ax = axes[1]\n    n_trials = 20\n    max_weight = 50\n    errors = []\n    \n    for _ in range(n_trials):\n        weights = [np.random.randint(1, max_weight + 1) for _ in range(5)]\n        T = StarTree(weights)\n        D_test = T.distance_matrix()\n        recovered = reconstruct_star_weights(D_test)\n        error = sum(abs(w - r) for w, r in zip(weights, recovered))\n        errors.append(error)\n    \n    ax.bar(range(n_trials), errors, color='#2ecc71', edgecolor='black')\n    ax.set_xlabel('Trial', fontsize=11)\n    ax.set_ylabel('Reconstruction Error', fontsize=11)\n    ax.set_title(f'Reconstruction Accuracy\\n({n_trials} random star trees, all errors = 0)', \n                fontsize=12, fontweight='bold')\n    ax.set_ylim(-0.5, 2)\n    \n    plt.tight_layout()\n    buf = BytesIO()\n    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    buf.seek(0)\n    plt.savefig('four_point_reconstruction.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    \n    return base64.b64encode(buf.read()).decode()\n\n\n# ============================================================\n# \u00a78. Main Demo\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Tropical Radon Transform Duality \u2014 Demo\\n\")\n    \n    # Run demonstrations\n    demonstrate_duality()\n    print()\n    demonstrate_tropical_semimodule()\n    \n    # Create visualizations\n    print(\"\\n\\nGenerating visualizations...\")\n    img1 = create_star_tree_visualization()\n    img2 = create_four_point_visualization()\n    print(f\"Saved: star_tree_duality.png\")\n    print(f\"Saved: four_point_reconstruction.png\")\n    \n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demonstrations completed successfully!\")\n    print(\"=\" * 60)\n"
+    },
+    "date": "2026-05-12T19:28:57Z",
+    "exp_id": "d6b0348c"
   },
   "algebracryptographypythagorean_tropical_height_rig.json": {
     "title": "Tropical Height Rigidity for Berggren Tree Valuations",
@@ -7301,7 +7351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T20:31:11Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "algebraeml_turingmyhill_reconstruction_via_closure",
@@ -7310,7 +7360,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:15:21Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "berggrenchronometric_reversible_automata_via_primi",
@@ -7319,7 +7369,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-10T21:26:08Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "algebraeml_morita_equivalence_via_closure_semimodu",
@@ -7328,7 +7378,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T21:28:58Z",
-      "hue": 179
+      "hue": 272
     },
     {
       "id": "algebraspeculative_fixed_point_logic_via_proof_sem",
@@ -7337,7 +7387,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-10T23:00:52Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebramachinelearning_operadic_semiring_semantics",
@@ -7346,7 +7396,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T23:03:32Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraeml_lefschetz_trace_semantics_via_closure_e",
@@ -7364,7 +7414,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-10T23:03:59Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraspeculative_longest_common_valued_prefix_ul",
@@ -7382,7 +7432,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-10T23:04:27Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraspeculative_prime_congruence_semantics_for_",
@@ -7391,7 +7441,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-10T23:04:40Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "algebraeml_renormalization_semantics_via_closure_f",
@@ -7400,7 +7450,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T02:04:48Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "berggren_matrix_groupoid_with_sl3_semantics_and_pr",
@@ -7409,7 +7459,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T02:05:02Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraeml_congruence_quotient_reconstruction_via_",
@@ -7418,7 +7468,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T02:05:18Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_dynam",
@@ -7427,7 +7477,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T02:05:38Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebramachinelearning_coalgebraic_myhillnerode_se",
@@ -7436,7 +7486,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T02:05:52Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebraspeculative_cobham_invariance_for_oracle_tr",
@@ -7445,7 +7495,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-11T02:06:07Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebraeml_ruelle_transfer_semantics_via_closure_c",
@@ -7454,7 +7504,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-11T04:06:02Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "logiccomputation_temporal_fixed_point_semantics_vi",
@@ -7463,7 +7513,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T04:06:15Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "machinelearningspeculative_operadic_diagonalizatio",
@@ -7472,7 +7522,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T04:06:27Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "cryptographypythagorean_isogeny_free_trapdoors_via",
@@ -7481,7 +7531,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T04:06:34Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebratropical_neural_representation_duality_via_",
@@ -7490,7 +7540,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T07:32:29Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "algebraeml_thermodynamic_formalism_via_tropical_pe",
@@ -7499,7 +7549,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T07:32:43Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebramachinelearning_ultrametric_myhillnerode_di",
@@ -7526,7 +7576,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-11T07:33:31Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebracryptography_tropical_min_plus_trapdoor_dua",
@@ -7544,7 +7594,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T07:33:54Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebraspeculative_stone_duality_for_ultrametric_p",
@@ -7553,7 +7603,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T09:35:52Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "tropical_cryptography_breakthrough_bridge",
@@ -7571,7 +7621,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:19Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebraphysicseml_tropical_holographic_reconstruct",
@@ -7580,7 +7630,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T09:36:32Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "algebralogiccomputation_temporal_stonebirkhoff_dua",
@@ -7589,7 +7639,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T09:36:49Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebramachinelearninglogic_operadic_tropical_vc_d",
@@ -7598,7 +7648,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T11:36:11Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebrapythagoreangeometry_gravitational_tropical_",
@@ -7607,7 +7657,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:27Z",
-      "hue": 91
+      "hue": 134
     },
     {
       "id": "algebraemltropical_non_archimedean_information_dua",
@@ -7616,7 +7666,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T11:36:40Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraspeculativecryptography_prime_congruence_du",
@@ -7625,7 +7675,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T11:36:54Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "algebraeml_spectral_tropical_langlands_corresponde",
@@ -7634,7 +7684,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T12:36:46Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "algebraspeculativecryptography_prime_stone_duality",
@@ -7643,7 +7693,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T12:37:01Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "algebraspeculativecomputation_stonepriestley_duali",
@@ -7652,7 +7702,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T12:37:16Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_tropical_ratedistortion_tra",
@@ -7661,7 +7711,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:35:26Z",
-      "hue": 95
+      "hue": 134
     },
     {
       "id": "machinelearningspeculative_ultrametric_proof_compr",
@@ -7670,7 +7720,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T13:35:42Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebrapythagoreancryptography_berggren_expander_h",
@@ -7679,7 +7729,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T13:36:13Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebralogicspeculative_temporal_prime_congruence_",
@@ -7688,7 +7738,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T14:36:52Z",
-      "hue": 100
+      "hue": 92
     },
     {
       "id": "algebramachinelearningspeculative_tropical_barron_",
@@ -7697,7 +7747,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T16:18:15Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_de_sitter_tropical_entropic_c_th",
@@ -7706,7 +7756,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-11T16:19:06Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebralogicmachinelearning_non_archimedean_lwenhe",
@@ -7715,7 +7765,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T16:19:23Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebracryptographypythagorean_berggren_lattice_re",
@@ -7724,7 +7774,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T16:19:44Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebraemltropical_tropical_tannaka_reconstruction",
@@ -7733,7 +7783,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-11T17:36:32Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraemlmachinelearning_tropical_information_bot",
@@ -7742,7 +7792,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T18:03:24Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_compr",
@@ -7751,7 +7801,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T18:03:42Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_hecke_trapdoo",
@@ -7760,7 +7810,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-11T18:48:13Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_gdel_semantics_via_p",
@@ -7769,7 +7819,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-11T19:05:38Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebra_breakthrough_discovery",
@@ -7778,7 +7828,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-11T19:08:26Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebrageometrycryptography_berggren_voronoi_duali",
@@ -7796,7 +7846,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-11T23:34:25Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebratropicalcomputation_tropical_automata_minim",
@@ -7805,7 +7855,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-11T23:34:43Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebramachinelearningspeculative_prime_congruence",
@@ -7814,7 +7864,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-11T23:42:04Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemlcryptography_tropical_pontryaginmellin_d",
@@ -7823,7 +7873,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T00:32:18Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebrapythagoreangeometry_tropical_gravitational_",
@@ -7832,7 +7882,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:34:54Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "algebratropicalmachinelearning_tropical_represente",
@@ -7841,7 +7891,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T00:35:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_satake_skeleton_v",
@@ -7850,7 +7900,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T00:35:30Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemllogic_idempotent_stone_completeness_via_",
@@ -7859,7 +7909,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T00:35:53Z",
-      "hue": 179
+      "hue": 92
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_planc",
@@ -7877,7 +7927,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T01:05:45Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraemlcomputation_idempotent_holographic_reali",
@@ -7886,7 +7936,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T02:01:36Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebratropicalcryptography_tropical_choquetradon_",
@@ -7904,7 +7954,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:04:32Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_fou",
@@ -7913,7 +7963,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T03:04:48Z",
-      "hue": 270
+      "hue": 314
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_geome",
@@ -7922,7 +7972,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T03:05:01Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraspeculativemachinelearning_tropical_valuati",
@@ -7931,7 +7981,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T03:05:17Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "algebraemlphysics_idempotent_gaugecurvature_dualit",
@@ -7940,7 +7990,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T04:35:50Z",
-      "hue": 90
+      "hue": 89
     },
     {
       "id": "algebralogicmachinelearning_ultrametric_proof_shea",
@@ -7949,7 +7999,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T04:36:07Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalcryptography_tropical_isogeny_rigid",
@@ -7958,7 +8008,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T04:36:24Z",
-      "hue": 179
+      "hue": 270
     },
     {
       "id": "algebralogiccomputation_temporal_fixed_point_duali",
@@ -7967,7 +8017,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T05:35:56Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "algebraemlphysics_idempotent_blackwellthermodynami",
@@ -7976,7 +8026,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T05:36:13Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraemlphysics_idempotent_holographic_renormali",
@@ -7985,7 +8035,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T05:36:31Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebramachinelearningspeculative_operadic_tropica",
@@ -8003,7 +8053,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T07:33:24Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancomputation_quantum_berggren_wal",
@@ -8012,7 +8062,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T07:34:03Z",
-      "hue": 90
+      "hue": 281
     },
     {
       "id": "algebraemlphysics_idempotent_renormalization_duali",
@@ -8021,7 +8071,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:37Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraemlphysics_idempotent_causal_holography_via",
@@ -8030,7 +8080,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T08:32:59Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraemllogic_closure_stone_spectral_duality_via",
@@ -8048,7 +8098,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T09:33:03Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_proof_c",
@@ -8057,7 +8107,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T09:48:21Z",
-      "hue": 134
+      "hue": 270
     },
     {
       "id": "algebramachinelearninglogic_operadic_stone_duality",
@@ -8066,7 +8116,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T09:51:53Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "algebraemlmachinelearning_closure_vc_duality_via_i",
@@ -8075,7 +8125,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T10:37:56Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraemlcomputation_closure_myhillnerode_duality",
@@ -8084,7 +8134,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T10:56:08Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "algebraemlgeometry_closure_voronoi_duality_via_ide",
@@ -8093,7 +8143,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T10:58:54Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_obse",
@@ -8102,7 +8152,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T11:15:45Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "algebratropicalcomputation_tropical_residuation_re",
@@ -8111,7 +8161,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T11:29:51Z",
-      "hue": 92
+      "hue": 281
     },
     {
       "id": "algebraemlphysics_closure_kramerswannier_duality_v",
@@ -8120,7 +8170,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:30:14Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_closure_sheafcode_duality_via_id",
@@ -8129,7 +8179,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T11:59:05Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraemlmachinelearning_closure_barron_duality_v",
@@ -8138,7 +8188,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T12:09:31Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalgeometry_tropical_choquetvoronoi_du",
@@ -8147,7 +8197,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T12:28:11Z",
-      "hue": 270
+      "hue": 179
     },
     {
       "id": "algebrapythagoreanphysics_berggren_transfer_dualit",
@@ -8174,7 +8224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:00:31Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_tropical_l",
@@ -8183,7 +8233,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T13:03:31Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlcomputation_closure_circuit_duality_via_",
@@ -8192,7 +8242,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T13:25:11Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_persistenc",
@@ -8201,7 +8251,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T13:33:40Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_closure_operad_duality_v",
@@ -8210,7 +8260,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T14:07:37Z",
-      "hue": 95
+      "hue": 112
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_barr",
@@ -8219,7 +8269,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-12T14:10:39Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_kernel_mea",
@@ -8228,7 +8278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T14:15:55Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancomputation_berggren_automaton_r",
@@ -8237,7 +8287,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T14:16:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalphysics_tropical_scattering_duality",
@@ -8246,7 +8296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T15:00:31Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebraemllogic_closure_proof_net_duality_via_idem",
@@ -8255,7 +8305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-12T15:00:53Z",
-      "hue": 314
+      "hue": 272
     },
     {
       "id": "algebraemlphysics_closure_holography_duality_via_i",
@@ -8264,7 +8314,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T15:05:11Z",
-      "hue": 95
+      "hue": 112
     },
     {
       "id": "algebraemlmachinelearning_closure_sheaf_learning_d",
@@ -8273,7 +8323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T15:10:18Z",
-      "hue": 359
+      "hue": 275
     },
     {
       "id": "algebraemlphysics_closure_renormalization_duality_",
@@ -8282,7 +8332,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T16:00:16Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_stone_duality_via_id",
@@ -8300,7 +8350,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-12T16:25:07Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_hecke",
@@ -8309,7 +8359,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T16:28:17Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "algebraemlalgebraicgeometry_closure_spectrum_duali",
@@ -8318,7 +8368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-12T17:00:20Z",
-      "hue": 272
+      "hue": 101
     },
     {
       "id": "algebraspeculativephysics_ultrametric_holographic_",
@@ -8327,7 +8377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-12T17:03:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -8336,7 +8386,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T17:13:08Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_proof_valuation_dual",
@@ -8345,7 +8395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-12T17:17:10Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_proo",
@@ -8354,7 +8404,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-12T18:00:35Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraemlalgebraictopology_closure_ech_realizatio",
@@ -8363,7 +8413,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-12T18:01:04Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalcryptography_tropical_one_way_rankf",
@@ -8372,7 +8422,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T18:05:25Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_closure_matroid_duality_via",
@@ -8381,7 +8431,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-12T18:05:44Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraemlcomputation_closure_temporal_realization",
@@ -8390,7 +8440,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-12T18:06:10Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlcomputation_closure_kolmogorov_realizati",
@@ -8399,7 +8449,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-12T19:09:31Z",
-      "hue": 90
+      "hue": 92
+    },
+    {
+      "id": "algebratropicalgeometry_tropical_radon_transform_d",
+      "title": "Tropical Radon Transform Duality via Idempotent Sheaf Semimodules and Certified Metric-Graph Reconstruction",
+      "domain": "Tropical Geometry \u00d7 Sheaf Theory \u00d7 Metric Graph Inverse Problems",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-12T19:28:57Z",
+      "hue": 271
     },
     {
       "id": "algebraemlcomputation_idempotent_kalman_realizatio",
@@ -8408,7 +8467,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "algebraemlcomputation_idempotent_thermodynamic_rea",
@@ -8435,7 +8494,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_idempotent_noether_correspondenc",
@@ -8444,7 +8503,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_barronchoq",
@@ -8453,7 +8512,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "",
-      "hue": 90
+      "hue": 270
     }
   ],
   "edges": [
@@ -8559,7 +8618,7 @@ window.PACKAGE_GRAPH = {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
       "strength": 0.5172413793103448,
-      "label": "Algebra,Tropical,Geometry,Bridges,MachineLearning bridge",
+      "label": "Bridges,Geometry,Algebra,Tropical,MachineLearning bridge",
       "type": "heuristic"
     },
     {
@@ -8776,21 +8835,21 @@ window.PACKAGE_GRAPH = {
       "source": "algebramachinelearninglogic_operadic_tropical_vc_d",
       "target": "algebraemllogic_idempotent_stone_completeness_via_",
       "strength": 0.37241379310344824,
-      "label": "Algebra,Geometry,Tropical,Logic bridge",
+      "label": "Tropical,Logic,Geometry,Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_tropical_valuati",
       "target": "algebramachinelearningspeculative_operadic_tropica",
       "strength": 0.37241379310344824,
-      "label": "Algebra,Geometry,Tropical,MachineLearning bridge",
+      "label": "Tropical,Geometry,MachineLearning,Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_operadic_tropica",
       "target": "algebratropicalmachinelearning_tropical_barronchoq",
       "strength": 0.37241379310344824,
-      "label": "Algebra,Geometry,Tropical,MachineLearning bridge",
+      "label": "Tropical,Geometry,MachineLearning,Algebra bridge",
       "type": "heuristic"
     },
     {
