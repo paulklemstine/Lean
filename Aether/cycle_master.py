@@ -864,6 +864,7 @@ class CycleMaster:
                 # Also feed future directions from Aristotle's output to FutureDirectionsManager
                 from research_memory import FutureDirectionsManager
                 fd_manager = FutureDirectionsManager(self.workspace)
+                fd_added = 0
                 # Look for FUTURE_DIRECTIONS.md in the extracted results
                 if extract_dir and extract_dir.exists():
                     for fd_pattern in ["FUTURE_DIRECTIONS.md", "future_directions*.md"]:
@@ -875,9 +876,35 @@ class CycleMaster:
                                         fd_content, exp_id, str(fd_file)
                                     )
                                     if added:
-                                        print(f"[Process] Added {added} future directions from {fd_file.name}")
+                                        fd_added += added
                             except Exception:
                                 pass
+                # Fallback: use result_future_directions from knowledge extraction
+                if fd_added == 0 and hasattr(job, 'result_future_directions') and job.result_future_directions:
+                    try:
+                        added = fd_manager.add_directions_from_text(
+                            job.result_future_directions, exp_id, "result_future_directions"
+                        )
+                        if added:
+                            fd_added += added
+                    except Exception:
+                        pass
+                # Fallback: use the JSON package's future_directions field
+                if fd_added == 0 and hasattr(job, 'result_json_package') and job.result_json_package:
+                    try:
+                        import json as _json
+                        pkg = _json.loads(job.result_json_package)
+                        fd_text = pkg.get("future_directions", "")
+                        if fd_text and len(fd_text) > 100:
+                            added = fd_manager.add_directions_from_text(
+                                fd_text, exp_id, "json_package"
+                            )
+                            if added:
+                                fd_added += added
+                    except Exception:
+                        pass
+                if fd_added > 0:
+                    print(f"[Process] Added {fd_added} future directions for {exp_id}")
         else:
             print(f"[Process] No result tarball for {exp_id}. Status: {job.status}")
 
