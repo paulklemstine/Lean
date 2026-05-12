@@ -308,22 +308,43 @@ def slug_to_hue(slug):
     return int(rng() * 360)
 
 
-def extract_edge_label(reasons):
-    """Extract the best label from scoring reasons."""
-    # Prefer heading matches, then theorem matches, then domain overlap
+def extract_edge_label(reasons, source_title="", target_title=""):
+    """Extract a meaningful label from scoring reasons.
+
+    Prefers specific concept matches over generic domain overlap.
+    """
+    # Prefer heading matches (most specific)
     for r in reasons:
         if r.startswith("heading_match:"):
-            return r.split(":", 1)[1][:50]
+            label = r.split(":", 1)[1].strip()
+            # Clean up common prefixes
+            label = re.sub(r'^\d+\.\s*', '', label)
+            if len(label) > 5:
+                return label[:60]
+
+    # Then theorem matches
+    for r in reasons:
         if r.startswith("theorem_in_title:"):
-            return r.split(":", 1)[1][:50]
+            return r.split(":", 1)[1][:60]
+
+    # Then cross-domain concepts
+    for r in reasons:
         if r.startswith("cross_domain_match:"):
-            return r.split(":", 1)[1][:50]
-    # Fall back to domain overlap
+            return r.split(":", 1)[1][:60]
+
+    # Then title-fd overlap
+    for r in reasons:
+        if r.startswith("title_fd_overlap:"):
+            return f"related concepts"
+
+    # Fall back to domain overlap — just list the shared domains
     for r in reasons:
         if r.startswith("domain_overlap:"):
-            return r
+            domains = r.split(":", 1)[1]
+            return f"{domains} bridge"
+
     if reasons:
-        return reasons[0][:50]
+        return reasons[0][:60]
     return ""
 
 
@@ -342,8 +363,18 @@ def build_lineage(packages_dir, config_path=None):
     packages = {}
     for f in json_files:
         slug = os.path.basename(f).replace('.json', '')
+        # Skip non-package files
         if slug in ('index', 'package', 'lineage'):
             continue
+        # Skip files that don't have a 'title' field (not real packages)
+        try:
+            with open(f, 'r', encoding='utf-8') as fh:
+                data = json.load(fh)
+            if not isinstance(data, dict) or 'title' not in data:
+                continue
+            packages[slug] = data
+        except Exception as e:
+            print(f"Warning: failed to load {f}: {e}")
         try:
             with open(f, 'r', encoding='utf-8') as fh:
                 data = json.load(fh)
@@ -412,33 +443,43 @@ def build_lineage(packages_dir, config_path=None):
                     "source": source_slug,
                     "target": target_slug,
                     "strength": min(score / 10.0, 1.0),
-                    "label": extract_edge_label(reasons),
+                    "label": extract_edge_label(reasons, source_pkg.get("title", ""), target_pkg.get("title", "")),
                     "score": round(score, 2),
                     "same_day": same_day,
                 })
 
     # Limit outgoing edges per node to avoid hairballs
-    # Keep top 5 outgoing edges per source
+    # Keep top 3 outgoing edges per source
     from collections import Counter
     outgoing_counts = Counter()
     filtered_edges = []
     edges.sort(key=lambda e: e["score"], reverse=True)
     for e in edges:
         key = e["source"]
-        if outgoing_counts[key] < 5:
+        if outgoing_counts[key] < 3:
             filtered_edges.append(e)
             outgoing_counts[key] += 1
     edges = filtered_edges
 
     # Deduplicate transitive edges
-    edges = deduplicate_transitive_edges(edges, min_score=4.0)
+    edges = deduplicate_transitive_edges(edges, min_strength=0.3)
 
     # Sort edges by score descending
     edges.sort(key=lambda e: e["score"], reverse=True)
 
-    # Limit total edges to keep visualization clean (max 120 edges)
-    if len(edges) > 120:
-        edges = edges[:120]
+    # Limit total edges to keep visualization clean (max 80 edges)
+    if len(edges) > 80:
+        edges = edges[:80]
+
+    # Normalize strength relative to the actual score distribution
+    if edges:
+        scores = [e["score"] for e in edges]
+        min_s = min(scores)
+        max_s = max(scores)
+        range_s = max_s - min_s if max_s > min_s else 1.0
+        for e in edges:
+            # Map to 0.3..1.0 range so even weak edges are visible
+            e["strength"] = 0.3 + 0.7 * ((e["score"] - min_s) / range_s)
 
     # Clean up internal fields from output
     for e in edges:
