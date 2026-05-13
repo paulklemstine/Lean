@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,7 +25,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -34,7 +34,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebraemlcomputation_closure_fixed_point_circuit_",
@@ -52,7 +52,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T12:34:41Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "algebratropicalgeometry_tropical_voronoilattice_re",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:34:59Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_valuation_sec",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T14:01:14Z",
-      "hue": 100
+      "hue": 275
     },
     {
       "id": "holographic_renormalization_of_proof_complexity",
@@ -106,7 +106,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T14:04:50Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "closure_operator_learning_universal_approximation_",
@@ -124,7 +124,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T14:05:24Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "quantum_resistant_lattice_cryptography_via_berggre",
@@ -133,7 +133,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T14:43:34Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
@@ -142,7 +142,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T15:02:02Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "idempotent_transfer_operators_and_critical_exponen",
@@ -151,16 +151,16 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T15:02:14Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_proo",
       "title": "Ultrametric Proof Generalization Duality via Operadic Neural Compression",
       "domain": "Bridges (Algebra × Machine Learning × Logic)",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
       "date": "2026-05-13T16:01:47Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "channel_capacity_as_idempotent_fixed_point_in_trop",
@@ -169,16 +169,16 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T16:04:57Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebramachinelearninglogic_sheaf_proof_state_dual",
       "title": "Sheaf-Proof-State Duality via Finite Cohomological Obstruction Theory",
       "domain": "Algebra × Machine Learning × Logic (Bridges)",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
       "date": "2026-05-13T16:05:12Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_modular_renormalization_of_closu",
@@ -187,7 +187,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T16:05:31Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_stone_recognition_du",
@@ -196,7 +196,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T16:05:50Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebraeml_tropical_spectral_duality_via_idempoten",
@@ -205,7 +205,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T16:06:07Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebratropicalcomputation_syntactic_semimodule_du",
@@ -214,7 +214,16 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T16:06:21Z",
-      "hue": 95
+      "hue": 90
+    },
+    {
+      "id": "algebraeml_thermodynamic_closure_duality_via_idemp",
+      "title": "Thermodynamic Closure Duality: Variational Characterization of Closure Fixed Points via Tropical Free-Energy Minimization",
+      "domain": "Bridges (Algebra–EML–Physics)",
+      "primary_domain": "EML",
+      "shape": "octahedron",
+      "date": "2026-05-13T16:06:41Z",
+      "hue": 272
     }
   ],
   "edges": [
@@ -228,414 +237,435 @@
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.8968599033816425,
+      "strength": 0.8979689366786141,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.8283816425120774,
+      "strength": 0.8302270011947432,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebraeml_tropical_spectral_duality_via_idempoten",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.7366545893719807,
+      "strength": 0.7394862604540022,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.734963768115942,
+      "strength": 0.7378136200716845,
       "label": "Tropical Stone Recognition Duality",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlphysics_modular_renormalization_of_closu",
+      "target": "algebraeml_thermodynamic_closure_duality_via_idemp",
+      "strength": 0.7181600955794505,
+      "label": "Thermodynamic Closure Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_ultrametric_proo",
       "target": "algebramachinelearninglogic_sheaf_proof_state_dual",
-      "strength": 0.7104468599033816,
+      "strength": 0.7135603345280765,
       "label": "Sheaf",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.6855072463768117,
+      "strength": 0.6888888888888889,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalcryptography_tropical_valuation_sec",
       "target": "channel_capacity_as_idempotent_fixed_point_in_trop",
-      "strength": 0.6804347826086956,
-      "label": "Tropical,Algebra,Cryptography bridge",
+      "strength": 0.6838709677419355,
+      "label": "Algebra,Tropical,Cryptography bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebramachinelearninglogic_sheaf_proof_state_dual",
-      "strength": 0.6576086956521738,
+      "strength": 0.6612903225806452,
       "label": "Functorial reconstruction",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.6521135265700483,
+      "strength": 0.6558542413381123,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_modular_renormalization_of_closu",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.6483091787439614,
+      "strength": 0.6520908004778972,
       "label": "tropical geometry",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_sheaf_proof_state_dual",
       "target": "algebraemlphysics_modular_renormalization_of_closu",
-      "strength": 0.6466183574879227,
+      "strength": 0.6504181600955794,
       "label": "Finite Spectral Boundary Theory",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebraemlphysics_modular_renormalization_of_closu",
-      "strength": 0.6394323671497584,
+      "strength": 0.6433094384707287,
       "label": ": prove that finite approximations conve",
       "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_stone_recognition_du",
       "target": "algebraeml_tropical_spectral_duality_via_idempoten",
-      "strength": 0.6381642512077295,
+      "strength": 0.6420549581839905,
       "label": "Tropical Spectral Duality",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.6330917874396136,
+      "strength": 0.6370370370370371,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.6330917874396136,
+      "strength": 0.6370370370370371,
       "label": "Tropical Voronoi",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlcryptography_closure_secret_sharing_dual",
+      "target": "algebraeml_thermodynamic_closure_duality_via_idemp",
+      "strength": 0.6345280764635604,
+      "label": "Thermodynamic Closure Duality",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.6242149758454106,
+      "strength": 0.6282556750298686,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebratropicallogic_tropical_stone_recognition_du",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.6242149758454106,
+      "strength": 0.6282556750298686,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_closure_secret_sharing_dual",
       "target": "channel_capacity_as_idempotent_fixed_point_in_trop",
-      "strength": 0.6170289855072464,
+      "strength": 0.6211469534050179,
       "label": "Tropical Channel Capacity",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
       "target": "channel_capacity_as_idempotent_fixed_point_in_trop",
-      "strength": 0.6170289855072464,
+      "strength": 0.6211469534050179,
       "label": "Tropical Channel Capacity",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.6098429951690821,
+      "strength": 0.6140382317801673,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalcryptography_tropical_valuation_sec",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.6098429951690821,
+      "strength": 0.6140382317801673,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "idempotent_transfer_operators_and_critical_exponen",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.5958937198067633,
+      "strength": 0.6002389486260453,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_sheaf_proof_state_dual",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.5958937198067633,
+      "strength": 0.6002389486260453,
       "label": "Algebra,Logic bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraemlcryptography_closure_secret_sharing_dual",
-      "target": "algebraemlphysics_modular_renormalization_of_closu",
-      "strength": 0.584903381642512,
-      "label": "Theorem 4.2 (Tropical Information Dualit",
       "type": "heuristic"
     },
     {
       "source": "idempotent_transfer_operators_and_critical_exponen",
       "target": "channel_capacity_as_idempotent_fixed_point_in_trop",
-      "strength": 0.5747584541062802,
+      "strength": 0.5793309438470728,
       "label": "Tropical Channel Capacity",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_ultrametric_proo",
       "target": "algebraemlphysics_modular_renormalization_of_closu",
-      "strength": 0.5620772946859903,
+      "strength": 0.5667861409796893,
       "label": "Finite Spectral Boundary Theory",
       "type": "heuristic"
     },
     {
       "source": "neural_sheaf_cohomology_and_adversarial_robustness",
       "target": "algebramachinelearninglogic_sheaf_proof_state_dual",
-      "strength": 0.5595410628019324,
+      "strength": 0.5642771804062127,
       "label": "Sheaf",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "channel_capacity_as_idempotent_fixed_point_in_trop",
-      "strength": 0.5536231884057972,
-      "label": "Tropical,Cryptography bridge",
+      "strength": 0.5584229390681004,
+      "label": "Cryptography,Tropical bridge",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalcryptography_tropical_valuation_sec",
       "target": "algebraspeculativemachinelearning_ultrametric_proo",
-      "strength": 0.5536231884057972,
+      "strength": 0.5584229390681004,
       "label": "Algebra,Bridges bridge",
       "type": "heuristic"
     },
     {
       "source": "idempotent_transfer_operators_and_critical_exponen",
       "target": "algebraeml_tropical_spectral_duality_via_idempoten",
-      "strength": 0.5536231884057972,
+      "strength": 0.5584229390681004,
       "label": "Tropical Spectral Duality",
       "type": "heuristic"
     },
     {
       "source": "channel_capacity_as_idempotent_fixed_point_in_trop",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.5536231884057972,
-      "label": "Tropical,Algebra bridge",
+      "strength": 0.5584229390681004,
+      "label": "Algebra,Tropical bridge",
       "type": "heuristic"
     },
     {
       "source": "temporal_stone_duality_from_idempotent_semiring_fi",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.5413647342995169,
+      "strength": 0.5462962962962963,
       "label": "Tropical Stone Recognition Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraspeculativemachinelearning_ultrametric_proo",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.5413647342995169,
+      "strength": 0.5462962962962963,
       "label": "Tropical Stone Recognition Duality",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "idempotent_transfer_operators_and_critical_exponen",
-      "strength": 0.532487922705314,
+      "strength": 0.5375149342891278,
       "label": "Idempotent Transfer Operators",
       "type": "heuristic"
     },
     {
       "source": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.5253019323671497,
+      "strength": 0.5304062126642772,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.5219202898550724,
+      "strength": 0.5270609318996415,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "closure_operator_learning_universal_approximation_",
       "target": "algebraspeculativemachinelearning_ultrametric_proo",
-      "strength": 0.5113526570048309,
+      "strength": 0.5166069295101553,
       "label": "MachineLearning bridge",
       "type": "heuristic"
     },
     {
       "source": "closure_operator_learning_universal_approximation_",
       "target": "algebramachinelearninglogic_sheaf_proof_state_dual",
-      "strength": 0.5113526570048309,
+      "strength": 0.5166069295101553,
       "label": "MachineLearning bridge",
       "type": "heuristic"
     },
     {
       "source": "neural_sheaf_cohomology_and_adversarial_robustness",
       "target": "algebraspeculativemachinelearning_ultrametric_proo",
-      "strength": 0.503743961352657,
+      "strength": 0.5090800477897253,
       "label": "Connection to Tropical Geometry",
       "type": "heuristic"
     },
     {
       "source": "algebraemlphysics_modular_renormalization_of_closu",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.4974033816425121,
+      "strength": 0.5028076463560334,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.4902173913043478,
+      "strength": 0.4956989247311828,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "quantum_resistant_lattice_cryptography_via_berggre",
       "target": "channel_capacity_as_idempotent_fixed_point_in_trop",
-      "strength": 0.4902173913043478,
+      "strength": 0.4956989247311828,
       "label": "Tropical Channel Capacity",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.4830314009661836,
+      "strength": 0.4885902031063321,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearninglogic_sheaf_proof_state_dual",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.4830314009661836,
+      "strength": 0.4885902031063321,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "p_vs_np_via_tropical_semiring_reductions",
       "target": "idempotent_transfer_operators_and_critical_exponen",
-      "strength": 0.4775362318840579,
+      "strength": 0.48315412186379925,
       "label": "Idempotent Transfer Operators",
       "type": "heuristic"
     },
     {
       "source": "p_vs_np_via_tropical_semiring_reductions",
       "target": "algebraemlphysics_modular_renormalization_of_closu",
-      "strength": 0.4775362318840579,
+      "strength": 0.48315412186379925,
       "label": "Finite Spectral Boundary Theory",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "quantum_resistant_lattice_cryptography_via_berggre",
-      "strength": 0.46908212560386475,
+      "strength": 0.47479091995221023,
       "label": "Berggren Groupoid Orbit Cryptography",
       "type": "heuristic"
     },
     {
       "source": "p_vs_np_via_tropical_semiring_reductions",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.46908212560386475,
+      "strength": 0.47479091995221023,
       "label": "Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "kolmogorov_complexity_closure_and_idempotent_compr",
       "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.46908212560386475,
+      "strength": 0.47479091995221023,
       "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
       "source": "channel_capacity_as_idempotent_fixed_point_in_trop",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.46908212560386475,
-      "label": "Tropical,Algebra bridge",
+      "strength": 0.47479091995221023,
+      "label": "Algebra,Tropical bridge",
       "type": "heuristic"
     },
     {
       "source": "channel_capacity_as_idempotent_fixed_point_in_trop",
       "target": "algebraeml_tropical_spectral_duality_via_idempoten",
-      "strength": 0.46908212560386475,
-      "label": "Tropical,Algebra bridge",
+      "strength": 0.47479091995221023,
+      "label": "Algebra,Tropical bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraeml_tropical_spectral_duality_via_idempoten",
+      "target": "algebraeml_thermodynamic_closure_duality_via_idemp",
+      "strength": 0.47479091995221023,
+      "label": "Algebra,EML bridge",
       "type": "heuristic"
     },
     {
       "source": "temporal_stone_duality_from_idempotent_semiring_fi",
       "target": "algebramachinelearninglogic_sheaf_proof_state_dual",
-      "strength": 0.45682367149758457,
+      "strength": 0.46266427718040626,
       "label": "Sheaf",
       "type": "heuristic"
     },
     {
       "source": "neural_sheaf_cohomology_and_adversarial_robustness",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.42681159420289855,
+      "strength": 0.43297491039426517,
       "label": "Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.42681159420289855,
+      "strength": 0.43297491039426517,
       "label": "Tropical bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraemlphysics_modular_renormalization_of_closu",
-      "target": "algebraeml_tropical_spectral_duality_via_idempoten",
-      "strength": 0.42681159420289855,
-      "label": "Tropical Spectral Duality",
       "type": "heuristic"
     },
     {
       "source": "temporal_stone_duality_from_idempotent_semiring_fi",
       "target": "algebraemlphysics_modular_renormalization_of_closu",
-      "strength": 0.4056763285024154,
+      "strength": 0.4120669056152927,
       "label": "Finite Spectral Boundary Theory",
       "type": "heuristic"
     },
     {
       "source": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
       "target": "idempotent_transfer_operators_and_critical_exponen",
-      "strength": 0.4056763285024154,
+      "strength": 0.4120669056152927,
       "label": "Idempotent Transfer Operators",
       "type": "heuristic"
     },
     {
       "source": "kolmogorov_complexity_closure_and_idempotent_compr",
+      "target": "algebraeml_thermodynamic_closure_duality_via_idemp",
+      "strength": 0.3681600955794504,
+      "label": "Thermodynamic Closure Duality",
+      "type": "heuristic"
+    },
+    {
+      "source": "kolmogorov_complexity_closure_and_idempotent_compr",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.33677536231884053,
+      "strength": 0.3439068100358422,
       "label": "Extract computability content.",
       "type": "heuristic"
     },
     {
       "source": "quantum_resistant_lattice_cryptography_via_berggre",
       "target": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
-      "strength": 0.3,
+      "strength": 0.3075268817204301,
       "label": "theorem",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalcomputation_syntactic_semimodule_du",
+      "target": "algebraeml_thermodynamic_closure_duality_via_idemp",
+      "strength": 0.3,
+      "label": "Thermodynamic Closure Duality",
       "type": "heuristic"
     }
   ]
