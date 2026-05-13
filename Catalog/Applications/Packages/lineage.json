@@ -4,11 +4,28 @@
       "id": "algebramachinelearningspeculative_tropical_observe",
       "title": "Tropical Observer Coding Duality: Finite Representation and Minimality for Proof-Compression Architectures",
       "domain": "Tropical Algebra × Machine Learning × Proof Theory",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
+      "hue": 95
+    },
+    {
+      "id": "algebraemllogic_closure_rateproof_duality_via_idem",
+      "title": "Proof-Complexity Semantics for Finite Closure Systems via Weighted Consequence Systems",
+      "domain": "Algebraic Logic / Proof Complexity / Tropical Mathematics",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-13T12:33:38Z",
       "hue": 270
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "algebramachinelearningspeculative_tropical_observe",
+      "target": "algebraemllogic_closure_rateproof_duality_via_idem",
+      "strength": 0.3,
+      "label": "Proof",
+      "type": "heuristic"
+    }
+  ]
 }
