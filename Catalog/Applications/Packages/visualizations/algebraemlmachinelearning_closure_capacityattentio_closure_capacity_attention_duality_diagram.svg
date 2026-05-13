@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" width="700" height="300">
+  <defs>
+    <style>
+      text { font-family: 'Georgia', serif; font-size: 13px; fill: #333; }
+      .title { font-size: 18px; font-weight: bold; fill: #1a1a2e; }
+      .box { rx: 12; ry: 12; stroke-width: 2; }
+      .left-box { fill: #e8f4f8; stroke: #2980b9; }
+      .right-box { fill: #fdebd0; stroke: #e67e22; }
+      .arrow { stroke: #2c3e50; stroke-width: 2; fill: none;
+               marker-end: url(#arrowhead); }
+      .arrow-label { font-size: 11px; fill: #666; font-style: italic; }
+      .item { font-size: 12px; fill: #444; }
+      .heading { font-size: 14px; font-weight: bold; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+  </defs>
+
+  <text x="350" y="30" text-anchor="middle" class="title">Closure-Capacity ⟷ Attention Duality</text>
+
+  <!-- Left box: Closure-Capacity -->
+  <rect x="30" y="50" width="250" height="220" class="box left-box"/>
+  <text x="155" y="78" text-anchor="middle" class="heading">Closure-Capacity Object</text>
+  <text x="50" y="105" class="item">• Closure operator cl</text>
+  <text x="50" y="125" class="item">• Capacity function κ</text>
+  <text x="50" y="145" class="item">• Closed sets {C₁, ..., Cₖ}</text>
+  <text x="50" y="165" class="item">• Extreme generators</text>
+  <text x="50" y="195" class="item" style="fill:#c0392b; font-weight:bold;">Invariant: extreme rank r</text>
+  <text x="50" y="215" class="item">• Monotonicity: A⊆B ⇒ κ(A)≤κ(B)</text>
+  <text x="50" y="235" class="item">• Normalization: κ(∅) = 0</text>
+  <text x="50" y="255" class="item">• Closure invariance</text>
+
+  <!-- Right box: Attention Model -->
+  <rect x="420" y="50" width="250" height="220" class="box right-box"/>
+  <text x="545" y="78" text-anchor="middle" class="heading">Sparse Attention Model</text>
+  <text x="440" y="105" class="item">• h attention heads</text>
+  <text x="440" y="125" class="item">• Support sets (closed)</text>
+  <text x="440" y="145" class="item">• Weight per head = κ</text>
+  <text x="440" y="165" class="item">• Closure-consistent</text>
+  <text x="440" y="195" class="item" style="fill:#c0392b; font-weight:bold;">Invariant: min heads = r</text>
+  <text x="440" y="215" class="item">• Reconstruction: cl, κ</text>
+  <text x="440" y="235" class="item">• Extensive &amp; monotone</text>
+  <text x="440" y="255" class="item">• Idempotent closure</text>
+
+  <!-- Arrows -->
+  <path d="M 280 130 Q 350 100 420 130" class="arrow"/>
+  <text x="350" y="100" text-anchor="middle" class="arrow-label">canonical model</text>
+
+  <path d="M 420 200 Q 350 230 280 200" class="arrow"/>
+  <text x="350" y="245" text-anchor="middle" class="arrow-label">reconstruction</text>
+
+  <!-- Equals sign -->
+  <text x="350" y="170" text-anchor="middle" style="font-size:20px; fill:#c0392b; font-weight:bold;">⟺</text>
+</svg>
