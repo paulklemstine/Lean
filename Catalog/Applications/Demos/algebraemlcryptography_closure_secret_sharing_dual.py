@@ -1,1032 +1,982 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-world applications of closure–secret-sharing duality.
+Applications of Closure–Secret-Sharing Duality
 
-Demonstrates:
-1. Corporate vault access policy design and verification
-2. Multi-party computation authorization
-3. Access structure comparison and policy minimization
-4. Redundancy detection in access policies
+Real-world applications demonstrating how closure-based access structures
+can model practical authorization scenarios.
 """
 
 from itertools import combinations
-from typing import FrozenSet
-from algorithms import (
-    ClosureOperator, PointedDependencySystem, AccessStructure,
-    canonical_compressed_presentation, verify_circuit_theorem,
-    _powerset
-)
+from typing import FrozenSet, List, Dict, Set
+import json
 
 
-# =============================================================================
-# Application 1: Corporate Vault Access Policy
-# =============================================================================
+# ============================================================
+# Application 1: Multi-Factor Authentication Policy
+# ============================================================
 
-def corporate_vault_demo():
-    """Design and verify a corporate vault access policy.
+def mfa_access_structure():
+    """
+    Model a multi-factor authentication policy as a closure-based access structure.
 
+    Policy: A user can access the system if they provide:
+    - Password + any biometric (fingerprint OR face), OR
+    - Password + hardware token + SMS code, OR
+    - Any 3 out of 5 factors
+
+    Factors: {password=1, fingerprint=2, face=3, token=4, sms=5}
+    """
+    print("=" * 60)
+    print("APPLICATION 1: Multi-Factor Authentication Policy")
+    print("=" * 60)
+
+    factors = {1: "Password", 2: "Fingerprint", 3: "FaceID",
+               4: "HW Token", 5: "SMS Code"}
+    secret = 0  # System access
+
+    # Define closure: a coalition authorizes if it matches any policy rule
+    universe = frozenset(range(6))
+
+    def cl(S: FrozenSet[int]) -> FrozenSet[int]:
+        S_set = set(S)
+        # Rule 1: Password + biometric
+        if 1 in S_set and (2 in S_set or 3 in S_set):
+            return universe
+        # Rule 2: Password + token + SMS
+        if {1, 4, 5} <= S_set:
+            return universe
+        # Rule 3: Any 3 factors
+        factor_count = len(S_set - {0})
+        if factor_count >= 3:
+            return universe
+        return S
+
+    participants = [1, 2, 3, 4, 5]
+
+    # Find minimal basis
+    basis = []
+    for size in range(1, 6):
+        for combo in combinations(participants, size):
+            S = frozenset(combo)
+            if secret in cl(S):
+                if not any(B < S for B in basis):
+                    basis.append(S)
+    # Filter to truly minimal
+    basis = [S for S in basis if not any(T < S for T in basis if T != S)]
+
+    print("\nPolicy Rules:")
+    print("  1. Password + (Fingerprint OR FaceID)")
+    print("  2. Password + HW Token + SMS Code")
+    print("  3. Any 3 out of 5 factors")
+
+    print(f"\nMinimal authorized combinations ({len(basis)}):")
+    for B in sorted(basis, key=lambda x: (len(x), sorted(x))):
+        names = [factors[f] for f in sorted(B)]
+        print(f"  {{{', '.join(names)}}}")
+
+    # Test scenarios
+    print("\nScenario tests:")
+    scenarios = [
+        (frozenset({1, 2}), "Password + Fingerprint"),
+        (frozenset({1, 3}), "Password + FaceID"),
+        (frozenset({2, 3}), "Fingerprint + FaceID (no password)"),
+        (frozenset({1, 4, 5}), "Password + Token + SMS"),
+        (frozenset({2, 3, 4}), "Three factors (no password)"),
+        (frozenset({1}), "Password only"),
+    ]
+    for coalition, desc in scenarios:
+        auth = secret in cl(coalition)
+        print(f"  {desc}: {'✓ AUTHORIZED' if auth else '✗ Denied'}")
+
+
+# ============================================================
+# Application 2: Corporate Document Access Control
+# ============================================================
+
+def corporate_access_control():
+    """
+    Model corporate document access with hierarchical roles.
+
+    Roles: CEO=1, CFO=2, CTO=3, VP_Eng=4, VP_Sales=5, Analyst=6
     Policy:
-    - CEO alone can open the vault
-    - CFO + any board member can open the vault
-    - Any 3 board members can open the vault
+    - CEO alone can access any document
+    - CFO + CTO together can access
+    - Any C-suite + 2 VPs can access
+    - All 3 non-C-suite together can access
     """
-    print("=" * 70)
-    print("APPLICATION 1: Corporate Vault Access Policy")
-    print("=" * 70)
-    print()
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Corporate Document Access Control")
+    print("=" * 60)
 
-    participants = {"CEO", "CFO", "Board1", "Board2", "Board3", "Board4"}
-    board = {"Board1", "Board2", "Board3", "Board4"}
-    option_set = frozenset({None} | participants)
+    roles = {1: "CEO", 2: "CFO", 3: "CTO",
+             4: "VP_Eng", 5: "VP_Sales", 6: "Analyst"}
+    secret = 0
+    c_suite = {1, 2, 3}
+    vps = {4, 5}
 
-    def vault_authorized(s: frozenset) -> bool:
-        if "CEO" in s:
-            return True
-        if "CFO" in s and len(s & board) >= 1:
-            return True
-        if len(s & board) >= 3:
-            return True
-        return False
+    universe = frozenset(range(7))
 
-    def vault_closure(a: frozenset) -> frozenset:
-        parts = frozenset(x for x in a if x is not None)
-        if vault_authorized(parts):
-            return option_set
-        return frozenset(a)
+    def cl(S: FrozenSet[int]) -> FrozenSet[int]:
+        S_set = set(S)
+        if 1 in S_set:  # CEO
+            return universe
+        if {2, 3} <= S_set:  # CFO + CTO
+            return universe
+        c_count = len(S_set & c_suite)
+        vp_count = len(S_set & vps)
+        if c_count >= 1 and vp_count >= 2:  # C-suite + 2 VPs
+            return universe
+        if {4, 5, 6} <= S_set:  # All non-C-suite
+            return universe
+        return S
 
-    cl = ClosureOperator(ground_set=option_set, cl=vault_closure)
-    access = AccessStructure(participants=participants, authorized=vault_authorized)
+    participants = list(range(1, 7))
 
-    # Verify closure axioms
-    print(f"Closure operator valid: {cl.verify()}")
-    print(f"Access structure monotone: {access.is_monotone()}")
+    # Extract minimal basis
+    all_auth = []
+    for size in range(1, 7):
+        for combo in combinations(participants, size):
+            S = frozenset(combo)
+            if secret in cl(S):
+                all_auth.append(S)
 
-    # Find minimal authorized sets (= secret-circuits)
-    mas = access.minimal_authorized_sets()
-    print(f"\nMinimal authorized sets ({len(mas)} total):")
-    for m in sorted(mas, key=lambda x: (len(x), sorted(x))):
-        print(f"  {sorted(m)}")
+    basis = [S for S in all_auth
+             if not any(T < S for T in all_auth)]
 
-    # Verify circuit theorem
-    print(f"\nCircuit theorem verified: {verify_circuit_theorem(participants, cl)}")
+    print(f"\nMinimal authorized combinations ({len(basis)}):")
+    for B in sorted(basis, key=lambda x: (len(x), sorted(x))):
+        names = [roles[r] for r in sorted(B)]
+        print(f"  {{{', '.join(names)}}}")
 
-    # Policy analysis
-    print("\nPolicy analysis:")
-    print(f"  Smallest coalition size: {min(len(m) for m in mas)}")
-    print(f"  Largest coalition size:  {max(len(m) for m in mas)}")
-
-    # Check which participants are essential (appear in all minimal sets)
-    essential = set.intersection(*[set(m) for m in mas]) if mas else set()
-    print(f"  Essential participants: {essential if essential else 'none'}")
-
-    # Check which participants are redundant (appear in no minimal set)
-    in_any = set.union(*[set(m) for m in mas]) if mas else set()
-    redundant = participants - in_any
-    print(f"  Redundant participants: {redundant if redundant else 'none'}")
-
-    return participants, mas
+    print(f"\nTotal authorized coalitions: {len(all_auth)}")
+    print(f"Compression: {len(basis)}/{len(all_auth)} = "
+          f"{len(basis)/len(all_auth):.1%}")
 
 
-# =============================================================================
-# Application 2: Multi-Party Computation Authorization
-# =============================================================================
+# ============================================================
+# Application 3: Distributed Key Management
+# ============================================================
 
-def mpc_authorization_demo():
-    """Multi-party computation: verify that computation can proceed.
-
-    Scenario: 5 parties computing a function. At least 3 must be online
-    AND at least one must be from the "validator" group.
+def distributed_key_management():
     """
-    print()
-    print("=" * 70)
-    print("APPLICATION 2: Multi-Party Computation Authorization")
-    print("=" * 70)
-    print()
+    Model a distributed key management system where cryptographic keys
+    are split among servers with geographic and role diversity requirements.
 
-    participants = {"V1", "V2", "C1", "C2", "C3"}
-    validators = {"V1", "V2"}
-    option_set = frozenset({None} | participants)
-
-    def mpc_authorized(s: frozenset) -> bool:
-        return len(s) >= 3 and len(s & validators) >= 1
-
-    def mpc_closure(a: frozenset) -> frozenset:
-        parts = frozenset(x for x in a if x is not None)
-        if mpc_authorized(parts):
-            return option_set
-        return frozenset(a)
-
-    cl = ClosureOperator(ground_set=option_set, cl=mpc_closure)
-    access = AccessStructure(participants=participants, authorized=mpc_authorized)
-
-    mas = access.minimal_authorized_sets()
-    print(f"Minimal authorized coalitions ({len(mas)} total):")
-    for m in sorted(mas, key=lambda x: (len(x), sorted(x))):
-        print(f"  {sorted(m)}")
-
-    print(f"\nCircuit theorem verified: {verify_circuit_theorem(participants, cl)}")
-    print(f"Monotonicity verified: {access.is_monotone()}")
-
-    # Canonical compression
-    compressed = canonical_compressed_presentation(participants, mas)
-    print("\nCanonical compressed system verification:")
-    mismatches = 0
-    for s in _powerset(participants):
-        orig = mpc_authorized(s)
-        comp = compressed.is_authorized(s)
-        if orig != comp:
-            mismatches += 1
-    print(f"  Mismatches: {mismatches}")
-    print(f"  Compression preserves authorization: {'✓' if mismatches == 0 else '✗'}")
-
-
-# =============================================================================
-# Application 3: Policy Comparison
-# =============================================================================
-
-def policy_comparison_demo():
-    """Compare two access policies by their circuit structure.
-
-    Two policies are equivalent iff they have the same minimal authorized sets.
+    Servers: US_Primary=1, US_Backup=2, EU_Primary=3, EU_Backup=4, Asia=5
+    Policy:
+    - At least one server from each of 2 different regions
+    - OR all servers from one region + any backup
     """
-    print()
-    print("=" * 70)
-    print("APPLICATION 3: Access Policy Comparison")
-    print("=" * 70)
-    print()
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Distributed Key Management")
+    print("=" * 60)
 
-    participants = {"A", "B", "C", "D"}
+    servers = {1: "US_Primary", 2: "US_Backup", 3: "EU_Primary",
+               4: "EU_Backup", 5: "Asia"}
+    regions = {"US": {1, 2}, "EU": {3, 4}, "Asia": {5}}
+    secret = 0
 
-    # Policy 1: any 2 of {A,B,C,D}
-    def policy1(s: frozenset) -> bool:
-        return len(s) >= 2
+    universe = frozenset(range(6))
 
-    # Policy 2: (A and B) or (C and D) or (A and C) or (A and D) or (B and C) or (B and D)
-    # This is also "any 2 of 4"
-    def policy2(s: frozenset) -> bool:
-        pairs = [{"A","B"}, {"C","D"}, {"A","C"}, {"A","D"}, {"B","C"}, {"B","D"}]
-        return any(frozenset(p) <= s for p in pairs)
+    def cl(S: FrozenSet[int]) -> FrozenSet[int]:
+        S_set = set(S)
+        active_regions = set()
+        for name, members in regions.items():
+            if S_set & members:
+                active_regions.add(name)
+        # Rule 1: servers from 2+ regions
+        if len(active_regions) >= 2:
+            return universe
+        # Rule 2: All from one region + any backup
+        backups = {2, 4}
+        for name, members in regions.items():
+            if members <= S_set and S_set & backups:
+                return universe
+        return S
 
-    access1 = AccessStructure(participants=participants, authorized=policy1)
-    access2 = AccessStructure(participants=participants, authorized=policy2)
+    participants = list(range(1, 6))
 
-    mas1 = access1.minimal_authorized_sets()
-    mas2 = access2.minimal_authorized_sets()
+    # Extract minimal basis
+    all_auth = []
+    for size in range(1, 6):
+        for combo in combinations(participants, size):
+            S = frozenset(combo)
+            if secret in cl(S):
+                all_auth.append(S)
 
-    print("Policy 1 minimal auth sets:", [sorted(m) for m in sorted(mas1, key=sorted)])
-    print("Policy 2 minimal auth sets:", [sorted(m) for m in sorted(mas2, key=sorted)])
+    basis = [S for S in all_auth
+             if not any(T < S for T in all_auth)]
 
-    equivalent = set(mas1) == set(mas2)
-    print(f"\nPolicies are equivalent: {'✓ Yes' if equivalent else '✗ No'}")
-    print("(Same circuits ⟹ same access structure, by the duality theorem)")
+    print(f"\nMinimal key reconstruction groups ({len(basis)}):")
+    for B in sorted(basis, key=lambda x: (len(x), sorted(x))):
+        names = [servers[s] for s in sorted(B)]
+        print(f"  {{{', '.join(names)}}}")
 
-    # Now a genuinely different policy
-    # Policy 3: A required, plus at least one other
-    def policy3(s: frozenset) -> bool:
-        return "A" in s and len(s) >= 2
+    print(f"\nTotal valid combinations: {len(all_auth)}")
+    print(f"Antichain basis size: {len(basis)}")
 
-    access3 = AccessStructure(participants=participants, authorized=policy3)
-    mas3 = access3.minimal_authorized_sets()
-
-    print(f"\nPolicy 3 minimal auth sets: {[sorted(m) for m in sorted(mas3, key=sorted)]}")
-    equiv13 = set(mas1) == set(mas3)
-    print(f"Policy 1 ≡ Policy 3: {'✓ Yes' if equiv13 else '✗ No'}")
-
-    if not equiv13:
-        only_in_1 = set(mas1) - set(mas3)
-        only_in_3 = set(mas3) - set(mas1)
-        if only_in_1:
-            print(f"  Circuits only in Policy 1: {[sorted(m) for m in only_in_1]}")
-        if only_in_3:
-            print(f"  Circuits only in Policy 3: {[sorted(m) for m in only_in_3]}")
+    # Geographic diversity analysis
+    print("\nGeographic diversity of minimal groups:")
+    for B in sorted(basis, key=lambda x: (len(x), sorted(x))):
+        active = set()
+        for name, members in regions.items():
+            if set(B) & members:
+                active.add(name)
+        names = [servers[s] for s in sorted(B)]
+        print(f"  {{{', '.join(names)}}} → regions: {active}")
 
 
-# =============================================================================
-# Application 4: Redundancy Detection
-# =============================================================================
+# ============================================================
+# Application 4: Secure Voting / Quorum Systems
+# ============================================================
 
-def redundancy_detection_demo():
-    """Detect redundant participants in an access structure.
-
-    A participant is redundant if they don't appear in any minimal authorized set,
-    meaning they can never be the "critical" member of any coalition.
+def secure_voting():
     """
-    print()
-    print("=" * 70)
-    print("APPLICATION 4: Participant Redundancy Detection")
-    print("=" * 70)
-    print()
+    Model a blockchain consensus / secure voting system.
 
-    participants = {"Alice", "Bob", "Charlie", "Dave", "Eve"}
+    Validators: v1..v7
+    Consensus requires: majority (4 out of 7) OR
+                       3 validators including at least 1 from each shard
+    Shards: {v1,v2,v3}, {v4,v5}, {v6,v7}
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Blockchain Consensus / Quorum System")
+    print("=" * 60)
 
-    # Policy: Alice and Bob, or Charlie and Dave
-    # Eve is completely redundant!
-    def policy(s: frozenset) -> bool:
-        if {"Alice", "Bob"} <= s:
-            return True
-        if {"Charlie", "Dave"} <= s:
-            return True
-        return False
+    validators = {i: f"v{i}" for i in range(1, 8)}
+    shards = {"Shard_A": {1, 2, 3}, "Shard_B": {4, 5}, "Shard_C": {6, 7}}
+    secret = 0
 
-    access = AccessStructure(participants=participants, authorized=policy)
-    mas = access.minimal_authorized_sets()
+    universe = frozenset(range(8))
 
-    print(f"Policy: (Alice ∧ Bob) ∨ (Charlie ∧ Dave)")
-    print(f"Participants: {sorted(participants)}")
-    print(f"\nMinimal authorized sets:")
-    for m in mas:
-        print(f"  {sorted(m)}")
+    def cl(S: FrozenSet[int]) -> FrozenSet[int]:
+        S_set = set(S) - {0}
+        # Majority rule
+        if len(S_set) >= 4:
+            return universe
+        # Cross-shard rule: 3 validators, 1 from each shard
+        if len(S_set) >= 3:
+            active_shards = sum(1 for members in shards.values()
+                                if S_set & members)
+            if active_shards == 3:
+                return universe
+        return S
 
-    # Find who appears in any circuit
-    in_any_circuit = set()
-    for m in mas:
-        in_any_circuit |= set(m)
+    participants = list(range(1, 8))
 
-    redundant = participants - in_any_circuit
-    print(f"\nParticipants in circuits: {sorted(in_any_circuit)}")
-    print(f"Redundant participants: {sorted(redundant)}")
+    all_auth = []
+    for size in range(1, 8):
+        for combo in combinations(participants, size):
+            S = frozenset(combo)
+            if secret in cl(S):
+                all_auth.append(S)
 
-    if redundant:
-        print(f"\n⚠ Warning: {sorted(redundant)} never contribute to any")
-        print(f"  minimal authorized coalition. They can be removed from")
-        print(f"  the scheme without changing the access structure.")
+    basis = [S for S in all_auth
+             if not any(T < S for T in all_auth)]
 
-    # Irredundancy check: for each participant, is there a circuit they're critical in?
-    print(f"\nIrredundancy analysis:")
-    for p in sorted(participants):
-        critical_in = [m for m in mas if p in m]
-        status = "essential" if critical_in else "REDUNDANT"
-        print(f"  {p:>10s}: appears in {len(critical_in)} circuit(s) → {status}")
+    print(f"\nConsensus rules:")
+    print(f"  1. Majority: 4 out of 7 validators")
+    print(f"  2. Cross-shard: 3 validators from all 3 shards")
+    print(f"\nShards: {dict((k, set(v)) for k, v in shards.items())}")
+    print(f"\nMinimal quorums ({len(basis)}):")
 
+    # Show first few
+    for B in sorted(basis, key=lambda x: (len(x), sorted(x)))[:15]:
+        names = [validators[v] for v in sorted(B)]
+        shard_info = []
+        for sname, members in shards.items():
+            if set(B) & members:
+                shard_info.append(sname)
+        rule = "cross-shard" if len(B) == 3 else "majority"
+        print(f"  {{{', '.join(names)}}} ({rule}, {'+'.join(shard_info)})")
 
-# =============================================================================
-# Main
-# =============================================================================
+    if len(basis) > 15:
+        print(f"  ... and {len(basis) - 15} more")
+
+    print(f"\nTotal valid quorums: {len(all_auth)}")
+    print(f"Minimal quorums (basis): {len(basis)}")
+    print(f"Compression: {len(basis)/len(all_auth):.1%}")
+
 
 if __name__ == "__main__":
-    corporate_vault_demo()
-    mpc_authorization_demo()
-    policy_comparison_demo()
-    redundancy_detection_demo()
+    mfa_access_structure()
+    corporate_access_control()
+    distributed_key_management()
+    secure_voting()
 
-    print()
-    print("=" * 70)
-    print("All applications completed successfully ✓")
-    print("=" * 70)
+    print("\n" + "=" * 60)
+    print("All applications completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-demo.py — Demonstrates the Closure–Secret-Sharing Duality with concrete examples.
+Closure–Secret-Sharing Duality: Demonstrations
 
-Shows how closure operators on pointed participant sets define access structures,
-how minimal authorized sets correspond to secret-circuits, and how the duality
-between closure and dependency representations works in practice.
+This module demonstrates the core theorems connecting closure operators,
+access structures, and idempotent semimodule realizations through concrete
+numerical examples.
 """
 
-from itertools import combinations
-from typing import Callable
-
-
-def powerset(s):
-    """Generate all subsets of s, ordered by size."""
-    items = list(s)
-    result = []
-    for r in range(len(items) + 1):
-        for combo in combinations(items, r):
-            result.append(frozenset(combo))
-    return result
-
-
-def fmt_set(s):
-    """Format a frozenset for display."""
-    if not s:
-        return "∅"
-    return "{" + ", ".join(sorted(s)) + "}"
-
-
-# =============================================================================
-# Example 1: (2,3)-Threshold Secret Sharing via Closure
-# =============================================================================
-print("=" * 70)
-print("EXAMPLE 1: (2,3)-Threshold Secret Sharing")
-print("=" * 70)
-print()
-print("Participants: {A, B, C}")
-print("Secret: ⊥ (none)")
-print("Threshold: any 2 of 3 can reconstruct the secret")
-print()
-
-participants = {"A", "B", "C"}
-
-def threshold_closure(s):
-    """Closure for (2,3)-threshold: secret is in span of any 2+ participants."""
-    participant_count = sum(1 for x in s if x is not None)
-    if participant_count >= 2:
-        return frozenset({None, "A", "B", "C"})
-    else:
-        return frozenset(s)
-
-def is_authorized(cl, s):
-    """Check if None (secret) is in cl(lift(S))."""
-    return None in cl(s)
-
-# Enumerate all subsets and their authorization status
-print("Authorization status:")
-for s in powerset(participants):
-    auth = is_authorized(threshold_closure, s)
-    status = "✓ AUTHORIZED" if auth else "✗ unauthorized"
-    label = fmt_set(s)
-    print(f"  {label:>20}  →  {status}")
-
-# Find minimal authorized sets
-print()
-print("Minimal authorized sets (= secret-circuits):")
-all_subsets = powerset(participants)
-for s in all_subsets:
-    if not is_authorized(threshold_closure, s):
-        continue
-    is_minimal = True
-    for t in all_subsets:
-        if t < s and is_authorized(threshold_closure, t):
-            is_minimal = False
-            break
-    if is_minimal:
-        print(f"  {fmt_set(s)}")
-
-# Verify monotonicity
-print()
-print("Monotonicity check:")
-monotone = True
-for s in all_subsets:
-    for t in all_subsets:
-        if s <= t and is_authorized(threshold_closure, s) and not is_authorized(threshold_closure, t):
-            print(f"  VIOLATION: {fmt_set(s)} ⊆ {fmt_set(t)}")
-            monotone = False
-if monotone:
-    print("  ✓ Authorization is monotone (Theorem 1 verified)")
-
-
-# =============================================================================
-# Example 2: Hierarchical Access Structure
-# =============================================================================
-print()
-print("=" * 70)
-print("EXAMPLE 2: Hierarchical Access Structure")
-print("=" * 70)
-print()
-print("Participants: CEO, VP1, VP2, Dir1, Dir2, Dir3")
-print("Policy: CEO alone, OR any 2 VPs, OR any 3 Directors")
-print()
-
-hier_participants = {"CEO", "VP1", "VP2", "Dir1", "Dir2", "Dir3"}
-
-def hier_closure(s):
-    """Closure for hierarchical access: weighted dependency."""
-    elems = set(s)
-    weight = 0
-    for x in elems:
-        if x is None:
-            continue
-        if x == "CEO":
-            weight += 3
-        elif x.startswith("VP"):
-            weight += 2
-        elif x.startswith("Dir"):
-            weight += 1
-    if weight >= 3:
-        result = set(s) | {None} | hier_participants
-        return frozenset(result)
-    return frozenset(s)
-
-print("Selected authorization examples:")
-test_sets = [
-    frozenset(),
-    frozenset({"CEO"}),
-    frozenset({"VP1"}),
-    frozenset({"VP1", "VP2"}),
-    frozenset({"Dir1"}),
-    frozenset({"Dir1", "Dir2"}),
-    frozenset({"Dir1", "Dir2", "Dir3"}),
-    frozenset({"VP1", "Dir1"}),
-]
-for s in test_sets:
-    auth = is_authorized(hier_closure, s)
-    status = "✓ AUTHORIZED" if auth else "✗ unauthorized"
-    label = fmt_set(s)
-    print(f"  {label:>35}  →  {status}")
-
-print()
-print("Minimal authorized sets:")
-all_hier = powerset(hier_participants)
-minimal_auth = []
-for s in all_hier:
-    if not is_authorized(hier_closure, s):
-        continue
-    is_minimal = True
-    for t in all_hier:
-        if t < s and is_authorized(hier_closure, t):
-            is_minimal = False
-            break
-    if is_minimal:
-        minimal_auth.append(s)
-        print(f"  {fmt_set(s)}")
-
-print(f"\nTotal minimal authorized sets: {len(minimal_auth)}")
-
-
-# =============================================================================
-# Example 3: Duality Round-Trip
-# =============================================================================
-print()
-print("=" * 70)
-print("EXAMPLE 3: Duality Round-Trip Verification")
-print("=" * 70)
-print()
-print("Starting with (2,3)-threshold closure, constructing dependency system,")
-print("then reconstructing closure, and verifying authorization is preserved.")
-print()
-
-# Step 1: Start with closure operator
-print("Step 1: Original closure → authorization")
-original_auth = {}
-for s in powerset(participants):
-    original_auth[s] = is_authorized(threshold_closure, s)
-
-# Step 2: Construct dependency system from closure
-print("Step 2: Construct dependency system D = (Option(X), cl, some, none)")
-print("  Carrier = Option({A, B, C}) = {None, A, B, C}")
-print("  span = threshold_closure")
-print("  gen(x) = x  (identity)")
-print("  secret = None")
-
-# Step 3: Convert dependency system back to closure
-print("Step 3: Reconstruct closure from dependency system")
-
-def roundtrip_closure(s):
-    return threshold_closure(s)
-
-# Step 4: Verify authorization preserved
-print("Step 4: Verify round-trip preserves authorization")
-all_match = True
-for s in powerset(participants):
-    original = original_auth[s]
-    roundtrip = is_authorized(roundtrip_closure, s)
-    if original != roundtrip:
-        print(f"  MISMATCH at {fmt_set(s)}")
-        all_match = False
-if all_match:
-    print("  ✓ Round-trip preserves all authorization decisions")
-    print("  (Theorem: roundtrip_closure_dependency_closure verified)")
-
-
-# =============================================================================
-# Example 4: Secret-Circuit Verification
-# =============================================================================
-print()
-print("=" * 70)
-print("EXAMPLE 4: Secret-Circuit = Minimal Authorized (Theorem 2)")
-print("=" * 70)
-print()
-
-def is_secret_circuit(cl, s):
-    """Check if s is a secret-circuit."""
-    if not is_authorized(cl, s):
-        return False
-    for x in s:
-        reduced = s - {x}
-        if is_authorized(cl, reduced):
-            return False
-    return True
-
-def is_minimal_authorized_fn(cl, s, all_subsets):
-    """Check if s is minimal authorized."""
-    if not is_authorized(cl, s):
-        return False
-    for t in all_subsets:
-        if t < s and is_authorized(cl, t):
-            return False
-    return True
-
-print("(2,3)-Threshold scheme:")
-all_subs = powerset(participants)
-for s in all_subs:
-    if not s:
-        continue
-    is_mc = is_secret_circuit(threshold_closure, s)
-    is_ma = is_minimal_authorized_fn(threshold_closure, s, all_subs)
-    if is_mc or is_ma:
-        label = fmt_set(s)
-        match_str = "✓" if is_mc == is_ma else "✗"
-        print(f"  {label:>20}  circuit={is_mc}  minimal_auth={is_ma}  {match_str}")
-
-print()
-print("Hierarchical scheme:")
-all_hier_subs = powerset(hier_participants)
-circuit_count = 0
-for s in all_hier_subs:
-    if not s:
-        continue
-    is_mc = is_secret_circuit(hier_closure, s)
-    is_ma = is_minimal_authorized_fn(hier_closure, s, all_hier_subs)
-    if is_mc or is_ma:
-        label = fmt_set(s)
-        match_str = "✓" if is_mc == is_ma else "✗"
-        print(f"  {label:>45}  circuit={is_mc}  minimal_auth={is_ma}  {match_str}")
-        circuit_count += 1
-
-print(f"\nAll {circuit_count} circuits match minimal authorized sets: Theorem 2 verified ✓")
-
-
-# =============================================================================
-# Summary
-# =============================================================================
-print()
-print("=" * 70)
-print("SUMMARY")
-print("=" * 70)
-print("""
-Demonstrated key theorems:
-  1. Authorization from closure is monotone (Theorem 1)          ✓
-  2. Minimal authorized = secret-circuits (Theorem 2)            ✓
-  3. Dependency ↔ closure authorization equivalence (Thm 3-4)    ✓
-  4. Round-trip preserves authorization (Theorems 7-8)           ✓
-  5. Every authorized set contains a minimal one (Theorem 9)     ✓
-
-The closure–dependency duality is not just abstract:
-it provides concrete, computable characterizations of
-who can reconstruct a secret and why.
-""")
-
-
-#!/usr/bin/env python3
-"""Generate PACKAGE.json with all embedded content."""
-
+from itertools import combinations, chain
+from typing import Set, FrozenSet, Callable, List, Tuple, Dict
 import json
-import base64
-from io import BytesIO
-from pathlib import Path
 
-# Read all text files
-def read_file(path):
-    return Path(path).read_text(encoding='utf-8')
 
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-lean_code = read_file('Bridges/AlgebraEMLCryptography/ClosureSecretSharingDuality.lean')
-demo_code = read_file('demo.py')
-algorithms_code = read_file('algorithms.py')
-applications_code = read_file('applications.py')
-viz_code = read_file('visualizations.py')
+# ============================================================
+# §1. Closure Operators
+# ============================================================
 
-# Generate visualizations and get base64
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-from itertools import combinations
+def make_linear_closure(n: int) -> Callable[[FrozenSet[int]], FrozenSet[int]]:
+    """
+    Closure operator on subsets of {0, ..., n-1} modeling linear span:
+    cl(S) = S union all elements reachable by 'linear combination'.
+    For this demo, cl(S) = S if |S| < 2, else cl(S) = {0,...,n-1}.
+    This models a (2,n)-threshold scheme.
+    """
+    universe = frozenset(range(n))
+    def cl(S: FrozenSet[int]) -> FrozenSet[int]:
+        if len(S) >= 2:
+            return universe
+        return S
+    return cl
 
-def powerset(s):
-    items = sorted(s)
-    result = []
-    for r in range(len(items) + 1):
-        for combo in combinations(items, r):
-            result.append(frozenset(combo))
-    return result
 
-def fig_to_base64(fig):
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{data}"
+def make_matroid_closure(n: int, circuits: List[FrozenSet[int]]) -> Callable:
+    """
+    Closure operator from a matroid given by its circuits.
+    cl(S) = S ∪ {x : ∃ circuit C with x ∈ C and C\\{x} ⊆ S}
+    Applied iteratively to fixed point.
+    """
+    universe = frozenset(range(n))
+    def cl(S: FrozenSet[int]) -> FrozenSet[int]:
+        result = set(S)
+        changed = True
+        while changed:
+            changed = False
+            for C in circuits:
+                for x in C:
+                    if x not in result and C - {x} <= result:
+                        result.add(x)
+                        changed = True
+        return frozenset(result)
+    return cl
 
-# Viz 1: Access lattice
-def make_lattice():
-    participants = {"A", "B", "C"}
-    subsets = powerset(participants)
 
-    def is_authorized(s):
-        return len(s) >= 2
+# ============================================================
+# §2. Access Structures from Closure
+# ============================================================
 
-    levels = {}
-    for s in subsets:
-        level = len(s)
-        if level not in levels:
-            levels[level] = []
-        levels[level].append(s)
+def closure_authorized(cl, secret: int, participants: FrozenSet[int]) -> bool:
+    """Check if a coalition is authorized: secret ∈ cl(participants)."""
+    return secret in cl(participants)
 
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-    positions = {}
-    for level, sets_at_level in sorted(levels.items()):
-        n = len(sets_at_level)
-        for i, s in enumerate(sorted(sets_at_level, key=lambda x: sorted(x))):
-            x = (i - (n - 1) / 2) * 2.5
-            y = level * 2
-            positions[s] = (x, y)
 
-    for s1 in subsets:
-        for s2 in subsets:
-            if s1 < s2 and len(s2) == len(s1) + 1:
-                x1, y1 = positions[s1]
-                x2, y2 = positions[s2]
-                ax.plot([x1, x2], [y1, y2], 'k-', alpha=0.3, linewidth=1)
+def find_minimal_authorized(cl, secret: int, n: int) -> List[FrozenSet[int]]:
+    """
+    Find all minimal authorized coalitions (the antichain basis).
+    This implements the key algorithm from Theorem B.
+    """
+    all_participants = list(range(n))
+    # Remove secret from participants if present
+    participants = [p for p in all_participants if p != secret]
 
-    for s in subsets:
-        x, y = positions[s]
-        auth = is_authorized(s)
-        is_min = auth and all(not is_authorized(t) for t in subsets if t < s)
-        if is_min:
-            color = '#e74c3c'; size = 800
-        elif auth:
-            color = '#f39c12'; size = 600
+    authorized = []
+    for size in range(1, len(participants) + 1):
+        for combo in combinations(participants, size):
+            S = frozenset(combo)
+            if closure_authorized(cl, secret, S):
+                authorized.append(S)
+
+    # Filter to minimal: keep S if no proper subset of S is authorized
+    minimal = []
+    for S in authorized:
+        is_minimal = True
+        for T in authorized:
+            if T < S:  # proper subset
+                is_minimal = False
+                break
+        if is_minimal:
+            minimal.append(S)
+
+    return minimal
+
+
+def verify_antichain(basis: List[FrozenSet[int]]) -> bool:
+    """Verify the basis is an antichain (no element is a subset of another)."""
+    for i, U in enumerate(basis):
+        for j, V in enumerate(basis):
+            if i != j and U <= V:
+                return False
+    return True
+
+
+def verify_authorization_iff_contains_basis(
+    cl, secret: int, participants: List[int],
+    basis: List[FrozenSet[int]]
+) -> bool:
+    """
+    Verify Theorem B: A is authorized iff A contains some basis element.
+    Tests all subsets of participants.
+    """
+    for size in range(len(participants) + 1):
+        for combo in combinations(participants, size):
+            A = frozenset(combo)
+            auth = closure_authorized(cl, secret, A)
+            contains_basis = any(U <= A for U in basis)
+            if auth != contains_basis:
+                return False
+    return True
+
+
+# ============================================================
+# §3. Idempotent Semimodule Realization
+# ============================================================
+
+class IdempotentAccessSemimodule:
+    """
+    An idempotent access semimodule over Bool (OR/AND semiring).
+    M = basis → Bool (indicator vectors).
+    share(x)[i] = (x ∈ basis[i])
+    Authorization: ∃ basis element ⊆ coalition.
+    """
+
+    def __init__(self, participants: List[int], basis: List[FrozenSet[int]]):
+        self.participants = participants
+        self.basis = basis
+        self.k = len(basis)  # dimension
+
+    def share(self, x: int) -> List[bool]:
+        """Share vector for participant x."""
+        return [x in B for B in self.basis]
+
+    def secret_vector(self) -> List[bool]:
+        """The secret target: all-True vector would be transversal condition."""
+        return [True] * self.k
+
+    def authorized(self, coalition: FrozenSet[int]) -> bool:
+        """Check authorization via basis containment."""
+        return any(B <= coalition for B in self.basis)
+
+    def minimal_support(self, coalition: FrozenSet[int]) -> FrozenSet[int]:
+        """Find a minimal authorized sub-coalition, if authorized."""
+        for B in self.basis:
+            if B <= coalition:
+                return B
+        return frozenset()
+
+
+# ============================================================
+# §4. Reconstruction Certificate
+# ============================================================
+
+class MinimalReconstructionCertificate:
+    """
+    A certified minimal reconstruction certificate.
+    Packages the antichain basis with correctness and minimality proofs.
+    """
+
+    def __init__(self, basis: List[FrozenSet[int]]):
+        self.basis = basis
+
+    def is_antichain(self) -> bool:
+        return verify_antichain(self.basis)
+
+    def reconstructs(self, A: FrozenSet[int]) -> bool:
+        return any(U <= A for U in self.basis)
+
+    def is_certified_minimal(self) -> bool:
+        """Every basis element is truly minimal."""
+        for U in self.basis:
+            for size in range(1, len(U)):
+                for combo in combinations(U, size):
+                    V = frozenset(combo)
+                    if self.reconstructs(V):
+                        return False
+        return True
+
+
+# ============================================================
+# §5. Demonstrations
+# ============================================================
+
+def demo_threshold_scheme():
+    """Demo 1: (2,5)-threshold secret sharing scheme."""
+    print("=" * 60)
+    print("DEMO 1: (2,5)-Threshold Secret Sharing via Closure")
+    print("=" * 60)
+
+    n = 6  # 5 participants + 1 secret
+    secret = 0
+    participants = list(range(1, n))
+
+    # Closure: cl(S) = {0,...,5} if |S| >= 2, else S
+    cl = make_linear_closure(n)
+
+    print(f"\nParticipants: {participants}")
+    print(f"Secret element: {secret}")
+    print(f"Closure model: linear span (threshold-2)")
+
+    # Find minimal authorized basis
+    basis = find_minimal_authorized(cl, secret, n)
+    print(f"\nMinimal authorized basis ({len(basis)} elements):")
+    for B in sorted(basis, key=lambda x: (len(x), sorted(x))):
+        print(f"  {set(B)}")
+
+    # Verify properties
+    print(f"\nAntichain property: {verify_antichain(basis)}")
+    print(f"Authorization ↔ contains basis: "
+          f"{verify_authorization_iff_contains_basis(cl, secret, participants, basis)}")
+
+    # Build semimodule
+    semimod = IdempotentAccessSemimodule(participants, basis)
+    print(f"\nSemimodule dimension: {semimod.k}")
+    print("Share vectors:")
+    for p in participants:
+        print(f"  share({p}) = {semimod.share(p)}")
+
+    # Test some coalitions
+    test_coalitions = [
+        frozenset({1, 2}), frozenset({3, 4, 5}),
+        frozenset({1}), frozenset({2, 3, 4, 5})
+    ]
+    print("\nAuthorization tests:")
+    for S in test_coalitions:
+        auth = semimod.authorized(S)
+        support = semimod.minimal_support(S) if auth else None
+        print(f"  {set(S)}: authorized={auth}"
+              + (f", minimal witness={set(support)}" if support else ""))
+
+    # Build certificate
+    cert = MinimalReconstructionCertificate(basis)
+    print(f"\nReconstruction certificate:")
+    print(f"  Antichain: {cert.is_antichain()}")
+    print(f"  Certified minimal: {cert.is_certified_minimal()}")
+    print(f"  Basis size: {len(cert.basis)}")
+
+
+def demo_matroid_scheme():
+    """Demo 2: Matroid-based access structure (non-threshold)."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Matroid-Based Access Structure via Closure")
+    print("=" * 60)
+
+    # 4 participants {1,2,3,4}, secret = 0
+    # Matroid circuits: {0,1,2}, {0,3,4}, {1,2,3,4}
+    # This means: {1,2} or {3,4} can reconstruct, but not {1,3} or {2,4}
+    n = 5
+    secret = 0
+    participants = [1, 2, 3, 4]
+
+    circuits = [
+        frozenset({0, 1, 2}),
+        frozenset({0, 3, 4}),
+        frozenset({1, 2, 3, 4})
+    ]
+    cl = make_matroid_closure(n, circuits)
+
+    print(f"\nParticipants: {participants}")
+    print(f"Secret element: {secret}")
+    print(f"Matroid circuits: {[set(c) for c in circuits]}")
+
+    # Find basis
+    basis = find_minimal_authorized(cl, secret, n)
+    print(f"\nMinimal authorized basis ({len(basis)} elements):")
+    for B in sorted(basis, key=lambda x: (len(x), sorted(x))):
+        print(f"  {set(B)}")
+
+    # Verify
+    print(f"\nAntichain property: {verify_antichain(basis)}")
+    print(f"Authorization ↔ contains basis: "
+          f"{verify_authorization_iff_contains_basis(cl, secret, participants, basis)}")
+
+    # Certificate
+    cert = MinimalReconstructionCertificate(basis)
+    print(f"\nReconstruction certificate:")
+    print(f"  Antichain: {cert.is_antichain()}")
+    print(f"  Certified minimal: {cert.is_certified_minimal()}")
+
+    # Semimodule
+    semimod = IdempotentAccessSemimodule(participants, basis)
+    print(f"\nSemimodule realization:")
+    print(f"  Dimension: {semimod.k}")
+    for p in participants:
+        print(f"  share({p}) = {semimod.share(p)}")
+
+    # Test coalitions
+    print("\nAuthorization tests:")
+    all_coalitions = []
+    for size in range(1, 5):
+        for combo in combinations(participants, size):
+            all_coalitions.append(frozenset(combo))
+    for S in all_coalitions:
+        auth = semimod.authorized(S)
+        if auth:
+            support = semimod.minimal_support(S)
+            print(f"  {str(set(S)):20s}: AUTHORIZED (witness: {set(support)})")
         else:
-            color = '#3498db'; size = 500
+            print(f"  {str(set(S)):20s}: unauthorized")
 
-        ax.scatter(x, y, s=size, c=color, zorder=5, edgecolors='black', linewidth=1.5)
-        label = "{" + ",".join(sorted(s)) + "}" if s else "∅"
-        ax.annotate(label, (x, y), textcoords="offset points",
-                   xytext=(0, -25), ha='center', fontsize=9, fontweight='bold')
 
-    legend_elements = [
-        mpatches.Patch(facecolor='#e74c3c', edgecolor='black', label='Minimal authorized (circuit)'),
-        mpatches.Patch(facecolor='#f39c12', edgecolor='black', label='Authorized'),
-        mpatches.Patch(facecolor='#3498db', edgecolor='black', label='Unauthorized'),
-    ]
-    ax.legend(handles=legend_elements, loc='upper left', fontsize=10)
-    ax.set_title('(2,3)-Threshold Access Structure Lattice', fontsize=14, fontweight='bold')
-    ax.set_xlim(-5, 5); ax.set_ylim(-1, 7.5); ax.axis('off')
-    return fig_to_base64(fig)
+def demo_hierarchical_scheme():
+    """Demo 3: Hierarchical access structure (manager + employees)."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Hierarchical Access Structure")
+    print("=" * 60)
 
-# Viz 2: Circuit distribution
-def make_circuit_dist():
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    # Manager (M=1) can authorize alone
+    # Any 2 employees from {E1=2, E2=3, E3=4} can authorize together
+    # Secret = 0
+    n = 5
+    secret = 0
+
+    # Closure: cl(S) = universe if M ∈ S or |S ∩ {E1,E2,E3}| >= 2
+    universe = frozenset(range(n))
+    employees = {2, 3, 4}
+    manager = 1
+
+    def cl(S: FrozenSet[int]) -> FrozenSet[int]:
+        S_set = set(S)
+        if manager in S_set or len(S_set & employees) >= 2:
+            return universe
+        return S
+
+    participants = [1, 2, 3, 4]
+    basis = find_minimal_authorized(cl, secret, n)
+
+    print(f"\nParticipants: Manager=1, Employees={{2,3,4}}")
+    print(f"Policy: Manager alone OR any 2 employees")
+    print(f"\nMinimal authorized basis ({len(basis)} elements):")
+    for B in sorted(basis, key=lambda x: (len(x), sorted(x))):
+        labels = []
+        for x in sorted(B):
+            labels.append(f"M" if x == 1 else f"E{x-1}")
+        print(f"  {set(B)} = {{{', '.join(labels)}}}")
+
+    print(f"\nAntichain: {verify_antichain(basis)}")
+    print(f"Correct: {verify_authorization_iff_contains_basis(cl, secret, participants, basis)}")
+
+    cert = MinimalReconstructionCertificate(basis)
+    print(f"Certified minimal: {cert.is_certified_minimal()}")
+
+    semimod = IdempotentAccessSemimodule(participants, basis)
+    print(f"\nSemimodule dimension: {semimod.k}")
+    print(f"Shares:")
+    for p in participants:
+        label = "Manager" if p == 1 else f"Employee {p-1}"
+        print(f"  {label}: {semimod.share(p)}")
+
+
+def demo_closure_lattice_statistics():
+    """Demo 4: Statistics on closure lattice and access structure complexity."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Closure Lattice & Access Structure Statistics")
+    print("=" * 60)
+
     configs = [
-        ("(2,5)-Threshold", {"A","B","C","D","E"}, lambda s: len(s) >= 2),
-        ("(3,5)-Threshold", {"A","B","C","D","E"}, lambda s: len(s) >= 3),
-        ("Hierarchical-5", {"CEO","VP1","VP2","D1","D2"},
-         lambda s: ("CEO" in s) or (len(s & {"VP1","VP2"}) >= 2) or (len(s) >= 3 and len(s & {"VP1","VP2"}) >= 1)),
+        ("(2,4)-threshold", 5, make_linear_closure(5)),
+        ("(2,6)-threshold", 7, make_linear_closure(7)),
     ]
-    x_positions = np.arange(1, 6)
-    width = 0.25
-    colors = ['#3498db', '#e74c3c', '#2ecc71']
-    for i, (name, parts, auth_fn) in enumerate(configs):
-        all_subs = powerset(parts)
-        minimal = [s for s in all_subs if auth_fn(s) and all(not auth_fn(t) for t in all_subs if t < s)]
-        size_counts = {}
-        for m in minimal:
-            sz = len(m)
-            size_counts[sz] = size_counts.get(sz, 0) + 1
-        counts = [size_counts.get(sz, 0) for sz in range(1, 6)]
-        ax.bar(x_positions + (i - 1) * width, counts, width, label=name, color=colors[i], edgecolor='black', alpha=0.8)
-    ax.set_xlabel('Circuit Size', fontsize=12); ax.set_ylabel('Count', fontsize=12)
-    ax.set_title('Secret-Circuit Size Distribution', fontsize=14, fontweight='bold')
-    ax.set_xticks(x_positions); ax.legend(); ax.grid(axis='y', alpha=0.3)
-    return fig_to_base64(fig)
 
-viz1 = make_lattice()
-viz2 = make_circuit_dist()
+    for name, n, cl in configs:
+        secret = 0
+        participants = list(range(1, n))
+        basis = find_minimal_authorized(cl, secret, n)
 
-package = {
-    "title": "Closure–Secret-Sharing Duality via Idempotent Dependency Systems",
-    "domain": "Bridges: Algebra × Cryptography × Closure Geometry",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {"name": "Closure–Secret-Sharing Duality Demo", "code": demo_code}
-    ],
-    "algorithms": [
-        {
-            "name": "Minimal Authorized Set Enumeration",
-            "pseudocode": "For each subset S ⊆ X (increasing size):\n  If none ∈ cl(lift(S)):\n    If no proper subset T ⊂ S has none ∈ cl(lift(T)):\n      Output S as minimal authorized\nComplexity: O(2^|X|) closure oracle calls",
-            "code": algorithms_code
-        },
-        {
-            "name": "Applications: Policy Design and Verification",
-            "pseudocode": "1. Define access policy as predicate\n2. Construct closure operator\n3. Enumerate minimal authorized sets (circuits)\n4. Verify monotonicity and circuit theorem\n5. Build canonical compressed presentation\n6. Detect redundant participants",
-            "code": applications_code
-        }
-    ],
-    "visualizations": [
-        {"name": "Access Structure Lattice", "data": viz1},
-        {"name": "Circuit Size Distribution", "data": viz2}
-    ],
-    "lean_proofs": lean_code
-}
+        # Count authorized vs unauthorized coalitions
+        n_auth = 0
+        n_total = 0
+        for size in range(len(participants) + 1):
+            for combo in combinations(participants, size):
+                n_total += 1
+                if closure_authorized(cl, secret, frozenset(combo)):
+                    n_auth += 1
 
-with open('PACKAGE.json', 'w', encoding='utf-8') as f:
-    json.dump(package, f, ensure_ascii=False, indent=2)
+        print(f"\n{name}:")
+        print(f"  Participants: {len(participants)}")
+        print(f"  Total coalitions: {n_total}")
+        print(f"  Authorized: {n_auth}")
+        print(f"  Unauthorized: {n_total - n_auth}")
+        print(f"  Minimal authorized (basis size): {len(basis)}")
+        print(f"  Compression ratio: {len(basis)}/{n_auth} = "
+              f"{len(basis)/n_auth:.3f}")
 
-print("PACKAGE.json generated successfully")
-print(f"  Size: {len(json.dumps(package))} characters")
+
+if __name__ == "__main__":
+    demo_threshold_scheme()
+    demo_matroid_scheme()
+    demo_hierarchical_scheme()
+    demo_closure_lattice_statistics()
+
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-visualizations.py — Generate visualizations for closure–secret-sharing duality.
+Visualizations for Closure–Secret-Sharing Duality
 
-Produces:
-1. Access structure lattice diagram
-2. Circuit/minimal authorized set comparison chart
-3. Closure geometry illustration
-4. Round-trip duality verification heatmap
+Generates diagrams showing access structure lattices, antichain bases,
+and semimodule share matrices.
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-from itertools import combinations
 import base64
-from io import BytesIO
+import io
+from itertools import combinations
+from typing import FrozenSet, List
+
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as mpatches
+    import numpy as np
+    HAS_MPL = True
+except ImportError:
+    HAS_MPL = False
 
 
-def powerset(s):
-    items = sorted(s)
-    result = []
-    for r in range(len(items) + 1):
-        for combo in combinations(items, r):
-            result.append(frozenset(combo))
-    return result
+def make_threshold_closure(n_total):
+    universe = frozenset(range(n_total))
+    def cl(S):
+        return universe if len(S) >= 2 else S
+    return cl
 
 
-def save_fig_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
-    buf = BytesIO()
+def get_basis(cl, secret, participants):
+    all_auth = []
+    for size in range(1, len(participants) + 1):
+        for combo in combinations(participants, size):
+            S = frozenset(combo)
+            if secret in cl(S):
+                all_auth.append(S)
+    return [S for S in all_auth if not any(T < S for T in all_auth)]
+
+
+def fig_to_base64(fig) -> str:
+    buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{data}"
+    return "data:image/png;base64," + base64.b64encode(buf.read()).decode()
 
 
-# =============================================================================
-# Visualization 1: Access Structure Lattice
-# =============================================================================
+def generate_share_matrix_figure():
+    """Generate the share matrix heatmap for a (2,4)-threshold scheme."""
+    if not HAS_MPL:
+        return None
 
-def plot_access_lattice():
-    """Visualize the (2,3)-threshold access structure as a lattice."""
-    participants = {"A", "B", "C"}
-    subsets = powerset(participants)
+    participants = [1, 2, 3, 4]
+    cl = make_threshold_closure(5)
+    basis = get_basis(cl, 0, participants)
 
-    def is_authorized(s):
-        return len(s) >= 2
+    # Build share matrix
+    k = len(basis)
+    n = len(participants)
+    matrix = np.zeros((n, k))
+    for j, B in enumerate(sorted(basis)):
+        for i, p in enumerate(participants):
+            matrix[i, j] = 1 if p in B else 0
 
-    # Position subsets by level (size)
+    fig, ax = plt.subplots(figsize=(8, 4))
+    im = ax.imshow(matrix, cmap='YlOrRd', aspect='auto', vmin=0, vmax=1)
+
+    ax.set_xticks(range(k))
+    ax.set_xticklabels([str(set(B)) for B in sorted(basis)],
+                       rotation=45, ha='right', fontsize=8)
+    ax.set_yticks(range(n))
+    ax.set_yticklabels([f"P{p}" for p in participants], fontsize=10)
+
+    ax.set_xlabel("Basis Elements (Minimal Authorized Coalitions)", fontsize=11)
+    ax.set_ylabel("Participants", fontsize=11)
+    ax.set_title("Idempotent Semimodule Share Matrix\n(2,4)-Threshold Scheme",
+                 fontsize=13, fontweight='bold')
+
+    # Add text annotations
+    for i in range(n):
+        for j in range(k):
+            text = "1" if matrix[i, j] == 1 else "0"
+            color = "white" if matrix[i, j] == 1 else "black"
+            ax.text(j, i, text, ha='center', va='center',
+                    fontsize=10, color=color, fontweight='bold')
+
+    plt.colorbar(im, ax=ax, shrink=0.8, label="Membership")
+    plt.tight_layout()
+    return fig
+
+
+def generate_compression_figure():
+    """Generate compression ratio chart across different scheme sizes."""
+    if not HAS_MPL:
+        return None
+
+    sizes = list(range(3, 10))
+    basis_sizes = []
+    auth_sizes = []
+
+    for n in sizes:
+        cl = make_threshold_closure(n + 1)
+        participants = list(range(1, n + 1))
+        basis = get_basis(cl, 0, participants)
+
+        n_auth = sum(1 for size in range(n + 1)
+                     for combo in combinations(participants, size)
+                     if any(B <= frozenset(combo) for B in basis))
+
+        basis_sizes.append(len(basis))
+        auth_sizes.append(n_auth)
+
+    ratios = [b / a for b, a in zip(basis_sizes, auth_sizes)]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+    # Left: absolute counts
+    ax1.bar([s - 0.15 for s in sizes], auth_sizes, 0.3,
+            label='Authorized coalitions', color='steelblue', alpha=0.8)
+    ax1.bar([s + 0.15 for s in sizes], basis_sizes, 0.3,
+            label='Basis elements', color='coral', alpha=0.8)
+    ax1.set_xlabel("Number of Participants", fontsize=11)
+    ax1.set_ylabel("Count", fontsize=11)
+    ax1.set_title("Authorized Coalitions vs. Basis Size\n(2,n)-Threshold",
+                  fontsize=12, fontweight='bold')
+    ax1.legend(fontsize=10)
+    ax1.set_yscale('log')
+
+    # Right: compression ratio
+    ax2.plot(sizes, ratios, 'o-', color='darkgreen', linewidth=2, markersize=8)
+    ax2.set_xlabel("Number of Participants", fontsize=11)
+    ax2.set_ylabel("Compression Ratio (basis/authorized)", fontsize=11)
+    ax2.set_title("Certificate Compression Ratio\n(2,n)-Threshold",
+                  fontsize=12, fontweight='bold')
+    ax2.set_ylim(0, 1)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    return fig
+
+
+def generate_access_structure_diagram():
+    """Generate a Hasse diagram of the access structure lattice."""
+    if not HAS_MPL:
+        return None
+
+    participants = [1, 2, 3]
+    cl = make_threshold_closure(4)
+    basis = get_basis(cl, 0, participants)
+
+    # All subsets
+    all_subsets = []
+    for size in range(4):
+        for combo in combinations(participants, size):
+            all_subsets.append(frozenset(combo))
+
+    # Classify
+    authorized = [S for S in all_subsets if 0 in cl(S)]
+    unauthorized = [S for S in all_subsets if S not in authorized]
+    minimal = basis
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+
+    # Position by level (size)
     levels = {}
-    for s in subsets:
-        level = len(s)
-        if level not in levels:
-            levels[level] = []
-        levels[level].append(s)
-
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+    for S in all_subsets:
+        sz = len(S)
+        if sz not in levels:
+            levels[sz] = []
+        levels[sz].append(S)
 
     positions = {}
-    for level, sets_at_level in sorted(levels.items()):
-        n = len(sets_at_level)
-        for i, s in enumerate(sorted(sets_at_level, key=lambda x: sorted(x))):
-            x = (i - (n - 1) / 2) * 2.5
-            y = level * 2
-            positions[s] = (x, y)
+    for level, subsets in levels.items():
+        n_items = len(subsets)
+        for i, S in enumerate(subsets):
+            x = (i - (n_items - 1) / 2) * 2.5
+            y = level * 2.5
+            positions[S] = (x, y)
 
-    # Draw edges (subset relations)
-    for s1 in subsets:
-        for s2 in subsets:
-            if s1 < s2 and len(s2) == len(s1) + 1:
-                x1, y1 = positions[s1]
-                x2, y2 = positions[s2]
-                ax.plot([x1, x2], [y1, y2], 'k-', alpha=0.3, linewidth=1)
+    # Draw edges (Hasse diagram)
+    for S in all_subsets:
+        for T in all_subsets:
+            if S < T and len(T) == len(S) + 1:
+                sx, sy = positions[S]
+                tx, ty = positions[T]
+                ax.plot([sx, tx], [sy, ty], 'k-', alpha=0.2, linewidth=1)
 
     # Draw nodes
-    for s in subsets:
-        x, y = positions[s]
-        auth = is_authorized(s)
-        is_minimal = auth and all(not is_authorized(t) for t in subsets if t < s)
-
-        if is_minimal:
-            color = '#e74c3c'  # Red for minimal authorized (circuits)
-            size = 800
-        elif auth:
-            color = '#f39c12'  # Orange for authorized
+    for S in all_subsets:
+        x, y = positions[S]
+        if S in minimal:
+            color = '#FF6B35'  # Orange for minimal authorized
             size = 600
+            edgecolor = 'darkred'
+        elif S in authorized:
+            color = '#4ECDC4'  # Teal for authorized
+            size = 400
+            edgecolor = 'darkgreen'
         else:
-            color = '#3498db'  # Blue for unauthorized
-            size = 500
+            color = '#E8E8E8'  # Gray for unauthorized
+            size = 300
+            edgecolor = 'gray'
 
-        ax.scatter(x, y, s=size, c=color, zorder=5, edgecolors='black', linewidth=1.5)
+        ax.scatter(x, y, s=size, c=color, edgecolors=edgecolor,
+                   linewidth=2, zorder=5)
 
-        label = "{" + ",".join(sorted(s)) + "}" if s else "∅"
+        label = str(set(S)) if S else "∅"
         ax.annotate(label, (x, y), textcoords="offset points",
-                   xytext=(0, -25), ha='center', fontsize=9, fontweight='bold')
+                    xytext=(0, -22), ha='center', fontsize=8, fontweight='bold')
 
     # Legend
     legend_elements = [
-        mpatches.Patch(facecolor='#e74c3c', edgecolor='black', label='Minimal authorized (circuit)'),
-        mpatches.Patch(facecolor='#f39c12', edgecolor='black', label='Authorized'),
-        mpatches.Patch(facecolor='#3498db', edgecolor='black', label='Unauthorized'),
+        mpatches.Patch(facecolor='#FF6B35', edgecolor='darkred',
+                       label='Minimal Authorized (Basis)'),
+        mpatches.Patch(facecolor='#4ECDC4', edgecolor='darkgreen',
+                       label='Authorized'),
+        mpatches.Patch(facecolor='#E8E8E8', edgecolor='gray',
+                       label='Unauthorized'),
     ]
     ax.legend(handles=legend_elements, loc='upper left', fontsize=10)
 
-    ax.set_title('(2,3)-Threshold Access Structure Lattice\nMinimal authorized = Secret-circuits (Theorem 2)',
-                fontsize=14, fontweight='bold')
+    ax.set_title("Access Structure Lattice: (2,3)-Threshold Scheme\n"
+                 "Hasse Diagram with Antichain Basis Highlighted",
+                 fontsize=13, fontweight='bold')
     ax.set_xlim(-5, 5)
-    ax.set_ylim(-1, 7.5)
     ax.axis('off')
-
-    fig.savefig('access_lattice.png', dpi=150, bbox_inches='tight')
-    print("Saved: access_lattice.png")
-    return save_fig_base64(fig)
+    plt.tight_layout()
+    return fig
 
 
-# =============================================================================
-# Visualization 2: Hierarchical Access Structure
-# =============================================================================
+def generate_all_visualizations():
+    """Generate all visualization figures and return as base64 dict."""
+    results = {}
 
-def plot_hierarchical_access():
-    """Visualize the hierarchical access structure."""
-    participants = {"CEO", "VP1", "VP2", "Dir1", "Dir2", "Dir3"}
+    fig1 = generate_share_matrix_figure()
+    if fig1:
+        results['share_matrix'] = fig_to_base64(fig1)
+        fig1.savefig('/workspace/request-project/share_matrix.png',
+                     dpi=150, bbox_inches='tight')
+        plt.close(fig1)
+        print("Generated: share_matrix.png")
 
-    def is_authorized(s):
-        weight = 0
-        for x in s:
-            if x == "CEO": weight += 3
-            elif x.startswith("VP"): weight += 2
-            elif x.startswith("Dir"): weight += 1
-        return weight >= 3
+    fig2 = generate_compression_figure()
+    if fig2:
+        results['compression'] = fig_to_base64(fig2)
+        fig2.savefig('/workspace/request-project/compression.png',
+                     dpi=150, bbox_inches='tight')
+        plt.close(fig2)
+        print("Generated: compression.png")
 
-    # Find minimal authorized sets
-    all_subs = powerset(participants)
-    minimal = []
-    for s in all_subs:
-        if not is_authorized(s):
-            continue
-        if all(not is_authorized(t) for t in all_subs if t < s):
-            minimal.append(s)
+    fig3 = generate_access_structure_diagram()
+    if fig3:
+        results['access_structure'] = fig_to_base64(fig3)
+        fig3.savefig('/workspace/request-project/access_structure.png',
+                     dpi=150, bbox_inches='tight')
+        plt.close(fig3)
+        print("Generated: access_structure.png")
 
-    fig, ax = plt.subplots(1, 1, figsize=(12, 6))
+    return results
 
-    # Group minimal sets by size
-    by_size = {}
-    for m in minimal:
-        sz = len(m)
-        if sz not in by_size:
-            by_size[sz] = []
-        by_size[sz].append(m)
-
-    colors = {1: '#e74c3c', 2: '#f39c12', 3: '#2ecc71'}
-    y_pos = 0
-
-    for sz in sorted(by_size.keys()):
-        sets = by_size[sz]
-        for i, s in enumerate(sorted(sets, key=lambda x: sorted(x))):
-            label = "{" + ", ".join(sorted(s)) + "}"
-            color = colors.get(sz, '#95a5a6')
-            ax.barh(y_pos, 1, color=color, edgecolor='black', linewidth=1)
-            ax.text(1.05, y_pos, label, va='center', ha='left', fontsize=10)
-            y_pos += 1
-
-    ax.set_xlim(0, 5)
-    ax.set_ylim(-0.5, y_pos - 0.5)
-    ax.set_xlabel('')
-    ax.set_yticks([])
-    ax.set_xticks([])
-
-    legend_elements = [
-        mpatches.Patch(facecolor='#e74c3c', edgecolor='black', label='Size 1 (CEO alone)'),
-        mpatches.Patch(facecolor='#f39c12', edgecolor='black', label='Size 2 (VP pairs, etc.)'),
-        mpatches.Patch(facecolor='#2ecc71', edgecolor='black', label='Size 3 (Director triples)'),
-    ]
-    ax.legend(handles=legend_elements, loc='upper right', fontsize=10)
-
-    ax.set_title(f'Hierarchical Access: {len(minimal)} Minimal Authorized Sets (Circuits)\n'
-                'CEO alone | VP+VP or VP+Dir | Dir+Dir+Dir',
-                fontsize=13, fontweight='bold')
-
-    fig.savefig('hierarchical_access.png', dpi=150, bbox_inches='tight')
-    print("Saved: hierarchical_access.png")
-    return save_fig_base64(fig)
-
-
-# =============================================================================
-# Visualization 3: Duality Round-Trip Verification
-# =============================================================================
-
-def plot_roundtrip_verification():
-    """Heatmap showing round-trip authorization preservation."""
-    participants = sorted(["A", "B", "C", "D"])
-    subsets = powerset(set(participants))
-
-    def threshold_auth(s, k=2):
-        return len(s) >= k
-
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
-    for idx, (k, title) in enumerate([(2, "(2,4)-Threshold"), (3, "(3,4)-Threshold"), (4, "(4,4)-Threshold")]):
-        ax = axes[idx]
-
-        # Original authorization
-        auth_original = [threshold_auth(s, k) for s in subsets]
-        # After round-trip (should be identical for closure-exact structures)
-        auth_roundtrip = auth_original.copy()  # By our theorem, these are equal
-
-        n = len(subsets)
-        matrix = np.zeros((2, n))
-        for j in range(n):
-            matrix[0, j] = 1 if auth_original[j] else 0
-            matrix[1, j] = 1 if auth_roundtrip[j] else 0
-
-        im = ax.imshow(matrix, aspect='auto', cmap='RdYlGn', vmin=0, vmax=1)
-
-        labels = ["{" + ",".join(sorted(s)) + "}" if s else "∅" for s in subsets]
-        ax.set_xticks(range(n))
-        ax.set_xticklabels(labels, rotation=90, fontsize=7)
-        ax.set_yticks([0, 1])
-        ax.set_yticklabels(["Original", "Round-trip"], fontsize=10)
-        ax.set_title(f'{title}\nk={k}, n=4', fontsize=12, fontweight='bold')
-
-    fig.suptitle('Round-Trip Duality Verification: Authorization Preserved ✓',
-                fontsize=14, fontweight='bold', y=1.02)
-    fig.tight_layout()
-
-    fig.savefig('roundtrip_verification.png', dpi=150, bbox_inches='tight')
-    print("Saved: roundtrip_verification.png")
-    return save_fig_base64(fig)
-
-
-# =============================================================================
-# Visualization 4: Circuit Size Distribution
-# =============================================================================
-
-def plot_circuit_distribution():
-    """Distribution of circuit sizes for different access structures."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-
-    configs = [
-        ("(2,5)-Threshold", {"A","B","C","D","E"}, lambda s: len(s) >= 2),
-        ("(3,5)-Threshold", {"A","B","C","D","E"}, lambda s: len(s) >= 3),
-        ("Hierarchical-5", {"CEO","VP1","VP2","D1","D2"},
-         lambda s: ("CEO" in s) or (len(s & {"VP1","VP2"}) >= 2) or (len(s) >= 3 and len(s & {"VP1","VP2"}) >= 1)),
-    ]
-
-    x_positions = np.arange(1, 6)
-    width = 0.25
-    colors = ['#3498db', '#e74c3c', '#2ecc71']
-
-    for i, (name, participants, auth_fn) in enumerate(configs):
-        all_subs = powerset(participants)
-        minimal = []
-        for s in all_subs:
-            if not auth_fn(s):
-                continue
-            if all(not auth_fn(t) for t in all_subs if t < s):
-                minimal.append(s)
-
-        # Count by size
-        size_counts = {}
-        for m in minimal:
-            sz = len(m)
-            size_counts[sz] = size_counts.get(sz, 0) + 1
-
-        counts = [size_counts.get(sz, 0) for sz in range(1, 6)]
-        ax.bar(x_positions + (i - 1) * width, counts, width,
-               label=name, color=colors[i], edgecolor='black', alpha=0.8)
-
-    ax.set_xlabel('Circuit Size (|S|)', fontsize=12)
-    ax.set_ylabel('Number of Circuits', fontsize=12)
-    ax.set_title('Secret-Circuit Size Distribution\nAcross Different Access Structures',
-                fontsize=14, fontweight='bold')
-    ax.set_xticks(x_positions)
-    ax.set_xticklabels([str(i) for i in range(1, 6)])
-    ax.legend(fontsize=10)
-    ax.grid(axis='y', alpha=0.3)
-
-    fig.savefig('circuit_distribution.png', dpi=150, bbox_inches='tight')
-    print("Saved: circuit_distribution.png")
-    return save_fig_base64(fig)
-
-
-# =============================================================================
-# Main
-# =============================================================================
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-    print()
-
-    b64_lattice = plot_access_lattice()
-    b64_hier = plot_hierarchical_access()
-    b64_roundtrip = plot_roundtrip_verification()
-    b64_circuit = plot_circuit_distribution()
-
-    print()
-    print("All visualizations generated successfully ✓")
-    print(f"  access_lattice.png ({len(b64_lattice)} chars base64)")
-    print(f"  hierarchical_access.png ({len(b64_hier)} chars base64)")
-    print(f"  roundtrip_verification.png ({len(b64_roundtrip)} chars base64)")
-    print(f"  circuit_distribution.png ({len(b64_circuit)} chars base64)")
+    viz = generate_all_visualizations()
+    print(f"\nGenerated {len(viz)} visualizations")
+    for name, data in viz.items():
+        print(f"  {name}: {len(data)} chars (base64)")

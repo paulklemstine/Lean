@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,16 +16,25 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
       "title": "Tropical Arithmetic Lensing: Geodesic Semimodules, Caustic Factor Certificates, and Certified Factor Reconstruction",
       "domain": "Tropical Geometry × Number Theory × Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
       "date": "2026-05-13T12:33:55Z",
       "hue": 270
+    },
+    {
+      "id": "algebraemlcryptography_closure_secret_sharing_dual",
+      "title": "Closure-Secret-Sharing Duality via Idempotent Access Semimodules",
+      "domain": "Bridges: Algebra-EML-Cryptography",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-13T12:34:13Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -34,6 +43,13 @@
       "target": "algebraemllogic_closure_rateproof_duality_via_idem",
       "strength": 1.0,
       "label": "Proof",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalgeometry_gravitational_lens_realiza",
+      "target": "algebraemlcryptography_closure_secret_sharing_dual",
+      "strength": 0.5271386430678466,
+      "label": "Cryptography bridge",
       "type": "heuristic"
     },
     {
