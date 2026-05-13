@@ -4,11 +4,28 @@
       "id": "algebratropicalrepresentationtheory_tropical_satak",
       "title": "Tropical Satake Polytope Duality via Idempotent Weight Semimodules and Certified Crystal Reconstruction",
       "domain": "Algebra-Tropical-Representation Theory Bridge",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
+      "primary_domain": "Tropical",
+      "shape": "star",
       "date": "2026-05-13T00:29:54Z",
-      "hue": 272
+      "hue": 90
+    },
+    {
+      "id": "algebraemlphysics_closure_entropic_gravity_duality",
+      "title": "Closure–Entropic Gravity Duality via Idempotent Curvature Semimodules and Certified Horizon Reconstruction",
+      "domain": "Bridges (Algebra–EML–Physics)",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-13T00:32:48Z",
+      "hue": 100
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "algebratropicalrepresentationtheory_tropical_satak",
+      "target": "algebraemlphysics_closure_entropic_gravity_duality",
+      "strength": 0.3,
+      "label": "Closure",
+      "type": "heuristic"
+    }
+  ]
 }
