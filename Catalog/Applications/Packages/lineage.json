@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -34,7 +34,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -52,7 +52,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T12:34:41Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_voronoilattice_re",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:34:59Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "algebratropicalcryptography_tropical_valuation_sec",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -97,7 +97,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T14:04:34Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -106,7 +106,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T14:04:50Z",
-      "hue": 112
+      "hue": 92
     },
     {
       "id": "closure_operator_learning_universal_approximation_",
@@ -115,7 +115,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T14:05:03Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "temporal_stone_duality_from_idempotent_semiring_fi",
@@ -124,61 +124,16 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T14:05:24Z",
-      "hue": 271
-    },
-    {
-      "id": "seed_seed_001",
-      "title": "P vs NP via Tropical Semiring Reductions",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "",
-      "hue": 271
-    },
-    {
-      "id": "seed_seed_003",
-      "title": "Kolmogorov Complexity Closure and Idempotent Compression Duality",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "",
-      "hue": 95
-    },
-    {
-      "id": "seed_seed_004",
-      "title": "Neural Sheaf Cohomology and Adversarial Robustness Guarantees",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "",
       "hue": 90
     },
     {
-      "id": "seed_seed_006",
-      "title": "Holographic Renormalization of Proof Complexity",
-      "domain": "Speculative",
-      "primary_domain": "Speculative",
-      "shape": "pentagonal_prism",
-      "date": "",
-      "hue": 272
-    },
-    {
-      "id": "seed_seed_007",
-      "title": "Closure-Operator Learning: Universal Approximation via Idempotent Semimodules",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "",
-      "hue": 91
-    },
-    {
-      "id": "seed_seed_009",
-      "title": "Temporal Stone Duality from Idempotent Semiring Fixpoints",
-      "domain": "Logic",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "",
-      "hue": 270
+      "id": "quantum_resistant_lattice_cryptography_via_berggre",
+      "title": "Berggren Groupoid Orbit Cryptography: Faithful Arithmetic Tree Actions as Post-Quantum Security Primitives",
+      "domain": "Post-Quantum Cryptography / Arithmetic Dynamics",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-13T14:43:34Z",
+      "hue": 92
     }
   ],
   "edges": [
@@ -235,7 +190,7 @@
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
       "strength": 0.6121720881427073,
-      "label": "Tropical,Algebra bridge",
+      "label": "Algebra,Tropical bridge",
       "type": "heuristic"
     },
     {
@@ -264,6 +219,13 @@
       "target": "algebratropicalcryptography_tropical_valuation_sec",
       "strength": 0.5570828961175236,
       "label": "Tropical Valuation Secret",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebrapythagoreancryptography_berggren_isogeny_re",
+      "target": "quantum_resistant_lattice_cryptography_via_berggre",
+      "strength": 0.5387198321091291,
+      "label": "Berggren Groupoid Orbit Cryptography",
       "type": "heuristic"
     },
     {
@@ -338,9 +300,9 @@
     },
     {
       "source": "algebratropicalcryptography_tropical_valuation_sec",
-      "target": "p_vs_np_via_tropical_semiring_reductions",
-      "strength": 0.35508919202518363,
-      "label": "Algebra bridge",
+      "target": "quantum_resistant_lattice_cryptography_via_berggre",
+      "strength": 0.3826337880377754,
+      "label": "Berggren Groupoid Orbit Cryptography",
       "type": "heuristic"
     },
     {
@@ -363,48 +325,6 @@
       "strength": 0.3,
       "label": "Temporal Stone Duality",
       "type": "heuristic"
-    },
-    {
-      "source": "seed_seed_001",
-      "target": "p_vs_np_via_tropical_semiring_reductions",
-      "strength": 1.0,
-      "label": "P vs NP via Tropical Semiring Reductions",
-      "type": "provenance"
-    },
-    {
-      "source": "seed_seed_003",
-      "target": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "strength": 1.0,
-      "label": "Kolmogorov Complexity Closure and Idempotent Compression ...",
-      "type": "provenance"
-    },
-    {
-      "source": "seed_seed_004",
-      "target": "neural_sheaf_cohomology_and_adversarial_robustness",
-      "strength": 1.0,
-      "label": "Neural Sheaf Cohomology and Adversarial Robustness Guaran...",
-      "type": "provenance"
-    },
-    {
-      "source": "seed_seed_006",
-      "target": "holographic_renormalization_of_proof_complexity",
-      "strength": 1.0,
-      "label": "Holographic Renormalization of Proof Complexity",
-      "type": "provenance"
-    },
-    {
-      "source": "seed_seed_007",
-      "target": "closure_operator_learning_universal_approximation_",
-      "strength": 1.0,
-      "label": "Closure-Operator Learning: Universal Approximation via Id...",
-      "type": "provenance"
-    },
-    {
-      "source": "seed_seed_009",
-      "target": "temporal_stone_duality_from_idempotent_semiring_fi",
-      "strength": 1.0,
-      "label": "Temporal Stone Duality from Idempotent Semiring Fixpoints",
-      "type": "provenance"
     }
   ]
 }
