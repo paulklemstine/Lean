@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" width="700" height="500">
+  <defs>
+    <marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#555"/>
+    </marker>
+    <style>
+      .box { rx: 8; ry: 8; stroke-width: 2; }
+      .def-box { fill: #eaf2f8; stroke: #3498db; }
+      .thm-box { fill: #e8f8f5; stroke: #1abc9c; }
+      .main-box { fill: #fef9e7; stroke: #f39c12; stroke-width: 3; }
+      .box-text { font: 12px sans-serif; fill: #222; }
+      .box-title { font: bold 13px sans-serif; fill: #222; }
+      .dep-arrow { stroke: #888; stroke-width: 1.5; marker-end: url(#arr2); fill: none; }
+    </style>
+  </defs>
+
+  <text x="350" y="25" text-anchor="middle" style="font: bold 16px sans-serif; fill: #222;">Theorem Dependency Structure</text>
+
+  <!-- Layer 1: Definitions -->
+  <rect x="20" y="45" width="140" height="50" class="box def-box"/>
+  <text x="90" y="65" text-anchor="middle" class="box-title">Term, Ctx</text>
+  <text x="90" y="82" text-anchor="middle" class="box-text">§1 Signatures</text>
+
+  <rect x="180" y="45" width="140" height="50" class="box def-box"/>
+  <text x="250" y="65" text-anchor="middle" class="box-title">SigAlgebra</text>
+  <text x="250" y="82" text-anchor="middle" class="box-text">§2 Algebras</text>
+
+  <rect x="340" y="45" width="160" height="50" class="box def-box"/>
+  <text x="420" y="65" text-anchor="middle" class="box-title">Architecture</text>
+  <text x="420" y="82" text-anchor="middle" class="box-text">§2 State + Observe</text>
+
+  <rect x="520" y="45" width="160" height="50" class="box def-box"/>
+  <text x="600" y="65" text-anchor="middle" class="box-title">ctxEquiv</text>
+  <text x="600" y="82" text-anchor="middle" class="box-text">§3 Observational</text>
+
+  <!-- Layer 2: Basic theorems -->
+  <rect x="40" y="140" width="200" height="45" class="box thm-box"/>
+  <text x="140" y="157" text-anchor="middle" class="box-title">ctxEquiv_isEquivalence</text>
+  <text x="140" y="175" text-anchor="middle" class="box-text">Equivalence relation</text>
+
+  <rect x="270" y="140" width="200" height="45" class="box thm-box"/>
+  <text x="370" y="157" text-anchor="middle" class="box-title">Ctx.plug_comp</text>
+  <text x="370" y="175" text-anchor="middle" class="box-text">Context composition</text>
+
+  <rect x="500" y="140" width="180" height="45" class="box thm-box"/>
+  <text x="590" y="157" text-anchor="middle" class="box-title">eval_plug</text>
+  <text x="590" y="175" text-anchor="middle" class="box-text">Eval factorization</text>
+
+  <!-- Layer 3: Core theorems -->
+  <rect x="30" y="230" width="220" height="45" class="box main-box"/>
+  <text x="140" y="247" text-anchor="middle" class="box-title">ctxEquiv_congruence</text>
+  <text x="140" y="265" text-anchor="middle" class="box-text">★ Congruence (telescoping)</text>
+
+  <rect x="280" y="230" width="220" height="45" class="box thm-box"/>
+  <text x="390" y="247" text-anchor="middle" class="box-title">state_factors_ctxEquiv</text>
+  <text x="390" y="265" text-anchor="middle" class="box-text">Forward Myhill-Nerode</text>
+
+  <rect x="530" y="230" width="150" height="45" class="box thm-box"/>
+  <text x="605" y="247" text-anchor="middle" class="box-title">ArchMorphism</text>
+  <text x="605" y="265" text-anchor="middle" class="box-text">map_eval, behavior</text>
+
+  <!-- Layer 4: Full abstraction -->
+  <rect x="180" y="320" width="340" height="45" class="box main-box"/>
+  <text x="350" y="337" text-anchor="middle" class="box-title">separated_stateEquiv_iff_ctxEquiv</text>
+  <text x="350" y="355" text-anchor="middle" class="box-text">★ Full abstraction for separated architectures</text>
+
+  <!-- Layer 5: Main results -->
+  <rect x="50" y="410" width="270" height="50" class="box main-box"/>
+  <text x="185" y="427" text-anchor="middle" class="box-title">minimality_via_separation</text>
+  <text x="185" y="447" text-anchor="middle" class="box-text">★★ Surjection onto minimal quotient</text>
+
+  <rect x="380" y="410" width="270" height="50" class="box main-box"/>
+  <text x="515" y="427" text-anchor="middle" class="box-title">uniqueness_of_minimal</text>
+  <text x="515" y="447" text-anchor="middle" class="box-text">★★ Isomorphism of minimal realizations</text>
+
+  <!-- Arrows -->
+  <line x1="600" y1="95" x2="590" y2="140" class="dep-arrow"/>
+  <line x1="420" y1="95" x2="370" y2="140" class="dep-arrow"/>
+  <line x1="90" y1="95" x2="140" y2="140" class="dep-arrow"/>
+  <line x1="250" y1="95" x2="140" y2="140" class="dep-arrow"/>
+
+  <line x1="140" y1="185" x2="140" y2="230" class="dep-arrow"/>
+  <line x1="370" y1="185" x2="140" y2="230" class="dep-arrow"/>
+  <line x1="590" y1="185" x2="390" y2="230" class="dep-arrow"/>
+
+  <line x1="390" y1="275" x2="350" y2="320" class="dep-arrow"/>
+  <line x1="140" y1="275" x2="350" y2="320" class="dep-arrow"/>
+
+  <line x1="350" y1="365" x2="185" y2="410" class="dep-arrow"/>
+  <line x1="350" y1="365" x2="515" y2="410" class="dep-arrow"/>
+  <line x1="185" y1="460" x2="515" y2="410" class="dep-arrow" stroke-dasharray="4,3"/>
+
+  <text x="350" y="488" text-anchor="middle" style="font: 12px sans-serif; fill: #888;">Dashed: uniqueness uses minimality</text>
+</svg>
