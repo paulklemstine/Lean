@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T00:29:54Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlphysics_closure_entropic_gravity_duality",
@@ -16,7 +16,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T00:32:48Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_ope",
@@ -25,7 +25,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T00:46:49Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_closure_causal_horizon_realizati",
@@ -34,7 +34,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T01:06:59Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemltropical_padic_closurevaluation_duality_",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T01:30:54Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_closure_gauge_realization_dualit",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T01:44:04Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlmachinelearning_closure_capacityattentio",
@@ -61,7 +61,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T01:57:06Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemllogic_closure_stone_spectrum_duality_via",
@@ -70,7 +70,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T02:00:56Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebratropicalcomputation_tropical_automaton_spec",
@@ -79,7 +79,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T02:05:55Z",
-      "hue": 271
+      "hue": 101
     },
     {
       "id": "algebraspeculativelogic_ultrametric_proof_compress",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T02:11:08Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemllogic_closure_stone_realization_duality_",
@@ -97,7 +97,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T02:19:51Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "algebraemlmachinelearning_closure_matroid_generali",
@@ -106,7 +106,16 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T03:03:23Z",
-      "hue": 270
+      "hue": 272
+    },
+    {
+      "id": "algebraemlcryptography_closure_extractorsyndrome_d",
+      "title": "Closure-Extractor-Syndrome Duality via Idempotent Parity Semimodules",
+      "domain": "Bridges: Algebra x Coding Theory x Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-13T03:03:31Z",
+      "hue": 292
     }
   ],
   "edges": [
@@ -128,7 +137,7 @@
       "source": "algebraemlphysics_closure_entropic_gravity_duality",
       "target": "algebraemlphysics_closure_gauge_realization_dualit",
       "strength": 0.8090413094310209,
-      "label": "Algebra,Bridges,EML,Physics bridge",
+      "label": "Physics,EML,Bridges,Algebra bridge",
       "type": "heuristic"
     },
     {
@@ -174,6 +183,13 @@
       "type": "heuristic"
     },
     {
+      "source": "algebraemlmachinelearning_closure_matroid_generali",
+      "target": "algebraemlcryptography_closure_extractorsyndrome_d",
+      "strength": 0.5749805144193296,
+      "label": "Closure",
+      "type": "heuristic"
+    },
+    {
       "source": "algebraemlphysics_closure_causal_horizon_realizati",
       "target": "algebraemlmachinelearning_closure_matroid_generali",
       "strength": 0.5520654715510522,
@@ -185,6 +201,13 @@
       "target": "algebraemlmachinelearning_closure_matroid_generali",
       "strength": 0.5520654715510522,
       "label": "Exchange",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlphysics_closure_gauge_realization_dualit",
+      "target": "algebraemlcryptography_closure_extractorsyndrome_d",
+      "strength": 0.5520654715510522,
+      "label": "Closure",
       "type": "heuristic"
     },
     {
@@ -210,13 +233,6 @@
     },
     {
       "source": "algebratropicalmachinelearning_tropical_neural_ope",
-      "target": "algebraemllogic_closure_stone_realization_duality_",
-      "strength": 0.5204208885424786,
-      "label": "Closure",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraemlphysics_closure_gauge_realization_dualit",
       "target": "algebraemllogic_closure_stone_realization_duality_",
       "strength": 0.5204208885424786,
       "label": "Closure",
@@ -255,6 +271,13 @@
       "target": "algebratropicalcomputation_tropical_automaton_spec",
       "strength": 0.37256430241621197,
       "label": "Algebra bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemllogic_closure_stone_realization_duality_",
+      "target": "algebraemlcryptography_closure_extractorsyndrome_d",
+      "strength": 0.3567420109119252,
+      "label": "Closure",
       "type": "heuristic"
     },
     {
