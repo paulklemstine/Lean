@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T00:29:54Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_closure_entropic_gravity_duality",
@@ -16,7 +16,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T00:32:48Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_ope",
@@ -34,7 +34,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T01:06:59Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebraemltropical_padic_closurevaluation_duality_",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T01:30:54Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_closure_gauge_realization_dualit",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T01:44:04Z",
-      "hue": 112
+      "hue": 134
     },
     {
       "id": "algebraemlmachinelearning_closure_capacityattentio",
@@ -61,7 +61,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T01:57:06Z",
-      "hue": 90
+      "hue": 281
     },
     {
       "id": "algebraemllogic_closure_stone_spectrum_duality_via",
@@ -70,7 +70,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T02:00:56Z",
-      "hue": 271
+      "hue": 112
     },
     {
       "id": "algebratropicalcomputation_tropical_automaton_spec",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T02:11:08Z",
-      "hue": 281
+      "hue": 270
     },
     {
       "id": "algebraemllogic_closure_stone_realization_duality_",
@@ -97,7 +97,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T02:19:51Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_closure_matroid_generali",
@@ -106,7 +106,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T03:03:23Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_closure_extractorsyndrome_d",
@@ -115,7 +115,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T03:03:31Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_proof_net_realizatio",
@@ -124,7 +124,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T03:03:44Z",
-      "hue": 271
+      "hue": 281
     },
     {
       "id": "algebraemlcryptography_closure_extractor_spectrum_",
@@ -133,7 +133,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T03:12:45Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancomputation_berggren_quantum_wal",
@@ -142,7 +142,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-13T04:31:30Z",
-      "hue": 92
+      "hue": 280
     },
     {
       "id": "algebratropicalcryptography_tropical_scattering_on",
@@ -151,7 +151,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T04:31:47Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_closure_thermodynamic_computatio",
@@ -160,7 +160,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T04:32:01Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebraemlcryptography_closure_syndromedecoding_du",
@@ -169,7 +169,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T04:32:17Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_closure_cosmology_duality_via_id",
@@ -178,7 +178,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T04:32:30Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "algebramachinelearningspeculative_ultrametric_neur",
@@ -187,7 +187,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T04:32:44Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "algebramachinelearninglogic_operadic_proof_circuit",
@@ -196,7 +196,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T04:32:57Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebratropicalrepresentationtheory_tropical_hecke",
@@ -205,7 +205,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T04:33:09Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraemltropical_closure_ratedistortion_duality_",
@@ -215,6 +215,15 @@
       "shape": "star",
       "date": "2026-05-13T06:30:17Z",
       "hue": 91
+    },
+    {
+      "id": "algebrapythagoreancryptography_berggren_lattice_re",
+      "title": "Berggren Lattice-Reduction Duality via Triple-Tree Semimodules and Certified Minimal Trapdoor Reconstruction",
+      "domain": "Number Theory × Lattice Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-13T06:30:26Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -271,7 +280,7 @@
       "source": "algebraemlphysics_closure_entropic_gravity_duality",
       "target": "algebraemlphysics_closure_gauge_realization_dualit",
       "strength": 0.766846153846154,
-      "label": "EML,Algebra,Bridges,Physics bridge",
+      "label": "EML,Physics,Algebra,Bridges bridge",
       "type": "heuristic"
     },
     {
@@ -565,7 +574,7 @@
       "source": "algebraemllogic_closure_stone_spectrum_duality_via",
       "target": "algebramachinelearninglogic_operadic_proof_circuit",
       "strength": 0.4437692307692308,
-      "label": "Algebra,Logic bridge",
+      "label": "Logic,Algebra bridge",
       "type": "heuristic"
     },
     {
