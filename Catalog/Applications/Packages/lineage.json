@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebraemlcomputation_closure_fixed_point_circuit_",
@@ -52,7 +52,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T12:34:41Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_voronoilattice_re",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:34:59Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalcryptography_tropical_valuation_sec",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -79,7 +79,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T13:12:04Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "p_vs_np_via_tropical_semiring_reductions",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T14:01:14Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "holographic_renormalization_of_proof_complexity",
@@ -97,7 +97,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T14:04:34Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -106,7 +106,16 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T14:04:50Z",
-      "hue": 271
+      "hue": 90
+    },
+    {
+      "id": "closure_operator_learning_universal_approximation_",
+      "title": "Closure-Operator Networks: Universal Approximation and Certified Robustness",
+      "domain": "Machine Learning / Order Theory / Formal Verification",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-13T14:05:03Z",
+      "hue": 90
     },
     {
       "id": "seed_seed_001",
@@ -115,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "seed_seed_003",
@@ -124,7 +133,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "",
-      "hue": 91
+      "hue": 134
     },
     {
       "id": "seed_seed_004",
@@ -133,7 +142,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "seed_seed_006",
@@ -142,7 +151,16 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "",
-      "hue": 92
+      "hue": 90
+    },
+    {
+      "id": "seed_seed_007",
+      "title": "Closure-Operator Learning: Universal Approximation via Idempotent Semimodules",
+      "domain": "MachineLearning",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "",
+      "hue": 91
     }
   ],
   "edges": [
@@ -156,162 +174,169 @@
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.902733485193622,
+      "strength": 0.9065134099616858,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.8381548974943052,
+      "strength": 0.8444444444444443,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.7034168564920273,
+      "strength": 0.7149425287356322,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.6539863325740318,
+      "strength": 0.6674329501915708,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.6539863325740318,
+      "strength": 0.6674329501915708,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.6539863325740318,
+      "strength": 0.6674329501915708,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.5790432801822323,
+      "strength": 0.5954022988505747,
       "label": "Tropical,Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_closure_secret_sharing_dual",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.5726651480637812,
+      "strength": 0.589272030651341,
       "label": "Theorem 4.2 (Tropical Information Dualit",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebraemllogic_closure_rateproof_duality_via_idem",
-      "strength": 0.5507403189066059,
+      "strength": 0.568199233716475,
       "label": "Proof",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.5491457858769931,
+      "strength": 0.5666666666666667,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.519248291571754,
+      "strength": 0.5379310344827586,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebraemlcryptography_closure_secret_sharing_dual",
-      "strength": 0.4594533029612756,
+      "strength": 0.4804597701149425,
       "label": "Cryptography bridge",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
       "target": "neural_sheaf_cohomology_and_adversarial_robustness",
-      "strength": 0.4594533029612756,
+      "strength": 0.4804597701149425,
       "label": "Neural Sheaf Cohomology",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_closure_secret_sharing_dual",
       "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.4566628701594533,
+      "strength": 0.47777777777777775,
       "label": "Closure Fixed",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.43952164009111616,
+      "strength": 0.46130268199233715,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.42238041002277904,
+      "strength": 0.44482758620689655,
       "label": "Closure Fixed",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalgeometry_gravitational_lens_realiza",
-      "strength": 0.41560364464692484,
+      "strength": 0.43831417624521074,
       "label": "Tropical Arithmetic Lensing",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalcryptography_tropical_valuation_sec",
       "target": "neural_sheaf_cohomology_and_adversarial_robustness",
-      "strength": 0.3797266514806378,
+      "strength": 0.40383141762452107,
       "label": "Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "strength": 0.3597949886104784,
+      "strength": 0.3846743295019157,
       "label": "Closure",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
       "target": "holographic_renormalization_of_proof_complexity",
-      "strength": 0.3542141230068337,
+      "strength": 0.3793103448275862,
       "label": "Holographic Proof Renormalization",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalcryptography_tropical_valuation_sec",
       "target": "holographic_renormalization_of_proof_complexity",
-      "strength": 0.3326879271070615,
+      "strength": 0.3586206896551724,
       "label": "Holographic Proof Renormalization",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalcryptography_tropical_valuation_sec",
       "target": "p_vs_np_via_tropical_semiring_reductions",
-      "strength": 0.3,
+      "strength": 0.3272030651340996,
       "label": "Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "neural_sheaf_cohomology_and_adversarial_robustness",
       "target": "p_vs_np_via_tropical_semiring_reductions",
-      "strength": 0.3,
+      "strength": 0.3272030651340996,
       "label": "Algebra bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "neural_sheaf_cohomology_and_adversarial_robustness",
+      "target": "closure_operator_learning_universal_approximation_",
+      "strength": 0.3,
+      "label": "Closure",
       "type": "heuristic"
     },
     {
@@ -340,6 +365,13 @@
       "target": "holographic_renormalization_of_proof_complexity",
       "strength": 1.0,
       "label": "Holographic Renormalization of Proof Complexity",
+      "type": "provenance"
+    },
+    {
+      "source": "seed_seed_007",
+      "target": "closure_operator_learning_universal_approximation_",
+      "strength": 1.0,
+      "label": "Closure-Operator Learning: Universal Approximation via Id...",
       "type": "provenance"
     }
   ]
