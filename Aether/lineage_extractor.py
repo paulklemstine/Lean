@@ -521,18 +521,8 @@ def build_lineage(packages_dir, config_path=None):
                     parent_slug = parent_filename.replace('.json', '')
             if not parent_slug and d.source_path.startswith('json:'):
                 parent_slug = d.source_path[5:].replace('.json', '')
-            # Handle seed directions: create a virtual "seed" parent node
-            if not parent_slug and d.source_exp_id == 'seed':
-                seed_slug = f"seed_{d.id}"
-                if seed_slug not in packages:
-                    packages[seed_slug] = {
-                        "title": d.title,
-                        "domain": d.domains[0] if d.domains else "General",
-                        "description": d.description,
-                        "exp_id": "seed",
-                        "_is_seed": True,
-                    }
-                parent_slug = seed_slug
+            # Handle seed directions: no virtual parent node — seed means root
+            # Edges from seed have no real parent package, so skip them
             if not parent_slug or parent_slug not in packages or parent_slug == child_slug:
                 continue
             pair = (parent_slug, child_slug)
@@ -551,22 +541,6 @@ def build_lineage(packages_dir, config_path=None):
             })
     except Exception as e:
         print(f"Warning: could not load FutureDirectionsManager for provenance: {e}")
-
-    # Add seed direction nodes to the node list
-    for slug, pkg in packages.items():
-        if pkg.get("_is_seed") and not any(n["id"] == slug for n in nodes):
-            domain_str = pkg.get("domain", "Bridges")
-            primary = primary_domain(domain_str)
-            shape = DOMAIN_SHAPES.get(primary, "icosahedron")
-            nodes.append({
-                "id": slug,
-                "title": pkg.get("title", slug),
-                "domain": domain_str,
-                "primary_domain": primary,
-                "shape": shape,
-                "date": pkg.get("date", ""),
-                "hue": slug_to_hue(slug),
-            })
 
     print(f"Provenance edges: {len(provenance_edges)}")
     edges = []
@@ -660,6 +634,13 @@ def build_lineage(packages_dir, config_path=None):
                 # Map to 0.3..1.0 range so even weak edges are visible
                 e["strength"] = 0.3 + 0.7 * ((e["score"] - min_s) / range_s)
         # Provenance edges already have strength=1.0
+
+    # Remove edges that reference non-existent packages (ghost nodes)
+    real_slugs = {n["id"] for n in nodes}
+    before = len(edges)
+    edges = [e for e in edges if e["source"] in real_slugs and e["target"] in real_slugs]
+    if before != len(edges):
+        print(f"Removed {before - len(edges)} edges with ghost nodes")
 
     # Clean up internal fields from output
     for e in edges:
