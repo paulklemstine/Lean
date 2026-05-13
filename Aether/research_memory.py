@@ -481,3 +481,75 @@ class FutureDirectionsManager:
             "completed": statuses.get("completed", 0),
             "abandoned": statuses.get("abandoned", 0),
         }
+
+    def reset_directions(self, new_directions: Optional[List["FutureDirection"]] = None) -> dict:
+        """Reset: mark in_progress as abandoned, then optionally re-seed.
+
+        Returns a summary dict of what was done.
+        """
+        reset_count = 0
+        for d in self._directions:
+            if d.status == "in_progress":
+                d.status = "abandoned"
+                d.consumed_by_exp_id = ""
+                reset_count += 1
+        seeded = 0
+        if new_directions:
+            for nd in new_directions:
+                self.add_direction(nd)
+                seeded += 1
+        self._save()
+        return {
+            "abandoned": reset_count,
+            "seeded": seeded,
+            "total": len(self._directions),
+        }
+
+    def clear_and_reseed(self, new_directions: List["FutureDirection"]) -> dict:
+        """Wipe all directions and re-seed from scratch.
+
+        Returns a summary dict.
+        """
+        old_count = len(self._directions)
+        self._directions = []
+        for nd in new_directions:
+            self.add_direction(nd)
+        self._save()
+        return {
+            "cleared": old_count,
+            "seeded": len(self._directions),
+        }
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Manage future directions")
+    sub = parser.add_subparsers(dest="command")
+
+    reset_p = sub.add_parser("reset", help="Clear and re-seed directions")
+    reset_p.add_argument("--keep-completed", action="store_true",
+                         help="Keep completed directions (default: wipe all)")
+
+    stats_p = sub.add_parser("stats", help="Show direction statistics")
+
+    args = parser.parse_args()
+    workspace = Path(".aether_workspace")
+
+    if args.command == "reset":
+        from seed_directions import get_seed_directions
+        mgr = FutureDirectionsManager(workspace)
+        if args.keep_completed:
+            result = mgr.reset_directions(get_seed_directions())
+        else:
+            result = mgr.clear_and_reseed(get_seed_directions())
+        print(f"Reset complete: {result}")
+    elif args.command == "stats":
+        mgr = FutureDirectionsManager(workspace)
+        stats = mgr.get_stats()
+        print(json.dumps(stats, indent=2))
+        available = mgr.get_available_directions()
+        print(f"\nTop available directions:")
+        for d in available[:5]:
+            print(f"  [{d.priority_score:.2f}] {d.title} ({d.status})")
+    else:
+        parser.print_help()

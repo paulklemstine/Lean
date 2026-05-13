@@ -1737,6 +1737,7 @@ class PiAgentClient:
             "counterexample": "Find a counterexample to the conjecture, or prove it true if it holds.",
             "sorry_fill": "Fill ALL sorry placeholders. Do NOT change theorem statements.",
             "discover": "Survey the territory. Find deep structures. Prove theorems that reveal truth. Produce FUTURE_DIRECTIONS.md.",
+            "team": "Create a team to conduct research, brainstorm hypotheses, run experiments, validate data, update knowledge base and iterate forever.",
         }
 
         mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
@@ -1783,6 +1784,10 @@ class PiAgentClient:
             Use concrete types (Nat, Real, Finset, Matrix). Avoid trivial tautologies.
             If a direct proof fails, try the contrapositive, a constructive witness,
             or structural induction. Connect to at least one other domain for impact.
+
+            ### Team Directive
+            Create a team to conduct research, brainstorm hypotheses,
+            run experiments, validate data, update knowledge base and iterate forever.
 
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md
             Optional: ARTICLE.md, RESEARCH_PAPER.md, demo.py, diagram.svg

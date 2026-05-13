@@ -534,6 +534,11 @@ DELIVERABLE 5 — FUTURE_DIRECTIONS.md  (MANDATORY — drives next cycle)
 The MOST IMPORTANT deliverable. Structured roadmap of breakthrough
 research opportunities opened by this work. See detailed spec below.
 
+**Team Directive**: Create a team to conduct research, brainstorm hypotheses,
+run experiments, validate data, update knowledge base and iterate forever.
+Each future direction should be specific enough for a team to pick up and
+pursue with clear hypotheses, proof strategies, and cross-domain connections.
+
 ────────────────────────────────────────────────────────────────────────────
 DELIVERABLE 6 — JSON Data Package  →  PACKAGE.json
 ────────────────────────────────────────────────────────────────────────────
@@ -1423,31 +1428,25 @@ Research mode: {concept.research_mode}
 
         bridges_entries = {e.name for e in bridges_dir.iterdir() if e.is_dir()}
 
-        # Try 1: The first part itself is a Bridges compound directory
-        # e.g. AlgebraEMLCryptography/X.lean -> Bridges/AlgebraEMLCryptography/X.lean
-        if parts[0] in bridges_entries:
-            return "Bridges/" + target_path
-
-        # Try 2: Concatenate first two parts as a compound Bridges name
-        # e.g. AlgebraEML/Cryptography/X.lean -> Bridges/AlgebraEMLCryptography/X.lean
-        # e.g. VSAlgebra/Bridges/X.lean -> skip Bridges, check VSAlgebra alone
+        # Priority 1: If first part + second part concatenates to a Bridges subdirectory,
+        # use the compound form. This handles AlgebraEML/Cryptography/ -> Bridges/AlgebraEMLCryptography/
+        # which is more specific than the bare AlgebraEML directory.
         if len(parts) >= 2:
-            # Skip internal "Bridges" directory component
             second = parts[1] if parts[1] != "Bridges" else (parts[2] if len(parts) > 2 else "")
             if second:
                 compound = parts[0] + second
                 if compound in bridges_entries:
-                    # Remaining path after the two merged parts (plus any skipped "Bridges")
                     skip = 2 if parts[1] != "Bridges" else 3
                     remaining = "/".join(parts[skip:]) if len(parts) > skip else ""
                     if remaining:
                         return f"Bridges/{compound}/{remaining}"
                     return f"Bridges/{compound}/{parts[-1]}"
 
-        # Try 3: Check if first part ends with a known domain suffix
-        for domain in known_domains:
-            if parts[0].endswith(domain) and parts[0] != domain and parts[0] in bridges_entries:
-                return "Bridges/" + target_path
+        # Priority 2: The first part itself is a Bridges compound directory
+        # e.g. AlgebraEMLCryptography/X.lean -> Bridges/AlgebraEMLCryptography/X.lean
+        # e.g. VSAlgebra/X.lean -> Bridges/VSAlgebra/X.lean
+        if parts[0] in bridges_entries:
+            return "Bridges/" + target_path
 
         # No compound match — return as-is
         return target_path
