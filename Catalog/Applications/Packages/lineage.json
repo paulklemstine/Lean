@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,16 +25,16 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
       "title": "Closure-Secret-Sharing Duality via Idempotent Access Semimodules",
       "domain": "Bridges: Algebra-EML-Cryptography",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
+      "primary_domain": "EML",
+      "shape": "octahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 271
+      "hue": 359
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemlcomputation_closure_fixed_point_circuit_",
@@ -52,7 +52,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T12:34:41Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebratropicalgeometry_tropical_voronoilattice_re",
@@ -61,106 +61,136 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:34:59Z",
-      "hue": 92
+      "hue": 272
+    },
+    {
+      "id": "algebratropicalcryptography_tropical_valuation_sec",
+      "title": "Tropical Valuation Secret-Sharing Duality via Idempotent Access Semimodules",
+      "domain": "Bridges: Tropical Geometry × Cryptography × Idempotent Algebra",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-13T12:35:13Z",
+      "hue": 281
     }
   ],
   "edges": [
     {
+      "source": "algebraemlcryptography_closure_secret_sharing_dual",
+      "target": "algebratropicalcryptography_tropical_valuation_sec",
+      "strength": 1.0,
+      "label": "Theorem 4.2 (Tropical Information Dualit",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalgeometry_gravitational_lens_realiza",
+      "target": "algebratropicalcryptography_tropical_valuation_sec",
+      "strength": 0.8834924965893589,
+      "label": "Tropical Valuation Secret",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalgeometry_tropical_voronoilattice_re",
+      "target": "algebratropicalcryptography_tropical_valuation_sec",
+      "strength": 0.8061391541609824,
+      "label": "Tropical Valuation Secret",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebramachinelearningspeculative_tropical_observe",
+      "target": "algebratropicalcryptography_tropical_valuation_sec",
+      "strength": 0.6447476125511596,
+      "label": "Tropical Valuation Secret",
+      "type": "heuristic"
+    },
+    {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 1.0,
+      "strength": 0.5855388813096862,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 1.0,
+      "strength": 0.5855388813096862,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 1.0,
+      "strength": 0.5855388813096862,
       "label": "Tropical Voronoi",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemllogic_closure_rateproof_duality_via_idem",
+      "target": "algebratropicalcryptography_tropical_valuation_sec",
+      "strength": 0.4957708049113233,
+      "label": "Algebra,Tropical bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_closure_secret_sharing_dual",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.8187817258883248,
+      "strength": 0.4881309686221009,
       "label": "Theorem 4.2 (Tropical Information Dualit",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebraemllogic_closure_rateproof_duality_via_idem",
-      "strength": 0.7699238578680201,
+      "strength": 0.461869031377899,
       "label": "Proof",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.7663705583756344,
+      "strength": 0.4599590723055934,
       "label": "Tropical Voronoi",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlcomputation_closure_fixed_point_circuit_",
+      "target": "algebratropicalcryptography_tropical_valuation_sec",
+      "strength": 0.42414733969986357,
+      "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebraemlcryptography_closure_secret_sharing_dual",
-      "strength": 0.566497461928934,
+      "strength": 0.3525238744884038,
       "label": "Cryptography bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_closure_secret_sharing_dual",
       "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.5602791878172588,
-      "label": "Closure Fixed",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebramachinelearningspeculative_tropical_observe",
-      "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.540736040609137,
+      "strength": 0.34918144611186896,
       "label": "Closure Fixed",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.5220812182741116,
+      "strength": 0.3286493860845839,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.48388324873096444,
+      "strength": 0.30811732605729875,
       "label": "Closure Fixed",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalgeometry_gravitational_lens_realiza",
-      "strength": 0.4687817258883249,
-      "label": "Tropical Arithmetic Lensing",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraemllogic_closure_rateproof_duality_via_idem",
-      "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.3444162436548223,
-      "label": "Closure Fixed",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraemlcryptography_closure_secret_sharing_dual",
-      "target": "algebrapythagoreancryptography_berggren_isogeny_re",
       "strength": 0.3,
-      "label": "Berggren Isogeny Realization Duality",
+      "label": "Tropical Arithmetic Lensing",
       "type": "heuristic"
     }
   ]
