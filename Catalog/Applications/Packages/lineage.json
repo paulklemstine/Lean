@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -17,14 +17,37 @@
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
       "hue": 270
+    },
+    {
+      "id": "algebratropicalgeometry_gravitational_lens_realiza",
+      "title": "Tropical Arithmetic Lensing: Geodesic Semimodules, Caustic Factor Certificates, and Certified Factor Reconstruction",
+      "domain": "Tropical Geometry × Number Theory × Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-13T12:33:55Z",
+      "hue": 270
     }
   ],
   "edges": [
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebraemllogic_closure_rateproof_duality_via_idem",
-      "strength": 0.3,
+      "strength": 1.0,
       "label": "Proof",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebramachinelearningspeculative_tropical_observe",
+      "target": "algebratropicalgeometry_gravitational_lens_realiza",
+      "strength": 0.4238938053097345,
+      "label": "Tropical Arithmetic Lensing",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemllogic_closure_rateproof_duality_via_idem",
+      "target": "algebratropicalgeometry_gravitational_lens_realiza",
+      "strength": 0.3,
+      "label": "Tropical Arithmetic Lensing",
       "type": "heuristic"
     }
   ]

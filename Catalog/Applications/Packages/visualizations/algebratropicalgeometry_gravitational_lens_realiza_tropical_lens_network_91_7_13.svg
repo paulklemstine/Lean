@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="500" height="300" fill="#fafafa" rx="8"/>
+  <text x="250" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Factoring 91 = 7 × 13</text>
+
+  <!-- Source -->
+  <circle cx="60" cy="150" r="20" fill="#4a90d9" stroke="#333" stroke-width="2"/>
+  <text x="60" y="155" text-anchor="middle" fill="white" font-size="12" font-weight="bold">S</text>
+
+  <!-- Observer -->
+  <circle cx="440" cy="150" r="20" fill="#d94a4a" stroke="#333" stroke-width="2"/>
+  <text x="440" y="155" text-anchor="middle" fill="white" font-size="12" font-weight="bold">O</text>
+  <line x1="80" y1="150" x2="227.5" y2="80.0" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="272.5" y1="80.0" x2="420" y2="150" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <circle cx="250" cy="80.0" r="22.5" fill="hsl(120, 60%, 50%)" stroke="#333" stroke-width="2" opacity="0.8"/>
+  <text x="250" y="85.0" text-anchor="middle" fill="white" font-size="12" font-weight="bold">×7</text>
+  <line x1="80" y1="150" x2="218.5" y2="220.0" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="281.5" y1="220.0" x2="420" y2="150" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <circle cx="250" cy="220.0" r="31.5" fill="hsl(180, 60%, 50%)" stroke="#333" stroke-width="2" opacity="0.8"/>
+  <text x="250" y="225.0" text-anchor="middle" fill="white" font-size="12" font-weight="bold">×13</text>
+  <text x="250" y="280" text-anchor="middle" font-size="13" fill="#555">Product: 7 × 13 = 91</text>
+</svg>
