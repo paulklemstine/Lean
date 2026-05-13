@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -34,7 +34,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebraemlcomputation_closure_fixed_point_circuit_",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:34:59Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebratropicalcryptography_tropical_valuation_sec",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -79,7 +79,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T13:12:04Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "p_vs_np_via_tropical_semiring_reductions",
@@ -88,7 +88,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T14:01:14Z",
-      "hue": 280
+      "hue": 271
+    },
+    {
+      "id": "holographic_renormalization_of_proof_complexity",
+      "title": "Holographic Proof Renormalization: Fixed-Point Theory, Ultrametric Geometry, and Decidable Approximation on Discrete Proof Spaces",
+      "domain": "Proof Complexity / Renormalization Group Theory / Ultrametric Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-13T14:04:34Z",
+      "hue": 270
     },
     {
       "id": "seed_seed_001",
@@ -105,6 +114,15 @@
       "domain": "MachineLearning",
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
+      "date": "",
+      "hue": 91
+    },
+    {
+      "id": "seed_seed_006",
+      "title": "Holographic Renormalization of Proof Complexity",
+      "domain": "Speculative",
+      "primary_domain": "Speculative",
+      "shape": "pentagonal_prism",
       "date": "",
       "hue": 90
     }
@@ -163,7 +181,7 @@
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
       "strength": 0.5790432801822323,
-      "label": "Tropical,Algebra bridge",
+      "label": "Algebra,Tropical bridge",
       "type": "heuristic"
     },
     {
@@ -245,9 +263,16 @@
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "target": "p_vs_np_via_tropical_semiring_reductions",
-      "strength": 0.3,
-      "label": "Algebra bridge",
+      "target": "holographic_renormalization_of_proof_complexity",
+      "strength": 0.3542141230068337,
+      "label": "Holographic Proof Renormalization",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalcryptography_tropical_valuation_sec",
+      "target": "holographic_renormalization_of_proof_complexity",
+      "strength": 0.3326879271070615,
+      "label": "Holographic Proof Renormalization",
       "type": "heuristic"
     },
     {
@@ -276,6 +301,13 @@
       "target": "neural_sheaf_cohomology_and_adversarial_robustness",
       "strength": 1.0,
       "label": "Neural Sheaf Cohomology and Adversarial Robustness Guaran...",
+      "type": "provenance"
+    },
+    {
+      "source": "seed_seed_006",
+      "target": "holographic_renormalization_of_proof_complexity",
+      "strength": 1.0,
+      "label": "Holographic Renormalization of Proof Complexity",
       "type": "provenance"
     }
   ]
