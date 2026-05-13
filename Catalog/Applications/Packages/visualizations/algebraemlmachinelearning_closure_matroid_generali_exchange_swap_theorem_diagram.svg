@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="600" height="300">
+  <defs>
+    <style>
+      .arrow { stroke: #333; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .set-box { fill: #f0f4f8; stroke: #2c3e50; stroke-width: 2; rx: 8; }
+      .elem { font-family: 'Courier New', monospace; font-size: 16px; fill: #2c3e50; font-weight: bold; }
+      .desc { font-family: Arial, sans-serif; font-size: 12px; fill: #666; text-anchor: middle; }
+      .title { font-family: Arial, sans-serif; font-size: 16px; fill: #333; font-weight: bold; text-anchor: middle; }
+      .highlight { fill: #e74c3c; }
+      .target { fill: #27ae60; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+
+  <text x="300" y="30" class="title">Exchange Swap Theorem</text>
+
+  <!-- Left side: b ∈ cl(A ∪ {a}) -->
+  <rect x="30" y="60" width="230" height="100" class="set-box" />
+  <text x="145" y="85" class="elem">A \ {a}</text>
+  <text x="60" y="135" class="elem highlight">a</text>
+  <text x="200" y="135" class="elem" fill="#999">→</text>
+  <text x="235" y="135" class="elem target">b</text>
+  <text x="145" y="185" class="desc">b ∈ cl(A), b ∉ cl(A \ {a})</text>
+  <text x="145" y="200" class="desc">a is essential for deriving b</text>
+
+  <!-- Arrow -->
+  <line x1="280" y1="110" x2="320" y2="110" class="arrow" />
+  <text x="300" y="130" class="desc">exchange</text>
+
+  <!-- Right side: a ∈ cl((A\{a}) ∪ {b}) -->
+  <rect x="340" y="60" width="230" height="100" class="set-box" />
+  <text x="455" y="85" class="elem">A \ {a}</text>
+  <text x="370" y="135" class="elem target">b</text>
+  <text x="510" y="135" class="elem" fill="#999">→</text>
+  <text x="545" y="135" class="elem highlight">a</text>
+  <text x="455" y="185" class="desc">a ∈ cl((A \ {a}) ∪ {b})</text>
+  <text x="455" y="200" class="desc">a is recoverable from b</text>
+
+  <text x="300" y="250" class="desc" style="font-size: 14px; fill: #333;">
+    Every essential feature is symmetrically co-dependent with the target
+  </text>
+  <text x="300" y="275" class="desc" style="font-size: 12px;">
+    Proved: exchange_swap, exchange_codependence
+  </text>
+</svg>
