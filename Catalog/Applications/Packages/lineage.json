@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,7 +25,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 92
+      "hue": 292
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -43,7 +43,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 91
+      "hue": 101
+    },
+    {
+      "id": "algebraemlcomputation_closure_fixed_point_circuit_",
+      "title": "Closure Fixed-Point Circuit Duality: Algebraic-Computational Equivalence via Idempotent Iteration and Certified Minimal Feedback Reconstruction",
+      "domain": "Algebraic Order Theory / Computational Duality",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-13T12:34:41Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -62,6 +71,20 @@
       "type": "heuristic"
     },
     {
+      "source": "algebraemlcryptography_closure_secret_sharing_dual",
+      "target": "algebraemlcomputation_closure_fixed_point_circuit_",
+      "strength": 0.6877126654064272,
+      "label": "Closure Fixed",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebramachinelearningspeculative_tropical_observe",
+      "target": "algebraemlcomputation_closure_fixed_point_circuit_",
+      "strength": 0.6586011342155011,
+      "label": "Closure Fixed",
+      "type": "heuristic"
+    },
+    {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalgeometry_gravitational_lens_realiza",
       "strength": 0.6308128544423441,
@@ -69,10 +92,24 @@
       "type": "heuristic"
     },
     {
+      "source": "algebrapythagoreancryptography_berggren_isogeny_re",
+      "target": "algebraemlcomputation_closure_fixed_point_circuit_",
+      "strength": 0.5739130434782609,
+      "label": "Closure Fixed",
+      "type": "heuristic"
+    },
+    {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalgeometry_gravitational_lens_realiza",
       "strength": 0.5514177693761815,
       "label": "Tropical Arithmetic Lensing",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemllogic_closure_rateproof_duality_via_idem",
+      "target": "algebraemlcomputation_closure_fixed_point_circuit_",
+      "strength": 0.3661625708884688,
+      "label": "Closure Fixed",
       "type": "heuristic"
     },
     {
