@@ -374,13 +374,6 @@ def append_future_directions(script_dir, db_path):
         except Exception as e:
             print(f"Warning: failed to update snapshot: {e}")
 
-    try:
-        with open(fd_path, 'r', encoding='utf-8') as f:
-            directions = json.load(f)
-    except Exception as e:
-        print(f"Warning: failed to load future_directions.json: {e}")
-        return
-
     # Transform to display-friendly format, sorted by priority descending
     display_dirs = []
     for d in directions:
