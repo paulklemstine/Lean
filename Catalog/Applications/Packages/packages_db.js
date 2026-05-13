@@ -2501,7 +2501,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -2510,7 +2510,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -2519,7 +2519,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -2528,7 +2528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -2546,7 +2546,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T12:34:41Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebratropicalgeometry_tropical_voronoilattice_re",
@@ -2555,7 +2555,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:34:59Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebratropicalcryptography_tropical_valuation_sec",
@@ -2564,7 +2564,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -2573,7 +2573,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T13:12:04Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "p_vs_np_via_tropical_semiring_reductions",
@@ -2582,7 +2582,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T14:01:14Z",
-      "hue": 281
+      "hue": 271
     },
     {
       "id": "holographic_renormalization_of_proof_complexity",
@@ -2591,7 +2591,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T14:04:34Z",
-      "hue": 270
+      "hue": 314
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -2600,7 +2600,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T14:04:50Z",
-      "hue": 91
+      "hue": 280
     },
     {
       "id": "closure_operator_learning_universal_approximation_",
@@ -2618,7 +2618,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T14:05:24Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "quantum_resistant_lattice_cryptography_via_berggre",
@@ -2627,7 +2627,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T14:43:34Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
@@ -2636,7 +2636,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T15:02:02Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "idempotent_transfer_operators_and_critical_exponen",
@@ -2645,7 +2645,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T15:02:14Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_proo",
@@ -2654,7 +2654,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T16:01:47Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "channel_capacity_as_idempotent_fixed_point_in_trop",
@@ -2663,7 +2663,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T16:04:57Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "algebramachinelearninglogic_sheaf_proof_state_dual",
@@ -2681,7 +2681,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T16:05:31Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicallogic_tropical_stone_recognition_du",
@@ -2690,7 +2690,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T16:05:50Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebraeml_tropical_spectral_duality_via_idempoten",
@@ -2699,7 +2699,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T16:06:07Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebratropicalcomputation_syntactic_semimodule_du",
@@ -2708,7 +2708,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T16:06:21Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraeml_thermodynamic_closure_duality_via_idemp",
@@ -2717,7 +2717,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T16:06:41Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancomputation_berggren_quantum_wal",
@@ -2726,7 +2726,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-13T18:02:02Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "algebratropicalcryptography_tropical_fourierhankel",
@@ -2735,7 +2735,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T18:02:22Z",
-      "hue": 100
+      "hue": 272
     },
     {
       "id": "algebraspeculativecryptography_ultrametric_observe",
@@ -2744,7 +2744,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T18:06:25Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemllogic_stonechu_duality_for_closure_semim",
@@ -2753,7 +2753,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T18:06:39Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebratropicalgeometry_tropical_radon_transform_d",
@@ -2762,7 +2762,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T18:06:59Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraspeculativecryptography_tropical_valuation_",
@@ -2771,7 +2771,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T19:04:43Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "algebraemllogic_priestley_duality_for_idempotent_c",
@@ -2780,7 +2780,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T19:05:01Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalrepresentation_tropical_satake_reco",
@@ -2789,7 +2789,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-13T19:05:10Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "algebrapythagoreancryptography_berggren_lattice_re",
@@ -2816,7 +2816,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T20:04:53Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraphysicspythagorean_tropical_lens_duality_vi",
@@ -2834,7 +2834,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T20:05:20Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "algebraspeculativecomputation_ultrametric_lawvere_",
@@ -2843,7 +2843,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T21:02:49Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "algebraemlmachinelearning_lawverestone_duality_for",
@@ -2861,7 +2861,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T21:09:09Z",
-      "hue": 270
+      "hue": 271
     }
   ],
   "edges": []
@@ -2880,11 +2880,11 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.95,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "68ea2aef",
-    "timestamp": "2026-05-13T19:47:28.052022+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-13T23:34:44.955957+00:00"
   },
   {
     "id": "seed_002",
@@ -2896,11 +2896,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.94,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "84520549",
-    "timestamp": "2026-05-13T19:47:28.052521+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-13T23:34:44.956130+00:00"
   },
   {
     "id": "seed_015",
@@ -2912,11 +2912,11 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "priority_score": 0.93,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "fd006fea",
-    "timestamp": "2026-05-13T19:47:28.057401+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-13T23:34:44.959641+00:00"
   },
   {
     "id": "seed_008",
@@ -2928,11 +2928,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.92,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "82478ea2",
-    "timestamp": "2026-05-13T19:47:28.055582+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-13T23:34:44.958157+00:00"
   },
   {
     "id": "seed_022",
@@ -2944,11 +2944,11 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "priority_score": 0.92,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "aa4a7bb2",
-    "timestamp": "2026-05-13T19:47:28.059986+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-13T23:34:44.961960+00:00"
   },
   {
     "id": "seed_016",
@@ -2964,7 +2964,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.057799+00:00"
+    "timestamp": "2026-05-13T23:34:44.960005+00:00"
   },
   {
     "id": "seed_004",
@@ -2976,11 +2976,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "ab8df0f8",
-    "timestamp": "2026-05-13T19:47:28.053250+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-13T23:34:44.956864+00:00"
   },
   {
     "id": "seed_018",
@@ -2996,7 +2996,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.058442+00:00"
+    "timestamp": "2026-05-13T23:34:44.960584+00:00"
   },
   {
     "id": "seed_017",
@@ -3012,7 +3012,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.058081+00:00"
+    "timestamp": "2026-05-13T23:34:44.960305+00:00"
   },
   {
     "id": "seed_006",
@@ -3028,7 +3028,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.053724+00:00"
+    "timestamp": "2026-05-13T23:34:44.957179+00:00"
   },
   {
     "id": "seed_009",
@@ -3044,7 +3044,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.055885+00:00"
+    "timestamp": "2026-05-13T23:34:44.958342+00:00"
   },
   {
     "id": "seed_013",
@@ -3060,7 +3060,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.056874+00:00"
+    "timestamp": "2026-05-13T23:34:44.959178+00:00"
   },
   {
     "id": "seed_011",
@@ -3072,11 +3072,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.85,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "718043c7",
-    "timestamp": "2026-05-13T19:47:28.056304+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-13T23:34:44.958721+00:00"
   },
   {
     "id": "seed_010",
@@ -3092,7 +3092,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.056099+00:00"
+    "timestamp": "2026-05-13T23:34:44.958529+00:00"
   },
   {
     "id": "seed_005",
@@ -3108,7 +3108,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.053472+00:00"
+    "timestamp": "2026-05-13T23:34:44.957006+00:00"
   },
   {
     "id": "seed_012",
@@ -3124,7 +3124,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.056593+00:00"
+    "timestamp": "2026-05-13T23:34:44.958923+00:00"
   },
   {
     "id": "seed_007",
@@ -3140,7 +3140,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.054003+00:00"
+    "timestamp": "2026-05-13T23:34:44.957939+00:00"
   },
   {
     "id": "seed_014",
@@ -3156,7 +3156,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.057147+00:00"
+    "timestamp": "2026-05-13T23:34:44.959402+00:00"
   },
   {
     "id": "seed_019",
@@ -3172,7 +3172,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.058865+00:00"
+    "timestamp": "2026-05-13T23:34:44.960885+00:00"
   },
   {
     "id": "seed_003",
@@ -3188,7 +3188,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.053001+00:00"
+    "timestamp": "2026-05-13T23:34:44.956651+00:00"
   },
   {
     "id": "seed_020",
@@ -3200,11 +3200,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.77,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "e044043d",
-    "timestamp": "2026-05-13T19:47:28.059181+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-13T23:34:44.961195+00:00"
   },
   {
     "id": "seed_021",
@@ -3220,6 +3220,6 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T19:47:28.059507+00:00"
+    "timestamp": "2026-05-13T23:34:44.961540+00:00"
   }
 ];
