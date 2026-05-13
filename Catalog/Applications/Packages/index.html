@@ -72,6 +72,10 @@
 
             <div class="package-list-container">
                 <h3 class="nav-section-title">Research Packages</h3>
+                <a href="#" class="nav-directions-link" id="nav-directions-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Future Directions
+                </a>
                 <ul id="package-list" class="nav-list">
                     <!-- Package links populated by JS -->
                 </ul>
@@ -154,6 +158,30 @@
                     </div>
                 </div>
             </div>
+            <!-- Future Directions View -->
+            <div class="directions-view hidden" id="directions-view">
+                <header class="directions-header">
+                    <h1>Future Research Directions</h1>
+                    <p class="directions-subtitle">Research frontiers queued for exploration</p>
+                    <div class="directions-filters">
+                        <select id="directions-status-filter">
+                            <option value="">All Statuses</option>
+                            <option value="available">Available</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="abandoned">Abandoned</option>
+                        </select>
+                        <select id="directions-domain-filter">
+                            <option value="">All Domains</option>
+                        </select>
+                        <input type="text" id="directions-search" placeholder="Search directions...">
+                    </div>
+                </header>
+                <div class="directions-grid" id="directions-grid">
+                    <!-- Direction cards rendered by JS -->
+                </div>
+            </div>
+
         </main>
     </div>
 

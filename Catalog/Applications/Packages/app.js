@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let packages = [];
     let currentPackage = null;
+    let directionsVisible = false;
+    const directionsView = document.getElementById('directions-view');
+    const directionsGrid = document.getElementById('directions-grid');
+    const directionsLink = document.getElementById('nav-directions-link');
+    const directionsStatusFilter = document.getElementById('directions-status-filter');
+    const directionsDomainFilter = document.getElementById('directions-domain-filter');
+    const directionsSearch = document.getElementById('directions-search');
     let currentVizIndex = 0;
     
     // Pyodide State
@@ -206,6 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         packageList.innerHTML = '<li class="nav-item"><div class="nav-item-title text-red">Please run update_index.py to bundle packages</div></li>';
     }
+    if (window.FUTURE_DIRECTIONS) {
+        populateDomainFilter();
+    }
 
     // Periodic refresh: check for new packages every 60 seconds
     setInterval(async () => {
@@ -217,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const prevCount = (window.PACKAGE_INDEX || []).length;
             const prevGraphNodes = (window.PACKAGE_GRAPH || {}).nodes?.length || 0;
             // Use Function constructor to eval the new data
-            const fn = new Function(text + '; return { INDEX: window.PACKAGE_INDEX, DB: window.PACKAGE_DB, GRAPH: window.PACKAGE_GRAPH };');
+            const fn = new Function(text + '; return { INDEX: window.PACKAGE_INDEX, DB: window.PACKAGE_DB, GRAPH: window.PACKAGE_GRAPH, DIRECTIONS: window.FUTURE_DIRECTIONS };');
             const newData = fn();
             if (newData.INDEX && newData.INDEX.length > prevCount) {
                 window.PACKAGE_INDEX = newData.INDEX;
@@ -240,6 +250,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.addGraphEdges(newEdges);
                 }
                 window.PACKAGE_GRAPH = newData.GRAPH;
+            }
+            // Update future directions if changed
+            if (newData.DIRECTIONS && newData.DIRECTIONS.length >= (window.FUTURE_DIRECTIONS || []).length) {
+                window.FUTURE_DIRECTIONS = newData.DIRECTIONS;
+                populateDomainFilter();
+                if (directionsVisible) renderDirectionsView();
             }
         } catch (err) {
             // Silently fail — refresh is best-effort
@@ -1741,4 +1757,158 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(render);
         }
     })();
+
+    // ── Future Directions View ──
+
+    function showDirectionsView() {
+        directionsVisible = true;
+        welcomeScreen.classList.add('hidden');
+        packageView.classList.add('hidden');
+        directionsView.classList.remove('hidden');
+        // Highlight nav link
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        directionsLink.classList.add('active');
+        renderDirectionsView();
+        // Close sidebar on mobile
+        if (window.innerWidth <= 768) closeSidebar();
+    }
+
+    function hideDirectionsView() {
+        directionsVisible = false;
+        directionsView.classList.add('hidden');
+        directionsLink.classList.remove('active');
+    }
+
+    function populateDomainFilter() {
+        if (!window.FUTURE_DIRECTIONS) return;
+        const domains = new Set();
+        window.FUTURE_DIRECTIONS.forEach(d => (d.domains || []).forEach(dm => domains.add(dm)));
+        directionsDomainFilter.innerHTML = '<option value="">All Domains</option>';
+        Array.from(domains).sort().forEach(dm => {
+            const opt = document.createElement('option');
+            opt.value = dm;
+            opt.textContent = dm;
+            directionsDomainFilter.appendChild(opt);
+        });
+    }
+
+    function getFilteredDirections() {
+        if (!window.FUTURE_DIRECTIONS) return [];
+        const statusFilter = directionsStatusFilter.value;
+        const domainFilter = directionsDomainFilter.value;
+        const searchTerm = directionsSearch.value.toLowerCase();
+        return window.FUTURE_DIRECTIONS.filter(d => {
+            if (statusFilter && d.status !== statusFilter) return false;
+            if (domainFilter && !(d.domains || []).includes(domainFilter)) return false;
+            if (searchTerm) {
+                const text = (d.title + ' ' + d.description).toLowerCase();
+                if (!text.includes(searchTerm)) return false;
+            }
+            return true;
+        });
+    }
+
+    function renderDirectionsView() {
+        if (!directionsGrid) return;
+        const directions = getFilteredDirections();
+        if (directions.length === 0) {
+            directionsGrid.innerHTML = '<div class="directions-empty">No research directions match your filters.</div>';
+            return;
+        }
+
+        const statusColors = {
+            available: '#4caf50',
+            in_progress: '#2196f3',
+            completed: '#9e9e9e',
+            abandoned: '#f44336',
+        };
+        const statusLabels = {
+            available: 'Available',
+            in_progress: 'In Progress',
+            completed: 'Completed',
+            abandoned: 'Abandoned',
+        };
+
+        directionsGrid.innerHTML = directions.map(d => {
+            const priorityPct = Math.round(d.priority_score * 100);
+            const priorityColor = d.priority_score >= 0.9 ? '#f44336' : d.priority_score >= 0.8 ? '#ff9800' : '#ffc107';
+            const statusColor = statusColors[d.status] || '#9e9e9e';
+            const statusLabel = statusLabels[d.status] || d.status;
+            const domainTags = (d.domains || []).map(dm =>
+                `<span class="direction-domain-tag">${dm}</span>`
+            ).join('');
+            const shortDesc = d.description.length > 200
+                ? d.description.substring(0, 200) + '...'
+                : d.description;
+
+            return `
+                <div class="direction-card" data-id="${d.id}" style="border-left: 4px solid ${statusColor}">
+                    <div class="direction-card-header">
+                        <h3 class="direction-card-title">${d.title}</h3>
+                        <div class="direction-card-badges">
+                            <span class="direction-priority-badge" style="background:${priorityColor}">${priorityPct}%</span>
+                            <span class="direction-status-badge" style="background:${statusColor}">${statusLabel}</span>
+                        </div>
+                    </div>
+                    <div class="direction-card-domains">${domainTags}</div>
+                    <p class="direction-card-desc">${shortDesc}</p>
+                    <div class="direction-card-details hidden" id="details-${d.id}">
+                        <p class="direction-card-full-desc">${d.description}</p>
+                        ${d.research_mode ? `<div class="direction-detail-row"><strong>Mode:</strong> ${d.research_mode}</div>` : ''}
+                        ${d.consumed_by_exp_id ? `<div class="direction-detail-row"><strong>Active Experiment:</strong> ${d.consumed_by_exp_id}</div>` : ''}
+                        <div class="direction-detail-row"><strong>Source:</strong> ${d.source_exp_id}</div>
+                    </div>
+                    <button class="direction-card-expand" data-id="${d.id}">Show Details</button>
+                </div>
+            `;
+        }).join('');
+
+        // Expand/collapse handlers
+        directionsGrid.querySelectorAll('.direction-card-expand').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const details = document.getElementById('details-' + id);
+                if (details.classList.contains('hidden')) {
+                    details.classList.remove('hidden');
+                    btn.textContent = 'Hide Details';
+                } else {
+                    details.classList.add('hidden');
+                    btn.textContent = 'Show Details';
+                }
+            });
+        });
+    }
+
+    // Nav link click handler
+    directionsLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showDirectionsView();
+    });
+
+    // Filter change handlers
+    directionsStatusFilter.addEventListener('change', renderDirectionsView);
+    directionsDomainFilter.addEventListener('change', renderDirectionsView);
+    directionsSearch.addEventListener('input', renderDirectionsView);
+
+    // Initial population of domain filter when data loads
+    const origOnload = window.PACKAGE_INDEX ? renderDirectionsView : null;
+    if (window.PACKAGE_INDEX) {
+        // Data already loaded
+        populateDomainFilter();
+    }
+
+    // Override loadPackage to hide directions view when switching to a package
+    const origLoadPackage = loadPackage;
+    loadPackage = function(filename) {
+        hideDirectionsView();
+        origLoadPackage(filename);
+    };
+
+    // When data refreshes, re-populate domain filter and re-render if directions visible
+    const _origRenderSidebar = renderSidebar;
+    renderSidebar = function(pkgArray) {
+        _origRenderSidebar(pkgArray);
+        populateDomainFilter();
+        if (directionsVisible) renderDirectionsView();
+    };
 });

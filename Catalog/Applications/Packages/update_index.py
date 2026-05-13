@@ -194,6 +194,9 @@ window.PACKAGE_DB = {json.dumps(package_db, indent=2)};
     # Generate knowledge graph data
     generate_graph_data(script_dir)
 
+    # Append future research directions
+    append_future_directions(script_dir, os.path.join(script_dir, "packages_db.js"))
+
     os.chdir(original_dir)
 
 
@@ -318,6 +321,50 @@ window.PACKAGE_GRAPH = {json.dumps(graph_data, indent=2)};
         f.write(graph_js)
 
     print(f"Appended PACKAGE_GRAPH to packages_db.js ({len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges)")
+
+
+def append_future_directions(script_dir, db_path):
+    """Read future_directions.json and append window.FUTURE_DIRECTIONS to packages_db.js."""
+    fd_path = os.path.abspath(os.path.join(script_dir, "..", "..", "..", "Aether", ".aether_workspace", "future_directions.json"))
+    if not os.path.exists(fd_path):
+        print(f"No future_directions.json found at {fd_path}, skipping")
+        return
+
+    try:
+        with open(fd_path, 'r', encoding='utf-8') as f:
+            directions = json.load(f)
+    except Exception as e:
+        print(f"Warning: failed to load future_directions.json: {e}")
+        return
+
+    # Transform to display-friendly format, sorted by priority descending
+    display_dirs = []
+    for d in directions:
+        display_dirs.append({
+            "id": d.get("id", ""),
+            "title": d.get("title", ""),
+            "description": d.get("description", ""),
+            "domains": d.get("domains", []),
+            "priority_score": d.get("priority_score", 0),
+            "status": d.get("status", "available"),
+            "research_mode": d.get("research_mode", ""),
+            "source_exp_id": d.get("source_exp_id", ""),
+            "consumed_by_exp_id": d.get("consumed_by_exp_id", ""),
+            "timestamp": d.get("timestamp", ""),
+        })
+
+    display_dirs.sort(key=lambda x: x["priority_score"], reverse=True)
+
+    fd_js = f"""
+
+// Future Research Directions (auto-generated from future_directions.json)
+window.FUTURE_DIRECTIONS = {json.dumps(display_dirs, indent=2)};
+"""
+    with open(db_path, 'a', encoding='utf-8') as f:
+        f.write(fd_js)
+
+    print(f"Appended FUTURE_DIRECTIONS to packages_db.js ({len(display_dirs)} directions)")
+
 
 if __name__ == "__main__":
     update_index()
