@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -34,7 +34,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 179
+      "hue": 272
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraemlcomputation_closure_fixed_point_circuit_",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -79,7 +79,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T13:12:04Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "p_vs_np_via_tropical_semiring_reductions",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T14:01:14Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "holographic_renormalization_of_proof_complexity",
@@ -97,7 +97,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T14:04:34Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -115,7 +115,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T14:05:03Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "temporal_stone_duality_from_idempotent_semiring_fi",
@@ -124,7 +124,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T14:05:24Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "quantum_resistant_lattice_cryptography_via_berggre",
@@ -133,7 +133,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T14:43:34Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
@@ -142,7 +142,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T15:02:02Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "idempotent_transfer_operators_and_critical_exponen",
@@ -151,7 +151,16 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T15:02:14Z",
-      "hue": 271
+      "hue": 270
+    },
+    {
+      "id": "algebraspeculativemachinelearning_ultrametric_proo",
+      "title": "Ultrametric Proof Generalization Duality via Operadic Neural Compression",
+      "domain": "Bridges (Algebra × Machine Learning × Logic)",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-13T16:01:47Z",
+      "hue": 281
     }
   ],
   "edges": [
@@ -212,10 +221,24 @@
       "type": "heuristic"
     },
     {
+      "source": "algebramachinelearningspeculative_tropical_observe",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
+      "strength": 0.6672612801678909,
+      "label": "Ultrametric Proof Generalization Duality",
+      "type": "heuristic"
+    },
+    {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
-      "target": "algebratropicalcryptography_tropical_valuation_sec",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
+      "strength": 0.6672612801678909,
+      "label": "Ultrametric Proof Generalization Duality",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalcryptography_tropical_valuation_sec",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
       "strength": 0.6121720881427073,
-      "label": "Tropical,Algebra bridge",
+      "label": "Bridges,Algebra bridge",
       "type": "heuristic"
     },
     {
@@ -240,13 +263,6 @@
       "type": "heuristic"
     },
     {
-      "source": "algebramachinelearningspeculative_tropical_observe",
-      "target": "algebraemllogic_closure_rateproof_duality_via_idem",
-      "strength": 0.5860965372507869,
-      "label": "Proof",
-      "type": "heuristic"
-    },
-    {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
       "strength": 0.5846274921301153,
@@ -261,6 +277,20 @@
       "type": "heuristic"
     },
     {
+      "source": "closure_operator_learning_universal_approximation_",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
+      "strength": 0.5754459601259181,
+      "label": "MachineLearning bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "neural_sheaf_cohomology_and_adversarial_robustness",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
+      "strength": 0.5688352570828961,
+      "label": "Connection to Tropical Geometry",
+      "type": "heuristic"
+    },
+    {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
       "strength": 0.5570828961175236,
@@ -272,6 +302,13 @@
       "target": "idempotent_transfer_operators_and_critical_exponen",
       "strength": 0.5460650577124868,
       "label": "Idempotent Transfer Operators",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlcryptography_closure_secret_sharing_dual",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
+      "strength": 0.5387198321091291,
+      "label": "Bridges,Algebra bridge",
       "type": "heuristic"
     },
     {
@@ -303,13 +340,6 @@
       "type": "heuristic"
     },
     {
-      "source": "algebraemlcryptography_closure_secret_sharing_dual",
-      "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.4994228751311647,
-      "label": "Closure Fixed",
-      "type": "heuristic"
-    },
-    {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
       "strength": 0.4836306400839454,
@@ -338,17 +368,31 @@
       "type": "heuristic"
     },
     {
+      "source": "p_vs_np_via_tropical_semiring_reductions",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
+      "strength": 0.4285414480587618,
+      "label": "Algebra bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "temporal_stone_duality_from_idempotent_semiring_fi",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
+      "strength": 0.4285414480587618,
+      "label": "Logic bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "idempotent_transfer_operators_and_critical_exponen",
+      "target": "algebraspeculativemachinelearning_ultrametric_proo",
+      "strength": 0.4285414480587618,
+      "label": "Algebra bridge",
+      "type": "heuristic"
+    },
+    {
       "source": "quantum_resistant_lattice_cryptography_via_berggre",
       "target": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
       "strength": 0.3918153200419727,
       "label": "theorem",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebratropicalcryptography_tropical_valuation_sec",
-      "target": "holographic_renormalization_of_proof_complexity",
-      "strength": 0.3852046169989507,
-      "label": "Holographic Proof Renormalization",
       "type": "heuristic"
     },
     {
@@ -377,13 +421,6 @@
       "target": "p_vs_np_via_tropical_semiring_reductions",
       "strength": 0.35508919202518363,
       "label": "Algebra bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "neural_sheaf_cohomology_and_adversarial_robustness",
-      "target": "closure_operator_learning_universal_approximation_",
-      "strength": 0.32901364113326337,
-      "label": "Closure",
       "type": "heuristic"
     },
     {
