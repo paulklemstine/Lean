@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 112
+      "hue": 272
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -34,7 +34,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebraemlcomputation_closure_fixed_point_circuit_",
@@ -52,7 +52,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T12:34:41Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebratropicalgeometry_tropical_voronoilattice_re",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -79,7 +79,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T13:12:04Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "p_vs_np_via_tropical_semiring_reductions",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T14:01:14Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "holographic_renormalization_of_proof_complexity",
@@ -97,7 +97,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T14:04:34Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -106,7 +106,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T14:04:50Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "closure_operator_learning_universal_approximation_",
@@ -115,7 +115,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T14:05:03Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "temporal_stone_duality_from_idempotent_semiring_fi",
@@ -124,7 +124,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T14:05:24Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "quantum_resistant_lattice_cryptography_via_berggre",
@@ -133,7 +133,16 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T14:43:34Z",
-      "hue": 92
+      "hue": 271
+    },
+    {
+      "id": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
+      "title": "Tropical Myhill-Nerode Theorem for Min-Plus Weighted Languages",
+      "domain": "Tropical Automata Theory / Formal Verification",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-13T15:02:02Z",
+      "hue": 91
     }
   ],
   "edges": [
@@ -286,9 +295,16 @@
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "target": "holographic_renormalization_of_proof_complexity",
-      "strength": 0.4050367261280168,
-      "label": "Holographic Proof Renormalization",
+      "target": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
+      "strength": 0.4101783840503672,
+      "label": "Tropical Myhill",
+      "type": "heuristic"
+    },
+    {
+      "source": "quantum_resistant_lattice_cryptography_via_berggre",
+      "target": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
+      "strength": 0.3918153200419727,
+      "label": "theorem",
       "type": "heuristic"
     },
     {
@@ -317,6 +333,13 @@
       "target": "closure_operator_learning_universal_approximation_",
       "strength": 0.32901364113326337,
       "label": "Closure",
+      "type": "heuristic"
+    },
+    {
+      "source": "temporal_stone_duality_from_idempotent_semiring_fi",
+      "target": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
+      "strength": 0.31836306400839454,
+      "label": "Tropical Myhill",
       "type": "heuristic"
     },
     {
