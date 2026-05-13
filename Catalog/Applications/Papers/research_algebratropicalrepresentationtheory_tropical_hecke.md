@@ -1,339 +1,253 @@
-# Tropical Hecke Realization Duality via Idempotent Convolution Semimodules and Certified Spherical Function Reconstruction
+# Tropical Hecke–Crystal Realization Duality via Observational Quotients
 
 ## Abstract
 
-We prove a finite tropical Hecke reconstruction theorem: for finitely generated idempotent convolution algebras defined by structure constants over a semiring with idempotent addition (SemilatticeSup with OrderBot), evaluation data from a separating nondegenerate family of tropical spherical functionals uniquely determines the structure constants. This is formalized as a machine-verified theorem establishing that the evaluation matrix is a complete invariant for the separated nondegenerate class of tropical Hecke data. We provide bundled structures for finite tropical Hecke data and finite spherical data, prove the core uniqueness theorem, establish the evaluation embedding as an injective polyhedral realization, and derive consequences including commutativity transfer, associativity forcing, and tropical Plancherel-type equivalences. All results are fully formalized and machine-verified.
+We establish a realization duality theorem for tropical Hecke operator systems: given a finite set equipped with operators indexed by a finite color set and an observation function into a finite codomain, the observational quotient—identifying elements with identical operator-observation profiles—yields a unique minimal crystal automaton. We prove existence, minimality, uniqueness up to isomorphism, and character recovery. The number of states of the minimal crystal equals the number of distinct rows in the Hankel–Hecke observation matrix. All results are fully formalized and machine-verified.
 
-**Keywords:** tropical Hecke algebra, idempotent semiring, semimodule duality, spherical functions, Satake reconstruction, polyhedral representation theory, certified algebra recovery, evaluation nondegeneracy, tropical harmonic analysis.
-
----
+**Keywords:** tropical algebra, Hecke operators, crystal bases, automata minimization, Myhill–Nerode, Hankel rank, certified reconstruction
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The Satake isomorphism is one of the foundational results in the representation theory of p-adic groups, establishing an isomorphism between the spherical Hecke algebra H(G//K) and a ring of Weyl-group-invariant characters on a maximal torus. This isomorphism is a cornerstone of the Langlands program and has far-reaching consequences in number theory, automorphic forms, and geometric representation theory.
+The Myhill–Nerode theorem (1958) establishes that every regular language has a unique minimal deterministic finite automaton, constructible by quotienting the state space modulo observational equivalence. This foundational result connects language theory, state minimization, and the rank of the Hankel matrix.
 
-In recent years, tropical geometry has emerged as a powerful tool for studying degenerations, valuations, and combinatorial shadows of algebraic structures. Tropical analogues of classical algebraic objects — tropical curves, tropical linear spaces, tropical Grassmannians — have found applications in optimization, phylogenetics, and algebraic statistics. However, a rigorous tropical analogue of the Satake isomorphism has remained elusive.
+Independently, in representation theory, Kashiwara's crystal bases (1990s) provide combinatorial models for representations of quantum groups, realized as finite weighted colored graphs. Hecke algebras act on representation spaces via operators satisfying braid relations and quadratic conditions.
 
-The fundamental challenge is that tropical (idempotent) semirings lack subtraction and cancellation, making classical proof techniques inapplicable. Equations over tropical semirings are solved by optimization rather than algebraic manipulation, and linear algebra over idempotent semirings has a fundamentally different character from its classical counterpart.
+We show that these two theories are instances of a common algebraic phenomenon. When Hecke-type operators act on a finite set with observations in a finite codomain, the observational quotient produces a minimal "crystal automaton"—a finite weighted colored graph—that is unique and certifiably reconstructable from finite data. This provides:
+
+1. A representation-theoretic lifting of the Myhill–Nerode paradigm,
+2. An algorithmic certified reconstruction procedure for crystal-like structures,
+3. A Hankel rank characterization of minimal crystal size.
 
 ### 1.2 Contributions
 
-In this paper, we establish a finite tropical Hecke reconstruction theorem that serves as a tropical analogue of the Satake isomorphism for finite-dimensional Hecke data. Our main contributions are:
+Our main contributions, all fully machine-verified, are:
 
-1. **Precise definitions** of tropical associativity, spherical compatibility, separation, and evaluation nondegeneracy for structure constants over general idempotent semirings (§2).
-
-2. **The core uniqueness theorem** (Theorem A): two sets of structure constants compatible with the same nondegenerate evaluation matrix must be identical (§3).
-
-3. **The realization duality theorem** (Theorem B): under separation and nondegeneracy, there exists a unique set of structure constants compatible with given evaluation data, and this unique solution automatically inherits all algebraic properties of the original (§3).
-
-4. **The polyhedral realization** (Theorem C): the evaluation embedding provides an injective map from basis elements into tropical affine space, establishing a faithful geometric realization of the Hecke data (§4).
-
-5. **Transfer theorems**: commutativity, associativity, and other algebraic properties can be detected and verified purely at the level of evaluation data (§5).
-
-6. **Full machine verification**: all definitions and theorems are formalized in Lean 4 with the Mathlib library, providing the highest level of mathematical certainty (§6).
+- **Theorem A (Realization Duality):** The observational quotient of a Hecke action datum yields an observable, minimal, unique (up to isomorphism) crystal realization.
+- **Theorem B (Hankel–Hecke Minimality):** The tropical rank of the Hankel–Hecke matrix equals the minimal crystal state count.
+- **Theorem C (Certified Reconstruction):** The quotient construction provides a sound, complete, minimal, character-correct reconstruction algorithm.
+- **Theorem D (Converse):** Every observable crystal automaton is the minimal realization of its own Hecke action data.
 
 ### 1.3 Related Work
 
-**Classical Satake isomorphism.** The classical Satake isomorphism [Sat63] identifies the spherical Hecke algebra with a polynomial character ring. Our result is a finite tropical shadow of this, working with general idempotent semirings rather than fields.
+Our work builds on several strands:
 
-**Tropical geometry.** The tropical semiring and its algebraic properties have been studied extensively [MS15, Jos21]. Tropical linear algebra, including tropical eigenvalue problems and tropical matrix factorization, provides background for our nondegeneracy conditions.
+- **Automata minimization:** The classical Myhill–Nerode theorem and its weighted generalizations (Schützenberger, Carlyle–Paz, Berstel–Reutenauer).
+- **Tropical linear algebra:** The theory of matrices over idempotent semirings, tropical rank, and tropical factorization (Develin–Santos–Sturmfels, Akian–Gaubert–Guterman).
+- **Crystal bases:** Kashiwara's crystal bases and their combinatorial models (Kashiwara, Littelmann, Bump–Schilling).
+- **Hecke algebras:** The algebraic theory of Hecke operators and their representations (Iwahori–Matsumoto, Kazhdan–Lusztig).
 
-**Idempotent analysis.** The theory of idempotent semirings and semimodules [LMS01, KM97] provides the algebraic framework for our definitions. Our spherical compatibility condition is a finite analogue of idempotent integral operators.
+Our contribution is the formalized synthesis: showing that the observational quotient construction unifies these theories in a machine-verifiable framework.
 
-**Tropical representation theory.** Emerging work on tropical flag varieties [BEZ21] and tropical Hecke algebras [TY20] motivates the search for reconstruction theorems in the tropical setting.
+## 2. Definitions and Setup
 
----
+### 2.1 Word Action
 
-## 2. Definitions and Notation
+Let `ι` be a finite set of colors (simple reflections) and `M` a finite set. Given operators `T : ι → (M → M)`, the **word action** of `w = [i₁, i₂, …, iₖ] ∈ List(ι)` on `m ∈ M` is:
 
-### 2.1 Algebraic Setup
+```
+wordAction(T, [], m) = m
+wordAction(T, i :: w, m) = wordAction(T, w, T(i)(m))
+```
 
-Let S be a type equipped with:
-- A binary operation · : S × S → S (semiring multiplication),
-- A partial order ≤ with finite suprema (SemilatticeSup),
-- A bottom element ⊥ (OrderBot).
+This reads the word left-to-right, applying `T(i₁)` first, then `T(i₂)`, etc.
 
-The canonical example is the max-plus tropical semiring (ℝ ∪ {-∞}, max, +), but our results hold for any S satisfying these axioms, including:
-- Max-times semiring (ℝ≥0, max, ×),
-- Boolean semiring ({0, 1}, max, min),
-- Finite chains with truncated addition.
+**Lemma 2.1 (Concatenation).** `wordAction(T, w₁ ++ w₂, m) = wordAction(T, w₂, wordAction(T, w₁, m))`.
 
-Let ι be a finite type indexing the Hecke basis {eᵢ}_{i ∈ ι}, and let Ω be a type indexing spherical functionals.
+### 2.2 Observational Equivalence
 
-### 2.2 Structure Constants
+Let `obs : M → S` be an observation function with `S` a finite set.
 
-**Definition 2.1 (Structure Constants).** A family c : ι → ι → ι → S defines the convolution product by:
+**Definition 2.2.** Two elements `m₁, m₂ ∈ M` are **observationally equivalent** (`m₁ ≈ m₂`) iff:
+```
+∀ w : List(ι), obs(wordAction(T, w, m₁)) = obs(wordAction(T, w, m₂))
+```
 
-eᵢ ⋆ eⱼ = sup_k (c(i,j,k) · eₖ)
+**Proposition 2.3.** Observational equivalence is:
+- An equivalence relation (reflexive, symmetric, transitive).
+- Compatible with operators: `m₁ ≈ m₂ ⟹ T(i)(m₁) ≈ T(i)(m₂)` for all `i ∈ ι`.
+- Compatible with observation: `m₁ ≈ m₂ ⟹ obs(m₁) = obs(m₂)`.
 
-**Definition 2.2 (Tropical Associativity).** The structure constants c are *tropically associative* if for all i, j, l, m ∈ ι:
+*Proof.* Reflexivity, symmetry, and transitivity follow from the corresponding properties of equality. Operator compatibility: if `m₁ ≈ m₂`, then for any word `w`, `obs(wordAction(T, w, T(i)(m₁))) = obs(wordAction(T, i::w, m₁)) = obs(wordAction(T, i::w, m₂)) = obs(wordAction(T, w, T(i)(m₂)))`. □
 
-sup_n (c(i,j,n) · c(n,l,m)) = sup_n (c(j,l,n) · c(i,n,m))
+### 2.3 Hecke Action Data
 
-This is the coefficient-level translation of (eᵢ ⋆ eⱼ) ⋆ eₗ = eᵢ ⋆ (eⱼ ⋆ eₗ).
+**Definition 2.4.** A **Hecke action datum** `D = (M, T, obs)` consists of:
+- A finite type `M` with decidable equality,
+- Operators `T : ι → (M → M)`,
+- An observation function `obs : M → S`.
 
-### 2.3 Spherical Data
+### 2.4 Crystal Automaton
 
-**Definition 2.3 (Evaluation Matrix).** An evaluation matrix is a function E : Ω → ι → S assigning to each spherical functional ω and basis element i the "evaluation" E(ω, i).
+**Definition 2.5.** A **crystal automaton** `C = (Q, wt, step)` consists of:
+- A finite type `Q` (states) with decidable equality,
+- A weight function `wt : Q → S`,
+- A transition function `step : ι → (Q → Q)`.
 
-**Definition 2.4 (Spherical Compatibility).** The evaluation matrix E is *spherically compatible* with structure constants c if for all ω ∈ Ω and i, j ∈ ι:
+### 2.5 Crystal Realization
 
-E(ω, i) · E(ω, j) = sup_k (c(i,j,k) · E(ω, k))
+**Definition 2.6.** A **crystal realization** of `D` is a tuple `R = (C, φ)` where `C` is a crystal automaton and `φ : M → Q` is a surjection satisfying:
+- **Intertwining:** `φ(T(i)(m)) = step(i)(φ(m))` for all `i, m`.
+- **Observation compatibility:** `wt(φ(m)) = obs(m)` for all `m`.
 
-This is the tropical eigenfunction property: each row of E is a simultaneous tropical eigenvector for all convolution operators.
+**Lemma 2.7.** Any realization correctly reproduces all observations:
+```
+wt(wordAction(step, w, φ(m))) = obs(wordAction(T, w, m))
+```
+for all words `w` and elements `m`.
 
-### 2.4 Separation and Nondegeneracy
+*Proof.* By induction on `w`, using intertwining and observation compatibility. □
 
-**Definition 2.5 (Separation).** The evaluation matrix E *separates* basis elements if the map i ↦ (ω ↦ E(ω, i)) is injective. Equivalently, if E(ω, i) = E(ω, j) for all ω implies i = j.
+### 2.6 Observability
 
-**Definition 2.6 (Evaluation Nondegeneracy).** The evaluation matrix E is *nondegenerate* if for all a, b : ι → S:
-
-(∀ω, sup_k (a(k) · E(ω,k)) = sup_k (b(k) · E(ω,k))) ⟹ a = b
-
-This says that coefficient vectors are uniquely determined by their tropical linear combination values against the evaluation columns.
-
----
+**Definition 2.8.** A crystal automaton `C` is **observable** if distinct states have distinct observation profiles:
+```
+(∀ w, wt(wordAction(step, w, q₁)) = wt(wordAction(step, w, q₂))) ⟹ q₁ = q₂
+```
 
 ## 3. Main Results
 
-### 3.1 Theorem A: Structure Constants Determined by Evaluation
+### 3.1 The Quotient Crystal
 
-**Theorem 3.1 (constants_determined_by_eval).** Let c, c' : ι → ι → ι → S be two families of structure constants. If both are spherically compatible with the same evaluation matrix E, and E is nondegenerate, then c = c'.
+**Construction.** Given `D = (M, T, obs)`, define:
+- `Q_D = M / ≈` (the quotient by observational equivalence),
+- `step_D(i)([m]) = [T(i)(m)]` (well-defined by Proposition 2.3),
+- `wt_D([m]) = obs(m)` (well-defined by Proposition 2.3),
+- `φ_D(m) = [m]` (the quotient map).
 
-*Proof sketch.* Fix i, j ∈ ι. From spherical compatibility:
-- E(ω,i) · E(ω,j) = sup_k c(i,j,k) · E(ω,k) for all ω
-- E(ω,i) · E(ω,j) = sup_k c'(i,j,k) · E(ω,k) for all ω
+**Proposition 3.1.** The quotient crystal `C(D) = (Q_D, wt_D, step_D)` is a crystal automaton, and `(C(D), φ_D)` is a crystal realization of `D`.
 
-Therefore sup_k c(i,j,k) · E(ω,k) = sup_k c'(i,j,k) · E(ω,k) for all ω. By evaluation nondegeneracy (applied to a = c(i,j,−) and b = c'(i,j,−)), we conclude c(i,j,−) = c'(i,j,−). Since i, j were arbitrary, c = c'. □
+### 3.2 Theorem A: Realization Duality
 
-### 3.2 Theorem B: Finite Tropical Hecke Realization Duality
+**Theorem 3.2 (Realization Duality).** The quotient crystal realization `(C(D), φ_D)` satisfies:
 
-**Theorem 3.2 (finite_tropical_hecke_realization_duality).** Let c be tropically associative structure constants with a nondegenerate spherically compatible evaluation matrix E. Then there exists a unique c' : ι → ι → ι → S such that c' is tropically associative and spherically compatible with E. Moreover, c' = c.
+1. **Observability:** `C(D)` is observable.
+2. **Minimality:** For any observable crystal realization `(C', φ')` of `D`, `|Q_D| ≤ |C'.State|`.
+3. **Uniqueness:** For any observable crystal realization `(C', φ')`, there exists a crystal isomorphism `C(D) ≅ C'`.
 
-*Proof.* Existence: c itself satisfies both conditions. Uniqueness: by Theorem 3.1, any other compatible c' must equal c. □
+*Proof sketch.*
 
-**Corollary 3.3 (unique_spherically_compatible_constants).** Under nondegeneracy alone (without assuming associativity of the candidate), there exists a unique c' spherically compatible with E.
+(1) **Observability.** If `[m₁]` and `[m₂]` have the same observation profile in `C(D)`, then by the defining property of the quotient, `m₁ ≈ m₂`, so `[m₁] = [m₂]`.
 
-**Corollary 3.4 (associativity_forced).** If c is associative and compatible with nondegenerate E, then any c' compatible with E is automatically associative (since c' = c).
+(2) **Minimality.** Define `f : C'.State → Q_D` by `f(q) = [m]` where `φ'(m) = q`. This is well-defined: if `φ'(m₁) = φ'(m₂) = q`, then `obs(wordAction(T, w, m₁)) = wt(wordAction(step', w, q)) = obs(wordAction(T, w, m₂))` for all `w`, so `m₁ ≈ m₂` and `[m₁] = [m₂]`. The map `f` is surjective (since `φ_D$ is surjective and factors through `φ'`). By Fintype.card_le_of_surjective, `|Q_D| ≤ |C'.State|`.
 
-This is a particularly satisfying consequence: associativity is not an independent condition but is *forced* by compatibility with a nondegenerate evaluation matrix.
+(3) **Uniqueness.** Given two observable realizations `R₁, R₂`, the map `f : R₁.State → R₂.State` defined by `f(q₁) = φ₂(m)` for `φ₁(m) = q₁` is well-defined (since obs-equivalent elements map to the same state in any observable realization) and bijective (by symmetry). It preserves weights and transitions by construction. □
 
-### 3.3 Theorem C: Grand Reconstruction Theorem
+### 3.3 Theorem B: Hankel–Hecke Minimality
 
-**Theorem 3.5 (grand_reconstruction).** Under the hypotheses of Theorem B, plus separation, the following hold simultaneously:
+**Definition 3.3.** The **Hankel–Hecke matrix** `H_D` has rows indexed by `M`, columns by `List(ι)`, with entries `H_D[m, w] = obs(wordAction(T, w, m))`.
 
-1. **Gelfand injectivity:** The evaluation embedding i ↦ (ω ↦ E(ω,i)) is injective.
-2. **Satake reconstruction:** There exists a unique c' with SphericalCompatibility c' E.
-3. **Rigidity:** Any compatible c' equals c.
-4. **Forced associativity:** Any compatible c' is tropically associative.
+**Definition 3.4.** The **tropical rank** of `H_D` is the number of distinct rows: `tropRank(H_D) = |{row_m : m ∈ M}|`.
 
----
+**Theorem 3.5 (Hankel–Hecke Minimality).** `tropRank(H_D) = |Q_D| = |States(C(D))|`.
 
-## 4. Polyhedral Realization
+*Proof.* The distinct rows of `H_D` are precisely the distinct observation profiles of elements of `M`, which are in bijection with the equivalence classes `Q_D$. □
 
-### 4.1 The Evaluation Embedding
+**Corollary 3.6.** For any observable realization `(C', φ')$, `tropRank(H_D) ≤ |C'.State|`.
 
-**Definition 4.1.** The *evaluation embedding* is the map:
-evaluationEmbedding(E) : ι → (Ω → S), i ↦ (ω ↦ E(ω, i))
+### 3.4 Theorem C: Certified Reconstruction
 
-**Theorem 4.1 (evaluationEmbedding_injective).** If E separates basis elements, the evaluation embedding is injective.
+**Theorem 3.7 (Certified Reconstruction).** The quotient construction is:
+- **Sound:** reproduces all observations correctly.
+- **Complete:** every observable realization has at least as many states.
+- **Observable:** the output automaton is observable.
+- **Character-correct:** the multiset of state weights equals the tropical character.
 
-**Theorem 4.2 (faithful_polyhedral_realization).** Under separation and nondegeneracy, the evaluation embedding is injective and, together with the compatibility equations, determines the structure constants uniquely.
+### 3.5 Theorem D: Converse
 
-### 4.2 Geometric Interpretation
+**Theorem 3.8.** Every observable crystal automaton `C$ is the unique minimal realization of its own Hecke action data: `|Q_{D(C)}| = |C.State|`, where `D(C) = (C.State, C.step, C.wt)`.
 
-The evaluation embedding maps each basis element to a point in the tropical affine space S^Ω. The key insight is:
+*Proof.* By le_antisymm: the inequality `|Q| ≤ |C.State|$ follows from the minimality theorem applied to the identity realization. The reverse `|C.State| ≤ |Q|$ follows because the quotient map `C.State → Q$ is injective (by observability of `C`). □
 
-- **Points** in the image correspond to basis elements.
-- **Distances** between points (in a tropical metric) encode the structure constants.
-- The **tropical convex hull** of the image points carries the full algebraic structure.
+## 4. Algorithm: Crystal Reconstruction
 
-This provides a geometric "polyhedral realization" of the Hecke algebra: the abstract algebraic data becomes a concrete geometric object in tropical space.
-
----
-
-## 5. Transfer Theorems
-
-### 5.1 Commutativity Transfer
-
-**Theorem 5.1 (commutativity_from_eval).** If E(ω,i) · E(ω,j) = E(ω,j) · E(ω,i) for all ω, i, j, and E is nondegenerate, then c(i,j) = c(j,i) for all i, j.
-
-### 5.2 Tropical Plancherel Equivalence
-
-**Theorem 5.2 (tropical_plancherel_weak).** If two nondegenerate evaluation matrices E₁, E₂ are both compatible with the same c, then they determine the same class of compatible structure constants: c' is compatible with E₁ if and only if c' is compatible with E₂.
-
-### 5.3 Dual Evaluation Bridge
-
-**Theorem 5.3 (dual_evaluation_bridge).** If E₁ and E₂ are both nondegenerate and compatible with c, then each independently determines c uniquely.
-
----
-
-## 6. Algorithms
-
-### 6.1 Reconstruction via Residuation
-
-**Algorithm 1: Structure Constant Reconstruction**
+### 4.1 Pseudocode
 
 ```
-Input: Evaluation matrix E : Ω × ι → S
-Output: Structure constants c : ι × ι × ι → S
+Algorithm ReconstructMinimalCrystal(M, T, obs, ι):
+  Input: finite set M, operators T[i] for i ∈ ι, observation obs : M → S
+  Output: minimal crystal automaton (Q, wt, step)
 
-For each (i, j, k):
-    c[i][j][k] ← inf_{ω} (E[ω][i] ⊗ E[ω][j]) ⊘ E[ω][k]
-    (where ⊘ is tropical division / residuation)
+  1. Compute observation profiles:
+     For each m ∈ M:
+       profile[m] = {w ↦ obs(wordAction(T, w, m)) : w ∈ Words(ι, depth)}
 
-Verify: SphericalCompatibility(c, E)
-Return c
+  2. Partition M into equivalence classes:
+     Q = {[m] : m ∈ M} where [m₁] = [m₂] iff profile[m₁] = profile[m₂]
+
+  3. Define transitions:
+     For each i ∈ ι, each class [m] ∈ Q:
+       step[i]([m]) = [T[i](m)]  // well-defined by compatibility
+
+  4. Define weights:
+     For each [m] ∈ Q:
+       wt([m]) = obs(m)  // well-defined by observation compatibility
+
+  Return (Q, wt, step)
 ```
 
-**Time complexity:** O(|ι|³ · |Ω|)
-**Space complexity:** O(|ι|³)
+### 4.2 Complexity Analysis
 
-### 6.2 Separation Verification
+- **Step 1:** O(|M| · D · |ι|^D) where D is the separation depth.
+- **Step 2:** O(|M|² · profile_size) for pairwise comparison, or O(|M| · log|M|) with hashing.
+- **Step 3:** O(|Q| · |ι|).
+- **Step 4:** O(|Q|).
 
-**Algorithm 2: Separation Check**
+Since D ≤ |M| (by pigeonhole on the finite state space), the total complexity is polynomial in |M| and |ι|.
 
-```
-Input: Evaluation matrix E : Ω × ι → S
-Output: Boolean (separated or not)
+In practice, partition refinement (as in Hopcroft's algorithm) achieves O(|M| · |ι| · log|M|) time.
 
-For each pair (i, j) with i < j:
-    If E[·][i] = E[·][j] (column equality):
-        Return False, (i, j)
-Return True
-```
+## 5. Examples
 
-**Time complexity:** O(|ι|² · |Ω|)
+### 5.1 Boolean Observations (Classical Automata)
 
-### 6.3 Associativity Verification
+When S = {0, 1} and obs is a characteristic function, the construction recovers the classical Myhill–Nerode minimal DFA.
 
-**Algorithm 3: Tropical Associativity Check**
+### 5.2 Tropical Observations
 
-```
-Input: Structure constants c : ι × ι × ι → S
-Output: Boolean (associative or not)
+When S = (ℕ ∪ {∞}, min, +), observations represent shortest-path costs or optimization values. The minimal crystal captures the essential cost structure.
 
-For each (i, j, l, m):
-    lhs ← sup_n (c[i][j][n] ⊗ c[n][l][m])
-    rhs ← sup_n (c[j][l][n] ⊗ c[i][n][m])
-    If lhs ≠ rhs:
-        Return False, (i, j, l, m)
-Return True
-```
+### 5.3 Two-Color Crystal
 
-**Time complexity:** O(|ι|⁵)
+Consider M = {a, b, c, d}, ι = {red, blue}, with:
+- T(red) = {a↦b, b↦a, c↦d, d↦c}
+- T(blue) = {a↦c, b↦d, c↦a, d↦b}
+- obs = {a↦0, b↦1, c↦0, d↦1}
 
----
+The observation profiles: a and c have profile {[]↦0, [red]↦1, [blue]↦0, ...}, which are equal. Similarly b and d. The quotient has 2 states: {a,c} and {b,d}, giving a minimal 2-state crystal.
 
-## 7. Computational Experiments
+## 6. Discussion
 
-### 7.1 Max-Times Semiring Examples
+### 6.1 Connections to Existing Theory
 
-We validated the reconstruction theorem over the max-times semiring (ℝ≥0, max, ×) with concrete examples.
+The theorem simultaneously generalizes:
+- The Myhill–Nerode theorem (S = {0,1}, ι = alphabet),
+- Weighted automaton minimization (S = semiring, observation = series value),
+- Crystal base construction (when braid relations and Kashiwara axioms are added).
 
-**Example 1 (n=2):** Structure constants c with basis {e₀, e₁}:
-- c[0][0] = [1, 0], c[0][1] = [0, 1], c[1][0] = [0, 1], c[1][1] = [0, 2]
-- Evaluation matrix E = [[1, 0], [1, 2]]
-- Spherical compatibility verified ✓
-- Separation verified ✓
-- Uniqueness confirmed by showing perturbation breaks compatibility ✓
+### 6.2 Limitations
 
-**Example 2 (n=3):** Reconstruction from evaluation data:
-- Starting from E ∈ ℝ^{3×3}, reconstructed c via residuation
-- Verified that perturbed c breaks compatibility
-- Demonstrated unique reconstruction ✓
+Our formalization does not impose braid relations, Coxeter conditions, or Kashiwara crystal axioms. The operators are arbitrary endomorphisms. While this gives maximum generality for the minimization result, it means the resulting "crystal" need not satisfy the axioms of a Kashiwara crystal in the representation-theoretic sense. Adding these axioms is a natural and important extension.
 
-### 7.2 Performance
+### 6.3 Verification
 
-For basis sizes n = 2, 3, 4, 5 with matching numbers of spherical functionals:
+All theorems are fully machine-verified with no axioms beyond the standard foundations (propext, Classical.choice, Quot.sound). The formalization comprises approximately 450 lines of verified code.
 
-| n | Structure constants | Reconstruction time | Associativity check |
-|---|--------------------|--------------------|-------------------|
-| 2 | 8 | < 1ms | < 1ms |
-| 3 | 27 | < 1ms | < 1ms |
-| 4 | 64 | < 1ms | ~2ms |
-| 5 | 125 | ~1ms | ~5ms |
+## 7. Future Work
 
-The O(n³) reconstruction and O(n⁵) associativity check are practical for moderate n.
-
----
-
-## 8. Machine Verification
-
-All theorems and definitions are formalized in Lean 4 with the Mathlib library (v4.28.0). The formalization consists of approximately 500 lines of Lean code organized in a single file `Bridges/TropicalHeckeRealizationDuality.lean`.
-
-### 8.1 Formalization Highlights
-
-- The core structures (`FiniteTropicalHeckeData`, `FiniteSphericalData`, `SphericalRealization`) are defined as bundled Lean structures with appropriate typeclass instances.
-- The main theorems depend only on the standard axioms `propext` and `Quot.sound` — no additional axioms are introduced.
-- All proofs are constructive where possible; Classical reasoning is not used in the core uniqueness argument.
-
-### 8.2 Axiom Usage
-
-All theorems are verified to depend only on the standard Lean axioms:
-- `propext` (propositional extensionality)
-- `Quot.sound` (quotient soundness)
-
-No use of `Classical.choice`, `sorry`, or custom axioms.
-
----
-
-## 9. Discussion
-
-### 9.1 Relationship to Classical Theory
-
-Our theorem is a finite tropical analogue of the Satake isomorphism. The key differences are:
-
-1. **Semiring vs. field:** We work over general idempotent semirings rather than fields or rings. This increases generality but requires different proof techniques.
-
-2. **Finite vs. infinite:** We work with finite basis types, avoiding measure-theoretic complications. This makes the theorem algorithmic and constructive.
-
-3. **Nondegeneracy hypothesis:** Our nondegeneracy condition (Definition 2.6) is the tropical analogue of linear independence. In the classical setting, this is often automatic; in the tropical setting, it must be imposed as a hypothesis.
-
-### 9.2 Limitations
-
-The main limitation is the abstract nature of the nondegeneracy hypothesis. In the classical Satake setting, nondegeneracy follows from the structure of the group and its representations. Establishing analogous structural results for tropical Hecke algebras — i.e., showing that natural families of tropical spherical functions are nondegenerate — is an important open problem.
-
-### 9.3 Implications
-
-The theorem establishes that evaluation data is a *complete invariant* for separated nondegenerate tropical Hecke data. This has several consequences:
-
-1. **Data compression:** Instead of storing O(n³) structure constants, one can store the O(n·m) evaluation matrix (where m is the number of functionals). If m ≪ n², this is a significant compression.
-
-2. **Structure transfer:** Properties of the algebra (commutativity, associativity) can be verified from evaluation data without reconstructing the structure constants.
-
-3. **Geometric classification:** The evaluation embedding provides a geometric classification of tropical Hecke algebras by their images in tropical affine space.
-
----
-
-## 10. Future Work
-
-1. **Tropical Satake transform for Coxeter groups:** Extend the reconstruction to structure constants indexed by Weyl groups, connecting to the geometry of tropical buildings.
-
-2. **Tropical Tannakian reconstruction:** Recover tropical groups from their categories of tropical representations, generalizing from one object (Hecke algebra) to many.
-
-3. **Explicit nondegeneracy criteria:** Establish sufficient conditions on the semiring S and basis type ι that guarantee the existence of nondegenerate evaluation matrices.
-
-4. **Polyhedral stratification:** Relate the face structure of the tropical polytope formed by evaluation profiles to algebraic substructures (ideals, subalgebras).
-
-5. **Tropical Plancherel theory:** Prove a tropical analogue of the Plancherel formula decomposing the regular representation into irreducibles.
-
----
+See FUTURE_DIRECTIONS.md for detailed next steps including:
+1. Full finite Coxeter braid relations,
+2. Tropical Demazure operators and character formulas,
+3. Learning-theoretic extraction from oracle access,
+4. Categorification via idempotent functor categories,
+5. Efficient algorithms and computational complexity analysis.
 
 ## References
 
-[BEZ21] M. Baker, N. Eriksson, S. Zhang. *Tropical flag varieties and tropical linear spaces.* J. Algebraic Combin., 2021.
-
-[Jos21] D. Joshi. *Tropical geometry and representation theory.* Lecture notes, 2021.
-
-[KM97] V.N. Kolokoltsov, V.P. Maslov. *Idempotent Analysis and Its Applications.* Kluwer, 1997.
-
-[LMS01] G.L. Litvinov, V.P. Maslov, G.B. Shpiz. *Idempotent functional analysis: An algebraic approach.* Math. Notes 69(5), 2001.
-
-[MS15] D. Maclagan, B. Sturmfels. *Introduction to Tropical Geometry.* AMS, 2015.
-
-[Sat63] I. Satake. *Theory of spherical functions on reductive algebraic groups over p-adic fields.* Publ. Math. IHÉS 18, 1963.
-
-[TY20] J. Tong, H. Yu. *Tropical Hecke algebras.* Preprint, 2020.
+1. A. Nerode, "Linear Automaton Transformations," *Proc. AMS* 9 (1958), 541–544.
+2. J. Myhill, "Finite Automata and the Representation of Events," WADD TR-57-624 (1957).
+3. M. Kashiwara, "Crystallizing the q-Analogue of Universal Enveloping Algebras," *Commun. Math. Phys.* 133 (1990), 249–260.
+4. M. Akian, S. Gaubert, A. Guterman, "Tropical Linear Algebra," in *Tropical and Idempotent Mathematics*, Contemp. Math. 495 (2009).
+5. J.-E. Pin, "Tropical Semirings," *Publ. Newton Inst.* 11 (1998), 50–69.
+6. J. Berstel, C. Reutenauer, *Noncommutative Rational Series with Applications*, Cambridge Univ. Press, 2011.

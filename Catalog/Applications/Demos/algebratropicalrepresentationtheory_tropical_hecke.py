@@ -1,909 +1,698 @@
 #!/usr/bin/env python3
 """
-Tropical Hecke Realization Duality — Applications
+Tropical Hecke–Crystal Realization Duality: Demonstrations
 
-Demonstrates real-world applications of the tropical reconstruction theorem:
-1. Network flow analysis via tropical convolution algebras
-2. Shortest-path computation as tropical matrix multiplication
-3. Scheduling optimization via tropical eigenvalue problems
-4. Pattern recognition in tropical data
+This module demonstrates the key constructions from the formalized theorem:
+1. Word action computation
+2. Observational equivalence and quotient construction
+3. Minimal crystal automaton reconstruction
+4. Hankel–Hecke matrix and tropical rank
+5. Crystal isomorphism verification
 """
 
-import numpy as np
-from typing import List, Tuple
-from itertools import product as iproduct
-
-NEG_INF = float('-inf')
-
-def trop_add(a, b):
-    return max(a, b)
-
-def trop_mul(a, b):
-    if a == NEG_INF or b == NEG_INF:
-        return NEG_INF
-    return a + b
-
-def trop_sup(values):
-    return max(values) if values else NEG_INF
+from __future__ import annotations
+from collections import defaultdict
+from itertools import product
+from typing import Any, Callable
+import json
 
 
-# =============================================================================
-# Application 1: Network Flow via Tropical Convolution
-# =============================================================================
+# ============================================================
+# Core Definitions
+# ============================================================
 
-def network_flow_demo():
+class HeckeActionData:
     """
-    Model a network as a tropical convolution algebra.
+    A Hecke action datum: finite set M, operators T_i, observation obs.
     
-    Nodes = basis elements, edge weights = structure constants.
-    The tropical product e_i ⋆ e_j represents the best 2-hop path from i to j.
-    
-    The structure constants c[i][j][k] represent the weight of the path i→k→j
-    (or equivalently, the "bandwidth" of the relay through k).
-    
-    The reconstruction theorem says: if we can observe the network through
-    a set of "probe" functions (spherical functionals) that separate nodes
-    and are nondegenerate, we can reconstruct the full network topology.
+    M is represented as range(n), operators as dicts, obs as a dict.
     """
-    print("=" * 70)
-    print("APPLICATION 1: Network Topology Reconstruction")
-    print("=" * 70)
+    def __init__(self, n: int, colors: list[str],
+                 operators: dict[str, dict[int, int]],
+                 obs: dict[int, Any]):
+        self.n = n
+        self.M = list(range(n))
+        self.colors = colors
+        self.operators = operators
+        self.obs = obs
     
-    # 4-node network with known connectivity
-    n = 4
-    # Direct edge weights (adjacency in tropical sense)
-    # weight[i][j] = bandwidth of direct link i→j (NEG_INF = no link)
-    weights = [
-        [0, 3, NEG_INF, 1],
-        [3, 0, 2, NEG_INF],
-        [NEG_INF, 2, 0, 4],
-        [1, NEG_INF, 4, 0],
-    ]
+    def T(self, color: str, m: int) -> int:
+        return self.operators[color][m]
     
-    print("\nNetwork adjacency (tropical, higher = better):")
-    for i in range(n):
-        print(f"  Node {i}: {weights[i]}")
-    
-    # Structure constants: c[i][j][k] = weight of 2-hop path i→k + k→j
-    c = [[[NEG_INF]*n for _ in range(n)] for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                c[i][j][k] = trop_mul(weights[i][k], weights[k][j])
-    
-    print("\n2-hop relay capacities c[i][j][k] = weight(i→k) + weight(k→j):")
-    for i in range(n):
-        for j in range(n):
-            best_k = max(range(n), key=lambda k: c[i][j][k])
-            best_val = c[i][j][best_k]
-            if best_val != NEG_INF:
-                print(f"  Best relay {i}→?→{j}: via node {best_k}, capacity {best_val}")
-    
-    # Probe functions: each probe measures reachability from a viewpoint
-    # Probe ω at node i = max hop capacity from viewpoint ω to node i
-    probes = weights  # Use direct adjacency as probes (each node probes its neighbors)
-    
-    print("\nProbe measurements (E[ω][i]):")
-    for w in range(n):
-        print(f"  Probe {w}: {probes[w]}")
-    
-    # Reconstruct network from probes
-    print("\nReconstructing network from probe data...")
-    c_recon = [[[NEG_INF]*n for _ in range(n)] for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                candidates = []
-                for w in range(n):
-                    if probes[w][k] != NEG_INF and probes[w][i] != NEG_INF and probes[w][j] != NEG_INF:
-                        candidates.append(probes[w][i] + probes[w][j] - probes[w][k])
-                if candidates:
-                    c_recon[i][j][k] = min(candidates)
-    
-    # Compare
-    match_count = 0
-    total = 0
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                total += 1
-                a, b = c[i][j][k], c_recon[i][j][k]
-                if (a == NEG_INF and b == NEG_INF) or (a != NEG_INF and b != NEG_INF and abs(a-b) < 0.01):
-                    match_count += 1
-    
-    print(f"  Reconstruction accuracy: {match_count}/{total} entries match")
-    print(f"  {'✓ Full reconstruction!' if match_count == total else '△ Partial reconstruction'}")
+    def observe(self, m: int) -> Any:
+        return self.obs[m]
 
 
-# =============================================================================
-# Application 2: Scheduling via Tropical Eigenvalues
-# =============================================================================
+def word_action(data: HeckeActionData, word: list[str], m: int) -> int:
+    """Apply a word of operators left-to-right: T_{w_k}(...T_{w_1}(m)...)."""
+    state = m
+    for color in word:
+        state = data.T(color, state)
+    return state
 
-def scheduling_demo():
+
+def observation_profile(data: HeckeActionData, m: int,
+                        max_depth: int = None) -> dict[tuple, Any]:
     """
-    Model a production scheduling problem using tropical algebra.
-    
-    Tasks = basis elements, processing times = structure constants.
-    The tropical eigenvalue reveals the critical cycle time.
-    
-    The reconstruction theorem implies: if we observe task completion
-    times under different initial conditions (spherical functionals),
-    we can reconstruct the full dependency structure.
+    Compute the observation profile of element m:
+    maps each word w to obs(T_w(m)).
     """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Production Schedule Reconstruction")
-    print("=" * 70)
+    if max_depth is None:
+        max_depth = data.n  # Sufficient by pigeonhole
     
-    n = 3  # 3 tasks in a cyclic production system
-    
-    # Processing time matrix: time to go from completing task i to completing task j
-    # (in max-plus algebra, this models precedence constraints)
-    proc_times = [
-        [0, 3, 5],
-        [2, 0, 4],
-        [1, 6, 0],
-    ]
-    
-    print("\nProcessing time matrix A[i][j]:")
-    print("  (time to transition from task i completion to task j start)")
-    for i in range(n):
-        print(f"  Task {i}: {proc_times[i]}")
-    
-    # Compute tropical matrix power A² = A ⊗ A
-    # (A²)[i][j] = max_k (A[i][k] + A[k][j])
-    A2 = [[NEG_INF]*n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            A2[i][j] = trop_sup([trop_mul(proc_times[i][k], proc_times[k][j]) for k in range(n)])
-    
-    print("\nTwo-step transition matrix A²:")
-    for i in range(n):
-        print(f"  {A2[i]}")
-    
-    # Tropical eigenvalue = critical cycle time
-    # λ = max_i A[i][i] for 1-cycles
-    # Also check 2-cycles: max_{i≠j} (A[i][j] + A[j][i])/2
-    one_cycles = [proc_times[i][i] for i in range(n)]
-    two_cycles = []
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                cycle_time = (proc_times[i][j] + proc_times[j][i]) / 2
-                two_cycles.append(cycle_time)
-    three_cycles = []
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                if i != j and j != k and i != k:
-                    ct = (proc_times[i][j] + proc_times[j][k] + proc_times[k][i]) / 3
-                    three_cycles.append(ct)
-    
-    lambda_val = max(max(one_cycles), max(two_cycles), max(three_cycles))
-    print(f"\nCritical cycle time (tropical eigenvalue): {lambda_val}")
-    print(f"  1-cycles: {max(one_cycles)}")
-    print(f"  2-cycles: {max(two_cycles)}")
-    print(f"  3-cycles: {max(three_cycles):.2f}")
-    
-    # Observation: different initial conditions give different completion times
-    # These are "spherical functionals" — they separate tasks
-    print("\nObserving completion times under different initial conditions:")
-    for init in range(n):
-        times = proc_times[init]
-        print(f"  Starting from task {init}: completion times = {times}")
-    
-    print("\n  → The processing time matrix can be reconstructed from")
-    print("    these observations (by the Reconstruction Theorem)!")
+    profile = {}
+    # Generate all words up to max_depth
+    for depth in range(max_depth + 1):
+        for word in product(data.colors, repeat=depth):
+            w = list(word)
+            profile[tuple(w)] = data.observe(word_action(data, w, m))
+    return profile
 
 
-# =============================================================================
-# Application 3: Tropical Data Classification
-# =============================================================================
-
-def classification_demo():
+def compute_observational_equivalence(data: HeckeActionData,
+                                       max_depth: int = None) -> dict[int, int]:
     """
-    Use tropical convolution structure for pattern classification.
-    
-    Data points are embedded in tropical space via evaluation profiles.
-    The reconstruction theorem guarantees that if the embedding separates
-    classes and is nondegenerate, the full class structure can be recovered.
+    Compute observational equivalence classes.
+    Returns a dict mapping each element to its class representative.
     """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Tropical Data Classification")
-    print("=" * 70)
+    profiles = {}
+    for m in data.M:
+        prof = observation_profile(data, m, max_depth)
+        # Convert to hashable tuple
+        key = tuple(sorted(prof.items()))
+        profiles[m] = key
     
-    # 5 data points in 3-dimensional tropical space
-    # Each point has a "class" determined by its tropical convolution behavior
-    data = [
-        [2, 0, 1],   # Class A
-        [2, 0, 1],   # Class A (duplicate)
-        [0, 3, 1],   # Class B
-        [1, 1, 3],   # Class C
-        [0, 3, 2],   # Class B (variant)
-    ]
+    # Group by profile
+    classes = defaultdict(list)
+    for m, key in profiles.items():
+        classes[key].append(m)
     
-    print("\nData points in tropical space:")
-    for idx, point in enumerate(data):
-        print(f"  Point {idx}: {point}")
+    # Assign class representatives (smallest element in each class)
+    representative = {}
+    for members in classes.values():
+        rep = min(members)
+        for m in members:
+            representative[m] = rep
     
-    # Compute tropical distance matrix
-    # d_trop(x, y) = max_i |x_i - y_i| (tropical Chebyshev metric)
-    n = len(data)
-    dist = [[0.0]*n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            dist[i][j] = max(abs(data[i][k] - data[j][k]) for k in range(len(data[0])))
-    
-    print("\nTropical distance matrix:")
-    for i in range(n):
-        print(f"  {[f'{d:.1f}' for d in dist[i]]}")
-    
-    # Identify clusters by tropical convex hull membership
-    # Two points are in the same "tropical class" if their tropical distance
-    # is below a threshold
-    threshold = 1.5
-    clusters = list(range(n))
-    for i in range(n):
-        for j in range(i + 1, n):
-            if dist[i][j] <= threshold:
-                # Merge clusters
-                old_cluster = clusters[j]
-                new_cluster = clusters[i]
-                for k in range(n):
-                    if clusters[k] == old_cluster:
-                        clusters[k] = new_cluster
-    
-    print(f"\nClusters (threshold={threshold}):")
-    unique_clusters = sorted(set(clusters))
-    for c in unique_clusters:
-        members = [i for i in range(n) if clusters[i] == c]
-        print(f"  Cluster {c}: points {members}")
-    
-    print("\n  The Reconstruction Theorem guarantees that if evaluation")
-    print("  profiles separate clusters, the full cluster structure")
-    print("  (including inter-cluster relationships) is recoverable.")
+    return representative
 
 
-# =============================================================================
+class CrystalAutomaton:
+    """A minimal crystal automaton: states, weights, transitions."""
+    
+    def __init__(self, states: list[int], colors: list[str],
+                 weights: dict[int, Any],
+                 transitions: dict[str, dict[int, int]]):
+        self.states = states
+        self.colors = colors
+        self.weights = weights
+        self.transitions = transitions
+    
+    def step(self, color: str, state: int) -> int:
+        return self.transitions[color][state]
+    
+    def wt(self, state: int) -> Any:
+        return self.weights[state]
+    
+    def word_step(self, word: list[str], state: int) -> int:
+        s = state
+        for c in word:
+            s = self.step(c, s)
+        return s
+    
+    def __repr__(self):
+        lines = [f"CrystalAutomaton with {len(self.states)} states:"]
+        lines.append(f"  States: {self.states}")
+        lines.append(f"  Colors: {self.colors}")
+        lines.append(f"  Weights: {self.weights}")
+        for c in self.colors:
+            lines.append(f"  T_{c}: {self.transitions[c]}")
+        return "\n".join(lines)
+
+
+def reconstruct_minimal_crystal(data: HeckeActionData,
+                                 max_depth: int = None) -> tuple[CrystalAutomaton, dict[int, int]]:
+    """
+    Certified reconstruction algorithm.
+    
+    Returns (crystal, quotient_map) where:
+    - crystal is the minimal crystal automaton
+    - quotient_map maps each element of M to its quotient state
+    """
+    rep = compute_observational_equivalence(data, max_depth)
+    
+    # States are the distinct representatives
+    state_set = sorted(set(rep.values()))
+    state_index = {s: i for i, s in enumerate(state_set)}
+    
+    # Quotient map
+    quotient_map = {m: state_index[rep[m]] for m in data.M}
+    
+    # Weights
+    weights = {state_index[s]: data.observe(s) for s in state_set}
+    
+    # Transitions
+    transitions = {}
+    for color in data.colors:
+        trans = {}
+        for s in state_set:
+            ts = data.T(color, s)
+            trans[state_index[s]] = state_index[rep[ts]]
+        transitions[color] = trans
+    
+    crystal = CrystalAutomaton(
+        states=list(range(len(state_set))),
+        colors=data.colors,
+        weights=weights,
+        transitions=transitions
+    )
+    
+    return crystal, quotient_map
+
+
+def hankel_hecke_matrix(data: HeckeActionData,
+                         max_depth: int = 3) -> dict[int, dict[tuple, Any]]:
+    """
+    Compute the Hankel–Hecke matrix.
+    Rows: elements of M, Columns: words up to max_depth.
+    """
+    matrix = {}
+    for m in data.M:
+        row = {}
+        for depth in range(max_depth + 1):
+            for word in product(data.colors, repeat=depth):
+                w = list(word)
+                row[tuple(w)] = data.observe(word_action(data, w, m))
+        matrix[m] = row
+    return matrix
+
+
+def tropical_rank(data: HeckeActionData, max_depth: int = 3) -> int:
+    """Compute the tropical rank = number of distinct Hankel rows."""
+    matrix = hankel_hecke_matrix(data, max_depth)
+    distinct_rows = set()
+    for m, row in matrix.items():
+        key = tuple(sorted(row.items()))
+        distinct_rows.add(key)
+    return len(distinct_rows)
+
+
+def verify_realization(data: HeckeActionData,
+                        crystal: CrystalAutomaton,
+                        quotient_map: dict[int, int],
+                        max_depth: int = 3) -> dict[str, bool]:
+    """
+    Verify all properties of the crystal realization.
+    """
+    results = {}
+    
+    # 1. Soundness: crystal reproduces all observations
+    sound = True
+    for m in data.M:
+        for depth in range(max_depth + 1):
+            for word in product(data.colors, repeat=depth):
+                w = list(word)
+                crystal_obs = crystal.wt(crystal.word_step(w, quotient_map[m]))
+                original_obs = data.observe(word_action(data, w, m))
+                if crystal_obs != original_obs:
+                    sound = False
+                    break
+    results["sound"] = sound
+    
+    # 2. Observation compatibility
+    obs_compat = all(
+        crystal.wt(quotient_map[m]) == data.observe(m)
+        for m in data.M
+    )
+    results["obs_compatible"] = obs_compat
+    
+    # 3. Intertwining
+    intertwine = all(
+        quotient_map[data.T(c, m)] == crystal.step(c, quotient_map[m])
+        for c in data.colors
+        for m in data.M
+    )
+    results["intertwining"] = intertwine
+    
+    # 4. Surjectivity
+    surj = set(quotient_map.values()) == set(crystal.states)
+    results["surjective"] = surj
+    
+    # 5. Observability
+    observable = True
+    for q1 in crystal.states:
+        for q2 in crystal.states:
+            if q1 >= q2:
+                continue
+            same = True
+            for depth in range(max_depth + 1):
+                for word in product(crystal.colors, repeat=depth):
+                    w = list(word)
+                    if crystal.wt(crystal.word_step(w, q1)) != \
+                       crystal.wt(crystal.word_step(w, q2)):
+                        same = False
+                        break
+                if not same:
+                    break
+            if same:
+                observable = False
+                break
+    results["observable"] = observable
+    
+    # 6. Hankel rank = state count
+    rank = tropical_rank(data, max_depth)
+    results["hankel_rank_eq_states"] = (rank == len(crystal.states))
+    results["hankel_rank"] = rank
+    results["num_states"] = len(crystal.states)
+    
+    return results
+
+
+# ============================================================
+# Examples
+# ============================================================
+
+def example_1_two_color_crystal():
+    """
+    Example 1: A 4-element system with 2 colors that minimizes to 2 states.
+    
+    M = {0, 1, 2, 3}
+    T_red:  0↔1, 2↔3 (swap pairs)
+    T_blue: 0↔2, 1↔3 (swap pairs)
+    obs: 0,2 → 'A', 1,3 → 'B'
+    
+    Elements 0,2 are obs-equivalent (same profile), as are 1,3.
+    Minimal crystal has 2 states.
+    """
+    print("=" * 60)
+    print("Example 1: Two-Color Crystal (4 → 2 states)")
+    print("=" * 60)
+    
+    data = HeckeActionData(
+        n=4,
+        colors=["red", "blue"],
+        operators={
+            "red":  {0: 1, 1: 0, 2: 3, 3: 2},
+            "blue": {0: 2, 1: 3, 2: 0, 3: 1}
+        },
+        obs={0: "A", 1: "B", 2: "A", 3: "B"}
+    )
+    
+    crystal, qmap = reconstruct_minimal_crystal(data, max_depth=3)
+    print(f"\nOriginal system: {data.n} elements")
+    print(f"Quotient map: {qmap}")
+    print(f"\n{crystal}")
+    
+    results = verify_realization(data, crystal, qmap, max_depth=3)
+    print(f"\nVerification results:")
+    for k, v in results.items():
+        print(f"  {k}: {v}")
+    
+    return results
+
+
+def example_2_identity_operators():
+    """
+    Example 2: Identity operators — each element is its own class.
+    
+    M = {0, 1, 2}, T_i = id for all i, distinct observations.
+    Minimal crystal = 3 states (no identification possible).
+    """
+    print("\n" + "=" * 60)
+    print("Example 2: Identity Operators (3 → 3 states)")
+    print("=" * 60)
+    
+    data = HeckeActionData(
+        n=3,
+        colors=["a"],
+        operators={"a": {0: 0, 1: 1, 2: 2}},
+        obs={0: 0, 1: 1, 2: 2}
+    )
+    
+    crystal, qmap = reconstruct_minimal_crystal(data, max_depth=3)
+    print(f"\nOriginal system: {data.n} elements")
+    print(f"Quotient map: {qmap}")
+    print(f"\n{crystal}")
+    
+    results = verify_realization(data, crystal, qmap, max_depth=3)
+    print(f"\nVerification results:")
+    for k, v in results.items():
+        print(f"  {k}: {v}")
+    
+    return results
+
+
+def example_3_cyclic_system():
+    """
+    Example 3: Cyclic system — a 6-element cycle that minimizes.
+    
+    M = {0,1,2,3,4,5}, T_a: m ↦ (m+1) mod 6
+    obs: m ↦ m mod 3
+    
+    Elements {0,3}, {1,4}, {2,5} are obs-equivalent.
+    Minimal crystal has 3 states forming a 3-cycle.
+    """
+    print("\n" + "=" * 60)
+    print("Example 3: Cyclic System (6 → 3 states)")
+    print("=" * 60)
+    
+    data = HeckeActionData(
+        n=6,
+        colors=["a"],
+        operators={"a": {i: (i + 1) % 6 for i in range(6)}},
+        obs={i: i % 3 for i in range(6)}
+    )
+    
+    crystal, qmap = reconstruct_minimal_crystal(data, max_depth=6)
+    print(f"\nOriginal system: {data.n} elements")
+    print(f"Quotient map: {qmap}")
+    print(f"\n{crystal}")
+    
+    results = verify_realization(data, crystal, qmap, max_depth=6)
+    print(f"\nVerification results:")
+    for k, v in results.items():
+        print(f"  {k}: {v}")
+    
+    return results
+
+
+def example_4_tropical_weights():
+    """
+    Example 4: Tropical (min-plus) observations.
+    
+    M = {0,1,2,3,4,5,6,7}, two operators, obs = cost function.
+    Demonstrates minimization with numeric observations.
+    """
+    print("\n" + "=" * 60)
+    print("Example 4: Tropical Weight System (8 → 4 states)")
+    print("=" * 60)
+    
+    data = HeckeActionData(
+        n=8,
+        colors=["x", "y"],
+        operators={
+            "x": {0: 1, 1: 0, 2: 3, 3: 2, 4: 5, 5: 4, 6: 7, 7: 6},
+            "y": {0: 4, 1: 5, 2: 6, 3: 7, 4: 0, 5: 1, 6: 2, 7: 3}
+        },
+        obs={0: 0, 1: 1, 2: 0, 3: 1, 4: 0, 5: 1, 6: 0, 7: 1}
+    )
+    
+    crystal, qmap = reconstruct_minimal_crystal(data, max_depth=4)
+    print(f"\nOriginal system: {data.n} elements")
+    print(f"Quotient map: {qmap}")
+    print(f"\n{crystal}")
+    
+    results = verify_realization(data, crystal, qmap, max_depth=4)
+    print(f"\nVerification results:")
+    for k, v in results.items():
+        print(f"  {k}: {v}")
+    
+    # Print Hankel matrix
+    print(f"\nHankel–Hecke matrix (first few columns):")
+    H = hankel_hecke_matrix(data, max_depth=2)
+    cols = sorted(list(H[0].keys()))[:8]
+    header = "m \\ w | " + " | ".join(str(c) for c in cols)
+    print(header)
+    print("-" * len(header))
+    for m in data.M:
+        row = " | ".join(str(H[m][c]) for c in cols)
+        print(f"  {m}   | {row}")
+    
+    return results
+
+
+def example_5_classical_dfa():
+    """
+    Example 5: Classical DFA minimization as a special case.
+    
+    The classical Myhill–Nerode theorem is recovered when S = {0, 1}
+    (accept/reject) and the operators are alphabet transitions.
+    """
+    print("\n" + "=" * 60)
+    print("Example 5: Classical DFA Minimization (5 → 3 states)")
+    print("=" * 60)
+    
+    # DFA recognizing strings with even number of 'a's
+    # States: {q0, q1, q2, q3, q4} where q0,q2 accept, q1,q3,q4 reject
+    # q0 --a--> q1, q1 --a--> q0 (parity flip)
+    # q2 --a--> q3, q3 --a--> q2 (duplicate of above)
+    # q4 --a--> q4 (sink)
+    # q0 --b--> q2, q2 --b--> q0 (swap between copies)
+    # q1 --b--> q3, q3 --b--> q1
+    # q4 --b--> q4
+    
+    data = HeckeActionData(
+        n=5,
+        colors=["a", "b"],
+        operators={
+            "a": {0: 1, 1: 0, 2: 3, 3: 2, 4: 4},
+            "b": {0: 2, 1: 3, 2: 0, 3: 1, 4: 4}
+        },
+        obs={0: 1, 1: 0, 2: 1, 3: 0, 4: 0}  # 1=accept, 0=reject
+    )
+    
+    crystal, qmap = reconstruct_minimal_crystal(data, max_depth=5)
+    print(f"\nOriginal DFA: {data.n} states")
+    print(f"Quotient map: {qmap}")
+    print(f"\n{crystal}")
+    
+    results = verify_realization(data, crystal, qmap, max_depth=5)
+    print(f"\nVerification results:")
+    for k, v in results.items():
+        print(f"  {k}: {v}")
+    
+    return results
+
+
+# ============================================================
 # Main
-# =============================================================================
+# ============================================================
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Tropical Hecke Realization Duality — Applications                 ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    
-    network_flow_demo()
-    scheduling_demo()
-    classification_demo()
-    
-    print("\n" + "=" * 70)
-    print("All applications demonstrated!")
-    print("Core insight: tropical evaluation data determines algebraic structure.")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Tropical Hecke Realization Duality — Demo
-
-Demonstrates the core reconstruction theorems with concrete numerical examples.
-
-We use two semiring models:
-1. Max-times semiring: (ℝ≥0, max, ×) — nonneg reals with max as "addition" and
-   ordinary multiplication. This is a natural idempotent semiring.
-2. Max-plus semiring: (ℝ ∪ {-∞}, max, +) — the classical tropical semiring.
-
-Key theorem demonstrated:
-  If E[ω][i] ⊗ E[ω][j] = ⊕_k c[i][j][k] ⊗ E[ω][k] for all ω,i,j,
-  and E is separating and nondegenerate, then c is uniquely determined.
-"""
-
-# =============================================================================
-# Max-Times Semiring: (ℝ≥0, max, ×)
-# =============================================================================
-
-def mt_add(a, b):
-    """Max-times addition: max(a, b)"""
-    return max(a, b)
-
-def mt_mul(a, b):
-    """Max-times multiplication: a * b"""
-    return a * b
-
-def mt_sup(values):
-    """Max-times supremum: max of all values"""
-    return max(values) if values else 0
-
-MT_BOT = 0  # Bottom element for max-times
-
-# =============================================================================
-# Demo 1: 2-element Hecke Algebra over Max-Times
-# =============================================================================
-
-def demo_max_times_2():
-    """
-    Basis: {e_0, e_1}, Semiring: (ℝ≥0, max, ×)
-    
-    Structure constants c[i][j][k]:
-      c[0][0] = [1, 0]  → e_0 ⋆ e_0 = max(1·e_0, 0·e_1) = e_0
-      c[0][1] = [0, 1]  → e_0 ⋆ e_1 = max(0·e_0, 1·e_1) = e_1
-      c[1][0] = [0, 1]  → e_1 ⋆ e_0 = e_1
-      c[1][1] = [0, 2]  → e_1 ⋆ e_1 = max(0·e_0, 2·e_1) = 2·e_1
-    
-    Evaluation matrix (2 functionals separating 2 basis elements):
-      E[0] = [1, 0]  → φ_0(e_0)=1, φ_0(e_1)=0
-      E[1] = [1, 2]  → φ_1(e_0)=1, φ_1(e_1)=2
-    """
-    print("=" * 70)
-    print("DEMO 1: 2-element Hecke Algebra over Max-Times Semiring")
-    print("  Semiring: (ℝ≥0, max, ×)")
-    print("=" * 70)
-    
-    n = 2
-    c = [
-        [[1, 0], [0, 1]],
-        [[0, 1], [0, 2]]
-    ]
-    E = [
-        [1, 0],
-        [1, 2],
-    ]
-    
-    print("\nStructure constants c[i][j][k]:")
-    for i in range(n):
-        for j in range(n):
-            print(f"  c[{i}][{j}] = {c[i][j]}")
-    
-    print(f"\nEvaluation matrix E[ω][i]:")
-    for w in range(len(E)):
-        print(f"  φ_{w}: {E[w]}")
-    
-    # Verify spherical compatibility
-    print("\nVerifying spherical compatibility:")
-    print("  E[ω][i] × E[ω][j] = max_k (c[i][j][k] × E[ω][k])")
-    all_ok = True
-    for w in range(len(E)):
-        for i in range(n):
-            for j in range(n):
-                lhs = mt_mul(E[w][i], E[w][j])
-                rhs = mt_sup([mt_mul(c[i][j][k], E[w][k]) for k in range(n)])
-                ok = abs(lhs - rhs) < 1e-10
-                if not ok:
-                    all_ok = False
-                print(f"  (ω={w},i={i},j={j}): {E[w][i]}×{E[w][j]}={lhs}, "
-                      f"max_k c·E = {rhs}  {'✓' if ok else '✗'}")
-    
-    # Verify separation
-    print("\nEvaluation profiles (columns of E):")
-    for i in range(n):
-        profile = tuple(E[w][i] for w in range(len(E)))
-        print(f"  e_{i} → {profile}")
-    profiles = [tuple(E[w][i] for w in range(len(E))) for i in range(n)]
-    sep = len(set(profiles)) == n
-    print(f"  Separation: {'✓' if sep else '✗'}")
-    
-    # Demonstrate uniqueness
-    print("\n--- Uniqueness Demonstration ---")
-    print("  Trying alternative c' with c'[1][1] = [1, 2] instead of [0, 2]:")
-    c_alt = [
-        [[1, 0], [0, 1]],
-        [[0, 1], [1, 2]]
-    ]
-    all_ok_alt = True
-    for w in range(len(E)):
-        for i in range(n):
-            for j in range(n):
-                lhs = mt_mul(E[w][i], E[w][j])
-                rhs = mt_sup([mt_mul(c_alt[i][j][k], E[w][k]) for k in range(n)])
-                if abs(lhs - rhs) > 1e-10:
-                    all_ok_alt = False
-                    print(f"  FAIL (ω={w},i={i},j={j}): {lhs} ≠ {rhs}")
-    
-    if not all_ok_alt:
-        print("  → c' does NOT satisfy compatibility. Uniqueness confirmed! ✓")
-
-
-# =============================================================================
-# Demo 2: 3-element Hecke Algebra — Full Reconstruction
-# =============================================================================
-
-def demo_reconstruction_3():
-    """
-    Start from evaluation data E, reconstruct structure constants c,
-    and verify the result.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 2: 3-element Reconstruction from Evaluation Data")
-    print("  Semiring: (ℝ≥0, max, ×)")
-    print("=" * 70)
-    
-    n = 3
-    
-    # Start with known structure constants (diagonal algebra: e_i ⋆ e_j = e_max(i,j))
-    # c[i][j][k] = 1 if k = max(i,j), 0 otherwise
-    c_original = [[[0]*n for _ in range(n)] for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            c_original[i][j][max(i,j)] = 1
-    
-    print("\nOriginal structure constants (band semigroup: e_i⋆e_j = e_{max(i,j)}):")
-    for i in range(n):
-        for j in range(n):
-            print(f"  c[{i}][{j}] = {c_original[i][j]}")
-    
-    # Find compatible evaluation matrix
-    # Compatibility: E[ω][i] * E[ω][j] = max_k c[i][j][k] * E[ω][k]
-    # = 1 * E[ω][max(i,j)] = E[ω][max(i,j)]
-    # So E[ω][i] * E[ω][j] = E[ω][max(i,j)]
-    # This means E[ω][i] ≤ E[ω][j] for i ≤ j (if all positive)
-    # and E[ω][j]² = E[ω][j], so E[ω][j] ∈ {0, 1}
-    # Hmm, that's too restrictive. Let me use a different algebra.
-    
-    # Better: weighted band semigroup
-    # c[i][j][max(i,j)] = w_{i,j}, all other c[i][j][k] = 0
-    # where w is chosen so that the algebra is interesting
-    
-    # Simplest approach: "upper triangular" algebra
-    # e_i ⋆ e_j = a_{ij} · e_{max(i,j)}
-    weights = [[1, 2, 3], [2, 1, 2], [3, 2, 1]]
-    c_original = [[[0]*n for _ in range(n)] for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            c_original[i][j][max(i,j)] = weights[i][j]
-    
-    print("\nAdjusted structure constants (weighted band):")
-    for i in range(n):
-        for j in range(n):
-            print(f"  c[{i}][{j}] = {c_original[i][j]}")
-    
-    # Evaluation: need E[ω][i]*E[ω][j] = c[i][j][max(i,j)] * E[ω][max(i,j)]
-    # = w[i][j] * E[ω][max(i,j)]
-    # For i=j: E[ω][i]² = w[i][i] * E[ω][i] → E[ω][i] = w[i][i] = 1
-    # For i<j: E[ω][i]*E[ω][j] = w[i][j]*E[ω][j] → E[ω][i] = w[i][j]
-    # But E[ω][i] = w[i][j] depends on j! Contradiction.
-    
-    # OK, let me just use a fully general approach.
-    # Pick an evaluation matrix, compute c from it, verify compatibility.
-    
-    # Evaluation matrix
-    E = [
-        [2, 3, 5],
-        [1, 4, 2],
-        [3, 1, 3],
-    ]
-    
-    print("\nEvaluation matrix E[ω][i]:")
-    for w in range(len(E)):
-        print(f"  φ_{w}: {E[w]}")
-    
-    # Reconstruct c: for each (i,j), find c[i][j][k] such that
-    # E[ω][i] * E[ω][j] = max_k c[i][j][k] * E[ω][k] for all ω
-    
-    # One natural approach: c[i][j][k] = min_ω E[ω][i]*E[ω][j] / E[ω][k]
-    # (when E[ω][k] > 0)
-    c_recon = [[[0]*n for _ in range(n)] for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                ratios = []
-                for w in range(len(E)):
-                    if E[w][k] > 0:
-                        ratios.append(E[w][i] * E[w][j] / E[w][k])
-                if ratios:
-                    c_recon[i][j][k] = min(ratios)
-    
-    print("\nReconstructed structure constants (via residuation):")
-    for i in range(n):
-        for j in range(n):
-            print(f"  c[{i}][{j}] = [{', '.join(f'{v:.2f}' for v in c_recon[i][j])}]")
-    
-    # Verify compatibility of reconstructed c
-    print("\nVerifying spherical compatibility of reconstructed c:")
-    all_ok = True
-    for w in range(len(E)):
-        for i in range(n):
-            for j in range(n):
-                lhs = mt_mul(E[w][i], E[w][j])
-                rhs = mt_sup([mt_mul(c_recon[i][j][k], E[w][k]) for k in range(n)])
-                ok = abs(lhs - rhs) < 1e-10
-                if not ok:
-                    all_ok = False
-    print(f"  Result: {'All compatible ✓' if all_ok else 'Some failures ✗'}")
-    
-    # Verify separation
-    profiles = [tuple(E[w][i] for w in range(len(E))) for i in range(n)]
-    print(f"\nSeparation check:")
-    for i in range(n):
-        print(f"  e_{i} → {profiles[i]}")
-    print(f"  {'Separated ✓' if len(set(profiles)) == n else 'NOT separated ✗'}")
-    
-    # Demonstrate uniqueness: try perturbing c and show compatibility fails
-    print("\n--- Uniqueness Test ---")
-    c_perturbed = [[[c_recon[i][j][k] for k in range(n)]
-                    for j in range(n)] for i in range(n)]
-    c_perturbed[1][2][0] += 0.5  # Small perturbation
-    
-    compat_after = True
-    for w in range(len(E)):
-        for i in range(n):
-            for j in range(n):
-                lhs = mt_mul(E[w][i], E[w][j])
-                rhs = mt_sup([mt_mul(c_perturbed[i][j][k], E[w][k]) for k in range(n)])
-                if abs(lhs - rhs) > 1e-10:
-                    compat_after = False
-    
-    print(f"  Perturbed c[1][2][0] by +0.5")
-    print(f"  Compatibility after perturbation: {'✓' if compat_after else '✗ BROKEN'}")
-    if not compat_after:
-        print("  → The original c is the UNIQUE compatible structure. ✓")
-    
-    return c_recon, E
-
-
-# =============================================================================
-# Demo 3: Evaluation Embedding in Tropical Affine Space
-# =============================================================================
-
-def demo_embedding():
-    """
-    Demonstrate the evaluation embedding: each basis element maps to
-    its profile in tropical affine space Ω → S.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 3: Evaluation Embedding (Polyhedral Realization)")
-    print("=" * 70)
-    
-    n = 4
-    m = 3  # number of functionals
-    
-    # Evaluation matrix
-    E = [
-        [5, 2, 7, 1],
-        [3, 6, 1, 4],
-        [1, 3, 4, 8],
-    ]
-    
-    print("\nEvaluation matrix E[ω][i]:")
-    for w in range(m):
-        print(f"  φ_{w}: {E[w]}")
-    
-    print("\nEvaluation embedding: each basis element → point in ℝ³")
-    for i in range(n):
-        profile = [E[w][i] for w in range(m)]
-        print(f"  e_{i} ↦ {profile}")
-    
-    # Check separation
-    profiles = [tuple(E[w][i] for w in range(m)) for i in range(n)]
-    sep = len(set(profiles)) == n
-    print(f"\n  Separation (injectivity): {'✓' if sep else '✗'}")
-    
-    if sep:
-        print("  → The embedding is injective: distinct basis elements")
-        print("    map to distinct points in tropical affine space.")
-        print("  → This is the 'polyhedral realization' of the Hecke algebra:")
-        print("    algebra structure is encoded by the geometry of these points.")
-    
-    # Reconstruct structure constants
-    c = [[[0]*n for _ in range(n)] for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                ratios = []
-                for w in range(m):
-                    if E[w][k] > 0:
-                        ratios.append(E[w][i] * E[w][j] / E[w][k])
-                if ratios:
-                    c[i][j][k] = min(ratios)
-    
-    # Show a few structure constants
-    print("\n  Sample structure constants recovered from geometry:")
-    for i in range(min(2, n)):
-        for j in range(min(2, n)):
-            print(f"    c[{i}][{j}] = [{', '.join(f'{v:.1f}' for v in c[i][j])}]")
-    print("    ...")
-
-
-# =============================================================================
-# Demo 4: Commutativity Detection
-# =============================================================================
-
-def demo_commutativity():
-    """
-    Demonstrate that commutativity of the algebra can be detected purely
-    from the evaluation matrix, without knowing the structure constants.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 4: Commutativity Detection from Evaluation Data")
-    print("=" * 70)
-    
-    n = 3
-    E = [
-        [2, 3, 5],
-        [1, 4, 2],
-        [3, 1, 3],
-    ]
-    
-    print("\nEvaluation matrix E[ω][i]:")
-    for w in range(len(E)):
-        print(f"  φ_{w}: {E[w]}")
-    
-    print("\nChecking commutativity: E[ω][i]×E[ω][j] = E[ω][j]×E[ω][i]?")
-    comm = True
-    for w in range(len(E)):
-        for i in range(n):
-            for j in range(i + 1, n):
-                lhs = E[w][i] * E[w][j]
-                rhs = E[w][j] * E[w][i]
-                if abs(lhs - rhs) > 1e-10:
-                    comm = False
-    
-    print(f"  Result: {'Commutative ✓' if comm else 'Non-commutative ✗'}")
-    print("  (Since ordinary multiplication is commutative, the algebra")
-    print("   is automatically commutative in the max-times semiring.)")
+    print("Tropical Hecke–Crystal Realization Duality: Demonstrations")
+    print("=" * 60)
     print()
-    print("  By the Commutativity Transfer Theorem:")
-    print("  → c[i][j] = c[j][i] for all i,j (structure constants are symmetric)")
-
-
-# =============================================================================
-# Main
-# =============================================================================
-
-if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Tropical Hecke Realization Duality — Demonstration Suite          ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
     
-    demo_max_times_2()
-    demo_reconstruction_3()
-    demo_embedding()
-    demo_commutativity()
+    all_results = {}
+    all_results["ex1"] = example_1_two_color_crystal()
+    all_results["ex2"] = example_2_identity_operators()
+    all_results["ex3"] = example_3_cyclic_system()
+    all_results["ex4"] = example_4_tropical_weights()
+    all_results["ex5"] = example_5_classical_dfa()
     
-    print("\n" + "=" * 70)
-    print("Summary of Key Results Demonstrated:")
-    print("  1. Spherical compatibility: E encodes algebra structure")
-    print("  2. Uniqueness: no two different c can share the same E")
-    print("  3. Reconstruction: c can be recovered from E via residuation")
-    print("  4. Embedding: basis elements → points in tropical affine space")
-    print("  5. Property transfer: algebraic properties detected from E")
-    print("=" * 70)
+    print("\n" + "=" * 60)
+    print("SUMMARY")
+    print("=" * 60)
+    
+    all_pass = True
+    for name, results in all_results.items():
+        checks = ["sound", "obs_compatible", "intertwining",
+                   "surjective", "observable", "hankel_rank_eq_states"]
+        passed = all(results.get(c, False) for c in checks)
+        status = "✓ PASS" if passed else "✗ FAIL"
+        print(f"  {name}: {status} "
+              f"(rank={results['hankel_rank']}, states={results['num_states']})")
+        if not passed:
+            all_pass = False
+    
+    print(f"\nAll examples passed: {all_pass}")
 
 
 #!/usr/bin/env python3
-"""
-Tropical Hecke Realization Duality — Visualizations
+"""Generate SVG visualizations for the Tropical Hecke–Crystal Duality."""
 
-Generates figures illustrating:
-1. Evaluation embedding in tropical affine space
-2. Structure constant recovery via residuation
-3. Separation by spherical functionals
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+import math
 import base64
-import io
 
 
-def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 PNG data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+def crystal_graph_svg(states, weights, transitions, colors_palette, title="Crystal Automaton"):
+    """Generate an SVG visualization of a crystal automaton."""
+    width, height = 500, 400
+    cx, cy = width // 2, height // 2 + 20
+    radius = min(width, height) // 3
+    n = len(states)
+    node_r = 28
+    
+    # Position nodes in a circle
+    positions = {}
+    for i, s in enumerate(states):
+        angle = -math.pi / 2 + 2 * math.pi * i / max(n, 1)
+        positions[s] = (cx + radius * math.cos(angle), cy + radius * math.sin(angle))
+    
+    if n == 1:
+        positions[states[0]] = (cx, cy)
+    elif n == 2:
+        positions[states[0]] = (cx - 80, cy)
+        positions[states[1]] = (cx + 80, cy)
+    
+    svg_parts = []
+    svg_parts.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">')
+    svg_parts.append(f'<rect width="{width}" height="{height}" fill="#fafafa" rx="8"/>')
+    svg_parts.append(f'<text x="{width//2}" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">{title}</text>')
+    
+    # Define arrow marker
+    svg_parts.append('<defs>')
+    for ci, c in enumerate(sorted(set(c for c in transitions.keys()))):
+        color = colors_palette.get(c, "#666")
+        svg_parts.append(f'<marker id="arrow_{ci}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="{color}"/></marker>')
+    svg_parts.append('</defs>')
+    
+    # Draw edges
+    color_list = sorted(transitions.keys())
+    for ci, c in enumerate(color_list):
+        color = colors_palette.get(c, "#666")
+        trans = transitions[c]
+        for src, tgt in trans.items():
+            if src not in positions or tgt not in positions:
+                continue
+            x1, y1 = positions[src]
+            x2, y2 = positions[tgt]
+            
+            if src == tgt:
+                # Self-loop
+                loop_r = 20
+                offset = ci * 12
+                svg_parts.append(
+                    f'<path d="M {x1-10},{y1-node_r-offset} '
+                    f'C {x1-40},{y1-node_r-30-offset} {x1+40},{y1-node_r-30-offset} {x1+10},{y1-node_r-offset}" '
+                    f'fill="none" stroke="{color}" stroke-width="2" marker-end="url(#arrow_{ci})"/>'
+                )
+                svg_parts.append(
+                    f'<text x="{x1}" y="{y1-node_r-25-offset}" text-anchor="middle" '
+                    f'font-size="11" fill="{color}" font-style="italic">{c}</text>'
+                )
+            else:
+                # Regular edge with offset for parallel edges
+                dx, dy = x2 - x1, y2 - y1
+                dist = math.sqrt(dx*dx + dy*dy)
+                if dist < 1:
+                    continue
+                nx, ny = -dy/dist, dx/dist  # normal
+                offset = (ci - len(color_list)/2 + 0.5) * 8
+                
+                sx = x1 + nx*offset + dx/dist * node_r
+                sy = y1 + ny*offset + dy/dist * node_r
+                ex = x2 + nx*offset - dx/dist * (node_r + 8)
+                ey = y2 + ny*offset - dy/dist * (node_r + 8)
+                
+                # Curve control point
+                mx = (sx+ex)/2 + nx * 15
+                my = (sy+ey)/2 + ny * 15
+                
+                svg_parts.append(
+                    f'<path d="M {sx:.1f},{sy:.1f} Q {mx:.1f},{my:.1f} {ex:.1f},{ey:.1f}" '
+                    f'fill="none" stroke="{color}" stroke-width="2" marker-end="url(#arrow_{ci})"/>'
+                )
+                lx = (sx+ex)/2 + nx*20
+                ly = (sy+ey)/2 + ny*20
+                svg_parts.append(
+                    f'<text x="{lx:.1f}" y="{ly:.1f}" text-anchor="middle" '
+                    f'font-size="11" fill="{color}" font-style="italic">{c}</text>'
+                )
+    
+    # Draw nodes
+    for s in states:
+        x, y = positions[s]
+        svg_parts.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{node_r}" fill="#e8f4fd" stroke="#2196F3" stroke-width="2.5"/>')
+        svg_parts.append(f'<text x="{x:.1f}" y="{y-6:.1f}" text-anchor="middle" font-size="13" font-weight="bold" fill="#1565C0">q{s}</text>')
+        svg_parts.append(f'<text x="{x:.1f}" y="{y+10:.1f}" text-anchor="middle" font-size="11" fill="#666">wt={weights[s]}</text>')
+    
+    svg_parts.append('</svg>')
+    return '\n'.join(svg_parts)
 
 
-def plot_evaluation_embedding():
-    """
-    Plot the evaluation embedding: basis elements as points in ℝ³,
-    projected to 2D for visualization.
-    """
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+def minimization_diagram_svg():
+    """Generate an SVG showing the minimization process."""
+    width, height = 700, 350
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">')
+    svg.append(f'<rect width="{width}" height="{height}" fill="#fafafa" rx="8"/>')
+    svg.append(f'<text x="{width//2}" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Crystal Minimization via Observational Quotient</text>')
     
-    # 4 basis elements with 3 evaluation functionals
-    E = np.array([
-        [5, 2, 7, 1],
-        [3, 6, 1, 4],
-        [1, 3, 4, 8],
-    ])
+    # Left: original system
+    left_cx, left_cy = 140, 190
+    original = [(0, "A"), (1, "B"), (2, "A"), (3, "B")]
+    for i, (s, w) in enumerate(original):
+        angle = -math.pi/2 + 2*math.pi*i/4
+        x = left_cx + 70*math.cos(angle)
+        y = left_cy + 70*math.sin(angle)
+        svg.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="22" fill="#ffebee" stroke="#e53935" stroke-width="2"/>')
+        svg.append(f'<text x="{x:.0f}" y="{y-4:.0f}" text-anchor="middle" font-size="12" font-weight="bold" fill="#c62828">{s}</text>')
+        svg.append(f'<text x="{x:.0f}" y="{y+10:.0f}" text-anchor="middle" font-size="10" fill="#666">{w}</text>')
+    svg.append(f'<text x="{left_cx}" y="310" text-anchor="middle" font-size="13" fill="#555">Original (4 states)</text>')
     
-    labels = [f'$e_{i}$' for i in range(4)]
-    colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
+    # Arrow
+    svg.append('<path d="M 250,190 L 340,190" stroke="#333" stroke-width="2.5" marker-end="url(#big_arrow)"/>')
+    svg.append('<text x="295" y="175" text-anchor="middle" font-size="11" fill="#666">quotient</text>')
+    svg.append('<text x="295" y="210" text-anchor="middle" font-size="11" fill="#666">by ≈</text>')
+    svg.append('<defs><marker id="big_arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/></marker></defs>')
     
-    # 3 projections: (φ₀, φ₁), (φ₀, φ₂), (φ₁, φ₂)
-    proj_pairs = [(0, 1), (0, 2), (1, 2)]
-    titles = ['φ₀ vs φ₁', 'φ₀ vs φ₂', 'φ₁ vs φ₂']
+    # Right: minimal crystal
+    right_cx = 470
+    right_cy = 190
+    # Two states
+    x1, y1 = right_cx - 60, right_cy
+    x2, y2 = right_cx + 60, right_cy
+    svg.append(f'<circle cx="{x1}" cy="{y1}" r="28" fill="#e8f5e9" stroke="#43A047" stroke-width="2.5"/>')
+    svg.append(f'<text x="{x1}" y="{y1-6}" text-anchor="middle" font-size="13" font-weight="bold" fill="#2E7D32">{{0,2}}</text>')
+    svg.append(f'<text x="{x1}" y="{y1+10}" text-anchor="middle" font-size="11" fill="#666">A</text>')
+    svg.append(f'<circle cx="{x2}" cy="{y2}" r="28" fill="#e8f5e9" stroke="#43A047" stroke-width="2.5"/>')
+    svg.append(f'<text x="{x2}" y="{y2-6}" text-anchor="middle" font-size="13" font-weight="bold" fill="#2E7D32">{{1,3}}</text>')
+    svg.append(f'<text x="{x2}" y="{y2+10}" text-anchor="middle" font-size="11" fill="#666">B</text>')
     
-    for ax, (p1, p2), title in zip(axes, proj_pairs, titles):
-        for i in range(4):
-            ax.scatter(E[p1, i], E[p2, i], c=colors[i], s=200, zorder=5,
-                      edgecolors='black', linewidth=1.5)
-            ax.annotate(labels[i], (E[p1, i], E[p2, i]),
-                       fontsize=14, ha='center', va='bottom',
-                       xytext=(0, 12), textcoords='offset points')
-        
-        ax.set_xlabel(f'φ_{p1}(·)', fontsize=12)
-        ax.set_ylabel(f'φ_{p2}(·)', fontsize=12)
-        ax.set_title(title, fontsize=14)
-        ax.grid(True, alpha=0.3)
-        ax.set_aspect('equal')
+    # Edges between minimal states
+    svg.append(f'<path d="M {x1+28},{y1-8} L {x2-36},{y2-8}" stroke="#e53935" stroke-width="2" marker-end="url(#red_arr)"/>')
+    svg.append(f'<path d="M {x2-28},{y2+8} L {x1+36},{y1+8}" stroke="#e53935" stroke-width="2" marker-end="url(#red_arr)"/>')
+    svg.append(f'<text x="{right_cx}" y="{right_cy-18}" text-anchor="middle" font-size="11" fill="#e53935" font-style="italic">red</text>')
+    svg.append(f'<text x="{right_cx}" y="{right_cy+28}" text-anchor="middle" font-size="11" fill="#e53935" font-style="italic">red</text>')
     
-    fig.suptitle('Evaluation Embedding: Basis Elements in Tropical Affine Space',
-                fontsize=16, fontweight='bold', y=1.02)
-    plt.tight_layout()
+    # Self-loops for blue
+    svg.append(f'<path d="M {x1-10},{y1-28} C {x1-40},{y1-60} {x1+40},{y1-60} {x1+10},{y1-28}" fill="none" stroke="#1565C0" stroke-width="2" marker-end="url(#blue_arr)"/>')
+    svg.append(f'<text x="{x1}" y="{y1-55}" text-anchor="middle" font-size="11" fill="#1565C0" font-style="italic">blue</text>')
+    svg.append(f'<path d="M {x2-10},{y2-28} C {x2-40},{y2-60} {x2+40},{y2-60} {x2+10},{y2-28}" fill="none" stroke="#1565C0" stroke-width="2" marker-end="url(#blue_arr)"/>')
+    svg.append(f'<text x="{x2}" y="{y2-55}" text-anchor="middle" font-size="11" fill="#1565C0" font-style="italic">blue</text>')
     
-    fig.savefig('/workspace/request-project/eval_embedding.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def plot_reconstruction_heatmap():
-    """
-    Plot the structure constants as a heatmap, showing reconstruction
-    from evaluation data.
-    """
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    svg.append('<defs>')
+    svg.append('<marker id="red_arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e53935"/></marker>')
+    svg.append('<marker id="blue_arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1565C0"/></marker>')
+    svg.append('</defs>')
     
-    n = 3
-    E = np.array([
-        [2, 3, 5],
-        [1, 4, 2],
-        [3, 1, 3],
-    ], dtype=float)
+    svg.append(f'<text x="{right_cx}" y="310" text-anchor="middle" font-size="13" fill="#555">Minimal Crystal (2 states)</text>')
     
-    # Reconstruct c via residuation: c[i][j][k] = min_ω E[ω,i]*E[ω,j] / E[ω,k]
-    c = np.zeros((n, n, n))
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                ratios = E[:, i] * E[:, j] / E[:, k]
-                c[i, j, k] = np.min(ratios)
+    # Equivalence classes annotation
+    svg.append(f'<text x="{width//2}" y="340" text-anchor="middle" font-size="12" fill="#888">Hankel rank = 2 = minimal states</text>')
     
-    # Plot c[i][j][k] for fixed i = 0, 1, 2
-    for idx in range(n):
-        im = axes[idx].imshow(c[idx], cmap='YlOrRd', aspect='equal',
-                              vmin=0, vmax=np.max(c))
-        axes[idx].set_title(f'c[{idx}, j, k]', fontsize=14)
-        axes[idx].set_xlabel('k (output basis)', fontsize=12)
-        axes[idx].set_ylabel('j (second input)', fontsize=12)
-        axes[idx].set_xticks(range(n))
-        axes[idx].set_yticks(range(n))
-        
-        # Add text annotations
-        for j in range(n):
-            for k in range(n):
-                axes[idx].text(k, j, f'{c[idx, j, k]:.1f}',
-                             ha='center', va='center', fontsize=11,
-                             color='white' if c[idx, j, k] > np.max(c)/2 else 'black')
-    
-    fig.colorbar(im, ax=axes, shrink=0.8, label='Structure constant value')
-    fig.suptitle('Reconstructed Structure Constants c[i,j,k] from Evaluation Data',
-                fontsize=16, fontweight='bold')
-    plt.tight_layout()
-    
-    fig.savefig('/workspace/request-project/reconstruction_heatmap.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def plot_separation_diagram():
-    """
-    Visualize how spherical functionals separate basis elements.
-    """
-    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
-    
-    n = 5
-    m = 3
-    
-    np.random.seed(42)
-    E = np.random.randint(1, 10, (m, n))
-    
-    # Compute pairwise distances between evaluation profiles
-    profiles = E.T  # (n, m) — each row is a profile
-    
-    # Plot profiles as parallel coordinates
-    x_coords = np.arange(m)
-    colors = plt.cm.Set1(np.linspace(0, 1, n))
-    
-    for i in range(n):
-        ax.plot(x_coords, profiles[i], 'o-', color=colors[i],
-               linewidth=2.5, markersize=10, label=f'$e_{i}$',
-               zorder=5)
-    
-    ax.set_xticks(x_coords)
-    ax.set_xticklabels([f'φ_{w}' for w in range(m)], fontsize=14)
-    ax.set_ylabel('Evaluation value E(ω, i)', fontsize=13)
-    ax.set_title('Separation by Spherical Functionals\n'
-                '(Distinct profiles → distinct basis elements)',
-                fontsize=15, fontweight='bold')
-    ax.legend(fontsize=12, loc='upper right')
-    ax.grid(True, alpha=0.3, axis='y')
-    
-    # Add annotation
-    ax.annotate('Each line is a unique\nevaluation profile',
-               xy=(1, profiles[0, 1]), xytext=(1.5, profiles[0, 1] + 2),
-               fontsize=11, ha='center',
-               arrowprops=dict(arrowstyle='->', color='gray'),
-               bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.8))
-    
-    plt.tight_layout()
-    
-    fig.savefig('/workspace/request-project/separation_diagram.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def plot_uniqueness_landscape():
-    """
-    Visualize the uniqueness theorem: perturbations of structure constants
-    break compatibility.
-    """
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    
-    n = 2
-    E = np.array([[1.0, 0.0], [1.0, 2.0]])
-    
-    # Original c[1][1] = [0, 2] (compatible)
-    # Perturb c[1][1][1] from 0 to 4 and measure compatibility error
-    perturbations = np.linspace(-1, 5, 200)
-    errors = []
-    
-    for p in perturbations:
-        c = [
-            [[1, 0], [0, 1]],
-            [[0, 1], [p, 2]]
-        ]
-        max_error = 0
-        for w in range(len(E)):
-            for i in range(n):
-                for j in range(n):
-                    lhs = E[w][i] * E[w][j]
-                    rhs = max(c[i][j][k] * E[w][k] for k in range(n))
-                    max_error = max(max_error, abs(lhs - rhs))
-        errors.append(max_error)
-    
-    ax.plot(perturbations, errors, 'b-', linewidth=2.5)
-    ax.axvline(x=0, color='r', linestyle='--', linewidth=2, label='Original c[1][1][0] = 0')
-    ax.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
-    
-    # Mark the minimum
-    min_idx = np.argmin(errors)
-    ax.plot(perturbations[min_idx], errors[min_idx], 'ro', markersize=12, zorder=5,
-           label=f'Minimum at c = {perturbations[min_idx]:.2f}')
-    
-    ax.set_xlabel('Perturbation of c[1][1][0]', fontsize=13)
-    ax.set_ylabel('Maximum compatibility error', fontsize=13)
-    ax.set_title('Uniqueness Landscape: Only One Compatible Structure\n'
-                '(Error = 0 only at the original c)',
-                fontsize=15, fontweight='bold')
-    ax.legend(fontsize=12)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    
-    fig.savefig('/workspace/request-project/uniqueness_landscape.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
+    svg.append('</svg>')
+    return '\n'.join(svg)
 
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
+    # Generate Example 1 crystal
+    svg1 = crystal_graph_svg(
+        states=[0, 1],
+        weights={0: "A", 1: "B"},
+        transitions={"red": {0: 1, 1: 0}, "blue": {0: 0, 1: 1}},
+        colors_palette={"red": "#e53935", "blue": "#1565C0"},
+        title="Minimal Crystal (Example 1)"
+    )
+    with open("crystal_example1.svg", "w") as f:
+        f.write(svg1)
+    print("Generated crystal_example1.svg")
     
-    b64_embedding = plot_evaluation_embedding()
-    print(f"  ✓ Evaluation embedding ({len(b64_embedding)} chars)")
+    # Generate Example 3 crystal (3-cycle)
+    svg3 = crystal_graph_svg(
+        states=[0, 1, 2],
+        weights={0: 0, 1: 1, 2: 2},
+        transitions={"a": {0: 1, 1: 2, 2: 0}},
+        colors_palette={"a": "#7B1FA2"},
+        title="Minimal Crystal (Example 3: 3-Cycle)"
+    )
+    with open("crystal_example3.svg", "w") as f:
+        f.write(svg3)
+    print("Generated crystal_example3.svg")
     
-    b64_heatmap = plot_reconstruction_heatmap()
-    print(f"  ✓ Reconstruction heatmap ({len(b64_heatmap)} chars)")
-    
-    b64_separation = plot_separation_diagram()
-    print(f"  ✓ Separation diagram ({len(b64_separation)} chars)")
-    
-    b64_uniqueness = plot_uniqueness_landscape()
-    print(f"  ✓ Uniqueness landscape ({len(b64_uniqueness)} chars)")
-    
-    print("\nAll visualizations saved as PNG files.")
-    print("Base64 data URIs generated for JSON package.")
+    # Generate minimization diagram
+    svg_min = minimization_diagram_svg()
+    with open("minimization_diagram.svg", "w") as f:
+        f.write(svg_min)
+    print("Generated minimization_diagram.svg")
