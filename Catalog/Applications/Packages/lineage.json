@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -25,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T12:33:55Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlcryptography_closure_secret_sharing_dual",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "algebraemlcomputation_closure_fixed_point_circuit_",
@@ -52,7 +52,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T12:34:41Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "algebratropicalgeometry_tropical_voronoilattice_re",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:34:59Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "algebratropicalcryptography_tropical_valuation_sec",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -82,13 +82,31 @@
       "hue": 270
     },
     {
+      "id": "p_vs_np_via_tropical_semiring_reductions",
+      "title": "Structural Barriers for Tropical Encodings of Boolean Satisfiability",
+      "domain": "Algebra / Complexity Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-13T14:01:14Z",
+      "hue": 280
+    },
+    {
+      "id": "seed_seed_001",
+      "title": "P vs NP via Tropical Semiring Reductions",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "",
+      "hue": 90
+    },
+    {
       "id": "seed_seed_004",
       "title": "Neural Sheaf Cohomology and Adversarial Robustness Guarantees",
       "domain": "MachineLearning",
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "",
-      "hue": 270
+      "hue": 90
     }
   ],
   "edges": [
@@ -102,128 +120,156 @@
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.8902313624678664,
+      "strength": 0.902733485193622,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.8173521850899743,
+      "strength": 0.8381548974943052,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.6652956298200514,
+      "strength": 0.7034168564920273,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.6095115681233934,
+      "strength": 0.6539863325740318,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.6095115681233934,
+      "strength": 0.6539863325740318,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.6095115681233934,
+      "strength": 0.6539863325740318,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.5249357326478149,
-      "label": "Algebra,Tropical bridge",
+      "strength": 0.5790432801822323,
+      "label": "Tropical,Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_closure_secret_sharing_dual",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.5177377892030848,
+      "strength": 0.5726651480637812,
       "label": "Theorem 4.2 (Tropical Information Dualit",
       "type": "heuristic"
     },
     {
       "source": "algebramachinelearningspeculative_tropical_observe",
       "target": "algebraemllogic_closure_rateproof_duality_via_idem",
-      "strength": 0.4929948586118251,
+      "strength": 0.5507403189066059,
       "label": "Proof",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.4911953727506426,
+      "strength": 0.5491457858769931,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcomputation_closure_fixed_point_circuit_",
       "target": "algebratropicalcryptography_tropical_valuation_sec",
-      "strength": 0.45745501285347046,
+      "strength": 0.519248291571754,
       "label": "Tropical Valuation Secret",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "algebraemlcryptography_closure_secret_sharing_dual",
-      "strength": 0.38997429305912595,
+      "strength": 0.4594533029612756,
       "label": "Cryptography bridge",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalgeometry_tropical_voronoilattice_re",
       "target": "neural_sheaf_cohomology_and_adversarial_robustness",
-      "strength": 0.38997429305912595,
+      "strength": 0.4594533029612756,
       "label": "Neural Sheaf Cohomology",
       "type": "heuristic"
     },
     {
       "source": "algebraemlcryptography_closure_secret_sharing_dual",
       "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.3868251928020565,
+      "strength": 0.4566628701594533,
       "label": "Closure Fixed",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "algebratropicalgeometry_tropical_voronoilattice_re",
-      "strength": 0.3674807197943445,
+      "strength": 0.43952164009111616,
       "label": "Tropical Voronoi",
       "type": "heuristic"
     },
     {
       "source": "algebrapythagoreancryptography_berggren_isogeny_re",
       "target": "algebraemlcomputation_closure_fixed_point_circuit_",
-      "strength": 0.3481362467866324,
+      "strength": 0.42238041002277904,
       "label": "Closure Fixed",
       "type": "heuristic"
     },
     {
       "source": "algebraemllogic_closure_rateproof_duality_via_idem",
       "target": "algebratropicalgeometry_gravitational_lens_realiza",
-      "strength": 0.3404884318766067,
+      "strength": 0.41560364464692484,
       "label": "Tropical Arithmetic Lensing",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalcryptography_tropical_valuation_sec",
       "target": "neural_sheaf_cohomology_and_adversarial_robustness",
+      "strength": 0.3797266514806378,
+      "label": "Algebra bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalgeometry_tropical_voronoilattice_re",
+      "target": "p_vs_np_via_tropical_semiring_reductions",
       "strength": 0.3,
       "label": "Algebra bridge",
       "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalcryptography_tropical_valuation_sec",
+      "target": "p_vs_np_via_tropical_semiring_reductions",
+      "strength": 0.3,
+      "label": "Algebra bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "neural_sheaf_cohomology_and_adversarial_robustness",
+      "target": "p_vs_np_via_tropical_semiring_reductions",
+      "strength": 0.3,
+      "label": "Algebra bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "seed_seed_001",
+      "target": "p_vs_np_via_tropical_semiring_reductions",
+      "strength": 1.0,
+      "label": "P vs NP via Tropical Semiring Reductions",
+      "type": "provenance"
     },
     {
       "source": "seed_seed_004",
