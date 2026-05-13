@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T12:33:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemllogic_closure_rateproof_duality_via_idem",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T12:33:38Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebratropicalgeometry_gravitational_lens_realiza",
@@ -34,7 +34,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T12:34:13Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "algebrapythagoreancryptography_berggren_isogeny_re",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T12:34:27Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraemlcomputation_closure_fixed_point_circuit_",
@@ -52,7 +52,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T12:34:41Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "algebratropicalgeometry_tropical_voronoilattice_re",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T12:35:13Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "neural_sheaf_cohomology_and_adversarial_robustness",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-13T14:01:14Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "holographic_renormalization_of_proof_complexity",
@@ -97,7 +97,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T14:04:34Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -115,7 +115,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T14:05:03Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "temporal_stone_duality_from_idempotent_semiring_fi",
@@ -133,7 +133,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-13T14:43:34Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_semiri",
@@ -142,7 +142,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T15:02:02Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "idempotent_transfer_operators_and_critical_exponen",
@@ -151,7 +151,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T15:02:14Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "algebraspeculativemachinelearning_ultrametric_proo",
@@ -160,7 +160,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T16:01:47Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "channel_capacity_as_idempotent_fixed_point_in_trop",
@@ -178,7 +178,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T16:05:12Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_modular_renormalization_of_closu",
@@ -196,7 +196,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T16:05:50Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "algebraeml_tropical_spectral_duality_via_idempoten",
@@ -205,7 +205,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T16:06:07Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebratropicalcomputation_syntactic_semimodule_du",
@@ -214,7 +214,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-13T16:06:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebraeml_thermodynamic_closure_duality_via_idemp",
@@ -223,7 +223,16 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T16:06:41Z",
-      "hue": 272
+      "hue": 90
+    },
+    {
+      "id": "algebrapythagoreancomputation_berggren_quantum_wal",
+      "title": "Berggren Quantum Walk Spectral Duality",
+      "domain": "Bridges: Algebra × Pythagorean × Computation",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-13T18:02:02Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -434,7 +443,7 @@
       "source": "algebratropicalgeometry_gravitational_lens_realiza",
       "target": "channel_capacity_as_idempotent_fixed_point_in_trop",
       "strength": 0.5584229390681004,
-      "label": "Cryptography,Tropical bridge",
+      "label": "Tropical,Cryptography bridge",
       "type": "heuristic"
     },
     {
@@ -459,6 +468,13 @@
       "type": "heuristic"
     },
     {
+      "source": "algebraemlphysics_modular_renormalization_of_closu",
+      "target": "algebrapythagoreancomputation_berggren_quantum_wal",
+      "strength": 0.5584229390681004,
+      "label": "Algebra,Bridges bridge",
+      "type": "heuristic"
+    },
+    {
       "source": "temporal_stone_duality_from_idempotent_semiring_fi",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
       "strength": 0.5462962962962963,
@@ -477,6 +493,13 @@
       "target": "idempotent_transfer_operators_and_critical_exponen",
       "strength": 0.5375149342891278,
       "label": "Idempotent Transfer Operators",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebrapythagoreancryptography_berggren_isogeny_re",
+      "target": "algebrapythagoreancomputation_berggren_quantum_wal",
+      "strength": 0.5333333333333333,
+      "label": "Berggren Quantum Walk Spectral Duality",
       "type": "heuristic"
     },
     {
@@ -512,13 +535,6 @@
       "target": "algebraspeculativemachinelearning_ultrametric_proo",
       "strength": 0.5090800477897253,
       "label": "Connection to Tropical Geometry",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebraemlphysics_modular_renormalization_of_closu",
-      "target": "algebratropicalcomputation_syntactic_semimodule_du",
-      "strength": 0.5028076463560334,
-      "label": "Tropical Hankel Realization Duality",
       "type": "heuristic"
     },
     {
@@ -564,13 +580,6 @@
       "type": "heuristic"
     },
     {
-      "source": "algebrapythagoreancryptography_berggren_isogeny_re",
-      "target": "quantum_resistant_lattice_cryptography_via_berggre",
-      "strength": 0.47479091995221023,
-      "label": "Berggren Groupoid Orbit Cryptography",
-      "type": "heuristic"
-    },
-    {
       "source": "p_vs_np_via_tropical_semiring_reductions",
       "target": "algebratropicallogic_tropical_stone_recognition_du",
       "strength": 0.47479091995221023,
@@ -606,6 +615,20 @@
       "type": "heuristic"
     },
     {
+      "source": "algebratropicalcomputation_syntactic_semimodule_du",
+      "target": "algebrapythagoreancomputation_berggren_quantum_wal",
+      "strength": 0.47479091995221023,
+      "label": "Algebra,Computation bridge",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraeml_thermodynamic_closure_duality_via_idemp",
+      "target": "algebrapythagoreancomputation_berggren_quantum_wal",
+      "strength": 0.47479091995221023,
+      "label": "Algebra,Bridges bridge",
+      "type": "heuristic"
+    },
+    {
       "source": "temporal_stone_duality_from_idempotent_semiring_fi",
       "target": "algebramachinelearninglogic_sheaf_proof_state_dual",
       "strength": 0.46266427718040626,
@@ -627,6 +650,13 @@
       "type": "heuristic"
     },
     {
+      "source": "algebraeml_tropical_spectral_duality_via_idempoten",
+      "target": "algebrapythagoreancomputation_berggren_quantum_wal",
+      "strength": 0.4246117084826762,
+      "label": "Berggren Quantum Walk Spectral Duality",
+      "type": "heuristic"
+    },
+    {
       "source": "temporal_stone_duality_from_idempotent_semiring_fi",
       "target": "algebraemlphysics_modular_renormalization_of_closu",
       "strength": 0.4120669056152927,
@@ -641,17 +671,17 @@
       "type": "heuristic"
     },
     {
-      "source": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "target": "algebraeml_thermodynamic_closure_duality_via_idemp",
-      "strength": 0.3681600955794504,
-      "label": "Thermodynamic Closure Duality",
+      "source": "quantum_resistant_lattice_cryptography_via_berggre",
+      "target": "algebrapythagoreancomputation_berggren_quantum_wal",
+      "strength": 0.3827956989247312,
+      "label": "Berggren Quantum Walk Spectral Duality",
       "type": "heuristic"
     },
     {
       "source": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "target": "algebratropicallogic_tropical_stone_recognition_du",
-      "strength": 0.3439068100358422,
-      "label": "Extract computability content.",
+      "target": "algebraeml_thermodynamic_closure_duality_via_idemp",
+      "strength": 0.3681600955794504,
+      "label": "Thermodynamic Closure Duality",
       "type": "heuristic"
     },
     {

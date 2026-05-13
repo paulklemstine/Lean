@@ -1,357 +1,358 @@
 #!/usr/bin/env python3
 """
-Berggren Quantum Walk Algorithms
+Algorithms for Berggren Quantum Walk Spectral Realization
 
-Implementation of core algorithms from the research:
-1. Kernel extraction from a quantum walk
-2. Moment table validation
-3. GNS realization from a valid moment table
-4. Phase gauge equivalence detection
+Implements the core algorithms from the spectral realization theory:
+1. Reachable submodule rank computation
+2. Hankel matrix construction and rank analysis
+3. Minimal realization extraction (SVD-based)
+4. Amplitude reconstruction from minimal model
+5. Boundary data reconstruction
 """
 
 import numpy as np
-from typing import Dict, List, Optional, Tuple
-from dataclasses import dataclass
+from typing import List, Tuple, Dict, Optional
+import itertools
 
 
-GENERATORS = ['A', 'B', 'C']
-
-
-def generate_words(max_length: int) -> List[str]:
-    """Generate all Berggren words up to given length.
+def generate_words(alphabet: str, max_length: int) -> List[str]:
+    """Generate all words over alphabet up to given length.
 
     Args:
+        alphabet: String of generator symbols (e.g., 'ABC')
         max_length: Maximum word length
 
     Returns:
-        List of words ordered by length, then lexicographically
+        List of all words of length 0 to max_length
+
+    Time complexity: O(|alphabet|^max_length)
+    Space complexity: O(|alphabet|^max_length)
     """
-    from itertools import product as cart_product
     words = ['']
     for length in range(1, max_length + 1):
-        for combo in cart_product(GENERATORS, repeat=length):
-            words.append(''.join(combo))
+        for w in itertools.product(alphabet, repeat=length):
+            words.append(''.join(w))
     return words
 
 
-@dataclass
-class QuantumWalk:
-    """A Berggren quantum walk."""
-    unitaries: Dict[str, np.ndarray]  # 'A','B','C' -> unitary matrix
-    psi0: np.ndarray                   # initial state
-    obs: np.ndarray                    # observation vector
-    dim: int                           # dimension
+def eval_word_matrix(generators: Dict[str, np.ndarray], word: str) -> np.ndarray:
+    """Evaluate a word as a product of generator matrices.
 
-    def eval_word(self, word: str) -> np.ndarray:
-        """Evaluate U(word) = U(w_k) ... U(w_1)."""
-        result = np.eye(self.dim, dtype=complex)
-        for g in word:
-            result = self.unitaries[g] @ result
-        return result
-
-    def eval_state(self, word: str) -> np.ndarray:
-        """Evaluate U(word) · ψ₀."""
-        return self.eval_word(word) @ self.psi0
-
-    def kernel(self, u: str, v: str) -> complex:
-        """K(u,v) = ⟨U(u)ψ₀, U(v)ψ₀⟩."""
-        return np.vdot(self.eval_state(u), self.eval_state(v))
-
-    def amplitude(self, w: str) -> complex:
-        """amp(w) = ⟨obs, U(w)ψ₀⟩."""
-        return np.vdot(self.obs, self.eval_state(w))
-
-
-def extract_kernel_matrix(walk: QuantumWalk, words: List[str]) -> np.ndarray:
-    """
-    Algorithm 1: Extract the kernel matrix from a quantum walk.
+    Convention: word "g1g2...gk" maps to generators[g1] @ generators[g2] @ ... @ generators[gk]
 
     Args:
-        walk: A Berggren quantum walk
-        words: List of words to evaluate
+        generators: Dict mapping generator symbols to matrices
+        word: String of generator symbols
 
     Returns:
-        Hermitian positive semi-definite kernel matrix K[i,j] = K(words[i], words[j])
+        Product matrix
 
-    Complexity: O(|words|² · dim²)
+    Time complexity: O(n³ * |word|) where n is the matrix dimension
     """
-    m = len(words)
-    # First compute all evolved states
-    states = np.zeros((m, walk.dim), dtype=complex)
-    for i, w in enumerate(words):
-        states[i] = walk.eval_state(w)
-
-    # Compute kernel matrix as Gram matrix
-    K = states.conj() @ states.T
-    return K
+    n = next(iter(generators.values())).shape[0]
+    result = np.eye(n, dtype=complex)
+    for g in reversed(word):
+        result = generators[g] @ result
+    return result
 
 
-def validate_moment_table(
-    table: Dict[Tuple[str, str], complex],
-    words: List[str],
-    tol: float = 1e-12
-) -> Dict[str, bool]:
-    """
-    Algorithm 2: Validate a moment table.
+def compute_reachable_rank(generators: Dict[str, np.ndarray],
+                           psi0: np.ndarray,
+                           max_depth: int,
+                           tol: float = 1e-10) -> Tuple[List[int], int]:
+    """Compute the reachable submodule rank at each depth.
 
-    Checks:
-    - Hermitian symmetry: H(u,v) = conj(H(v,u))
-    - Positivity: Re(H(w,w)) >= 0
-    - Shift compatibility: H(gu, gv) = H(u, v)
+    Implements Theorem A: the rank stabilizes at finite depth N ≤ dim(V).
+
+    Algorithm:
+        For each depth d = 0, 1, ..., max_depth:
+            1. Collect all states evalWord(w) @ psi0 for |w| ≤ d
+            2. Stack them as rows of a matrix
+            3. Compute the numerical rank
 
     Args:
-        table: Dict mapping (word, word) -> complex amplitude
-        words: List of words in the table
-        tol: Numerical tolerance
+        generators: Dict mapping generator symbols to unitary matrices
+        psi0: Initial state vector
+        max_depth: Maximum depth to explore
+        tol: Tolerance for numerical rank
 
     Returns:
-        Dict with validation results
+        (ranks, stabilization_depth) where ranks[d] is the rank at depth d
+
+    Time complexity: O(n³ * Σ_{d=0}^{max_depth} |alphabet|^d)
+    Space complexity: O(n * Σ_{d=0}^{max_depth} |alphabet|^d)
     """
-    results = {}
+    alphabet = ''.join(generators.keys())
+    ranks = []
+    all_states = []
 
-    # Hermitian check
-    max_herm_err = 0
-    for u in words:
-        for v in words:
-            if (u, v) in table and (v, u) in table:
-                err = abs(table[(u, v)] - table[(v, u)].conjugate())
-                max_herm_err = max(max_herm_err, err)
-    results['hermitian'] = max_herm_err < tol
-    results['hermitian_error'] = max_herm_err
+    for depth in range(max_depth + 1):
+        if depth == 0:
+            all_states.append(psi0.copy())
+        else:
+            for word in itertools.product(alphabet, repeat=depth):
+                w = ''.join(word)
+                state = eval_word_matrix(generators, w) @ psi0
+                all_states.append(state)
 
-    # Positivity check
-    min_diag = float('inf')
-    for w in words:
-        if (w, w) in table:
-            min_diag = min(min_diag, table[(w, w)].real)
-    results['positive'] = min_diag >= -tol
-    results['min_diagonal'] = min_diag
+        matrix = np.vstack([s.reshape(1, -1) for s in all_states])
+        rank = np.linalg.matrix_rank(matrix, tol=tol)
+        ranks.append(rank)
 
-    # Shift compatibility (where data available)
-    max_shift_err = 0
-    for g in GENERATORS:
-        for u in words:
-            for v in words:
-                gu = g + u
-                gv = g + v
-                if (gu, gv) in table and (u, v) in table:
-                    err = abs(table[(gu, gv)] - table[(u, v)])
-                    max_shift_err = max(max_shift_err, err)
-    results['shift_compatible'] = max_shift_err < tol
-    results['shift_error'] = max_shift_err
-
-    results['valid'] = all([
-        results['hermitian'],
-        results['positive'],
-        results['shift_compatible']
-    ])
-
-    return results
-
-
-def compute_stable_rank(
-    kernel_matrix: np.ndarray,
-    tol: float = 1e-10
-) -> int:
-    """
-    Compute the stable rank of a kernel matrix.
-
-    The stable rank is the number of eigenvalues above tolerance.
-
-    Args:
-        kernel_matrix: Hermitian PSD kernel matrix
-        tol: Threshold for considering an eigenvalue as zero
-
-    Returns:
-        Stable rank
-    """
-    eigenvalues = np.linalg.eigvalsh(kernel_matrix)
-    return int(np.sum(eigenvalues > tol))
-
-
-def gns_realization(
-    table: Dict[Tuple[str, str], complex],
-    basis_words: List[str],
-    all_words: List[str]
-) -> Optional[QuantumWalk]:
-    """
-    Algorithm 3: GNS realization from a valid moment table.
-
-    Given a valid moment table and a basis of words, construct a minimal
-    quantum walk realizing the table.
-
-    Args:
-        table: Valid moment table
-        basis_words: Words forming a basis for the kernel row space
-        all_words: All words in the table
-
-    Returns:
-        QuantumWalk realizing the table, or None if construction fails
-
-    Complexity: O(r³) for Cholesky + O(r² · |words|) for state extraction
-    """
-    r = len(basis_words)
-    if r == 0:
-        return None
-
-    # Step 1: Build Gram matrix on basis words
-    G = np.zeros((r, r), dtype=complex)
-    for i in range(r):
-        for j in range(r):
-            key = (basis_words[i], basis_words[j])
-            if key in table:
-                G[i, j] = table[key]
-            else:
-                return None
-
-    # Step 2: Verify PSD and compute Cholesky
-    eigenvalues = np.linalg.eigvalsh(G)
-    if np.min(eigenvalues) < -1e-10:
-        return None  # Not PSD
-
-    # Regularize slightly for numerical stability
-    G += np.eye(r) * max(0, -np.min(eigenvalues) + 1e-14)
-
-    try:
-        L = np.linalg.cholesky(G)
-    except np.linalg.LinAlgError:
-        return None
-
-    # Step 3: Compute state vectors for basis words
-    # v_i = L[i, :] (rows of Cholesky factor)
-    # Then ⟨v_i, v_j⟩ = (L L†)[i,j] = G[i,j] ✓
-
-    # Step 4: Compute decomposition coefficients for shifted words
-    # For each generator g, need to express g*basis_i in terms of basis
-    unitaries = {}
-    for g in GENERATORS:
-        U_g = np.zeros((r, r), dtype=complex)
-        for i in range(r):
-            shifted = g + basis_words[i]
-            if shifted not in [w for w in all_words]:
-                # Need coefficient decomposition
-                # From stable rank: shifted word = ∑ coeffs_j * basis_j
-                # Solve: table(shifted, basis_k) = ∑_j coeffs_j * table(basis_j, basis_k)
-                rhs = np.array([table.get((shifted, basis_words[k]), 0) for k in range(r)])
-                try:
-                    coeffs = np.linalg.solve(G, rhs)
-                    U_g[:, i] = L @ coeffs
-                except np.linalg.LinAlgError:
-                    U_g[:, i] = np.zeros(r)
-            else:
-                rhs = np.array([table.get((shifted, basis_words[k]), 0) for k in range(r)])
-                try:
-                    coeffs = np.linalg.solve(G, rhs)
-                    U_g[:, i] = L @ coeffs
-                except np.linalg.LinAlgError:
-                    U_g[:, i] = np.zeros(r)
-
-        # Polar decomposition to ensure unitarity
-        U_polar, S, Vh = np.linalg.svd(U_g)
-        unitaries[g] = U_polar @ Vh
-
-    # Step 5: Determine psi0
-    # psi0 corresponds to the identity word
-    identity_coeffs = np.zeros(r)
-    if '' in basis_words:
-        identity_coeffs[basis_words.index('')] = 1.0
+    # Find stabilization depth
+    stab = 0
+    for i in range(len(ranks) - 1):
+        if ranks[i] == ranks[i + 1]:
+            stab = i
+            break
     else:
-        rhs = np.array([table.get(('', basis_words[k]), 0) for k in range(r)])
-        try:
-            identity_coeffs = np.linalg.solve(G, rhs)
-        except np.linalg.LinAlgError:
-            identity_coeffs = np.zeros(r)
+        stab = len(ranks) - 1
 
-    psi0 = L @ identity_coeffs
-
-    return QuantumWalk(
-        unitaries=unitaries,
-        psi0=psi0,
-        obs=psi0.copy(),
-        dim=r
-    )
+    return ranks, stab
 
 
-def detect_phase_gauge_equivalence(
-    Q1: QuantumWalk,
-    Q2: QuantumWalk,
-    max_length: int = 4,
-    tol: float = 1e-10
-) -> Tuple[bool, float]:
-    """
-    Algorithm 4: Detect phase gauge equivalence.
-
-    Two walks are phase-gauge equivalent if they have the same kernel.
+def build_hankel_matrix(generators: Dict[str, np.ndarray],
+                        psi0: np.ndarray,
+                        obs: np.ndarray,
+                        depth: int) -> Tuple[np.ndarray, List[str]]:
+    """Build the truncated Hankel matrix H(u,v) = obs^* @ generators(u++v) @ psi0.
 
     Args:
-        Q1, Q2: Quantum walks (must have same dimension)
-        max_length: Maximum word length to check
-        tol: Tolerance for kernel comparison
+        generators: Dict mapping generator symbols to matrices
+        psi0: Initial state vector
+        obs: Observation vector
+        depth: Truncation depth (words up to this length)
 
     Returns:
-        (equivalent, max_difference)
+        (H, words) where H[i,j] = amplitude(words[i] + words[j])
+
+    Time complexity: O(n³ * W² + n * W²) where W = number of words
+    Space complexity: O(W² + n * W)
     """
-    words = generate_words(max_length)
-    max_diff = 0
-    for u in words:
-        for v in words:
-            diff = abs(Q1.kernel(u, v) - Q2.kernel(u, v))
-            max_diff = max(max_diff, diff)
-    return max_diff < tol, max_diff
+    alphabet = ''.join(generators.keys())
+    words = generate_words(alphabet, depth)
+    W = len(words)
+
+    # Precompute amplitudes for all concatenated words
+    H = np.zeros((W, W), dtype=complex)
+    for i, u in enumerate(words):
+        for j, v in enumerate(words):
+            concat = u + v
+            state = eval_word_matrix(generators, concat) @ psi0
+            H[i, j] = np.conj(obs) @ state
+
+    return H, words
 
 
-# --- Example usage ---
+def extract_minimal_realization(generators: Dict[str, np.ndarray],
+                                 psi0: np.ndarray,
+                                 obs: np.ndarray,
+                                 depth: int,
+                                 tol: float = 1e-10) -> Dict:
+    """Extract the minimal finite realization from Hankel data.
+
+    Implements Theorem C: constructs the canonical smallest finite-dimensional
+    model that reproduces all amplitudes.
+
+    Algorithm (SVD-based Hankel realization):
+        1. Build Hankel matrix H(u,v) = amplitude(u ++ v)
+        2. Compute SVD: H = U Σ V^*
+        3. Truncate to rank r: H ≈ U_r Σ_r V_r^*
+        4. Extract initial vector: α = V_r^* e_0 (first column)
+        5. Extract output: ω = U_r^* e_0 (first row)
+        6. For each generator g, build shifted Hankel H_g(u,v) = amplitude(u ++ g ++ v)
+        7. Project: T_g = (U_r Σ_r^{1/2})^+ H_g (V_r Σ_r^{1/2})^+
+
+    Args:
+        generators: Dict mapping generator symbols to matrices
+        psi0: Initial state vector
+        obs: Observation vector
+        depth: Truncation depth
+        tol: Tolerance for rank determination
+
+    Returns:
+        Dict with keys: 'T' (generator matrices), 'init', 'out', 'dim', 'rank'
+
+    Time complexity: O(W³) where W = number of words up to depth
+    Space complexity: O(W²)
+    """
+    alphabet = ''.join(generators.keys())
+    H, words = build_hankel_matrix(generators, psi0, obs, depth)
+    W = len(words)
+    rank = np.linalg.matrix_rank(H, tol=tol)
+
+    # SVD
+    U, S, Vh = np.linalg.svd(H)
+    sqrt_S = np.sqrt(S[:rank])
+    U_r = U[:, :rank] * sqrt_S[np.newaxis, :]
+    V_r = Vh[:rank, :].T * sqrt_S[np.newaxis, :]
+
+    # Initial and output vectors
+    init = V_r[0, :]  # Row 0 = empty word
+    output = U_r[0, :]
+
+    # Shifted Hankel matrices and generator projections
+    U_pinv = np.linalg.pinv(U_r)  # rank × W
+    V_r_pinv = np.linalg.pinv(V_r.T)  # W × rank
+
+    T = {}
+    for g in alphabet:
+        H_g = np.zeros((W, W), dtype=complex)
+        for i, u in enumerate(words):
+            for j, v in enumerate(words):
+                state = eval_word_matrix(generators, u + g + v) @ psi0
+                H_g[i, j] = np.conj(obs) @ state
+
+        T[g] = U_pinv @ H_g @ V_r_pinv  # rank × rank
+
+    return {
+        'T': T,
+        'init': init,
+        'out': output,
+        'dim': rank,
+        'rank': rank
+    }
+
+
+def reconstruct_amplitude(realization: Dict, word: str) -> complex:
+    """Reconstruct an amplitude from a minimal realization.
+
+    Computes: out @ T_{w_1} @ T_{w_2} @ ... @ T_{w_k} @ init
+
+    Args:
+        realization: Dict from extract_minimal_realization
+        word: Word to evaluate
+
+    Returns:
+        Reconstructed amplitude value
+
+    Time complexity: O(r² * |word|) where r is the realization dimension
+    """
+    state = realization['init'].copy()
+    for g in reversed(word):
+        state = realization['T'][g] @ state
+    return realization['out'] @ state
+
+
+def verify_reconstruction(generators: Dict[str, np.ndarray],
+                          psi0: np.ndarray,
+                          obs: np.ndarray,
+                          realization: Dict,
+                          test_words: List[str]) -> Dict[str, float]:
+    """Verify that a minimal realization correctly reconstructs amplitudes.
+
+    Args:
+        generators, psi0, obs: Original quantum walk parameters
+        realization: Minimal realization from extract_minimal_realization
+        test_words: Words to test
+
+    Returns:
+        Dict mapping words to reconstruction errors
+    """
+    errors = {}
+    for w in test_words:
+        true_amp = np.conj(obs) @ eval_word_matrix(generators, w) @ psi0
+        recon_amp = reconstruct_amplitude(realization, w)
+        errors[w] = abs(true_amp - recon_amp)
+    return errors
+
+
+def level_amplitude_recurrence(generators: Dict[str, np.ndarray],
+                                psi0: np.ndarray,
+                                obs: np.ndarray,
+                                max_level: int) -> Tuple[np.ndarray, Optional[np.ndarray]]:
+    """Compute level amplitudes and detect linear recurrence.
+
+    The level amplitude at depth n is the sum of amplitudes over all
+    words of length n. Under the finite realization, these satisfy a
+    linear recurrence of order ≤ dim(realization).
+
+    Args:
+        generators, psi0, obs: Quantum walk parameters
+        max_level: Maximum level to compute
+
+    Returns:
+        (level_amps, recurrence_coeffs) where recurrence_coeffs[i] are
+        the coefficients c_i such that a_n = sum_i c_i * a_{n-d+i}
+    """
+    alphabet = ''.join(generators.keys())
+    level_amps = np.zeros(max_level + 1, dtype=complex)
+
+    for n in range(max_level + 1):
+        if n == 0:
+            level_amps[0] = np.conj(obs) @ psi0
+        else:
+            for word in itertools.product(alphabet, repeat=n):
+                w = ''.join(word)
+                state = eval_word_matrix(generators, w) @ psi0
+                level_amps[n] += np.conj(obs) @ state
+
+    # Try to find recurrence
+    recurrence = None
+    for d in range(1, max_level // 2 + 1):
+        # Build system: a_{d+k} = sum_{i=0}^{d-1} c_i * a_{k+i} for k=0,...,d-1
+        if 2 * d > max_level:
+            break
+        A = np.zeros((d, d), dtype=complex)
+        b = np.zeros(d, dtype=complex)
+        for k in range(d):
+            for i in range(d):
+                A[k, i] = level_amps[k + i]
+            b[k] = level_amps[d + k]
+
+        try:
+            c = np.linalg.solve(A, b)
+            # Verify on remaining data
+            ok = True
+            for k in range(d, max_level - d + 1):
+                predicted = sum(c[i] * level_amps[k + i] for i in range(d))
+                if abs(predicted - level_amps[d + k]) > 1e-8:
+                    ok = False
+                    break
+            if ok:
+                recurrence = c
+                break
+        except np.linalg.LinAlgError:
+            continue
+
+    return level_amps, recurrence
+
+
 if __name__ == '__main__':
-    print("=" * 60)
-    print("Berggren Quantum Walk Algorithms — Test Suite")
-    print("=" * 60)
-
-    # Create a test walk
+    # Quick demonstration
     np.random.seed(42)
     n = 3
 
+    # Random unitary generators
     def random_unitary(dim):
         Z = (np.random.randn(dim, dim) + 1j * np.random.randn(dim, dim)) / np.sqrt(2)
         Q, R = np.linalg.qr(Z)
-        return Q @ np.diag(np.diag(R) / np.abs(np.diag(R)))
+        D = np.diag(np.diag(R) / np.abs(np.diag(R)))
+        return Q @ D
 
-    U = {g: random_unitary(n) for g in GENERATORS}
-    psi0 = np.array([1.0, 0.0, 0.0], dtype=complex)
-    Q = QuantumWalk(U, psi0, psi0.copy(), n)
+    gens = {g: random_unitary(n) for g in 'ABC'}
+    psi0 = np.array([1, 0, 0], dtype=complex)
+    obs = np.array([1, 0, 0], dtype=complex)
 
-    # Test kernel extraction
-    words = generate_words(3)
-    K = extract_kernel_matrix(Q, words)
-    print(f"\n1. Kernel extraction: {K.shape[0]}×{K.shape[1]} matrix")
-    print(f"   Rank: {compute_stable_rank(K)}")
-    print(f"   Hermitian: {np.allclose(K, K.conj().T)}")
-    print(f"   Min eigenvalue: {np.min(np.linalg.eigvalsh(K)):.2e}")
+    print("=== Reachable Rank Analysis ===")
+    ranks, stab = compute_reachable_rank(gens, psi0, 5)
+    print(f"Ranks by depth: {ranks}")
+    print(f"Stabilization depth: {stab}")
 
-    # Test validation
-    table = {}
-    for i, u in enumerate(words):
-        for j, v in enumerate(words):
-            table[(u, v)] = K[i, j]
-    results = validate_moment_table(table, words)
-    print(f"\n2. Moment table validation: {results}")
+    print("\n=== Minimal Realization ===")
+    real = extract_minimal_realization(gens, psi0, obs, 3)
+    print(f"Realization dimension: {real['dim']}")
 
-    # Test GNS realization
-    basis = ['', 'A', 'B']  # First 3 words as basis
-    Q_realized = gns_realization(table, basis, words)
-    if Q_realized:
-        print(f"\n3. GNS realization: dimension {Q_realized.dim}")
-        equiv, diff = detect_phase_gauge_equivalence(Q, Q_realized, max_length=2)
-        print(f"   Kernel match: {diff:.2e}")
+    print("\n=== Reconstruction Verification ===")
+    test = ['', 'A', 'B', 'C', 'AB', 'BA', 'ABC', 'CBA', 'ABCA']
+    errors = verify_reconstruction(gens, psi0, obs, real, test)
+    for w, err in errors.items():
+        print(f"  word='{w}': error = {err:.2e}")
+
+    print("\n=== Level Amplitude Recurrence ===")
+    amps, rec = level_amplitude_recurrence(gens, psi0, obs, 8)
+    print(f"Level amplitudes: {[f'{a:.4f}' for a in amps]}")
+    if rec is not None:
+        print(f"Recurrence coefficients (order {len(rec)}): {rec}")
     else:
-        print("\n3. GNS realization: failed (expected for non-basis words)")
-
-    # Test phase gauge equivalence
-    phi = np.pi / 4
-    V = random_unitary(n)
-    U2 = {g: V @ Ug @ V.conj().T for g, Ug in U.items()}
-    psi0_2 = V @ psi0
-    Q2 = QuantumWalk(U2, psi0_2, V @ psi0, n)
-    equiv, diff = detect_phase_gauge_equivalence(Q, Q2)
-    print(f"\n4. Phase gauge equivalence: {equiv} (max diff: {diff:.2e})")
-
-    print("\nAll tests complete.")
+        print("No simple recurrence detected")
