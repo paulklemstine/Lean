@@ -103,7 +103,7 @@ def update_index():
     # Find the Catalog root (grandparent of Packages dir) for git commands
     catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
 
-    json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json")]
+    json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions_snapshot.json")]
 
     viz_dir = os.path.join(script_dir, "visualizations")
     os.makedirs(viz_dir, exist_ok=True)
