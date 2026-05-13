@@ -458,6 +458,9 @@ def build_lineage(packages_dir, config_path=None):
     for slug, pkg in packages.items():
         source_ids = pkg.get("source_exp_ids", [])
         for src_exp_id in source_ids:
+            # Skip "seed" source — it's a virtual root, not a real package
+            if src_exp_id == "seed":
+                continue
             # Find parent slug: first check exp_id_map, then pkg_exp_ids
             parent_slug = None
             parent_filename = exp_id_map.get(src_exp_id, "")
@@ -512,12 +515,24 @@ def build_lineage(packages_dir, config_path=None):
                 continue
             # Find parent: source_exp_id -> filename, or source_path -> slug
             parent_slug = None
-            if d.source_exp_id and d.source_exp_id != 'unknown':
+            if d.source_exp_id and d.source_exp_id not in ('unknown', 'seed'):
                 parent_filename = exp_id_map.get(d.source_exp_id, "")
                 if parent_filename:
                     parent_slug = parent_filename.replace('.json', '')
             if not parent_slug and d.source_path.startswith('json:'):
                 parent_slug = d.source_path[5:].replace('.json', '')
+            # Handle seed directions: create a virtual "seed" parent node
+            if not parent_slug and d.source_exp_id == 'seed':
+                seed_slug = f"seed_{d.id}"
+                if seed_slug not in packages:
+                    packages[seed_slug] = {
+                        "title": d.title,
+                        "domain": d.domains[0] if d.domains else "General",
+                        "description": d.description,
+                        "exp_id": "seed",
+                        "_is_seed": True,
+                    }
+                parent_slug = seed_slug
             if not parent_slug or parent_slug not in packages or parent_slug == child_slug:
                 continue
             pair = (parent_slug, child_slug)
@@ -536,6 +551,22 @@ def build_lineage(packages_dir, config_path=None):
             })
     except Exception as e:
         print(f"Warning: could not load FutureDirectionsManager for provenance: {e}")
+
+    # Add seed direction nodes to the node list
+    for slug, pkg in packages.items():
+        if pkg.get("_is_seed") and not any(n["id"] == slug for n in nodes):
+            domain_str = pkg.get("domain", "Bridges")
+            primary = primary_domain(domain_str)
+            shape = DOMAIN_SHAPES.get(primary, "icosahedron")
+            nodes.append({
+                "id": slug,
+                "title": pkg.get("title", slug),
+                "domain": domain_str,
+                "primary_domain": primary,
+                "shape": shape,
+                "date": pkg.get("date", ""),
+                "hue": slug_to_hue(slug),
+            })
 
     print(f"Provenance edges: {len(provenance_edges)}")
     edges = []

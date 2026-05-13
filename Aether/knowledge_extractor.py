@@ -264,12 +264,38 @@ class KnowledgeExtractor:
         inflight_concepts = [j.concept.title for j in self.inflight.values()] if hasattr(self, 'inflight') and self.inflight else []
 
         # Pi-Agent: THE BRAINS — selects the specific concept
-        concept = self.pi_agent.select_research_direction(
-            domains=domains_with_context,
-            recent_history=recent_history,
-            research_context=discoveries_prompt,
-            inflight_concepts=inflight_concepts,
-        )
+        # Prefer future directions from previous cycles
+        source_exp_ids = []
+        from research_memory import FutureDirectionsManager
+        fd_manager = FutureDirectionsManager(self.workspace)
+        available = fd_manager.get_available_directions(limit=5, domain_filter=loop_result['domain'])
+        if not available:
+            available = fd_manager.get_available_directions(limit=5)
+
+        if available:
+            best_dir = available[0]
+            fd_manager.mark_direction_consumed(best_dir.id, job_id)
+            source_exp_ids = fd_manager.get_source_exp_ids_for(job_id)
+            print(f"[Discover] Using future direction: {best_dir.title} (source={best_dir.source_exp_id})")
+            concept = ResearchConcept(
+                title=best_dir.title,
+                domain=normalize_domain(best_dir.domains[0]) if best_dir.domains else loop_result['domain'],
+                concept_description=best_dir.description,
+                mathematical_framing=best_dir.description,
+                lean_guess="",
+                catalog_references=[],
+                research_mode=best_dir.research_mode or "prove",
+                novelty_estimate=0.85,
+                breakthrough_potential=best_dir.priority_score,
+                key_references=[],
+            )
+        else:
+            concept = self.pi_agent.select_research_direction(
+                domains=domains_with_context,
+                recent_history=recent_history,
+                research_context=discoveries_prompt,
+                inflight_concepts=inflight_concepts,
+            )
 
         print(f"[Pi] concept={concept.title}, domain={concept.domain}, "
               f"mode={concept.research_mode}, novelty={concept.novelty_estimate:.2f}")
@@ -279,6 +305,7 @@ class KnowledgeExtractor:
             cycle_n=cycle_n,
             concept=concept,
             prompt="",  # Will be filled in Phase 2
+            source_exp_ids=source_exp_ids if source_exp_ids else None,
         )
 
     # ==================================================================
@@ -1719,6 +1746,56 @@ Research mode: {concept.research_mode}
 
         # 6. INTEGRATE
         job = self.integrate(job)
+
+        # 6b. EXTRACT FUTURE DIRECTIONS from Aristotle's output
+        if job.status == "integrated" and job.job_id:
+            try:
+                from research_memory import FutureDirectionsManager
+                fd_manager = FutureDirectionsManager(self.workspace)
+                fd_added = 0
+                # Try result_future_directions first
+                if job.result_future_directions and len(job.result_future_directions) > 100:
+                    added = fd_manager.add_directions_from_text(
+                        job.result_future_directions, job.job_id, "result_future_directions"
+                    )
+                    if added:
+                        fd_added += added
+                # Fallback: try JSON package's future_directions field
+                if fd_added == 0 and job.result_json_package:
+                    try:
+                        pkg = json.loads(job.result_json_package)
+                        fd_text = pkg.get("future_directions", "")
+                        if fd_text and len(fd_text) > 100:
+                            added = fd_manager.add_directions_from_text(
+                                fd_text, job.job_id, "json_package"
+                            )
+                            if added:
+                                fd_added += added
+                    except Exception:
+                        pass
+                # Also scan project dir for FUTURE_DIRECTIONS.md files
+                if fd_added == 0 and job.project_dir and job.project_dir.exists():
+                    for fd_file in job.project_dir.rglob("FUTURE_DIRECTIONS*.md"):
+                        try:
+                            fd_content = fd_file.read_text(encoding="utf-8", errors="replace")
+                            if len(fd_content) > 100:
+                                added = fd_manager.add_directions_from_text(
+                                    fd_content, job.job_id, str(fd_file)
+                                )
+                                if added:
+                                    fd_added += added
+                        except Exception:
+                            pass
+                if fd_added > 0:
+                    print(f"[Cycle] Added {fd_added} future directions from cycle {job.job_id}")
+                # Mark the consumed direction as completed
+                for d in fd_manager._directions:
+                    if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
+                        fd_manager.mark_direction_completed(d.id)
+                        print(f"[Cycle] Marked direction {d.id} as completed")
+                        break
+            except Exception as e:
+                print(f"[Cycle] Warning: Failed to extract future directions: {e}")
 
         # 7. CLEANUP — dedup, workspace removal, sync verification
         job = self.cleanup_catalog(job)
