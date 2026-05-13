@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-13T00:29:54Z",
-      "hue": 134
+      "hue": 270
     },
     {
       "id": "algebraemlphysics_closure_entropic_gravity_duality",
@@ -16,7 +16,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T00:32:48Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_ope",
@@ -25,7 +25,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T00:46:49Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "algebraemlphysics_closure_causal_horizon_realizati",
@@ -34,7 +34,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T01:06:59Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraemltropical_padic_closurevaluation_duality_",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T01:30:54Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "algebraemlphysics_closure_gauge_realization_dualit",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-13T01:44:04Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "algebraemlmachinelearning_closure_capacityattentio",
@@ -61,7 +61,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-13T01:57:06Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "algebraemllogic_closure_stone_spectrum_duality_via",
@@ -70,7 +70,16 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-13T02:00:56Z",
-      "hue": 272
+      "hue": 90
+    },
+    {
+      "id": "algebratropicalcomputation_tropical_automaton_spec",
+      "title": "Tropical Automaton Spectral Realization Duality via Idempotent Hankel Semimodules",
+      "domain": "Algebra–Tropical–Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-13T02:05:55Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -92,7 +101,7 @@
       "source": "algebraemlphysics_closure_entropic_gravity_duality",
       "target": "algebraemlphysics_closure_gauge_realization_dualit",
       "strength": 0.8419354838709676,
-      "label": "Physics,EML,Algebra,Bridges bridge",
+      "label": "Bridges,Physics,Algebra,EML bridge",
       "type": "heuristic"
     },
     {
@@ -100,6 +109,13 @@
       "target": "algebraemlmachinelearning_closure_capacityattentio",
       "strength": 0.7367096774193549,
       "label": "Closure",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalrepresentationtheory_tropical_satak",
+      "target": "algebratropicalcomputation_tropical_automaton_spec",
+      "strength": 0.7290322580645161,
+      "label": "Tropical Automaton Spectral Realization Duality",
       "type": "heuristic"
     },
     {
@@ -117,6 +133,27 @@
       "type": "heuristic"
     },
     {
+      "source": "algebratropicalmachinelearning_tropical_neural_ope",
+      "target": "algebratropicalcomputation_tropical_automaton_spec",
+      "strength": 0.6107096774193548,
+      "label": "Tropical Automaton Spectral Realization Duality",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlphysics_closure_gauge_realization_dualit",
+      "target": "algebratropicalcomputation_tropical_automaton_spec",
+      "strength": 0.6107096774193548,
+      "label": "Tropical Automaton Spectral Realization Duality",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlphysics_closure_causal_horizon_realizati",
+      "target": "algebratropicalcomputation_tropical_automaton_spec",
+      "strength": 0.5935483870967742,
+      "label": "Tropical Automaton Spectral Realization Duality",
+      "type": "heuristic"
+    },
+    {
       "source": "algebraemlphysics_closure_gauge_realization_dualit",
       "target": "algebraemlmachinelearning_closure_capacityattentio",
       "strength": 0.5560645161290323,
@@ -124,10 +161,10 @@
       "type": "heuristic"
     },
     {
-      "source": "algebraemlphysics_closure_causal_horizon_realizati",
-      "target": "algebraemllogic_closure_stone_spectrum_duality_via",
-      "strength": 0.5538064516129032,
-      "label": "Finite Closure",
+      "source": "algebraemltropical_padic_closurevaluation_duality_",
+      "target": "algebratropicalcomputation_tropical_automaton_spec",
+      "strength": 0.5258064516129032,
+      "label": "Tropical bridge",
       "type": "heuristic"
     },
     {
@@ -145,6 +182,13 @@
       "type": "heuristic"
     },
     {
+      "source": "algebraemllogic_closure_stone_spectrum_duality_via",
+      "target": "algebratropicalcomputation_tropical_automaton_spec",
+      "strength": 0.5032258064516129,
+      "label": "Tropical Automaton Spectral Realization Duality",
+      "type": "heuristic"
+    },
+    {
       "source": "algebratropicalmachinelearning_tropical_neural_ope",
       "target": "algebraemlmachinelearning_closure_capacityattentio",
       "strength": 0.4955483870967742,
@@ -152,23 +196,16 @@
       "type": "heuristic"
     },
     {
-      "source": "algebratropicalmachinelearning_tropical_neural_ope",
-      "target": "algebraemlphysics_closure_causal_horizon_realizati",
-      "strength": 0.4937419354838709,
-      "label": "Closure",
+      "source": "algebraemlmachinelearning_closure_capacityattentio",
+      "target": "algebratropicalcomputation_tropical_automaton_spec",
+      "strength": 0.48064516129032253,
+      "label": "Algebra bridge",
       "type": "heuristic"
     },
     {
       "source": "algebraemltropical_padic_closurevaluation_duality_",
       "target": "algebraemlmachinelearning_closure_capacityattentio",
       "strength": 0.4205806451612903,
-      "label": "Closure",
-      "type": "heuristic"
-    },
-    {
-      "source": "algebratropicalrepresentationtheory_tropical_satak",
-      "target": "algebraemlphysics_closure_gauge_realization_dualit",
-      "strength": 0.41290322580645156,
       "label": "Closure",
       "type": "heuristic"
     },
