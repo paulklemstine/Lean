@@ -521,8 +521,6 @@ def build_lineage(packages_dir, config_path=None):
                     parent_slug = parent_filename.replace('.json', '')
             if not parent_slug and d.source_path.startswith('json:'):
                 parent_slug = d.source_path[5:].replace('.json', '')
-            # Handle seed directions: no virtual parent node — seed means root
-            # Edges from seed have no real parent package, so skip them
             if not parent_slug or parent_slug not in packages or parent_slug == child_slug:
                 continue
             pair = (parent_slug, child_slug)
@@ -543,97 +541,9 @@ def build_lineage(packages_dir, config_path=None):
         print(f"Warning: could not load FutureDirectionsManager for provenance: {e}")
 
     print(f"Provenance edges: {len(provenance_edges)}")
-    edges = []
-    for i, source_slug in enumerate(sorted_slugs):
-        source_pkg = packages[source_slug]
-        fd_text = source_pkg.get("future_directions", "")
-        if not fd_text:
-            continue
 
-        concepts = extract_concepts_from_future_directions(fd_text)
-
-        for target_slug in sorted_slugs:
-            if target_slug == source_slug:
-                continue
-            target_pkg = packages[target_slug]
-
-            # Temporal ordering: prefer older→newer, but allow same-day edges
-            # when there's a strong conceptual signal
-            source_date = source_pkg.get("date", "9999")
-            target_date = target_pkg.get("date", "9999")
-            same_day = source_date[:10] == target_date[:10] and source_date[:10] != "9999"
-            if source_date > target_date:
-                # Source is newer — no edge possible
-                continue
-            elif source_date == target_date or same_day:
-                # Same day — edges need higher score threshold to avoid noise
-                pass
-
-            score, reasons = compute_edge_score(
-                source_pkg, target_pkg, concepts, packages, arcs
-            )
-
-            # Same-day edges need a higher threshold to avoid spurious connections
-            min_score_threshold = 5.0 if same_day else 3.0
-            if score >= min_score_threshold:
-                edges.append({
-                    "source": source_slug,
-                    "target": target_slug,
-                    "strength": min(score / 10.0, 1.0),
-                    "label": extract_edge_label(reasons, source_pkg.get("title", ""), target_pkg.get("title", "")),
-                    "score": round(score, 2),
-                    "same_day": same_day,
-                })
-
-    # Limit outgoing edges per node to avoid hairballs
-    # Keep top 3 outgoing edges per source
-    from collections import Counter as EdgeCounter
-    outgoing_counts = EdgeCounter()
-    filtered_edges = []
-    edges.sort(key=lambda e: e["score"], reverse=True)
-    for e in edges:
-        key = e["source"]
-        if outgoing_counts[key] < 3:
-            filtered_edges.append(e)
-            outgoing_counts[key] += 1
-    edges = filtered_edges
-
-    # ── Phase 3: Merge provenance and heuristic edges ──
-    # Remove heuristic edges that duplicate provenance edges
-    edges = [e for e in edges if (e["source"], e["target"]) not in provenance_pairs]
-    # Tag heuristic edges
-    for e in edges:
-        e["type"] = "heuristic"
-    # Combine: provenance first, then heuristic
-    all_edges = provenance_edges + edges
-    edges = all_edges
-    edges = deduplicate_transitive_edges(edges, min_strength=0.3)
-
-    # Sort edges by score/strength descending
-    edges.sort(key=lambda e: e.get("score", e.get("strength", 0)), reverse=True)
-
-    # Limit heuristic edges to keep visualization clean, but keep ALL provenance edges
-    provenance_count = sum(1 for e in edges if e.get("type") == "provenance")
-    heuristic_count = len(edges) - provenance_count
-    max_heuristic = 150
-    if heuristic_count > max_heuristic:
-        # Keep all provenance edges, trim heuristic edges
-        prov_edges = [e for e in edges if e.get("type") == "provenance"]
-        heur_edges = [e for e in edges if e.get("type") != "provenance"][:max_heuristic]
-        edges = prov_edges + heur_edges
-
-    # Normalize strength relative to the actual score distribution
-    if edges:
-        heuristic_edges = [e for e in edges if e.get("type") != "provenance"]
-        if heuristic_edges:
-            scores = [e["score"] for e in heuristic_edges]
-            min_s = min(scores)
-            max_s = max(scores)
-            range_s = max_s - min_s if max_s > min_s else 1.0
-            for e in heuristic_edges:
-                # Map to 0.3..1.0 range so even weak edges are visible
-                e["strength"] = 0.3 + 0.7 * ((e["score"] - min_s) / range_s)
-        # Provenance edges already have strength=1.0
+    # Use only provenance edges
+    edges = provenance_edges
 
     # Remove edges that reference non-existent packages (ghost nodes)
     real_slugs = {n["id"] for n in nodes}
@@ -641,11 +551,6 @@ def build_lineage(packages_dir, config_path=None):
     edges = [e for e in edges if e["source"] in real_slugs and e["target"] in real_slugs]
     if before != len(edges):
         print(f"Removed {before - len(edges)} edges with ghost nodes")
-
-    # Clean up internal fields from output
-    for e in edges:
-        e.pop("score", None)
-        e.pop("same_day", None)
 
     print(f"Built lineage: {len(nodes)} nodes, {len(edges)} edges")
     return {"nodes": nodes, "edges": edges}

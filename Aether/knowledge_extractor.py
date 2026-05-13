@@ -1294,6 +1294,8 @@ Research mode: {concept.research_mode}
         target_path = self._strip_catalog_prefix(str(requested_path or part.get("path", "")))
         # Strip any remaining _aristotle path segments (e.g. Bridges/47bf2ccd_aristotle/Bridges/...)
         target_path = re.sub(r'/[0-9a-f]+_aristotle/', '/', target_path)
+        # Fix compound domain paths like AlgebraEML/Cryptography/ -> Bridges/AlgebraEMLCryptography/
+        target_path = self._resolve_compound_domain_path(target_path)
         suffix = Path(target_path).suffix.lower()
 
         # Safety: reject obviously invalid paths
@@ -1390,6 +1392,65 @@ Research mode: {concept.research_mode}
             if part in known_domains:
                 return part
         return ""
+
+    def _resolve_compound_domain_path(self, target_path: str) -> str:
+        """Fix paths like AlgebraEML/Cryptography/X.lean -> Bridges/AlgebraEMLCryptography/X.lean.
+
+        Aristotle sometimes generates compound domain paths split into nested directories
+        (AlgebraEML/Cryptography/) or as a single compound directory (AlgebraEMLCryptography/).
+        Both should map to the correct Bridges/ subdirectory.
+        """
+        parts = [p for p in target_path.replace("\\", "/").split("/") if p]
+        if not parts:
+            return target_path
+
+        # Already under Bridges/ — trust it
+        if parts[0] == "Bridges":
+            return target_path
+
+        # Already a known single domain — no fix needed
+        known_domains = {
+            "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
+            "EML", "Geometry", "Logic", "MachineLearning", "Physics",
+            "Pythagorean", "Shared", "Tropical", "Speculative", "Core",
+        }
+        if parts[0] in known_domains:
+            return target_path
+
+        bridges_dir = self.catalog_root / "Bridges"
+        if not bridges_dir.exists():
+            return target_path
+
+        bridges_entries = {e.name for e in bridges_dir.iterdir() if e.is_dir()}
+
+        # Try 1: The first part itself is a Bridges compound directory
+        # e.g. AlgebraEMLCryptography/X.lean -> Bridges/AlgebraEMLCryptography/X.lean
+        if parts[0] in bridges_entries:
+            return "Bridges/" + target_path
+
+        # Try 2: Concatenate first two parts as a compound Bridges name
+        # e.g. AlgebraEML/Cryptography/X.lean -> Bridges/AlgebraEMLCryptography/X.lean
+        # e.g. VSAlgebra/Bridges/X.lean -> skip Bridges, check VSAlgebra alone
+        if len(parts) >= 2:
+            # Skip internal "Bridges" directory component
+            second = parts[1] if parts[1] != "Bridges" else (parts[2] if len(parts) > 2 else "")
+            if second:
+                compound = parts[0] + second
+                if compound in bridges_entries:
+                    # Remaining path after the two merged parts (plus any skipped "Bridges")
+                    skip = 2 if parts[1] != "Bridges" else 3
+                    remaining = "/".join(parts[skip:]) if len(parts) > skip else ""
+                    if remaining:
+                        return f"Bridges/{compound}/{remaining}"
+                    return f"Bridges/{compound}/{parts[-1]}"
+
+        # Try 3: Check if first part ends with a known domain suffix
+        for domain in known_domains:
+            if parts[0].endswith(domain) and parts[0] != domain and parts[0] in bridges_entries:
+                return "Bridges/" + target_path
+
+        # No compound match — return as-is
+        return target_path
 
     async def cleanup_catalog_async(self, job: ResearchJob) -> ResearchJob:
         """Run deduplication, cleanup project files, and Pi consolidation.
