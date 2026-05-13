@@ -4,8 +4,8 @@
       "id": "algebratropicalrepresentationtheory_tropical_satak",
       "title": "Tropical Satake Polytope Duality via Idempotent Weight Semimodules and Certified Crystal Reconstruction",
       "domain": "Algebra-Tropical-Representation Theory Bridge",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
+      "primary_domain": "Tropical",
+      "shape": "star",
       "date": "2026-05-13T00:29:54Z",
       "hue": 270
     },
@@ -16,7 +16,7 @@
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-13T00:32:48Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "algebratropicalmachinelearning_tropical_neural_ope",
@@ -25,22 +25,45 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-13T00:46:49Z",
-      "hue": 91
+      "hue": 112
+    },
+    {
+      "id": "algebraemlphysics_closure_causal_horizon_realizati",
+      "title": "Closure-Causal Horizon Duality: Finite Causality from Closure Algebra",
+      "domain": "Bridges (Algebra-EML-Physics)",
+      "primary_domain": "EML",
+      "shape": "octahedron",
+      "date": "2026-05-13T01:06:59Z",
+      "hue": 270
     }
   ],
   "edges": [
     {
       "source": "algebraemlphysics_closure_entropic_gravity_duality",
-      "target": "algebratropicalmachinelearning_tropical_neural_ope",
+      "target": "algebraemlphysics_closure_causal_horizon_realizati",
       "strength": 1.0,
+      "label": "Closure",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebraemlphysics_closure_entropic_gravity_duality",
+      "target": "algebratropicalmachinelearning_tropical_neural_ope",
+      "strength": 0.5919200695047784,
       "label": "Bridges bridge",
       "type": "heuristic"
     },
     {
       "source": "algebratropicalrepresentationtheory_tropical_satak",
       "target": "algebratropicalmachinelearning_tropical_neural_ope",
-      "strength": 0.6660416666666668,
+      "strength": 0.4526498696785404,
       "label": "Tropical Operadic Realization Duality",
+      "type": "heuristic"
+    },
+    {
+      "source": "algebratropicalmachinelearning_tropical_neural_ope",
+      "target": "algebraemlphysics_closure_causal_horizon_realizati",
+      "strength": 0.4271068635968722,
+      "label": "Closure",
       "type": "heuristic"
     },
     {
