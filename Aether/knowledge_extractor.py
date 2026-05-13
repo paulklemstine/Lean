@@ -268,12 +268,12 @@ class KnowledgeExtractor:
         source_exp_ids = []
         from research_memory import FutureDirectionsManager
         fd_manager = FutureDirectionsManager(self.workspace)
-        available = fd_manager.get_available_directions(limit=5, domain_filter=loop_result['domain'])
-        if not available:
-            available = fd_manager.get_available_directions(limit=5)
+        # Try domain-filtered selection first, fall back to unfiltered
+        best_dir = fd_manager.select_direction_weighted(domain_filter=loop_result['domain'])
+        if not best_dir:
+            best_dir = fd_manager.select_direction_weighted()
 
-        if available:
-            best_dir = available[0]
+        if best_dir:
             fd_manager.mark_direction_consumed(best_dir.id, job_id)
             source_exp_ids = fd_manager.get_source_exp_ids_for(job_id)
             print(f"[Discover] Using future direction: {best_dir.title} (source={best_dir.source_exp_id})")

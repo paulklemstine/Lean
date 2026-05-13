@@ -427,6 +427,24 @@ class FutureDirectionsManager:
         available.sort(key=lambda d: d.priority_score, reverse=True)
         return available[:limit]
 
+    def select_direction_weighted(
+        self, domain_filter: Optional[str] = None
+    ) -> Optional[FutureDirection]:
+        """Select a direction from a probability distribution weighted by priority_score.
+
+        Higher priority directions are more likely to be selected, but lower-priority
+        directions still have a chance. The sampling probability for each direction is
+        proportional to its priority_score.
+        """
+        available = [d for d in self._directions if d.status == "available"]
+        if domain_filter:
+            available = [d for d in available if domain_filter in d.domains or not d.domains]
+        if not available:
+            return None
+        import random
+        weights = [d.priority_score for d in available]
+        return random.choices(available, weights=weights, k=1)[0]
+
     def mark_direction_consumed(self, direction_id: str, exp_id: str) -> None:
         """Mark a direction as in-progress when it's selected for research."""
         for d in self._directions:

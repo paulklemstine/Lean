@@ -98,6 +98,66 @@ class TestConsumingDirections:
     def test_get_available_empty(self, fd_manager):
         assert fd_manager.get_available_directions() == []
 
+    def test_select_direction_weighted_empty(self, fd_manager):
+        assert fd_manager.select_direction_weighted() is None
+
+    def test_select_direction_weighted_returns_available(self, fd_manager):
+        fd_manager.add_direction(FutureDirection(
+            id="w_001", title="Weighted Test",
+            description="A direction for testing weighted selection probability distribution.",
+            source_exp_id="seed", source_path="seed:test",
+            priority_score=0.9,
+        ))
+        result = fd_manager.select_direction_weighted()
+        assert result is not None
+        assert result.id == "w_001"
+
+    def test_select_direction_weighted_prefers_high_priority(self, fd_manager):
+        """Run many selections; highest-priority direction should be selected most often."""
+        import random
+        random.seed(42)
+        fd_manager.add_direction(FutureDirection(
+            id="w_Low", title="Direction Low",
+            description="Prove that Berggren tree orbits have bounded spectral radius under min-plus dynamics.",
+            source_exp_id="seed", source_path="seed:test",
+            priority_score=0.2,
+        ))
+        fd_manager.add_direction(FutureDirection(
+            id="w_Mid", title="Direction Mid",
+            description="Show that quantum error correction codes form a lattice with minimum distance bounds.",
+            source_exp_id="seed", source_path="seed:test",
+            priority_score=0.5,
+        ))
+        fd_manager.add_direction(FutureDirection(
+            id="w_High", title="Direction High",
+            description="Establish that idempotent closure of tropical semirings yields complexity class incomparable with P.",
+            source_exp_id="seed", source_path="seed:test",
+            priority_score=0.9,
+        ))
+        counts = {"High": 0, "Mid": 0, "Low": 0}
+        for _ in range(1000):
+            d = fd_manager.select_direction_weighted()
+            counts[d.title.split()[-1]] += 1
+        # High priority (0.9) should be selected most often
+        assert counts["High"] > counts["Mid"]
+        assert counts["High"] > counts["Low"]
+
+    def test_select_direction_weighted_with_domain_filter(self, fd_manager):
+        fd_manager.add_direction(FutureDirection(
+            id="w_trop", title="Tropical Direction",
+            description="A tropical algebra direction for domain-filtered weighted selection.",
+            source_exp_id="seed", source_path="seed:test",
+            domains=["Tropical"], priority_score=0.9,
+        ))
+        fd_manager.add_direction(FutureDirection(
+            id="w_log", title="Logic Direction",
+            description="A logic computation direction for domain-filtered weighted selection.",
+            source_exp_id="seed", source_path="seed:test",
+            domains=["Logic"], priority_score=0.8,
+        ))
+        result = fd_manager.select_direction_weighted(domain_filter="Tropical")
+        assert result.id == "w_trop"
+
     def test_get_available_returns_by_priority(self, fd_manager):
         descriptions = [
             "Prove that the Berggren triple generation tree has infinite branching number, connecting Pythagorean orbits to spectral theory.",
