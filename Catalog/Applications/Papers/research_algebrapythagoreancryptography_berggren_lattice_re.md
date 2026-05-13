@@ -1,427 +1,275 @@
-# Berggren Lattice-Reduction Duality via Triple-Tree Semimodules and Certified Minimal Trapdoor Reconstruction
+# Berggren Lattice Reduction Duality via Triple-Tree Gram Semimodules and Certified Short-Basis Reconstruction
 
 ## Abstract
 
-We establish a rigorous duality between primitive Pythagorean triple dynamics — as organized by the Berggren ternary tree — and certified positive-definite lattice presentations with explicit short-basis witnesses. The central construction attaches to each primitive triple (a, b, c) a canonical rank-2 positive-definite Gram matrix G⁺(a,b,c) = [[c, a], [a, c]] with determinant b² and trace 2c, as well as a rank-3 positive-definite lift with determinant c·b². We prove that this attachment is injective (rigidity), that every finite set of primitive triples admits a canonical lattice certificate family preserving cardinality (realization), and that valid certificates uniquely determine their source triples (reconstruction). The degenerate Gram matrix [[c+a, b], [b, c-a]] with determinant zero is correctly identified as a semidefinite boundary form, motivating the positive-definite construction. These results establish Berggren ancestry as a new arithmetic trapdoor mechanism for lattice-based cryptographic constructions. All theorems are machine-verified.
+We establish a formal bridge between the Berggren semigroup of primitive Pythagorean triples and lattice reduction theory, formalized and verified in Lean 4 with Mathlib. For each primitive Pythagorean triple $(a,b,c)$ with $a^2+b^2=c^2$, we construct a rank-2 lattice with basis vectors $v_1=(a,b)$, $v_2=(b,c)$ and associated Gram matrix $G(a,b,c)$. We prove:
 
-**Keywords:** Pythagorean triples, Berggren tree, lattice reduction, Gram matrices, positive-definite forms, arithmetic trapdoors, short-basis certificates
+1. **Perfect square determinant identity**: $\det G(a,b,c) = (ac - b^2)^2$, showing the Gram determinant is always a perfect square.
+2. **Universal trace monotonicity**: The Gram trace $a^2 + 2b^2 + c^2$ strictly increases under all three Berggren generators.
+3. **Shortest norm monotonicity**: The minimum basis vector squared norm $c^2$ is nondecreasing under all generators.
+4. **Determinant monotonicity with algebraic certificates**: $\det G$ increases under generators A and C, with explicit factorization proofs.
+5. **Gram recognition theorem**: The Gram matrix is a complete invariant for positive Pythagorean triples.
+6. **Path-level invariant theory**: Berggren paths preserve the Pythagorean property and positivity, and the path invariant determines the terminal lattice.
 
----
+All results are formalized without `sorry` in ~430 lines of Lean 4. We also provide Python implementations of the reconstruction algorithm and Lagrange reduction applied to Berggren lattices.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 Background
 
-Primitive Pythagorean triples have been studied since antiquity, but their structural organization was only clarified in the 20th century with the discovery by Berggren (1934) and independently by Barning (1963) of a canonical ternary tree structure. The Berggren tree generates all primitive Pythagorean triples from the root (3, 4, 5) through three unimodular integer matrix operations, with each triple appearing exactly once.
+The Berggren tree [Berggren 1934, Barning 1963, Hall 1970] enumerates all primitive Pythagorean triples via three $3\times 3$ integer matrices acting on the root triple $(3,4,5)$. The generators are:
 
-Independently, lattice-based cryptography has emerged as the leading candidate for post-quantum security. The fundamental primitive is a trapdoor function based on the hardness of finding short vectors in integer lattices, where the generator of the lattice knows a "short" basis (the trapdoor) while only a "bad" basis is made public.
+$$M_A = \begin{pmatrix} 1 & -2 & 2 \\ 2 & -1 & 2 \\ 2 & -2 & 3 \end{pmatrix}, \quad
+M_B = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 1 & 2 \\ 2 & 2 & 3 \end{pmatrix}, \quad
+M_C = \begin{pmatrix} -1 & 2 & 2 \\ -2 & 1 & 2 \\ -2 & 2 & 3 \end{pmatrix}$$
 
-This paper bridges these two domains by constructing a canonical positive-definite lattice realization of the Berggren tree and proving that it satisfies the structural requirements for a trapdoor-type construction: forward evaluation (from tree path to lattice certificate) is efficient, while inverse computation (from certificate to tree path) requires searching an exponentially growing tree.
+These matrices preserve the Lorentzian form $a^2 + b^2 - c^2$ and generate a free monoid acting transitively on primitive Pythagorean triples with positive entries.
 
-### 1.2 Contributions
+### 1.2 Motivation
 
-1. **Positive-definite Gram construction** (§3): We define the rank-2 matrix G⁺(a,b,c) = [[c, a], [a, c]] and prove det(G⁺) = b², trace(G⁺) = 2c, symmetry, and positive-definiteness via the Sylvester criterion. We also construct a rank-3 lift with det = c·b².
+Lattice reduction theory, originating with Lagrange, Gauss, and developed into a modern algorithmic framework by Lenstra–Lenstra–Lovász (LLL), is central to computational number theory and post-quantum cryptography. We observe that the Berggren tree provides a natural source of structured lattice instances with controlled arithmetic properties, and develop the formal theory connecting these domains.
 
-2. **Degenerate boundary analysis** (§4): We prove that the naive Gram matrix G₀ = [[c+a, b], [b, c-a]] has determinant zero, correctly identifying it as a semidefinite boundary form and motivating the positive-definite construction.
+### 1.3 Contributions
 
-3. **Injectivity and reconstruction** (§5): We prove that the Gram map is injective on primitive triples, that lattice certificates uniquely determine source triples, and that reconstruction from valid certificates is constructive.
+Our main contributions are:
+- The identification of the Berggren tree as a *dynamical source* of rank-2 lattice instances
+- Exact algebraic factorizations certifying monotonicity of lattice invariants along tree branches
+- A complete invariant (the Gram matrix) for positive Pythagorean lattices
+- Certified reconstruction of reduced bases from Gram data
+- Complete formal verification of all results in Lean 4
 
-4. **Realization and rigidity** (§6): We prove that every finite set of primitive triples admits a canonical certificate family preserving cardinality (realization), and that the certificate family determines the triple set uniquely (rigidity).
+## 2. Definitions and Notation
 
-5. **Duality package** (§7): We package these results into a single theorem establishing the Berggren-Gram realization as a faithful, structure-preserving bridge between Pythagorean dynamics and lattice certificates.
+### 2.1 Pythagorean Triples
 
-### 1.3 Related Work
+A **primitive Pythagorean triple** is a triple $(a,b,c) \in \mathbb{Z}_{>0}^3$ satisfying $a^2 + b^2 = c^2$ with $\gcd(a,b) = 1$.
 
-The Berggren tree was introduced in [1] and rediscovered by Barning [2]. Its connection to the Lorentz group O(2,1;ℤ) was established by [3]. The use of primitive triples in number-theoretic constructions has a long history surveyed in [4].
+### 2.2 Berggren Generators
 
-Lattice-based cryptography originates with the work of Ajtai [5] and was developed into practical schemes by Regev [6] and Gentry [7]. The trapdoor lattice construction of Micciancio and Peikert [8] provides the current standard framework.
+The three Berggren generators act on triples as:
+- **Generator A**: $(a,b,c) \mapsto (a-2b+2c, \; 2a-b+2c, \; 2a-2b+3c)$
+- **Generator B**: $(a,b,c) \mapsto (a+2b+2c, \; 2a+b+2c, \; 2a+2b+3c)$
+- **Generator C**: $(a,b,c) \mapsto (-a+2b+2c, \; -2a+b+2c, \; -2a+2b+3c)$
 
-The connection between Pythagorean triples and lattice structures appears to be new.
+### 2.3 Gram Matrix
 
----
+For a triple $(a,b,c)$, define the **lattice basis matrix** $B = \begin{pmatrix} a & b \\ b & c \end{pmatrix}$ and the **Gram matrix**:
 
-## 2. Preliminaries
+$$G(a,b,c) = B^\top B = \begin{pmatrix} a^2+b^2 & ab+bc \\ ab+bc & b^2+c^2 \end{pmatrix}$$
 
-### 2.1 Primitive Pythagorean Triples
+### 2.4 Lattice Invariants
 
-**Definition 2.1.** A *primitive Pythagorean triple* is a tuple (a, b, c) ∈ ℤ³ satisfying:
-- a² + b² = c² (Pythagorean relation)
-- a, b, c > 0 (positivity)
-- gcd(a, b) = 1 (primitivity)
-- a ≡ 1 (mod 2), b ≡ 0 (mod 2) (canonical normalization)
+- **Gram trace**: $\mathrm{tr}(G) = a^2 + 2b^2 + c^2$
+- **Gram determinant**: $\det(G) = (a^2+b^2)(b^2+c^2) - (ab+bc)^2$
+- **Short norm**: $\mathrm{short}(G) = \min(a^2+b^2, \; b^2+c^2) = c^2$ (for Pythagorean triples)
+- **Signature invariant**: $\sigma = ac - b^2$
 
-**Proposition 2.2.** For any primitive triple (a, b, c): a < c, b < c, and c < a + b.
+## 3. Main Results
 
-*Proof.* The first two follow from c² = a² + b² > a² (resp. b²) with all terms positive. The triangle inequality c < a + b follows from (a + b - c)(a + b + c) = 2ab > 0. □
+### 3.1 Perfect Square Determinant Identity (Theorem 1)
 
-### 2.2 The Berggren Tree
+**Theorem 1.** *For any Pythagorean triple $(a,b,c)$ with $a^2+b^2=c^2$:*
+$$\det G(a,b,c) = (ac - b^2)^2$$
 
-**Definition 2.3.** The three *Berggren matrices* are:
+**Proof sketch.** Direct algebraic expansion:
+$$\det G = (a^2+b^2)(b^2+c^2) - (ab+bc)^2$$
 
-```
-A = | 1  -2   2 |    B = | 1   2   2 |    C = |-1   2   2 |
-    | 2  -1   2 |        | 2   1   2 |        |-2   1   2 |
-    | 2  -2   3 |        | 2   2   3 |        |-2   2   3 |
-```
+Substituting $c^2 = a^2+b^2$ and expanding both sides, the identity reduces to a polynomial identity verified by `nlinarith` in Lean. $\square$
 
-**Theorem 2.4** (Berggren). Starting from the root (3, 4, 5), the three matrices A, B, C generate all primitive Pythagorean triples exactly once, forming a rooted ternary tree.
+**Significance.** The Gram determinant is always a perfect square. The "signature invariant" $\sigma = ac - b^2$ captures the essential arithmetic of the lattice in a single integer.
 
-**Proposition 2.5.** Each Berggren matrix preserves the Pythagorean relation: if a² + b² = c², then the child triple also satisfies the Pythagorean relation. Moreover, the child's hypotenuse strictly exceeds the parent's.
+### 3.2 Component Monotonicity (Theorem 2)
 
-**Proposition 2.6.** The B-branch hypotenuse satisfies c' ≥ 3c, giving a depth bound of O(log c).
+**Theorem 2.** *For any positive Pythagorean triple $(a,b,c)$ and any Berggren generator $g \in \{A,B,C\}$, the child triple $(a',b',c')$ satisfies $a' > a$, $b' > b$, $c' > c$.*
 
-### 2.3 Lattice Gram Matrices
+**Proof sketch.** For each generator, the differences $a'-a$, $b'-b$, $c'-c$ can be expressed in terms of positive quantities. The key auxiliary facts are:
+- $b < c$ (from $a^2+b^2=c^2$ and $a>0$)
+- $a < c$ (from $a^2+b^2=c^2$ and $b>0$)
 
-**Definition 2.7.** A *Gram matrix* of a lattice is a symmetric positive-definite integer matrix G such that G_{ij} = ⟨b_i, b_j⟩ where {b_i} is a lattice basis.
+For generator A: $a'-a = -2b+2c = 2(c-b) > 0$. For generator B: $a'-a = 2b+2c > 0$ (trivially). For generator C: $a'-a = -2a+2b+2c$ and $c > a$ gives $-2a+2c > 0$, combined with $2b > 0$. Similar arguments apply to $b$ and $c$ components. $\square$
 
-**Definition 2.8.** The *Sylvester criterion* states that a symmetric matrix is positive-definite if and only if all leading principal minors are positive.
+### 3.3 Trace Monotonicity (Theorem 3)
 
----
+**Theorem 3.** *For any positive Pythagorean triple $t$ and any Berggren generator $g$:*
+$$\mathrm{tr}(G(t)) < \mathrm{tr}(G(g \cdot t))$$
 
-## 3. Positive-Definite Gram Construction
+**Proof.** Follows from Component Monotonicity (Theorem 2). Since $a' > a > 0$, $b' > b > 0$, $c' > c > 0$, we have $a'^2 > a^2$, $b'^2 > b^2$, $c'^2 > c^2$, and thus $a'^2+2b'^2+c'^2 > a^2+2b^2+c^2$. $\square$
 
-### 3.1 The Rank-2 Construction
+### 3.4 Determinant Monotonicity (Theorem 4)
 
-**Definition 3.1.** The *positive-definite Gram matrix* of a primitive triple (a, b, c) is:
+**Theorem 4.** *For generators $A$ and $C$: $(ac-b^2)^2 \leq (a'c'-b'^2)^2$.*
 
-```
-G⁺(a, b, c) = | c  a |
-               | a  c |
-```
+**Proof sketch (Generator A).** The key step is the algebraic factorization identity:
 
-**Theorem 3.2** (Gram determinant). For any primitive triple (a, b, c):
-```
-det(G⁺) = c² - a² = b²
-```
+$$(a'c'-b'^2)^2 - (ac-b^2)^2 = 4b \cdot (3b^2 - ab - 3bc - ac) \cdot (2b - a - 3c)$$
 
-*Proof.* det(G⁺) = c·c - a·a = c² - a². By the Pythagorean relation, c² - a² = (c² - a²) = b². □
+This holds as a polynomial identity after substituting $c^2 = a^2+b^2$ and simplifying $a'c'-b'^2 = 5b^2-2ab-ac-6bc$.
 
-**Theorem 3.3** (Gram trace). trace(G⁺) = 2c.
+**Sign analysis:**
+- $b > 0$ (hypothesis)
+- $3b^2 - ab - 3bc - ac = 3b(b-c) - a(b+c) \leq 0$ since $b < c$
+- $2b - a - 3c \leq 0$ since $a > 0$ and $3c > 3b > 2b$
 
-**Theorem 3.4** (Positive-definiteness). G⁺(a,b,c) is positive-definite:
-- G⁺₀₀ = c > 0
-- det(G⁺) = b² > 0
+Thus the product is $4b \cdot (\text{nonpositive}) \cdot (\text{nonpositive}) \geq 0$. $\square$
 
-*Proof.* Both conditions follow from positivity of c and b. □
+**Proof sketch (Generator C).** The analogous factorization is:
 
-**Theorem 3.5** (Symmetry). G⁺ is symmetric: (G⁺)ᵀ = G⁺.
+$$(a'c'-b'^2)^2 - (ac-b^2)^2 = 4b \cdot (3b+3c-a) \cdot (2b^2+3bc-ab+ac)$$
 
-### 3.2 The Rank-3 Lift
+All three factors are nonneg for positive Pythagorean triples. $\square$
 
-**Definition 3.6.** The *lifted Gram matrix* is:
+**Remark.** Generator B does *not* satisfy determinant monotonicity in general. The counterexample $(99, 20, 101)$ has $|ac-b^2| = 9599$ but its B-child has $|a'c'-b'^2| = 8081 < 9599$.
 
-```
-G̃(a, b, c) = | c  a  0 |
-              | a  c  0 |
-              | 0  0  c |
-```
+### 3.5 Gram Recognition Theorem (Theorem 5)
 
-**Theorem 3.7.** det(G̃) = c · b², which is positive for any primitive triple.
+**Theorem 5.** *If two positive Pythagorean triples $(a_1,b_1,c_1)$ and $(a_2,b_2,c_2)$ have equal Gram matrices, then $a_1=a_2$, $b_1=b_2$, $c_1=c_2$.*
 
-*Proof.* By cofactor expansion along the third row: det(G̃) = c · det(G⁺) = c · b². □
+**Proof sketch.** From $G(a_1,b_1,c_1) = G(a_2,b_2,c_2)$:
+1. Entry $(0,0)$: $a_1^2+b_1^2 = a_2^2+b_2^2$, i.e., $c_1^2 = c_2^2$. Since $c_1,c_2 > 0$: $c_1 = c_2$.
+2. Entry $(1,1)$: $b_1^2+c_1^2 = b_2^2+c_2^2$. With $c_1=c_2$: $b_1^2 = b_2^2$, so $b_1 = b_2$.
+3. Then $a_1^2 = c_1^2-b_1^2 = c_2^2-b_2^2 = a_2^2$, so $a_1 = a_2$. $\square$
 
-**Theorem 3.8** (Sylvester criterion for G̃). All leading principal minors are positive:
-- G̃₀₀ = c > 0
-- det(G⁺) = b² > 0
-- det(G̃) = c · b² > 0
+### 3.6 Path-Level Theory (Theorem 6)
 
-### 3.3 Eigenvalue Analysis
+**Theorem 6.** *Berggren paths preserve the Pythagorean property and positivity. If two paths produce the same path invariant, they yield the same terminal triple.*
 
-The eigenvalues of G⁺ are c + a and c - a (both positive since c > a > 0). The condition number is:
+**Proof.** By induction on the path length, using Theorems 1–2 for the inductive step. The path invariant includes the terminal triple, so equality of invariants implies equality of triples. $\square$
 
-```
-κ(G⁺) = (c + a) / (c - a)
-```
+## 4. Algorithms
 
-For the root (3, 4, 5): κ = 8/2 = 4. As the triple moves deeper in the tree, the condition number varies but is always finite and computable from the triple data.
-
----
-
-## 4. Degenerate Boundary Form
-
-### 4.1 The Naive Construction
-
-**Definition 4.1.** The *degenerate Gram matrix* is:
+### 4.1 Gram Invariant Computation
 
 ```
-G₀(a, b, c) = | c+a   b  |
-               |  b   c-a |
+Algorithm: ComputeGramInvariant(a, b, c)
+Input: Pythagorean triple (a, b, c)
+Output: GramInvariant(trace, det, g00, g01, g11)
+
+1. g00 ← a² + b²         // = c²
+2. g01 ← a·b + b·c       // = b(a+c)
+3. g11 ← b² + c²
+4. trace ← g00 + g11      // = a² + 2b² + c²
+5. det ← (a·c - b²)²     // perfect square formula
+6. return (trace, det, g00, g01, g11)
+
+Time: O(M(n)) where M(n) = bit complexity of multiplying n-bit integers
+Space: O(n)
 ```
 
-**Theorem 4.2.** For any primitive triple, det(G₀) = 0.
-
-*Proof.* det(G₀) = (c+a)(c-a) - b² = c² - a² - b² = 0 by the Pythagorean relation. □
-
-**Remark 4.3.** G₀ is positive *semi*definite (diagonal entries are c+a ≥ 0 and c-a > 0), but not positive definite. It lies on the boundary of the positive semidefinite cone, which is the geometric locus of the Pythagorean constraint.
-
-### 4.2 Significance
-
-The degeneracy of G₀ is not a failure but a feature: it encodes the Pythagorean relation directly as a geometric condition (rank deficiency). The positive-definite lift G⁺ "resolves" this degeneracy by reorganizing the arithmetic data into a non-degenerate form, with the determinant b² measuring the "distance" from the boundary.
-
----
-
-## 5. Injectivity and Reconstruction
-
-### 5.1 Gram Injectivity
-
-**Theorem 5.1** (Gram injectivity). If G⁺(a₁, b₁, c₁) = G⁺(a₂, b₂, c₂) for primitive triples, then (a₁, b₁, c₁) = (a₂, b₂, c₂).
-
-*Proof.* From the matrix entries: c₁ = c₂ (diagonal) and a₁ = a₂ (off-diagonal). Then b₁² = det(G⁺) = b₂², and since both are positive, b₁ = b₂. □
-
-**Corollary 5.2.** The lifted Gram map is also injective.
-
-### 5.2 Certificate Structure
-
-**Definition 5.3.** A *lattice certificate* is a tuple (gramDiag, gramOff, gramDet) ∈ ℤ³.
-
-**Definition 5.4.** The certificate of a primitive triple (a, b, c) is cert(a,b,c) = (c, a, b²).
-
-**Theorem 5.5** (Certificate determines triple). If cert(a₁, b₁, c₁) = cert(a₂, b₂, c₂), then (a₁, b₁, c₁) = (a₂, b₂, c₂).
-
-*Proof.* From c₁ = c₂ and a₁ = a₂ directly. From b₁² = b₂² with positivity, b₁ = b₂. □
-
-### 5.3 Reconstruction Algorithm
-
-**Algorithm 5.6** (Triple reconstruction from certificate).
+### 4.2 Triple Reconstruction from Gram Data
 
 ```
-Input: Certificate C = (gramDiag, gramOff, gramDet)
-Output: Triple (a, b, c) or INVALID
+Algorithm: ReconstructTriple(g00, g01, g11)
+Input: Gram matrix entries
+Output: (a, b, c) or FAIL
 
-1. Set c ← gramDiag, a ← gramOff
-2. Compute b ← isqrt(gramDet)
-3. Verify b² = gramDet
-4. Verify a² + b² = c²
-5. Verify gcd(a, b) = 1
-6. Verify a odd, b even
-7. Return (a, b, c)
+1. c ← isqrt(g00)         // c² = g00 = a²+b²
+2. if c² ≠ g00: return FAIL
+3. b ← isqrt(g11 - g00)   // b² = g11 - c²
+4. if b² ≠ g11 - g00: return FAIL
+5. a ← isqrt(g00 - b²)    // a² = c² - b²
+6. if a² ≠ g00 - b²: return FAIL
+7. if a·b + b·c ≠ g01: return FAIL
+8. return (a, b, c)
+
+Time: O(M(n)·log n) for integer square root
+Space: O(n)
 ```
 
-**Complexity:** O(log²(gramDet)) for the integer square root, O(log(max(a,b))) for the GCD. Total: polynomial in the bit-size of the certificate.
+### 4.3 Lagrange Reduction of Berggren Basis
 
----
-
-## 6. Realization and Rigidity
-
-### 6.1 Certificate Families
-
-**Definition 6.1.** The *certificate family* of a finite set S of primitive triples is:
 ```
-certFamily(S) = {cert(t) : t ∈ S}
+Algorithm: LagrangeReduce(v1, v2)
+Input: Basis vectors v1=(a,b), v2=(b,c) from Pythagorean triple
+Output: Reduced basis (u1, u2) with |u1| ≤ |u2|, |⟨u1,u2⟩| ≤ |u1|²/2
+
+1. if ‖v1‖² > ‖v2‖²: swap(v1, v2)
+2. repeat:
+3.   q ← round(⟨v2,v1⟩ / ⟨v1,v1⟩)
+4.   if q = 0: break
+5.   v2 ← v2 - q·v1
+6.   if ‖v2‖² < ‖v1‖²: swap(v1, v2)
+7. return (v1, v2)
+
+Time: O(log(max_norm)) iterations, O(M(n)) per iteration
+Space: O(n)
+Convergence: Guaranteed in O(log(c/a)) steps
 ```
 
-**Theorem 6.2** (Realization). For any finite set S of primitive triples:
-1. |certFamily(S)| = |S| (cardinality preservation)
-2. Every certificate is valid: det > 0, trace > 0, short-basis bounds hold
-3. Every triple is recoverable from its certificate
+## 5. Computational Experiments
 
-*Proof.* Cardinality preservation follows from injectivity of the certificate map (Theorem 5.5). Validity follows from positive-definiteness (Theorem 3.4). Recoverability follows from the reconstruction algorithm (Algorithm 5.6). □
+### 5.1 Monotonicity Verification
 
-### 6.2 Rigidity
+We verified trace, determinant, and short-norm monotonicity for all 40 triples in the depth-3 Berggren tree (from root (3,4,5)):
 
-**Theorem 6.3** (Rigidity). If certFamily(S₁) = certFamily(S₂), then S₁ = S₂.
+| Metric | Generators Verified | Counterexamples |
+|--------|-------------------|-----------------|
+| Trace monotonicity | A, B, C (all) | None |
+| Short norm monotonicity | A, B, C (all) | None |
+| Det monotonicity | A, C | B fails at (99,20,101) |
 
-*Proof.* For each t ∈ S₁, cert(t) ∈ certFamily(S₁) = certFamily(S₂), so there exists t' ∈ S₂ with cert(t') = cert(t). By Theorem 5.5, t = t'. Symmetrically for S₂ ⊆ S₁. □
+### 5.2 Gram Recognition
 
-### 6.3 Short-Basis Bounds
+All 40 triples in the depth-3 tree have distinct Gram matrices, confirming the recognition theorem computationally.
 
-**Theorem 6.4.** For any primitive triple (a, b, c):
-- a ≤ c and b ≤ c (legs bounded by hypotenuse)
-- The diagonal entries of G⁺ equal c (the hypotenuse)
-- The off-diagonal entry a < c
+### 5.3 Growth Rates
 
-These bounds are explicit and computable, providing certified short-basis witnesses for the associated lattices.
+Along the repeated-A branch, the trace grows approximately as $O(c^2)$ where $c$ grows linearly with depth (the sequence 5, 13, 25, 41, ... grows by $\approx 2\sqrt{c^2+b^2}$ per step). The determinant grows much faster, approximately as $(ac-b^2)^2 = O(c^4)$ per depth level.
 
----
+| Depth | Triple | Trace | Det | Short Norm |
+|-------|--------|-------|-----|-----------|
+| 0 | (3,4,5) | 66 | 1 | 25 |
+| 1A | (5,12,13) | 482 | 6241 | 169 |
+| 2AA | (7,24,25) | 1826 | 160801 | 625 |
+| 3AAA | (9,40,41) | 4962 | 1515361 | 1681 |
 
-## 7. The Duality Package
+## 6. Applications
 
-**Theorem 7.1** (Berggren-Lattice Duality). For any finite set S of primitive Pythagorean triples, the Berggren-Gram realization provides:
+### 6.1 Structured Lattice Generation for Cryptography
 
-1. **Realization**: A certificate family certFamily(S) with |certFamily(S)| = |S|
-2. **Rigidity**: certFamily(S') = certFamily(S) implies S' = S
-3. **Positive-definiteness**: det(G⁺(t)) > 0 for all t ∈ S
-4. **Short-basis bounds**: a(t) ≤ c(t) and b(t) ≤ c(t) for all t ∈ S
+The Berggren tree provides a deterministic generator of lattice instances with certified properties:
+- **Known reduction behavior**: Monotonicity theorems guarantee invariant growth
+- **Algebraic certificates**: Factorization identities provide proofs of reduction quality
+- **Reproducibility**: Path encoding compactly represents the lattice instance
+- **Parameterized hardness**: Depth in the tree controls the lattice invariants
 
-### 7.1 The Trapdoor Interpretation
+### 6.2 Lattice Reduction Benchmarking
 
-The duality package supports a cryptographic trapdoor interpretation:
+Berggren lattices provide a structured test suite for lattice reduction algorithms:
+- Known optimal reductions (via Lagrange reduction in rank 2)
+- Controlled invariant profiles for measuring algorithm performance
+- Easy generation of instances with specific trace/det targets
 
-- **Public data**: The certificate family {cert(t) : t ∈ S} — equivalent to the Gram matrices
-- **Private data**: The Berggren tree paths producing each triple in S
-- **Forward direction**: Given a path of length d, compute the triple in O(d) matrix multiplications
-- **Backward direction**: Given a certificate, the triple is recovered in polynomial time, but the tree path requires searching ≥ 3^d possibilities
-- **Security parameter**: The tree depth d, controlling the exponential gap
+## 7. Discussion
 
-### 7.2 Complexity Analysis
+### 7.1 Limitations
 
-| Operation | Complexity | Direction |
-|-----------|-----------|-----------|
-| Path → Triple | O(d) matrix mults | Forward (easy) |
-| Triple → Certificate | O(1) | Forward (easy) |
-| Certificate → Triple | O(poly(log c)) | Backward (easy) |
-| Certificate → Path | Ω(3^d) worst-case | Backward (hard) |
+1. **Rank 2**: The current theory is limited to rank-2 lattices. Extension to higher ranks requires different lattice constructions (e.g., from higher-dimensional Pythagorean-like equations or Lorentzian null vectors).
 
-The "hard" direction — recovering the Berggren path from the certificate — is the trapdoor. The holder of the path can verify it in O(d) time; an adversary must search the exponentially growing tree.
+2. **Generator B**: Determinant monotonicity fails for generator B, limiting the class of paths with full invariant control.
 
----
+3. **Primitivity vs. GL(2,ℤ) reduction**: The "reduction equivalence" in our theory is simpler than full Gauss/LLL reduction equivalence, since our lattices have distinguished bases.
 
-## 8. Computational Experiments
+### 7.2 Relation to Prior Work
 
-### 8.1 Gram Matrix Verification
+- **Berggren tree theory** [Berggren 1934, Price 2008]: Our lattice interpretation appears new.
+- **Binary quadratic forms** [Gauss, Zagier]: The Gram matrix can be viewed as defining a binary quadratic form; our recognition theorem is a family-specific completeness result.
+- **Structured lattices in cryptography** [Micciancio & Regev 2009]: Our work provides a new family of structured instances, distinct from ideal lattices or NTRU lattices.
 
-| Triple | det(G⁺) | trace(G⁺) | det(G₀) | det(G̃) |
-|--------|---------|-----------|---------|---------|
-| (3, 4, 5) | 16 | 10 | 0 | 80 |
-| (5, 12, 13) | 144 | 26 | 0 | 1872 |
-| (7, 24, 25) | 576 | 50 | 0 | 14400 |
-| (21, 20, 29) | 400 | 58 | 0 | 11600 |
-| (15, 8, 17) | 64 | 34 | 0 | 1088 |
+## 8. Future Work
 
-All degenerate determinants are zero, confirming Theorem 4.2. All positive-definite determinants equal b², confirming Theorem 3.2.
-
-### 8.2 Hypotenuse Growth Along B-Branch
-
-| Depth | c | c(n)/c(n-1) | Converges to 3+2√2 ≈ 5.828 |
-|-------|-----|-------------|------|
-| 0 | 5 | — | — |
-| 1 | 29 | 5.800 | |
-| 2 | 169 | 5.828 | |
-| 3 | 985 | 5.828 | |
-| 4 | 5741 | 5.828 | |
-| 5 | 33461 | 5.828 | ✓ |
-| 6 | 195025 | 5.828 | ✓ |
-
-The growth rate converges to 3 + 2√2, the silver ratio squared, which is the dominant eigenvalue of the Berggren B matrix.
-
-### 8.3 Ancestry Recovery
-
-For the triple (7, 24, 25):
-```
-(3, 4, 5) →[A]→ (5, 12, 13) →[A]→ (7, 24, 25)
-```
-Depth: 2. Path: AA. Certificate: (25, 7, 576).
-
-### 8.4 Minimal Generating Subtree
-
-For the set {(3,4,5), (5,12,13), (7,24,25), (21,20,29)}:
-- (7,24,25) is a descendant of (5,12,13), which is a descendant of (3,4,5)
-- Minimal generators: {(3,4,5), (21,20,29)} — these are the "leaves" in the ancestry
-- Actually, (21,20,29) is a child of (3,4,5), so the minimal generator is just {(3,4,5)}
-
----
-
-## 9. Discussion
-
-### 9.1 Comparison with Existing Lattice Trapdoors
-
-Standard lattice trapdoors (Micciancio-Peikert) use random lattices with hidden short bases. The Berggren construction replaces randomness with arithmetic structure. This has both advantages (rigidity, explicit bounds, number-theoretic certification) and limitations (the lattice family is highly structured, which could be exploited by specialized attacks).
-
-### 9.2 The Role of Degeneracy
-
-The zero-determinant Gram matrix G₀ is not merely a failed construction — it encodes the Pythagorean constraint directly as a rank condition. The positive-definite lift "resolves" this degeneracy while preserving the arithmetic information. This pattern (constraint → degeneracy → resolution → cryptographic utility) may generalize to other Diophantine families.
-
-### 9.3 Limitations
-
-The current construction is a proof of concept. Several gaps remain:
-
-1. **Average-case hardness**: We prove worst-case exponential search complexity but not average-case hardness for path recovery.
-2. **Chosen-plaintext security**: No formal security reduction is established.
-3. **Key generation**: The path-to-certificate function needs additional randomization for practical security.
-
----
-
-## 10. Future Work
-
-1. **Markov and Pell tree generalizations**: Extend the construction to other Diophantine trees (Markov triples, Pell equations) for higher-rank trapdoors.
-
-2. **Average-case hardness**: Prove that random Berggren paths produce certificates that are computationally indistinguishable from random lattice certificates.
-
-3. **Tropical degeneration**: Study the behavior of the Gram construction as triples approach the semidefinite boundary in a tropical-geometric framework.
-
-4. **Formal security games**: Define IND-CPA and IND-CCA security games for the Berggren trapdoor and analyze their reductions.
-
-5. **Higher-rank constructions**: Use products of Berggren matrices to construct higher-dimensional lattice families with richer structure.
-
----
-
-## 11. Appendix: Complete Theorem Listing
-
-For reference, we list all theorems proved in this work, organized by category.
-
-### Core Structural Theorems
-- `PrimTriple.a_lt_c`: For any primitive triple, a < c
-- `PrimTriple.b_lt_c`: For any primitive triple, b < c
-- `PrimTriple.triangle`: Triangle inequality c < a + b
-
-### Berggren Preservation
-- `childA_pyth`, `childB_pyth`, `childC_pyth`: All three children preserve the Pythagorean relation
-- `childB_c_increase`: The B-child strictly increases the hypotenuse
-- `childB_hyp_geometric`: The B-child satisfies c' ≥ 3c
-
-### Gram Matrix Properties
-- `gramPD_symm`: The Gram matrix is symmetric
-- `gramPD_det`: det(G⁺) = b²
-- `gramPD_trace`: trace(G⁺) = 2c
-- `gramPD_det_pos`: The determinant is positive
-- `gramPD_diag_pos`: Diagonal entries are positive
-- `gramPD_posDef`: Sylvester criterion is satisfied
-
-### Lifted Gram Properties
-- `liftedGram_symm`: The lifted Gram is symmetric
-- `liftedGram_det`: det(G̃) = c · b²
-- `liftedGram_det_pos`: The lifted determinant is positive
-- `liftedGram_posDef`: Full Sylvester criterion satisfied
-
-### Injectivity and Reconstruction
-- `gramPD_injective`: The rank-2 Gram map is injective
-- `liftedGram_injective`: The rank-3 Gram map is injective
-- `cert_determines_triple`: Certificates uniquely determine triples
-- `invariants_determine_triple`: Gram matrices uniquely determine triples
-- `liftedGram_determines_triple`: Lifted Gram matrices uniquely determine triples
-- `reconstructTriple_spec`: Unique reconstruction specification
-
-### Realization and Rigidity
-- `certFamily_card`: Certificate families preserve cardinality
-- `realization_of_finite_berggren_family`: Realization theorem
-- `rigidity_of_gramPD_family`: Rigidity theorem
-- `berggren_lattice_duality_package`: Full duality package
-
-### Degenerate Boundary
-- `gramDegenerate_det_zero`: The degenerate Gram has zero determinant
-- `gramDegenerate_psd`: Positive semidefiniteness of boundary form
-
-### Short-Basis Bounds
-- `gramPD_short_basis_bound`: Diagonal entries bounded by hypotenuse
-- `gramPD_offdiag_bound`: Off-diagonal entry strictly less than hypotenuse
-- `short_basis_from_hypotenuse`: Legs bounded by hypotenuse
-
-### Explicit Verifications
-- `root_gramPD`: G⁺(3,4,5) = [[5,3],[3,5]]
-- `root_gramPD_det`: det(G⁺(3,4,5)) = 16
-- `root_liftedGram_det`: det(G̃(3,4,5)) = 80
-- `childA_root`: A(3,4,5) = (5,12,13)
-- `childB_root`: B(3,4,5) = (21,20,29)
-- `childC_root`: C(3,4,5) = (15,8,17)
-
-All 40+ theorems are machine-verified with no axioms beyond the standard foundational axioms (propext, Classical.choice, Quot.sound).
-
----
+1. **Rank-3 null-cone lift**: Extend to rank-3 lattices using the natural Lorentzian structure of the Berggren action on $\mathbb{R}^{2,1}$.
+2. **Exact Gauss classification**: Classify the reduced Gram forms achievable by Berggren lattices within the Gauss theory of binary quadratic forms.
+3. **Tropical monotonicity**: Encode growth rates in a tropical (min-plus) semimodule for simplified analysis.
+4. **Cryptographic hardness**: Investigate whether Berggren lattice problems are provably hard, potentially yielding new average-case/worst-case reductions.
+5. **Automata model**: Determine whether reduced bases correspond to recognizable path languages in the Berggren tree automaton.
 
 ## References
 
-[1] B. Berggren, "Pytagoreiska trianglar," *Tidskrift för Elementär Matematik, Fysik och Kemi*, vol. 17, pp. 129–139, 1934.
-
-[2] F. J. M. Barning, "Over pythagorese en bijna-pythagorese driehoeken en een generatieproces met behulp van unimodulaire matrices," *Math. Centrum Amsterdam Afd. Zuivere Wisk.*, 1963.
-
-[3] R. A. Romik, "The dynamics of Pythagorean triples," *Trans. Amer. Math. Soc.*, vol. 360, pp. 6045–6064, 2008.
-
-[4] W. Sierpiński, *Pythagorean Triangles*, Dover Publications, 2003.
-
-[5] M. Ajtai, "Generating hard instances of lattice problems," in *Proc. 28th STOC*, pp. 99–108, 1996.
-
-[6] O. Regev, "On lattices, learning with errors, random linear codes, and cryptography," *J. ACM*, vol. 56, no. 6, 2009.
-
-[7] C. Gentry, "Fully homomorphic encryption using ideal lattices," in *Proc. 41st STOC*, pp. 169–178, 2009.
-
-[8] D. Micciancio and C. Peikert, "Trapdoors for lattices: Simpler, tighter, faster, smaller," in *Proc. EUROCRYPT*, pp. 700–718, 2012.
+1. B. Berggren, "Pytagoreiska trianglar," *Tidskrift för Elementär Matematik, Fysik och Kemi*, 1934.
+2. F.J.M. Barning, "Over pythagorese en bijna-pythagorese driehoeken en een generatieproces met behulp van unimodulaire matrices," *Math. Centrum Amsterdam Afd. Zuivere Wisk.*, ZW-011, 1963.
+3. A. Hall, "Genealogy of Pythagorean Triads," *The Mathematical Gazette*, 54(390), 1970.
+4. H. Price, "The Pythagorean Tree: A New Species," arXiv:0809.4324, 2008.
+5. A.K. Lenstra, H.W. Lenstra Jr., L. Lovász, "Factoring polynomials with rational coefficients," *Mathematische Annalen*, 261, 515–534, 1982.
+6. D. Micciancio, O. Regev, "Lattice-based Cryptography," in *Post-Quantum Cryptography*, Springer, 2009.
+7. C.F. Gauss, *Disquisitiones Arithmeticae*, 1801.
+8. D. Zagier, "Zetafunktionen und quadratische Körper," Springer-Verlag, 1981.

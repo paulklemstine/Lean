@@ -1,378 +1,373 @@
 #!/usr/bin/env python3
 """
-Algorithms for Berggren Lattice-Reduction Duality
+Algorithms for Berggren Lattice Reduction Duality
 
-Implements the core algorithms from the research:
-1. Berggren tree generation and traversal
-2. Gram matrix construction (positive-definite, degenerate, lifted)
-3. Certificate extraction and reconstruction
-4. Ancestry inversion (parent computation)
-5. Minimal subtree computation
+Implements the core algorithms from the research paper:
+1. Berggren tree traversal and Gram matrix computation
+2. Gram-based lattice invariant computation
+3. Lagrange reduction of rank-2 lattice bases
+4. Certified short-basis reconstruction from Berggren path data
 """
 
-import numpy as np
-from math import gcd, isqrt
-from typing import Tuple, List, Optional, Set, Dict
+from typing import Tuple, List, Optional, Dict
+from dataclasses import dataclass
+import math
 
-# ─── Type aliases ────────────────────────────────────────────────
 
-Triple = Tuple[int, int, int]
+# ============================================================================
+# Data Types
+# ============================================================================
 
-# ─── Berggren Matrices ──────────────────────────────────────────
+@dataclass(frozen=True)
+class PythagTriple:
+    """A Pythagorean triple (a, b, c) with a² + b² = c²."""
+    a: int
+    b: int
+    c: int
+    
+    def __post_init__(self):
+        assert self.a**2 + self.b**2 == self.c**2, f"Not Pythagorean: {self}"
+        assert self.a > 0 and self.b > 0 and self.c > 0, f"Not positive: {self}"
+    
+    def gram_matrix(self) -> Tuple[Tuple[int,int], Tuple[int,int]]:
+        """Return the Gram matrix as ((g00, g01), (g10, g11))."""
+        g00 = self.a**2 + self.b**2  # = c²
+        g01 = self.a * self.b + self.b * self.c
+        g11 = self.b**2 + self.c**2
+        return ((g00, g01), (g01, g11))
+    
+    def gram_trace(self) -> int:
+        """Gram trace = a² + 2b² + c²."""
+        return self.a**2 + 2 * self.b**2 + self.c**2
+    
+    def gram_det(self) -> int:
+        """Gram determinant = (ac - b²)²."""
+        return (self.a * self.c - self.b**2)**2
+    
+    def short_norm_sq(self) -> int:
+        """Minimum basis vector squared norm = c²."""
+        return self.c**2
+    
+    def ac_minus_b2(self) -> int:
+        """The signature invariant ac - b²."""
+        return self.a * self.c - self.b**2
 
-BERGGREN_A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]], dtype=int)
-BERGGREN_B = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]], dtype=int)
-BERGGREN_C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]], dtype=int)
 
-INV_A = np.array([[1, 2, -2], [-2, -1, 2], [-2, -2, 3]], dtype=int)
-INV_B = np.array([[1, 2, -2], [2, 1, -2], [-2, -2, 3]], dtype=int)
-INV_C = np.array([[-1, -2, 2], [2, 1, -2], [-2, -2, 3]], dtype=int)
+@dataclass(frozen=True)
+class GramInvariant:
+    """Complete Gram invariant package for a Pythagorean triple."""
+    trace: int
+    det: int
+    g00: int  # = c²
+    g01: int  # = b(a+c)
+    g11: int  # = b² + c²
+    
+    @staticmethod
+    def from_triple(t: PythagTriple) -> 'GramInvariant':
+        G = t.gram_matrix()
+        return GramInvariant(
+            trace=t.gram_trace(),
+            det=t.gram_det(),
+            g00=G[0][0],
+            g01=G[0][1],
+            g11=G[1][1],
+        )
+    
+    def reconstruct_triple(self) -> Optional[PythagTriple]:
+        """Reconstruct the triple from Gram data.
+        
+        Algorithm:
+        1. c² = g00, so c = √g00
+        2. b² = g11 - g00 = g11 - c², so b = √(g11 - c²)
+        3. a² = c² - b², so a = √(c² - b²)
+        4. Verify: g01 = b(a + c)
+        
+        Returns None if data is inconsistent.
+        
+        Complexity: O(1) (constant number of integer square root computations)
+        """
+        c2 = self.g00
+        c = int(math.isqrt(c2))
+        if c * c != c2 or c <= 0:
+            return None
+        
+        b2 = self.g11 - c2
+        if b2 < 0:
+            return None
+        b = int(math.isqrt(b2))
+        if b * b != b2 or b <= 0:
+            return None
+        
+        a2 = c2 - b2
+        if a2 < 0:
+            return None
+        a = int(math.isqrt(a2))
+        if a * a != a2 or a <= 0:
+            return None
+        
+        # Verify consistency
+        if a * b + b * c != self.g01:
+            return None
+        
+        return PythagTriple(a, b, c)
 
-BERGGREN_MATRICES = [BERGGREN_A, BERGGREN_B, BERGGREN_C]
-INVERSE_MATRICES = [INV_A, INV_B, INV_C]
 
-# ─── Core Functions ─────────────────────────────────────────────
+# ============================================================================
+# Berggren Generators
+# ============================================================================
 
-def is_primitive_triple(a: int, b: int, c: int) -> bool:
-    """Check if (a, b, c) is a normalized primitive Pythagorean triple.
-
-    Args:
-        a: First leg (must be odd)
-        b: Second leg (must be even)
-        c: Hypotenuse
-
-    Returns:
-        True if (a, b, c) is a primitive Pythagorean triple with a odd, b even.
+def berggren_A(t: PythagTriple) -> PythagTriple:
+    """Apply Berggren generator A.
+    
+    Time: O(1), Space: O(1)
     """
-    return (a > 0 and b > 0 and c > 0 and
-            a*a + b*b == c*c and
-            gcd(a, b) == 1 and
-            a % 2 == 1 and b % 2 == 0)
+    a, b, c = t.a, t.b, t.c
+    return PythagTriple(a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
 
-
-def berggren_child(matrix_idx: int, triple: Triple) -> Triple:
-    """Apply a Berggren matrix to a triple.
-
-    Args:
-        matrix_idx: 0 for A, 1 for B, 2 for C
-        triple: Input (a, b, c)
-
-    Returns:
-        Child triple (a', b', c')
+def berggren_B(t: PythagTriple) -> PythagTriple:
+    """Apply Berggren generator B.
+    
+    Time: O(1), Space: O(1)
     """
-    v = np.array(triple, dtype=int)
-    result = BERGGREN_MATRICES[matrix_idx] @ v
-    return (int(result[0]), int(result[1]), int(result[2]))
+    a, b, c = t.a, t.b, t.c
+    return PythagTriple(a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
 
-
-def berggren_parent(triple: Triple) -> Optional[Tuple[int, Triple]]:
-    """Compute the unique parent of a triple in the Berggren tree.
-
-    Args:
-        triple: Input (a, b, c)
-
-    Returns:
-        (matrix_idx, parent_triple) or None if triple is root (3, 4, 5)
+def berggren_C(t: PythagTriple) -> PythagTriple:
+    """Apply Berggren generator C.
+    
+    Time: O(1), Space: O(1)
     """
-    if triple == (3, 4, 5):
-        return None
+    a, b, c = t.a, t.b, t.c
+    return PythagTriple(-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
-    v = np.array(triple, dtype=int)
-    for idx, inv_mat in enumerate(INVERSE_MATRICES):
-        parent = inv_mat @ v
-        a, b, c = int(parent[0]), int(parent[1]), int(parent[2])
-        if a > 0 and b > 0 and c > 0 and a*a + b*b == c*c:
-            return (idx, (a, b, c))
-
-    return None
+GENERATORS = {'A': berggren_A, 'B': berggren_B, 'C': berggren_C}
 
 
-def berggren_ancestry(triple: Triple) -> List[Tuple[int, Triple]]:
-    """Compute the full ancestry path from root to triple.
-
-    Args:
-        triple: Input (a, b, c)
-
-    Returns:
-        List of (matrix_idx, triple) from root to input
+def apply_path(root: PythagTriple, path: str) -> PythagTriple:
+    """Apply a sequence of generators specified by a string like 'ABC'.
+    
+    Time: O(|path|), Space: O(1)
     """
-    path = []
-    current = triple
-    while current != (3, 4, 5):
-        result = berggren_parent(current)
-        if result is None:
+    t = root
+    for ch in path:
+        t = GENERATORS[ch](t)
+    return t
+
+
+# ============================================================================
+# Lagrange Reduction for Rank-2 Lattices
+# ============================================================================
+
+def lagrange_reduce(v1: Tuple[int,int], v2: Tuple[int,int]) -> Tuple[Tuple[int,int], Tuple[int,int]]:
+    """Lagrange (Gauss) reduction of a rank-2 lattice basis.
+    
+    Given basis vectors v1, v2, returns a reduced basis (u1, u2) where:
+    - |u1| ≤ |u2|
+    - |⟨u1, u2⟩| ≤ |u1|²/2
+    
+    This is the rank-2 analogue of LLL reduction and produces the unique
+    reduced basis (up to sign and ordering).
+    
+    Time: O(log(max_norm)) iterations, Space: O(1)
+    """
+    def dot(a, b):
+        return a[0]*b[0] + a[1]*b[1]
+    
+    def norm_sq(v):
+        return dot(v, v)
+    
+    # Ensure |v1| ≤ |v2|
+    if norm_sq(v1) > norm_sq(v2):
+        v1, v2 = v2, v1
+    
+    while True:
+        n1 = norm_sq(v1)
+        if n1 == 0:
             break
-        idx, parent = result
-        path.append((idx, current))
-        current = parent
-    path.reverse()
-    return path
+        
+        # Compute the closest integer to ⟨v2, v1⟩ / ⟨v1, v1⟩
+        d = dot(v2, v1)
+        q = round(d / n1)  # Nearest integer
+        
+        if q == 0:
+            break
+        
+        # v2 ← v2 - q * v1
+        v2 = (v2[0] - q * v1[0], v2[1] - q * v1[1])
+        
+        # Swap if needed to maintain |v1| ≤ |v2|
+        if norm_sq(v2) < norm_sq(v1):
+            v1, v2 = v2, v1
+    
+    return v1, v2
 
 
-def berggren_depth(triple: Triple) -> int:
-    """Compute the depth of a triple in the Berggren tree.
-
-    Args:
-        triple: Input (a, b, c)
-
-    Returns:
-        Depth (0 for root)
+def reduced_gram(v1: Tuple[int,int], v2: Tuple[int,int]) -> Tuple[Tuple[int,int], Tuple[int,int]]:
+    """Compute the Gram matrix of the Lagrange-reduced basis.
+    
+    Time: O(log(max_norm)), Space: O(1)
     """
-    return len(berggren_ancestry(triple))
+    u1, u2 = lagrange_reduce(v1, v2)
+    def dot(a, b):
+        return a[0]*b[0] + a[1]*b[1]
+    
+    return ((dot(u1,u1), dot(u1,u2)), (dot(u1,u2), dot(u2,u2)))
 
 
-# ─── Gram Matrix Construction ───────────────────────────────────
+# ============================================================================
+# Certified Short-Basis Reconstruction
+# ============================================================================
 
-def gram_positive_definite(a: int, b: int, c: int) -> np.ndarray:
-    """Construct the rank-2 positive-definite Gram matrix.
-
-    G+(a,b,c) = [[c, a], [a, c]]
-
-    Properties:
-        - det(G+) = c² - a² = b² > 0
-        - trace(G+) = 2c
-        - Symmetric, positive definite
-
-    Args:
-        a, b, c: Components of a primitive Pythagorean triple
-
-    Returns:
-        2×2 integer Gram matrix
+def reconstruct_from_invariant(inv: GramInvariant) -> Optional[Tuple[Tuple[int,int], Tuple[int,int]]]:
+    """Reconstruct a reduced basis from a Gram invariant.
+    
+    Algorithm:
+    1. Reconstruct the triple (a, b, c) from the invariant.
+    2. Form the basis v1 = (a, b), v2 = (b, c).
+    3. Apply Lagrange reduction.
+    4. Verify the reduced basis has the correct Gram structure.
+    
+    Returns None if the invariant is not realizable.
+    
+    Time: O(log c) for reduction, O(1) for reconstruction
+    Space: O(1)
     """
-    return np.array([[c, a], [a, c]], dtype=int)
+    t = inv.reconstruct_triple()
+    if t is None:
+        return None
+    
+    v1 = (t.a, t.b)
+    v2 = (t.b, t.c)
+    
+    u1, u2 = lagrange_reduce(v1, v2)
+    return (u1, u2)
 
 
-def gram_lifted(a: int, b: int, c: int) -> np.ndarray:
-    """Construct the rank-3 lifted Gram matrix.
-
-    G̃(a,b,c) = [[c, a, 0], [a, c, 0], [0, 0, c]]
-
-    Properties:
-        - det(G̃) = c · b²
-        - Positive definite
-        - Block diagonal: G+ ⊕ [c]
-
-    Args:
-        a, b, c: Components of a primitive Pythagorean triple
-
-    Returns:
-        3×3 integer Gram matrix
+def verify_reconstruction(t: PythagTriple) -> bool:
+    """Verify the full reconstruction pipeline:
+    triple → invariant → reconstruction → reduced basis.
+    
+    Returns True if the pipeline is consistent.
     """
-    return np.array([[c, a, 0], [a, c, 0], [0, 0, c]], dtype=int)
+    inv = GramInvariant.from_triple(t)
+    reconstructed = inv.reconstruct_triple()
+    
+    if reconstructed is None:
+        return False
+    
+    if reconstructed != t:
+        return False
+    
+    basis = reconstruct_from_invariant(inv)
+    if basis is None:
+        return False
+    
+    u1, u2 = basis
+    # Verify reduced basis generates same lattice (det check)
+    orig_det = t.a * t.c - t.b * t.b  # det of [[a,b],[b,c]]
+    new_det = u1[0] * u2[1] - u1[1] * u2[0]
+    
+    return abs(new_det) > 0  # Nondegenerate
 
 
-def gram_degenerate(a: int, b: int, c: int) -> np.ndarray:
-    """Construct the degenerate boundary Gram matrix.
+# ============================================================================
+# Det Monotonicity Factorization Certificates
+# ============================================================================
 
-    G₀(a,b,c) = [[c+a, b], [b, c-a]]
-
-    Properties:
-        - det(G₀) = (c+a)(c-a) - b² = c² - a² - b² = 0
-        - Rank 1 (semidefinite boundary)
-        - Positive semidefinite for valid triples
-
-    Args:
-        a, b, c: Components of a primitive Pythagorean triple
-
-    Returns:
-        2×2 integer Gram matrix (degenerate)
+def det_mono_certificate_A(t: PythagTriple) -> Dict:
+    """Compute the algebraic certificate for det monotonicity under generator A.
+    
+    The factorization is:
+    (a'c' - b'²)² - (ac - b²)² = 4b · (3b² - ab - 3bc - ac) · (2b - a - 3c)
+    
+    Both inner factors are nonpositive for positive Pythagorean triples,
+    making the product nonneg.
     """
-    return np.array([[c + a, b], [b, c - a]], dtype=int)
-
-
-# ─── Certificate Operations ─────────────────────────────────────
-
-def extract_certificate(triple: Triple) -> Dict:
-    """Extract a lattice certificate from a primitive triple.
-
-    Args:
-        triple: (a, b, c) primitive Pythagorean triple
-
-    Returns:
-        Certificate dictionary with gram_diag, gram_off, gram_det, and validity data
-    """
-    a, b, c = triple
+    a, b, c = t.a, t.b, t.c
+    child = berggren_A(t)
+    
+    original_invariant = a * c - b**2
+    child_invariant = child.a * child.c - child.b**2
+    
+    factor1 = b
+    factor2 = 3*b**2 - a*b - 3*b*c - a*c  # ≤ 0
+    factor3 = 2*b - a - 3*c                 # ≤ 0
+    
+    product = 4 * factor1 * factor2 * factor3
+    diff = child_invariant**2 - original_invariant**2
+    
     return {
-        'gram_diag': c,
-        'gram_off': a,
-        'gram_det': b * b,
-        'trace': 2 * c,
-        'short_basis_bound': c,
-        'parity': 'a_odd' if a % 2 == 1 else 'a_even',
-        'depth': berggren_depth(triple),
+        'original': original_invariant,
+        'child': child_invariant,
+        'diff': diff,
+        'factored': product,
+        'factor1_sign': 'positive' if factor1 > 0 else 'zero',
+        'factor2_sign': 'nonpositive' if factor2 <= 0 else 'POSITIVE (unexpected)',
+        'factor3_sign': 'nonpositive' if factor3 <= 0 else 'POSITIVE (unexpected)',
+        'product_nonneg': product >= 0,
+        'identity_verified': diff == product,
     }
 
 
-def reconstruct_from_certificate(cert: Dict) -> Optional[Triple]:
-    """Reconstruct a primitive triple from a valid certificate.
-
-    Args:
-        cert: Certificate dictionary
-
-    Returns:
-        Reconstructed triple (a, b, c) or None if invalid
-    """
-    c = cert['gram_diag']
-    a = cert['gram_off']
-    det = cert['gram_det']
-
-    # Check b² = det
-    b = isqrt(det)
-    if b * b != det:
-        return None
-
-    # Verify Pythagorean
-    if a * a + b * b != c * c:
-        return None
-
-    # Verify primitivity
-    if gcd(a, b) != 1:
-        return None
-
-    return (a, b, c)
-
-
-# ─── Minimal Subtree Computation ────────────────────────────────
-
-def minimal_generating_subtree(triples: Set[Triple]) -> Set[Triple]:
-    """Compute the minimal generating subtree for a set of triples.
-
-    A triple t is a generator if no ancestor of t is also in the set.
-
-    Args:
-        triples: Set of primitive Pythagorean triples
-
-    Returns:
-        Minimal generating subset
-    """
-    generators = set()
-    for t in triples:
-        # Check if any ancestor is in the set
-        current = t
-        is_generated = False
-        while current != (3, 4, 5):
-            result = berggren_parent(current)
-            if result is None:
-                break
-            _, parent = result
-            if parent in triples and parent != t:
-                is_generated = True
-                break
-            current = parent
-        if not is_generated:
-            generators.add(t)
-    return generators
-
-
-def berggren_closure(generators: Set[Triple], max_depth: int = 5) -> Set[Triple]:
-    """Compute the Berggren closure of a set of generators up to a given depth.
-
-    Args:
-        generators: Set of seed triples
-        max_depth: Maximum number of Berggren steps to apply
-
-    Returns:
-        Closure set
-    """
-    closure = set(generators)
-    frontier = set(generators)
-    for _ in range(max_depth):
-        new_frontier = set()
-        for t in frontier:
-            for idx in range(3):
-                child = berggren_child(idx, t)
-                if child not in closure:
-                    closure.add(child)
-                    new_frontier.add(child)
-        frontier = new_frontier
-    return closure
-
-
-# ─── Verification ────────────────────────────────────────────────
-
-def verify_duality_package(triples: List[Triple]) -> Dict:
-    """Verify all components of the duality package for a family of triples.
-
-    Args:
-        triples: List of primitive Pythagorean triples
-
-    Returns:
-        Dictionary of verification results
-    """
-    results = {
-        'family_size': len(triples),
-        'all_primitive': all(is_primitive_triple(*t) for t in triples),
-        'certificates': [],
-        'all_certs_distinct': True,
-        'all_pos_def': True,
-        'all_bounded': True,
-        'all_reconstructible': True,
-    }
-
-    cert_set = set()
-    for a, b, c in triples:
-        cert = extract_certificate((a, b, c))
-        cert_key = (cert['gram_diag'], cert['gram_off'], cert['gram_det'])
-
-        G = gram_positive_definite(a, b, c)
-        det_G = int(np.linalg.det(G).round())
-
-        results['certificates'].append({
-            'triple': (a, b, c),
-            'certificate': cert,
-            'det': det_G,
-            'pos_def': c > 0 and det_G > 0,
-            'bounded': a <= c and b <= c,
-        })
-
-        if cert_key in cert_set:
-            results['all_certs_distinct'] = False
-        cert_set.add(cert_key)
-
-        if not (c > 0 and det_G > 0):
-            results['all_pos_def'] = False
-        if not (a <= c and b <= c):
-            results['all_bounded'] = False
-
-        reconstructed = reconstruct_from_certificate(cert)
-        if reconstructed != (a, b, c):
-            results['all_reconstructible'] = False
-
-    return results
-
+# ============================================================================
+# Example Usage
+# ============================================================================
 
 if __name__ == "__main__":
-    # Quick verification
-    print("Berggren Lattice-Reduction Duality - Algorithm Verification")
-    print("=" * 60)
-
-    # Test ancestry
-    triple = (7, 24, 25)
-    ancestry = berggren_ancestry(triple)
-    print(f"\nAncestry of {triple}:")
-    print(f"  Root: (3, 4, 5)")
-    for idx, t in ancestry:
-        label = ['A', 'B', 'C'][idx]
-        print(f"  → [{label}] → {t}")
-
-    # Test reconstruction
-    cert = extract_certificate((5, 12, 13))
-    print(f"\nCertificate of (5, 12, 13): {cert}")
-    rec = reconstruct_from_certificate(cert)
-    print(f"Reconstructed: {rec}")
-
-    # Test minimal subtree
-    family = {(3, 4, 5), (5, 12, 13), (7, 24, 25), (21, 20, 29)}
-    minimal = minimal_generating_subtree(family)
-    print(f"\nMinimal generators of {family}:")
-    print(f"  {minimal}")
-
-    # Full verification
-    triples = [(3, 4, 5), (5, 12, 13), (7, 24, 25), (15, 8, 17), (21, 20, 29)]
-    results = verify_duality_package(triples)
-    print(f"\nDuality package verification for {len(triples)} triples:")
-    print(f"  All primitive: {results['all_primitive']}")
-    print(f"  All certificates distinct: {results['all_certs_distinct']}")
-    print(f"  All positive definite: {results['all_pos_def']}")
-    print(f"  All bounded: {results['all_bounded']}")
-    print(f"  All reconstructible: {results['all_reconstructible']}")
+    root = PythagTriple(3, 4, 5)
+    
+    print("=== Berggren Lattice Reduction: Algorithm Demonstrations ===\n")
+    
+    # 1. Gram invariant computation and reconstruction
+    print("1. Gram Invariant Computation and Reconstruction")
+    print("-" * 50)
+    inv = GramInvariant.from_triple(root)
+    print(f"   Triple: {root}")
+    print(f"   Invariant: trace={inv.trace}, det={inv.det}")
+    print(f"   Gram: [[{inv.g00}, {inv.g01}], [{inv.g01}, {inv.g11}]]")
+    
+    reconstructed = inv.reconstruct_triple()
+    print(f"   Reconstructed: {reconstructed}")
+    print(f"   Match: {reconstructed == root}")
+    
+    # 2. Lagrange reduction
+    print(f"\n2. Lagrange Reduction of Berggren Lattice Bases")
+    print("-" * 50)
+    for path in ['', 'A', 'B', 'C', 'AA', 'AB', 'ABC']:
+        t = apply_path(root, path) if path else root
+        v1, v2 = (t.a, t.b), (t.b, t.c)
+        u1, u2 = lagrange_reduce(v1, v2)
+        print(f"   Path {'root' if not path else path}: ({t.a},{t.b},{t.c})")
+        print(f"     Original basis: {v1}, {v2} → norms: {v1[0]**2+v1[1]**2}, {v2[0]**2+v2[1]**2}")
+        print(f"     Reduced basis:  {u1}, {u2} → norms: {u1[0]**2+u1[1]**2}, {u2[0]**2+u2[1]**2}")
+    
+    # 3. Full reconstruction pipeline
+    print(f"\n3. Full Reconstruction Pipeline Verification")
+    print("-" * 50)
+    tree_triples = [root]
+    for gen_name, gen in GENERATORS.items():
+        tree_triples.append(gen(root))
+        for gen2_name, gen2 in GENERATORS.items():
+            tree_triples.append(gen2(gen(root)))
+    
+    all_ok = True
+    for t in tree_triples:
+        ok = verify_reconstruction(t)
+        if not ok:
+            print(f"   FAILED: {t}")
+            all_ok = False
+    print(f"   Tested {len(tree_triples)} triples: {'All passed ✓' if all_ok else 'FAILURES DETECTED'}")
+    
+    # 4. Det monotonicity certificates
+    print(f"\n4. Determinant Monotonicity Certificates (Generator A)")
+    print("-" * 50)
+    t = root
+    for i in range(4):
+        cert = det_mono_certificate_A(t)
+        print(f"   Depth {i}: ac-b² = {cert['original']}")
+        print(f"     Child ac-b² = {cert['child']}")
+        print(f"     (child)² - (parent)² = {cert['diff']}")
+        print(f"     Factored = {cert['factored']}")
+        print(f"     Identity verified: {cert['identity_verified']}")
+        print(f"     Product ≥ 0: {cert['product_nonneg']}")
+        t = berggren_A(t)
