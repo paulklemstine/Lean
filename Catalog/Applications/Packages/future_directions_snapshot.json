@@ -582,10 +582,10 @@
       "EML"
     ],
     "priority_score": 0.85,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "13b8af12",
     "timestamp": "2026-05-14T16:03:53.827592+00:00"
   },
   {
@@ -1483,20 +1483,6 @@
     "timestamp": "2026-05-14T17:33:00.485104+00:00"
   },
   {
-    "id": "fd_0163",
-    "title": "Define tropical branching programs",
-    "description": ": A weighted DAG on $[w] \\times [d]$ (width $w$, depth $d$) with min-plus path costs.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.488181+00:00"
-  },
-  {
     "id": "fd_0166",
     "title": "Apply to specific problems",
     "description": ": Show that certain functions (e.g., element distinctness, graph connectivity) require super-linear tropical cost in bounded-width branching programs.\n\n### Proof Strategy\n- Generalize the layered system framework from `Obstruction.lean`.\n- Use the block cost lemma within each layer.\n- Combine with the existing `layered_no_shortcut` theorem.\n\n### Cross-domain Impact\n- Circuit complexity (lower bounds for restricted circuits)\n- Streaming algorithms (space-bounded computation)\n- VLSI design (area-time tradeoffs)\n\n---\n\n## Direction 3: Tropical Communication Complexity via Min-Plus Protocol Cost\n\n### Goal\nDefine communication complexity over the min-plus semiring and prove direct-sum lower bounds using the cycle-gap framework.\n\n### Background\nIn classical communication complexity, Alice and Bob",
@@ -1620,22 +1606,6 @@
     "timestamp": "2026-05-14T19:35:20.582859+00:00"
   },
   {
-    "id": "fd_0206",
-    "title": "Prove converse under mild conditions",
-    "description": ": if the eigenspace is unique, there exists a projectively dominant direction, which corresponds to a \"soft sink\" in the original attention.\n\n### Cross-Domain Connections\n- **Markov chain theory**: unique stationary distribution ↔ irreducibility/aperiodicity.\n- **Tropical convexity**: eigenspaces are tropical polytopes; uniqueness relates to tropical rank.\n- **Mechanistic interpretability**: sink tokens are empirically observed in GPT-family models; this gives a checkable algebraic criterion.\n\n### Expected Impact\nThis would transform \"attention sinks\" from an empirical curiosity to a mathematically predictable phenomenon, enabling their detection, prevention, or deliberate engineering.\n\n---\n\n## Direction 4: Tropical Expressivity Lower Bounds for Transformers\n\n### Hypothesis\nThe class of fu",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.179410+00:00"
-  },
-  {
     "id": "fd_0207",
     "title": "Formalize tropical circuits",
     "description": ": a tropical attention layer as a max-plus affine map composed with a tropical projection.",
@@ -1757,73 +1727,6 @@
     "timestamp": "2026-05-14T23:35:13.244396+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Reduction to uniform case",
-    "description": ": Choose `B_max = max_i B_i` and apply the uniform theorem in a larger box, then observe that the collision vectors actually lie in the weighted box.\n\n### Cross-Domain Significance\n- **Side-channel cryptanalysis**: Models attacks where some key bits are known (those coordinates have B_i = 0) while others are searched.\n- **Lattice geometry**: Connects to Banaszczyk's transference theorem for non-uniform lattice bases.\n- **Coding theory**: Weighted Hamming distance and unequal error protection codes.\n\n---\n\n## 3. Collision Multiplicity Theorem\n\n### Goal\nWhen the box is *much* larger than `q` (say `(2B+1)^n ≥ k · q`), guarantee not just one but at least `k` distinct short kernel vectors. This quantifies how attack complexity grows with the number of witnesses needed.\n\n### Theorem Statement\n```",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.252024+00:00"
-  },
-  {
-    "id": "fd_0196",
-    "title": "Iterated pigeonhole",
-    "description": ": By the pigeonhole principle, some residue class modulo `q` contains at least `⌈(2B+1)^n / q⌉ ≥ k+1` box vectors. Any two differences give kernel vectors. From `k+1` vectors in a coset, extract `k` distinct nonzero differences.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.259355+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "Averaging argument",
-    "description": ": The expected number of collisions is `(2B+1)^n / q`. Formalize this as a lower bound on the number of pairs, then extract distinct difference vectors via a greedy algorithm.\n\n### Cross-Domain Significance\n- **Additive combinatorics**: Connects to sumset structure theorems — many collisions force additive structure in the kernel.\n- **Cryptographic security reduction**: Bounds the number of attack witnesses available, which appears in tight security reductions for lattice signatures.\n- **Statistical physics**: Multiple ground states in a discrete energy landscape.\n\n---\n\n## 4. Tropical Determinant Bridge\n\n### Goal\nConnect the bounded-box collision threshold with the tropical determinant `det_trop(L)` of the kernel lattice to derive a formal complexity-vs-volume principle: the tropical deter",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.267033+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Smith normal form",
-    "description": ": Express the kernel lattice via Smith normal form of the map `x ↦ ∑ a_i x_i mod q`. The tropical determinant relates to the product of diagonal entries, connecting to the determinant bound.\n\n### Cross-Domain Significance\n- **Geometry of numbers**: Formal discrete analog of Minkowski's first theorem relating lattice determinant to shortest vector length.\n- **Complexity theory**: The tropical determinant becomes a formal measure of \"cryptographic hardness\" — larger determinant = harder to find short vectors = more secure.\n- **Optimization**: Connects to tropical geometry and min-plus algebra interpretations of lattice problems.\n\n---\n\n## 5. Coding-Theoretic Corollary: Bounded Syndrome-Zero Patterns\n\n### Goal\nReinterpret the matrix SIS theorem as a statement about error-correcting codes: if a",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.280457+00:00"
-  },
-  {
     "id": "fd_0201",
     "title": "Singleton bound comparison",
     "description": ": Compare the existence threshold `(2w+1)^n > q^m` with the classical q-ary Singleton and Plotkin bounds. Show that the SIS theorem recovers known distance bounds for random codes as a special case.\n\n### Cross-Domain Significance\n- **Coding theory**: Provides a unified lattice-geometric proof of minimum distance bounds for q-ary codes, complementing algebraic and probabilistic arguments.\n- **Cryptography**: The dual view — codes whose minimum distance is large correspond to hard SIS instances — is the foundation of code-based cryptography (McEliece, BIKE, Classic McEliece).\n- **Information theory**: Connects channel coding capacity to lattice packing density.\n\n---\n\n## Team Directive\n\nCreate a team to conduct research along these five directions. Each direction should:",
@@ -1842,60 +1745,112 @@
     "timestamp": "2026-05-14T23:35:13.293278+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Validates hypotheses",
-    "description": "computationally before attempting formal proofs",
+    "id": "fd_0198",
+    "title": "Sorted representative:",
+    "description": "Define the canonical representative of a chord class as its sorted version. Show that vlCostN on sorted representatives equals vlCostN on the original chords, using permutation invariance and sorted optimality. This gives a concrete computational handle on the quotient.\n\n### Cross-Domain Connection\n\nThe quotient space {chord classes} with the induced metric is an **orbifold** in the sense of Tymoczko's geometric music theory. Formalizing this quotient construction bridges combinatorial group theory (permutation group actions) with metric geometry, and could connect to formalized orbifold theory.\n\n---\n\n## Direction 3: Certified Optimal Matching Algorithm\n\n### Theorem Target\n\n```lean\n-- A computable function that returns the optimal cost\ndef vlCostN_compute {n : ℕ} (x y : Fin n → ℤ) : ℕ :=\n ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00fcfe9a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:49:05.141334+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Decision procedure:",
+    "description": "For fixed small n (e.g., n = 4), use `native_decide` to verify the algorithm on all inputs up to some bound, then prove correctness abstractly for general inputs.\n\n### Cross-Domain Connection\n\nThis connects to **certified algorithmics**: producing not just algorithms but machine-checked proofs of their correctness and complexity bounds. The O(n log n) sorting algorithm replaces the O(n!) brute force, and the correctness proof is a formal certificate. This is directly relevant to verified software for music production and algorithmic composition.\n\n---\n\n## Direction 4: Finite Harmonic Graph Diameter Theorem\n\n### Theorem Target\n\n```lean\n-- Define a finite corpus of chord types (e.g., all major/minor triads + seventh chords in Fin 4 → ZMod 12)\ndef chordCorpus : Finset (Fin 4 → ZMod 12) := sorr",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00fcfe9a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:49:05.154934+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Computational verification:",
+    "description": "For small corpora (50-200 chords), compute all-pairs shortest paths by Floyd-Warshall, verify the diameter computationally, and certify the result via `native_decide` or explicit witness construction.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00fcfe9a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:49:05.160972+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Structural argument:",
+    "description": "Prove that every chord in the corpus is reachable from a fixed \"hub\" chord (e.g., C major in root position) with bounded cost. Then the diameter is at most twice the maximum hub distance. This requires enumerating the corpus and checking reachability.\n\n### Cross-Domain Connection\n\nThis connects to **graph theory** and **network science**. The chord graph is a small-world network (short diameter despite sparse local connectivity), and its structure encodes the navigability of harmonic space. Diameter bounds have applications in algorithmic composition (bounding the length of optimal harmonic paths) and music information retrieval (clustering chord vocabularies).\n\n---\n\n## Direction 5: Tropical Harmonic Composition Law\n\n### Theorem Target\n\n```lean\n-- Define a tropical semiring of chord progre",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00fcfe9a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:49:05.168031+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Direct concatenation:",
+    "description": "The concatenated path p₁ ++ p₂.tail has cost equal to progressionCost(p₁) + progressionCost(p₂) minus the zero-cost self-transition at the join point. This gives a direct proof of subadditivity.",
     "domains": [
       "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1f802c0a",
+    "source_exp_id": "00fcfe9a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:35.153202+00:00"
+    "timestamp": "2026-05-14T23:49:05.175195+00:00"
   },
   {
-    "id": "fd_0196",
-    "title": "Iterates on lemma decomposition",
-    "description": "— break each theorem into 5–10 helper lemmas",
+    "id": "fd_0204",
+    "title": "Min-plus matrix formulation:",
+    "description": "Represent the chord space as vertices of a weighted graph and define the tropical matrix product M₁ ⊗ M₂ where (M₁ ⊗ M₂)(i,j) = min_k (M₁(i,k) + M₂(k,j)). Prove that this product is associative (tropical matrix multiplication is associative in the min-plus semiring) and connects to multi-step progression costs.\n\n### Cross-Domain Connection\n\nThis extends `tropPath_cost_compose_bound` from the existing tropical HoTT module to the voice-leading setting. The tropical semiring structure on progression costs connects to:\n- **Tropical geometry:** algebraic geometry over the min-plus semifield\n- **Dynamic programming:** the Bellman equation for shortest paths is tropical matrix multiplication\n- **Formal language theory:** tropical semirings appear in weighted automata and the Viterbi algorithm\n\nTh",
     "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00fcfe9a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:49:05.182783+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Direction 5",
+    "description": "(tropical composition) — novel cross-domain bridge",
+    "domains": [
+      "Tropical",
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1f802c0a",
+    "source_exp_id": "00fcfe9a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:35.159765+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "Cross-references",
-    "description": "with Mathlib for available infrastructure",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f802c0a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:35.166613+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Identifies",
-    "description": "new connections between domains that emerge during formalization",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f802c0a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:35.179833+00:00"
+    "timestamp": "2026-05-14T23:49:05.202405+00:00"
   },
   {
     "id": "seed_078",
@@ -2119,25 +2074,6 @@
   },
   {
     "id": "fd_0179",
-    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
-    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "00fcfe9a",
-    "timestamp": "2026-05-14T17:33:19.336802+00:00"
-  },
-  {
-    "id": "fd_0179",
     "title": "1. Activation-Region Nerve as a Simplicial Complex",
     "description": "**Objective**: Formalize the nerve of the activation region decomposition of a ReLU network as a finite simplicial complex, and identify certified robustness with exactness of a margin cosheaf on this nerve.\n\n**Approach**: A ReLU network with $n$ layers and widths $w_1, \\ldots, w_n$ partitions $\\mathbb{R}^d$ into at most $\\prod_i \\binom{w_i}{k}$ polyhedral activation regions, each determined by a sign pattern. The nerve of this cover — where simplices correspond to nonempty intersections of activation regions — encodes the combinatorial topology of the classifier. Define a cosheaf $\\mathcal{M}$ on this nerve assigning to each simplex the minimum margin over its closure, and prove that exactness of the cosheaf complex $\\mathcal{M}_0 \\to \\mathcal{M}_1 \\to \\cdots$ in degree 1 is equivalent to",
     "domains": [
@@ -2320,50 +2256,6 @@
     "timestamp": "2026-05-14T21:35:00.982044+00:00"
   },
   {
-    "id": "fd_0196",
-    "title": "Statement",
-    "description": "In classical convex analysis, the Fenchel–Moreau theorem states that a lower semicontinuous convex function equals its biconjugate. The tropical analogue states: a function f : ℝⁿ → ℝ ∪ {+∞} that is the supremum of a finite family of max-plus linear forms equals its tropical biconjugate.\n\n**Precise theorem:** Let f : Fin n → ℝ be defined as f(i) = sup_j (c_j + V_j(i)). Define the tropical Legendre transform:\n\n- f*(a) = inf_i (f(i) - a(i))\n- f**(i) = sup_a (f*(a) + a(i))\n\nThen f** = f.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23e88b22",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:26:25.324369+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "Expected Lean Signature",
-    "description": "```lean\nnoncomputable def tropLegendre {n : ℕ} [NeZero n]\n    (f : Fin n → ℝ) : (Fin n → ℝ) → ℝ :=\n  fun a => Finset.univ.inf' Finset.univ_nonempty (fun i => f i - a i)\n\nnoncomputable def tropBiconj {n : ℕ} [NeZero n]\n    (f : Fin n → ℝ) : Fin n → ℝ :=\n  fun i => ⨆ (a : Fin n → ℝ), tropLegendre f a + a i\n\ntheorem tropical_fenchel_moreau {n m : ℕ} [NeZero n] [NeZero m]\n    (V : Fin m → Fin n → ℝ) (c : Fin m → ℝ)\n    (f : Fin n → ℝ) (hf : f = tropLinComb V c) :\n    tropBiconj f = f := by sorry\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23e88b22",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:26:25.331134+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Research Program Summary",
-    "description": "| Direction | Difficulty | Prerequisites | Impact |\n|-----------|-----------|--------------|--------|\n| 1. Fenchel–Moreau | Medium | Tropical Young ineq | Duality theory |\n| 2. Hahn–Banach | Hard | Carathéodory + LP theory | Certificates |\n| 3. Helly–Radon | Hard | Carathéodory + combinatorics | Feasibility |\n| 4. Sparse certificates | Medium | Carathéodory + LP | Algorithms |\n| 5. Invariant cones | Very Hard | All above + spectral theory | Control |\n\n**Recommended order:** 1 → 4 → 2 → 3 → 5\n\nEach direction builds on the tropical Carathéodory theorem established here. Together, they would constitute a comprehensive formally verified library for tropical convex analysis — the first of its kind in any proof assistant.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23e88b22",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:26:25.361621+00:00"
-  },
-  {
     "id": "fd_0194",
     "title": "1. Tropical Replicator Composition and Ecosystem Interaction Theorems",
     "description": "**Hypothesis:** If two tropical replicators R₁ and R₂ on the same finite lattice commute (R₁.step ∘ R₂.step = R₂.step ∘ R₁.step), their composition is again a tropical replicator. More generally, for a finite collection of pairwise commuting replicators, the composed system admits a global attractor that is the intersection of the individual attractor sets.\n\n**Proof Strategy:**\n- We proved `comp_idempotent_of_commuting` for the idempotent property. Extend this to monotonicity (composition of monotone maps is monotone) and inflationarity (under commutativity, the composition of inflationary maps is inflationary if they also commute with the order).\n- Define an \"ecosystem\" as a finite family of pairwise commuting TropicalReplicators. Prove that the set of fixed points of the composed system ",
@@ -2380,76 +2272,6 @@
     "source_exp_id": "51f002b7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T22:34:47.493626+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "2. Encoding Universal Computation in Mutation-Stable Tropical Cellular Automata",
-    "description": "**Hypothesis:** There exists a finite tropical CA rule on a sufficiently large torus (Fin N → Fin M → ℕ) that is (a) monotone, (b) Lipschitz-1 in the sup metric, and (c) capable of simulating any bounded-space Turing machine computation via encoding of tape states as tropical vectors.\n\n**Proof Strategy:**\n- Start with known results on CA universality (e.g., Rule 110). Translate the Boolean CA into a tropical CA using the embedding 0 ↦ 0, 1 ↦ K for large K, with min/max operations replacing AND/OR.\n- The key challenge is maintaining Lipschitz-1 stability while achieving universality. Investigate whether a \"threshold\" tropical rule (using min, max, and bounded addition) suffices.\n- Formalize in Lean: define the encoding, prove that the tropical CA simulates the Boolean CA step-by-step, and v",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f002b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:34:47.501778+00:00"
-  },
-  {
-    "id": "fd_0196",
-    "title": "3. Ultrametric Phylogenetics of Attractor Basins",
-    "description": "**Hypothesis:** The basins of attraction of a monotone idempotent map F on a finite lattice carry a natural ultrametric structure: define d(x, y) = min{k : F^[k] x = F^[k] y}. This ultrametric encodes a \"phylogenetic tree\" of states, where states that converge to the same attractor faster are \"more closely related.\"\n\n**Proof Strategy:**\n- For idempotent F, the ultrametric collapses: d(x, y) ∈ {0, 1, ∞} depending on whether F x = F y or not. This is the \"flat\" case.\n- For inflationary monotone (non-idempotent) F, the ultrametric is genuinely non-trivial. Prove that d satisfies the strong triangle inequality d(x, z) ≤ max(d(x, y), d(y, z)).\n- Connect to tropical geometry: the ultrametric tree is a tropical curve (a metric graph), and the attractor map is a tropical morphism.\n\n**Cross-Domain ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f002b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:34:47.510240+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "4. Entropy and Information Theory for Idempotent Artificial Chemistry",
-    "description": "**Hypothesis:** Define \"tropical entropy\" of a state distribution as a min-plus analog of Shannon entropy. Prove that monotone idempotent dynamics are entropy-decreasing (or entropy-preserving on attractors), giving a second-law-like theorem for tropical artificial chemistry.\n\n**Proof Strategy:**\n- Define tropical entropy as H_trop(x) = min_i (x_i) or as the tropical analog of -Σ pᵢ log pᵢ using min-plus operations.\n- Prove that for monotone inflationary F, H_trop(F(x)) ≥ H_trop(x) (entropy increases toward the attractor) or the reverse, depending on the definition.\n- Investigate the \"free energy\" functional F(x) = Σᵢ xᵢ (tropical total weight) and prove it increases along orbits of inflationary maps.\n\n**Cross-Domain Connections:**\n- Thermodynamics: the second law as a theorem about monoto",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f002b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:34:47.517739+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Target Theorems",
-    "description": "1. `ProofCategory` satisfies the category axioms (associativity, identity laws).\n2. The forgetful functor from `ProofCategory` to `Type` preserves composition.\n3. Natural transformations between proof morphisms correspond to proof equivalences.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5fa1c5eb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:34:31.197926+00:00"
   },
   {
     "id": "fd_0201",
