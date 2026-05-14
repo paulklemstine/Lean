@@ -237,6 +237,8 @@ class FutureDirection:
     status: str = "available"  # available, in_progress, completed
     consumed_by_exp_id: str = ""
     timestamp: str = ""
+    prune_reason: str = ""
+    pruned_at: str = ""
 
     def to_dict(self) -> dict:
         return {
@@ -269,6 +271,7 @@ class FutureDirectionsManager:
         self.workspace = Path(workspace)
         self._file = self.workspace / "future_directions.json"
         self._directions: List[FutureDirection] = []
+        self._pruned: List[FutureDirection] = []
         self._load()
 
     def _load(self) -> None:
@@ -276,14 +279,24 @@ class FutureDirectionsManager:
             return
         try:
             data = json.loads(self._file.read_text(encoding="utf-8"))
-            self._directions = [FutureDirection.from_dict(d) for d in data]
+            if isinstance(data, list):
+                # Legacy format: flat list of directions
+                self._directions = [FutureDirection.from_dict(d) for d in data]
+                self._pruned = []
+            elif isinstance(data, dict):
+                self._directions = [FutureDirection.from_dict(d) for d in data.get("directions", [])]
+                self._pruned = [FutureDirection.from_dict(d) for d in data.get("pruned", [])]
         except Exception:
             self._directions = []
+            self._pruned = []
 
     def _save(self) -> None:
         self.workspace.mkdir(parents=True, exist_ok=True)
         self._file.write_text(
-            json.dumps([d.to_dict() for d in self._directions], indent=2, ensure_ascii=False),
+            json.dumps({
+                "directions": [d.to_dict() for d in self._directions],
+                "pruned": [d.to_dict() for d in self._pruned],
+            }, indent=2, ensure_ascii=False),
             encoding="utf-8",
         )
 
@@ -543,8 +556,171 @@ class FutureDirectionsManager:
             "seeded": len(self._directions),
         }
 
+    # ── Quality Scoring & Pruning ──
 
-if __name__ == "__main__":
+    @staticmethod
+    def _compute_quality_score(direction: FutureDirection) -> float:
+        """Compute a composite quality score for a direction.
+
+        Weights: priority 35%, source 20%, domains 15%, description 10%,
+                 strategy 10%, freshness 10%, plus fun bonus.
+        """
+        # priority_score: already 0-1
+        priority = direction.priority_score
+
+        # source_bonus: seed directions are higher quality
+        if direction.source_path == "seed:manual_v2":
+            source_bonus = 1.0
+        elif direction.source_path.startswith("seed:"):
+            source_bonus = 0.5
+        else:
+            source_bonus = 0.3
+
+        # domain_richness: well-classified directions are better
+        if not direction.domains:
+            domain_richness = 0.1
+        elif direction.domains == ["Bridges"]:
+            domain_richness = 0.1
+        else:
+            domain_richness = min(1.0, len(direction.domains) / 3.0)
+
+        # description_depth: longer, more detailed descriptions
+        desc_len = len(direction.description)
+        if desc_len < 80:
+            description_depth = 0.0
+        else:
+            description_depth = min(1.0, (desc_len - 80) / 300.0)
+
+        # strategy_bonus: having a proof strategy means more actionable
+        strategy_bonus = 1.0 if direction.proof_strategy else 0.0
+
+        # freshness: newer directions get a slight bonus
+        if direction.timestamp:
+            try:
+                added = datetime.fromisoformat(direction.timestamp)
+                days_old = (datetime.now(timezone.utc) - added).days
+                freshness = max(0.0, 1.0 - days_old / 90.0)
+            except (ValueError, TypeError):
+                freshness = 0.5
+        else:
+            freshness = 0.5
+
+        # fun_bonus: preserve speculative directions
+        fun_bonus = 0.05 if "Speculative" in direction.domains else 0.0
+
+        return (
+            0.35 * priority
+            + 0.20 * source_bonus
+            + 0.15 * domain_richness
+            + 0.10 * description_depth
+            + 0.10 * strategy_bonus
+            + 0.10 * freshness
+            + fun_bonus
+        )
+
+    def prune_directions(
+        self,
+        cap: int = DEFAULT_DIRECTION_CAP,
+        dry_run: bool = False,
+        min_quality: float = 0.0,
+    ) -> dict:
+        """Remove low-quality available directions, keeping up to `cap` best.
+
+        Never prunes: in_progress, completed, or seed directions.
+        Pruned directions are archived (recoverable via restore_direction).
+
+        Args:
+            cap: Maximum number of available non-seed directions to keep.
+            dry_run: If True, compute but do not actually prune.
+            min_quality: If set, also prune directions below this threshold.
+
+        Returns:
+            Dict with pruned_count, kept counts, pruned_ids, etc.
+        """
+        seed_available = []
+        auto_available = []
+        protected = []
+
+        for d in self._directions:
+            if d.status in ("in_progress", "completed"):
+                protected.append(d)
+            elif d.status == "available":
+                if d.source_path.startswith("seed:"):
+                    seed_available.append(d)
+                else:
+                    auto_available.append(d)
+
+        # Score and sort auto-parsed available directions
+        scored = [(d, self._compute_quality_score(d)) for d in auto_available]
+        scored.sort(key=lambda x: x[1], reverse=True)
+
+        # Determine which to keep and which to prune
+        if min_quality > 0:
+            above_threshold = [(d, s) for d, s in scored if s >= min_quality]
+            keep_count = min(cap, len(above_threshold))
+        else:
+            keep_count = min(cap, len(auto_available))
+
+        to_keep = [d for d, s in scored[:keep_count]]
+        to_prune = [d for d, s in scored[keep_count:]]
+
+        # Also prune below min_quality even if within cap
+        if min_quality > 0:
+            to_prune = [d for d, s in scored if s < min_quality]
+            to_keep = [d for d, s in scored if s >= min_quality][:cap]
+
+        quality_threshold = scored[keep_count][1] if keep_count < len(scored) else 0.0
+
+        result = {
+            "pruned_count": len(to_prune),
+            "kept_auto": len(to_keep),
+            "kept_seed": len(seed_available),
+            "kept_protected": len(protected),
+            "total_available_after": len(seed_available) + len(to_keep),
+            "quality_threshold": round(quality_threshold, 4),
+            "pruned_ids": [d.id for d in to_prune],
+            "pruned_details": [
+                {"id": d.id, "title": d.title[:60], "quality_score": round(s, 4)}
+                for d, s in scored[keep_count:]
+            ] if len(scored) > keep_count else [],
+        }
+
+        if dry_run:
+            return result
+
+        # Move pruned directions to archive
+        pruned_ids = {d.id for d in to_prune}
+        for d in to_prune:
+            d.status = "pruned"
+            d.prune_reason = "quality_below_threshold"
+            d.pruned_at = datetime.now(timezone.utc).isoformat()
+            self._pruned.append(d)
+
+        self._directions = [d for d in self._directions if d.id not in pruned_ids]
+        self._save()
+
+        return result
+
+    def restore_direction(self, direction_id: str) -> bool:
+        """Restore a pruned direction back to available.
+
+        Returns True if the direction was found and restored.
+        """
+        for i, d in enumerate(self._pruned):
+            if d.id == direction_id:
+                d.status = "available"
+                d.prune_reason = ""
+                d.pruned_at = ""
+                d.consumed_by_exp_id = ""
+                self._directions.append(d)
+                self._pruned.pop(i)
+                self._save()
+                return True
+        return False
+
+    def get_pruned(self, limit: int = 50) -> List[FutureDirection]:
+        """Return pruned directions, most recently pruned first."""
+        return list(reversed(self._pruned[-limit:]))
     import argparse
     parser = argparse.ArgumentParser(description="Manage future directions")
     sub = parser.add_subparsers(dest="command")
