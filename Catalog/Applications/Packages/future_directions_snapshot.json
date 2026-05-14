@@ -9,10 +9,10 @@
       "Algebra"
     ],
     "priority_score": 0.99,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8add5c7a",
     "timestamp": "2026-05-14T04:01:04.745549+00:00"
   },
   {
@@ -121,10 +121,10 @@
       "Computation"
     ],
     "priority_score": 0.96,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "338c829a",
     "timestamp": "2026-05-14T04:01:04.746822+00:00"
   },
   {
@@ -729,10 +729,10 @@
       "EML"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0457d512",
     "timestamp": "2026-05-14T04:01:04.709982+00:00"
   },
   {
@@ -857,10 +857,10 @@
       "Cryptography"
     ],
     "priority_score": 0.81,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e4b1075",
     "timestamp": "2026-05-14T04:01:04.698284+00:00"
   },
   {
