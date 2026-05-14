@@ -1,113 +1,82 @@
 #!/usr/bin/env python3
 """
-Tropical Game Theory: Core Algorithms
+Tropical Game Theory — Algorithms
 
-Implements the key algorithms from the tropical game equilibrium theory:
-1. Tropical Bellman operator and value iteration
-2. Min-plus matrix operations (multiplication, closure, idempotence check)
+Implements the core algorithms for tropical game analysis:
+1. Min-plus matrix operations (multiplication, closure/Kleene star)
+2. Tropical Bellman value iteration
 3. Saddle-point detection
-4. Game value computation (max-min, min-max)
-5. Tropical policy extraction
+4. Tropical game solver
 """
 
-from typing import Optional, Tuple, List
 import numpy as np
+from typing import Tuple, Optional, List
 
 
-# ═══════════════════════════════════════════════
-# 1. Min-Plus Matrix Algebra
-# ═══════════════════════════════════════════════
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 1: Min-Plus Matrix Algebra
+# ═══════════════════════════════════════════════════════════════════════
 
-def minplus_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+def min_plus_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     """
     Min-plus matrix multiplication: (A ⊗ B)[i,k] = min_j (A[i,j] + B[j,k]).
 
-    Parameters:
-        A: n×m matrix
-        B: m×p matrix
-
-    Returns:
-        n×p matrix C where C[i,k] = min_j (A[i,j] + B[j,k])
-
-    Complexity: O(n·m·p)
-
-    Example:
-        >>> A = np.array([[0, 3], [2, 0]])
-        >>> minplus_multiply(A, A)
-        array([[0., 3.],
-               [2., 0.]])
+    Time complexity: O(n³)
+    Space complexity: O(n²)
     """
-    n, m = A.shape
-    _, p = B.shape
-    C = np.full((n, p), np.inf)
+    n = A.shape[0]
+    C = np.full((n, n), np.inf)
     for i in range(n):
-        for k in range(p):
+        for k in range(n):
             C[i, k] = np.min(A[i, :] + B[:, k])
     return C
 
 
-def minplus_closure(B: np.ndarray) -> np.ndarray:
+def min_plus_closure(A: np.ndarray, max_iter: int = 100) -> np.ndarray:
     """
-    Min-plus Kleene star (shortest-path closure) via Floyd-Warshall.
+    Compute the min-plus Kleene star (transitive closure):
+    A* = I ⊕ A ⊕ A² ⊕ A³ ⊕ ...
 
-    Computes A = B* = I ⊕ B ⊕ B² ⊕ ... where I is the min-plus identity
-    (0 on diagonal, +∞ off-diagonal) and ⊕ is componentwise min.
+    This gives the all-pairs shortest path matrix.
 
-    The result is the unique min-plus idempotent matrix A with A ≤ B
-    (componentwise) and A[i,i] = 0 for all i (assuming no negative cycles).
+    Time complexity: O(n³ · min(n, max_iter))
+    Space complexity: O(n²)
 
-    Parameters:
-        B: n×n matrix (non-negative entries for well-definedness)
-
-    Returns:
-        n×n min-plus idempotent shortest-path matrix
-
-    Complexity: O(n³)
+    Returns the closure matrix, which is min-plus idempotent.
     """
-    n = B.shape[0]
-    A = B.copy().astype(float)
-    # Set diagonal to 0 (min-plus identity)
-    np.fill_diagonal(A, 0)
+    n = A.shape[0]
+    # Start with identity (0 on diagonal, +inf elsewhere)
+    result = np.full((n, n), np.inf)
+    np.fill_diagonal(result, 0.0)
+
+    # Entrywise min with A
+    result = np.minimum(result, A)
+
+    # Floyd-Warshall style closure
     for k in range(n):
         for i in range(n):
             for j in range(n):
-                if A[i, k] + A[k, j] < A[i, j]:
-                    A[i, j] = A[i, k] + A[k, j]
-    return A
+                result[i, j] = min(result[i, j], result[i, k] + result[k, j])
+
+    return result
 
 
-def is_minplus_idempotent(A: np.ndarray, tol: float = 1e-10) -> bool:
-    """
-    Check if A is min-plus idempotent: A ⊗ A = A.
-
-    Parameters:
-        A: n×n matrix
-        tol: numerical tolerance
-
-    Returns:
-        True if A ⊗ A ≈ A within tolerance
-    """
-    return np.allclose(minplus_multiply(A, A), A, atol=tol)
+def is_min_plus_idempotent(A: np.ndarray, tol: float = 1e-10) -> bool:
+    """Check if A ⊗ A = A in the min-plus semiring."""
+    return np.allclose(min_plus_multiply(A, A), A, atol=tol)
 
 
-# ═══════════════════════════════════════════════
-# 2. Tropical Bellman Operator
-# ═══════════════════════════════════════════════
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 2: Tropical Bellman Value Iteration
+# ═══════════════════════════════════════════════════════════════════════
 
 def tropical_bellman(A: np.ndarray, x: np.ndarray) -> np.ndarray:
     """
-    Tropical Bellman (Shapley) operator: T_A(x)_i = min_j (A[i,j] + x[j]).
+    Apply the tropical Bellman operator:
+    T_A(x)_i = min_j (A[i,j] + x[j])
 
-    This is the min-plus matrix-vector product.
-
-    Parameters:
-        A: n×n payoff matrix
-        x: n-dimensional value vector
-
-    Returns:
-        n-dimensional vector T_A(x)
-
-    Complexity: O(n²)
+    Time complexity: O(n²)
+    Space complexity: O(n)
     """
     n = A.shape[0]
     return np.array([np.min(A[i, :] + x) for i in range(n)])
@@ -115,147 +84,64 @@ def tropical_bellman(A: np.ndarray, x: np.ndarray) -> np.ndarray:
 
 def tropical_value_iteration(
     A: np.ndarray,
-    x0: np.ndarray,
+    x0: Optional[np.ndarray] = None,
     max_iter: int = 1000,
     tol: float = 1e-12
 ) -> Tuple[np.ndarray, int, List[np.ndarray]]:
     """
     Tropical value iteration: repeatedly apply T_A until convergence.
 
-    Parameters:
+    Given initial vector x0, compute x_{k+1} = T_A(x_k) until
+    ||x_{k+1} - x_k||_∞ < tol.
+
+    For min-plus idempotent A, converges in exactly 1 step (after first application).
+    For general A, converges in at most n steps where n = matrix dimension.
+
+    Args:
         A: n×n payoff matrix
-        x0: initial value vector
-        max_iter: maximum number of iterations
-        tol: convergence tolerance (L∞ norm)
+        x0: initial vector (defaults to zeros)
+        max_iter: maximum iterations
+        tol: convergence tolerance
 
     Returns:
-        (v, iterations, history) where v is the (approximate) fixed point,
-        iterations is the number of steps taken, and history is the
-        list of all iterates.
+        (fixed_point, num_iterations, trajectory)
 
-    Complexity: O(n² · iterations)
-    """
-    v = x0.copy()
-    history = [v.copy()]
-
-    for it in range(1, max_iter + 1):
-        v_new = tropical_bellman(A, v)
-        history.append(v_new.copy())
-        if np.max(np.abs(v_new - v)) < tol:
-            return v_new, it, history
-        v = v_new
-
-    return v, max_iter, history
-
-
-def is_tropical_fixed_point(A: np.ndarray, v: np.ndarray, tol: float = 1e-10) -> bool:
-    """
-    Check if v is a fixed point of the tropical Bellman operator T_A.
-
-    Parameters:
-        A: n×n payoff matrix
-        v: n-dimensional candidate fixed point
-
-    Returns:
-        True if T_A(v) ≈ v within tolerance
-    """
-    return np.allclose(tropical_bellman(A, v), v, atol=tol)
-
-
-# ═══════════════════════════════════════════════
-# 3. Tropical Game Values
-# ═══════════════════════════════════════════════
-
-def tropical_lower_value(A: np.ndarray) -> float:
-    """
-    Lower (max-min) value: v̲(A) = max_i min_j A[i,j].
-
-    This is the row player's guaranteed minimum payoff.
-
-    Parameters:
-        A: n×n payoff matrix
-
-    Returns:
-        The lower value
-
-    Complexity: O(n²)
-    """
-    return float(np.max(np.min(A, axis=1)))
-
-
-def tropical_upper_value(A: np.ndarray) -> float:
-    """
-    Upper (min-max) value: v̄(A) = min_j max_i A[i,j].
-
-    This is the column player's guaranteed maximum loss.
-
-    Parameters:
-        A: n×n payoff matrix
-
-    Returns:
-        The upper value
-
-    Complexity: O(n²)
-    """
-    return float(np.min(np.max(A, axis=0)))
-
-
-def tropical_minimax_gap(A: np.ndarray) -> float:
-    """
-    Minimax gap: v̄(A) - v̲(A) ≥ 0.
-
-    Always non-negative by the tropical minimax inequality.
-
-    Parameters:
-        A: n×n payoff matrix
-
-    Returns:
-        The non-negative gap
-    """
-    return tropical_upper_value(A) - tropical_lower_value(A)
-
-
-# ═══════════════════════════════════════════════
-# 4. Saddle-Point Detection
-# ═══════════════════════════════════════════════
-
-def find_saddle_point(A: np.ndarray) -> Optional[Tuple[int, int]]:
-    """
-    Find a saddle point (i₀, j₀) where A[i₀,j₀] is the minimum in its row
-    and the maximum in its column.
-
-    A saddle point satisfies:
-        ∀j: A[i₀,j₀] ≤ A[i₀,j]    (row min)
-        ∀i: A[i,j₀] ≤ A[i₀,j₀]    (column max)
-
-    Parameters:
-        A: n×n payoff matrix
-
-    Returns:
-        (i₀, j₀) if a saddle point exists, None otherwise
-
-    Complexity: O(n²)
+    Time complexity: O(n² · k) where k is number of iterations
+    Space complexity: O(n · k) for trajectory storage
     """
     n = A.shape[0]
-    row_mins = np.min(A, axis=1)
-    col_maxs = np.max(A, axis=0)
+    if x0 is None:
+        x0 = np.zeros(n)
 
-    for i in range(n):
-        for j in range(n):
-            if A[i, j] == row_mins[i] and A[i, j] == col_maxs[j]:
-                return (i, j)
-    return None
+    x = x0.copy()
+    trajectory = [x.copy()]
+
+    for k in range(max_iter):
+        x_new = tropical_bellman(A, x)
+        trajectory.append(x_new.copy())
+
+        if np.max(np.abs(x_new - x)) < tol:
+            return x_new, k + 1, trajectory
+
+        x = x_new
+
+    return x, max_iter, trajectory
 
 
-def find_all_saddle_points(A: np.ndarray) -> List[Tuple[int, int]]:
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 3: Saddle Point Detection
+# ═══════════════════════════════════════════════════════════════════════
+
+def find_saddle_points(A: np.ndarray) -> List[Tuple[int, int]]:
     """
-    Find all saddle points of a matrix.
+    Find all saddle points of matrix A.
 
-    Parameters:
-        A: n×n payoff matrix
+    A saddle point (i0, j0) satisfies:
+    - A[i0, j0] ≤ A[i0, j] for all j  (row minimum)
+    - A[i, j0] ≤ A[i0, j0] for all i  (column maximum)
 
-    Returns:
-        List of (i, j) pairs that are saddle points
+    Time complexity: O(n²)
+    Space complexity: O(n)
     """
     n = A.shape[0]
     row_mins = np.min(A, axis=1)
@@ -266,72 +152,123 @@ def find_all_saddle_points(A: np.ndarray) -> List[Tuple[int, int]]:
         for j in range(n):
             if A[i, j] == row_mins[i] and A[i, j] == col_maxs[j]:
                 saddles.append((i, j))
+
     return saddles
 
 
-# ═══════════════════════════════════════════════
-# 5. Tropical Policy Extraction
-# ═══════════════════════════════════════════════
-
-def extract_greedy_policy(A: np.ndarray, v: np.ndarray) -> np.ndarray:
+def tropical_minimax_gap(A: np.ndarray) -> float:
     """
-    Extract the greedy (optimal) policy from a value vector.
+    Compute the minimax gap: min_j max_i A[i,j] - max_i min_j A[i,j].
 
-    σ(i) = argmin_j (A[i,j] + v[j])
+    By our theorem, this is always ≥ 0.
+    Equals 0 iff a saddle point exists (sufficient condition).
 
-    Parameters:
-        A: n×n payoff matrix
-        v: n-dimensional value vector
+    Time complexity: O(n²)
+    """
+    lower = np.max(np.min(A, axis=1))
+    upper = np.min(np.max(A, axis=0))
+    return upper - lower
 
-    Returns:
-        n-dimensional integer array of optimal actions
 
-    Complexity: O(n²)
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 4: Tropical Game Solver
+# ═══════════════════════════════════════════════════════════════════════
+
+def solve_tropical_game(
+    A: np.ndarray,
+    compute_closure: bool = True
+) -> dict:
+    """
+    Complete tropical game analysis for matrix A.
+
+    Returns a dictionary with:
+    - lower_value: max-min value
+    - upper_value: min-max value
+    - minimax_gap: upper - lower (≥ 0 by theorem)
+    - saddle_points: list of (i, j) saddle point coordinates
+    - is_idempotent: whether A is min-plus idempotent
+    - fixed_point: a fixed point of T_A (computed via value iteration)
+    - closure: min-plus closure A* (if compute_closure=True)
+    - closure_fixed_point: fixed point using closure matrix
+
+    Time complexity: O(n³) for closure, O(n²) for other operations
     """
     n = A.shape[0]
-    return np.array([np.argmin(A[i, :] + v) for i in range(n)])
+
+    result = {
+        'matrix': A,
+        'size': n,
+        'lower_value': float(np.max(np.min(A, axis=1))),
+        'upper_value': float(np.min(np.max(A, axis=0))),
+        'minimax_gap': tropical_minimax_gap(A),
+        'saddle_points': find_saddle_points(A),
+        'is_idempotent': is_min_plus_idempotent(A),
+    }
+
+    # Compute fixed point via value iteration
+    fp, iters, traj = tropical_value_iteration(A)
+    result['fixed_point'] = fp
+    result['iterations_to_converge'] = iters
+
+    if compute_closure:
+        closure = min_plus_closure(A)
+        result['closure'] = closure
+        result['closure_is_idempotent'] = is_min_plus_idempotent(closure)
+
+        # Fixed point via closure (converges in 1 step)
+        fp_closure, iters_c, _ = tropical_value_iteration(closure)
+        result['closure_fixed_point'] = fp_closure
+        result['closure_iterations'] = iters_c
+
+    return result
 
 
-# ═══════════════════════════════════════════════
-# Example Usage
-# ═══════════════════════════════════════════════
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 5: Tropical Policy Extraction
+# ═══════════════════════════════════════════════════════════════════════
+
+def extract_optimal_policy(A: np.ndarray, v: np.ndarray) -> np.ndarray:
+    """
+    Given a fixed point v of T_A, extract the optimal policy:
+    π(i) = argmin_j (A[i,j] + v[j])
+
+    This is the tropical analogue of extracting a best-response strategy
+    from a game value vector.
+
+    Time complexity: O(n²)
+    Space complexity: O(n)
+    """
+    n = A.shape[0]
+    policy = np.zeros(n, dtype=int)
+    for i in range(n):
+        policy[i] = np.argmin(A[i, :] + v)
+    return policy
+
 
 if __name__ == "__main__":
-    print("Tropical Game Theory: Algorithm Demonstrations")
+    print("Tropical Game Solver — Example")
     print("=" * 50)
 
-    # Example 1: Min-plus idempotent matrix and one-step convergence
-    B = np.array([
-        [0, 3, 7],
-        [2, 0, 4],
-        [5, 1, 0]
-    ], dtype=float)
+    A = np.array([
+        [3.0, 5.0, 7.0],
+        [1.0, 4.0, 6.0],
+        [2.0, 3.0, 8.0]
+    ])
 
-    A = minplus_closure(B)
-    print(f"\nOriginal matrix B:\n{B}")
-    print(f"\nShortest-path closure A = B*:\n{A}")
-    print(f"Min-plus idempotent: {is_minplus_idempotent(A)}")
+    result = solve_tropical_game(A)
 
-    x0 = np.array([100.0, 200.0, 300.0])
-    v, iters, history = tropical_value_iteration(A, x0)
-    print(f"\nValue iteration from x₀ = {x0}:")
-    print(f"  Converged in {iters} iteration(s)")
-    print(f"  Fixed point: {v}")
-    print(f"  Greedy policy: {extract_greedy_policy(A, v)}")
+    print(f"Matrix:\n{A}")
+    print(f"\nLower value (max-min): {result['lower_value']}")
+    print(f"Upper value (min-max): {result['upper_value']}")
+    print(f"Minimax gap: {result['minimax_gap']}")
+    print(f"Saddle points: {result['saddle_points']}")
+    print(f"Min-plus idempotent: {result['is_idempotent']}")
+    print(f"Fixed point: {result['fixed_point']}")
+    print(f"Iterations to converge: {result['iterations_to_converge']}")
+    print(f"Closure is idempotent: {result['closure_is_idempotent']}")
 
-    # Example 2: Minimax computation
-    M = np.array([
-        [3, 5, 7],
-        [1, 4, 6],
-        [2, 3, 8]
-    ], dtype=float)
-
-    print(f"\nPayoff matrix M:\n{M}")
-    print(f"Lower value (max-min): {tropical_lower_value(M)}")
-    print(f"Upper value (min-max): {tropical_upper_value(M)}")
-    print(f"Minimax gap: {tropical_minimax_gap(M)}")
-    saddle = find_saddle_point(M)
-    print(f"Saddle point: {saddle}")
-    if saddle:
-        i0, j0 = saddle
-        print(f"Game value = M[{i0},{j0}] = {M[i0, j0]}")
+    # Extract policy
+    fp = result['fixed_point']
+    policy = extract_optimal_policy(A, fp)
+    print(f"\nOptimal policy: {policy}")
+    print(f"Policy meaning: player i should choose action {policy}")

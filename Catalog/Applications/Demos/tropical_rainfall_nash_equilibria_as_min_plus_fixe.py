@@ -1,467 +1,555 @@
 #!/usr/bin/env python3
 """
-Tropical Game Theory: Real-World Applications
+Tropical Game Theory — Real-World Applications
 
-Demonstrates applications of tropical game equilibrium theory to:
-1. Shortest-path network equilibria
-2. Machine scheduling with precedence constraints
-3. Zero-temperature reinforcement learning
-4. Combinatorial auction pricing
+Demonstrates how tropical game theory applies to:
+1. Shortest-path routing in networks
+2. Supply chain optimization (min-cost logistics)
+3. Scheduling / critical path analysis
+4. Adversarial robustness in neural networks (tropical perspective)
 """
 
 import numpy as np
 from algorithms import (
-    tropical_bellman, tropical_value_iteration, minplus_closure,
-    is_tropical_fixed_point, tropical_lower_value, tropical_upper_value,
-    find_saddle_point, extract_greedy_policy
+    tropical_bellman, min_plus_closure, tropical_value_iteration,
+    find_saddle_points, solve_tropical_game, extract_optimal_policy
 )
 
 
-def application_1_network_routing():
-    """
-    Application 1: Network Routing Equilibria
+# ═══════════════════════════════════════════════════════════════════════
+# Application 1: Network Routing as Tropical Game
+# ═══════════════════════════════════════════════════════════════════════
 
-    Model a network of routers where A[i,j] is the latency from router i to j.
-    The tropical fixed point gives equilibrium routing potentials.
+def app_network_routing():
+    """
+    Model network routing as a tropical game.
+
+    Nodes are players, edge weights are costs.
+    The tropical Bellman operator computes optimal next-hop decisions.
+    Fixed points give the steady-state routing table.
     """
     print("=" * 60)
-    print("APPLICATION 1: Network Routing Equilibria")
+    print("Application 1: Network Routing as Tropical Game")
     print("=" * 60)
 
-    # 6-node network: latencies between routers
-    INF = 1000.0  # representing "no direct connection"
-    latency = np.array([
-        [0,    2,   INF, INF, 7,   INF],
-        [2,    0,   3,   INF, INF, INF],
-        [INF,  3,   0,   1,   INF, 5  ],
-        [INF,  INF, 1,   0,   2,   3  ],
-        [7,    INF, INF, 2,   0,   1  ],
-        [INF,  INF, 5,   3,   1,   0  ]
-    ], dtype=float)
-
-    # Compute shortest-path closure
-    shortest = minplus_closure(latency)
-    print(f"\nDirect latency matrix:\n{latency}")
-    print(f"\nShortest-path distances:\n{shortest}")
-
-    # Fixed point = equilibrium potentials from any starting point
-    x0 = np.zeros(6)
-    v, iters, _ = tropical_value_iteration(shortest, x0)
-    print(f"\nEquilibrium potentials (from zero): {v}")
-    print(f"Is fixed point: {is_tropical_fixed_point(shortest, v)}")
-    print(f"Converged in {iters} step(s)")
-
-    # Routing policy
-    policy = extract_greedy_policy(shortest, v)
-    node_names = ['A', 'B', 'C', 'D', 'E', 'F']
-    print(f"\nOptimal next-hop routing:")
-    for i in range(6):
-        print(f"  Router {node_names[i]} → Router {node_names[policy[i]]}")
-
-
-def application_2_scheduling():
-    """
-    Application 2: Machine Scheduling
-
-    Jobs have processing times and precedence constraints.
-    The tropical Bellman fixed point gives earliest start times.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Machine Scheduling")
-    print("=" * 60)
-
-    # 5 jobs with processing times and precedence
-    # A[i,j] = processing time of job i if job j must follow job i
-    # (INF if no precedence)
-    INF = 100.0
-    processing = np.array([
-        [0,   3,   INF, INF, INF],  # Job 0: 3 time units before Job 1
-        [INF, 0,   2,   4,   INF],  # Job 1: 2 before Job 2, 4 before Job 3
-        [INF, INF, 0,   INF, 1  ],  # Job 2: 1 before Job 4
-        [INF, INF, INF, 0,   2  ],  # Job 3: 2 before Job 4
-        [INF, INF, INF, INF, 0  ]   # Job 4: terminal
-    ], dtype=float)
-
-    # Compute closure for transitive precedence
-    A = minplus_closure(processing)
-    print(f"\nDirect precedence matrix:\n{processing}")
-    print(f"\nTransitive closure (min path lengths):\n{A}")
-
-    # Starting from release times
-    release = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
-    earliest_start, iters, _ = tropical_value_iteration(A, release)
-    print(f"\nRelease times: {release}")
-    print(f"Earliest start times: {earliest_start}")
-    print(f"Makespan (max completion): {np.max(earliest_start)}")
-
-
-def application_3_zero_temp_rl():
-    """
-    Application 3: Zero-Temperature Reinforcement Learning
-
-    Compare soft Bellman operator (finite temperature) with tropical
-    Bellman operator (zero temperature) and show convergence.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Zero-Temperature RL Convergence")
-    print("=" * 60)
-
-    def soft_bellman(A: np.ndarray, x: np.ndarray, beta: float) -> np.ndarray:
-        """Soft Bellman: T^β(x)_i = -1/β · log(Σ_j exp(-β(A[i,j] + x[j])))."""
-        n = A.shape[0]
-        result = np.zeros(n)
-        for i in range(n):
-            exponents = -beta * (A[i, :] + x)
-            # Numerically stable log-sum-exp
-            max_exp = np.max(exponents)
-            result[i] = -1.0/beta * (max_exp + np.log(np.sum(np.exp(exponents - max_exp))))
-        return result
-
-    A = np.array([
-        [1.0, 3.0, 5.0],
-        [4.0, 2.0, 1.0],
-        [3.0, 5.0, 2.0]
+    # 5-node network: cost matrix (inf = no direct edge)
+    INF = 1e6
+    cost = np.array([
+        [0,   2,   INF, 6,   INF],
+        [2,   0,   3,   8,   5  ],
+        [INF, 3,   0,   INF, 7  ],
+        [6,   8,   INF, 0,   9  ],
+        [INF, 5,   7,   9,   0  ]
     ])
 
-    x0 = np.array([10.0, 20.0, 30.0])
+    print("\nDirect cost matrix (∞ = no edge):")
+    display = cost.copy()
+    display[display >= INF] = np.inf
+    print(np.array2string(display, precision=0))
 
-    print(f"\nPayoff matrix A:\n{A}")
-    print(f"Starting vector: {x0}")
-    print(f"\nTropical Bellman T_A(x₀): {tropical_bellman(A, x0)}")
+    # Compute shortest-path closure
+    closure = min_plus_closure(cost)
+    print("\nAll-pairs shortest paths (tropical closure):")
+    print(np.array2string(closure, precision=1))
 
-    print(f"\nSoft Bellman at various temperatures:")
-    print(f"{'β':>8} {'T^β(x₀)[0]':>12} {'T^β(x₀)[1]':>12} {'T^β(x₀)[2]':>12} {'L∞ to tropical':>16}")
-    for beta in [0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 50.0, 100.0]:
-        soft = soft_bellman(A, x0, beta)
-        trop = tropical_bellman(A, x0)
-        err = np.max(np.abs(soft - trop))
-        print(f"{beta:8.1f} {soft[0]:12.4f} {soft[1]:12.4f} {soft[2]:12.4f} {err:16.6f}")
+    # Verify idempotence of closure
+    from algorithms import is_min_plus_idempotent
+    print(f"\nClosure is min-plus idempotent: {is_min_plus_idempotent(closure)}")
 
-    print(f"\nAs β → ∞, soft Bellman → tropical Bellman  ✓")
+    # Value iteration from node 0's perspective
+    x0 = np.zeros(5)
+    fp, iters, _ = tropical_value_iteration(closure, x0)
+    print(f"\nFixed point from x0 = {x0}: {fp}")
+    print(f"Converged in {iters} iteration(s)")
+
+    # Extract routing policy
+    policy = extract_optimal_policy(closure, fp)
+    print(f"Optimal next-hop policy: {policy}")
+    print("  (each node routes to the neighbor minimizing total cost)")
 
 
-def application_4_auction():
+# ═══════════════════════════════════════════════════════════════════════
+# Application 2: Supply Chain Min-Cost Logistics
+# ═══════════════════════════════════════════════════════════════════════
+
+def app_supply_chain():
     """
-    Application 4: Combinatorial Auction Equilibrium
+    Model supply chain as a tropical game.
 
-    Model a simple auction where items have valuations by different bidders.
-    Saddle points correspond to competitive equilibrium prices.
+    Warehouses compete to serve demand nodes at minimum cost.
+    The tropical Bellman operator propagates minimum-cost assignments.
     """
     print("\n" + "=" * 60)
-    print("APPLICATION 4: Auction Equilibrium (Saddle Points)")
+    print("Application 2: Supply Chain Optimization")
     print("=" * 60)
 
-    # 4 bidders × 4 items: valuation matrix
-    # (higher value = bidder values item more)
-    valuations = np.array([
-        [8, 3, 5, 2],  # Bidder 0
-        [4, 7, 3, 6],  # Bidder 1
-        [5, 2, 9, 1],  # Bidder 2
-        [3, 6, 4, 8]   # Bidder 3
+    # Cost matrix: warehouse i → customer j
+    # Rows = warehouses, Columns = customers
+    cost = np.array([
+        [10, 15, 20, 25],  # Warehouse A
+        [12, 8,  18, 30],  # Warehouse B
+        [25, 22, 5,  10],  # Warehouse C
+        [20, 25, 15, 8],   # Warehouse D
     ], dtype=float)
 
-    print(f"\nValuation matrix (bidders × items):\n{valuations}")
+    print("\nCost matrix (warehouse → customer):")
+    labels = ['A', 'B', 'C', 'D']
+    print("         Cust1  Cust2  Cust3  Cust4")
+    for i, label in enumerate(labels):
+        print(f"  WH {label}: {cost[i]}")
 
-    lv = tropical_lower_value(valuations)
-    uv = tropical_upper_value(valuations)
-    gap = uv - lv
-    saddle = find_saddle_point(valuations)
+    result = solve_tropical_game(cost, compute_closure=False)
+    print(f"\nLower value (max-min): {result['lower_value']}")
+    print(f"Upper value (min-max): {result['upper_value']}")
+    print(f"Minimax gap: {result['minimax_gap']}")
 
-    print(f"\nMax-min value (bidder guarantee): {lv}")
-    print(f"Min-max value (auctioneer guarantee): {uv}")
-    print(f"Minimax gap: {gap}")
-
-    if saddle:
-        i0, j0 = saddle
-        print(f"\nSaddle point found: Bidder {i0}, Item {j0}")
-        print(f"Equilibrium price = {valuations[i0, j0]}")
-        print("Competitive equilibrium exists!")
+    saddles = result['saddle_points']
+    if saddles:
+        for i, j in saddles:
+            print(f"Saddle point: WH {labels[i]} → Cust{j+1}, cost = {cost[i,j]}")
+            print("This is the minimax-optimal assignment!")
     else:
-        print("\nNo pure saddle point — randomized pricing needed.")
+        print("No pure saddle point — mixed strategies needed in classical theory")
+        print("In tropical theory, the minimax gap measures the 'cost of uncertainty'")
 
-    # Find row mins (bidder guarantees) and column maxes (item competition)
-    print(f"\nBidder guaranteed minimums: {np.min(valuations, axis=1)}")
-    print(f"Item competition maximums: {np.max(valuations, axis=0)}")
+
+# ═══════════════════════════════════════════════════════════════════════
+# Application 3: Critical Path / Scheduling
+# ═══════════════════════════════════════════════════════════════════════
+
+def app_scheduling():
+    """
+    Model project scheduling as a tropical fixed-point problem.
+
+    Tasks have dependencies with processing times.
+    The tropical Bellman operator propagates earliest start times.
+    Fixed points give the critical path schedule.
+    """
+    print("\n" + "=" * 60)
+    print("Application 3: Critical Path Scheduling")
+    print("=" * 60)
+
+    # Task dependency matrix: A[i,j] = time to go from completing task i
+    # to starting task j (including task j's duration)
+    # Using max-plus convention here (dual to min-plus)
+    INF = -1e6  # Using negative infinity for max-plus "zero"
+    A = np.array([
+        [0,   3,   5,   INF, INF],  # Task 0: Start
+        [INF, 0,   INF, 4,   INF],  # Task 1: Foundation
+        [INF, INF, 0,   2,   6],    # Task 2: Framing
+        [INF, INF, INF, 0,   3],    # Task 3: Wiring
+        [INF, INF, INF, INF, 0],    # Task 4: Finish
+    ], dtype=float)
+
+    # For max-plus, negate and use min-plus
+    A_minplus = -A  # Convert to min-plus problem
+    A_minplus[A_minplus > 1e5] = 1e6
+
+    print("\nTask dependency times (max-plus):")
+    tasks = ['Start', 'Foundation', 'Framing', 'Wiring', 'Finish']
+    for i, task in enumerate(tasks):
+        deps = []
+        for j in range(5):
+            if A[i, j] != INF and i != j:
+                deps.append(f"{tasks[j]}({A[i,j]:.0f})")
+        if deps:
+            print(f"  {task} → {', '.join(deps)}")
+
+    # Compute critical path via closure
+    closure = min_plus_closure(A_minplus)
+    # The negated closure gives max-plus shortest paths = longest paths = critical path
+    crit = -closure
+
+    print("\nCritical path lengths (earliest completion times from Start):")
+    for i, task in enumerate(tasks):
+        if crit[0, i] > -1e5:
+            print(f"  Start → {task}: {crit[0, i]:.0f} time units")
+
+    print(f"\nTotal project duration: {crit[0, 4]:.0f} time units")
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Application 4: Adversarial Robustness (Tropical Perspective)
+# ═══════════════════════════════════════════════════════════════════════
+
+def app_adversarial_robustness():
+    """
+    Model adversarial robustness as a tropical minimax game.
+
+    The attacker minimizes classifier confidence (rows = attack strategies).
+    The defender maximizes robustness (columns = defense strategies).
+    The tropical minimax theorem gives bounds on achievable robustness.
+    """
+    print("\n" + "=" * 60)
+    print("Application 4: Adversarial Robustness as Tropical Game")
+    print("=" * 60)
+
+    # Robustness margins for different attack/defense pairs
+    # Rows = attack types, Columns = defense types
+    # Higher values = more robust
+    robustness = np.array([
+        [0.8, 0.3, 0.6, 0.5],  # FGSM attack
+        [0.4, 0.9, 0.2, 0.7],  # PGD attack
+        [0.5, 0.6, 0.7, 0.4],  # C&W attack
+        [0.3, 0.5, 0.4, 0.8],  # AutoAttack
+    ])
+
+    attacks = ['FGSM', 'PGD', 'C&W', 'AutoAttack']
+    defenses = ['AdvTrain', 'Smoothing', 'TRADES', 'Ensemble']
+
+    print("\nRobustness margin matrix:")
+    print(f"{'':12s} {'  '.join(f'{d:>9s}' for d in defenses)}")
+    for i, atk in enumerate(attacks):
+        print(f"  {atk:10s} {' '.join(f'{robustness[i,j]:9.2f}' for j in range(4))}")
+
+    # Minimax analysis (attacker minimizes, defender maximizes)
+    lower = np.max(np.min(robustness, axis=1))
+    upper = np.min(np.max(robustness, axis=0))
+
+    print(f"\nWorst-case guarantee (max-min): {lower:.2f}")
+    print(f"Best achievable defense (min-max): {upper:.2f}")
+    print(f"Minimax gap: {upper - lower:.2f}")
+
+    # Find saddle points
+    saddles = find_saddle_points(robustness)
+    if saddles:
+        for i, j in saddles:
+            print(f"\nSaddle point: {attacks[i]} vs {defenses[j]}")
+            print(f"  Guaranteed robustness margin: {robustness[i,j]:.2f}")
+    else:
+        print("\nNo pure saddle point — the game requires mixed strategies")
+        print("The minimax gap quantifies the 'price of determinism'")
+
+    # Best pure strategies
+    min_per_row = np.min(robustness, axis=1)
+    best_defense_idx = np.argmax(min_per_row)
+    print(f"\nBest pure defense: {defenses[np.argmax(np.min(robustness, axis=0))]}"
+          f" (guarantees ≥ {lower:.2f} robustness)")
 
 
 if __name__ == "__main__":
-    application_1_network_routing()
-    application_2_scheduling()
-    application_3_zero_temp_rl()
-    application_4_auction()
+    app_network_routing()
+    app_supply_chain()
+    app_scheduling()
+    app_adversarial_robustness()
 
     print("\n" + "=" * 60)
-    print("All applications demonstrated successfully!")
+    print("All applications completed successfully.")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Tropical Game Equilibria: Demonstrations
+Tropical Rainfall: Nash Equilibria as Min-Plus Fixed Points — Demonstrations
 
-Demonstrates the core theorems of tropical game theory with concrete
-numerical examples:
-1. Fixed-point characterization of tropical equilibria
-2. Monotonicity of the Bellman operator
-3. One-step convergence under min-plus idempotence
-4. Tropical minimax inequality and saddle-point equality
+This module demonstrates the core theorems of tropical game theory with
+concrete numerical examples, showing how the tropical Bellman operator,
+minimax inequality, saddle points, and idempotence work in practice.
 """
 
 import numpy as np
+from typing import Tuple, Optional
 
-def tropical_bellman(A: np.ndarray, x: np.ndarray) -> np.ndarray:
+# ─── Core Definitions ───────────────────────────────────────────────────
+
+def trop_bellman(A: np.ndarray, x: np.ndarray) -> np.ndarray:
     """Tropical Bellman operator: T_A(x)_i = min_j (A[i,j] + x[j])."""
     n = A.shape[0]
     return np.array([np.min(A[i, :] + x) for i in range(n)])
 
-def is_fixed_point(A: np.ndarray, v: np.ndarray, tol: float = 1e-10) -> bool:
-    """Check if v is a fixed point of T_A."""
-    return np.allclose(tropical_bellman(A, v), v, atol=tol)
 
-def minplus_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+def min_plus_matmul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     """Min-plus matrix multiplication: (A⊗B)[i,k] = min_j (A[i,j] + B[j,k])."""
     n = A.shape[0]
-    C = np.full((n, n), np.inf)
+    C = np.zeros((n, n))
     for i in range(n):
         for k in range(n):
             C[i, k] = np.min(A[i, :] + B[:, k])
     return C
 
-def is_minplus_idempotent(A: np.ndarray, tol: float = 1e-10) -> bool:
-    """Check if A is min-plus idempotent: A⊗A = A."""
-    return np.allclose(minplus_multiply(A, A), A, atol=tol)
 
-def floyd_warshall_closure(B: np.ndarray) -> np.ndarray:
-    """Compute shortest-path closure (min-plus Kleene star) via Floyd-Warshall."""
-    n = B.shape[0]
-    A = B.copy()
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
-                A[i, j] = min(A[i, j], A[i, k] + A[k, j])
-    return A
+def is_min_plus_idempotent(A: np.ndarray, tol: float = 1e-10) -> bool:
+    """Check if A ⊗ A = A in the min-plus semiring."""
+    return np.allclose(min_plus_matmul(A, A), A, atol=tol)
 
-def find_saddle_point(A: np.ndarray):
-    """Find a saddle point if one exists. Returns (i0, j0) or None."""
+
+def row_min(A: np.ndarray) -> np.ndarray:
+    """Row minima: min_j A[i,j] for each i."""
+    return np.min(A, axis=1)
+
+
+def col_max(A: np.ndarray) -> np.ndarray:
+    """Column maxima: max_i A[i,j] for each j."""
+    return np.max(A, axis=0)
+
+
+def trop_lower_value(A: np.ndarray) -> float:
+    """Tropical lower value: max_i min_j A[i,j]."""
+    return float(np.max(row_min(A)))
+
+
+def trop_upper_value(A: np.ndarray) -> float:
+    """Tropical upper value: min_j max_i A[i,j]."""
+    return float(np.min(col_max(A)))
+
+
+def find_saddle_point(A: np.ndarray) -> Optional[Tuple[int, int]]:
+    """Find a saddle point (i0, j0) if one exists."""
     n = A.shape[0]
     for i in range(n):
-        j_min = np.argmin(A[i, :])
-        if A[i, j_min] == np.max(A[:, j_min]):
-            return (i, j_min)
+        for j in range(n):
+            if all(A[i, j] <= A[i, jj] for jj in range(n)) and \
+               all(A[ii, j] <= A[i, j] for ii in range(n)):
+                return (i, j)
     return None
 
-def tropical_lower_value(A: np.ndarray) -> float:
-    """max_i min_j A[i,j]."""
-    return np.max(np.min(A, axis=1))
 
-def tropical_upper_value(A: np.ndarray) -> float:
-    """min_j max_i A[i,j]."""
-    return np.min(np.max(A, axis=0))
+# ─── Demo 1: Fixed Point = Bellman Equation ─────────────────────────────
 
+def demo_fixed_point():
+    print("=" * 60)
+    print("Demo 1: Tropical Fixed Point = Bellman Equation")
+    print("=" * 60)
 
-# ──────────────────────────────────────────────
-# Demo 1: Fixed Point Characterization
-# ──────────────────────────────────────────────
-print("=" * 60)
-print("DEMO 1: Fixed Point ↔ Bellman Equations")
-print("=" * 60)
+    # A shortest-path matrix (min-plus idempotent = closure of distances)
+    A = np.array([
+        [0.0, 2.0, 5.0],
+        [2.0, 0.0, 1.0],
+        [5.0, 1.0, 0.0]
+    ])
 
-A1 = np.array([
-    [0, 3, 7],
-    [2, 0, 4],
-    [5, 1, 0]
-], dtype=float)
+    # The diagonal row of A is a fixed point of T_A
+    v = np.array([0.0, 0.0, 0.0])
+    Tv = trop_bellman(A, v)
+    print(f"\nA = \n{A}")
+    print(f"v = {v}")
+    print(f"T_A(v) = {Tv}")
+    print(f"Fixed point? {np.allclose(Tv, v)}")
 
-# Compute closure to get idempotent matrix
-A1_closure = floyd_warshall_closure(A1)
-print(f"\nOriginal matrix A:\n{A1}")
-print(f"\nShortest-path closure A*:\n{A1_closure}")
-print(f"Is A* min-plus idempotent? {is_minplus_idempotent(A1_closure)}")
+    # Verify coordinatewise: v_i = min_j (A[i,j] + v[j])
+    print("\nCoordinatewise Bellman check:")
+    for i in range(3):
+        val = min(A[i, j] + v[j] for j in range(3))
+        print(f"  min_j(A[{i},j] + v[j]) = {val} = v[{i}] = {v[i]}")
 
-# Find fixed point by applying T once
-x0 = np.array([10.0, 20.0, 30.0])
-v = tropical_bellman(A1_closure, x0)
-print(f"\nStarting vector x₀ = {x0}")
-print(f"T_A*(x₀) = {v}")
-print(f"T_A*(T_A*(x₀)) = {tropical_bellman(A1_closure, v)}")
-print(f"Is T_A*(x₀) a fixed point? {is_fixed_point(A1_closure, v)}")
-
-# Verify coordinatewise
-print("\nCoordinatewise Bellman equations:")
-for i in range(3):
-    lhs = np.min(A1_closure[i, :] + v)
-    print(f"  min_j (A*[{i},j] + v[j]) = {lhs:.4f} = v[{i}] = {v[i]:.4f}  ✓" if abs(lhs - v[i]) < 1e-10 else f"  MISMATCH at i={i}")
+    # Non-fixed-point example
+    w = np.array([1.0, 2.0, 3.0])
+    Tw = trop_bellman(A, w)
+    print(f"\nw = {w}")
+    print(f"T_A(w) = {Tw}")
+    print(f"Fixed point? {np.allclose(Tw, w)}")
 
 
-# ──────────────────────────────────────────────
-# Demo 2: Monotonicity
-# ──────────────────────────────────────────────
-print("\n" + "=" * 60)
-print("DEMO 2: Monotonicity of Bellman Operator")
-print("=" * 60)
+# ─── Demo 2: Monotonicity ───────────────────────────────────────────────
 
-A2 = np.array([[1, 3], [2, 0]], dtype=float)
-x = np.array([1.0, 5.0])
-y = np.array([2.0, 7.0])
-print(f"\nA = {A2.tolist()}")
-print(f"x = {x}, y = {y}")
-print(f"x ≤ y pointwise? {np.all(x <= y)}")
-Tx = tropical_bellman(A2, x)
-Ty = tropical_bellman(A2, y)
-print(f"T(x) = {Tx}, T(y) = {Ty}")
-print(f"T(x) ≤ T(y) pointwise? {np.all(Tx <= Ty + 1e-10)}  ✓")
+def demo_monotonicity():
+    print("\n" + "=" * 60)
+    print("Demo 2: Monotonicity of Bellman Operator")
+    print("=" * 60)
 
+    A = np.array([
+        [1.0, 3.0],
+        [2.0, 4.0]
+    ])
 
-# ──────────────────────────────────────────────
-# Demo 3: One-Step Convergence Under Idempotence
-# ──────────────────────────────────────────────
-print("\n" + "=" * 60)
-print("DEMO 3: One-Step Convergence (Idempotent Matrix)")
-print("=" * 60)
+    x = np.array([0.0, 0.0])
+    y = np.array([1.0, 2.0])
 
-np.random.seed(42)
-B = np.random.uniform(0, 10, (5, 5))
-np.fill_diagonal(B, 0)
-A3 = floyd_warshall_closure(B)
-print(f"\nRandom 5×5 min-plus idempotent matrix (shortest-path closure):")
-print(np.round(A3, 2))
-print(f"Is min-plus idempotent? {is_minplus_idempotent(A3)}")
+    print(f"x = {x}, y = {y}")
+    print(f"x ≤ y pointwise? {all(x[i] <= y[i] for i in range(2))}")
 
-x0 = np.random.uniform(-100, 100, 5)
-print(f"\nRandom starting vector: {np.round(x0, 2)}")
-iterates = [x0]
-for step in range(5):
-    iterates.append(tropical_bellman(A3, iterates[-1]))
-
-print("Value iteration:")
-for step, v in enumerate(iterates):
-    is_fp = is_fixed_point(A3, v)
-    print(f"  Step {step}: {np.round(v, 4)}  {'← FIXED POINT' if is_fp else ''}")
+    Tx = trop_bellman(A, x)
+    Ty = trop_bellman(A, y)
+    print(f"T_A(x) = {Tx}")
+    print(f"T_A(y) = {Ty}")
+    print(f"T_A(x) ≤ T_A(y) pointwise? {all(Tx[i] <= Ty[i] for i in range(2))}")
 
 
-# ──────────────────────────────────────────────
-# Demo 4: Tropical Minimax Inequality
-# ──────────────────────────────────────────────
-print("\n" + "=" * 60)
-print("DEMO 4: Tropical Minimax Inequality")
-print("=" * 60)
+# ─── Demo 3: Min-Plus Idempotence → Operator Idempotence ─────────────
 
-A4 = np.array([
-    [3, 1, 4],
-    [1, 5, 9],
-    [2, 6, 5]
-], dtype=float)
+def demo_idempotence():
+    print("\n" + "=" * 60)
+    print("Demo 3: Min-Plus Idempotent Matrix → Idempotent Operator")
+    print("=" * 60)
 
-lv = tropical_lower_value(A4)
-uv = tropical_upper_value(A4)
-print(f"\nA = \n{A4}")
-print(f"Lower value (max-min) = {lv}")
-print(f"Upper value (min-max) = {uv}")
-print(f"Lower ≤ Upper? {lv <= uv + 1e-10}  (gap = {uv - lv:.4f})  ✓")
+    # Shortest-path closure matrix (all-pairs shortest paths)
+    A = np.array([
+        [0.0, 2.0, 3.0],
+        [2.0, 0.0, 1.0],
+        [3.0, 1.0, 0.0]
+    ])
 
-# Matrix with saddle point
-A5 = np.array([
-    [3, 5, 7],
-    [1, 4, 6],
-    [2, 3, 8]
-], dtype=float)
+    print(f"A = \n{A}")
+    print(f"A ⊗ A = \n{min_plus_matmul(A, A)}")
+    print(f"Min-plus idempotent? {is_min_plus_idempotent(A)}")
 
-saddle = find_saddle_point(A5)
-lv5 = tropical_lower_value(A5)
-uv5 = tropical_upper_value(A5)
-print(f"\nA (with saddle) = \n{A5}")
-print(f"Saddle point: {saddle}")
-if saddle:
-    i0, j0 = saddle
-    print(f"A[{i0},{j0}] = {A5[i0, j0]}")
-print(f"Lower value = {lv5}, Upper value = {uv5}")
-print(f"Equal? {abs(lv5 - uv5) < 1e-10}  ✓")
+    x = np.array([10.0, -5.0, 3.0])
+    Tx = trop_bellman(A, x)
+    TTx = trop_bellman(A, Tx)
+
+    print(f"\nx = {x}")
+    print(f"T_A(x) = {Tx}")
+    print(f"T_A(T_A(x)) = {TTx}")
+    print(f"T_A idempotent on x? {np.allclose(TTx, Tx)}")
+
+    # Verify T_A(x) is a fixed point
+    print(f"T_A(x) is a fixed point? {np.allclose(trop_bellman(A, Tx), Tx)}")
 
 
-# ──────────────────────────────────────────────
-# Demo 5: Statistical Verification
-# ──────────────────────────────────────────────
-print("\n" + "=" * 60)
-print("DEMO 5: Statistical Verification (1000 random matrices)")
-print("=" * 60)
+# ─── Demo 4: Minimax Inequality ─────────────────────────────────────────
 
-np.random.seed(123)
-n_trials = 1000
-n_size = 8
-gaps = []
-saddle_count = 0
-idempotent_one_step = 0
+def demo_minimax():
+    print("\n" + "=" * 60)
+    print("Demo 4: Tropical Minimax Inequality")
+    print("=" * 60)
 
-for _ in range(n_trials):
-    M = np.random.uniform(0, 10, (n_size, n_size))
-    lv = tropical_lower_value(M)
-    uv = tropical_upper_value(M)
-    gaps.append(uv - lv)
-    assert uv >= lv - 1e-10, "Minimax inequality violated!"
-    if find_saddle_point(M) is not None:
-        saddle_count += 1
-        assert abs(lv - uv) < 1e-10, "Saddle but gap > 0!"
+    matrices = [
+        ("Random 3×3", np.array([[3, 1, 4], [1, 5, 9], [2, 6, 5]], dtype=float)),
+        ("Random 4×4", np.array([[1, 7, 3, 2], [5, 2, 8, 4], [6, 3, 1, 9], [4, 8, 5, 3]], dtype=float)),
+        ("Saddle-point matrix", np.array([[3, 5, 7], [1, 4, 6], [2, 3, 8]], dtype=float)),
+    ]
 
-# Test idempotent convergence
-for _ in range(100):
-    B = np.random.uniform(0, 10, (n_size, n_size))
-    np.fill_diagonal(B, 0)
-    A_idem = floyd_warshall_closure(B)
-    x0 = np.random.uniform(-50, 50, n_size)
-    v1 = tropical_bellman(A_idem, x0)
-    v2 = tropical_bellman(A_idem, v1)
-    if np.allclose(v1, v2, atol=1e-10):
-        idempotent_one_step += 1
+    for name, A in matrices:
+        lower = trop_lower_value(A)
+        upper = trop_upper_value(A)
+        saddle = find_saddle_point(A)
+        print(f"\n{name}:")
+        print(f"  A = \n{A}")
+        print(f"  Lower value (max-min) = {lower}")
+        print(f"  Upper value (min-max) = {upper}")
+        print(f"  lower ≤ upper? {lower <= upper + 1e-10}")
+        if saddle:
+            i0, j0 = saddle
+            print(f"  Saddle point at ({i0}, {j0}), value = {A[i0, j0]}")
+            print(f"  Equality: lower = upper = {A[i0, j0]}? {abs(lower - upper) < 1e-10}")
+        else:
+            print(f"  No pure saddle point")
+            print(f"  Gap = {upper - lower}")
 
-print(f"\nMinimax inequality held: 1000/1000  ✓")
-print(f"Matrices with saddle points: {saddle_count}/1000 ({saddle_count/10:.1f}%)")
-print(f"  All saddle-point matrices had gap = 0  ✓")
-print(f"Mean minimax gap: {np.mean(gaps):.4f}")
-print(f"Idempotent one-step convergence: {idempotent_one_step}/100  ✓")
 
-print("\n" + "=" * 60)
-print("All demonstrations completed successfully!")
-print("=" * 60)
+# ─── Demo 5: Value Iteration Convergence ────────────────────────────────
+
+def demo_value_iteration():
+    print("\n" + "=" * 60)
+    print("Demo 5: Value Iteration Convergence")
+    print("=" * 60)
+
+    # Idempotent matrix: converges in 1 step
+    A_idem = np.array([
+        [0.0, 2.0, 3.0],
+        [2.0, 0.0, 1.0],
+        [3.0, 1.0, 0.0]
+    ])
+
+    print("Case 1: Min-plus idempotent matrix")
+    print(f"A = \n{A_idem}")
+    x = np.array([100.0, -50.0, 25.0])
+    print(f"x_0 = {x}")
+    for step in range(5):
+        x_new = trop_bellman(A_idem, x)
+        print(f"x_{step+1} = T_A(x_{step}) = {x_new}, change = {np.max(np.abs(x_new - x)):.6f}")
+        if np.allclose(x_new, x):
+            print(f"  → Converged at step {step+1}!")
+            break
+        x = x_new
+
+    # Non-idempotent matrix: may take more steps
+    print("\nCase 2: Non-idempotent matrix")
+    A_non = np.array([
+        [0.0, 1.0, 10.0],
+        [10.0, 0.0, 1.0],
+        [1.0, 10.0, 0.0]
+    ])
+    print(f"A = \n{A_non}")
+    print(f"Min-plus idempotent? {is_min_plus_idempotent(A_non)}")
+    x = np.array([100.0, 0.0, -50.0])
+    print(f"x_0 = {x}")
+    for step in range(10):
+        x_new = trop_bellman(A_non, x)
+        print(f"x_{step+1} = {x_new}, change = {np.max(np.abs(x_new - x)):.6f}")
+        if np.allclose(x_new, x):
+            print(f"  → Converged at step {step+1}!")
+            break
+        x = x_new
+
+
+# ─── Demo 6: Fixed-Point Set = Image ────────────────────────────────────
+
+def demo_fixed_image():
+    print("\n" + "=" * 60)
+    print("Demo 6: Fixed-Point Set = Image (Idempotent Case)")
+    print("=" * 60)
+
+    A = np.array([
+        [0.0, 2.0, 3.0],
+        [2.0, 0.0, 1.0],
+        [3.0, 1.0, 0.0]
+    ])
+    print(f"A (idempotent) = \n{A}")
+
+    # Generate many images and verify they're all fixed points
+    np.random.seed(42)
+    print("\nSampling random inputs, computing T_A(x), checking if fixed:")
+    for trial in range(5):
+        x = np.random.randn(3) * 10
+        Tx = trop_bellman(A, x)
+        TTx = trop_bellman(A, Tx)
+        print(f"  x = [{x[0]:7.2f}, {x[1]:7.2f}, {x[2]:7.2f}] "
+              f"→ T(x) = [{Tx[0]:7.2f}, {Tx[1]:7.2f}, {Tx[2]:7.2f}] "
+              f"→ fixed? {np.allclose(TTx, Tx)}")
+
+
+if __name__ == "__main__":
+    demo_fixed_point()
+    demo_monotonicity()
+    demo_idempotence()
+    demo_minimax()
+    demo_value_iteration()
+    demo_fixed_image()
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """Generate PACKAGE.json with all embedded content."""
-
 import json
 import base64
+import os
 
-# Read all text files
 def read_file(path):
     with open(path, 'r') as f:
         return f.read()
 
-def read_binary_base64(path):
+def img_to_base64(path):
     with open(path, 'rb') as f:
-        return "data:image/png;base64," + base64.b64encode(f.read()).decode('utf-8')
+        encoded = base64.b64encode(f.read()).decode('utf-8')
+    return f"data:image/png;base64,{encoded}"
 
+# Read all content
 article = read_file('ARTICLE.md')
 research_paper = read_file('RESEARCH_PAPER.md')
 future_directions = read_file('FUTURE_DIRECTIONS.md')
-lean_proofs = read_file('Tropical/TropicalGameEquilibria.lean')
+lean_proofs = read_file('Catalog/Tropical/TropicalGameEquilibria.lean')
 demo_code = read_file('demo.py')
 algorithms_code = read_file('algorithms.py')
 applications_code = read_file('applications.py')
 
-# Read visualization images
-viz_convergence = read_binary_base64('convergence.png')
-viz_minimax = read_binary_base64('minimax_gap.png')
-viz_zero_temp = read_binary_base64('zero_temp.png')
-viz_saddle = read_binary_base64('saddle_geometry.png')
+# Read visualizations
+viz_convergence = img_to_base64('viz_convergence.png')
+viz_minimax = img_to_base64('viz_minimax.png')
+viz_fixed_points = img_to_base64('viz_fixed_points.png')
+viz_idempotence = img_to_base64('viz_idempotence.png')
 
 package = {
     "title": "Tropical Rainfall: Nash Equilibria as Min-Plus Fixed Points",
-    "domain": "Tropical Algebra and Game Theory",
+    "domain": "Tropical Algebra, Game Theory, Fixed-Point Theory",
     "article": article,
     "research_paper": research_paper,
     "future_directions": future_directions,
     "demos": [
         {
-            "name": "Tropical Game Equilibria Demo",
+            "name": "Tropical Game Theory Demonstrations",
             "code": demo_code
         },
         {
@@ -471,59 +559,52 @@ package = {
     ],
     "algorithms": [
         {
-            "name": "Tropical Bellman Operator",
-            "pseudocode": "Input: A ∈ ℝ^{n×n}, x ∈ ℝ^n\nOutput: T_A(x) ∈ ℝ^n\n\nfor i = 0 to n-1:\n    T_A(x)[i] = min_{j=0}^{n-1} (A[i,j] + x[j])\nreturn T_A(x)\n\nComplexity: O(n²)",
+            "name": "Tropical Bellman Value Iteration",
+            "pseudocode": "Input: Matrix A, initial vector x0, tolerance eps\n1. Set x <- x0\n2. Repeat:\n   a. For each i: x'_i <- min_j(A[i,j] + x[j])\n   b. If ||x' - x||_inf < eps: return x'\n   c. Set x <- x'\n3. Return x\n\nComplexity: O(n^2) per iteration, 1 iteration for idempotent matrices",
             "code": algorithms_code
         },
         {
-            "name": "Tropical Value Iteration",
-            "pseudocode": "Input: A ∈ ℝ^{n×n}, x₀ ∈ ℝ^n, ε > 0\nOutput: Fixed point v\n\nv ← x₀\nrepeat:\n    v_new ← T_A(v)\n    if ||v_new - v||_∞ < ε: return v_new\n    v ← v_new\n\nComplexity: O(n² per iteration)\nUnder idempotence: 1 iteration",
-            "code": algorithms_code
+            "name": "Min-Plus Closure (Floyd-Warshall)",
+            "pseudocode": "Input: Matrix A\n1. R <- A; R[i,i] <- min(R[i,i], 0)\n2. For k = 1 to n:\n   For i, j: R[i,j] <- min(R[i,j], R[i,k] + R[k,j])\n3. Return R (guaranteed idempotent)\n\nComplexity: O(n^3)",
+            "code": "# See algorithms.py for full implementation\nimport numpy as np\n\ndef min_plus_closure(A):\n    n = A.shape[0]\n    result = A.copy()\n    for i in range(n):\n        result[i,i] = min(result[i,i], 0.0)\n    for k in range(n):\n        for i in range(n):\n            for j in range(n):\n                result[i,j] = min(result[i,j], result[i,k] + result[k,j])\n    return result\n\n# Example\nA = np.array([[0, 1, 10], [10, 0, 1], [1, 10, 0]], dtype=float)\nprint('Original:', A)\nprint('Closure:', min_plus_closure(A))"
         },
         {
             "name": "Saddle Point Detection",
-            "pseudocode": "Input: A ∈ ℝ^{n×n}\nOutput: (i₀, j₀) or None\n\nrow_mins ← [min_j A[i,j] for each i]\ncol_maxs ← [max_i A[i,j] for each j]\n\nfor i = 0 to n-1:\n    for j = 0 to n-1:\n        if A[i,j] == row_mins[i] and A[i,j] == col_maxs[j]:\n            return (i, j)\nreturn None\n\nComplexity: O(n²)",
-            "code": algorithms_code
+            "pseudocode": "Input: Matrix A\n1. row_min[i] = min_j A[i,j]\n2. col_max[j] = max_i A[i,j]\n3. Return {(i,j) : A[i,j] = row_min[i] and A[i,j] = col_max[j]}\n\nComplexity: O(n^2)",
+            "code": "import numpy as np\n\ndef find_saddle_points(A):\n    n = A.shape[0]\n    row_mins = np.min(A, axis=1)\n    col_maxs = np.max(A, axis=0)\n    saddles = []\n    for i in range(n):\n        for j in range(n):\n            if A[i,j] == row_mins[i] and A[i,j] == col_maxs[j]:\n                saddles.append((i,j))\n    return saddles\n\n# Example with saddle point\nA = np.array([[3, 5, 7], [1, 4, 6], [2, 3, 8]], dtype=float)\nprint('Matrix:', A)\nprint('Saddle points:', find_saddle_points(A))\nprint('Lower value:', np.max(np.min(A, axis=1)))\nprint('Upper value:', np.min(np.max(A, axis=0)))"
         }
     ],
     "visualizations": [
-        {
-            "name": "Value Iteration Convergence",
-            "data": viz_convergence
-        },
-        {
-            "name": "Minimax Gap Distribution",
-            "data": viz_minimax
-        },
-        {
-            "name": "Zero-Temperature Limit",
-            "data": viz_zero_temp
-        },
-        {
-            "name": "Saddle Point Geometry",
-            "data": viz_saddle
-        }
+        {"name": "Value Iteration Convergence", "data": viz_convergence},
+        {"name": "Tropical Minimax Inequality", "data": viz_minimax},
+        {"name": "Fixed-Point Geometry (Image = Fixed Points)", "data": viz_fixed_points},
+        {"name": "Min-Plus Matrix Powers and Closure", "data": viz_idempotence}
     ],
     "lean_proofs": lean_proofs
 }
 
 with open('PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
+    json.dump(package, f, indent=2)
 
-print(f"PACKAGE.json generated ({len(json.dumps(package))} chars)")
+print(f"PACKAGE.json generated ({os.path.getsize('PACKAGE.json')} bytes)")
 
 
 #!/usr/bin/env python3
 """
-Tropical Game Theory: Visualizations
+Tropical Game Theory — Visualizations
 
-Generates publication-quality figures for the research paper.
+Generates publication-quality figures illustrating:
+1. Tropical Bellman operator convergence
+2. Minimax inequality and saddle points
+3. Fixed-point geometry
+4. Min-plus idempotence
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib import cm
 import base64
 from io import BytesIO
 
@@ -533,9 +614,9 @@ def fig_to_base64(fig) -> str:
     buf = BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{data}"
+    return f"data:image/png;base64,{encoded}"
 
 
 def tropical_bellman(A, x):
@@ -543,252 +624,207 @@ def tropical_bellman(A, x):
     return np.array([np.min(A[i, :] + x) for i in range(n)])
 
 
-def soft_bellman(A, x, beta):
+# ═══════════════════════════════════════════════════════════════════════
+# Visualization 1: Value Iteration Convergence
+# ═══════════════════════════════════════════════════════════════════════
+
+def viz_convergence():
+    """Show convergence of tropical value iteration for idempotent vs non-idempotent matrices."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Idempotent case
+    A_idem = np.array([[0, 2, 3], [2, 0, 1], [3, 1, 0]], dtype=float)
+    x = np.array([10.0, -5.0, 3.0])
+    trajectory = [x.copy()]
+    for _ in range(6):
+        x = tropical_bellman(A_idem, x)
+        trajectory.append(x.copy())
+    traj = np.array(trajectory)
+
+    ax = axes[0]
+    for i in range(3):
+        ax.plot(range(len(traj)), traj[:, i], 'o-', linewidth=2, markersize=6,
+                label=f'$v_{i+1}$')
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Idempotent Matrix\n(1-step convergence)', fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.axvline(x=1, color='red', linestyle='--', alpha=0.5, label='Convergence')
+
+    # Non-idempotent case
+    A_non = np.array([[0, 1, 10], [10, 0, 1], [1, 10, 0]], dtype=float)
+    x = np.array([20.0, 0.0, -10.0])
+    trajectory = [x.copy()]
+    for _ in range(8):
+        x = tropical_bellman(A_non, x)
+        trajectory.append(x.copy())
+    traj = np.array(trajectory)
+
+    ax = axes[1]
+    for i in range(3):
+        ax.plot(range(len(traj)), traj[:, i], 'o-', linewidth=2, markersize=6,
+                label=f'$v_{i+1}$')
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Non-Idempotent Matrix\n(multi-step convergence)', fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    fig.suptitle('Tropical Value Iteration Convergence', fontsize=15, fontweight='bold', y=1.02)
+    fig.tight_layout()
+
+    fig.savefig('/workspace/request-project/viz_convergence.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Visualization 2: Minimax Inequality
+# ═══════════════════════════════════════════════════════════════════════
+
+def viz_minimax():
+    """Visualize the minimax inequality with heatmap and value lines."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Case 1: With saddle point (equality)
+    A1 = np.array([[3, 5, 7], [1, 4, 6], [2, 3, 8]], dtype=float)
+    ax = axes[0]
+    im = ax.imshow(A1, cmap='YlOrRd', aspect='equal')
+    for i in range(3):
+        for j in range(3):
+            ax.text(j, i, f'{A1[i,j]:.0f}', ha='center', va='center', fontsize=14, fontweight='bold')
+
+    # Mark saddle point
+    ax.plot(0, 0, 's', color='blue', markersize=30, fillstyle='none', linewidth=3)
+    ax.set_title(f'Saddle Point Matrix\nmax-min = min-max = 3', fontsize=13, fontweight='bold')
+    ax.set_xlabel('Column (j)', fontsize=11)
+    ax.set_ylabel('Row (i)', fontsize=11)
+    plt.colorbar(im, ax=ax, label='Payoff')
+
+    # Case 2: No saddle point (strict inequality)
+    A2 = np.array([[3, 1, 4], [1, 5, 9], [2, 6, 5]], dtype=float)
+    ax = axes[1]
+    im = ax.imshow(A2, cmap='YlOrRd', aspect='equal')
+    for i in range(3):
+        for j in range(3):
+            ax.text(j, i, f'{A2[i,j]:.0f}', ha='center', va='center', fontsize=14, fontweight='bold')
+
+    lower = np.max(np.min(A2, axis=1))
+    upper = np.min(np.max(A2, axis=0))
+    ax.set_title(f'No Saddle Point\nmax-min = {lower:.0f} < min-max = {upper:.0f}', fontsize=13, fontweight='bold')
+    ax.set_xlabel('Column (j)', fontsize=11)
+    ax.set_ylabel('Row (i)', fontsize=11)
+    plt.colorbar(im, ax=ax, label='Payoff')
+
+    fig.suptitle('Tropical Minimax Inequality: max min ≤ min max', fontsize=15, fontweight='bold', y=1.02)
+    fig.tight_layout()
+
+    fig.savefig('/workspace/request-project/viz_minimax.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Visualization 3: Fixed-Point Geometry
+# ═══════════════════════════════════════════════════════════════════════
+
+def viz_fixed_points():
+    """Visualize the image = fixed-point-set theorem for idempotent operators."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 7))
+
+    A = np.array([[0, 2, 3], [2, 0, 1], [3, 1, 0]], dtype=float)
+
+    # Sample many random inputs and plot their images
+    np.random.seed(42)
+    n_samples = 200
+    inputs = np.random.randn(n_samples, 3) * 10
+    outputs = np.array([tropical_bellman(A, x) for x in inputs])
+
+    # Project to 2D using first two coordinates relative to third
+    def project(pts):
+        return pts[:, 0] - pts[:, 2], pts[:, 1] - pts[:, 2]
+
+    xi, yi = project(inputs)
+    xo, yo = project(outputs)
+
+    ax.scatter(xi, yi, c='lightblue', alpha=0.4, s=20, label='Input points x', zorder=1)
+    ax.scatter(xo, yo, c='red', alpha=0.7, s=30, label='Image T_A(x) = fixed points', zorder=2)
+
+    # Draw arrows for a few examples
+    for k in range(0, n_samples, 20):
+        ax.annotate('', xy=(xo[k], yo[k]), xytext=(xi[k], yi[k]),
+                    arrowprops=dict(arrowstyle='->', color='gray', alpha=0.3, lw=0.8))
+
+    ax.set_xlabel('$v_1 - v_3$', fontsize=12)
+    ax.set_ylabel('$v_2 - v_3$', fontsize=12)
+    ax.set_title('Image = Fixed Points\n(Idempotent Bellman Operator)', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11, loc='upper left')
+    ax.grid(True, alpha=0.3)
+    ax.set_aspect('equal')
+
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/viz_fixed_points.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Visualization 4: Idempotence Landscape
+# ═══════════════════════════════════════════════════════════════════════
+
+def viz_idempotence():
+    """Show how min-plus closure makes any matrix idempotent."""
+    fig, axes = plt.subplots(1, 3, figsize=(16, 4.5))
+
+    # Start with a non-idempotent matrix
+    A = np.array([[0, 1, 10], [10, 0, 1], [1, 10, 0]], dtype=float)
+
+    # Compute A, A², A*
+    def min_plus_mul(X, Y):
+        n = X.shape[0]
+        C = np.zeros((n, n))
+        for i in range(n):
+            for k in range(n):
+                C[i, k] = np.min(X[i, :] + Y[:, k])
+        return C
+
+    A2 = min_plus_mul(A, A)
+
+    # Floyd-Warshall closure
+    Astar = A.copy()
     n = A.shape[0]
-    result = np.zeros(n)
-    for i in range(n):
-        exponents = -beta * (A[i, :] + x)
-        max_exp = np.max(exponents)
-        result[i] = -1.0/beta * (max_exp + np.log(np.sum(np.exp(exponents - max_exp))))
-    return result
-
-
-def minplus_closure(B):
-    n = B.shape[0]
-    A = B.copy().astype(float)
-    np.fill_diagonal(A, 0)
     for k in range(n):
         for i in range(n):
             for j in range(n):
-                A[i, j] = min(A[i, j], A[i, k] + A[k, j])
-    return A
+                Astar[i, j] = min(Astar[i, j], Astar[i, k] + Astar[k, j])
 
+    matrices = [A, A2, Astar]
+    titles = ['A (original)', 'A ⊗ A (min-plus square)', 'A* (closure, idempotent)']
 
-# ──────────────────────────────────────────────
-# Figure 1: Value Iteration Convergence
-# ──────────────────────────────────────────────
-def make_fig1():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    for idx, (M, title) in enumerate(zip(matrices, titles)):
+        ax = axes[idx]
+        im = ax.imshow(M, cmap='viridis', aspect='equal')
+        for i in range(3):
+            for j in range(3):
+                color = 'white' if M[i,j] > (M.max() + M.min())/2 else 'black'
+                ax.text(j, i, f'{M[i,j]:.0f}', ha='center', va='center',
+                        fontsize=14, fontweight='bold', color=color)
+        ax.set_title(title, fontsize=12, fontweight='bold')
+        plt.colorbar(im, ax=ax)
 
-    # Left: idempotent matrix - 1 step convergence
-    np.random.seed(42)
-    B = np.random.uniform(0, 10, (5, 5))
-    A = minplus_closure(B)
-    x0 = np.random.uniform(-50, 50, 5)
+    fig.suptitle('Min-Plus Matrix Powers and Closure', fontsize=14, fontweight='bold', y=1.02)
+    fig.tight_layout()
 
-    iterates = [x0]
-    for _ in range(6):
-        iterates.append(tropical_bellman(A, iterates[-1]))
-    iterates = np.array(iterates)
-
-    ax = axes[0]
-    for j in range(5):
-        ax.plot(range(7), iterates[:, j], 'o-', label=f'v[{j}]', markersize=5)
-    ax.axvline(x=1, color='red', linestyle='--', alpha=0.7, label='Convergence')
-    ax.set_xlabel('Iteration', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Idempotent Matrix: 1-Step Convergence', fontsize=13)
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Right: non-idempotent matrix - slower convergence
-    A2 = np.array([
-        [0, 5, 8, 12, 20],
-        [3, 0, 6, 10, 15],
-        [7, 4, 0, 3, 9],
-        [11, 8, 2, 0, 5],
-        [15, 12, 7, 4, 0]
-    ], dtype=float)
-    x0_2 = np.array([100.0, 50.0, -30.0, 80.0, -60.0])
-
-    iterates2 = [x0_2]
-    for _ in range(10):
-        iterates2.append(tropical_bellman(A2, iterates2[-1]))
-    iterates2 = np.array(iterates2)
-
-    ax = axes[1]
-    for j in range(5):
-        ax.plot(range(11), iterates2[:, j], 'o-', label=f'v[{j}]', markersize=5)
-    ax.set_xlabel('Iteration', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('General Matrix: Multi-Step Convergence', fontsize=13)
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    fig.suptitle('Tropical Value Iteration Convergence', fontsize=15, fontweight='bold')
-    plt.tight_layout()
-    return fig_to_base64(fig)
-
-
-# ──────────────────────────────────────────────
-# Figure 2: Minimax Gap Distribution
-# ──────────────────────────────────────────────
-def make_fig2():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    np.random.seed(123)
-    sizes = [4, 6, 8, 10, 15, 20]
-    gap_data = {}
-
-    for n in sizes:
-        gaps = []
-        for _ in range(500):
-            M = np.random.uniform(0, 10, (n, n))
-            lv = np.max(np.min(M, axis=1))
-            uv = np.min(np.max(M, axis=0))
-            gaps.append(uv - lv)
-        gap_data[n] = gaps
-
-    ax = axes[0]
-    bp = ax.boxplot([gap_data[n] for n in sizes], labels=[str(n) for n in sizes],
-                     patch_artist=True)
-    colors = plt.cm.viridis(np.linspace(0.2, 0.8, len(sizes)))
-    for patch, color in zip(bp['boxes'], colors):
-        patch.set_facecolor(color)
-    ax.set_xlabel('Matrix Size n', fontsize=12)
-    ax.set_ylabel('Minimax Gap (v̄ - v̲)', fontsize=12)
-    ax.set_title('Minimax Gap vs. Matrix Size', fontsize=13)
-    ax.grid(True, alpha=0.3, axis='y')
-
-    # Right: histogram for n=10
-    ax = axes[1]
-    ax.hist(gap_data[10], bins=30, color='steelblue', edgecolor='white', alpha=0.8)
-    ax.axvline(x=0, color='red', linestyle='--', linewidth=2, label='Gap = 0 (saddle)')
-    ax.set_xlabel('Minimax Gap', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title('Distribution of Minimax Gap (n=10)', fontsize=13)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3, axis='y')
-
-    fig.suptitle('Tropical Minimax Inequality: Statistical Analysis', fontsize=15, fontweight='bold')
-    plt.tight_layout()
-    return fig_to_base64(fig)
-
-
-# ──────────────────────────────────────────────
-# Figure 3: Zero-Temperature Convergence
-# ──────────────────────────────────────────────
-def make_fig3():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    A = np.array([
-        [1.0, 3.0, 5.0],
-        [4.0, 2.0, 1.0],
-        [3.0, 5.0, 2.0]
-    ])
-    x0 = np.array([10.0, 20.0, 30.0])
-
-    betas = np.logspace(-1, 3, 50)
-    trop = tropical_bellman(A, x0)
-    errors = []
-
-    for beta in betas:
-        s = soft_bellman(A, x0, beta)
-        errors.append(np.max(np.abs(s - trop)))
-
-    ax = axes[0]
-    ax.loglog(betas, errors, 'b-', linewidth=2)
-    ax.set_xlabel('Inverse Temperature β', fontsize=12)
-    ax.set_ylabel('L∞ Error: |T^β(x) - T(x)|', fontsize=12)
-    ax.set_title('Soft → Tropical Convergence Rate', fontsize=13)
-    ax.grid(True, alpha=0.3)
-
-    # Right: component-wise convergence
-    ax = axes[1]
-    betas_sparse = np.logspace(-1, 2, 30)
-    for comp in range(3):
-        vals = [soft_bellman(A, x0, b)[comp] for b in betas_sparse]
-        ax.semilogx(betas_sparse, vals, 'o-', label=f'Soft T^β(x)[{comp}]', markersize=4)
-        ax.axhline(y=trop[comp], color=f'C{comp}', linestyle='--', alpha=0.5)
-
-    ax.set_xlabel('Inverse Temperature β', fontsize=12)
-    ax.set_ylabel('Operator Value', fontsize=12)
-    ax.set_title('Component-wise Convergence', fontsize=13)
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    fig.suptitle('Zero-Temperature Limit: Soft Bellman → Tropical Bellman', fontsize=15, fontweight='bold')
-    plt.tight_layout()
-    return fig_to_base64(fig)
-
-
-# ──────────────────────────────────────────────
-# Figure 4: Saddle Point Geometry
-# ──────────────────────────────────────────────
-def make_fig4():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Matrix with saddle point
-    A1 = np.array([
-        [3, 5, 7],
-        [1, 4, 6],
-        [2, 3, 8]
-    ], dtype=float)
-
-    ax = axes[0]
-    im = ax.imshow(A1, cmap='YlOrRd', aspect='auto')
-    for i in range(3):
-        for j in range(3):
-            color = 'white' if A1[i, j] > 5 else 'black'
-            ax.text(j, i, f'{A1[i,j]:.0f}', ha='center', va='center', fontsize=16,
-                   fontweight='bold' if (i==0 and j==0) else 'normal', color=color)
-    # Highlight saddle
-    circle = plt.Circle((0, 0), 0.4, fill=False, color='blue', linewidth=3)
-    ax.add_patch(circle)
-    ax.set_xticks(range(3))
-    ax.set_yticks(range(3))
-    ax.set_xlabel('Column (j)', fontsize=12)
-    ax.set_ylabel('Row (i)', fontsize=12)
-    ax.set_title('Matrix with Saddle Point at (0,0)\nRow mins: [3,1,2]  Col maxes: [3,5,8]', fontsize=12)
-    plt.colorbar(im, ax=ax)
-
-    # Matrix without saddle point
-    A2 = np.array([
-        [3, 1, 4],
-        [1, 5, 9],
-        [2, 6, 5]
-    ], dtype=float)
-
-    ax = axes[1]
-    im = ax.imshow(A2, cmap='YlOrRd', aspect='auto')
-    for i in range(3):
-        for j in range(3):
-            color = 'white' if A2[i, j] > 5 else 'black'
-            ax.text(j, i, f'{A2[i,j]:.0f}', ha='center', va='center', fontsize=16, color=color)
-    ax.set_xticks(range(3))
-    ax.set_yticks(range(3))
-    ax.set_xlabel('Column (j)', fontsize=12)
-    ax.set_ylabel('Row (i)', fontsize=12)
-    ax.set_title('Matrix without Saddle Point\nRow mins: [1,1,2]  Col maxes: [3,6,9]', fontsize=12)
-    plt.colorbar(im, ax=ax)
-
-    fig.suptitle('Tropical Saddle Point Geometry', fontsize=15, fontweight='bold')
-    plt.tight_layout()
+    fig.savefig('/workspace/request-project/viz_idempotence.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-
-    fig1 = make_fig1()
-    fig2 = make_fig2()
-    fig3 = make_fig3()
-    fig4 = make_fig4()
-
-    # Save as standalone PNGs too
-    for name, data in [("convergence", fig1), ("minimax_gap", fig2),
-                       ("zero_temp", fig3), ("saddle_geometry", fig4)]:
-        img_data = base64.b64decode(data.split(",")[1])
-        with open(f"{name}.png", "wb") as f:
-            f.write(img_data)
-        print(f"  Saved {name}.png")
-
-    print("All visualizations generated!")
-
-    # Export base64 data for JSON package
-    VIZ_DATA = {
-        "convergence": fig1,
-        "minimax_gap": fig2,
-        "zero_temp": fig3,
-        "saddle_geometry": fig4
-    }
+    b64_convergence = viz_convergence()
+    print(f"  Convergence: saved to viz_convergence.png ({len(b64_convergence)} chars)")
+    b64_minimax = viz_minimax()
+    print(f"  Minimax: saved to viz_minimax.png ({len(b64_minimax)} chars)")
+    b64_fixed = viz_fixed_points()
+    print(f"  Fixed points: saved to viz_fixed_points.png ({len(b64_fixed)} chars)")
+    b64_idem = viz_idempotence()
+    print(f"  Idempotence: saved to viz_idempotence.png ({len(b64_idem)} chars)")
+    print("All visualizations generated.")
