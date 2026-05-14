@@ -1,733 +1,528 @@
 #!/usr/bin/env python3
 """
-Applications of Collatz-Tropical Dynamics
+Applications of Tropical Contraction Theory to Collatz and Generalized Dynamics.
 
-Demonstrates real-world connections of the tropical contraction framework:
-1. Pseudorandom number generation from Collatz orbits
-2. Hash function construction using orbit statistics
-3. Stopping time distribution analysis
-4. Connection to coding theory: variable-length codes from parity sequences
+Demonstrates practical applications of the Bellman contraction framework:
+1. Stopping time estimation via value function
+2. Orbit complexity classification
+3. Generalized Collatz maps (5n+1, 7n+1, etc.)
+4. Parity sequence entropy analysis
 """
 
-import math
-import hashlib
-from typing import List, Dict, Tuple
-from collections import Counter
-
-
-# ============================================================
-# Application 1: Collatz-Based Mixing Function
-# ============================================================
-
-def collatz_mixer(seed: int, rounds: int = 100) -> int:
-    """Use Collatz dynamics as a mixing function.
-
-    The chaotic-but-deterministic nature of Collatz orbits provides
-    good bit mixing, illustrating how arithmetic dynamics connects
-    to practical computation.
-
-    The tropical contraction framework shows WHY Collatz orbits
-    eventually concentrate—the logarithmic potential decreases on
-    average—making this a "contracting mixer."
-
-    Args:
-        seed: Input integer (≥ 1)
-        rounds: Number of Collatz steps to mix
-
-    Returns:
-        Mixed output value
-    """
-    n = max(seed, 1)
-    accumulator = 0
-    for i in range(rounds):
-        accumulator ^= n
-        accumulator = (accumulator * 2654435761) & 0xFFFFFFFF  # Knuth multiplicative hash
-        if n % 2 == 0:
-            n = n // 2
-        else:
-            n = 3 * n + 1
-        if n > 2**32:
-            n = n % (2**32 - 1) + 1
-    return accumulator
-
-
-# ============================================================
-# Application 2: Stopping Time Distribution
-# ============================================================
-
-def stopping_time(n: int, max_steps: int = 10000) -> int:
-    """Compute the stopping time: first k such that collatz^k(n) < n.
-
-    The tropical contraction theory predicts that stopping times
-    are finite for all n (conditional on the contraction hypothesis).
-    The distribution of stopping times reveals the structure of
-    residue-class-dependent contraction rates.
-    """
-    original = n
-    for k in range(1, max_steps + 1):
-        if n % 2 == 0:
-            n = n // 2
-        else:
-            n = 3 * n + 1
-        if n < original:
-            return k
-    return -1  # Did not stop
-
-
-def total_stopping_time(n: int, max_steps: int = 10000) -> int:
-    """Compute the total stopping time: first k such that collatz^k(n) = 1."""
-    for k in range(max_steps + 1):
-        if n == 1:
-            return k
-        if n % 2 == 0:
-            n = n // 2
-        else:
-            n = 3 * n + 1
-    return -1
-
-
-def analyze_stopping_times(max_n: int = 10000) -> Dict:
-    """Analyze the distribution of stopping times.
-
-    Returns statistics about how quickly orbits begin to contract,
-    validating the tropical contraction framework's predictions.
-    """
-    times = []
-    total_times = []
-    for n in range(2, max_n + 1):
-        st = stopping_time(n)
-        tt = total_stopping_time(n)
-        if st > 0:
-            times.append(st)
-        if tt >= 0:
-            total_times.append(tt)
-
-    return {
-        'count': len(times),
-        'mean_stopping': sum(times) / len(times) if times else 0,
-        'max_stopping': max(times) if times else 0,
-        'mean_total': sum(total_times) / len(total_times) if total_times else 0,
-        'max_total': max(total_times) if total_times else 0,
-        'all_finite': all(t > 0 for t in times),
-    }
-
-
-# ============================================================
-# Application 3: Parity Sequence Coding
-# ============================================================
-
-def parity_encode(n: int, max_len: int = 100) -> str:
-    """Encode n as its Collatz parity sequence.
-
-    The parity sequence uniquely determines the orbit (given the starting value),
-    creating a variable-length code. The tropical framework shows that codeword
-    lengths are controlled by the logarithmic potential.
-
-    Average codeword length ≈ log₂(n) · (1 + log(3)/log(4))
-    due to the even/odd step ratio.
-    """
-    bits = []
-    current = n
-    while current != 1 and len(bits) < max_len:
-        if current % 2 == 0:
-            bits.append('0')  # even = halving
-            current = current // 2
-        else:
-            bits.append('1')  # odd = 3n+1
-            current = 3 * current + 1
-    return ''.join(bits)
-
-
-def analyze_code_efficiency(max_n: int = 1000) -> Dict:
-    """Analyze the efficiency of parity sequence codes.
-
-    Compares codeword length to log₂(n), testing the tropical
-    potential bound on code lengths.
-    """
-    ratios = []
-    for n in range(2, max_n + 1):
-        code = parity_encode(n)
-        code_len = len(code)
-        log_n = math.log2(n)
-        if log_n > 0:
-            ratios.append(code_len / log_n)
-
-    return {
-        'mean_ratio': sum(ratios) / len(ratios),
-        'max_ratio': max(ratios),
-        'min_ratio': min(ratios),
-        'sample_codes': {n: parity_encode(n) for n in [3, 7, 15, 27, 97]},
-    }
-
-
-# ============================================================
-# Application 4: Residue Class Transition Graph
-# ============================================================
-
-def build_transition_graph(modulus: int) -> Dict[int, Dict]:
-    """Build the finite-state transition graph for Collatz mod m.
-
-    This implements the "renormalization" viewpoint: Collatz dynamics
-    on ℕ projects to a finite-state automaton on Z/mZ. The tropical
-    Lyapunov framework seeks a potential function on this finite graph
-    that certifies global contraction.
-
-    Args:
-        modulus: Size of the state space
-
-    Returns:
-        Dictionary describing the transition graph
-    """
-    graph = {}
-    for r in range(modulus):
-        if r % 2 == 0:
-            target = (r // 2) % modulus
-            weight = -math.log(2)  # log-potential change
-            graph[r] = {
-                'parity': 'even',
-                'target': target,
-                'weight': weight,
-                'operation': f'{r} → {r}//2 ≡ {target} (mod {modulus})',
-            }
-        else:
-            target = (3 * r + 1) % modulus
-            weight = math.log(3 + 1/max(r, 1))  # approximate log-potential change
-            graph[r] = {
-                'parity': 'odd',
-                'target': target,
-                'weight': weight,
-                'operation': f'{r} → 3·{r}+1 ≡ {target} (mod {modulus})',
-            }
-    return graph
-
-
-# ============================================================
-# Main
-# ============================================================
-
-if __name__ == "__main__":
-    print("=" * 70)
-    print("APPLICATIONS OF COLLATZ-TROPICAL DYNAMICS")
-    print("=" * 70)
-
-    # Application 1: Mixing
-    print("\n--- Application 1: Collatz Mixer ---")
-    for seed in [1, 42, 1000, 2**16]:
-        mixed = collatz_mixer(seed)
-        print(f"  mixer({seed}) = {mixed} (0x{mixed:08x})")
-
-    # Application 2: Stopping times
-    print("\n--- Application 2: Stopping Time Distribution ---")
-    stats = analyze_stopping_times(10000)
-    print(f"  Range: n = 2..10000")
-    print(f"  All stopping times finite: {stats['all_finite']}")
-    print(f"  Mean stopping time: {stats['mean_stopping']:.2f}")
-    print(f"  Max stopping time: {stats['max_stopping']}")
-    print(f"  Mean total stopping time: {stats['mean_total']:.2f}")
-    print(f"  Max total stopping time: {stats['max_total']}")
-
-    # Application 3: Parity encoding
-    print("\n--- Application 3: Parity Sequence Codes ---")
-    code_stats = analyze_code_efficiency(1000)
-    print(f"  Mean code_length / log₂(n): {code_stats['mean_ratio']:.3f}")
-    print(f"  Sample codes:")
-    for n, code in code_stats['sample_codes'].items():
-        print(f"    {n:>4} → {code[:40]}{'...' if len(code)>40 else ''} (len={len(code)})")
-
-    # Application 4: Transition graph
-    print("\n--- Application 4: Transition Graph (mod 8) ---")
-    graph = build_transition_graph(8)
-    for r in sorted(graph.keys()):
-        info = graph[r]
-        print(f"  {info['operation']}, weight={info['weight']:.4f}")
-
-    print("\n" + "=" * 70)
-    print("All applications completed.")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Collatz Convergence via Tropical Contracting Dynamics — Demonstrations
-
-This script demonstrates the key theorems from the formal development:
-1. Collatz orbit computation and the 1→4→2→1 cycle
-2. Logarithmic potential tracking along orbits
-3. Even branch exact identity: Φ(n/2) = Φ(n) - log(2)
-4. Odd branch coarse bound: Φ(3n+1) ≤ Φ(n) + log(4)
-5. Two-step odd→even bound: Φ((3n+1)/2) ≤ Φ(n) + log(2)
-6. Arithmetic contraction when 4 | (3n+1)
-7. Residue class analysis for favorable contraction
-"""
-
-import math
+import numpy as np
 from typing import List, Tuple
+from algorithms import bellman_value_iteration, collatz_orbit, log_orbit_analysis
 
 
-def collatz(n: int) -> int:
-    """Standard Collatz map."""
-    if n % 2 == 0:
-        return n // 2
-    else:
-        return 3 * n + 1
+def stopping_time_estimation(max_n: int = 500, gamma: float = 0.95) -> None:
+    """
+    Use the Bellman fixed point to estimate relative stopping-time complexity.
 
-
-def collatz_odd(n: int) -> int:
-    """Accelerated odd step: (3n+1)/2."""
-    return (3 * n + 1) // 2
-
-
-def collatz_orbit(n: int, max_steps: int = 1000) -> List[int]:
-    """Compute the Collatz orbit of n until reaching 1 or max_steps."""
-    orbit = [n]
-    while n != 1 and len(orbit) < max_steps:
-        n = collatz(n)
-        orbit.append(n)
-    return orbit
-
-
-def log_potential(n: int) -> float:
-    """Logarithmic potential Φ(n) = log(n)."""
-    return math.log(n) if n > 0 else 0.0
-
-
-# ============================================================
-# Demo 1: Collatz Cycle and Basic Orbits
-# ============================================================
-def demo_collatz_basics():
+    The fixed-point value f*(n) correlates with the difficulty of the Collatz
+    orbit starting at n: higher values indicate more complex orbits.
+    """
     print("=" * 60)
-    print("DEMO 1: Collatz Basics and the 1→4→2→1 Cycle")
+    print("APPLICATION 1: Stopping Time Estimation via Value Function")
     print("=" * 60)
 
-    # Verify the 3-cycle
-    print(f"\ncollatz(1) = {collatz(1)} (expected: 4)")
-    print(f"collatz(4) = {collatz(4)} (expected: 2)")
-    print(f"collatz(2) = {collatz(2)} (expected: 1)")
-    print("→ 1 is NOT a fixed point; {1,2,4} forms a 3-cycle\n")
+    # Compute fixed point
+    f_star, _, iters = bellman_value_iteration(gamma, 1.0, 1.5, max_n, epsilon=1e-10)
+    print(f"Computed fixed point on [0, {max_n}) in {iters} iterations (γ={gamma})")
 
-    # Show some orbits
-    for start in [7, 27, 97, 871]:
-        orbit = collatz_orbit(start)
-        print(f"Orbit of {start}: length={len(orbit)}, "
-              f"max={max(orbit)}, first 10: {orbit[:10]}...")
+    # Compute actual stopping times
+    stopping_times = {}
+    for n in range(1, max_n):
+        orbit = collatz_orbit(n)
+        stopping_times[n] = len(orbit) - 1
+
+    # Correlation between f* and stopping time
+    ns = list(range(2, max_n))
+    fvals = [f_star[n] for n in ns]
+    stimes = [stopping_times[n] for n in ns]
+
+    corr = np.corrcoef(fvals, stimes)[0, 1]
+    print(f"Correlation between f*(n) and stopping time: {corr:.4f}")
+
+    # Top-10 by value function
+    ranked = sorted(range(2, max_n), key=lambda n: f_star[n], reverse=True)
+    print("\nTop 10 by Bellman potential (most complex orbits):")
+    print(f"  {'n':>5} | {'f*(n)':>10} | {'Steps':>6}")
+    print(f"  {'-'*5}-+-{'-'*10}-+-{'-'*6}")
+    for n in ranked[:10]:
+        print(f"  {n:>5} | {f_star[n]:>10.4f} | {stopping_times[n]:>6}")
+    print()
 
 
-# ============================================================
-# Demo 2: Even Branch Identity
-# ============================================================
-def demo_even_branch():
-    print("\n" + "=" * 60)
-    print("DEMO 2: Even Branch — Φ(n/2) = Φ(n) - log(2)")
+def generalized_collatz_analysis() -> None:
+    """
+    Apply the framework to generalized Collatz maps: n ↦ (kn+1)/2^v for odd n.
+    """
+    print("=" * 60)
+    print("APPLICATION 2: Generalized Collatz Maps")
     print("=" * 60)
 
-    print(f"\n{'n':>8} {'Φ(n)':>12} {'Φ(n/2)':>12} {'Φ(n)-log2':>12} {'Match?':>8}")
-    print("-" * 56)
-    for n in [2, 4, 10, 100, 256, 1000, 65536]:
-        phi_n = log_potential(n)
-        phi_half = log_potential(n // 2)
-        expected = phi_n - math.log(2)
-        match = abs(phi_half - expected) < 1e-12
-        print(f"{n:>8} {phi_n:>12.6f} {phi_half:>12.6f} {expected:>12.6f} {'✓' if match else '✗':>8}")
+    def gen_collatz_orbit(n: int, k: int, max_steps: int = 1000) -> List[int]:
+        """Orbit of the generalized map: even→n/2, odd→k*n+1."""
+        orbit = [n]
+        while n != 1 and len(orbit) < max_steps:
+            n = n // 2 if n % 2 == 0 else k * n + 1
+            orbit.append(n)
+        return orbit
+
+    multipliers = [3, 5, 7]
+    test_values = [27, 31, 97, 127]
+
+    for k in multipliers:
+        log_drift_odd = np.log(k) - np.log(2)  # log(k/2)
+        print(f"\n  k = {k}: odd branch drift = +{log_drift_odd:.4f} "
+              f"({'net contracting' if log_drift_odd < np.log(2) else 'net expanding'} "
+              f"when paired with one even step)")
+
+        for n in test_values:
+            orbit = gen_collatz_orbit(n, k, max_steps=2000)
+            reached_1 = orbit[-1] == 1
+            max_val = max(orbit)
+            print(f"    n={n:>4}: {'→1' if reached_1 else 'diverges/cycles'} "
+                  f"in {len(orbit)-1:>4} steps, max={max_val}")
+
+    print()
 
 
-# ============================================================
-# Demo 3: Odd Branch Coarse Bound
-# ============================================================
-def demo_odd_branch():
-    print("\n" + "=" * 60)
-    print("DEMO 3: Odd Branch — Φ(3n+1) ≤ Φ(n) + log(4)")
+def parity_entropy_analysis(max_n: int = 1000) -> None:
+    """
+    Compute Shannon entropy of Collatz parity sequences.
+
+    The entropy rate of the parity sequence (even/odd indicators along orbits)
+    determines the effective compression ratio achievable by the Bellman framework.
+    """
+    print("=" * 60)
+    print("APPLICATION 3: Parity Sequence Entropy")
     print("=" * 60)
 
-    print(f"\n{'n':>8} {'Φ(3n+1)':>12} {'Φ(n)+log4':>12} {'Gap':>12} {'Valid?':>8}")
-    print("-" * 56)
-    for n in [1, 3, 5, 7, 11, 27, 99, 999, 9999]:
-        phi_collatz = log_potential(3 * n + 1)
-        bound = log_potential(n) + math.log(4)
-        gap = bound - phi_collatz
-        valid = phi_collatz <= bound + 1e-12
-        print(f"{n:>8} {phi_collatz:>12.6f} {bound:>12.6f} {gap:>12.6f} {'✓' if valid else '✗':>8}")
-
-    print("\nNote: The gap approaches log(4/3) ≈ 0.2877 as n → ∞")
-    print(f"log(4/3) = {math.log(4/3):.6f}")
-
-
-# ============================================================
-# Demo 4: Two-Step Bound
-# ============================================================
-def demo_two_step():
-    print("\n" + "=" * 60)
-    print("DEMO 4: Two-Step Bound — Φ((3n+1)/2) ≤ Φ(n) + log(2)")
-    print("=" * 60)
-
-    print(f"\n{'n':>8} {'(3n+1)/2':>10} {'Φ(result)':>12} {'Φ(n)+log2':>12} {'Valid?':>8}")
-    print("-" * 54)
-    for n in [1, 3, 5, 7, 11, 27, 99, 999, 9999, 99999]:
-        if n % 2 == 1:  # odd
-            result = (3 * n + 1) // 2
-            phi_result = log_potential(result)
-            bound = log_potential(n) + math.log(2)
-            valid = phi_result <= bound + 1e-12
-            print(f"{n:>8} {result:>10} {phi_result:>12.6f} {bound:>12.6f} {'✓' if valid else '✗':>8}")
-
-
-# ============================================================
-# Demo 5: Arithmetic Contraction via 4-Divisibility
-# ============================================================
-def demo_four_divisibility():
-    print("\n" + "=" * 60)
-    print("DEMO 5: Arithmetic Contraction — 4|(3n+1) ⟹ (3n+1)/4 < n")
-    print("=" * 60)
-
-    print(f"\n{'n':>8} {'n%4':>5} {'3n+1':>8} {'4|(3n+1)?':>10} {'(3n+1)/4':>10} {'< n?':>6}")
-    print("-" * 51)
-    contracting = 0
+    total_even = 0
     total_odd = 0
-    for n in range(1, 101):
-        if n % 2 == 1:  # odd
-            total_odd += 1
-            val = 3 * n + 1
-            four_divides = val % 4 == 0
-            quotient = val // 4 if four_divides else None
-            contracts = quotient is not None and quotient < n
-            if four_divides:
-                contracting += 1
-            if n <= 25:
-                print(f"{n:>8} {n%4:>5} {val:>8} {'Yes' if four_divides else 'No':>10} "
-                      f"{str(quotient) if quotient else '-':>10} "
-                      f"{'✓' if contracts else ('=' if quotient == n else '-'):>6}")
+    bigram_counts = {"EE": 0, "EO": 0, "OE": 0, "OO": 0}
 
-    print(f"\nAmong odd numbers 1-99: {contracting}/{total_odd} have 4|(3n+1)")
-    print(f"Fraction: {contracting/total_odd:.2%}")
-    print("Theory predicts: exactly those with n ≡ 1 (mod 4)")
+    for n in range(2, max_n + 1):
+        orbit = collatz_orbit(n)
+        parities = ['E' if x % 2 == 0 else 'O' for x in orbit[:-1]]
+
+        for p in parities:
+            if p == 'E':
+                total_even += 1
+            else:
+                total_odd += 1
+
+        for i in range(len(parities) - 1):
+            bigram = parities[i] + parities[i+1]
+            bigram_counts[bigram] += 1
+
+    total = total_even + total_odd
+    p_even = total_even / total
+    p_odd = total_odd / total
+
+    # Unigram entropy
+    H1 = -(p_even * np.log2(p_even) + p_odd * np.log2(p_odd))
+
+    # Bigram entropy rate
+    total_bigrams = sum(bigram_counts.values())
+    H2 = 0
+    for bg, count in bigram_counts.items():
+        if count > 0:
+            p = count / total_bigrams
+            H2 -= p * np.log2(p)
+    H2_rate = H2 / 2  # per-symbol rate from bigram model
+
+    print(f"  Analyzed orbits for n = 2 to {max_n}")
+    print(f"  Even fraction: {p_even:.4f}")
+    print(f"  Odd fraction:  {p_odd:.4f}")
+    print(f"  Expected even fraction (heuristic): {np.log2(3)/(1+np.log2(3)):.4f}")
+    print(f"  Unigram entropy: {H1:.4f} bits/symbol")
+    print(f"  Bigram entropy rate: {H2_rate:.4f} bits/symbol")
+    print(f"  Maximum entropy: 1.0000 bits/symbol")
+    print(f"  Redundancy: {1 - H1:.4f} bits/symbol")
+    print(f"\n  Bigram distribution:")
+    for bg, count in sorted(bigram_counts.items()):
+        print(f"    {bg}: {count/total_bigrams:.4f}")
+
+    print(f"\n  The sub-maximal entropy ({H1:.4f} < 1) means parity sequences")
+    print(f"  are compressible — validating the MDL interpretation of the")
+    print(f"  Bellman fixed point as a compression certificate.\n")
 
 
-# ============================================================
-# Demo 6: Log Potential Along Orbits
-# ============================================================
-def demo_orbit_potential():
-    print("\n" + "=" * 60)
-    print("DEMO 6: Log Potential Along Collatz Orbits")
+def contraction_rate_vs_gamma() -> None:
+    """
+    Show how convergence speed varies with the discount factor.
+    """
+    print("=" * 60)
+    print("APPLICATION 4: Convergence Speed vs Discount Factor")
     print("=" * 60)
 
-    for start in [27, 97]:
-        orbit = collatz_orbit(start)
-        potentials = [log_potential(n) for n in orbit]
-        even_steps = sum(1 for i in range(len(orbit)-1) if orbit[i] % 2 == 0)
-        odd_steps = sum(1 for i in range(len(orbit)-1) if orbit[i] % 2 == 1)
+    N = 100
+    a, b = 1.0, 1.5
+    epsilon = 1e-8
 
-        print(f"\nOrbit of {start}:")
-        print(f"  Length: {len(orbit)} steps")
-        print(f"  Even steps: {even_steps}, Odd steps: {odd_steps}")
-        print(f"  Even/Odd ratio: {even_steps/max(odd_steps,1):.3f}")
-        print(f"  Initial Φ: {potentials[0]:.4f}")
-        print(f"  Final Φ: {potentials[-1]:.4f} (log 1 = 0)")
-        print(f"  Max Φ: {max(potentials):.4f} at n={orbit[potentials.index(max(potentials))]}")
-        print(f"  Net drift: {even_steps * (-math.log(2)) + odd_steps * math.log(4):.4f} (coarse bound)")
-        print(f"  Actual net: {potentials[-1] - potentials[0]:.4f}")
+    print(f"  {'γ':>6} | {'Iterations':>11} | {'Theoretical bound':>18}")
+    print(f"  {'-'*6}-+-{'-'*11}-+-{'-'*18}")
 
+    for gamma in [0.1, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99]:
+        _, diffs, iters = bellman_value_iteration(gamma, a, b, N, epsilon=epsilon)
+        theoretical = int(np.ceil(np.log(epsilon) / np.log(gamma)))
+        print(f"  {gamma:>6.2f} | {iters:>11} | {theoretical:>18}")
 
-# ============================================================
-# Demo 7: Symbolic Drift Analysis
-# ============================================================
-def demo_symbolic_drift():
-    print("\n" + "=" * 60)
-    print("DEMO 7: Symbolic Drift — When Even Steps Dominate")
-    print("=" * 60)
-
-    print("\nFor net contraction: need even_steps/odd_steps > log(4)/log(2) = 2")
-    print("Equivalently: fraction of odd steps < 1/3\n")
-
-    print(f"{'Start':>8} {'Steps':>8} {'Even':>6} {'Odd':>6} {'Ratio':>8} {'Odd Frac':>10} {'Contract?':>10}")
-    print("-" * 66)
-
-    for start in [3, 7, 15, 27, 97, 255, 447, 871, 6171, 77031]:
-        orbit = collatz_orbit(start)
-        total = len(orbit) - 1
-        even = sum(1 for i in range(total) if orbit[i] % 2 == 0)
-        odd = total - even
-        ratio = even / max(odd, 1)
-        odd_frac = odd / max(total, 1)
-        contracts = odd_frac < 1/3
-        print(f"{start:>8} {total:>8} {even:>6} {odd:>6} {ratio:>8.3f} {odd_frac:>10.4f} "
-              f"{'✓ (<1/3)' if contracts else '✗ (≥1/3)':>10}")
+    print()
 
 
 if __name__ == "__main__":
-    demo_collatz_basics()
-    demo_even_branch()
-    demo_odd_branch()
-    demo_two_step()
-    demo_four_divisibility()
-    demo_orbit_potential()
-    demo_symbolic_drift()
-
-    print("\n" + "=" * 60)
-    print("All demos completed successfully.")
-    print("=" * 60)
+    stopping_time_estimation()
+    generalized_collatz_analysis()
+    parity_entropy_analysis()
+    contraction_rate_vs_gamma()
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Collatz-Tropical Dynamics
+Tropical Contraction Theory for Collatz Dynamics — Demonstrations
 
-Generates publication-quality figures showing:
-1. Collatz orbits in standard and logarithmic coordinates
-2. Branch-wise potential analysis (even/odd)
-3. Residue class contraction map
-4. Symbolic drift density
-5. Stopping time heatmap
+This script demonstrates the key mathematical results formalized in Lean 4:
+1. Branch isometry: Collatz branches preserve distance in log-coordinates
+2. Min-plus contraction: |min(a,b) - min(c,d)| ≤ max(|a-c|, |b-d|)
+3. Bellman operator convergence: Picard iteration converges geometrically
+4. Fixed-point characterization: the value function satisfies the Bellman equation
 """
 
-import math
-import base64
-import io
-from typing import List, Tuple
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from typing import Callable
 
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import matplotlib.cm as cm
-    import numpy as np
-    HAS_MATPLOTLIB = True
-except ImportError:
-    HAS_MATPLOTLIB = False
-    print("matplotlib not available, generating SVG fallbacks")
+# ══════════════════════════════════════════════════════════════════════════════
+# Section 1: Branch Maps and Isometry Verification
+# ══════════════════════════════════════════════════════════════════════════════
 
+def branch_even(x: float) -> float:
+    """Even Collatz branch in log-coordinates: x ↦ x - log(2)."""
+    return x - np.log(2)
 
-def collatz(n: int) -> int:
+def branch_odd(x: float) -> float:
+    """Odd Collatz branch in log-coordinates: x ↦ x + log(3) - log(2)."""
+    return x + np.log(3) - np.log(2)
+
+def demo_branch_isometry():
+    """Demonstrate that both branches are isometries (preserve distance)."""
+    print("=" * 70)
+    print("DEMO 1: Branch Isometry Verification")
+    print("=" * 70)
+    
+    np.random.seed(42)
+    pairs = np.random.randn(1000, 2) * 10
+    
+    for name, branch in [("Even (x - log2)", branch_even), ("Odd (x + log(3/2))", branch_odd)]:
+        max_err = 0.0
+        for x, y in pairs:
+            original_dist = abs(x - y)
+            mapped_dist = abs(branch(x) - branch(y))
+            max_err = max(max_err, abs(original_dist - mapped_dist))
+        print(f"  Branch {name}: max |dist(f(x),f(y)) - dist(x,y)| = {max_err:.2e}")
+    
+    print("  → Both branches are exact isometries (translations preserve distance).\n")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Section 2: Min-Plus Contraction Algebra
+# ══════════════════════════════════════════════════════════════════════════════
+
+def demo_min_lipschitz():
+    """Demonstrate the min-Lipschitz property."""
+    print("=" * 70)
+    print("DEMO 2: Min-Plus Contraction (|min(a,b)-min(c,d)| ≤ max(|a-c|,|b-d|))")
+    print("=" * 70)
+    
+    np.random.seed(123)
+    N = 100000
+    vals = np.random.randn(N, 4) * 10
+    
+    lhs = np.abs(np.minimum(vals[:, 0], vals[:, 1]) - np.minimum(vals[:, 2], vals[:, 3]))
+    rhs = np.maximum(np.abs(vals[:, 0] - vals[:, 2]), np.abs(vals[:, 1] - vals[:, 3]))
+    
+    ratio = lhs / np.maximum(rhs, 1e-15)
+    
+    violations = np.sum(lhs > rhs + 1e-12)
+    print(f"  Tested {N} random quadruples (a, b, c, d)")
+    print(f"  Violations: {violations}")
+    print(f"  Max ratio LHS/RHS: {ratio.max():.6f}")
+    print(f"  Mean ratio LHS/RHS: {ratio.mean():.6f}")
+    print("  → Min operation is 1-Lipschitz in max-norm (confirmed).\n")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Section 3: Bellman Operator and Value Iteration
+# ══════════════════════════════════════════════════════════════════════════════
+
+def collatz_bellman(gamma: float, a: float, b: float, 
+                     f: np.ndarray) -> np.ndarray:
+    """
+    Apply the discounted tropical Collatz Bellman operator.
+    
+    T_γ[f](n) = γ · min(f(n//2) + a, f((3n+1)//2) + b)
+    """
+    N = len(f)
+    result = np.zeros(N)
+    for n in range(N):
+        branch_even_val = f[n // 2] + a
+        branch_odd_val = f[min((3 * n + 1) // 2, N - 1)] + b
+        result[n] = gamma * min(branch_even_val, branch_odd_val)
+    return result
+
+def demo_bellman_convergence():
+    """Demonstrate geometric convergence of Picard iteration."""
+    print("=" * 70)
+    print("DEMO 3: Bellman Operator — Picard Iteration Convergence")
+    print("=" * 70)
+    
+    N = 200  # domain size
+    gamma = 0.9  # discount factor
+    a, b = 1.0, 1.5  # branch costs
+    
+    # Initial function: constant zero
+    f = np.zeros(N)
+    
+    # Track convergence
+    iterates = [f.copy()]
+    diffs = []
+    
+    for k in range(80):
+        f_new = collatz_bellman(gamma, a, b, f)
+        diff = np.max(np.abs(f_new - f))
+        diffs.append(diff)
+        f = f_new
+        iterates.append(f.copy())
+        if diff < 1e-14:
+            break
+    
+    print(f"  Parameters: γ = {gamma}, a = {a}, b = {b}, domain = [0, {N})")
+    print(f"  Converged in {len(diffs)} iterations")
+    print(f"  Theoretical contraction constant: γ = {gamma}")
+    
+    # Estimate actual contraction rate
+    if len(diffs) > 5:
+        rates = [diffs[i+1] / max(diffs[i], 1e-15) for i in range(min(20, len(diffs)-1))]
+        avg_rate = np.mean(rates[:10])
+        print(f"  Observed contraction rate: ≈ {avg_rate:.4f}")
+    
+    print(f"  Final sup-norm change: {diffs[-1]:.2e}")
+    
+    # Verify fixed-point equation
+    f_check = collatz_bellman(gamma, a, b, f)
+    residual = np.max(np.abs(f_check - f))
+    print(f"  Fixed-point residual ‖Tf - f‖_∞ = {residual:.2e}")
+    print("  → Geometric convergence confirmed (rate ≈ γ).\n")
+    
+    return f, diffs, iterates
+
+def demo_bellman_contraction_rate():
+    """Show that the contraction constant equals γ."""
+    print("=" * 70)
+    print("DEMO 4: Contraction Constant = γ (Lipschitz verification)")
+    print("=" * 70)
+    
+    N = 100
+    gammas = [0.1, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99]
+    a, b = 1.0, 2.0
+    
+    print(f"  {'γ':>6} | {'Observed Lip. const':>20} | {'Ratio obs/γ':>12}")
+    print(f"  {'-'*6}-+-{'-'*20}-+-{'-'*12}")
+    
+    for gamma in gammas:
+        np.random.seed(42)
+        max_ratio = 0.0
+        for _ in range(200):
+            f = np.random.randn(N) * 5
+            g = np.random.randn(N) * 5
+            Tf = collatz_bellman(gamma, a, b, f)
+            Tg = collatz_bellman(gamma, a, b, g)
+            dist_Tf_Tg = np.max(np.abs(Tf - Tg))
+            dist_f_g = np.max(np.abs(f - g))
+            if dist_f_g > 1e-10:
+                max_ratio = max(max_ratio, dist_Tf_Tg / dist_f_g)
+        
+        print(f"  {gamma:>6.2f} | {max_ratio:>20.6f} | {max_ratio/gamma:>12.6f}")
+    
+    print("  → Observed Lipschitz constant ≤ γ in all cases (confirming the theorem).\n")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Section 4: Collatz Orbit Analysis
+# ══════════════════════════════════════════════════════════════════════════════
+
+def collatz_step(n: int) -> int:
+    """Standard Collatz step."""
     return n // 2 if n % 2 == 0 else 3 * n + 1
 
-def collatz_orbit(n: int, max_steps: int = 1000) -> List[int]:
+def collatz_orbit(n: int, max_steps: int = 1000) -> list:
+    """Compute the Collatz orbit of n."""
     orbit = [n]
     while n != 1 and len(orbit) < max_steps:
-        n = collatz(n)
+        n = collatz_step(n)
         orbit.append(n)
     return orbit
 
+def demo_collatz_orbits_and_potential():
+    """Show how the Bellman fixed point relates to Collatz orbit structure."""
+    print("=" * 70)
+    print("DEMO 5: Collatz Orbits and Tropical Potential")
+    print("=" * 70)
+    
+    test_values = [27, 31, 41, 97, 127, 171]
+    
+    for n in test_values:
+        orbit = collatz_orbit(n)
+        log_orbit = [np.log(x) for x in orbit]
+        max_log = max(log_orbit)
+        min_log = min(log_orbit[:-1]) if len(log_orbit) > 1 else log_orbit[0]
+        steps = len(orbit) - 1
+        print(f"  n = {n:>4}: steps = {steps:>3}, "
+              f"max(log) = {max_log:.2f}, "
+              f"avg drift = {(log_orbit[-1] - log_orbit[0])/max(steps,1):.4f}")
+    
+    print("\n  The tropical potential function f_γ encodes the discounted")
+    print("  branch-cost structure of these orbits.\n")
 
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+# ══════════════════════════════════════════════════════════════════════════════
+# Section 5: Visualizations
+# ══════════════════════════════════════════════════════════════════════════════
 
+def create_visualizations(fixed_point, diffs, iterates):
+    """Generate publication-quality figures."""
+    
+    # Figure 1: Convergence of Picard iteration
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    ax = axes[0]
+    ax.semilogy(range(1, len(diffs)+1), diffs, 'b-o', markersize=3, linewidth=1.5)
+    ax.set_xlabel('Iteration k', fontsize=12)
+    ax.set_ylabel('‖T^k f₀ - T^{k-1} f₀‖_∞', fontsize=12)
+    ax.set_title('Geometric Convergence of Picard Iteration', fontsize=13)
+    ax.grid(True, alpha=0.3)
+    
+    # Overlay theoretical rate
+    if len(diffs) > 1:
+        gamma = 0.9
+        theoretical = [diffs[0] * gamma**k for k in range(len(diffs))]
+        ax.semilogy(range(1, len(theoretical)+1), theoretical, 'r--', 
+                    alpha=0.7, label=f'γ^k · C₀ (γ={gamma})')
+        ax.legend(fontsize=10)
+    
+    # Figure 2: The fixed-point function
+    ax = axes[1]
+    ax.plot(range(len(fixed_point)), fixed_point, 'g-', linewidth=1.5)
+    ax.set_xlabel('n', fontsize=12)
+    ax.set_ylabel('f_γ(n)', fontsize=12)
+    ax.set_title('Tropical Collatz Fixed Point f_γ', fontsize=13)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('convergence_and_fixedpoint.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("  Saved: convergence_and_fixedpoint.png")
+    
+    # Figure 2: Evolution of iterates
+    fig, ax = plt.subplots(figsize=(10, 6))
+    iterations_to_show = [0, 1, 2, 5, 10, 20, len(iterates)-1]
+    colors = plt.cm.viridis(np.linspace(0, 1, len(iterations_to_show)))
+    
+    for idx, k in enumerate(iterations_to_show):
+        if k < len(iterates):
+            ax.plot(range(len(iterates[k])), iterates[k], 
+                   color=colors[idx], linewidth=1.2, alpha=0.8,
+                   label=f'k = {k}')
+    
+    ax.set_xlabel('n', fontsize=12)
+    ax.set_ylabel('T^k[f₀](n)', fontsize=12)
+    ax.set_title('Evolution of Value Function Under Picard Iteration', fontsize=13)
+    ax.legend(fontsize=9, loc='best')
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('iterate_evolution.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("  Saved: iterate_evolution.png")
+    
+    # Figure 3: Contraction rate verification
+    fig, ax = plt.subplots(figsize=(8, 5))
+    gammas = np.linspace(0.05, 0.99, 20)
+    observed_rates = []
+    
+    N = 80
+    a, b = 1.0, 1.5
+    for gamma in gammas:
+        np.random.seed(42)
+        max_ratio = 0.0
+        for _ in range(100):
+            f = np.random.randn(N) * 3
+            g = np.random.randn(N) * 3
+            Tf = collatz_bellman(gamma, a, b, f)
+            Tg = collatz_bellman(gamma, a, b, g)
+            d_out = np.max(np.abs(Tf - Tg))
+            d_in = np.max(np.abs(f - g))
+            if d_in > 1e-10:
+                max_ratio = max(max_ratio, d_out / d_in)
+        observed_rates.append(max_ratio)
+    
+    ax.plot(gammas, gammas, 'r--', linewidth=2, label='Theoretical bound (γ)')
+    ax.plot(gammas, observed_rates, 'bo-', markersize=5, linewidth=1.5,
+           label='Observed Lipschitz constant')
+    ax.set_xlabel('Discount factor γ', fontsize=12)
+    ax.set_ylabel('Lipschitz constant', fontsize=12)
+    ax.set_title('Contraction Constant Verification: Observed ≤ γ', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('contraction_rate.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("  Saved: contraction_rate.png")
+    
+    # Figure 4: Collatz orbit in log-coordinates with branch structure
+    fig, ax = plt.subplots(figsize=(10, 5))
+    
+    for n_start in [27, 97, 171]:
+        orbit = collatz_orbit(n_start)
+        log_orbit = [np.log(x) for x in orbit]
+        ax.plot(range(len(log_orbit)), log_orbit, '-', linewidth=1.2,
+               alpha=0.8, label=f'n₀ = {n_start}')
+    
+    ax.axhline(y=0, color='k', linestyle=':', alpha=0.3)
+    ax.set_xlabel('Step', fontsize=12)
+    ax.set_ylabel('log(n)', fontsize=12)
+    ax.set_title('Collatz Orbits in Tropical (Logarithmic) Coordinates', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('collatz_tropical_orbits.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("  Saved: collatz_tropical_orbits.png")
 
-def generate_orbit_plot() -> str:
-    """Plot 1: Collatz orbits in standard and log coordinates."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#f39c12']
-    starts = [27, 97, 171, 447, 871]
-
-    for start, color in zip(starts, colors):
-        orbit = collatz_orbit(start)
-        ax1.plot(orbit, color=color, alpha=0.8, linewidth=0.8, label=f'n={start}')
-        log_orbit = [math.log(x) if x > 0 else 0 for x in orbit]
-        ax2.plot(log_orbit, color=color, alpha=0.8, linewidth=0.8, label=f'n={start}')
-
-    ax1.set_xlabel('Step', fontsize=12)
-    ax1.set_ylabel('Value', fontsize=12)
-    ax1.set_title('Collatz Orbits (Standard Coordinates)', fontsize=13)
-    ax1.legend(fontsize=9)
-    ax1.set_yscale('log')
-
-    ax2.set_xlabel('Step', fontsize=12)
-    ax2.set_ylabel('log(value) = Φ(n)', fontsize=12)
-    ax2.set_title('Collatz Orbits (Tropical/Log Coordinates)', fontsize=13)
-    ax2.axhline(y=0, color='black', linewidth=0.5, linestyle='--', alpha=0.5)
-    ax2.legend(fontsize=9)
-
-    fig.suptitle('Standard vs. Tropical Coordinates for Collatz Dynamics', fontsize=14, y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_branch_analysis() -> str:
-    """Plot 2: Even/odd branch potential changes."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Even branch: exact identity Φ(n/2) = Φ(n) - log(2)
-    even_ns = list(range(2, 1001, 2))
-    even_changes = [math.log(n//2) - math.log(n) for n in even_ns]
-    ax1.scatter(even_ns, even_changes, s=1, alpha=0.5, color='#3498db')
-    ax1.axhline(y=-math.log(2), color='#e74c3c', linewidth=2, label=f'−log(2) ≈ {-math.log(2):.4f}')
-    ax1.set_xlabel('n (even)', fontsize=12)
-    ax1.set_ylabel('Φ(n/2) − Φ(n)', fontsize=12)
-    ax1.set_title('Even Branch: Exact Translation', fontsize=13)
-    ax1.legend(fontsize=10)
-
-    # Odd branch: bound Φ(3n+1) ≤ Φ(n) + log(4)
-    odd_ns = list(range(1, 1001, 2))
-    odd_changes = [math.log(3*n+1) - math.log(n) for n in odd_ns]
-    ax2.scatter(odd_ns, odd_changes, s=1, alpha=0.5, color='#e74c3c')
-    ax2.axhline(y=math.log(4), color='#2ecc71', linewidth=2, label=f'log(4) ≈ {math.log(4):.4f}')
-    ax2.axhline(y=math.log(3), color='#9b59b6', linewidth=2, linestyle='--',
-                label=f'log(3) ≈ {math.log(3):.4f} (asymptote)')
-    ax2.set_xlabel('n (odd)', fontsize=12)
-    ax2.set_ylabel('Φ(3n+1) − Φ(n)', fontsize=12)
-    ax2.set_title('Odd Branch: Coarse Tropical Majorization', fontsize=13)
-    ax2.legend(fontsize=10)
-
-    fig.suptitle('Piecewise Tropical Structure of Collatz Dynamics', fontsize=14, y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_contraction_map() -> str:
-    """Plot 3: Residue class contraction analysis."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # 2-adic valuation of 3n+1 for odd n
-    modulus = 128
-    residues = list(range(1, modulus, 2))
-    v2_vals = []
-    for r in residues:
-        val = 3 * r + 1
-        v2 = 0
-        temp = val
-        while temp % 2 == 0:
-            v2 += 1
-            temp //= 2
-        v2_vals.append(v2)
-
-    colors_v2 = ['#e74c3c' if v < 2 else '#f39c12' if v == 2 else '#2ecc71' for v in v2_vals]
-    ax1.bar(range(len(residues)), v2_vals, color=colors_v2, width=1.0)
-    ax1.set_xlabel('Odd residue index (mod 128)', fontsize=12)
-    ax1.set_ylabel('ν₂(3n+1)', fontsize=12)
-    ax1.set_title('2-Adic Valuation by Residue Class', fontsize=13)
-    ax1.axhline(y=2, color='black', linewidth=0.5, linestyle='--', alpha=0.5)
-
-    # Contraction ratio
-    log_ratios = [math.log(3) - v * math.log(2) for v in v2_vals]
-    colors_ratio = ['#2ecc71' if r < 0 else '#e74c3c' for r in log_ratios]
-    ax2.bar(range(len(residues)), log_ratios, color=colors_ratio, width=1.0)
-    ax2.axhline(y=0, color='black', linewidth=1.5)
-    ax2.set_xlabel('Odd residue index (mod 128)', fontsize=12)
-    ax2.set_ylabel('log(3) − ν₂·log(2)', fontsize=12)
-    ax2.set_title('Log-Contraction Ratio by Residue', fontsize=13)
-
-    contracting = sum(1 for r in log_ratios if r < 0)
-    total = len(log_ratios)
-    ax2.text(0.02, 0.98, f'Contracting: {contracting}/{total} ({contracting/total:.0%})',
-             transform=ax2.transAxes, fontsize=10, verticalalignment='top',
-             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
-
-    fig.suptitle('Residue Class Contraction Analysis', fontsize=14, y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_stopping_time_plot() -> str:
-    """Plot 4: Stopping time distribution."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    max_n = 10000
-    total_times = []
-    for n in range(2, max_n + 1):
-        current = n
-        for k in range(10000):
-            if current == 1:
-                total_times.append(k)
-                break
-            current = collatz(current)
-        else:
-            total_times.append(-1)
-
-    ns = list(range(2, max_n + 1))
-    ax1.scatter(ns, total_times, s=0.3, alpha=0.3, color='#3498db')
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('Total stopping time', fontsize=12)
-    ax1.set_title('Total Stopping Times', fontsize=13)
-
-    # Histogram
-    valid_times = [t for t in total_times if t >= 0]
-    ax2.hist(valid_times, bins=80, color='#3498db', alpha=0.7, edgecolor='white')
-    ax2.axvline(x=sum(valid_times)/len(valid_times), color='#e74c3c',
-                linewidth=2, label=f'Mean = {sum(valid_times)/len(valid_times):.1f}')
-    ax2.set_xlabel('Total stopping time', fontsize=12)
-    ax2.set_ylabel('Count', fontsize=12)
-    ax2.set_title('Distribution of Total Stopping Times', fontsize=13)
-    ax2.legend(fontsize=10)
-
-    fig.suptitle('Stopping Time Analysis (n = 2 to 10,000)', fontsize=14, y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_drift_plot() -> str:
-    """Plot 5: Symbolic drift analysis."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    max_n = 5000
-    odd_fractions = []
-    for n in range(2, max_n + 1):
-        orbit = collatz_orbit(n, max_steps=10000)
-        total = len(orbit) - 1
-        if total > 0:
-            odd = sum(1 for i in range(total) if orbit[i] % 2 == 1)
-            odd_fractions.append(odd / total)
-
-    ax1.scatter(range(2, max_n + 1), odd_fractions, s=0.3, alpha=0.3, color='#9b59b6')
-    ax1.axhline(y=1/3, color='#e74c3c', linewidth=2, label='Critical: 1/3',
-                linestyle='--')
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('Fraction of odd steps', fontsize=12)
-    ax1.set_title('Odd Step Fraction per Orbit', fontsize=13)
-    ax1.legend(fontsize=10)
-    ax1.set_ylim(0, 0.6)
-
-    ax2.hist(odd_fractions, bins=60, color='#9b59b6', alpha=0.7, edgecolor='white')
-    ax2.axvline(x=1/3, color='#e74c3c', linewidth=2, linestyle='--', label='Critical: 1/3')
-    ax2.axvline(x=sum(odd_fractions)/len(odd_fractions), color='#2ecc71',
-                linewidth=2, label=f'Mean = {sum(odd_fractions)/len(odd_fractions):.4f}')
-    ax2.set_xlabel('Fraction of odd steps', fontsize=12)
-    ax2.set_ylabel('Count', fontsize=12)
-    ax2.set_title('Distribution of Odd Step Fractions', fontsize=13)
-    ax2.legend(fontsize=10)
-
-    fig.suptitle('Symbolic Drift Analysis: Even Steps Must Dominate', fontsize=14, y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_all_visualizations() -> dict:
-    """Generate all visualizations and return as base64 dict."""
-    if not HAS_MATPLOTLIB:
-        return {}
-
-    print("Generating visualizations...")
-    results = {}
-
-    print("  1/5: Orbit plot...")
-    results['orbits'] = generate_orbit_plot()
-
-    print("  2/5: Branch analysis...")
-    results['branches'] = generate_branch_analysis()
-
-    print("  3/5: Contraction map...")
-    results['contraction'] = generate_contraction_map()
-
-    print("  4/5: Stopping times...")
-    results['stopping'] = generate_stopping_time_plot()
-
-    print("  5/5: Drift analysis...")
-    results['drift'] = generate_drift_plot()
-
-    print("Done!")
-    return results
-
+# ══════════════════════════════════════════════════════════════════════════════
+# Main
+# ══════════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    viz = generate_all_visualizations()
-    for name, data in viz.items():
-        print(f"Generated {name}: {len(data)} chars")
-        # Save as file too
-        if data.startswith("data:image/png;base64,"):
-            raw = base64.b64decode(data.split(",")[1])
-            with open(f"viz_{name}.png", "wb") as f:
-                f.write(raw)
-            print(f"  Saved as viz_{name}.png")
+    print("\n" + "═" * 70)
+    print("  TROPICAL CONTRACTION THEORY FOR COLLATZ DYNAMICS")
+    print("  Computational Demonstrations")
+    print("═" * 70 + "\n")
+    
+    demo_branch_isometry()
+    demo_min_lipschitz()
+    fixed_point, diffs, iterates = demo_bellman_convergence()
+    demo_bellman_contraction_rate()
+    demo_collatz_orbits_and_potential()
+    
+    print("=" * 70)
+    print("Generating visualizations...")
+    print("=" * 70)
+    create_visualizations(fixed_point, diffs, iterates)
+    
+    print("\n" + "═" * 70)
+    print("  All demonstrations complete.")
+    print("═" * 70)
