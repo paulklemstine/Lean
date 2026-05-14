@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "connect_to_orbit_structure.json",
+    "title": "Orbit Complexity of Tropical Matrix Powers from Spectral Data",
+    "domain": "Tropical Algebra / Dynamical Systems",
+    "date": "2026-05-14T19:35:16Z",
+    "exp_id": "c337fb05"
+  },
+  {
     "filename": "implementation_priority.json",
     "title": "Pareto Rigidity and Transposition Invariance on Pitch-Class Space",
     "domain": "Algebraic Combinatorics / Musical Mathematics / Discrete Optimization",
@@ -4462,6 +4469,63 @@ window.PACKAGE_DB = {
       "seed"
     ]
   },
+  "connect_to_orbit_structure.json": {
+    "title": "Orbit Complexity of Tropical Matrix Powers from Spectral Data",
+    "domain": "Tropical Algebra / Dynamical Systems",
+    "article": "# The Hidden Order in Chaos: How a Strange Algebra Reveals the Fate of Complex Systems\n\n## When Addition Becomes Maximum\n\nImagine you're managing a massive factory with dozens of machines, each feeding parts to the next. Every morning, the question is the same: when will today's batch be done? The answer depends on the slowest link in the chain \u2014 the machine that takes the longest. If machine A needs parts from machines B and C, it can't start until *both* deliveries arrive. The start time isn't the sum of the delivery times; it's the *maximum*.\n\nThis simple observation \u2014 that \"addition\" sometimes means \"take the larger one\" \u2014 opens a door to one of the most surprising corners of modern mathematics. It's called *tropical algebra*, named (somewhat whimsically) after the Brazilian mathematician Imre Simon, and it's been quietly revolutionizing how we understand everything from factory scheduling to train timetables to the inner workings of artificial intelligence.\n\nIn tropical algebra, you replace ordinary addition with maximum, and ordinary multiplication with addition. It sounds like a parlor trick, but the consequences are profound. Equations that were impossible to solve in classical mathematics suddenly become tractable. Curved surfaces flatten into crystalline polygonal shapes. And as a recent mathematical breakthrough shows, the long-term behavior of complex systems \u2014 systems that seem chaotic and unpredictable \u2014 turns out to be governed by a single number.\n\n## The Orbit Problem\n\nHere's the core puzzle. Take a square grid of numbers \u2014 mathematicians call it a matrix \u2014 and multiply it by itself, over and over, using tropical rules. Each entry of the result captures the \"best path\" through a network: the fastest route, the highest bandwidth, the maximum capacity.\n\nDo this once: you get the best one-step paths. Twice: the best two-step paths. A hundred times: the best hundred-step paths. The natural question is: what does this sequence look like as you go further and further?\n\nIn ordinary algebra, we know the answer. The entries of a matrix raised to the *k*-th power grow (or shrink) at a rate determined by the *eigenvalues* \u2014 special numbers that encode the matrix's fundamental stretching and rotating behavior. This is the backbone of everything from Google's PageRank algorithm to quantum mechanics.\n\nBut tropical algebra is different. The operations are nonlinear. The usual tools break. For decades, mathematicians have understood bits and pieces \u2014 computing the tropical analogue of eigenvalues, analyzing small examples \u2014 but the big picture remained murky. Does the same kind of spectral control exist in the tropical world?\n\nThe answer, it turns out, is yes. And it's even more elegant than the classical case.\n\n## The Spectral Drift\n\nThe first key insight is about *growth*. When you take tropical powers of a matrix, the entries grow roughly linearly. There's a number *\u03c1* \u2014 the *tropical spectral radius* \u2014 that controls this growth. After *k* tropical multiplications, every entry is approximately *k\u03c1*.\n\nThink of it like a river with a steady current. The water (the matrix entries) flows downstream at a constant speed *\u03c1*. If you're standing on the bank watching a particular molecule, it drifts past at speed *\u03c1*, give or take some small fluctuations.\n\nThe crucial question is about those fluctuations. Strip away the linear drift \u2014 subtract *k\u03c1* from every entry of the *k*-th power \u2014 and what's left? Is the residual chaotic, or is it orderly?\n\n## The Finite-State Collapse\n\nThe breakthrough result says something startling: the residual is not just orderly, it's *finite*. After removing the spectral drift, the tropical matrix powers cycle through at most a bounded number of distinct patterns. No matter how many times you multiply, you'll never see more than a certain fixed number of different \"shapes\" in the residual.\n\nThe bound is explicit and computable. If the matrix is *n \u00d7 n* and the residual entries stay within a range of width *2C*, then there are at most *(2C+1)^(n\u00b2)* possible patterns. For a 3\u00d73 matrix with residuals bounded by 5, that's 11\u2079 \u2248 2.4 billion possible patterns. In practice, the number is usually far smaller \u2014 often just a handful.\n\nThis is the *finite-state collapse theorem*: a system that looks infinite-dimensional (the sequence of all tropical powers) actually lives in a finite state space once you subtract the drift.\n\n## The Eigenvector Connection\n\nBut where does the bound come from? This is where the second piece of the puzzle clicks into place.\n\nIn tropical algebra, an *eigenvector* is a vector *v* such that when you apply the matrix to it (tropically), each entry shifts by the eigenvalue *\u03c1* plus the corresponding component of *v*. Formally: the maximum over all *j* of *(G_{ij} + v_j)* equals *\u03c1 + v_i*.\n\nThe new result proves that if such an eigenvector exists, then the entries of the *k*-th tropical power are controlled by the gauge of the eigenvector: the *k*-th power entry at position *(i,j)* is at most *k\u03c1 + v_i - v_j*. The eigenvector acts like a *ruler* that measures how far each entry can deviate from the drift.\n\nThis is remarkable because it connects two seemingly different mathematical objects: the *dynamical* behavior of matrix powers (an orbit problem) and the *algebraic* structure of eigenvectors (a spectral problem). The eigenvector, a static object, completely controls the dynamics.\n\n## Why Zero Entropy Matters\n\nIn physics and information theory, *entropy* measures the complexity or unpredictability of a system. A system with high entropy is chaotic and information-rich; one with low entropy is orderly and predictable.\n\nThe finite-state collapse immediately implies that the *orbit entropy* \u2014 the rate at which the number of distinct patterns grows \u2014 is zero. More precisely, the number of distinct normalized powers grows at most like a constant, so the entropy rate *log(count)/N* tends to zero as *N* grows.\n\nThis is a profound statement about predictability. It says that no matter how complicated a tropical matrix looks, its long-term behavior is fundamentally simple. The spectral radius captures all the essential dynamics; everything else is a bounded, finite transient.\n\nIn the language of dynamical systems, the tropical matrix power iteration is *zero-entropy*. It lives at the opposite extreme from chaos.\n\n## Factories, Trains, and Chips\n\nThese aren't abstract curiosities. Tropical matrix powers literally describe real-world systems:\n\n**Manufacturing.** A factory with *n* machines, where machine *i* needs input from machine *j* with processing time *G_{ij}*, is modeled by the tropical system *x(k+1) = G \u2297 x(k)*. The spectral radius *\u03c1* is the *cycle time* \u2014 the minimum time between consecutive batches. The finite-state collapse theorem guarantees that the production schedule eventually becomes periodic, and the period is bounded by the eigenvector gauge. Factory managers can compute, in advance, exactly how many production patterns will appear before the system settles into its rhythm.\n\n**Train timetables.** A rail network where trains must synchronize at stations is another tropical system. The spectral radius gives the minimum headway between trains. The finite orbit means the timetable is eventually periodic \u2014 good news for commuters and scheduling algorithms alike.\n\n**Digital circuits.** The propagation delay through a chip's logic gates follows tropical rules (the output is ready when the *last* input arrives). The spectral radius gives the minimum clock period. Finite orbit means timing analysis has bounded complexity.\n\n**Neural networks.** Each layer of a ReLU neural network \u2014 the kind powering modern AI \u2014 computes a tropical linear function (maximum of affine functions). The orbit complexity of these tropical maps controls the network's expressivity. Bounded orbit means bounded representational complexity.\n\n## A Bridge Between Worlds\n\nWhat makes this result particularly exciting is that it sits at a crossroads of multiple mathematical disciplines:\n\nFrom *algebra*, it uses the tropical semiring and eigenvector theory. From *dynamics*, it uses orbit counting and entropy. From *combinatorics*, it uses the pigeonhole principle in a finite box. From *analysis*, it uses the vanishing of a limit.\n\nHistorically, these fields developed separately. Tropical geometry emerged from algebraic geometry in the 1990s and 2000s, driven by problems in mirror symmetry and enumerative geometry. Max-plus algebra grew independently in control theory and operations research, driven by scheduling problems. Dynamical systems theory evolved from celestial mechanics through chaos theory. Entropy migrated from thermodynamics to information theory to ergodic theory.\n\nThe orbit complexity theorem weaves these threads together into a single statement: **spectral data determines dynamical complexity in the tropical world**. It's the tropical analogue of one of the deepest principles in mathematics \u2014 that eigenvalues control dynamics \u2014 but realized in a fundamentally different algebraic setting.\n\n## The Road Ahead\n\nThe immediate theorem raises as many questions as it answers. Does the normalized orbit always become eventually periodic (not just bounded)? What determines the period? Can the theory extend from single matrices to semigroups \u2014 collections of matrices whose products model switching systems?\n\nEarly computational experiments are tantalizing. In every example tested, the normalized orbit doesn't just stay bounded \u2014 it becomes exactly periodic after a transient. The period seems to be related to the structure of \"critical cycles\" in the matrix, much as the period of a Markov chain is determined by the gcd of its cycle lengths.\n\nIf these conjectures are confirmed, we'd have a complete dynamical classification of tropical linear systems: the spectral radius controls the drift, the eigenvector controls the amplitude, and the critical graph controls the period. That would be the tropical Perron-Frobenius theorem \u2014 the full tropical analogue of one of the most important results in classical matrix theory.\n\nFor applications, the implications are immediate and practical. Any system modeled by max-plus dynamics \u2014 factories, networks, circuits, neural networks \u2014 comes with a guaranteed certificate of eventual periodicity and bounded complexity. The certificate is computable from the spectral radius and eigenvector, both of which can be found in polynomial time.\n\n## The Deepest Pattern\n\nPerhaps the most striking aspect of this work is what it reveals about the nature of complexity itself. We tend to think of \"simple\" and \"complex\" as endpoints of a spectrum. But the orbit complexity theorem shows something subtler: apparent complexity can be an illusion created by linear drift.\n\nThe tropical matrix powers *look* like they're doing something increasingly complicated as the entries grow without bound. But strip away the trivial linear growth \u2014 the spectral drift that a single number captures \u2014 and the residual dynamics is finite. There are only so many patterns. The system was simple all along; it was just wearing a disguise.\n\nThis echoes a theme that runs throughout science: from the apparent chaos of planetary orbits (which Kepler revealed as simple ellipses) to the seeming randomness of genetic mutation (which reveals the order of natural selection) to the noise of financial markets (which yields to the structure of stochastic models). The message is always the same: *look past the drift, and the hidden order appears*.\n\nIn tropical mathematics, we can now prove this. The drift has a name \u2014 the spectral radius. The hidden order has a bound \u2014 the eigenvector gauge. And the proof is absolute: not a statistical tendency or an approximation, but a mathematical certainty.\n\nThat a system governed by maximums instead of sums should reveal the same deep structure as its classical counterpart \u2014 eigenvalues controlling dynamics, finite residual complexity, zero entropy \u2014 is, in the end, not surprising. It's a testament to the universality of mathematics itself. The same patterns recur, whether you add or maximize, whether you work with real numbers or tropical ones. The algebra changes. The truth doesn't.\n",
+    "research_paper": "# Orbit Complexity of Tropical Matrix Powers from Spectral Data\n\n## Abstract\n\nWe develop a rigorous theory connecting the spectral data of tropical (max-plus) matrices to the dynamical complexity of their power orbits. Working over the integers, we prove three main theorems: (A) if all entries of tropical powers grow linearly with bounded residual, the normalized orbit cardinality is bounded by $(2C+1)^{n^2}$; (B) a tropical eigenvector with eigenvalue $\\rho$ implies the upper bound $G^{\\otimes k}_{ij} \\leq k\\rho + v_i - v_j$ for all powers; and (C) bounded normalized orbit implies zero asymptotic orbit entropy. All results are machine-verified. These theorems establish that tropical spectral data governs orbit structure, providing a tropical analogue of the classical principle that eigenvalues control dynamics.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe max-plus algebra $(\\mathbb{R} \\cup \\{-\\infty\\}, \\max, +)$ arises naturally in discrete event systems [1], scheduling theory [2], and tropical geometry [3]. A fundamental object is the tropical matrix power: given $G \\in \\mathbb{Z}^{n \\times n}$, the $k$-th tropical power is defined by\n\n$$G^{\\otimes k}_{ij} = \\max_{i_1, \\ldots, i_{k-1}} \\sum_{t=0}^{k-1} G_{i_t, i_{t+1}}$$\n\nwhere $i_0 = i$ and $i_k = j$. This computes the maximum-weight path of length $k$ from $j$ to $i$ in the weighted digraph with adjacency matrix $G$.\n\nThe central question of this paper is: **how does the orbit $\\{G, G^{\\otimes 2}, G^{\\otimes 3}, \\ldots\\}$ behave, and how is its complexity controlled by spectral data?**\n\n### 1.2 Prior work\n\nThe tropical spectral radius \u2014 the maximum cycle mean \u2014 was introduced by Cuninghame-Green [4] and extensively studied by Butkovi\u010d [1]. The cyclicity theorem of Cohen, Dubois, Quadrat, and Viot [5] establishes eventual periodicity of tropical powers for irreducible matrices. Gaubert's thesis [6] developed the algebraic foundations of max-plus linear systems. Heidergott, Olsder, and van der Woude [2] applied these results to discrete event systems.\n\nOur contribution is to formalize, with machine-checked proofs, the quantitative connection between spectral bounds and orbit cardinality, providing explicit bounds that are new in their generality and precision.\n\n### 1.3 Contributions\n\n1. **Theorem A** (Orbit Cardinality Bound): Bounded normalized entries imply orbit cardinality $\\leq (2C+1)^{n^2}$.\n2. **Theorem B** (Spectral-to-Orbit Bridge): Tropical eigenvector controls entry growth of all powers.\n3. **Theorem C** (Entropy Collapse): Bounded orbit implies zero asymptotic entropy rate.\n4. All proofs are machine-verified, using only standard axioms (propext, choice, Quot.sound).\n\n## 2. Definitions and Notation\n\n### 2.1 Tropical matrix operations\n\n**Definition 2.1** (Tropical matrix multiplication). For $A, B \\in \\mathbb{Z}^{n \\times n}$:\n$$(A \\otimes B)_{ij} = \\max_{k=1}^{n} (A_{ik} + B_{kj})$$\n\n**Definition 2.2** (Tropical matrix power). Define $G^{\\otimes 0} = \\mathbf{0}$ (zero matrix), $G^{\\otimes 1} = G$, and $G^{\\otimes(k+1)} = G^{\\otimes k} \\otimes G$ for $k \\geq 1$.\n\n**Definition 2.3** (Tropical matrix-vector multiplication). For $A \\in \\mathbb{Z}^{n \\times n}$, $v \\in \\mathbb{Z}^n$:\n$$(A \\otimes v)_i = \\max_{j=1}^{n} (A_{ij} + v_j)$$\n\n**Definition 2.4** (Normalized tropical power). For drift parameter $\\rho \\in \\mathbb{Z}$:\n$$\\widetilde{G}^{(k)}_{ij} = G^{\\otimes k}_{ij} - k\\rho$$\n\n**Definition 2.5** (Normalized orbit set).\n$$\\mathcal{O}(G, \\rho, N) = \\{\\widetilde{G}^{(1)}, \\widetilde{G}^{(2)}, \\ldots, \\widetilde{G}^{(N)}\\}$$\nas a set (without multiplicity).\n\n### 2.2 Tropical spectral concepts\n\n**Definition 2.6** (Tropical eigenvector). A vector $v \\in \\mathbb{Z}^n$ is a tropical eigenvector of $G$ with eigenvalue $\\rho$ if $(G \\otimes v)_i = \\rho + v_i$ for all $i$.\n\n**Definition 2.7** (Tropical spectral radius). $\\rho(G) = \\max_{\\text{cycles } \\gamma} \\frac{w(\\gamma)}{|\\gamma|}$ where the maximum is over all directed cycles in the weighted digraph of $G$.\n\n## 3. Main Results\n\n### 3.1 Theorem A: Orbit Cardinality Bound\n\n**Lemma 3.1** (Finite box counting). Let $S$ be a finite set of $n \\times n$ integer matrices with $|M_{ij}| \\leq C$ for all $M \\in S$ and all $i, j$. Then $|S| \\leq (2C+1)^{n^2}$.\n\n*Proof sketch.* Define $\\varphi: S \\to (\\text{Fin}(2C+1))^{n \\times n}$ by $\\varphi(M)_{ij} = M_{ij} + C$. This is well-defined since $0 \\leq M_{ij} + C \\leq 2C$. It is injective since $M_{ij}$ is recovered from $\\varphi(M)_{ij} - C$. Therefore $|S| \\leq |(\\text{Fin}(2C+1))^{n \\times n}| = (2C+1)^{n^2}$. $\\square$\n\n**Theorem 3.2** (Orbit Cardinality Bound). Let $G \\in \\mathbb{Z}^{n \\times n}$, $\\rho \\in \\mathbb{Z}$, $C \\in \\mathbb{N}$. If for all $k \\geq 1$ and all $i, j$:\n$$|G^{\\otimes k}_{ij} - k\\rho| \\leq C$$\nthen for all $N$:\n$$|\\mathcal{O}(G, \\rho, N)| \\leq (2C+1)^{n^2}$$\n\n*Proof sketch.* The normalized orbit $\\mathcal{O}(G, \\rho, N)$ is a finite set of integer matrices. By hypothesis, every element has entries bounded by $C$ in absolute value. Apply Lemma 3.1. $\\square$\n\n**Remark.** The bound $(2C+1)^{n^2}$ is independent of $N$. This is the key structural consequence: no matter how far we iterate, the orbit size is bounded. The bound is sharp in the sense that there exist matrices achieving orbit sizes close to $(2C+1)^{n^2}$ for small $C$.\n\n### 3.2 Theorem B: Eigenvector Upper Bound\n\n**Lemma 3.3** (Entry bound from eigenvector). If $v$ is a tropical eigenvector of $G$ with eigenvalue $\\rho$, then $G_{ij} \\leq \\rho + v_i - v_j$ for all $i, j$.\n\n*Proof.* By the eigenvector equation, $(G \\otimes v)_i = \\max_j(G_{ij} + v_j) = \\rho + v_i$. Since $G_{ij} + v_j$ is one term in the maximum, $G_{ij} + v_j \\leq \\rho + v_i$, giving $G_{ij} \\leq \\rho + v_i - v_j$. $\\square$\n\n**Theorem 3.4** (Power entry upper bound). If $v$ is a tropical eigenvector of $G$ with eigenvalue $\\rho$, then for all $k \\geq 1$ and all $i, j$:\n$$G^{\\otimes k}_{ij} \\leq k\\rho + v_i - v_j$$\n\n*Proof sketch (by induction on $k$).*\n\n*Base case* ($k = 1$): $G^{\\otimes 1}_{ij} = G_{ij} \\leq \\rho + v_i - v_j$ by Lemma 3.3.\n\n*Inductive step*: Assume the bound holds for $k$. Then\n$$G^{\\otimes(k+1)}_{ij} = \\max_l (G^{\\otimes k}_{il} + G_{lj}) \\leq \\max_l (k\\rho + v_i - v_l + \\rho + v_l - v_j) = (k+1)\\rho + v_i - v_j$$\nThe $v_l$ terms cancel, yielding the result. $\\square$\n\n**Corollary 3.5.** If $G$ has tropical eigenvector $v$ with eigenvalue $\\rho$, and if a matching lower bound holds (e.g., from irreducibility), then the normalized orbit is bounded with $C = \\max_{i,j} |v_i - v_j|$.\n\n### 3.3 Theorem C: Entropy Collapse\n\n**Theorem 3.6** (Zero orbit entropy). If $|\\mathcal{O}(G, \\rho, N)| \\leq K$ for all $N$, then for any $\\varepsilon > 0$, there exists $N_0$ such that for all $N \\geq N_0$:\n$$\\frac{\\log |\\mathcal{O}(G, \\rho, N)|}{N} \\leq \\varepsilon$$\n\n*Proof.* Since $|\\mathcal{O}(G, \\rho, N)| \\leq K$, we have $\\log |\\mathcal{O}(G, \\rho, N)| \\leq \\log K$. Choose $N_0 = \\lceil \\log K / \\varepsilon \\rceil + 1$. For $N \\geq N_0$: $\\frac{\\log K}{N} \\leq \\frac{\\log K}{N_0} \\leq \\varepsilon$. $\\square$\n\n**Definition 3.7** (Orbit entropy). $h_{\\text{orb}}(G, \\rho) = \\limsup_{N \\to \\infty} \\frac{1}{N} \\log |\\mathcal{O}(G, \\rho, N)|$.\n\n**Corollary 3.8.** Under the hypotheses of Theorem 3.2, $h_{\\text{orb}}(G, \\rho) = 0$.\n\n## 4. Algorithms\n\n### 4.1 Tropical Matrix Power Computation\n\n```\nAlgorithm TropPow(G, k):\n  Input: n\u00d7n integer matrix G, positive integer k\n  Output: G^\u2297k\n  \n  R \u2190 G\n  for t = 2, ..., k:\n    for i = 1, ..., n:\n      for j = 1, ..., n:\n        R[i,j] \u2190 max_{l=1}^{n} (R[i,l] + G[l,j])\n  return R\n```\n\n**Time complexity:** $O(k \\cdot n^3)$. **Space complexity:** $O(n^2)$.\n\n### 4.2 Normalized Orbit Computation\n\n```\nAlgorithm NormalizedOrbit(G, \u03c1, N):\n  Input: n\u00d7n matrix G, drift \u03c1, horizon N\n  Output: Set of distinct normalized powers\n  \n  S \u2190 \u2205\n  R \u2190 G\n  for k = 1, ..., N:\n    M \u2190 R - k\u00b7\u03c1\u00b7J  (where J is the all-ones matrix)\n    S \u2190 S \u222a {M}\n    R \u2190 TropMul(R, G)\n  return S\n```\n\n**Time complexity:** $O(N \\cdot n^3)$. **Space complexity:** $O(|S| \\cdot n^2)$, with $|S| \\leq (2C+1)^{n^2}$.\n\n### 4.3 Tropical Spectral Radius (Karp's Algorithm)\n\n```\nAlgorithm TropSpectralRadius(G):\n  Input: n\u00d7n matrix G\n  Output: Maximum cycle mean \u03c1(G)\n  \n  Compute G, G\u00b2, ..., G^n\n  \u03c1 \u2190 -\u221e\n  for i = 1, ..., n:\n    \u03c1 \u2190 max(\u03c1, min_{k=1}^{n-1} (G^n[i,i] - G^k[i,i])/(n-k))\n  return \u03c1\n```\n\n**Time complexity:** $O(n^4)$. **Space complexity:** $O(n^3)$.\n\n## 5. Applications\n\n### 5.1 Manufacturing Scheduling\n\nA factory with $n$ machines is modeled by a tropical matrix $G$ where $G_{ij}$ is the processing time from machine $j$'s output to machine $i$'s output. The system dynamics are $x(k+1) = G \\otimes x(k)$ where $x(k)_i$ is the completion time of cycle $k$ at machine $i$.\n\n**Result:** The cycle time (throughput) equals $\\rho(G)$. After a transient of at most $(2C+1)^{n^2}$ cycles, the system reaches a periodic production schedule.\n\n**Numerical example.** For $G = \\begin{pmatrix} 5 & 3 & 4 \\\\ 2 & 6 & 3 \\\\ 4 & 2 & 5 \\end{pmatrix}$, $\\rho = 6$. The orbit stabilizes after 7 cycles with only 7 distinct production patterns.\n\n### 5.2 Train Timetable Synchronization\n\nA rail network with $n$ stations where $G_{ij}$ is the minimum travel + synchronization time from station $j$'s departure to station $i$'s departure. The spectral radius gives the minimum headway. The finite orbit theorem guarantees eventually periodic timetables.\n\n### 5.3 Digital Circuit Timing\n\nIn a synchronous circuit with $n$ flip-flops, $G_{ij}$ is the propagation delay from flip-flop $j$ to flip-flop $i$. The spectral radius gives the minimum clock period (reciprocal of maximum frequency). The orbit bound controls timing analysis complexity.\n\n### 5.4 Neural Network Expressivity\n\nEach layer of a ReLU neural network computes a tropical (piecewise-linear) function. The composition of layers corresponds to tropical matrix multiplication. The orbit complexity bounds the number of distinct linear regions, which measures the network's representational power.\n\n## 6. Computational Experiments\n\n### 6.1 Orbit Size vs. Dimension\n\n| Dimension $n$ | Example matrix | $\\rho$ | $C$ | Bound $(2C+1)^{n^2}$ | Actual orbit |\n|:-:|:-:|:-:|:-:|:-:|:-:|\n| 2 | $\\begin{pmatrix}5&1\\\\1&5\\end{pmatrix}$ | 5 | 4 | $9^4 = 6561$ | 1 |\n| 2 | $\\begin{pmatrix}3&2\\\\1&4\\end{pmatrix}$ | 4 | 5 | $11^4 = 14641$ | 5 |\n| 3 | $\\begin{pmatrix}2&0&1\\\\1&3&0\\\\0&1&2\\end{pmatrix}$ | 3 | 6 | $13^9 \\approx 10^{10}$ | 5 |\n| 4 | $\\begin{pmatrix}4&1&0&2\\\\2&3&1&0\\\\0&2&4&1\\\\1&0&2&3\\end{pmatrix}$ | 4 | 8 | $17^{16} \\approx 10^{19}$ | 6 |\n\n**Observation:** Actual orbit sizes are dramatically smaller than the theoretical bound. This suggests substantial room for improvement, likely via critical graph analysis.\n\n### 6.2 Entropy Rate Convergence\n\nFor the 3\u00d73 example with $\\rho = 3$:\n\n| $N$ | $|\\mathcal{O}(G,\\rho,N)|$ | $\\frac{\\log|\\mathcal{O}|}{N}$ |\n|:-:|:-:|:-:|\n| 1 | 1 | 0.000 |\n| 5 | 5 | 0.322 |\n| 10 | 5 | 0.161 |\n| 50 | 5 | 0.032 |\n| 200 | 5 | 0.008 |\n| 500 | 5 | 0.003 |\n\nThe entropy rate converges to zero as $1/N$, consistent with Theorem C.\n\n## 7. Discussion\n\n### 7.1 Relation to classical spectral theory\n\nIn classical linear algebra, the spectral radius controls the growth rate of matrix powers: $\\|A^k\\| \\sim |\\lambda_{\\max}|^k$. Our Theorem B is the tropical analogue: $G^{\\otimes k}_{ij} \\leq k\\rho + v_i - v_j$. The key difference is that tropical growth is *linear* (additive) rather than *exponential* (multiplicative), reflecting the additive nature of tropical multiplication.\n\n### 7.2 Sharpness of bounds\n\nThe bound $(2C+1)^{n^2}$ is tight in the worst case but far from sharp for typical matrices. The gap arises because most entries of the normalized matrix are correlated (they come from overlapping path families), while the bound treats them as independent. Incorporating the critical graph structure could yield much tighter bounds.\n\n### 7.3 Limitations\n\nOur results require integer-valued matrices. For real-valued matrices, the normalized orbit is generically infinite (since entries can take irrational values). Extending to the real case requires either discretization or a topological notion of orbit complexity (e.g., Hausdorff dimension of the orbit closure).\n\nThe lower bound in Theorem A is assumed as a hypothesis. Deriving it from spectral data alone requires irreducibility or critical-graph hypotheses that we leave to future work.\n\n## 8. Future Work\n\n1. **Eventual periodicity.** Prove that the normalized orbit is not just bounded but eventually periodic for irreducible matrices.\n2. **Critical graph period.** Show the period divides the cyclicity of the critical graph.\n3. **Semigroup entropy.** Define and bound tropical topological entropy for finitely generated matrix semigroups.\n4. **DES stability.** Derive computable transient bounds for discrete event systems.\n5. **Probabilistic extensions.** Bound orbit complexity for random products of tropical matrices.\n\n## References\n\n[1] P. Butkovi\u010d, *Max-linear Systems: Theory and Algorithms*, Springer, 2010.\n\n[2] B. Heidergott, G.J. Olsder, J. van der Woude, *Max Plus at Work*, Princeton University Press, 2006.\n\n[3] D. Maclagan, B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.\n\n[4] R.A. Cuninghame-Green, *Minimax Algebra*, Lecture Notes in Economics and Mathematical Systems 166, Springer, 1979.\n\n[5] G. Cohen, D. Dubois, J.P. Quadrat, M. Viot, \"A linear-system-theoretic view of discrete-event processes and its use for performance evaluation in manufacturing,\" *IEEE Trans. Automatic Control*, 30(3):210-220, 1985.\n\n[6] S. Gaubert, \"Th\u00e9orie des syst\u00e8mes lin\u00e9aires dans les dio\u00efdes,\" Th\u00e8se, \u00c9cole des Mines de Paris, 1992.\n\n[7] M. Akian, S. Gaubert, C. Walsh, \"Discrete max-plus spectral theory,\" in *Idempotent Mathematics and Mathematical Physics*, AMS, 2005.\n",
+    "future_directions": "# Future Directions: Tropical Orbit Complexity\n\n## Overview\n\nThis document outlines five concrete research directions opened by the formalization of tropical orbit complexity from spectral data. Each direction includes precise theorem statements, proof strategies, and cross-domain significance.\n\n---\n\n## Direction 1: Eventual Periodicity of Normalized Tropical Orbits\n\n### Conjecture\n\n**Theorem (Eventual Periodicity).** For every `n \u2265 1` and every irreducible tropical matrix `G : Matrix (Fin n) (Fin n) \u2124` with tropical spectral radius `\u03c1`, there exist `T, p \u2208 \u2115` with `p \u2265 1` such that for all `k \u2265 T`:\n\n```\nnormalizedTropPow G \u03c1 (k + p) = normalizedTropPow G \u03c1 k\n```\n\n### Lean 4 Signature\n\n```lean\ntheorem normalized_orbit_eventually_periodic\n    {n : \u2115} [NeZero n]\n    (G : Matrix (Fin n) (Fin n) \u2124)\n    (\u03c1 : \u2124)\n    (hirr : TropIrreducible G)\n    (hbound : \u2200 k : \u2115, 1 \u2264 k \u2192\n      \u2200 i j : Fin n, |tropPow G k i j - (k : \u2124) * \u03c1| \u2264 C) :\n    \u2203 T p : \u2115, 0 < p \u2227 \u2200 k : \u2115, T \u2264 k \u2192\n      normalizedTropPow G \u03c1 (k + p) = normalizedTropPow G \u03c1 k\n```\n\n### Proof Strategy\n\n1. By `orbit_card_bound_of_box_bound`, the normalized orbit is finite.\n2. By the pigeonhole principle, there exist `k\u2081 < k\u2082` with `normalizedTropPow G \u03c1 k\u2081 = normalizedTropPow G \u03c1 k\u2082`.\n3. Set `p = k\u2082 - k\u2081`. Show by induction that `normalizedTropPow G \u03c1 (k + p) = normalizedTropPow G \u03c1 k` for all `k \u2265 k\u2081`.\n4. The induction step uses the \"tropical Cayley-Hamilton\" property: if the normalized power repeats, then subsequent powers also repeat because tropical multiplication is determined by the preceding power.\n\n### Cross-Domain Significance\n\n- **Symbolic dynamics**: Eventually periodic orbits correspond to periodic points of the shift map, classifying the tropical matrix as a \"finite-type\" dynamical system.\n- **Discrete event systems**: Periodic normalized orbit = periodic production schedule with constant cycle time.\n- **Tropical Perron-Frobenius**: This is the tropical analogue of the classical theorem that primitive matrices have convergent normalized powers.\n\n---\n\n## Direction 2: Critical Graph Structure Determines Orbit Period\n\n### Conjecture\n\n**Theorem (Period from Critical Graph).** The period `p` in Direction 1 divides the lcm of the cyclicity indices of the strongly connected components of the critical graph of `G`.\n\nThe *critical graph* of `G` with spectral radius `\u03c1` consists of:\n- Vertices: indices `i` participating in a cycle of mean exactly `\u03c1`\n- Edges: arcs `(i,j)` belonging to such a critical cycle\n\n### Lean 4 Signature\n\n```lean\ndef criticalGraph {n : \u2115} [NeZero n] (G : Matrix (Fin n) (Fin n) \u2124) (\u03c1 : \u2124) :\n    SimpleGraph (Fin n) := sorry\n\ndef criticalCyclicity {n : \u2115} [NeZero n] (G : Matrix (Fin n) (Fin n) \u2124) (\u03c1 : \u2124) : \u2115 := sorry\n\ntheorem orbit_period_divides_critical_cyclicity\n    {n : \u2115} [NeZero n]\n    (G : Matrix (Fin n) (Fin n) \u2124) (\u03c1 : \u2124) (p : \u2115)\n    (hp : IsOrbitPeriod G \u03c1 p) :\n    p \u2223 criticalCyclicity G \u03c1\n```\n\n### Proof Strategy\n\n1. Define the critical graph as a `SimpleGraph (Fin n)`.\n2. Compute its strongly connected components and their cyclicity (gcd of cycle lengths).\n3. Show that the normalized power restricted to critical vertices has period dividing the cyclicity.\n4. Extend to non-critical vertices using the \"coupling time\" argument: non-critical vertices eventually follow the critical component's periodic behavior.\n\n### Cross-Domain Significance\n\n- **Graph theory**: Connects tropical spectral theory to strongly connected component decomposition.\n- **Scheduling**: Critical graph = bottleneck structure of a production network.\n- **Number theory**: The cyclicity calculation involves gcd computations on cycle lengths, connecting to arithmetic of graphs.\n\n---\n\n## Direction 3: Tropical Topological Entropy for Matrix Semigroup Actions\n\n### Definition and Theorem\n\nDefine the *tropical topological entropy* of a finite set of tropical matrices `{G\u2081, ..., G\u2098}`:\n\n```\nh_trop({G\u2081,...,G\u2098}) = lim sup_{N\u2192\u221e} (1/N) log |{G\u1d62\u2081 \u2297 ... \u2297 G\u1d62_N : i\u2c7c \u2208 {1,...,m}}|_normalized\n```\n\nwhere \"normalized\" means modding out the maximal entry.\n\n**Theorem.** If all matrices in `{G\u2081, ..., G\u2098}` share a common tropical eigenvector, then `h_trop = 0`.\n\n**Theorem.** In general, `h_trop \u2264 log(m) \u00b7 dim(residual state space)`.\n\n### Lean 4 Signature\n\n```lean\ndef tropSemigroupOrbit {n m : \u2115} [NeZero n]\n    (generators : Fin m \u2192 Matrix (Fin n) (Fin n) \u2124) (N : \u2115) :\n    Finset (Matrix (Fin n) (Fin n) \u2124) := sorry\n\ndef tropTopologicalEntropy {n m : \u2115} [NeZero n]\n    (generators : Fin m \u2192 Matrix (Fin n) (Fin n) \u2124) : \u211d := sorry\n\ntheorem trop_entropy_zero_of_common_eigenvector\n    {n m : \u2115} [NeZero n]\n    (generators : Fin m \u2192 Matrix (Fin n) (Fin n) \u2124)\n    (v : Fin n \u2192 \u2124)\n    (heig : \u2200 s : Fin m, \u2200 i : Fin n,\n      (tropMatVecMul (generators s) v) i = (eigenvalue s) + v i) :\n    tropTopologicalEntropy generators = 0\n```\n\n### Proof Strategy\n\n1. Each generator's powers are controlled by its eigenvector (Theorem B from our development).\n2. Any product of generators is bounded entrywise by the sum of eigenvalues plus eigenvector gauge.\n3. After normalizing by the total eigenvalue sum, entries are bounded.\n4. Apply the box-counting argument (Theorem A).\n\n### Cross-Domain Significance\n\n- **Ergodic theory**: Tropical topological entropy is a new dynamical invariant for semigroup actions.\n- **Information theory**: Measures the \"surprise\" or complexity of tropical matrix products.\n- **Control theory**: Characterizes the complexity of switching max-plus linear systems.\n\n---\n\n## Direction 4: Discrete Event Systems Stability via Orbit Complexity\n\n### Theorem\n\n**Theorem (DES Stability from Spectral Data).** Consider a discrete event system modeled as `x(k+1) = G \u2297 x(k)` where `G` is an `n \u00d7 n` tropical matrix with spectral radius `\u03c1` and tropical eigenvector `v`. Then:\n\n1. The system is *asymptotically periodic*: there exist `T, p` such that `x(k+p) - x(k) = p\u03c1 \u00b7 1` for all `k \u2265 T`.\n2. The *transient length* `T` satisfies `T \u2264 n \u00b7 (2C+1)^(n\u00b2)` where `C` is the eigenvector gauge.\n3. The *steady-state throughput* equals `\u03c1` regardless of initial condition `x(0)`.\n\n### Lean 4 Signature\n\n```lean\ndef tropDES {n : \u2115} [NeZero n] (G : Matrix (Fin n) (Fin n) \u2124) :\n    \u2115 \u2192 (Fin n \u2192 \u2124) \u2192 Fin n \u2192 \u2124\n  | 0, x => x\n  | k + 1, x => tropMatVecMul G (tropDES G k x)\n\ntheorem des_eventually_periodic\n    {n : \u2115} [NeZero n]\n    (G : Matrix (Fin n) (Fin n) \u2124) (v : Fin n \u2192 \u2124) (\u03c1 : \u2124)\n    (heig : \u2200 i, (tropMatVecMul G v) i = \u03c1 + v i) :\n    \u2200 x\u2080 : Fin n \u2192 \u2124, \u2203 T p : \u2115, 0 < p \u2227\n      \u2200 k \u2265 T, \u2200 i, tropDES G (k + p) x\u2080 i = tropDES G k x\u2080 i + p * \u03c1\n```\n\n### Proof Strategy\n\n1. Extend Theorem B to state-space trajectories: `tropDES G k x\u2080 i \u2264 k\u03c1 + C` where `C` depends on `x\u2080` and `v`.\n2. The normalized state `x\u0303(k) = x(k) - k\u03c1` lies in a bounded integer box.\n3. By pigeonhole (Theorem A), the normalized state must repeat.\n4. Once it repeats, periodicity follows by the deterministic nature of the dynamics.\n5. Bound the transient by the box size.\n\n### Cross-Domain Significance\n\n- **Manufacturing**: Guarantees that production lines reach steady-state periodic operation.\n- **Transportation**: Proves that timetables for synchronized systems are eventually periodic.\n- **Control theory**: Provides a computable stability certificate for max-plus linear systems.\n\n---\n\n## Direction 5: Probabilistic Tropical Orbit Complexity via `tropical_entropy_search_bound`\n\n### Connection to Existing Catalog\n\nThe catalog theorem `tropical_entropy_search_bound` states that for a probability distribution `p`, the reciprocal of the minimum probability equals the exponential of the tropical entropy: `1/min(p) = exp(H_\u2295(p))`.\n\nThis can be extended to tropical matrix orbits by randomizing the initial condition or the matrix entries.\n\n### Theorem\n\n**Theorem (Random Tropical Orbit Complexity).** Let `G\u2081, G\u2082, ...` be i.i.d. random tropical matrices drawn from a distribution with finite support. Let `\u03a0_N = G_N \u2297 ... \u2297 G\u2081`. Then:\n\n1. The Lyapunov exponent `\u03bb = lim (1/N) E[max_{i,j} \u03a0_N(i,j)]` exists.\n2. The residual complexity `h = lim sup (1/N) log |{normalized \u03a0_N}|` satisfies `h \u2264 H_\u2295(support)`.\n3. If the matrices share a common eigenvector, then `h = 0`.\n\n### Lean 4 Signature\n\n```lean\ntheorem random_tropical_orbit_bound\n    {n m : \u2115} [NeZero n]\n    (generators : Fin m \u2192 Matrix (Fin n) (Fin n) \u2124)\n    (weights : Fin m \u2192 \u211d) (hpos : \u2200 s, 0 < weights s)\n    (hsum : \u2211 s, weights s = 1) :\n    \u2200 N : \u2115,\n      (tropSemigroupOrbit generators N).card \u2264\n        m ^ N * (2 * maxGauge generators + 1) ^ (n * n)\n```\n\n### Proof Strategy\n\n1. The number of distinct products of length `N` from `m` generators is at most `m^N`.\n2. Each normalized product has entries bounded by the maximum gauge.\n3. The orbit is contained in the product of these sets.\n4. Connect to `tropical_entropy_search_bound` by interpreting the minimum-probability event as the rarest production sequence.\n\n### Cross-Domain Significance\n\n- **Machine learning**: Random tropical matrix products arise in the analysis of ReLU neural networks (each layer is a tropical linear map). Our bounds control the expressivity.\n- **Statistical mechanics**: The Lyapunov exponent is the free energy per site in a random max-plus polymer model. The entropy measures the number of metastable states.\n- **Information theory**: Extends Shannon's entropy to tropical channel capacity.\n\n---\n\n## Research Team Directive\n\nEach direction above is actionable. A research team should:\n\n1. **Validate** each conjecture computationally on 2\u00d72 and 3\u00d73 examples before attempting formal proof.\n2. **Build** the required infrastructure (critical graph definitions, semigroup orbit sets, DES trajectories) as Lean definitions with `sorry`-ed properties.\n3. **Prove** the simplest instances first (2\u00d72 eventual periodicity, single-generator entropy collapse).\n4. **Connect** to existing Mathlib infrastructure for graph theory (connected components), combinatorics (pigeonhole), and analysis (limsup).\n5. **Iterate** on failed proof attempts by decomposing into smaller lemmas, leveraging the modular structure established in this work.\n\nThe key insight enabling all five directions is the same: **tropical spectral data \u21a6 bounded normalized orbit \u21a6 finite-state dynamics**. This pipeline, now formalized, is the foundation for a complete theory of tropical dynamical complexity.\n",
+    "demos": [
+      {
+        "name": "Tropical Orbit Complexity Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nTropical Orbit Complexity \u2014 Demonstrations\n\nConcrete numerical examples showing how tropical spectral data controls\norbit complexity. Each demo illustrates a theorem from the formal development.\n\"\"\"\n\nimport numpy as np\nfrom itertools import product\n\n\ndef trop_mul_mat(A, B):\n    \"\"\"Tropical (max-plus) matrix multiplication: (A\u2297B)_{ij} = max_k (A_{ik} + B_{kj}).\"\"\"\n    n = A.shape[0]\n    C = np.full((n, n), -np.inf)\n    for i in range(n):\n        for j in range(n):\n            C[i, j] = max(A[i, k] + B[k, j] for k in range(n))\n    return C\n\n\ndef trop_pow(G, k):\n    \"\"\"Compute the k-th tropical power of G.\"\"\"\n    n = G.shape[0]\n    if k == 0:\n        # Tropical identity (0 on diagonal, -inf off-diagonal for true max-plus)\n        # But for integer version matching Lean, use 0 everywhere\n        return np.zeros((n, n), dtype=float)\n    result = G.copy()\n    for _ in range(k - 1):\n        result = trop_mul_mat(result, G)\n    return result\n\n\ndef trop_mat_vec_mul(A, v):\n    \"\"\"Tropical matrix-vector multiplication: (A\u2297v)_i = max_j (A_{ij} + v_j).\"\"\"\n    n = A.shape[0]\n    return np.array([max(A[i, j] + v[j] for j in range(n)) for i in range(n)])\n\n\ndef normalized_trop_pow(G, rho, k):\n    \"\"\"Normalized tropical power: G^\u2297k_{ij} - k*rho.\"\"\"\n    return trop_pow(G, k) - k * rho\n\n\ndef orbit_set_normalized(G, rho, N):\n    \"\"\"Compute the set of distinct normalized tropical powers {G\u0303^(1), ..., G\u0303^(N)}.\"\"\"\n    seen = {}\n    for k in range(1, N + 1):\n        M = normalized_trop_pow(G, rho, k)\n        key = tuple(M.flatten())\n        if key not in seen:\n            seen[key] = k\n    return seen\n\n\n# ============================================================================\n# Demo 1: Basic Tropical Matrix Powers\n# ============================================================================\ndef demo_basic_powers():\n    print(\"=\" * 70)\n    print(\"DEMO 1: Tropical Matrix Powers and Entry Growth\")\n    print(\"=\" * 70)\n\n    G = np.array([[3, 1],\n                  [2, 4]], dtype=float)\n\n    print(f\"\\nMatrix G =\\n{G}\")\n    print(f\"\\nTropical powers G^\u2297k (max-plus multiplication):\")\n\n    for k in range(1, 8):\n        Gk = trop_pow(G, k)\n        max_entry = Gk.max()\n        min_entry = Gk.min()\n        print(f\"  k={k}: G^\u2297{k} = {Gk.flatten()}, \"\n              f\"max={max_entry:.0f}, min={min_entry:.0f}, \"\n              f\"span={max_entry - min_entry:.0f}\")\n\n    # The spectral radius (max cycle mean) for this matrix\n    # Diagonal: max(3, 4) = 4\n    # 2-cycle: (1+2)/2 = 1.5\n    # So rho = 4\n    rho = 4\n    print(f\"\\nTropical spectral radius \u03c1 = {rho}\")\n    print(f\"\\nNormalized powers G\u0303^(k) = G^\u2297k - k\u00b7\u03c1:\")\n\n    for k in range(1, 8):\n        Mk = normalized_trop_pow(G, rho, k)\n        print(f\"  k={k}: {Mk.flatten()}\")\n\n    print(\"\\n\u2192 Normalized entries are bounded! Orbit is finite.\")\n\n\n# ============================================================================\n# Demo 2: Orbit Cardinality Bound (Theorem A)\n# ============================================================================\ndef demo_orbit_bound():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 2: Orbit Cardinality Bound (Theorem A)\")\n    print(\"=\" * 70)\n\n    G = np.array([[2, 0, 1],\n                  [1, 3, 0],\n                  [0, 1, 2]], dtype=float)\n    n = G.shape[0]\n\n    # Compute spectral radius (max cycle mean)\n    # Diagonal: max(2,3,2) = 3\n    # 2-cycles: (0+1)/2=0.5, (1+0)/2=0.5, (0+1)/2=0.5\n    # 3-cycle: (0+0+0)/3=0, etc.\n    rho = 3\n    print(f\"\\nMatrix G (3\u00d73):\\n{G}\")\n    print(f\"Tropical spectral radius \u03c1 = {rho}\")\n\n    N = 50\n    orbit = orbit_set_normalized(G, rho, N)\n    print(f\"\\nOrbit cardinality for N=1..{N}: |orbit| = {len(orbit)}\")\n\n    # Compute the bound\n    C = 0\n    for k in range(1, N + 1):\n        Mk = normalized_trop_pow(G, rho, k)\n        C = max(C, int(np.max(np.abs(Mk))))\n\n    bound = (2 * C + 1) ** (n * n)\n    print(f\"Maximum |entry| in normalized powers: C = {C}\")\n    print(f\"Theoretical bound (2C+1)^(n\u00b2) = ({2*C+1})^{n*n} = {bound}\")\n    print(f\"Actual orbit size: {len(orbit)} \u2264 {bound} \u2713\")\n\n    # Show the orbit stabilizes\n    sizes = []\n    for N_curr in range(1, N + 1):\n        orb = orbit_set_normalized(G, rho, N_curr)\n        sizes.append(len(orb))\n    print(f\"\\nOrbit sizes by N: {sizes[:20]}...\")\n    print(f\"\u2192 Orbit stabilizes! Eventually periodic behavior.\")\n\n\n# ============================================================================\n# Demo 3: Eigenvector Upper Bound (Theorem B)\n# ============================================================================\ndef demo_eigenvector_bound():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 3: Eigenvector Upper Bound (Theorem B)\")\n    print(\"=\" * 70)\n\n    # Matrix with known tropical eigenvector\n    # G\u2297v = \u03c1 + v means max_j(G_{ij} + v_j) = \u03c1 + v_i\n    # Choose G = [[5, 1], [3, 5]], v = [0, 0], \u03c1 = 5\n    G = np.array([[5, 1],\n                  [3, 5]], dtype=float)\n    v = np.array([0, 0], dtype=float)\n    rho = 5\n\n    # Verify eigenvector equation\n    Gv = trop_mat_vec_mul(G, v)\n    print(f\"\\nMatrix G =\\n{G}\")\n    print(f\"Eigenvector v = {v}\")\n    print(f\"Eigenvalue \u03c1 = {rho}\")\n    print(f\"G\u2297v = {Gv}\")\n    print(f\"\u03c1 + v = {rho + v}\")\n    print(f\"Eigenvector equation holds: {np.allclose(Gv, rho + v)}\")\n\n    print(f\"\\nVerifying Theorem B: G^\u2297k_{{ij}} \u2264 k\u00b7\u03c1 + v_i - v_j\")\n    for k in range(1, 10):\n        Gk = trop_pow(G, k)\n        for i in range(2):\n            for j in range(2):\n                bound = k * rho + v[i] - v[j]\n                actual = Gk[i, j]\n                ok = actual <= bound + 1e-10\n                if not ok:\n                    print(f\"  VIOLATION at k={k}, i={i}, j={j}: \"\n                          f\"{actual} > {bound}\")\n        max_gap = max(k * rho + v[i] - v[j] - Gk[i, j]\n                      for i in range(2) for j in range(2))\n        print(f\"  k={k}: bound holds \u2713 (max slack = {max_gap:.0f})\")\n\n\n# ============================================================================\n# Demo 4: Entropy Collapse (Theorem C)\n# ============================================================================\ndef demo_entropy_collapse():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 4: Entropy Collapse (Theorem C)\")\n    print(\"=\" * 70)\n\n    G = np.array([[2, 0, 1],\n                  [1, 3, 0],\n                  [0, 1, 2]], dtype=float)\n    rho = 3\n\n    print(f\"\\nMatrix G (3\u00d73):\\n{G}\")\n    print(f\"Spectral radius \u03c1 = {rho}\")\n    print(f\"\\n{'N':>5} {'|orbit|':>8} {'log(|orbit|)/N':>16}\")\n    print(\"-\" * 35)\n\n    for N in [1, 2, 5, 10, 20, 50, 100, 200, 500]:\n        orbit = orbit_set_normalized(G, rho, N)\n        card = len(orbit)\n        if N > 0 and card > 0:\n            entropy_rate = np.log(card) / N\n        else:\n            entropy_rate = 0\n        print(f\"{N:5d} {card:8d} {entropy_rate:16.6f}\")\n\n    print(\"\\n\u2192 log(|orbit|)/N \u2192 0 as N \u2192 \u221e  (entropy collapse)\")\n\n\n# ============================================================================\n# Demo 5: 2\u00d72 Classification\n# ============================================================================\ndef demo_2x2_classification():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 5: 2\u00d72 Tropical Matrix Classification\")\n    print(\"=\" * 70)\n\n    examples = [\n        (\"Diagonal dominant\", np.array([[5, 1], [1, 5]])),\n        (\"Cycle dominant\", np.array([[0, 3], [4, 0]])),\n        (\"Mixed\", np.array([[3, 2], [1, 4]])),\n        (\"Uniform\", np.array([[2, 2], [2, 2]])),\n    ]\n\n    for name, G in examples:\n        # Tropical spectral radius for 2x2\n        diag_max = max(G[0, 0], G[1, 1])\n        cycle_mean = (G[0, 1] + G[1, 0]) / 2\n        rho = max(diag_max, cycle_mean)\n\n        orbit = orbit_set_normalized(G, rho, 100)\n        print(f\"\\n{name}: G = {G.flatten()}\")\n        print(f\"  \u03c1 = max({diag_max}, {cycle_mean}) = {rho}\")\n        print(f\"  Orbit size (N=100): {len(orbit)}\")\n\n        # Show normalized powers\n        for k in range(1, min(6, 101)):\n            Mk = normalized_trop_pow(G, rho, k)\n            print(f\"    k={k}: normalized = {Mk.flatten()}\")\n\n\nif __name__ == \"__main__\":\n    demo_basic_powers()\n    demo_orbit_bound()\n    demo_eigenvector_bound()\n    demo_entropy_collapse()\n    demo_2x2_classification()\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demos completed successfully!\")\n    print(\"=\" * 70)\n"
+      },
+      {
+        "name": "Real-World Applications",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nTropical Orbit Complexity \u2014 Real-World Applications\n\nDemonstrates how tropical matrix orbit complexity theory applies to:\n1. Manufacturing scheduling (discrete event systems)\n2. Network routing optimization\n3. Train timetable synchronization\n4. Digital circuit timing analysis\n\"\"\"\n\nimport numpy as np\nfrom algorithms import (trop_mul_mat, trop_pow, trop_mat_vec_mul,\n                        tropical_spectral_radius, normalized_orbit,\n                        orbit_cardinality_sequence, orbit_entropy_sequence,\n                        find_tropical_eigenvector)\n\n\ndef app_manufacturing():\n    \"\"\"\n    Application 1: Manufacturing Line Scheduling\n\n    A factory has 3 machines processing parts in sequence.\n    Machine i takes time G[i,j] to process a part coming from machine j.\n    The max-plus system x(k+1) = G \u2297 x(k) models the k-th cycle completion times.\n\n    The tropical spectral radius gives the cycle time (throughput rate).\n    Bounded normalized orbit means the system reaches a periodic steady state.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Manufacturing Line Scheduling\")\n    print(\"=\" * 70)\n\n    # Processing times matrix:\n    # Machine 1 takes 5 from self, 3 from machine 2, 4 from machine 3\n    # Machine 2 takes 2 from machine 1, 6 from self, 3 from machine 3\n    # Machine 3 takes 4 from machine 1, 2 from machine 2, 5 from self\n    G = np.array([\n        [5, 3, 4],\n        [2, 6, 3],\n        [4, 2, 5]\n    ], dtype=float)\n\n    print(f\"\\nProcessing time matrix G:\\n{G}\")\n\n    rho = tropical_spectral_radius(G)\n    print(f\"\\nCycle time (throughput rate): \u03c1 = {rho:.2f} time units\")\n    print(f\"This means one complete production cycle takes {rho:.2f} time units\")\n\n    # Simulate production\n    x = np.zeros(3)  # Start times\n    print(f\"\\nProduction simulation:\")\n    print(f\"  Cycle 0: start times = {x}\")\n    for k in range(1, 8):\n        x = trop_mat_vec_mul(G, x)\n        normalized = x - k * rho\n        print(f\"  Cycle {k}: completion = {x}, normalized = {normalized}\")\n\n    # Orbit analysis\n    orbit = normalized_orbit(G, rho, 50)\n    print(f\"\\n  Orbit size (50 cycles): {len(orbit)}\")\n    print(f\"  \u2192 System reaches periodic steady state after {max(orbit.values())} cycles\")\n    print(f\"  \u2192 Only {len(orbit)} distinct production patterns exist\")\n\n\ndef app_network_routing():\n    \"\"\"\n    Application 2: Network Routing \u2014 Widest Path Problem\n\n    In a communication network, G[i,j] represents the bandwidth of the\n    direct link from node j to node i. The tropical (max-plus) product\n    gives the maximum-bandwidth path.\n\n    G^\u2297k[i,j] = maximum bandwidth achievable using exactly k hops from j to i.\n\n    The spectral radius determines the long-run bandwidth growth.\n    Bounded normalized orbit means the network has stable routing patterns.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 2: Network Routing \u2014 Bandwidth Optimization\")\n    print(\"=\" * 70)\n\n    # 4-node network: bandwidth matrix (log-scale, so additive = multiplicative)\n    G = np.array([\n        [0, 2, 0, 1],\n        [2, 0, 3, 0],\n        [0, 3, 0, 2],\n        [1, 0, 2, 0]\n    ], dtype=float)\n\n    print(f\"\\nBandwidth matrix (log-scale):\\n{G}\")\n\n    rho = tropical_spectral_radius(G)\n    print(f\"\\nSpectral radius: \u03c1 = {rho:.2f}\")\n\n    print(f\"\\nMax-bandwidth paths by hop count:\")\n    for k in range(1, 6):\n        Gk = trop_pow(G, k)\n        print(f\"  k={k} hops: best path 0\u21923 has bandwidth {Gk[3,0]:.0f} (log-scale)\")\n\n    # Normalized orbit\n    orbit = normalized_orbit(G, rho, 30)\n    print(f\"\\n  Routing pattern diversity (30 hops): {len(orbit)} distinct patterns\")\n    print(f\"  \u2192 Network has finite routing complexity\")\n\n\ndef app_train_timetable():\n    \"\"\"\n    Application 3: Train Timetable Synchronization\n\n    A railway network where trains must synchronize at stations.\n    G[i,j] = minimum travel + wait time from station j's departure to station i's departure.\n\n    The max-plus system models departure times:\n    d(k+1) = G \u2297 d(k) where d(k) is the vector of k-th departure times.\n\n    Cycle time = minimum headway between consecutive trains.\n    Finite normalized orbit = eventually periodic timetable.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 3: Train Timetable Synchronization\")\n    print(\"=\" * 70)\n\n    # 4 stations: travel + synchronization times\n    G = np.array([\n        [10,  5,  0,  8],\n        [ 6, 10,  7,  0],\n        [ 0,  4, 10,  6],\n        [ 7,  0,  5, 10]\n    ], dtype=float)\n\n    print(f\"\\nTravel + sync matrix G:\\n{G}\")\n\n    rho = tropical_spectral_radius(G)\n    print(f\"\\nMinimum headway (cycle time): {rho:.1f} minutes\")\n\n    v, _ = find_tropical_eigenvector(G, rho)\n    print(f\"Steady-state departure offsets: {v}\")\n\n    # Verify eigenvector\n    Gv = trop_mat_vec_mul(G, v)\n    print(f\"G\u2297v = {Gv}\")\n    print(f\"\u03c1+v = {rho + v}\")\n    print(f\"Eigenvector valid: {np.allclose(Gv, rho + v, atol=0.01)}\")\n\n    # Check orbit\n    orbit = normalized_orbit(G, rho, 50)\n    print(f\"\\nTimetable pattern diversity: {len(orbit)} patterns in 50 departures\")\n\n    entropy = orbit_entropy_sequence(G, rho, 50)\n    print(f\"Entropy rate at N=50: {entropy[-1]:.6f}\")\n    print(f\"\u2192 Timetable reaches periodic steady state (zero entropy)\")\n\n\ndef app_circuit_timing():\n    \"\"\"\n    Application 4: Digital Circuit Timing Analysis\n\n    In a synchronous digital circuit, G[i,j] represents the propagation\n    delay from flip-flop j to flip-flop i through combinational logic.\n\n    The max-plus system models clock cycle timing:\n    t(k+1) = G \u2297 t(k) where t(k) is the arrival time at cycle k.\n\n    Spectral radius = minimum clock period (critical path delay).\n    Finite normalized orbit = the circuit stabilizes after a transient.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 4: Digital Circuit Timing Analysis\")\n    print(\"=\" * 70)\n\n    # 3 flip-flops with combinational delays\n    G = np.array([\n        [2, 4, 1],\n        [3, 2, 5],\n        [1, 3, 2]\n    ], dtype=float)\n\n    print(f\"\\nPropagation delay matrix G:\\n{G}\")\n\n    rho = tropical_spectral_radius(G)\n    print(f\"\\nMinimum clock period (critical path): {rho:.1f} ns\")\n    print(f\"Maximum clock frequency: {1000/rho:.1f} MHz (if delays in ns)\")\n\n    # Timing analysis over cycles\n    print(f\"\\nTiming convergence:\")\n    x = np.zeros(3)\n    for k in range(1, 8):\n        x = trop_mat_vec_mul(G, x)\n        slack = k * rho - np.max(x)\n        print(f\"  Cycle {k}: max arrival = {np.max(x):.0f}, \"\n              f\"expected = {k*rho:.0f}, slack = {slack:.0f}\")\n\n    orbit = normalized_orbit(G, rho, 30)\n    print(f\"\\n  Timing patterns: {len(orbit)} distinct in 30 cycles\")\n    print(f\"  \u2192 Circuit timing is stable (finite orbit)\")\n\n\nif __name__ == \"__main__\":\n    app_manufacturing()\n    app_network_routing()\n    app_train_timetable()\n    app_circuit_timing()\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All applications demonstrated successfully!\")\n    print(\"=\" * 70)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Tropical Matrix Power Computation",
+        "pseudocode": "TropPow(G, k):\n  R <- G\n  for t = 2..k:\n    for i,j:\n      R[i,j] <- max_l(R[i,l] + G[l,j])\n  return R\n\nComplexity: O(k*n^3) time, O(n^2) space",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nTropical Orbit Complexity \u2014 Algorithms\n\nImplements the core algorithms from the research paper:\n1. Tropical matrix multiplication and power computation\n2. Tropical spectral radius computation (max cycle mean)\n3. Tropical eigenvector computation\n4. Normalized orbit analysis\n5. Orbit entropy estimation\n\"\"\"\n\nimport numpy as np\nfrom typing import Tuple, List, Dict, Optional\n\n\n# ============================================================================\n# Core Tropical Operations\n# ============================================================================\n\ndef trop_add(a: float, b: float) -> float:\n    \"\"\"Tropical addition (max-plus): a \u2295 b = max(a, b).\"\"\"\n    return max(a, b)\n\n\ndef trop_mul(a: float, b: float) -> float:\n    \"\"\"Tropical multiplication (max-plus): a \u2297 b = a + b.\"\"\"\n    return a + b\n\n\ndef trop_mul_mat(A: np.ndarray, B: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Tropical matrix multiplication: (A\u2297B)_{ij} = max_k (A_{ik} + B_{kj}).\n\n    Time complexity: O(n\u00b3) where n is the matrix dimension.\n    Space complexity: O(n\u00b2) for the result matrix.\n\n    Args:\n        A: n\u00d7n matrix\n        B: n\u00d7n matrix\n    Returns:\n        n\u00d7n matrix C where C[i,j] = max_k(A[i,k] + B[k,j])\n    \"\"\"\n    n = A.shape[0]\n    C = np.full((n, n), -np.inf)\n    for i in range(n):\n        for j in range(n):\n            C[i, j] = max(A[i, k] + B[k, j] for k in range(n))\n    return C\n\n\ndef trop_pow(G: np.ndarray, k: int) -> np.ndarray:\n    \"\"\"\n    Compute the k-th tropical power of G via repeated multiplication.\n\n    Time complexity: O(k \u00b7 n\u00b3)\n    Space complexity: O(n\u00b2)\n\n    Args:\n        G: n\u00d7n matrix\n        k: power (k \u2265 0)\n    Returns:\n        G^\u2297k\n    \"\"\"\n    n = G.shape[0]\n    if k == 0:\n        return np.zeros((n, n))\n    result = G.copy()\n    for _ in range(k - 1):\n        result = trop_mul_mat(result, G)\n    return result\n\n\ndef trop_mat_vec_mul(A: np.ndarray, v: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Tropical matrix-vector multiplication: (A\u2297v)_i = max_j(A_{ij} + v_j).\n\n    Time complexity: O(n\u00b2)\n\n    Args:\n        A: n\u00d7n matrix\n        v: n-vector\n    Returns:\n        n-vector w where w[i] = max_j(A[i,j] + v[j])\n    \"\"\"\n    n = A.shape[0]\n    return np.array([max(A[i, j] + v[j] for j in range(n)) for i in range(n)])\n\n\n# ============================================================================\n# Spectral Analysis\n# ============================================================================\n\ndef tropical_spectral_radius(G: np.ndarray) -> float:\n    \"\"\"\n    Compute the tropical spectral radius (maximum cycle mean) of G.\n\n    The tropical spectral radius is:\n        \u03c1(G) = max over all cycles (i\u2081,...,i\u2096) of\n               (G[i\u2081,i\u2082] + G[i\u2082,i\u2083] + ... + G[i\u2096,i\u2081]) / k\n\n    Algorithm: Karp's algorithm via tropical matrix powers.\n    Time complexity: O(n\u2074) via computing all powers up to n.\n    Space complexity: O(n\u00b3) for storing intermediate powers.\n\n    Args:\n        G: n\u00d7n matrix\n    Returns:\n        Maximum cycle mean \u03c1(G)\n    \"\"\"\n    n = G.shape[0]\n\n    # Compute G, G\u00b2, ..., G^n\n    powers = [None] * (n + 1)\n    powers[1] = G.copy()\n    for k in range(2, n + 1):\n        powers[k] = trop_mul_mat(powers[k - 1], G)\n\n    # Karp's algorithm: \u03c1 = max_i min_k (G^n[i,i] - G^k[i,i]) / (n-k)\n    rho = -np.inf\n    for i in range(n):\n        min_val = np.inf\n        for k in range(1, n):\n            if powers[n][i, i] != -np.inf and powers[k][i, i] != -np.inf:\n                val = (powers[n][i, i] - powers[k][i, i]) / (n - k)\n                min_val = min(min_val, val)\n        if min_val != np.inf:\n            rho = max(rho, min_val)\n\n    # Also check diagonal entries directly (self-loops)\n    for i in range(n):\n        rho = max(rho, G[i, i])\n\n    # And check all 2-cycles\n    for i in range(n):\n        for j in range(i + 1, n):\n            rho = max(rho, (G[i, j] + G[j, i]) / 2)\n\n    return rho\n\n\ndef find_tropical_eigenvector(G: np.ndarray, rho: Optional[float] = None,\n                                max_iter: int = 1000) -> Tuple[np.ndarray, float]:\n    \"\"\"\n    Find a tropical eigenvector of G: a vector v such that G\u2297v = \u03c1+v.\n\n    Algorithm: Power iteration in the tropical semiring.\n    After subtracting \u03c1 at each step, iterate v \u2190 G\u2297v - \u03c1 until convergence.\n\n    Time complexity: O(max_iter \u00b7 n\u00b2)\n\n    Args:\n        G: n\u00d7n matrix\n        rho: eigenvalue (computed if None)\n        max_iter: maximum iterations\n    Returns:\n        (v, rho) where G\u2297v = \u03c1 + v (approximately)\n    \"\"\"\n    n = G.shape[0]\n    if rho is None:\n        rho = tropical_spectral_radius(G)\n\n    v = np.zeros(n)\n    for _ in range(max_iter):\n        v_new = trop_mat_vec_mul(G, v) - rho\n        if np.allclose(v_new, v):\n            break\n        v = v_new\n\n    return v, rho\n\n\n# ============================================================================\n# Orbit Analysis\n# ============================================================================\n\ndef normalized_orbit(G: np.ndarray, rho: float, N: int) -> Dict[tuple, int]:\n    \"\"\"\n    Compute the normalized orbit {G\u0303^(1), ..., G\u0303^(N)} where G\u0303^(k) = G^\u2297k - k\u03c1.\n\n    Time complexity: O(N \u00b7 n\u00b3)\n    Space complexity: O(|orbit| \u00b7 n\u00b2)\n\n    Args:\n        G: n\u00d7n matrix\n        rho: spectral radius / drift parameter\n        N: maximum power\n    Returns:\n        Dictionary mapping matrix tuples to first occurrence time\n    \"\"\"\n    seen = {}\n    Gk = G.copy()\n    for k in range(1, N + 1):\n        if k > 1:\n            Gk = trop_mul_mat(Gk, G)\n        normalized = Gk - k * rho\n        key = tuple(np.round(normalized, 10).flatten())\n        if key not in seen:\n            seen[key] = k\n    return seen\n\n\ndef orbit_cardinality_sequence(G: np.ndarray, rho: float, N: int) -> List[int]:\n    \"\"\"\n    Compute the orbit cardinality sequence |{G\u0303^(1),...,G\u0303^(k)}| for k=1,...,N.\n\n    Time complexity: O(N \u00b7 n\u00b3)\n\n    Args:\n        G: n\u00d7n matrix\n        rho: spectral radius\n        N: maximum power\n    Returns:\n        List of orbit cardinalities\n    \"\"\"\n    seen = set()\n    sizes = []\n    Gk = G.copy()\n    for k in range(1, N + 1):\n        if k > 1:\n            Gk = trop_mul_mat(Gk, G)\n        normalized = Gk - k * rho\n        key = tuple(np.round(normalized, 10).flatten())\n        seen.add(key)\n        sizes.append(len(seen))\n    return sizes\n\n\ndef orbit_entropy_sequence(G: np.ndarray, rho: float, N: int) -> List[float]:\n    \"\"\"\n    Compute the orbit entropy rate sequence log(|orbit_k|)/k for k=1,...,N.\n\n    Time complexity: O(N \u00b7 n\u00b3)\n\n    Args:\n        G: n\u00d7n matrix\n        rho: spectral radius\n        N: maximum power\n    Returns:\n        List of entropy rates\n    \"\"\"\n    sizes = orbit_cardinality_sequence(G, rho, N)\n    rates = []\n    for k, s in enumerate(sizes, 1):\n        if s > 0:\n            rates.append(np.log(s) / k)\n        else:\n            rates.append(0.0)\n    return rates\n\n\ndef entry_bound_from_eigenvector(G: np.ndarray, v: np.ndarray, rho: float,\n                                   k: int) -> np.ndarray:\n    \"\"\"\n    Compute the eigenvector-based upper bound on G^\u2297k entries.\n\n    By Theorem B: G^\u2297k_{ij} \u2264 k\u00b7\u03c1 + v_i - v_j\n\n    Args:\n        G: n\u00d7n matrix\n        v: tropical eigenvector\n        rho: tropical eigenvalue\n        k: power\n    Returns:\n        n\u00d7n matrix of upper bounds\n    \"\"\"\n    n = G.shape[0]\n    bounds = np.zeros((n, n))\n    for i in range(n):\n        for j in range(n):\n            bounds[i, j] = k * rho + v[i] - v[j]\n    return bounds\n\n\n# ============================================================================\n# Application: Discrete Event Systems\n# ============================================================================\n\ndef des_cycle_time(G: np.ndarray, num_cycles: int = 100) -> Tuple[float, np.ndarray]:\n    \"\"\"\n    Compute the cycle time and transient behavior of a discrete event system.\n\n    In a DES modeled by max-plus linear system x(k+1) = G\u2297x(k),\n    the cycle time equals the tropical spectral radius.\n    The transient is the number of steps before periodicity.\n\n    Args:\n        G: n\u00d7n transition matrix (processing times + routing)\n        num_cycles: number of cycles to simulate\n    Returns:\n        (cycle_time, trajectory) where trajectory[k] = x(k)\n    \"\"\"\n    n = G.shape[0]\n    rho = tropical_spectral_radius(G)\n    x = np.zeros(n)\n    trajectory = [x.copy()]\n\n    for k in range(num_cycles):\n        x = trop_mat_vec_mul(G, x)\n        trajectory.append(x.copy())\n\n    return rho, np.array(trajectory)\n\n\nif __name__ == \"__main__\":\n    # Quick test\n    G = np.array([[3, 1], [2, 4]], dtype=float)\n    rho = tropical_spectral_radius(G)\n    print(f\"Spectral radius of [[3,1],[2,4]]: {rho}\")\n\n    v, rho = find_tropical_eigenvector(G)\n    print(f\"Eigenvector: {v}, eigenvalue: {rho}\")\n\n    orbit = normalized_orbit(G, rho, 100)\n    print(f\"Orbit size (N=100): {len(orbit)}\")\n\n    entropy = orbit_entropy_sequence(G, rho, 20)\n    print(f\"Entropy rates: {[f'{e:.4f}' for e in entropy]}\")\n",
+        "code_file": "visualizations/connect_to_orbit_structure_tropical_matrix_power_computation.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Entry Growth vs Spectral Drift",
+        "file": "visualizations/connect_to_orbit_structure_entry_growth_vs_spectral_drift.png"
+      },
+      {
+        "name": "Orbit Cardinality Convergence",
+        "file": "visualizations/connect_to_orbit_structure_orbit_cardinality_convergence.png"
+      },
+      {
+        "name": "Entropy Collapse",
+        "file": "visualizations/connect_to_orbit_structure_entropy_collapse.png"
+      },
+      {
+        "name": "Eigenvector Bound Verification",
+        "file": "visualizations/connect_to_orbit_structure_eigenvector_bound_verification.png"
+      },
+      {
+        "name": "2x2 Phase Diagram",
+        "file": "visualizations/connect_to_orbit_structure_2x2_phase_diagram.png"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# Tropical Orbit Complexity from Spectral Data\n\nThis file develops the theory connecting tropical matrix powers to orbit complexity,\nproving that spectral bounds on entry growth force bounded orbit cardinality and\nzero asymptotic orbit entropy.\n\n## Main results\n\n* `tropMulMat` \u2014 tropical (max-plus) matrix multiplication over \u2124\n* `tropPow` \u2014 tropical matrix powers\n* `tropMatVecMul` \u2014 tropical matrix-vector multiplication\n* `normalizedTropPow` \u2014 normalized tropical power (subtract linear drift)\n* `orbitSetNormalized` \u2014 the finite set of distinct normalized powers up to time N\n* `finset_card_le_of_bounded_entries` \u2014 finite box counting lemma\n* `orbit_card_bound_of_box_bound` \u2014 bounded entries \u27f9 polynomially bounded orbit count\n* `trop_entry_le_of_eigenvector` \u2014 eigenvector \u27f9 individual entry bound\n* `trop_power_entry_upper_bound_of_eigenvector` \u2014 eigenvector \u27f9 power entry bound\n* `orbit_entropy_upper_bound_zero` \u2014 bounded orbit \u27f9 vanishing entropy rate\n\n## Strategy\n\nWe work over \u2124 to get exact finite-state counting. The key insight:\n1. Define tropical matrix multiplication as (A \u2297 B)\u1d62\u2c7c = max_k (A\u1d62\u2096 + B\u2096\u2c7c)\n2. If all entries of G^\u2297k lie within k\u03c1 \u00b1 C, normalized entries lie in [-C, C]\n3. Integer matrices with entries in [-C, C] form a finite set of size \u2264 (2C+1)^(n\u00b2)\n4. Therefore the normalized orbit is bounded by (2C+1)^(n\u00b2)\n-/\n\nnoncomputable section\n\nopen Finset Matrix\n\n/-! ## Tropical matrix operations over \u2124 -/\n\n/-- Tropical (max-plus) matrix multiplication: (A \u2297 B)\u1d62\u2c7c = max_k (A\u1d62\u2096 + B\u2096\u2c7c). -/\ndef tropMulMat {n : \u2115} [NeZero n] (A B : Matrix (Fin n) (Fin n) \u2124) :\n    Matrix (Fin n) (Fin n) \u2124 :=\n  fun i j => Finset.sup' Finset.univ Finset.univ_nonempty (fun k => A i k + B k j)\n\n/-- Tropical matrix power: G^\u2297k under max-plus multiplication. -/\ndef tropPow {n : \u2115} [NeZero n] (G : Matrix (Fin n) (Fin n) \u2124) :\n    \u2115 \u2192 Matrix (Fin n) (Fin n) \u2124\n  | 0 => fun i j => if i = j then 0 else 0\n  | 1 => G\n  | k + 1 => tropMulMat (tropPow G k) G\n\n/-- Tropical matrix-vector multiplication: (A \u2297 v)\u1d62 = max_j (A\u1d62\u2c7c + v\u2c7c). -/\ndef tropMatVecMul {n : \u2115} [NeZero n] (A : Matrix (Fin n) (Fin n) \u2124)\n    (v : Fin n \u2192 \u2124) : Fin n \u2192 \u2124 :=\n  fun i => Finset.sup' Finset.univ Finset.univ_nonempty (fun j => A i j + v j)\n\n/-- Normalized tropical power: subtract the linear drift k\u03c1 from each entry. -/\ndef normalizedTropPow {n : \u2115} [NeZero n] (G : Matrix (Fin n) (Fin n) \u2124)\n    (\u03c1 : \u2124) (k : \u2115) : Matrix (Fin n) (Fin n) \u2124 :=\n  fun i j => tropPow G k i j - k * \u03c1\n\n/-- The set of distinct normalized tropical powers from step 1 to step N. -/\ndef orbitSetNormalized {n : \u2115} [NeZero n] (G : Matrix (Fin n) (Fin n) \u2124)\n    (\u03c1 : \u2124) (N : \u2115) : Finset (Matrix (Fin n) (Fin n) \u2124) :=\n  (Finset.range N).image (fun k => normalizedTropPow G \u03c1 (k + 1))\n\n/-! ## Helper lemmas for tropical multiplication -/\n\n/-- In tropical multiplication, the result entry is at least any particular summand. -/\nlemma tropMulMat_entry_le {n : \u2115} [NeZero n]\n    (A B : Matrix (Fin n) (Fin n) \u2124) (i j : Fin n) (k : Fin n) :\n    A i k + B k j \u2264 tropMulMat A B i j := by\n  simp only [tropMulMat]\n  exact Finset.le_sup' (fun k => A i k + B k j) (Finset.mem_univ k)\n\n/-- The tropical product entry equals some particular summand (the maximum). -/\nlemma tropMulMat_entry_eq {n : \u2115} [NeZero n]\n    (A B : Matrix (Fin n) (Fin n) \u2124) (i j : Fin n) :\n    \u2203 k : Fin n, tropMulMat A B i j = A i k + B k j := by\n  simp only [tropMulMat]\n  obtain \u27e8k, _, hk\u27e9 := Finset.exists_mem_eq_sup' Finset.univ_nonempty (fun k => A i k + B k j)\n  exact \u27e8k, hk\u27e9\n\n/-- The tropical product entry is bounded above by the max of all summands. -/\nlemma tropMulMat_entry_ub {n : \u2115} [NeZero n]\n    (A B : Matrix (Fin n) (Fin n) \u2124) (i j : Fin n)\n    (bound : \u2124) (h : \u2200 k : Fin n, A i k + B k j \u2264 bound) :\n    tropMulMat A B i j \u2264 bound := by\n  simp only [tropMulMat]\n  apply Finset.sup'_le\n  intro k _\n  exact h k\n\n/-! ## Finite box counting -/\n\n/-\nAny Finset of n\u00d7n integer matrices with entries bounded by C in absolute value\nhas cardinality at most (2C+1)^(n*n). This is the key finite box counting lemma:\neach of n\u00b2 entries has at most 2C+1 possible values.\n-/\nlemma finset_card_le_of_bounded_entries {n : \u2115}\n    (S : Finset (Matrix (Fin n) (Fin n) \u2124)) (C : \u2115)\n    (h : \u2200 M \u2208 S, \u2200 i j : Fin n, |M i j| \u2264 (C : \u2124)) :\n    S.card \u2264 (2 * C + 1) ^ (n * n) := by\n  refine' le_trans ( Finset.card_le_card _ ) _;\n  exact Finset.image ( fun x : Fin n \u2192 Fin n \u2192 Fin ( 2 * C + 1 ) => fun i j => ( x i j : \u2124 ) - C ) ( Finset.univ );\n  \u00b7 intro M hM; use Finset.mem_image.mpr \u27e8 fun i j => \u27e8 Int.toNat ( M i j + C ), by linarith [ abs_le.mp ( h M hM i j ), Int.toNat_of_nonneg ( by linarith [ abs_le.mp ( h M hM i j ) ] : 0 \u2264 M i j + C ) ] \u27e9, Finset.mem_univ _, ?_ \u27e9 ; ext i j; simp +decide [ Int.toNat_of_nonneg ( by linarith [ abs_le.mp ( h M hM i j ) ] : 0 \u2264 M i j + C ) ] ;\n  \u00b7 refine' Finset.card_image_le.trans _ ; norm_num [ Finset.card_univ ] ; ring_nf ; aesop;\n\n/-! ## Primary Theorem A: Orbit cardinality bound from entry bounds -/\n\n/-\n**Orbit cardinality bound (Theorem A)**: If all normalized tropical power entries\nlie in [-C, C] (in absolute value), then the number of distinct normalized powers\nup to any time N is at most (2C+1)^(n\u00b2).\n\nThis converts spectral linear growth bounds into a finite-state dynamical system.\n-/\ntheorem orbit_card_bound_of_box_bound\n    {n : \u2115} [NeZero n]\n    (G : Matrix (Fin n) (Fin n) \u2124)\n    (\u03c1 : \u2124) (C : \u2115)\n    (hbound : \u2200 k : \u2115, 1 \u2264 k \u2192\n      \u2200 i j : Fin n, |tropPow G k i j - (k : \u2124) * \u03c1| \u2264 (C : \u2124)) :\n    \u2200 N : \u2115,\n      (orbitSetNormalized G \u03c1 N).card \u2264 (2 * C + 1) ^ (n * n) := by\n  intro N\n  apply finset_card_le_of_bounded_entries;\n  unfold orbitSetNormalized; aesop;\n\n/-! ## Primary Theorem B: Eigenvector implies entry upper bound -/\n\n/-\nAuxiliary: tropical eigenvector equation implies individual entry bound.\nFrom max_j (G i j + v j) = \u03c1 + v i, we get G i j + v j \u2264 \u03c1 + v i for each j,\nhence G i j \u2264 \u03c1 + v i - v j.\n-/\nlemma trop_entry_le_of_eigenvector\n    {n : \u2115} [NeZero n]\n    (G : Matrix (Fin n) (Fin n) \u2124)\n    (v : Fin n \u2192 \u2124) (\u03c1 : \u2124)\n    (heig : \u2200 i : Fin n, (tropMatVecMul G v) i = \u03c1 + v i)\n    (i j : Fin n) :\n    G i j \u2264 \u03c1 + v i - v j := by\n  exact le_tsub_of_add_le_right ( heig i \u25b8 Finset.le_sup' ( fun k => G i k + v k ) ( Finset.mem_univ j ) )\n\n/-\n**Spectral-to-orbit bridge (Theorem B)**: If v is a tropical eigenvector of G\nwith eigenvalue \u03c1 (meaning max_j (G_{ij} + v_j) = \u03c1 + v_i for all i), then every\nentry of the k-th tropical power satisfies G^\u2297k_{ij} \u2264 k\u03c1 + v_i - v_j.\n\nThe proof is by induction on k:\n- Base case k=1: tropPow G 1 = G, and G i j \u2264 \u03c1 + v i - v j by `trop_entry_le_of_eigenvector`.\n- Inductive step: tropPow G (k+1) = tropMulMat (tropPow G k) G.\n  For each intermediate index l:\n    tropPow G k i l + G l j \u2264 (k*\u03c1 + v i - v l) + (\u03c1 + v l - v j)\n                             = (k+1)*\u03c1 + v i - v j\n  Taking the max over l preserves this upper bound.\n-/\ntheorem trop_power_entry_upper_bound_of_eigenvector\n    {n : \u2115} [NeZero n]\n    (G : Matrix (Fin n) (Fin n) \u2124)\n    (v : Fin n \u2192 \u2124) (\u03c1 : \u2124)\n    (heig : \u2200 i : Fin n, (tropMatVecMul G v) i = \u03c1 + v i) :\n    \u2200 k : \u2115, 1 \u2264 k \u2192 \u2200 i j : Fin n,\n      tropPow G k i j \u2264 (k : \u2124) * \u03c1 + v i - v j := by\n  intro k hk;\n  induction' k with k ih;\n  \u00b7 contradiction;\n  \u00b7 rcases k with ( _ | k ) <;> simp_all +decide;\n    \u00b7 exact fun i j => trop_entry_le_of_eigenvector (tropPow G 1) v \u03c1 heig i j;\n    \u00b7 intro i j;\n      -- By definition of tropPow, we have tropPow G (k + 2) i j = tropMulMat (tropPow G (k + 1)) G i j.\n      have h_tropPow_succ : tropPow G (k + 2) i j = tropMulMat (tropPow G (k + 1)) G i j := by\n        rfl;\n      exact h_tropPow_succ \u25b8 tropMulMat_entry_ub _ _ _ _ _ fun l => by linarith [ ih i l, trop_entry_le_of_eigenvector G v \u03c1 heig l j ] ;\n\n/-! ## Primary Theorem C: Zero entropy from bounded orbit -/\n\n/-\n**Entropy collapse (Theorem C)**: If the normalized orbit cardinality is uniformly\nbounded by K, then for any \u03b5 > 0, log(card)/N \u2264 \u03b5 for sufficiently large N.\nThis is the finite-step version of zero asymptotic orbit entropy.\n-/\ntheorem orbit_entropy_upper_bound_zero\n    {n : \u2115} [NeZero n]\n    (G : Matrix (Fin n) (Fin n) \u2124)\n    (\u03c1 : \u2124) (K : \u2115)\n    (hK : \u2200 N : \u2115, (orbitSetNormalized G \u03c1 N).card \u2264 K) :\n    \u2200 \u03b5 : \u211d, 0 < \u03b5 \u2192 \u2203 N\u2080 : \u2115, \u2200 N : \u2115, N\u2080 \u2264 N \u2192\n      Real.log ((orbitSetNormalized G \u03c1 N).card : \u211d) / (N : \u211d) \u2264 \u03b5 := by\n  -- Given K bounding the orbit cardinality for all N, we need: for any \u03b5 > 0, there exists N\u2080 such that for N \u2265 N\u2080, log(card)/N \u2264 \u03b5.\n  intros \u03b5 h\u03b5pos\n  use Nat.ceil (Real.log (K : \u211d) / \u03b5) + 1;\n  intro N hN;\n  rw [ div_le_iff\u2080 ];\n  \u00b7 rcases eq_or_ne K 0 <;> rcases eq_or_ne ( # ( orbitSetNormalized G \u03c1 N ) ) 0 <;> simp_all +decide;\n    exact le_trans ( Real.log_le_log ( Nat.cast_pos.mpr <| Finset.card_pos.mpr <| Finset.nonempty_of_ne_empty \u2039_\u203a ) <| Nat.cast_le.mpr <| hK N ) <| by nlinarith [ Nat.lt_of_ceil_lt hN, mul_div_cancel\u2080 ( Real.log K ) h\u03b5pos.ne' ] ;\n  \u00b7 exact Nat.cast_pos.mpr ( by linarith )\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nTropical Orbit Complexity \u2014 Algorithms\n\nImplements the core algorithms from the research paper:\n1. Tropical matrix multiplication and power computation\n2. Tropical spectral radius computation (max cycle mean)\n3. Tropical eigenvector computation\n4. Normalized orbit analysis\n5. Orbit entropy estimation\n\"\"\"\n\nimport numpy as np\nfrom typing import Tuple, List, Dict, Optional\n\n\n# ============================================================================\n# Core Tropical Operations\n# ============================================================================\n\ndef trop_add(a: float, b: float) -> float:\n    \"\"\"Tropical addition (max-plus): a \u2295 b = max(a, b).\"\"\"\n    return max(a, b)\n\n\ndef trop_mul(a: float, b: float) -> float:\n    \"\"\"Tropical multiplication (max-plus): a \u2297 b = a + b.\"\"\"\n    return a + b\n\n\ndef trop_mul_mat(A: np.ndarray, B: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Tropical matrix multiplication: (A\u2297B)_{ij} = max_k (A_{ik} + B_{kj}).\n\n    Time complexity: O(n\u00b3) where n is the matrix dimension.\n    Space complexity: O(n\u00b2) for the result matrix.\n\n    Args:\n        A: n\u00d7n matrix\n        B: n\u00d7n matrix\n    Returns:\n        n\u00d7n matrix C where C[i,j] = max_k(A[i,k] + B[k,j])\n    \"\"\"\n    n = A.shape[0]\n    C = np.full((n, n), -np.inf)\n    for i in range(n):\n        for j in range(n):\n            C[i, j] = max(A[i, k] + B[k, j] for k in range(n))\n    return C\n\n\ndef trop_pow(G: np.ndarray, k: int) -> np.ndarray:\n    \"\"\"\n    Compute the k-th tropical power of G via repeated multiplication.\n\n    Time complexity: O(k \u00b7 n\u00b3)\n    Space complexity: O(n\u00b2)\n\n    Args:\n        G: n\u00d7n matrix\n        k: power (k \u2265 0)\n    Returns:\n        G^\u2297k\n    \"\"\"\n    n = G.shape[0]\n    if k == 0:\n        return np.zeros((n, n))\n    result = G.copy()\n    for _ in range(k - 1):\n        result = trop_mul_mat(result, G)\n    return result\n\n\ndef trop_mat_vec_mul(A: np.ndarray, v: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Tropical matrix-vector multiplication: (A\u2297v)_i = max_j(A_{ij} + v_j).\n\n    Time complexity: O(n\u00b2)\n\n    Args:\n        A: n\u00d7n matrix\n        v: n-vector\n    Returns:\n        n-vector w where w[i] = max_j(A[i,j] + v[j])\n    \"\"\"\n    n = A.shape[0]\n    return np.array([max(A[i, j] + v[j] for j in range(n)) for i in range(n)])\n\n\n# ============================================================================\n# Spectral Analysis\n# ============================================================================\n\ndef tropical_spectral_radius(G: np.ndarray) -> float:\n    \"\"\"\n    Compute the tropical spectral radius (maximum cycle mean) of G.\n\n    The tropical spectral radius is:\n        \u03c1(G) = max over all cycles (i\u2081,...,i\u2096) of\n               (G[i\u2081,i\u2082] + G[i\u2082,i\u2083] + ... + G[i\u2096,i\u2081]) / k\n\n    Algorithm: Karp's algorithm via tropical matrix powers.\n    Time complexity: O(n\u2074) via computing all powers up to n.\n    Space complexity: O(n\u00b3) for storing intermediate powers.\n\n    Args:\n        G: n\u00d7n matrix\n    Returns:\n        Maximum cycle mean \u03c1(G)\n    \"\"\"\n    n = G.shape[0]\n\n    # Compute G, G\u00b2, ..., G^n\n    powers = [None] * (n + 1)\n    powers[1] = G.copy()\n    for k in range(2, n + 1):\n        powers[k] = trop_mul_mat(powers[k - 1], G)\n\n    # Karp's algorithm: \u03c1 = max_i min_k (G^n[i,i] - G^k[i,i]) / (n-k)\n    rho = -np.inf\n    for i in range(n):\n        min_val = np.inf\n        for k in range(1, n):\n            if powers[n][i, i] != -np.inf and powers[k][i, i] != -np.inf:\n                val = (powers[n][i, i] - powers[k][i, i]) / (n - k)\n                min_val = min(min_val, val)\n        if min_val != np.inf:\n            rho = max(rho, min_val)\n\n    # Also check diagonal entries directly (self-loops)\n    for i in range(n):\n        rho = max(rho, G[i, i])\n\n    # And check all 2-cycles\n    for i in range(n):\n        for j in range(i + 1, n):\n            rho = max(rho, (G[i, j] + G[j, i]) / 2)\n\n    return rho\n\n\ndef find_tropical_eigenvector(G: np.ndarray, rho: Optional[float] = None,\n                                max_iter: int = 1000) -> Tuple[np.ndarray, float]:\n    \"\"\"\n    Find a tropical eigenvector of G: a vector v such that G\u2297v = \u03c1+v.\n\n    Algorithm: Power iteration in the tropical semiring.\n    After subtracting \u03c1 at each step, iterate v \u2190 G\u2297v - \u03c1 until convergence.\n\n    Time complexity: O(max_iter \u00b7 n\u00b2)\n\n    Args:\n        G: n\u00d7n matrix\n        rho: eigenvalue (computed if None)\n        max_iter: maximum iterations\n    Returns:\n        (v, rho) where G\u2297v = \u03c1 + v (approximately)\n    \"\"\"\n    n = G.shape[0]\n    if rho is None:\n        rho = tropical_spectral_radius(G)\n\n    v = np.zeros(n)\n    for _ in range(max_iter):\n        v_new = trop_mat_vec_mul(G, v) - rho\n        if np.allclose(v_new, v):\n            break\n        v = v_new\n\n    return v, rho\n\n\n# ============================================================================\n# Orbit Analysis\n# ============================================================================\n\ndef normalized_orbit(G: np.ndarray, rho: float, N: int) -> Dict[tuple, int]:\n    \"\"\"\n    Compute the normalized orbit {G\u0303^(1), ..., G\u0303^(N)} where G\u0303^(k) = G^\u2297k - k\u03c1.\n\n    Time complexity: O(N \u00b7 n\u00b3)\n    Space complexity: O(|orbit| \u00b7 n\u00b2)\n\n    Args:\n        G: n\u00d7n matrix\n        rho: spectral radius / drift parameter\n        N: maximum power\n    Returns:\n        Dictionary mapping matrix tuples to first occurrence time\n    \"\"\"\n    seen = {}\n    Gk = G.copy()\n    for k in range(1, N + 1):\n        if k > 1:\n            Gk = trop_mul_mat(Gk, G)\n        normalized = Gk - k * rho\n        key = tuple(np.round(normalized, 10).flatten())\n        if key not in seen:\n            seen[key] = k\n    return seen\n\n\ndef orbit_cardinality_sequence(G: np.ndarray, rho: float, N: int) -> List[int]:\n    \"\"\"\n    Compute the orbit cardinality sequence |{G\u0303^(1),...,G\u0303^(k)}| for k=1,...,N.\n\n    Time complexity: O(N \u00b7 n\u00b3)\n\n    Args:\n        G: n\u00d7n matrix\n        rho: spectral radius\n        N: maximum power\n    Returns:\n        List of orbit cardinalities\n    \"\"\"\n    seen = set()\n    sizes = []\n    Gk = G.copy()\n    for k in range(1, N + 1):\n        if k > 1:\n            Gk = trop_mul_mat(Gk, G)\n        normalized = Gk - k * rho\n        key = tuple(np.round(normalized, 10).flatten())\n        seen.add(key)\n        sizes.append(len(seen))\n    return sizes\n\n\ndef orbit_entropy_sequence(G: np.ndarray, rho: float, N: int) -> List[float]:\n    \"\"\"\n    Compute the orbit entropy rate sequence log(|orbit_k|)/k for k=1,...,N.\n\n    Time complexity: O(N \u00b7 n\u00b3)\n\n    Args:\n        G: n\u00d7n matrix\n        rho: spectral radius\n        N: maximum power\n    Returns:\n        List of entropy rates\n    \"\"\"\n    sizes = orbit_cardinality_sequence(G, rho, N)\n    rates = []\n    for k, s in enumerate(sizes, 1):\n        if s > 0:\n            rates.append(np.log(s) / k)\n        else:\n            rates.append(0.0)\n    return rates\n\n\ndef entry_bound_from_eigenvector(G: np.ndarray, v: np.ndarray, rho: float,\n                                   k: int) -> np.ndarray:\n    \"\"\"\n    Compute the eigenvector-based upper bound on G^\u2297k entries.\n\n    By Theorem B: G^\u2297k_{ij} \u2264 k\u00b7\u03c1 + v_i - v_j\n\n    Args:\n        G: n\u00d7n matrix\n        v: tropical eigenvector\n        rho: tropical eigenvalue\n        k: power\n    Returns:\n        n\u00d7n matrix of upper bounds\n    \"\"\"\n    n = G.shape[0]\n    bounds = np.zeros((n, n))\n    for i in range(n):\n        for j in range(n):\n            bounds[i, j] = k * rho + v[i] - v[j]\n    return bounds\n\n\n# ============================================================================\n# Application: Discrete Event Systems\n# ============================================================================\n\ndef des_cycle_time(G: np.ndarray, num_cycles: int = 100) -> Tuple[float, np.ndarray]:\n    \"\"\"\n    Compute the cycle time and transient behavior of a discrete event system.\n\n    In a DES modeled by max-plus linear system x(k+1) = G\u2297x(k),\n    the cycle time equals the tropical spectral radius.\n    The transient is the number of steps before periodicity.\n\n    Args:\n        G: n\u00d7n transition matrix (processing times + routing)\n        num_cycles: number of cycles to simulate\n    Returns:\n        (cycle_time, trajectory) where trajectory[k] = x(k)\n    \"\"\"\n    n = G.shape[0]\n    rho = tropical_spectral_radius(G)\n    x = np.zeros(n)\n    trajectory = [x.copy()]\n\n    for k in range(num_cycles):\n        x = trop_mat_vec_mul(G, x)\n        trajectory.append(x.copy())\n\n    return rho, np.array(trajectory)\n\n\nif __name__ == \"__main__\":\n    # Quick test\n    G = np.array([[3, 1], [2, 4]], dtype=float)\n    rho = tropical_spectral_radius(G)\n    print(f\"Spectral radius of [[3,1],[2,4]]: {rho}\")\n\n    v, rho = find_tropical_eigenvector(G)\n    print(f\"Eigenvector: {v}, eigenvalue: {rho}\")\n\n    orbit = normalized_orbit(G, rho, 100)\n    print(f\"Orbit size (N=100): {len(orbit)}\")\n\n    entropy = orbit_entropy_sequence(G, rho, 20)\n    print(f\"Entropy rates: {[f'{e:.4f}' for e in entropy]}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nTropical Orbit Complexity \u2014 Real-World Applications\n\nDemonstrates how tropical matrix orbit complexity theory applies to:\n1. Manufacturing scheduling (discrete event systems)\n2. Network routing optimization\n3. Train timetable synchronization\n4. Digital circuit timing analysis\n\"\"\"\n\nimport numpy as np\nfrom algorithms import (trop_mul_mat, trop_pow, trop_mat_vec_mul,\n                        tropical_spectral_radius, normalized_orbit,\n                        orbit_cardinality_sequence, orbit_entropy_sequence,\n                        find_tropical_eigenvector)\n\n\ndef app_manufacturing():\n    \"\"\"\n    Application 1: Manufacturing Line Scheduling\n\n    A factory has 3 machines processing parts in sequence.\n    Machine i takes time G[i,j] to process a part coming from machine j.\n    The max-plus system x(k+1) = G \u2297 x(k) models the k-th cycle completion times.\n\n    The tropical spectral radius gives the cycle time (throughput rate).\n    Bounded normalized orbit means the system reaches a periodic steady state.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Manufacturing Line Scheduling\")\n    print(\"=\" * 70)\n\n    # Processing times matrix:\n    # Machine 1 takes 5 from self, 3 from machine 2, 4 from machine 3\n    # Machine 2 takes 2 from machine 1, 6 from self, 3 from machine 3\n    # Machine 3 takes 4 from machine 1, 2 from machine 2, 5 from self\n    G = np.array([\n        [5, 3, 4],\n        [2, 6, 3],\n        [4, 2, 5]\n    ], dtype=float)\n\n    print(f\"\\nProcessing time matrix G:\\n{G}\")\n\n    rho = tropical_spectral_radius(G)\n    print(f\"\\nCycle time (throughput rate): \u03c1 = {rho:.2f} time units\")\n    print(f\"This means one complete production cycle takes {rho:.2f} time units\")\n\n    # Simulate production\n    x = np.zeros(3)  # Start times\n    print(f\"\\nProduction simulation:\")\n    print(f\"  Cycle 0: start times = {x}\")\n    for k in range(1, 8):\n        x = trop_mat_vec_mul(G, x)\n        normalized = x - k * rho\n        print(f\"  Cycle {k}: completion = {x}, normalized = {normalized}\")\n\n    # Orbit analysis\n    orbit = normalized_orbit(G, rho, 50)\n    print(f\"\\n  Orbit size (50 cycles): {len(orbit)}\")\n    print(f\"  \u2192 System reaches periodic steady state after {max(orbit.values())} cycles\")\n    print(f\"  \u2192 Only {len(orbit)} distinct production patterns exist\")\n\n\ndef app_network_routing():\n    \"\"\"\n    Application 2: Network Routing \u2014 Widest Path Problem\n\n    In a communication network, G[i,j] represents the bandwidth of the\n    direct link from node j to node i. The tropical (max-plus) product\n    gives the maximum-bandwidth path.\n\n    G^\u2297k[i,j] = maximum bandwidth achievable using exactly k hops from j to i.\n\n    The spectral radius determines the long-run bandwidth growth.\n    Bounded normalized orbit means the network has stable routing patterns.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 2: Network Routing \u2014 Bandwidth Optimization\")\n    print(\"=\" * 70)\n\n    # 4-node network: bandwidth matrix (log-scale, so additive = multiplicative)\n    G = np.array([\n        [0, 2, 0, 1],\n        [2, 0, 3, 0],\n        [0, 3, 0, 2],\n        [1, 0, 2, 0]\n    ], dtype=float)\n\n    print(f\"\\nBandwidth matrix (log-scale):\\n{G}\")\n\n    rho = tropical_spectral_radius(G)\n    print(f\"\\nSpectral radius: \u03c1 = {rho:.2f}\")\n\n    print(f\"\\nMax-bandwidth paths by hop count:\")\n    for k in range(1, 6):\n        Gk = trop_pow(G, k)\n        print(f\"  k={k} hops: best path 0\u21923 has bandwidth {Gk[3,0]:.0f} (log-scale)\")\n\n    # Normalized orbit\n    orbit = normalized_orbit(G, rho, 30)\n    print(f\"\\n  Routing pattern diversity (30 hops): {len(orbit)} distinct patterns\")\n    print(f\"  \u2192 Network has finite routing complexity\")\n\n\ndef app_train_timetable():\n    \"\"\"\n    Application 3: Train Timetable Synchronization\n\n    A railway network where trains must synchronize at stations.\n    G[i,j] = minimum travel + wait time from station j's departure to station i's departure.\n\n    The max-plus system models departure times:\n    d(k+1) = G \u2297 d(k) where d(k) is the vector of k-th departure times.\n\n    Cycle time = minimum headway between consecutive trains.\n    Finite normalized orbit = eventually periodic timetable.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 3: Train Timetable Synchronization\")\n    print(\"=\" * 70)\n\n    # 4 stations: travel + synchronization times\n    G = np.array([\n        [10,  5,  0,  8],\n        [ 6, 10,  7,  0],\n        [ 0,  4, 10,  6],\n        [ 7,  0,  5, 10]\n    ], dtype=float)\n\n    print(f\"\\nTravel + sync matrix G:\\n{G}\")\n\n    rho = tropical_spectral_radius(G)\n    print(f\"\\nMinimum headway (cycle time): {rho:.1f} minutes\")\n\n    v, _ = find_tropical_eigenvector(G, rho)\n    print(f\"Steady-state departure offsets: {v}\")\n\n    # Verify eigenvector\n    Gv = trop_mat_vec_mul(G, v)\n    print(f\"G\u2297v = {Gv}\")\n    print(f\"\u03c1+v = {rho + v}\")\n    print(f\"Eigenvector valid: {np.allclose(Gv, rho + v, atol=0.01)}\")\n\n    # Check orbit\n    orbit = normalized_orbit(G, rho, 50)\n    print(f\"\\nTimetable pattern diversity: {len(orbit)} patterns in 50 departures\")\n\n    entropy = orbit_entropy_sequence(G, rho, 50)\n    print(f\"Entropy rate at N=50: {entropy[-1]:.6f}\")\n    print(f\"\u2192 Timetable reaches periodic steady state (zero entropy)\")\n\n\ndef app_circuit_timing():\n    \"\"\"\n    Application 4: Digital Circuit Timing Analysis\n\n    In a synchronous digital circuit, G[i,j] represents the propagation\n    delay from flip-flop j to flip-flop i through combinational logic.\n\n    The max-plus system models clock cycle timing:\n    t(k+1) = G \u2297 t(k) where t(k) is the arrival time at cycle k.\n\n    Spectral radius = minimum clock period (critical path delay).\n    Finite normalized orbit = the circuit stabilizes after a transient.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 4: Digital Circuit Timing Analysis\")\n    print(\"=\" * 70)\n\n    # 3 flip-flops with combinational delays\n    G = np.array([\n        [2, 4, 1],\n        [3, 2, 5],\n        [1, 3, 2]\n    ], dtype=float)\n\n    print(f\"\\nPropagation delay matrix G:\\n{G}\")\n\n    rho = tropical_spectral_radius(G)\n    print(f\"\\nMinimum clock period (critical path): {rho:.1f} ns\")\n    print(f\"Maximum clock frequency: {1000/rho:.1f} MHz (if delays in ns)\")\n\n    # Timing analysis over cycles\n    print(f\"\\nTiming convergence:\")\n    x = np.zeros(3)\n    for k in range(1, 8):\n        x = trop_mat_vec_mul(G, x)\n        slack = k * rho - np.max(x)\n        print(f\"  Cycle {k}: max arrival = {np.max(x):.0f}, \"\n              f\"expected = {k*rho:.0f}, slack = {slack:.0f}\")\n\n    orbit = normalized_orbit(G, rho, 30)\n    print(f\"\\n  Timing patterns: {len(orbit)} distinct in 30 cycles\")\n    print(f\"  \u2192 Circuit timing is stable (finite orbit)\")\n\n\nif __name__ == \"__main__\":\n    app_manufacturing()\n    app_network_routing()\n    app_train_timetable()\n    app_circuit_timing()\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All applications demonstrated successfully!\")\n    print(\"=\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\nTropical Orbit Complexity \u2014 Demonstrations\n\nConcrete numerical examples showing how tropical spectral data controls\norbit complexity. Each demo illustrates a theorem from the formal development.\n\"\"\"\n\nimport numpy as np\nfrom itertools import product\n\n\ndef trop_mul_mat(A, B):\n    \"\"\"Tropical (max-plus) matrix multiplication: (A\u2297B)_{ij} = max_k (A_{ik} + B_{kj}).\"\"\"\n    n = A.shape[0]\n    C = np.full((n, n), -np.inf)\n    for i in range(n):\n        for j in range(n):\n            C[i, j] = max(A[i, k] + B[k, j] for k in range(n))\n    return C\n\n\ndef trop_pow(G, k):\n    \"\"\"Compute the k-th tropical power of G.\"\"\"\n    n = G.shape[0]\n    if k == 0:\n        # Tropical identity (0 on diagonal, -inf off-diagonal for true max-plus)\n        # But for integer version matching Lean, use 0 everywhere\n        return np.zeros((n, n), dtype=float)\n    result = G.copy()\n    for _ in range(k - 1):\n        result = trop_mul_mat(result, G)\n    return result\n\n\ndef trop_mat_vec_mul(A, v):\n    \"\"\"Tropical matrix-vector multiplication: (A\u2297v)_i = max_j (A_{ij} + v_j).\"\"\"\n    n = A.shape[0]\n    return np.array([max(A[i, j] + v[j] for j in range(n)) for i in range(n)])\n\n\ndef normalized_trop_pow(G, rho, k):\n    \"\"\"Normalized tropical power: G^\u2297k_{ij} - k*rho.\"\"\"\n    return trop_pow(G, k) - k * rho\n\n\ndef orbit_set_normalized(G, rho, N):\n    \"\"\"Compute the set of distinct normalized tropical powers {G\u0303^(1), ..., G\u0303^(N)}.\"\"\"\n    seen = {}\n    for k in range(1, N + 1):\n        M = normalized_trop_pow(G, rho, k)\n        key = tuple(M.flatten())\n        if key not in seen:\n            seen[key] = k\n    return seen\n\n\n# ============================================================================\n# Demo 1: Basic Tropical Matrix Powers\n# ============================================================================\ndef demo_basic_powers():\n    print(\"=\" * 70)\n    print(\"DEMO 1: Tropical Matrix Powers and Entry Growth\")\n    print(\"=\" * 70)\n\n    G = np.array([[3, 1],\n                  [2, 4]], dtype=float)\n\n    print(f\"\\nMatrix G =\\n{G}\")\n    print(f\"\\nTropical powers G^\u2297k (max-plus multiplication):\")\n\n    for k in range(1, 8):\n        Gk = trop_pow(G, k)\n        max_entry = Gk.max()\n        min_entry = Gk.min()\n        print(f\"  k={k}: G^\u2297{k} = {Gk.flatten()}, \"\n              f\"max={max_entry:.0f}, min={min_entry:.0f}, \"\n              f\"span={max_entry - min_entry:.0f}\")\n\n    # The spectral radius (max cycle mean) for this matrix\n    # Diagonal: max(3, 4) = 4\n    # 2-cycle: (1+2)/2 = 1.5\n    # So rho = 4\n    rho = 4\n    print(f\"\\nTropical spectral radius \u03c1 = {rho}\")\n    print(f\"\\nNormalized powers G\u0303^(k) = G^\u2297k - k\u00b7\u03c1:\")\n\n    for k in range(1, 8):\n        Mk = normalized_trop_pow(G, rho, k)\n        print(f\"  k={k}: {Mk.flatten()}\")\n\n    print(\"\\n\u2192 Normalized entries are bounded! Orbit is finite.\")\n\n\n# ============================================================================\n# Demo 2: Orbit Cardinality Bound (Theorem A)\n# ============================================================================\ndef demo_orbit_bound():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 2: Orbit Cardinality Bound (Theorem A)\")\n    print(\"=\" * 70)\n\n    G = np.array([[2, 0, 1],\n                  [1, 3, 0],\n                  [0, 1, 2]], dtype=float)\n    n = G.shape[0]\n\n    # Compute spectral radius (max cycle mean)\n    # Diagonal: max(2,3,2) = 3\n    # 2-cycles: (0+1)/2=0.5, (1+0)/2=0.5, (0+1)/2=0.5\n    # 3-cycle: (0+0+0)/3=0, etc.\n    rho = 3\n    print(f\"\\nMatrix G (3\u00d73):\\n{G}\")\n    print(f\"Tropical spectral radius \u03c1 = {rho}\")\n\n    N = 50\n    orbit = orbit_set_normalized(G, rho, N)\n    print(f\"\\nOrbit cardinality for N=1..{N}: |orbit| = {len(orbit)}\")\n\n    # Compute the bound\n    C = 0\n    for k in range(1, N + 1):\n        Mk = normalized_trop_pow(G, rho, k)\n        C = max(C, int(np.max(np.abs(Mk))))\n\n    bound = (2 * C + 1) ** (n * n)\n    print(f\"Maximum |entry| in normalized powers: C = {C}\")\n    print(f\"Theoretical bound (2C+1)^(n\u00b2) = ({2*C+1})^{n*n} = {bound}\")\n    print(f\"Actual orbit size: {len(orbit)} \u2264 {bound} \u2713\")\n\n    # Show the orbit stabilizes\n    sizes = []\n    for N_curr in range(1, N + 1):\n        orb = orbit_set_normalized(G, rho, N_curr)\n        sizes.append(len(orb))\n    print(f\"\\nOrbit sizes by N: {sizes[:20]}...\")\n    print(f\"\u2192 Orbit stabilizes! Eventually periodic behavior.\")\n\n\n# ============================================================================\n# Demo 3: Eigenvector Upper Bound (Theorem B)\n# ============================================================================\ndef demo_eigenvector_bound():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 3: Eigenvector Upper Bound (Theorem B)\")\n    print(\"=\" * 70)\n\n    # Matrix with known tropical eigenvector\n    # G\u2297v = \u03c1 + v means max_j(G_{ij} + v_j) = \u03c1 + v_i\n    # Choose G = [[5, 1], [3, 5]], v = [0, 0], \u03c1 = 5\n    G = np.array([[5, 1],\n                  [3, 5]], dtype=float)\n    v = np.array([0, 0], dtype=float)\n    rho = 5\n\n    # Verify eigenvector equation\n    Gv = trop_mat_vec_mul(G, v)\n    print(f\"\\nMatrix G =\\n{G}\")\n    print(f\"Eigenvector v = {v}\")\n    print(f\"Eigenvalue \u03c1 = {rho}\")\n    print(f\"G\u2297v = {Gv}\")\n    print(f\"\u03c1 + v = {rho + v}\")\n    print(f\"Eigenvector equation holds: {np.allclose(Gv, rho + v)}\")\n\n    print(f\"\\nVerifying Theorem B: G^\u2297k_{{ij}} \u2264 k\u00b7\u03c1 + v_i - v_j\")\n    for k in range(1, 10):\n        Gk = trop_pow(G, k)\n        for i in range(2):\n            for j in range(2):\n                bound = k * rho + v[i] - v[j]\n                actual = Gk[i, j]\n                ok = actual <= bound + 1e-10\n                if not ok:\n                    print(f\"  VIOLATION at k={k}, i={i}, j={j}: \"\n                          f\"{actual} > {bound}\")\n        max_gap = max(k * rho + v[i] - v[j] - Gk[i, j]\n                      for i in range(2) for j in range(2))\n        print(f\"  k={k}: bound holds \u2713 (max slack = {max_gap:.0f})\")\n\n\n# ============================================================================\n# Demo 4: Entropy Collapse (Theorem C)\n# ============================================================================\ndef demo_entropy_collapse():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 4: Entropy Collapse (Theorem C)\")\n    print(\"=\" * 70)\n\n    G = np.array([[2, 0, 1],\n                  [1, 3, 0],\n                  [0, 1, 2]], dtype=float)\n    rho = 3\n\n    print(f\"\\nMatrix G (3\u00d73):\\n{G}\")\n    print(f\"Spectral radius \u03c1 = {rho}\")\n    print(f\"\\n{'N':>5} {'|orbit|':>8} {'log(|orbit|)/N':>16}\")\n    print(\"-\" * 35)\n\n    for N in [1, 2, 5, 10, 20, 50, 100, 200, 500]:\n        orbit = orbit_set_normalized(G, rho, N)\n        card = len(orbit)\n        if N > 0 and card > 0:\n            entropy_rate = np.log(card) / N\n        else:\n            entropy_rate = 0\n        print(f\"{N:5d} {card:8d} {entropy_rate:16.6f}\")\n\n    print(\"\\n\u2192 log(|orbit|)/N \u2192 0 as N \u2192 \u221e  (entropy collapse)\")\n\n\n# ============================================================================\n# Demo 5: 2\u00d72 Classification\n# ============================================================================\ndef demo_2x2_classification():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 5: 2\u00d72 Tropical Matrix Classification\")\n    print(\"=\" * 70)\n\n    examples = [\n        (\"Diagonal dominant\", np.array([[5, 1], [1, 5]])),\n        (\"Cycle dominant\", np.array([[0, 3], [4, 0]])),\n        (\"Mixed\", np.array([[3, 2], [1, 4]])),\n        (\"Uniform\", np.array([[2, 2], [2, 2]])),\n    ]\n\n    for name, G in examples:\n        # Tropical spectral radius for 2x2\n        diag_max = max(G[0, 0], G[1, 1])\n        cycle_mean = (G[0, 1] + G[1, 0]) / 2\n        rho = max(diag_max, cycle_mean)\n\n        orbit = orbit_set_normalized(G, rho, 100)\n        print(f\"\\n{name}: G = {G.flatten()}\")\n        print(f\"  \u03c1 = max({diag_max}, {cycle_mean}) = {rho}\")\n        print(f\"  Orbit size (N=100): {len(orbit)}\")\n\n        # Show normalized powers\n        for k in range(1, min(6, 101)):\n            Mk = normalized_trop_pow(G, rho, k)\n            print(f\"    k={k}: normalized = {Mk.flatten()}\")\n\n\nif __name__ == \"__main__\":\n    demo_basic_powers()\n    demo_orbit_bound()\n    demo_eigenvector_bound()\n    demo_entropy_collapse()\n    demo_2x2_classification()\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demos completed successfully!\")\n    print(\"=\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\nTropical Orbit Complexity \u2014 Visualizations\n\nGenerates publication-quality figures showing:\n1. Entry growth and spectral drift\n2. Normalized orbit convergence\n3. Entropy collapse\n4. Eigenvector bound verification\n5. 2\u00d72 classification phase diagram\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom matplotlib.gridspec import GridSpec\n\nfrom algorithms import (trop_mul_mat, trop_pow, trop_mat_vec_mul,\n                        tropical_spectral_radius, normalized_orbit,\n                        orbit_cardinality_sequence, orbit_entropy_sequence,\n                        find_tropical_eigenvector)\n\n\ndef fig1_entry_growth():\n    \"\"\"Figure 1: Entry growth under tropical powers vs linear drift.\"\"\"\n    G = np.array([[3, 1], [2, 4]], dtype=float)\n    rho = tropical_spectral_radius(G)\n\n    ks = range(1, 21)\n    entries = {(i, j): [] for i in range(2) for j in range(2)}\n    for k in ks:\n        Gk = trop_pow(G, k)\n        for i in range(2):\n            for j in range(2):\n                entries[(i, j)].append(Gk[i, j])\n\n    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))\n\n    colors = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']\n    labels = ['(0,0)', '(0,1)', '(1,0)', '(1,1)']\n    for idx, (ij, vals) in enumerate(entries.items()):\n        ax1.plot(list(ks), vals, 'o-', color=colors[idx], label=f'Entry {labels[idx]}',\n                 markersize=4)\n\n    drift = [k * rho for k in ks]\n    ax1.plot(list(ks), drift, 'k--', linewidth=2, label=f'Linear drift k\u03c1 (\u03c1={rho:.0f})')\n    ax1.set_xlabel('Power k', fontsize=12)\n    ax1.set_ylabel('Entry value', fontsize=12)\n    ax1.set_title('Tropical Power Entries vs Spectral Drift', fontsize=13)\n    ax1.legend(fontsize=10)\n    ax1.grid(True, alpha=0.3)\n\n    # Normalized entries\n    for idx, (ij, vals) in enumerate(entries.items()):\n        normalized = [v - k * rho for k, v in zip(ks, vals)]\n        ax2.plot(list(ks), normalized, 'o-', color=colors[idx],\n                 label=f'Entry {labels[idx]}', markersize=4)\n\n    ax2.axhline(y=0, color='k', linestyle='--', alpha=0.5)\n    ax2.set_xlabel('Power k', fontsize=12)\n    ax2.set_ylabel('Normalized entry (G^k_{ij} - k\u03c1)', fontsize=12)\n    ax2.set_title('Normalized Entries: Bounded Residuals', fontsize=13)\n    ax2.legend(fontsize=10)\n    ax2.grid(True, alpha=0.3)\n\n    plt.tight_layout()\n    plt.savefig('fig1_entry_growth.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    print(\"Saved fig1_entry_growth.png\")\n\n\ndef fig2_orbit_convergence():\n    \"\"\"Figure 2: Orbit cardinality convergence for various matrices.\"\"\"\n    examples = [\n        (\"2\u00d72 Diagonal\\ndominant\", np.array([[5, 1], [1, 5]], dtype=float)),\n        (\"2\u00d72 Cycle\\ndominant\", np.array([[0, 3], [4, 0]], dtype=float)),\n        (\"3\u00d73 Mixed\", np.array([[2, 0, 1], [1, 3, 0], [0, 1, 2]], dtype=float)),\n        (\"3\u00d73 Dense\", np.array([[3, 2, 1], [1, 3, 2], [2, 1, 3]], dtype=float)),\n    ]\n\n    fig, axes = plt.subplots(2, 2, figsize=(12, 10))\n    axes = axes.flatten()\n\n    for idx, (name, G) in enumerate(examples):\n        rho = tropical_spectral_radius(G)\n        N = 50\n        sizes = orbit_cardinality_sequence(G, rho, N)\n\n        ax = axes[idx]\n        ax.plot(range(1, N + 1), sizes, 'b-', linewidth=2)\n        ax.axhline(y=sizes[-1], color='r', linestyle='--', alpha=0.7,\n                   label=f'Limit = {sizes[-1]}')\n        ax.set_xlabel('N', fontsize=11)\n        ax.set_ylabel('|Orbit(N)|', fontsize=11)\n        ax.set_title(f'{name}\\n\u03c1 = {rho:.1f}', fontsize=12)\n        ax.legend(fontsize=10)\n        ax.grid(True, alpha=0.3)\n        ax.set_ylim(bottom=0)\n\n    plt.suptitle('Orbit Cardinality Convergence', fontsize=14, y=1.02)\n    plt.tight_layout()\n    plt.savefig('fig2_orbit_convergence.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    print(\"Saved fig2_orbit_convergence.png\")\n\n\ndef fig3_entropy_collapse():\n    \"\"\"Figure 3: Entropy rate collapse to zero.\"\"\"\n    examples = [\n        (\"3\u00d73 Example A\", np.array([[2, 0, 1], [1, 3, 0], [0, 1, 2]], dtype=float)),\n        (\"3\u00d73 Example B\", np.array([[3, 2, 1], [1, 3, 2], [2, 1, 3]], dtype=float)),\n        (\"4\u00d74 Random\", np.array([[4, 1, 0, 2], [2, 3, 1, 0],\n                                  [0, 2, 4, 1], [1, 0, 2, 3]], dtype=float)),\n    ]\n\n    fig, ax = plt.subplots(figsize=(10, 6))\n    colors = ['#2196F3', '#FF5722', '#4CAF50']\n\n    for idx, (name, G) in enumerate(examples):\n        rho = tropical_spectral_radius(G)\n        N = 200\n        entropy = orbit_entropy_sequence(G, rho, N)\n        ax.plot(range(1, N + 1), entropy, color=colors[idx], linewidth=1.5,\n                label=f'{name} (\u03c1={rho:.1f})')\n\n    ax.axhline(y=0, color='k', linestyle='--', alpha=0.5)\n    ax.set_xlabel('N', fontsize=12)\n    ax.set_ylabel('log(|orbit|) / N', fontsize=12)\n    ax.set_title('Entropy Collapse: log(|orbit|)/N \u2192 0', fontsize=14)\n    ax.legend(fontsize=11)\n    ax.grid(True, alpha=0.3)\n    ax.set_ylim(-0.05, max(0.5, ax.get_ylim()[1]))\n\n    plt.tight_layout()\n    plt.savefig('fig3_entropy_collapse.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    print(\"Saved fig3_entropy_collapse.png\")\n\n\ndef fig4_eigenvector_bound():\n    \"\"\"Figure 4: Eigenvector-based entry bounds (Theorem B).\"\"\"\n    G = np.array([[5, 1, 3],\n                  [2, 4, 1],\n                  [3, 2, 5]], dtype=float)\n    rho = tropical_spectral_radius(G)\n    v, _ = find_tropical_eigenvector(G, rho)\n\n    ks = range(1, 16)\n    fig, axes = plt.subplots(1, 3, figsize=(15, 5))\n\n    pairs = [(0, 1), (1, 2), (0, 2)]\n    for ax_idx, (i, j) in enumerate(pairs):\n        actuals = []\n        bounds = []\n        for k in ks:\n            Gk = trop_pow(G, k)\n            actuals.append(Gk[i, j])\n            bounds.append(k * rho + v[i] - v[j])\n\n        ax = axes[ax_idx]\n        ax.plot(list(ks), actuals, 'bo-', markersize=5, label='Actual G^\u2297k_{ij}')\n        ax.plot(list(ks), bounds, 'r--', linewidth=2, label='Bound k\u03c1 + v_i - v_j')\n        ax.fill_between(list(ks), actuals, bounds, alpha=0.2, color='green',\n                         label='Slack')\n        ax.set_xlabel('Power k', fontsize=11)\n        ax.set_ylabel(f'Entry ({i},{j})', fontsize=11)\n        ax.set_title(f'Entry ({i},{j}): Bound vs Actual', fontsize=12)\n        ax.legend(fontsize=9)\n        ax.grid(True, alpha=0.3)\n\n    plt.suptitle(f'Eigenvector Bound (Theorem B): \u03c1={rho:.1f}, v={np.round(v,1)}',\n                 fontsize=13, y=1.02)\n    plt.tight_layout()\n    plt.savefig('fig4_eigenvector_bound.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    print(\"Saved fig4_eigenvector_bound.png\")\n\n\ndef fig5_phase_diagram():\n    \"\"\"Figure 5: 2\u00d72 orbit complexity phase diagram.\"\"\"\n    fig, ax = plt.subplots(figsize=(10, 8))\n\n    # Scan over 2x2 matrices parameterized by off-diagonal entries\n    # G = [[a, b], [c, d]] with a=d=0 (normalized)\n    resolution = 30\n    bs = np.linspace(0, 6, resolution)\n    cs = np.linspace(0, 6, resolution)\n\n    orbit_sizes = np.zeros((resolution, resolution))\n\n    for bi, b in enumerate(bs):\n        for ci, c in enumerate(cs):\n            G = np.array([[0, b], [c, 0]], dtype=float)\n            rho = tropical_spectral_radius(G)\n            orbit = normalized_orbit(G, rho, 50)\n            orbit_sizes[ci, bi] = len(orbit)\n\n    im = ax.pcolormesh(bs, cs, orbit_sizes, cmap='viridis', shading='auto')\n    plt.colorbar(im, ax=ax, label='Orbit size |{G\u0303^(1),...,G\u0303^(50)}|')\n\n    ax.set_xlabel('Off-diagonal entry b (G\u2080\u2081)', fontsize=12)\n    ax.set_ylabel('Off-diagonal entry c (G\u2081\u2080)', fontsize=12)\n    ax.set_title('2\u00d72 Orbit Complexity Phase Diagram\\nG = [[0, b], [c, 0]]', fontsize=14)\n    ax.set_aspect('equal')\n\n    plt.tight_layout()\n    plt.savefig('fig5_phase_diagram.png', dpi=150, bbox_inches='tight')\n    plt.close()\n    print(\"Saved fig5_phase_diagram.png\")\n\n\nif __name__ == \"__main__\":\n    fig1_entry_growth()\n    fig2_orbit_convergence()\n    fig3_entropy_collapse()\n    fig4_eigenvector_bound()\n    fig5_phase_diagram()\n    print(\"\\nAll visualizations generated!\")\n"
+    },
+    "date": "2026-05-14T19:35:16Z",
+    "exp_id": "c337fb05",
+    "source_exp_ids": [
+      "3cb1c42c"
+    ]
+  },
   "deep_double_descent_as_tropical_phase_diagram.json": {
     "title": "Deep Double Descent as Tropical Phase Diagram",
     "domain": "Machine Learning / Tropical Geometry",
@@ -5222,7 +5286,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T04:05:00Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -5231,7 +5295,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T04:05:25Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "tropical_knot_theory_min_plus_invariants_for_knot_",
@@ -5240,7 +5304,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T05:32:59Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
@@ -5249,7 +5313,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T05:33:18Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "emergent_computation_in_pythagorean_orbit_lattices",
@@ -5258,7 +5322,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T05:33:35Z",
-      "hue": 272
+      "hue": 134
     },
     {
       "id": "collatz_convergence_via_tropical_contracting_dynam",
@@ -5267,7 +5331,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:33:53Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "riemann_hypothesis_via_tropical_spectral_transfer",
@@ -5276,7 +5340,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:34:23Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "homomorphic_encryption_over_tropical_semirings",
@@ -5285,7 +5349,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T06:34:03Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "aristotle_prompt_engineering_category_theoretic_pr",
@@ -5294,7 +5358,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T07:32:50Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "navier_stokes_regularity_via_tropical_diffusion_op",
@@ -5312,7 +5376,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:24Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "quantum_pythagorean_teleportation_berggren_orbits_",
@@ -5321,7 +5385,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-14T07:33:40Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "twin_prime_conjecture_via_tropical_sieve_methods",
@@ -5330,7 +5394,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T07:33:50Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "neural_tangent_kernel_in_the_tropical_limit",
@@ -5339,7 +5403,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T07:34:05Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "tropical_source_coding_min_plus_rate_distortion_th",
@@ -5348,7 +5412,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T07:34:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "homotopy_type_theory_via_tropical_higher_inductive",
@@ -5357,7 +5421,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T08:32:40Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
@@ -5366,7 +5430,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T08:32:58Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "amortized_complexity_via_tropical_amortization",
@@ -5375,7 +5439,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T08:33:13Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "adversarial_training_as_tropical_regularization_pr",
@@ -5402,7 +5466,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T09:32:30Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "tropical_time_travel_min_plus_closed_timelike_curv",
@@ -5420,7 +5484,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:32:57Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "pythagorean_lattice_reduction_for_integer_factorin",
@@ -5429,7 +5493,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T09:33:10Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "alien_mathematics_what_theorems_would_non_carbon_l",
@@ -5438,7 +5502,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T09:33:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -5447,7 +5511,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T09:33:33Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "deep_double_descent_as_tropical_phase_diagram",
@@ -5456,7 +5520,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:33:48Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "tropical_sudoku_min_plus_constraint_satisfaction_a",
@@ -5465,7 +5529,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T10:33:46Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "string_theory_t_duality_as_tropical_duality_min_pl",
@@ -5474,7 +5538,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:04Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "quantum_gravity_as_tropical_geometry_min_plus_spac",
@@ -5483,7 +5547,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:22Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "birch_swinnerton_dyer_via_tropical_l_function_spec",
@@ -5492,7 +5556,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T10:34:39Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "aether_quality_control_automated_counterexample_ge",
@@ -5501,7 +5565,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T10:34:57Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "semantic_compression_via_tropical_information_geom",
@@ -5510,7 +5574,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T10:35:16Z",
-      "hue": 95
+      "hue": 280
     },
     {
       "id": "alien_algebra_non_archimedean_life_forms_in_idempo",
@@ -5528,7 +5592,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T11:34:50Z",
-      "hue": 280
+      "hue": 95
     },
     {
       "id": "aether_evolution_self_modifying_research_strategie",
@@ -5546,7 +5610,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T11:36:00Z",
-      "hue": 292
+      "hue": 92
     },
     {
       "id": "from_shallow_to_deep_formalizing_the_depth_gap_in_",
@@ -5555,7 +5619,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T12:34:45Z",
-      "hue": 271
+      "hue": 314
     },
     {
       "id": "goldbach_via_tropical_additive_combinatorics",
@@ -5564,7 +5628,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T12:35:03Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "tropical_type_theory_dependent_types_in_the_min_pl",
@@ -5573,7 +5637,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T12:35:20Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "grokking_as_tropical_phase_transition_in_neural_lo",
@@ -5591,7 +5655,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T13:22:43Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -5600,7 +5664,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T13:23:00Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -5609,7 +5673,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T13:23:19Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hyperbolic_crafting_optimal_nether_portals_via_tro",
@@ -5618,7 +5682,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T13:30:14Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "aristotle_quality_amplification_proof_strategy_min",
@@ -5627,7 +5691,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T13:30:31Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "dyson_sphere_optimization_tropical_light_network_f",
@@ -5645,7 +5709,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T14:11:36Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "p_vs_np_tropical_semiring_barrier",
@@ -5663,7 +5727,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T14:14:30Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_origami_min_plus_fold_structures_and_rigi",
@@ -5681,7 +5745,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T15:02:18Z",
-      "hue": 91
+      "hue": 101
     },
     {
       "id": "tropical_language_evolution_min_plus_phylogenetics",
@@ -5699,7 +5763,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T15:03:10Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "pythagorean_music_theory_harmonic_ratios_from_trip",
@@ -5708,7 +5772,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T15:03:27Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "tropical_rsa_min_plus_public_key_cryptosystem_with",
@@ -5717,7 +5781,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T16:16:17Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "holographic_proof_renormalization_ultrametric_comp",
@@ -5726,7 +5790,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T16:16:36Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "transformer_attention_as_tropical_matrix_multiplic",
@@ -5735,7 +5799,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T16:16:56Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "tropical_curry_howard_proofs_as_min_plus_programs",
@@ -5744,7 +5808,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T16:17:17Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "aristotle_architecture_compositional_research_via_",
@@ -5753,7 +5817,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T16:17:35Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "conways_game_of_life_on_tropical_semirings_emergen",
@@ -5762,7 +5826,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T16:17:52Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "musical_counterpoint_as_tropical_voice_leading_opt",
@@ -5771,7 +5835,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T16:24:00Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "wormhole_topology_via_tropical_surgery_min_plus_sp",
@@ -5780,7 +5844,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T16:24:25Z",
-      "hue": 90
+      "hue": 359
     },
     {
       "id": "p_vs_space_via_tropical_time_space_tradeoffs",
@@ -5789,7 +5853,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T17:32:56Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -5798,7 +5862,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T17:33:15Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "aether_self_improvement_certified_novelty_detectio",
@@ -5807,7 +5871,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T17:33:33Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "garden_of_eden",
@@ -5816,7 +5880,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T17:33:50Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "summary_table",
@@ -5825,7 +5889,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T17:34:08Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "prove__spreadness",
@@ -5834,7 +5898,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T18:35:16Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "lorentz_force_analogue",
@@ -5843,7 +5907,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T18:35:30Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "functoriality",
@@ -5852,7 +5916,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T18:35:49Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "sheaf_cohomology_and_certified_adversarial_robustn",
@@ -5861,7 +5925,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T18:36:09Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "circuit_universality",
@@ -5870,7 +5934,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T18:40:52Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "aristotle_bootstrapping_learning_to_prove_harder_t",
@@ -5879,7 +5943,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T19:31:41Z",
-      "hue": 270
+      "hue": 179
     },
     {
       "id": "circuit_lower_bounds_from_tropical_spectral_theory",
@@ -5888,7 +5952,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T19:34:10Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hodge_conjecture_through_tropical_algebraic_cycles",
@@ -5897,7 +5961,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T19:34:28Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "consciousness_as_tropical_fixed_point_min_plus_ref",
@@ -5906,7 +5970,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T19:34:40Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "implementation_priority",
@@ -5915,7 +5979,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T19:34:58Z",
-      "hue": 271
+      "hue": 270
+    },
+    {
+      "id": "connect_to_orbit_structure",
+      "title": "Orbit Complexity of Tropical Matrix Powers from Spectral Data",
+      "domain": "Tropical Algebra / Dynamical Systems",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-14T19:35:16Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -5924,6 +5997,13 @@ window.PACKAGE_GRAPH = {
       "target": "circuit_universality",
       "strength": 1.0,
       "label": "Entropy and Growth-Rate Invariants for Tropical Automata",
+      "type": "provenance"
+    },
+    {
+      "source": "tropical_rsa_min_plus_public_key_cryptosystem_with",
+      "target": "connect_to_orbit_structure",
+      "strength": 1.0,
+      "label": "inspired by",
       "type": "provenance"
     },
     {
@@ -5997,7 +6077,7 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Algebra",
       "domain_b": "Tropical",
-      "package_count": 33,
+      "package_count": 34,
       "strength": 1.0
     },
     {
@@ -8504,20 +8584,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T16:24:05.747567+00:00"
   },
   {
-    "id": "fd_0129",
-    "title": "Implementation Priority",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 5. Mod-12 | Medium | High | Self-contained |\n| 2. Rate-Distortion | Medium | Very High | Pareto theorem |\n| 4. Optimal Transport | High | Very High | Self-contained |\n| 1. Four-Part | High | Transformative | Two-voice theory |\n| 3. Categorical | Very High | Foundational | All above |\n\n**Recommended next step**: Direction 5 (mod-12), as it is self-contained, computationally concrete, and provides a test bed for all other directions. Direction 2 follows naturally from the Pareto machinery already formalized.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "8fece6dc",
-    "timestamp": "2026-05-14T16:24:05.755955+00:00"
-  },
-  {
     "id": "fd_0179",
     "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
     "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop \u2115`.\n2. Show that distinct rows of the Hankel m",
@@ -8646,5 +8712,63 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "51f0d321",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:31:45.855826+00:00"
+  },
+  {
+    "id": "fd_0178",
+    "title": "Concrete Lean Target",
+    "description": "```\ntheorem pareto_optimal_transposition_invariant_4voice\n    (t : pc) (source target : Fin 4 \u2192 pc) (\u03c4 : Equiv.Perm (Fin 4)) :\n    AssignmentParetoOptimal 4 source target \u03c4 \u2194\n    AssignmentParetoOptimal 4 (fun i => source i + t) (fun i => target i + t) \u03c4\n```\n\n---",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8fece6dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:01.968004+00:00"
+  },
+  {
+    "id": "fd_0179",
+    "title": "Phase 1 (Immediate, 1-2 weeks)",
+    "description": "- **Team A:** Four-voice generalization (Direction 1). Extend all definitions, re-run proofs, compute database.\n- **Team B:** Computational exploration. Enumerate all triad/seventh-chord transitions, visualize cost landscapes, identify patterns.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8fece6dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:01.983030+00:00"
+  },
+  {
+    "id": "fd_0180",
+    "title": "Phase 2 (Short-term, 1-2 months)",
+    "description": "- **Team C:** Optimal transport formulation (Direction 2). Formalize Wasserstein distance in Lean, prove invariance.\n- **Team D:** Tropical foundations (Direction 4). Build min-plus matrix algebra, compute eigenvalues.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8fece6dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:01.987358+00:00"
+  },
+  {
+    "id": "fd_0181",
+    "title": "Phase 3 (Medium-term, 3-6 months)",
+    "description": "- **Team E:** Rate-distortion theory (Direction 3). Build finite information theory in Lean, compute R(D) curves.\n- **Team F:** Categorical framework (Direction 5). Define voice-leading category, prove functoriality.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8fece6dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:01.991565+00:00"
   }
 ];

@@ -2401,20 +2401,6 @@
     "timestamp": "2026-05-14T16:24:05.747567+00:00"
   },
   {
-    "id": "fd_0129",
-    "title": "Implementation Priority",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 5. Mod-12 | Medium | High | Self-contained |\n| 2. Rate-Distortion | Medium | Very High | Pareto theorem |\n| 4. Optimal Transport | High | Very High | Self-contained |\n| 1. Four-Part | High | Transformative | Two-voice theory |\n| 3. Categorical | Very High | Foundational | All above |\n\n**Recommended next step**: Direction 5 (mod-12), as it is self-contained, computationally concrete, and provides a test bed for all other directions. Direction 2 follows naturally from the Pareto machinery already formalized.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "8fece6dc",
-    "timestamp": "2026-05-14T16:24:05.755955+00:00"
-  },
-  {
     "id": "fd_0179",
     "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
     "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
@@ -2543,5 +2529,63 @@
     "source_exp_id": "51f0d321",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:31:45.855826+00:00"
+  },
+  {
+    "id": "fd_0178",
+    "title": "Concrete Lean Target",
+    "description": "```\ntheorem pareto_optimal_transposition_invariant_4voice\n    (t : pc) (source target : Fin 4 → pc) (τ : Equiv.Perm (Fin 4)) :\n    AssignmentParetoOptimal 4 source target τ ↔\n    AssignmentParetoOptimal 4 (fun i => source i + t) (fun i => target i + t) τ\n```\n\n---",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8fece6dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:01.968004+00:00"
+  },
+  {
+    "id": "fd_0179",
+    "title": "Phase 1 (Immediate, 1-2 weeks)",
+    "description": "- **Team A:** Four-voice generalization (Direction 1). Extend all definitions, re-run proofs, compute database.\n- **Team B:** Computational exploration. Enumerate all triad/seventh-chord transitions, visualize cost landscapes, identify patterns.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8fece6dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:01.983030+00:00"
+  },
+  {
+    "id": "fd_0180",
+    "title": "Phase 2 (Short-term, 1-2 months)",
+    "description": "- **Team C:** Optimal transport formulation (Direction 2). Formalize Wasserstein distance in Lean, prove invariance.\n- **Team D:** Tropical foundations (Direction 4). Build min-plus matrix algebra, compute eigenvalues.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8fece6dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:01.987358+00:00"
+  },
+  {
+    "id": "fd_0181",
+    "title": "Phase 3 (Medium-term, 3-6 months)",
+    "description": "- **Team E:** Rate-distortion theory (Direction 3). Build finite information theory in Lean, compute R(D) curves.\n- **Team F:** Categorical framework (Direction 5). Define voice-leading category, prove functoriality.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8fece6dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:01.991565+00:00"
   }
 ]
