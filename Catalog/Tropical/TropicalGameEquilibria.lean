@@ -170,26 +170,6 @@ theorem fixedPoints_eq_range_tropBellman
   · exact fun h => ⟨ v, h ⟩;
   · rintro ⟨ x, rfl ⟩ ; exact tropBellman_image_fixed A hA x;
 
-/-! ## Monotone idempotent maps: image = fixed points (abstract version) -/
-
-/-- For any idempotent function, the set of fixed points equals the range. -/
-theorem fixedPoints_eq_range_of_idempotent {α : Type*}
-    (f : α → α) (hf : ∀ x, f (f x) = f x) :
-    {x | f x = x} = Set.range f := by
-  ext x
-  constructor
-  · intro h; exact ⟨x, h⟩
-  · rintro ⟨y, rfl⟩; exact hf y
-
-/-! ## Tropically monotone Bellman operator preserves order -/
-
-/-- The Bellman operator applied to a pointwise-smaller vector yields
-    a pointwise-smaller result. This is a more explicit form of monotonicity. -/
-theorem tropBellman_le_tropBellman (A : Matrix (Fin n) (Fin n) ℝ)
-    (x y : Fin n → ℝ) (h : ∀ i, x i ≤ y i) :
-    ∀ i, tropBellman A x i ≤ tropBellman A y i :=
-  tropBellman_monotone A h
-
 /-! ## Saddle point value theorem -/
 
 /-
