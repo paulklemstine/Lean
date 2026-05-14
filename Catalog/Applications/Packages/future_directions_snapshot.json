@@ -2537,5 +2537,98 @@
     "source_exp_id": "5c101a52",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:31:58.196051+00:00"
+  },
+  {
+    "id": "fd_0185",
+    "title": "Direction 1: Knaster–Tarski Balanced Consciousness Theorem",
+    "description": "**Goal.** Generalize the scalar theory to complete lattices.\n\n**Conjecture.** Let $(L, \\leq)$ be a complete lattice and let $F, G : L \\to L$ be monotone maps. Then:\n\n1. $\\mathrm{Fix}(F) \\cap \\mathrm{Fix}(G)$ is nonempty whenever there exists $x \\in L$ with $F(x) \\leq x$ and $x \\leq G(x)$.\n2. If $F$ and $G$ commute (i.e., $F \\circ G = G \\circ F$), then $\\mathrm{Fix}(F) \\cap \\mathrm{Fix}(G)$ is a complete sublattice of $L$.\n3. Uniqueness of the common fixed point is equivalent to $F = G$ on the range of the other.\n\n**Proof strategy.** Apply the Knaster–Tarski theorem separately to $F$ and $G$ to obtain $\\mathrm{Fix}(F)$ and $\\mathrm{Fix}(G)$ as complete lattices. The commuting condition ensures that $F$ restricts to a monotone endomorphism of $\\mathrm{Fix}(G)$ and vice versa, allowing a seco",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "918eb128",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:35:00.969113+00:00"
+  },
+  {
+    "id": "fd_0186",
+    "title": "Direction 2: Tropical Minimax Theorem in Higher Dimensions",
+    "description": "**Goal.** Extend the interval characterization to $\\mathbb{R}^n$.\n\n**Conjecture.** For vectors $l, u \\in \\mathbb{R}^n$, the set of balanced states\n$$\\{x \\in \\mathbb{R}^n : \\forall i,\\; \\max(l_i, x_i) = x_i \\;\\wedge\\; \\min(u_i, x_i) = x_i\\}$$\nequals the box $[l, u] = \\prod_{i=1}^n [l_i, u_i]$. Uniqueness holds iff $l = u$ (componentwise).\n\nFor non-axis-aligned constraints — tropical halfspaces of the form $\\max(a_j + x_j : j) = x_i$ — the balanced set becomes a **tropical polytope**, and uniqueness corresponds to the polytope being a single point.\n\n**Proof strategy.** The componentwise case follows directly from the scalar theorem applied coordinate-by-coordinate (use `Pi.le_def` and `funext`). The tropical polytope case requires developing the theory of tropical halfspaces as sets of the f",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "918eb128",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:35:00.976272+00:00"
+  },
+  {
+    "id": "fd_0187",
+    "title": "Direction 3: Dynamic Balanced Consciousness (Fixed-Point Iteration)",
+    "description": "**Goal.** Study convergence of alternating min-plus / max-plus iteration to balanced states.\n\n**Conjecture.** Define the alternating iteration:\n$$x_{n+1} = \\begin{cases} \\min(u, x_n) & \\text{if } n \\text{ even} \\\\ \\max(l, x_n) & \\text{if } n \\text{ odd} \\end{cases}$$\n\nThen:\n1. If $l \\leq u$, the sequence converges to a balanced state in at most 2 steps.\n2. If $l > u$, the sequence oscillates between $l$ and $u$ (no balanced state exists).\n3. For tropical matrix operators $F(x) = A \\otimes_{\\min} x$ and $G(x) = B \\otimes_{\\max} x$, convergence to a balanced state (when it exists) occurs in at most $n$ steps, where $n$ is the dimension.\n\n**Proof strategy.** The scalar case is elementary: $\\min(u, \\max(l, x)) = \\mathrm{clamp}(x, l, u)$, which is idempotent. The matrix case uses the theory of ",
+    "domains": [
+      "Tropical",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "918eb128",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:35:00.982044+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Direction 4: Categorical Duality of Balanced States",
+    "description": "**Goal.** Express balanced consciousness as an equalizer in a suitable category.\n\n**Conjecture.** Define the category $\\mathbf{TropOrd}$ whose objects are linearly ordered sets equipped with a pair of monotone endofunctors $(F, G)$ (the \"pessimistic\" and \"optimistic\" operators). Morphisms are order-preserving maps that intertwine both operators. Then:\n\n1. The balanced conscious states form the **equalizer** of $F$ and $G$ in this category.\n2. The duality theorem (Theorem 3) is a natural isomorphism between the balanced-state functor and its opposite.\n3. The interval characterization (Theorem 4) identifies balanced states with a representable functor $\\mathrm{Hom}(-, [l,u])$ in the category of intervals.\n\n**Proof strategy.** Define the relevant category and functors in Lean using Mathlib's ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "918eb128",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:35:00.986993+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Direction 5: Logical Semantics of Balance — Tropical Soundness/Completeness",
+    "description": "**Goal.** Interpret balanced consciousness as a coincidence of lower and upper logical semantics.\n\n**Conjecture.** Define a tropical propositional logic where:\n- Formulas are evaluated in $(\\mathbb{R}, \\min, +)$ (min-plus / \"pessimistic\" semantics) or $(\\mathbb{R}, \\max, +)$ (max-plus / \"optimistic\" semantics).\n- A valuation $v$ is **sound** if $\\mathrm{val}_{\\min}(\\varphi, v) \\leq \\mathrm{val}_{\\max}(\\varphi, v)$ for all formulas $\\varphi$.\n- A valuation is **complete** if equality holds: $\\mathrm{val}_{\\min}(\\varphi, v) = \\mathrm{val}_{\\max}(\\varphi, v)$.\n\nThen:\n1. Sound valuations exist for all formula sets (they form the tropical analogue of satisfiable assignments).\n2. Complete valuations exist iff the formula set has a \"balanced\" structure (tropical analogue of determinacy).\n3. The b",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "918eb128",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:35:00.992129+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Prioritization",
+    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 2 (Higher dimensions) | Medium | High | Theorem 4 (done) |\n| 3 (Dynamic iteration) | Low–Medium | High | Theorem 4 (done) |\n| 1 (Knaster–Tarski) | High | Very High | Mathlib lattice theory |\n| 5 (Logical semantics) | Medium | High | Theorems 1, 4 |\n| 4 (Categorical duality) | High | Medium | Mathlib category theory |\n\n**Recommended next cycle:** Directions 2 and 3 simultaneously (independent, moderate difficulty, high payoff), then Direction 1 (hardest but most foundational), then 5 and 4.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "918eb128",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:35:00.998156+00:00"
   }
 ]
