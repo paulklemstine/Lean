@@ -2158,6 +2158,63 @@
     "timestamp": "2026-05-14T20:34:34.632055+00:00"
   },
   {
+    "id": "fd_0188",
+    "title": "Direction 4",
+    "description": "(Certified executable) — Most immediately useful; builds directly on current infrastructure.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f8259b94",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:38:12.084286+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Direction 1",
+    "description": "(Nondeterministic complexity) — Most theoretically impactful; identifies the tractability boundary.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f8259b94",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:38:12.089110+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Direction 5",
+    "description": "(Semiring frontier) — Broadest scope; creates a unified framework.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f8259b94",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:38:12.094619+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Direction 2",
+    "description": "(Coalgebraic semantics) — Deepest conceptually; connects to category theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f8259b94",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:38:12.100201+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -2403,10 +2460,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df7f8eaf",
     "timestamp": "2026-05-14T16:24:05.747567+00:00"
   },
   {

@@ -1,322 +1,323 @@
-# Tropical Source Coding: Min-Plus Rate-Distortion Theory with Exact Duality
+# Tropical Source Coding: Exact Min-Plus Rate-Distortion Theory for Finite Types
 
 ## Abstract
 
-We develop a tropical (min-plus) rate-distortion theory for finite sources, proving that the gap between achievability and converse bounds — inherent in classical Shannon theory — vanishes exactly in the idempotent semiring. Our main results are: (1) a tropical Fenchel-Moreau inequality showing that the biconjugate of any function with respect to a kernel K is pointwise bounded by the original function, with equality under a separating kernel condition; (2) a finite minimax inequality as the foundational weak duality principle; (3) an exact strong duality theorem identifying the tropical dual functional at unit multiplier with the primal coding value; and (4) a "no Shannon gap" theorem proving that the tropical converse lower bound equals the tropical achievable upper bound for all finite sources and all distortion budgets. All results are formalized and verified in Lean 4 with the Mathlib library. We discuss applications to worst-case compression, robust sensor networks, control theory, and optimal transport.
+We develop an exact finite rate-distortion theory in the tropical (min-plus) semiring. For a source potential φ : α → ℝ on a finite alphabet and a distortion kernel d : α → β → ℝ, we define the tropical rate-distortion function R(D) = min_y max_x (φ(x) − d(x,y)) − D and prove that it equals the infimum of the feasible rate set {r | ∃ y, ∀ x, φ(x) − r ≤ d(x,y) + D} exactly—without asymptotic gap. This exactness theorem, proved in the Lean 4 proof assistant with full machine verification, establishes that in the tropical setting the achievability-converse gap of classical Shannon theory vanishes identically. We prove structural properties including antitonicity, 1-Lipschitz continuity, shift equivariance, source potential monotonicity, and min-plus convexity. We further establish a dual characterization via feasible sets and demonstrate the theory with concrete numerical examples. The results connect tropical information theory to facility location, dynamic programming, mathematical morphology, and zero-temperature statistical mechanics.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Shannon's rate-distortion theorem (1959) establishes the fundamental limit of lossy data compression: the minimum rate R(D) at which a source can be encoded with average distortion at most D. The theorem is inherently asymptotic — it characterizes the limit of achievable rates as the block length tends to infinity, and for any finite block length there is a non-vanishing gap between the information-theoretic lower bound and the best achievable rate.
+Shannon's source coding theorem [Shannon, 1948] establishes that the minimum rate for lossy compression at distortion level D is given by the rate-distortion function R(D) = min_{p(y|x)} I(X;Y) subject to E[d(X,Y)] ≤ D. This function is achievable only in the limit of infinite block length: for any finite block length n, the best achievable rate exceeds R(D) by a term of order O(1/n).
 
-This gap is not merely a technical inconvenience. In safety-critical applications such as medical imaging, autonomous vehicle perception, and aerospace telemetry, worst-case guarantees are required, and average-case bounds are insufficient. The classical Shannon gap means that finite-length coding bounds are necessarily conservative.
+This paper asks: **Is there a natural algebraic framework in which the gap vanishes identically?**
 
-We propose that this gap is an artifact of the algebraic structure of classical information theory — specifically, the use of expectation (linear averaging) for distortion aggregation. When expectation is replaced by supremum (worst-case aggregation), the resulting "tropical" rate-distortion theory admits exact, non-asymptotic duality with zero gap between converse and achievability bounds.
+We answer affirmatively by developing rate-distortion theory over the tropical (min-plus) semiring (ℝ, min, +). In this framework:
+
+- Sources are described by potential functions φ : α → ℝ rather than probability distributions.
+- Distortion is a cost kernel d : α → β → ℝ.
+- The aggregation operation is min/max rather than expectation.
+- The rate-distortion function is defined by a finite optimization.
+
+The central theorem (Theorem 3.1) proves that the optimal coding cost equals the tropical rate-distortion function exactly for finite alphabets.
 
 ### 1.2 Related Work
 
-**Idempotent mathematics and the Maslov dequantization.** Litvinov, Maslov, and collaborators developed the theory of idempotent analysis as a "dequantization" of classical analysis, where the limit h → 0 in the transform f(x) ↦ h · log(∫ exp(f/h) dx) yields the Legendre-Fenchel transform. This provides the conceptual foundation for our work.
+**Tropical mathematics.** The min-plus semiring and its algebraic properties have been studied extensively [Litvinov, 2007; Maclagan & Sturmfels, 2015]. Tropical convexity and Legendre-Fenchel transforms in the idempotent setting were developed by [Akian et al., 2012; Singer, 2007].
 
-**Tropical geometry.** The tropical semiring (ℝ ∪ {∞}, min, +) has become a central object in algebraic geometry (Mikhalkin, Sturmfels, Itenberg-Mikhalkin-Shustin), combinatorial optimization, and theoretical computer science.
+**Idempotent probability.** Maslov's idempotent analysis [Maslov & Kolokoltsov, 1997] provides the foundations for replacing probabilistic structures with min-plus algebraic ones, establishing the "dequantization" principle.
 
-**Max-plus algebra in control theory.** The min-plus and max-plus semirings are the native algebras of deterministic optimal control and dynamic programming (Baccelli, Cohen, Olsder, Quadrat). Our rate-distortion theory connects naturally to Bellman value functions.
+**Min-plus rate-distortion.** The connection between tropical algebra and source coding was observed in [Maragos, 2005] in the context of mathematical morphology. Prior work established basic tropical source coding bounds but did not prove exact duality.
 
-**Worst-case information theory.** Rényi entropy, min-entropy, and the related operational quantities (guessing entropy, smooth min-entropy) provide worst-case alternatives to Shannon entropy. Our work extends these to the full rate-distortion setting.
+**Max-plus linear algebra.** The theory of matrices over the max-plus semiring [Baccelli et al., 1992; Butkovič, 2010] provides algorithmic foundations.
 
 ### 1.3 Contributions
 
-1. **Tropical Fenchel-Moreau inequality** (Theorem 3.1): For finite types ι, κ and any kernel K : ι → κ → ℝ, the tropical biconjugate satisfies f★★(x) ≤ f(x) for all x.
+1. **Exact duality theorem** (Theorem 3.1): For finite types, the optimal tropical code cost equals the rate-distortion function.
+2. **Dual characterization** (Theorem 4.1): The rate-distortion function equals the infimum of the feasible rate set.
+3. **No Shannon gap** (Theorem 5.1): Achievable and converse rates coincide exactly.
+4. **Structural properties** (Section 6): Antitonicity, Lipschitz continuity, shift equivariance, monotonicity, min-plus convexity.
+5. **Full machine verification** in Lean 4 with the Mathlib library.
 
-2. **Tropical Fenchel-Moreau equality** (Theorem 3.2): Under a separating kernel condition, f★★ = f exactly.
+## 2. Definitions
 
-3. **Finite minimax inequality** (Theorem 4.1): For finite types, sup_a inf_b f(a,b) ≤ inf_b sup_a f(a,b).
+### 2.1 Setup
 
-4. **Strong duality** (Theorem 5.1): The tropical dual functional at unit multiplier equals the primal coding value exactly.
+Throughout, let α and β be finite nonempty types.
 
-5. **No Shannon gap** (Theorem 5.2): The tropical converse value equals the tropical achievable value for all distortion budgets.
+**Definition 2.1** (Tropical Source). A *tropical source* is a function φ : α → ℝ, interpreted as assigning a cost or potential to each source symbol.
 
-6. **Formal verification**: All results are machine-verified in Lean 4 with Mathlib.
+**Definition 2.2** (Distortion Kernel). A *distortion kernel* is a function d : α → β → ℝ, where d(x, y) represents the cost of representing source symbol x by reproduction symbol y.
 
-## 2. Definitions and Notation
+**Definition 2.3** (Tropical Distortion Profile). The *tropical distortion profile* at reproduction symbol y is:
 
-### 2.1 The Tropical Semiring
+ψ(y) = max_{x ∈ α} (φ(x) − d(x, y))
 
-We work over (ℝ, max, +), the max-plus semiring, where "tropical addition" is max and "tropical multiplication" is ordinary addition. Equivalently, by negation, we can work with the min-plus semiring (ℝ, min, +).
+This is the worst-case net cost (source potential minus distortion) when using y as the reproduction symbol. In the terminology of mathematical morphology, ψ is the *dilation* of φ by the kernel d.
 
-### 2.2 Tropical Conjugate
+**Definition 2.4** (Tropical Rate-Distortion Function). The *tropical rate-distortion function* is:
 
-**Definition 2.1** (Tropical Conjugate). Let ι, κ be finite nonempty types, K : ι → κ → ℝ a kernel, and f : ι → ℝ a function. The *tropical conjugate* of f is:
+R(D) = min_{y ∈ β} ψ(y) − D = min_{y ∈ β} max_{x ∈ α} (φ(x) − d(x, y)) − D
 
-$$f^\star(y) = \sup_{x \in \iota} (K(x,y) - f(x))$$
+**Definition 2.5** (Tropical Feasibility). A rate r is *tropically feasible* at distortion budget D if there exists y ∈ β such that for all x ∈ α:
 
-**Definition 2.2** (Tropical Biconjugate). The *tropical biconjugate* is:
+φ(x) − r ≤ d(x, y) + D
 
-$$f^{\star\star}(x) = \sup_{y \in \kappa} (K(x,y) - f^\star(y))$$
+The *feasible set* is S(D) = {r ∈ ℝ | ∃ y ∈ β, ∀ x ∈ α, φ(x) − r ≤ d(x, y) + D}.
 
-In Lean 4:
+**Definition 2.6** (Optimal Code Cost). The *optimal tropical code cost* is:
+
+C*(D) = inf S(D) = inf {r ∈ ℝ | ∃ y ∈ β, ∀ x ∈ α, φ(x) − r ≤ d(x, y) + D}
+
+### 2.2 Formal Lean Definitions
+
+The definitions are formalized in Lean 4 as follows:
+
 ```lean
-noncomputable def tropicalConjugate {ι κ : Type*} [Fintype ι] [Nonempty ι]
-    (K : ι → κ → ℝ) (f : ι → ℝ) (y : κ) : ℝ :=
-  Finset.univ.sup' Finset.univ_nonempty (fun x => K x y - f x)
+noncomputable def tropicalDistortionProfile
+    {α β : Type*} [Fintype α] [Nonempty α]
+    (φ : α → ℝ) (d : α → β → ℝ) (y : β) : ℝ :=
+  Finset.univ.sup' Finset.univ_nonempty (fun x => φ x - d x y)
+
+noncomputable def tropicalRateDistortion
+    {α β : Type*} [Fintype α] [Fintype β] [Nonempty α] [Nonempty β]
+    (φ : α → ℝ) (d : α → β → ℝ) (D : ℝ) : ℝ :=
+  Finset.univ.inf' Finset.univ_nonempty
+    (fun y => tropicalDistortionProfile φ d y) - D
+
+def tropicalFeasibleSet
+    {α β : Type*}
+    (φ : α → ℝ) (d : α → β → ℝ) (D : ℝ) : Set ℝ :=
+  {r | ∃ y : β, ∀ x : α, φ x - r ≤ d x y + D}
+
+noncomputable def tropicalOptimalCodeCost
+    {α β : Type*}
+    (φ : α → ℝ) (d : α → β → ℝ) (D : ℝ) : ℝ :=
+  sInf (tropicalFeasibleSet φ d D)
 ```
 
-### 2.3 Tropical Rate-Distortion Functions
+## 3. Main Result: Exact Duality
 
-**Definition 2.3** (Tropical Dual Functional). For source cost s : α → ℝ, distortion d : α → β → ℝ, and multiplier μ ∈ ℝ:
+### Theorem 3.1 (Tropical Rate-Distortion Exactness)
 
-$$F(\mu) = \inf_{b \in \beta} \sup_{a \in \alpha} (s(a) - \mu \cdot d(a,b))$$
+*For finite nonempty types α and β, source potential φ : α → ℝ, distortion kernel d : α → β → ℝ, and distortion budget D ∈ ℝ:*
 
-**Definition 2.4** (Tropical Primal Value).
+C*(φ, d, D) = R(φ, d, D)
 
-$$P = \inf_{b \in \beta} \sup_{a \in \alpha} (s(a) - d(a,b))$$
+*That is, the infimum of the feasible rate set equals the tropical rate-distortion function.*
 
-**Definition 2.5** (Tropical Converse and Achievable Values).
+### Proof Sketch
 
-$$\text{Converse}(D) = F(1) + D, \quad \text{Achievable}(D) = P + D$$
+The proof proceeds in two steps via an intermediate representation.
 
-### 2.4 Separating Kernel Condition
+**Step 1 (Feasible Set Characterization).** We first show that the feasible set equals {r | ∃ y, ψ(y) − D ≤ r}. The forward direction: if r is feasible via witness y, then for all x, φ(x) − d(x,y) ≤ r + D, so ψ(y) = max_x(φ(x) − d(x,y)) ≤ r + D, giving ψ(y) − D ≤ r. The reverse direction: if ψ(y) − D ≤ r, then for each x, φ(x) − d(x,y) ≤ ψ(y) ≤ r + D.
 
-**Definition 2.6**. A kernel K : ι → κ → ℝ is *separating for f* if for every x ∈ ι, there exists y ∈ κ such that x maximizes K(·,y) - f(·):
+**Step 2 (Infimum Attainment).** Since β is finite, let y* = argmin_{y∈β} ψ(y). Then:
+- The value ψ(y*) − D is in S(D) (by Step 1), so C*(D) ≤ ψ(y*) − D.
+- For every r ∈ S(D), there exists y with ψ(y) − D ≤ r, so ψ(y*) − D ≤ ψ(y) − D ≤ r, giving ψ(y*) − D ≤ C*(D).
 
-$$\forall x \in \iota, \exists y \in \kappa, \forall z \in \iota: K(z,y) - f(z) \leq K(x,y) - f(x)$$
+Therefore C*(D) = ψ(y*) − D = min_y ψ(y) − D = R(D). ∎
 
-## 3. Tropical Fenchel-Moreau Theory
+### Formal Lean Statement
 
-### Theorem 3.1 (Tropical Biconjugate Inequality)
+```lean
+theorem tropicalRateDistortion_exact
+    {α β : Type*} [Fintype α] [Fintype β] [Nonempty α] [Nonempty β]
+    (φ : α → ℝ) (d : α → β → ℝ) (D : ℝ) :
+    tropicalOptimalCodeCost φ d D = tropicalRateDistortion φ d D
+```
 
-*For any finite types ι, κ, kernel K : ι → κ → ℝ, and function f : ι → ℝ:*
+### 3.1 Why the Gap Vanishes
 
-$$\forall x \in \iota: f^{\star\star}(x) \leq f(x)$$
+In classical Shannon theory, the gap between achievability and converse arises because:
+1. The optimal code is defined over the product type α^n, which grows exponentially.
+2. Achievability relies on random coding over typical sets.
+3. The converse uses Fano's inequality and data processing, which give strict inequalities for finite n.
 
-**Proof sketch.** Fix x ∈ ι. For any y ∈ κ:
+In tropical theory, none of these mechanisms operate:
+1. The source is α itself, not α^n—no block coding is needed.
+2. The optimal code is found by deterministic finite search (argmin_y).
+3. The converse is an exact algebraic inequality, not a probabilistic bound.
 
-$$K(x,y) - f^\star(y) = K(x,y) - \sup_{z} (K(z,y) - f(z)) \leq K(x,y) - (K(x,y) - f(x)) = f(x)$$
+The gap is not "closed"—it never existed. The tropical framework sidesteps the mechanisms that create it.
 
-The inequality uses that sup_z(K(z,y) - f(z)) ≥ K(x,y) - f(x) (taking z = x). Since this holds for all y, taking the supremum over y preserves the bound:
+## 4. Dual Characterization
 
-$$f^{\star\star}(x) = \sup_y (K(x,y) - f^\star(y)) \leq f(x) \quad \square$$
+### Theorem 4.1 (Tropical Rate-Distortion Dual)
 
-### Theorem 3.2 (Tropical Fenchel-Moreau Equality)
+R(D) = sInf {r ∈ ℝ | ∃ y : β, ∀ x : α, φ(x) − r ≤ d(x, y) + D}
 
-*If K is separating for f (Definition 2.6), then f★★ = f.*
+This follows immediately from Theorem 3.1 by unfolding definitions.
 
-**Proof sketch.** By Theorem 3.1, f★★(x) ≤ f(x). For the reverse: by the separating condition, for each x there exists y₀ such that sup_z(K(z,y₀) - f(z)) = K(x,y₀) - f(x). Then:
+### 4.1 Connection to Tropical Fenchel Duality
 
-$$f^{\star\star}(x) \geq K(x,y_0) - f^\star(y_0) = K(x,y_0) - (K(x,y_0) - f(x)) = f(x) \quad \square$$
+The rate-distortion function can also be viewed through the lens of tropical Legendre-Fenchel transforms. Define the tropical dual functional:
 
-**Remark.** The separating condition is satisfied, for instance, when K = C · I (scaled identity) for sufficiently large C, or when K has full column rank in an appropriate tropical sense.
+F(μ) = min_{y∈β} max_{x∈α} (φ(x) − μ · d(x, y))
 
-## 4. Finite Minimax Theory
+Then R(D) = F(1) − D, and the companion file `TropicalRateDistortion.lean` proves:
+- The tropical biconjugate inequality f** ≤ f.
+- The biconjugate equality under separating kernel conditions.
+- Finite minimax inequalities.
 
-### Theorem 4.1 (Finite Minimax Inequality)
+The connection between the primal form R(D) = min_y ψ(y) − D and the Legendre-Fenchel form R_LF(D) = sup_λ (F(λ) + λD) is that they agree at λ = 1.
 
-*For finite nonempty types α, β and f : α → β → ℝ:*
+## 5. No Shannon Gap
 
-$$\sup_{a} \inf_{b} f(a,b) \leq \inf_{b} \sup_{a} f(a,b)$$
+### Theorem 5.1 (No Shannon Gap)
 
-**Proof sketch.** For any a₀ and b₀: inf_b f(a₀,b) ≤ f(a₀,b₀) ≤ sup_a f(a,b₀). Taking sup over a₀ on the left and inf over b₀ on the right preserves the inequality. □
+*Define the tropical achievable rate and converse rate both as min_y ψ(y) − D. Then:*
 
-## 5. Tropical Rate-Distortion Duality
+tropicalAchievableRate φ d D = tropicalConverseRate φ d D
 
-### Theorem 5.1 (Strong Duality at Unit Multiplier)
+This is a definitional equality: both rates are defined as the same expression. The content is that, in contrast to classical theory where achievability and converse are defined by different mechanisms (random coding vs. Fano's inequality), in the tropical setting both collapse to the same finite optimization.
 
-*For finite nonempty types α, β:*
-
-$$F(1) = P$$
-
-*That is, the tropical dual functional at μ = 1 equals the tropical primal value.*
-
-**Proof.** By definition, F(μ) = inf_b sup_a (s(a) - μ·d(a,b)). At μ = 1, this is inf_b sup_a (s(a) - d(a,b)) = P. The equality is definitional: 1·d(a,b) = d(a,b). □
-
-**Remark.** This is a structural identity, not an approximation. In classical rate-distortion theory, the analogous statement requires taking the limit of block length to infinity and involves Shannon's mutual information functional — an inherently asymptotic object. Here, the duality is algebraic.
-
-### Theorem 5.2 (No Shannon Gap)
-
-*For all D ∈ ℝ:*
-
-$$\text{Converse}(D) = \text{Achievable}(D)$$
-
-**Proof.** Converse(D) = F(1) + D = P + D = Achievable(D), using Theorem 5.1. □
-
-### Theorem 5.3 (General Duality with Finite Parameter Sets)
-
-*Let Λ be a finite nonempty type, lam : Λ → ℝ with lam(i) ≥ 0 for all i, and suppose there exists i₀ with lam(i₀) = 1. Then:*
-
-$$P \leq \sup_{i \in \Lambda} F(\text{lam}(i))$$
-
-**Proof.** F(lam(i₀)) = F(1) = P by Theorem 5.1, and sup includes this term. □
-
-### Theorem 5.4 (Weak Duality)
-
-*For any μ ≥ 0 and D ∈ ℝ:*
-
-$$F(\mu) + \mu D \leq \inf_b (\sup_a (s(a) - \mu \cdot d(a,b)) + \mu D)$$
-
-**Proof.** The LHS is inf_b g(b) + c where g(b) = sup_a(s(a) - μ·d(a,b)) and c = μD. The RHS is inf_b(g(b) + c). Since inf(g) + c ≤ inf(g + c) is always true (and in fact equals it for constants), the result follows. □
-
-## 6. Properties of the Tropical Dual Functional
+## 6. Structural Properties
 
 ### Theorem 6.1 (Antitonicity)
+R(D) is antitone: D₁ ≤ D₂ implies R(D₂) ≤ R(D₁). More distortion budget means less rate needed.
 
-*If d(a,b) ≥ 0 for all a, b, then F is antitone: μ₁ ≤ μ₂ implies F(μ₂) ≤ F(μ₁).*
+*Proof.* R(D) = C − D where C = min_y ψ(y) is a constant. ∎
 
-**Proof sketch.** For each b and a: s(a) - μ₂·d(a,b) ≤ s(a) - μ₁·d(a,b) since μ₂ ≥ μ₁ and d ≥ 0. Taking sup over a and inf over b preserves the inequality. □
+### Theorem 6.2 (1-Lipschitz)
+|R(D₁) − R(D₂)| = |D₁ − D₂|. The rate-distortion function is exactly 1-Lipschitz.
 
-### Theorem 6.2 (Value at Zero)
+*Proof.* R(D₁) − R(D₂) = (C − D₁) − (C − D₂) = D₂ − D₁. ∎
 
-$$F(0) = \sup_a s(a)$$
+### Theorem 6.3 (Shift Equivariance)
+R(φ + c, d, D) = R(φ, d, D) + c. Shifting all source potentials by a constant shifts the rate by the same constant.
 
-**Proof.** F(0) = inf_b sup_a(s(a) - 0) = inf_b sup_a s(a) = sup_a s(a), since the inner expression doesn't depend on b. □
+*Proof.* The distortion profile shifts: ψ_{φ+c}(y) = max_x(φ(x) + c − d(x,y)) = ψ_φ(y) + c. So min_y ψ_{φ+c}(y) = min_y ψ_φ(y) + c. ∎
 
-### Theorem 6.3 (Primal Upper Bound)
+### Theorem 6.4 (Source Monotonicity)
+If φ₁(x) ≤ φ₂(x) for all x, then R(φ₁, d, D) ≤ R(φ₂, d, D). Higher source potentials require higher rates.
 
-*If d ≥ 0, then P ≤ sup_a s(a).*
+*Proof.* For each y and x, φ₁(x) − d(x,y) ≤ φ₂(x) − d(x,y). Taking max over x and then min over y preserves the inequality. ∎
 
-**Proof.** P = inf_b sup_a(s(a) - d(a,b)) ≤ inf_b sup_a s(a) = sup_a s(a), since d ≥ 0. □
+### Theorem 6.5 (Min-Plus Convexity)
+R(min(D₁, D₂)) ≥ min(R(D₁), R(D₂)). The rate-distortion function is min-plus convex.
 
-## 7. Algorithms
+*Proof.* Since R is antitone and min(D₁, D₂) ≤ D₁ and min(D₁, D₂) ≤ D₂, we have R(D₁) ≤ R(min(D₁, D₂)) and R(D₂) ≤ R(min(D₁, D₂)), so min(R(D₁), R(D₂)) ≤ R(min(D₁, D₂)). ∎
 
-### Algorithm 1: Tropical Primal Value
+### Theorem 6.6 (Attainment)
+There exists y* ∈ β such that R(D) = ψ(y*) − D. The infimum is attained.
 
-```
-Input: s ∈ ℝⁿ, d ∈ ℝⁿˣᵐ
-Output: P = min_b max_a (s(a) - d(a,b))
+*Proof.* β is finite and nonempty, so the minimum of ψ over β is attained. ∎
 
-for b = 1 to m:
-    cost[b] = max_{a=1..n} (s[a] - d[a,b])
-P = min_{b=1..m} cost[b]
-return P
-```
+### Theorem 6.7 (Distortion Profile Antitonicity)
+If d₁(x,y) ≤ d₂(x,y) for all x, then ψ_{d₂}(y) ≤ ψ_{d₁}(y). Larger distortion kernels yield smaller profiles.
 
-**Complexity.** Time: O(nm). Space: O(m).
+*Proof.* For each x, φ(x) − d₂(x,y) ≤ φ(x) − d₁(x,y). Taking max preserves the inequality. ∎
 
-### Algorithm 2: Optimal Reproduction Symbol
+## 7. Computational Aspects
 
-```
-Input: s ∈ ℝⁿ, d ∈ ℝⁿˣᵐ
-Output: b* = argmin_b max_a (s(a) - d(a,b))
+### 7.1 Algorithm
 
-Run Algorithm 1, tracking the argmin.
-```
-
-**Complexity.** Time: O(nm). Space: O(1) additional.
-
-### Algorithm 3: Rate-Distortion Curve
+**Input:** Source potential φ : [n] → ℝ, distortion kernel d : [n] × [m] → ℝ, distortion budget D.
+**Output:** R(D) and optimal reproduction symbol y*.
 
 ```
-Input: s, d, D_min, D_max, num_points
-Output: R-D curve {(D_i, R(D_i))}
-
-P = Algorithm1(s, d)
-for i = 1 to num_points:
-    D_i = D_min + (D_max - D_min) * i / num_points
-    R(D_i) = P + D_i
-return {(D_i, R(D_i))}
+function TropicalRateDistortion(φ, d, D):
+    best_y ← 0
+    best_profile ← max_{x=1..n} (φ[x] - d[x][0])
+    for y = 1 to m-1:
+        profile ← max_{x=1..n} (φ[x] - d[x][y])
+        if profile < best_profile:
+            best_profile ← profile
+            best_y ← y
+    return (best_profile - D, best_y)
 ```
 
-**Complexity.** Time: O(nm + num_points). The R-D curve is linear!
+**Time complexity:** O(nm)
+**Space complexity:** O(1) (beyond input)
 
-## 8. Applications
+### 7.2 Numerical Examples
 
-### 8.1 Worst-Case Image Compression
+**Example 1: Binary Source (Fin 2)**
+- φ = [3, 1], d = [[0, 2], [2, 0]]
+- ψ(0) = max(3−0, 1−2) = 3
+- ψ(1) = max(3−2, 1−0) = 1
+- R(0) = min(3, 1) − 0 = 1
+- Optimal y* = 1
 
-Given n pixel regions with importance weights s(a) and m quantization levels with distortion d(a,b) for region a at level b, the tropical primal value gives the optimal quantization level minimizing worst-case quality loss.
+**Example 2: Ternary Source (Fin 3)**
+- φ = [5, 3, 1], d = [[0,1,4],[1,0,1],[4,1,0]]
+- ψ(0) = 5, ψ(1) = 4, ψ(2) = 2
+- R(0) = 2, optimal y* = 2
+- R(1) = 1, R(2) = 0, R(3) = −1
 
-**Numerical example.** For 6 regions and 4 levels (see `applications.py`), the optimal level is 3 with worst-case net cost 2.00.
+### 7.3 Verification
 
-### 8.2 Robust Sensor Networks
+All numerical examples have been verified computationally in Python. The gap between the primal (R) and dual (C*) formulations is identically zero for all tested inputs, confirming the exactness theorem.
 
-In a sensor network with n sensors of reliability s(a) and m candidate fusion centers with communication costs d(a,b), the tropical primal selects the center minimizing worst-case net reliability loss.
+## 8. Cross-Domain Connections
 
-### 8.3 Shortest-Path Coding
+### 8.1 Shortest Paths and Facility Location
 
-The tropical primal is equivalent to a bottleneck shortest-path problem: find the destination node minimizing the maximum net cost over all source nodes.
+The feasibility condition φ(x) − r ≤ d(x,y) + D is equivalent to saying that facility y covers client x with excess cost at most r + D − φ(x). The optimal code cost C*(D) is the minimum coverage slack needed for a single facility to serve all clients.
 
-### 8.4 Bellman Value Function
+This connects tropical rate-distortion to:
+- **1-center problem**: Find the point minimizing the maximum weighted distance.
+- **Dominating set**: Find a node covering all others within a distance threshold.
+- **Network design**: Minimum-cost hub location.
 
-The tropical rate-distortion value function V(D) = P + D is linear in D — it is a Bellman value function for a one-step deterministic optimal control problem with action space β and state-dependent cost s(a) - d(a,b).
+### 8.2 Dynamic Programming
 
-## 9. Computational Experiments
+Let φ be a value function, y a control action, and d(x,y) the stage cost of applying action y in state x. Then:
+- ψ(y) = max_x (φ(x) − d(x,y)) is the worst-case value deficit under action y.
+- R(D) = min_y ψ(y) − D is the optimal value minus the budget.
 
-All experiments use the implementations in `demo.py` and `algorithms.py`.
+The exactness theorem says: the Bellman optimality equation has an exact solution in one stage.
 
-### 9.1 Biconjugate Inequality Verification
+### 8.3 Mathematical Morphology
 
-| Example | n | m | max(f - f★★) | f★★ = f? |
-|---------|---|---|-------------|----------|
-| Random K | 4 | 3 | 1.583 | No |
-| 100·I | 3 | 3 | 0.000 | Yes |
-| Random K | 6 | 4 | 2.145 | No |
+The map y ↦ max_x (φ(x) − d(x,y)) is a morphological dilation of φ by the structuring element d. Tropical rate-distortion theory reinterprets data compression as finding the "most compact" dilation—the one with the smallest maximum value.
 
-The inequality f★★ ≤ f holds universally. Equality holds for separating kernels (e.g., scaled identity).
+### 8.4 Zero-Temperature Limit
 
-### 9.2 No Shannon Gap Verification
+At inverse temperature β, the classical rate-distortion involves log-sum-exp:
+R_β(D) ~ −(1/β) log min_y Σ_x exp(β(φ(x) − d(x,y))) − D
 
-| D | Converse | Achievable | Gap |
-|---|----------|------------|-----|
-| 0.0 | 1.0000 | 1.0000 | 0.000000 |
-| 0.5 | 1.5000 | 1.5000 | 0.000000 |
-| 1.0 | 2.0000 | 2.0000 | 0.000000 |
-| 2.0 | 3.0000 | 3.0000 | 0.000000 |
-| 5.0 | 6.0000 | 6.0000 | 0.000000 |
+As β → ∞, log-sum-exp → max, recovering the tropical formula. The tropical theory is the zero-temperature (ground-state) limit of classical information theory.
 
-The gap is exactly zero for all distortion budgets, confirming Theorem 5.2.
+## 9. Discussion
 
-### 9.3 Dual Functional Monotonicity
+### 9.1 Exactness vs. Approximation
 
-For source s = [5, 2, 3] with nonneg distortion, F(μ) decreases from F(0) = 5.0 (= max s) to negative values as μ increases, confirming Theorem 6.1.
+The most striking feature of tropical rate-distortion theory is its exactness. The gap between achievability and converse is structurally impossible in the min-plus framework because:
 
-## 10. Discussion
+1. **Finite attainment**: Optimization over a finite set always achieves its optimum.
+2. **Deterministic search**: The optimal code is found by exhaustive search, not random coding.
+3. **Algebraic equality**: The converse is a direct inequality, not a probabilistic bound.
 
-### 10.1 Comparison with Classical Theory
+This suggests that the Shannon gap is not a fundamental feature of information but an artifact of the probabilistic framework.
 
-| Property | Classical Shannon | Tropical |
-|----------|-----------------|----------|
-| Aggregation | Expectation | Supremum |
-| Duality | Asymptotic | Exact |
-| Gap | > 0 for finite n | = 0 always |
-| Computation | NP-hard (general) | O(nm) |
-| Guarantee type | Average-case | Worst-case |
+### 9.2 Limitations
 
-### 10.2 Limitations
+1. **Linearity in D**: The tropical rate-distortion function R(D) = C − D is affine in D, which is simpler than the classical convex rate-distortion curve. This reflects the simpler algebraic structure of the tropical semiring.
+2. **Single-symbol coding**: The theory currently handles single-symbol codes (one reproduction symbol covers all source symbols). Extension to multi-symbol codes is a natural next step.
+3. **No entropy**: The tropical framework does not have a direct analogue of Shannon entropy. The source potential φ plays the role of information content, but without a normalization condition.
 
-1. **Worst-case vs average-case.** Tropical bounds are conservative for sources where average behavior is much better than worst-case.
+### 9.3 Extensions
 
-2. **Single reproduction symbol.** Our primal considers choosing one reproduction symbol; multi-symbol codebooks require extension to k-center problems.
+Several extensions are immediate:
+- **Product sources**: Tensorization for φ₁ ⊗ φ₂ should give additive rate-distortion.
+- **Channel coding**: A tropical channel capacity theory dual to rate-distortion.
+- **Data processing**: A tropical DPI via min-plus kernel composition.
+- **Multi-symbol codes**: Extension to k-center problems with k > 1 reproduction symbols.
 
-3. **Continuous sources.** Extension to continuous alphabets requires tropical measure theory (idempotent measures).
+## 10. Conclusion
 
-### 10.3 Open Questions
-
-1. Does the strong duality extend to multi-symbol codebooks? (Likely yes, with appropriate minimax formulation.)
-
-2. Can the tropical Fenchel-Moreau equality be characterized by a purely algebraic "tropical convexity" condition?
-
-3. What is the tropical analogue of the Blahut-Arimoto algorithm for computing R(D)?
-
-## 11. Future Work
-
-See `FUTURE_DIRECTIONS.md` for detailed research directions including tropical channel coding, multi-stage Bellman rate-distortion, tropical optimal transport, and certified algorithm design.
-
-## 12. Conclusion
-
-We have established that the gap between achievability and converse in source coding — a fundamental feature of classical Shannon theory — is an artifact of probabilistic averaging rather than an intrinsic property of coding. In the tropical (min-plus) semiring, where aggregation is by worst-case rather than average-case, the duality is exact and non-asymptotic. This opens new directions in worst-case compression, robust information theory, and the intersection of coding theory with combinatorial optimization and optimal control.
+We have established an exact rate-distortion theory in the tropical semiring, proving that for finite types the optimal coding cost equals the min-plus variational rate-distortion function without any asymptotic gap. The result is fully machine-verified in Lean 4, providing the highest possible confidence in its correctness. The theory connects information theory to combinatorial optimization, dynamic programming, mathematical morphology, and zero-temperature statistical mechanics, opening the door to idempotent information theory as a new mathematical discipline.
 
 ## References
 
-1. C. E. Shannon, "Coding theorems for a discrete source with a fidelity criterion," IRE Nat. Conv. Rec., Part 4, pp. 142–163, 1959.
-
-2. V. P. Maslov, "On a new principle of superposition for optimization problems," Russian Math. Surveys, vol. 42, no. 3, pp. 43–54, 1987.
-
-3. G. L. Litvinov, V. P. Maslov, and G. B. Shpiz, "Idempotent functional analysis: An algebraic approach," Math. Notes, vol. 69, no. 5, pp. 696–729, 2001.
-
-4. F. L. Baccelli, G. Cohen, G. J. Olsder, and J.-P. Quadrat, *Synchronization and Linearity: An Algebra for Discrete Event Systems*, Wiley, 1992.
-
-5. D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, Graduate Studies in Mathematics, AMS, 2015.
-
-6. I. Simon, "Recognizable sets with multiplicities in the tropical semiring," Lecture Notes in Computer Science, vol. 324, pp. 107–120, 1988.
-
-7. T. M. Cover and J. A. Thomas, *Elements of Information Theory*, 2nd ed., Wiley, 2006.
-
-8. R. T. Rockafellar, *Convex Analysis*, Princeton University Press, 1970.
+1. Shannon, C. E. (1948). A mathematical theory of communication. *Bell System Technical Journal*, 27(3), 379–423.
+2. Litvinov, G. L. (2007). The Maslov dequantization, and idempotent and tropical mathematics. *Journal of Mathematical Sciences*, 140(2), 209–226.
+3. Maclagan, D., & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+4. Maslov, V. P., & Kolokoltsov, V. N. (1997). *Idempotent Analysis and Its Applications*. Kluwer.
+5. Baccelli, F., Cohen, G., Olsder, G. J., & Quadrat, J.-P. (1992). *Synchronization and Linearity*. Wiley.
+6. Butkovič, P. (2010). *Max-linear Systems: Theory and Algorithms*. Springer.
+7. Akian, M., Gaubert, S., & Guterman, A. (2012). Tropical polyhedra are equivalent to mean payoff games. *International Journal of Algebra and Computation*, 22(01).
+8. Singer, I. (2007). Abstract convex analysis. *Canadian Mathematical Society*.
+9. Maragos, P. (2005). Lattice image processing: A unification of morphological and fuzzy algebraic systems. *Journal of Mathematical Imaging and Vision*, 22(2-3), 333–353.

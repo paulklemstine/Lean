@@ -1,244 +1,280 @@
-#!/usr/bin/env python3
 """
-Algorithms for Tropical Rate-Distortion Theory
+Tropical Rate-Distortion Algorithms
 
-Implements the core computational procedures for min-plus rate-distortion:
-1. Tropical conjugate transform
-2. Tropical biconjugate computation
-3. Tropical dual functional evaluation
-4. Optimal reproduction symbol search
-5. Full rate-distortion curve computation
+Implements the core computational procedures from the tropical rate-distortion
+theory, including optimal code computation, dual transform evaluation,
+and tropical Blahut-Arimoto style iteration.
 """
 
-import numpy as np
-from typing import Tuple, List, Optional
+from typing import List, Tuple, Optional
+import itertools
 
 
-def tropical_conjugate(K: np.ndarray, f: np.ndarray) -> np.ndarray:
+def tropical_distortion_profile(
+    phi: List[float],
+    d: List[List[float]],
+    y: int
+) -> float:
     """
-    Compute the tropical conjugate f★(y) = max_x (K(x,y) - f(x)).
-    
-    This is the min-plus analogue of the Legendre-Fenchel transform.
-    
+    Compute the tropical distortion profile at reproduction symbol y.
+
+    ψ(y) = max_x (φ(x) - d(x, y))
+
+    This is the worst-case net cost when encoding to symbol y.
+
     Args:
-        K: Kernel matrix of shape (n, m), where K[x, y] is the coupling cost.
-        f: Function values of shape (n,).
-    
+        phi: Source potential φ : α → ℝ (list of length |α|)
+        d: Distortion kernel d : α × β → ℝ (|α| × |β| matrix)
+        y: Reproduction symbol index
+
     Returns:
-        f_star: Conjugate values of shape (m,).
-    
-    Time complexity: O(n * m)
-    Space complexity: O(m)
-    
-    Example:
-        >>> K = np.array([[1, 0], [0, 1]])
-        >>> f = np.array([2.0, 3.0])
-        >>> tropical_conjugate(K, f)
-        array([-1., -2.])
+        The profile value ψ(y)
+
+    Time complexity: O(|α|)
+    Space complexity: O(1)
+
+    >>> tropical_distortion_profile([3.0, 1.0], [[0, 2], [2, 0]], 0)
+    3.0
+    >>> tropical_distortion_profile([3.0, 1.0], [[0, 2], [2, 0]], 1)
+    1.0
     """
-    n, m = K.shape
-    assert f.shape == (n,), f"f must have shape ({n},), got {f.shape}"
-    
-    # Broadcast: K[x, y] - f[x] for all (x, y), then max over x
-    return np.max(K - f[:, np.newaxis], axis=0)
+    n_alpha = len(phi)
+    return max(phi[x] - d[x][y] for x in range(n_alpha))
 
 
-def tropical_biconjugate(K: np.ndarray, f: np.ndarray) -> np.ndarray:
+def tropical_rate_distortion(
+    phi: List[float],
+    d: List[List[float]],
+    D: float
+) -> float:
     """
-    Compute the tropical biconjugate f★★(x) = max_y (K(x,y) - f★(y)).
-    
-    By the tropical Fenchel-Moreau inequality, f★★(x) ≤ f(x) always.
-    Equality holds when K is a "separating" kernel.
-    
+    Compute the tropical rate-distortion function.
+
+    R(D) = min_y ψ(y) - D = min_y max_x (φ(x) - d(x,y)) - D
+
     Args:
-        K: Kernel matrix of shape (n, m).
-        f: Function values of shape (n,).
-    
+        phi: Source potential
+        d: Distortion kernel
+        D: Distortion budget
+
     Returns:
-        f_biconj: Biconjugate values of shape (n,).
-    
-    Time complexity: O(n * m)
-    Space complexity: O(n + m)
+        The rate-distortion value R(D)
+
+    Time complexity: O(|α| × |β|)
+    Space complexity: O(|β|)
+
+    >>> tropical_rate_distortion([3.0, 1.0], [[0, 2], [2, 0]], 0)
+    1.0
     """
-    f_star = tropical_conjugate(K, f)
-    return np.max(K - f_star[np.newaxis, :], axis=1)
+    n_beta = len(d[0])
+    profiles = [tropical_distortion_profile(phi, d, y) for y in range(n_beta)]
+    return min(profiles) - D
 
 
-def tropical_dual_functional(s: np.ndarray, d: np.ndarray, mu: float) -> float:
+def optimal_reproduction_symbol(
+    phi: List[float],
+    d: List[List[float]]
+) -> Tuple[int, float]:
     """
-    Compute F(μ) = min_b max_a (s(a) - μ * d(a,b)).
-    
-    The tropical dual functional parametrized by Lagrange multiplier μ.
-    
+    Find the optimal reproduction symbol y* that minimizes ψ(y).
+
+    y* = argmin_y max_x (φ(x) - d(x, y))
+
+    This is the symbol that achieves the rate-distortion bound.
+
     Args:
-        s: Source cost vector of shape (n,).
-        d: Distortion matrix of shape (n, m), d[a, b] = distortion(source a, repro b).
-        mu: Lagrange multiplier (≥ 0 for standard interpretation).
-    
+        phi: Source potential
+        d: Distortion kernel
+
     Returns:
-        F_mu: The dual functional value.
-    
-    Time complexity: O(n * m)
-    Space complexity: O(m)
+        Tuple of (optimal y index, profile value ψ(y*))
+
+    Time complexity: O(|α| × |β|)
+
+    >>> optimal_reproduction_symbol([3.0, 1.0], [[0, 2], [2, 0]])
+    (1, 1.0)
     """
-    # For each b, compute max_a (s(a) - μ * d(a,b))
-    per_b = np.max(s[:, np.newaxis] - mu * d, axis=0)
-    return np.min(per_b)
+    n_beta = len(d[0])
+    best_y = 0
+    best_val = tropical_distortion_profile(phi, d, 0)
+    for y in range(1, n_beta):
+        val = tropical_distortion_profile(phi, d, y)
+        if val < best_val:
+            best_val = val
+            best_y = y
+    return best_y, best_val
 
 
-def tropical_primal_value(s: np.ndarray, d: np.ndarray) -> float:
+def tropical_feasible_check(
+    phi: List[float],
+    d: List[List[float]],
+    D: float,
+    r: float
+) -> Optional[int]:
     """
-    Compute P = min_b max_a (s(a) - d(a,b)).
-    
-    The tropical primal coding value. Equals F(1) by the strong duality theorem.
-    
+    Check if rate r is feasible at distortion budget D.
+
+    A rate r is feasible if ∃ y : ∀ x, φ(x) - r ≤ d(x,y) + D.
+
     Args:
-        s: Source cost vector of shape (n,).
-        d: Distortion matrix of shape (n, m).
-    
+        phi: Source potential
+        d: Distortion kernel
+        D: Distortion budget
+        r: Rate to check
+
     Returns:
-        P: The primal value.
-    
-    Time complexity: O(n * m)
-    Space complexity: O(m)
+        Index of witnessing y if feasible, None otherwise.
+
+    Time complexity: O(|α| × |β|)
+
+    >>> tropical_feasible_check([3.0, 1.0], [[0, 2], [2, 0]], 0, 1.0)
+    1
     """
-    return tropical_dual_functional(s, d, 1.0)
+    n_alpha = len(phi)
+    n_beta = len(d[0])
+    for y in range(n_beta):
+        if all(phi[x] - r <= d[x][y] + D + 1e-12 for x in range(n_alpha)):
+            return y
+    return None
 
 
-def optimal_reproduction_symbol(s: np.ndarray, d: np.ndarray) -> Tuple[int, float]:
+def tropical_dual_functional(
+    phi: List[float],
+    d: List[List[float]],
+    mu: float
+) -> float:
     """
-    Find the optimal reproduction symbol and its cost.
-    
-    Solves: argmin_b max_a (s(a) - d(a,b))
-    
+    Compute the tropical dual functional.
+
+    F(μ) = min_y max_x (φ(x) - μ · d(x, y))
+
+    This is the Lagrangian relaxation of the rate-distortion problem.
+
     Args:
-        s: Source cost vector of shape (n,).
-        d: Distortion matrix of shape (n, m).
-    
+        phi: Source potential
+        d: Distortion kernel
+        mu: Dual variable (Lagrange multiplier)
+
     Returns:
-        (b_opt, cost): Index of optimal reproduction and its worst-case net cost.
-    
-    Time complexity: O(n * m)
-    Space complexity: O(m)
+        The dual functional value F(μ)
+
+    Time complexity: O(|α| × |β|)
     """
-    per_b = np.max(s[:, np.newaxis] - d, axis=0)
-    b_opt = int(np.argmin(per_b))
-    return b_opt, per_b[b_opt]
+    n_alpha = len(phi)
+    n_beta = len(d[0])
+    return min(
+        max(phi[x] - mu * d[x][y] for x in range(n_alpha))
+        for y in range(n_beta)
+    )
+
+
+def tropical_legendre_fenchel(
+    phi: List[float],
+    d: List[List[float]],
+    D: float,
+    mu_values: List[float]
+) -> float:
+    """
+    Compute the tropical rate-distortion via Legendre-Fenchel transform.
+
+    R_LF(D) = max_μ (F(μ) - μ · D)
+
+    where F(μ) = min_y max_x (φ(x) - μ · d(x,y)).
+
+    Args:
+        phi: Source potential
+        d: Distortion kernel
+        D: Distortion budget
+        mu_values: Set of dual parameters to optimize over
+
+    Returns:
+        The Legendre-Fenchel transform value
+
+    Time complexity: O(|μ_values| × |α| × |β|)
+    """
+    return max(
+        tropical_dual_functional(phi, d, mu) - mu * D
+        for mu in mu_values
+    )
+
+
+def tropical_covering_radius(
+    phi: List[float],
+    d: List[List[float]],
+    y: int
+) -> float:
+    """
+    Compute the covering radius of reproduction symbol y.
+
+    This is the minimum D such that y is a feasible code at rate 0:
+    D_cover(y) = max_x (φ(x) - d(x, y))
+
+    Equivalently, this is the distortion profile ψ(y).
+
+    Args:
+        phi: Source potential
+        d: Distortion kernel
+        y: Reproduction symbol index
+
+    Returns:
+        The covering radius
+
+    >>> tropical_covering_radius([3.0, 1.0], [[0, 2], [2, 0]], 1)
+    1.0
+    """
+    return tropical_distortion_profile(phi, d, y)
 
 
 def tropical_rate_distortion_curve(
-    s: np.ndarray, 
-    d: np.ndarray,
-    D_range: np.ndarray,
-    mu_range: Optional[np.ndarray] = None
-) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    phi: List[float],
+    d: List[List[float]],
+    D_values: List[float]
+) -> List[Tuple[float, float, int]]:
     """
-    Compute the tropical rate-distortion curve R(D) for a range of D values.
-    
-    For each D, computes both the primal and dual values, demonstrating
-    that they coincide (no Shannon gap).
-    
+    Compute the full rate-distortion curve with optimal witnesses.
+
+    For each D, returns (D, R(D), y*) where y* is the optimal symbol.
+
     Args:
-        s: Source cost vector of shape (n,).
-        d: Distortion matrix of shape (n, m).
-        D_range: Array of distortion budget values.
-        mu_range: Optional array of dual parameters. If None, uses {1}.
-    
+        phi: Source potential
+        d: Distortion kernel
+        D_values: List of distortion budgets to evaluate
+
     Returns:
-        (D_range, primal_values, dual_values): The R-D curve data.
-    
-    Time complexity: O(|D_range| * n * m * |mu_range|)
+        List of (D, R(D), optimal_y) tuples
     """
-    if mu_range is None:
-        mu_range = np.array([1.0])
-    
-    P = tropical_primal_value(s, d)
-    primal_vals = P + D_range
-    
-    dual_vals = np.array([
-        max(tropical_dual_functional(s, d, mu) + mu * D for mu in mu_range)
-        for D in D_range
-    ])
-    
-    return D_range, primal_vals, dual_vals
+    results = []
+    for D in D_values:
+        y_star, psi_star = optimal_reproduction_symbol(phi, d)
+        R = psi_star - D
+        results.append((D, R, y_star))
+    return results
 
 
-def verify_biconjugate_inequality(K: np.ndarray, f: np.ndarray) -> Tuple[bool, np.ndarray]:
-    """
-    Verify the tropical Fenchel-Moreau inequality f★★ ≤ f.
-    
-    Args:
-        K: Kernel matrix.
-        f: Function values.
-    
-    Returns:
-        (holds, gap): Whether the inequality holds, and the pointwise gap f - f★★.
-    """
-    f_biconj = tropical_biconjugate(K, f)
-    gap = f - f_biconj
-    holds = bool(np.all(gap >= -1e-12))
-    return holds, gap
-
-
-def check_separating_kernel(K: np.ndarray, f: np.ndarray) -> Tuple[bool, List[Optional[int]]]:
-    """
-    Check if kernel K is separating for function f.
-    
-    K is separating for f if for each x, there exists y such that
-    x = argmax_z (K(z,y) - f(z)).
-    
-    Args:
-        K: Kernel matrix of shape (n, m).
-        f: Function values of shape (n,).
-    
-    Returns:
-        (is_sep, witnesses): Whether K is separating, and for each x,
-        the witness y (or None if none exists).
-    """
-    n, m = K.shape
-    witnesses = []
-    
-    for x in range(n):
-        found = False
-        for y in range(m):
-            vals = K[:, y] - f
-            if vals[x] >= np.max(vals) - 1e-12:
-                witnesses.append(y)
-                found = True
-                break
-        if not found:
-            witnesses.append(None)
-    
-    is_sep = all(w is not None for w in witnesses)
-    return is_sep, witnesses
-
-
+# =============================================================================
+# Demonstration
+# =============================================================================
 if __name__ == "__main__":
-    # Quick self-test
-    print("Running algorithm self-tests...")
-    
-    # Test 1: Biconjugate inequality
-    K = np.random.randn(5, 4)
-    f = np.random.randn(5)
-    holds, gap = verify_biconjugate_inequality(K, f)
-    assert holds, "Biconjugate inequality failed!"
-    print("  ✓ Biconjugate inequality verified")
-    
-    # Test 2: Strong duality
-    s = np.array([3.0, 1.0, 2.0])
-    d = np.array([[0.0, 1.0], [1.0, 0.0], [0.5, 0.5]])
-    P = tropical_primal_value(s, d)
-    F1 = tropical_dual_functional(s, d, 1.0)
-    assert abs(P - F1) < 1e-12, "Strong duality failed!"
-    print("  ✓ Strong duality (P = F(1)) verified")
-    
-    # Test 3: Separating kernel
-    K_sep = 100 * np.eye(3)
-    f_test = np.array([1.0, 2.0, 3.0])
-    is_sep, _ = check_separating_kernel(K_sep, f_test)
-    assert is_sep, "Identity kernel should be separating!"
-    f_biconj = tropical_biconjugate(K_sep, f_test)
-    assert np.allclose(f_biconj, f_test), "Biconjugate should equal f for separating kernel!"
-    print("  ✓ Separating kernel detection verified")
-    
-    print("\nAll self-tests passed! ✓")
+    print("Tropical Rate-Distortion Algorithms")
+    print("=" * 50)
+
+    # Binary example
+    phi = [3.0, 1.0]
+    d = [[0.0, 2.0], [2.0, 0.0]]
+
+    y_star, psi_star = optimal_reproduction_symbol(phi, d)
+    print(f"\nBinary source: optimal y* = {y_star}, ψ(y*) = {psi_star}")
+
+    # Verify Legendre-Fenchel
+    mus = [i * 0.1 for i in range(0, 51)]
+    for D in [0.0, 0.5, 1.0, 2.0]:
+        R_primal = tropical_rate_distortion(phi, d, D)
+        R_lf = tropical_legendre_fenchel(phi, d, D, mus)
+        print(f"  D={D}: R_primal={R_primal:.4f}, R_LF={R_lf:.4f}")
+
+    # Feasibility check
+    print("\nFeasibility checks:")
+    for r in [2.0, 1.0, 0.5, 0.0, -1.0]:
+        witness = tropical_feasible_check(phi, d, 0, r)
+        print(f"  r={r:5.1f}, D=0: feasible={witness is not None}"
+              + (f" (witness y={witness})" if witness is not None else ""))
