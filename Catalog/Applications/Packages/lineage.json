@@ -7,7 +7,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T01:50:13Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
@@ -16,7 +16,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:16:39Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -25,7 +25,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T02:16:56Z",
-      "hue": 101
+      "hue": 272
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -43,16 +43,16 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T03:01:11Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
       "title": "Tropical Rainfall: Nash Equilibria as Min-Plus Fixed Points",
       "domain": "Tropical Algebra and Game Theory",
-      "primary_domain": "Tropical",
-      "shape": "star",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-14T03:04:29Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "holographic_proof_renormalization_ultrametric_comp",
@@ -61,7 +61,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T03:08:28Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -79,7 +79,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T04:04:29Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "tropical_neural_code_classification_with_provable_",
@@ -88,7 +88,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T04:04:46Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "dragon_curve_fractals_as_tropical_curve_generators",
@@ -97,7 +97,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T04:05:00Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -115,7 +115,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T04:05:40Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "pythagorean_lattice_reduction_for_integer_factorin",
@@ -124,7 +124,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T05:30:32Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "tropical_knot_theory_min_plus_invariants_for_knot_",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T05:32:59Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T05:33:18Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "emergent_computation_in_pythagorean_orbit_lattices",
@@ -160,7 +160,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:33:53Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -169,7 +169,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T05:34:09Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "riemann_hypothesis_via_tropical_spectral_transfer",
@@ -178,7 +178,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:34:23Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hodge_conjecture_through_tropical_algebraic_cycles",
@@ -187,7 +187,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:34:33Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "p_vs_space_via_tropical_time_space_tradeoffs",
@@ -196,7 +196,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T06:33:48Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "homomorphic_encryption_over_tropical_semirings",
@@ -205,7 +205,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T06:34:03Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "sheaf_cohomology_and_certified_adversarial_robustn",
@@ -214,16 +214,16 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T06:34:20Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "consciousness_as_tropical_fixed_point_min_plus_ref",
       "title": "Tropical Reflective Equilibrium: Min-Plus Fixed Points of Self-Reference Dynamics",
       "domain": "Tropical Algebra / Consciousness Theory / Fixed-Point Theory",
-      "primary_domain": "Tropical",
-      "shape": "star",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-14T06:42:14Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "aristotle_prompt_engineering_category_theoretic_pr",
@@ -241,7 +241,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:09Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "thermodynamic_computation_via_tropical_landauers_p",
@@ -259,16 +259,25 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-14T07:33:40Z",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "twin_prime_conjecture_via_tropical_sieve_methods",
       "title": "Tropical Sieve Energetics: Gap-Pattern Detection via Min-Plus Convolution",
       "domain": "Tropical Algebra / Additive Combinatorics / Number Theory",
-      "primary_domain": "Tropical",
-      "shape": "star",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-14T07:33:50Z",
-      "hue": 271
+      "hue": 280
+    },
+    {
+      "id": "neural_tangent_kernel_in_the_tropical_limit",
+      "title": "Tropical Neural Tangent Kernel: Polyhedral Linearization of Overparameterized Learning",
+      "domain": "Machine Learning Theory / Tropical Geometry",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-14T07:34:05Z",
+      "hue": 275
     }
   ],
   "edges": []
