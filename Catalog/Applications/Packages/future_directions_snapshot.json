@@ -1594,6 +1594,79 @@
     "timestamp": "2026-05-14T16:17:00.733777+00:00"
   },
   {
+    "id": "fd_0107",
+    "title": "Formalizes definitions and conjectures",
+    "description": "in Lean 4, building on the existing `TropicalCurryHoward` module.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b8bbbc75",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:21.765666+00:00"
+  },
+  {
+    "id": "fd_0108",
+    "title": "Tests conjectures computationally",
+    "description": "using Python prototypes before formal proof attempts.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b8bbbc75",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:21.768401+00:00"
+  },
+  {
+    "id": "fd_0109",
+    "title": "Proves helper lemmas",
+    "description": "incrementally, validating the proof skeleton before attacking main theorems.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b8bbbc75",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:21.770418+00:00"
+  },
+  {
+    "id": "fd_0110",
+    "title": "Documents cross-domain connections",
+    "description": "explicitly, maintaining the bridge between proof theory, algebra, and applications.",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b8bbbc75",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:21.772264+00:00"
+  },
+  {
+    "id": "fd_0111",
+    "title": "Iterates",
+    "description": "between formalization and mathematical insight, using failed proof attempts to refine conjectures.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b8bbbc75",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:21.774209+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
