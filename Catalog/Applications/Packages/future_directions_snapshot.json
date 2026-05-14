@@ -781,22 +781,6 @@
     "timestamp": "2026-05-14T16:03:53.820235+00:00"
   },
   {
-    "id": "seed_062",
-    "title": "Tropical Knot Theory: Min-Plus Invariants for Knot Classification",
-    "description": "Construct tropical knot invariants by evaluating classical knot polynomials (Jones, Alexander) in the min-plus semiring, and prove that tropical Jones polynomials distinguish knots that classical Jones cannot. Show that the tropical skein relation yields a canonical simplification of knot diagrams, and that the tropical crossing number is a sharp lower bound on the classical crossing number.",
-    "domains": [
-      "Algebra",
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.81,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "792d0062",
-    "timestamp": "2026-05-14T16:03:53.857051+00:00"
-  },
-  {
     "id": "seed_033",
     "title": "Amortized Complexity via Tropical Amortization",
     "description": "Prove that amortized analysis of data structures has a natural formulation as tropical sequence optimization, where the min-plus amortized cost is the tropical convolution of operation costs over the sequence. Show that the potential method corresponds to a tropical potential function, and that the accounting method is tropical bookkeeping in the idempotent semiring.",
@@ -1722,10 +1706,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c337fb05",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f802c0a",
     "timestamp": "2026-05-14T19:35:20.593956+00:00"
   },
   {
@@ -1921,6 +1905,76 @@
     "source_exp_id": "7498ad19",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:41:38.453645+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Hypothesize",
+    "description": ": Formulate a precise conjecture based on computational evidence or theoretical reasoning.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "792d0062",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:28:53.514189+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Experiment",
+    "description": ": Test the conjecture computationally on small examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "792d0062",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:28:53.520307+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Prove",
+    "description": ": If evidence supports the conjecture, attempt a formal proof.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "792d0062",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:28:53.525749+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Publish",
+    "description": ": Document results, update the knowledge base, and identify new directions.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "792d0062",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:28:53.531667+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Repeat",
+    "description": ": Use new results to refine hypotheses and expand the theory.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "792d0062",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:28:53.537073+00:00"
   },
   {
     "id": "seed_078",
