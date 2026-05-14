@@ -25,10 +25,10 @@
       "Bridges"
     ],
     "priority_score": 0.98,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5fa1c5eb",
     "timestamp": "2026-05-14T16:03:53.863987+00:00"
   },
   {
@@ -646,10 +646,10 @@
       "EML"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "42c626d5",
     "timestamp": "2026-05-14T16:03:53.827014+00:00"
   },
   {
@@ -806,10 +806,10 @@
       "Bridges"
     ],
     "priority_score": 0.81,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "792d0062",
     "timestamp": "2026-05-14T16:03:53.857051+00:00"
   },
   {
@@ -1193,10 +1193,10 @@
       "Speculative"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e7c79405",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23e88b22",
     "timestamp": "2026-05-14T16:16:40.316976+00:00"
   },
   {
@@ -1228,20 +1228,6 @@
     "source_exp_id": "adc29728",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:00.727665+00:00"
-  },
-  {
-    "id": "fd_0105",
-    "title": "Dynamics",
-    "description": "(Direction 4): Explain training phenomena through tropical stability.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "adc29728",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:17:00.731557+00:00"
   },
   {
     "id": "fd_0107",
@@ -1746,23 +1732,6 @@
     "timestamp": "2026-05-14T18:35:19.816031+00:00"
   },
   {
-    "id": "fd_0199",
-    "title": "Prove equivalence",
-    "description": ": Show this categorical Φ agrees with the combinatorial Φ on finite systems.\n\n### Key Definitions to Formalize\n```\nstructure TropicalModule where\n  carrier : Type*\n  add : carrier → carrier → carrier  -- min\n  smul : ℝ → carrier → carrier       -- + (scalar action)\n  -- axioms...\n\ndef categorical_phi (M : TropicalModule) (partition : List TropicalModule) : ℝ := sorry\n```\n\n### Cross-Domain Connections\n- **Enriched category theory**: This connects to Lawvere's metric spaces as enriched categories, where the enriching category is `([0,∞], ≥, +)`.\n- **Homological algebra**: Φ as a deficiency of exactness is analogous to derived functors measuring the failure of a functor to be exact.\n\n### Estimated Difficulty\nVery hard. Requires significant category theory infrastructure in Lean (available in ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:44.284959+00:00"
-  },
-  {
     "id": "fd_0209",
     "title": "Can tropical reflective equilibrium be used as a loss function for training self-aware neural networks?",
     "description": "The discrepancy `D(R, x)` is differentiable almost everywhere and could serve as a regularizer.",
@@ -1835,34 +1804,6 @@
     "timestamp": "2026-05-14T20:34:15.721141+00:00"
   },
   {
-    "id": "fd_0192",
-    "title": "\"≥\" direction",
-    "description": ": Already established by `weighted_le_log_sum_exp` (Theorem A). For any $p \\in \\Delta_n$, $\\sum p_i x_i \\leq \\log(\\sum p_i e^{x_i}) \\leq \\log(\\sum e^{x_i})$ (the second inequality needs $p_i \\leq 1$, which follows from a separate lemma using the KL divergence).\n\n   Correction: The \"≥\" direction is: $\\sum p_i x_i + H(p) \\leq \\text{LSE}(x)$, which follows from Theorem A applied with the substitution $y_i = x_i - \\log p_i$ (or directly from $D_{KL}(p \\| q) \\geq 0$ with $q_i = e^{x_i}/Z$).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "074afb83",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:34:34.590983+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Documentation",
-    "description": ": Write detailed docstrings explaining mathematical significance and usage patterns.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "074afb83",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:34:34.632055+00:00"
-  },
-  {
     "id": "fd_0189",
     "title": "Direction 1",
     "description": "(Nondeterministic complexity) — Most theoretically impactful; identifies the tractability boundary.",
@@ -1920,21 +1861,6 @@
     "source_exp_id": "9b6e4e14",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:34:38.133895+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Define the tropical spectral radius",
-    "description": ": `ρ_t(A) = max_{γ cycle} (weight(γ) / length(γ))`.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.143504+00:00"
   },
   {
     "id": "fd_0202",
@@ -2031,20 +1957,6 @@
     "timestamp": "2026-05-14T21:34:38.199582+00:00"
   },
   {
-    "id": "fd_0211",
-    "title": "Define tropical head equivalence",
-    "description": ": heads r₁, r₂ are equivalent if `argmax_j A_r₁(i,j) = argmax_j A_r₂(i,j)` for all i.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.204316+00:00"
-  },
-  {
     "id": "fd_0213",
     "title": "Bound the finite-temperature error",
     "description": "from pruning: use the LSE-tropical bound to show that removing a redundant head changes the output by at most `τ · log n`.",
@@ -2071,20 +1983,6 @@
     "source_exp_id": "9b6e4e14",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:34:38.217919+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "Test computationally",
-    "description": "using the Python algorithms module.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4aff04ca",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:35:19.784378+00:00"
   },
   {
     "id": "fd_0196",
@@ -2160,10 +2058,10 @@
       "Bridges"
     ],
     "priority_score": 0.71,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "067dd911",
     "timestamp": "2026-05-14T16:03:53.847921+00:00"
   },
   {
@@ -2339,22 +2237,6 @@
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
   },
   {
-    "id": "fd_0128",
-    "title": "Cross-Domain Connections",
-    "description": "- **Applied category theory**: Connects to Fong-Spivak's compositional frameworks for open systems.\n- **Formal methods**: Style categories as refinement lattices for musical specifications.\n- **Machine learning**: Categorical abstraction enables compositional transfer learning across musical styles.\n\n---",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "df7f8eaf",
-    "timestamp": "2026-05-14T16:24:05.747567+00:00"
-  },
-  {
     "id": "fd_0179",
     "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
     "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
@@ -2510,20 +2392,6 @@
     "timestamp": "2026-05-14T20:33:57.945591+00:00"
   },
   {
-    "id": "fd_0192",
-    "title": "Hypothesis",
-    "description": "The tropical (min-plus) channel capacity can be defined as a max-min variational problem over input potentials and channel kernels, and it satisfies an exact finite duality theorem analogous to the rate-distortion exactness theorem.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c101a52",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:31:58.196051+00:00"
-  },
-  {
     "id": "fd_0185",
     "title": "Direction 1: Knaster–Tarski Balanced Consciousness Theorem",
     "description": "**Goal.** Generalize the scalar theory to complete lattices.\n\n**Conjecture.** Let $(L, \\leq)$ be a complete lattice and let $F, G : L \\to L$ be monotone maps. Then:\n\n1. $\\mathrm{Fix}(F) \\cap \\mathrm{Fix}(G)$ is nonempty whenever there exists $x \\in L$ with $F(x) \\leq x$ and $x \\leq G(x)$.\n2. If $F$ and $G$ commute (i.e., $F \\circ G = G \\circ F$), then $\\mathrm{Fix}(F) \\cap \\mathrm{Fix}(G)$ is a complete sublattice of $L$.\n3. Uniqueness of the common fixed point is equivalent to $F = G$ on the range of the other.\n\n**Proof strategy.** Apply the Knaster–Tarski theorem separately to $F$ and $G$ to obtain $\\mathrm{Fix}(F)$ and $\\mathrm{Fix}(G)$ as complete lattices. The commuting condition ensures that $F$ restricts to a monotone endomorphism of $\\mathrm{Fix}(G)$ and vice versa, allowing a seco",
@@ -2615,5 +2483,70 @@
     "source_exp_id": "918eb128",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:35:00.998156+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Direction 2: Probabilistic Specifications and Stochastic Refinement",
+    "description": "**Goal**: Extend specifications from sets to probability measures over phrases, and extend refinement from subset inclusion to stochastic dominance or total variation bounds.\n\n**Theorem targets**:\n```\ndef ProbMusicSpec (α : Type*) := List α → ℝ≥0∞\n\ndef stochastic_refines (P Q : ProbMusicSpec α) : Prop :=\n  ∀ S : Set (List α), (∑' w ∈ S, P w) ≤ (∑' w ∈ S, Q w)\n\ntheorem stochastic_compose_mono\n    (hP : stochastic_refines P₁ P₂) (hQ : stochastic_refines Q₁ Q₂) :\n    stochastic_refines (prob_compose P₁ Q₁) (prob_compose P₂ Q₂)\n```\n\n**Cross-domain impact**: Connects to measure-theoretic probability and ergodic theory. Directly relevant to probabilistic generative music systems (variational autoencoders, diffusion models, autoregressive transformers). A stochastic monotonicity theorem would cer",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "df7f8eaf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:36:06.334098+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Direction 3: Galois Connections Between Musical Vocabularies",
+    "description": "**Goal**: Formalize a full Galois connection between fine-grained and coarse-grained musical event alphabets, with both abstraction and concretization maps, and prove that the connection preserves compositional structure.\n\n**Theorem targets**:\n```\nstructure MusicGalois (α β : Type*) where\n  abs : α → β\n  conc : β → Set α\n  sound : ∀ a, a ∈ conc (abs a)\n  optimal : ∀ b, abs '' (conc b) ⊆ {b}\n\ntheorem galois_preserves_compose\n    (G : MusicGalois α β) (S T : MusicSpec α) :\n    mapSpec G.abs (compose S T) ⊆\n    compose (mapSpec G.abs S) (mapSpec G.abs T)\n\ntheorem galois_concretization_antitone\n    (G : MusicGalois α β) {S T : MusicSpec β}\n    (h : refines S T) :\n    refines (concSpec G S) (concSpec G T)\n```\n\n**Cross-domain impact**: Connects to abstract interpretation (Cousot & Cousot, 1977) ",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "df7f8eaf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:36:06.343778+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Direction 4: Hierarchical Composition via Operads",
+    "description": "**Goal**: Extend flat concatenation to hierarchical (tree-structured) composition using operads or multicategories, modeling nested musical structure (motif → phrase → section → movement).\n\n**Theorem targets**:\n```\ninductive MusicTree (α : Type*) where\n  | leaf : α → MusicTree α\n  | node : List (MusicTree α) → MusicTree α\n\ndef TreeSpec (α : Type*) := Set (MusicTree α)\n\ndef tree_compose (S : TreeSpec α) (children : List (TreeSpec α)) : TreeSpec α :=\n  { t | ∃ root ∈ S, ∃ subs, (∀ i, subs.get i ∈ (children.get i)) ∧ t = graft root subs }\n\ntheorem tree_refines_compose_mono\n    (hS : refines S₁ S₂) (hC : ∀ i, refines (C₁.get i) (C₂.get i)) :\n    refines (tree_compose S₁ C₁) (tree_compose S₂ C₂)\n```\n\n**Cross-domain impact**: Connects to operad theory in applied category theory and to context-fr",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "df7f8eaf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:36:06.353077+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "Direction 5: Differentiable Encoders and Certified Latent Representations",
+    "description": "**Goal**: Prove that if an encoder-decoder pair between a discrete musical specification and a continuous latent space satisfies certain fidelity conditions, then refinement in the discrete domain implies a corresponding ordering in the latent space.\n\n**Theorem targets**:\n```\ndef latent_faithful (enc : List α → ℝ^d) (dec : ℝ^d → Set (List α)) : Prop :=\n  ∀ w, w ∈ dec (enc w)\n\ntheorem faithful_encoder_reflects_refinement\n    (hfaith : latent_faithful enc dec)\n    (hS : refines S T)\n    (w : List α) (hw : w ∈ S) :\n    enc w ∈ enc '' T\n\n-- Stronger: latent ordering\ndef latent_refines (enc : List α → ℝ^d) (S T : MusicSpec α) : Prop :=\n  enc '' S ⊆ enc '' T\n\ntheorem latent_refines_of_refines\n    (hS : refines S T) :\n    latent_refines enc S T\n```\n\n**Cross-domain impact**: Bridges the gap betwee",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "df7f8eaf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:36:06.360715+00:00"
   }
 ]
