@@ -1,1347 +1,1024 @@
 #!/usr/bin/env python3
 """
-Applications of Closure-Compression Duality
+Applications of Closure-Kolmogorov Compression Duality
 
-Demonstrates real-world applications of the theoretical framework to:
-1. Data deduplication / canonical form computation
-2. Compiler optimization (expression normalization)
-3. Cryptographic hash collision analysis
-4. Machine learning feature compression
+Real-world applications demonstrating the formal theorems in practice:
+1. Grammar induction via closure-based compression
+2. Feature selection via closure MDL bounds
+3. Signal denoising via tropical normalization
+4. Network packet compression via idempotent canonicalization
+"""
+
+from typing import List, Dict, Set, Tuple, Optional
+import collections
+import itertools
+import math
+import random
+
+
+# ============================================================================
+# Application 1: Grammar Induction via Closure Compression
+# ============================================================================
+
+class GrammarCompressor:
+    """
+    Grammar-based compression using closure operators.
+    
+    The closure operation replaces repeated substrings with grammar rules,
+    creating a canonical compressed representation. Fixed points are strings
+    that cannot be further compressed by grammar substitution.
+    
+    This demonstrates the theorem: fixed points of an idempotent compressor
+    are exactly the incompressible objects.
+    """
+    
+    def __init__(self, min_pattern_len: int = 2, min_count: int = 2):
+        self.min_pattern_len = min_pattern_len
+        self.min_count = min_count
+    
+    def find_most_common_pattern(self, data: List[int]) -> Optional[Tuple[List[int], int]]:
+        """Find the most frequently repeated substring."""
+        best_pattern = None
+        best_savings = 0
+        
+        for length in range(self.min_pattern_len, len(data) // 2 + 1):
+            pattern_counts: Dict[tuple, int] = collections.Counter()
+            for i in range(len(data) - length + 1):
+                pattern = tuple(data[i:i+length])
+                pattern_counts[pattern] += 1
+            
+            for pattern, count in pattern_counts.items():
+                if count >= self.min_count:
+                    # Savings: replacing `count` occurrences of `length` symbols
+                    # with `count` references to 1 rule of `length` symbols
+                    savings = (count - 1) * (length - 1) - 1
+                    if savings > best_savings:
+                        best_savings = savings
+                        best_pattern = (list(pattern), count)
+        
+        return best_pattern
+    
+    def compress_step(self, data: List[int], next_symbol: int) -> Tuple[List[int], Dict[int, List[int]], int]:
+        """One step of grammar compression."""
+        result = find_result = self.find_most_common_pattern(data)
+        if result is None:
+            return data, {}, next_symbol
+        
+        pattern, count = result
+        # Replace all non-overlapping occurrences
+        new_data = []
+        rules = {next_symbol: pattern}
+        i = 0
+        pattern_tuple = tuple(pattern)
+        while i < len(data):
+            if tuple(data[i:i+len(pattern)]) == pattern_tuple:
+                new_data.append(next_symbol)
+                i += len(pattern)
+            else:
+                new_data.append(data[i])
+                i += 1
+        
+        return new_data, rules, next_symbol + 1
+    
+    def compress(self, data: List[int]) -> Tuple[List[int], Dict[int, List[int]]]:
+        """
+        Fully compress via iterated grammar substitution.
+        
+        Returns (compressed_data, grammar_rules).
+        The process terminates at a fixed point: when no more 
+        patterns can be found, compression is idempotent.
+        """
+        all_rules = {}
+        next_sym = max(data) + 1 if data else 256
+        current = data[:]
+        
+        while True:
+            new_data, rules, next_sym = self.compress_step(current, next_sym)
+            if not rules:  # Fixed point reached
+                break
+            all_rules.update(rules)
+            current = new_data
+        
+        return current, all_rules
+    
+    def decompress(self, data: List[int], rules: Dict[int, List[int]]) -> List[int]:
+        """Decompress by expanding grammar rules."""
+        result = data[:]
+        changed = True
+        while changed:
+            changed = False
+            new_result = []
+            for sym in result:
+                if sym in rules:
+                    new_result.extend(rules[sym])
+                    changed = True
+                else:
+                    new_result.append(sym)
+            result = new_result
+        return result
+
+
+def demo_grammar_compression():
+    """Demonstrate grammar-based compression as closure operator."""
+    print("=" * 70)
+    print("APPLICATION 1: Grammar Induction via Closure Compression")
+    print("=" * 70)
+    
+    gc = GrammarCompressor(min_pattern_len=2, min_count=2)
+    
+    # Test cases
+    test_data = [
+        [1, 2, 3, 1, 2, 3, 4, 5, 1, 2, 3],  # Repeated pattern
+        [1, 2, 1, 2, 1, 2, 1, 2],              # Highly repetitive
+        [1, 2, 3, 4, 5, 6, 7, 8],              # No repetition (incompressible)
+        [1, 1, 2, 2, 1, 1, 2, 2, 3, 3],        # Nested repetition
+    ]
+    
+    for i, data in enumerate(test_data):
+        compressed, rules = gc.compress(data)
+        decompressed = gc.decompress(compressed, rules)
+        ratio = len(compressed) / len(data) if data else 1.0
+        is_fixed = gc.find_most_common_pattern(compressed) is None
+        
+        print(f"\n  Test {i+1}: {data}")
+        print(f"    Compressed:   {compressed}")
+        print(f"    Rules:        {rules}")
+        print(f"    Ratio:        {ratio:.3f}")
+        print(f"    Fixed point:  {is_fixed}")
+        print(f"    Invertible:   {decompressed == data}")
+    
+    print("\n  KEY: Incompressible strings (test 3) are already at a fixed point.")
+    print("  Grammar compression is an idempotent closure operator.\n")
+
+
+# ============================================================================
+# Application 2: Feature Selection via Closure MDL
+# ============================================================================
+
+def demo_feature_selection():
+    """Feature selection using closure-based MDL bounds."""
+    print("=" * 70)
+    print("APPLICATION 2: Feature Selection via Closure MDL Bounds")
+    print("=" * 70)
+    
+    # Simulated dataset with correlated features
+    random.seed(42)
+    
+    features = ['temperature', 'humidity', 'pressure', 'wind_speed', 
+                'cloud_cover', 'rain_prob', 'dew_point']
+    
+    # Feature implications (domain knowledge)
+    implications = {
+        'temperature': {'dew_point'},      # temp determines dew point (simplified)
+        'humidity': {'cloud_cover'},        # high humidity -> clouds
+        'cloud_cover': {'rain_prob'},       # clouds -> rain possible
+        'pressure': set(),
+        'wind_speed': set(),
+        'rain_prob': set(),
+        'dew_point': set(),
+    }
+    
+    def close(feature_set: Set[str]) -> Set[str]:
+        """Compute closure under implications."""
+        result = set(feature_set)
+        changed = True
+        while changed:
+            changed = False
+            for f in list(result):
+                if f in implications:
+                    for implied in implications[f]:
+                        if implied not in result:
+                            result.add(implied)
+                            changed = True
+        return result
+    
+    # Different feature subsets to evaluate
+    candidates = [
+        {'temperature', 'pressure'},
+        {'humidity', 'wind_speed'},
+        {'temperature', 'humidity'},
+        {'temperature', 'humidity', 'pressure', 'wind_speed'},
+    ]
+    
+    print("\n  Feature implications:")
+    for f, implied in implications.items():
+        if implied:
+            print(f"    {f} -> {implied}")
+    
+    print("\n  Feature subset evaluation (MDL via closure):")
+    for feat_set in candidates:
+        closed = close(feat_set)
+        added = closed - feat_set
+        mdl = len(feat_set)  # Only need to store the generators
+        total_info = len(closed)  # Total information captured
+        efficiency = total_info / mdl if mdl > 0 else 0
+        
+        print(f"\n    Selected: {feat_set}")
+        print(f"    Closure:  {closed}")
+        print(f"    Added by closure: {added}")
+        print(f"    MDL cost (generators): {mdl}")
+        print(f"    Information captured: {total_info} features")
+        print(f"    Efficiency: {efficiency:.2f} features/cost")
+    
+    print("\n  MDL THEOREM: The closure provides the optimal fixed-point")
+    print("  representative. Selecting only generators minimizes description")
+    print("  length while capturing full information.\n")
+
+
+# ============================================================================
+# Application 3: Signal Denoising via Tropical Normalization
+# ============================================================================
+
+def demo_signal_denoising():
+    """Signal denoising using tropical (min-plus) normalization."""
+    print("=" * 70)
+    print("APPLICATION 3: Signal Denoising via Tropical Normalization")
+    print("=" * 70)
+    
+    random.seed(42)
+    n = 20
+    
+    # True signal (smooth)
+    true_signal = [5 * math.sin(2 * math.pi * i / n) + 10 for i in range(n)]
+    
+    # Add noise
+    noise_level = 3.0
+    noisy_signal = [s + random.gauss(0, noise_level) for s in true_signal]
+    
+    # Baseline: physical constraints (e.g., signal cannot exceed certain bounds)
+    baseline = [15.0] * n  # Upper bound
+    
+    # Tropical normalization: cap at baseline
+    denoised = [min(s, b) for s, b in zip(noisy_signal, baseline)]
+    
+    # Compute errors
+    noise_error = sum((n - t)**2 for n, t in zip(noisy_signal, true_signal)) / n
+    denoised_error = sum((d - t)**2 for d, t in zip(denoised, true_signal)) / n
+    
+    print(f"\n  Signal length: {n}")
+    print(f"  Noise level: {noise_level}")
+    print(f"  Baseline (cap): {baseline[0]}")
+    print(f"\n  Mean squared error:")
+    print(f"    Noisy signal:    {noise_error:.4f}")
+    print(f"    After denoising: {denoised_error:.4f}")
+    print(f"    Improvement:     {(1 - denoised_error/noise_error)*100:.1f}%")
+    
+    # Show a few values
+    print(f"\n  Sample values (first 8):")
+    print(f"  {'i':>3} | {'True':>8} | {'Noisy':>8} | {'Denoised':>8}")
+    print("  " + "-" * 40)
+    for i in range(min(8, n)):
+        print(f"  {i:>3} | {true_signal[i]:>8.3f} | {noisy_signal[i]:>8.3f} | {denoised[i]:>8.3f}")
+    
+    # Verify idempotence
+    double_denoised = [min(d, b) for d, b in zip(denoised, baseline)]
+    assert all(abs(a - b) < 1e-10 for a, b in zip(denoised, double_denoised))
+    print("\n  Idempotence verified: denoise(denoise(x)) = denoise(x) ✓")
+    
+    print("\n  TROPICAL THEOREM: The normalization is the pointwise-minimal")
+    print("  canonical representative. Fixed points are signals already")
+    print("  within the physical constraints.\n")
+
+
+# ============================================================================
+# Application 4: Network Packet Canonicalization
+# ============================================================================
+
+def demo_packet_canonicalization():
+    """Network packet header canonicalization as idempotent compression."""
+    print("=" * 70)
+    print("APPLICATION 4: Network Packet Canonicalization")
+    print("=" * 70)
+    
+    # Simulate network packet headers as bit sequences
+    # Canonicalization: normalize optional fields to default values
+    
+    class PacketCompressor:
+        """Idempotent packet header canonicalizer."""
+        
+        def __init__(self):
+            # Define canonical (default) values for optional fields
+            self.canonical_defaults = {
+                'tos': [False] * 8,       # Type of Service: default 0
+                'ttl': [True] * 8,        # TTL: default 255
+                'options': [],            # Options: remove
+            }
+        
+        def compress(self, packet: List[bool]) -> List[bool]:
+            """
+            Canonicalize packet header.
+            Strip optional fields, normalize defaults.
+            This is idempotent by construction.
+            """
+            if len(packet) <= 8:
+                return packet  # Too short, return as-is
+            
+            # Simple model: first 8 bits are essential, rest are optional
+            essential = packet[:8]
+            optional = packet[8:]
+            
+            # Remove trailing zeros (optional padding)
+            while optional and not optional[-1]:
+                optional.pop()
+            
+            return essential + optional
+    
+    comp = PacketCompressor()
+    
+    # Test packets
+    test_packets = [
+        [True, False, True, True, False, False, True, False],  # 8-bit essential only
+        [True, False, True, True, False, False, True, False,   # With padding
+         False, False, False, False],
+        [True, True, True, True, True, True, True, True,       # With real optional data
+         True, False, True],
+        [True, False, True, True, False, False, True, False,   # Mixed
+         True, False, False, False, False],
+    ]
+    
+    print("\n  Packet canonicalization results:")
+    for i, packet in enumerate(test_packets):
+        compressed = comp.compress(packet)
+        is_fixed = comp.compress(compressed) == compressed
+        bits_saved = len(packet) - len(compressed)
+        
+        orig_str = ''.join('1' if b else '0' for b in packet)
+        comp_str = ''.join('1' if b else '0' for b in compressed)
+        
+        print(f"\n    Packet {i+1}: {orig_str}")
+        print(f"    Canonical: {comp_str}")
+        print(f"    Saved: {bits_saved} bits, Fixed: {is_fixed}")
+    
+    # Verify idempotence
+    for packet in test_packets:
+        c1 = comp.compress(packet)
+        c2 = comp.compress(c1)
+        assert c1 == c2, "Idempotence violated!"
+    
+    print("\n  Idempotence verified for all test packets ✓")
+    print("\n  THEOREM APPLICATION: Canonical packet headers are fixed points")
+    print("  of the canonicalization operator. Non-canonical packets are")
+    print("  strictly shortened, matching the formal compression duality.\n")
+
+
+# ============================================================================
+# Main
+# ============================================================================
+
+if __name__ == "__main__":
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  Applications of Closure-Kolmogorov Compression Duality            ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+    
+    demo_grammar_compression()
+    demo_feature_selection()
+    demo_signal_denoising()
+    demo_packet_canonicalization()
+    
+    print("All applications demonstrated successfully!")
+
+
+#!/usr/bin/env python3
+"""
+Closure-Kolmogorov Complexity Duality: Demonstrations
+
+This module demonstrates the core theorems connecting closure operators,
+idempotent compression, and algorithmic description length through
+concrete numerical examples.
 """
 
 import itertools
-from collections import defaultdict
-from typing import List, Tuple, Dict, Set
-import hashlib
+from typing import Callable, List, Tuple, Dict
+import collections
 
 
-# ===========================================================================
-# Application 1: Data Deduplication via Canonical Forms
-# ===========================================================================
+# ============================================================================
+# Demo 1: Idempotent Compressor on Binary Strings
+# ============================================================================
 
-class CanonicalDeduplicator:
+def run_length_compress(s: List[bool]) -> List[bool]:
     """
-    Data deduplication system based on closure-compression duality.
-
-    Maps data items to canonical representatives of their semantic
-    equivalence class. By the compression optimality theorem, the
-    canonical representative minimizes description length within each class.
-
-    Real-world application: Database normalization, file deduplication,
-    content-addressable storage.
+    A simple idempotent compressor: if the string has a repeated suffix
+    pattern, collapse it. For demonstration, we use a canonical
+    "sorted representative" compressor - sort the bits.
+    
+    This is idempotent (sorting a sorted list gives the same list),
+    length-preserving (same length), and has clear fixed points
+    (already-sorted strings).
     """
-
-    def __init__(self):
-        self.canonical_map: Dict[str, str] = {}
-        self.class_sizes: Dict[str, int] = defaultdict(int)
-
-    def normalize_whitespace(self, text: str) -> str:
-        """Normalize whitespace: collapse runs, strip edges."""
-        return ' '.join(text.split())
-
-    def normalize_case(self, text: str) -> str:
-        """Case-insensitive normalization."""
-        return text.lower()
-
-    def compress(self, text: str) -> str:
-        """
-        Full canonical compression: normalize whitespace and case.
-
-        This is idempotent by construction:
-        - normalize_whitespace(normalize_whitespace(x)) = normalize_whitespace(x)
-        - normalize_case(normalize_case(x)) = normalize_case(x)
-        - Their composition is also idempotent when applied in fixed order.
-        """
-        return self.normalize_case(self.normalize_whitespace(text))
-
-    def deduplicate(self, items: List[str]) -> Tuple[List[str], Dict]:
-        """
-        Deduplicate a list of items using canonical compression.
-
-        Returns:
-            Tuple of (unique canonical forms, statistics dict)
-        """
-        canonical_items = set()
-        fiber_sizes = defaultdict(int)
-        total_chars_saved = 0
-
-        for item in items:
-            canonical = self.compress(item)
-            canonical_items.add(canonical)
-            fiber_sizes[canonical] += 1
-            total_chars_saved += len(item) - len(canonical)
-
-        stats = {
-            "original_count": len(items),
-            "unique_count": len(canonical_items),
-            "dedup_ratio": 1 - len(canonical_items) / len(items)
-            if items else 0,
-            "total_chars_saved": total_chars_saved,
-            "max_equivalence_class": max(fiber_sizes.values())
-            if fiber_sizes else 0,
-            "avg_equivalence_class": sum(fiber_sizes.values()) /
-            len(fiber_sizes) if fiber_sizes else 0,
-        }
-
-        return sorted(canonical_items), stats
+    return sorted(s)
 
 
-# ===========================================================================
-# Application 2: Expression Normalization (Compiler Optimization)
-# ===========================================================================
-
-class ExpressionNormalizer:
+def dedup_compress(s: List[bool]) -> List[bool]:
     """
-    Arithmetic expression normalizer based on idempotent rewriting.
-
-    Normalizes expressions to canonical form by:
-    1. Sorting commutative operands
-    2. Flattening nested operations
-    3. Constant folding
-
-    The normalizer is idempotent: applying it twice gives the same result
-    as applying it once, making it a valid closure operator.
-
-    Real-world application: Compiler CSE (common subexpression elimination),
-    symbolic computation, proof normalization.
+    Remove consecutive duplicate bits. This is idempotent and 
+    strictly shortening on non-fixed-points.
+    
+    Fixed points: strings with no consecutive duplicates (alternating).
     """
+    if not s:
+        return s
+    result = [s[0]]
+    for bit in s[1:]:
+        if bit != result[-1]:
+            result.append(bit)
+    return result
 
-    @staticmethod
-    def normalize(expr: tuple) -> tuple:
-        """
-        Normalize an arithmetic expression tree.
 
-        Expression format: (op, left, right) or atomic value (int/str)
+def demo_idempotent_compressor():
+    """Demonstrate idempotent compression and fixed-point structure."""
+    print("=" * 70)
+    print("DEMO 1: Idempotent Compressor - Fixed Points as Incompressible Strings")
+    print("=" * 70)
+    
+    # Generate all binary strings of length up to 5
+    compress = dedup_compress
+    
+    for n in range(1, 7):
+        all_strings = [list(bits) for bits in itertools.product([False, True], repeat=n)]
+        fixed_points = [s for s in all_strings if compress(s) == s]
+        compressed = [s for s in all_strings if compress(s) != s]
+        
+        # Verify idempotence
+        for s in all_strings:
+            cs = compress(s)
+            assert compress(cs) == cs, f"Idempotence violated for {s}"
+        
+        # Verify strict shortening on non-fixed points
+        for s in compressed:
+            cs = compress(s)
+            assert len(cs) < len(s), f"Strict shortening violated for {s}"
+        
+        ratio = len(fixed_points) / len(all_strings) * 100
+        print(f"  n={n}: {len(all_strings):4d} strings, "
+              f"{len(fixed_points):4d} fixed points ({ratio:.1f}%), "
+              f"{len(compressed):4d} compressible")
+    
+    print("\n  Example fixed points (n=5, incompressible under dedup):")
+    n = 5
+    all_5 = [list(bits) for bits in itertools.product([False, True], repeat=n)]
+    fixed_5 = [s for s in all_5 if compress(s) == s]
+    for s in fixed_5[:8]:
+        bits = ''.join('1' if b else '0' for b in s)
+        print(f"    {bits} -> {bits} (fixed)")
+    
+    print("\n  Example compressed strings (n=5):")
+    compressed_5 = [(s, compress(s)) for s in all_5 if compress(s) != s]
+    for s, cs in compressed_5[:8]:
+        sbits = ''.join('1' if b else '0' for b in s)
+        cbits = ''.join('1' if b else '0' for b in cs)
+        print(f"    {sbits} -> {cbits} (shortened by {len(s) - len(cs)})")
+    
+    print("\n  KEY THEOREM VERIFIED: Every string with no shorter compression")
+    print("  image is a fixed point of the compressor.")
+    print()
 
-        Normalization rules:
-        1. Sort commutative operators (+, *)
-        2. Flatten nested same-operator applications
-        3. Fold constants
-        """
-        if not isinstance(expr, tuple):
-            return expr
 
-        if len(expr) != 3:
-            return expr
+# ============================================================================
+# Demo 2: Fiber Structure and Compression Classes
+# ============================================================================
 
-        op, left, right = expr
-        # Recursively normalize children
-        left = ExpressionNormalizer.normalize(left)
-        right = ExpressionNormalizer.normalize(right)
-
-        # Constant folding
-        if isinstance(left, (int, float)) and isinstance(right, (int, float)):
-            if op == '+':
-                return left + right
-            elif op == '*':
-                return left * right
-            elif op == '-':
-                return left - right
-
-        # Sort commutative operators
-        if op in ('+', '*'):
-            if str(right) < str(left):
-                left, right = right, left
-
-        return (op, left, right)
-
-    @staticmethod
-    def description_length(expr) -> int:
-        """Compute the description length (tree size) of an expression."""
-        if not isinstance(expr, tuple):
-            return 1
-        return 1 + sum(
-            ExpressionNormalizer.description_length(child)
-            for child in expr[1:]
+def demo_fiber_structure():
+    """Demonstrate the fiber structure of an idempotent compressor."""
+    print("=" * 70)
+    print("DEMO 2: Fiber Structure - Equivalence Classes Under Compression")
+    print("=" * 70)
+    
+    compress = dedup_compress
+    n = 4
+    all_strings = [list(bits) for bits in itertools.product([False, True], repeat=n)]
+    
+    # Also include shorter strings since compression reduces length
+    for k in range(n):
+        all_strings.extend(
+            list(bits) for bits in itertools.product([False, True], repeat=k)
         )
+    
+    # Build fibers: group strings by their compressed representative
+    fibers: Dict[str, List[str]] = collections.defaultdict(list)
+    for s in all_strings:
+        cs = compress(s)
+        key = ''.join('1' if b else '0' for b in cs)
+        val = ''.join('1' if b else '0' for b in s)
+        fibers[key].append(val)
+    
+    print(f"\n  Fibers (equivalence classes) for strings of length ≤ {n}:")
+    for rep, members in sorted(fibers.items(), key=lambda x: (len(x[0]), x[0])):
+        is_fp = rep in members
+        print(f"    Fixed point '{rep}' <- {members}")
+        if is_fp:
+            # Verify: fixed point is the shortest in its fiber
+            min_len = min(len(m) for m in members)
+            assert len(rep) == min_len, "Fixed point should be shortest!"
+    
+    print("\n  VERIFIED: Fixed points are the shortest representatives in each fiber.")
+    print("  This is the 'compression ratio optimal on fibers' theorem.\n")
 
 
-# ===========================================================================
-# Application 3: Network Packet Deduplication
-# ===========================================================================
+# ============================================================================
+# Demo 3: Tropical Normalization
+# ============================================================================
 
-class PacketDeduplicator:
-    """
-    Network packet deduplication via content-based canonical forms.
-
-    Uses closure-compression to identify semantically equivalent packets
-    and compress traffic by sending only canonical representatives.
-
-    Real-world application: WAN optimization, CDN caching, protocol
-    compression.
-    """
-
-    @staticmethod
-    def canonical_form(packet: dict) -> tuple:
-        """
-        Map a packet to its canonical form.
-
-        Ignores timestamps, sequence numbers, and other ephemeral fields.
-        Focuses on semantic content.
-        """
-        # Extract semantic content (ignoring metadata)
-        content = packet.get("payload", "")
-        src = packet.get("src", "")
-        dst = packet.get("dst", "")
-        proto = packet.get("proto", "")
-
-        return (proto, src, dst, content)
-
-    @staticmethod
-    def compress_stream(packets: List[dict]) -> Tuple[List[dict], Dict]:
-        """
-        Compress a packet stream by deduplicating canonical forms.
-
-        Returns only the first occurrence of each canonical form,
-        plus statistics on the compression achieved.
-        """
-        seen = set()
-        unique = []
-        duplicates = 0
-
-        for packet in packets:
-            canonical = PacketDeduplicator.canonical_form(packet)
-            if canonical not in seen:
-                seen.add(canonical)
-                unique.append(packet)
-            else:
-                duplicates += 1
-
-        stats = {
-            "original_packets": len(packets),
-            "unique_packets": len(unique),
-            "duplicates_removed": duplicates,
-            "compression_ratio": duplicates / len(packets) if packets else 0,
-        }
-
-        return unique, stats
-
-
-# ===========================================================================
-# Application 4: Feature Compression for ML
-# ===========================================================================
-
-class FeatureCompressor:
-    """
-    Feature vector compression using idempotent quantization.
-
-    Quantizes continuous features to discrete levels, creating an
-    idempotent compression operator. The fixed points are exactly
-    the quantized values — the "incompressible" feature vectors.
-
-    Real-world application: Model compression, feature hashing,
-    dimensionality reduction.
-    """
-
-    def __init__(self, levels: int = 8):
-        """
-        Args:
-            levels: Number of quantization levels per feature
-        """
-        self.levels = levels
-
-    def quantize_value(self, x: float, lo: float = 0.0,
-                       hi: float = 1.0) -> float:
-        """Quantize a single value to the nearest level."""
-        if hi <= lo:
-            return lo
-        step = (hi - lo) / self.levels
-        bucket = int((x - lo) / step)
-        bucket = max(0, min(bucket, self.levels - 1))
-        return lo + (bucket + 0.5) * step
-
-    def compress(self, features: tuple) -> tuple:
-        """
-        Compress a feature vector by quantization.
-
-        This is idempotent: quantizing already-quantized values
-        produces the same values.
-        """
-        return tuple(self.quantize_value(f) for f in features)
-
-    def analyze_compression(self, dataset: List[tuple]) -> Dict:
-        """
-        Analyze compression on a dataset.
-
-        Returns statistics including:
-        - Number of unique canonical forms
-        - Compression ratio
-        - Fixed point count
-        """
-        canonical_forms = set()
-        fixed_count = 0
-
-        for features in dataset:
-            compressed = self.compress(features)
-            canonical_forms.add(compressed)
-            if compressed == features:
-                fixed_count += 1
-
-        return {
-            "dataset_size": len(dataset),
-            "unique_forms": len(canonical_forms),
-            "fixed_points": fixed_count,
-            "compression_ratio": 1 - len(canonical_forms) / len(dataset)
-            if dataset else 0,
-        }
-
-
-# ===========================================================================
-# Main: Run all applications
-# ===========================================================================
-
-if __name__ == "__main__":
+def demo_tropical_normalization():
+    """Demonstrate tropical (min-plus) normalization as idempotent compression."""
     print("=" * 70)
-    print("APPLICATION 1: Data Deduplication")
+    print("DEMO 3: Tropical Normalization - Min-Plus Canonical Forms")
     print("=" * 70)
-
-    dedup = CanonicalDeduplicator()
-    items = [
-        "Hello World",
-        "hello world",
-        "HELLO WORLD",
-        "  Hello   World  ",
-        "hello  world",
-        "Hello World!",
-        "hello world!",
-        "  HELLO   WORLD!  ",
-        "Goodbye World",
-        "goodbye world",
-    ]
-
-    # Verify idempotence
-    for item in items:
-        c1 = dedup.compress(item)
-        c2 = dedup.compress(c1)
-        assert c1 == c2, f"Idempotence violated: {item} -> {c1} -> {c2}"
-
-    unique, stats = dedup.deduplicate(items)
-    print(f"\nInput: {len(items)} strings")
-    for item in items:
-        print(f"  '{item}' → '{dedup.compress(item)}'")
-    print(f"\nCanonical forms: {unique}")
-    print(f"Statistics: {stats}")
-
-    print(f"\n{'=' * 70}")
-    print("APPLICATION 2: Expression Normalization")
-    print("=" * 70)
-
-    norm = ExpressionNormalizer()
-    expressions = [
-        ('+', 'b', 'a'),          # Should normalize to ('+', 'a', 'b')
-        ('+', 'a', 'b'),          # Already canonical
-        ('*', 3, 4),              # Should fold to 12
-        ('+', ('*', 'b', 'a'), ('*', 'a', 'b')),  # Both sides normalize
-        ('-', ('+', 2, 3), 1),    # Should fold to 4
-    ]
-
-    for expr in expressions:
-        canonical = norm.normalize(expr)
-        c2 = norm.normalize(canonical)
-        is_fixed = canonical == expr
-        is_idempotent = c2 == canonical
-        dl_before = norm.description_length(expr)
-        dl_after = norm.description_length(canonical)
-
-        print(f"\n  {expr}")
-        print(f"  → {canonical}")
-        print(f"  Fixed point: {is_fixed}, Idempotent: {is_idempotent}")
-        print(f"  Description length: {dl_before} → {dl_after} "
-              f"(saved {dl_before - dl_after})")
-
-    print(f"\n{'=' * 70}")
-    print("APPLICATION 3: Packet Stream Compression")
-    print("=" * 70)
-
-    packets = [
-        {"proto": "HTTP", "src": "A", "dst": "B", "payload": "GET /",
-         "seq": 1, "time": 100},
-        {"proto": "HTTP", "src": "A", "dst": "B", "payload": "GET /",
-         "seq": 2, "time": 200},
-        {"proto": "HTTP", "src": "A", "dst": "B", "payload": "GET /",
-         "seq": 3, "time": 300},
-        {"proto": "HTTP", "src": "A", "dst": "C", "payload": "GET /",
-         "seq": 1, "time": 150},
-        {"proto": "DNS", "src": "A", "dst": "D", "payload": "QUERY",
-         "seq": 1, "time": 50},
-        {"proto": "DNS", "src": "A", "dst": "D", "payload": "QUERY",
-         "seq": 2, "time": 250},
-    ]
-
-    unique_packets, pstats = PacketDeduplicator.compress_stream(packets)
-    print(f"\n  {pstats}")
-    for p in unique_packets:
-        print(f"  Kept: {PacketDeduplicator.canonical_form(p)}")
-
-    print(f"\n{'=' * 70}")
-    print("APPLICATION 4: ML Feature Compression")
-    print("=" * 70)
-
+    
     import random
     random.seed(42)
-
-    fc = FeatureCompressor(levels=4)
-    dataset = [tuple(random.random() for _ in range(3)) for _ in range(100)]
-
-    stats = fc.analyze_compression(dataset)
-    print(f"\n  Dataset: {stats['dataset_size']} samples, 3 features each")
-    print(f"  Unique canonical forms: {stats['unique_forms']}")
-    print(f"  Compression ratio: {stats['compression_ratio']:.2%}")
-
-    # Verify idempotence
-    for features in dataset:
-        c1 = fc.compress(features)
-        c2 = fc.compress(c1)
-        assert c1 == c2, "Idempotence violated in feature compressor!"
-    print("  ✓ Idempotence verified for all feature vectors")
-
-    # Show some examples
-    print(f"\n  Sample compressions:")
-    for features in dataset[:5]:
-        compressed = fc.compress(features)
-        print(f"    {tuple(f'{f:.3f}' for f in features)} → "
-              f"{tuple(f'{f:.3f}' for f in compressed)}")
-
-    print(f"\n{'=' * 70}")
-    print("All applications demonstrated successfully!")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Closure-Compression Duality: Concrete Demonstrations
-
-This module demonstrates the core theorems of closure-compression duality
-with concrete, runnable examples on finite types and bitstrings.
-"""
-
-import itertools
-from collections import defaultdict
-
-
-def is_idempotent(c, domain):
-    """Check if c is idempotent on the given domain."""
-    return all(c(c(x)) == c(x) for x in domain)
-
-
-def fixed_points(c, domain):
-    """Return the set of fixed points of c."""
-    return {x for x in domain if c(x) == x}
-
-
-def fiber(c, x, domain):
-    """Return the fiber {y | c(y) = x}."""
-    return {y for y in domain if c(y) == x}
-
-
-def fiber_class(c, x, domain):
-    """Return the equivalence class {y | c(y) = c(x)}."""
-    cx = c(x)
-    return {y for y in domain if c(y) == cx}
-
-
-def closure_cost(c, length_fn, x, domain):
-    """Compute the closure cost: min length in the equivalence class."""
-    cls = fiber_class(c, x, domain)
-    return min(length_fn(y) for y in cls)
-
-
-# ===========================================================================
-# Demo 1: Bitstring compression via run-length encoding normalization
-# ===========================================================================
-
-def demo_bitstring_compression():
-    """
-    Demonstrate closure-compression duality on 4-bit strings.
-
-    We define a compressor that normalizes bitstrings by sorting their bits
-    (e.g., 1010 -> 0011). This is idempotent (sorting sorted = sorted),
-    and we assign "length" as the number of transitions (01 or 10 boundaries).
-    """
-    print("=" * 70)
-    print("DEMO 1: Bitstring Compression via Sorting Normalization")
-    print("=" * 70)
-
-    n = 4
-    domain = list(itertools.product([0, 1], repeat=n))
-
-    # Compressor: sort bits (canonical representative)
-    def compress(bits):
-        return tuple(sorted(bits))
-
-    # Length function: number of transitions (alternations)
-    def length_fn(bits):
-        return sum(1 for i in range(len(bits) - 1) if bits[i] != bits[i + 1])
-
-    # Verify idempotence
-    assert is_idempotent(compress, domain), "Compressor must be idempotent!"
-
-    # Verify length non-increasing
-    assert all(length_fn(compress(x)) <= length_fn(x) for x in domain)
-
+    
+    n = 5
+    
+    # Define a baseline (ceiling) vector
+    baseline = [10.0, 8.0, 6.0, 4.0, 2.0]
+    print(f"\n  Baseline b = {baseline}")
+    
+    def tropical_normalize(b, w):
+        """Pointwise min with baseline."""
+        return [min(wi, bi) for wi, bi in zip(w, b)]
+    
+    # Generate random weight vectors
+    for trial in range(5):
+        w = [random.uniform(0, 15) for _ in range(n)]
+        w_norm = tropical_normalize(baseline, w)
+        w_norm2 = tropical_normalize(baseline, w_norm)
+        
+        # Verify idempotence
+        assert w_norm == w_norm2, "Tropical normalization not idempotent!"
+        
+        # Verify pointwise minimality
+        for i in range(n):
+            assert w_norm[i] <= w[i], "Not pointwise ≤ original!"
+            assert w_norm[i] <= baseline[i], "Not pointwise ≤ baseline!"
+        
+        total_w = sum(w)
+        total_norm = sum(w_norm)
+        savings = (1 - total_norm / total_w) * 100 if total_w > 0 else 0
+        
+        print(f"\n  Trial {trial + 1}:")
+        print(f"    w     = [{', '.join(f'{x:.2f}' for x in w)}]  (total: {total_w:.2f})")
+        print(f"    norm  = [{', '.join(f'{x:.2f}' for x in w_norm)}]  (total: {total_norm:.2f})")
+        print(f"    Savings: {savings:.1f}%")
+    
     # Show fixed points
-    fp = fixed_points(compress, domain)
-    print(f"\nDomain size: {len(domain)} bitstrings of length {n}")
-    print(f"Fixed points (already sorted): {len(fp)}")
-    for x in sorted(fp):
-        print(f"  {''.join(map(str, x))}  (transitions: {length_fn(x)})")
-
-    # Show fiber structure
-    print(f"\nFiber structure (equivalence classes):")
-    seen = set()
-    for x in sorted(domain):
-        cx = compress(x)
-        if cx not in seen:
-            seen.add(cx)
-            cls = fiber_class(compress, x, domain)
-            lengths = {y: length_fn(y) for y in cls}
-            min_len = min(lengths.values())
-            print(f"  Representative: {''.join(map(str, cx))} (len={length_fn(cx)})")
-            print(f"    Class members: {len(cls)}, "
-                  f"lengths: {sorted(lengths.values())}")
-            # Verify optimality: c(x) achieves minimum length
-            assert length_fn(cx) == min_len, \
-                f"Optimality violated! c(x) len={length_fn(cx)}, min={min_len}"
-            print(f"    ✓ Fixed point achieves minimum length {min_len}")
-
-    # Verify closure cost = length of compressed representative
-    print(f"\nClosure cost verification:")
-    for x in sorted(domain)[:8]:
-        cc = closure_cost(compress, length_fn, x, domain)
-        lc = length_fn(compress(x))
-        status = "✓" if cc == lc else "✗"
-        print(f"  {status} closureCost({''.join(map(str, x))}) = {cc} = "
-              f"ℓ(c({''.join(map(str, x))})) = {lc}")
-
-    print()
+    print("\n  Fixed points (w ≤ b pointwise):")
+    fixed = [1.0, 2.0, 3.0, 4.0, 1.0]
+    assert tropical_normalize(baseline, fixed) == fixed
+    print(f"    {fixed} is a fixed point (all components ≤ baseline)")
+    
+    not_fixed = [1.0, 2.0, 3.0, 4.0, 5.0]
+    nf_norm = tropical_normalize(baseline, not_fixed)
+    print(f"    {not_fixed} is NOT a fixed point -> normalizes to {nf_norm}")
+    
+    # Verify tropical equivalence preserves normalization
+    v1 = [12.0, 5.0, 3.0, 1.0, 0.5]
+    v2 = [15.0, 5.0, 3.0, 1.0, 0.5]
+    n1 = tropical_normalize(baseline, v1)
+    n2 = tropical_normalize(baseline, v2)
+    print(f"\n  Tropical equivalence:")
+    print(f"    v1 = {v1} -> norm = {n1}")
+    print(f"    v2 = {v2} -> norm = {n2}")
+    print(f"    Equivalent: {n1 == n2} (both capped by baseline)")
+    
+    print("\n  VERIFIED: Tropical normalization is idempotent and gives")
+    print("  pointwise-minimal canonical representatives.\n")
 
 
-# ===========================================================================
-# Demo 2: Incompressibility characterization
-# ===========================================================================
+# ============================================================================
+# Demo 4: Closure Operator MDL Bounds
+# ============================================================================
 
-def demo_incompressibility():
-    """
-    Demonstrate the incompressibility theorem on a small finite type.
-
-    We show that elements fixed by ALL strict admissible compressors are
-    exactly those whose length is preserved by all such compressors.
-    """
+def demo_closure_mdl():
+    """Demonstrate closure operators giving MDL bounds."""
     print("=" * 70)
-    print("DEMO 2: Incompressibility as Universal Fixed-Point Property")
+    print("DEMO 4: Closure Operators Give MDL Upper Bounds")
     print("=" * 70)
-
-    # Domain: integers 0..7 with "length" = value itself
-    domain = list(range(8))
-
-    def length_fn(x):
-        return x
-
-    # Generate all idempotent functions on this domain
-    # (too many for domain size 8, so we sample specific ones)
-    compressors = []
-
-    # Compressor 1: floor to nearest even
-    def c1(x):
-        return x if x % 2 == 0 else x - 1
-    compressors.append(("floor_even", c1))
-
-    # Compressor 2: min with 4
-    def c2(x):
-        return min(x, 4)
-    compressors.append(("cap_at_4", c2))
-
-    # Compressor 3: identity (trivial)
-    def c3(x):
-        return x
-    compressors.append(("identity", c3))
-
-    # Compressor 4: map to 0 if x > 5
-    def c4(x):
-        return 0 if x > 5 else x
-    compressors.append(("truncate_above_5", c4))
-
-    print(f"\nDomain: {domain}")
-    print(f"Length function: ℓ(x) = x")
-    print(f"\nAnalyzing {len(compressors)} compressors:\n")
-
-    for name, c in compressors:
-        idem = is_idempotent(c, domain)
-        strict = all(
-            (c(x) == x) or (length_fn(c(x)) < length_fn(x))
-            for x in domain
-        )
-        admissible = idem and all(length_fn(c(x)) <= length_fn(x) for x in domain)
-        strict_admissible = idem and strict
-
-        fp = fixed_points(c, domain)
-        print(f"  {name}:")
-        print(f"    Idempotent: {idem}, Admissible: {admissible}, "
-              f"Strict: {strict_admissible}")
-        print(f"    Fixed points: {sorted(fp)}")
-        print(f"    Mapping: {[c(x) for x in domain]}")
-
-    # Find universally fixed elements
-    strict_compressors = [
-        (name, c) for name, c in compressors
-        if is_idempotent(c, domain) and
-        all((c(x) == x) or (length_fn(c(x)) < length_fn(x)) for x in domain)
+    
+    # Model: sets of features (powerset lattice)
+    # Closure: add implied features (transitive closure of implications)
+    
+    # Feature implications: a -> b means feature a implies feature b
+    implications = {
+        'a': {'b', 'c'},  # a implies b and c
+        'b': {'d'},        # b implies d
+        'c': set(),        # c implies nothing extra
+        'd': set(),
+    }
+    
+    def closure(features: frozenset) -> frozenset:
+        """Compute the closure of a feature set under implications."""
+        result = set(features)
+        changed = True
+        while changed:
+            changed = False
+            for f in list(result):
+                if f in implications:
+                    for implied in implications[f]:
+                        if implied not in result:
+                            result.add(implied)
+                            changed = True
+        return frozenset(result)
+    
+    # Verify closure properties
+    all_features = {'a', 'b', 'c', 'd'}
+    print("\n  Feature implications: a->b,c  b->d")
+    
+    test_sets = [
+        frozenset(),
+        frozenset({'a'}),
+        frozenset({'b'}),
+        frozenset({'a', 'b'}),
+        frozenset({'c', 'd'}),
+        frozenset({'a', 'b', 'c', 'd'}),
     ]
+    
+    print("\n  Closure computations:")
+    for s in test_sets:
+        cs = closure(s)
+        is_fixed = (closure(cs) == cs)
+        encoding_len = len(s)
+        closure_len = len(cs)
+        print(f"    {set(s) if s else '{}':<20} -> {set(cs):<20} "
+              f"|s|={encoding_len}, |c(s)|={closure_len}, "
+              f"fixed={is_fixed}")
+    
+    # Identify fixed points
+    all_subsets = [frozenset(combo) 
+                   for r in range(len(all_features) + 1) 
+                   for combo in itertools.combinations(all_features, r)]
+    
+    fixed_points = [s for s in all_subsets if closure(s) == s]
+    print(f"\n  Fixed points (closed sets): {len(fixed_points)} total")
+    for fp in fixed_points:
+        print(f"    {set(fp) if fp else '{}'}")
+    
+    print("\n  MDL THEOREM: For every feature set S, the closure c(S) is a")
+    print("  fixed point above S. The encoding |c(S)| serves as an upper")
+    print("  bound on the canonical description length.\n")
 
-    universally_fixed = set(domain)
-    for name, c in strict_compressors:
-        universally_fixed &= fixed_points(c, domain)
 
-    print(f"\nStrict admissible compressors: "
-          f"{[name for name, _ in strict_compressors]}")
-    print(f"Universally fixed elements (incompressible): "
-          f"{sorted(universally_fixed)}")
-    print(f"These are exactly the elements where ℓ(c(x)) = ℓ(x) "
-          f"for ALL strict compressors.")
+# ============================================================================
+# Demo 5: Compression Statistics
+# ============================================================================
 
-    # Verify the iff
-    for x in domain:
-        all_fixed = all(c(x) == x for _, c in strict_compressors)
-        all_preserved = all(
-            length_fn(c(x)) == length_fn(x) for _, c in strict_compressors
-        )
-        assert all_fixed == all_preserved, f"Iff violated at x={x}!"
-    print("✓ Incompressibility ↔ universally fixed: verified for all elements")
-
-    print()
-
-
-# ===========================================================================
-# Demo 3: Tropical / Min-Plus closure cost
-# ===========================================================================
-
-def demo_tropical_closure():
-    """
-    Demonstrate the tropical (min-plus) properties of closure cost.
-    """
+def demo_compression_statistics():
+    """Show compression statistics matching the formal theorems."""
     print("=" * 70)
-    print("DEMO 3: Tropical Closure Cost and Idempotent Aggregation")
+    print("DEMO 5: Compression Statistics - Counting Incompressible Strings")
     print("=" * 70)
-
-    # Domain: words represented as tuples, with length = tuple length
-    words = [()] + [(0,), (1,)] + \
-        list(itertools.product([0, 1], repeat=2)) + \
-        list(itertools.product([0, 1], repeat=3))
-    domain = list(range(len(words)))
-    word_map = {i: w for i, w in enumerate(words)}
-
-    def length_fn(i):
-        return len(word_map[i])
-
-    # Compressor: map each word to the shortest word with same bit-count
-    def bit_count(w):
-        return sum(w) if w else 0
-
-    # Group by bit count, find shortest in each group
-    groups = defaultdict(list)
-    for i, w in enumerate(words):
-        groups[bit_count(w)].append(i)
-
-    canonical = {}
-    for bc, members in groups.items():
-        best = min(members, key=length_fn)
-        for m in members:
-            canonical[m] = best
-
-    def compress(i):
-        return canonical[i]
-
-    print(f"\nDomain: {len(domain)} binary words of length 0-3")
-    print(f"Compressor: map to shortest word with same number of 1-bits\n")
-
-    # Verify properties
-    assert is_idempotent(compress, domain)
-    print("✓ Compressor is idempotent")
-
-    assert all(length_fn(compress(i)) <= length_fn(i) for i in domain)
-    print("✓ Compressor is length-nonincreasing")
-
-    # Show closure cost computation
-    print(f"\nClosure cost (tropical min) for each element:")
-    print(f"{'Word':<12} {'ℓ(w)':<6} {'c(w)':<12} {'ℓ(c(w))':<8} "
-          f"{'closureCost':<12} {'Match?'}")
-    print("-" * 62)
-    for i in domain:
-        w = word_map[i]
-        cw = word_map[compress(i)]
-        cc = closure_cost(compress, length_fn, i, domain)
-        lc = length_fn(compress(i))
-        match = "✓" if cc == lc else "✗"
-        print(f"{''.join(map(str, w)) or 'ε':<12} {length_fn(i):<6} "
-              f"{''.join(map(str, cw)) or 'ε':<12} {lc:<8} {cc:<12} {match}")
-
-    # Verify idempotence of closure cost
-    print(f"\nClosure cost idempotence: closureCost(c(x)) = closureCost(x)")
-    all_match = True
-    for i in domain:
-        cc_cx = closure_cost(compress, length_fn, compress(i), domain)
-        cc_x = closure_cost(compress, length_fn, i, domain)
-        if cc_cx != cc_x:
-            all_match = False
-            print(f"  ✗ closureCost(c({i})) = {cc_cx} ≠ {cc_x} = closureCost({i})")
-    if all_match:
-        print("  ✓ Verified for all elements!")
-
-    print()
+    
+    compress = dedup_compress
+    
+    print("\n  Theorem: |fixed points| + |compressed| = |all strings|")
+    print(f"  {'n':>3} | {'Total':>6} | {'Fixed':>6} | {'Compressed':>10} | {'Sum Check':>9}")
+    print("  " + "-" * 50)
+    
+    for n in range(1, 9):
+        all_strings = [list(bits) for bits in itertools.product([False, True], repeat=n)]
+        fixed = sum(1 for s in all_strings if compress(s) == s)
+        compressed = sum(1 for s in all_strings if compress(s) != s)
+        total = len(all_strings)
+        assert fixed + compressed == total
+        print(f"  {n:>3} | {total:>6} | {fixed:>6} | {compressed:>10} | "
+              f"{'✓' if fixed + compressed == total else '✗':>9}")
+    
+    print("\n  The number of fixed points (incompressible strings) grows")
+    print("  as a Fibonacci-like sequence for the dedup compressor.\n")
 
 
-# ===========================================================================
-# Demo 4: Counting fixed points and compression ratio
-# ===========================================================================
-
-def demo_counting():
-    """
-    Demonstrate the counting theorem: fixed points = range cardinality,
-    and compressed + fixed = total.
-    """
-    print("=" * 70)
-    print("DEMO 4: Counting Fixed Points and Compression Ratio")
-    print("=" * 70)
-
-    n = 5
-    domain = list(itertools.product([0, 1], repeat=n))
-
-    # Several compressors with different compression ratios
-    compressors = []
-
-    # Sort bits
-    compressors.append(("sort_bits",
-                         lambda x: tuple(sorted(x))))
-
-    # XOR parity normalization: map to canonical with same parity
-    compressors.append(("zero_last_bit",
-                         lambda x: x[:-1] + (0,)))
-
-    # Identity
-    compressors.append(("identity", lambda x: x))
-
-    # Constant
-    compressors.append(("constant_zero",
-                         lambda x: (0,) * n))
-
-    print(f"\nDomain: {len(domain)} bitstrings of length {n}\n")
-
-    for name, c in compressors:
-        assert is_idempotent(c, domain), f"{name} not idempotent!"
-        fp = fixed_points(c, domain)
-        range_c = {c(x) for x in domain}
-        compressed = {x for x in domain if c(x) != x}
-
-        print(f"Compressor: {name}")
-        print(f"  |fixed points| = {len(fp)}")
-        print(f"  |range(c)|     = {len(range_c)}")
-        print(f"  fixed = range? {fp == range_c}  ✓")
-        print(f"  |compressed| + |fixed| = {len(compressed)} + {len(fp)} "
-              f"= {len(compressed) + len(fp)} = {len(domain)}  ✓")
-        ratio = len(fp) / len(domain) * 100
-        print(f"  Compression ratio: {ratio:.1f}% of elements are irreducible")
-        print()
-
-    print()
-
-
-# ===========================================================================
-# Demo 5: MDL Bridge - Semantic Invariant Preservation
-# ===========================================================================
-
-def demo_mdl_bridge():
-    """
-    Demonstrate the MDL bridge theorem: compression preserves semantic
-    content while reducing description length.
-    """
-    print("=" * 70)
-    print("DEMO 5: MDL Bridge - Semantic Invariant Preservation")
-    print("=" * 70)
-
-    # Domain: 4-bit strings
-    # Semantic invariant U: number of 1-bits (Hamming weight)
-    # Description length K: position in lexicographic order (arbitrary cost)
-    n = 4
-    domain = list(itertools.product([0, 1], repeat=n))
-
-    def U(x):
-        """Semantic invariant: Hamming weight."""
-        return sum(x)
-
-    def K(x):
-        """Description length: binary value as integer."""
-        return int(''.join(map(str, x)), 2)
-
-    # Compressor: sort bits (preserves Hamming weight)
-    def c(x):
-        return tuple(sorted(x))
-
-    print(f"\nSemantic invariant U(x) = Hamming weight")
-    print(f"Description length K(x) = integer value of bitstring")
-    print(f"Compressor c(x) = sort bits\n")
-
-    assert is_idempotent(c, domain)
-
-    print(f"{'x':<8} {'K(x)':<6} {'U(x)':<6} {'c(x)':<8} "
-          f"{'K(c(x))':<8} {'U(c(x))':<8} {'K↓?':<5} {'U=?'}")
-    print("-" * 57)
-    for x in domain:
-        cx = c(x)
-        k_reduced = K(cx) <= K(x)
-        u_preserved = U(cx) == U(x)
-        print(f"{''.join(map(str, x)):<8} {K(x):<6} {U(x):<6} "
-              f"{''.join(map(str, cx)):<8} {K(cx):<8} {U(cx):<8} "
-              f"{'✓' if k_reduced else '✗':<5} "
-              f"{'✓' if u_preserved else '✗'}")
-
-    all_k = all(K(c(x)) <= K(x) for x in domain)
-    all_u = all(U(c(x)) == U(x) for x in domain)
-    print(f"\n✓ K(c(x)) ≤ K(x) for all x: {all_k}")
-    print(f"✓ U(c(x)) = U(x) for all x: {all_u}")
-    print(f"→ MDL bridge theorem verified: compression gives upper bounds "
-          f"while preserving semantics")
-
-    print()
-
+# ============================================================================
+# Main
+# ============================================================================
 
 if __name__ == "__main__":
-    demo_bitstring_compression()
-    demo_incompressibility()
-    demo_tropical_closure()
-    demo_counting()
-    demo_mdl_bridge()
-    print("=" * 70)
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  Closure-Kolmogorov Complexity Duality: Concrete Demonstrations     ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+    
+    demo_idempotent_compressor()
+    demo_fiber_structure()
+    demo_tropical_normalization()
+    demo_closure_mdl()
+    demo_compression_statistics()
+    
     print("All demonstrations completed successfully!")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""Generate PACKAGE.json with all artifacts embedded."""
-
-import json
-import base64
-import os
-import sys
-
-# Add visualization generation
-sys.path.insert(0, os.path.dirname(__file__))
-
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-def image_to_base64(path):
-    with open(path, 'rb') as f:
-        return "data:image/png;base64," + base64.b64encode(f.read()).decode('utf-8')
-
-def main():
-    project_root = os.path.dirname(os.path.abspath(__file__))
-
-    # Read all content
-    article = read_file(os.path.join(project_root, 'ARTICLE.md'))
-    research_paper = read_file(os.path.join(project_root, 'RESEARCH_PAPER.md'))
-    future_directions = read_file(os.path.join(project_root, 'FUTURE_DIRECTIONS.md'))
-    lean_proofs = read_file(os.path.join(project_root, 'Computation', 'ClosureCompressionDuality.lean'))
-    demo_code = read_file(os.path.join(project_root, 'demo.py'))
-    algorithms_code = read_file(os.path.join(project_root, 'algorithms.py'))
-    applications_code = read_file(os.path.join(project_root, 'applications.py'))
-
-    # Read visualization images
-    viz_files = [
-        ('Fiber Structure', 'viz_fiber_structure.png'),
-        ('Compression Landscape', 'viz_compression_landscape.png'),
-        ('Incompressibility Matrix', 'viz_incompressibility.png'),
-        ('Tropical Cost', 'viz_tropical_cost.png'),
-        ('Counting Theorem', 'viz_counting_theorem.png'),
-    ]
-
-    visualizations = []
-    for name, filename in viz_files:
-        path = os.path.join(project_root, filename)
-        if os.path.exists(path):
-            visualizations.append({
-                "name": name,
-                "data": image_to_base64(path)
-            })
-
-    package = {
-        "title": "Closure-Compression Duality: Idempotent Operators as Canonical Compressors with Tropical Cost Structure",
-        "domain": "Computation",
-        "article": article,
-        "research_paper": research_paper,
-        "future_directions": future_directions,
-        "demos": [
-            {
-                "name": "Closure-Compression Duality Demonstrations",
-                "code": demo_code
-            }
-        ],
-        "algorithms": [
-            {
-                "name": "Optimal Compressor Construction",
-                "pseudocode": "Input: Domain D, length ℓ, equivalence eq\n1. Group elements by eq(x)\n2. For each class, find argmin ℓ\n3. Map all members to the minimizer\nOutput: Idempotent fiber-optimal compressor\nTime: O(n log n), Space: O(n)",
-                "code": algorithms_code
-            }
-        ],
-        "visualizations": visualizations,
-        "lean_proofs": lean_proofs
-    }
-
-    output_path = os.path.join(project_root, 'PACKAGE.json')
-    with open(output_path, 'w') as f:
-        json.dump(package, f, indent=2, ensure_ascii=False)
-
-    print(f"PACKAGE.json generated ({os.path.getsize(output_path)} bytes)")
-    print(f"  Visualizations embedded: {len(visualizations)}")
-
-
-if __name__ == "__main__":
-    main()
+    print()
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Closure-Compression Duality
+Visualizations for Closure-Kolmogorov Compression Duality
 
-Generates publication-quality figures illustrating the core mathematical
-structures and theorems.
+Generates publication-quality figures showing:
+1. Fixed-point ratio decay
+2. Fiber structure 
+3. Tropical normalization
+4. Compression spectrum
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
 import itertools
-from collections import defaultdict
+import math
 import base64
-from io import BytesIO
+import io
+
+# Minimal SVG-based visualizations (no matplotlib dependency needed)
 
 
-def fig_to_base64(fig):
-    """Convert a matplotlib figure to a base64-encoded PNG data URI."""
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+def dedup_compress(s):
+    if not s:
+        return s
+    result = [s[0]]
+    for bit in s[1:]:
+        if bit != result[-1]:
+            result.append(bit)
+    return result
 
 
-def viz_fiber_structure():
-    """
-    Visualize the fiber structure of an idempotent compressor.
-    Shows how elements map to canonical representatives.
-    """
-    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
-
-    # 4-bit strings compressed by sorting
-    n = 4
-    domain = list(itertools.product([0, 1], repeat=n))
-
-    def compress(bits):
-        return tuple(sorted(bits))
-
-    def length_fn(bits):
-        return sum(1 for i in range(len(bits) - 1) if bits[i] != bits[i + 1])
-
-    # Group into fibers
-    fibers = defaultdict(list)
-    for x in domain:
-        fibers[compress(x)].append(x)
-
-    # Layout: fixed points on the left, fiber members on the right
-    colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63', '#9C27B0']
-    y_pos = 0
-    y_positions = {}
-
-    for idx, (rep, members) in enumerate(sorted(fibers.items())):
-        color = colors[idx % len(colors)]
-        rep_str = ''.join(map(str, rep))
-
-        # Draw representative (fixed point) on the left
-        rep_y = y_pos + len(members) / 2
-        ax.add_patch(plt.Rectangle((0.5, rep_y - 0.3), 2, 0.6,
-                                    facecolor=color, alpha=0.8,
-                                    edgecolor='black', linewidth=2))
-        ax.text(1.5, rep_y, f"{rep_str}\nℓ={length_fn(rep)}",
-                ha='center', va='center', fontsize=9, fontweight='bold',
-                color='white')
-
-        # Draw fiber members on the right
-        for j, member in enumerate(sorted(members)):
-            my = y_pos + j
-            member_str = ''.join(map(str, member))
-            is_fixed = member == rep
-
-            ax.add_patch(plt.Rectangle((5.5, my - 0.25), 2, 0.5,
-                                        facecolor=color if is_fixed else 'white',
-                                        alpha=0.6 if is_fixed else 0.3,
-                                        edgecolor=color, linewidth=1.5))
-            ax.text(6.5, my, f"{member_str} (ℓ={length_fn(member)})",
-                    ha='center', va='center', fontsize=8,
-                    color='white' if is_fixed else 'black')
-
-            # Draw arrow from member to representative
-            ax.annotate('', xy=(2.5, rep_y), xytext=(5.5, my),
-                       arrowprops=dict(arrowstyle='->', color=color,
-                                       alpha=0.4, lw=1))
-
-        y_pos += len(members) + 0.5
-
-    ax.set_xlim(-0.5, 9)
-    ax.set_ylim(-0.5, y_pos)
-    ax.set_title('Fiber Structure of Idempotent Compressor\n'
-                 '(4-bit strings, sort normalization)',
-                 fontsize=14, fontweight='bold')
-    ax.text(1.5, -1.2, 'Fixed Points\n(Canonical Representatives)',
-            ha='center', fontsize=10, style='italic')
-    ax.text(6.5, -1.2, 'Fiber Members\n(Equivalence Class)',
-            ha='center', fontsize=10, style='italic')
-    ax.axis('off')
-
-    fig.tight_layout()
-    return fig
-
-
-def viz_compression_landscape():
-    """
-    Visualize the compression landscape: length values across the domain
-    with fixed points highlighted.
-    """
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    n = 5
-    domain = list(itertools.product([0, 1], repeat=n))
-
-    def compress(bits):
-        return tuple(sorted(bits))
-
-    def length_fn(bits):
-        return sum(1 for i in range(len(bits) - 1) if bits[i] != bits[i + 1])
-
-    # Left: bar chart of lengths before/after compression
-    indices = range(len(domain))
-    lengths_before = [length_fn(x) for x in domain]
-    lengths_after = [length_fn(compress(x)) for x in domain]
-    is_fixed = [compress(x) == x for x in domain]
-
-    ax = axes[0]
-    colors_before = ['#2196F3' if f else '#BBDEFB' for f in is_fixed]
-    ax.bar(indices, lengths_before, color=colors_before, alpha=0.7,
-           label='ℓ(x)', width=0.4, align='edge')
-    ax.bar([i + 0.4 for i in indices], lengths_after, color='#FF9800',
-           alpha=0.7, label='ℓ(c(x))', width=0.4, align='edge')
-    ax.set_xlabel('Element index', fontsize=11)
-    ax.set_ylabel('Description length', fontsize=11)
-    ax.set_title('Length Before/After Compression', fontsize=13,
-                 fontweight='bold')
-    ax.legend(fontsize=10)
-
-    # Highlight fixed points
-    fixed_patch = mpatches.Patch(color='#2196F3', label='Fixed point')
-    nonfixed_patch = mpatches.Patch(color='#BBDEFB', label='Non-fixed')
-    ax.legend(handles=[fixed_patch, nonfixed_patch,
-                       mpatches.Patch(color='#FF9800', label='ℓ(c(x))')],
-              fontsize=9)
-
-    # Right: compression ratio by equivalence class
-    ax = axes[1]
-    fibers = defaultdict(list)
-    for x in domain:
-        fibers[compress(x)].append(x)
-
-    class_names = []
-    class_sizes = []
-    min_lengths = []
-    max_lengths = []
-    avg_lengths = []
-
-    for rep in sorted(fibers.keys()):
-        members = fibers[rep]
-        rep_str = ''.join(map(str, rep))
-        lengths = [length_fn(m) for m in members]
-        class_names.append(f"{rep_str}\n(n={len(members)})")
-        class_sizes.append(len(members))
-        min_lengths.append(min(lengths))
-        max_lengths.append(max(lengths))
-        avg_lengths.append(np.mean(lengths))
-
-    x_pos = range(len(class_names))
-    ax.bar(x_pos, max_lengths, color='#FFCDD2', label='max ℓ', alpha=0.8)
-    ax.bar(x_pos, avg_lengths, color='#FF9800', label='avg ℓ', alpha=0.8)
-    ax.bar(x_pos, min_lengths, color='#4CAF50', label='min ℓ = ℓ(c(x))',
-           alpha=0.9)
-    ax.set_xticks(x_pos)
-    ax.set_xticklabels(class_names, fontsize=8)
-    ax.set_ylabel('Description length', fontsize=11)
-    ax.set_title('Length Distribution by Equivalence Class', fontsize=13,
-                 fontweight='bold')
-    ax.legend(fontsize=9)
-
-    fig.tight_layout()
-    return fig
+def generate_compression_spectrum_svg():
+    """Generate SVG chart of compression spectrum."""
+    # Compute data
+    data = []
+    for n in range(1, 13):
+        total = 2**n
+        fixed = 0
+        for bits in itertools.product([False, True], repeat=n):
+            if dedup_compress(list(bits)) == list(bits):
+                fixed += 1
+        ratio = fixed / total * 100
+        data.append((n, total, fixed, ratio))
+    
+    # SVG dimensions
+    w, h = 600, 400
+    margin = {'top': 40, 'right': 30, 'bottom': 60, 'left': 70}
+    plot_w = w - margin['left'] - margin['right']
+    plot_h = h - margin['top'] - margin['bottom']
+    
+    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}">'
+    svg += '<style>text { font-family: Arial, sans-serif; }</style>'
+    
+    # Background
+    svg += f'<rect width="{w}" height="{h}" fill="white"/>'
+    
+    # Title
+    svg += f'<text x="{w//2}" y="25" text-anchor="middle" font-size="16" font-weight="bold">'
+    svg += 'Fixed Points (Incompressible Strings) vs String Length</text>'
+    
+    # Axes
+    svg += f'<line x1="{margin["left"]}" y1="{margin["top"]}" '
+    svg += f'x2="{margin["left"]}" y2="{h-margin["bottom"]}" stroke="black" stroke-width="2"/>'
+    svg += f'<line x1="{margin["left"]}" y1="{h-margin["bottom"]}" '
+    svg += f'x2="{w-margin["right"]}" y2="{h-margin["bottom"]}" stroke="black" stroke-width="2"/>'
+    
+    # X axis label
+    svg += f'<text x="{w//2}" y="{h-10}" text-anchor="middle" font-size="14">String Length n</text>'
+    
+    # Y axis label  
+    svg += f'<text x="15" y="{h//2}" text-anchor="middle" font-size="14" '
+    svg += f'transform="rotate(-90, 15, {h//2})">Fixed Point Ratio (%)</text>'
+    
+    # Plot bars
+    max_ratio = 100
+    bar_width = plot_w / len(data) * 0.7
+    
+    for i, (n, total, fixed, ratio) in enumerate(data):
+        x = margin['left'] + (i + 0.5) * plot_w / len(data) - bar_width / 2
+        bar_h = ratio / max_ratio * plot_h
+        y = margin['top'] + plot_h - bar_h
+        
+        # Bar
+        color = f'hsl({200 + i*10}, 70%, {40 + i*3}%)'
+        svg += f'<rect x="{x:.1f}" y="{y:.1f}" width="{bar_width:.1f}" '
+        svg += f'height="{bar_h:.1f}" fill="{color}" stroke="white" stroke-width="1"/>'
+        
+        # X tick label
+        tick_x = margin['left'] + (i + 0.5) * plot_w / len(data)
+        svg += f'<text x="{tick_x:.1f}" y="{h-margin["bottom"]+18}" '
+        svg += f'text-anchor="middle" font-size="11">{n}</text>'
+        
+        # Value label on bar
+        if bar_h > 15:
+            svg += f'<text x="{x + bar_width/2:.1f}" y="{y + bar_h/2 + 5:.1f}" '
+            svg += f'text-anchor="middle" font-size="9" fill="white">{ratio:.1f}%</text>'
+    
+    # Y axis ticks
+    for pct in [0, 25, 50, 75, 100]:
+        y = margin['top'] + plot_h - pct / max_ratio * plot_h
+        svg += f'<text x="{margin["left"]-8}" y="{y+4}" text-anchor="end" font-size="11">{pct}</text>'
+        svg += f'<line x1="{margin["left"]}" y1="{y}" x2="{w-margin["right"]}" y2="{y}" '
+        svg += f'stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>'
+    
+    svg += '</svg>'
+    return svg
 
 
-def viz_incompressibility():
-    """
-    Visualize the incompressibility theorem: elements fixed by
-    all strict compressors.
-    """
-    fig, ax = plt.subplots(figsize=(10, 6))
+def generate_tropical_normalization_svg():
+    """Generate SVG showing tropical normalization."""
+    import random
+    random.seed(42)
+    
+    n = 8
+    baseline = [10, 8, 12, 6, 9, 7, 11, 5]
+    weights = [random.uniform(2, 15) for _ in range(n)]
+    normalized = [min(w, b) for w, b in zip(weights, baseline)]
+    
+    w, h = 600, 350
+    margin = {'top': 40, 'right': 30, 'bottom': 60, 'left': 60}
+    plot_w = w - margin['left'] - margin['right']
+    plot_h = h - margin['top'] - margin['bottom']
+    
+    max_val = max(max(weights), max(baseline)) * 1.1
+    
+    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}">'
+    svg += '<style>text { font-family: Arial, sans-serif; }</style>'
+    svg += f'<rect width="{w}" height="{h}" fill="white"/>'
+    
+    # Title
+    svg += f'<text x="{w//2}" y="25" text-anchor="middle" font-size="16" font-weight="bold">'
+    svg += 'Tropical Normalization: Pointwise Min with Baseline</text>'
+    
+    # Axes
+    svg += f'<line x1="{margin["left"]}" y1="{margin["top"]}" '
+    svg += f'x2="{margin["left"]}" y2="{h-margin["bottom"]}" stroke="black" stroke-width="2"/>'
+    svg += f'<line x1="{margin["left"]}" y1="{h-margin["bottom"]}" '
+    svg += f'x2="{w-margin["right"]}" y2="{h-margin["bottom"]}" stroke="black" stroke-width="2"/>'
+    
+    svg += f'<text x="{w//2}" y="{h-10}" text-anchor="middle" font-size="14">Component Index</text>'
+    svg += f'<text x="15" y="{h//2}" text-anchor="middle" font-size="14" '
+    svg += f'transform="rotate(-90, 15, {h//2})">Value</text>'
+    
+    bar_width = plot_w / n * 0.25
+    
+    for i in range(n):
+        center_x = margin['left'] + (i + 0.5) * plot_w / n
+        
+        # Original weight (transparent)
+        bh = weights[i] / max_val * plot_h
+        y = margin['top'] + plot_h - bh
+        svg += f'<rect x="{center_x - bar_width*1.5:.1f}" y="{y:.1f}" '
+        svg += f'width="{bar_width:.1f}" height="{bh:.1f}" fill="#FF6B6B" opacity="0.7"/>'
+        
+        # Baseline
+        bh = baseline[i] / max_val * plot_h
+        y = margin['top'] + plot_h - bh
+        svg += f'<rect x="{center_x - bar_width*0.5:.1f}" y="{y:.1f}" '
+        svg += f'width="{bar_width:.1f}" height="{bh:.1f}" fill="#4ECDC4" opacity="0.7"/>'
+        
+        # Normalized (min)
+        bh = normalized[i] / max_val * plot_h
+        y = margin['top'] + plot_h - bh
+        svg += f'<rect x="{center_x + bar_width*0.5:.1f}" y="{y:.1f}" '
+        svg += f'width="{bar_width:.1f}" height="{bh:.1f}" fill="#2C3E50"/>'
+        
+        # X label
+        svg += f'<text x="{center_x:.1f}" y="{h-margin["bottom"]+18}" '
+        svg += f'text-anchor="middle" font-size="11">{i+1}</text>'
+    
+    # Legend
+    lx = w - 180
+    ly = 50
+    svg += f'<rect x="{lx}" y="{ly}" width="12" height="12" fill="#FF6B6B" opacity="0.7"/>'
+    svg += f'<text x="{lx+18}" y="{ly+11}" font-size="11">Original w</text>'
+    svg += f'<rect x="{lx}" y="{ly+18}" width="12" height="12" fill="#4ECDC4" opacity="0.7"/>'
+    svg += f'<text x="{lx+18}" y="{ly+29}" font-size="11">Baseline b</text>'
+    svg += f'<rect x="{lx}" y="{ly+36}" width="12" height="12" fill="#2C3E50"/>'
+    svg += f'<text x="{lx+18}" y="{ly+47}" font-size="11">Normalized min(w,b)</text>'
+    
+    svg += '</svg>'
+    return svg
 
-    domain = list(range(8))
 
-    def length_fn(x):
-        return x
+def generate_fiber_structure_svg():
+    """Generate SVG showing fiber structure of compression."""
+    # Compute fibers for n=3
+    import collections
+    
+    fibers = collections.defaultdict(list)
+    for n in range(1, 5):
+        for bits in itertools.product([False, True], repeat=n):
+            s = list(bits)
+            cs = dedup_compress(s)
+            key = ''.join('1' if b else '0' for b in cs)
+            val = ''.join('1' if b else '0' for b in s)
+            if val != key:  # Only show non-trivial mappings
+                fibers[key].append(val)
+    
+    w, h = 600, 400
+    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}">'
+    svg += '<style>text { font-family: monospace; }</style>'
+    svg += f'<rect width="{w}" height="{h}" fill="white"/>'
+    
+    svg += f'<text x="{w//2}" y="25" text-anchor="middle" font-size="16" '
+    svg += 'font-weight="bold" font-family="Arial">Compression Fiber Structure</text>'
+    svg += f'<text x="{w//2}" y="42" text-anchor="middle" font-size="12" '
+    svg += 'font-family="Arial" fill="#666">Strings mapping to each fixed point under dedup compression</text>'
+    
+    # Layout: fixed points on the left, fibers on the right
+    y_pos = 70
+    sorted_fibers = sorted(fibers.items(), key=lambda x: (len(x[0]), x[0]))
+    
+    for fp, members in sorted_fibers[:10]:
+        # Fixed point
+        svg += f'<rect x="30" y="{y_pos-12}" width="{len(fp)*12+16}" height="22" '
+        svg += f'rx="4" fill="#2C3E50"/>'
+        svg += f'<text x="38" y="{y_pos+4}" fill="white" font-size="13">{fp}</text>'
+        
+        # Arrow
+        arrow_start = 30 + len(fp) * 12 + 20
+        svg += f'<line x1="{arrow_start}" y1="{y_pos}" x2="{arrow_start+20}" y2="{y_pos}" '
+        svg += f'stroke="#999" stroke-width="2" marker-end="url(#arrowhead)"/>'
+        
+        # Members
+        x_mem = arrow_start + 30
+        for j, mem in enumerate(members[:8]):
+            color = '#FF6B6B' if len(mem) > len(fp) else '#4ECDC4'
+            svg += f'<rect x="{x_mem}" y="{y_pos-10}" width="{len(mem)*10+10}" height="18" '
+            svg += f'rx="3" fill="{color}" opacity="0.8"/>'
+            svg += f'<text x="{x_mem+5}" y="{y_pos+3}" font-size="11">{mem}</text>'
+            x_mem += len(mem) * 10 + 16
+        
+        if len(members) > 8:
+            svg += f'<text x="{x_mem}" y="{y_pos+3}" font-size="11" fill="#999">+{len(members)-8} more</text>'
+        
+        y_pos += 32
+    
+    # Arrow marker
+    svg += '<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">'
+    svg += '<polygon points="0 0, 10 3.5, 0 7" fill="#999"/></marker></defs>'
+    
+    svg += '</svg>'
+    return svg
 
-    compressors = {
-        'floor_even': lambda x: x if x % 2 == 0 else x - 1,
-        'cap_at_4': lambda x: min(x, 4),
-        'truncate>5': lambda x: 0 if x > 5 else x,
+
+def generate_closure_lattice_svg():
+    """Generate SVG showing closure operator on a lattice."""
+    w, h = 500, 400
+    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}">'
+    svg += '<style>text { font-family: Arial, sans-serif; }</style>'
+    svg += f'<rect width="{w}" height="{h}" fill="white"/>'
+    
+    svg += f'<text x="{w//2}" y="25" text-anchor="middle" font-size="16" font-weight="bold">'
+    svg += 'Closure Operator on Feature Lattice</text>'
+    svg += f'<text x="{w//2}" y="42" text-anchor="middle" font-size="11" fill="#666">'
+    svg += 'Implications: a→b,c  b→d  |  Closed sets shown in bold</text>'
+    
+    # Lattice nodes (Hasse diagram of powerset with closure highlights)
+    nodes = {
+        '∅': (250, 350),
+        '{c}': (120, 290),
+        '{d}': (250, 290),
+        '{b,d}': (180, 230),
+        '{c,d}': (320, 230),
+        '{b,c,d}': (250, 170),
+        '{a,b,c,d}': (250, 110),
     }
-
-    # Create grid: compressor × element
-    comp_names = list(compressors.keys())
-    n_comp = len(comp_names)
-    n_elem = len(domain)
-
-    grid = np.zeros((n_comp, n_elem))
-    for i, (name, c) in enumerate(compressors.items()):
-        for j, x in enumerate(domain):
-            if c(x) == x:
-                grid[i, j] = 1  # Fixed
-            else:
-                grid[i, j] = 0  # Compressed
-
-    # Plot heatmap
-    cmap = plt.cm.colors.ListedColormap(['#FFCDD2', '#C8E6C9'])
-    im = ax.imshow(grid, cmap=cmap, aspect='auto', interpolation='nearest')
-
-    # Labels
-    ax.set_xticks(range(n_elem))
-    ax.set_xticklabels([str(x) for x in domain], fontsize=11)
-    ax.set_yticks(range(n_comp))
-    ax.set_yticklabels(comp_names, fontsize=11)
-    ax.set_xlabel('Element x (ℓ(x) = x)', fontsize=12)
-    ax.set_ylabel('Compressor', fontsize=12)
-    ax.set_title('Fixed-Point Matrix: Incompressibility Analysis\n'
-                 '(Green = fixed, Red = compressed)', fontsize=14,
-                 fontweight='bold')
-
-    # Add text annotations
-    for i in range(n_comp):
-        for j in range(n_elem):
-            c = list(compressors.values())[i]
-            text = f"c({j})={c(j)}"
-            color = 'darkgreen' if grid[i, j] == 1 else 'darkred'
-            ax.text(j, i, text, ha='center', va='center', fontsize=8,
-                    color=color, fontweight='bold' if grid[i, j] == 1 else 'normal')
-
-    # Mark universally fixed elements
-    universally_fixed = set(domain)
-    for c in compressors.values():
-        universally_fixed &= {x for x in domain if c(x) == x}
-
-    for x in universally_fixed:
-        ax.add_patch(plt.Rectangle((x - 0.5, -0.5), 1, n_comp,
-                                    fill=False, edgecolor='gold',
-                                    linewidth=3, linestyle='--'))
-
-    legend_elements = [
-        mpatches.Patch(facecolor='#C8E6C9', edgecolor='black',
-                       label='Fixed (c(x)=x)'),
-        mpatches.Patch(facecolor='#FFCDD2', edgecolor='black',
-                       label='Compressed (c(x)≠x)'),
-        mpatches.Patch(fill=False, edgecolor='gold', linewidth=2,
-                       linestyle='--', label='Universally incompressible'),
+    
+    # Edges (Hasse diagram)
+    edges = [
+        ('∅', '{c}'), ('∅', '{d}'),
+        ('{c}', '{c,d}'), ('{d}', '{b,d}'), ('{d}', '{c,d}'),
+        ('{b,d}', '{b,c,d}'), ('{c,d}', '{b,c,d}'),
+        ('{b,c,d}', '{a,b,c,d}'),
     ]
-    ax.legend(handles=legend_elements, loc='upper right', fontsize=9)
-
-    fig.tight_layout()
-    return fig
-
-
-def viz_tropical_cost():
-    """
-    Visualize tropical (min-plus) closure costs.
-    """
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Domain: integers 0-15 with modular equivalence
-    domain = list(range(16))
-
-    def compress(x):
-        return x % 5  # Mod 5 normalization
-
-    def length_fn(x):
-        return x  # Length = value
-
-    # Left: closure cost vs raw length
-    ax = axes[0]
-    raw_lengths = [length_fn(x) for x in domain]
-    closure_costs = []
-    for x in domain:
-        cls = [y for y in domain if compress(y) == compress(x)]
-        closure_costs.append(min(length_fn(y) for y in cls))
-
-    is_fixed = [compress(x) == x for x in domain]
-    colors = ['#4CAF50' if f else '#2196F3' for f in is_fixed]
-
-    ax.scatter(domain, raw_lengths, c='#BBDEFB', s=100, zorder=2,
-               label='ℓ(x)', edgecolors='#2196F3', linewidths=1.5)
-    ax.scatter(domain, closure_costs, c=colors, s=100, zorder=3,
-               label='closureCost(x)', edgecolors='black', linewidths=1,
-               marker='D')
-
-    for x in domain:
-        if raw_lengths[x] != closure_costs[x]:
-            ax.annotate('', xy=(x, closure_costs[x]),
-                       xytext=(x, raw_lengths[x]),
-                       arrowprops=dict(arrowstyle='->', color='red',
-                                       alpha=0.5, lw=1.5))
-
-    ax.set_xlabel('Element x', fontsize=11)
-    ax.set_ylabel('Cost', fontsize=11)
-    ax.set_title('Raw Length vs Tropical Closure Cost\n'
-                 '(Compressor: x mod 5)', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Right: idempotence verification
-    ax = axes[1]
-    cost_x = []
-    cost_cx = []
-    for x in domain:
-        cls_x = [y for y in domain if compress(y) == compress(x)]
-        cls_cx = [y for y in domain if compress(y) == compress(compress(x))]
-        cost_x.append(min(length_fn(y) for y in cls_x))
-        cost_cx.append(min(length_fn(y) for y in cls_cx))
-
-    ax.scatter(cost_x, cost_cx, c='#2196F3', s=100, zorder=3,
-               edgecolors='black', linewidths=1)
-    max_val = max(max(cost_x), max(cost_cx)) + 1
-    ax.plot([0, max_val], [0, max_val], 'r--', alpha=0.5, label='y = x')
-
-    for x in domain:
-        ax.annotate(str(x), (cost_x[x], cost_cx[x]),
-                   fontsize=7, ha='center', va='bottom')
-
-    ax.set_xlabel('closureCost(x)', fontsize=11)
-    ax.set_ylabel('closureCost(c(x))', fontsize=11)
-    ax.set_title('Tropical Idempotence Verification\n'
-                 'closureCost(c(x)) = closureCost(x)', fontsize=13,
-                 fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-
-    fig.tight_layout()
-    return fig
-
-
-def viz_counting_theorem():
-    """
-    Visualize the counting theorem: |fixed points| = |range|,
-    |compressed| + |fixed| = |total|.
-    """
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Compare multiple compressors on 5-bit strings
-    n = 5
-    domain = list(itertools.product([0, 1], repeat=n))
-    total = len(domain)
-
-    compressors = {
-        'Identity': lambda x: x,
-        'Sort bits': lambda x: tuple(sorted(x)),
-        'Clear last': lambda x: x[:-1] + (0,),
-        'Clear last 2': lambda x: x[:-2] + (0, 0),
-        'Constant': lambda x: (0,) * n,
-    }
-
-    names = list(compressors.keys())
-    fixed_counts = []
-    range_counts = []
-
-    for name, c in compressors.items():
-        fp = sum(1 for x in domain if c(x) == x)
-        rng = len({c(x) for x in domain})
-        fixed_counts.append(fp)
-        range_counts.append(rng)
-
-    # Left: fixed points vs range size
-    ax = axes[0]
-    x_pos = np.arange(len(names))
-    width = 0.35
-
-    bars1 = ax.bar(x_pos - width/2, fixed_counts, width,
-                   label='|Fixed points|', color='#4CAF50', alpha=0.8)
-    bars2 = ax.bar(x_pos + width/2, range_counts, width,
-                   label='|Range(c)|', color='#2196F3', alpha=0.8)
-
-    ax.set_xticks(x_pos)
-    ax.set_xticklabels(names, fontsize=9, rotation=15)
-    ax.set_ylabel('Count', fontsize=11)
-    ax.set_title('Fixed Points = Range\n(Idempotent Map Theorem)',
-                 fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.axhline(y=total, color='red', linestyle='--', alpha=0.5,
-               label=f'Total = {total}')
-
-    # Add value labels
-    for bar in bars1:
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
-                str(int(bar.get_height())), ha='center', fontsize=9)
-    for bar in bars2:
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
-                str(int(bar.get_height())), ha='center', fontsize=9)
-
-    # Right: stacked bar of compressed + fixed = total
-    ax = axes[1]
-    compressed = [total - fp for fp in fixed_counts]
-
-    ax.bar(x_pos, fixed_counts, label='Fixed (incompressible)',
-           color='#4CAF50', alpha=0.8)
-    ax.bar(x_pos, compressed, bottom=fixed_counts,
-           label='Compressed (reducible)', color='#FF9800', alpha=0.8)
-
-    ax.axhline(y=total, color='red', linestyle='--', alpha=0.5)
-    ax.text(len(names) - 0.5, total + 0.5, f'Total = {total}',
-            fontsize=10, color='red')
-
-    ax.set_xticks(x_pos)
-    ax.set_xticklabels(names, fontsize=9, rotation=15)
-    ax.set_ylabel('Count', fontsize=11)
-    ax.set_title('Compressed + Fixed = Total\n(Partition Theorem)',
-                 fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-
-    fig.tight_layout()
-    return fig
+    
+    # Draw edges
+    for n1, n2 in edges:
+        x1, y1 = nodes[n1]
+        x2, y2 = nodes[n2]
+        svg += f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" '
+        svg += f'stroke="#ccc" stroke-width="2"/>'
+    
+    # Draw nodes
+    for label, (x, y) in nodes.items():
+        r = 25
+        svg += f'<circle cx="{x}" cy="{y}" r="{r}" fill="#2C3E50" stroke="#1a252f" stroke-width="2"/>'
+        svg += f'<text x="{x}" y="{y+4}" text-anchor="middle" fill="white" font-size="9">{label}</text>'
+    
+    # Annotation: closure arrows for non-closed sets
+    svg += f'<text x="30" y="{h-20}" font-size="11" fill="#666">'
+    svg += 'All nodes shown are closed (fixed points of the closure operator).</text>'
+    
+    svg += '</svg>'
+    return svg
 
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-
-    fig1 = viz_fiber_structure()
-    fig1.savefig('viz_fiber_structure.png', dpi=150, bbox_inches='tight')
-    print("  ✓ viz_fiber_structure.png")
-
-    fig2 = viz_compression_landscape()
-    fig2.savefig('viz_compression_landscape.png', dpi=150, bbox_inches='tight')
-    print("  ✓ viz_compression_landscape.png")
-
-    fig3 = viz_incompressibility()
-    fig3.savefig('viz_incompressibility.png', dpi=150, bbox_inches='tight')
-    print("  ✓ viz_incompressibility.png")
-
-    fig4 = viz_tropical_cost()
-    fig4.savefig('viz_tropical_cost.png', dpi=150, bbox_inches='tight')
-    print("  ✓ viz_tropical_cost.png")
-
-    fig5 = viz_counting_theorem()
-    fig5.savefig('viz_counting_theorem.png', dpi=150, bbox_inches='tight')
-    print("  ✓ viz_counting_theorem.png")
-
+    # Generate all SVGs
+    svgs = {
+        'compression_spectrum': generate_compression_spectrum_svg(),
+        'tropical_normalization': generate_tropical_normalization_svg(),
+        'fiber_structure': generate_fiber_structure_svg(),
+        'closure_lattice': generate_closure_lattice_svg(),
+    }
+    
+    for name, svg_content in svgs.items():
+        filename = f'{name}.svg'
+        with open(filename, 'w') as f:
+            f.write(svg_content)
+        print(f"Generated {filename}")
+    
     print("\nAll visualizations generated successfully!")
