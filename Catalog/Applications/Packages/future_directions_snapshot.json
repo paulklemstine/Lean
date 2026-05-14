@@ -137,10 +137,10 @@
       "Bridges"
     ],
     "priority_score": 0.95,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4aff04ca",
     "timestamp": "2026-05-14T16:03:53.872578+00:00"
   },
   {
@@ -1321,20 +1321,6 @@
     "timestamp": "2026-05-14T16:17:21.765666+00:00"
   },
   {
-    "id": "fd_0108",
-    "title": "Tests conjectures computationally",
-    "description": "using Python prototypes before formal proof attempts.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b8bbbc75",
-    "consumed_by_exp_id": "074afb83",
-    "timestamp": "2026-05-14T16:17:21.768401+00:00"
-  },
-  {
     "id": "fd_0109",
     "title": "Proves helper lemmas",
     "description": "incrementally, validating the proof skeleton before attacking main theorems.",
@@ -1920,20 +1906,6 @@
     "timestamp": "2026-05-14T18:35:19.816031+00:00"
   },
   {
-    "id": "fd_0193",
-    "title": "Hoeffding bound",
-    "description": ": The magnetic sum along a fixed path is a sum of bounded independent random variables. Apply Hoeffding's inequality to get sub-Gaussian concentration, then use the pathwise bound and a union bound over finitely many paths.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.318353+00:00"
-  },
-  {
     "id": "fd_0194",
     "title": "Martingale approach",
     "description": ": Construct a martingale from partial sums of $A(v_i, v_{i+1})$ along the path and apply Azuma's inequality.\n\n### Cross-Domain Connection\n**Statistical mechanics**: Random gauge fields on lattices are central to lattice QCD. This direction provides a rigorous probabilistic framework for studying how random magnetic perturbations affect tropical observables, connecting to disordered systems and spin glasses.\n\n---\n\n## Direction 5: Tropical Yang–Mills Functional and Optimal Gauge Configurations\n\n### Precise Statement\nDefine the *tropical Yang–Mills functional* on a graph $G = (V, E)$ with a set of fundamental cycles $\\mathcal{C}$:\n$$\\text{YM}(A) = \\sum_{C \\in \\mathcal{C}} (\\Phi_A(C))^2$$\nProve:\n1. $\\text{YM}(A) = 0$ if and only if $A$ is exact (pure gauge).\n2. For fixed cycle fluxes $\\{\\Phi_C",
@@ -1949,36 +1921,6 @@
     "source_exp_id": "497bcb15",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:35:35.324230+00:00"
-  },
-  {
-    "id": "fd_0184",
-    "title": "Forward direction (easier):",
-    "description": "If `G` escapes all five clones, show it generates NOT and AND (hence NAND), then invoke `nand_universal`. This requires five \"escape\" lemmas showing how breaking each invariant yields a useful gate.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "82942422",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.772040+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "Characterize",
-    "description": ": Under separation, the least fixed point is `b`. Without separation, characterize the fixed-point lattice.\n\n### Key Lemma to Formalize\n```\ntheorem tropReflect_monotone (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ) :\n    Monotone (fun x => tropReflect hn W b x)\n```\n\n### Cross-Domain Connections\n- **Domain theory**: Fixed points of monotone operators on complete partial orders are central to denotational semantics. The tropical reflective operator is a semantic evaluation function.\n- **Lattice-theoretic AI**: The lattice of fixed points could model \"levels of self-awareness\" — the least fixed point as minimal consciousness, the greatest as maximal.\n\n### Estimated Difficulty\nMedium. Monotonicity should be straightforward; the main challenge is packaging the complete lattice structure and ap",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:44.244699+00:00"
   },
   {
     "id": "fd_0194",
@@ -2038,10 +1980,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "918eb128",
     "timestamp": "2026-05-14T19:34:44.327007+00:00"
   },
   {
@@ -2053,10 +1995,10 @@
       "EML"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b8a30d25",
     "timestamp": "2026-05-14T19:34:44.332467+00:00"
   },
   {
@@ -2132,34 +2074,6 @@
     "timestamp": "2026-05-14T19:35:20.582859+00:00"
   },
   {
-    "id": "fd_0184",
-    "title": "Prove",
-    "description": "the simplest instances first (2×2 eventual periodicity, single-generator entropy collapse).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c337fb05",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:35:20.586552+00:00"
-  },
-  {
-    "id": "fd_0185",
-    "title": "Connect",
-    "description": "to existing Mathlib infrastructure for graph theory (connected components), combinatorics (pigeonhole), and analysis (limsup).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c337fb05",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:35:20.590404+00:00"
-  },
-  {
     "id": "fd_0186",
     "title": "Iterate",
     "description": "on failed proof attempts by decomposing into smaller lemmas, leveraging the modular structure established in this work.",
@@ -2188,20 +2102,6 @@
     "timestamp": "2026-05-14T20:34:15.721141+00:00"
   },
   {
-    "id": "fd_0190",
-    "title": "Formalize the definitions",
-    "description": "in Lean, building on the existing `DependencyExtraction.lean` infrastructure.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "08ca2eef",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:34:15.726130+00:00"
-  },
-  {
     "id": "fd_0191",
     "title": "Prove the key lemma",
     "description": "identified in each proof strategy, then compose into the main theorem.",
@@ -2214,6 +2114,48 @@
     "source_exp_id": "08ca2eef",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T20:34:15.731779+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "\"≥\" direction",
+    "description": ": Already established by `weighted_le_log_sum_exp` (Theorem A). For any $p \\in \\Delta_n$, $\\sum p_i x_i \\leq \\log(\\sum p_i e^{x_i}) \\leq \\log(\\sum e^{x_i})$ (the second inequality needs $p_i \\leq 1$, which follows from a separate lemma using the KL divergence).\n\n   Correction: The \"≥\" direction is: $\\sum p_i x_i + H(p) \\leq \\text{LSE}(x)$, which follows from Theorem A applied with the substitution $y_i = x_i - \\log p_i$ (or directly from $D_{KL}(p \\| q) \\geq 0$ with $q_i = e^{x_i}/Z$).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "074afb83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:34:34.590983+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Supremum attainment",
+    "description": ": Show the sup is achieved, hence is a max.\n\n### Cross-Domain Significance\n\n- **Statistical mechanics**: This is the Gibbs variational principle, the foundation of equilibrium statistical mechanics.\n- **Information theory**: Establishes log-sum-exp as the Legendre-Fenchel conjugate of the negative entropy.\n- **Optimization**: Opens the door to formalizing duality in convex optimization.\n\n---\n\n## Direction 2: KL-Divergence Nonnegativity (Gibbs' Inequality)\n\n### Theorem Statement\n\nFor probability distributions $p, q$ on $\\text{Fin}(n)$ with $q_i > 0$ for all $i$:\n\n$$D_{KL}(p \\| q) = \\sum_i p_i \\log\\frac{p_i}{q_i} \\geq 0$$\n\nwith equality if and only if $p = q$.\n\n### Lean Type Signature\n\n```lean\ntheorem kl_divergence_nonneg\n    {n : ℕ} (hn : 0 < n)\n    (p q : Fin n → ℝ)\n    (hp_nonneg : ∀ i, 0",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "074afb83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:34:34.603685+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Documentation",
+    "description": ": Write detailed docstrings explaining mathematical significance and usage patterns.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "074afb83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:34:34.632055+00:00"
   },
   {
     "id": "seed_078",
@@ -2580,22 +2522,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.866477+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "5. Automated Curriculum Extraction from Formal Proof Libraries",
-    "description": "**Target Deliverable:** Given a formal proof library (e.g., a collection of theorems with their dependency graphs extracted from import/usage analysis), automatically synthesize an admissible curriculum and certify its optimality bounds.\n\n**Algorithm:**\n1. Parse the dependency graph from `#check` / import analysis.\n2. Compute `depLevel` for each theorem via topological sort (O(|V| + |E|) time).\n3. Output the level decomposition as a certified curriculum.\n4. Verify optimality: the computed `maxLevel` equals the longest path in the DAG.\n\n**Proof Strategy:** Implement this as a verified algorithm in Lean 4 using `DecidableRel` and `Fintype` computation. The correctness proof reduces to our `mem_stageKnowledge_iff` and `frontier_all_known_iff` theorems.\n\n**Cross-Domain Connection:** This direc",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f0d321",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:31:45.855826+00:00"
   },
   {
     "id": "fd_0178",
