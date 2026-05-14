@@ -73,10 +73,10 @@
       "Cryptography"
     ],
     "priority_score": 0.92,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6a82243",
     "timestamp": "2026-05-13T23:34:44.961960+00:00"
   },
   {

@@ -7,7 +7,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T01:50:13Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T01:57:43Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -25,7 +25,16 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-14T02:00:38Z",
-      "hue": 275
+      "hue": 359
+    },
+    {
+      "id": "pythagorean_lattice_reduction_for_integer_factorin",
+      "title": "Pythagorean Lattice Reduction for Integer Factoring",
+      "domain": "Cryptography / Number Theory",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-14T02:13:58Z",
+      "hue": 270
     }
   ],
   "edges": []
