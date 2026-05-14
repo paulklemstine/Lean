@@ -1386,62 +1386,6 @@
     "timestamp": "2026-05-14T16:16:22.752502+00:00"
   },
   {
-    "id": "fd_0097",
-    "title": "Direction 4",
-    "description": "(Certified Prover) — most immediately applicable, builds directly on current theorems",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e7c79405",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:40.309174+00:00"
-  },
-  {
-    "id": "fd_0098",
-    "title": "Direction 1",
-    "description": "(p-adic Trees) — natural mathematical extension, moderate difficulty",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e7c79405",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:40.311465+00:00"
-  },
-  {
-    "id": "fd_0099",
-    "title": "Direction 2",
-    "description": "(Rate-Distortion) — connects to information theory, high impact",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e7c79405",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:40.313438+00:00"
-  },
-  {
-    "id": "fd_0100",
-    "title": "Direction 5",
-    "description": "(Banach Fixed Point) — foundational, potential Mathlib contribution",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e7c79405",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:40.315123+00:00"
-  },
-  {
     "id": "fd_0101",
     "title": "Direction 3",
     "description": "(Tropical Convexity) — most speculative, highest conceptual payoff",
@@ -1617,20 +1561,6 @@
     "timestamp": "2026-05-14T16:17:56.772471+00:00"
   },
   {
-    "id": "fd_0124",
-    "title": "Categorical semantics",
-    "description": "(Direction 5) — foundational but requires the most new mathematical infrastructure",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "705e2def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:17:56.774740+00:00"
-  },
-  {
     "id": "fd_0131",
     "title": "Transitivity",
     "description": ": If `v ∈ causalCone W s T₁` and `w ∈ causalCone W v T₂`, then `w ∈ causalCone W s (T₁ + T₂)` (triangle inequality).",
@@ -1691,20 +1621,6 @@
     "timestamp": "2026-05-14T16:24:30.108164+00:00"
   },
   {
-    "id": "fd_0135",
-    "title": "Horizon monotonicity under surgery",
-    "description": ": Adding a wormhole bridge that crosses the horizon strictly increases the min-cut value.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.110587+00:00"
-  },
-  {
     "id": "fd_0136",
     "title": "Area-entropy bound",
     "description": ": `tropicalEntropy ≤ C * horizonArea` for an explicit constant `C`.",
@@ -1762,21 +1678,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.122635+00:00"
-  },
-  {
-    "id": "fd_0140",
-    "title": "Lorentz force analogue",
-    "description": ": The difference `tropicalDistance (chargedWeight W A q) s t - tropicalDistance W s t` is bounded by `|q| * maxA * pathLength`, giving a discrete analogue of the Lorentz force deflection.",
-    "domains": [
-      "Tropical",
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "497bcb15",
-    "timestamp": "2026-05-14T16:24:30.125539+00:00"
   },
   {
     "id": "fd_0141",
@@ -2225,20 +2126,6 @@
     "timestamp": "2026-05-14T17:33:00.515491+00:00"
   },
   {
-    "id": "fd_0173",
-    "title": "Prove the converse",
-    "description": ": Under reversibility conditions, $\\gamma(P) \\geq g(W) / (n \\cdot \\max_{ij} W_{ij})$.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.521286+00:00"
-  },
-  {
     "id": "fd_0174",
     "title": "Apply to mixing lower bounds",
     "description": ": Use tropical cycle gaps to give new proofs of mixing time lower bounds for Markov chains.\n\n### Proof Strategy\n- Build on the existing `spectral_moment_gap` theorem.\n- Use log-Sobolev inequality techniques adapted to the tropical setting.\n- Formalize the connection via a shared abstract semiring framework.\n\n### Cross-domain Impact\n- Markov chain Monte Carlo (mixing time analysis)\n- Quantum computing (quantum walk analysis)\n- Statistical physics (phase transition detection)\n\n---\n\n## Direction 5: Certified Algorithms for Tropical Spectral Gap Computation\n\n### Goal\nDevelop algorithms that compute tropical spectral gaps of finite machines and output machine-checkable lower-bound certificates.\n\n### Background\nThe tropical cycle gap is computable (via Karp's algorithm for minimum cycle mean), b",
@@ -2341,34 +2228,6 @@
     "timestamp": "2026-05-14T17:33:54.626752+00:00"
   },
   {
-    "id": "fd_0180",
-    "title": "Automatic discovery",
-    "description": "of which results port between domains",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "10c1074c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:34:12.182263+00:00"
-  },
-  {
-    "id": "fd_0181",
-    "title": "Certified quality bounds",
-    "description": "on the loss incurred in translation",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "10c1074c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:34:12.186028+00:00"
-  },
-  {
     "id": "fd_0182",
     "title": "Algebraic Foundations Team",
     "description": ": Directions 2, 6 — extend entropy and spectral analysis",
@@ -2396,20 +2255,6 @@
     "source_exp_id": "831fce32",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:35:19.816031+00:00"
-  },
-  {
-    "id": "fd_0184",
-    "title": "Systems Team",
-    "description": ": Directions 3, 4 — hybrid KEMs and implementation",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "831fce32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:19.819616+00:00"
   },
   {
     "id": "fd_0185",
@@ -2440,6 +2285,158 @@
     "source_exp_id": "831fce32",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:35:19.827837+00:00"
+  },
+  {
+    "id": "fd_0187",
+    "title": "Direct algebraic approach",
+    "description": ": Apply `pathWeight_charged_eq` to both paths and subtract. The result follows immediately from linearity.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.288665+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Cycle-based approach",
+    "description": ": Construct the loop $p_1 \\cdot \\bar{p}_2$, apply `magneticSum_exact` and the telescoping property to decompose the flux into gauge and curl components.\n\n### Cross-Domain Connection\n**Quantum mechanics**: The Aharonov–Bohm effect shows that electrons traveling around a solenoid on opposite sides acquire a relative phase proportional to enclosed magnetic flux. This tropical version replaces quantum phase with min-plus cost difference, preserving the topological structure.\n\n---\n\n## Direction 2: Bellman Operator Perturbation Theorem\n\n### Precise Statement\nDefine the Bellman operator $T_W : (V \\to \\mathbb{R}) \\to (V \\to \\mathbb{R})$ by\n$$T_W(f)(v) = \\min_{u \\in N(v)} \\{W(u,v) + f(u)\\}$$\nThen the charged Bellman operator satisfies:\n$$\\|T_{W_q}(f) - T_W(f)\\|_\\infty \\leq |q| \\cdot \\max|A|$$\nand a",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.295119+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Pointwise via finite-minimum stability",
+    "description": ": For each $v$, the Bellman update is a minimum over a finite set. Apply `finset_min_perturbation_le` with the single-edge bound $|q| \\cdot \\max|A|$.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.299258+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Iteration bound by induction",
+    "description": ": Prove the $k$-step bound by induction on $k$, using the triangle inequality and the one-step bound at each iteration.\n\n### Cross-Domain Connection\n**Dynamic programming / reinforcement learning**: The Bellman operator is the foundation of value iteration in Markov decision processes. This result certifies that magnetic-type perturbations to transition costs produce bounded perturbation of value functions, relevant to robust RL.\n\n---\n\n## Direction 3: Magnetic Tropical Curvature and Geodesic Deviation\n\n### Precise Statement\nDefine the *cycle flux curvature* of a vector potential $A$ at a triangle $(u,v,w)$ as:\n$$\\kappa_A(u,v,w) = A(u,v) + A(v,w) + A(w,u)$$\nThis is the discrete magnetic field strength (analogue of $F_{ij} = \\partial_i A_j - \\partial_j A_i$). For exact potentials, $\\kappa = ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.304027+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Induction on triangle flips",
+    "description": ": Show each elementary flip changes the magnetic sum by exactly one triangle flux, then sum the changes.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.307851+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Homological approach",
+    "description": ": Express the difference of two paths as a 2-chain (sum of triangles) and show the magnetic sum difference equals the integral of curvature over the chain.\n\n### Cross-Domain Connection\n**Riemannian geometry**: Geodesic deviation in curved spacetime is governed by sectional curvature via the Jacobi equation. This discrete version replaces Riemannian curvature with cycle flux, providing a combinatorial model for how \"magnetic curvature\" causes tropical geodesics to diverge.\n\n---\n\n## Direction 4: Random Magnetic Perturbation and Expected Distance Distortion\n\n### Precise Statement\nLet $A(u,v)$ be i.i.d. random variables with $\\mathbb{E}[A(u,v)] = 0$ and $|A(u,v)| \\leq M$ a.s., with $A(v,u) = -A(u,v)$. Then:\n$$\\mathbb{E}[|d_q(s,t) - d(s,t)|] \\leq |q| \\cdot M \\cdot \\sqrt{L}$$\nwhere $L$ is the le",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.312980+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Hoeffding bound",
+    "description": ": The magnetic sum along a fixed path is a sum of bounded independent random variables. Apply Hoeffding's inequality to get sub-Gaussian concentration, then use the pathwise bound and a union bound over finitely many paths.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.318353+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Martingale approach",
+    "description": ": Construct a martingale from partial sums of $A(v_i, v_{i+1})$ along the path and apply Azuma's inequality.\n\n### Cross-Domain Connection\n**Statistical mechanics**: Random gauge fields on lattices are central to lattice QCD. This direction provides a rigorous probabilistic framework for studying how random magnetic perturbations affect tropical observables, connecting to disordered systems and spin glasses.\n\n---\n\n## Direction 5: Tropical Yang–Mills Functional and Optimal Gauge Configurations\n\n### Precise Statement\nDefine the *tropical Yang–Mills functional* on a graph $G = (V, E)$ with a set of fundamental cycles $\\mathcal{C}$:\n$$\\text{YM}(A) = \\sum_{C \\in \\mathcal{C}} (\\Phi_A(C))^2$$\nProve:\n1. $\\text{YM}(A) = 0$ if and only if $A$ is exact (pure gauge).\n2. For fixed cycle fluxes $\\{\\Phi_C",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.324230+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Linear algebra",
+    "description": ": Express $A$ in terms of tree edges and cycle fluxes via the cycle-edge incidence matrix. Show $\\text{YM} = 0$ implies all cycle fluxes vanish, which implies $A$ is a coboundary.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.328651+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "Hodge decomposition on graphs",
+    "description": ": Decompose the space of antisymmetric functions into exact forms (coboundaries) and harmonic forms (dual to cycles). Show $\\text{YM}$ measures the harmonic component.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "497bcb15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:35.333170+00:00"
   },
   {
     "id": "seed_078",
@@ -2725,40 +2722,6 @@
     "source_exp_id": "28ca9606",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:19.336802+00:00"
-  },
-  {
-    "id": "fd_0180",
-    "title": "Direction 2: Tropical Schützenberger Theory — Star-Free and Aperiodic Characteri",
-    "description": "**Hypothesis.** A tropically recognizable language has an aperiodic syntactic monoid (all elements satisfy `xⁿ = xⁿ⁺¹` for some n) if and only if it can be defined by a \"tropical star-free\" expression (using min, +, concatenation, and complement, but no Kleene star).\n\n**Why it matters.** Schützenberger's classical theorem characterizes star-free = aperiodic = first-order definable. A tropical analogue would:\n- Create a logical characterization of weighted language classes\n- Enable decidability results for fragments of weighted temporal logic\n- Connect to circuit complexity via tropical depth lower bounds\n\n**Proof Strategy.**\n1. Define aperiodicity for the syntactic monoid of endomorphisms on residual classes.\n2. Define tropical star-free expressions (min-plus algebra without iteration).\n3.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:19.342593+00:00"
-  },
-  {
-    "id": "fd_0181",
-    "title": "Direction 3: Decidability and Complexity of Tropical Nerode Index",
-    "description": "**Hypothesis.** Given a tropical automaton with n states, the problem of computing the Nerode index (size of the minimal equivalent automaton) is decidable in polynomial time.\n\n**Why it matters.** Minimization algorithms for weighted automata are significantly more complex than for classical DFA. A polynomial-time algorithm would:\n- Enable practical state-space reduction for large-scale optimization\n- Provide canonical forms for equivalence testing of weighted languages\n- Connect to the complexity of min-plus matrix operations\n\n**Proof Strategy.**\n1. Formalize reachability analysis: compute the set of reachable residuals by BFS.\n2. Show that two states are Nerode-equivalent iff they have identical residualOfState functions.\n3. For deterministic min-plus automata, show this can be tested in",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "f8259b94",
-    "timestamp": "2026-05-14T17:33:19.347274+00:00"
   },
   {
     "id": "fd_0182",
