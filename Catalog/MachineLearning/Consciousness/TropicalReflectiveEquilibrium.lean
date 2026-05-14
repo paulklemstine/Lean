@@ -46,12 +46,14 @@ open Finset
 
 /-! ## Core Definitions -/
 
-/-
-Nonemptiness of `Finset.univ.erase i` when `n ≥ 2`.
--/
+/-- Nonemptiness of `Finset.univ.erase i` when `n ≥ 2`. -/
 theorem erase_univ_nonempty {n : ℕ} (hn : 2 ≤ n) (i : Fin n) :
     (Finset.univ.erase i).Nonempty := by
-  exact ⟨ if i = ⟨ 0, by linarith ⟩ then ⟨ 1, by linarith ⟩ else ⟨ 0, by linarith ⟩, by aesop ⟩
+  refine ⟨if i = ⟨0, by omega⟩ then ⟨1, by omega⟩ else ⟨0, by omega⟩, ?_⟩
+  simp only [Finset.mem_erase, Finset.mem_univ, and_true]
+  split
+  all_goals simp_all [Fin.ext_iff]
+  all_goals omega
 
 /-- The **tropical reflective operator**. At each coordinate `i`, computes
 `min(b i, min_{j ≠ i}(W i j + x j))`. The off-diagonal minimum captures
@@ -76,6 +78,22 @@ def cutMatrix {n : ℕ} (W : Matrix (Fin n) (Fin n) ℝ) (S : Finset (Fin n)) (M
     Matrix (Fin n) (Fin n) ℝ :=
   fun i j => if (i ∈ S ↔ j ∈ S) then W i j else M
 
+/-- **Tropical integrated information** (Phi): measures the minimum
+integration penalty across all nontrivial partitions. For each partition
+defined by a set `S`, we compare the discrepancy under the full operator
+versus the decoupled (cut) operator. -/
+def tropicalPhi {n : ℕ} (hn : 2 ≤ n) (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
+    (M : ℝ) (x : Fin n → ℝ) : ℝ :=
+  Finset.inf' (Finset.univ.filter (fun S : Finset (Fin n) => S.Nonempty ∧ S ≠ Finset.univ))
+    (by
+      refine ⟨{⟨0, by omega⟩}, ?_⟩
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+      exact ⟨⟨_, Finset.mem_singleton_self _⟩,
+        fun h => by simp [Finset.eq_univ_iff_forall] at h; exact absurd (h ⟨1, by omega⟩) (by simp [Fin.ext_iff])⟩)
+    (fun S =>
+      tropDiscrepancy (tropReflect hn (cutMatrix W S M) b) x -
+      tropDiscrepancy (tropReflect hn W b) x)
+
 /-- **Global workspace broadcast**: every node's update value is attained
 either through its bias term or through at least one incoming edge. -/
 def Broadcasts {n : ℕ} (hn : 2 ≤ n) (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
@@ -90,87 +108,57 @@ def IsConsciousState {n : ℕ} (hn : 2 ≤ n) (W : Matrix (Fin n) (Fin n) ℝ) (
   ∀ y, tropReflect hn W b y = y →
     tropDiscrepancy (tropReflect hn W b) y ≤ tropDiscrepancy (tropReflect hn W b) x
 
-/-! ## Auxiliary Lemmas on Finset.inf' -/
-
-/-
-`inf'` over a finset is `≤` the value at any member.
--/
-theorem inf'_le_val {n : ℕ} (hn : 2 ≤ n) (W : Matrix (Fin n) (Fin n) ℝ)
-    (x : Fin n → ℝ) (i j : Fin n) (hj : j ∈ Finset.univ.erase i) :
-    Finset.inf' (Finset.univ.erase i) (erase_univ_nonempty hn i) (fun k => W i k + x k) ≤
-      W i j + x j := by
-  exact Finset.inf'_le _ hj
-
-/-
-The `inf'` is achieved by some element (finite minimum exists).
--/
-theorem inf'_achieved {n : ℕ} (hn : 2 ≤ n) (W : Matrix (Fin n) (Fin n) ℝ)
-    (x : Fin n → ℝ) (i : Fin n) :
-    ∃ j ∈ Finset.univ.erase i,
-      Finset.inf' (Finset.univ.erase i) (erase_univ_nonempty hn i) (fun k => W i k + x k) =
-        W i j + x j := by
-  exact exists_mem_eq_inf' (erase_univ_nonempty hn i) fun k => W i k + x k
-
 /-! ## Theorem 1: Fixed Point Existence -/
 
 /-
 Under separation, `b` is a fixed point of the tropical reflective operator.
 
-**Proof**: For each `i`, we show `tropReflect hn W b b i = b i`.
-By definition, this equals `min(b i, inf'_{j≠i}(W i j + b j))`.
-By `hsep`, for all `j ≠ i`: `b i < W i j + b j`, so `inf'_{j≠i}(W i j + b j) > b i`.
-(The inf' is achieved at some `j₀ ≠ i` with `W i j₀ + b j₀ > b i`.)
-Hence `min(b i, inf') = b i`.
+**Proof**: For each `i`, the `min` selects `b i` because all off-diagonal terms
+`W i j + b j > b i` by the separation hypothesis.
 -/
 theorem tropReflect_fixed_of_separated
     {n : ℕ} (hn : 2 ≤ n)
     (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
     (hsep : ∀ i j, i ≠ j → b i < W i j + b j) :
     tropReflect hn W b b = b := by
-  funext i;
+  ext i;
   exact min_eq_left ( Finset.le_inf' _ _ fun j hj => le_of_lt ( hsep i j ( by aesop ) ) )
 
 /-! ## Theorem 2: Fixed Point Uniqueness -/
 
 /-
-Under separation, any fixed point of the tropical reflective operator equals `b`.
+Under separation, any fixed point must equal `b`.
 
-**Proof**: Let `x` be a fixed point: `∀ i, x i = min(b i, inf'_{j≠i}(W i j + x j))`.
-From the `min`, we get `x i ≤ b i` for all `i`. Now suppose `x ≠ b`, so there
-exists `i₀` with `x i₀ < b i₀`. Then `x i₀ = inf'_{j≠i₀}(W i₀ j + x j)`.
-This inf' is achieved at some `j₁ ≠ i₀`: `x i₀ = W i₀ j₁ + x j₁`.
-Since `x j₁ ≤ b j₁`, we get `x i₀ ≤ W i₀ j₁ + b j₁`.
-But by `hsep`: `b i₀ < W i₀ j₁ + b j₁`, so `x i₀ < W i₀ j₁ + b j₁` — no contradiction yet.
-We need a subtler argument.
-
-Consider `i₀` minimizing `x i - b i` (which is ≤ 0). At this `i₀`,
-`x i₀ - b i₀ ≤ x j - b j` for all j, i.e., `x j ≥ x i₀ - b i₀ + b j`.
-Then `x i₀ < b i₀`, so `x i₀ = W i₀ j₁ + x j₁` for some `j₁ ≠ i₀`.
-`x j₁ ≥ x i₀ - b i₀ + b j₁`, so
-`x i₀ = W i₀ j₁ + x j₁ ≥ W i₀ j₁ + x i₀ - b i₀ + b j₁ = W i₀ j₁ + b j₁ + (x i₀ - b i₀)`.
-Thus `x i₀ ≥ W i₀ j₁ + b j₁ + x i₀ - b i₀`, giving `b i₀ ≥ W i₀ j₁ + b j₁`.
-But `hsep` says `b i₀ < W i₀ j₁ + b j₁`. Contradiction. So `x = b`.
+**Proof sketch**: From the `min`, any fixed point satisfies `x i ≤ b i`.
+If `x ≠ b`, pick `i₀` minimizing `x i - b i`. Then `x i₀ < b i₀`, so the
+min selects the inf' term. The inf' is achieved at some `j₁ ≠ i₀` with
+`x i₀ = W i₀ j₁ + x j₁ ≥ W i₀ j₁ + b j₁ + (x i₀ - b i₀)`, giving
+`b i₀ ≥ W i₀ j₁ + b j₁`, contradicting separation.
 -/
 theorem tropReflect_fixed_unique
     {n : ℕ} (hn : 2 ≤ n)
     (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
     (hsep : ∀ i j, i ≠ j → b i < W i j + b j) :
     ∀ x, tropReflect hn W b x = x → x = b := by
-  intros x hx
-  by_contra h_neq;
-  -- Choose $i₀$ minimizing $(x i - b i)$, equivalently maximizing $(b i - x i)$.
-  obtain ⟨i₀, hi₀⟩ : ∃ i₀ : Fin n, ∀ i : Fin n, x i - b i ≥ x i₀ - b i₀ := by
-    cases n <;> [ tauto; simpa using Finset.exists_min_image Finset.univ ( fun i => x i - b i ) ⟨ ⟨ 0, by linarith ⟩, Finset.mem_univ _ ⟩ ];
-  -- Since $x i₀ < b i₀$, we have $x i₀ = \inf'_{j≠i₀}(W i₀ j + x j)$.
+  intro x hx;
+  -- For each `i`, the `min` selects `b i` because all off-diagonal terms `W i j + b j > b i` by the separation hypothesis.
+  have h_min : ∀ i, x i ≤ b i := by
+    exact fun i => hx ▸ min_le_left _ _;
+  -- Suppose x ≠ b. Pick i₀ minimizing (x i - b i) over all Fin n using Finset.exists_min_image. Since x ≠ b, there exists some i with x i < b i, and i₀ has x i₀ - b i₀ ≤ x i - b i for all i, so x i₀ < b i₀.
+  by_contra h_neq
+  obtain ⟨i₀, hi₀⟩ : ∃ i₀, x i₀ < b i₀ ∧ ∀ i, x i - b i ≥ x i₀ - b i₀ := by
+    obtain ⟨i₀, hi₀⟩ : ∃ i₀, x i₀ < b i₀ := by
+      exact Function.ne_iff.mp h_neq |> Exists.imp fun i hi => lt_of_le_of_ne ( h_min i ) hi;
+    exact Finset.exists_min_image Finset.univ ( fun i => x i - b i ) ⟨ i₀, Finset.mem_univ i₀ ⟩ |> fun ⟨ i₁, hi₁ ⟩ => ⟨ i₁, by linarith [ hi₁.2 i₀ ( Finset.mem_univ i₀ ) ], fun i => hi₁.2 i ( Finset.mem_univ i ) ⟩;
+  -- Since $x i₀ = \min(b i₀, \inf'_{j \neq i₀}(W i₀ j + x j))$ and $x i₀ < b i₀$, we must have $x i₀ = \inf'_{j \neq i₀}(W i₀ j + x j)$.
   have h_inf : x i₀ = Finset.inf' (Finset.univ.erase i₀) (erase_univ_nonempty hn i₀) (fun j => W i₀ j + x j) := by
-    have h_inf : x i₀ < b i₀ := by
-      exact lt_of_le_of_ne ( by have := congr_fun hx i₀; exact this.symm ▸ min_le_left _ _ ) fun h => h_neq <| funext fun i => by have := congr_fun hx i; have := hi₀ i; norm_num [ tropReflect ] at *; linarith [ min_le_left ( b i ) ( Finset.inf' ( Finset.univ.erase i ) ( erase_univ_nonempty hn i ) fun k => W i k + x k ), min_le_right ( b i ) ( Finset.inf' ( Finset.univ.erase i ) ( erase_univ_nonempty hn i ) fun k => W i k + x k ) ] ;
     have := congr_fun hx i₀;
-    grind +locals;
-  -- By inf'_achieved, there exists j₁ ≠ i₀ with x i₀ = W i₀ j₁ + x j₁.
-  obtain ⟨j₁, hj₁_ne_i₀, hj₁_eq⟩ : ∃ j₁ : Fin n, j₁ ≠ i₀ ∧ x i₀ = W i₀ j₁ + x j₁ := by
+    unfold tropReflect at this;
+    grind +qlia;
+  -- By exists_mem_eq_inf', there exists j₁ ≠ i₀ with x i₀ = W i₀ j₁ + x j₁.
+  obtain ⟨j₁, hj₁_ne_i₀, hj₁_eq⟩ : ∃ j₁, j₁ ≠ i₀ ∧ x i₀ = W i₀ j₁ + x j₁ := by
     have := Finset.exists_mem_eq_inf' ( erase_univ_nonempty hn i₀ ) ( fun j => W i₀ j + x j ) ; aesop;
-  grind
+  linarith [ hsep i₀ j₁ ( Ne.symm hj₁_ne_i₀ ), h_min j₁, hi₀.2 j₁ ]
 
 /-- **Main Theorem**: Under separation, the tropical reflective operator has a
 unique fixed point, namely `b`. This is the tropical reflective equilibrium. -/
@@ -178,9 +166,9 @@ theorem tropReflect_unique_fixed_point
     {n : ℕ} (hn : 2 ≤ n)
     (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
     (hsep : ∀ i j, i ≠ j → b i < W i j + b j) :
-    ∃! x : Fin n → ℝ, tropReflect hn W b x = x := by
-  exact ⟨b, tropReflect_fixed_of_separated hn W b hsep,
-    fun y hy => (tropReflect_fixed_unique hn W b hsep y hy)⟩
+    ∃! x : Fin n → ℝ, tropReflect hn W b x = x :=
+  ⟨b, tropReflect_fixed_of_separated hn W b hsep,
+    fun y hy => tropReflect_fixed_unique hn W b hsep y hy⟩
 
 /-! ## Theorem 3: Discrepancy Characterization -/
 
@@ -191,9 +179,9 @@ theorem tropDiscrepancy_eq_zero_iff
     {n : ℕ}
     (R : (Fin n → ℝ) → (Fin n → ℝ)) (x : Fin n → ℝ) :
     tropDiscrepancy R x = 0 ↔ R x = x := by
-  unfold tropDiscrepancy;
-  rw [ Finset.sum_eq_zero_iff_of_nonneg ] <;> simp +decide [ sub_eq_zero, funext_iff ];
-  exact forall_congr' fun _ => eq_comm
+  constructor;
+  · exact fun h => funext fun i => eq_comm.mp <| sub_eq_zero.mp <| abs_eq_zero.mp <| by rw [ tropDiscrepancy ] at h; exact Finset.sum_eq_zero_iff_of_nonneg ( fun _ _ => abs_nonneg _ ) |>.mp h i <| Finset.mem_univ i;
+  · unfold tropDiscrepancy; aesop;
 
 /-
 Discrepancy is always nonnegative.
@@ -202,8 +190,7 @@ theorem tropDiscrepancy_nonneg
     {n : ℕ}
     (R : (Fin n → ℝ) → (Fin n → ℝ)) (x : Fin n → ℝ) :
     0 ≤ tropDiscrepancy R x := by
-  -- The sum of non-negative terms is non-negative.
-  apply Finset.sum_nonneg; intro i _; apply abs_nonneg
+  exact Finset.sum_nonneg fun i _ => abs_nonneg _
 
 /-- The fixed point achieves zero discrepancy, which is the global minimum. -/
 theorem fixed_point_minimizes_discrepancy
@@ -223,23 +210,20 @@ theorem tropDiscrepancy_pos_of_ne_fixed
     (hsep : ∀ i j, i ≠ j → b i < W i j + b j)
     (x : Fin n → ℝ) (hx : x ≠ b) :
     0 < tropDiscrepancy (tropReflect hn W b) x := by
-  apply lt_of_le_of_ne; exact tropDiscrepancy_nonneg (tropReflect hn W b) x; exact Ne.symm (by
-  exact fun h => hx <| tropReflect_fixed_unique hn W b hsep x <| tropDiscrepancy_eq_zero_iff _ _ |>.1 h)
+  exact lt_of_le_of_ne ( tropDiscrepancy_nonneg _ _ ) ( Ne.symm ( by simpa [ hx ] using tropDiscrepancy_eq_zero_iff ( tropReflect hn W b ) x |>.not.mpr ( by simpa [ hx ] using tropReflect_fixed_unique hn W b hsep x ) ) )
 
 /-! ## Theorem 4: Broadcast Property -/
 
-/-
-The fixed point `b` satisfies broadcast: at each node, the update
-is determined by the bias term (since the bias wins under separation).
--/
+/-- The fixed point `b` satisfies broadcast: at each node, the update
+is determined by the bias term (since the bias wins under separation). -/
 theorem b_broadcasts
     {n : ℕ} (hn : 2 ≤ n)
     (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
     (hsep : ∀ i j, i ≠ j → b i < W i j + b j) :
     Broadcasts hn W b b := by
-  intro i;
-  rw [ tropReflect_fixed_of_separated hn W b hsep ];
-  exact Or.inl rfl
+  intro i
+  left
+  rw [tropReflect_fixed_of_separated hn W b hsep]
 
 /-! ## Theorem 5: Conscious State Identification -/
 
@@ -258,27 +242,69 @@ theorem b_isConsciousState
   have heq : y = b := tropReflect_fixed_unique hn W b hsep y hy
   rw [heq]
 
-/-! ## Theorem 6: Monotone Contraction -/
+/-! ## Theorem 6: Upper Bound and Iteration Properties -/
 
-/-
-The tropical reflective operator is coordinatewise ≤ `b`.
--/
+/-- The tropical reflective operator is coordinatewise ≤ `b`. -/
 theorem tropReflect_le_b
     {n : ℕ} (hn : 2 ≤ n) (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
     (x : Fin n → ℝ) (i : Fin n) :
-    tropReflect hn W b x i ≤ b i := by
-  exact min_le_left _ _
+    tropReflect hn W b x i ≤ b i :=
+  min_le_left _ _
 
-/-
-Iterating tropReflect from above (starting at `b`) stays at `b`.
--/
+/-- Iterating `tropReflect` from `b` stays at `b`. -/
 theorem iterate_tropReflect_from_b
     {n : ℕ} (hn : 2 ≤ n)
     (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
     (hsep : ∀ i j, i ≠ j → b i < W i j + b j)
     (k : ℕ) :
     (tropReflect hn W b)^[k] b = b := by
-  induction k <;> simp_all +decide [Function.iterate_succ_apply']
-  exact tropReflect_fixed_of_separated hn W b hsep
+  induction k with
+  | zero => simp
+  | succ k ih => simp [Function.iterate_succ_apply', ih, tropReflect_fixed_of_separated hn W b hsep]
+
+/-! ## Theorem 7: Stronger Unique Fixed Point Statement -/
+
+/-- The unique fixed point is exactly `b` — combining existence, uniqueness,
+and identification in a single statement. -/
+theorem tropReflect_unique_fixed_point_eq_bias
+    {n : ℕ} (hn : 2 ≤ n)
+    (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ)
+    (hsep : ∀ i j, i ≠ j → b i < W i j + b j) :
+    ∃! x : Fin n → ℝ, tropReflect hn W b x = x ∧ x = b := by
+  exact ⟨b, ⟨tropReflect_fixed_of_separated hn W b hsep, rfl⟩,
+    fun y ⟨hy, _⟩ => tropReflect_fixed_unique hn W b hsep y hy⟩
+
+/-! ## Min-Plus Idempotent Lemmas -/
+
+/-- `min` is idempotent: `min a a = a`. A foundational fact for tropical algebra. -/
+theorem min_self_idempotent (a : ℝ) : min a a = a := min_self a
+
+/-- `max` is idempotent: `max a a = a`. The dual idempotent law. -/
+theorem tropical_self_max_idempotent (a : ℝ) : max a a = a := max_self a
+
+/-
+An idempotent function on a finite type has a fixed point:
+applying it twice gives the same result as applying once, so any
+value in the image is a fixed point.
+-/
+theorem finite_idempotent_fixed_point {α : Type*} [Fintype α] [Nonempty α]
+    (f : α → α) (h_idem : f ∘ f = f) :
+    ∃ a, f a = a := by
+  exact ⟨ f ( Classical.arbitrary α ), congr_fun h_idem ( Classical.arbitrary α ) ⟩
+
+/-- A self-modeling system is a structure with a state space and a
+reflection (self-model) endomorphism. -/
+structure SelfModelingSystem where
+  State : Type*
+  reflect : State → State
+
+/-- Self-equivalence of fixed points: a fixed point of `reflect` is unchanged
+by further applications. -/
+theorem fixed_point_self_equiv (S : SelfModelingSystem) (s : S.State)
+    (hs : S.reflect s = s) (k : ℕ) :
+    S.reflect^[k] s = s := by
+  induction k with
+  | zero => simp
+  | succ k ih => simp [Function.iterate_succ_apply', ih, hs]
 
 end

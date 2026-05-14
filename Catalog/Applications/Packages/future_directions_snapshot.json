@@ -255,22 +255,6 @@
     "timestamp": "2026-05-14T16:03:53.839617+00:00"
   },
   {
-    "id": "seed_006",
-    "title": "Hodge Conjecture through Tropical Algebraic Cycles",
-    "description": "Reformulate the Hodge conjecture in terms of tropical algebraic cycles on idempotent compactifications of Kähler manifolds. Prove that Hodge classes in the tropical cohomology ring are exactly those represented by tropical subvarieties, establishing the conjecture for the tropical shadow and constructing a transfer principle back to the classical setting.",
-    "domains": [
-      "Algebra",
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.91,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "4816365b",
-    "timestamp": "2026-05-14T16:03:53.812680+00:00"
-  },
-  {
     "id": "seed_037",
     "title": "Thermodynamic Computation via Tropical Landauer's Principle",
     "description": "Formalize Landauer's principle in Lean: prove that any erasure operation on a semiring element costs at least kT ln 2 in tropical entropy, establishing tropical thermodynamics as a computational bound. Show that the min-plus free energy of a computation equals its tropical circuit depth, connecting physical and computational complexity through idempotent analysis.",
@@ -2263,6 +2247,62 @@
     "source_exp_id": "709f1672",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:34:14.219507+00:00"
+  },
+  {
+    "id": "fd_0186",
+    "title": "Formulates precise hypotheses",
+    "description": "as Lean theorem statements with `sorry`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4816365b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:34:31.617406+00:00"
+  },
+  {
+    "id": "fd_0187",
+    "title": "Tests hypotheses computationally",
+    "description": "using the Python algorithms on small examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4816365b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:34:31.622099+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Builds infrastructure incrementally",
+    "description": "— prove helper lemmas bottom-up.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4816365b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:34:31.626128+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Cross-validates",
+    "description": "with the mathematical literature.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4816365b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:34:31.630240+00:00"
   },
   {
     "id": "seed_078",
