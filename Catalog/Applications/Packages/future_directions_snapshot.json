@@ -184,10 +184,10 @@
       "EML"
     ],
     "priority_score": 0.93,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "181d8ba6",
     "timestamp": "2026-05-14T16:03:53.811765+00:00"
   },
   {
@@ -875,22 +875,6 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.840973+00:00"
-  },
-  {
-    "id": "seed_042",
-    "title": "Alien Algebra: Non-Archimedean Life Forms in Idempotent Semirings",
-    "description": "Prove that idempotent semiring algebras support self-replicating computational structures formalized as fixed-point attractors, establishing a mathematical framework for non-Archimedean 'life' that satisfies key axioms of artificial chemistry. Show that tropical cell automata on min-plus lattices exhibit universal self-replication with provable mutation bounds, opening a formal theory of alien computation.",
-    "domains": [
-      "Speculative",
-      "EML",
-      "Algebra"
-    ],
-    "priority_score": 0.77,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "51f002b7",
-    "timestamp": "2026-05-14T16:03:53.838094+00:00"
   },
   {
     "id": "seed_048",
@@ -1678,10 +1662,10 @@
       "Physics"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0c6f9fb",
     "timestamp": "2026-05-14T19:34:44.354883+00:00"
   },
   {
@@ -1961,20 +1945,6 @@
     "source_exp_id": "792d0062",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T22:28:53.531667+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "Repeat",
-    "description": ": Use new results to refine hypotheses and expand the theory.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "792d0062",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:28:53.537073+00:00"
   },
   {
     "id": "fd_0193",
@@ -2532,5 +2502,97 @@
     "source_exp_id": "23e88b22",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T22:26:25.361621+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "1. Tropical Replicator Composition and Ecosystem Interaction Theorems",
+    "description": "**Hypothesis:** If two tropical replicators R₁ and R₂ on the same finite lattice commute (R₁.step ∘ R₂.step = R₂.step ∘ R₁.step), their composition is again a tropical replicator. More generally, for a finite collection of pairwise commuting replicators, the composed system admits a global attractor that is the intersection of the individual attractor sets.\n\n**Proof Strategy:**\n- We proved `comp_idempotent_of_commuting` for the idempotent property. Extend this to monotonicity (composition of monotone maps is monotone) and inflationarity (under commutativity, the composition of inflationary maps is inflationary if they also commute with the order).\n- Define an \"ecosystem\" as a finite family of pairwise commuting TropicalReplicators. Prove that the set of fixed points of the composed system ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f002b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:34:47.493626+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "2. Encoding Universal Computation in Mutation-Stable Tropical Cellular Automata",
+    "description": "**Hypothesis:** There exists a finite tropical CA rule on a sufficiently large torus (Fin N → Fin M → ℕ) that is (a) monotone, (b) Lipschitz-1 in the sup metric, and (c) capable of simulating any bounded-space Turing machine computation via encoding of tape states as tropical vectors.\n\n**Proof Strategy:**\n- Start with known results on CA universality (e.g., Rule 110). Translate the Boolean CA into a tropical CA using the embedding 0 ↦ 0, 1 ↦ K for large K, with min/max operations replacing AND/OR.\n- The key challenge is maintaining Lipschitz-1 stability while achieving universality. Investigate whether a \"threshold\" tropical rule (using min, max, and bounded addition) suffices.\n- Formalize in Lean: define the encoding, prove that the tropical CA simulates the Boolean CA step-by-step, and v",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f002b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:34:47.501778+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "3. Ultrametric Phylogenetics of Attractor Basins",
+    "description": "**Hypothesis:** The basins of attraction of a monotone idempotent map F on a finite lattice carry a natural ultrametric structure: define d(x, y) = min{k : F^[k] x = F^[k] y}. This ultrametric encodes a \"phylogenetic tree\" of states, where states that converge to the same attractor faster are \"more closely related.\"\n\n**Proof Strategy:**\n- For idempotent F, the ultrametric collapses: d(x, y) ∈ {0, 1, ∞} depending on whether F x = F y or not. This is the \"flat\" case.\n- For inflationary monotone (non-idempotent) F, the ultrametric is genuinely non-trivial. Prove that d satisfies the strong triangle inequality d(x, z) ≤ max(d(x, y), d(y, z)).\n- Connect to tropical geometry: the ultrametric tree is a tropical curve (a metric graph), and the attractor map is a tropical morphism.\n\n**Cross-Domain ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f002b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:34:47.510240+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "4. Entropy and Information Theory for Idempotent Artificial Chemistry",
+    "description": "**Hypothesis:** Define \"tropical entropy\" of a state distribution as a min-plus analog of Shannon entropy. Prove that monotone idempotent dynamics are entropy-decreasing (or entropy-preserving on attractors), giving a second-law-like theorem for tropical artificial chemistry.\n\n**Proof Strategy:**\n- Define tropical entropy as H_trop(x) = min_i (x_i) or as the tropical analog of -Σ pᵢ log pᵢ using min-plus operations.\n- Prove that for monotone inflationary F, H_trop(F(x)) ≥ H_trop(x) (entropy increases toward the attractor) or the reverse, depending on the definition.\n- Investigate the \"free energy\" functional F(x) = Σᵢ xᵢ (tropical total weight) and prove it increases along orbits of inflationary maps.\n\n**Cross-Domain Connections:**\n- Thermodynamics: the second law as a theorem about monoto",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f002b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:34:47.517739+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "5. Categorical Semantics of Tropical Organisms as Closure Spaces",
+    "description": "**Hypothesis:** Tropical replicators form a category where morphisms are equivariant maps (maps that commute with the replication step). This category is equivalent to the category of closure spaces (complete lattices with closure operators). The fixed-point functor sending a replicator to its set of fixed points is a faithful functor to the category of sets.\n\n**Proof Strategy:**\n- Define the category TropRep with objects = TropicalReplicators and morphisms = monotone maps φ satisfying φ ∘ R₁.step = R₂.step ∘ φ.\n- Prove that this category has products (product replicators on product lattices), coproducts (disjoint union), and an initial object (the trivial replicator on a singleton).\n- Prove the equivalence with closure spaces by showing that every closure operator is a tropical replicator",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f002b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:34:47.525121+00:00"
   }
 ]

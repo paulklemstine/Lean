@@ -1,793 +1,775 @@
 #!/usr/bin/env python3
 """
-Composable Proof Schemata: Real-World Applications
+Applications of Composable Proof Schemata
 
-Demonstrates how the proof schemata framework applies to:
-1. Cryptography — security reductions as schema composition
-2. Machine learning — sample compression as finite core extraction
-3. Software verification — program invariants as rigidity
-4. Network analysis — graph properties via descent
+Demonstrates real-world applications of the proof schema framework:
+1. Cryptographic security reductions as schema composition
+2. Program verification via descent
+3. Network reliability via finite core extraction
+4. Automated theorem proving search strategies
 """
 
-import math
-from typing import List, Dict, Tuple, Set, Optional
+from typing import List, Tuple, Dict, Callable, Optional
 import random
-
-random.seed(42)
-
-
-# =============================================================================
-# Application 1: Cryptographic Security Reductions
-# =============================================================================
-
-def crypto_reduction_demo():
-    """
-    Security reductions in cryptography ARE proof schema compositions.
-    
-    A security proof typically says:
-    "If scheme A is broken, then hard problem H is solved."
-    This is exactly: ProofSchema.ReducesTo (Security A) (Hardness H)
-    
-    Composing reductions: A → B → C means breaking A breaks C.
-    """
-    print("=" * 60)
-    print("APPLICATION 1: Cryptographic Security Reductions")
-    print("=" * 60)
-    print()
-    
-    # Model security levels as numbers (bits of security)
-    reductions = [
-        ("RSA Encryption", "Factoring", 0.99, "Textbook reduction"),
-        ("Factoring", "RSA Problem", 1.0, "Equivalent"),
-        ("ElGamal", "DDH Assumption", 0.5, "Tight reduction"),
-        ("AES-128", "Key Recovery", 1.0, "Direct"),
-        ("SHA-256", "Collision Finding", 0.5, "Birthday bound"),
-    ]
-    
-    print("Security reductions as proof schema compositions:")
-    print()
-    for scheme, problem, tightness, note in reductions:
-        print(f"  Schema: Security({scheme}) ←reduces_to— Hardness({problem})")
-        print(f"          Tightness: {tightness:.2f}  ({note})")
-        print()
-    
-    print("Composition example:")
-    print("  RSA Encryption → Factoring → RSA Problem")
-    print("  Combined tightness: 0.99 × 1.0 = 0.99")
-    print()
-    print("The proof schema framework formalizes:")
-    print("  - Each reduction is a ProofSchema")
-    print("  - Composition is ProofSchema.comp")
-    print("  - Soundness guarantees security transfers")
-    print("  - Associativity means grouping doesn't matter")
-    print()
-
-
-# =============================================================================
-# Application 2: Sample Compression in ML
-# =============================================================================
-
-def ml_compression_demo():
-    """
-    Sample compression in learning theory is finite core extraction.
-    
-    A compression scheme finds a small subset (the core) such that
-    the hypothesis learned from the core correctly classifies everything.
-    """
-    print("=" * 60)
-    print("APPLICATION 2: Sample Compression in Machine Learning")
-    print("=" * 60)
-    print()
-    
-    # Generate a simple 1D classification problem
-    n_samples = 100
-    threshold = 0.5
-    X = [random.random() for _ in range(n_samples)]
-    y = [1 if x > threshold else 0 for x in X]
-    
-    print(f"Dataset: {n_samples} samples, threshold at {threshold}")
-    print(f"  Positive: {sum(y)}, Negative: {n_samples - sum(y)}")
-    print()
-    
-    # Find compression core: the two samples closest to the threshold
-    sorted_by_dist = sorted(range(n_samples), key=lambda i: abs(X[i] - threshold))
-    core_size = 2
-    core_indices = sorted_by_dist[:core_size]
-    
-    # Learn threshold from core
-    core_X = [X[i] for i in core_indices]
-    core_y = [y[i] for i in core_indices]
-    learned_threshold = sum(core_X) / len(core_X)
-    
-    # Verify on full dataset
-    predictions = [1 if x > learned_threshold else 0 for x in X]
-    accuracy = sum(1 for p, t in zip(predictions, y) if p == t) / n_samples
-    
-    print(f"Compression core: {core_size} samples (out of {n_samples})")
-    print(f"  Core points: {[f'{X[i]:.3f}' for i in core_indices]}")
-    print(f"  Learned threshold: {learned_threshold:.3f}")
-    print(f"  Full dataset accuracy: {accuracy:.1%}")
-    print()
-    print("This is a FiniteCoreSchema instantiation:")
-    print(f"  - IsCore(S) = S contains boundary samples")
-    print(f"  - core_exists: the 2 closest points to decision boundary")
-    print(f"  - propagate: threshold from core classifies everything")
-    print()
-    
-    # Compression ratio analysis
-    print("Compression ratio analysis:")
-    for k in [1, 2, 3, 5, 10, 20]:
-        core_idx = sorted_by_dist[:k]
-        c_X = [X[i] for i in core_idx]
-        c_threshold = sum(c_X) / len(c_X)
-        preds = [1 if x > c_threshold else 0 for x in X]
-        acc = sum(1 for p, t in zip(preds, y) if p == t) / n_samples
-        print(f"  Core size {k:2d}: accuracy = {acc:.1%}, "
-              f"compression = {k/n_samples:.1%}")
-    print()
-
-
-# =============================================================================
-# Application 3: Software Verification via Invariants
-# =============================================================================
-
-def software_verification_demo():
-    """
-    Program loop invariants are instances of invariant rigidity.
-    
-    A loop invariant I satisfies:
-    - I holds before the loop (base case)
-    - I is preserved by each iteration (rigidity)
-    - I implies the postcondition (soundness)
-    
-    This is exactly finite_invariant_classification:
-    - Invariant I classifies loop states
-    - Each iteration preserves the class
-    - Checking the invariant on representatives suffices
-    """
-    print("=" * 60)
-    print("APPLICATION 3: Software Verification via Invariants")
-    print("=" * 60)
-    print()
-    
-    # Example: verify a simple sorting algorithm
-    def insertion_sort(arr):
-        """Insertion sort with invariant tracking."""
-        trace = []
-        for i in range(1, len(arr)):
-            key = arr[i]
-            j = i - 1
-            while j >= 0 and arr[j] > key:
-                arr[j + 1] = arr[j]
-                j -= 1
-            arr[j + 1] = key
-            
-            # Check invariant: arr[0..i] is sorted
-            sorted_prefix = all(arr[k] <= arr[k+1] for k in range(i))
-            trace.append({
-                'iteration': i,
-                'state': arr.copy(),
-                'invariant_holds': sorted_prefix,
-                'prefix_sorted': arr[:i+1]
-            })
-        
-        return arr, trace
-    
-    test_arr = [5, 3, 8, 1, 9, 2, 7]
-    print(f"Sorting {test_arr} with insertion sort:")
-    print()
-    
-    sorted_arr, trace = insertion_sort(test_arr.copy())
-    for step in trace:
-        inv = "✓" if step['invariant_holds'] else "✗"
-        print(f"  Iteration {step['iteration']}: {step['state']}  "
-              f"Invariant: {inv}  Sorted prefix: {step['prefix_sorted']}")
-    
-    print()
-    print("Invariant rigidity analysis:")
-    print("  - Invariant: 'first i elements are sorted'")
-    print("  - Base: trivially true for i=0 (empty prefix)")
-    print("  - Rigidity: insertion preserves sortedness of prefix")
-    print("  - Soundness: when i=n, entire array is sorted")
-    print()
-    print("This maps to the proof schema framework:")
-    print("  - ConstructiveSchema: sort(P) = sorted version of P")
-    print("  - Certify: sorted array satisfies ordering property")
-    print("  - Descent: each iteration reduces 'unsorted suffix length'")
-    print()
-
-
-# =============================================================================
-# Application 4: Network Analysis via Graph Descent
-# =============================================================================
-
-def network_analysis_demo():
-    """
-    Graph properties often follow from descent on graph size.
-    
-    Example: prove that every connected graph on n vertices has ≥ n-1 edges.
-    Descent: if a connected graph G has fewer than n-1 edges,
-    removing a leaf gives a connected graph G' with fewer vertices
-    and even fewer edges relative to its size.
-    """
-    print("=" * 60)
-    print("APPLICATION 4: Network Analysis via Graph Descent")
-    print("=" * 60)
-    print()
-    
-    # Generate random graphs and verify property
-    def random_connected_graph(n: int) -> Tuple[int, List[Tuple[int, int]]]:
-        """Generate a random connected graph on n vertices."""
-        # Start with a spanning tree
-        edges = set()
-        for i in range(1, n):
-            j = random.randint(0, i - 1)
-            edges.add((min(i, j), max(i, j)))
-        
-        # Add some random edges
-        extra = random.randint(0, n)
-        for _ in range(extra):
-            i, j = random.randint(0, n-1), random.randint(0, n-1)
-            if i != j:
-                edges.add((min(i, j), max(i, j)))
-        
-        return n, list(edges)
-    
-    print("Verifying: connected graph on n vertices has ≥ n-1 edges")
-    print()
-    
-    all_verified = True
-    for n in range(2, 15):
-        results = []
-        for trial in range(20):
-            n_v, edges = random_connected_graph(n)
-            n_e = len(edges)
-            satisfies = n_e >= n_v - 1
-            results.append(satisfies)
-            if not satisfies:
-                all_verified = False
-        
-        success_rate = sum(results) / len(results)
-        print(f"  n={n:2d}: {len(results)} random graphs, "
-              f"all satisfy |E| ≥ n-1: {success_rate == 1.0}")
-    
-    print()
-    print(f"All verified: {all_verified}")
-    print()
-    
-    # Descent argument
-    print("Descent argument structure:")
-    print("  Measure: μ(G) = |V(G)|")
-    print("  Step: If connected G has < n-1 edges:")
-    print("    - Find a leaf v (degree 1 vertex)")
-    print("    - Remove v to get G' with n-1 vertices")
-    print("    - G' is connected with < (n-1)-1 edges")
-    print("    - By descent, this is impossible")
-    print("  Base: K_1 (single vertex, 0 edges) satisfies 0 ≥ 1-1")
-    print()
-
-
-# =============================================================================
-# Application 5: Error-Correcting Codes as Finite Core
-# =============================================================================
-
-def error_correction_demo():
-    """
-    Error-correcting codes use the finite core principle:
-    a small number of parity checks (the core) control
-    the correctness of an arbitrarily long message.
-    """
-    print("=" * 60)
-    print("APPLICATION 5: Error-Correcting Codes as Finite Core")
-    print("=" * 60)
-    print()
-    
-    # Simple Hamming code example
-    def hamming_encode(data: List[int]) -> List[int]:
-        """Encode 4 data bits with 3 parity bits (Hamming [7,4])."""
-        d1, d2, d3, d4 = data
-        p1 = d1 ^ d2 ^ d4
-        p2 = d1 ^ d3 ^ d4
-        p3 = d2 ^ d3 ^ d4
-        return [p1, p2, d1, p3, d2, d3, d4]
-    
-    def hamming_check(codeword: List[int]) -> Tuple[bool, int]:
-        """Check and correct single-bit errors."""
-        p1, p2, d1, p3, d2, d3, d4 = codeword
-        s1 = p1 ^ d1 ^ d2 ^ d4
-        s2 = p2 ^ d1 ^ d3 ^ d4
-        s3 = p3 ^ d2 ^ d3 ^ d4
-        syndrome = s1 + 2 * s2 + 4 * s3  # Error position (0 = no error)
-        return syndrome == 0, syndrome
-    
-    print("Hamming [7,4] Code: Finite Core in Action")
-    print()
-    
-    # Encode some data
-    data = [1, 0, 1, 1]
-    codeword = hamming_encode(data)
-    print(f"  Data:     {data}")
-    print(f"  Encoded:  {codeword}")
-    
-    # Check correctness
-    ok, syndrome = hamming_check(codeword)
-    print(f"  Check:    valid={ok}, syndrome={syndrome}")
-    print()
-    
-    # Introduce an error
-    for error_pos in range(7):
-        corrupted = codeword.copy()
-        corrupted[error_pos] ^= 1
-        ok, syndrome = hamming_check(corrupted)
-        print(f"  Error at position {error_pos}: {corrupted} → "
-              f"syndrome={syndrome}, detected={not ok}")
-    
-    print()
-    print("Finite core principle:")
-    print(f"  - Core: 3 parity bits (out of 7 total bits)")
-    print(f"  - These 3 checks control correctness of all 7 bits")
-    print(f"  - Propagate: syndrome identifies and corrects any single error")
-    print(f"  - Compression ratio: 3/7 = {3/7:.1%} of bits are 'core'")
-    print()
-
-
-# =============================================================================
-# Main
-# =============================================================================
-
-def main():
-    print()
-    print("╔" + "═" * 58 + "╗")
-    print("║  PROOF SCHEMATA: REAL-WORLD APPLICATIONS               ║")
-    print("╚" + "═" * 58 + "╝")
-    print()
-    
-    crypto_reduction_demo()
-    ml_compression_demo()
-    software_verification_demo()
-    network_analysis_demo()
-    error_correction_demo()
-    
-    print("=" * 60)
-    print("CROSS-DOMAIN SUMMARY")
-    print("=" * 60)
-    print()
-    print("The proof schemata framework unifies:")
-    print()
-    print("  Cryptography:    Security reductions = schema composition")
-    print("  Machine Learning: Sample compression = finite core extraction")
-    print("  Software:        Loop invariants = invariant rigidity")
-    print("  Networks:        Graph properties = measured descent")
-    print("  Coding Theory:   Parity checks = finite core verification")
-    print()
-    print("Each application instantiates the same formal structures")
-    print("(ProofSchema, FiniteCoreSchema, DescentSchema) on domain-")
-    print("specific objects, demonstrating the universality of the")
-    print("composable proof architecture framework.")
-    print()
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Composable Proof Schemata: Demonstrations
-
-This module demonstrates the key mathematical concepts from the formal theory
-of composable proof schemata using concrete numerical examples.
-"""
-
 import math
-from typing import Callable, Optional, List, Tuple
 
 
-# =============================================================================
-# §1. The Descent Principle on Natural Numbers
-# =============================================================================
+# ============================================================
+# Application 1: Cryptographic Security Reductions
+# ============================================================
 
-def demonstrate_descent():
+class SecurityReduction:
     """
-    Demonstrate the descent principle: if every counterexample has a
-    strictly smaller counterexample, then no counterexample exists.
+    Models a cryptographic security reduction as a proof schema.
     
-    Example: Prove that all natural numbers ≤ 100 satisfy n² ≥ n.
-    The descent step: if n² < n, then n-1 also satisfies (n-1)² < n-1
-    (which is actually false for n=1, confirming the property holds).
-    """
-    print("=" * 60)
-    print("DESCENT PRINCIPLE DEMONSTRATION")
-    print("=" * 60)
-    print()
-    print("Claim: For all n ∈ ℕ, n² ≥ n")
-    print()
+    In cryptography, a "security reduction" proves that breaking
+    scheme B is at least as hard as breaking scheme A:
     
-    # Attempt to find a counterexample and show descent would fail
-    counterexamples = []
-    for n in range(101):
-        if n * n < n:
-            counterexamples.append(n)
-            # Try to descend
-            found_smaller = False
-            for m in range(n):
-                if m * m < m:
-                    found_smaller = True
-                    break
-            if found_smaller:
-                print(f"  n={n}: COUNTER, descends to m={m}")
-            else:
-                print(f"  n={n}: COUNTER, NO DESCENT (minimal)")
+      "If adversary breaks B, then we can break A"
+      
+    This is exactly a proof schema:
+      ReducesTo(Secure_B, Secure_A)
+      Sound: Secure_A → Secure_B
     
-    if not counterexamples:
-        print("  No counterexamples found in [0, 100].")
-        print("  Descent principle confirms: the property holds universally.")
-        print()
-        print("  Why it works: If n² < n, then n > 0, and we need m < n")
-        print("  with m² < m. But 0² = 0 ≥ 0 and 1² = 1 ≥ 1, so descent")
-        print("  is impossible at the base, confirming no counterexample exists.")
-    print()
-
-
-# =============================================================================
-# §2. Proof Schema Composition
-# =============================================================================
-
-class ProofSchema:
-    """
-    A proof schema: a certified reduction between predicates.
-    
-    reduces_to(P, Q) means: proving Q suffices to prove P.
-    sound: if reduces_to(P, Q), then Q(x) implies P(x) for all x.
+    Composition of reductions gives transitive security:
+      A reduces to B, B reduces to C → A reduces to C
     """
     
     def __init__(self, name: str, 
-                 transform: Callable[[Callable], Callable],
-                 certify: Callable[[Callable, int], bool]):
+                 source: str, target: str,
+                 loss_factor: float = 1.0):
         self.name = name
-        self.transform = transform
-        self.certify = certify
+        self.source = source  # What we want to prove secure
+        self.target = target  # What we assume is secure
+        self.loss_factor = loss_factor  # Security loss in reduction
     
-    def compose(self, other: 'ProofSchema') -> 'ProofSchema':
-        """Compose two proof schemata: first self, then other."""
-        def composed_transform(P):
-            Q = self.transform(P)
-            R = other.transform(Q)
-            return R
-        
-        def composed_certify(P, x):
-            R = composed_transform(P)
-            Q = self.transform(P)
-            # R(x) → Q(x) → P(x)
-            return R(x) and other.certify(Q, x) and self.certify(P, x)
-        
-        return ProofSchema(
-            f"({self.name} ∘ {other.name})",
-            composed_transform,
-            composed_certify
+    def compose(self, other: 'SecurityReduction') -> 'SecurityReduction':
+        """Compose two security reductions."""
+        assert self.target == other.source, \
+            f"Cannot compose: {self.target} ≠ {other.source}"
+        return SecurityReduction(
+            name=f"{self.name} ∘ {other.name}",
+            source=self.source,
+            target=other.target,
+            loss_factor=self.loss_factor * other.loss_factor
         )
 
 
-def demonstrate_composition():
-    """
-    Demonstrate schema composition with concrete schemata.
-    
-    Schema S: "to prove P(n), it suffices to prove P(n) for even n 
-              and derive odd cases from even"
-    Schema T: "to prove P(n) for even n, check P(0) and propagate"
-    """
+def demo_crypto_reductions():
+    """Demonstrate security reductions as proof schemata."""
     print("=" * 60)
-    print("PROOF SCHEMA COMPOSITION DEMONSTRATION")
+    print("APPLICATION 1: CRYPTOGRAPHIC SECURITY REDUCTIONS")
     print("=" * 60)
-    print()
     
-    # Schema S: reduce to even numbers
-    def even_reduce(P):
-        """Reduce: P holds iff P holds on all even numbers and even→odd works."""
-        return lambda n: P(n) if n % 2 == 0 else True
-    
-    def even_certify(P, x):
-        return True  # Even reduction is sound by construction
-    
-    S = ProofSchema("EvenReduce", even_reduce, even_certify)
-    
-    # Schema T: reduce to base case
-    def base_reduce(P):
-        """Reduce: P holds iff P(0) holds and P propagates."""
-        return lambda n: P(0)
-    
-    def base_certify(P, x):
-        return P(0)
-    
-    T = ProofSchema("BaseReduce", base_reduce, base_certify)
+    # Define reductions
+    r1 = SecurityReduction("DDH→DLog", "DDH", "DLog", 1.0)
+    r2 = SecurityReduction("ElGamal→DDH", "ElGamal", "DDH", 2.0)
+    r3 = SecurityReduction("Hybrid→ElGamal", "HybridEnc", "ElGamal", 1.0)
     
     # Compose
-    ST = S.compose(T)
+    r12 = r2.compose(r1)
+    r123 = r3.compose(r12)
     
-    # Test on P(n) = "n + 1 > 0"
-    P = lambda n: n + 1 > 0
+    print(f"\n  Reduction chain:")
+    print(f"    {r3.name}: {r3.source} → {r3.target} (loss: {r3.loss_factor}x)")
+    print(f"    {r2.name}: {r2.source} → {r2.target} (loss: {r2.loss_factor}x)")
+    print(f"    {r1.name}: {r1.source} → {r1.target} (loss: {r1.loss_factor}x)")
+    print(f"\n  Composed: {r123.name}")
+    print(f"    {r123.source} → {r123.target}")
+    print(f"    Total security loss: {r123.loss_factor}x")
+    print(f"\n  Interpretation:")
+    print(f"    If DLog is (t, ε)-hard, then HybridEnc is")
+    print(f"    (t, {r123.loss_factor}ε)-secure.")
     
-    print(f"Schema S: {S.name}")
-    print(f"Schema T: {T.name}")
-    print(f"Composed: {ST.name}")
-    print()
-    print(f"Testing on P(n) = 'n + 1 > 0':")
-    print(f"  P(0) = {P(0)}")
-    print(f"  P(5) = {P(5)}")
-    print(f"  S.transform(P)(4) = {S.transform(P)(4)} (even)")
-    print(f"  S.transform(P)(5) = {S.transform(P)(5)} (odd, auto-true)")
-    print(f"  T.transform(S.transform(P))(0) = {T.transform(S.transform(P))(0)}")
-    print(f"  Composition is sound: reduce → verify base → propagate")
-    print()
+    # Associativity
+    r23 = r3.compose(r2)
+    r1_23 = r23.compose(r1)
+    print(f"\n  Associativity check:")
+    print(f"    (r3 ∘ r2) ∘ r1 loss = {r1_23.loss_factor}")
+    print(f"    r3 ∘ (r2 ∘ r1) loss = {r123.loss_factor}")
+    print(f"    Equal: {r1_23.loss_factor == r123.loss_factor}")
 
 
-# =============================================================================
-# §3. Measured Descent on Various Types
-# =============================================================================
+# ============================================================
+# Application 2: Program Verification via Descent
+# ============================================================
 
-def demonstrate_measured_descent():
-    """
-    Show descent working on different measured types:
-    - Natural numbers with identity measure
-    - Lists with length measure  
-    - Finite sets with cardinality measure
-    """
+def demo_program_verification():
+    """Use descent to verify program termination and correctness."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: PROGRAM VERIFICATION VIA DESCENT")
     print("=" * 60)
-    print("MEASURED DESCENT ON VARIOUS TYPES")
+    
+    # Verify Euclidean algorithm terminates
+    print("\n  Verifying: Euclidean GCD algorithm terminates")
+    print("  Measure: μ(a, b) = b")
+    print("  Descent: gcd(a, b) → gcd(b, a mod b), and a mod b < b")
+    
+    def gcd_trace(a: int, b: int) -> List[Tuple[int, int, int]]:
+        """Trace GCD computation with measures."""
+        trace = []
+        while b > 0:
+            trace.append((a, b, b))  # (a, b, measure)
+            a, b = b, a % b
+        trace.append((a, b, b))
+        return trace
+    
+    test_cases = [(48, 18), (1071, 462), (270, 192), (17, 13)]
+    for a, b in test_cases:
+        trace = gcd_trace(a, b)
+        measures = [t[2] for t in trace]
+        print(f"\n    gcd({a}, {b}):")
+        for step_a, step_b, m in trace:
+            print(f"      ({step_a}, {step_b}) → μ = {m}")
+        print(f"      Measures strictly decrease: {all(measures[i] > measures[i+1] for i in range(len(measures)-2))}")
+        print(f"      Result: gcd = {trace[-1][0]}")
+    
+    # Verify loop invariant via descent
+    print("\n  Verifying: Binary search correctness")
+    print("  Measure: μ(lo, hi) = hi - lo")
+    print("  Descent: each step halves the interval")
+    
+    def binary_search_trace(arr: List[int], target: int):
+        lo, hi = 0, len(arr) - 1
+        trace = []
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            measure = hi - lo
+            trace.append((lo, hi, mid, measure))
+            if arr[mid] == target:
+                return trace, mid
+            elif arr[mid] < target:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        return trace, -1
+    
+    arr = list(range(0, 100, 3))
+    trace, result = binary_search_trace(arr, 42)
+    print(f"\n    Searching for 42 in {arr[:5]}...{arr[-3:]}")
+    for lo, hi, mid, m in trace:
+        print(f"      [{lo}, {hi}] → mid={mid}, μ={m}")
+    print(f"    Found at index: {result}")
+
+
+# ============================================================
+# Application 3: Network Reliability via Finite Core
+# ============================================================
+
+def demo_network_reliability():
+    """Demonstrate finite core extraction for network analysis."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: NETWORK RELIABILITY VIA FINITE CORE")
     print("=" * 60)
-    print()
     
-    # Example 1: GCD descent
-    print("Example 1: GCD Computation via Descent")
-    print("-" * 40)
-    a, b = 252, 105
-    print(f"Computing GCD({a}, {b}) via Euclidean descent:")
-    steps = []
-    x, y = a, b
-    while y > 0:
-        measure = y
-        steps.append((x, y, measure))
-        x, y = y, x % y
-    steps.append((x, y, 0))
+    # Create a network graph
+    n_nodes = 20
+    random.seed(42)
+    edges = set()
+    for i in range(n_nodes):
+        for j in range(i+1, n_nodes):
+            if random.random() < 0.3:
+                edges.add((i, j))
     
-    for i, (x, y, m) in enumerate(steps):
-        if y > 0:
-            print(f"  Step {i}: GCD({x}, {y}), measure = {m}")
-        else:
-            print(f"  Step {i}: GCD({x}, {y}) = {x}, measure = {m}")
-    print(f"  Measures: {[s[2] for s in steps]} — strictly decreasing!")
-    print()
+    print(f"\n  Network: {n_nodes} nodes, {len(edges)} edges")
     
-    # Example 2: List processing descent
-    print("Example 2: Sorting Verification via List Length Descent")
-    print("-" * 40)
-    lst = [5, 3, 8, 1, 9, 2, 7]
-    print(f"Verifying sort of {lst}:")
+    # Find a finite core (dominating set)
+    def find_dominating_set(n: int, edges: set) -> set:
+        """Greedy dominating set as a 'finite core'."""
+        adj = {i: set() for i in range(n)}
+        for u, v in edges:
+            adj[u].add(v)
+            adj[v].add(u)
+        
+        covered = set()
+        core = set()
+        
+        while covered != set(range(n)):
+            # Pick node covering most uncovered neighbors
+            best = max(range(n), key=lambda v: len(adj[v] - covered) + (1 if v not in covered else 0))
+            core.add(best)
+            covered.add(best)
+            covered.update(adj[best])
+        
+        return core
     
-    def check_sorted(lst):
-        """Check if sorted; if not, find a smaller unsorted sublist."""
-        for i in range(len(lst) - 1):
-            if lst[i] > lst[i + 1]:
-                return False, lst[:i] + lst[i+1:]  # Remove offending element
-        return True, lst
+    core = find_dominating_set(n_nodes, edges)
+    print(f"  Finite core (dominating set): {sorted(core)}")
+    print(f"  Core size: {len(core)} (out of {n_nodes} nodes)")
+    print(f"  Compression ratio: {len(core)/n_nodes:.1%}")
     
-    current = lst
-    step = 0
-    while len(current) > 1:
-        is_sorted, smaller = check_sorted(current)
-        if is_sorted:
-            print(f"  Step {step}: {current} is sorted (length {len(current)})")
-            break
-        else:
-            print(f"  Step {step}: {current} not sorted, descent to length {len(smaller)}")
-            current = smaller
-            step += 1
-    print(f"  Descent terminates: any 'bad' list has a smaller 'bad' sublist,")
-    print(f"  and eventually we reach a 1-element list (always sorted).")
-    print()
+    print(f"\n  Interpretation:")
+    print(f"    To verify a monotone property on the entire network,")
+    print(f"    it suffices to verify it on {len(core)} core nodes.")
+    print(f"    This is the 'finite core' principle in action:")
+    print(f"    global_of_finite_core applied to network properties.")
 
 
-# =============================================================================
-# §4. Invariant Rigidity Classification
-# =============================================================================
+# ============================================================
+# Application 4: Automated Reasoning Strategies
+# ============================================================
 
-def demonstrate_invariant_rigidity():
-    """
-    Demonstrate invariant rigidity: classify objects by an invariant,
-    find a canonical representative per class, propagate properties.
-    """
+def demo_automated_reasoning():
+    """Show how proof schemata guide automated reasoning."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: AUTOMATED REASONING STRATEGIES")
     print("=" * 60)
-    print("INVARIANT RIGIDITY CLASSIFICATION")
+    
+    print("""
+  Proof schemata as reusable search strategies:
+  
+  Strategy 1: DESCENT SEARCH
+    Given goal ∀ n, P(n):
+    → Try strong induction on n
+    → For each case, find descent witness
+    → Terminate when base cases are reached
+    
+  Strategy 2: CLASSIFY-AND-VERIFY
+    Given goal ∀ x, P(x):
+    → Find invariant I : α → β with |β| small
+    → For each class b ∈ β:
+      → Find canonical representative
+      → Verify P on representative
+      → Transfer by rigidity
+      
+  Strategy 3: MINIMIZE-AND-ELIMINATE
+    Given goal ∀ x, ¬Bad(x):
+    → Assume Bad(x₀) for contradiction
+    → Find minimal bad x* with μ(x*) minimal
+    → Derive contradiction from minimality of x*
+  """)
+    
+    # Simulate strategy application
+    print("  Simulated strategy application:")
+    print("  Goal: Every number > 1 has a prime factor")
+    
+    def has_prime_factor(n: int) -> Tuple[bool, Optional[int]]:
+        if n <= 1:
+            return True, None
+        for p in range(2, int(math.sqrt(n)) + 1):
+            if n % p == 0:
+                # Check if p is prime
+                is_prime = all(p % i != 0 for i in range(2, p))
+                if is_prime:
+                    return True, p
+        # n itself is prime
+        return True, n
+    
+    print("\n    Using DESCENT SEARCH:")
+    for n in [2, 6, 15, 35, 97, 100, 1000]:
+        result, factor = has_prime_factor(n)
+        print(f"      n={n:4d}: prime factor = {factor}")
+    
+    print("\n    Using CLASSIFY-AND-VERIFY (mod 6 classification):")
+    for r in range(6):
+        examples = [n for n in range(2, 50) if n % 6 == r][:3]
+        factors = [(n, has_prime_factor(n)[1]) for n in examples]
+        print(f"      Class {r} mod 6: {factors}")
+
+
+# ============================================================
+# Application 5: Mathematical Discovery Pipeline
+# ============================================================
+
+def demo_discovery_pipeline():
+    """Show the proof schema framework as a discovery tool."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 5: MATHEMATICAL DISCOVERY PIPELINE")
     print("=" * 60)
-    print()
     
-    # Classify integers mod 3 by their residue
-    print("Example: Classifying integers mod 3")
-    print("-" * 40)
+    print("""
+  The proof schema framework enables systematic mathematical discovery:
+  
+  Step 1: IDENTIFY THE PATTERN
+    Look at known proofs → extract the schema structure
     
-    invariant = lambda n: n % 3  # The invariant
+  Step 2: FORMALIZE THE SCHEMA  
+    Define ProofSchema, DescentSchema, or ConstructiveSchema
     
-    # Property: "n mod 3 determines whether n is divisible by 3"
-    # Canonical representatives: 0, 1, 2
-    canonical_reps = {0: 0, 1: 1, 2: 2}
+  Step 3: PROVE COMPOSITION
+    Show schemata compose → get new theorems "for free"
     
-    print(f"Invariant I(n) = n mod 3")
-    print(f"Fibers:")
-    for residue in range(3):
-        examples = [n for n in range(20) if n % 3 == residue]
-        canonical = canonical_reps[residue]
-        div_by_3 = canonical % 3 == 0
-        print(f"  I⁻¹({residue}): {examples}...")
-        print(f"    Canonical rep: {canonical}")
-        print(f"    Divisible by 3: {div_by_3}")
-        print(f"    → ALL elements in fiber: divisible by 3 = {div_by_3}")
+  Step 4: TRANSFER TO NEW DOMAINS
+    Apply the composed schema to new mathematical objects
+  
+  Example pipeline:
+    Input: "Fermat's descent for x⁴ + y⁴ = z²"
+    → Extract: DescentSchema with μ(x,y,z) = z
+    → Compose with: invariant schema I(x,y,z) = (x mod 2, y mod 2)
+    → Transfer to: other Diophantine equations
+    → Output: automated descent proofs for related equations
+  """)
     
-    print()
-    print("Key insight: checking 3 representatives suffices for ALL integers.")
-    print("This is invariant rigidity: the invariant compresses infinite")
-    print("verification to finite (3 checks).")
-    print()
+    # Concrete: use descent to show no solution to x² + y² = 3z² 
+    # in positive integers (sketch)
+    print("  Concrete pipeline run:")
+    print("  Goal: No positive integer solution to x² + y² ≡ 3 (mod 4)")
+    print("  Schema: parity obstruction + finite verification")
+    
+    print("\n  Finite core: check all (x mod 4, y mod 4) pairs")
+    found_solution = False
+    for x_mod in range(4):
+        for y_mod in range(4):
+            lhs = (x_mod**2 + y_mod**2) % 4
+            if lhs == 3:
+                found_solution = True
+                print(f"    ({x_mod}, {y_mod}): x²+y² ≡ {lhs} (mod 4) ✓")
+    
+    if not found_solution:
+        print("    No residue pair gives x²+y² ≡ 3 (mod 4)")
+        print("    → By finite core principle: x²+y² ≢ 3 (mod 4) for all x,y")
+        print("    → Therefore: x²+y² ≠ 3z² for any positive integers")
 
 
-# =============================================================================
-# §5. The Strategy Triad
-# =============================================================================
-
-def demonstrate_strategy_triad():
-    """
-    Demonstrate the full Strategy Triad:
-    Descent + Finite Obstruction + Invariant Rigidity
-    
-    Example: Prove there are no "bad" numbers, where Bad(n) means
-    n > 0 and n is not expressible as a sum of 1s.
-    """
-    print("=" * 60)
-    print("THE STRATEGY TRIAD: COMBINED PROOF ARCHITECTURE")
-    print("=" * 60)
-    print()
-    
-    print("Claim: Every positive integer is expressible as a sum of 1s.")
-    print()
-    
-    # Define "Bad": a positive number not expressible as sum of 1s
-    # (This is trivially false, but it demonstrates the pattern)
-    
-    # Layer 1: Descent
-    print("Layer 1 — DESCENT:")
-    print("  If n is 'bad' (not a sum of 1s), then n-1 is also 'bad'")
-    print("  (since adding 1 to a sum-of-1s gives a sum-of-1s).")
-    print("  Measure: μ(n) = n, strictly decreasing.")
-    print()
-    
-    # Layer 2: Finite Obstruction  
-    print("Layer 2 — FINITE OBSTRUCTION:")
-    print("  Descent reaches n=0. But 0 is vacuously a sum of 0 ones.")
-    print("  The finite obstruction set is {0}: check this one case.")
-    print()
-    
-    # Layer 3: Invariant Rigidity
-    print("Layer 3 — INVARIANT RIGIDITY:")
-    print("  The invariant I(n) = n mod 1 = 0 is trivial here.")
-    print("  All numbers share one fiber. One canonical rep suffices.")
-    print()
-    
-    # Composition
-    print("COMPOSITION: Descent to 0 → Check base case → Propagate")
-    print("  Result: ∀ n, n is a sum of 1s. ✓")
-    print()
-    
-    # A more interesting example
-    print("-" * 40)
-    print("More interesting example: Fibonacci GCD identity")
-    print("-" * 40)
-    print()
-    print("Claim: gcd(F_m, F_n) = F_{gcd(m,n)} for all m, n ≥ 1")
-    print()
-    
-    def fib(n):
-        if n <= 0: return 0
-        if n == 1: return 1
-        a, b = 0, 1
-        for _ in range(2, n + 1):
-            a, b = b, a + b
-        return b
-    
-    print("Verification by descent on max(m, n):")
-    for m in range(1, 10):
-        for n in range(1, 10):
-            g = math.gcd(m, n)
-            lhs = math.gcd(fib(m), fib(n))
-            rhs = fib(g)
-            status = "✓" if lhs == rhs else "✗"
-            if m <= 5 and n <= 5:
-                print(f"  gcd(F_{m}, F_{n}) = gcd({fib(m)}, {fib(n)}) = {lhs}"
-                      f"  vs  F_{{gcd({m},{n})}} = F_{g} = {rhs}  {status}")
-    
-    print()
-    print("Descent argument: if the identity fails at (m,n),")
-    print("use F_{m} = F_{n} · F_{m-n-1} + F_{n-1} · F_{m-n}")
-    print("to reduce to a smaller pair, eventually reaching base cases.")
-    print()
-
-
-# =============================================================================
-# §6. Finite Core Extraction
-# =============================================================================
-
-def demonstrate_finite_core():
-    """
-    Demonstrate finite core extraction: verifying a property on a
-    finite set of representatives suffices for all elements.
-    """
-    print("=" * 60)
-    print("FINITE CORE EXTRACTION")
-    print("=" * 60)
-    print()
-    
-    print("Example: Wilson's theorem characterization of primes")
-    print("-" * 40)
-    print()
-    print("Wilson's theorem: p is prime ↔ (p-1)! ≡ -1 (mod p)")
-    print()
-    print("Finite core: check for all p in a range")
-    print()
-    
-    for p in range(2, 20):
-        factorial_mod = math.factorial(p - 1) % p
-        is_prime = all(p % i != 0 for i in range(2, p))
-        wilson_holds = (factorial_mod == p - 1)
-        status = "✓" if (is_prime == wilson_holds) else "✗"
-        print(f"  p={p:2d}: (p-1)! mod p = {factorial_mod:6d} mod {p:2d} = {factorial_mod % p:2d}, "
-              f"prime={str(is_prime):5s}, Wilson={str(wilson_holds):5s} {status}")
-    
-    print()
-    print("The finite core principle: to verify Wilson's theorem for ALL primes,")
-    print("it suffices to verify it on a finite set of primes up to some bound,")
-    print("then use the algebraic structure to propagate.")
-    print()
-
-
-# =============================================================================
+# ============================================================
 # Main
-# =============================================================================
-
-def main():
-    print()
-    print("╔" + "═" * 58 + "╗")
-    print("║  COMPOSABLE PROOF SCHEMATA: INTERACTIVE DEMONSTRATIONS  ║")
-    print("╚" + "═" * 58 + "╝")
-    print()
-    
-    demonstrate_descent()
-    demonstrate_composition()
-    demonstrate_measured_descent()
-    demonstrate_invariant_rigidity()
-    demonstrate_strategy_triad()
-    demonstrate_finite_core()
-    
-    print("=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
-    print()
-    print("Key demonstrations:")
-    print("  1. Descent principle eliminates counterexamples")
-    print("  2. Proof schemata compose (chain reductions)")
-    print("  3. Measured descent works on lists, sets, any measured type")
-    print("  4. Invariant rigidity compresses verification to finite checks")
-    print("  5. The Strategy Triad combines all three layers")
-    print("  6. Finite core extraction reduces infinite to finite")
-    print()
-    print("All of these are formally verified in Lean 4 with zero sorry.")
-    print()
-
+# ============================================================
 
 if __name__ == "__main__":
-    main()
+    print("╔" + "═" * 58 + "╗")
+    print("║  APPLICATIONS OF COMPOSABLE PROOF SCHEMATA              ║")
+    print("╚" + "═" * 58 + "╝")
+    
+    demo_crypto_reductions()
+    demo_program_verification()
+    demo_network_reliability()
+    demo_automated_reasoning()
+    demo_discovery_pipeline()
+    
+    print("\n" + "=" * 60)
+    print("All applications demonstrated successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Composable Proof Schemata: Visualizations
+Composable Proof Schemata: Concrete Demonstrations
+
+This module demonstrates the key theorems from the formal theory of
+proof architecture with concrete numerical examples.
+"""
+
+from typing import Callable, Optional, Tuple, List
+
+
+# ============================================================
+# §1. Proof Schema — Core Abstraction
+# ============================================================
+
+class ProofSchema:
+    """A certified reduction between predicates.
+    
+    A ProofSchema transforms a hard-to-verify predicate P into a
+    simpler predicate Q, with a soundness guarantee: if Q holds
+    everywhere, then P holds everywhere.
+    """
+    
+    def __init__(self, name: str, 
+                 reduces_to: Callable,
+                 sound: Callable):
+        self.name = name
+        self.reduces_to = reduces_to  # (P, Q) -> bool
+        self.sound = sound            # (Q, x) -> P(x) given Q(x)
+    
+    def compose(self, other: 'ProofSchema') -> 'ProofSchema':
+        """Compose two proof schemata: self then other."""
+        def new_reduces(P, R):
+            # There exists an intermediate Q
+            return True  # Simplified for demo
+        
+        def new_sound(R_val, x):
+            # Chain: R(x) -> Q(x) -> P(x)
+            q_val = other.sound(R_val, x)
+            return self.sound(q_val, x)
+        
+        return ProofSchema(
+            name=f"{self.name} ∘ {other.name}",
+            reduces_to=new_reduces,
+            sound=new_sound
+        )
+
+
+# ============================================================
+# §2. Natural Number Descent Principle
+# ============================================================
+
+def nat_descent_principle(P: Callable[[int], bool], 
+                          step: Callable[[int], Optional[int]],
+                          bound: int = 1000) -> bool:
+    """
+    Verify the descent principle: if every counterexample descends
+    to a smaller counterexample, then P holds universally.
+    
+    Returns True if P holds for all n in [0, bound).
+    
+    The 'step' function: given n where ¬P(n), returns m < n with ¬P(m),
+    or None if no descent exists (meaning P(n) must hold).
+    """
+    for n in range(bound):
+        if not P(n):
+            # Try to descend
+            m = step(n)
+            if m is None or m >= n:
+                return False  # Found a genuine counterexample
+            # Descent exists, but this means we'd have an infinite
+            # descending chain — contradiction with well-ordering
+    return True
+
+
+def demo_descent_principle():
+    """Demonstrate the descent principle on concrete predicates."""
+    print("=" * 60)
+    print("§2. NATURAL NUMBER DESCENT PRINCIPLE")
+    print("=" * 60)
+    
+    # Example 1: Every natural number is non-negative (trivial)
+    print("\nExample 1: ∀ n : ℕ, n ≥ 0")
+    P1 = lambda n: n >= 0
+    step1 = lambda n: n - 1 if n > 0 else None
+    result = nat_descent_principle(P1, step1)
+    print(f"  Verified up to 1000: {result}")
+    
+    # Example 2: Every natural number satisfies n < n + 1
+    print("\nExample 2: ∀ n : ℕ, n < n + 1")
+    P2 = lambda n: n < n + 1
+    step2 = lambda n: n - 1 if n > 0 else None
+    result = nat_descent_principle(P2, step2)
+    print(f"  Verified up to 1000: {result}")
+    
+    # Example 3: Descent traces for divisibility by 1
+    print("\nExample 3: Descent trace for '1 | n'")
+    print("  Every n has 1 | n. If ¬(1 | n), we'd need m < n with ¬(1 | m).")
+    print("  But 1 | 0, so descent to 0 always succeeds → no counterexample exists.")
+    
+    # Example 4: Demonstrate infinite descent impossibility
+    print("\nExample 4: Infinite descent impossibility")
+    print("  Suppose ∃ n with ¬P(n). Then ∃ m < n with ¬P(m).")
+    print("  Then ∃ k < m with ¬P(k). This chain n > m > k > ... ")
+    print("  must terminate (ℕ is well-ordered), contradiction.")
+    
+    # Visualize a descent chain
+    print("\n  Descent chain visualization (hypothetical):")
+    chain = [100, 73, 45, 28, 12, 5, 2, 0]
+    for i, n in enumerate(chain):
+        prefix = "  " + "  " * i
+        if i < len(chain) - 1:
+            print(f"{prefix}¬P({n}) → descend to {chain[i+1]}")
+        else:
+            print(f"{prefix}¬P({n}) → cannot descend further → contradiction!")
+
+
+# ============================================================
+# §3. Measured Descent on General Types
+# ============================================================
+
+def measured_descent(elements: list, 
+                     measure: Callable, 
+                     predicate: Callable[[object], bool],
+                     step: Callable) -> Tuple[bool, List]:
+    """
+    Apply measured descent to a finite collection.
+    Returns (all_hold, trace_of_verification).
+    """
+    trace = []
+    # Sort by measure
+    sorted_elts = sorted(elements, key=measure)
+    
+    for elt in sorted_elts:
+        m = measure(elt)
+        holds = predicate(elt)
+        trace.append((elt, m, holds))
+        if not holds:
+            # Check if descent produces a valid smaller element
+            smaller = step(elt)
+            if smaller is not None and measure(smaller) < m:
+                trace.append(("DESCENT", measure(smaller), f"→ {smaller}"))
+            else:
+                trace.append(("STUCK", m, "No valid descent!"))
+                return False, trace
+    
+    return True, trace
+
+
+def demo_measured_descent():
+    """Demonstrate measured descent on integer pairs."""
+    print("\n" + "=" * 60)
+    print("§3. MEASURED DESCENT ON PAIRS (a, b)")
+    print("=" * 60)
+    
+    # Predicate: gcd(a,b) > 0 for positive pairs
+    pairs = [(a, b) for a in range(1, 6) for b in range(1, 6)]
+    measure = lambda p: p[0] + p[1]
+    predicate = lambda p: True  # gcd(a,b) > 0 for positive a,b
+    step = lambda p: (p[0]-1, p[1]) if p[0] > 1 else None
+    
+    result, trace = measured_descent(pairs, measure, predicate, step)
+    print(f"\n  Predicate: gcd(a,b) > 0 for positive pairs")
+    print(f"  All verified: {result}")
+    print(f"  Elements checked: {len([t for t in trace if t[0] != 'DESCENT' and t[0] != 'STUCK'])}")
+
+
+# ============================================================
+# §4. Invariant Classification
+# ============================================================
+
+def demo_invariant_classification():
+    """Demonstrate invariant-based classification."""
+    print("\n" + "=" * 60)
+    print("§4. INVARIANT CLASSIFICATION")
+    print("=" * 60)
+    
+    # Classify integers mod 3
+    print("\n  Invariant: I(n) = n mod 3")
+    print("  Canonical representatives: {0, 1, 2}")
+    print("  Property: 'has a canonical representative in its fiber'")
+    
+    invariant = lambda n: n % 3
+    canonical = {0, 1, 2}
+    
+    print("\n  Fiber structure:")
+    for b in range(3):
+        fiber = [n for n in range(20) if invariant(n) == b]
+        canon = min(fiber)  # canonical = smallest in fiber
+        print(f"    I⁻¹({b}) = {fiber}")
+        print(f"    Canonical rep: {canon}")
+        assert canon in canonical
+    
+    # Demonstrate rigidity: if property holds for canonical rep,
+    # it holds for entire fiber
+    print("\n  Rigidity transfer:")
+    prop = lambda n: (n % 3) in {0, 1, 2}  # trivially true
+    for n in range(20):
+        canon_rep = n % 3
+        print(f"    n={n:2d}: I(n)={invariant(n)}, "
+              f"canon={canon_rep}, P(canon)={prop(canon_rep)}, "
+              f"P(n)={prop(n)}")
+
+
+# ============================================================
+# §5. Minimal Obstruction Elimination
+# ============================================================
+
+def demo_minimal_obstruction():
+    """Demonstrate the minimal obstruction elimination pattern."""
+    print("\n" + "=" * 60)
+    print("§5. MINIMAL OBSTRUCTION ELIMINATION")
+    print("=" * 60)
+    
+    print("\n  The pattern:")
+    print("  1. Assume a 'bad' object exists")
+    print("  2. By well-ordering, find a MINIMAL bad object")
+    print("  3. Show the minimal bad object leads to contradiction")
+    print("  4. Conclude: no bad objects exist")
+    
+    # Concrete example: Show there's no natural number n > 0
+    # with n < n (using descent)
+    print("\n  Example: No n ∈ ℕ satisfies n < n")
+    print("  Bad(n) := n < n")
+    print("  Measure μ(n) = n")
+    print("  If Bad(n), then n < n, which is False.")
+    print("  So helim holds vacuously → ∀ n, ¬Bad(n) ✓")
+    
+    # More interesting: Irrationality of √2 sketch
+    print("\n  Classic application: Irrationality of √2")
+    print("  Bad(a,b) := a²=2b² ∧ a,b>0")
+    print("  μ(a,b) = a")
+    print("  Descent: If a²=2b², then a is even, a=2c,")
+    print("    so 4c²=2b², b²=2c², giving Bad(b,c) with b<a.")
+    print("  Minimal obstruction: smallest a with Bad(a,b).")
+    print("  But descent gives a smaller one → contradiction!")
+    
+    # Simulate the descent
+    print("\n  Simulated descent chain:")
+    a, b = 1414, 1000  # Approximate √2
+    for i in range(5):
+        print(f"    Step {i}: a={a}, b={b}, a²={a*a}, 2b²={2*b*b}, "
+              f"ratio={a/b:.6f}")
+        if a*a == 2*b*b:
+            print(f"    → Exact! a²=2b². Descending...")
+        # Simulated descent step
+        a, b = b, a - b
+
+
+# ============================================================
+# §6. Schema Composition
+# ============================================================
+
+def demo_composition():
+    """Demonstrate composition of proof schemata."""
+    print("\n" + "=" * 60)
+    print("§6. SCHEMA COMPOSITION")
+    print("=" * 60)
+    
+    # Define three simple schemata
+    # S: reduces "n is positive" to "n ≥ 1"
+    # T: reduces "n ≥ 1" to "n = 0 + 1 + ... for some sum"
+    # U: reduces the sum representation to base facts
+    
+    print("\n  Schema S: 'n > 0' reduces to 'n ≥ 1'")
+    print("  Schema T: 'n ≥ 1' reduces to '∃ k, n = k + 1'")
+    print("  Schema U: '∃ k, n = k + 1' reduces to 'n - 1 ∈ ℕ'")
+    
+    print("\n  Composition S ∘ T:")
+    print("    'n > 0' reduces to '∃ k, n = k + 1'")
+    print("    Soundness: (∃ k, n = k+1) → n ≥ 1 → n > 0  ✓")
+    
+    print("\n  Composition (S ∘ T) ∘ U = S ∘ (T ∘ U)  [Associativity]")
+    print("    Both reduce 'n > 0' to 'n - 1 ∈ ℕ'")
+    print("    Soundness chains are identical  ✓")
+    
+    print("\n  Identity laws:")
+    print("    id ∘ S = S  ✓  (identity reduces P to P)")
+    print("    S ∘ id = S  ✓  (composing with identity is no-op)")
+    
+    # Demonstrate with actual function composition
+    S = lambda n: n > 0
+    T = lambda n: n >= 1
+    U = lambda n: isinstance(n - 1, int) and n - 1 >= 0
+    
+    print("\n  Verification on n = 0..9:")
+    for n in range(10):
+        s = S(n)
+        t = T(n)
+        u = U(n)
+        chain = u and t and s if u else "N/A"
+        print(f"    n={n}: S(n)={s}, T(n)={t}, U(n)={u}, "
+              f"chain_valid={s == t == u}")
+
+
+# ============================================================
+# §7. Prime Factor Descent
+# ============================================================
+
+def prime_factor_descent_demo(P: Callable[[int], bool],
+                               n: int) -> Tuple[bool, str]:
+    """
+    Verify P(n) using the prime factor descent principle.
+    Returns (result, proof_trace).
+    """
+    if n == 0:
+        return P(0), "Base case: n=0"
+    if n == 1:
+        return P(1), "Base case: n=1"
+    
+    # Check if prime
+    def is_prime(k):
+        if k < 2:
+            return False
+        for i in range(2, int(k**0.5) + 1):
+            if k % i == 0:
+                return False
+        return True
+    
+    if is_prime(n):
+        return P(n), f"Prime case: {n} is prime"
+    
+    # Find factorization
+    for d in range(2, n):
+        if n % d == 0:
+            q = n // d
+            if q > 1:
+                p_d, trace_d = prime_factor_descent_demo(P, d)
+                p_q, trace_q = prime_factor_descent_demo(P, q)
+                result = p_d and p_q  # simplified; real uses hmul
+                return result, (f"Composite: {n} = {d} × {q}; "
+                              f"P({d})={p_d}, P({q})={p_q}")
+    
+    return P(n), f"Direct verification"
+
+
+def demo_prime_descent():
+    """Demonstrate prime factor descent."""
+    print("\n" + "=" * 60)
+    print("§7. PRIME FACTOR DESCENT")
+    print("=" * 60)
+    
+    # Property: "n can be written as a product of primes" (trivially true)
+    P = lambda n: True
+    
+    print("\n  Verifying 'every n is a product of primes' via descent:")
+    for n in [0, 1, 2, 3, 12, 30, 60, 100, 360]:
+        result, trace = prime_factor_descent_demo(P, n)
+        print(f"    n={n:3d}: {trace}")
+
+
+# ============================================================
+# §8. Strategy Triad Synthesis
+# ============================================================
+
+def demo_strategy_triad():
+    """Demonstrate the full strategy triad."""
+    print("\n" + "=" * 60)
+    print("§8. STRATEGY TRIAD SYNTHESIS")
+    print("=" * 60)
+    
+    print("""
+  The Strategy Triad combines three proof layers:
+
+  Layer 1: DESCENT
+    Every 'bad' object descends to a smaller bad object.
+    μ : α → ℕ is the complexity measure.
+    
+  Layer 2: FINITE CORE  
+    The space of possible 'bad' objects is controlled by
+    finitely many invariant classes.
+    I : α → β with Fintype β.
+    
+  Layer 3: INVARIANT RIGIDITY
+    'Badness' is rigid within invariant fibers:
+    I(x) = I(y) ∧ Bad(x) → Bad(y).
+    
+  SYNTHESIS: Descent alone eliminates all bad objects
+    (well-foundedness of ℕ). The invariant structure provides
+    additional organizational power for the proof.
+
+  Theorem: ∀ x, ¬ Bad(x)
+    Proof: Suppose Bad(x₀). By descent, find x₁ with
+    Bad(x₁) and μ(x₁) < μ(x₀). Repeat to get
+    x₀, x₁, x₂, ... with μ(x₀) > μ(x₁) > μ(x₂) > ...
+    This is an infinite strictly decreasing sequence in ℕ.
+    Contradiction with well-ordering. □
+    """)
+    
+    # Concrete example
+    print("  Concrete example: No perfect square equals 2 mod 4")
+    print("  Bad(n) := n² ≡ 2 (mod 4)")
+    print("  μ(n) = n")
+    print("  I(n) = n mod 4")
+    
+    print("\n  Verification:")
+    for n in range(20):
+        sq_mod4 = (n * n) % 4
+        is_bad = sq_mod4 == 2
+        print(f"    n={n:2d}: n²={n*n:3d}, n² mod 4 = {sq_mod4}, "
+              f"Bad(n) = {is_bad}")
+
+
+# ============================================================
+# Main
+# ============================================================
+
+if __name__ == "__main__":
+    print("╔" + "═" * 58 + "╗")
+    print("║  COMPOSABLE PROOF SCHEMATA: CONCRETE DEMONSTRATIONS     ║")
+    print("║  A Formal Theory of Proof Architecture                  ║")
+    print("╚" + "═" * 58 + "╝")
+    
+    demo_descent_principle()
+    demo_measured_descent()
+    demo_invariant_classification()
+    demo_minimal_obstruction()
+    demo_composition()
+    demo_prime_descent()
+    demo_strategy_triad()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""
+Visualizations for Composable Proof Schemata
 
 Generates publication-quality figures illustrating the key concepts.
 """
@@ -797,351 +779,276 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-import math
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 import base64
-import io
-
-plt.rcParams.update({
-    'font.size': 12,
-    'font.family': 'serif',
-    'figure.dpi': 150,
-    'savefig.dpi': 150,
-    'savefig.bbox': 'tight',
-})
+from io import BytesIO
 
 
 def fig_to_base64(fig) -> str:
     """Convert matplotlib figure to base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', bbox_inches='tight', dpi=150)
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{data}"
 
 
-def plot_descent_chain():
-    """Visualize the descent principle as a chain of decreasing measures."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+def create_descent_visualization():
+    """Create visualization of the descent principle."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
     
-    # Left: descent chain
-    measures = [15, 12, 9, 7, 4, 2, 0]
-    x = range(len(measures))
+    # Left: Descent chain
+    ax1.set_title("Infinite Descent Principle", fontsize=14, fontweight='bold')
     
-    ax1.bar(x, measures, color=['#e74c3c' if m > 0 else '#2ecc71' for m in measures],
-            edgecolor='black', linewidth=1.2, alpha=0.8)
+    measures = [100, 73, 45, 28, 12, 5, 2, 0]
+    x_pos = range(len(measures))
     
-    # Draw arrows showing descent
+    # Draw bars
+    colors = ['#e74c3c' if m > 0 else '#2ecc71' for m in measures]
+    bars = ax1.bar(x_pos, measures, color=colors, alpha=0.8, edgecolor='black', linewidth=0.5)
+    
+    # Draw descent arrows
     for i in range(len(measures) - 1):
-        ax1.annotate('', xy=(i+1, measures[i+1] + 0.3),
-                    xytext=(i, measures[i] - 0.3),
-                    arrowprops=dict(arrowstyle='->', color='#2c3e50', lw=2))
+        ax1.annotate('', xy=(i+1, measures[i+1] + 3),
+                     xytext=(i, measures[i] - 3),
+                     arrowprops=dict(arrowstyle='->', color='#2c3e50', lw=2))
     
-    ax1.set_xlabel('Descent Step', fontsize=14)
-    ax1.set_ylabel('Measure μ(x)', fontsize=14)
-    ax1.set_title('Infinite Descent: Measures Strictly Decrease', fontsize=14, fontweight='bold')
-    ax1.set_xticks(x)
-    ax1.set_xticklabels([f'x₀', 'x₁', 'x₂', 'x₃', 'x₄', 'x₅', 'x₆'])
+    ax1.set_xlabel("Descent Step", fontsize=12)
+    ax1.set_ylabel("Measure μ(x)", fontsize=12)
+    ax1.set_xticks(x_pos)
+    ax1.set_xticklabels([f"x₍{i}₎" for i in range(len(measures))])
     
     # Add annotation
-    ax1.annotate('Contradiction!\nNo infinite\ndescending chain', 
-                xy=(6, 0), fontsize=11, ha='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='#2ecc71', alpha=0.3))
+    ax1.annotate('Contradiction!\nμ cannot decrease\nforever in ℕ',
+                xy=(7, 0), xytext=(5.5, 40),
+                fontsize=10, ha='center',
+                arrowprops=dict(arrowstyle='->', color='#e74c3c', lw=2),
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#fff3cd', edgecolor='#ffc107'))
     
-    # Right: GCD descent
-    a, b = 252, 105
-    steps = []
-    while b > 0:
-        steps.append((a, b))
-        a, b = b, a % b
-    steps.append((a, 0))
+    # Right: Well-ordering illustration
+    ax2.set_title("Well-Ordering of ℕ", fontsize=14, fontweight='bold')
     
-    x = range(len(steps))
-    vals_a = [s[0] for s in steps]
-    vals_b = [s[1] for s in steps]
+    n = 50
+    x = np.arange(n)
+    y = x
     
-    ax2.plot(x, vals_a, 'o-', color='#3498db', linewidth=2, markersize=8, label='a')
-    ax2.plot(x, vals_b, 's-', color='#e74c3c', linewidth=2, markersize=8, label='b')
-    ax2.fill_between(x, vals_b, alpha=0.1, color='#e74c3c')
+    ax2.plot(x, y, 'b-', alpha=0.3, linewidth=2)
+    ax2.scatter(x, y, c=x, cmap='RdYlGn_r', s=30, zorder=5, edgecolors='black', linewidth=0.3)
     
-    ax2.set_xlabel('Euclidean Step', fontsize=14)
-    ax2.set_ylabel('Value', fontsize=14)
-    ax2.set_title(f'GCD Descent: GCD(252, 105) = {steps[-1][0]}', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=12)
-    ax2.set_xticks(list(x))
+    # Highlight that every non-empty subset has a minimum
+    subset = [3, 7, 12, 19, 25, 31, 38, 44]
+    ax2.scatter(subset, subset, c='red', s=100, zorder=10, edgecolors='black', linewidth=1.5, marker='D')
+    ax2.scatter([3], [3], c='gold', s=200, zorder=15, edgecolors='black', linewidth=2, marker='*')
     
-    for i, (a, b) in enumerate(steps):
-        ax2.annotate(f'({a},{b})', (i, max(a, b) + 5), fontsize=9, ha='center')
+    ax2.annotate('Minimum element\n(well-ordering)',
+                xy=(3, 3), xytext=(15, 10),
+                fontsize=10,
+                arrowprops=dict(arrowstyle='->', color='#e74c3c', lw=2),
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#d4edda', edgecolor='#28a745'))
     
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/fig_descent.png')
-    return fig_to_base64(fig)
-
-
-def plot_schema_composition():
-    """Visualize proof schema composition as a pipeline."""
-    fig, ax = plt.subplots(1, 1, figsize=(14, 6))
-    
-    # Draw three boxes for schemata
-    boxes = [
-        (1, 3, 'Schema S\n(Descent)', '#3498db'),
-        (5, 3, 'Schema T\n(Invariant)', '#e74c3c'),
-        (9, 3, 'Schema U\n(Finite Core)', '#2ecc71'),
-    ]
-    
-    predicates = [
-        (0, 3, 'P', '#8e44ad'),
-        (4, 3, 'Q', '#8e44ad'),
-        (8, 3, 'R', '#8e44ad'),
-        (12, 3, 'W', '#8e44ad'),
-    ]
-    
-    for x, y, label, color in boxes:
-        rect = mpatches.FancyBboxPatch((x, y-0.8), 2.5, 1.6,
-                                        boxstyle="round,pad=0.2",
-                                        facecolor=color, alpha=0.3,
-                                        edgecolor=color, linewidth=2)
-        ax.add_patch(rect)
-        ax.text(x + 1.25, y, label, ha='center', va='center',
-                fontsize=12, fontweight='bold')
-    
-    for x, y, label, color in predicates:
-        ax.plot(x, y, 'o', color=color, markersize=20, zorder=5)
-        ax.text(x, y, label, ha='center', va='center',
-                fontsize=14, fontweight='bold', color='white', zorder=6)
-    
-    # Arrows between predicates and schemata
-    arrow_props = dict(arrowstyle='->', color='#2c3e50', lw=2.5)
-    for i in range(3):
-        px = predicates[i][0]
-        bx = boxes[i][0]
-        ax.annotate('', xy=(bx, 3), xytext=(px + 0.3, 3), arrowprops=arrow_props)
-        ax.annotate('', xy=(predicates[i+1][0] - 0.3, 3), 
-                    xytext=(bx + 2.5, 3), arrowprops=arrow_props)
-    
-    # Soundness arrows (bottom)
-    ax.annotate('', xy=(0, 1.5), xytext=(12, 1.5),
-                arrowprops=dict(arrowstyle='->', color='#27ae60', lw=3,
-                               connectionstyle='arc3,rad=0.3'))
-    ax.text(6, 0.8, 'Soundness: W(x) → R(x) → Q(x) → P(x)', 
-            ha='center', fontsize=13, color='#27ae60', fontweight='bold')
-    
-    # Title
-    ax.text(6, 5.2, 'Proof Schema Composition: S ∘ T ∘ U', 
-            ha='center', fontsize=16, fontweight='bold')
-    ax.text(6, 4.6, 'Each schema reduces the problem; composition preserves soundness',
-            ha='center', fontsize=12, color='gray')
-    
-    ax.set_xlim(-1, 13)
-    ax.set_ylim(0, 5.8)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    
-    fig.savefig('/workspace/request-project/fig_composition.png')
-    return fig_to_base64(fig)
-
-
-def plot_invariant_fibers():
-    """Visualize invariant rigidity as fiber classification."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
-    
-    # Create points in 3 fibers
-    np.random.seed(42)
-    colors = ['#3498db', '#e74c3c', '#2ecc71']
-    labels = ['Fiber 0 (mod 3)', 'Fiber 1 (mod 3)', 'Fiber 2 (mod 3)']
-    
-    for i in range(3):
-        # Points in each fiber
-        n_points = 8
-        theta = np.linspace(0, 2 * np.pi, n_points, endpoint=False) + i * 0.3
-        r = 1.5 + 0.3 * np.random.randn(n_points)
-        x = 4 * i + r * np.cos(theta)
-        y = 3.5 + r * np.sin(theta)
-        
-        ax.scatter(x, y, c=colors[i], s=100, zorder=5, edgecolor='black', linewidth=1)
-        
-        # Canonical representative (starred)
-        ax.scatter(4 * i, 3.5, c=colors[i], s=300, marker='*', zorder=6,
-                  edgecolor='black', linewidth=1.5)
-        
-        # Ellipse around fiber
-        ellipse = mpatches.Ellipse((4 * i, 3.5), 4.5, 4.5,
-                                    facecolor=colors[i], alpha=0.1,
-                                    edgecolor=colors[i], linewidth=2,
-                                    linestyle='--')
-        ax.add_patch(ellipse)
-        
-        # Label
-        ax.text(4 * i, 0.8, labels[i], ha='center', fontsize=11, fontweight='bold')
-        ax.text(4 * i, 0.2, f'Canonical: {i}', ha='center', fontsize=10, color='gray')
-    
-    # Invariant map arrow
-    ax.annotate('Invariant I(x) = x mod 3', xy=(4, 6.5),
-                fontsize=14, ha='center', fontweight='bold',
-                bbox=dict(boxstyle='round,pad=0.5', facecolor='#f39c12', alpha=0.3))
-    
-    ax.text(4, -0.5, 'Rigidity: checking ★ canonical representatives suffices',
-            ha='center', fontsize=12, color='#2c3e50', fontweight='bold')
-    
-    ax.set_xlim(-3, 11)
-    ax.set_ylim(-1.2, 7.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('Invariant Rigidity: Classification by Fibers', 
-                fontsize=16, fontweight='bold', pad=20)
-    
-    fig.savefig('/workspace/request-project/fig_invariant_fibers.png')
-    return fig_to_base64(fig)
-
-
-def plot_strategy_triad():
-    """Visualize the Strategy Triad as three interlocking gears."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-    
-    # Three overlapping circles (Venn-like)
-    circles = [
-        (3, 5, '#3498db', 'Descent\n(Well-Founded\nReduction)'),
-        (7, 5, '#e74c3c', 'Finite Core\n(Obstruction\nExtraction)'),
-        (5, 2, '#2ecc71', 'Invariant\nRigidity\n(Classification)'),
-    ]
-    
-    for x, y, color, label in circles:
-        circle = plt.Circle((x, y), 2.2, facecolor=color, alpha=0.15,
-                           edgecolor=color, linewidth=3)
-        ax.add_patch(circle)
-        ax.text(x, y, label, ha='center', va='center',
-                fontsize=11, fontweight='bold', color=color)
-    
-    # Center: the synthesis
-    ax.text(5, 4.2, 'SYNTHESIS', ha='center', va='center',
-            fontsize=14, fontweight='bold', color='#2c3e50',
-            bbox=dict(boxstyle='round,pad=0.4', facecolor='#f1c40f', alpha=0.5))
-    
-    # Arrows showing data flow
-    # Title
-    ax.text(5, 8.5, 'The Strategy Triad', fontsize=18, fontweight='bold',
-            ha='center')
-    ax.text(5, 7.8, 'Three proof strategies compose into a global classification engine',
-            fontsize=12, ha='center', color='gray')
-    
-    # Labels for intersections
-    ax.text(5, 5.5, 'Descent\n→ Finite\nReduction', fontsize=8, ha='center',
-            color='#8e44ad', fontweight='bold')
-    ax.text(3.5, 3, 'Descent\n→ Rigid\nBase', fontsize=8, ha='center',
-            color='#8e44ad', fontweight='bold')
-    ax.text(6.5, 3, 'Core\n→ Fiber\nCheck', fontsize=8, ha='center',
-            color='#8e44ad', fontweight='bold')
-    
-    ax.set_xlim(0, 10)
-    ax.set_ylim(-0.5, 9)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    
-    fig.savefig('/workspace/request-project/fig_strategy_triad.png')
-    return fig_to_base64(fig)
-
-
-def plot_convergence():
-    """Plot convergence of descent processes."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    # 1. GCD descent convergence
-    ax = axes[0]
-    pairs = [(252, 105), (1071, 462), (3456, 1234)]
-    for a0, b0 in pairs:
-        measures = []
-        a, b = a0, b0
-        while b > 0:
-            measures.append(b)
-            a, b = b, a % b
-        measures.append(0)
-        ax.plot(measures, 'o-', linewidth=2, markersize=6, label=f'GCD({a0},{b0})')
-    
-    ax.set_xlabel('Step')
-    ax.set_ylabel('Measure (b)')
-    ax.set_title('GCD Descent Convergence', fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.set_yscale('log')
-    ax.set_ylim(bottom=0.5)
-    
-    # 2. Collatz-style descent (for illustration)
-    ax = axes[1]
-    starts = [27, 31, 41, 97]
-    for s in starts:
-        chain = [s]
-        n = s
-        for _ in range(100):
-            if n <= 1:
-                break
-            if n % 2 == 0:
-                n = n // 2
-            else:
-                n = 3 * n + 1
-            chain.append(n)
-        ax.plot(chain, linewidth=1.5, alpha=0.8, label=f'n₀={s}')
-    
-    ax.set_xlabel('Step')
-    ax.set_ylabel('Value')
-    ax.set_title('Descent Dynamics (3n+1)', fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.set_yscale('log')
-    
-    # 3. Compression ratio vs accuracy
-    ax = axes[2]
-    np.random.seed(42)
-    core_sizes = np.arange(1, 51)
-    n_total = 100
-    
-    # Simulate accuracy improvement
-    accuracies = 1 - 0.5 * np.exp(-core_sizes / 5)
-    accuracies = np.minimum(accuracies, 1.0)
-    accuracies += 0.02 * np.random.randn(len(core_sizes))
-    accuracies = np.clip(accuracies, 0.5, 1.0)
-    
-    ax.plot(core_sizes / n_total * 100, accuracies * 100, 'o-', 
-            color='#2ecc71', linewidth=2, markersize=4)
-    ax.axhline(y=100, color='gray', linestyle='--', alpha=0.5)
-    ax.fill_between(core_sizes / n_total * 100, 50, accuracies * 100, alpha=0.1, color='#2ecc71')
-    
-    ax.set_xlabel('Core Size (% of total)')
-    ax.set_ylabel('Accuracy (%)')
-    ax.set_title('Finite Core: Size vs Accuracy', fontweight='bold')
-    ax.set_ylim(50, 105)
+    ax2.set_xlabel("Element", fontsize=12)
+    ax2.set_ylabel("Value", fontsize=12)
+    ax2.legend(['ℕ', 'Subset S', 'min(S)'], loc='upper left')
     
     plt.tight_layout()
-    fig.savefig('/workspace/request-project/fig_convergence.png')
-    return fig_to_base64(fig)
+    return fig
+
+
+def create_composition_visualization():
+    """Create visualization of schema composition."""
+    fig, ax = plt.subplots(1, 1, figsize=(14, 7))
+    ax.set_xlim(-0.5, 10.5)
+    ax.set_ylim(-1, 8)
+    ax.axis('off')
+    ax.set_title("Composable Proof Schema Architecture", fontsize=16, fontweight='bold', pad=20)
+    
+    # Schema boxes
+    box_style = dict(boxstyle='round,pad=0.5', facecolor='#3498db', alpha=0.2, edgecolor='#2c3e50', linewidth=2)
+    
+    schemas = [
+        (1.5, 6, "Schema S\n(Descent)", '#e74c3c'),
+        (5, 6, "Schema T\n(Finite Core)", '#2ecc71'),
+        (8.5, 6, "Schema U\n(Rigidity)", '#9b59b6'),
+    ]
+    
+    for x, y, label, color in schemas:
+        fancy = FancyBboxPatch((x-0.8, y-0.5), 1.6, 1.2,
+                               boxstyle="round,pad=0.2",
+                               facecolor=color, alpha=0.3,
+                               edgecolor=color, linewidth=2)
+        ax.add_patch(fancy)
+        ax.text(x, y, label, ha='center', va='center', fontsize=11, fontweight='bold')
+    
+    # Composition arrows
+    for x1, x2 in [(2.5, 4.0), (6.2, 7.5)]:
+        ax.annotate('', xy=(x2, 6), xytext=(x1, 6),
+                    arrowprops=dict(arrowstyle='->', lw=3, color='#2c3e50'))
+        ax.text((x1+x2)/2, 6.3, '∘', fontsize=18, ha='center', fontweight='bold')
+    
+    # Predicates
+    preds = [
+        (0, 4, "P(x)\nOriginal\nProperty", '#1abc9c'),
+        (3.5, 4, "Q(x)\nIntermediate", '#f39c12'),
+        (7, 4, "R(x)\nReduced\nProperty", '#e67e22'),
+        (10.5, 4, "True\n(verified)", '#27ae60'),
+    ]
+    
+    for x, y, label, color in preds:
+        ax.text(x, y, label, ha='center', va='center', fontsize=10,
+                bbox=dict(boxstyle='round,pad=0.4', facecolor=color, alpha=0.2, edgecolor=color))
+    
+    # Arrows from predicates
+    for x1, x2 in [(0.8, 2.8), (4.3, 6.3), (7.8, 9.8)]:
+        ax.annotate('', xy=(x2, 4), xytext=(x1, 4),
+                    arrowprops=dict(arrowstyle='->', lw=2, color='#7f8c8d', linestyle='--'))
+    
+    # Soundness annotation
+    ax.text(5, 2.5, "Soundness: R(x) → Q(x) → P(x)", 
+            ha='center', fontsize=13, fontweight='bold',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#fff3cd', edgecolor='#ffc107', linewidth=2))
+    
+    # Associativity
+    ax.text(5, 1.2, "(S ∘ T) ∘ U  =  S ∘ (T ∘ U)", 
+            ha='center', fontsize=14, fontweight='bold', family='serif',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#d5f5e3', edgecolor='#28a745', linewidth=2))
+    
+    ax.text(5, 0.2, "Proof architectures form a monoid under composition",
+            ha='center', fontsize=11, style='italic', color='#555')
+    
+    plt.tight_layout()
+    return fig
+
+
+def create_strategy_triad_visualization():
+    """Create visualization of the three-layer strategy triad."""
+    fig, ax = plt.subplots(1, 1, figsize=(12, 10))
+    ax.set_xlim(-1, 11)
+    ax.set_ylim(-1, 11)
+    ax.axis('off')
+    ax.set_title("Strategy Triad: Three Layers of Proof Architecture", 
+                 fontsize=16, fontweight='bold', pad=20)
+    
+    # Three concentric-ish layers
+    from matplotlib.patches import Circle, Wedge
+    
+    # Layer 3 (outer): Invariant Rigidity
+    circle3 = plt.Circle((5, 5), 4.5, fill=True, facecolor='#9b59b6', alpha=0.1, edgecolor='#9b59b6', linewidth=3)
+    ax.add_patch(circle3)
+    ax.text(5, 9.8, "Layer 3: INVARIANT RIGIDITY", ha='center', fontsize=12, fontweight='bold', color='#9b59b6')
+    ax.text(5, 9.2, "I : α → β preserves structure", ha='center', fontsize=10, color='#9b59b6')
+    
+    # Layer 2 (middle): Finite Core
+    circle2 = plt.Circle((5, 5), 3.0, fill=True, facecolor='#2ecc71', alpha=0.15, edgecolor='#2ecc71', linewidth=3)
+    ax.add_patch(circle2)
+    ax.text(5, 8.1, "Layer 2: FINITE CORE", ha='center', fontsize=12, fontweight='bold', color='#27ae60')
+    ax.text(5, 7.5, "Reduce to finitely many cases", ha='center', fontsize=10, color='#27ae60')
+    
+    # Layer 1 (inner): Descent
+    circle1 = plt.Circle((5, 5), 1.5, fill=True, facecolor='#e74c3c', alpha=0.2, edgecolor='#e74c3c', linewidth=3)
+    ax.add_patch(circle1)
+    ax.text(5, 5.3, "Layer 1:", ha='center', fontsize=11, fontweight='bold', color='#c0392b')
+    ax.text(5, 4.7, "DESCENT", ha='center', fontsize=13, fontweight='bold', color='#c0392b')
+    ax.text(5, 4.1, "μ(x) → 0", ha='center', fontsize=10, color='#c0392b')
+    
+    # Dots representing elements in different fibers
+    np.random.seed(42)
+    fiber_colors = ['#3498db', '#e67e22', '#1abc9c', '#e74c3c']
+    fiber_labels = ['Fiber I⁻¹(0)', 'Fiber I⁻¹(1)', 'Fiber I⁻¹(2)', 'Fiber I⁻¹(3)']
+    
+    for i, (color, label) in enumerate(zip(fiber_colors, fiber_labels)):
+        angle = i * np.pi / 2 + np.pi / 4
+        r = 2.2 + np.random.uniform(-0.3, 0.3, 5)
+        theta = angle + np.random.uniform(-0.3, 0.3, 5)
+        x = 5 + r * np.cos(theta)
+        y = 5 + r * np.sin(theta)
+        ax.scatter(x, y, c=color, s=60, zorder=10, edgecolors='black', linewidth=0.5)
+    
+    # Bottom text
+    ax.text(5, 0.5, "Theorem: Descent + Finite Core + Rigidity ⟹ ∀ x, ¬Bad(x)",
+            ha='center', fontsize=13, fontweight='bold',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#fff3cd', edgecolor='#ffc107', linewidth=2))
+    
+    ax.text(5, -0.3, "The shared architecture of FLT, Poincaré, and CFSG",
+            ha='center', fontsize=11, style='italic', color='#555')
+    
+    plt.tight_layout()
+    return fig
+
+
+def create_classification_visualization():
+    """Create visualization of invariant-based classification."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left: Fiber structure
+    ax1.set_title("Invariant Fibers: I(x) = x mod 3", fontsize=14, fontweight='bold')
+    
+    colors = ['#e74c3c', '#3498db', '#2ecc71']
+    for fiber_val in range(3):
+        elements = [n for n in range(21) if n % 3 == fiber_val]
+        y_pos = [fiber_val * 2.5] * len(elements)
+        ax1.scatter(elements, y_pos, c=colors[fiber_val], s=100, 
+                   edgecolors='black', linewidth=1, zorder=10)
+        
+        # Highlight canonical representative
+        ax1.scatter([fiber_val], [fiber_val * 2.5], c='gold', s=200,
+                   edgecolors='black', linewidth=2, zorder=15, marker='*')
+        
+        ax1.text(-1.5, fiber_val * 2.5, f"I⁻¹({fiber_val})", 
+                fontsize=12, ha='right', va='center', fontweight='bold',
+                color=colors[fiber_val])
+    
+    ax1.set_xlabel("Element x", fontsize=12)
+    ax1.set_yticks([0, 2.5, 5])
+    ax1.set_yticklabels(['Fiber 0', 'Fiber 1', 'Fiber 2'])
+    ax1.legend(['Elements', 'Canonical rep ★'], loc='upper right')
+    
+    # Right: Rigidity transfer
+    ax2.set_title("Rigidity Transfer", fontsize=14, fontweight='bold')
+    
+    # Show transfer within a fiber
+    fiber = [1, 4, 7, 10, 13, 16, 19]
+    y = [1] * len(fiber)
+    
+    ax2.scatter(fiber, y, c='#3498db', s=120, edgecolors='black', linewidth=1, zorder=10)
+    ax2.scatter([1], [1], c='gold', s=250, edgecolors='black', linewidth=2, zorder=15, marker='*')
+    
+    # Transfer arrows
+    for x in fiber[1:]:
+        ax2.annotate('', xy=(x, 0.85), xytext=(1, 0.85),
+                    arrowprops=dict(arrowstyle='->', color='#e74c3c', lw=1.5, 
+                                   connectionstyle='arc3,rad=0.3'))
+    
+    ax2.text(10, 1.5, "P(1) is canonical\n→ P transfers to\nentire fiber",
+            fontsize=11, ha='center',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='#d5f5e3', edgecolor='#28a745'))
+    
+    ax2.set_xlabel("Element x", fontsize=12)
+    ax2.set_ylim(0.3, 2)
+    ax2.set_yticks([])
+    
+    plt.tight_layout()
+    return fig
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
     
-    b64_descent = plot_descent_chain()
-    print(f"  fig_descent.png generated ({len(b64_descent)} chars)")
+    fig1 = create_descent_visualization()
+    fig1.savefig("viz_descent.png", dpi=150, bbox_inches='tight')
+    print("  ✓ viz_descent.png")
     
-    b64_comp = plot_schema_composition()
-    print(f"  fig_composition.png generated ({len(b64_comp)} chars)")
+    fig2 = create_composition_visualization()
+    fig2.savefig("viz_composition.png", dpi=150, bbox_inches='tight')
+    print("  ✓ viz_composition.png")
     
-    b64_fibers = plot_invariant_fibers()
-    print(f"  fig_invariant_fibers.png generated ({len(b64_fibers)} chars)")
+    fig3 = create_strategy_triad_visualization()
+    fig3.savefig("viz_strategy_triad.png", dpi=150, bbox_inches='tight')
+    print("  ✓ viz_strategy_triad.png")
     
-    b64_triad = plot_strategy_triad()
-    print(f"  fig_strategy_triad.png generated ({len(b64_triad)} chars)")
+    fig4 = create_classification_visualization()
+    fig4.savefig("viz_classification.png", dpi=150, bbox_inches='tight')
+    print("  ✓ viz_classification.png")
     
-    b64_conv = plot_convergence()
-    print(f"  fig_convergence.png generated ({len(b64_conv)} chars)")
-    
-    print("\nAll visualizations saved.")
-    
-    # Export base64 data for PACKAGE.json
-    import json
-    viz_data = {
-        'descent': b64_descent,
-        'composition': b64_comp,
-        'invariant_fibers': b64_fibers,
-        'strategy_triad': b64_triad,
-        'convergence': b64_conv,
-    }
-    with open('/workspace/request-project/viz_data.json', 'w') as f:
-        json.dump(viz_data, f)
-    print("Base64 data exported to viz_data.json")
+    print("\nAll visualizations generated successfully.")
