@@ -64,22 +64,6 @@
     "timestamp": "2026-05-14T16:03:53.868250+00:00"
   },
   {
-    "id": "seed_077",
-    "title": "Aristotle Bootstrapping: Learning to Prove Harder Theorems from Easy Ones via Curricula",
-    "description": "Prove that a mathematical curriculum — an ordered sequence of theorems of increasing difficulty — can be formally constructed such that each theorem's proof only requires techniques learned from the preceding theorems. Show that such curricula exist for any mathematical theory of sufficient depth, and that the curriculum length bounds the minimum number of research cycles needed to reach the theory's frontier. Formalize curriculum construction in Lean 4 and prove that Aristotle bootstrapped with a curriculum produces progressively deeper results, converging to master-class quality.",
-    "domains": [
-      "Meta",
-      "Logic",
-      "MachineLearning"
-    ],
-    "priority_score": 0.97,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "51f0d321",
-    "timestamp": "2026-05-14T16:03:53.878524+00:00"
-  },
-  {
     "id": "seed_069",
     "title": "Research Depth Guarantees via Proof-Theoretic Ordinal Analysis",
     "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research, and construct a Lean 4 formalization that computes the proof-theoretic ordinal of each Aether output. Show that results exceeding a threshold ordinal depth are guaranteed to be non-trivial, and prove that the ordinal depth of a research cycle bounds the conceptual innovation of its output. Establish that cycles with depth below the threshold can be automatically rejected or escalated for deeper investigation.",
@@ -1147,20 +1131,6 @@
     "timestamp": "2026-05-14T16:16:22.718724+00:00"
   },
   {
-    "id": "fd_0081",
-    "title": "Reduce from 3-Partition",
-    "description": ": The entries of the factorization matrices must \"partition\" the path-cost budget among intermediate vertices, analogous to 3-Partition.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:22.720326+00:00"
-  },
-  {
     "id": "fd_0082",
     "title": "Alternative",
     "description": ": Reduce from the Assignment Problem with precedence constraints, which is NP-hard and naturally maps to tropical matrix structure.\n\n### Key Lemmas Needed\n- `karp_reduction_forbidden_pairs_to_trop_factor`: A computable function from Shortest-Path-with-Forbidden-Pairs instances to tropical factorization instances, preserving YES/NO.\n- `trop_factor_in_NP`: A certificate (A, B) can be verified in polynomial time (tropMul is O(n³)).\n- `forbidden_pairs_is_NP_hard`: Standard NP-hardness result (from Gabow et al., 1976).\n\n### Candidate Lean Files\n- `Cryptography/TropicalNPHardness.lean`\n- `Cryptography/KarpReductions.lean`\n\n### Cross-Domain Connections\n- **Computational Complexity → Cryptography**: First formal Cook/Karp reduction linking tropical algebra to classical complexity classes.\n- **Oper",
@@ -1516,20 +1486,6 @@
     "timestamp": "2026-05-14T16:17:56.770099+00:00"
   },
   {
-    "id": "fd_0132",
-    "title": "Surgery enlargement",
-    "description": ": Wormhole surgery strictly enlarges the causal cone: `causalCone W s T ⊂ causalCone (wormholeSurgery W u v τ) s T` under appropriate conditions.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.102483+00:00"
-  },
-  {
     "id": "fd_0133",
     "title": "Chronological ordering",
     "description": ": Define a partial order from tropical distances and show it satisfies antisymmetry for nonneg-weight graphs with no negative cycles.\n\n### Proof Strategy\nUse the triangle inequality for tropical distance (which follows from path concatenation) and the surgery distance-drop theorem already proved.\n\n### Cross-Domain Connections\n- Causal set theory in quantum gravity\n- Reachability analysis in timed automata\n- Network influence propagation bounds\n\n---\n\n## Direction 2: Tropical Black Hole Horizons as Min-Cut Barriers\n\n### Hypothesis\nA \"tropical event horizon\" is a min-cut in the weighted spacetime graph separating an interior region from an exterior region. The horizon's \"area\" (total cut weight) controls the maximum information throughput, yielding a discrete analogue of the Bekenstein–Hawkin",
@@ -1733,10 +1689,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08ca2eef",
     "timestamp": "2026-05-14T17:32:45.366275+00:00"
   },
   {
@@ -1915,34 +1871,6 @@
     "source_exp_id": "e06c3817",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:00.488181+00:00"
-  },
-  {
-    "id": "fd_0164",
-    "title": "Prove the bottleneck lemma",
-    "description": ": Any path through a width-$w$ branching program of depth $d > w$ must contain a cycle within some layer, contributing cost $\\geq g$.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.491529+00:00"
-  },
-  {
-    "id": "fd_0165",
-    "title": "Derive width-depth tradeoff",
-    "description": ": If the branching program has minimum intralayer cycle cost $g$, then the minimum path cost is $\\geq g \\cdot \\lfloor d/w \\rfloor$.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.494640+00:00"
   },
   {
     "id": "fd_0166",
@@ -2307,20 +2235,6 @@
     "source_exp_id": "82942422",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:40:55.778282+00:00"
-  },
-  {
-    "id": "fd_0186",
-    "title": "Upper bound:",
-    "description": "Analyze the DNF construction. Each minterm uses O(n) gates, there are at most 2^n minterms, and the OR-tree adds at most 2^n gates.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "82942422",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.782457+00:00"
   },
   {
     "id": "fd_0187",
@@ -2760,5 +2674,85 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.866477+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "1. Infinite Curricula via Ordinal-Valued Ranks",
+    "description": "**Target Theorem:** For any countable well-founded dependency system `(T, dep)`, there exists an ordinal-valued rank function `rank : T → Ordinal` such that `dep a b → rank b < rank a`, and the rank of every element is a countable ordinal.\n\n**Proof Strategy:** Use transfinite induction on the well-founded relation `flip dep`. Define `rank(t) = sup{rank(s) + 1 | dep t s}`. The well-foundedness of `flip dep` guarantees termination. For countable `T`, all ranks are countable ordinals (below ω₁).\n\n**Cross-Domain Connection:** This generalizes the finite curriculum existence theorem to infinite mathematical theories — modeling, for example, the entirety of Mathlib as a single dependency system with a well-founded import/dependency graph.\n\n**Concrete Next Step:** Formalize `OrdinalDepSystem` for",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f0d321",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:31:45.833806+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "2. Category of Theories and Functoriality of Frontier Depth",
+    "description": "**Target Theorem:** Define a category `DepSysCat` whose objects are dependency systems and whose morphisms are dependency-preserving maps (i.e., functions `f : T → T'` such that `dep' (f a) (f b)` whenever `dep a b`). Prove that `depLevel` is functorial: `depLevel_{T'} (f t) ≤ depLevel_T t` for any morphism `f`.\n\n**Proof Strategy:** A morphism maps dependency chains to dependency chains (possibly collapsing some), so chain lengths can only decrease. Formalize this as a functor from `DepSysCat` to `(ℕ, ≤)`.\n\n**Cross-Domain Connection:** This captures the idea of **conservative theory extension**: embedding a smaller theory into a larger one preserves (or reduces) curriculum depth. This is the formal analogue of \"prerequisites transfer across fields.\"\n\n**Concrete Next Step:** Define `DepSyst",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f0d321",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:31:45.840336+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "3. Parallel Research Complexity via Antichain Decompositions",
+    "description": "**Target Theorem:** Define the **width** of a dependency system as the maximum size of an antichain (set of mutually independent theorems). Prove Dilworth's theorem in this context: the minimum number of chains needed to cover `T` equals the width, and the minimum number of antichains (= sequential depth) equals the longest chain length.\n\n**Proof Strategy:** Use Mirsky's theorem (dual of Dilworth): the minimum number of antichains partitioning a finite poset equals the length of the longest chain. This directly gives: `maxLevel S + 1` equals the minimum number of parallel research rounds.\n\n**Cross-Domain Connection:** This formalizes **parallel research planning**: if you have unlimited researchers who can work simultaneously on independent theorems, the minimum time to complete all theore",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f0d321",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:31:45.845110+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "4. Curriculum Entropy and Information-Theoretic Bounds",
+    "description": "**Target Theorem:** Define the **curriculum entropy** of a dependency system as:\n\n$$H(S) = \\log_2 |\\{f : T \\to \\mathbb{N} \\mid f \\text{ is a valid curriculum ranking}\\}|$$\n\nProve that $H(S) \\geq \\sum_{k=0}^{L} \\log_2(|A_k|!)$ where $A_k$ is the set of theorems at level $k$ and $L$ is the maximum level. Prove the upper bound $H(S) \\leq \\log_2(|T|!)$.\n\n**Proof Strategy:** Any permutation of theorems within the same level preserves validity of the curriculum. This gives at least $\\prod_k |A_k|!$ valid orderings. The upper bound is trivial (all permutations).\n\n**Cross-Domain Connection:** Curriculum entropy measures the **degrees of freedom** in organizing a mathematical theory. Low entropy means the theory is essentially linearly ordered (few valid curricula); high entropy means many equivale",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f0d321",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:31:45.850584+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "5. Automated Curriculum Extraction from Formal Proof Libraries",
+    "description": "**Target Deliverable:** Given a formal proof library (e.g., a collection of theorems with their dependency graphs extracted from import/usage analysis), automatically synthesize an admissible curriculum and certify its optimality bounds.\n\n**Algorithm:**\n1. Parse the dependency graph from `#check` / import analysis.\n2. Compute `depLevel` for each theorem via topological sort (O(|V| + |E|) time).\n3. Output the level decomposition as a certified curriculum.\n4. Verify optimality: the computed `maxLevel` equals the longest path in the DAG.\n\n**Proof Strategy:** Implement this as a verified algorithm in Lean 4 using `DecidableRel` and `Fintype` computation. The correctness proof reduces to our `mem_stageKnowledge_iff` and `frontier_all_known_iff` theorems.\n\n**Cross-Domain Connection:** This direc",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "51f0d321",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:31:45.855826+00:00"
   }
 ]

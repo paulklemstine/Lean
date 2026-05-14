@@ -2,444 +2,266 @@
 """
 Tropical Circuit Lower Bounds — Algorithms
 
-Complete implementations of the key algorithms from the research,
-including tropical matrix operations, path enumeration, and
-min-plus permanent computation.
+Implements the core algorithms from the tropical circuit complexity framework.
+Each algorithm computes a tropical invariant that yields circuit depth lower bounds.
 """
 
 import numpy as np
 from itertools import permutations
-from typing import List, Tuple, Optional, Set
-from dataclasses import dataclass
+from typing import Tuple, List, Optional
 
 
-# =============================================================================
-# Core Data Structures
-# =============================================================================
-
-@dataclass
-class LayeredCircuitMatrix:
-    """A layered circuit matrix: weighted adjacency matrix of a DAG.
-
-    The matrix M is n×n over ℕ, with M[i,j] > 0 indicating a directed
-    edge from gate i to gate j with weight M[i,j]. The layered condition
-    requires all edges to go from smaller to larger indices (i < j).
-
-    Attributes:
-        matrix: The n×n weight matrix
-        n: Dimension
-
-    Invariant: M[i,j] > 0 implies i < j (strictly upper triangular support)
+def tropical_mul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     """
-    matrix: np.ndarray
-    n: int
+    Min-plus (tropical) matrix multiplication.
 
-    def __post_init__(self):
-        assert self.matrix.shape == (self.n, self.n)
-        for i in range(self.n):
-            for j in range(self.n):
-                if self.matrix[i, j] > 0:
-                    assert i < j, f"Layered violation: M[{i},{j}] = {self.matrix[i,j]} > 0 but {i} >= {j}"
+    (A ⊗ B)[i,j] = min_k (A[i,k] + B[k,j])
 
-
-@dataclass
-class Path:
-    """A path in the support graph of a matrix.
-
-    Attributes:
-        vertices: List of vertex indices
-        edges: Number of edges (= len(vertices) - 1)
-        cost: Total edge weight cost
-    """
-    vertices: List[int]
-    edges: int
-    cost: int
-
-
-# =============================================================================
-# Algorithm 1: Layered Matrix Construction
-# =============================================================================
-
-def build_layered_matrix(n: int, weight_fn=None) -> LayeredCircuitMatrix:
-    """Build a layered circuit matrix with given weight function.
-
-    Args:
-        n: Matrix dimension
-        weight_fn: Function (i, j) -> weight for i < j. Default: j - i.
-
-    Returns:
-        A LayeredCircuitMatrix instance.
-
-    Time complexity: O(n²)
+    Time complexity: O(n³)
     Space complexity: O(n²)
-    """
-    if weight_fn is None:
-        weight_fn = lambda i, j: j - i
-
-    M = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        for j in range(i + 1, n):
-            w = weight_fn(i, j)
-            if w > 0:
-                M[i, j] = w
-
-    return LayeredCircuitMatrix(matrix=M, n=n)
-
-
-# =============================================================================
-# Algorithm 2: Depth Computation via Dynamic Programming
-# =============================================================================
-
-def compute_depth(M: np.ndarray) -> Tuple[int, List[int]]:
-    """Compute the depth (longest path) of a DAG encoded by matrix M.
-
-    Uses dynamic programming on the topological order (which for
-    strictly upper triangular matrices is simply 0, 1, ..., n-1).
 
     Args:
-        M: n×n weight matrix (strictly upper triangular support)
+        A: n×n matrix with entries in ℝ ∪ {∞}
+        B: n×n matrix with entries in ℝ ∪ {∞}
 
     Returns:
-        (depth, longest_path) where depth is the number of edges
-        in the longest path and longest_path is the path achieving it.
-
-    Time complexity: O(n²)
-    Space complexity: O(n)
+        The tropical product A ⊗ B
     """
-    n = M.shape[0]
-    # dp[j] = length of longest path ending at vertex j
-    dp = [0] * n
-    # pred[j] = predecessor of j on the longest path
-    pred = [-1] * n
-
-    for j in range(n):
-        for i in range(j):
-            if M[i, j] > 0 and dp[i] + 1 > dp[j]:
-                dp[j] = dp[i] + 1
-                pred[j] = i
-
-    # Find the vertex with maximum dp value
-    depth = max(dp) if n > 0 else 0
-    end = dp.index(depth) if depth > 0 else 0
-
-    # Reconstruct path
-    path = []
-    v = end
-    while v != -1:
-        path.append(v)
-        v = pred[v]
-    path.reverse()
-
-    return depth, path
+    n = A.shape[0]
+    C = np.full((n, n), np.inf)
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                val = A[i, k] + B[k, j]
+                if val < C[i, j]:
+                    C[i, j] = val
+    return C
 
 
-# =============================================================================
-# Algorithm 3: All Admissible Paths Enumeration
-# =============================================================================
+def tropical_pow(M: np.ndarray, k: int) -> np.ndarray:
+    """
+    Tropical matrix power: M^⊗(k+1).
 
-def enumerate_paths(M: np.ndarray, min_length: int = 2) -> List[Path]:
-    """Enumerate all admissible paths in the support graph.
+    Encodes minimum-cost walks of exactly k+1 edges.
+    tropPow M 0 = M (one copy, one edge per walk)
+
+    Time complexity: O(k × n³)
+    Space complexity: O(n²)
 
     Args:
         M: n×n weight matrix
-        min_length: Minimum path length (number of vertices)
+        k: power index (result uses k+1 copies of M)
 
     Returns:
-        List of all admissible paths with at least min_length vertices.
-
-    Time complexity: O(n · 2^n) worst case (exponential in n)
-    Space complexity: O(n · 2^n)
-
-    Warning: Only practical for small n (≤ 20).
+        The (k+1)-fold tropical product of M
     """
-    n = M.shape[0]
-    paths = []
-
-    def dfs(current: int, path: List[int], cost: int):
-        if len(path) >= min_length:
-            paths.append(Path(
-                vertices=path[:],
-                edges=len(path) - 1,
-                cost=cost
-            ))
-        for j in range(n):
-            if M[current, j] > 0:
-                dfs(j, path + [j], cost + M[current, j])
-
-    for start in range(n):
-        dfs(start, [start], 0)
-
-    return paths
+    result = M.copy()
+    for _ in range(k):
+        result = tropical_mul(result, M)
+    return result
 
 
-# =============================================================================
-# Algorithm 4: Min-Plus Permanent (Exact)
-# =============================================================================
+def tropical_perm(M: np.ndarray) -> Tuple[float, Optional[tuple]]:
+    """
+    Tropical permanent: min over all permutations σ of Σ_i M[i, σ(i)].
 
-def min_plus_permanent_exact(M: np.ndarray) -> Tuple[int, Tuple[int, ...]]:
-    """Compute the exact min-plus permanent by brute force.
+    This is equivalent to the minimum weight perfect matching in the
+    complete bipartite graph with weight matrix M.
 
-    The min-plus permanent is: min_σ Σᵢ M[i, σ(i)]
+    Time complexity: O(n! × n) — exact computation via enumeration
+    Space complexity: O(n)
+
+    For n > 10, use the Hungarian algorithm (O(n³)) instead.
 
     Args:
         M: n×n weight matrix
 
     Returns:
         (permanent_value, optimal_permutation)
-
-    Time complexity: O(n! · n)
-    Space complexity: O(n)
-
-    Warning: Only practical for n ≤ 10.
     """
     n = M.shape[0]
-    best_cost = float('inf')
+    best_cost = np.inf
     best_perm = None
-
     for perm in permutations(range(n)):
-        cost = sum(int(M[i, perm[i]]) for i in range(n))
+        cost = sum(M[i, perm[i]] for i in range(n))
         if cost < best_cost:
             best_cost = cost
             best_perm = perm
+    return best_cost, best_perm
 
-    return int(best_cost), best_perm
 
+def tropical_chain_product(layers: List[np.ndarray]) -> np.ndarray:
+    """
+    Sequential tropical product of a list of (possibly different) matrices.
 
-# =============================================================================
-# Algorithm 5: Min-Plus Permanent (Hungarian Algorithm)
-# =============================================================================
+    layers = [L₀, L₁, ..., L_d] → L₀ ⊗ L₁ ⊗ ... ⊗ L_d
 
-def min_plus_permanent_hungarian(M: np.ndarray) -> Tuple[int, List[int]]:
-    """Compute the min-plus permanent using the Hungarian algorithm.
-
-    This is the standard O(n³) algorithm for the assignment problem,
-    which is equivalent to computing the min-plus permanent.
+    Time complexity: O(d × n³)
+    Space complexity: O(n²)
 
     Args:
-        M: n×n cost matrix (non-negative integers)
+        layers: list of n×n matrices
 
     Returns:
-        (permanent_value, assignment) where assignment[i] = σ(i)
-
-    Time complexity: O(n³)
-    Space complexity: O(n²)
+        The tropical product of all layers
     """
-    n = M.shape[0]
-    if n == 0:
-        return 0, []
-
-    # Use the Kuhn-Munkres (Hungarian) algorithm
-    INF = float('inf')
-    cost = M.astype(float).copy()
-
-    u = np.zeros(n + 1)  # potential for rows
-    v = np.zeros(n + 1)  # potential for cols
-    p = np.zeros(n + 1, dtype=int)  # assignment
-    way = np.zeros(n + 1, dtype=int)
-
-    for i in range(1, n + 1):
-        p[0] = i
-        j0 = 0
-        minv = np.full(n + 1, INF)
-        used = np.zeros(n + 1, dtype=bool)
-
-        while True:
-            used[j0] = True
-            i0 = p[j0]
-            delta = INF
-            j1 = -1
-
-            for j in range(1, n + 1):
-                if not used[j]:
-                    cur = cost[i0 - 1, j - 1] - u[i0] - v[j]
-                    if cur < minv[j]:
-                        minv[j] = cur
-                        way[j] = j0
-                    if minv[j] < delta:
-                        delta = minv[j]
-                        j1 = j
-
-            for j in range(n + 1):
-                if used[j]:
-                    u[p[j]] += delta
-                    v[j] -= delta
-                else:
-                    minv[j] -= delta
-
-            j0 = j1
-            if p[j0] == 0:
-                break
-
-        while j0 != 0:
-            p[j0] = p[way[j0]]
-            j0 = way[j0]
-
-    assignment = [0] * n
-    for j in range(1, n + 1):
-        assignment[p[j] - 1] = j - 1
-
-    total_cost = sum(int(M[i, assignment[i]]) for i in range(n))
-    return total_cost, assignment
-
-
-# =============================================================================
-# Algorithm 6: Tropical Spectral Gap Computation
-# =============================================================================
-
-def tropical_spectral_gap(M: np.ndarray) -> dict:
-    """Compute tropical spectral gap invariants.
-
-    Returns a dictionary with:
-    - min_offdiag: minimum off-diagonal positive entry
-    - min_diag: minimum diagonal entry
-    - gap: min_offdiag - min_diag (the tropical spectral gap)
-    - max_entry: maximum entry
-    - weight_ratio: max_entry / min_offdiag (if defined)
-
-    Time complexity: O(n²)
-    Space complexity: O(1)
-    """
-    n = M.shape[0]
-
-    diag = [M[i, i] for i in range(n)]
-    offdiag_pos = [M[i, j] for i in range(n) for j in range(n) if i != j and M[i, j] > 0]
-
-    result = {
-        'min_diag': min(diag) if diag else None,
-        'max_diag': max(diag) if diag else None,
-        'min_offdiag': min(offdiag_pos) if offdiag_pos else None,
-        'max_entry': int(M.max()),
-        'gap': None,
-        'weight_ratio': None,
-    }
-
-    if result['min_offdiag'] is not None and result['min_diag'] is not None:
-        result['gap'] = result['min_offdiag'] - result['min_diag']
-
-    if result['min_offdiag'] is not None and result['min_offdiag'] > 0:
-        result['weight_ratio'] = result['max_entry'] / result['min_offdiag']
-
+    result = layers[0].copy()
+    for L in layers[1:]:
+        result = tropical_mul(result, L)
     return result
 
 
-# =============================================================================
-# Algorithm 7: Depth-Cost Tradeoff Analysis
-# =============================================================================
+def depth_lower_bound_from_perm(M: np.ndarray, W: float) -> int:
+    """
+    Compute circuit depth lower bound from tropical permanent.
 
-def depth_cost_tradeoff(M: np.ndarray) -> dict:
-    """Analyze the depth-cost tradeoff for a matrix.
-
-    Computes all relevant invariants and verifies the bridge theorems.
+    Uses Theorem B: tropPerm(M) ≤ n × (d+1) × W
+    Hence: d+1 ≥ tropPerm(M) / (n × W)
+    So: d ≥ ⌈tropPerm(M) / (n × W)⌉ - 1
 
     Args:
-        M: n×n weight matrix (strictly upper triangular support expected)
+        M: n×n weight matrix (the target)
+        W: weight cap per layer
 
     Returns:
-        Dictionary with analysis results.
-
-    Time complexity: O(n² + n! · n) — dominated by permanent computation for small n
+        Lower bound on circuit depth d
     """
     n = M.shape[0]
+    perm_val, _ = tropical_perm(M)
+    if W <= 0 or n <= 0:
+        return 0
+    d_plus_1 = int(np.ceil(perm_val / (n * W)))
+    return max(0, d_plus_1 - 1)
 
-    depth, longest_path = compute_depth(M)
-    paths = enumerate_paths(M) if n <= 15 else []
 
-    min_w = None
-    max_w = int(M.max())
-    positive = M[M > 0]
-    if len(positive) > 0:
-        min_w = int(positive.min())
+def depth_lower_bound_from_spectral_gap(M: np.ndarray, B: float) -> int:
+    """
+    Compute circuit depth lower bound from spectral gap.
 
-    # Min-plus permanent
-    if n <= 10:
-        perm_val, perm_opt = min_plus_permanent_exact(M)
-    else:
-        perm_val, perm_opt = min_plus_permanent_hungarian(M)
+    Uses the spectral gap theorem: if minEntry(M) = w > 0,
+    then any walk of d+1 edges has cost ≥ (d+1) × w.
+    If cost ≤ B, then d+1 ≤ B/w + 1, so d ≤ B/w.
 
-    trace = sum(int(M[i, i]) for i in range(n))
+    Args:
+        M: n×n weight matrix
+        B: target cost budget
 
-    # Verify theorems
-    results = {
-        'n': n,
-        'depth': depth,
-        'longest_path': longest_path,
-        'min_edge_weight': min_w,
-        'max_edge_weight': max_w,
-        'min_plus_permanent': perm_val,
-        'trace': trace,
-        'num_paths': len(paths),
-        'spectral_gap': tropical_spectral_gap(M),
-        'theorems_verified': {},
-    }
+    Returns:
+        Lower bound on minimum edges needed, minus 1
+    """
+    w = np.min(M)
+    if w <= 0:
+        return 0
+    return int(np.floor(B / w))
 
-    # Verify: depth ≤ n - 1
-    results['theorems_verified']['depth_le_n_minus_1'] = depth <= n - 1
 
-    # Verify: minPlusPerm ≤ trace
-    results['theorems_verified']['perm_le_trace'] = perm_val <= trace
+def verify_entry_bound(M: np.ndarray, max_k: int = 10) -> List[dict]:
+    """
+    Verify the entry bound theorem: tropPow M k ≤ (k+1) × maxEntry(M).
 
-    # Verify: minPlusPerm ≤ n × max_entry
-    results['theorems_verified']['perm_le_n_mul_max'] = perm_val <= n * max_w
+    Args:
+        M: n×n weight matrix
+        max_k: maximum power to check
 
-    # Verify path cost bounds
-    if paths and min_w is not None:
-        all_cost_lower = all(
-            min_w * p.edges <= p.cost for p in paths
-        )
-        all_cost_upper = all(
-            p.cost <= max_w * p.edges for p in paths
-        )
-        results['theorems_verified']['path_cost_lower_bound'] = all_cost_lower
-        results['theorems_verified']['path_cost_upper_bound'] = all_cost_upper
-
+    Returns:
+        List of verification results
+    """
+    W = np.max(M)
+    results = []
+    for k in range(max_k):
+        Mk = tropical_pow(M, k)
+        actual_max = np.max(Mk)
+        bound = (k + 1) * W
+        results.append({
+            'k': k,
+            'edges': k + 1,
+            'actual_max': actual_max,
+            'bound': bound,
+            'holds': actual_max <= bound + 1e-10
+        })
     return results
 
 
-# =============================================================================
-# Main: Run all algorithms on example matrices
-# =============================================================================
+def verify_minentry_growth(M: np.ndarray, max_k: int = 10) -> List[dict]:
+    """
+    Verify the minEntry growth theorem: tropPow M k ≥ (k+1) × minEntry(M).
 
+    Args:
+        M: n×n weight matrix
+        max_k: maximum power to check
+
+    Returns:
+        List of verification results
+    """
+    w = np.min(M)
+    results = []
+    for k in range(max_k):
+        Mk = tropical_pow(M, k)
+        actual_min = np.min(Mk)
+        bound = (k + 1) * w
+        results.append({
+            'k': k,
+            'edges': k + 1,
+            'actual_min': actual_min,
+            'bound': bound,
+            'holds': actual_min >= bound - 1e-10
+        })
+    return results
+
+
+def find_optimal_walks(M: np.ndarray, k: int, i: int, j: int) -> List[Tuple[list, float]]:
+    """
+    Find all minimum-cost walks of exactly k+1 edges from i to j.
+
+    Uses dynamic programming / backtracking.
+
+    Time complexity: O(n^(k+1)) in the worst case
+    Space complexity: O(n × k)
+
+    Args:
+        M: n×n weight matrix
+        k: power index (walk uses k+1 edges)
+        i, j: start and end vertices
+
+    Returns:
+        List of (walk, cost) pairs achieving the minimum
+    """
+    n = M.shape[0]
+    Mk = tropical_pow(M, k)
+    target = Mk[i, j]
+
+    optimal = []
+
+    def backtrack(pos: int, path: list, cost: float, edges_left: int):
+        if edges_left == 0:
+            if pos == j and abs(cost - target) < 1e-10:
+                optimal.append((list(path), cost))
+            return
+        for next_v in range(n):
+            new_cost = cost + M[pos, next_v]
+            if new_cost <= target + 1e-10:  # pruning
+                path.append(next_v)
+                backtrack(next_v, path, new_cost, edges_left - 1)
+                path.pop()
+
+    backtrack(i, [i], 0.0, k + 1)
+    return optimal
+
+
+# Example usage
 if __name__ == "__main__":
-    print("=" * 70)
-    print("TROPICAL CIRCUIT LOWER BOUNDS — ALGORITHM DEMONSTRATIONS")
-    print("=" * 70)
+    print("Tropical Circuit Lower Bounds — Algorithm Examples\n")
 
-    # Example 1: Small layered matrix
-    print("\n--- Example 1: 5×5 Layered Matrix ---")
-    lcm = build_layered_matrix(5, weight_fn=lambda i, j: 2 * (j - i) + 1)
-    print(f"Matrix:\n{lcm.matrix}")
-    results = depth_cost_tradeoff(lcm.matrix)
-    print(f"Depth: {results['depth']}")
-    print(f"Longest path: {results['longest_path']}")
-    print(f"Min-plus permanent: {results['min_plus_permanent']}")
-    print(f"Trace: {results['trace']}")
-    print(f"Spectral gap: {results['spectral_gap']}")
-    print(f"Theorems verified: {results['theorems_verified']}")
+    M = np.array([[5, 3], [4, 6]], dtype=float)
+    print(f"Matrix: {M.tolist()}")
+    print(f"Tropical permanent: {tropical_perm(M)}")
+    print(f"Depth bound (W=1): d ≥ {depth_lower_bound_from_perm(M, 1)}")
+    print(f"Depth bound (W=3): d ≥ {depth_lower_bound_from_perm(M, 3)}")
 
-    # Example 2: Dense non-layered matrix
-    print("\n--- Example 2: 4×4 Non-Layered Matrix ---")
-    M2 = np.array([
-        [3, 1, 5, 2],
-        [4, 2, 1, 6],
-        [2, 3, 4, 1],
-        [5, 2, 3, 3]
-    ])
-    print(f"Matrix:\n{M2}")
-    perm_val, perm_opt = min_plus_permanent_exact(M2)
-    print(f"Min-plus permanent: {perm_val} (permutation: {perm_opt})")
-    perm_h, perm_ha = min_plus_permanent_hungarian(M2)
-    print(f"Hungarian algorithm: {perm_h} (assignment: {perm_ha})")
-    assert perm_val == perm_h, "Hungarian and brute force disagree!"
-    print("✓ Hungarian algorithm matches brute force")
+    print("\nEntry bound verification:")
+    for r in verify_entry_bound(M, 5):
+        print(f"  k={r['k']}: max={r['actual_max']:.0f} ≤ {r['bound']:.0f} {'✓' if r['holds'] else '✗'}")
 
-    # Example 3: Family with growing weights
-    print("\n--- Example 3: Family with Growing Minimum Weight ---")
-    for k in range(1, 6):
-        n = 5
-        lcm_k = build_layered_matrix(n, weight_fn=lambda i, j, k=k: k * (j - i))
-        res = depth_cost_tradeoff(lcm_k.matrix)
-        print(f"  k={k}: depth={res['depth']}, min_w={res['min_edge_weight']}, "
-              f"perm={res['min_plus_permanent']}, "
-              f"all_verified={all(res['theorems_verified'].values())}")
-
-    print("\n✓ All algorithms completed successfully")
+    print("\nMinEntry growth verification:")
+    for r in verify_minentry_growth(M, 5):
+        print(f"  k={r['k']}: min={r['actual_min']:.0f} ≥ {r['bound']:.0f} {'✓' if r['holds'] else '✗'}")
