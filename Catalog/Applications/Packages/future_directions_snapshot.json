@@ -1223,23 +1223,6 @@
     "timestamp": "2026-05-14T16:16:22.730452+00:00"
   },
   {
-    "id": "fd_0085",
-    "title": "Prove γ-spreadness",
-    "description": ": Show that tropical ciphertexts have high min-entropy, using the non-commutativity and dimension bounds already established.\n\n### Key Lemmas Needed\n- `tropical_gamma_spread`: For random r, the distribution of (tropPow G r, tropMul (tropPow (tropPow G a) r) M) has min-entropy ≥ γ.\n- `fo_transform_cca2`: Generic FO transform theorem (may need to be formalized from scratch).\n- `tropical_kem_correctness`: The KEM decapsulation recovers the encapsulated key.\n- `tropical_kem_cca2_security`: The full CCA2 security theorem.\n\n### Candidate Lean Files\n- `Cryptography/TropicalKEM.lean`\n- `Cryptography/FujisakiOkamoto.lean`\n\n### Cross-Domain Connections\n- **Standardization → Deployment**: A formally verified KEM with concrete security bounds could be submitted to future NIST post-quantum rounds.\n- **",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "831fce32",
-    "timestamp": "2026-05-14T16:16:22.732498+00:00"
-  },
-  {
     "id": "fd_0086",
     "title": "Commitment-based protocol",
     "description": ": The prover commits to A and B using a binding commitment scheme. The verifier challenges with a random row index i. The prover reveals row i of A and the corresponding column contributions to K, allowing the verifier to check consistency without learning the full matrices.",
@@ -2384,6 +2367,79 @@
     "source_exp_id": "10c1074c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:34:12.186028+00:00"
+  },
+  {
+    "id": "fd_0182",
+    "title": "Algebraic Foundations Team",
+    "description": ": Directions 2, 6 — extend entropy and spectral analysis",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "831fce32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:19.811676+00:00"
+  },
+  {
+    "id": "fd_0183",
+    "title": "Cryptanalysis Team",
+    "description": ": Directions 1, 3 — attack complexity and lattice reduction",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "831fce32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:19.816031+00:00"
+  },
+  {
+    "id": "fd_0184",
+    "title": "Systems Team",
+    "description": ": Directions 3, 4 — hybrid KEMs and implementation",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "831fce32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:19.819616+00:00"
+  },
+  {
+    "id": "fd_0185",
+    "title": "Complexity Team",
+    "description": ": Directions 5, 7 — circuit bounds and quantum separation",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "831fce32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:19.822758+00:00"
+  },
+  {
+    "id": "fd_0186",
+    "title": "Bridge Team",
+    "description": ": Cross-cutting — connect tropical results to ML, physics, optimization",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "831fce32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:19.827837+00:00"
   },
   {
     "id": "seed_078",
