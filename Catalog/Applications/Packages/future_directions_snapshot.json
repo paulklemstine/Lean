@@ -2034,6 +2034,137 @@
     "timestamp": "2026-05-14T16:24:30.150755+00:00"
   },
   {
+    "id": "fd_0150",
+    "title": "Dependency extraction",
+    "description": ": Parse proof files to extract `import` and `theorem`-level dependencies.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.366275+00:00"
+  },
+  {
+    "id": "fd_0151",
+    "title": "Level computation",
+    "description": ": Apply the longest-path algorithm from `algorithms.py`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.369472+00:00"
+  },
+  {
+    "id": "fd_0152",
+    "title": "Certificate generation",
+    "description": ": Produce a Lean proof that the computed ranking satisfies `IsCurriculum`.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.372232+00:00"
+  },
+  {
+    "id": "fd_0153",
+    "title": "Incremental updates",
+    "description": ": When a new theorem is added, only recompute levels along the affected dependency chain.\n\n### Cross-Domain Connections\n- Software engineering: build systems, dependency resolution (npm, cargo)\n- Formal methods: certified compilation, proof-carrying code\n- Education technology: adaptive learning systems, prerequisite graphs\n- Knowledge management: ontology design, skill trees in games\n\n---\n\n## Implementation Priority",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.375913+00:00"
+  },
+  {
+    "id": "fd_0154",
+    "title": "Direction 3 (Parallel Complexity)",
+    "description": "— Most accessible, builds directly on the existing theory, and has immediate practical applications for proof automation.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.379046+00:00"
+  },
+  {
+    "id": "fd_0155",
+    "title": "Direction 1 (Infinite Curricula)",
+    "description": "— Mathematically deepest, connects to ordinal analysis and proof theory. Good target for a research paper.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.381864+00:00"
+  },
+  {
+    "id": "fd_0156",
+    "title": "Direction 5 (Automated Extraction)",
+    "description": "— Most practical impact. Could be integrated into existing proof assistants as a library analysis tool.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.385066+00:00"
+  },
+  {
+    "id": "fd_0157",
+    "title": "Direction 2 (Category Theory)",
+    "description": "— Elegant mathematical framework. Important for understanding how curriculum complexity behaves under theory morphisms.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.388513+00:00"
+  },
+  {
+    "id": "fd_0158",
+    "title": "Direction 4 (Entropy)",
+    "description": "— Most speculative but potentially most impactful. Opens connections to information theory and computational complexity.",
+    "domains": [
+      "Computation",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "68311f72",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:32:45.392105+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
