@@ -1575,20 +1575,6 @@
     "timestamp": "2026-05-14T16:24:30.150755+00:00"
   },
   {
-    "id": "fd_0150",
-    "title": "Dependency extraction",
-    "description": ": Parse proof files to extract `import` and `theorem`-level dependencies.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "08ca2eef",
-    "timestamp": "2026-05-14T17:32:45.366275+00:00"
-  },
-  {
     "id": "fd_0152",
     "title": "Certificate generation",
     "description": ": Produce a Lean proof that the computed ranking satisfies `IsCurriculum`.",
@@ -2186,6 +2172,48 @@
     "source_exp_id": "c337fb05",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:35:20.593956+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Validate the conjecture",
+    "description": "computationally on real proof libraries (e.g., run dependency extraction on Mathlib's 100K+ declarations).",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "08ca2eef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:34:15.721141+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Formalize the definitions",
+    "description": "in Lean, building on the existing `DependencyExtraction.lean` infrastructure.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "08ca2eef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:34:15.726130+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Prove the key lemma",
+    "description": "identified in each proof strategy, then compose into the main theorem.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "08ca2eef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:34:15.731779+00:00"
   },
   {
     "id": "seed_078",
