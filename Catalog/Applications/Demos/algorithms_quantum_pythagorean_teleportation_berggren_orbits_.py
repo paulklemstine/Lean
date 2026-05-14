@@ -1,342 +1,301 @@
 #!/usr/bin/env python3
 """
-Algorithms for Berggren Tree Dynamics and Parity Analysis
+Algorithms for the Berggren Symplectic Bridge
 
 Implements:
-1. Berggren tree traversal (BFS/DFS)
-2. Inverse Berggren descent (finding the path to a given triple)
-3. Parity automaton simulation
-4. Quadratic form verification
-5. Depth and complexity analysis
+1. Berggren tree generation
+2. Euclidean parameter extraction
+3. SL(2, F_3) word decomposition
+4. Shortest symplectic transport computation
 """
 
-import numpy as np
-from typing import List, Tuple, Optional, Dict
+from itertools import product
 from collections import deque
-
-# ============================================================
-# Core Matrices and Constants
-# ============================================================
-
-ETA = np.array([[1, 0, 0], [0, 1, 0], [0, 0, -1]], dtype=np.int64)
-
-GENERATORS = {
-    'A': np.array([[ 1, -2,  2], [ 2, -1,  2], [ 2, -2,  3]], dtype=np.int64),
-    'B': np.array([[ 1,  2,  2], [ 2,  1,  2], [ 2,  2,  3]], dtype=np.int64),
-    'C': np.array([[-1,  2,  2], [-2,  1,  2], [-2,  2,  3]], dtype=np.int64),
-}
-
-INVERSES = {
-    'A': np.array([[ 1,  2, -2], [-2, -1,  2], [-2, -2,  3]], dtype=np.int64),
-    'B': np.array([[ 1,  2, -2], [ 2,  1, -2], [-2, -2,  3]], dtype=np.int64),
-    'C': np.array([[-1, -2,  2], [ 2,  1, -2], [-2, -2,  3]], dtype=np.int64),
-}
-
-ROOT = np.array([3, 4, 5], dtype=np.int64)
+from typing import Tuple, List, Optional, Dict
 
 
-# ============================================================
-# Algorithm 1: Quadratic Form and Verification
-# ============================================================
+def mat_mul_mod(A: List[List[int]], B: List[List[int]], p: int) -> List[List[int]]:
+    """Multiply two 2x2 matrices modulo p.
 
-def pyth_quad(v: np.ndarray) -> int:
+    Time: O(1)  Space: O(1)
+
+    Args:
+        A: 2x2 matrix as list of lists
+        B: 2x2 matrix as list of lists
+        p: prime modulus
+
+    Returns:
+        Product A*B mod p as 2x2 list of lists
     """
-    Compute the Pythagorean quadratic form Q(v) = v[0]² + v[1]² - v[2]².
-    
-    Returns 0 iff v represents a Pythagorean triple.
-    
-    Complexity: O(1) time, O(1) space
-    """
-    return int(v[0]**2 + v[1]**2 - v[2]**2)
+    return [
+        [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % p,
+         (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % p],
+        [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % p,
+         (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % p]
+    ]
 
 
-def verify_lorentz_membership(M: np.ndarray) -> bool:
+def mat_vec_mod(M: List[List[int]], v: Tuple[int, int], p: int) -> Tuple[int, int]:
+    """Multiply 2x2 matrix by 2-vector modulo p.
+
+    Args:
+        M: 2x2 matrix
+        v: 2-vector
+        p: prime modulus
+
+    Returns:
+        M*v mod p as tuple
     """
-    Check whether M ∈ O(2,1;ℤ), i.e., Mᵀ η M = η.
-    
-    Complexity: O(n³) for n×n matrix (here n=3, so O(1))
-    """
-    return np.array_equal(M.T @ ETA @ M, ETA)
+    return (
+        (M[0][0]*v[0] + M[0][1]*v[1]) % p,
+        (M[1][0]*v[0] + M[1][1]*v[1]) % p
+    )
 
 
-def parity_constraint(v: np.ndarray) -> bool:
+def mat_pow_mod(M: List[List[int]], k: int, p: int) -> List[List[int]]:
+    """Compute M^k mod p for a 2x2 matrix.
+
+    Time: O(log k)  Space: O(1)
     """
-    Check the parity constraint: v[0] + v[1] + v[2] ≡ 0 (mod 2).
-    
-    Complexity: O(1)
-    """
-    return (v[0] + v[1] + v[2]) % 2 == 0
+    result = [[1, 0], [0, 1]]  # Identity
+    base = [row[:] for row in M]
+    while k > 0:
+        if k % 2 == 1:
+            result = mat_mul_mod(result, base, p)
+        base = mat_mul_mod(base, base, p)
+        k //= 2
+    return result
 
 
-# ============================================================
-# Algorithm 2: Berggren Tree Traversal (BFS)
-# ============================================================
+# Berggren generators on Euclidean parameters
+E1 = [[2, -1], [1, 0]]   # det = 1
+E2 = [[2, 1], [1, 0]]    # det = -1
+E3 = [[1, 2], [0, 1]]    # det = 1
 
-def berggren_bfs(max_hypotenuse: int) -> List[Tuple[str, np.ndarray]]:
+# Mod-3 reductions
+E1_MOD3 = [[2, 2], [1, 0]]
+E3_MOD3 = [[1, 2], [0, 1]]
+
+
+def berggren_triple(m: int, n: int) -> Tuple[int, int, int]:
+    """Compute the Pythagorean triple from Euclidean parameters.
+
+    Args:
+        m, n: coprime integers with m > n > 0 and m - n odd
+
+    Returns:
+        (a, b, c) where a = m²-n², b = 2mn, c = m²+n²
     """
-    Generate all primitive Pythagorean triples with hypotenuse ≤ max_hypotenuse
-    using BFS on the Berggren tree.
-    
-    Returns list of (path, triple) pairs.
-    
-    Complexity:
-      Time:  O(N) where N = number of triples with c ≤ max_hypotenuse
-      Space: O(N) for the queue and results
-      
-    The number of primitive Pythagorean triples with hypotenuse ≤ C
-    grows as Θ(C / (2π)), so this is optimal.
+    return (m*m - n*n, 2*m*n, m*m + n*n)
+
+
+def berggren_tree(depth: int) -> List[Tuple[int, int, int, int, List[str]]]:
+    """Generate the Berggren tree to a given depth.
+
+    BFS traversal of the ternary Berggren tree starting from (3,4,5).
+
+    Time: O(3^depth)  Space: O(3^depth)
+
+    Args:
+        depth: maximum tree depth
+
+    Returns:
+        List of (a, b, c, depth, path) tuples
     """
-    results = []
-    queue = deque([("", ROOT)])
-    
+    import numpy as np
+
+    B1 = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])
+    B2 = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]])
+    B3 = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])
+
+    root = np.array([3, 4, 5])
+    result = [(3, 4, 5, 0, [])]
+    queue = deque([(root, 0, [])])
+
     while queue:
-        path, v = queue.popleft()
-        if v[2] > max_hypotenuse:
+        triple, d, path = queue.popleft()
+        if d >= depth:
             continue
-        results.append((path, v.copy()))
-        
-        for label, M in GENERATORS.items():
-            child = M @ v
-            if child[2] <= max_hypotenuse:
-                queue.append((path + label, child))
-    
-    return results
+        for name, B in [("B1", B1), ("B2", B2), ("B3", B3)]:
+            child = B @ triple
+            new_path = path + [name]
+            result.append((int(child[0]), int(child[1]), int(child[2]), d + 1, new_path))
+            queue.append((child, d + 1, new_path))
+
+    return result
 
 
-def berggren_dfs(max_depth: int) -> List[Tuple[str, np.ndarray]]:
+def enumerate_sl2_f3() -> List[List[List[int]]]:
+    """Enumerate all elements of SL(2, F_3).
+
+    Returns:
+        List of 24 matrices [[a,b],[c,d]] with ad-bc ≡ 1 mod 3
     """
-    Generate all triples in the Berggren tree up to a given depth using DFS.
-    
-    Complexity:
-      Time:  O(3^d) where d = max_depth
-      Space: O(d) stack depth + O(3^d) for results
-    """
-    results = []
-    
-    def _dfs(path: str, v: np.ndarray, depth: int):
-        results.append((path, v.copy()))
-        if depth >= max_depth:
-            return
-        for label, M in GENERATORS.items():
-            _dfs(path + label, M @ v, depth + 1)
-    
-    _dfs("", ROOT, 0)
-    return results
+    elements = []
+    for a, b, c, d in product(range(3), repeat=4):
+        if (a * d - b * c) % 3 == 1:
+            elements.append([[a, b], [c, d]])
+    return elements
 
 
-# ============================================================
-# Algorithm 3: Inverse Berggren Descent
-# ============================================================
+def word_decomposition(target: List[List[int]], max_len: int = 8) -> Optional[List[str]]:
+    """Find the shortest word in {E1, E1^2, E3, E3^2} expressing a target in SL(2, F_3).
 
-def berggren_descent(triple: np.ndarray) -> Optional[str]:
+    BFS over words in the generators.
+
+    Time: O(4^max_len) worst case  Space: O(|SL(2,F_3)|) = O(1)
+
+    Args:
+        target: 2x2 matrix over F_3
+        max_len: maximum word length to search
+
+    Returns:
+        List of generator names, or None if not found
     """
-    Find the unique path from the root (3,4,5) to a given primitive
-    Pythagorean triple in the Berggren tree.
-    
-    Uses the inverse matrices to ascend from the triple back to the root.
-    
-    Complexity:
-      Time:  O(log c) where c is the hypotenuse (each step reduces c)
-      Space: O(log c) for the path
-      
-    Returns None if the triple is not in the Berggren tree
-    (i.e., not a primitive Pythagorean triple with positive entries).
-    """
-    v = triple.copy()
-    path = []
-    max_steps = 1000  # Safety limit
-    
-    for _ in range(max_steps):
-        if np.array_equal(v, ROOT):
-            return ''.join(reversed(path))
-        
-        if v[2] <= 0 or pyth_quad(v) != 0:
-            return None
-        
-        # Try each inverse; exactly one should produce a valid parent
-        found = False
-        for label, M_inv in INVERSES.items():
-            parent = M_inv @ v
-            # Valid parent has all positive entries and smaller hypotenuse
-            if all(parent > 0) and parent[2] < v[2]:
-                path.append(label)
-                v = parent
-                found = True
-                break
-        
-        if not found:
-            return None
-    
+    target_key = (target[0][0], target[0][1], target[1][0], target[1][1])
+    identity = [[1, 0], [0, 1]]
+    identity_key = (1, 0, 0, 1)
+
+    if target_key == identity_key:
+        return []
+
+    generators = {
+        "E1": E1_MOD3,
+        "E1^2": mat_pow_mod(E1_MOD3, 2, 3),
+        "E3": E3_MOD3,
+        "E3^2": mat_pow_mod(E3_MOD3, 2, 3),
+    }
+
+    visited: Dict[Tuple[int, ...], List[str]] = {identity_key: []}
+    queue = deque([(identity, [])])
+
+    while queue:
+        current, path = queue.popleft()
+        if len(path) >= max_len:
+            continue
+        for name, gen in generators.items():
+            prod = mat_mul_mod(current, gen, 3)
+            key = (prod[0][0], prod[0][1], prod[1][0], prod[1][1])
+            if key not in visited:
+                new_path = path + [name]
+                visited[key] = new_path
+                if key == target_key:
+                    return new_path
+                queue.append((prod, new_path))
+
     return None
 
 
-# ============================================================
-# Algorithm 4: Parity Automaton
-# ============================================================
+def shortest_transport(source: Tuple[int, int], target: Tuple[int, int],
+                       p: int = 3) -> Optional[List[str]]:
+    """Find the shortest Berggren word transporting source to target in F_p^2.
 
-class ParityAutomaton:
+    This implements the "compiler optimality" theorem: find the minimum-cost
+    sequence of Berggren generators mapping one F_p-vector to another.
+
+    Args:
+        source: starting vector in F_p^2 (nonzero)
+        target: target vector in F_p^2 (nonzero)
+        p: prime (default 3)
+
+    Returns:
+        Shortest word as list of generator names, or None
     """
-    Finite-state automaton on (Z/2Z)³ induced by Berggren generators.
-    
-    Since all three generators reduce to the identity mod 2,
-    the automaton has a trivially stable dynamics — every state
-    is a fixed point. The parity constraint x+y+z ≡ 0 (mod 2)
-    is an invariant of this automaton.
-    
-    This is the "proto-stabilizer" structure: a certified finite shadow
-    of the infinite integral Lorentz dynamics.
-    """
-    
-    def __init__(self):
-        self.generators_mod2 = {}
-        for label, M in GENERATORS.items():
-            self.generators_mod2[label] = M % 2
-    
-    def transition(self, state: np.ndarray, generator: str) -> np.ndarray:
-        """Apply a generator mod 2 to a parity state."""
-        M2 = self.generators_mod2[generator]
-        return (M2 @ state) % 2
-    
-    def is_invariant(self, state: np.ndarray) -> bool:
-        """Check if parity constraint holds."""
-        return sum(state) % 2 == 0
-    
-    def orbit(self, state: np.ndarray, word: str) -> List[np.ndarray]:
-        """Trace the orbit of a state under a word in {A,B,C}*."""
-        trajectory = [state.copy()]
-        current = state.copy()
-        for letter in word:
-            current = self.transition(current, letter)
-            trajectory.append(current.copy())
-        return trajectory
-    
-    def full_state_table(self) -> Dict[str, Dict[str, Tuple]]:
-        """
-        Compute the complete transition table for all 8 states of (Z/2Z)³.
-        
-        Since all generators ≡ I (mod 2), every state maps to itself.
-        """
-        table = {}
-        for i in range(8):
-            state = np.array([(i >> 2) & 1, (i >> 1) & 1, i & 1])
-            state_key = f"({state[0]},{state[1]},{state[2]})"
-            table[state_key] = {}
-            for label in GENERATORS:
-                result = self.transition(state, label)
-                table[state_key][label] = tuple(result)
-        return table
+    if source == (0, 0) or target == (0, 0):
+        return None
 
-
-# ============================================================
-# Algorithm 5: Hypotenuse Growth Analysis
-# ============================================================
-
-def hypotenuse_growth_analysis(depth: int) -> Dict[str, List[int]]:
-    """
-    Analyze how the hypotenuse grows along each branch of the Berggren tree.
-    
-    For each generator applied repeatedly, tracks the hypotenuse sequence.
-    Shows exponential growth with different rates for different generators.
-    
-    Complexity: O(depth) per branch
-    """
-    results = {}
-    
-    for label, M in GENERATORS.items():
-        hyps = []
-        v = ROOT.copy()
-        for _ in range(depth):
-            hyps.append(int(v[2]))
-            v = M @ v
-        hyps.append(int(v[2]))
-        results[label] = hyps
-    
-    return results
-
-
-# ============================================================
-# Algorithm 6: Triple Statistics
-# ============================================================
-
-def triple_statistics(max_hyp: int) -> Dict[str, any]:
-    """
-    Compute statistics of the Berggren tree up to a given hypotenuse bound.
-    
-    Returns: count, depth distribution, parity verification, etc.
-    """
-    triples = berggren_bfs(max_hyp)
-    
-    depths = {}
-    for path, v in triples:
-        d = len(path)
-        depths[d] = depths.get(d, 0) + 1
-    
-    all_pythagorean = all(pyth_quad(v) == 0 for _, v in triples)
-    all_parity = all(parity_constraint(v) for _, v in triples)
-    
-    return {
-        'count': len(triples),
-        'max_hypotenuse': max_hyp,
-        'depth_distribution': depths,
-        'all_pythagorean': all_pythagorean,
-        'all_parity_satisfied': all_parity,
-        'sample_triples': [(path, tuple(v)) for path, v in triples[:10]],
+    # BFS over the 8 nonzero vectors
+    generators = {
+        "E1": E1_MOD3,
+        "E1^2": mat_pow_mod(E1_MOD3, 2, 3),
+        "E3": E3_MOD3,
+        "E3^2": mat_pow_mod(E3_MOD3, 2, 3),
     }
 
+    visited = {source: []}
+    queue = deque([(source, [])])
 
-# ============================================================
-# Main — Run all algorithms
-# ============================================================
+    while queue:
+        current, path = queue.popleft()
+        if current == target:
+            return path
+        for name, gen in generators.items():
+            new_vec = mat_vec_mod(gen, current, p)
+            if new_vec not in visited:
+                new_path = path + [name]
+                visited[new_vec] = new_path
+                queue.append((new_vec, new_path))
+
+    return None
+
+
+def cayley_graph_sl2_f3() -> Dict[Tuple[int, ...], Dict[str, Tuple[int, ...]]]:
+    """Compute the Cayley graph of SL(2, F_3) with Berggren generators.
+
+    Returns:
+        Dictionary mapping matrix (as tuple) to dict of {generator_name: neighbor}
+    """
+    generators = {
+        "E1": E1_MOD3,
+        "E1^(-1)": mat_pow_mod(E1_MOD3, 2, 3),
+        "E3": E3_MOD3,
+        "E3^(-1)": mat_pow_mod(E3_MOD3, 2, 3),
+    }
+
+    elements = enumerate_sl2_f3()
+    graph = {}
+
+    for M in elements:
+        key = (M[0][0], M[0][1], M[1][0], M[1][1])
+        neighbors = {}
+        for name, gen in generators.items():
+            prod = mat_mul_mod(M, gen, 3)
+            prod_key = (prod[0][0], prod[0][1], prod[1][0], prod[1][1])
+            neighbors[name] = prod_key
+        graph[key] = neighbors
+
+    return graph
+
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("ALGORITHM DEMONSTRATIONS")
+    print("Algorithm 1: Word Decomposition in SL(2, F_3)")
     print("=" * 60)
-    
-    # 1. Lorentz verification
-    print("\n--- Lorentz Group Membership ---")
-    for label, M in GENERATORS.items():
-        print(f"  {label} ∈ O(2,1;ℤ): {verify_lorentz_membership(M)}")
-    
-    # 2. BFS enumeration
-    print("\n--- BFS Enumeration (hypotenuse ≤ 100) ---")
-    triples = berggren_bfs(100)
-    print(f"  Found {len(triples)} primitive Pythagorean triples")
-    for path, v in triples:
-        print(f"    [{path or 'root':>6}] ({v[0]:>3}, {v[1]:>3}, {v[2]:>3})")
-    
-    # 3. Inverse descent
-    print("\n--- Inverse Descent ---")
-    test_triples = [
-        np.array([5, 12, 13]),
-        np.array([8, 15, 17]),
-        np.array([7, 24, 25]),
-        np.array([20, 21, 29]),
-    ]
-    for t in test_triples:
-        path = berggren_descent(t)
-        print(f"  ({t[0]:>3}, {t[1]:>3}, {t[2]:>3}) → path: {path}")
-    
-    # 4. Parity automaton
-    print("\n--- Parity Automaton ---")
-    automaton = ParityAutomaton()
-    print("  Transition table (all generators ≡ I mod 2):")
-    table = automaton.full_state_table()
-    for state, transitions in table.items():
-        parity_ok = sum(int(c) for c in state if c.isdigit()) % 2 == 0
-        marker = "✓ invariant" if parity_ok else "  outside"
-        print(f"    {state} → A:{transitions['A']} B:{transitions['B']} C:{transitions['C']}  {marker}")
-    
-    # 5. Growth analysis
-    print("\n--- Hypotenuse Growth ---")
-    growth = hypotenuse_growth_analysis(8)
-    for label, hyps in growth.items():
-        print(f"  {label}-branch: {hyps}")
-    
-    # 6. Statistics
-    print("\n--- Statistics (hypotenuse ≤ 1000) ---")
-    stats = triple_statistics(1000)
-    print(f"  Count: {stats['count']}")
-    print(f"  All Pythagorean: {stats['all_pythagorean']}")
-    print(f"  All parity OK: {stats['all_parity_satisfied']}")
-    print(f"  Depth distribution: {stats['depth_distribution']}")
+
+    elements = enumerate_sl2_f3()
+    max_word_len = 0
+    for M in elements:
+        word = word_decomposition(M)
+        key = f"[[{M[0][0]},{M[0][1]}],[{M[1][0]},{M[1][1]}]]"
+        if word is not None:
+            print(f"  {key} = {'·'.join(word) if word else 'I'} (length {len(word)})")
+            max_word_len = max(max_word_len, len(word))
+        else:
+            print(f"  {key} = NOT FOUND")
+    print(f"\nMaximum word length (diameter): {max_word_len}")
+
+    print()
+    print("=" * 60)
+    print("Algorithm 2: Shortest Symplectic Transport")
+    print("=" * 60)
+
+    root = (2, 1)
+    for target in [(0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]:
+        path = shortest_transport(root, target)
+        print(f"  ({root[0]},{root[1]}) -> ({target[0]},{target[1]}): "
+              f"{'·'.join(path) if path else 'identity'} (cost {len(path) if path else 0})")
+
+    print()
+    print("=" * 60)
+    print("Algorithm 3: Berggren Tree (depth 3)")
+    print("=" * 60)
+
+    tree = berggren_tree(3)
+    for a, b, c, d, path in tree[:13]:  # First 13 nodes
+        path_str = " -> ".join(path) if path else "root"
+        m_sq = (a + c) // 2
+        n_sq = (c - a) // 2
+        m_val = int(round(m_sq ** 0.5))
+        n_val = int(round(n_sq ** 0.5))
+        print(f"  Depth {d}: ({a},{b},{c}), Euclid ({m_val},{n_val}), "
+              f"mod 3: ({m_val%3},{n_val%3}), path: {path_str}")

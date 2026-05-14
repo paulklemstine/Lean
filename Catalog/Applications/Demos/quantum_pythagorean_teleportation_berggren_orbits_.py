@@ -1,760 +1,889 @@
 #!/usr/bin/env python3
 """
-Applications of Berggren–Lorentz Dynamics
+Applications of the Berggren Symplectic Bridge
 
-Demonstrates real-world and cross-domain applications:
-1. Cryptographic hash via Berggren monoid action
-2. Error-detecting codes from parity invariant
-3. Efficient Pythagorean triple enumeration
-4. Lattice point counting on the Pythagorean cone
+Demonstrates practical applications of the arithmetic-to-symplectic connection:
+1. Qutrit stabilizer state labeling via Pythagorean triples
+2. Arithmetic circuit compiler for stabilizer transport
+3. Binary classification of Pythagorean triples by symplectic orbit
 """
 
-import numpy as np
-from typing import List, Tuple
-import hashlib
-
-# ============================================================
-# Core Setup (self-contained)
-# ============================================================
-
-GENERATORS = {
-    'A': np.array([[ 1, -2,  2], [ 2, -1,  2], [ 2, -2,  3]], dtype=np.int64),
-    'B': np.array([[ 1,  2,  2], [ 2,  1,  2], [ 2,  2,  3]], dtype=np.int64),
-    'C': np.array([[-1,  2,  2], [-2,  1,  2], [-2,  2,  3]], dtype=np.int64),
-}
-
-INVERSES = {
-    'A': np.array([[ 1,  2, -2], [-2, -1,  2], [-2, -2,  3]], dtype=np.int64),
-    'B': np.array([[ 1,  2, -2], [ 2,  1, -2], [-2, -2,  3]], dtype=np.int64),
-    'C': np.array([[-1, -2,  2], [ 2,  1, -2], [-2, -2,  3]], dtype=np.int64),
-}
-
-ROOT = np.array([3, 4, 5], dtype=np.int64)
-ETA = np.array([[1, 0, 0], [0, 1, 0], [0, 0, -1]], dtype=np.int64)
+from itertools import product
+from collections import deque
+from typing import Tuple, List, Dict, Optional
 
 
 # ============================================================
-# Application 1: Berggren Hash Function
+# Application 1: Qutrit Stabilizer State Labeling
 # ============================================================
 
-def berggren_hash(message: bytes, output_bits: int = 64) -> str:
+class QutritStabilizerLabeler:
+    """Label qutrit stabilizer states using Pythagorean triple arithmetic.
+
+    Each primitive Pythagorean triple (a,b,c) with Euclidean parameters (m,n)
+    maps to a stabilizer state label (m mod 3, n mod 3) in F_3^2 \\ {0}.
+
+    The 8 nonzero vectors in F_3^2 correspond to the 8 distinct stabilizer
+    states of a single qutrit (dimension 3).
+
+    Usage:
+        labeler = QutritStabilizerLabeler()
+        label = labeler.label_triple(3, 4, 5)  # Returns (2, 1)
+        name = labeler.state_name(label)        # Returns human-readable name
     """
-    Hash function based on Berggren monoid action.
-    
-    The security intuition: given a point on the Berggren tree,
-    finding the word that produced it requires solving the
-    Berggren descent problem, which has logarithmic depth but
-    non-obvious structure for arbitrary starting points.
-    
-    This is a pedagogical demonstration, not a production hash.
-    
-    Process:
-    1. Convert message to a sequence of generator choices {A,B,C}
-    2. Apply generators sequentially to the root triple
-    3. Extract hash from the final triple coordinates
-    """
-    # Convert message bytes to generator sequence
-    msg_hash = hashlib.sha256(message).digest()
-    gen_sequence = []
-    for byte in msg_hash:
-        for i in range(0, 8, 2):
-            bits = (byte >> i) & 0x3
-            gen_sequence.append(['A', 'B', 'C'][bits % 3])
-    
-    # Apply generators
-    v = ROOT.copy().astype(np.int64)
-    for gen in gen_sequence:
-        v = GENERATORS[gen] @ v
-        # Reduce modulo a large prime to prevent overflow
-        v = v % (2**61 - 1)
-    
-    # Extract hash
-    combined = (v[0] * 2**42 + v[1] * 2**21 + v[2]) % (2**output_bits)
-    return format(combined, f'0{output_bits // 4}x')
 
-
-# ============================================================
-# Application 2: Parity Error Detection
-# ============================================================
-
-def encode_with_parity(a: int, b: int) -> Tuple[int, int, int]:
-    """
-    Use the Pythagorean parity constraint as an error-detecting code.
-    
-    Given two values a, b, compute c such that (a,b,c) satisfies
-    the parity constraint a + b + c ≡ 0 (mod 2).
-    
-    This is the simplest manifestation of the parity shadow:
-    the mod-2 invariant provides a single-bit error check.
-    """
-    c = (a + b) % 2  # Ensure parity constraint
-    return (a, b, c)
-
-
-def check_parity(triple: Tuple[int, int, int]) -> bool:
-    """Check the parity constraint."""
-    return (triple[0] + triple[1] + triple[2]) % 2 == 0
-
-
-def simulate_transmission(data: List[Tuple[int, int]], error_rate: float = 0.1) -> dict:
-    """
-    Simulate data transmission with parity-based error detection.
-    
-    Demonstrates that the Pythagorean parity invariant serves as
-    a natural error-detecting code.
-    """
-    import random
-    random.seed(42)
-    
-    encoded = [encode_with_parity(a, b) for a, b in data]
-    
-    # Simulate channel errors
-    received = []
-    errors_introduced = 0
-    for triple in encoded:
-        triple_list = list(triple)
-        if random.random() < error_rate:
-            # Flip one bit in one component
-            idx = random.randint(0, 2)
-            triple_list[idx] ^= 1
-            errors_introduced += 1
-        received.append(tuple(triple_list))
-    
-    # Detect errors
-    errors_detected = sum(1 for t in received if not check_parity(t))
-    
-    return {
-        'total_messages': len(data),
-        'errors_introduced': errors_introduced,
-        'errors_detected': errors_detected,
-        'detection_rate': errors_detected / max(errors_introduced, 1),
+    STABILIZER_NAMES = {
+        (1, 0): "|0⟩ basis",
+        (2, 0): "|0⟩ basis (conjugate)",
+        (0, 1): "|+⟩ basis",
+        (0, 2): "|+⟩ basis (conjugate)",
+        (1, 1): "|+i⟩ basis",
+        (2, 2): "|+i⟩ basis (conjugate)",
+        (1, 2): "|ω⟩ basis",
+        (2, 1): "|ω⟩ basis (conjugate)",
     }
 
+    def label_triple(self, a: int, b: int, c: int) -> Tuple[int, int]:
+        """Extract the qutrit stabilizer label from a primitive Pythagorean triple.
+
+        Args:
+            a, b, c: primitive Pythagorean triple with a odd, b even
+
+        Returns:
+            (m mod 3, n mod 3) where a = m²-n², b = 2mn, c = m²+n²
+        """
+        m_sq = (a + c) // 2
+        n_sq = (c - a) // 2
+        m = int(round(m_sq ** 0.5))
+        n = int(round(n_sq ** 0.5))
+        assert m * m == m_sq and n * n == n_sq, f"Invalid triple ({a},{b},{c})"
+        return (m % 3, n % 3)
+
+    def state_name(self, label: Tuple[int, int]) -> str:
+        """Get the human-readable stabilizer state name."""
+        return self.STABILIZER_NAMES.get(label, "Unknown")
+
+    def classify_tree(self, depth: int) -> Dict[Tuple[int, int], List[Tuple[int, int, int]]]:
+        """Classify Berggren tree triples by their stabilizer label.
+
+        Returns dict mapping stabilizer label -> list of triples
+        """
+        import numpy as np
+
+        B1 = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])
+        B2 = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]])
+        B3 = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])
+
+        classified = {k: [] for k in self.STABILIZER_NAMES}
+        root = np.array([3, 4, 5])
+        queue = deque([(root, 0)])
+
+        while queue:
+            triple, d = queue.popleft()
+            a, b, c = int(triple[0]), int(triple[1]), int(triple[2])
+            label = self.label_triple(a, b, c)
+            if label in classified:
+                classified[label].append((a, b, c))
+            if d < depth:
+                for B in [B1, B2, B3]:
+                    queue.append((B @ triple, d + 1))
+
+        return classified
+
 
 # ============================================================
-# Application 3: Efficient Triple Enumeration
+# Application 2: Arithmetic Circuit Compiler
 # ============================================================
 
-def enumerate_triples_sorted(max_hyp: int) -> List[Tuple[int, int, int]]:
-    """
-    Enumerate all primitive Pythagorean triples with hypotenuse ≤ max_hyp,
-    sorted by hypotenuse.
-    
-    Uses the Berggren tree with BFS pruning.
-    The Berggren tree is complete: every primitive Pythagorean triple
-    with positive entries appears exactly once.
-    
-    Complexity: O(N log N) where N = π(C) ~ C/(2π) is the count
-    """
-    from collections import deque
-    
-    results = []
-    queue = deque([ROOT.copy()])
-    
-    while queue:
-        v = queue.popleft()
-        if v[2] > max_hyp:
-            continue
-        
-        # Normalize: ensure a < b (canonical form)
-        a, b, c = int(v[0]), int(v[1]), int(v[2])
-        if a > b:
-            a, b = b, a
-        results.append((a, b, c))
-        
-        for M in GENERATORS.values():
-            child = M @ v
-            if child[2] <= max_hyp:
-                queue.append(child)
-    
-    results.sort(key=lambda t: (t[2], t[0]))
-    return results
+class ArithmeticCircuitCompiler:
+    """Compile stabilizer state transitions into Berggren word sequences.
 
+    Given a source and target stabilizer state (as F_3^2 vectors), finds the
+    shortest Berggren generator word that realizes the transition.
 
-# ============================================================
-# Application 4: Lattice Point Counting
-# ============================================================
+    This is the "circuit compiler" interpretation: Berggren arithmetic provides
+    a deterministic, optimal protocol for navigating between stabilizer states.
 
-def count_lattice_points(max_hyp: int) -> dict:
+    Usage:
+        compiler = ArithmeticCircuitCompiler()
+        circuit = compiler.compile((2, 1), (1, 0))
+        print(circuit)  # e.g., ['E1^2']
     """
-    Count primitive Pythagorean triples up to various hypotenuse bounds.
-    
-    Compares with the asymptotic formula: π(C) ~ C / (2π).
-    """
-    triples = enumerate_triples_sorted(max_hyp)
-    
-    bounds = [10, 25, 50, 100, 250, 500, 1000]
-    bounds = [b for b in bounds if b <= max_hyp]
-    
-    results = {}
-    for bound in bounds:
-        count = sum(1 for t in triples if t[2] <= bound)
-        predicted = bound / (2 * 3.14159265)
-        results[bound] = {
-            'count': count,
-            'predicted': round(predicted, 1),
-            'ratio': round(count / predicted, 3) if predicted > 0 else 0,
+
+    E1_MOD3 = [[2, 2], [1, 0]]
+    E3_MOD3 = [[1, 2], [0, 1]]
+
+    def __init__(self):
+        # Precompute all shortest paths
+        self._precompute()
+
+    def _mat_mul(self, A, B, p=3):
+        return [
+            [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % p,
+             (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % p],
+            [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % p,
+             (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % p]
+        ]
+
+    def _mat_pow(self, M, k, p=3):
+        result = [[1, 0], [0, 1]]
+        for _ in range(k):
+            result = self._mat_mul(result, M, p)
+        return result
+
+    def _mat_vec(self, M, v, p=3):
+        return (
+            (M[0][0]*v[0] + M[0][1]*v[1]) % p,
+            (M[1][0]*v[0] + M[1][1]*v[1]) % p,
+        )
+
+    def _precompute(self):
+        """Build the shortest-path table for all source-target pairs."""
+        gens = {
+            "E₁": self.E1_MOD3,
+            "E₁⁻¹": self._mat_pow(self.E1_MOD3, 2),
+            "E₃": self.E3_MOD3,
+            "E₃⁻¹": self._mat_pow(self.E3_MOD3, 2),
         }
-    
-    return results
+
+        nonzero = [(a, b) for a in range(3) for b in range(3) if (a, b) != (0, 0)]
+
+        self.shortest_paths: Dict[Tuple[Tuple[int,int], Tuple[int,int]], List[str]] = {}
+
+        for source in nonzero:
+            visited = {source: []}
+            queue = deque([(source, [])])
+            while queue:
+                current, path = queue.popleft()
+                for name, gen in gens.items():
+                    new_vec = self._mat_vec(gen, current)
+                    if new_vec not in visited:
+                        new_path = path + [name]
+                        visited[new_vec] = new_path
+                        queue.append((new_vec, new_path))
+            for target in nonzero:
+                self.shortest_paths[(source, target)] = visited.get(target, [])
+
+    def compile(self, source: Tuple[int, int], target: Tuple[int, int]) -> List[str]:
+        """Compile the shortest circuit from source to target.
+
+        Args:
+            source: starting stabilizer label in F_3^2
+            target: target stabilizer label in F_3^2
+
+        Returns:
+            List of generator names forming the shortest word
+        """
+        return self.shortest_paths.get((source, target), [])
+
+    def cost(self, source: Tuple[int, int], target: Tuple[int, int]) -> int:
+        """Get the minimum cost of transport."""
+        return len(self.compile(source, target))
+
+    def cost_matrix(self) -> Dict[Tuple[Tuple[int,int], Tuple[int,int]], int]:
+        """Return the full 8x8 cost matrix."""
+        return {k: len(v) for k, v in self.shortest_paths.items()}
 
 
 # ============================================================
-# Main
+# Application 3: Triple Classification by Symplectic Orbit
 # ============================================================
+
+def classify_triples_by_orbit(max_hypotenuse: int = 1000) -> Dict[Tuple[int, int], List[Tuple[int, int, int]]]:
+    """Classify all primitive Pythagorean triples by their symplectic orbit label.
+
+    For each primitive triple (a, b, c) with a odd, b even, computes
+    the Euclidean parameters (m, n) and the label (m mod 3, n mod 3).
+
+    Args:
+        max_hypotenuse: maximum hypotenuse value
+
+    Returns:
+        Dict mapping F_3^2 label to list of triples
+    """
+    from math import gcd, isqrt
+
+    classified: Dict[Tuple[int, int], List[Tuple[int, int, int]]] = {
+        (a, b): [] for a in range(3) for b in range(3) if (a, b) != (0, 0)
+    }
+
+    for m in range(2, isqrt(max_hypotenuse) + 1):
+        for n in range(1, m):
+            if (m - n) % 2 == 0:
+                continue
+            if gcd(m, n) != 1:
+                continue
+            a = m*m - n*n
+            b = 2*m*n
+            c = m*m + n*n
+            if c > max_hypotenuse:
+                continue
+            label = (m % 3, n % 3)
+            classified[label].append((a, b, c))
+
+    return classified
+
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("APPLICATION DEMONSTRATIONS")
+    print("Application 1: Qutrit Stabilizer State Labeling")
     print("=" * 60)
-    
-    # 1. Hash function
-    print("\n--- Berggren Hash Function ---")
-    messages = [b"hello", b"Hello", b"hello world", b"pythagorean"]
-    for msg in messages:
-        h = berggren_hash(msg)
-        print(f"  hash({msg.decode()!r}) = {h}")
-    
-    # Avalanche effect
-    h1 = berggren_hash(b"test1")
-    h2 = berggren_hash(b"test2")
-    diff_bits = bin(int(h1, 16) ^ int(h2, 16)).count('1')
-    print(f"\n  Avalanche: 'test1' vs 'test2' differ in {diff_bits}/64 bits")
-    
-    # 2. Error detection
-    print("\n--- Parity Error Detection ---")
-    data = [(i, j) for i in range(10) for j in range(10)]
-    result = simulate_transmission(data, error_rate=0.15)
-    print(f"  Messages: {result['total_messages']}")
-    print(f"  Errors introduced: {result['errors_introduced']}")
-    print(f"  Errors detected: {result['errors_detected']}")
-    print(f"  Detection rate: {result['detection_rate']:.1%}")
-    
-    # 3. Triple enumeration
-    print("\n--- Efficient Enumeration (hypotenuse ≤ 200) ---")
-    triples = enumerate_triples_sorted(200)
-    print(f"  Found {len(triples)} primitive Pythagorean triples")
-    for t in triples[:10]:
-        print(f"    ({t[0]:>3}, {t[1]:>3}, {t[2]:>3})")
-    print(f"    ... and {len(triples) - 10} more")
-    
-    # 4. Lattice counting
-    print("\n--- Lattice Point Counting ---")
-    counts = count_lattice_points(1000)
-    print(f"  {'Bound':>6} | {'Count':>5} | {'~C/2π':>6} | {'Ratio':>5}")
-    print(f"  {'-'*6}-+-{'-'*5}-+-{'-'*6}-+-{'-'*5}")
-    for bound, data in counts.items():
-        print(f"  {bound:>6} | {data['count']:>5} | {data['predicted']:>6} | {data['ratio']:>5}")
+
+    labeler = QutritStabilizerLabeler()
+
+    test_triples = [
+        (3, 4, 5), (5, 12, 13), (7, 24, 25),
+        (21, 20, 29), (15, 8, 17), (35, 12, 37), (45, 28, 53),
+        (55, 48, 73), (39, 80, 89),
+    ]
+
+    for a, b, c in test_triples:
+        label = labeler.label_triple(a, b, c)
+        name = labeler.state_name(label)
+        print(f"  ({a:3d}, {b:3d}, {c:3d}) -> label {label} -> {name}")
+
+    print("\n  Classification of first 3 levels:")
+    classified = labeler.classify_tree(3)
+    for label, triples in sorted(classified.items()):
+        name = labeler.state_name(label)
+        print(f"  {label} ({name}): {len(triples)} triples")
+        for t in triples[:3]:
+            print(f"    ({t[0]}, {t[1]}, {t[2]})")
+        if len(triples) > 3:
+            print(f"    ... and {len(triples) - 3} more")
+
+    print()
+    print("=" * 60)
+    print("Application 2: Arithmetic Circuit Compiler")
+    print("=" * 60)
+
+    compiler = ArithmeticCircuitCompiler()
+
+    print("  Transport costs from root (2,1):")
+    for target in [(0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)]:
+        circuit = compiler.compile((2, 1), target)
+        cost = compiler.cost((2, 1), target)
+        name = labeler.state_name(target)
+        circuit_str = " → ".join(circuit) if circuit else "identity"
+        print(f"  (2,1) -> {target}: cost {cost}, circuit: {circuit_str}")
+        print(f"          [{name}]")
+
+    print("\n  Full 8×8 cost matrix (rows=source, cols=target):")
+    nonzero = [(a, b) for a in range(3) for b in range(3) if (a, b) != (0, 0)]
+    header = "      " + "  ".join(f"{v}" for v in nonzero)
+    print(f"  {header}")
+    for src in nonzero:
+        row = "  ".join(f"{compiler.cost(src, tgt):5d}" for tgt in nonzero)
+        print(f"  {src} {row}")
+
+    print()
+    print("=" * 60)
+    print("Application 3: Triple Classification (c ≤ 500)")
+    print("=" * 60)
+
+    classified = classify_triples_by_orbit(500)
+    for label in sorted(classified.keys()):
+        triples = classified[label]
+        name = labeler.state_name(label)
+        print(f"  {label} ({name}): {len(triples)} primitive triples")
+        for t in triples[:5]:
+            print(f"    ({t[0]}, {t[1]}, {t[2]})")
+        if len(triples) > 5:
+            print(f"    ... and {len(triples) - 5} more")
 
 
 #!/usr/bin/env python3
 """
-Berggren Orbits as Integral Lorentz Symmetries — Demonstration
+Berggren Symplectic Bridge — Computational Demonstrations
 
-This script demonstrates the core theorems:
-1. Berggren generators preserve the Pythagorean quadratic form Q(x,y,z) = x² + y² - z²
-2. The Berggren tree generates Pythagorean triples from the root (3,4,5)
-3. Mod-2 reduction reveals a finite-state parity invariant
+Demonstrates the connection between the Berggren tree of primitive Pythagorean
+triples and finite symplectic group actions over F_3.
+
+Key results demonstrated:
+1. Berggren matrices act on Euclidean parameters via 2x2 integer matrices
+2. Mod-3 reduction generates all of SL(2, F_3) (24 elements)
+3. The orbit covers all 8 nonzero vectors in F_3^2
+4. The mod-2 reduction is trivially identity (correcting naive claims)
 """
 
 import numpy as np
-from typing import List, Tuple
+from itertools import product
 
 # ============================================================
-# Core Definitions
+# Berggren matrices (3x3 over Z)
 # ============================================================
+B1 = np.array([[1, -2, 2],
+               [2, -1, 2],
+               [2, -2, 3]])
 
-def pyth_quad(v: np.ndarray) -> int:
-    """Pythagorean quadratic form Q(v) = v[0]² + v[1]² - v[2]²"""
-    return int(v[0]**2 + v[1]**2 - v[2]**2)
+B2 = np.array([[1, 2, 2],
+               [2, 1, 2],
+               [2, 2, 3]])
 
-# Lorentz metric η = diag(1, 1, -1)
-ETA = np.array([[1, 0, 0],
-                [0, 1, 0],
-                [0, 0, -1]], dtype=int)
-
-# Berggren generators
-BERGGREN_A = np.array([[ 1, -2,  2],
-                        [ 2, -1,  2],
-                        [ 2, -2,  3]], dtype=int)
-
-BERGGREN_B = np.array([[ 1,  2,  2],
-                        [ 2,  1,  2],
-                        [ 2,  2,  3]], dtype=int)
-
-BERGGREN_C = np.array([[-1,  2,  2],
-                        [-2,  1,  2],
-                        [-2,  2,  3]], dtype=int)
-
-ROOT = np.array([3, 4, 5], dtype=int)
+B3 = np.array([[-1, 2, 2],
+               [-2, 1, 2],
+               [-2, 2, 3]])
 
 # ============================================================
-# Theorem 1: Quadratic Form Preservation
+# Euclidean parameter matrices (2x2 over Z)
 # ============================================================
+E1 = np.array([[2, -1],
+               [1,  0]])
 
-def check_preserves_quad(M: np.ndarray, name: str) -> bool:
-    """Verify Mᵀ η M = η (integral Lorentz group membership)"""
-    result = M.T @ ETA @ M
-    preserved = np.array_equal(result, ETA)
-    print(f"  {name}ᵀ · η · {name} = η? {preserved}")
-    if preserved:
-        print(f"    → {name} ∈ O(2,1;ℤ) ✓")
-    return preserved
+E2 = np.array([[2, 1],
+               [1, 0]])
 
+E3 = np.array([[1, 2],
+               [0, 1]])
+
+def euclid_param(m, n):
+    """Euclid parametrization: (m,n) -> (m^2-n^2, 2mn, m^2+n^2)"""
+    return np.array([m**2 - n**2, 2*m*n, m**2 + n**2])
+
+# ============================================================
+# Demo 1: Verify Berggren-Euclid correspondence
+# ============================================================
 print("=" * 60)
-print("THEOREM 1: Berggren Generators in O(2,1;ℤ)")
-print("=" * 60)
-print(f"\nLorentz metric η = diag(1, 1, -1)")
-print(f"Condition: Mᵀ · η · M = η\n")
-
-for M, name in [(BERGGREN_A, "A"), (BERGGREN_B, "B"), (BERGGREN_C, "C")]:
-    check_preserves_quad(M, name)
-
-# Determinants
-print(f"\nDeterminant structure:")
-for M, name in [(BERGGREN_A, "A"), (BERGGREN_B, "B"), (BERGGREN_C, "C")]:
-    d = int(np.linalg.det(M).round())
-    kind = "proper" if d == 1 else "improper"
-    print(f"  det({name}) = {d:+d}  ({kind} Lorentz transformation)")
-
-# ============================================================
-# Theorem 2: Orbit Theorem — Berggren Tree
-# ============================================================
-
-print(f"\n{'=' * 60}")
-print("THEOREM 2: Berggren Tree — All Reachable Triples Are Pythagorean")
+print("DEMO 1: Berggren-Euclid Correspondence")
 print("=" * 60)
 
-def berggren_tree(root: np.ndarray, depth: int) -> List[Tuple[str, np.ndarray]]:
-    """Generate all triples in the Berggren tree up to given depth."""
-    result = [("root", root)]
-    frontier = [("", root)]
-    
-    for d in range(depth):
-        new_frontier = []
-        for path, v in frontier:
-            for M, label in [(BERGGREN_A, "A"), (BERGGREN_B, "B"), (BERGGREN_C, "C")]:
-                child = M @ v
-                new_path = path + label
-                result.append((new_path, child))
-                new_frontier.append((new_path, child))
-        frontier = new_frontier
-    
+m, n = 2, 1  # Root parameters giving (3, 4, 5)
+triple = euclid_param(m, n)
+print(f"Root: (m,n) = ({m},{n}) -> triple = {triple}")
+print()
+
+for name, B, E in [("B1", B1, E1), ("B2", B2, E2), ("B3", B3, E3)]:
+    # Apply 3x3 Berggren
+    new_triple_3x3 = B @ triple
+
+    # Apply 2x2 Euclidean
+    new_params = E @ np.array([m, n])
+    new_triple_2x2 = euclid_param(new_params[0], new_params[1])
+
+    match = np.array_equal(new_triple_3x3, new_triple_2x2)
+    print(f"{name}: 3x3 gives {new_triple_3x3}, 2x2 gives {new_triple_2x2}, match={match}")
+    print(f"  New Euclid params: (M,N) = ({new_params[0]}, {new_params[1]})")
+
+# ============================================================
+# Demo 2: Mod-2 triviality
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 2: Mod-2 Triviality (All Berggren ≡ I mod 2)")
+print("=" * 60)
+
+for name, B in [("B1", B1), ("B2", B2), ("B3", B3)]:
+    mod2 = B % 2
+    is_identity = np.array_equal(mod2, np.eye(3, dtype=int))
+    print(f"{name} mod 2 = identity: {is_identity}")
+    print(f"  {mod2.tolist()}")
+
+print("\nConclusion: Naive mod-2 approach gives ONLY identity.")
+print("Cannot generate SL(2, F_2). The original proposal is corrected.")
+
+# ============================================================
+# Demo 3: Mod-3 generation of SL(2, F_3)
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 3: Mod-3 Generation of SL(2, F_3)")
+print("=" * 60)
+
+def mat_mod(M, p):
+    return M % p
+
+E1_mod3 = mat_mod(E1, 3)
+E3_mod3 = mat_mod(E3, 3)
+print(f"E1 mod 3 = {E1_mod3.tolist()}")
+print(f"E3 mod 3 = {E3_mod3.tolist()}")
+print(f"det(E1 mod 3) = {int(round(np.linalg.det(E1_mod3))) % 3}")
+print(f"det(E3 mod 3) = {int(round(np.linalg.det(E3_mod3))) % 3}")
+
+def mat_mul_mod(A, B, p):
+    return (A @ B) % p
+
+def mat_pow_mod(M, k, p):
+    n = M.shape[0]
+    result = np.eye(n, dtype=int)
+    for _ in range(k):
+        result = mat_mul_mod(result, M, p)
     return result
 
-tree = berggren_tree(ROOT, depth=3)
+# Check orders
+for name, M in [("E1", E1_mod3), ("E3", E3_mod3)]:
+    for k in range(1, 10):
+        if np.array_equal(mat_pow_mod(M, k, 3), np.eye(2, dtype=int)):
+            print(f"Order of {name} mod 3: {k}")
+            break
 
-print(f"\nRoot: ({ROOT[0]}, {ROOT[1]}, {ROOT[2]})")
-print(f"Q(root) = {pyth_quad(ROOT)}")
-print(f"\nFirst 3 levels of Berggren tree ({len(tree)} triples total):\n")
+prod_E1E3 = mat_mul_mod(E1_mod3, E3_mod3, 3)
+for k in range(1, 20):
+    if np.array_equal(mat_pow_mod(prod_E1E3, k, 3), np.eye(2, dtype=int)):
+        print(f"Order of E1*E3 mod 3: {k}")
+        break
 
-all_pythagorean = True
-for path, v in tree[:1 + 3 + 9]:  # Show first 2 levels
-    q = pyth_quad(v)
-    is_pyth = "✓" if q == 0 else "✗"
-    label = path if path else "root"
-    print(f"  [{label:>4}] ({v[0]:>4}, {v[1]:>4}, {v[2]:>4})  Q = {q}  {is_pyth}")
-    if q != 0:
-        all_pythagorean = False
+# Generate all products E1^a * E3^b * E1^c * E3^d * E1^e
+generated = set()
+for a, b, c, d, e in product(range(3), repeat=5):
+    M = np.eye(2, dtype=int)
+    M = mat_mul_mod(M, mat_pow_mod(E1_mod3, a, 3), 3)
+    M = mat_mul_mod(M, mat_pow_mod(E3_mod3, b, 3), 3)
+    M = mat_mul_mod(M, mat_pow_mod(E1_mod3, c, 3), 3)
+    M = mat_mul_mod(M, mat_pow_mod(E3_mod3, d, 3), 3)
+    M = mat_mul_mod(M, mat_pow_mod(E1_mod3, e, 3), 3)
+    generated.add(tuple(M.flatten()))
 
-print(f"\n  ... and {len(tree) - 13} more triples at depth 3")
-print(f"\nAll {len(tree)} triples satisfy Q = 0? {all_pythagorean and all(pyth_quad(v) == 0 for _, v in tree)}")
+print(f"\nNumber of distinct products: {len(generated)}")
+
+# Count SL(2, F_3) elements
+sl2_count = 0
+for a, b, c, d in product(range(3), repeat=4):
+    if (a * d - b * c) % 3 == 1:
+        sl2_count += 1
+print(f"|SL(2, F_3)| = {sl2_count}")
+print(f"Generated == SL(2, F_3): {len(generated) == sl2_count}")
 
 # ============================================================
-# Theorem 3: Parity Shadow
+# Demo 4: Orbit surjectivity on F_3^2
 # ============================================================
-
-print(f"\n{'=' * 60}")
-print("THEOREM 3: Parity Shadow — Mod-2 Invariant")
+print()
+print("=" * 60)
+print("DEMO 4: Orbit Surjectivity on F_3^2 \\ {0}")
 print("=" * 60)
 
-print(f"\nParity constraint: x + y + z ≡ 0 (mod 2)")
-print(f"Every primitive Pythagorean triple satisfies this.\n")
+root_vec = np.array([2, 1])  # (m, n) = (2, 1) mod 3
 
-print("Mod-2 reduction of Berggren generators:")
-for M, name in [(BERGGREN_A, "A"), (BERGGREN_B, "B"), (BERGGREN_C, "C")]:
-    M2 = M % 2
-    print(f"\n  {name} mod 2 =")
-    for row in M2:
-        print(f"    {row}")
+orbit = set()
+for mat_tuple in generated:
+    M = np.array(mat_tuple, dtype=int).reshape(2, 2)
+    v = (M @ root_vec) % 3
+    orbit.add(tuple(v))
 
-print(f"\n  Note: All three generators reduce to the identity mod 2!")
-print(f"  This means the parity vector is invariant under Berggren evolution.")
+nonzero_vecs = set()
+for a, b in product(range(3), repeat=2):
+    if (a, b) != (0, 0):
+        nonzero_vecs.add((a, b))
 
-print(f"\nParity check on tree nodes:")
-for path, v in tree[:13]:
-    parity = v % 2
-    parity_sum = sum(parity) % 2
-    label = path if path else "root"
-    check = "✓" if parity_sum == 0 else "✗"
-    print(f"  [{label:>4}] ({v[0]:>4}, {v[1]:>4}, {v[2]:>4})  "
-          f"parity ({parity[0]},{parity[1]},{parity[2]})  "
-          f"sum mod 2 = {parity_sum}  {check}")
+print(f"Root vector mod 3: {tuple(root_vec)}")
+print(f"Orbit size: {len(orbit)}")
+print(f"|F_3^2 \\ {{0}}| = {len(nonzero_vecs)}")
+print(f"Orbit = F_3^2 \\ {{0}}: {orbit == nonzero_vecs}")
+print(f"Orbit vectors: {sorted(orbit)}")
 
 # ============================================================
-# Monoid Structure
+# Demo 5: Berggren tree — first few levels
 # ============================================================
-
-print(f"\n{'=' * 60}")
-print("MONOID CLOSURE: Products Preserve O(2,1;ℤ)")
+print()
+print("=" * 60)
+print("DEMO 5: Berggren Tree (First 3 Levels)")
 print("=" * 60)
 
-products = [
-    ("A·B", BERGGREN_A @ BERGGREN_B),
-    ("A·C", BERGGREN_A @ BERGGREN_C),
-    ("B·C", BERGGREN_B @ BERGGREN_C),
-    ("A·B·C", BERGGREN_A @ BERGGREN_B @ BERGGREN_C),
-    ("A²", BERGGREN_A @ BERGGREN_A),
-    ("B²", BERGGREN_B @ BERGGREN_B),
-]
+def berggren_children(triple):
+    return [B @ triple for B in [B1, B2, B3]]
 
-for name, P in products:
-    preserved = np.array_equal(P.T @ ETA @ P, ETA)
-    det = int(np.linalg.det(P).round())
-    print(f"  {name:>5}: preserves η? {preserved}  det = {det:+d}")
+root = np.array([3, 4, 5])
+print(f"Level 0: {root.tolist()}")
+
+level1 = berggren_children(root)
+print(f"Level 1: {[t.tolist() for t in level1]}")
+
+level2 = []
+for t in level1:
+    level2.extend(berggren_children(t))
+print(f"Level 2: {[t.tolist() for t in level2]}")
+
+# Show Euclidean parameters for each
+print("\nEuclidean parameters:")
+print(f"  (3,4,5) <- (m,n) = (2,1)")
+for t in level1:
+    a, b, c = t
+    # Recover m, n from a = m^2 - n^2, c = m^2 + n^2
+    m_sq = (a + c) // 2
+    n_sq = (c - a) // 2
+    m_val = int(round(m_sq ** 0.5))
+    n_val = int(round(n_sq ** 0.5))
+    if m_val**2 == m_sq and n_val**2 == n_sq:
+        print(f"  {t.tolist()} <- (m,n) = ({m_val},{n_val}), mod 3: ({m_val%3},{n_val%3})")
+    else:
+        print(f"  {t.tolist()} <- complex Euclid params")
 
 # ============================================================
-# Summary
+# Demo 6: Standard generators of SL(2, F_3)
 # ============================================================
-
-print(f"\n{'=' * 60}")
-print("SUMMARY OF VERIFIED RESULTS")
+print()
 print("=" * 60)
-print("""
-1. berggren_A_preserves : Aᵀ η A = η             ✓ proved
-2. berggren_B_preserves : Bᵀ η B = η             ✓ proved
-3. berggren_C_preserves : Cᵀ η C = η             ✓ proved
-4. berggren_map_pythagorean : M ∈ O(2,1;ℤ), Q(v)=0 → Q(Mv)=0  ✓ proved
-5. reachable_is_pythagorean : Berggren orbit ⊂ light cone       ✓ proved
-6. berggren_preserves_parityConstraint : parity shadow invariant ✓ proved
-7. reachable_parityConstraint : orbit satisfies parity           ✓ proved
-8. preservesPythQuad_mul : O(2,1;ℤ) closed under products       ✓ proved
-9. preservesPythQuad_one : I ∈ O(2,1;ℤ)                         ✓ proved
-""")
+print("DEMO 6: Identifying Standard Generators of SL(2, F_3)")
+print("=" * 60)
+
+T = mat_pow_mod(E3_mod3, 2, 3)  # [[1,1],[0,1]]
+S = mat_mul_mod(T, E1_mod3, 3)   # T * E1 = [[0,2],[1,0]]
+
+print(f"T = E3^2 mod 3 = {T.tolist()}")
+print(f"S = T * E1 mod 3 = {S.tolist()}")
+print(f"T is the standard upper triangular generator: {T.tolist() == [[1,1],[0,1]]}")
+print(f"S is the standard swap generator [[0,2],[1,0]]: {S.tolist() == [[0,2],[1,0]]}")
+print(f"\nS and T are the classical generators of SL(2, F_3).")
+print(f"This confirms E1, E3 generate the full group.")
 
 if __name__ == "__main__":
-    pass
+    print("\n" + "=" * 60)
+    print("ALL DEMONSTRATIONS COMPLETE")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Berggren–Lorentz Dynamics
+Visualizations for the Berggren Symplectic Bridge
 
-Generates publication-quality figures:
-1. Berggren tree structure
-2. Pythagorean triples on the light cone
-3. Hypotenuse growth analysis
-4. Parity state diagram
+Generates publication-quality figures showing:
+1. The Berggren tree with mod-3 Euclidean parameter coloring
+2. The Cayley graph of SL(2, F_3) with Berggren generators
+3. The orbit diagram on F_3^2
 """
 
-import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+import numpy as np
+from itertools import product as iterproduct
 from collections import deque
 import base64
-from io import BytesIO
+import io
+
 
 # ============================================================
-# Core Setup
+# Color scheme for F_3^2 vectors
 # ============================================================
-
-GENERATORS = {
-    'A': np.array([[ 1, -2,  2], [ 2, -1,  2], [ 2, -2,  3]], dtype=np.int64),
-    'B': np.array([[ 1,  2,  2], [ 2,  1,  2], [ 2,  2,  3]], dtype=np.int64),
-    'C': np.array([[-1,  2,  2], [-2,  1,  2], [-2,  2,  3]], dtype=np.int64),
+PARITY_COLORS = {
+    (0, 1): '#e74c3c',  # red
+    (0, 2): '#e67e22',  # orange
+    (1, 0): '#2ecc71',  # green
+    (1, 1): '#3498db',  # blue
+    (1, 2): '#9b59b6',  # purple
+    (2, 0): '#1abc9c',  # teal
+    (2, 1): '#f39c12',  # yellow
+    (2, 2): '#e91e63',  # pink
+    (0, 0): '#95a5a6',  # gray (should not appear)
 }
 
-ROOT = np.array([3, 4, 5], dtype=np.int64)
+PARITY_LABELS = {
+    (0, 1): '(0,1)',
+    (0, 2): '(0,2)',
+    (1, 0): '(1,0)',
+    (1, 1): '(1,1)',
+    (1, 2): '(1,2)',
+    (2, 0): '(2,0)',
+    (2, 1): '(2,1)',
+    (2, 2): '(2,2)',
+}
+
+# Berggren matrices
+B1 = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])
+B2 = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]])
+B3 = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])
 
 
-def berggren_tree(depth):
-    """Generate tree with parent-child edges."""
-    nodes = [("", ROOT)]
-    edges = []
-    frontier = [("", ROOT)]
-    for d in range(depth):
-        new_frontier = []
-        for path, v in frontier:
-            for label, M in GENERATORS.items():
-                child = M @ v
-                child_path = path + label
-                nodes.append((child_path, child))
-                edges.append((path, child_path))
-                new_frontier.append((child_path, child))
-        frontier = new_frontier
-    return nodes, edges
+def get_euclid_params(a, b, c):
+    """Extract Euclidean parameters from a primitive triple."""
+    m_sq = (a + c) // 2
+    n_sq = (c - a) // 2
+    m = int(round(m_sq ** 0.5))
+    n = int(round(n_sq ** 0.5))
+    if m*m == m_sq and n*n == n_sq:
+        return m, n
+    return None, None
 
-
-# ============================================================
-# Figure 1: Pythagorean Triples on Integer Lattice
-# ============================================================
-
-def fig_lattice_points():
-    """Plot primitive Pythagorean triples as points (a,b) colored by tree depth."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
-    
-    nodes, _ = berggren_tree(6)
-    
-    colors = plt.cm.viridis(np.linspace(0.1, 0.9, 7))
-    
-    for path, v in nodes:
-        d = len(path)
-        a, b, c = v
-        ax.scatter(a, b, c=colors[d:d+1], s=max(100 - d*12, 10),
-                  zorder=5, edgecolors='white', linewidths=0.5)
-    
-    # Label first few
-    for path, v in nodes[:13]:
-        a, b, c = v
-        label = f"({a},{b},{c})"
-        ax.annotate(label, (a, b), fontsize=6, ha='center', va='bottom',
-                   xytext=(0, 5), textcoords='offset points')
-    
-    ax.set_xlabel('a (first leg)', fontsize=12)
-    ax.set_ylabel('b (second leg)', fontsize=12)
-    ax.set_title('Primitive Pythagorean Triples from Berggren Tree\n'
-                'Color = tree depth (dark = shallow, light = deep)', fontsize=14)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    
-    # Legend
-    handles = [mpatches.Patch(color=colors[i], label=f'Depth {i}') for i in range(5)]
-    ax.legend(handles=handles, loc='upper left', fontsize=10)
-    
-    plt.tight_layout()
-    return fig
-
-
-# ============================================================
-# Figure 2: Berggren Tree Structure
-# ============================================================
-
-def fig_tree_structure():
-    """Visualize the Berggren tree as a graph."""
-    fig, ax = plt.subplots(1, 1, figsize=(14, 8))
-    
-    nodes, edges = berggren_tree(3)
-    
-    # Compute positions
-    pos = {}
-    # Root
-    pos[""] = (0, 0)
-    
-    def get_children(path):
-        return [path + l for l in "ABC"]
-    
-    # Layout by depth
-    for depth in range(4):
-        nodes_at_depth = [p for p, v in nodes if len(p) == depth]
-        n = len(nodes_at_depth)
-        width = 3 ** depth
-        for i, path in enumerate(sorted(nodes_at_depth)):
-            x = (i - (n-1)/2) * (12 / max(width, 1))
-            y = -depth * 2
-            pos[path] = (x, y)
-    
-    # Draw edges
-    gen_colors = {'A': '#e74c3c', 'B': '#3498db', 'C': '#2ecc71'}
-    for parent, child in edges:
-        if parent in pos and child in pos:
-            gen = child[-1]
-            color = gen_colors[gen]
-            ax.plot([pos[parent][0], pos[child][0]],
-                   [pos[parent][1], pos[child][1]],
-                   color=color, linewidth=1.5, alpha=0.7, zorder=1)
-    
-    # Draw nodes
-    for path, v in nodes:
-        if path in pos:
-            x, y = pos[path]
-            d = len(path)
-            size = max(400 - d*80, 100)
-            ax.scatter(x, y, s=size, c='white', edgecolors='black',
-                      linewidths=1.5, zorder=3)
-            label = f"({v[0]},{v[1]},{v[2]})"
-            fontsize = max(7 - d, 4)
-            ax.text(x, y, label, ha='center', va='center',
-                   fontsize=fontsize, zorder=4)
-    
-    # Legend
-    handles = [mpatches.Patch(color=c, label=f'Generator {l}')
-               for l, c in gen_colors.items()]
-    ax.legend(handles=handles, loc='upper right', fontsize=11)
-    
-    ax.set_title('Berggren Tree: First Three Levels\n'
-                'Every node is a primitive Pythagorean triple', fontsize=14)
-    ax.set_xlim(-8, 8)
-    ax.axis('off')
-    
-    plt.tight_layout()
-    return fig
-
-
-# ============================================================
-# Figure 3: Hypotenuse Growth
-# ============================================================
-
-def fig_hypotenuse_growth():
-    """Plot hypotenuse growth along pure branches."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    
-    depth = 12
-    colors = {'A': '#e74c3c', 'B': '#3498db', 'C': '#2ecc71'}
-    
-    for label, M in GENERATORS.items():
-        hyps = []
-        v = ROOT.copy()
-        for _ in range(depth):
-            hyps.append(int(v[2]))
-            v = M @ v
-        
-        ax1.plot(range(depth), hyps, 'o-', color=colors[label],
-                label=f'{label}-branch', linewidth=2, markersize=5)
-        ax2.semilogy(range(depth), hyps, 'o-', color=colors[label],
-                    label=f'{label}-branch', linewidth=2, markersize=5)
-    
-    ax1.set_xlabel('Depth', fontsize=12)
-    ax1.set_ylabel('Hypotenuse c', fontsize=12)
-    ax1.set_title('Hypotenuse Growth (Linear Scale)', fontsize=13)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-    
-    ax2.set_xlabel('Depth', fontsize=12)
-    ax2.set_ylabel('Hypotenuse c (log scale)', fontsize=12)
-    ax2.set_title('Hypotenuse Growth (Log Scale)', fontsize=13)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    return fig
-
-
-# ============================================================
-# Figure 4: Quadratic Form Verification
-# ============================================================
-
-def fig_quadratic_form():
-    """Verify Q(v) = 0 for all tree nodes — visual proof."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    
-    nodes, _ = berggren_tree(5)
-    
-    depths = [len(p) for p, v in nodes]
-    q_values = [int(v[0]**2 + v[1]**2 - v[2]**2) for p, v in nodes]
-    
-    ax.scatter(depths, q_values, c='#3498db', s=30, alpha=0.7, zorder=3)
-    ax.axhline(y=0, color='red', linewidth=2, linestyle='--', label='Q = 0 (light cone)')
-    
-    ax.set_xlabel('Tree Depth', fontsize=12)
-    ax.set_ylabel('Q(v) = a² + b² - c²', fontsize=12)
-    ax.set_title(f'Quadratic Form Values for {len(nodes)} Berggren Tree Nodes\n'
-                f'All values are exactly 0 — the orbit lies on the light cone', fontsize=13)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(-1, 1)
-    
-    plt.tight_layout()
-    return fig
-
-
-# ============================================================
-# Figure 5: Parity State Diagram
-# ============================================================
-
-def fig_parity_diagram():
-    """Visualize the mod-2 parity automaton."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-    
-    # All 8 states of (Z/2Z)^3
-    states = [(i, j, k) for i in range(2) for j in range(2) for k in range(2)]
-    
-    # Position in a circle
-    n = len(states)
-    angles = np.linspace(0, 2*np.pi, n, endpoint=False)
-    radius = 3
-    
-    # Separate invariant vs non-invariant states
-    invariant = [s for s in states if sum(s) % 2 == 0]
-    non_invariant = [s for s in states if sum(s) % 2 != 0]
-    
-    positions = {}
-    # Place invariant states on inner circle, non-invariant on outer
-    inv_angles = np.linspace(0, 2*np.pi, len(invariant), endpoint=False) + np.pi/4
-    for i, s in enumerate(invariant):
-        positions[s] = (2 * np.cos(inv_angles[i]), 2 * np.sin(inv_angles[i]))
-    
-    noninv_angles = np.linspace(0, 2*np.pi, len(non_invariant), endpoint=False)
-    for i, s in enumerate(non_invariant):
-        positions[s] = (4.5 * np.cos(noninv_angles[i]), 4.5 * np.sin(noninv_angles[i]))
-    
-    # Draw states
-    for s in states:
-        x, y = positions[s]
-        is_inv = sum(s) % 2 == 0
-        color = '#2ecc71' if is_inv else '#e74c3c'
-        size = 1500 if is_inv else 1000
-        ax.scatter(x, y, s=size, c=color, edgecolors='black', linewidths=2, zorder=5)
-        ax.text(x, y, f"({s[0]},{s[1]},{s[2]})", ha='center', va='center',
-               fontsize=9, fontweight='bold', zorder=6)
-    
-    # Draw self-loops (all generators map each state to itself mod 2)
-    for s in states:
-        x, y = positions[s]
-        # Small loop indicator
-        loop = plt.Circle((x, y + 0.6), 0.3, fill=False, color='#3498db',
-                          linewidth=1.5, linestyle='--')
-        ax.add_patch(loop)
-    
-    # Legend
-    handles = [
-        mpatches.Patch(color='#2ecc71', label='Invariant: x+y+z ≡ 0 (mod 2)'),
-        mpatches.Patch(color='#e74c3c', label='Non-invariant: x+y+z ≡ 1 (mod 2)'),
-    ]
-    ax.legend(handles=handles, loc='lower right', fontsize=11)
-    
-    ax.set_title('Parity Automaton on (ℤ/2ℤ)³\n'
-                'All Berggren generators act as identity mod 2\n'
-                'Pythagorean triples always occupy green states', fontsize=13)
-    ax.set_xlim(-6, 6)
-    ax.set_ylim(-6, 6)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    
-    plt.tight_layout()
-    return fig
-
-
-# ============================================================
-# Generate all figures
-# ============================================================
 
 def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 PNG string."""
-    buf = BytesIO()
+    """Convert matplotlib figure to base64 data URI."""
+    buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{data}"
+
+
+# ============================================================
+# Figure 1: Berggren Tree with Mod-3 Coloring
+# ============================================================
+def make_berggren_tree_figure():
+    """Generate the Berggren tree colored by mod-3 Euclidean parameters."""
+    fig, ax = plt.subplots(1, 1, figsize=(14, 8))
+
+    # Generate tree
+    root = np.array([3, 4, 5])
+    nodes = [(root, 0, 0, None)]  # (triple, depth, position, parent_pos)
+    positions = {}
+    colors_list = []
+
+    # BFS
+    queue = deque([(root, 0, 0)])
+    depth_counts = {0: 1, 1: 3, 2: 9, 3: 27}
+    depth_index = {0: 0, 1: 0, 2: 0, 3: 0}
+
+    all_nodes = []
+    edges = []
+
+    def add_node(triple, depth, parent_idx):
+        idx = len(all_nodes)
+        m, n = get_euclid_params(int(triple[0]), int(triple[1]), int(triple[2]))
+        mod3 = (m % 3, n % 3) if m is not None else (0, 0)
+        x_spacing = 12.0 / max(1, depth_counts.get(depth, 1))
+        x = depth_index[depth] * x_spacing - 6.0 + x_spacing / 2
+        y = -depth * 2.0
+        depth_index[depth] += 1
+        all_nodes.append({
+            'triple': triple,
+            'depth': depth,
+            'x': x, 'y': y,
+            'mod3': mod3,
+            'm': m, 'n': n,
+            'parent': parent_idx
+        })
+        if parent_idx is not None:
+            edges.append((parent_idx, idx))
+        return idx
+
+    root_idx = add_node(root, 0, None)
+
+    queue = deque([(root, 0, root_idx)])
+    max_depth = 2
+
+    while queue:
+        triple, d, parent_idx = queue.popleft()
+        if d >= max_depth:
+            continue
+        for B in [B1, B2, B3]:
+            child = B @ triple
+            child_idx = add_node(child, d + 1, parent_idx)
+            queue.append((child, d + 1, child_idx))
+
+    # Draw edges
+    for p_idx, c_idx in edges:
+        p = all_nodes[p_idx]
+        c = all_nodes[c_idx]
+        ax.plot([p['x'], c['x']], [p['y'], c['y']],
+                color='#bdc3c7', linewidth=1.5, zorder=1)
+
+    # Draw nodes
+    for node in all_nodes:
+        color = PARITY_COLORS[node['mod3']]
+        circle = plt.Circle((node['x'], node['y']), 0.35,
+                           facecolor=color, edgecolor='black',
+                           linewidth=1.5, zorder=2)
+        ax.add_patch(circle)
+        a, b, c = node['triple']
+        label = f"({int(a)},{int(b)},{int(c)})"
+        ax.text(node['x'], node['y'] - 0.6, label,
+                ha='center', va='top', fontsize=7, fontweight='bold')
+        if node['m'] is not None:
+            mod_label = f"({node['m']%3},{node['n']%3})"
+            ax.text(node['x'], node['y'] + 0.05, mod_label,
+                    ha='center', va='center', fontsize=6, color='white',
+                    fontweight='bold')
+
+    # Legend
+    legend_patches = [mpatches.Patch(color=PARITY_COLORS[k], label=f'mod 3: {PARITY_LABELS[k]}')
+                     for k in sorted(PARITY_LABELS.keys()) if k != (0, 0)]
+    ax.legend(handles=legend_patches, loc='upper right', fontsize=8, ncol=2)
+
+    ax.set_xlim(-7, 7)
+    ax.set_ylim(-5.5, 1.5)
+    ax.set_aspect('equal')
+    ax.set_title('Berggren Tree with Mod-3 Euclidean Parameter Coloring',
+                fontsize=14, fontweight='bold')
+    ax.text(0, 1.0, 'Each node is a primitive Pythagorean triple; colors show (m mod 3, n mod 3)',
+            ha='center', fontsize=9, style='italic')
+    ax.axis('off')
+
+    return fig
+
+
+# ============================================================
+# Figure 2: Orbit on F_3^2
+# ============================================================
+def make_orbit_figure():
+    """Generate the orbit diagram on F_3^2."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+
+    E1_mod3 = np.array([[2, 2], [1, 0]])
+    E3_mod3 = np.array([[1, 2], [0, 1]])
+
+    # Draw all 9 points of F_3^2
+    for a, b in iterproduct(range(3), repeat=2):
+        color = PARITY_COLORS.get((a, b), '#95a5a6')
+        size = 800 if (a, b) != (0, 0) else 200
+        alpha = 1.0 if (a, b) != (0, 0) else 0.3
+        ax.scatter(a, b, c=color, s=size, zorder=3, alpha=alpha,
+                  edgecolors='black', linewidth=2)
+        ax.text(a, b - 0.25, f'({a},{b})', ha='center', va='top',
+                fontsize=10, fontweight='bold')
+
+    # Draw arrows for E1 action
+    for a, b in iterproduct(range(3), repeat=2):
+        if (a, b) == (0, 0):
+            continue
+        v = np.array([a, b])
+        w_e1 = (E1_mod3 @ v) % 3
+        w_e3 = (E3_mod3 @ v) % 3
+
+        if not np.array_equal(v, w_e1):
+            dx, dy = w_e1[0] - a, w_e1[1] - b
+            ax.annotate('', xy=(w_e1[0] - dx*0.15, w_e1[1] - dy*0.15),
+                        xytext=(a + dx*0.15, b + dy*0.15),
+                        arrowprops=dict(arrowstyle='->', color='#e74c3c',
+                                       lw=2, connectionstyle='arc3,rad=0.2'))
+
+        if not np.array_equal(v, w_e3):
+            dx, dy = w_e3[0] - a, w_e3[1] - b
+            ax.annotate('', xy=(w_e3[0] - dx*0.15, w_e3[1] - dy*0.15),
+                        xytext=(a + dx*0.15, b + dy*0.15),
+                        arrowprops=dict(arrowstyle='->', color='#3498db',
+                                       lw=2, connectionstyle='arc3,rad=-0.2'))
+
+    # Mark root
+    ax.scatter(2, 1, c='gold', s=1200, zorder=2, marker='*',
+              edgecolors='black', linewidth=1)
+    ax.text(2, 1.4, 'Root\n(2,1)', ha='center', fontsize=9, color='#f39c12',
+            fontweight='bold')
+
+    # Legend
+    e1_line = mpatches.Patch(color='#e74c3c', label='E₁ action')
+    e3_line = mpatches.Patch(color='#3498db', label='E₃ action')
+    ax.legend(handles=[e1_line, e3_line], loc='upper left', fontsize=11)
+
+    ax.set_xlim(-0.5, 2.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.set_title('Berggren Orbit on F₃² \\ {0}', fontsize=14, fontweight='bold')
+    ax.set_xlabel('First coordinate (mod 3)', fontsize=12)
+    ax.set_ylabel('Second coordinate (mod 3)', fontsize=12)
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks([0, 1, 2])
+    ax.set_yticks([0, 1, 2])
+
+    return fig
+
+
+# ============================================================
+# Figure 3: Word length distribution
+# ============================================================
+def make_word_length_figure():
+    """Generate the word length distribution for SL(2, F_3) elements."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Compute word lengths via BFS
+    E1_mod3 = [[2, 2], [1, 0]]
+    E3_mod3 = [[1, 2], [0, 1]]
+
+    def mat_mul(A, B, p=3):
+        return [
+            [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % p,
+             (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % p],
+            [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % p,
+             (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % p]
+        ]
+
+    def mat_pow(M, k, p=3):
+        result = [[1, 0], [0, 1]]
+        for _ in range(k):
+            result = mat_mul(result, M, p)
+        return result
+
+    gens = {
+        "E₁": E1_mod3,
+        "E₁⁻¹": mat_pow(E1_mod3, 2),
+        "E₃": E3_mod3,
+        "E₃⁻¹": mat_pow(E3_mod3, 2),
+    }
+
+    visited = {(1, 0, 0, 1): 0}
+    queue = deque([([[1, 0], [0, 1]], 0)])
+
+    while queue:
+        current, dist = queue.popleft()
+        for name, gen in gens.items():
+            prod = mat_mul(current, gen)
+            key = (prod[0][0], prod[0][1], prod[1][0], prod[1][1])
+            if key not in visited:
+                visited[key] = dist + 1
+                queue.append((prod, dist + 1))
+
+    # Word length histogram
+    lengths = list(visited.values())
+    counts = {}
+    for l in lengths:
+        counts[l] = counts.get(l, 0) + 1
+
+    bars = ax1.bar(sorted(counts.keys()), [counts[k] for k in sorted(counts.keys())],
+                  color=['#2ecc71', '#3498db', '#e74c3c', '#9b59b6', '#f39c12'],
+                  edgecolor='black', linewidth=1.5)
+
+    for bar, count in zip(bars, [counts[k] for k in sorted(counts.keys())]):
+        ax1.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.3,
+                str(count), ha='center', fontsize=12, fontweight='bold')
+
+    ax1.set_xlabel('Word Length', fontsize=12)
+    ax1.set_ylabel('Number of Elements', fontsize=12)
+    ax1.set_title('Word Length Distribution in SL(2, F₃)\nwith Berggren Generators',
+                 fontsize=13, fontweight='bold')
+    ax1.set_xticks(sorted(counts.keys()))
+
+    # Transport costs from root (2,1)
+    root = (2, 1)
+    targets = [(a, b) for a in range(3) for b in range(3) if (a, b) != (0, 0)]
+
+    transport_costs = {}
+    visited_vec = {root: 0}
+    queue_vec = deque([(root, 0)])
+
+    while queue_vec:
+        current, dist = queue_vec.popleft()
+        for name, gen in gens.items():
+            new_vec = (
+                (gen[0][0]*current[0] + gen[0][1]*current[1]) % 3,
+                (gen[1][0]*current[0] + gen[1][1]*current[1]) % 3,
+            )
+            if new_vec not in visited_vec:
+                visited_vec[new_vec] = dist + 1
+                queue_vec.append((new_vec, dist + 1))
+
+    labels = [f'({t[0]},{t[1]})' for t in targets]
+    costs = [visited_vec.get(t, -1) for t in targets]
+    colors = [PARITY_COLORS[t] for t in targets]
+
+    bars2 = ax2.bar(range(len(targets)), costs, color=colors,
+                   edgecolor='black', linewidth=1.5)
+
+    for bar, cost in zip(bars2, costs):
+        ax2.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.05,
+                str(cost), ha='center', fontsize=11, fontweight='bold')
+
+    ax2.set_xticks(range(len(targets)))
+    ax2.set_xticklabels(labels, fontsize=9)
+    ax2.set_xlabel('Target Vector in F₃²', fontsize=12)
+    ax2.set_ylabel('Minimum Transport Cost', fontsize=12)
+    ax2.set_title('Shortest Transport Cost from Root (2,1)\nvia Berggren Generators',
+                 fontsize=13, fontweight='bold')
+
+    plt.tight_layout()
+    return fig
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-    
-    figs = {
-        'lattice_points': fig_lattice_points(),
-        'tree_structure': fig_tree_structure(),
-        'hypotenuse_growth': fig_hypotenuse_growth(),
-        'quadratic_form': fig_quadratic_form(),
-        'parity_diagram': fig_parity_diagram(),
-    }
-    
-    for name, fig in figs.items():
-        filename = f"{name}.png"
-        fig.savefig(filename, dpi=150, bbox_inches='tight')
-        print(f"  Saved {filename}")
-        plt.close(fig)
-    
-    print("Done!")
+
+    fig1 = make_berggren_tree_figure()
+    fig1.savefig('berggren_tree.png', dpi=150, bbox_inches='tight')
+    print("  Saved berggren_tree.png")
+
+    fig2 = make_orbit_figure()
+    fig2.savefig('orbit_f3.png', dpi=150, bbox_inches='tight')
+    print("  Saved orbit_f3.png")
+
+    fig3 = make_word_length_figure()
+    fig3.savefig('word_lengths.png', dpi=150, bbox_inches='tight')
+    print("  Saved word_lengths.png")
+
+    print("All visualizations generated.")
