@@ -1,335 +1,402 @@
 #!/usr/bin/env python3
 """
-Algorithms for Sheaf-Theoretic Certified Adversarial Robustness
+Sheaf-Theoretic Certified Adversarial Robustness — Algorithms
 
 Implements the core algorithms from the research paper:
-1. Global certified radius computation
-2. Čech cocycle/coboundary analysis
-3. Vulnerability locus detection
-4. Activation chamber analysis for ReLU networks
+1. Local certificate computation (margin/Lipschitz)
+2. Global certification pipeline (cohomological descent)
+3. Čech cohomology computation (H¹ via linear algebra)
+4. Vulnerability detection (stalk obstruction)
 """
 
 import numpy as np
-from typing import List, Tuple, Dict, Optional, Set
+from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
 
 
 @dataclass
-class Chamber:
-    """An activation chamber of a ReLU network."""
-    index: int
-    weight: np.ndarray      # Weight vector (affine function on this chamber)
-    bias: float              # Bias term
-    vertices: np.ndarray     # Vertices of the polyhedral chamber (optional)
-    neighbors: Set[int]      # Indices of adjacent chambers
-    
-    @property
-    def lipschitz_linf(self) -> float:
-        """L∞ Lipschitz constant = ‖w‖₁ (dual of L∞ norm)."""
-        return float(np.sum(np.abs(self.weight)))
-    
-    @property
-    def lipschitz_l2(self) -> float:
-        """L₂ Lipschitz constant = ‖w‖₂."""
-        return float(np.linalg.norm(self.weight))
-
-
-@dataclass
 class LocalCertificate:
-    """Local robustness certificate for a single chamber."""
-    chamber_index: int
-    margin: float           # Classification margin (score gap)
-    lipschitz: float        # Lipschitz constant
+    """Local robustness certificate for a single activation chamber."""
+    chamber_id: int
+    margin: float
+    lipschitz: float
+    radius: float
     
-    @property
-    def radius(self) -> float:
-        """Certified robustness radius = margin / Lipschitz."""
-        if self.lipschitz <= 0:
-            return float('inf') if self.margin >= 0 else 0.0
-        return self.margin / self.lipschitz
-    
-    @property
-    def is_positive(self) -> bool:
-        """Whether this certificate gives positive robustness."""
-        return self.radius > 0
+    @staticmethod
+    def compute(margin: float, lipschitz: float, chamber_id: int = 0) -> 'LocalCertificate':
+        """Compute local certified radius = margin / Lipschitz."""
+        if lipschitz <= 0:
+            raise ValueError(f"Lipschitz constant must be positive, got {lipschitz}")
+        return LocalCertificate(
+            chamber_id=chamber_id,
+            margin=margin,
+            lipschitz=lipschitz,
+            radius=margin / lipschitz
+        )
 
 
 @dataclass
 class GlobalCertificate:
-    """Global robustness certificate from sheaf descent."""
+    """Global robustness certificate from cohomological descent."""
     radius: float
-    bottleneck_chamber: int
     local_certificates: List[LocalCertificate]
-    cocycle_trivial: bool
+    h1_vanishes: bool
+    bottleneck_chamber: int
+    
+    @property
+    def is_robust(self) -> bool:
+        return self.radius > 0
+
+
+@dataclass
+class VulnerabilityReport:
+    """Report of vulnerability detection via stalk obstruction."""
+    vulnerable_points: List[float]
     vulnerable_chambers: List[int]
+    obstruction_type: str  # 'zero_margin', 'non_coboundary', 'stalk_collapse'
 
 
-def compute_local_certificates(
-    chambers: List[Chamber],
-    score_gap_fn,
-    sample_points: Optional[np.ndarray] = None,
-    n_samples: int = 100
-) -> List[LocalCertificate]:
+class CechCohomology:
     """
-    Compute local robustness certificates for each activation chamber.
+    Finite Čech cohomology computation for robustness sheaves.
     
-    For each chamber, computes:
-    - margin: minimum score gap over sampled points in the chamber
-    - Lipschitz: L∞ operator norm of the weight vector
-    
-    Args:
-        chambers: List of activation chambers
-        score_gap_fn: Function computing score gap at a point
-        sample_points: Optional pre-computed sample points per chamber
-        n_samples: Number of samples per chamber for margin estimation
-    
-    Returns:
-        List of LocalCertificate objects
-    
-    Complexity: O(N * n_samples * d) where N = #chambers, d = dimension
+    Given a finite cover {U_i} with overlap data, computes:
+    - Z¹: space of cocycles
+    - B¹: space of coboundaries
+    - H¹ = Z¹/B¹: first cohomology group
     """
-    certificates = []
-    for chamber in chambers:
-        lip = chamber.lipschitz_linf
-        # For affine function w·x + b, the margin at x is w·x + b
-        # In practice, compute minimum over samples
-        margin = abs(chamber.bias)  # Simplified: true margin requires sampling
-        certificates.append(LocalCertificate(
-            chamber_index=chamber.index,
-            margin=margin,
-            lipschitz=lip
-        ))
-    return certificates
+    
+    def __init__(self, n_sets: int):
+        self.n = n_sets
+    
+    def coboundary_matrix(self) -> np.ndarray:
+        """
+        Construct the coboundary matrix δ⁰ : C⁰ → C¹.
+        
+        C⁰ has dimension n (0-cochains = functions ι → ℝ).
+        C¹ has dimension n² (1-cochains = functions ι × ι → ℝ).
+        δ⁰(b)(i,j) = b(j) - b(i).
+        
+        Returns matrix of shape (n², n).
+        """
+        n = self.n
+        delta = np.zeros((n * n, n))
+        for i in range(n):
+            for j in range(n):
+                row = i * n + j
+                delta[row, j] = 1.0   # +b(j)
+                delta[row, i] -= 1.0  # -b(i)
+        return delta
+    
+    def is_cocycle(self, c: np.ndarray) -> bool:
+        """Check additive cocycle condition: c(i,k) = c(i,j) + c(j,k)."""
+        n = self.n
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    if not np.isclose(c[i, k], c[i, j] + c[j, k], atol=1e-10):
+                        return False
+        return True
+    
+    def is_coboundary(self, c: np.ndarray) -> Tuple[bool, Optional[np.ndarray]]:
+        """
+        Check if cocycle is a coboundary and return primitive.
+        
+        For a cocycle, try b(i) = c(0, i) as the candidate primitive.
+        """
+        n = self.n
+        b = np.array([c[0, i] for i in range(n)])
+        
+        for i in range(n):
+            for j in range(n):
+                if not np.isclose(c[i, j], b[j] - b[i], atol=1e-10):
+                    return False, None
+        return True, b
+    
+    def compute_h1_dimension(self) -> int:
+        """
+        Compute dim H¹ = dim Z¹ - dim B¹.
+        
+        For a finite set with n elements:
+        - Z¹ (cocycles satisfying additive condition) has dim n-1
+          (any cocycle is determined by c(0,1), c(0,2), ..., c(0,n-1))
+        - B¹ (coboundaries) has dim n-1
+          (coboundary is determined by b(1)-b(0), ..., b(n-1)-b(0))
+        
+        Therefore H¹ = 0 for a complete cover (all overlaps nonempty).
+        """
+        # For a complete graph (all overlaps), H¹ always vanishes
+        # This is because every cocycle on a simplex is a coboundary
+        return 0
+    
+    def find_obstruction(self, c: np.ndarray) -> Optional[Tuple[int, int, int]]:
+        """Find a triple (i,j,k) violating the cocycle condition."""
+        n = self.n
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    if not np.isclose(c[i, k], c[i, j] + c[j, k], atol=1e-10):
+                        return (i, j, k)
+        return None
 
 
-def compute_global_certificate(
-    local_certs: List[LocalCertificate],
-    adjacency: Optional[Dict[int, Set[int]]] = None
-) -> GlobalCertificate:
+class SheafCertifier:
     """
-    Compute global certified radius via sheaf descent (Theorem 3.1).
+    Main certification pipeline implementing the cohomological descent theorem.
     
-    The global radius is R = min_i(r_i) where r_i = margin_i / Lipschitz_i.
-    
-    Args:
-        local_certs: List of local certificates
-        adjacency: Optional chamber adjacency for cocycle check
-    
-    Returns:
-        GlobalCertificate with the global radius and analysis
-    
-    Complexity: O(N) for radius computation, O(N²) for cocycle check
+    Algorithm 2 from the research paper:
+    1. Enumerate chambers intersecting the region
+    2. Compute local certificates (margin/Lipschitz)
+    3. Check cohomological gluing condition
+    4. Return global certified radius or vulnerability report
     """
-    if not local_certs:
+    
+    def __init__(self):
+        self.certificates: List[LocalCertificate] = []
+        self.cohomology: Optional[CechCohomology] = None
+    
+    def add_certificate(self, margin: float, lipschitz: float, 
+                        chamber_id: int = -1) -> LocalCertificate:
+        """Add a local certificate for a chamber."""
+        if chamber_id < 0:
+            chamber_id = len(self.certificates)
+        cert = LocalCertificate.compute(margin, lipschitz, chamber_id)
+        self.certificates.append(cert)
+        return cert
+    
+    def certify(self, overlap_cocycle: Optional[np.ndarray] = None) -> GlobalCertificate:
+        """
+        Run the full certification pipeline.
+        
+        This implements the cohomological descent theorem:
+        If H¹ = 0, then R_global = min(r_i).
+        """
+        if not self.certificates:
+            return GlobalCertificate(
+                radius=0.0,
+                local_certificates=[],
+                h1_vanishes=True,
+                bottleneck_chamber=-1
+            )
+        
+        n = len(self.certificates)
+        self.cohomology = CechCohomology(n)
+        
+        # Check cohomological condition
+        h1_vanishes = True
+        if overlap_cocycle is not None:
+            if not self.cohomology.is_cocycle(overlap_cocycle):
+                h1_vanishes = False  # Not even a cocycle → inconsistent data
+            else:
+                is_cob, _ = self.cohomology.is_coboundary(overlap_cocycle)
+                h1_vanishes = is_cob
+        
+        # Global radius = infimum of local radii
+        radii = [c.radius for c in self.certificates]
+        global_radius = min(radii)
+        bottleneck = int(np.argmin(radii))
+        
         return GlobalCertificate(
-            radius=0.0, bottleneck_chamber=-1,
-            local_certificates=[], cocycle_trivial=True,
-            vulnerable_chambers=[]
+            radius=global_radius,
+            local_certificates=self.certificates,
+            h1_vanishes=h1_vanishes,
+            bottleneck_chamber=bottleneck
         )
     
-    radii = [cert.radius for cert in local_certs]
-    bottleneck = int(np.argmin(radii))
-    global_radius = radii[bottleneck]
-    
-    # Identify vulnerable chambers (zero or near-zero radius)
-    vulnerable = [cert.chamber_index for cert in local_certs if cert.radius < 1e-10]
-    
-    # Check cocycle triviality (always true for finite covers by Theorem 6.1)
-    cocycle_trivial = True
-    
-    return GlobalCertificate(
-        radius=global_radius,
-        bottleneck_chamber=local_certs[bottleneck].chamber_index,
-        local_certificates=local_certs,
-        cocycle_trivial=cocycle_trivial,
-        vulnerable_chambers=vulnerable
-    )
+    def detect_vulnerability(self, 
+                             score_gap_fn=None,
+                             boundary_points: Optional[List[float]] = None
+                             ) -> VulnerabilityReport:
+        """
+        Detect vulnerable points via stalk obstruction.
+        
+        A point x is vulnerable if stalkRadius(x) ≤ 0, i.e., 
+        no neighborhood of x has uniformly positive score gap.
+        """
+        vulnerable_points = []
+        vulnerable_chambers = []
+        
+        # Check for zero-margin chambers
+        for cert in self.certificates:
+            if cert.margin <= 0:
+                vulnerable_chambers.append(cert.chamber_id)
+        
+        # Check boundary points
+        if boundary_points and score_gap_fn:
+            for x in boundary_points:
+                if score_gap_fn(x) <= 0:
+                    vulnerable_points.append(x)
+        
+        obstruction_type = 'none'
+        if vulnerable_chambers:
+            obstruction_type = 'zero_margin'
+        elif vulnerable_points:
+            obstruction_type = 'stalk_collapse'
+        
+        return VulnerabilityReport(
+            vulnerable_points=vulnerable_points,
+            vulnerable_chambers=vulnerable_chambers,
+            obstruction_type=obstruction_type
+        )
 
 
-def cech_coboundary_operator(b: np.ndarray) -> np.ndarray:
+class ReLUChamberAnalyzer:
     """
-    Apply the Čech coboundary operator δ⁰: (ι → ℝ) → (ι → ι → ℝ).
+    Analyze ReLU network activation chambers for robustness certification.
     
-    δ⁰(b)[i,j] = b[j] - b[i]
-    
-    This is a linear map (Theorem: coboundaryMap in the formal development).
-    
-    Args:
-        b: 0-cochain (array of length n)
-    
-    Returns:
-        1-cochain (n×n matrix)
-    
-    Complexity: O(n²)
+    For a ReLU network f(x) = W₂ · max(0, W₁x + b₁) + b₂:
+    - Each activation pattern defines a chamber (convex polytope)
+    - On each chamber, f is affine: f(x) = W_eff · x + b_eff
+    - Local Lipschitz = ‖W_eff‖_∞ (L∞ operator norm)
+    - Local margin = min score gap on chamber
     """
-    n = len(b)
-    return np.subtract.outer(b, b).T  # c[i,j] = b[j] - b[i]
-
-
-def find_coboundary_primitive(c: np.ndarray) -> Optional[np.ndarray]:
-    """
-    Find a primitive b such that c[i,j] = b[j] - b[i], if one exists.
     
-    By Theorem 6.1, this always succeeds for cocycles on finite sets.
-    We fix b[0] = 0 and set b[j] = c[0,j].
+    def __init__(self, W1: np.ndarray, b1: np.ndarray, 
+                 W2: np.ndarray, b2: np.ndarray):
+        self.W1 = W1
+        self.b1 = b1
+        self.W2 = W2
+        self.b2 = b2
+        self.input_dim = W1.shape[1]
+        self.hidden_dim = W1.shape[0]
     
-    Args:
-        c: 1-cochain (n×n matrix)
+    def forward(self, x: np.ndarray) -> float:
+        """Forward pass."""
+        h = np.maximum(0, self.W1 @ x + self.b1)
+        return float(self.W2 @ h + self.b2)
     
-    Returns:
-        Primitive b if c is a coboundary, None otherwise
+    def activation_pattern(self, x: np.ndarray) -> tuple:
+        """Get activation pattern at x."""
+        return tuple((self.W1 @ x + self.b1) > 0)
     
-    Complexity: O(n²) for verification
-    """
-    n = c.shape[0]
-    if n == 0:
-        return np.array([])
+    def effective_weight(self, pattern: tuple) -> np.ndarray:
+        """Get effective weight matrix for a given activation pattern."""
+        active = np.diag(np.array(pattern, dtype=float))
+        return self.W2 @ active @ self.W1
     
-    b = c[0, :].copy()  # b[j] = c[0, j], so b[0] = c[0,0] should be 0
+    def linf_lipschitz(self, pattern: tuple) -> float:
+        """Compute L∞ Lipschitz constant for a chamber."""
+        W_eff = self.effective_weight(pattern)
+        return float(np.max(np.sum(np.abs(W_eff), axis=1)))
     
-    # Verify
-    for i in range(n):
-        for j in range(n):
-            if abs(c[i, j] - (b[j] - b[i])) > 1e-10:
-                return None
+    def enumerate_chambers(self, x_range: np.ndarray, 
+                           y_range: Optional[np.ndarray] = None
+                           ) -> Dict[tuple, dict]:
+        """Enumerate activation chambers by grid sampling."""
+        chambers = {}
+        
+        if y_range is not None:
+            # 2D case
+            for xi in x_range:
+                for yi in y_range:
+                    x = np.array([xi, yi])
+                    pattern = self.activation_pattern(x)
+                    score = self.forward(x)
+                    if pattern not in chambers:
+                        chambers[pattern] = {
+                            'points': [], 'scores': [],
+                            'lip': self.linf_lipschitz(pattern)
+                        }
+                    chambers[pattern]['points'].append(x.copy())
+                    chambers[pattern]['scores'].append(score)
+        else:
+            # 1D case
+            for xi in x_range:
+                x = np.array([xi])
+                pattern = self.activation_pattern(x)
+                score = self.forward(x)
+                if pattern not in chambers:
+                    chambers[pattern] = {
+                        'points': [], 'scores': [],
+                        'lip': self.linf_lipschitz(pattern)
+                    }
+                chambers[pattern]['points'].append(x.copy())
+                chambers[pattern]['scores'].append(score)
+        
+        return chambers
     
-    return b
-
-
-def detect_vulnerable_locus(
-    score_gap_fn,
-    grid_points: np.ndarray,
-    epsilon: float = 0.01
-) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Detect the vulnerable locus: points where the stalk radius is zero.
-    
-    Implements Theorem 5.1: VulnerableAt iff no positive stalk section.
-    
-    Args:
-        score_gap_fn: Function X → ℝ giving the score gap
-        grid_points: Array of points to check (shape: N × d)
-        epsilon: Threshold for vulnerability (stalk radius < epsilon)
-    
-    Returns:
-        (vulnerable_points, stalk_radii): The vulnerable points and their stalk radii
-    
-    Complexity: O(N * d) for function evaluation
-    """
-    score_gaps = np.array([score_gap_fn(p) for p in grid_points])
-    
-    # Estimate stalk radius as |scoreGap(x)| / local_Lipschitz
-    # For simplicity, use |scoreGap(x)| as a proxy (assumes Lipschitz ~ 1)
-    stalk_radii = np.abs(score_gaps)
-    
-    vulnerable_mask = stalk_radii < epsilon
-    
-    return grid_points[vulnerable_mask], stalk_radii
-
-
-def activation_complex_analysis(
-    chambers: List[Chamber]
-) -> Dict:
-    """
-    Analyze the activation complex of a ReLU network.
-    
-    Computes:
-    - Number of chambers (vertices)
-    - Adjacency structure (edges)
-    - Betti number β₀ (connected components)
-    - Whether the complex is tree-like (β₁ = 0 automatically)
-    
-    Args:
-        chambers: List of activation chambers with adjacency data
-    
-    Returns:
-        Dictionary with topological analysis
-    
-    Complexity: O(N + E) where N = #chambers, E = #edges
-    """
-    n = len(chambers)
-    
-    # Build adjacency matrix
-    edges = set()
-    for ch in chambers:
-        for nb in ch.neighbors:
-            edge = (min(ch.index, nb), max(ch.index, nb))
-            edges.add(edge)
-    
-    # Count connected components via BFS
-    visited = set()
-    components = 0
-    for ch in chambers:
-        if ch.index not in visited:
-            components += 1
-            queue = [ch.index]
-            while queue:
-                current = queue.pop(0)
-                if current in visited:
-                    continue
-                visited.add(current)
-                for nb in chambers[current].neighbors if current < len(chambers) else set():
-                    if nb not in visited:
-                        queue.append(nb)
-    
-    # Euler characteristic: χ = V - E + F (for planar graphs)
-    # β₁ = E - V + components (first Betti number)
-    beta_0 = components
-    beta_1 = len(edges) - n + components
-    
-    return {
-        "n_chambers": n,
-        "n_edges": len(edges),
-        "n_components": beta_0,
-        "beta_0": beta_0,
-        "beta_1": beta_1,
-        "is_tree": beta_1 == 0,
-        "h1_vanishes": True,  # Always true for finite covers (Theorem 6.1)
-    }
+    def certify_chambers(self, chambers: Dict[tuple, dict]) -> List[LocalCertificate]:
+        """Compute local certificates for each chamber."""
+        certs = []
+        for idx, (pattern, data) in enumerate(chambers.items()):
+            scores = np.array(data['scores'])
+            margin = float(np.min(np.abs(scores)))
+            lip = data['lip']
+            if lip > 0:
+                certs.append(LocalCertificate.compute(margin, lip, idx))
+        return certs
 
 
 # =============================================================================
-# Example usage
+# Usage Examples
 # =============================================================================
+
 if __name__ == "__main__":
-    print("Sheaf-Theoretic Certified Robustness: Algorithm Demonstrations")
-    print("=" * 60)
+    print("=" * 70)
+    print("ALGORITHM DEMONSTRATION")
+    print("=" * 70)
     
-    # Create toy chambers
-    chambers = []
-    for i in range(5):
-        w = np.random.randn(3)
-        b = np.random.randn() * 0.5
-        neighbors = {(i - 1) % 5, (i + 1) % 5}
-        chambers.append(Chamber(
-            index=i, weight=w, bias=b,
-            vertices=np.array([]), neighbors=neighbors
-        ))
+    # Example: Full certification pipeline
+    certifier = SheafCertifier()
     
-    # Compute certificates
-    certs = compute_local_certificates(chambers, None)
+    # Add local certificates from 5 chambers
+    chamber_data = [
+        (1.0, 2.0),   # margin, Lipschitz
+        (0.5, 1.0),
+        (0.8, 4.0),
+        (1.2, 3.0),
+        (0.3, 1.5),
+    ]
+    
     print("\nLocal certificates:")
-    for cert in certs:
-        print(f"  Chamber {cert.chamber_index}: margin={cert.margin:.3f}, "
-              f"Lip={cert.lipschitz:.3f}, radius={cert.radius:.4f}")
+    for i, (m, l) in enumerate(chamber_data):
+        cert = certifier.add_certificate(m, l)
+        print(f"  Chamber {i}: margin={m}, Lip={l}, radius={cert.radius:.4f}")
     
-    # Global certificate
-    global_cert = compute_global_certificate(certs)
-    print(f"\nGlobal certified radius: R = {global_cert.radius:.4f}")
-    print(f"Bottleneck: chamber {global_cert.bottleneck_chamber}")
-    print(f"Cocycle trivial: {global_cert.cocycle_trivial}")
+    # Run global certification
+    result = certifier.certify()
+    print(f"\nGlobal certification result:")
+    print(f"  Global radius R = {result.radius:.4f}")
+    print(f"  H¹ vanishes: {result.h1_vanishes}")
+    print(f"  Bottleneck chamber: {result.bottleneck_chamber}")
+    print(f"  Is robust: {result.is_robust}")
     
-    # Cocycle analysis
-    print("\n\nČech cocycle analysis:")
-    b = np.array([1.0, -0.5, 2.3, 0.7, -1.2])
-    c = cech_coboundary_operator(b)
-    b_recovered = find_coboundary_primitive(c)
-    print(f"  Original b: {b}")
-    print(f"  Recovered b: {b_recovered}")
-    print(f"  Match (up to constant): {np.allclose(b - b[0], b_recovered - b_recovered[0])}")
+    # Čech cohomology analysis
+    print("\n--- Čech Cohomology Analysis ---")
+    cech = CechCohomology(3)
     
-    # Activation complex
-    analysis = activation_complex_analysis(chambers)
-    print(f"\nActivation complex analysis:")
-    for key, val in analysis.items():
-        print(f"  {key}: {val}")
+    # Trivial cocycle
+    c_trivial = np.zeros((3, 3))
+    c_trivial[0, 1] = 0.1; c_trivial[1, 0] = -0.1
+    c_trivial[1, 2] = 0.2; c_trivial[2, 1] = -0.2
+    c_trivial[0, 2] = 0.3; c_trivial[2, 0] = -0.3
+    
+    print(f"  Cocycle check: {cech.is_cocycle(c_trivial)}")
+    is_cob, prim = cech.is_coboundary(c_trivial)
+    print(f"  Coboundary check: {is_cob}")
+    if prim is not None:
+        print(f"  Primitive: {prim}")
+    print(f"  dim H¹ = {cech.compute_h1_dimension()}")
+    
+    # ReLU chamber analysis
+    print("\n--- ReLU Chamber Analysis ---")
+    W1 = np.array([[1.0, 0.5], [-0.5, 1.0], [0.3, -0.8]])
+    b1 = np.array([0.1, -0.2, 0.3])
+    W2 = np.array([[1.0, -1.0, 0.5]])
+    b2 = np.array([0.0])
+    
+    analyzer = ReLUChamberAnalyzer(W1, b1, W2, b2)
+    x_range = np.linspace(-2, 2, 100)
+    y_range = np.linspace(-2, 2, 100)
+    
+    chambers = analyzer.enumerate_chambers(x_range, y_range)
+    certs = analyzer.certify_chambers(chambers)
+    
+    print(f"  Chambers found: {len(chambers)}")
+    print(f"  Certificates computed: {len(certs)}")
+    
+    if certs:
+        radii = [c.radius for c in certs]
+        print(f"  Min local radius: {min(radii):.6f}")
+        print(f"  Max local radius: {max(radii):.6f}")
+        print(f"  Global certified radius: {min(radii):.6f}")
