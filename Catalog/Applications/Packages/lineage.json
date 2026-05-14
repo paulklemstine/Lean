@@ -7,7 +7,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T01:50:13Z",
-      "hue": 281
+      "hue": 270
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -17,6 +17,15 @@
       "shape": "star_of_david",
       "date": "2026-05-14T01:57:43Z",
       "hue": 90
+    },
+    {
+      "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
+      "title": "Tropical Myhill-Nerode Theorem for Min-Plus Automata",
+      "domain": "Computation / Automata Theory / Tropical Algebra",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-14T02:00:38Z",
+      "hue": 275
     }
   ],
   "edges": []
