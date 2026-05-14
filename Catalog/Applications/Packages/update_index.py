@@ -353,8 +353,10 @@ def append_future_directions(script_dir, db_path):
     # If loaded from workspace, also update the snapshot
     if source == fd_path:
         try:
+            # Filter out completed before writing snapshot too
+            active_directions = [d for d in directions if d.get("status") != "completed"]
             display_for_snapshot = []
-            for d in directions:
+            for d in active_directions:
                 display_for_snapshot.append({
                     "id": d.get("id", ""),
                     "title": d.get("title", ""),
@@ -370,9 +372,12 @@ def append_future_directions(script_dir, db_path):
             display_for_snapshot.sort(key=lambda x: x["priority_score"], reverse=True)
             with open(snapshot_path, 'w', encoding='utf-8') as f:
                 json.dump(display_for_snapshot, f, indent=2, ensure_ascii=False)
-            print(f"Updated future_directions_snapshot.json ({len(display_for_snapshot)} directions)")
+            print(f"Updated future_directions_snapshot.json ({len(display_for_snapshot)} active directions, {len(directions) - len(active_directions)} completed filtered)")
         except Exception as e:
             print(f"Warning: failed to update snapshot: {e}")
+
+    # Filter out completed directions (no need to ship stale data)
+    directions = [d for d in directions if d.get("status") != "completed"]
 
     # Transform to display-friendly format, sorted by priority descending
     display_dirs = []

@@ -647,22 +647,6 @@ window.PACKAGE_GRAPH = {
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "id": "seed_001",
-    "title": "P vs NP: Tropical Semiring Barrier",
-    "description": "Prove that tropical semiring morphisms cannot polynomially simulate Boolean circuit satisfiability, establishing a structural barrier via min-plus idempotent completions that separates P from NP. Construct a family of Boolean formulas whose tropical evaluation requires super-polynomial min-plus circuit size, and prove that the idempotent closure of the tropical semiring yields a natural complexity class incomparable with P.",
-    "domains": [
-      "Algebra",
-      "Computation",
-      "Tropical"
-    ],
-    "priority_score": 0.95,
-    "status": "completed",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "53771932",
-    "timestamp": "2026-05-13T23:34:44.955957+00:00"
-  },
-  {
     "id": "seed_002",
     "title": "Riemann Hypothesis via Tropical Spectral Transfer",
     "description": "Formulate the Riemann Hypothesis as a statement about the spectrum of a tropical transfer operator on the critical strip. Prove that all non-trivial zeros lie on Re(s)=1/2 if and only if the tropical eigenvalue gap vanishes, connecting analytic number theory to tropical dynamics via a constructive spectral correspondence.",
@@ -676,7 +660,23 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T23:34:44.956130+00:00"
+    "timestamp": "2026-05-14T02:49:10.850854+00:00"
+  },
+  {
+    "id": "seed_023",
+    "title": "Birch-Swinnerton-Dyer via Tropical L-Function Specialization",
+    "description": "Formulate the BSD conjecture as a statement about the tropical specialization of L-functions at s=1, proving that the tropical rank of the Mordell-Weil group equals the order of vanishing of the tropical L-function. Construct a min-plus L-series whose idempotent residue captures the regulator and Tamagawa numbers in a single tropical invariant.",
+    "domains": [
+      "Algebra",
+      "NumberTheory",
+      "Tropical"
+    ],
+    "priority_score": 0.94,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.857924+00:00"
   },
   {
     "id": "seed_015",
@@ -688,11 +688,27 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "priority_score": 0.93,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "b55df62f",
-    "timestamp": "2026-05-13T23:34:44.959641+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.855226+00:00"
+  },
+  {
+    "id": "seed_024",
+    "title": "Navier-Stokes Regularity via Tropical Diffusion Operators",
+    "description": "Prove that tropical diffusion operators on min-plus function spaces satisfy maximum principles that prevent finite-time blowup of classical solutions, yielding a new regularity criterion for Navier-Stokes. Show that the idempotent energy dissipation rate bounds the vorticity growth, and that tropical viscosity provides a constructive barrier to singularity formation.",
+    "domains": [
+      "Physics",
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.93,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.858658+00:00"
   },
   {
     "id": "seed_008",
@@ -704,11 +720,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.92,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "20834c3d",
-    "timestamp": "2026-05-13T23:34:44.958157+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.853072+00:00"
   },
   {
     "id": "seed_022",
@@ -720,11 +736,27 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "priority_score": 0.92,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "a6a82243",
-    "timestamp": "2026-05-13T23:34:44.961960+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.857523+00:00"
+  },
+  {
+    "id": "seed_051",
+    "title": "Quantum Gravity as Tropical Geometry: Min-Plus Spacetime at Planck Scale",
+    "description": "Prove that at the Planck scale, spacetime geometry becomes tropical: the metric reduces to a min-plus distance function, and quantum superposition corresponds to the idempotent property of tropical addition. Show that the tropical Einstein equations yield a well-posed initial value problem, and that the tropical Schwarzschild solution has a horizon at the tropical fixed point of the radial coordinate.",
+    "domains": [
+      "Physics",
+      "Tropical",
+      "Speculative"
+    ],
+    "priority_score": 0.92,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.878847+00:00"
   },
   {
     "id": "seed_016",
@@ -740,7 +772,39 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T23:34:44.960005+00:00"
+    "timestamp": "2026-05-14T02:49:10.855513+00:00"
+  },
+  {
+    "id": "seed_025",
+    "title": "Hodge Conjecture through Tropical Algebraic Cycles",
+    "description": "Reformulate the Hodge conjecture in terms of tropical algebraic cycles on idempotent compactifications of K\u00e4hler manifolds. Prove that Hodge classes in the tropical cohomology ring are exactly those represented by tropical subvarieties, establishing the conjecture for the tropical shadow and constructing a transfer principle back to the classical setting.",
+    "domains": [
+      "Algebra",
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.91,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.859298+00:00"
+  },
+  {
+    "id": "seed_038",
+    "title": "P vs SPACE via Tropical Time-Space Tradeoffs",
+    "description": "Prove that tropical time-space tradeoffs for Turing machines yield tight bounds on the relationship between P and PSPACE, showing that the min-plus time cost of simulating a polynomial-space computation is super-polynomial. Establish that the tropical spectral gap of the space-time tradeoff matrix separates P from PSPACE in the min-plus semiring.",
+    "domains": [
+      "Computation",
+      "Algebra",
+      "Tropical"
+    ],
+    "priority_score": 0.91,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.867978+00:00"
   },
   {
     "id": "seed_004",
@@ -752,11 +816,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "a9b70184",
-    "timestamp": "2026-05-13T23:34:44.956864+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.852108+00:00"
   },
   {
     "id": "seed_018",
@@ -768,11 +832,43 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.9,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "fe61d30c",
-    "timestamp": "2026-05-13T23:34:44.960584+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.856084+00:00"
+  },
+  {
+    "id": "seed_029",
+    "title": "Transformer Attention as Tropical Matrix Multiplication",
+    "description": "Prove that softmax attention in transformers is a tropical (min-plus) matrix multiplication in the log-semiring, and that multi-head attention corresponds to computing in a product of tropical semirings. Show that the attention sink phenomenon is a tropical fixed point, and that the convergence of deep transformer layers is governed by the tropical spectral radius of the attention matrix.",
+    "domains": [
+      "MachineLearning",
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.861467+00:00"
+  },
+  {
+    "id": "seed_052",
+    "title": "String Theory T-Duality as Tropical Duality: Min-Plus Mirror Symmetry",
+    "description": "Prove that T-duality in string theory is precisely tropical duality in the min-plus semiring: compactification on a circle of radius R is dual to compactification on a circle of tropical radius 1/R. Show that mirror symmetry between Calabi-Yau manifolds is the tropical Legendre transform of their potential functions, and that the conifold transition is a tropical corner locus.",
+    "domains": [
+      "Physics",
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.879731+00:00"
   },
   {
     "id": "seed_017",
@@ -784,11 +880,43 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.89,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "9590c6d3",
-    "timestamp": "2026-05-13T23:34:44.960305+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.855795+00:00"
+  },
+  {
+    "id": "seed_026",
+    "title": "Tropical RSA: Min-Plus Public Key Cryptosystem with Provable Security",
+    "description": "Construct a public-key cryptosystem based on the hardness of tropical matrix factorization, proving that recovering the private key from the public key reduces to the tropical shortest-path problem which is NP-hard in the min-plus semiring. Show that the min-plus analog of RSA has semantic security under a tropical decisional Diffie-Hellman assumption.",
+    "domains": [
+      "Cryptography",
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.89,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.859777+00:00"
+  },
+  {
+    "id": "seed_058",
+    "title": "Twin Prime Conjecture via Tropical Sieve Methods",
+    "description": "Prove that the twin prime conjecture follows from a tropical sieve inequality: the min-plus residue of the sieve kernel at 2 bounds the gap distribution. Show that the tropical Brun sieve achieves a stronger bound than the classical Selberg sieve for twin primes, and that the tropical Hardy-Littlewood conjecture is a min-plus convolution identity.",
+    "domains": [
+      "NumberTheory",
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.89,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.885930+00:00"
   },
   {
     "id": "seed_006",
@@ -800,11 +928,75 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.88,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "8e2cd002",
-    "timestamp": "2026-05-13T23:34:44.957179+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.852605+00:00"
+  },
+  {
+    "id": "seed_027",
+    "title": "Post-Quantum Lattices from Pythagorean Triple Groupoids",
+    "description": "Prove that Berggren groupoid orbits generate lattice bases with worst-case to average-case reduction properties suitable for post-quantum cryptography. Show that the shortest vector problem on Pythagorean lattices is as hard as the general SVP, and construct a key exchange protocol whose security reduces to the hardness of finding primitive triples in high-dimensional Berggren lattices.",
+    "domains": [
+      "Cryptography",
+      "Pythagorean",
+      "Computation"
+    ],
+    "priority_score": 0.88,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.860330+00:00"
+  },
+  {
+    "id": "seed_030",
+    "title": "Grokking as Tropical Phase Transition in Neural Loss Landscapes",
+    "description": "Prove that the grokking phenomenon in neural networks is a phase transition in the tropical geometry of the loss landscape, where the min-plus distance to the decision boundary undergoes a sudden collapse. Construct a tropical order parameter that predicts grokking onset, and show that delayed generalization corresponds to the tropical geodesic crossing a corner locus.",
+    "domains": [
+      "MachineLearning",
+      "Tropical",
+      "Physics"
+    ],
+    "priority_score": 0.88,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.862000+00:00"
+  },
+  {
+    "id": "seed_047",
+    "title": "Wormhole Topology via Tropical Surgery: Min-Plus Spacetime Bridging",
+    "description": "Prove that traversable wormholes in general relativity correspond to tropical surgery operations on the spacetime manifold, where the min-plus Ricci curvature determines the throat radius. Show that the Einstein field equations in the tropical shadow reduce to a shortest-path problem on the spacetime graph, and that tropical geodesics through the wormhole are computable in polynomial time.",
+    "domains": [
+      "Speculative",
+      "Physics",
+      "Tropical"
+    ],
+    "priority_score": 0.88,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.875322+00:00"
+  },
+  {
+    "id": "seed_059",
+    "title": "Goldbach via Tropical Additive Combinatorics",
+    "description": "Prove that every even number greater than 2 is the sum of two primes by reformulating Goldbach's conjecture as a tropical additive identity: the min-plus convolution of the prime indicator function with itself achieves its minimum at every even integer. Show that the tropical Goldbach function is bounded, and that the tropical Schnirelmann density of primes is 1/2 in the min-plus sense.",
+    "domains": [
+      "NumberTheory",
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.88,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.887220+00:00"
   },
   {
     "id": "seed_009",
@@ -816,11 +1008,43 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.87,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "2c76b4e8",
-    "timestamp": "2026-05-13T23:34:44.958342+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.853297+00:00"
+  },
+  {
+    "id": "seed_028",
+    "title": "Homomorphic Encryption over Tropical Semirings",
+    "description": "Construct a fully homomorphic encryption scheme over min-plus arithmetic where addition and multiplication of ciphertexts correspond to tropical operations on plaintexts. Prove correctness and security against chosen-plaintext attacks, showing that the idempotent property of tropical addition enables bootstrapping without the noise growth that plagues classical FHE.",
+    "domains": [
+      "Cryptography",
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.87,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.860915+00:00"
+  },
+  {
+    "id": "seed_036",
+    "title": "Tropical Curry-Howard: Proofs as Min-Plus Programs",
+    "description": "Establish a Curry-Howard correspondence for tropical logic where proofs are min-plus programs and propositions are tropical types. Prove that cut elimination corresponds to tropical normalization, and that the idempotent property of min-plus yields a canonical proof normalization strategy that is strongly normalizing and confluent.",
+    "domains": [
+      "Logic",
+      "Computation",
+      "Tropical"
+    ],
+    "priority_score": 0.87,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.866548+00:00"
   },
   {
     "id": "seed_013",
@@ -832,11 +1056,59 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.86,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "07e325b2",
-    "timestamp": "2026-05-13T23:34:44.959178+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.854603+00:00"
+  },
+  {
+    "id": "seed_031",
+    "title": "Category-Theoretic Composition of Neural Architectures",
+    "description": "Formalize neural network architectures as morphisms in a monoidal category where objects are tensor shapes and composition is layer stacking. Prove that ResNet skip connections correspond to categorical products, that attention is a natural transformation, and that architecture search is optimization in a functor category. Show this yields compositional generalization bounds.",
+    "domains": [
+      "MachineLearning",
+      "Algebra",
+      "Bridges"
+    ],
+    "priority_score": 0.86,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.862613+00:00"
+  },
+  {
+    "id": "seed_048",
+    "title": "Consciousness as Tropical Fixed Point: Min-Plus Reflective Equilibrium",
+    "description": "Prove that self-referential computation in idempotent semirings has unique fixed points that satisfy formal criteria for reflective consciousness: self-modeling, integrated information, and global workspace broadcast. Show that the tropical fixed-point of the self-reference operator maximizes tropical Phi (the min-plus analog of integrated information), and that conscious states are exactly the attractors of the tropical reflective dynamics.",
+    "domains": [
+      "Speculative",
+      "MachineLearning",
+      "Algebra"
+    ],
+    "priority_score": 0.86,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.876122+00:00"
+  },
+  {
+    "id": "seed_060",
+    "title": "Tropical Type Theory: Dependent Types in the Min-Plus Semiring",
+    "description": "Construct a dependent type theory where types are tropical sets and terms are min-plus functions, proving that type checking in tropical type theory is decidable and that the tropical identity type corresponds to min-plus equality. Show that tropical inductive types satisfy tropical initial algebra semantics, and that the tropical universe hierarchy is well-founded by the idempotent ordering.",
+    "domains": [
+      "Logic",
+      "Algebra",
+      "Tropical"
+    ],
+    "priority_score": 0.86,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.888183+00:00"
   },
   {
     "id": "seed_011",
@@ -848,11 +1120,43 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.85,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "7cf55235",
-    "timestamp": "2026-05-13T23:34:44.958721+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.853794+00:00"
+  },
+  {
+    "id": "seed_032",
+    "title": "Adversarial Training as Tropical Regularization: Provable Defense via Min-Plus",
+    "description": "Prove that adversarial training is equivalent to adding a tropical regularization penalty to the empirical risk, where the min-plus distance to the nearest adversarial example replaces the Lp norm. Show that the resulting tropical risk minimizer has certified robustness radius equal to the idempotent closure of the margin, yielding a constructive defense with provable guarantees.",
+    "domains": [
+      "MachineLearning",
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.85,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.863450+00:00"
+  },
+  {
+    "id": "seed_056",
+    "title": "Deep Double Descent as Tropical Phase Diagram",
+    "description": "Prove that the double descent phenomenon in overparameterized models is a tropical phase transition where the min-plus generalization error undergoes a corner crossing in the interpolation threshold. Show that the modern and classical regimes correspond to two tropical facets of the risk surface, and that the transition point is the tropical vertex where both facets are equally dominant.",
+    "domains": [
+      "MachineLearning",
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.85,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.883900+00:00"
   },
   {
     "id": "seed_010",
@@ -868,7 +1172,39 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T23:34:44.958529+00:00"
+    "timestamp": "2026-05-14T02:49:10.853527+00:00"
+  },
+  {
+    "id": "seed_033",
+    "title": "Scaling Laws as Tropical Power-Law Fixed Points",
+    "description": "Prove that neural network scaling laws are tropical fixed points of the form L(N,D) = min-plus(N^a, D^b, C^c) where the idempotent structure forces the loss to follow the dominant power-law regime. Show that phase transitions between data-limited and compute-limited scaling are corner points of the tropical polytope, predicting emergent capabilities from the geometry of the loss surface.",
+    "domains": [
+      "MachineLearning",
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.84,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.864061+00:00"
+  },
+  {
+    "id": "seed_061",
+    "title": "Homotopy Type Theory via Tropical Higher Inductive Types",
+    "description": "Prove that higher inductive types in homotopy type theory have tropical shadows where the path type becomes min-plus equidistance, and that the tropical univalence axiom is a decidable min-plus identity. Show that tropical HoTT captures the combinatorial skeleton of homotopy types while eliminating the topological complexity, yielding a computational interpretation of univalence.",
+    "domains": [
+      "Logic",
+      "Algebra",
+      "Bridges"
+    ],
+    "priority_score": 0.84,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.889149+00:00"
   },
   {
     "id": "seed_005",
@@ -880,11 +1216,59 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.83,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "c0e6134c",
-    "timestamp": "2026-05-13T23:34:44.957006+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.852315+00:00"
+  },
+  {
+    "id": "seed_034",
+    "title": "Tropical Source Coding: Min-Plus Rate-Distortion Theory",
+    "description": "Construct a tropical rate-distortion theory where the rate-distortion function is the min-plus Legendre-Fenchel transform of the distortion measure. Prove that tropical source coding achieves the min-plus rate-distortion bound, and that the idempotent structure eliminates the Shannon gap between achievable and converse rates for min-plus sources.",
+    "domains": [
+      "Computation",
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.83,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.864807+00:00"
+  },
+  {
+    "id": "seed_049",
+    "title": "Tropical Time Travel: Min-Plus Closed Timelike Curves and Consistency",
+    "description": "Formulate time travel paradoxes as tropical fixed-point problems where Novikov consistency corresponds to the existence of a tropical fixed point. Prove that every tropical CTC has a unique consistent solution, and that the grandfather paradox is resolved by the idempotent property min(a,a)=a. Show that tropical chronology protection is equivalent to the tropical spectral radius being less than unity.",
+    "domains": [
+      "Speculative",
+      "Physics",
+      "Logic"
+    ],
+    "priority_score": 0.83,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.876970+00:00"
+  },
+  {
+    "id": "seed_057",
+    "title": "Neural Tangent Kernel in the Tropical Limit",
+    "description": "Prove that the neural tangent kernel of an infinitely wide network converges to a tropical kernel in the min-plus limit, and that training dynamics in the tropical NTK regime are governed by tropical gradient flow on a polyhedral loss surface. Show that the tropical NTK is constant along tropical flat directions, yielding a precise characterization of feature learning vs. lazy training.",
+    "domains": [
+      "MachineLearning",
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.83,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.884926+00:00"
   },
   {
     "id": "seed_012",
@@ -896,11 +1280,27 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "priority_score": 0.82,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "d31aa671",
-    "timestamp": "2026-05-13T23:34:44.958923+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.854092+00:00"
+  },
+  {
+    "id": "seed_035",
+    "title": "Semantic Compression via Tropical Information Geometry",
+    "description": "Prove that semantic compression\u2014preserving meaning rather than bits\u2014has a natural formulation as min-plus projection onto a tropical submanifold of the information geometry. Show that the tropical Fisher information metric bounds semantic distortion, and that the idempotent projection yields optimal semantic codes that compress by extracting the tropical skeleton of the source distribution.",
+    "domains": [
+      "MachineLearning",
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.82,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.865616+00:00"
   },
   {
     "id": "seed_007",
@@ -912,11 +1312,27 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "priority_score": 0.81,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "04b8c0b1",
-    "timestamp": "2026-05-13T23:34:44.957939+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.852828+00:00"
+  },
+  {
+    "id": "seed_046",
+    "title": "Tropical Knot Theory: Min-Plus Invariants for Knot Classification",
+    "description": "Construct tropical knot invariants by evaluating classical knot polynomials (Jones, Alexander) in the min-plus semiring, and prove that tropical Jones polynomials distinguish knots that classical Jones cannot. Show that the tropical skein relation yields a canonical simplification of knot diagrams, and that the tropical crossing number is a sharp lower bound on the classical crossing number.",
+    "domains": [
+      "Algebra",
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.81,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.874525+00:00"
   },
   {
     "id": "seed_014",
@@ -932,7 +1348,39 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T23:34:44.959402+00:00"
+    "timestamp": "2026-05-14T02:49:10.854885+00:00"
+  },
+  {
+    "id": "seed_037",
+    "title": "Amortized Complexity via Tropical Amortization",
+    "description": "Prove that amortized analysis of data structures has a natural formulation as tropical sequence optimization, where the min-plus amortized cost is the tropical convolution of operation costs over the sequence. Show that the potential method corresponds to a tropical potential function, and that the accounting method is tropical bookkeeping in the idempotent semiring.",
+    "domains": [
+      "Computation",
+      "Algebra",
+      "Tropical"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.867344+00:00"
+  },
+  {
+    "id": "seed_041",
+    "title": "Conway's Game of Life on Tropical Semirings: Emergent Complexity from Min-Plus",
+    "description": "Prove that Conway's Game of Life rules reformulated in the min-plus semiring produce emergent complexity with provable lower bounds on pattern diversity. Show that tropical gliders exist, that tropical still lifes correspond to fixed points of the min-plus update rule, and that the tropical Game of Life is Turing complete via a constructive embedding of Boolean circuits into tropical cellular automata.",
+    "domains": [
+      "Computation",
+      "Tropical",
+      "Speculative"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.870358+00:00"
   },
   {
     "id": "seed_019",
@@ -948,23 +1396,39 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T23:34:44.960885+00:00"
+    "timestamp": "2026-05-14T02:49:10.856390+00:00"
   },
   {
-    "id": "seed_003",
-    "title": "Collatz Convergence via Tropical Contracting Dynamics",
-    "description": "Prove that the Collatz iteration corresponds to a contracting tropical dynamical system on a min-plus lattice, and that convergence follows from tropical spectral radius bounds. Show that the 3n+1 map is a piecewise-tropical contraction with unique fixed point at 1, establishing global convergence through idempotent metric arguments.",
+    "id": "seed_045",
+    "title": "Alien Mathematics: What Theorems Would Non-Carbon Life Prove?",
+    "description": "Construct a formal framework for alien mathematics by varying the underlying semiring from classical arithmetic to tropical, idempotent, and p-adic algebras. Prove that each semiring choice yields a distinct provability landscape, and that the theorems of idempotent alien civilizations are precisely the tropical shadow theorems of classical results. Show that the intersection of all semiring-provable statements is exactly the combinatorial core of mathematics.",
     "domains": [
-      "Computation",
-      "Tropical",
-      "Speculative"
+      "Speculative",
+      "Algebra",
+      "Logic"
     ],
-    "priority_score": 0.78,
-    "status": "completed",
+    "priority_score": 0.79,
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "11e89186",
-    "timestamp": "2026-05-13T23:34:44.956651+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.873613+00:00"
+  },
+  {
+    "id": "seed_039",
+    "title": "Tropical Origami: Min-Plus Fold Structures and Rigid Origami Classification",
+    "description": "Prove that the space of valid origami crease patterns forms a tropical hyperplane arrangement, and that rigid foldability corresponds to the existence of a tropical stress equilibrium. Classify all rigid origami bases via tropical linear programming on the crease matrix, and show that the Miura-ori fold is the unique tropical minimum of the fold-energy functional.",
+    "domains": [
+      "Physics",
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.78,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.868644+00:00"
   },
   {
     "id": "seed_020",
@@ -980,7 +1444,23 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-13T23:34:44.961195+00:00"
+    "timestamp": "2026-05-14T02:49:10.856791+00:00"
+  },
+  {
+    "id": "seed_042",
+    "title": "Musical Counterpoint as Tropical Voice-Leading Optimization",
+    "description": "Prove that the rules of species counterpoint in music theory are tropical constraint satisfaction problems, where the min-plus cost function penalizes forbidden intervals and voice-leading distance. Show that Palestrina-style counterpoint is the tropical optimum of the voice-leading semiring, and that Bach chorales occupy tropical saddle points that maximize harmonic variety under contrapuntal constraints.",
+    "domains": [
+      "Bridges",
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.77,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.871194+00:00"
   },
   {
     "id": "seed_021",
@@ -992,10 +1472,122 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.76,
-    "status": "completed",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "3692e74b",
-    "timestamp": "2026-05-13T23:34:44.961540+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.857169+00:00"
+  },
+  {
+    "id": "seed_040",
+    "title": "Dyson Sphere Optimization: Tropical Light-Network Flow",
+    "description": "Formulate Dyson sphere energy collection as a tropical network flow problem on a min-plus graph surrounding a star. Prove that optimal panel placement is a tropical maximum-flow solution, and that the Berggren groupoid provides the optimal tiling for hexagonal panel arrangement. Show that the tropical energy capacity bounds the Kardashev scale classification.",
+    "domains": [
+      "Speculative",
+      "Tropical",
+      "Physics"
+    ],
+    "priority_score": 0.76,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.869530+00:00"
+  },
+  {
+    "id": "seed_043",
+    "title": "Tropical Ecosystem Dynamics: Predator-Prey as Min-Plus Lotka-Volterra",
+    "description": "Reformulate the Lotka-Volterra equations as a tropical dynamical system where species interactions are min-plus operations, and prove that ecological equilibria are tropical fixed points. Show that the tropical predator-prey cycle has a canonical period determined by the tropical eigenvalue, and that ecosystem stability corresponds to the tropical spectral radius being less than 1.",
+    "domains": [
+      "Bridges",
+      "Tropical",
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.871950+00:00"
+  },
+  {
+    "id": "seed_050",
+    "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
+    "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
+    "domains": [
+      "Speculative",
+      "Computation",
+      "Tropical"
+    ],
+    "priority_score": 0.74,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.877875+00:00"
+  },
+  {
+    "id": "seed_054",
+    "title": "Tropical Language Evolution: Min-Plus Phylogenetics and Glottochronology",
+    "description": "Prove that language divergence follows a tropical diffusion process on the min-plus metric space of lexical items, and that the tropical distance between languages is an optimal phylogenetic distance. Show that glottochronological dating is recovered as tropical distance estimation, and that the tropical phylogenetic tree is the unique min-plus Steiner tree of the language family.",
+    "domains": [
+      "Bridges",
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.73,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.881405+00:00"
+  },
+  {
+    "id": "seed_053",
+    "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
+    "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
+    "domains": [
+      "Computation",
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.72,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.880568+00:00"
+  },
+  {
+    "id": "seed_055",
+    "title": "Dragon Curve Fractals as Tropical Curve Generators",
+    "description": "Prove that the Heighway dragon curve and its generalizations are tropical curves generated by iterated min-plus maps on the integer lattice, and that the Hausdorff dimension of tropical dragon curves equals 2 exactly. Show that the dragon curve's self-similarity is a tropical scaling property, and that all space-filling curves are tropical limits of dragon curve iterations.",
+    "domains": [
+      "Algebra",
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.71,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.882672+00:00"
+  },
+  {
+    "id": "seed_044",
+    "title": "Hyperbolic Crafting: Optimal Nether Portals via Tropical Shortest Paths",
+    "description": "Prove that optimal Nether portal placement in Minecraft's hyperbolic geometry reduces to a tropical shortest-path problem on the min-plus distance matrix between Overworld coordinates and their Nether counterparts. Show that the 1:8 ratio is exactly the tropical scaling factor, and that the optimal portal network is a tropical minimum spanning tree of the dual-world graph.",
+    "domains": [
+      "Speculative",
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.872751+00:00"
   }
 ];

@@ -1823,7 +1823,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const domainFilter = directionsDomainFilter.value;
         const searchTerm = directionsSearch.value.toLowerCase();
         return window.FUTURE_DIRECTIONS.filter(d => {
-            if (statusFilter && d.status !== statusFilter) return false;
+            // Hide completed directions unless explicitly showing all or filtering for them
+            if (statusFilter === 'all') {
+                // show everything
+            } else if (statusFilter) {
+                if (d.status !== statusFilter) return false;
+            } else if (d.status === 'completed') {
+                return false;
+            }
             if (domainFilter && !(d.domains || []).includes(domainFilter)) return false;
             if (searchTerm) {
                 const text = (d.title + ' ' + d.description).toLowerCase();
