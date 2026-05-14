@@ -345,7 +345,14 @@ def append_future_directions(script_dir, db_path):
 
     try:
         with open(source, 'r', encoding='utf-8') as f:
-            directions = json.load(f)
+            data = json.load(f)
+        # Handle both old format (flat list) and new format (dict with "directions" key)
+        if isinstance(data, list):
+            directions = data
+        elif isinstance(data, dict):
+            directions = data.get("directions", [])
+        else:
+            directions = []
     except Exception as e:
         print(f"Warning: failed to load future_directions.json: {e}")
         return

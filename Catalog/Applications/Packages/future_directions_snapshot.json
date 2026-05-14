@@ -697,10 +697,10 @@
       "Bridges"
     ],
     "priority_score": 0.81,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bc255d0",
     "timestamp": "2026-05-14T02:49:10.874525+00:00"
   },
   {
