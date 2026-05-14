@@ -2,389 +2,278 @@
 
 ## Abstract
 
-We introduce a rigorous mathematical framework for certifying the novelty of mathematical theorems relative to a finite catalog of known results. The framework embeds theorem descriptors into a pseudo-metric space, defines an equivalence relation capturing "same theorem up to rephrasing," and proves that sufficient metric separation from the catalog certifies non-equivalence to all catalog entries. We formalize and machine-verify 14 theorems constituting a complete certification architecture: a sound novelty certification theorem, a nearest-neighbor novelty score with computable decision procedure, a completeness converse, feature-gap obstruction certificates, a catalog separation theorem, reconstruction-based novelty, and embedding injectivity. We implement the framework as a concrete six-dimensional theorem fingerprinting system and demonstrate it on worked examples. All results are formalized and verified in Lean 4 with Mathlib, providing the first formally verified foundation for certified theorem originality.
-
-**Keywords:** novelty detection, theorem embeddings, metric certification, formal verification, nearest-neighbor classification, feature-gap obstruction, reconstruction uniqueness
-
----
+We introduce a formally verified framework for certifying the novelty of mathematical theorems relative to a finite catalog of known results. The framework embeds theorem descriptors into a pseudo-metric space and proves that distance from the catalog beyond an equivalence radius constitutes a sound novelty certificate. We formalize the core certification theorem, a nearest-neighbor novelty score, finite minimizer existence, multi-feature obstruction principles, and a concrete descriptor structure with coordinate-gap non-equivalence theorems. All results are machine-verified with no unproven assumptions beyond standard foundations. This establishes the first rigorous architecture for automated non-derivativeness certification in formal mathematics.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The accelerating pace of mathematical discovery — driven by automated theorem provers, machine learning-guided conjecture generation, and large-scale formalization projects — creates an urgent need for systematic methods to assess the originality of mathematical results. While correctness verification (proof checking) is well-established, **novelty verification** — determining whether a correct theorem is genuinely new rather than a trivial rephrasing of known work — remains an informal, expert-dependent process.
+As formal mathematics libraries grow to hundreds of thousands of theorems, a fundamental question arises: given a candidate theorem, is it genuinely new, or merely a reformulation of an existing result? This question is currently answered by human judgment—reviewers, editors, and colleagues assess novelty informally. No mathematical criterion exists for certifying that a result is not equivalent to anything in a given corpus.
 
-We address this gap by formalizing a **metric-geometric certification architecture** that transforms the question "Is this theorem new?" into a computationally checkable geometric separation condition.
+We address this gap by constructing a metric-geometric certification architecture. The key insight is that if we embed theorem descriptors into a metric space such that equivalent theorems map to nearby points, then sufficient distance from the catalog provides a provable novelty guarantee.
 
-### 1.2 Contributions
+### 1.2 Related Work
 
-1. **Formal framework.** We define a general architecture parameterized by a type of theorem descriptors σ, a pseudo-metric embedding space α, an equivalence relation on descriptors, and an equivalence radius δ.
+**Formal libraries and deduplication.** Large proof libraries (Mathlib, AFP, Mizar) contain informal deduplication via naming conventions and namespace organization, but no formal novelty criterion.
 
-2. **Sound certification theorem** (`novelty_of_far_from_catalog`). We prove that if every catalog element is at distance > δ from a candidate, and equivalent descriptors are within δ under the embedding, then the candidate is novel.
+**Plagiarism detection.** Text similarity metrics (TF-IDF, BLEU, embedding cosine similarity) detect near-copies in natural language but lack mathematical soundness guarantees.
 
-3. **Nearest-neighbor certification** (`novelty_of_nearestDist_gt`). We define a novelty score as the Finset.inf' of distances and prove it yields a computable certification criterion.
+**Metric semantics for proofs.** Prior work on proof complexity and proof mining extracts quantitative information from proofs but does not address the novelty question.
 
-4. **Completeness converse** (`novelty_converse`). We prove that non-novelty implies existence of a nearby catalog element, establishing partial completeness.
+**Error-correcting codes.** Our framework has a precise analogy to minimum-distance decoding in coding theory, where codewords are catalog theorems and the decoding radius corresponds to the equivalence tolerance.
 
-5. **Feature-gap obstruction** (`not_equivalent_of_coordinate_gap`). We prove that a single coordinate gap exceeding the tolerance certifies non-equivalence.
+### 1.3 Contributions
 
-6. **Catalog separation** (`catalog_separation_disjoint`). We prove that under 2δ-separation of non-equivalent catalog entries, equivalence to two catalog elements implies their mutual equivalence.
-
-7. **Concrete descriptor model.** We define `TheoremDescriptor` with six structural features and prove coordinate-gap theorems for each.
-
-8. **Reconstruction bridge** (`reconstruction_novelty`). We connect to reconstruction uniqueness: if theorem identity is determined by descriptor data, novelty follows from metric separation.
-
-9. **Machine verification.** All 14 theorems are formalized and verified in Lean 4 with Mathlib, with no axioms beyond the standard ones (propext, Classical.choice, Quot.sound).
-
-### 1.3 Related Work
-
-**Metric embeddings for mathematical objects.** Embeddings of mathematical structures into metric spaces have been studied extensively in geometric group theory, metric geometry, and more recently in representation learning for mathematical text. Our work differs in providing formal *certification guarantees* rather than empirical similarity measures.
-
-**Formal verification.** Large-scale formalization projects (Mathlib, the Xena project, the Liquid Tensor Experiment) have demonstrated that substantial mathematics can be machine-verified. We extend this methodology to meta-mathematical questions about theorem originality.
-
-**Novelty detection in machine learning.** Anomaly/novelty detection is a mature field in ML, but existing methods provide probabilistic guarantees. Our framework provides deterministic, mathematically proven certificates.
-
-**Error-correcting codes.** The structural parallel between novelty certification and minimum-distance decoding provides a conceptual bridge to coding theory, though we do not develop this connection quantitatively here.
-
----
+1. **Novelty Certification Theorem** (Theorem 3.1): Sound certification of non-equivalence via metric separation.
+2. **Nearest-Neighbor Score** (Theorem 3.3): A computable novelty score with formal soundness guarantee.
+3. **Multi-Feature Obstruction** (Theorem 3.5): Joint certification via multiple independent features.
+4. **Concrete Descriptor Model** (Section 4): An explicit six-dimensional descriptor with coordinate-gap theorems.
+5. **Monotonicity and Structural Properties** (Section 5): The novelty score decreases under catalog expansion.
+6. **Complete formal verification**: All results machine-checked with only standard axioms (propext, Classical.choice, Quot.sound).
 
 ## 2. Definitions and Notation
 
-### 2.1 Setting
+### 2.1 Setup
 
-Let σ be a type of **theorem descriptors** — abstract representations capturing structural features of mathematical theorems. Let (α, dist) be a **pseudo-metric space**. We work with:
+Let σ be a type of **theorem descriptors**—abstract certificates representing mathematical statements at a chosen granularity. Let (α, d) be a pseudo-metric space and E : σ → α an **embedding** mapping descriptors to metric feature space.
 
-- **Embedding** E : σ → α mapping descriptors to the metric space.
-- **Equivalence** Equivalent : σ → σ → Prop, a binary predicate capturing "same theorem up to rephrasing."
-- **Catalog** K : Finset σ, a finite collection of known theorem descriptors.
-- **Equivalence radius** δ : ℝ, the maximum metric distortion of equivalence under E.
+Let **Equivalent** : σ → σ → Prop be a predicate capturing when two descriptors represent "the same" theorem up to the chosen certification granularity (e.g., modulo variable renaming, definitional unfolding, or logical equivalence).
+
+Let K ⊆ σ be a finite **catalog** of known theorem descriptors, represented as a Finset σ.
 
 ### 2.2 Core Definitions
 
-**Definition 2.1 (Novel).** A descriptor x is *novel* with respect to catalog K if:
+**Definition 2.1 (Novelty).** A descriptor x is *novel* with respect to catalog K and equivalence relation Equivalent if:
 
-```
-Novel(Equivalent, K, x) := ∀ a ∈ K, ¬ Equivalent(x, a)
-```
+$$\text{Novel}(K, x) \iff \forall a \in K,\ \neg\text{Equivalent}(x, a)$$
 
-**Definition 2.2 (Nearest-neighbor distance).** For nonempty K:
+**Definition 2.2 (Nearest Distance).** For nonempty K, the nearest distance is:
 
-```
-nearestDist(E, K, x, hK) := K.inf' hK (fun a ↦ dist(E x, E a))
-```
+$$\text{nearestDist}(x, K) := \inf_{a \in K} d(E(x), E(a))$$
 
-### 2.3 Axioms
+Formally, this is `K.inf' hK (fun a => dist (E x) (E a))` using Finset.inf'.
 
-**Axiom (Embedding soundness).** Equivalent descriptors map close:
+### 2.3 Assumptions
 
-```
-∀ x y, Equivalent(x, y) → dist(E x, E y) ≤ δ
-```
+The framework requires one assumption relating the embedding to the equivalence:
 
-**Axiom (Catalog separation).** Non-equivalent catalog entries are far apart:
+**Embedding Soundness (ES).** ∀ x y, Equivalent(x, y) → d(E(x), E(y)) ≤ δ.
 
-```
-∀ a ∈ K, ∀ b ∈ K, ¬ Equivalent(a, b) → 2δ < dist(E a, E b)
-```
+This states that equivalent descriptors embed within distance δ. The parameter δ > 0 is the **equivalence radius**—it quantifies the maximum metric distortion that equivalence can produce.
 
----
+Note: We do *not* assume the converse (completeness). Close embeddings need not correspond to equivalent theorems. This one-sided assumption yields a sound but possibly incomplete certification system.
 
 ## 3. Main Results
 
 ### 3.1 Sound Novelty Certification
 
-**Theorem 3.1** (`novelty_of_far_from_catalog`). *Under the embedding soundness axiom, if δ < dist(E x, E a) for all a ∈ K, then x is novel.*
+**Theorem 3.1** (novelty_of_far_from_catalog). *Assume (ES). For any candidate x, if*
 
-*Proof.* Fix a ∈ K and suppose for contradiction that Equivalent(x, a). By embedding soundness, dist(E x, E a) ≤ δ. But by hypothesis, δ < dist(E x, E a), yielding δ < dist(E x, E a) ≤ δ, a contradiction. ∎
+$$\forall a \in K,\ \delta < d(E(x), E(a)),$$
 
-This is the foundational result: distance from the catalog beyond the equivalence radius certifies novelty.
+*then Novel(K, x).*
 
-### 3.2 Nearest-Neighbor Certification
+*Proof sketch.* Suppose toward contradiction that Equivalent(x, a) for some a ∈ K. By (ES), d(E(x), E(a)) ≤ δ. But d(E(x), E(a)) > δ by hypothesis. Contradiction. □
 
-**Lemma 3.2** (`nearestDist_le_dist`). *For any a ∈ K, nearestDist(E, K, x, hK) ≤ dist(E x, E a).*
+This is the foundational soundness theorem. Its proof is a single contrapositive step, but its significance lies in establishing the mathematical interface between metric geometry and logical novelty.
 
-*Proof.* Immediate from the definition of Finset.inf' as the minimum over K. ∎
+### 3.2 Existence of Nearest Catalog Element
 
-**Theorem 3.3** (`novelty_of_nearestDist_gt`). *If δ < nearestDist(E, K, x, hK), then x is novel.*
+**Theorem 3.2** (exists_nearest_in_finset). *For nonempty K, there exists a ∈ K achieving the minimum distance:*
 
-*Proof.* For any a ∈ K, by Lemma 3.2, δ < nearestDist ≤ dist(E x, E a). Apply Theorem 3.1. ∎
+$$\exists a \in K,\ \forall b \in K,\ d(E(x), E(a)) \leq d(E(x), E(b)).$$
 
-**Theorem 3.4** (`exists_nearest_in_finset`). *For nonempty K, there exists a ∈ K minimizing dist(E x, E a) over K.*
+*Proof.* Direct application of Finset.exists_min_image, which provides a minimizer for any real-valued function on a nonempty finite set. □
 
-*Proof.* Apply `Finset.exists_min_image` to the nonempty finite set K. ∎
+### 3.3 Nearest-Neighbor Novelty Score
 
-**Theorem 3.5** (`nearestDist_eq_nearest`). *The nearestDist is realized: ∃ a ∈ K, nearestDist = dist(E x, E a).*
+**Theorem 3.3** (novelty_of_nearestDist_gt). *Assume (ES). If K is nonempty and*
 
-*Proof.* Apply `Finset.exists_mem_eq_inf'`. ∎
+$$\delta < \text{nearestDist}(x, K),$$
 
-### 3.3 Completeness Converse
+*then Novel(K, x).*
 
-**Theorem 3.6** (`novelty_converse`). *If x is not novel, then ∃ a ∈ K, dist(E x, E a) ≤ δ.*
+*Proof sketch.* Since nearestDist is K.inf', we have nearestDist(x,K) ≤ d(E(x), E(a)) for all a ∈ K. Combined with δ < nearestDist, this gives δ < d(E(x), E(a)) for all a ∈ K. Apply Theorem 3.1. □
 
-*Proof.* ¬ Novel(x) means ∃ a ∈ K, Equivalent(x, a). By embedding soundness, dist(E x, E a) ≤ δ. ∎
+### 3.4 Coordinate-Gap Obstruction
 
-This establishes that novelty certification is *complete* in the following sense: the certification test (distance > δ) is the exact decision boundary between provably novel and potentially equivalent.
+**Theorem 3.4** (not_equivalent_of_coordinate_gap). *Let f : σ → ℝ be any feature extractor. Suppose Equivalent(x,y) implies |f(x) - f(y)| ≤ δ. Then if |f(x) - f(y)| > δ, we have ¬Equivalent(x, y).*
 
-### 3.4 Catalog Separation
+*Proof.* Direct contrapositive. □
 
-**Theorem 3.7** (`catalog_separation_disjoint`). *Under both axioms, if x is equivalent to both a ∈ K and b ∈ K, then a and b are equivalent.*
+### 3.5 Multi-Feature Obstruction
 
-*Proof.* Suppose ¬ Equivalent(a, b). By catalog separation, 2δ < dist(E a, E b). By embedding soundness with Equivalent(x, a) and Equivalent(x, b), we get dist(E x, E a) ≤ δ and dist(E x, E b) ≤ δ. By the triangle inequality, dist(E a, E b) ≤ dist(E a, E x) + dist(E x, E b) ≤ 2δ. This contradicts 2δ < dist(E a, E b). ∎
+**Theorem 3.5** (not_equivalent_of_any_feature_gap). *Given n feature extractors f_i : σ → ℝ with tolerances δ_i, if Equivalent(x,y) implies |f_i(x) - f_i(y)| ≤ δ_i for all i, then a gap in any single feature suffices:*
 
-### 3.5 Feature-Gap Obstruction
+$$\exists i,\ \delta_i < |f_i(x) - f_i(y)| \implies \neg\text{Equivalent}(x, y).$$
 
-**Theorem 3.8** (`not_equivalent_of_coordinate_gap`). *If |f(x) - f(y)| > δ for some feature f with equivalence tolerance δ, then x and y are not equivalent.*
+*Proof.* Obtain the witnessing index i. The single-feature obstruction (Theorem 3.4) applied to f_i yields the result. □
 
-*Proof.* Assume Equivalent(x, y). Then |f(x) - f(y)| ≤ δ by the coordinate soundness axiom, contradicting |f(x) - f(y)| > δ. ∎
+### 3.6 Partial Completeness
 
-**Corollary 3.9** (`nonequiv_of_symbolCount_gap`, `nonequiv_of_arity_gap`, `nonequiv_of_quantifierDepth_gap`). *Specialized to each coordinate of TheoremDescriptor.*
+**Theorem 3.6** (catalog_separation_implies_novelty_or_unique_match). *If the novelty certification fails (i.e., it is not the case that every catalog element is farther than δ), then there exists a catalog element within distance δ:*
 
-### 3.6 Reconstruction Bridge
+$$\neg(\forall a \in K,\ \delta < d(E(x), E(a))) \implies \exists a \in K,\ d(E(x), E(a)) \leq \delta.$$
 
-**Theorem 3.10** (`reconstruction_novelty`). *If equivalence is defined as reconstruct(x) = reconstruct(y), and metric separation holds, then the candidate's reconstruction differs from all catalog reconstructions.*
+*Proof.* Push the negation through the universal quantifier. □
 
-*Proof.* This is a special case of Theorem 3.1 with Equivalent := ReconstructionEquiv. ∎
-
-### 3.7 Injectivity from Separation
-
-**Theorem 3.11** (`embedding_injective_of_separated`). *If distinct catalog elements have positive embedding distance, then the embedding is injective on K.*
-
-*Proof.* If E(a) = E(b), then dist(E a, E b) = 0, contradicting the positive-distance hypothesis for a ≠ b. ∎
-
----
+This is the "partial completeness" direction: failure to certify novelty implies proximity to the catalog. Combined with Theorem 3.1, this gives a two-sided characterization of the certification boundary.
 
 ## 4. Concrete Descriptor Model
 
-### 4.1 TheoremDescriptor
+### 4.1 The TheoremDescriptor Structure
 
-We define a concrete descriptor type:
-
-```
-structure TheoremDescriptor where
-  arity : ℕ              -- number of free variables/hypotheses
-  symbolCount : ℕ         -- total symbol count
-  quantifierDepth : ℕ     -- maximum quantifier nesting
-  dependencyCount : ℕ     -- number of imported dependencies
-  hasInduction : Bool      -- uses induction
-  hasContradiction : Bool  -- uses contradiction/contraposition
-```
-
-### 4.2 Embedding
-
-The embedding into ℝ⁶ is:
+We define a concrete descriptor type with six features:
 
 ```
-descVec(d) = (d.arity, d.symbolCount, d.quantifierDepth,
-              d.dependencyCount, d.hasInduction, d.hasContradiction)
+TheoremDescriptor :=
+  { arity : ℕ,           -- number of free variables
+    symbolCount : ℕ,      -- total symbol count
+    quantifierDepth : ℕ,  -- max quantifier nesting
+    dependencyCount : ℕ,  -- number of imported lemmas
+    hasInduction : Bool,  -- uses induction?
+    hasContradiction : Bool }  -- uses contradiction?
 ```
 
-where boolean fields are mapped to {0, 1}.
+### 4.2 Coordinate-Gap Theorems
 
-### 4.3 Coordinate-Gap Theorems
+For each numeric coordinate, we prove a specialized gap theorem:
 
-For each coordinate f ∈ {arity, symbolCount, quantifierDepth}, we prove:
+**Theorem 4.1** (nonequiv_of_symbolCount_gap). If Equivalent preserves symbol count within tolerance δs, then |(x.symbolCount : ℝ) - y.symbolCount| > δs implies ¬Equivalent(x, y).
 
-```
-∀ Equivalent δ_f, (∀ x y, Equivalent x y → |f(x) - f(y)| ≤ δ_f)
-  → δ_f < |f(x) - f(y)| → ¬ Equivalent x y
-```
+**Theorem 4.2** (nonequiv_of_arity_gap). Analogous for arity.
 
-These are instances of Theorem 3.8 applied to the concrete descriptor.
+**Theorem 4.3** (nonequiv_of_quantifierDepth_gap). Analogous for quantifier depth.
 
----
+These are instances of the general coordinate-gap obstruction (Theorem 3.4), specialized to the concrete descriptor.
 
-## 5. Algorithms
+## 5. Structural Properties
 
-### 5.1 Novelty Certification Algorithm
+### 5.1 Non-negativity
 
-```
-Algorithm CertifyNovelty(x, K, E, δ):
-  Input: candidate x, catalog K, embedding E, radius δ
-  Output: (is_novel: bool, score: ℝ, certificate: string)
+**Theorem 5.1** (nearestDist_nonneg). *The novelty score is non-negative:*
 
-  1. score ← min_{a ∈ K} dist(E(x), E(a))
-  2. if score > δ:
-       return (True, score, "Certified novel by Theorem 3.3")
-  3. else:
-       return (False, score, "Not certifiably novel")
-```
+$$0 \leq \text{nearestDist}(x, K).$$
 
-**Time complexity:** O(|K| · dim(α))
-**Space complexity:** O(|K| · dim(α))
-**Soundness:** By Theorem 3.3, if output is True, the candidate is provably novel.
+*Proof.* The infimum of non-negative values (distances) is non-negative. □
 
-### 5.2 Feature-Gap Certificate Algorithm
+### 5.2 Monotonicity Under Catalog Expansion
 
-```
-Algorithm FeatureGapCertificate(x, y, features, tolerances):
-  Input: descriptors x, y; feature functions; coordinate tolerances
-  Output: list of obstruction certificates
+**Theorem 5.2** (nearestDist_insert_le). *Adding an element to the catalog can only decrease or maintain the novelty score:*
 
-  1. certificates ← []
-  2. for each (f_i, δ_i) in zip(features, tolerances):
-       gap ← |f_i(x) - f_i(y)|
-       if gap > δ_i:
-         certificates.append((f_i, gap, δ_i))
-  3. return certificates
-```
+$$\text{nearestDist}(x, K \cup \{b\}) \leq \text{nearestDist}(x, K).$$
 
-**Time complexity:** O(number of features)
-**Soundness:** Each certificate is valid by Theorem 3.8.
+*Proof.* The infimum over a larger set is at most the infimum over a subset. □
 
-### 5.3 Catalog Construction with Separation
+This has an important practical consequence: as the catalog grows, novelty certificates become *harder* to obtain. A theorem that is certified novel today remains meaningful even as the catalog expands.
+
+### 5.3 Equal Distances for Joint Minimizers
+
+**Theorem 5.3** (unique_nearest_of_strict_dist). *If both a and b achieve the minimum distance to x among all catalog elements, then d(E(x), E(a)) = d(E(x), E(b)).*
+
+*Proof.* By mutual inequality from the minimality conditions. □
+
+## 6. Algorithms
+
+### 6.1 Novelty Certification Algorithm
 
 ```
-Algorithm BuildSeparatedCatalog(theorems, E, δ):
-  Input: list of theorem descriptors, embedding E, radius δ
-  Output: separated catalog K
+Algorithm: CertifyNovelty(x, K, δ, E)
+Input: candidate descriptor x, catalog K, tolerance δ, embedding E
+Output: NOVEL or UNCERTAIN
 
-  1. K ← ∅
-  2. for each t in theorems:
-       if ∀ a ∈ K: dist(E(t), E(a)) > 2δ:
-         K ← K ∪ {t}
-  3. return K
+1. For each a ∈ K:
+   a. Compute d(E(x), E(a))
+   b. If d(E(x), E(a)) ≤ δ: return UNCERTAIN
+2. Return NOVEL
 ```
 
-**Time complexity:** O(n · |K| · dim(α)) where n = |theorems|
-**Guarantee:** The output catalog satisfies the catalog separation axiom.
+**Complexity:** O(|K| · d) where d is the dimension of the embedding space.
 
----
+**Soundness:** By Theorem 3.1, if the algorithm returns NOVEL, then ¬Equivalent(x, a) for all a ∈ K.
 
-## 6. Computational Experiments
+### 6.2 Nearest-Neighbor Novelty Score
 
-### 6.1 Experiment 1: Novelty Scoring
+```
+Algorithm: NoveltyScore(x, K, E)
+Input: candidate descriptor x, catalog K, embedding E
+Output: nearest distance score
 
-We constructed a catalog of 5 well-known theorems (Pythagorean, FTA, Fermat's Little, Wilson's, Bolzano–Weierstrass) and tested 3 candidates:
+1. min_dist ← ∞
+2. For each a ∈ K:
+   a. d ← dist(E(x), E(a))
+   b. If d < min_dist: min_dist ← d
+3. Return min_dist
+```
 
-| Candidate | Novelty Score | δ = 5.0 | Status |
-|-----------|--------------|---------|--------|
-| Pythagoras variant (arity=3, sym=13) | 1.00 | ≤ δ | Not certifiable |
-| Novel theorem (arity=5, sym=50) | 21.42 | > δ | **Certified novel** |
-| Moderate novelty (arity=2, sym=20) | 5.39 | > δ | **Certified novel** |
+**Complexity:** O(|K| · d).
 
-### 6.2 Experiment 2: Feature-Gap Analysis
+### 6.3 Multi-Feature Certification
 
-For the novel candidate vs. Pythagorean theorem:
+```
+Algorithm: MultiFeatureCertify(x, y, features, tolerances)
+Input: descriptors x, y; feature extractors; tolerances
+Output: NOT_EQUIVALENT or UNCERTAIN
 
-| Feature | Catalog | Candidate | Gap | Tolerance | Obstruction? |
-|---------|---------|-----------|-----|-----------|-------------|
-| arity | 3 | 5 | 2 | 5.0 | No |
-| symbolCount | 12 | 50 | 38 | 5.0 | **Yes** |
-| quantifierDepth | 1 | 4 | 3 | 5.0 | No |
-| dependencyCount | 2 | 12 | 10 | 5.0 | **Yes** |
+1. For each (f_i, δ_i) in zip(features, tolerances):
+   a. If |f_i(x) - f_i(y)| > δ_i: return NOT_EQUIVALENT
+2. Return UNCERTAIN
+```
 
-### 6.3 Experiment 3: Discovery Filtering
+**Soundness:** By Theorem 3.5.
 
-With a corpus of 20 known theorems and 50 auto-generated candidates (δ = 8.0):
-- Certified novel: 25/50 (50%)
-- Mean novelty score: 11.79
-- Maximum novelty score: 28.64
+## 7. Applications
 
-The certification rate is tunable via δ: smaller δ certifies more candidates (at the cost of requiring a tighter embedding soundness axiom), while larger δ is more conservative.
+### 7.1 Library Deduplication
 
-### 6.4 Experiment 4: Catalog Separation Verification
+Given a formal mathematics library with N theorems, compute pairwise novelty scores. Theorems with nearestDist ≤ δ are candidate duplicates. Theorems with nearestDist > δ are certified unique in the catalog.
 
-For a catalog of 5 number-theoretic theorems with δ = 5.0, pairwise distance analysis reveals:
-- 7 out of 10 pairs satisfy the 2δ-separation condition
-- 3 pairs are within 2δ, indicating potential equivalence class overlap
-- The catalog achieves full separation after removing overlapping entries
+### 7.2 Research Novelty Assessment
 
----
+A researcher submitting a new theorem can compute its novelty score against a standard catalog. A high score provides objective evidence of non-derivativeness. A low score flags potential overlap for further investigation.
 
-## 7. Discussion
+### 7.3 AI-Generated Mathematics Audit
 
-### 7.1 Soundness vs. Completeness
+As AI systems produce mathematical conjectures and proofs, novelty certification provides a machine-checkable audit: is this AI-generated result genuinely new, or a reformulation of training data?
 
-Our certification is **sound but not complete** in the standard sense:
-- **Soundness:** If certification succeeds, novelty is guaranteed. (Theorem 3.3)
-- **Incompleteness:** A genuinely novel theorem may fail certification if its descriptor is too close to a catalog entry's descriptor.
+## 8. Computational Experiments
 
-This asymmetry is by design. In safety-critical applications (automated research governance, IP originality), false positives (falsely certifying novelty) are more dangerous than false negatives (failing to recognize novelty). Our framework never produces false positives.
+We implement the framework in Python and demonstrate it on a catalog of elementary theorems. See the accompanying `demo.py` for full details.
 
-### 7.2 Connection to Error-Correcting Codes
+**Experiment 1: Catalog of 5 elementary theorems.** We embed descriptors for the Pythagorean theorem, Euclid's infinitude of primes, the fundamental theorem of calculus, Fermat's little theorem, and the quadratic formula. With δ = 2.0, the system correctly certifies novel candidates (e.g., a complex analysis result) and identifies structurally similar candidates (e.g., a number theory result close to Fermat's little theorem).
 
-The novelty framework is isomorphic to a minimum-distance decoding problem:
+**Experiment 2: Feature-gap analysis.** We demonstrate that even a single coordinate gap (e.g., symbol count difference of 30 vs. tolerance of 5) suffices for certification.
 
-| Coding Theory | Novelty Certification |
-|--------------|----------------------|
-| Codewords | Catalog theorems K |
-| Received message | Candidate theorem x |
-| Channel noise | Equivalence-preserving variation |
-| Minimum distance | Catalog separation 2δ |
-| Decoding radius | Equivalence radius δ |
-| Decoding failure | Novelty certification |
+**Experiment 3: Catalog growth dynamics.** As the catalog grows from 5 to 50 theorems, we track how novelty scores decrease, illustrating Theorem 5.2.
 
-This suggests quantitative bounds from coding theory could apply: sphere-packing bounds limit the number of distinct theorems certifiable in a given feature space.
+## 9. Discussion
 
-### 7.3 Limitations
+### 9.1 Limitations
 
-1. **Descriptor granularity.** The six-dimensional descriptor is coarse. Two semantically identical theorems might have different symbol counts due to notation choices.
+The framework certifies *structural* non-equivalence, not *semantic* novelty. Two semantically identical theorems with different syntactic structure may both receive novelty certificates. This is a fundamental limitation of any feature-based approach and motivates the development of semantic embeddings.
 
-2. **Equivalence radius calibration.** The choice of δ requires empirical calibration. Too small: false negatives (genuinely equivalent theorems not recognized). Too large: certification becomes uninformatively conservative.
+The choice of δ is critical: too small and the system issues false novelty certificates (unsound); too large and it never certifies anything (useless). In practice, δ must be calibrated by testing on known equivalences.
 
-3. **Semantic gap.** Syntactic features do not capture mathematical meaning. A deep generalization and a superficial extension might have similar descriptors.
+### 9.2 Coding-Theoretic Interpretation
 
-4. **Catalog completeness.** Certification is only relative to the catalog K. A result not in K is treated as unknown, even if it's well-known in the broader literature.
+The catalog K is formally a codebook in the sense of information theory. Each codeword (known theorem) occupies a ball of radius δ in feature space. The novelty score is the minimum distance from a candidate to any codeword. Novelty certification is equivalent to determining that a received signal does not match any codeword—it lies outside the decoding region.
 
----
+This analogy suggests that results from coding theory (sphere-packing bounds, Gilbert-Varshamov bounds, Shannon capacity) may have direct implications for the capacity of theorem catalogs.
 
-## 8. Future Work
+### 9.3 Connections to Reconstruction Uniqueness
 
-1. **Semantic embeddings.** Replace syntactic descriptors with embeddings derived from dependency graphs, proof terms, or type-theoretic structure. This would close the semantic gap while preserving the certification architecture.
+The framework connects to reconstruction principles: if theorem features uniquely determine theorem identity (up to equivalence), then distinct identities must map to separated feature regions. This is the formal backbone that makes embedding-based certification meaningful.
 
-2. **Learned embeddings with certified bounds.** Train neural networks to embed theorems such that the embedding soundness axiom holds with provable δ. Techniques from Lipschitz-bounded networks and certified robustness could apply.
+## 10. Future Work
 
-3. **Coding-theoretic capacity bounds.** Derive sphere-packing and sphere-covering bounds for theorem catalogs, establishing fundamental limits on the resolution of novelty certification.
-
-4. **Cryptographic novelty commitments.** Use hash-based commitments to establish priority of novel results without revealing their content, combining novelty certificates with cryptographic timestamps.
-
-5. **Self-improving theorem provers.** Integrate novelty certification into automated theorem provers, enabling systems that preferentially explore certifiably novel directions.
-
----
-
-## 9. Conclusion
-
-We have established the first formally verified mathematical framework for certified theorem novelty detection. The framework reduces novelty certification to a single geometric computation — nearest-neighbor distance in a feature embedding space — and provides an absolute mathematical guarantee: if the distance exceeds the equivalence radius, the candidate theorem is provably not equivalent to any known result.
-
-The 14 formally verified theorems constitute a complete certification architecture, from abstract metric certification through concrete feature-gap obstructions to reconstruction-based novelty. The framework is extensible by design: richer descriptors, tighter embeddings, and larger catalogs all slot into the same architecture without modifying the core theorems.
-
-By bridging formal proof theory, metric geometry, and information theory, this work opens a new research direction: the formal epistemology of mathematical discovery.
-
----
+1. **Semantic embeddings** via dependency graphs and logical structure.
+2. **Learned embeddings** from neural networks with formal soundness wrappers.
+3. **Dynamic catalog certification** with amortized novelty score updates.
+4. **Packing bounds** on the number of certifiable novelty regions under complexity budgets.
+5. **Cryptographic commitments** to theorem identity for priority claims.
 
 ## References
 
-1. Avigad, J. (2018). The mechanization of mathematics. *Notices of the AMS*, 65(6), 681-690.
-
-2. de Moura, L., & Ullrich, S. (2021). The Lean 4 theorem prover and programming language. *CADE-28*.
-
-3. Mathlib Community. (2020). The Lean mathematical library. *CPP 2020*.
-
-4. Chandola, V., Banerjee, A., & Kumar, V. (2009). Anomaly detection: A survey. *ACM Computing Surveys*, 41(3), 1-58.
-
-5. MacWilliams, F.J., & Sloane, N.J.A. (1977). *The Theory of Error-Correcting Codes*. North-Holland.
-
-6. Blumer, A., Ehrenfeucht, A., Haussler, D., & Warmuth, M.K. (1989). Learnability and the Vapnik-Chervonenkis dimension. *JACM*, 36(4), 929-965.
-
----
-
-## Appendix A: Complete Formal Verification Summary
-
-| # | Theorem | Lines | Axioms |
-|---|---------|-------|--------|
-| 1 | `novelty_of_far_from_catalog` | 1 | propext, Classical.choice, Quot.sound |
-| 2 | `exists_nearest_in_finset` | 1 | propext, Classical.choice, Quot.sound |
-| 3 | `nearestDist_eq_nearest` | 1 | propext, Classical.choice, Quot.sound |
-| 4 | `nearestDist_le_dist` | 1 | propext, Classical.choice, Quot.sound |
-| 5 | `novelty_of_nearestDist_gt` | 4 | propext, Classical.choice, Quot.sound |
-| 6 | `novelty_converse` | 1 | propext, Classical.choice, Quot.sound |
-| 7 | `catalog_separation_disjoint` | 1 | propext, Classical.choice, Quot.sound |
-| 8 | `not_equivalent_of_coordinate_gap` | 1 | propext, Classical.choice, Quot.sound |
-| 9 | `not_equivalent_of_nat_gap` | 1 | propext, Classical.choice, Quot.sound |
-| 10 | `nonequiv_of_symbolCount_gap` | 1 | propext, Classical.choice, Quot.sound |
-| 11 | `nonequiv_of_arity_gap` | 1 | propext, Classical.choice, Quot.sound |
-| 12 | `nonequiv_of_quantifierDepth_gap` | 1 | propext, Classical.choice, Quot.sound |
-| 13 | `reconstruction_novelty` | 1 | propext, Classical.choice, Quot.sound |
-| 14 | `embedding_injective_of_separated` | 1 | propext, Classical.choice, Quot.sound |
-
-All proofs verified with Lean 4 v4.28.0 and Mathlib v4.28.0. Zero sorries remain.
+1. Shannon, C.E. "A Mathematical Theory of Communication." Bell System Technical Journal, 1948.
+2. Hamming, R.W. "Error Detecting and Error Correcting Codes." Bell System Technical Journal, 1950.
+3. The Mathlib Community. "The Lean Mathematical Library." CPP 2020.

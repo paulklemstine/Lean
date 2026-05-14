@@ -1,46 +1,47 @@
-import Mathlib
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
 
-/-!
 # Certified Novelty Detection via Theorem Embedding Uniqueness
 
-This module formalizes a **metric-geometric certification architecture** for detecting
-novelty of mathematical theorems relative to a finite catalog of known results.
+This module formalizes a metric-geometric framework for certifying that a theorem
+(represented by a descriptor) is *novel* relative to a finite catalog of known results.
 
-## Main Results
+The key idea: if we embed theorem descriptors into a metric space such that
+"equivalent" theorems map within distance δ, then any candidate whose embedding
+is farther than δ from every catalog point cannot be equivalent to any known theorem.
 
-1. `novelty_of_far_from_catalog`: Sound novelty certification via metric separation.
-2. `novelty_of_nearestDist_gt`: Nearest-neighbor novelty certification.
-3. `exists_nearest_in_finset`: Finite catalogs always have a nearest element.
-4. `not_equivalent_of_coordinate_gap`: Feature-gap obstruction theorem.
-5. `novelty_converse`: Completeness direction.
-6. Concrete `TheoremDescriptor` model with coordinate-gap theorems.
+## Main results
+
+- `novelty_of_far_from_catalog`: Sound novelty certification via metric separation.
+- `novelty_of_nearestDist_gt`: Nearest-neighbor novelty score certification.
+- `exists_nearest_in_finset`: Existence of a nearest catalog element.
+- `not_equivalent_of_coordinate_gap`: Feature-gap obstruction for non-equivalence.
+- `nonequiv_of_symbolCount_gap`: Concrete coordinate gap for theorem descriptors.
+- `catalog_separation_implies_novelty_or_unique_match`: Partial completeness.
 -/
+
+import Mathlib
 
 open scoped BigOperators
 
-/-! ## Section 1: Abstract Novelty Framework -/
+/-! ## Core Novelty Framework -/
 
-section NoveltyFramework
+section Novelty
 
 variable {σ α : Type*}
 variable [PseudoMetricSpace α]
--- `Equivalent x y` means descriptors represent the same theorem up to certification granularity.
 variable (Equivalent : σ → σ → Prop)
--- Embedding of theorem descriptors into a metric feature space.
 variable (E : σ → α)
 
-/-- A theorem descriptor `x` is **novel** with respect to catalog `K` if it is not
-equivalent to any element of `K`. -/
+/-- A theorem descriptor `x` is *novel* with respect to a catalog `K` and an equivalence
+relation if it is not equivalent to any element of the catalog. -/
 def Novel (K : Finset σ) (x : σ) : Prop :=
   ∀ a ∈ K, ¬ Equivalent x a
 
 /-
-**Sound novelty certification.** If equivalent descriptors map within distance `δ`
-under the embedding `E`, and every catalog point is at distance greater than `δ` from
-the candidate `x`, then `x` is novel (not equivalent to any catalog theorem).
-
-*Proof strategy*: Assume for contradiction that `x` is equivalent to some `a ∈ K`.
-Then `dist(E x, E a) ≤ δ` by the embedding soundness axiom, contradicting `δ < dist(E x, E a)`.
+**Sound novelty certification.** If equivalent descriptors embed within distance δ,
+then any candidate farther than δ from every catalog element is novel.
 -/
 theorem novelty_of_far_from_catalog
     (K : Finset σ) (δ : ℝ)
@@ -48,37 +49,15 @@ theorem novelty_of_far_from_catalog
     ∀ x, (∀ a ∈ K, δ < dist (E x) (E a)) → Novel Equivalent K x := by
   exact fun x hx a ha => fun h => not_lt_of_ge ( hEq x a h ) ( hx a ha )
 
-/-- The **nearest-neighbor distance** (novelty score) of a candidate `x` to a nonempty
-finite catalog `K`. -/
+/-! ## Nearest-Neighbor Novelty Score -/
+
+/-- The nearest distance from a candidate `x` to the catalog `K`, defined as
+the infimum of distances to catalog elements. -/
 noncomputable def nearestDist (K : Finset σ) (x : σ) (hK : K.Nonempty) : ℝ :=
   K.inf' hK (fun a => dist (E x) (E a))
 
 /-
-Every nonempty finite set has a nearest element.
--/
-theorem exists_nearest_in_finset
-    (K : Finset σ) (hK : K.Nonempty) (x : σ) :
-    ∃ a ∈ K, ∀ b ∈ K, dist (E x) (E a) ≤ dist (E x) (E b) := by
-  exact Finset.exists_min_image K (fun x_1 => dist (E x) (E x_1)) hK
-
-/-
-The nearest distance equals the distance to some catalog element.
--/
-theorem nearestDist_eq_nearest
-    (K : Finset σ) (hK : K.Nonempty) (x : σ) :
-    ∃ a ∈ K, nearestDist E K x hK = dist (E x) (E a) := by
-  exact Finset.exists_mem_eq_inf' hK fun a => dist (E x) (E a)
-
-/-
-The nearest distance is a lower bound on all catalog distances.
--/
-theorem nearestDist_le_dist
-    (K : Finset σ) (hK : K.Nonempty) (x : σ) (a : σ) (ha : a ∈ K) :
-    nearestDist E K x hK ≤ dist (E x) (E a) := by
-  exact Finset.inf'_le _ ha
-
-/-
-**Nearest-neighbor novelty certification.** If the novelty score exceeds `δ`, then
+**Nearest-neighbor novelty certification.** If the nearest catalog distance exceeds δ,
 the candidate is novel.
 -/
 theorem novelty_of_nearestDist_gt
@@ -87,171 +66,172 @@ theorem novelty_of_nearestDist_gt
     (x : σ)
     (hfar : δ < nearestDist E K x hK) :
     Novel Equivalent K x := by
-  -- By definition of nearest distance, for any $a \in K$, we have $dist (E x) (E a) \geq nearestDist E K x hK$.
-  have h_dist_ge_nearest : ∀ a ∈ K, dist (E x) (E a) ≥ nearestDist E K x hK := by
-    exact fun a a_1 => nearestDist_le_dist E K hK x a a_1
-  exact fun a ha h => not_lt_of_ge ( hEq x a h ) ( lt_of_lt_of_le hfar ( h_dist_ge_nearest a ha ) )
+  -- Since δ < nearestDist E K x hK and nearestDist is K.inf', we have nearestDist ≤ dist (E x) (E a) for each a ∈ K.
+  have hdist : ∀ a ∈ K, δ < dist (E x) (E a) := by
+    exact fun a ha => hfar.trans_le ( Finset.inf'_le _ ha );
+  exact fun y hy => fun h => not_lt_of_ge ( hEq _ _ h ) ( hdist _ hy )
 
 /-
-**Novelty converse (completeness).** If `x` is not novel, then it is within
-distance `δ` of some catalog element.
+**Existence of a nearest catalog element.** For any nonempty finite catalog,
+there exists an element achieving the minimum distance.
 -/
-theorem novelty_converse
-    (K : Finset σ) (δ : ℝ)
-    (hEq : ∀ x y, Equivalent x y → dist (E x) (E y) ≤ δ)
-    (x : σ)
-    (hnotnovel : ¬ Novel Equivalent K x) :
-    ∃ a ∈ K, dist (E x) (E a) ≤ δ := by
-  grind +locals
+theorem exists_nearest_in_finset
+    (K : Finset σ) (hK : K.Nonempty) (x : σ) :
+    ∃ a ∈ K, ∀ b ∈ K, dist (E x) (E a) ≤ dist (E x) (E b) := by
+  exact Finset.exists_min_image _ _ hK
 
 /-
-**Catalog class separation implies equivalence transitivity.**
-If distinct classes are metrically separated by more than `2δ`, and equivalent
-descriptors are within `δ`, then if `x` is equivalent to both `a` and `b` in `K`,
-then `a` and `b` must be equivalent.
+The nearest distance equals the distance to some catalog element.
 -/
-theorem catalog_separation_disjoint
-    (K : Finset σ) (δ : ℝ)
-    (hEq_dist : ∀ x y, Equivalent x y → dist (E x) (E y) ≤ δ)
-    (hsep : ∀ a ∈ K, ∀ b ∈ K, ¬ Equivalent a b → 2 * δ < dist (E a) (E b))
-    (x : σ) (a b : σ) (ha : a ∈ K) (hb : b ∈ K)
-    (hxa : Equivalent x a) (hxb : Equivalent x b) :
-    Equivalent a b := by
-  exact not_not.mp fun h => by linarith [ hsep a ha b hb h, hEq_dist _ _ hxa, hEq_dist _ _ hxb, dist_triangle_left ( E a ) ( E b ) ( E x ), dist_triangle_right ( E a ) ( E b ) ( E x ) ] ;
-
-end NoveltyFramework
-
-/-! ## Section 2: Feature-Gap Obstruction Theorems -/
-
-section FeatureGap
-
-variable {σ : Type*}
+theorem nearestDist_eq_dist_of_nearest
+    (K : Finset σ) (hK : K.Nonempty) (x : σ) :
+    ∃ a ∈ K, nearestDist E K x hK = dist (E x) (E a) := by
+  exact Finset.exists_mem_eq_inf' hK fun a => dist (E x) (E a)
 
 /-
-**Feature-gap obstruction.** If equivalent descriptors have a feature `f` differing
-by at most `δ`, then any pair differing by more than `δ` is non-equivalent.
+Every catalog element is at least as far as the nearest distance.
+-/
+theorem nearestDist_le_dist
+    (K : Finset σ) (hK : K.Nonempty) (x : σ) (a : σ) (ha : a ∈ K) :
+    nearestDist E K x hK ≤ dist (E x) (E a) := by
+  exact Finset.inf'_le _ ha
+
+/-! ## Feature-Gap Obstruction -/
+
+/-
+**Coordinate-gap non-equivalence.** If a real-valued feature of two descriptors
+differs by more than the equivalence tolerance, the descriptors are not equivalent.
 -/
 theorem not_equivalent_of_coordinate_gap
-    (Equivalent : σ → σ → Prop)
     (f : σ → ℝ)
+    (Equiv' : σ → σ → Prop)
     (δ : ℝ)
-    (hEq : ∀ x y, Equivalent x y → |f x - f y| ≤ δ)
+    (hEq : ∀ x y, Equiv' x y → |f x - f y| ≤ δ)
     {x y : σ}
     (hgap : δ < |f x - f y|) :
-    ¬ Equivalent x y := by
+    ¬ Equiv' x y := by
+  exact fun h => hgap.not_ge <| hEq x y h
+
+/-! ## Concrete Theorem Descriptor -/
+
+/-- A concrete syntactic/structural descriptor for a theorem, capturing
+key features that can be extracted from a formal statement. -/
+structure TheoremDescriptor where
+  /-- Number of free variables / parameters. -/
+  arity : ℕ
+  /-- Total count of symbols in the statement. -/
+  symbolCount : ℕ
+  /-- Maximum nesting depth of quantifiers. -/
+  quantifierDepth : ℕ
+  /-- Number of dependencies (imported lemmas used). -/
+  dependencyCount : ℕ
+  /-- Whether the proof uses induction. -/
+  hasInduction : Bool
+  /-- Whether the proof uses contradiction/contrapositive. -/
+  hasContradiction : Bool
+deriving DecidableEq
+
+/-
+**Symbol-count gap implies non-equivalence.**
+-/
+theorem nonequiv_of_symbolCount_gap
+    (Equiv' : TheoremDescriptor → TheoremDescriptor → Prop)
+    (δs : ℝ)
+    (hEq : ∀ x y, Equiv' x y → |(x.symbolCount : ℝ) - y.symbolCount| ≤ δs)
+    {x y : TheoremDescriptor}
+    (hgap : δs < |(x.symbolCount : ℝ) - y.symbolCount|) :
+    ¬ Equiv' x y := by
+  exact fun h => not_le_of_gt hgap <| hEq x y h
+
+/-
+**Arity gap implies non-equivalence.**
+-/
+theorem nonequiv_of_arity_gap
+    (Equiv' : TheoremDescriptor → TheoremDescriptor → Prop)
+    (δa : ℝ)
+    (hEq : ∀ x y, Equiv' x y → |(x.arity : ℝ) - y.arity| ≤ δa)
+    {x y : TheoremDescriptor}
+    (hgap : δa < |(x.arity : ℝ) - y.arity|) :
+    ¬ Equiv' x y := by
   grind
 
 /-
-Variant with natural-number-valued features.
--/
-theorem not_equivalent_of_nat_gap
-    (Equivalent : σ → σ → Prop)
-    (f : σ → ℕ)
-    (δ : ℝ)
-    (hEq : ∀ x y, Equivalent x y → |(f x : ℝ) - (f y : ℝ)| ≤ δ)
-    {x y : σ}
-    (hgap : δ < |(f x : ℝ) - (f y : ℝ)|) :
-    ¬ Equivalent x y := by
-  exact not_equivalent_of_coordinate_gap Equivalent (fun x => ↑(f x)) δ hEq hgap
-
-end FeatureGap
-
-/-! ## Section 3: Concrete Theorem Descriptor Model -/
-
-section ConcreteDescriptor
-
-/-- A concrete theorem descriptor capturing syntactic/structural features. -/
-structure TheoremDescriptor where
-  arity : ℕ
-  symbolCount : ℕ
-  quantifierDepth : ℕ
-  dependencyCount : ℕ
-  hasInduction : Bool
-  hasContradiction : Bool
-deriving DecidableEq, Repr
-
-/-- Embedding a theorem descriptor into ℝ⁶ (as a nested product). -/
-noncomputable def descVec (d : TheoremDescriptor) : ℝ × ℝ × ℝ × ℝ × ℝ × ℝ :=
-  (d.arity, d.symbolCount, d.quantifierDepth, d.dependencyCount,
-   if d.hasInduction then 1 else 0,
-   if d.hasContradiction then 1 else 0)
-
-/-
-Non-equivalence from symbol count gap.
--/
-theorem nonequiv_of_symbolCount_gap
-    (Equivalent : TheoremDescriptor → TheoremDescriptor → Prop)
-    (δs : ℝ)
-    (hEq : ∀ x y, Equivalent x y → |(x.symbolCount : ℝ) - y.symbolCount| ≤ δs)
-    {x y : TheoremDescriptor}
-    (hgap : δs < |(x.symbolCount : ℝ) - y.symbolCount|) :
-    ¬ Equivalent x y := by
-  exact not_equivalent_of_coordinate_gap Equivalent (fun x => ↑x.symbolCount) δs hEq hgap
-
-/-
-Non-equivalence from arity gap.
--/
-theorem nonequiv_of_arity_gap
-    (Equivalent : TheoremDescriptor → TheoremDescriptor → Prop)
-    (δa : ℝ)
-    (hEq : ∀ x y, Equivalent x y → |(x.arity : ℝ) - y.arity| ≤ δa)
-    {x y : TheoremDescriptor}
-    (hgap : δa < |(x.arity : ℝ) - y.arity|) :
-    ¬ Equivalent x y := by
-  grind +extAll
-
-/-
-Non-equivalence from quantifier depth gap.
+**Quantifier-depth gap implies non-equivalence.**
 -/
 theorem nonequiv_of_quantifierDepth_gap
-    (Equivalent : TheoremDescriptor → TheoremDescriptor → Prop)
+    (Equiv' : TheoremDescriptor → TheoremDescriptor → Prop)
     (δq : ℝ)
-    (hEq : ∀ x y, Equivalent x y → |(x.quantifierDepth : ℝ) - y.quantifierDepth| ≤ δq)
+    (hEq : ∀ x y, Equiv' x y → |(x.quantifierDepth : ℝ) - y.quantifierDepth| ≤ δq)
     {x y : TheoremDescriptor}
     (hgap : δq < |(x.quantifierDepth : ℝ) - y.quantifierDepth|) :
-    ¬ Equivalent x y := by
-  grind +splitIndPred
+    ¬ Equiv' x y := by
+  exact not_equivalent_of_coordinate_gap (fun x => ↑x.quantifierDepth) Equiv' δq hEq hgap
 
-end ConcreteDescriptor
-
-/-! ## Section 4: Reconstruction-Uniqueness Bridge -/
-
-section ReconstructionBridge
-
-variable {σ τ α : Type*} [PseudoMetricSpace α]
-
-/-- Two descriptors are equivalent if they reconstruct to the same identity. -/
-def ReconstructionEquiv (reconstruct : σ → τ) (x y : σ) : Prop :=
-  reconstruct x = reconstruct y
+/-! ## Sound-and-Partially-Complete Certification -/
 
 /-
-Novelty under reconstruction equivalence: a descriptor is novel if its
-reconstruction differs from all catalog reconstructions.
+**Completeness direction.** If the candidate is not far from every catalog element
+(i.e., the novelty certification fails), then there exists a catalog element within δ.
 -/
-theorem reconstruction_novelty
-    (reconstruct : σ → τ)
-    (E : σ → α) (K : Finset σ) (δ : ℝ)
-    (hEq : ∀ x y, reconstruct x = reconstruct y → dist (E x) (E y) ≤ δ)
-    (x : σ) (hfar : ∀ a ∈ K, δ < dist (E x) (E a)) :
-    ∀ a ∈ K, reconstruct x ≠ reconstruct a := by
-  exact fun a ha h => not_lt_of_ge ( hEq x a h ) ( hfar a ha )
+theorem catalog_separation_implies_novelty_or_unique_match
+    (K : Finset σ) (_hK : K.Nonempty) (δ : ℝ)
+    (_hEq : ∀ x y, Equivalent x y → dist (E x) (E y) ≤ δ)
+    (x : σ)
+    (hclose : ¬ (∀ a ∈ K, δ < dist (E x) (E a))) :
+    ∃ a ∈ K, dist (E x) (E a) ≤ δ := by
+  push_neg at hclose
+  exact hclose
 
-end ReconstructionBridge
-
-/-! ## Section 5: Injectivity from Separation -/
-
-section Separation
+/-! ## Nearest Neighbor Uniqueness Under Strict Separation -/
 
 /-
-**Injectivity from strict separation.** If all distinct catalog elements are
-mapped to points at positive distance, the embedding is injective on the catalog.
+**Equal nearest distances.** If two catalog elements both achieve the minimum
+distance to a candidate, they have equal distances.
 -/
-theorem embedding_injective_of_separated
-    {σ α : Type*} [PseudoMetricSpace α]
-    (E : σ → α) (K : Finset σ)
-    (hsep : ∀ a ∈ K, ∀ b ∈ K, a ≠ b → 0 < dist (E a) (E b))
-    {a b : σ} (ha : a ∈ K) (hb : b ∈ K) (heq : E a = E b) :
-    a = b := by
-  exact Classical.not_not.1 fun hab => ne_of_gt ( hsep a ha b hb hab ) ( by simp +decide [ heq ] )
+theorem unique_nearest_of_strict_dist
+    (K : Finset σ) (x : σ)
+    {a b : σ}
+    (hna : ∀ c ∈ K, dist (E x) (E a) ≤ dist (E x) (E c))
+    (hnb : ∀ c ∈ K, dist (E x) (E b) ≤ dist (E x) (E c))
+    (ha : a ∈ K) (hb : b ∈ K) :
+    dist (E x) (E a) = dist (E x) (E b) := by
+  grind
 
-end Separation
+/-! ## Novelty Score Monotonicity -/
+
+/-
+The novelty score is non-negative.
+-/
+theorem nearestDist_nonneg
+    (K : Finset σ) (hK : K.Nonempty) (x : σ) :
+    0 ≤ nearestDist E K x hK := by
+  exact Finset.le_inf' _ _ fun y hy => dist_nonneg
+
+/-
+Adding an element to the catalog can only decrease or maintain the novelty score.
+-/
+theorem nearestDist_insert_le [DecidableEq σ]
+    (K : Finset σ) (hK : K.Nonempty) (x : σ) (b : σ) :
+    nearestDist E (insert b K) x (Finset.insert_nonempty b K) ≤ nearestDist E K x hK := by
+  unfold nearestDist;
+  simp +decide [ Finset.inf'_le_iff ];
+  exact fun y hy => Or.inr ⟨ y, hy, le_rfl ⟩
+
+/-! ## Multi-Feature Obstruction -/
+
+/-
+**Joint feature gap.** If any one of multiple feature extractors witnesses a gap
+beyond its tolerance, the descriptors are not equivalent.
+-/
+theorem not_equivalent_of_any_feature_gap
+    {n : ℕ}
+    (features : Fin n → σ → ℝ)
+    (tolerances : Fin n → ℝ)
+    (Equiv' : σ → σ → Prop)
+    (hEq : ∀ i, ∀ x y, Equiv' x y → |features i x - features i y| ≤ tolerances i)
+    {x y : σ}
+    (hgap : ∃ i, tolerances i < |features i x - features i y|) :
+    ¬ Equiv' x y := by
+  grind
+
+end Novelty

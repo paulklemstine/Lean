@@ -717,22 +717,6 @@
     "timestamp": "2026-05-14T16:03:53.827592+00:00"
   },
   {
-    "id": "seed_029",
-    "title": "Tropical Myhill-Nerode Theorem for Min-Plus Automata",
-    "description": "Prove a tropical analogue of the Myhill-Nerode theorem: a min-plus weighted language is recognizable by a tropical finite automaton if and only if its Nerode congruence has finite index in the tropical semiring. Establish minimality of the tropical Nerode automaton and prove that tropical regular languages are exactly those with finite idempotent syntactic monoids.",
-    "domains": [
-      "Computation",
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.85,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "28ca9606",
-    "timestamp": "2026-05-14T16:03:53.828130+00:00"
-  },
-  {
     "id": "seed_040",
     "title": "Dark Energy as Tropical Vacuum Pressure: Min-Plus Cosmological Constant",
     "description": "Prove that the observed dark energy density corresponds to the tropical vacuum expectation value of the cosmological constant in min-plus quantum field theory. Show that the 120-order-of-magnitude discrepancy between the predicted and observed values is resolved by the idempotent property: in tropical QFT, vacuum energy is min-dominated by the shortest Feynman diagram, yielding the correct order of magnitude.",
@@ -2344,20 +2328,6 @@
     "timestamp": "2026-05-14T17:33:00.515491+00:00"
   },
   {
-    "id": "fd_0172",
-    "title": "Prove the entropic bound",
-    "description": ": $g(W) \\geq \\gamma(P) \\cdot \\min_{ij} W_{ij}$ under appropriate conditions.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.518300+00:00"
-  },
-  {
     "id": "fd_0173",
     "title": "Prove the converse",
     "description": ": Under reversibility conditions, $\\gamma(P) \\geq g(W) / (n \\cdot \\max_{ij} W_{ij})$.",
@@ -2416,20 +2386,6 @@
     "source_exp_id": "e06c3817",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:00.530641+00:00"
-  },
-  {
-    "id": "fd_0177",
-    "title": "Build a verified checker",
-    "description": ": A Lean program that reads a weight matrix and outputs a verified lower bound.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.533657+00:00"
   },
   {
     "id": "fd_0178",
@@ -2725,5 +2681,112 @@
     "source_exp_id": "f37e592e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:05.755955+00:00"
+  },
+  {
+    "id": "fd_0179",
+    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
+    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:19.336802+00:00"
+  },
+  {
+    "id": "fd_0180",
+    "title": "Direction 2: Tropical Schützenberger Theory — Star-Free and Aperiodic Characteri",
+    "description": "**Hypothesis.** A tropically recognizable language has an aperiodic syntactic monoid (all elements satisfy `xⁿ = xⁿ⁺¹` for some n) if and only if it can be defined by a \"tropical star-free\" expression (using min, +, concatenation, and complement, but no Kleene star).\n\n**Why it matters.** Schützenberger's classical theorem characterizes star-free = aperiodic = first-order definable. A tropical analogue would:\n- Create a logical characterization of weighted language classes\n- Enable decidability results for fragments of weighted temporal logic\n- Connect to circuit complexity via tropical depth lower bounds\n\n**Proof Strategy.**\n1. Define aperiodicity for the syntactic monoid of endomorphisms on residual classes.\n2. Define tropical star-free expressions (min-plus algebra without iteration).\n3.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:19.342593+00:00"
+  },
+  {
+    "id": "fd_0181",
+    "title": "Direction 3: Decidability and Complexity of Tropical Nerode Index",
+    "description": "**Hypothesis.** Given a tropical automaton with n states, the problem of computing the Nerode index (size of the minimal equivalent automaton) is decidable in polynomial time.\n\n**Why it matters.** Minimization algorithms for weighted automata are significantly more complex than for classical DFA. A polynomial-time algorithm would:\n- Enable practical state-space reduction for large-scale optimization\n- Provide canonical forms for equivalence testing of weighted languages\n- Connect to the complexity of min-plus matrix operations\n\n**Proof Strategy.**\n1. Formalize reachability analysis: compute the set of reachable residuals by BFS.\n2. Show that two states are Nerode-equivalent iff they have identical residualOfState functions.\n3. For deterministic min-plus automata, show this can be tested in",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:19.347274+00:00"
+  },
+  {
+    "id": "fd_0182",
+    "title": "Direction 4: Weighted MSO Logic and Cost Logic Characterization",
+    "description": "**Hypothesis.** Tropically recognizable languages correspond exactly to languages definable in a weighted MSO logic over the min-plus semiring.\n\n**Why it matters.** Büchi's theorem (regular = MSO-definable) is one of the deepest results in automata theory. A tropical analogue would:\n- Provide a logical specification language for optimization problems\n- Enable model-checking algorithms for quantitative properties\n- Bridge automata theory with verification and formal methods\n\n**Proof Strategy.**\n1. Define a weighted MSO logic where quantifiers are interpreted as min (∀) and sup (∃) over the tropical semiring.\n2. Prove that every weighted MSO formula defines a tropically recognizable language (by induction on formula structure, constructing automata).\n3. Prove the converse by expressing autom",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:19.352870+00:00"
+  },
+  {
+    "id": "fd_0183",
+    "title": "Direction 5: Reversible Tropical Automata and Thermodynamic Bounds",
+    "description": "**Hypothesis.** Every minimal tropical automaton admits a reversible simulation with at most polynomial blowup, and the minimal entropy cost of irreversibility in tropical computation is bounded by the logarithm of the Nerode index.\n\n**Why it matters.** Landauer's principle states that irreversible computation dissipates energy. For tropical automata (which model energy-optimal scheduling), understanding reversibility bounds would:\n- Connect automata theory to thermodynamic computing\n- Provide entropy-based lower bounds on automaton size\n- Enable energy-aware controller synthesis\n\n**Proof Strategy.**\n1. Define reversible tropical automata (where the step function is a bijection for each letter).\n2. Show that the Nerode automaton is generally not reversible (construct a counterexample).\n3. ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:19.357383+00:00"
+  },
+  {
+    "id": "fd_0184",
+    "title": "Cross-Cutting Themes",
+    "description": "All five directions share a common structural insight: **the Nerode quotient is the universal compressor** for tropical language recognition. It simultaneously:\n- Minimizes state complexity (Direction 3)\n- Captures algebraic structure (Directions 1, 2)\n- Bridges logic and automata (Direction 4)\n- Quantifies information loss (Direction 5)\n\nThe formalization of the canonical Nerode automaton and its minimality provides the rigorous foundation for all these extensions.",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:19.361181+00:00"
   }
 ]

@@ -1,379 +1,221 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-World Applications of Certified Novelty Detection
+Applications of Certified Novelty Detection
 
-Demonstrates applications of the theorem novelty certification framework:
-  1. Research paper novelty screening
-  2. Automated theorem discovery filtering
-  3. Patent/IP originality certification
-  4. Educational plagiarism detection (structural level)
+Demonstrates real-world applications of the novelty certification framework:
+1. Library deduplication
+2. Research novelty assessment
+3. AI-generated theorem audit
+4. Novelty landscape visualization
 """
 
-import numpy as np
+import math
 from dataclasses import dataclass
-from typing import List, Dict, Tuple
-import json
+from typing import List, Tuple, Dict, Optional
 
 
-@dataclass
+@dataclass(frozen=True)
 class TheoremDescriptor:
-    name: str
-    features: Dict[str, float]
-
-    def to_vector(self, feature_order: List[str]) -> np.ndarray:
-        return np.array([self.features.get(f, 0.0) for f in feature_order])
-
-
-FEATURES = ['arity', 'symbol_count', 'quantifier_depth',
-            'dependency_count', 'has_induction', 'has_contradiction',
-            'uses_reals', 'uses_topology']
-
-
-def novelty_score(candidate: TheoremDescriptor, catalog: List[TheoremDescriptor]) -> float:
-    """Compute nearest-neighbor novelty score."""
-    if not catalog:
-        return float('inf')
-    v = candidate.to_vector(FEATURES)
-    return min(np.linalg.norm(v - c.to_vector(FEATURES)) for c in catalog)
-
-
-# ──────────────────────────────────────────────────────────────────
-# Application 1: Research Paper Novelty Screening
-# ──────────────────────────────────────────────────────────────────
-
-def research_screening_demo():
-    """Simulate screening theorems from a new research paper against known results."""
-    print("=" * 70)
-    print("APPLICATION 1: Research Paper Novelty Screening")
-    print("=" * 70)
-
-    known_results = [
-        TheoremDescriptor("Mean Value Theorem",
-            {'arity': 3, 'symbol_count': 18, 'quantifier_depth': 2,
-             'dependency_count': 4, 'uses_reals': 1, 'uses_topology': 1}),
-        TheoremDescriptor("Intermediate Value Theorem",
-            {'arity': 3, 'symbol_count': 15, 'quantifier_depth': 2,
-             'dependency_count': 3, 'uses_reals': 1, 'uses_topology': 1}),
-        TheoremDescriptor("Rolle's Theorem",
-            {'arity': 3, 'symbol_count': 16, 'quantifier_depth': 2,
-             'dependency_count': 3, 'uses_reals': 1, 'uses_topology': 0}),
-        TheoremDescriptor("Cauchy's MVT",
-            {'arity': 4, 'symbol_count': 22, 'quantifier_depth': 2,
-             'dependency_count': 5, 'uses_reals': 1, 'uses_topology': 1}),
-    ]
-
-    paper_theorems = [
-        TheoremDescriptor("Paper Thm 1 (generalized MVT)",
-            {'arity': 4, 'symbol_count': 20, 'quantifier_depth': 2,
-             'dependency_count': 5, 'uses_reals': 1, 'uses_topology': 1}),
-        TheoremDescriptor("Paper Thm 2 (novel fixed-point result)",
-            {'arity': 5, 'symbol_count': 40, 'quantifier_depth': 3,
-             'dependency_count': 8, 'has_induction': 1, 'uses_reals': 1,
-             'uses_topology': 1}),
-        TheoremDescriptor("Paper Thm 3 (trivial corollary of Rolle)",
-            {'arity': 3, 'symbol_count': 16, 'quantifier_depth': 2,
-             'dependency_count': 3, 'uses_reals': 1, 'uses_topology': 0}),
-    ]
-
-    delta = 5.0
-    print(f"\n  Equivalence radius δ = {delta}")
-    print(f"  Catalog size: {len(known_results)} known theorems\n")
-
-    for thm in paper_theorems:
-        score = novelty_score(thm, known_results)
-        certified = score > delta
-        icon = "✅" if certified else "⚠️"
-        print(f"  {icon} {thm.name}")
-        print(f"     Novelty score: {score:.2f} {'>' if certified else '≤'} δ={delta}")
-        if certified:
-            print(f"     → CERTIFIED NOVEL (sound guarantee)")
-        else:
-            print(f"     → Requires manual review")
-        print()
-
-
-# ──────────────────────────────────────────────────────────────────
-# Application 2: Automated Theorem Discovery Filter
-# ──────────────────────────────────────────────────────────────────
-
-def discovery_filter_demo():
-    """Filter outputs from an automated theorem prover for genuine novelty."""
-    print("=" * 70)
-    print("APPLICATION 2: Automated Theorem Discovery Filter")
-    print("=" * 70)
-
-    corpus = [
-        TheoremDescriptor(f"Known-{i}",
-            {'arity': np.random.randint(1, 5),
-             'symbol_count': np.random.randint(5, 30),
-             'quantifier_depth': np.random.randint(0, 4),
-             'dependency_count': np.random.randint(1, 10)})
-        for i in range(20)
-    ]
-
-    np.random.seed(42)
-    candidates = [
-        TheoremDescriptor(f"Generated-{i}",
-            {'arity': np.random.randint(1, 8),
-             'symbol_count': np.random.randint(5, 60),
-             'quantifier_depth': np.random.randint(0, 5),
-             'dependency_count': np.random.randint(1, 15)})
-        for i in range(50)
-    ]
-
-    delta = 8.0
-    novel_count = 0
-    scores = []
-
-    for c in candidates:
-        score = novelty_score(c, corpus)
-        scores.append(score)
-        if score > delta:
-            novel_count += 1
-
-    print(f"\n  Corpus size: {len(corpus)}")
-    print(f"  Candidates generated: {len(candidates)}")
-    print(f"  Equivalence radius δ = {delta}")
-    print(f"\n  Results:")
-    print(f"    Certified novel:      {novel_count}/{len(candidates)}")
-    print(f"    Requires review:      {len(candidates) - novel_count}/{len(candidates)}")
-    print(f"    Mean novelty score:   {np.mean(scores):.2f}")
-    print(f"    Median novelty score: {np.median(scores):.2f}")
-    print(f"    Max novelty score:    {np.max(scores):.2f}")
-
-
-# ──────────────────────────────────────────────────────────────────
-# Application 3: Theorem Catalog Statistics
-# ──────────────────────────────────────────────────────────────────
-
-def catalog_statistics_demo():
-    """Compute statistics about a theorem catalog's coverage of feature space."""
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Catalog Coverage Analysis")
-    print("=" * 70)
-
-    catalog = [
-        TheoremDescriptor("Euclid's Lemma",
-            {'arity': 3, 'symbol_count': 10, 'quantifier_depth': 1, 'dependency_count': 2}),
-        TheoremDescriptor("Bezout's Identity",
-            {'arity': 3, 'symbol_count': 14, 'quantifier_depth': 1, 'dependency_count': 3}),
-        TheoremDescriptor("Chinese Remainder",
-            {'arity': 4, 'symbol_count': 20, 'quantifier_depth': 2, 'dependency_count': 4}),
-        TheoremDescriptor("Quadratic Reciprocity",
-            {'arity': 2, 'symbol_count': 18, 'quantifier_depth': 2, 'dependency_count': 6}),
-        TheoremDescriptor("Prime Number Theorem",
-            {'arity': 1, 'symbol_count': 25, 'quantifier_depth': 2, 'dependency_count': 10}),
-    ]
-
-    features_used = ['arity', 'symbol_count', 'quantifier_depth', 'dependency_count']
-    delta = 5.0
-
-    # Compute pairwise distances
-    print(f"\n  Pairwise distances (δ = {delta}, 2δ = {2*delta}):")
-    print(f"  {'':30s}", end="")
-    for c in catalog:
-        print(f"{c.name[:8]:>10s}", end="")
-    print()
-
-    for i, a in enumerate(catalog):
-        print(f"  {a.name:30s}", end="")
-        va = a.to_vector(features_used)
-        for j, b in enumerate(catalog):
-            vb = b.to_vector(features_used)
-            d = np.linalg.norm(va - vb)
-            marker = " " if d > 2 * delta or i == j else "*"
-            print(f"{d:9.1f}{marker}", end="")
-        print()
-
-    print(f"\n  * = within 2δ (possible equivalence class overlap)")
-
-    # Coverage analysis
-    print(f"\n  Feature ranges in catalog:")
-    for feat in features_used:
-        values = [c.features.get(feat, 0) for c in catalog]
-        print(f"    {feat:20s}: [{min(values):.0f}, {max(values):.0f}], "
-              f"span = {max(values) - min(values):.0f}")
-
-
-def main():
-    np.random.seed(42)
-    research_screening_demo()
-    discovery_filter_demo()
-    catalog_statistics_demo()
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-demo.py — Certified Novelty Detection via Theorem Embedding Uniqueness
-
-Demonstrates the core mathematical framework with concrete numerical examples:
-  1. TheoremDescriptor embeddings into ℝ⁶
-  2. Novelty score computation via nearest-neighbor distance
-  3. Certified novelty detection with configurable equivalence radius δ
-  4. Feature-gap obstruction certificates
-"""
-
-import numpy as np
-from dataclasses import dataclass
-from typing import List, Tuple, Optional
-
-
-@dataclass
-class TheoremDescriptor:
-    """A concrete theorem descriptor capturing syntactic/structural features."""
-    name: str
+    """Theorem descriptor matching the formal Lean structure."""
     arity: int
     symbol_count: int
     quantifier_depth: int
     dependency_count: int
     has_induction: bool
     has_contradiction: bool
+    name: str = ""
 
-    def to_vector(self) -> np.ndarray:
-        """Embed into ℝ⁶."""
-        return np.array([
+    def to_vector(self) -> Tuple[float, ...]:
+        return (
             float(self.arity),
             float(self.symbol_count),
             float(self.quantifier_depth),
             float(self.dependency_count),
             1.0 if self.has_induction else 0.0,
             1.0 if self.has_contradiction else 0.0,
-        ])
+        )
 
 
-def nearest_dist(candidate: TheoremDescriptor, catalog: List[TheoremDescriptor]) -> Tuple[float, TheoremDescriptor]:
-    """Compute the nearest-neighbor distance and the nearest catalog element."""
-    assert len(catalog) > 0, "Catalog must be nonempty"
-    v = candidate.to_vector()
-    best_dist = float('inf')
-    best_elem = catalog[0]
+def dist(v1: Tuple[float, ...], v2: Tuple[float, ...]) -> float:
+    return math.sqrt(sum((a - b) ** 2 for a, b in zip(v1, v2)))
+
+
+def nearest_dist(x: TheoremDescriptor, catalog: List[TheoremDescriptor]) -> Tuple[float, Optional[TheoremDescriptor]]:
+    best = float('inf')
+    nearest = None
     for t in catalog:
-        d = np.linalg.norm(v - t.to_vector())
-        if d < best_dist:
-            best_dist = d
-            best_elem = t
-    return best_dist, best_elem
+        d = dist(x.to_vector(), t.to_vector())
+        if d < best:
+            best, nearest = d, t
+    return best, nearest
 
 
-def certify_novelty(candidate: TheoremDescriptor, catalog: List[TheoremDescriptor],
-                     delta: float) -> Tuple[bool, float, Optional[TheoremDescriptor]]:
+# ============================================================
+# Application 1: Library Deduplication
+# ============================================================
+
+def library_deduplication(library: List[TheoremDescriptor], delta: float) -> List[Tuple[TheoremDescriptor, TheoremDescriptor, float]]:
     """
-    Certify novelty of a candidate theorem descriptor.
+    Find potential duplicate pairs in a theorem library.
 
-    Returns (is_novel, novelty_score, nearest_element).
-    By the Sound Novelty Certification Theorem:
-      if novelty_score > delta, then the candidate is certified novel.
+    Returns pairs within distance delta (potential equivalences).
     """
-    score, nearest = nearest_dist(candidate, catalog)
-    return score > delta, score, nearest
+    duplicates = []
+    for i in range(len(library)):
+        for j in range(i + 1, len(library)):
+            d = dist(library[i].to_vector(), library[j].to_vector())
+            if d <= delta:
+                duplicates.append((library[i], library[j], d))
+    return sorted(duplicates, key=lambda x: x[2])
 
 
-def check_feature_gap(x: TheoremDescriptor, y: TheoremDescriptor,
-                       feature_name: str, delta: float) -> Tuple[bool, float]:
+# ============================================================
+# Application 2: Research Novelty Assessment
+# ============================================================
+
+def assess_research_novelty(
+    submissions: List[TheoremDescriptor],
+    known_corpus: List[TheoremDescriptor],
+    delta: float,
+) -> List[Dict]:
     """
-    Check feature-gap obstruction between two descriptors.
+    Assess novelty of research submissions against a known corpus.
 
-    By the Feature-Gap Obstruction Theorem:
-      if |f(x) - f(y)| > delta for any coordinate f, then x and y are non-equivalent.
+    Returns a report for each submission with novelty score,
+    certification status, and nearest known result.
     """
-    features = {
-        'arity': lambda d: d.arity,
-        'symbol_count': lambda d: d.symbol_count,
-        'quantifier_depth': lambda d: d.quantifier_depth,
-        'dependency_count': lambda d: d.dependency_count,
-        'has_induction': lambda d: 1 if d.has_induction else 0,
-        'has_contradiction': lambda d: 1 if d.has_contradiction else 0,
+    reports = []
+    for sub in submissions:
+        score, nearest = nearest_dist(sub, known_corpus)
+        reports.append({
+            'submission': sub.name,
+            'novelty_score': score,
+            'certified_novel': score > delta,
+            'nearest_known': nearest.name if nearest else 'N/A',
+            'distance_to_nearest': score,
+            'margin': score - delta,
+        })
+    return reports
+
+
+# ============================================================
+# Application 3: AI-Generated Theorem Audit
+# ============================================================
+
+def audit_ai_theorems(
+    ai_theorems: List[TheoremDescriptor],
+    training_corpus: List[TheoremDescriptor],
+    delta: float,
+) -> Dict:
+    """
+    Audit AI-generated theorems for originality relative to training data.
+
+    Returns statistics on how many AI theorems are certified novel
+    vs. potentially derived from training data.
+    """
+    novel_count = 0
+    suspicious_count = 0
+    results = []
+
+    for thm in ai_theorems:
+        score, nearest = nearest_dist(thm, training_corpus)
+        is_novel = score > delta
+        if is_novel:
+            novel_count += 1
+        else:
+            suspicious_count += 1
+        results.append({
+            'theorem': thm.name,
+            'score': score,
+            'novel': is_novel,
+            'nearest_training': nearest.name if nearest else 'N/A',
+        })
+
+    return {
+        'total': len(ai_theorems),
+        'certified_novel': novel_count,
+        'potentially_derived': suspicious_count,
+        'novelty_rate': novel_count / len(ai_theorems) if ai_theorems else 0,
+        'details': results,
     }
-    f = features[feature_name]
-    gap = abs(f(x) - f(y))
-    return gap > delta, gap
 
 
-# ──────────────────────────────────────────────────────────────────
-# Demo: Concrete Example
-# ──────────────────────────────────────────────────────────────────
+# ============================================================
+# Demo
+# ============================================================
 
 def main():
     print("=" * 70)
-    print("CERTIFIED NOVELTY DETECTION — Demonstration")
+    print("Applications of Certified Novelty Detection")
     print("=" * 70)
 
-    # Define a catalog of known theorems
-    catalog = [
-        TheoremDescriptor("Pythagorean Theorem", arity=3, symbol_count=12,
-                          quantifier_depth=1, dependency_count=2,
-                          has_induction=False, has_contradiction=False),
-        TheoremDescriptor("Fundamental Thm of Algebra", arity=2, symbol_count=25,
-                          quantifier_depth=2, dependency_count=8,
-                          has_induction=False, has_contradiction=True),
-        TheoremDescriptor("Fermat's Little Theorem", arity=2, symbol_count=15,
-                          quantifier_depth=1, dependency_count=3,
-                          has_induction=True, has_contradiction=False),
-        TheoremDescriptor("Wilson's Theorem", arity=1, symbol_count=10,
-                          quantifier_depth=1, dependency_count=2,
-                          has_induction=False, has_contradiction=False),
-        TheoremDescriptor("Bolzano–Weierstrass", arity=2, symbol_count=30,
-                          quantifier_depth=3, dependency_count=5,
-                          has_induction=True, has_contradiction=True),
+    # Build a realistic catalog
+    corpus = [
+        TheoremDescriptor(3, 12, 1, 3, False, False, "Pythagorean Theorem"),
+        TheoremDescriptor(1, 18, 2, 5, False, True, "Infinitude of Primes"),
+        TheoremDescriptor(3, 25, 2, 12, False, False, "Fund. Thm. of Calculus"),
+        TheoremDescriptor(2, 15, 1, 6, True, False, "Fermat's Little Theorem"),
+        TheoremDescriptor(3, 20, 1, 4, False, False, "Quadratic Formula"),
+        TheoremDescriptor(1, 10, 1, 2, True, False, "Sum of first n integers"),
+        TheoremDescriptor(2, 22, 2, 8, True, True, "Fund. Thm. of Arithmetic"),
+        TheoremDescriptor(2, 14, 1, 3, False, False, "Triangle Inequality"),
+        TheoremDescriptor(1, 8, 1, 1, True, False, "Factorial recursion"),
+        TheoremDescriptor(3, 30, 3, 15, False, True, "Intermediate Value Thm."),
     ]
 
-    print("\n📚 Catalog of Known Theorems:")
-    print("-" * 50)
-    for t in catalog:
-        v = t.to_vector()
-        print(f"  {t.name:30s} → {v}")
+    delta = 5.0
 
-    # Define candidate theorems
-    candidates = [
-        TheoremDescriptor("Candidate A (variation of Pythagoras)", arity=3, symbol_count=13,
-                          quantifier_depth=1, dependency_count=2,
-                          has_induction=False, has_contradiction=False),
-        TheoremDescriptor("Candidate B (truly novel)", arity=5, symbol_count=50,
-                          quantifier_depth=4, dependency_count=12,
-                          has_induction=True, has_contradiction=True),
-        TheoremDescriptor("Candidate C (moderate novelty)", arity=2, symbol_count=20,
-                          quantifier_depth=2, dependency_count=4,
-                          has_induction=False, has_contradiction=True),
+    # Application 1: Library Deduplication
+    print("\n" + "-" * 70)
+    print("Application 1: Library Deduplication")
+    print("-" * 70)
+    dupes = library_deduplication(corpus, delta)
+    if dupes:
+        print(f"\n  Found {len(dupes)} potential duplicate pairs (dist ≤ {delta}):")
+        for t1, t2, d in dupes:
+            print(f"    {t1.name} ↔ {t2.name}: dist = {d:.2f}")
+    else:
+        print(f"\n  No duplicates found at δ = {delta}")
+
+    # Application 2: Research Novelty
+    print("\n" + "-" * 70)
+    print("Application 2: Research Novelty Assessment")
+    print("-" * 70)
+    submissions = [
+        TheoremDescriptor(4, 35, 3, 20, False, False, "Cauchy Residue Theorem"),
+        TheoremDescriptor(2, 16, 1, 7, True, False, "Euler's Theorem"),
+        TheoremDescriptor(5, 45, 4, 25, True, True, "Spectral Gap Theorem"),
+        TheoremDescriptor(1, 9, 1, 2, True, False, "Fibonacci recurrence"),
     ]
-
-    delta = 5.0  # Equivalence radius
-
-    print(f"\n🔬 Novelty Certification (δ = {delta})")
-    print("-" * 50)
-
-    for c in candidates:
-        is_novel, score, nearest = certify_novelty(c, catalog, delta)
-        status = "✅ CERTIFIED NOVEL" if is_novel else "❌ Not certifiably novel"
-        print(f"\n  {c.name}")
-        print(f"    Vector: {c.to_vector()}")
-        print(f"    Novelty score: {score:.2f}")
-        print(f"    Nearest catalog: {nearest.name} (dist = {score:.2f})")
+    reports = assess_research_novelty(submissions, corpus, delta)
+    for r in reports:
+        status = "✓ NOVEL" if r['certified_novel'] else "✗ NOT CERTIFIED"
+        print(f"\n  {r['submission']}:")
+        print(f"    Score: {r['novelty_score']:.2f} (margin: {r['margin']:+.2f})")
+        print(f"    Nearest: {r['nearest_known']}")
         print(f"    Status: {status}")
 
-    print(f"\n🔎 Feature-Gap Obstruction Analysis")
-    print("-" * 50)
+    # Application 3: AI Audit
+    print("\n" + "-" * 70)
+    print("Application 3: AI-Generated Theorem Audit")
+    print("-" * 70)
+    ai_theorems = [
+        TheoremDescriptor(3, 13, 1, 3, False, False, "AI: Pythagorean variant"),
+        TheoremDescriptor(6, 50, 5, 30, True, True, "AI: Novel deep result"),
+        TheoremDescriptor(2, 15, 1, 6, True, False, "AI: Fermat rephrasing"),
+        TheoremDescriptor(4, 28, 2, 10, False, True, "AI: Analytic continuation"),
+        TheoremDescriptor(1, 11, 1, 2, True, False, "AI: Sum formula variant"),
+    ]
+    audit = audit_ai_theorems(ai_theorems, corpus, delta)
+    print(f"\n  Total AI theorems: {audit['total']}")
+    print(f"  Certified novel: {audit['certified_novel']}")
+    print(f"  Potentially derived: {audit['potentially_derived']}")
+    print(f"  Novelty rate: {audit['novelty_rate']:.0%}")
+    for d in audit['details']:
+        flag = "✓" if d['novel'] else "✗"
+        print(f"    {flag} {d['theorem']}: score={d['score']:.2f}, nearest={d['nearest_training']}")
 
-    candidate_b = candidates[1]
-    for feature in ['arity', 'symbol_count', 'quantifier_depth', 'dependency_count']:
-        for cat_thm in catalog:
-            obstructs, gap = check_feature_gap(candidate_b, cat_thm, feature, delta)
-            if obstructs:
-                print(f"  {feature}: |{feature}(B) - {feature}({cat_thm.name})| = {gap} > {delta}")
-                print(f"    → Certificate: B ≢ {cat_thm.name}")
-
-    # Show the mathematical guarantee
-    print(f"\n📐 Mathematical Guarantee")
-    print("-" * 50)
-    print(f"  By the Sound Novelty Certification Theorem:")
-    print(f"  If ∀ (x,y) equivalent: dist(E x, E y) ≤ δ = {delta}")
-    print(f"  and noveltyScore(x, K) > δ,")
-    print(f"  then x is provably non-equivalent to every theorem in K.")
-    print(f"\n  This is a machine-verified mathematical theorem,")
-    print(f"  not a heuristic — it provides absolute certainty.")
+    print()
 
 
 if __name__ == "__main__":
@@ -382,206 +224,518 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-visualizations.py — Generate visualizations for the novelty certification framework.
-Saves figures as PNG files and prints base64 data URIs.
+Certified Novelty Detection via Theorem Embedding Uniqueness — Demo
+
+This script demonstrates the novelty certification framework with concrete
+numerical examples, showing how theorem descriptors are embedded into metric
+space and how novelty certificates are issued.
 """
 
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
-import base64
-import io
+import math
+from dataclasses import dataclass
+from typing import List, Tuple, Optional
 
 
-def fig_to_base64(fig) -> str:
-    """Convert a matplotlib figure to a base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode('utf-8')
+@dataclass(frozen=True)
+class TheoremDescriptor:
+    """A structured descriptor for a mathematical theorem."""
+    name: str
+    arity: int          # number of free variables
+    symbol_count: int   # total symbol count
+    quantifier_depth: int  # max quantifier nesting
+    dependency_count: int  # imported lemma count
+    has_induction: bool
+    has_contradiction: bool
+
+    def to_vector(self) -> Tuple[float, ...]:
+        """Embed into 6-dimensional Euclidean space."""
+        return (
+            float(self.arity),
+            float(self.symbol_count),
+            float(self.quantifier_depth),
+            float(self.dependency_count),
+            1.0 if self.has_induction else 0.0,
+            1.0 if self.has_contradiction else 0.0,
+        )
 
 
-def plot_novelty_certification():
-    """Visualize the core novelty certification theorem in 2D."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-
-    np.random.seed(42)
-    catalog = np.array([
-        [2, 3], [5, 7], [8, 2], [3, 8], [7, 6]
-    ], dtype=float)
-    delta = 1.5
-
-    # Draw δ-balls around catalog points
-    for i, pt in enumerate(catalog):
-        circle = Circle(pt, delta, fill=True, alpha=0.15, color='steelblue',
-                       linestyle='--', linewidth=1.5)
-        ax.add_patch(circle)
-        circle_border = Circle(pt, delta, fill=False, color='steelblue',
-                              linestyle='--', linewidth=1.5)
-        ax.add_patch(circle_border)
-
-    # Plot catalog points
-    ax.scatter(catalog[:, 0], catalog[:, 1], c='navy', s=120, zorder=5,
-              label='Catalog K', marker='s', edgecolors='black', linewidth=1)
-
-    # Novel candidate (far from all catalog points)
-    novel = np.array([1, 6.5])
-    ax.scatter(*novel, c='green', s=150, zorder=5, marker='*',
-              edgecolors='black', linewidth=1, label='Novel candidate')
-
-    # Non-novel candidate (within δ of a catalog point)
-    derivative = np.array([5.5, 7.5])
-    ax.scatter(*derivative, c='red', s=150, zorder=5, marker='X',
-              edgecolors='black', linewidth=1, label='Derivative candidate')
-
-    # Draw distance lines
-    for pt in catalog:
-        d_novel = np.linalg.norm(novel - pt)
-        if d_novel == min(np.linalg.norm(novel - c) for c in catalog):
-            ax.plot([novel[0], pt[0]], [novel[1], pt[1]], 'g--', alpha=0.5, linewidth=1)
-            ax.annotate(f'd={d_novel:.1f}', xy=((novel[0]+pt[0])/2, (novel[1]+pt[1])/2),
-                       fontsize=9, color='green')
-
-    d_deriv = np.linalg.norm(derivative - catalog[1])
-    ax.plot([derivative[0], catalog[1][0]], [derivative[1], catalog[1][1]],
-            'r--', alpha=0.5, linewidth=1)
-    ax.annotate(f'd={d_deriv:.1f}', xy=((derivative[0]+catalog[1][0])/2 + 0.2,
-                (derivative[1]+catalog[1][1])/2),
-               fontsize=9, color='red')
-
-    ax.set_xlim(-0.5, 10)
-    ax.set_ylim(-0.5, 10)
-    ax.set_aspect('equal')
-    ax.set_xlabel('Feature dimension 1', fontsize=12)
-    ax.set_ylabel('Feature dimension 2', fontsize=12)
-    ax.set_title(f'Novelty Certification via Metric Separation (δ = {delta})', fontsize=14)
-    ax.legend(fontsize=11, loc='lower right')
-    ax.grid(True, alpha=0.3)
-
-    fig.savefig('novelty_certification_2d.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+def euclidean_dist(v1: Tuple[float, ...], v2: Tuple[float, ...]) -> float:
+    """Compute Euclidean distance between two vectors."""
+    return math.sqrt(sum((a - b) ** 2 for a, b in zip(v1, v2)))
 
 
-def plot_novelty_score_distribution():
-    """Visualize distribution of novelty scores."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    np.random.seed(42)
-    # Simulate novelty scores
-    n_catalog = 10
-    catalog = np.random.randn(n_catalog, 6) * 5 + 15
-
-    n_candidates = 200
-    # Mix of novel and derivative candidates
-    novel_candidates = np.random.randn(100, 6) * 8 + 30
-    deriv_candidates = catalog[np.random.randint(0, n_catalog, 100)] + np.random.randn(100, 6) * 1.5
-
-    def compute_scores(candidates, catalog):
-        scores = []
-        for c in candidates:
-            min_dist = min(np.linalg.norm(c - k) for k in catalog)
-            scores.append(min_dist)
-        return np.array(scores)
-
-    novel_scores = compute_scores(novel_candidates, catalog)
-    deriv_scores = compute_scores(deriv_candidates, catalog)
-    all_scores = np.concatenate([novel_scores, deriv_scores])
-
-    delta = 8.0
-
-    # Histogram
-    ax1.hist(novel_scores, bins=30, alpha=0.6, color='green', label='Novel theorems',
-             density=True)
-    ax1.hist(deriv_scores, bins=30, alpha=0.6, color='red', label='Derivative theorems',
-             density=True)
-    ax1.axvline(x=delta, color='black', linestyle='--', linewidth=2, label=f'δ = {delta}')
-    ax1.set_xlabel('Novelty Score (nearest-neighbor distance)', fontsize=11)
-    ax1.set_ylabel('Density', fontsize=11)
-    ax1.set_title('Distribution of Novelty Scores', fontsize=13)
-    ax1.legend(fontsize=10)
-
-    # ROC-like curve: certification rate vs delta
-    deltas = np.linspace(0, 30, 100)
-    novel_cert_rate = [np.mean(novel_scores > d) for d in deltas]
-    deriv_cert_rate = [np.mean(deriv_scores > d) for d in deltas]
-
-    ax2.plot(deltas, novel_cert_rate, 'g-', linewidth=2, label='True novel certification rate')
-    ax2.plot(deltas, deriv_cert_rate, 'r-', linewidth=2, label='False novel certification rate')
-    ax2.axvline(x=delta, color='black', linestyle='--', linewidth=1.5, label=f'δ = {delta}')
-    ax2.fill_between(deltas, novel_cert_rate, deriv_cert_rate, alpha=0.1, color='blue')
-    ax2.set_xlabel('Equivalence Radius δ', fontsize=11)
-    ax2.set_ylabel('Certification Rate', fontsize=11)
-    ax2.set_title('Certification Rate vs. Equivalence Radius', fontsize=13)
-    ax2.legend(fontsize=10)
-
-    fig.tight_layout()
-    fig.savefig('novelty_score_distribution.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+def nearest_dist(candidate: TheoremDescriptor,
+                 catalog: List[TheoremDescriptor]) -> Tuple[float, Optional[TheoremDescriptor]]:
+    """Compute nearest distance from candidate to catalog."""
+    if not catalog:
+        return float('inf'), None
+    best_dist = float('inf')
+    best_match = None
+    for thm in catalog:
+        d = euclidean_dist(candidate.to_vector(), thm.to_vector())
+        if d < best_dist:
+            best_dist = d
+            best_match = thm
+    return best_dist, best_match
 
 
-def plot_feature_gap_obstruction():
-    """Visualize the feature-gap obstruction theorem."""
-    fig, ax = plt.subplots(figsize=(10, 6))
+def certify_novelty(candidate: TheoremDescriptor,
+                    catalog: List[TheoremDescriptor],
+                    delta: float) -> Tuple[bool, float, Optional[TheoremDescriptor]]:
+    """
+    Certify whether a candidate is novel w.r.t. the catalog.
 
-    features = ['Arity', 'Symbols', 'Quant.\nDepth', 'Deps', 'Induction', 'Contra-\ndiction']
-    catalog_vals = [3, 12, 1, 2, 0, 0]
-    candidate_vals = [5, 50, 4, 12, 1, 1]
-    tolerances = [2, 10, 1, 3, 0.5, 0.5]
+    Returns (is_certified_novel, novelty_score, nearest_theorem).
+    By Theorem 3.1, if novelty_score > delta, the candidate is
+    provably not equivalent to any catalog theorem.
+    """
+    score, nearest = nearest_dist(candidate, catalog)
+    return score > delta, score, nearest
 
-    x_pos = np.arange(len(features))
-    width = 0.3
 
-    bars1 = ax.bar(x_pos - width/2, catalog_vals, width, label='Catalog theorem',
-                   color='steelblue', alpha=0.8, edgecolor='black')
-    bars2 = ax.bar(x_pos + width/2, candidate_vals, width, label='Novel candidate',
-                   color='green', alpha=0.8, edgecolor='black')
+def feature_gap_check(x: TheoremDescriptor,
+                      y: TheoremDescriptor,
+                      tolerances: dict) -> List[str]:
+    """
+    Check which features show a gap beyond tolerance.
+    By Theorem 3.5, any single gap certifies non-equivalence.
+    """
+    gaps = []
+    checks = [
+        ('arity', abs(x.arity - y.arity), tolerances.get('arity', float('inf'))),
+        ('symbol_count', abs(x.symbol_count - y.symbol_count),
+         tolerances.get('symbol_count', float('inf'))),
+        ('quantifier_depth', abs(x.quantifier_depth - y.quantifier_depth),
+         tolerances.get('quantifier_depth', float('inf'))),
+        ('dependency_count', abs(x.dependency_count - y.dependency_count),
+         tolerances.get('dependency_count', float('inf'))),
+    ]
+    for name, diff, tol in checks:
+        if diff > tol:
+            gaps.append(f"{name}: |{diff}| > {tol}")
+    return gaps
 
-    # Mark obstructions
-    for i, (cv, nv, tol) in enumerate(zip(catalog_vals, candidate_vals, tolerances)):
-        gap = abs(nv - cv)
-        if gap > tol:
-            ax.annotate(f'Gap={gap}\n> δ={tol}', xy=(i, max(cv, nv) + 1),
-                       fontsize=8, ha='center', color='darkred', fontweight='bold')
-            ax.plot([i - width/2, i + width/2], [max(cv, nv) + 0.5] * 2,
-                   'r-', linewidth=2)
 
-    ax.set_xticks(x_pos)
-    ax.set_xticklabels(features, fontsize=10)
-    ax.set_ylabel('Feature Value', fontsize=12)
-    ax.set_title('Feature-Gap Obstruction Certificates', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3, axis='y')
-
-    fig.savefig('feature_gap_obstruction.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
-
+# ============================================================
+# Demo: Catalog of elementary theorems
+# ============================================================
 
 def main():
-    print("Generating visualizations...")
-    b64_cert = plot_novelty_certification()
-    print(f"  novelty_certification_2d.png — {len(b64_cert)} chars")
+    print("=" * 70)
+    print("Certified Novelty Detection — Demonstration")
+    print("=" * 70)
 
-    b64_dist = plot_novelty_score_distribution()
-    print(f"  novelty_score_distribution.png — {len(b64_dist)} chars")
+    # Build a catalog of well-known theorems
+    catalog = [
+        TheoremDescriptor(
+            name="Pythagorean Theorem",
+            arity=3, symbol_count=12, quantifier_depth=1,
+            dependency_count=3, has_induction=False, has_contradiction=False
+        ),
+        TheoremDescriptor(
+            name="Euclid's Infinitude of Primes",
+            arity=1, symbol_count=18, quantifier_depth=2,
+            dependency_count=5, has_induction=False, has_contradiction=True
+        ),
+        TheoremDescriptor(
+            name="Fundamental Theorem of Calculus",
+            arity=3, symbol_count=25, quantifier_depth=2,
+            dependency_count=12, has_induction=False, has_contradiction=False
+        ),
+        TheoremDescriptor(
+            name="Fermat's Little Theorem",
+            arity=2, symbol_count=15, quantifier_depth=1,
+            dependency_count=6, has_induction=True, has_contradiction=False
+        ),
+        TheoremDescriptor(
+            name="Quadratic Formula",
+            arity=3, symbol_count=20, quantifier_depth=1,
+            dependency_count=4, has_induction=False, has_contradiction=False
+        ),
+    ]
 
-    b64_gap = plot_feature_gap_obstruction()
-    print(f"  feature_gap_obstruction.png — {len(b64_gap)} chars")
+    delta = 5.0  # Equivalence radius
 
-    print("Done. Figures saved as PNG files.")
-    return {
-        'novelty_certification_2d': b64_cert,
-        'novelty_score_distribution': b64_dist,
-        'feature_gap_obstruction': b64_gap,
-    }
+    print(f"\nCatalog size: {len(catalog)}")
+    print(f"Equivalence radius δ = {delta}")
+    print()
+
+    # --- Experiment 1: Test novelty of several candidates ---
+    print("-" * 70)
+    print("Experiment 1: Novelty Certification")
+    print("-" * 70)
+
+    candidates = [
+        TheoremDescriptor(
+            name="Cauchy's Residue Theorem (complex analysis)",
+            arity=4, symbol_count=35, quantifier_depth=3,
+            dependency_count=20, has_induction=False, has_contradiction=False
+        ),
+        TheoremDescriptor(
+            name="Euler's Theorem (number theory, near Fermat)",
+            arity=2, symbol_count=16, quantifier_depth=1,
+            dependency_count=7, has_induction=True, has_contradiction=False
+        ),
+        TheoremDescriptor(
+            name="Bolzano-Weierstrass Theorem",
+            arity=2, symbol_count=22, quantifier_depth=3,
+            dependency_count=8, has_induction=True, has_contradiction=True
+        ),
+        TheoremDescriptor(
+            name="Trivial rephrasing of Pythagorean (same features)",
+            arity=3, symbol_count=13, quantifier_depth=1,
+            dependency_count=3, has_induction=False, has_contradiction=False
+        ),
+    ]
+
+    for cand in candidates:
+        is_novel, score, nearest = certify_novelty(cand, catalog, delta)
+        status = "✓ CERTIFIED NOVEL" if is_novel else "✗ NOT CERTIFIED (too close)"
+        print(f"\n  Candidate: {cand.name}")
+        print(f"  Novelty score: {score:.2f}")
+        print(f"  Nearest known: {nearest.name if nearest else 'N/A'}")
+        print(f"  Status: {status}")
+
+    # --- Experiment 2: Feature-gap analysis ---
+    print()
+    print("-" * 70)
+    print("Experiment 2: Feature-Gap Analysis")
+    print("-" * 70)
+
+    tolerances = {'arity': 1, 'symbol_count': 5, 'quantifier_depth': 1, 'dependency_count': 3}
+
+    x = candidates[0]  # Cauchy's Residue Theorem
+    y = catalog[0]      # Pythagorean Theorem
+
+    print(f"\n  Comparing: {x.name}")
+    print(f"       with: {y.name}")
+    print(f"  Tolerances: {tolerances}")
+    gaps = feature_gap_check(x, y, tolerances)
+    if gaps:
+        print(f"  Certified non-equivalent via feature gaps:")
+        for g in gaps:
+            print(f"    • {g}")
+    else:
+        print(f"  No feature gap detected — cannot certify via this method.")
+
+    # --- Experiment 3: Catalog growth dynamics ---
+    print()
+    print("-" * 70)
+    print("Experiment 3: Catalog Growth Dynamics")
+    print("-" * 70)
+
+    test_candidate = candidates[2]  # Bolzano-Weierstrass
+    print(f"\n  Tracking novelty score of: {test_candidate.name}")
+    print(f"  as catalog grows from 1 to {len(catalog)} theorems:\n")
+
+    for size in range(1, len(catalog) + 1):
+        subcatalog = catalog[:size]
+        score, nearest = nearest_dist(test_candidate, subcatalog)
+        print(f"  Catalog size {size}: score = {score:.2f}"
+              f"  (nearest: {nearest.name if nearest else 'N/A'})")
+
+    print()
+    print("  → Novelty score is monotonically non-increasing (Theorem 5.2)")
+
+    # --- Summary ---
+    print()
+    print("=" * 70)
+    print("Summary of Verified Theorems Used")
+    print("=" * 70)
+    print("""
+  1. novelty_of_far_from_catalog     — Sound certification via metric separation
+  2. novelty_of_nearestDist_gt       — Nearest-neighbor score certification
+  3. exists_nearest_in_finset        — Finite minimizer existence
+  4. not_equivalent_of_coordinate_gap — Single-feature obstruction
+  5. not_equivalent_of_any_feature_gap — Multi-feature obstruction
+  6. nearestDist_insert_le           — Monotonicity under catalog expansion
+  7. nearestDist_nonneg              — Non-negativity of novelty score
+    """)
 
 
 if __name__ == "__main__":
     main()
+
+
+#!/usr/bin/env python3
+"""
+Visualizations for Certified Novelty Detection
+
+Generates publication-quality figures illustrating the key concepts.
+"""
+
+import math
+import base64
+import io
+import json
+
+# Use Agg backend for headless rendering
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+
+
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 PNG data URI."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    buf.seek(0)
+    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{b64}"
+
+
+def create_novelty_certification_diagram() -> str:
+    """
+    Figure 1: Novelty Certification in 2D Feature Space
+
+    Shows catalog theorems as points with δ-balls, a novel candidate
+    outside all balls, and a non-novel candidate inside a ball.
+    """
+    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+
+    catalog = [
+        (2, 3, "Pythagorean\nTheorem"),
+        (6, 7, "Euclid's\nPrimes"),
+        (8, 2, "Fermat's\nLittle Thm"),
+        (4, 8, "Fund. Thm.\nCalculus"),
+        (9, 6, "Quadratic\nFormula"),
+    ]
+
+    delta = 1.5
+
+    # Draw δ-balls
+    for x, y, name in catalog:
+        circle = plt.Circle((x, y), delta, color='lightblue', alpha=0.3, linewidth=2, edgecolor='steelblue')
+        ax.add_patch(circle)
+        ax.plot(x, y, 'o', color='steelblue', markersize=10, zorder=5)
+        ax.annotate(name, (x, y), textcoords="offset points", xytext=(0, 18),
+                    ha='center', fontsize=8, color='darkblue')
+
+    # Novel candidate (far from all)
+    nx, ny = 1, 9
+    ax.plot(nx, ny, '*', color='green', markersize=20, zorder=5)
+    ax.annotate("Novel\nCandidate ✓", (nx, ny), textcoords="offset points",
+                xytext=(15, -10), ha='left', fontsize=10, color='green', fontweight='bold')
+
+    # Non-novel candidate (inside a ball)
+    nnx, nny = 2.5, 3.5
+    ax.plot(nnx, nny, 'X', color='red', markersize=15, zorder=5)
+    ax.annotate("Not Certified ✗", (nnx, nny), textcoords="offset points",
+                xytext=(15, -15), ha='left', fontsize=10, color='red', fontweight='bold')
+
+    # Draw distance line from novel to nearest
+    nearest_x, nearest_y = 4, 8
+    ax.annotate('', xy=(nx, ny), xytext=(nearest_x, nearest_y),
+                arrowprops=dict(arrowstyle='<->', color='gray', lw=1.5, ls='--'))
+    mid_x, mid_y = (nx + nearest_x) / 2, (ny + nearest_y) / 2
+    ax.annotate(f'd > δ', (mid_x, mid_y), textcoords="offset points",
+                xytext=(10, 5), ha='left', fontsize=10, color='gray')
+
+    ax.set_xlim(-0.5, 11)
+    ax.set_ylim(-0.5, 11)
+    ax.set_xlabel("Feature 1 (e.g., Symbol Count)", fontsize=12)
+    ax.set_ylabel("Feature 2 (e.g., Quantifier Depth)", fontsize=12)
+    ax.set_title("Novelty Certification in Feature Space", fontsize=14, fontweight='bold')
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+
+    # Legend
+    legend_elements = [
+        mpatches.Patch(facecolor='lightblue', edgecolor='steelblue', alpha=0.3,
+                       label=f'Equivalence ball (radius δ = {delta})'),
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='steelblue',
+                   markersize=10, label='Catalog theorem'),
+        plt.Line2D([0], [0], marker='*', color='w', markerfacecolor='green',
+                   markersize=15, label='Certified novel'),
+        plt.Line2D([0], [0], marker='X', color='w', markerfacecolor='red',
+                   markersize=12, label='Not certified'),
+    ]
+    ax.legend(handles=legend_elements, loc='lower right', fontsize=10)
+
+    return fig_to_base64(fig)
+
+
+def create_novelty_score_decay() -> str:
+    """
+    Figure 2: Novelty Score vs. Catalog Size
+
+    Shows how the novelty score monotonically decreases as the catalog grows.
+    """
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+
+    # Simulate catalog growth
+    np.random.seed(42)
+    catalog_points = np.random.randn(50, 6) * 5 + np.array([5, 20, 2, 8, 0.5, 0.5])
+    candidate = np.array([10, 40, 4, 25, 0, 0])
+
+    sizes = range(1, 51)
+    scores = []
+    for size in sizes:
+        dists = [np.linalg.norm(candidate - catalog_points[i]) for i in range(size)]
+        scores.append(min(dists))
+
+    ax.plot(list(sizes), scores, 'b-', linewidth=2, label='Novelty score')
+    ax.fill_between(list(sizes), scores, alpha=0.1, color='blue')
+
+    # Mark delta threshold
+    delta = 8.0
+    ax.axhline(y=delta, color='red', linestyle='--', linewidth=1.5, label=f'δ = {delta} (threshold)')
+
+    # Find transition point
+    transition = None
+    for i, s in enumerate(scores):
+        if s <= delta:
+            transition = i + 1
+            break
+
+    if transition:
+        ax.axvline(x=transition, color='orange', linestyle=':', linewidth=1.5, alpha=0.7)
+        ax.annotate(f'Certification lost\nat catalog size {transition}',
+                    (transition, delta), textcoords="offset points",
+                    xytext=(20, 20), ha='left', fontsize=10, color='orange',
+                    arrowprops=dict(arrowstyle='->', color='orange'))
+
+    ax.set_xlabel("Catalog Size |K|", fontsize=12)
+    ax.set_ylabel("Novelty Score (nearest distance)", fontsize=12)
+    ax.set_title("Novelty Score Monotonically Decreases with Catalog Growth\n(Theorem 5.2: nearestDist_insert_le)",
+                 fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    return fig_to_base64(fig)
+
+
+def create_feature_gap_diagram() -> str:
+    """
+    Figure 3: Multi-Feature Obstruction
+
+    Shows how gaps in individual feature dimensions certify non-equivalence.
+    """
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    features = ['Arity', 'Symbol Count', 'Quantifier Depth']
+    x_vals = [3, 12, 1]
+    y_vals = [6, 35, 4]
+    tolerances = [1, 5, 1]
+    gaps = [abs(x - y) for x, y in zip(x_vals, y_vals)]
+
+    colors = ['#2ecc71' if g > t else '#e74c3c' for g, t in zip(gaps, tolerances)]
+
+    for idx, (ax, feat, xv, yv, tol, gap, col) in enumerate(
+            zip(axes, features, x_vals, y_vals, tolerances, gaps, colors)):
+        bars = ax.bar(['Theorem A', 'Theorem B'], [xv, yv], color=['steelblue', 'coral'],
+                      width=0.5, edgecolor='black', linewidth=0.5)
+
+        # Draw tolerance band around Theorem A
+        ax.axhspan(xv - tol, xv + tol, alpha=0.15, color='gray',
+                   label=f'Tolerance band (±{tol})')
+
+        # Annotate gap
+        mid = (xv + yv) / 2
+        ax.annotate('', xy=(1.3, xv), xytext=(1.3, yv),
+                    arrowprops=dict(arrowstyle='<->', color=col, lw=2))
+        ax.text(1.45, mid, f'Gap = {gap}', fontsize=10, color=col,
+                fontweight='bold', va='center')
+
+        cert = "✓ Certified" if gap > tol else "✗ Not certified"
+        ax.set_title(f"{feat}\n{cert}", fontsize=12, fontweight='bold',
+                     color='green' if gap > tol else 'red')
+        ax.legend(fontsize=8, loc='upper left')
+        ax.set_xlim(-0.5, 2)
+
+    fig.suptitle("Multi-Feature Obstruction: Any Single Gap Certifies Non-Equivalence\n(Theorem 3.5)",
+                 fontsize=14, fontweight='bold', y=1.02)
+    fig.tight_layout()
+
+    return fig_to_base64(fig)
+
+
+def create_coding_theory_analogy() -> str:
+    """
+    Figure 4: Coding Theory Analogy
+
+    Shows the parallel between theorem catalogs and error-correcting codes.
+    """
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: Theorem space
+    ax1.set_title("Theorem Feature Space", fontsize=13, fontweight='bold')
+    theorems = [(2, 3), (7, 7), (9, 2), (4, 9)]
+    delta = 1.5
+
+    for x, y in theorems:
+        circle = plt.Circle((x, y), delta, color='lightblue', alpha=0.3,
+                             edgecolor='steelblue', linewidth=2)
+        ax1.add_patch(circle)
+        ax1.plot(x, y, 'o', color='steelblue', markersize=12)
+
+    ax1.plot(1, 8, '*', color='green', markersize=20)
+    ax1.annotate("Novel theorem", (1, 8), textcoords="offset points",
+                 xytext=(10, 10), fontsize=10, color='green')
+    ax1.set_xlim(-0.5, 11)
+    ax1.set_ylim(-0.5, 11)
+    ax1.set_xlabel("Feature dimension 1", fontsize=11)
+    ax1.set_ylabel("Feature dimension 2", fontsize=11)
+    ax1.set_aspect('equal')
+    ax1.grid(True, alpha=0.3)
+    ax1.annotate("δ-balls = equivalence\nneighborhoods", (5, 0.5),
+                 fontsize=10, ha='center', style='italic', color='gray')
+
+    # Right: Code space
+    ax2.set_title("Error-Correcting Code Space", fontsize=13, fontweight='bold')
+    codewords = [(2, 3), (7, 7), (9, 2), (4, 9)]
+
+    for x, y in codewords:
+        circle = plt.Circle((x, y), delta, color='lightyellow', alpha=0.4,
+                             edgecolor='goldenrod', linewidth=2)
+        ax2.add_patch(circle)
+        ax2.plot(x, y, 's', color='goldenrod', markersize=12)
+
+    ax2.plot(1, 8, 'D', color='purple', markersize=12)
+    ax2.annotate("Undecodable\nsignal", (1, 8), textcoords="offset points",
+                 xytext=(10, 10), fontsize=10, color='purple')
+    ax2.set_xlim(-0.5, 11)
+    ax2.set_ylim(-0.5, 11)
+    ax2.set_xlabel("Signal dimension 1", fontsize=11)
+    ax2.set_ylabel("Signal dimension 2", fontsize=11)
+    ax2.set_aspect('equal')
+    ax2.grid(True, alpha=0.3)
+    ax2.annotate("Decoding balls =\ncodeword neighborhoods", (5, 0.5),
+                 fontsize=10, ha='center', style='italic', color='gray')
+
+    fig.suptitle("Novelty Certification ≅ Minimum-Distance Decoding",
+                 fontsize=14, fontweight='bold', y=1.02)
+    fig.tight_layout()
+
+    return fig_to_base64(fig)
+
+
+if __name__ == "__main__":
+    print("Generating visualizations...")
+
+    viz1 = create_novelty_certification_diagram()
+    print(f"Figure 1: {len(viz1)} chars")
+
+    viz2 = create_novelty_score_decay()
+    print(f"Figure 2: {len(viz2)} chars")
+
+    viz3 = create_feature_gap_diagram()
+    print(f"Figure 3: {len(viz3)} chars")
+
+    viz4 = create_coding_theory_analogy()
+    print(f"Figure 4: {len(viz4)} chars")
+
+    print("All visualizations generated successfully.")
+
+    # Save individual PNGs
+    for name, data_uri in [("fig1_novelty_space.png", viz1),
+                           ("fig2_score_decay.png", viz2),
+                           ("fig3_feature_gaps.png", viz3),
+                           ("fig4_coding_analogy.png", viz4)]:
+        b64_data = data_uri.split(",", 1)[1]
+        with open(name, "wb") as f:
+            f.write(base64.b64decode(b64_data))
+        print(f"Saved {name}")
