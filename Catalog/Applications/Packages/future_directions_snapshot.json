@@ -1153,21 +1153,6 @@
     "timestamp": "2026-05-14T16:16:22.752502+00:00"
   },
   {
-    "id": "fd_0101",
-    "title": "Direction 3",
-    "description": "(Tropical Convexity) — most speculative, highest conceptual payoff",
-    "domains": [
-      "Tropical",
-      "Speculative"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e7c79405",
-    "consumed_by_exp_id": "23e88b22",
-    "timestamp": "2026-05-14T16:16:40.316976+00:00"
-  },
-  {
     "id": "fd_0102",
     "title": "Depth",
     "description": "(Direction 1): Understand vertical composition through tropical spectral theory.",
@@ -1679,10 +1664,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "831fce32",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9d04e28c",
     "timestamp": "2026-05-14T18:35:19.816031+00:00"
   },
   {
@@ -1936,121 +1921,6 @@
     "source_exp_id": "7498ad19",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:41:38.453645+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "Gibbs variational principle",
-    "description": ": Express evidence as a partition function and apply the variational formula for log-partition functions.\n\n### Cross-Domain Connection\n\nThis directly connects to the free energy principle in neuroscience (Friston), providing a rigorous mathematical foundation for the claim that prediction minimizes free energy.\n\n---\n\n## Direction 4: Bell Inequality for Adversarial Expert Systems\n\n### Precise Theorem Statement\n\n```\ntheorem adversarial_bell_inequality\n    {n : ℕ} (hn : 4 ≤ n)\n    (strategy : Fin n → Fin 2 → Bool) -- expert strategies for 2 questions\n    (weights : Fin n → ℝ) -- positive weights summing to 1\n    (hw : ∀ i, 0 ≤ weights i) (hs : ∑ i, weights i = 1) :\n    |Σ_ij correlation_ij * tensor_weight_ij| ≤ 2\n```\n\n### Why Breakthrough-Level\n\nThis would show that adversarial expert systems",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7498ad19",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:41:38.464850+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Direct combinatorial proof",
-    "description": ": Enumerate ±1 assignments and show the weighted combination is bounded.\n\n### Cross-Domain Connection\n\nThis connects to mechanism design (can prediction markets exceed classical correlation limits?) and to the foundations of quantum computing (is there a quantum advantage for expert advice?).\n\n---\n\n## Direction 5: Categorical Unification of Models and Games\n\n### Precise Theorem Statement\n\n```\ndef PredictionCategory : Category where\n  Obj := Σ n, (BState' n × LocalModel' n × CoherenceBudget)\n  Hom X Y := ResourceMorphism X Y  -- maps preserving resource bounds\n  -- Composition preserves the Full Resource Inequality\n```\n\n```\ntheorem category_preserves_resource_inequality\n    (f : ResourceMorphism X Y) :\n    resourceBound Y ≤ resourceBound X + morphismCost f\n```\n\n### Why Breakthrough-Level\n\nT",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7498ad19",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:41:38.476152+00:00"
-  },
-  {
-    "id": "fd_0194",
-    "title": "Tropical semiring foundations",
-    "description": ": min-plus algebra, tropical matrices, tropical polynomials.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e097f73b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:09:35.053426+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Tropical convexity",
-    "description": ": tropical convex sets, tropical polytopes, tropical hyperplanes.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e097f73b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:09:35.060560+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "Phase structure",
-    "description": ": which resource is the binding constraint",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "42c626d5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:23:41.678042+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "Transition sharpness",
-    "description": ": how quickly capabilities emerge",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "42c626d5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:23:41.684136+00:00"
-  },
-  {
-    "id": "fd_0194",
-    "title": "Optimal allocation",
-    "description": ": how to distribute resources across regimes",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "42c626d5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:23:41.689999+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Forecasting",
-    "description": ": when capability thresholds will be crossed",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "42c626d5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:23:41.695542+00:00"
   },
   {
     "id": "seed_078",
@@ -2522,36 +2392,6 @@
     "timestamp": "2026-05-14T21:35:00.992129+00:00"
   },
   {
-    "id": "fd_0193",
-    "title": "Direction 2: Probabilistic Specifications and Stochastic Refinement",
-    "description": "**Goal**: Extend specifications from sets to probability measures over phrases, and extend refinement from subset inclusion to stochastic dominance or total variation bounds.\n\n**Theorem targets**:\n```\ndef ProbMusicSpec (α : Type*) := List α → ℝ≥0∞\n\ndef stochastic_refines (P Q : ProbMusicSpec α) : Prop :=\n  ∀ S : Set (List α), (∑' w ∈ S, P w) ≤ (∑' w ∈ S, Q w)\n\ntheorem stochastic_compose_mono\n    (hP : stochastic_refines P₁ P₂) (hQ : stochastic_refines Q₁ Q₂) :\n    stochastic_refines (prob_compose P₁ Q₁) (prob_compose P₂ Q₂)\n```\n\n**Cross-domain impact**: Connects to measure-theoretic probability and ergodic theory. Directly relevant to probabilistic generative music systems (variational autoencoders, diffusion models, autoregressive transformers). A stochastic monotonicity theorem would cer",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "df7f8eaf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:36:06.334098+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Direction 4: Hierarchical Composition via Operads",
-    "description": "**Goal**: Extend flat concatenation to hierarchical (tree-structured) composition using operads or multicategories, modeling nested musical structure (motif → phrase → section → movement).\n\n**Theorem targets**:\n```\ninductive MusicTree (α : Type*) where\n  | leaf : α → MusicTree α\n  | node : List (MusicTree α) → MusicTree α\n\ndef TreeSpec (α : Type*) := Set (MusicTree α)\n\ndef tree_compose (S : TreeSpec α) (children : List (TreeSpec α)) : TreeSpec α :=\n  { t | ∃ root ∈ S, ∃ subs, (∀ i, subs.get i ∈ (children.get i)) ∧ t = graft root subs }\n\ntheorem tree_refines_compose_mono\n    (hS : refines S₁ S₂) (hC : ∀ i, refines (C₁.get i) (C₂.get i)) :\n    refines (tree_compose S₁ C₁) (tree_compose S₂ C₂)\n```\n\n**Cross-domain impact**: Connects to operad theory in applied category theory and to context-fr",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "df7f8eaf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:36:06.353077+00:00"
-  },
-  {
     "id": "fd_0189",
     "title": "Precise Theorem Statement",
     "description": "For any tropical protocol tree T, construct a weighted directed acyclic graph G(T) with a source vertex (the root) and a sink vertex, such that the shortest-path distance from source to sink in G(T) equals T.value. Conversely, any finite weighted DAG with designated source and sink can be \"unfolded\" into a (possibly exponentially larger) tropical protocol tree with the same optimal value.",
@@ -2584,34 +2424,61 @@
     "timestamp": "2026-05-14T22:07:13.434811+00:00"
   },
   {
-    "id": "fd_0192",
-    "title": "Research Team Structure",
-    "description": "Each direction should be pursued by a team with these roles:\n\n- **Definition Architect**: Designs the core data structures and recursion principles\n- **Semantics Engineer**: Proves the semantic equivalences (value characterizations, path correspondences)\n- **Complexity Theorist**: Derives bounds, lower bounds, and counting arguments\n- **Cross-Domain Synthesist**: Identifies and formalizes connections to other mathematical areas\n- **Lean Integrator**: Ensures proof quality, minimizes dependencies, documents reusable patterns",
+    "id": "fd_0196",
+    "title": "Statement",
+    "description": "In classical convex analysis, the Fenchel–Moreau theorem states that a lower semicontinuous convex function equals its biconjugate. The tropical analogue states: a function f : ℝⁿ → ℝ ∪ {+∞} that is the supremum of a finite family of max-plus linear forms equals its tropical biconjugate.\n\n**Precise theorem:** Let f : Fin n → ℝ be defined as f(i) = sup_j (c_j + V_j(i)). Define the tropical Legendre transform:\n\n- f*(a) = inf_i (f(i) - a(i))\n- f**(i) = sup_a (f*(a) + a(i))\n\nThen f** = f.",
     "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
+      "Tropical"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1849e719",
+    "source_exp_id": "23e88b22",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:07:13.457216+00:00"
+    "timestamp": "2026-05-14T22:26:25.324369+00:00"
   },
   {
-    "id": "fd_0193",
-    "title": "Priority Order",
-    "description": "1. Direction 1 (DAGs) — most directly extends the current work\n2. Direction 2 (Cut-sets) — highest impact for complexity applications\n3. Direction 4 (Entropy) — builds on existing depth bounds\n4. Direction 3 (Matrix powers) — requires more algebraic infrastructure\n5. Direction 5 (Normal forms) — most ambitious, benefits from all prior work",
+    "id": "fd_0197",
+    "title": "Expected Lean Signature",
+    "description": "```lean\nnoncomputable def tropLegendre {n : ℕ} [NeZero n]\n    (f : Fin n → ℝ) : (Fin n → ℝ) → ℝ :=\n  fun a => Finset.univ.inf' Finset.univ_nonempty (fun i => f i - a i)\n\nnoncomputable def tropBiconj {n : ℕ} [NeZero n]\n    (f : Fin n → ℝ) : Fin n → ℝ :=\n  fun i => ⨆ (a : Fin n → ℝ), tropLegendre f a + a i\n\ntheorem tropical_fenchel_moreau {n m : ℕ} [NeZero n] [NeZero m]\n    (V : Fin m → Fin n → ℝ) (c : Fin m → ℝ)\n    (f : Fin n → ℝ) (hf : f = tropLinComb V c) :\n    tropBiconj f = f := by sorry\n```",
     "domains": [
-      "Algebra",
-      "Computation"
+      "Tropical"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1849e719",
+    "source_exp_id": "23e88b22",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:07:13.465694+00:00"
+    "timestamp": "2026-05-14T22:26:25.331134+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Expected Lean Signatures",
+    "description": "```lean\ntheorem tropical_helly {n m : ℕ} [NeZero n]\n    (H : Fin m → Set (Fin n → ℝ))\n    (hhalf : ∀ j, ∃ a b : Fin n → ℝ, H j = tropHalfspace a b)\n    (hsmall : ∀ I : Finset (Fin m), I.card ≤ n + 1 →\n      (⋂ j ∈ I, H j).Nonempty) :\n    (⋂ j, H j).Nonempty := by sorry\n\ntheorem tropical_radon {n : ℕ} [NeZero n]\n    (P : Fin (n + 2) → Fin n → ℝ) :\n    ∃ (A B : Finset (Fin (n + 2))),\n      A ∪ B = Finset.univ ∧ Disjoint A B ∧\n      (tropHullFinset A P ∩ tropHullFinset B P).Nonempty := by sorry\n```",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "23e88b22",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:26:25.342024+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Research Program Summary",
+    "description": "| Direction | Difficulty | Prerequisites | Impact |\n|-----------|-----------|--------------|--------|\n| 1. Fenchel–Moreau | Medium | Tropical Young ineq | Duality theory |\n| 2. Hahn–Banach | Hard | Carathéodory + LP theory | Certificates |\n| 3. Helly–Radon | Hard | Carathéodory + combinatorics | Feasibility |\n| 4. Sparse certificates | Medium | Carathéodory + LP | Algorithms |\n| 5. Invariant cones | Very Hard | All above + spectral theory | Control |\n\n**Recommended order:** 1 → 4 → 2 → 3 → 5\n\nEach direction builds on the tropical Carathéodory theorem established here. Together, they would constitute a comprehensive formally verified library for tropical convex analysis — the first of its kind in any proof assistant.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "23e88b22",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:26:25.361621+00:00"
   }
 ]

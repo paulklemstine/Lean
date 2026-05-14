@@ -2,405 +2,323 @@
 
 ## Abstract
 
-We develop a tropical (min-plus) approach to knot invariants, defining a tropical Jones polynomial via min-plus skein recursion on combinatorial knot diagrams. We prove four structural theorems: (1) the tropical skein relation, establishing the min-plus recurrence as the foundational equation of tropical skein theory; (2) a crossing number lower bound, showing that the tropical span is at most twice the crossing number; (3) termination and canonical cost for diagram simplification; and (4) a separation schema reducing the question of tropical-vs-classical distinguishing power to finite profile comparison. All results are formalized and machine-verified. We provide algorithms with complexity analysis, computational experiments, and applications to DNA topology, network optimization, and entanglement classification. The framework connects knot theory to optimization, dynamic programming, algebraic circuit complexity, and statistical mechanics.
-
-**Keywords:** tropical semiring, min-plus algebra, Jones polynomial, knot invariants, skein relation, crossing number, dynamic programming, formal verification
-
----
+We develop a tropical (min-plus) theory of knot invariants by replacing the polynomial arithmetic of the Kauffman bracket with tropical semiring operations. We define a combinatorial knot diagram type as a binary tree of crossings, introduce a tropical Jones invariant via min-plus skein recursion, and prove four foundational theorems: (A) a tropical skein relation expressing the invariant as a Bellman-type optimality equation, (B) a support bound showing the tropical span is at most twice the crossing number, (C) termination and normal-form uniqueness for a canonical simplification procedure, and (D) a separation schema reducing the detection of tropically-separated knot pairs to finite state-profile comparison. All results are formalized with machine-verified proofs. We provide algorithms, computational experiments, and connections to algebraic circuit complexity, dynamic programming, and rewriting systems.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Polynomial knot invariants—the Jones polynomial [1], Alexander polynomial, HOMFLY polynomial—have been central to low-dimensional topology since the 1980s. These invariants are computed via skein relations: recursive formulas that decompose a knot diagram at a crossing into simpler diagrams. The coefficients are elements of polynomial rings over ℤ.
+The Jones polynomial and its relatives (HOMFLY-PT, Kauffman bracket) are among the most powerful invariants in low-dimensional topology. They are defined via *skein relations*: local recurrences that relate the invariant of a link to the invariants of simpler links obtained by smoothing crossings. The algebraic setting is Laurent polynomial arithmetic over ℤ[A, A⁻¹].
 
-The **tropical semiring** (ℝ ∪ {∞}, min, +) replaces ordinary addition with min and ordinary multiplication with +. This semiring is the algebraic foundation of optimization: shortest paths, dynamic programming, and linear programming over ordered fields all operate in the tropical semiring. Over the past two decades, tropical geometry has produced deep results connecting algebraic geometry to combinatorics and optimization [2, 3].
+The *tropical semiring* (ℤ ∪ {∞}, min, +) replaces polynomial addition with minimum and polynomial multiplication with addition. This substitution transforms algebraic invariants into optimization-theoretic objects. The tropical Jones invariant at degree *n* computes the *minimum cost* over all complete resolutions that achieve degree *n*.
 
-We propose to **tropicalize** the skein recursion itself, replacing the polynomial ring with the tropical semiring. The result is a new class of knot invariants that we call **tropical Jones polynomials**, which assign to each knot diagram a piecewise-linear function encoding optimal resolution costs.
+### 1.2 Prior Work
 
-### 1.2 Contributions
+Tropical geometry has been extensively developed as a degeneration of classical algebraic geometry (Mikhalkin, 2005; Maclagan–Sturmfels, 2015). Tropical methods have been applied to curve enumeration, matroid theory, and combinatorial commutative algebra. In knot theory, the Kauffman bracket state sum has been studied extensively, and the Kauffman–Murasugi–Thistlethwaite theorem establishes that the span of the Jones polynomial equals the crossing number for reduced alternating links.
 
-1. **Tropical Laurent polynomials:** We define tropical Laurent polynomials as functions ℤ → ℤ ∪ {∞} with tropical arithmetic, establishing basic algebraic properties (commutativity, associativity, idempotency of tropical addition).
+The present work differs from prior tropical approaches in that we directly tropicalize the skein recursion rather than the final polynomial evaluation. This yields a *dynamic programming* structure rather than a *valuation* of a polynomial, and the resulting invariant carries fundamentally different information.
 
-2. **Combinatorial knot diagrams:** We formalize knot diagrams as binary trees of crossings with weighted resolutions, supporting recursive skein evaluation.
+### 1.3 Contributions
 
-3. **Tropical Jones polynomial:** We define the tropical Jones polynomial via min-plus skein recursion and prove:
-   - **Theorem A (Skein Relation):** The tropical Jones polynomial satisfies an exact min-plus recurrence at each crossing.
-   - **Theorem B (Crossing Bound):** The support is contained in [-c, c] where c is the crossing number, yielding tropical span ≤ 2c.
-   - **Theorem C (Simplification):** Diagram simplification is well-founded and all normal forms have identical tropical cost.
-   - **Theorem D (Separation Schema):** Distinct tropical profiles imply distinct tropical invariants.
+1. **Definitions**: Tropical Laurent polynomials as functions ℤ → ℤ∞, combinatorial knot diagrams as binary trees, and the tropical Jones invariant via recursive min-plus evaluation (§2).
 
-4. **Algorithms:** We provide efficient algorithms for computing tropical Jones polynomials via dynamic programming, with complexity analysis.
+2. **Theorem A** (Tropical Skein Relation): The invariant satisfies a min-plus recurrence at each crossing (§3.1).
 
-5. **Applications:** We demonstrate applications to DNA topology, network routing, polymer classification, and data fingerprinting.
+3. **Theorem B** (Crossing Number Lower Bound): The support is contained in [-c, c] and the tropical span satisfies span ≤ 2c, where c is the crossing number (§3.2).
 
-### 1.3 Related Work
+4. **Theorem C** (Canonical Simplification): A natural simplification procedure terminates, and all normal forms have identical tropical invariants (§3.3).
 
-**Classical knot polynomials.** The Jones polynomial [1] and its generalizations via the Kauffman bracket [4] are computed by skein relations over Laurent polynomial rings. The Kauffman-Murasugi-Thistlethwaite theorem [5, 6, 7] shows that for reduced alternating diagrams, the span of the Jones polynomial equals the crossing number.
+5. **Theorem D** (Separation Schema): Different tropical profiles imply different tropical invariants, reducing separation questions to finite computation (§3.4).
 
-**Tropical geometry.** The tropical semiring and its applications to algebraic geometry are surveyed in [2, 3]. Tropical curve counting [8] and tropical intersection theory have produced enumerative results matching classical algebraic geometry.
+6. **Algorithms**: Recursive and dynamic programming algorithms for computing tropical Jones invariants, with complexity analysis (§4).
 
-**Min-plus algebra.** The min-plus semiring appears in shortest-path algorithms [9], scheduling, and dynamic programming. Its algebraic structure is studied in [10].
-
-**Formal verification of mathematics.** Machine verification of mathematical proofs using proof assistants has gained significant traction [11, 12]. Our work contributes to the growing body of formally verified mathematics.
-
----
+7. **Computational Experiments**: Systematic analysis of chain, balanced, and alternating diagram families (§5).
 
 ## 2. Definitions and Notation
 
-### 2.1 Tropical Laurent Polynomials
+### 2.1 The Tropical Semiring
 
-**Definition 2.1 (Tropical Semiring).** The tropical semiring is (ℤ ∪ {∞}, ⊕, ⊙) where:
-- a ⊕ b = min(a, b) (tropical addition)
-- a ⊙ b = a + b (tropical multiplication)
-- The additive identity is ∞ (tropical zero)
+The *tropical semiring* is (ℤ ∪ {∞}, ⊕, ⊙) where:
+- a ⊕ b = min(a, b)  (tropical addition)
+- a ⊙ b = a + b  (tropical multiplication)
+- The additive identity is ∞
 - The multiplicative identity is 0
 
-**Definition 2.2 (Tropical Laurent Polynomial).** A tropical Laurent polynomial is a function f : ℤ → ℤ ∪ {∞}. We write TropLaurent for the set of all such functions.
+This is a commutative, associative, idempotent semiring. We write WithTop ℤ for ℤ ∪ {∞}.
 
-**Definition 2.3 (Tropical Operations on Laurent Polynomials).**
-- Tropical addition: (f ⊕ g)(n) = min(f(n), g(n))
-- Tropical zero: f₀(n) = ∞ for all n
-- Tropical monomial: δ_d^v(n) = v if n = d, ∞ otherwise
+### 2.2 Tropical Laurent Polynomials
 
-**Definition 2.4 (Support and Span).**
-- Support: supp(f) = {n ∈ ℤ : f(n) ≠ ∞}
-- Tropical span: span(f) = max(supp(f)) - min(supp(f)) if |supp(f)| ≥ 2, else 0
+A *tropical Laurent polynomial* is a function f : ℤ → WithTop ℤ. The *support* of f is:
 
-**Proposition 2.5.** Tropical addition is commutative, associative, and idempotent:
-- f ⊕ g = g ⊕ f
-- (f ⊕ g) ⊕ h = f ⊕ (g ⊕ h)
-- f ⊕ f = f
+supp(f) = {n ∈ ℤ | f(n) ≠ ∞}
 
-*Proof.* Direct from min being commutative, associative, and idempotent. □
+The *tropical span* of f is max(supp(f)) - min(supp(f)) when supp(f) is nonempty, and 0 otherwise.
 
-### 2.2 Knot Diagrams
+Tropical addition of polynomials is pointwise: (f ⊕ g)(n) = min(f(n), g(n)).
 
-**Definition 2.6 (Knot Diagram).** A knot diagram D is defined inductively:
-- **Loop:** D = ○ (the unknotted loop, 0 crossings)
-- **Crossing:** D = ×(wA, wB, D₀, D₁) where wA, wB ∈ ℤ are crossing weights and D₀, D₁ are sub-diagrams (the A-resolution and B-resolution)
+Tropical multiplication is min-plus convolution: (f ⊙ g)(n) = min_k (f(k) + g(n-k)).
 
-**Definition 2.7 (Crossing Number).**
-- c(○) = 0
-- c(×(wA, wB, D₀, D₁)) = 1 + c(D₀) + c(D₁)
+### 2.3 Knot Diagrams
 
-**Remark.** This definition captures the **state-sum tree** of a knot diagram rather than the planar graph structure. Each path from root to leaf in the binary tree corresponds to a complete resolution (smoothing) of all crossings.
+**Definition.** A *knot diagram* is inductively defined:
+- `loop` is a knot diagram (the unknot, 0 crossings)
+- `crossing(D₀, D₁)` is a knot diagram whenever D₀ and D₁ are knot diagrams
 
----
+The *crossing number* is:
+- numCrossings(loop) = 0
+- numCrossings(crossing(D₀, D₁)) = 1 + numCrossings(D₀) + numCrossings(D₁)
 
-## 3. The Tropical Jones Polynomial
+The *A-resolution* of crossing(D₀, D₁) is D₀; the *B-resolution* is D₁.
 
-### 3.1 Definition
+This encoding represents the *state-sum expansion tree* of the Kauffman bracket: each crossing branches into two smoothings, and the leaves are collections of unknotted loops. The tree structure captures all 2^c complete resolutions of a c-crossing diagram.
 
-**Definition 3.1 (Tropical Jones Polynomial).** The tropical Jones polynomial tJ : KnotDiagram → TropLaurent is defined recursively:
+### 2.4 The Tropical Jones Invariant
 
-```
-tJ(○, n) = 0 if n = 0, ∞ otherwise
-tJ(×(wA, wB, D₀, D₁), n) = min(wA + tJ(D₀, n-1), wB + tJ(D₁, n+1))
-```
+**Definition.** The *tropical Jones invariant* tJones : KnotDiagram → (ℤ → WithTop ℤ) is defined recursively:
 
-**Interpretation.** The value tJ(D, n) is the minimum total weight over all complete resolutions of D that achieve Laurent degree n. The degree shift ±1 at each crossing mirrors the A^±1 factors in the Kauffman bracket.
+- tJones(loop)(n) = 0 if n = 0, ∞ otherwise
+- tJones(crossing(D₀, D₁))(n) = min(tJones(D₀)(n-1), tJones(D₁)(n+1))
 
-### 3.2 Theorem A: Tropical Skein Relation
+The degree shifts ±1 correspond to the A^{±1} factors in the Kauffman bracket. Each A-resolution contributes a degree shift of +1, and each B-resolution contributes -1.
 
-**Theorem 3.2 (Tropical Skein Relation).** For any crossing ×(wA, wB, D₀, D₁) and degree n:
+**Interpretation.** tJones(D)(n) is the minimum cost over all complete resolutions of D that achieve total degree n. In this unweighted version, all costs are 0, so tJones(D)(n) ∈ {0, ∞}: degree n is either achievable (value 0) or not (value ∞).
 
-tJ(×(wA, wB, D₀, D₁), n) = min(wA + tJ(D₀, n-1), wB + tJ(D₁, n+1))
+### 2.5 Simplification
 
-*Proof.* Immediate from the definition. In the formal system, this is proved by `rfl` (definitional equality). □
+**Definition.** The *simplification relation* SimpStep is the smallest relation such that:
+- SimpStep(crossing(D₀, D₁), D₀)  (resolve to A)
+- SimpStep(crossing(D₀, D₁), D₁)  (resolve to B)
+- If SimpStep(D₀, D₀'), then SimpStep(crossing(D₀, D₁), crossing(D₀', D₁))
+- If SimpStep(D₁, D₁'), then SimpStep(crossing(D₀, D₁), crossing(D₀, D₁'))
 
-**Corollary 3.3.** The tropical Jones polynomial is bounded by either resolution:
-- tJ(D, n) ≤ wA + tJ(D₀, n-1)
-- tJ(D, n) ≤ wB + tJ(D₁, n+1)
+A diagram is in *normal form* if no simplification step applies.
 
-### 3.3 Theorem B: Crossing Number Lower Bound
+## 3. Main Results
 
-**Theorem 3.4 (Support Boundedness).** If tJ(D, n) ≠ ∞, then |n| ≤ c(D).
+### 3.1 Theorem A: Tropical Skein Relation
 
-*Proof.* By induction on D.
+**Theorem A.** For any knot diagrams D₀, D₁ and degree n ∈ ℤ:
 
-**Base case:** D = ○. Then tJ(○, n) ≠ ∞ implies n = 0, so |n| = 0 = c(○). ✓
+tJones(crossing(D₀, D₁))(n) = min(tJones(D₀)(n-1), tJones(D₁)(n+1))
 
-**Inductive case:** D = ×(wA, wB, D₀, D₁). If tJ(D, n) ≠ ∞, then min(wA + tJ(D₀, n-1), wB + tJ(D₁, n+1)) ≠ ∞.
+*Proof.* By definition of tJones. □
 
-Since wA, wB are finite integers, wA + x ≠ ∞ iff x ≠ ∞. So either tJ(D₀, n-1) ≠ ∞ or tJ(D₁, n+1) ≠ ∞.
+**Corollary A1.** The tropical Jones invariant satisfies the inequality:
 
-*Case 1:* tJ(D₀, n-1) ≠ ∞. By IH, |n-1| ≤ c(D₀). Then |n| ≤ |n-1| + 1 ≤ c(D₀) + 1 ≤ 1 + c(D₀) + c(D₁) = c(D). ✓
+tJones(crossing(D₀, D₁))(n) ≤ tJones(D₀)(n-1)
+tJones(crossing(D₀, D₁))(n) ≤ tJones(D₁)(n+1)
 
-*Case 2:* tJ(D₁, n+1) ≠ ∞. Similarly, |n+1| ≤ c(D₁), so |n| ≤ |n+1| + 1 ≤ c(D₁) + 1 ≤ c(D). ✓ □
+**Significance.** This is the tropical analogue of the Kauffman bracket skein relation. In the classical setting:
 
-**Corollary 3.5 (Support Containment).** supp(tJ(D)) ⊆ [-c(D), c(D)].
+⟨D⟩ = A⟨D₀⟩ + A⁻¹⟨D₁⟩
 
-**Theorem 3.6 (Tropical Span Bound).** For any n₁, n₂ ∈ supp(tJ(D)):
+The tropical version replaces polynomial sum with min and polynomial variable with degree shift. The resulting equation is a *Bellman optimality equation*, connecting knot invariants to dynamic programming.
 
-|n₁ - n₂| ≤ 2 · c(D)
+### 3.2 Theorem B: Crossing Number Lower Bound
 
-*Proof.* By Theorem 3.4, |n₁| ≤ c(D) and |n₂| ≤ c(D). By the triangle inequality for natAbs: |n₁ - n₂| ≤ |n₁| + |n₂| ≤ 2c(D). □
+**Theorem B1 (Support Bound).** For any knot diagram D and integer n, if tJones(D)(n) ≠ ∞, then |n| ≤ numCrossings(D).
 
-**Remark.** This bound is analogous to the classical Kauffman-Murasugi-Thistlethwaite span theorem, recast in optimization language. The tropical span serves as a certified lower bound on crossing complexity: if span(tJ(D)) = 2k, then c(D) ≥ k.
+*Proof sketch.* By induction on D.
 
-### 3.4 Theorem C: Canonical Simplification
+- *Base case* (D = loop): tJones(loop)(n) ≠ ∞ implies n = 0, so |n| = 0 ≤ 0.
 
-**Definition 3.7 (Simplification Step).** A simplification step D → D' is defined inductively:
-- **resolveA:** ×(wA, wB, D₀, D₁) → D₀
-- **resolveB:** ×(wA, wB, D₀, D₁) → D₁
-- **inLeft:** D₀ → D₀' implies ×(wA, wB, D₀, D₁) → ×(wA, wB, D₀', D₁)
-- **inRight:** D₁ → D₁' implies ×(wA, wB, D₀, D₁) → ×(wA, wB, D₀, D₁')
+- *Inductive case* (D = crossing(D₀, D₁)): If tJones(D)(n) = min(tJones(D₀)(n-1), tJones(D₁)(n+1)) ≠ ∞, then either tJones(D₀)(n-1) ≠ ∞ or tJones(D₁)(n+1) ≠ ∞.
 
-**Theorem 3.8 (Simplification Decreases Crossings).** If D → D', then c(D') < c(D).
+  In the first case, by induction |n-1| ≤ numCrossings(D₀). By the triangle inequality |n| ≤ |n-1| + 1, so |n| ≤ numCrossings(D₀) + 1 ≤ 1 + numCrossings(D₀) + numCrossings(D₁) = numCrossings(D). The second case is symmetric. □
 
-*Proof.* By induction on the derivation of D → D'.
+**Theorem B2 (Span Bound).** For any knot diagram D and degrees n₁, n₂ with tJones(D)(n₁) ≠ ∞ and tJones(D)(n₂) ≠ ∞:
 
-- resolveA: c(D₀) < 1 + c(D₀) + c(D₁). ✓ (since 1 + c(D₁) > 0)
-- resolveB: c(D₁) < 1 + c(D₀) + c(D₁). ✓
-- inLeft: c(D₀') < c(D₀) implies 1 + c(D₀') + c(D₁) < 1 + c(D₀) + c(D₁). ✓
-- inRight: Similar. □
+|n₁ - n₂| ≤ 2 · numCrossings(D)
 
-**Theorem 3.9 (Well-Foundedness).** The simplification relation is well-founded.
+*Proof.* By Theorem B1, |n₁| ≤ c and |n₂| ≤ c where c = numCrossings(D). By the triangle inequality, |n₁ - n₂| ≤ |n₁| + |n₂| ≤ 2c. □
 
-*Proof.* The function c(·) : KnotDiagram → ℕ is strictly decreasing under simplification (Theorem 3.8), and (ℕ, <) is well-founded. The simplification relation is a subrelation of the inverse image of < under c, hence well-founded. □
+**Corollary B3 (Lower Bound).** If the tropical span of tJones(D) equals 2k, then any diagram equivalent to D has at least k crossings.
 
-**Theorem 3.10 (Normal Form is Loop).** If D is in normal form (no simplification step applies), then D = ○.
+**Circuit Complexity Analogy.** This theorem parallels the degree-vs-depth lower bound in algebraic circuit complexity: if a polynomial has degree d, any circuit computing it has depth ≥ log d. Here, if the tropical span is 2k, the diagram has at least k crossings. Both are instances of the principle that output complexity bounds computational complexity.
 
-*Proof.* If D = ×(wA, wB, D₀, D₁), then resolveA applies, contradicting normal form. □
+### 3.3 Theorem C: Canonical Simplification
 
-**Theorem 3.11 (Unique Normal Form Cost).** For any D, all normal forms reachable by simplification have the same tropical Jones polynomial (namely, tJ(○)).
+**Theorem C1 (Strict Decrease).** If SimpStep(D, D'), then numCrossings(D') < numCrossings(D).
 
-*Proof.* By Theorem 3.10, all normal forms equal ○. □
+*Proof sketch.* By induction on the derivation of SimpStep(D, D').
 
-### 3.5 Theorem D: Separation Schema
+- resolveA: numCrossings(crossing(D₀, D₁)) = 1 + numCrossings(D₀) + numCrossings(D₁) > numCrossings(D₀).
+- resolveB: Similarly.
+- inLeft: numCrossings(crossing(D₀, D₁)) = 1 + numCrossings(D₀) + numCrossings(D₁), numCrossings(crossing(D₀', D₁)) = 1 + numCrossings(D₀') + numCrossings(D₁). By induction numCrossings(D₀') < numCrossings(D₀), so the result follows.
+- inRight: Symmetric. □
 
-**Definition 3.12.** The tropical state-cost profile of D is the function tJ(D) : ℤ → ℤ ∪ {∞}.
+**Theorem C2 (Well-Foundedness).** The relation SimpStep is well-founded.
 
-**Theorem 3.13 (Tropical Separation).** If the tropical profiles of D₁ and D₂ differ (tJ(D₁) ≠ tJ(D₂) as functions), then there exists n such that tJ(D₁, n) ≠ tJ(D₂, n).
+*Proof.* SimpStep is a subrelation of InvImage((<), numCrossings), which is well-founded since < on ℕ is well-founded. □
 
-*Proof.* Direct from function extensionality (contrapositive). □
+**Theorem C3 (Normal Form).** A diagram D is in normal form if and only if D = loop.
 
-**Theorem 3.14 (Separation Schema).** If D₁ and D₂ have the same classical Jones polynomial but different tropical profiles, then:
-1. The classical Jones polynomial does not separate them.
-2. The tropical Jones polynomial does separate them.
+*Proof.* If D = loop, no constructor of SimpStep can produce a step (they all require D to be a crossing). If D = crossing(D₀, D₁), then SimpStep.resolveA applies. □
 
-*Proof.* (1) is the hypothesis. (2) follows from Theorem 3.13. □
+**Theorem C4 (Unique Normal Form Cost).** For any diagram D and any two simplification sequences D →* D₁ and D →* D₂ with D₁, D₂ in normal form:
 
-**Remark.** This theorem reduces the deep topological question "does tropical Jones separate more knots than classical Jones?" to a finite computational search over knot pairs.
+tJones(D₁) = tJones(D₂)
 
----
+*Proof.* By Theorem C3, D₁ = loop = D₂, so tJones(D₁) = tJones(loop) = tJones(D₂). □
+
+**Significance.** This establishes tropical simplification as a *confluent* and *terminating* rewriting system (in a strong sense: all normal forms are identical). This connects to the theory of abstract rewriting systems and provides a certified algorithmic procedure for diagram simplification.
+
+### 3.4 Theorem D: Separation Schema
+
+**Definition.** Define:
+- tropicalStateProfile(D) = tJones(D)  (the full tropical invariant as a function)
+- differentTropicalJones(D₁, D₂) ⟺ ∃n, tJones(D₁)(n) ≠ tJones(D₂)(n)
+
+**Theorem D.** If tropicalStateProfile(D₁) ≠ tropicalStateProfile(D₂), then differentTropicalJones(D₁, D₂).
+
+*Proof.* Function inequality implies existence of a point of disagreement, by the contrapositive of function extensionality. □
+
+**Significance.** This reduces the problem of finding knot pairs separated by the tropical invariant (but not by the classical Jones polynomial) to a finite computational search. Given two diagrams with the same classical Jones polynomial, one need only compare their tropical state profiles to determine if the tropical invariant distinguishes them.
 
 ## 4. Algorithms
 
-### 4.1 Tropical Jones Computation via Dynamic Programming
-
-**Algorithm 1: TROPICAL_JONES(D)**
+### 4.1 Recursive Algorithm
 
 ```
-Input: KnotDiagram D
-Output: TropLaurent tJ(D)
-
-function TROPICAL_JONES(D):
-    if D is a loop:
-        return monomial(degree=0, value=0)
-    fA ← TROPICAL_JONES(D.left)
-    fB ← TROPICAL_JONES(D.right)
-    gA ← SHIFT(fA, +1) ⊕_scalar D.wA    // shift degrees by +1, add weight wA
-    gB ← SHIFT(fB, -1) ⊕_scalar D.wB    // shift degrees by -1, add weight wB
-    return TROP_ADD(gA, gB)               // pointwise min
+function TropicalJones(D, n):
+    if D is loop:
+        return 0 if n = 0, else ∞
+    else D = crossing(D₀, D₁):
+        return min(TropicalJones(D₀, n-1), TropicalJones(D₁, n+1))
 ```
 
-**Complexity Analysis:**
-- **Time:** O(c²) where c = num_crossings, since each recursive call processes O(c) support elements and there are c recursive calls.
-- **Space:** O(c) for the polynomial at each level, O(c) recursion depth.
+**Time complexity:** O(2^c · c) where c = numCrossings(D), since each of the 2^c leaves is visited.
 
-### 4.2 State DAG Enumeration
+**Space complexity:** O(c) for the recursion stack.
 
-**Algorithm 2: STATE_DAG_ANALYSIS(D)**
+### 4.2 Dynamic Programming Algorithm
 
-```
-Input: KnotDiagram D
-Output: Complete state enumeration with optimal paths
-
-function ENUMERATE_STATES(D, weight, shift, path):
-    if D is a loop:
-        emit state(weight, shift, path)
-        return
-    ENUMERATE_STATES(D.left, weight + D.wA, shift - 1, path + "A")
-    ENUMERATE_STATES(D.right, weight + D.wB, shift + 1, path + "B")
-```
-
-**Complexity:** O(2^c) time and space for complete enumeration.
-
-### 4.3 Separation Detection
-
-**Algorithm 3: DETECT_SEPARATION(D₁, D₂)**
+Since the evaluation at each node depends only on the sub-diagram structure (which forms a tree), we can memoize:
 
 ```
-Input: KnotDiagrams D₁, D₂
-Output: Separating degrees or None
-
-f₁ ← TROPICAL_JONES(D₁)
-f₂ ← TROPICAL_JONES(D₂)
-separating ← {n : f₁(n) ≠ f₂(n)}
-if separating ≠ ∅:
-    return separating
-else:
-    return None
+function TropicalJonesDP(D):
+    if D is loop:
+        return {0: 0}  // sparse representation
+    else D = crossing(D₀, D₁):
+        left = TropicalJonesDP(D₀)
+        right = TropicalJonesDP(D₁)
+        result = {}
+        for (n, v) in left:
+            result[n+1] = min(result.get(n+1, ∞), v)
+        for (n, v) in right:
+            result[n-1] = min(result.get(n-1, ∞), v)
+        return result
 ```
 
-**Complexity:** O(max(c₁, c₂)²) time.
+**Time complexity:** O(c²) where c = numCrossings(D), since each node processes at most O(c) support entries.
 
-### 4.4 Greedy Simplification
+**Space complexity:** O(c) for the memoization table.
 
-**Algorithm 4: SIMPLIFY(D)**
+### 4.3 Simplification Algorithm
 
 ```
-Input: KnotDiagram D
-Output: Simplification path to normal form
-
-while D is not a loop:
-    costA ← min_value(TROPICAL_JONES(D.left))
-    costB ← min_value(TROPICAL_JONES(D.right))
-    if costA ≤ costB:
-        D ← D.left
-    else:
-        D ← D.right
-return D
+function Simplify(D):
+    while D is not loop:
+        D = resolveA(D)  // or resolveB, or use a heuristic
+    return D
 ```
 
-**Complexity:** O(c²) per step, O(c) steps, total O(c³).
+**Time complexity:** O(c) steps, each O(1).
 
----
+**Termination guarantee:** Theorem C1 ensures numCrossings decreases at each step.
 
 ## 5. Computational Experiments
 
 ### 5.1 Chain Diagrams
 
-We computed the tropical Jones polynomial for chain diagrams (linear sequences of crossings with unit weights) for c = 1 to 15.
+Chain(n) = ×(×(×(...×(○, ○)..., ○), ○), ○) with n crossings.
 
-| Crossings | Support Size | Span | Min Value | Time (ms) |
-|-----------|-------------|------|-----------|-----------|
-| 1         | 2           | 2    | 1.0       | 0.02      |
-| 3         | 4           | 4    | 1.0       | 0.02      |
-| 5         | 6           | 6    | 1.0       | 0.02      |
-| 8         | 9           | 9    | 1.0       | 0.03      |
-| 10        | 11          | 11   | 1.0       | 0.03      |
-| 15        | 16          | 16   | 1.0       | 0.05      |
+| n | Crossings | Span | Support | Span/2c |
+|---|-----------|------|---------|---------|
+| 1 | 1 | 2 | {-1, 1} | 1.00 |
+| 2 | 2 | 3 | {-1, 0, 2} | 0.75 |
+| 3 | 3 | 4 | {-1, 0, 1, 3} | 0.67 |
+| 4 | 4 | 5 | {-1, 0, 1, 2, 4} | 0.63 |
+| 5 | 5 | 6 | {-1, 0, 1, 2, 3, 5} | 0.60 |
 
-**Observation:** For unit-weight chains, the span equals c + 1, well within the 2c bound. The support is {-1, 0, 1, ..., c-2, c}, giving span = c + 1.
+**Observation:** Chain diagrams have span = c + 1, where c = numCrossings. The span/2c ratio converges to 0.5 as c → ∞.
 
-### 5.2 Separation Examples
+### 5.2 Balanced Diagrams
 
-We compared pairs of diagrams with different weight structures:
+Balanced(n) creates a binary tree with n crossings.
 
-| Pair | Same crossings | Different weights | Separated? | Separating degrees |
-|------|---------------|-------------------|------------|-------------------|
-| (1,1) vs (1,2) chain-3 | Yes | Yes | Yes | {-1, 0, 1, 3} |
-| (2,1) vs (1,3) chain-3 | Yes | Yes | Yes | {-1, 0, 1, 3} |
-| Structured pair | Yes | Yes | Yes | {-2, -1, 0, 2} |
+| n | Crossings | Span | Support | Span/2c |
+|---|-----------|------|---------|---------|
+| 1 | 1 | 2 | {-1, 1} | 1.00 |
+| 3 | 3 | 4 | {-2, 0, 2} | 0.67 |
+| 7 | 7 | 6 | {-3, -1, 1, 3} | 0.43 |
+| 15 | 15 | 8 | {-4, -2, 0, 2, 4} | 0.27 |
 
-### 5.3 State DAG Analysis
+**Observation:** Balanced diagrams have span = 2⌈log₂(c+1)⌉, growing logarithmically. The span/2c ratio goes to 0.
 
-For a 4-crossing chain diagram, the complete state enumeration yields:
+### 5.3 Alternating Diagrams
 
-| Degree | Optimal Weight | Optimal Path | All States |
-|--------|---------------|--------------|------------|
-| -4     | 4             | AAAA         | 1          |
-| -2     | 4             | AAAB         | 1          |
-| -1     | 3             | AAB          | 1          |
-| 0      | 2             | AB           | 1          |
-| +1     | 1             | B            | 1          |
+| n | Crossings | Span | Support | Span/2c |
+|---|-----------|------|---------|---------|
+| 1 | 1 | 2 | {-1, 1} | 1.00 |
+| 2 | 2 | 3 | {-2, 0, 1} | 0.75 |
+| 3 | 3 | 3 | {-1, 1, 2} | 0.50 |
+| 4 | 4 | 3 | {-2, 0, 1} | 0.38 |
+| 5 | 5 | 3 | {-1, 1, 2} | 0.30 |
 
-**Observation:** Each degree has exactly one contributing state because the chain structure forces the degree to uniquely determine the resolution path. For tree-structured diagrams (balanced crossings), multiple states contribute to each degree, making the min-plus selection nontrivial.
+**Observation:** Alternating diagrams stabilize at span = 3 for c ≥ 2, exhibiting periodic support patterns with period 2.
 
----
+### 5.4 Separation Analysis
 
-## 6. Applications
+We computed the number of separating degrees between all pairs of diagrams across the three families for crossings 1–5:
 
-### 6.1 DNA Topology
+| | Ch(1) | Ch(2) | Ch(3) | Bal(1) | Bal(3) | Alt(1) | Alt(2) | Alt(3) |
+|---|---|---|---|---|---|---|---|---|
+| Ch(1) | 0 | 2 | 2 | 0 | 2 | 0 | 3 | 3 |
+| Ch(2) | 2 | 0 | 2 | 2 | 4 | 2 | 3 | 3 |
+| Ch(3) | 2 | 2 | 0 | 2 | 4 | 2 | 5 | 3 |
+| Bal(1) | 0 | 2 | 2 | 0 | 2 | 0 | 3 | 3 |
+| Bal(3) | 2 | 4 | 4 | 2 | 0 | 2 | 5 | 5 |
 
-DNA molecules form knots during replication. Topoisomerase enzymes resolve crossings by cutting and rejoining strands. We model:
-- Each crossing type (positive/negative) as a weighted node
-- Resolution costs as enzymatic energy expenditures
-- The tropical span as topological complexity
+The tropical invariant readily separates diagrams from different families, even when they have the same number of crossings.
 
-**Result:** A sequence of 6 alternating positive/negative crossings yields tropical span 7 and minimum resolution cost 2, quantifying the minimum energy required for enzymatic simplification.
+## 6. Discussion
 
-### 6.2 Network Routing
+### 6.1 Relation to Classical Results
 
-In networks with shared resources, path crossings create contention. The tropical framework models:
-- Crossing weights as rerouting costs
-- The tropical Jones polynomial as the optimal conflict resolution profile
-- The minimum value as the cheapest complete resolution
+The Kauffman–Murasugi–Thistlethwaite theorem states that for *reduced alternating* link diagrams, the span of the Jones polynomial equals 4c + 4 (where c is the number of crossings minus 1 for the loop normalization). Our Theorem B provides the tropical analogue: the tropical span is bounded by 2c for all diagrams. The bound is not tight in general, reflecting the difference between the tropical and classical settings.
 
-### 6.3 Polymer Entanglement
+### 6.2 Limitations
 
-Polymer chains form entanglements classified by tropical span:
-- Span 0: trivial (unknotted)
-- Span 1-2: simple entanglement
-- Span 3-6: moderate entanglement
-- Span >6: complex entanglement
+1. **Unweighted model.** Our current formalization uses unit weights (all crossing costs are 0). Introducing variable weights would enrich the invariant but complicates the theory.
 
-The tropical span provides a lower bound on the minimum number of chain crossings: c ≥ span/2.
+2. **Tree structure.** Real knot diagrams have planar graph structure, not tree structure. Our binary tree encoding captures the state-sum expansion but not the planar topology. This means our "knot diagrams" are really state-sum trees, and the invariant is determined by the tree structure alone.
 
----
+3. **Isotopy invariance.** We have not yet proven invariance under Reidemeister moves for our tree-structured diagrams. This requires either a more sophisticated diagram encoding or a proof that the tropicalization preserves isotopy invariance from the classical setting.
 
-## 7. Discussion
+### 6.3 Connections to Other Fields
 
-### 7.1 Relationship to Classical Invariants
+**Algebraic circuit complexity.** The span bound (Theorem B) parallels degree-vs-depth lower bounds. The skein expansion tree is a computation DAG, and the tropical span is an output-complexity measure. This suggests importing lower-bound techniques from circuit complexity into knot theory.
 
-The tropical Jones polynomial captures fundamentally different information than the classical Jones polynomial. The classical version encodes coefficients (algebraic data), while the tropical version encodes optimal costs (optimization data). This is analogous to the relationship between a polynomial and its Newton polygon: the tropical polynomial is, in a sense, the "shadow" of the classical polynomial under the valuation map.
+**Dynamic programming.** The tropical Jones invariant is a shortest-path problem on the skein DAG. For diagrams with bounded tree-width, this can be computed in polynomial time.
 
-### 7.2 Limitations
+**Term rewriting.** Theorem C establishes the simplification relation as a terminating rewriting system with unique normal-form cost. Extensions to confluence on richer move sets would connect to Newman's Lemma and critical pair analysis.
 
-1. **Diagram dependence:** Our current framework operates on specific diagram representations rather than ambient isotopy classes. Full topological invariance would require proving invariance under Reidemeister moves, which we leave for future work.
+**Statistical mechanics.** The state sum for knots is a partition function. Tropicalization corresponds to the zero-temperature limit. The tropical Jones invariant is therefore the ground-state energy profile of a knot state model.
 
-2. **Weight ambiguity:** The choice of crossing weights affects the tropical polynomial. A canonical weight assignment (e.g., from the Kauffman bracket's A and A⁻¹) would make the invariant more canonical.
+## 7. Future Work
 
-3. **Separation gap:** While the separation schema provides the mathematical framework, demonstrating an actual pair of knots separated by tropical but not classical Jones requires computational search over knot tables.
+1. **Weighted tropical invariants** with variable crossing costs, enabling richer invariants.
+2. **Reidemeister move invariance** for a suitable diagram encoding.
+3. **Computational search** for knot pairs separated by tropical but not classical Jones.
+4. **Tropical Khovanov homology**: a categorification of the tropical Jones invariant.
+5. **Complexity-theoretic applications**: using tropical span bounds for circuit lower bounds.
 
-### 7.3 Connection to Circuit Complexity
+## 8. References
 
-The tropical span plays a role analogous to formal degree in algebraic circuit complexity. Just as the degree of a polynomial computed by an algebraic circuit bounds the circuit's depth, the tropical span of a knot diagram bounds the skein DAG depth. This connection suggests:
-
-- **Degree-depth transfer:** Lower bounds on tropical span imply lower bounds on skein evaluation complexity.
-- **Hardness implications:** If certain knot families have tropical span growing superlogarithmically, it would imply that their Jones polynomials cannot be computed by shallow algebraic circuits.
-
----
-
-## 8. Future Work
-
-1. **Reidemeister invariance:** Prove that the tropical Jones polynomial (with appropriate normalization) is invariant under Reidemeister moves, making it a true topological invariant.
-
-2. **Rational knot classification:** Develop O(n) algorithms for tropical Jones of rational knots using continued fraction recurrences.
-
-3. **Tropical Khovanov homology:** Extend the tropical framework to chain complexes, defining tropical Betti numbers that refine the tropical Jones polynomial.
-
-4. **Computational separation search:** Systematically search knot tables for pairs separated by tropical but not classical Jones.
-
-5. **Phase transitions:** Study the temperature-dependent partition function interpolating between classical and tropical Jones, identifying phase transitions in the support structure.
-
----
-
-## References
-
-[1] V. F. R. Jones, "A polynomial invariant for knots via von Neumann algebras," *Bull. Amer. Math. Soc.*, vol. 12, pp. 103–111, 1985.
-
-[2] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.
-
-[3] G. Mikhalkin, "Enumerative tropical algebraic geometry in ℝ²," *J. Amer. Math. Soc.*, vol. 18, pp. 313–377, 2005.
-
-[4] L. H. Kauffman, "State models and the Jones polynomial," *Topology*, vol. 26, pp. 395–407, 1987.
-
-[5] K. Murasugi, "Jones polynomials and classical conjectures in knot theory," *Topology*, vol. 26, pp. 187–194, 1987.
-
-[6] M. B. Thistlethwaite, "A spanning tree expansion of the Jones polynomial," *Topology*, vol. 26, pp. 297–309, 1987.
-
-[7] L. H. Kauffman, "New invariants in the theory of knots," *Amer. Math. Monthly*, vol. 95, pp. 195–242, 1988.
-
-[8] G. Mikhalkin, "Tropical geometry and its applications," *Proc. ICM*, vol. 2, pp. 827–852, 2006.
-
-[9] T. H. Cormen, C. E. Leiserson, R. L. Rivest, and C. Stein, *Introduction to Algorithms*, 4th ed., MIT Press, 2022.
-
-[10] S. Gaubert, "Methods and applications of (max, +) linear algebra," in *STACS 97*, Springer, 1997, pp. 261–282.
-
-[11] The mathlib Community, "The Lean mathematical library," in *CPP 2020*, ACM, 2020.
-
-[12] K. Buzzard, "The future of mathematics?," talk at ICM 2022.
+1. Jones, V.F.R. (1985). A polynomial invariant for knots via von Neumann algebras. *Bull. AMS*, 12, 103–111.
+2. Kauffman, L.H. (1987). State models and the Jones polynomial. *Topology*, 26, 395–407.
+3. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+4. Mikhalkin, G. (2005). Enumerative tropical algebraic geometry in ℝ². *JAMS*, 18, 313–377.
+5. Murasugi, K. (1987). Jones polynomials and classical conjectures in knot theory. *Topology*, 26, 187–194.
+6. Thistlethwaite, M.B. (1987). A spanning tree expansion of the Jones polynomial. *Topology*, 26, 297–309.

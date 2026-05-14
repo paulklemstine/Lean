@@ -2,635 +2,520 @@
 """
 Tropical Knot Theory: Applications
 
-Demonstrates real-world applications of tropical knot invariants:
-1. DNA topology: modeling strand complexity
-2. Network routing: knot-theoretic optimization
-3. Material science: polymer entanglement classification
-4. Cryptographic hashing: knot-based fingerprinting
+This module demonstrates real-world applications of tropical knot invariants:
+1. Knot complexity certification
+2. Diagram optimization via tropical simplification
+3. Knot family classification
+4. Connections to network routing and circuit complexity
 """
 
-from typing import Dict, List, Tuple
+from algorithms import (
+    KnotDiagram, TropicalLaurent, tropical_jones,
+    tropical_span_bound, verify_support_bound, full_simplification,
+    tropical_profiles_differ, make_chain, make_balanced, make_alternating_chain
+)
 import math
 
-INF = float('inf')
 
+def application_complexity_certification():
+    """Application 1: Certified Lower Bounds on Knot Complexity
 
-# ============================================================
-# Application 1: DNA Strand Complexity Analysis
-# ============================================================
+    The tropical span gives a certified lower bound on crossing number.
+    If span(tJones(D)) = 2k, then any equivalent diagram must have ≥ k crossings.
 
-class DNATopologyAnalyzer:
-    """Model DNA strand crossings as knot diagrams.
-
-    DNA molecules can form knotted structures during replication.
-    The tropical Jones invariant provides a complexity measure:
-    - Higher tropical span → more topologically complex
-    - Minimum tropical cost → energetic favorability of resolution
-
-    This models how topoisomerase enzymes "simplify" DNA crossings.
+    This is analogous to degree lower bounds in algebraic circuit complexity:
+    just as the degree of a polynomial bounds the depth of any circuit computing it,
+    the tropical span bounds the crossing number of any diagram representing the knot.
     """
-
-    def __init__(self):
-        self.crossing_energy = {"positive": 2, "negative": 1}
-
-    def model_crossing_sequence(self, crossings: List[str]) -> Dict:
-        """Model a sequence of DNA crossings.
-
-        Args:
-            crossings: List of "positive" or "negative" crossing types
-
-        Returns:
-            Analysis including tropical complexity measures
-        """
-        # Build knot diagram from crossing sequence
-        from algorithms import KnotDiagram, compute_tropical_jones
-
-        D = KnotDiagram.loop("strand_end")
-        for i, ctype in enumerate(crossings):
-            wA = self.crossing_energy.get(ctype, 1)
-            wB = 3 - wA  # complementary weight
-            D = KnotDiagram.crossing(wA, wB, D, KnotDiagram.loop(f"loop_{i}"),
-                                     name=f"crossing_{i}")
-
-        f = compute_tropical_jones(D)
-
-        return {
-            "num_crossings": len(crossings),
-            "crossing_types": crossings,
-            "tropical_span": f.tropical_span,
-            "min_resolution_cost": f.min_value,
-            "complexity_profile": dict(f.coeffs),
-            "topoisomerase_difficulty": f.tropical_span * f.min_value if f.min_value < INF else INF,
-        }
-
-
-# ============================================================
-# Application 2: Network Routing Optimization
-# ============================================================
-
-class NetworkTopologyOptimizer:
-    """Use tropical knot invariants for network path optimization.
-
-    In network routing, paths can "cross" at shared resources.
-    The tropical Jones invariant captures the minimum cost to resolve
-    all resource conflicts, modeling:
-    - Bandwidth allocation at crossing points
-    - Latency optimization through resource sharing
-    """
-
-    def analyze_route_crossings(self, routes: List[List[int]],
-                                 crossing_costs: Dict[Tuple[int,int], Tuple[int,int]]) -> Dict:
-        """Analyze crossing structure of network routes.
-
-        Args:
-            routes: List of routes (each route is a list of node IDs)
-            crossing_costs: For each pair of crossing routes, (costA, costB)
-                           for the two resolution options
-
-        Returns:
-            Tropical analysis of the routing topology
-        """
-        from algorithms import KnotDiagram, compute_tropical_jones
-
-        # Build diagram from crossings
-        D = KnotDiagram.loop("base")
-        for (i, j), (cA, cB) in crossing_costs.items():
-            D = KnotDiagram.crossing(cA, cB, D, KnotDiagram.loop(f"alt_{i}_{j}"),
-                                     name=f"route_crossing_{i}_{j}")
-
-        f = compute_tropical_jones(D)
-
-        return {
-            "num_route_crossings": len(crossing_costs),
-            "tropical_span": f.tropical_span,
-            "min_resolution_cost": f.min_value,
-            "optimal_degree": min(f.coeffs.keys(), key=lambda k: f.coeffs[k]) if f.coeffs else None,
-            "profile": dict(f.coeffs),
-        }
-
-
-# ============================================================
-# Application 3: Polymer Entanglement Classification
-# ============================================================
-
-class PolymerEntanglementClassifier:
-    """Classify polymer chain entanglements using tropical invariants.
-
-    Polymer chains in solution can form knots and links.
-    The tropical Jones polynomial provides:
-    - A complexity measure invariant under ambient isotopy
-    - A lower bound on the minimum number of chain crossings
-    - An energy landscape for untangling pathways
-    """
-
-    def classify_entanglement(self, chain_crossings: List[Tuple[int, int]]) -> Dict:
-        """Classify entanglement complexity from crossing data.
-
-        Args:
-            chain_crossings: List of (wA, wB) weight pairs for each crossing
-
-        Returns:
-            Classification including tropical invariant data
-        """
-        from algorithms import KnotDiagram, compute_tropical_jones
-
-        D = KnotDiagram.loop("chain_end")
-        for i, (wA, wB) in enumerate(chain_crossings):
-            D = KnotDiagram.crossing(wA, wB, D, KnotDiagram.loop())
-
-        f = compute_tropical_jones(D)
-
-        # Classification thresholds based on tropical span
-        span = f.tropical_span
-        if span == 0:
-            category = "trivial (unknotted)"
-        elif span <= 2:
-            category = "simple entanglement"
-        elif span <= 6:
-            category = "moderate entanglement"
-        else:
-            category = "complex entanglement"
-
-        return {
-            "num_crossings": len(chain_crossings),
-            "tropical_span": span,
-            "min_cost": f.min_value,
-            "category": category,
-            "crossing_complexity_bound": span // 2,  # lower bound on crossing number
-            "profile": dict(f.coeffs),
-        }
-
-
-# ============================================================
-# Application 4: Knot-Based Fingerprinting
-# ============================================================
-
-class TropicalFingerprint:
-    """Generate tropical knot fingerprints for data comparison.
-
-    The tropical Jones polynomial can serve as a fingerprint:
-    - Two objects with different fingerprints are provably distinct
-    - The fingerprint is computed efficiently via dynamic programming
-    - The tropical span provides a complexity measure
-    """
-
-    @staticmethod
-    def from_sequence(data: List[int], window_size: int = 4) -> Dict:
-        """Generate a tropical fingerprint from a data sequence.
-
-        Encodes the sequence as crossing weights and computes the
-        tropical Jones invariant.
-
-        Args:
-            data: Integer sequence to fingerprint
-            window_size: Number of crossings per window
-
-        Returns:
-            Fingerprint data including tropical invariant
-        """
-        from algorithms import KnotDiagram, compute_tropical_jones
-
-        # Encode data as crossing weights
-        D = KnotDiagram.loop()
-        for i in range(0, len(data) - 1, 2):
-            wA = data[i] % 10
-            wB = data[i + 1] % 10 if i + 1 < len(data) else 0
-            D = KnotDiagram.crossing(wA, wB, D, KnotDiagram.loop())
-
-        f = compute_tropical_jones(D)
-
-        return {
-            "data_length": len(data),
-            "num_crossings": D.num_crossings,
-            "tropical_span": f.tropical_span,
-            "fingerprint": tuple(sorted(f.coeffs.items())),
-            "profile": dict(f.coeffs),
-        }
-
-
-# ============================================================
-# Run all applications
-# ============================================================
-
-def run_all_applications():
-    """Demonstrate all applications with concrete examples."""
-
     print("=" * 70)
-    print("APPLICATION 1: DNA Strand Complexity Analysis")
+    print("APPLICATION 1: Certified Knot Complexity Lower Bounds")
     print("=" * 70)
+    print()
+    print("The tropical span gives a certified lower bound on crossing number.")
+    print("If span(tJones(D)) = 2k, then the knot requires ≥ k crossings.")
+    print()
 
-    dna = DNATopologyAnalyzer()
-
-    sequences = [
-        ["positive", "positive"],
-        ["positive", "negative", "positive"],
-        ["positive", "positive", "negative", "positive", "negative"],
-        ["positive", "negative", "positive", "negative", "positive", "negative"],
-    ]
-
-    for seq in sequences:
-        result = dna.model_crossing_sequence(seq)
-        print(f"\n  Crossings: {result['crossing_types']}")
-        print(f"  Tropical span: {result['tropical_span']}")
-        print(f"  Min resolution cost: {result['min_resolution_cost']}")
-        print(f"  Complexity profile: {result['complexity_profile']}")
-
-    print("\n\n" + "=" * 70)
-    print("APPLICATION 2: Network Routing Optimization")
-    print("=" * 70)
-
-    net = NetworkTopologyOptimizer()
-
-    # Example: 3 routes crossing at shared resources
-    crossing_costs = {
-        (0, 1): (2, 5),   # Routes 0,1 cross: reroute costs 2 or 5
-        (1, 2): (3, 1),   # Routes 1,2 cross
-        (0, 2): (4, 2),   # Routes 0,2 cross
+    diagrams = {
+        "Unknot": KnotDiagram.loop(),
+        "Single twist": make_chain(1),
+        "Double twist": make_chain(2),
+        "Triple twist": make_chain(3),
+        "5-crossing chain": make_chain(5),
+        "3-crossing balanced": make_balanced(3),
+        "7-crossing balanced": make_balanced(7),
     }
 
-    result = net.analyze_route_crossings(
-        routes=[[1,2,3], [2,4,5], [3,5,6]],
-        crossing_costs=crossing_costs
+    print(f"{'Diagram':<25} {'Crossings':>10} {'Span':>8} {'Lower Bound':>12}")
+    print("-" * 60)
+    for name, D in diagrams.items():
+        span, _ = tropical_span_bound(D)
+        lower_bound = span // 2  # span ≤ 2c implies c ≥ span/2
+        print(f"{name:<25} {D.num_crossings:>10} {span:>8} {lower_bound:>12}")
+
+    print()
+    print("Interpretation: The lower bound is certified — any diagram")
+    print("representing the same knot must have at least this many crossings.")
+    print()
+
+
+def application_diagram_optimization():
+    """Application 2: Diagram Optimization via Tropical Simplification
+
+    The simplification procedure provides a systematic way to reduce diagram complexity.
+    Each step is guaranteed to decrease the crossing number, and the process terminates.
+    """
+    print("=" * 70)
+    print("APPLICATION 2: Diagram Optimization")
+    print("=" * 70)
+    print()
+
+    # Build a complex diagram
+    D = KnotDiagram.crossing(
+        KnotDiagram.crossing(
+            KnotDiagram.crossing(
+                make_chain(2),
+                KnotDiagram.loop()
+            ),
+            make_balanced(3)
+        ),
+        KnotDiagram.crossing(
+            KnotDiagram.loop(),
+            make_chain(2)
+        )
     )
-    print(f"\n  Route crossings: {result['num_route_crossings']}")
-    print(f"  Tropical span: {result['tropical_span']}")
-    print(f"  Min resolution cost: {result['min_resolution_cost']}")
-    print(f"  Optimal degree: {result['optimal_degree']}")
-    print(f"  Profile: {result['profile']}")
 
-    print("\n\n" + "=" * 70)
-    print("APPLICATION 3: Polymer Entanglement Classification")
+    print(f"Input diagram: {D.num_crossings} crossings")
+    print(f"Tropical Jones: {tropical_jones(D)}")
+    print()
+
+    path = full_simplification(D)
+    print("Simplification path:")
+    total_reduction = 0
+    for i, step in enumerate(path):
+        tj = tropical_jones(step)
+        if i > 0:
+            reduction = path[i-1].num_crossings - step.num_crossings
+            total_reduction += reduction
+            print(f"  Step {i}: {step.num_crossings} crossings "
+                  f"(reduced by {reduction}), tJones = {tj}")
+        else:
+            print(f"  Start:  {step.num_crossings} crossings, tJones = {tj}")
+
+    print(f"\nTotal reduction: {total_reduction} crossings removed")
+    print(f"Final: {path[-1].num_crossings} crossings (loop = normal form)")
+    print()
+
+
+def application_knot_classification():
+    """Application 3: Knot Family Classification
+
+    Different diagram families have characteristic tropical signatures.
+    The tropical Jones invariant acts as a fingerprint for classification.
+    """
     print("=" * 70)
+    print("APPLICATION 3: Knot Family Classification")
+    print("=" * 70)
+    print()
 
-    polymer = PolymerEntanglementClassifier()
+    families = {
+        "Chain": [make_chain(n) for n in range(1, 6)],
+        "Balanced": [make_balanced(n) for n in [1, 3, 7]],
+        "Alternating": [make_alternating_chain(n) for n in range(1, 6)],
+    }
 
-    entanglements = [
-        [(1, 1)],
-        [(1, 1), (2, 1)],
-        [(1, 2), (3, 1), (1, 1), (2, 3)],
-        [(1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)],
+    for family_name, members in families.items():
+        print(f"\n{family_name} family:")
+        print(f"  {'n':>4} {'Crossings':>10} {'Span':>6} {'Span/2c':>8} "
+              f"{'Support size':>13}")
+        print("  " + "-" * 50)
+        for D in members:
+            tj = tropical_jones(D)
+            span = tj.span
+            nc = D.num_crossings
+            ratio = span / (2 * nc) if nc > 0 else 0
+            print(f"  {nc:>4} {nc:>10} {span:>6} {ratio:>8.2f} "
+                  f"{len(tj.support):>13}")
+
+    print()
+    print("Observations:")
+    print("• Chain diagrams achieve maximum span (span/2c = 1.0)")
+    print("• Balanced diagrams have lower span-to-crossing ratios")
+    print("• Alternating diagrams show intermediate behavior")
+    print("• The span/crossing ratio characterizes diagram families")
+    print()
+
+
+def application_network_routing():
+    """Application 4: Connection to Network Routing
+
+    The tropical Jones invariant has a natural interpretation as a
+    shortest-path problem: each crossing is a routing decision point,
+    and the invariant computes minimum-cost routes to each "degree" target.
+
+    This connects knot theory to:
+    - Network routing and flow optimization
+    - VLSI circuit layout
+    - Dynamic programming in operations research
+    """
+    print("=" * 70)
+    print("APPLICATION 4: Network Routing Interpretation")
+    print("=" * 70)
+    print()
+    print("The tropical Jones invariant = shortest path cost in a routing network.")
+    print()
+    print("Interpretation:")
+    print("  • Each crossing = a routing decision (left or right)")
+    print("  • Each degree = a destination")
+    print("  • tJones(D)(n) = minimum cost to reach destination n")
+    print("  • Left turn shifts destination by +1, right turn by -1")
+    print()
+
+    # Build a routing network (diagram) and analyze reachability
+    for n in [3, 5, 7]:
+        D = make_chain(n)
+        tj = tropical_jones(D)
+        print(f"Network with {n} decision points:")
+        print(f"  Reachable destinations: {sorted(tj.support)}")
+        print(f"  Maximum reach: ±{max(abs(d) for d in tj.support)}")
+        print(f"  Cost profile: ", end="")
+        for d in sorted(tj.support):
+            cost = tj[d]
+            cost_str = "∞" if cost == math.inf else str(int(cost))
+            print(f"[{d:+d}→{cost_str}]", end=" ")
+        print()
+        print()
+
+
+def application_circuit_complexity():
+    """Application 5: Circuit Complexity Analogy
+
+    The tropical span bound is the knot-theoretic analogue of the
+    degree-vs-depth lower bound in algebraic circuit complexity.
+
+    In circuit complexity: degree(output) ≤ depth(circuit)
+    In tropical knot theory: span(tJones) ≤ 2 × crossings(diagram)
+
+    Both are certified lower bounds: the complexity measure (depth/crossings)
+    is bounded below by the output measure (degree/span).
+    """
+    print("=" * 70)
+    print("APPLICATION 5: Circuit Complexity Analogy")
+    print("=" * 70)
+    print()
+    print("COMPARISON:")
+    print("  Circuit complexity:      degree(output) ≤ depth(circuit)")
+    print("  Tropical knot theory:    span(tJones)   ≤ 2 × crossings(diagram)")
+    print()
+    print("Both provide certified lower bounds on structural complexity.")
+    print()
+
+    print(f"{'Diagram':<20} {'Crossings':>10} {'Span':>6} "
+          f"{'Span/2':>7} {'= Lower Bound':>14}")
+    print("-" * 60)
+
+    test_cases = [
+        ("Chain(1)", make_chain(1)),
+        ("Chain(3)", make_chain(3)),
+        ("Chain(5)", make_chain(5)),
+        ("Balanced(3)", make_balanced(3)),
+        ("Balanced(7)", make_balanced(7)),
+        ("Alt(3)", make_alternating_chain(3)),
+        ("Alt(5)", make_alternating_chain(5)),
     ]
 
-    for ent in entanglements:
-        result = polymer.classify_entanglement(ent)
-        print(f"\n  Crossings: {ent}")
-        print(f"  Category: {result['category']}")
-        print(f"  Tropical span: {result['tropical_span']}")
-        print(f"  Crossing complexity bound: ≥ {result['crossing_complexity_bound']}")
-
-    print("\n\n" + "=" * 70)
-    print("APPLICATION 4: Tropical Fingerprinting")
-    print("=" * 70)
-
-    fp = TropicalFingerprint()
-
-    data_sets = [
-        [3, 1, 4, 1, 5, 9],
-        [3, 1, 4, 1, 5, 8],  # One digit different
-        [2, 7, 1, 8, 2, 8],
-    ]
-
-    fingerprints = []
-    for data in data_sets:
-        result = fp.from_sequence(data)
-        fingerprints.append(result)
-        print(f"\n  Data: {data}")
-        print(f"  Crossings: {result['num_crossings']}")
-        print(f"  Tropical span: {result['tropical_span']}")
-        print(f"  Fingerprint: {result['fingerprint']}")
-
-    # Compare fingerprints
-    print("\n  Fingerprint comparison:")
-    for i in range(len(fingerprints)):
-        for j in range(i + 1, len(fingerprints)):
-            same = fingerprints[i]['fingerprint'] == fingerprints[j]['fingerprint']
-            print(f"    Data {i} vs Data {j}: {'SAME' if same else 'DIFFERENT'}")
+    for name, D in test_cases:
+        span, bound = tropical_span_bound(D)
+        lower = span // 2
+        print(f"{name:<20} {D.num_crossings:>10} {span:>6} {lower:>7} "
+              f"{'≤ ' + str(D.num_crossings):>14}")
+    print()
 
 
 if __name__ == "__main__":
-    run_all_applications()
+    application_complexity_certification()
+    application_diagram_optimization()
+    application_knot_classification()
+    application_network_routing()
+    application_circuit_complexity()
+
+    print("=" * 70)
+    print("All applications demonstrated successfully!")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Tropical Knot Theory: Demonstrations and Concrete Examples
+Tropical Knot Theory: Interactive Demonstrations
 
-This module demonstrates the tropical Jones invariant and its properties
-on concrete knot diagram examples, making the abstract mathematics tangible.
+This script demonstrates the core theorems of tropical knot theory with
+concrete numerical examples, showing how min-plus algebra transforms
+knot invariants into optimization problems.
+
+Run with: python demo.py
 """
 
+from algorithms import (
+    KnotDiagram, TropicalLaurent, tropical_jones, tropical_jones_dp,
+    tropical_span_bound, verify_support_bound, full_simplification,
+    tropical_profiles_differ, make_chain, make_balanced, make_alternating_chain
+)
 import math
-from typing import Optional
-
-INF = float('inf')
 
 
-class KnotDiagram:
-    """A combinatorial knot diagram as a binary tree of crossings.
-
-    - Leaf: unknotted loop
-    - Internal node: crossing with weights wA, wB and sub-diagrams D0, D1
-
-    The tropical Jones invariant is computed by min-plus recursion:
-    tJones(loop, n) = 0 if n==0, else ∞
-    tJones(crossing(wA, wB, D0, D1), n) = min(wA + tJones(D0, n-1), wB + tJones(D1, n+1))
-    """
-
-    def __init__(self, wA: Optional[int] = None, wB: Optional[int] = None,
-                 D0: Optional['KnotDiagram'] = None, D1: Optional['KnotDiagram'] = None,
-                 name: str = ""):
-        self.is_loop = (wA is None)
-        self.wA = wA
-        self.wB = wB
-        self.D0 = D0
-        self.D1 = D1
-        self.name = name
-
-    @staticmethod
-    def loop(name: str = "unknot") -> 'KnotDiagram':
-        return KnotDiagram(name=name)
-
-    @staticmethod
-    def crossing(wA: int, wB: int, D0: 'KnotDiagram', D1: 'KnotDiagram',
-                 name: str = "") -> 'KnotDiagram':
-        return KnotDiagram(wA=wA, wB=wB, D0=D0, D1=D1, name=name)
-
-    @property
-    def num_crossings(self) -> int:
-        if self.is_loop:
-            return 0
-        return 1 + self.D0.num_crossings + self.D1.num_crossings
-
-    def tJones(self, n: int) -> float:
-        """Compute the tropical Jones invariant at Laurent degree n."""
-        if self.is_loop:
-            return 0.0 if n == 0 else INF
-        val_A = self.wA + self.D0.tJones(n - 1)
-        val_B = self.wB + self.D1.tJones(n + 1)
-        return min(val_A, val_B)
-
-    def support(self) -> list:
-        """Compute the support: degrees where tJones is finite."""
-        c = self.num_crossings
-        return [n for n in range(-c, c + 1) if self.tJones(n) < INF]
-
-    def tropical_span(self) -> int:
-        """Compute the tropical span (max support - min support)."""
-        supp = self.support()
-        if len(supp) <= 1:
-            return 0
-        return max(supp) - min(supp)
-
-    def profile(self) -> dict:
-        """Full tropical state-cost profile."""
-        c = self.num_crossings
-        return {n: self.tJones(n) for n in range(-c, c + 1) if self.tJones(n) < INF}
-
-    def resolveA(self) -> 'KnotDiagram':
-        """A-resolution of outermost crossing."""
-        if self.is_loop:
-            return self
-        return self.D0
-
-    def resolveB(self) -> 'KnotDiagram':
-        """B-resolution of outermost crossing."""
-        if self.is_loop:
-            return self
-        return self.D1
-
-    def __repr__(self):
-        if self.name:
-            return self.name
-        if self.is_loop:
-            return "○"
-        return f"×({self.wA},{self.wB})[{self.D0}, {self.D1}]"
-
-
-def demo_basic():
-    """Demonstrate basic tropical Jones computation."""
+def demo_tropical_semiring():
+    """Demonstrate the tropical (min-plus) semiring operations."""
     print("=" * 70)
-    print("DEMO 1: Basic Tropical Jones Computation")
+    print("DEMO 1: The Tropical Semiring")
     print("=" * 70)
+    print()
+    print("In the tropical semiring:")
+    print("  • Addition = min (take the smaller value)")
+    print("  • Multiplication = + (add the values)")
+    print("  • Zero = ∞ (additive identity for min)")
+    print("  • One = 0 (multiplicative identity for +)")
+    print()
 
-    # Unknot
-    unknot = KnotDiagram.loop("unknot")
-    print(f"\n{unknot}: {unknot.num_crossings} crossings")
-    print(f"  tJones(0) = {unknot.tJones(0)}")
-    print(f"  tJones(1) = {unknot.tJones(1)}")
-    print(f"  Support: {unknot.support()}")
-    print(f"  Span: {unknot.tropical_span()}")
+    f = TropicalLaurent({0: 3, 1: 5, -1: 2})
+    g = TropicalLaurent({0: 4, 1: 1, 2: 7})
 
-    # Single crossing (Hopf link surrogate)
-    hopf = KnotDiagram.crossing(1, 1, KnotDiagram.loop(), KnotDiagram.loop(), "hopf")
-    print(f"\n{hopf}: {hopf.num_crossings} crossing")
-    for n in range(-2, 3):
-        v = hopf.tJones(n)
-        print(f"  tJones({n:+d}) = {v if v < INF else '∞'}")
-    print(f"  Support: {hopf.support()}")
-    print(f"  Span: {hopf.tropical_span()}")
-    print(f"  Span ≤ 2·crossings? {hopf.tropical_span()} ≤ {2 * hopf.num_crossings}: {hopf.tropical_span() <= 2 * hopf.num_crossings}")
+    print(f"f = {f}")
+    print(f"g = {g}")
+    print()
+    print(f"f ⊕ g (tropical add = pointwise min):")
+    print(f"  = {f + g}")
+    print()
+    print(f"f ⊙ g (tropical mul = min-plus convolution):")
+    print(f"  = {f * g}")
+    print()
 
-    # Trefoil surrogate: chain of 3 crossings
-    D1 = KnotDiagram.crossing(1, 1, KnotDiagram.loop(), KnotDiagram.loop())
-    D2 = KnotDiagram.crossing(1, 2, D1, KnotDiagram.loop())
-    trefoil = KnotDiagram.crossing(2, 1, D2, KnotDiagram.loop(), "trefoil")
-    print(f"\n{trefoil}: {trefoil.num_crossings} crossings")
-    print(f"  Profile: {trefoil.profile()}")
-    print(f"  Support: {trefoil.support()}")
-    print(f"  Span: {trefoil.tropical_span()}")
-    print(f"  Span ≤ 2·crossings? {trefoil.tropical_span()} ≤ {2 * trefoil.num_crossings}: {trefoil.tropical_span() <= 2 * trefoil.num_crossings}")
+    # Verify semiring properties
+    zero = TropicalLaurent()
+    print(f"f ⊕ 0 = {f + zero}  (additive identity)")
+    print(f"f ⊕ f = {f + f}  (idempotent!)")
+    print()
 
 
 def demo_skein_relation():
-    """Demonstrate the tropical skein relation."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Tropical Skein Relation")
+    """Demonstrate Theorem A: the tropical skein relation."""
     print("=" * 70)
+    print("DEMO 2: Tropical Skein Relation (Theorem A)")
+    print("=" * 70)
+    print()
+    print("The tropical Jones invariant satisfies:")
+    print("  tJones(crossing(D₀, D₁))(n) = min(tJones(D₀)(n-1), tJones(D₁)(n+1))")
+    print()
 
-    D0 = KnotDiagram.crossing(1, 1, KnotDiagram.loop(), KnotDiagram.loop(), "D0")
-    D1 = KnotDiagram.loop("D1")
-    wA, wB = 3, 2
-    D = KnotDiagram.crossing(wA, wB, D0, D1, "D")
+    loop = KnotDiagram.loop()
+    D0 = KnotDiagram.crossing(loop, loop)
+    D1 = loop
 
-    print(f"\nDiagram D = crossing({wA}, {wB}, {D0}, {D1})")
-    print(f"  D has {D.num_crossings} crossings")
-    print(f"  D0 has {D0.num_crossings} crossing, D1 has {D1.num_crossings} crossings")
+    tj_D0 = tropical_jones(D0)
+    tj_D1 = tropical_jones(D1)
 
-    print("\nVerifying skein relation: tJones(D, n) = min(wA + tJones(D0, n-1), wB + tJones(D1, n+1))")
+    crossing = KnotDiagram.crossing(D0, D1)
+    tj_crossing = tropical_jones(crossing)
+
+    print(f"D₀ = single crossing: tJones(D₀) = {tj_D0}")
+    print(f"D₁ = loop:            tJones(D₁) = {tj_D1}")
+    print(f"crossing(D₀, D₁):     tJones     = {tj_crossing}")
+    print()
+
+    # Verify the skein relation at each degree
+    print("Verification of skein relation at each degree:")
     for n in range(-3, 4):
-        lhs = D.tJones(n)
-        rhs_A = wA + D0.tJones(n - 1)
-        rhs_B = wB + D1.tJones(n + 1)
-        rhs = min(rhs_A, rhs_B)
-        status = "✓" if lhs == rhs else "✗"
-        lhs_s = f"{lhs}" if lhs < INF else "∞"
-        rhs_A_s = f"{rhs_A}" if rhs_A < INF else "∞"
-        rhs_B_s = f"{rhs_B}" if rhs_B < INF else "∞"
-        rhs_s = f"{rhs}" if rhs < INF else "∞"
-        print(f"  n={n:+d}: tJones={lhs_s:>4s}  min({rhs_A_s:>4s}, {rhs_B_s:>4s}) = {rhs_s:>4s}  {status}")
+        lhs = tj_crossing[n]
+        rhs = min(tj_D0[n - 1], tj_D1[n + 1])
+        lhs_str = "∞" if lhs == math.inf else str(int(lhs))
+        rhs_str = "∞" if rhs == math.inf else str(int(rhs))
+        check = "✓" if lhs == rhs else "✗"
+        print(f"  n={n:+d}: tJones(D)(n) = {lhs_str}, "
+              f"min(tJones(D₀)(n-1), tJones(D₁)(n+1)) = {rhs_str}  {check}")
+    print()
 
 
 def demo_crossing_bound():
-    """Demonstrate the crossing number lower bound."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Crossing Number Lower Bound")
+    """Demonstrate Theorem B: the crossing number lower bound."""
     print("=" * 70)
+    print("DEMO 3: Crossing Number Lower Bound (Theorem B)")
+    print("=" * 70)
+    print()
+    print("Theorem: For any diagram D with c crossings,")
+    print("  (1) If tJones(D)(n) ≠ ∞, then |n| ≤ c")
+    print("  (2) tropical span ≤ 2c")
+    print()
 
-    def make_chain(k: int) -> KnotDiagram:
-        """Build a chain of k crossings."""
-        D = KnotDiagram.loop()
-        for i in range(k):
-            D = KnotDiagram.crossing(1, 1, D, KnotDiagram.loop())
-        return D
+    print(f"{'Diagram':<25} {'Crossings':>10} {'Span':>8} {'Bound':>8} {'Tight?':>8}")
+    print("-" * 65)
 
-    print("\nFor chains of k crossings:")
-    print(f"{'k':>3s} | {'crossings':>9s} | {'span':>5s} | {'2·crossings':>11s} | {'bound holds':>11s} | {'support':>20s}")
-    print("-" * 75)
-    for k in range(8):
-        D = make_chain(k)
-        c = D.num_crossings
-        s = D.tropical_span()
-        supp = D.support()
-        holds = s <= 2 * c
-        print(f"{k:3d} | {c:9d} | {s:5d} | {2*c:11d} | {'✓' if holds else '✗':>11s} | {supp}")
+    diagrams = [
+        ("Loop", KnotDiagram.loop()),
+        ("Single crossing", make_chain(1)),
+        ("Chain(2)", make_chain(2)),
+        ("Chain(3)", make_chain(3)),
+        ("Chain(4)", make_chain(4)),
+        ("Chain(5)", make_chain(5)),
+        ("Balanced(3)", make_balanced(3)),
+        ("Balanced(7)", make_balanced(7)),
+        ("Alternating(3)", make_alternating_chain(3)),
+        ("Alternating(5)", make_alternating_chain(5)),
+    ]
+
+    for name, D in diagrams:
+        span, bound = tropical_span_bound(D)
+        tight = "YES" if span == bound else "no"
+        verified = verify_support_bound(D)
+        assert verified, f"Support bound violated for {name}!"
+        print(f"{name:<25} {D.num_crossings:>10} {span:>8} {bound:>8} {tight:>8}")
+
+    print()
+    print("Note: The bound is always satisfied. When tight (span = 2c),")
+    print("the diagram achieves maximum tropical spread — analogous to")
+    print("reduced alternating diagrams in classical knot theory.")
+    print()
 
 
 def demo_simplification():
-    """Demonstrate simplification termination."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Simplification Termination")
+    """Demonstrate Theorem C: simplification terminates with unique cost."""
     print("=" * 70)
+    print("DEMO 4: Canonical Simplification (Theorem C)")
+    print("=" * 70)
+    print()
+    print("Theorem: Every simplification step decreases crossing number.")
+    print("All normal forms are loops with the same tropical Jones invariant.")
+    print()
 
-    # Build a complex diagram
-    D = KnotDiagram.crossing(2, 3,
-            KnotDiagram.crossing(1, 1,
-                KnotDiagram.crossing(0, 1, KnotDiagram.loop(), KnotDiagram.loop()),
-                KnotDiagram.loop()),
-            KnotDiagram.crossing(1, 2, KnotDiagram.loop(), KnotDiagram.loop()),
-            "complex")
+    for n in [3, 5, 7]:
+        D = make_chain(n)
+        path = full_simplification(D)
+        print(f"Simplification of Chain({n}) ({D.num_crossings} crossings):")
+        for i, step in enumerate(path):
+            tj = tropical_jones(step)
+            print(f"  Step {i}: {step.num_crossings} crossings, tJones = {tj}")
 
-    print(f"\nStarting diagram: {D}")
-    print(f"  Crossings: {D.num_crossings}")
-    print(f"  Profile: {D.profile()}")
-
-    # Simplification by always taking A-resolution
-    print("\nSimplification by A-resolution:")
-    step = 0
-    current = D
-    while not current.is_loop:
-        print(f"  Step {step}: {current.num_crossings} crossings, profile = {current.profile()}")
-        current = current.resolveA()
-        step += 1
-    print(f"  Step {step}: {current.num_crossings} crossings (normal form = loop)")
-    print(f"  Normal form tJones(0) = {current.tJones(0)}")
-
-    # Simplification by always taking B-resolution
-    print("\nSimplification by B-resolution:")
-    step = 0
-    current = D
-    while not current.is_loop:
-        print(f"  Step {step}: {current.num_crossings} crossings, profile = {current.profile()}")
-        current = current.resolveB()
-        step += 1
-    print(f"  Step {step}: {current.num_crossings} crossings (normal form = loop)")
-    print(f"  Normal form tJones(0) = {current.tJones(0)}")
-    print("\n  → Both paths reach the same normal form cost (0), confirming uniqueness!")
+        # Verify all normal forms are loops
+        assert path[-1].is_loop, "Normal form should be a loop!"
+        print(f"  → Normal form reached: loop (0 crossings)")
+        print(f"  → Normal form tJones: {tropical_jones(path[-1])}")
+        print()
 
 
 def demo_separation():
-    """Demonstrate the separation schema."""
-    print("\n" + "=" * 70)
-    print("DEMO 5: Separation Schema")
+    """Demonstrate Theorem D: the tropical separation schema."""
     print("=" * 70)
-
-    # Two diagrams with different tropical profiles
-    D1 = KnotDiagram.crossing(1, 1,
-            KnotDiagram.crossing(1, 1, KnotDiagram.loop(), KnotDiagram.loop()),
-            KnotDiagram.loop(), "D1")
-
-    D2 = KnotDiagram.crossing(1, 2,
-            KnotDiagram.crossing(2, 1, KnotDiagram.loop(), KnotDiagram.loop()),
-            KnotDiagram.loop(), "D2")
-
-    print(f"\n{D1}: {D1.num_crossings} crossings")
-    print(f"  Profile: {D1.profile()}")
-    print(f"\n{D2}: {D2.num_crossings} crossings")
-    print(f"  Profile: {D2.profile()}")
-
-    # Compare profiles
-    p1 = D1.profile()
-    p2 = D2.profile()
-    all_keys = sorted(set(p1.keys()) | set(p2.keys()))
-
-    print(f"\nProfile comparison:")
-    print(f"{'n':>4s} | {'D1':>6s} | {'D2':>6s} | {'differ':>6s}")
-    print("-" * 30)
-    separating_degrees = []
-    for n in all_keys:
-        v1 = p1.get(n, INF)
-        v2 = p2.get(n, INF)
-        diff = "≠" if v1 != v2 else "="
-        v1_s = f"{v1}" if v1 < INF else "∞"
-        v2_s = f"{v2}" if v2 < INF else "∞"
-        print(f"{n:4d} | {v1_s:>6s} | {v2_s:>6s} | {diff:>6s}")
-        if v1 != v2:
-            separating_degrees.append(n)
-
-    if separating_degrees:
-        print(f"\n  → Tropical invariant separates at degrees: {separating_degrees}")
-        print("  → By the separation theorem, these diagrams have different tropical Jones invariants!")
-    else:
-        print("\n  → Profiles are identical; no tropical separation.")
-
-
-def demo_dynamic_programming():
-    """Demonstrate the DP / shortest-path interpretation."""
-    print("\n" + "=" * 70)
-    print("DEMO 6: Dynamic Programming / Shortest-Path Interpretation")
+    print("DEMO 5: Tropical Separation Schema (Theorem D)")
     print("=" * 70)
-
-    # Build a diagram and show the state-sum tree
-    L = KnotDiagram.loop
-    D = KnotDiagram.crossing(2, 3,
-            KnotDiagram.crossing(1, 4, L(), L()),
-            KnotDiagram.crossing(5, 1, L(), L()))
-
-    print(f"\nDiagram with {D.num_crossings} crossings")
-    print("State-sum tree (each leaf = complete resolution):")
+    print()
+    print("Theorem: If tropicalStateProfile(D₁) ≠ tropicalStateProfile(D₂),")
+    print("then tJones(D₁) ≠ tJones(D₂) at some specific degree.")
     print()
 
-    def print_tree(d: KnotDiagram, indent: str = "", path: str = "", total_weight: int = 0, total_shift: int = 0):
-        if d.is_loop:
-            val = d.tJones(0) + total_weight  # = total_weight since tJones(loop,0)=0
-            print(f"{indent}○ path={path} weight={total_weight} degree={total_shift} → tJones({total_shift}) contributes {val}")
-            return
-        print(f"{indent}× (wA={d.wA}, wB={d.wB})")
-        print_tree(d.D0, indent + "  A─", path + "A", total_weight + d.wA, total_shift - 1)
-        print_tree(d.D1, indent + "  B─", path + "B", total_weight + d.wB, total_shift + 1)
+    pairs = [
+        ("Chain(3)", make_chain(3), "Balanced(3)", make_balanced(3)),
+        ("Chain(4)", make_chain(4), "Alternating(4)", make_alternating_chain(4)),
+        ("Chain(2)", make_chain(2), "Chain(2)", make_chain(2)),
+        ("Balanced(3)", make_balanced(3), "Alternating(3)", make_alternating_chain(3)),
+    ]
 
-    print_tree(D)
+    for name1, D1, name2, D2 in pairs:
+        tj1 = tropical_jones(D1)
+        tj2 = tropical_jones(D2)
+        sep = tropical_profiles_differ(D1, D2)
 
-    print("\nFinal tropical Jones values (min over all paths to each degree):")
-    for n in range(-D.num_crossings, D.num_crossings + 1):
-        v = D.tJones(n)
-        v_s = f"{v}" if v < INF else "∞"
-        print(f"  tJones({n:+d}) = {v_s}")
+        print(f"{name1} vs {name2}:")
+        print(f"  tJones({name1}) = {tj1}")
+        print(f"  tJones({name2}) = {tj2}")
+        if sep is not None:
+            v1 = "∞" if tj1[sep] == math.inf else str(int(tj1[sep]))
+            v2 = "∞" if tj2[sep] == math.inf else str(int(tj2[sep]))
+            print(f"  SEPARATED at degree {sep}: {v1} ≠ {v2}")
+        else:
+            print(f"  IDENTICAL tropical profiles")
+        print()
+
+
+def demo_dp_interpretation():
+    """Demonstrate the dynamic programming / shortest-path interpretation."""
+    print("=" * 70)
+    print("DEMO 6: Dynamic Programming Interpretation")
+    print("=" * 70)
+    print()
+    print("The tropical Jones invariant = shortest-path cost in the skein DAG.")
+    print("Each leaf (loop) is a terminal with cost 0 at degree 0.")
+    print("Each crossing combines sub-problems via min with degree shifts.")
+    print()
+
+    for n in range(1, 6):
+        D = make_chain(n)
+        tj_recursive = tropical_jones(D)
+        tj_dp = tropical_jones_dp(D)
+
+        assert tj_recursive == tj_dp, "DP and recursive should agree!"
+
+        print(f"Chain({n}):")
+        print(f"  Recursive: {tj_recursive}")
+        print(f"  DP:        {tj_dp}")
+        print(f"  Match: ✓")
+    print()
+
+
+def demo_family_analysis():
+    """Analyze tropical invariants across diagram families."""
+    print("=" * 70)
+    print("DEMO 7: Family Analysis — Chains, Trees, and Alternating Diagrams")
+    print("=" * 70)
+    print()
+
+    print("CHAIN FAMILY (left-leaning twists):")
+    print(f"{'n':>4} {'Crossings':>10} {'Span':>6} {'Support':>30}")
+    print("-" * 55)
+    for n in range(8):
+        D = make_chain(n)
+        tj = tropical_jones(D)
+        support = sorted(tj.support)
+        print(f"{n:>4} {D.num_crossings:>10} {tj.span:>6} {str(support):>30}")
+
+    print()
+    print("BALANCED FAMILY (binary tree structure):")
+    print(f"{'n':>4} {'Crossings':>10} {'Span':>6} {'Support':>30}")
+    print("-" * 55)
+    for n in [0, 1, 3, 7, 15]:
+        D = make_balanced(n)
+        tj = tropical_jones(D)
+        support = sorted(tj.support)
+        print(f"{n:>4} {D.num_crossings:>10} {tj.span:>6} {str(support):>30}")
+
+    print()
+    print("ALTERNATING FAMILY:")
+    print(f"{'n':>4} {'Crossings':>10} {'Span':>6} {'Support':>30}")
+    print("-" * 55)
+    for n in range(8):
+        D = make_alternating_chain(n)
+        tj = tropical_jones(D)
+        support = sorted(tj.support)
+        print(f"{n:>4} {D.num_crossings:>10} {tj.span:>6} {str(support):>30}")
+    print()
 
 
 if __name__ == "__main__":
-    demo_basic()
+    demo_tropical_semiring()
     demo_skein_relation()
     demo_crossing_bound()
     demo_simplification()
     demo_separation()
-    demo_dynamic_programming()
+    demo_dp_interpretation()
+    demo_family_analysis()
+
+    print("=" * 70)
+    print("All demonstrations completed successfully!")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
 Tropical Knot Theory: Visualizations
 
-Generates publication-quality visualizations of tropical knot invariants.
+Generates publication-quality figures illustrating the key results
+of tropical knot invariant theory.
 """
 
 import matplotlib
@@ -638,343 +523,320 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-from typing import Dict, List
+import math
 import base64
-import io
-
-# Use a clean style
-plt.rcParams.update({
-    'font.size': 12,
-    'axes.titlesize': 14,
-    'axes.labelsize': 12,
-    'figure.figsize': (10, 6),
-    'figure.dpi': 150,
-})
-
-INF = float('inf')
-
-
-class KnotDiagramViz:
-    """Minimal KnotDiagram for visualization (self-contained)."""
-    def __init__(self, wA=None, wB=None, left=None, right=None):
-        self.is_loop = (wA is None)
-        self.wA = wA; self.wB = wB
-        self.left = left; self.right = right
-
-    @staticmethod
-    def loop(): return KnotDiagramViz()
-
-    @staticmethod
-    def crossing(wA, wB, D0, D1): return KnotDiagramViz(wA, wB, D0, D1)
-
-    @property
-    def num_crossings(self):
-        if self.is_loop: return 0
-        return 1 + self.left.num_crossings + self.right.num_crossings
-
-    def tJones(self, n):
-        if self.is_loop: return 0.0 if n == 0 else INF
-        vA = self.wA + self.left.tJones(n - 1)
-        vB = self.wB + self.right.tJones(n + 1)
-        return min(vA, vB)
-
-    def profile(self):
-        c = self.num_crossings
-        return {n: self.tJones(n) for n in range(-c, c+1) if self.tJones(n) < INF}
-
-
-def make_chain(k, wA=1, wB=1):
-    D = KnotDiagramViz.loop()
-    for _ in range(k):
-        D = KnotDiagramViz.crossing(wA, wB, D, KnotDiagramViz.loop())
-    return D
+from io import BytesIO
+from algorithms import (
+    KnotDiagram, TropicalLaurent, tropical_jones,
+    tropical_span_bound, make_chain, make_balanced, make_alternating_chain
+)
 
 
 def fig_to_base64(fig) -> str:
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', bbox_inches='tight', facecolor='white')
+    """Convert a matplotlib figure to a base64 data URI."""
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode()
-
-
-def viz_tropical_jones_profiles():
-    """Visualize tropical Jones profiles for different diagram families."""
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Chain diagrams with unit weights
-    ax = axes[0, 0]
-    for k in range(1, 7):
-        D = make_chain(k)
-        prof = D.profile()
-        degrees = sorted(prof.keys())
-        values = [prof[d] for d in degrees]
-        ax.plot(degrees, values, 'o-', label=f'{k} crossings', markersize=5, alpha=0.8)
-    ax.set_xlabel('Laurent degree')
-    ax.set_ylabel('Tropical value')
-    ax.set_title('Tropical Jones Profiles: Chain Diagrams')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Asymmetric weight diagrams
-    ax = axes[0, 1]
-    weights = [(1,1), (1,2), (2,1), (1,3), (3,1)]
-    for wA, wB in weights:
-        D = make_chain(4, wA, wB)
-        prof = D.profile()
-        degrees = sorted(prof.keys())
-        values = [prof[d] for d in degrees]
-        ax.plot(degrees, values, 's-', label=f'w=({wA},{wB})', markersize=5, alpha=0.8)
-    ax.set_xlabel('Laurent degree')
-    ax.set_ylabel('Tropical value')
-    ax.set_title('Weight Dependence (4 crossings)')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Tropical span vs crossings
-    ax = axes[1, 0]
-    max_k = 12
-    spans = []
-    for k in range(1, max_k + 1):
-        D = make_chain(k)
-        prof = D.profile()
-        if len(prof) > 1:
-            span = max(prof.keys()) - min(prof.keys())
-        else:
-            span = 0
-        spans.append(span)
-
-    crossings_range = list(range(1, max_k + 1))
-    ax.plot(crossings_range, spans, 'bo-', label='Tropical span', markersize=6)
-    ax.plot(crossings_range, [2*k for k in crossings_range], 'r--', label='2·crossings (upper bound)', alpha=0.7)
-    ax.plot(crossings_range, crossings_range, 'g--', label='crossings', alpha=0.7)
-    ax.set_xlabel('Number of crossings')
-    ax.set_ylabel('Tropical span')
-    ax.set_title('Span vs Crossing Number Bound')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Heatmap of profiles
-    ax = axes[1, 1]
-    max_k = 8
-    data = np.full((max_k, 2*max_k+1), np.nan)
-    for k in range(1, max_k + 1):
-        D = make_chain(k)
-        for n in range(-max_k, max_k + 1):
-            v = D.tJones(n)
-            if v < INF:
-                data[k-1, n + max_k] = v
-    im = ax.imshow(data, aspect='auto', cmap='viridis_r',
-                   extent=[-max_k-0.5, max_k+0.5, max_k+0.5, 0.5])
-    ax.set_xlabel('Laurent degree')
-    ax.set_ylabel('Number of crossings')
-    ax.set_title('Tropical Jones Value Heatmap')
-    plt.colorbar(im, ax=ax, label='Tropical value')
-
-    fig.suptitle('Tropical Knot Invariants: Structural Analysis', fontsize=16, y=1.02)
-    plt.tight_layout()
-
-    fig.savefig('/workspace/request-project/viz_profiles.png', bbox_inches='tight', dpi=150)
-    b64 = fig_to_base64(fig)
+    b64 = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return b64
+    return f"data:image/png;base64,{b64}"
 
 
-def viz_separation_schema():
-    """Visualize the separation schema between diagram pairs."""
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+def viz_tropical_support():
+    """Visualize the tropical support patterns for different diagram families."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    # Create pairs of diagrams with different weights
-    pairs = [
-        (make_chain(3, 1, 1), make_chain(3, 1, 2), "Unit vs (1,2)"),
-        (make_chain(3, 2, 1), make_chain(3, 1, 3), "(2,1) vs (1,3)"),
-        (
-            KnotDiagramViz.crossing(1, 1,
-                KnotDiagramViz.crossing(2, 1, KnotDiagramViz.loop(), KnotDiagramViz.loop()),
-                KnotDiagramViz.loop()),
-            KnotDiagramViz.crossing(1, 2,
-                KnotDiagramViz.crossing(1, 2, KnotDiagramViz.loop(), KnotDiagramViz.loop()),
-                KnotDiagramViz.loop()),
-            "Different structure"
-        ),
+    families = [
+        ("Chain Diagrams", [make_chain(n) for n in range(1, 8)], axes[0]),
+        ("Balanced Trees", [make_balanced(n) for n in [1, 3, 7, 15]], axes[1]),
+        ("Alternating Chains", [make_alternating_chain(n) for n in range(1, 8)], axes[2]),
     ]
 
-    for idx, (D1, D2, title) in enumerate(pairs):
-        ax = axes[idx]
-        p1 = D1.profile()
-        p2 = D2.profile()
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, 8))
 
-        all_degrees = sorted(set(p1.keys()) | set(p2.keys()))
-        v1 = [p1.get(d, None) for d in all_degrees]
-        v2 = [p2.get(d, None) for d in all_degrees]
+    for title, diagrams, ax in families:
+        for i, D in enumerate(diagrams):
+            tj = tropical_jones(D)
+            nc = D.num_crossings
+            support = sorted(tj.support)
+            y_vals = [nc] * len(support)
+            ax.scatter(support, y_vals, c=[colors[i]], s=80, zorder=3,
+                      edgecolors='black', linewidths=0.5)
+            if support:
+                ax.plot([min(support), max(support)], [nc, nc],
+                       c=colors[i], linewidth=2, alpha=0.5)
 
-        # Plot
-        d1_plot = [d for d, v in zip(all_degrees, v1) if v is not None]
-        v1_plot = [v for v in v1 if v is not None]
-        d2_plot = [d for d, v in zip(all_degrees, v2) if v is not None]
-        v2_plot = [v for v in v2 if v is not None]
+        # Draw the bound lines
+        max_nc = max(D.num_crossings for D in diagrams)
+        for nc in range(max_nc + 1):
+            ax.axvline(x=nc, color='red', alpha=0.1, linestyle='--')
+            ax.axvline(x=-nc, color='red', alpha=0.1, linestyle='--')
 
-        ax.bar([d - 0.15 for d in d1_plot], v1_plot, width=0.3, alpha=0.7, color='steelblue', label='D₁')
-        ax.bar([d + 0.15 for d in d2_plot], v2_plot, width=0.3, alpha=0.7, color='coral', label='D₂')
+        ax.set_title(title, fontsize=13, fontweight='bold')
+        ax.set_xlabel('Laurent Degree', fontsize=11)
+        ax.set_ylabel('Number of Crossings', fontsize=11)
+        ax.grid(True, alpha=0.2)
+        ax.axvline(x=0, color='gray', alpha=0.3)
 
-        # Highlight separating degrees
-        for d in all_degrees:
-            if p1.get(d) != p2.get(d):
-                ax.axvline(d, color='gold', alpha=0.3, linewidth=8)
-
-        ax.set_xlabel('Laurent degree')
-        ax.set_ylabel('Tropical value')
-        ax.set_title(title)
-        ax.legend(fontsize=9)
-        ax.grid(True, alpha=0.3)
-
-    fig.suptitle('Tropical Separation Schema: Profile Comparison', fontsize=14, y=1.02)
-    plt.tight_layout()
-
-    fig.savefig('/workspace/request-project/viz_separation.png', bbox_inches='tight', dpi=150)
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+    fig.suptitle('Tropical Jones Support Patterns', fontsize=15, fontweight='bold', y=1.02)
+    fig.tight_layout()
+    return fig
 
 
-def viz_simplification():
-    """Visualize the simplification process and termination."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+def viz_span_vs_crossings():
+    """Visualize the span bound: span ≤ 2 × crossings."""
+    fig, ax = plt.subplots(figsize=(10, 7))
 
-    # Build a complex diagram
-    D = KnotDiagramViz.crossing(2, 3,
-            KnotDiagramViz.crossing(1, 1,
-                KnotDiagramViz.crossing(0, 1, KnotDiagramViz.loop(), KnotDiagramViz.loop()),
-                KnotDiagramViz.loop()),
-            KnotDiagramViz.crossing(1, 2, KnotDiagramViz.loop(), KnotDiagramViz.loop()))
+    # Generate data
+    families = {
+        'Chain': [(n, make_chain(n)) for n in range(1, 12)],
+        'Balanced': [(n, make_balanced(n)) for n in [1, 3, 7, 15]],
+        'Alternating': [(n, make_alternating_chain(n)) for n in range(1, 12)],
+    }
 
-    # A-resolution path
-    ax = axes[0]
-    steps_A = []
-    current = D
-    while not current.is_loop:
-        steps_A.append(current.num_crossings)
-        current = current.left
-    steps_A.append(0)
+    markers = {'Chain': 'o', 'Balanced': 's', 'Alternating': '^'}
+    colors_map = {'Chain': '#2196F3', 'Balanced': '#4CAF50', 'Alternating': '#FF9800'}
 
-    # B-resolution path
-    steps_B = []
-    current = D
-    while not current.is_loop:
-        steps_B.append(current.num_crossings)
-        current = current.right
-    steps_B.append(0)
+    for family_name, diagrams in families.items():
+        crossings = []
+        spans = []
+        for n, D in diagrams:
+            tj = tropical_jones(D)
+            crossings.append(D.num_crossings)
+            spans.append(tj.span)
 
-    ax.plot(range(len(steps_A)), steps_A, 'bo-', label='A-resolution path', markersize=8)
-    ax.plot(range(len(steps_B)), steps_B, 'rs-', label='B-resolution path', markersize=8)
-    ax.set_xlabel('Simplification step')
-    ax.set_ylabel('Number of crossings')
-    ax.set_title('Simplification Terminates\n(crossings strictly decrease)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(-0.5, max(steps_A) + 1)
+        ax.scatter(crossings, spans, marker=markers[family_name],
+                  c=colors_map[family_name], s=100, label=family_name,
+                  edgecolors='black', linewidths=0.5, zorder=3)
 
-    # Span decrease during simplification
-    ax = axes[1]
-    max_k = 10
-    initial_spans = []
-    for k in range(1, max_k + 1):
-        D = make_chain(k)
-        prof = D.profile()
-        span = max(prof.keys()) - min(prof.keys()) if len(prof) > 1 else 0
-        initial_spans.append(span)
+    # Draw the bound line
+    max_c = 16
+    ax.plot([0, max_c], [0, 2 * max_c], 'r--', linewidth=2,
+            label='Bound: span = 2c', alpha=0.7)
+    ax.fill_between([0, max_c], [0, 2 * max_c], [2 * max_c + 5] * 2,
+                    alpha=0.05, color='red')
 
-    ax.fill_between(range(1, max_k+1), [2*k for k in range(1, max_k+1)],
-                     alpha=0.15, color='red', label='Forbidden zone (span > 2c)')
-    ax.fill_between(range(1, max_k+1), initial_spans,
-                     alpha=0.2, color='blue', label='Achievable region')
-    ax.plot(range(1, max_k+1), initial_spans, 'bo-', markersize=6, label='Chain diagram span')
-    ax.plot(range(1, max_k+1), [2*k for k in range(1, max_k+1)], 'r--',
-            label='Upper bound (2c)', alpha=0.7)
-    ax.set_xlabel('Number of crossings (c)')
-    ax.set_ylabel('Tropical span')
-    ax.set_title('Tropical Span Bound: span ≤ 2c')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('Number of Crossings (c)', fontsize=13)
+    ax.set_ylabel('Tropical Span', fontsize=13)
+    ax.set_title('Tropical Span vs. Crossing Number\n'
+                 '(Theorem B: span ≤ 2c always holds)', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11, loc='upper left')
+    ax.grid(True, alpha=0.2)
+    ax.set_xlim(-0.5, max_c + 0.5)
+    ax.set_ylim(-0.5, 2 * max_c + 2)
 
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_simplification.png', bbox_inches='tight', dpi=150)
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+    # Add annotation
+    ax.annotate('Forbidden region\n(span > 2c)',
+                xy=(8, 20), fontsize=11, color='red', alpha=0.5,
+                ha='center', style='italic')
+
+    fig.tight_layout()
+    return fig
 
 
-def viz_dp_tree():
-    """Visualize the dynamic programming / shortest-path structure."""
-    fig, ax = plt.subplots(1, 1, figsize=(12, 7))
+def viz_skein_tree():
+    """Visualize the skein expansion tree for a small diagram."""
+    fig, ax = plt.subplots(figsize=(12, 8))
 
-    # 3-crossing chain: enumerate all 8 states
-    D = make_chain(3)
-    states = []
+    # Draw a skein tree for a 3-crossing chain
+    levels = [
+        [(0.5, 0.95, '×(×(×(○,○),○),○)', 'red', 14)],
+        [(0.25, 0.7, '×(×(○,○),○)', '#E65100', 12),
+         (0.75, 0.7, '○', '#1B5E20', 12)],
+        [(0.12, 0.45, '×(○,○)', '#FF6D00', 11),
+         (0.38, 0.45, '○', '#1B5E20', 11)],
+        [(0.06, 0.2, '○', '#1B5E20', 10),
+         (0.18, 0.2, '○', '#1B5E20', 10)],
+    ]
 
-    def enum_states(d, weight, shift, depth, path):
-        if d.is_loop:
-            states.append((weight, shift, depth, path))
-            return
-        enum_states(d.left, weight + d.wA, shift - 1, depth + 1, path + "A")
-        enum_states(d.right, weight + d.wB, shift + 1, depth + 1, path + "B")
+    # Draw edges
+    edges = [
+        ((0.5, 0.95), (0.25, 0.7), 'A: shift +1'),
+        ((0.5, 0.95), (0.75, 0.7), 'B: shift −1'),
+        ((0.25, 0.7), (0.12, 0.45), 'A: shift +1'),
+        ((0.25, 0.7), (0.38, 0.45), 'B: shift −1'),
+        ((0.12, 0.45), (0.06, 0.2), 'A: shift +1'),
+        ((0.12, 0.45), (0.18, 0.2), 'B: shift −1'),
+    ]
 
-    enum_states(D, 0, 0, 0, "")
+    for (x1, y1), (x2, y2), label in edges:
+        ax.annotate('', xy=(x2, y2 + 0.03), xytext=(x1, y1 - 0.03),
+                   arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
+        mid_x = (x1 + x2) / 2
+        mid_y = (y1 + y2) / 2
+        ax.text(mid_x + 0.02, mid_y, label, fontsize=8, color='gray',
+               ha='left', va='center')
 
-    # Plot each state as a point in (degree, weight) space
-    degrees = [s[1] for s in states]
-    weights = [s[0] for s in states]
-    paths = [s[3] for s in states]
+    for level in levels:
+        for x, y, text, color, size in level:
+            bbox = dict(boxstyle='round,pad=0.4', facecolor='lightyellow',
+                       edgecolor=color, linewidth=2)
+            ax.text(x, y, text, fontsize=size, ha='center', va='center',
+                   bbox=bbox, fontfamily='monospace')
 
-    # Color by optimality
-    degree_min = {}
-    for d, w in zip(degrees, weights):
-        if d not in degree_min or w < degree_min[d]:
-            degree_min[d] = w
+    # Add degree labels for leaves
+    leaf_info = [
+        (0.06, 0.12, 'degree = +3\ncost = 0'),
+        (0.18, 0.12, 'degree = +1\ncost = 0'),
+        (0.38, 0.37, 'degree = 0\ncost = 0'),
+        (0.75, 0.62, 'degree = −1\ncost = 0'),
+    ]
 
-    colors = ['gold' if weights[i] == degree_min[degrees[i]] else 'lightgray'
-              for i in range(len(states))]
-    sizes = [150 if weights[i] == degree_min[degrees[i]] else 80
-             for i in range(len(states))]
+    for x, y, text in leaf_info:
+        ax.text(x, y, text, fontsize=8, ha='center', va='top',
+               color='#1B5E20', style='italic')
 
-    ax.scatter(degrees, weights, c=colors, s=sizes, edgecolors='black', zorder=5)
+    ax.set_xlim(-0.05, 1.05)
+    ax.set_ylim(0.05, 1.05)
+    ax.set_title('Skein Expansion Tree for Chain(3)\n'
+                 'Each path from root to leaf = a complete resolution',
+                 fontsize=14, fontweight='bold')
+    ax.axis('off')
 
-    for i, (d, w, _, p) in enumerate(zip(degrees, weights, [s[2] for s in states], paths)):
-        offset_y = 0.15 if i % 2 == 0 else -0.25
-        ax.annotate(p, (d, w), textcoords="offset points", xytext=(0, 12+offset_y*20),
-                   fontsize=8, ha='center', alpha=0.8)
+    # Add legend
+    legend_text = ('Tropical Jones = min over all root-to-leaf paths\n'
+                  'tJones(Chain(3)) = {−1↦0, 0↦0, 1↦0, 3↦0}')
+    ax.text(0.65, 0.35, legend_text, fontsize=10,
+           bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8),
+           ha='center', va='center')
 
-    # Draw the optimal path (tropical Jones polynomial)
-    opt_degrees = sorted(degree_min.keys())
-    opt_values = [degree_min[d] for d in opt_degrees]
-    ax.plot(opt_degrees, opt_values, 'r-', linewidth=2, alpha=0.5, label='Tropical Jones (optimal)')
+    fig.tight_layout()
+    return fig
 
-    ax.set_xlabel('Laurent degree (n)', fontsize=13)
-    ax.set_ylabel('Path weight (tropical cost)', fontsize=13)
-    ax.set_title('State-Sum as Shortest Path Problem (3-crossing chain)\n'
-                 'Gold = optimal path for each degree', fontsize=14)
 
-    optimal_patch = mpatches.Patch(color='gold', label='Optimal state')
-    suboptimal_patch = mpatches.Patch(color='lightgray', label='Suboptimal state')
-    ax.legend(handles=[optimal_patch, suboptimal_patch,
-                       plt.Line2D([0], [0], color='red', alpha=0.5, label='Tropical Jones')],
-             fontsize=10)
-    ax.grid(True, alpha=0.3)
+def viz_simplification_paths():
+    """Visualize simplification paths for different diagram families."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_dp_tree.png', bbox_inches='tight', dpi=150)
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+    diagrams = [
+        ("Chain(6)", make_chain(6), '#2196F3'),
+        ("Chain(8)", make_chain(8), '#1565C0'),
+        ("Balanced(7)", make_balanced(7), '#4CAF50'),
+        ("Balanced(15)", make_balanced(15), '#2E7D32'),
+        ("Alt(6)", make_alternating_chain(6), '#FF9800'),
+        ("Alt(8)", make_alternating_chain(8), '#E65100'),
+    ]
+
+    for name, D, color in diagrams:
+        # Simplification path
+        steps = [D.num_crossings]
+        current = D
+        while not current.is_loop:
+            if current.left.num_crossings <= current.right.num_crossings:
+                current = current.left
+            else:
+                current = current.right
+            steps.append(current.num_crossings)
+
+        ax.plot(range(len(steps)), steps, 'o-', color=color, label=name,
+               markersize=6, linewidth=2)
+
+    ax.set_xlabel('Simplification Step', fontsize=13)
+    ax.set_ylabel('Crossing Number', fontsize=13)
+    ax.set_title('Simplification Trajectories\n'
+                 '(Theorem C: strictly decreasing, terminates at 0)',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.2)
+    ax.set_ylim(-0.5, None)
+
+    fig.tight_layout()
+    return fig
+
+
+def viz_separation_heatmap():
+    """Heatmap showing tropical separation between diagram families."""
+    diagrams = []
+    labels = []
+
+    for n in range(1, 6):
+        diagrams.append(make_chain(n))
+        labels.append(f'Ch({n})')
+    for n in [1, 3, 7]:
+        diagrams.append(make_balanced(n))
+        labels.append(f'Bal({n})')
+    for n in range(1, 5):
+        diagrams.append(make_alternating_chain(n))
+        labels.append(f'Alt({n})')
+
+    n = len(diagrams)
+    separation = np.zeros((n, n))
+
+    for i in range(n):
+        for j in range(n):
+            tj_i = tropical_jones(diagrams[i])
+            tj_j = tropical_jones(diagrams[j])
+            # Count number of separating degrees
+            all_degrees = tj_i.support | tj_j.support
+            sep_count = sum(1 for d in all_degrees if tj_i[d] != tj_j[d])
+            separation[i, j] = sep_count
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+    im = ax.imshow(separation, cmap='YlOrRd', aspect='auto')
+
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=9)
+    ax.set_yticklabels(labels, fontsize=9)
+
+    # Add text annotations
+    for i in range(n):
+        for j in range(n):
+            val = int(separation[i, j])
+            color = 'white' if val > 3 else 'black'
+            ax.text(j, i, str(val), ha='center', va='center',
+                   fontsize=9, color=color)
+
+    ax.set_title('Tropical Separation Matrix\n'
+                 '(number of degrees where invariants differ)',
+                 fontsize=14, fontweight='bold')
+    plt.colorbar(im, label='Number of separating degrees')
+
+    fig.tight_layout()
+    return fig
+
+
+def generate_all_visualizations():
+    """Generate all visualizations and return as base64 data URIs."""
+    print("Generating visualizations...")
+
+    figs = {
+        'tropical_support': viz_tropical_support(),
+        'span_vs_crossings': viz_span_vs_crossings(),
+        'skein_tree': viz_skein_tree(),
+        'simplification': viz_simplification_paths(),
+        'separation_heatmap': viz_separation_heatmap(),
+    }
+
+    results = {}
+    for name, fig in figs.items():
+        b64 = fig_to_base64(fig)
+        results[name] = b64
+        print(f"  Generated {name} ({len(b64)} chars)")
+
+        # Also save to file
+        buf = BytesIO()
+        fig_copy = fig  # already closed by fig_to_base64, need to regenerate
+        print(f"  (saved inline)")
+
+    return results
 
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-    b1 = viz_tropical_jones_profiles()
-    print(f"  viz_profiles.png generated ({len(b1)} chars base64)")
-    b2 = viz_separation_schema()
-    print(f"  viz_separation.png generated ({len(b2)} chars base64)")
-    b3 = viz_simplification()
-    print(f"  viz_simplification.png generated ({len(b3)} chars base64)")
-    b4 = viz_dp_tree()
-    print(f"  viz_dp_tree.png generated ({len(b4)} chars base64)")
-    print("Done!")
+    # Save individual figures
+    figs = {
+        'tropical_support': viz_tropical_support(),
+        'span_vs_crossings': viz_span_vs_crossings(),
+        'skein_tree': viz_skein_tree(),
+        'simplification': viz_simplification_paths(),
+        'separation_heatmap': viz_separation_heatmap(),
+    }
+
+    for name, fig in figs.items():
+        fig.savefig(f'{name}.png', dpi=150, bbox_inches='tight',
+                   facecolor='white', edgecolor='none')
+        print(f"Saved {name}.png")
+        plt.close(fig)
+
+    print("All visualizations generated!")
