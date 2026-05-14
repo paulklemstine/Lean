@@ -234,7 +234,7 @@ class FutureDirection:
     research_mode: str = "prove"
     depth_estimate: int = 3
     priority_score: float = 0.5
-    status: str = "available"  # available, in_progress, completed, abandoned
+    status: str = "available"  # available, in_progress, completed
     consumed_by_exp_id: str = ""
     timestamp: str = ""
 
@@ -474,10 +474,16 @@ class FutureDirectionsManager:
         self._save()
 
     def mark_direction_abandoned(self, direction_id: str) -> None:
-        """Mark a direction as abandoned (e.g., trivial proof)."""
+        """Mark a direction as abandoned (e.g., trivial proof).
+        Deprecated: now resets to available so the direction can be retried."""
+        self.mark_direction_available(direction_id)
+
+    def mark_direction_available(self, direction_id: str) -> None:
+        """Reset a direction back to available so it can be retried."""
         for d in self._directions:
             if d.id == direction_id:
-                d.status = "abandoned"
+                d.status = "available"
+                d.consumed_by_exp_id = ""
                 break
         self._save()
 
@@ -497,18 +503,17 @@ class FutureDirectionsManager:
             "available": statuses.get("available", 0),
             "in_progress": statuses.get("in_progress", 0),
             "completed": statuses.get("completed", 0),
-            "abandoned": statuses.get("abandoned", 0),
         }
 
     def reset_directions(self, new_directions: Optional[List["FutureDirection"]] = None) -> dict:
-        """Reset: mark in_progress as abandoned, then optionally re-seed.
+        """Reset: mark in_progress as available, then optionally re-seed.
 
         Returns a summary dict of what was done.
         """
         reset_count = 0
         for d in self._directions:
             if d.status == "in_progress":
-                d.status = "abandoned"
+                d.status = "available"
                 d.consumed_by_exp_id = ""
                 reset_count += 1
         seeded = 0
@@ -518,7 +523,7 @@ class FutureDirectionsManager:
                 seeded += 1
         self._save()
         return {
-            "abandoned": reset_count,
+            "released": reset_count,
             "seeded": seeded,
             "total": len(self._directions),
         }

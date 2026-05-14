@@ -1823,14 +1823,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const domainFilter = directionsDomainFilter.value;
         const searchTerm = directionsSearch.value.toLowerCase();
         return window.FUTURE_DIRECTIONS.filter(d => {
-            // Hide completed directions unless explicitly showing all or filtering for them
-            if (statusFilter === 'all') {
-                // show everything
-            } else if (statusFilter) {
-                if (d.status !== statusFilter) return false;
-            } else if (d.status === 'completed') {
-                return false;
-            }
+            if (statusFilter && d.status !== statusFilter) return false;
             if (domainFilter && !(d.domains || []).includes(domainFilter)) return false;
             if (searchTerm) {
                 const text = (d.title + ' ' + d.description).toLowerCase();
@@ -1851,14 +1844,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const statusColors = {
             available: '#4caf50',
             in_progress: '#2196f3',
-            completed: '#9e9e9e',
-            abandoned: '#f44336',
         };
         const statusLabels = {
             available: 'Available',
             in_progress: 'In Progress',
-            completed: 'Completed',
-            abandoned: 'Abandoned',
         };
 
         directionsGrid.innerHTML = directions.map(d => {

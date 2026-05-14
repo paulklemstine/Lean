@@ -234,12 +234,13 @@ class TestCompletingDirections:
         assert d.status == "completed"
         assert fd_manager.get_available_directions() == []
 
-    def test_mark_abandoned(self, fd_manager, sample_direction):
+    def test_mark_abandoned_resets_to_available(self, fd_manager, sample_direction):
         fd_manager.add_direction(sample_direction)
         fd_manager.mark_direction_consumed("test_001", "exp_001")
         fd_manager.mark_direction_abandoned("test_001")
         d = fd_manager._directions[0]
-        assert d.status == "abandoned"
+        assert d.status == "available"
+        assert d.consumed_by_exp_id == ""
 
 
 # ── Test: Provenance Chain ──
@@ -436,11 +437,11 @@ class TestResetAndReseed:
             priority_score=0.85,
         )]
         result = fd_manager.reset_directions(new_dirs)
-        assert result["abandoned"] == 1
+        assert result["released"] == 1
         assert result["seeded"] == 1
-        # Only the new direction is available (abandoned directions are not available)
+        # The released direction and the new direction are both available
         available = fd_manager.get_available_directions()
-        assert len(available) == 1
+        assert len(available) == 2
 
     def test_clear_and_reseed(self, fd_manager):
         fd_manager.add_direction(FutureDirection(

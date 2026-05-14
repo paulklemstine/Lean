@@ -1,5 +1,21 @@
 [
   {
+    "id": "seed_001",
+    "title": "P vs NP: Tropical Semiring Barrier",
+    "description": "Prove that tropical semiring morphisms cannot polynomially simulate Boolean circuit satisfiability, establishing a structural barrier via min-plus idempotent completions that separates P from NP. Construct a family of Boolean formulas whose tropical evaluation requires super-polynomial min-plus circuit size, and prove that the idempotent closure of the tropical semiring yields a natural complexity class incomparable with P.",
+    "domains": [
+      "Algebra",
+      "Computation",
+      "Tropical"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.850566+00:00"
+  },
+  {
     "id": "seed_002",
     "title": "Riemann Hypothesis via Tropical Spectral Transfer",
     "description": "Formulate the Riemann Hypothesis as a statement about the spectrum of a tropical transfer operator on the critical strip. Prove that all non-trivial zeros lie on Re(s)=1/2 if and only if the tropical eigenvalue gap vanishes, connecting analytic number theory to tropical dynamics via a constructive spectral correspondence.",
@@ -766,6 +782,22 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T02:49:10.873613+00:00"
+  },
+  {
+    "id": "seed_003",
+    "title": "Collatz Convergence via Tropical Contracting Dynamics",
+    "description": "Prove that the Collatz iteration corresponds to a contracting tropical dynamical system on a min-plus lattice, and that convergence follows from tropical spectral radius bounds. Show that the 3n+1 map is a piecewise-tropical contraction with unique fixed point at 1, establishing global convergence through idempotent metric arguments.",
+    "domains": [
+      "Computation",
+      "Tropical",
+      "Speculative"
+    ],
+    "priority_score": 0.78,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T02:49:10.851799+00:00"
   },
   {
     "id": "seed_039",
