@@ -248,10 +248,10 @@
       "Bridges"
     ],
     "priority_score": 0.92,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5198167b",
     "timestamp": "2026-05-14T16:03:53.822515+00:00"
   },
   {
@@ -296,10 +296,10 @@
       "Bridges"
     ],
     "priority_score": 0.91,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4816365b",
     "timestamp": "2026-05-14T16:03:53.812680+00:00"
   },
   {
@@ -1627,10 +1627,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "705e2def",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82942422",
     "timestamp": "2026-05-14T16:17:56.772471+00:00"
   },
   {
@@ -1789,10 +1789,10 @@
       "Physics"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "497bcb15",
     "timestamp": "2026-05-14T16:24:30.125539+00:00"
   },
   {
@@ -1820,10 +1820,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5896784e",
     "timestamp": "2026-05-14T16:24:30.131427+00:00"
   },
   {
@@ -2358,6 +2358,34 @@
     "timestamp": "2026-05-14T17:33:54.626752+00:00"
   },
   {
+    "id": "fd_0180",
+    "title": "Automatic discovery",
+    "description": "of which results port between domains",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "10c1074c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:34:12.182263+00:00"
+  },
+  {
+    "id": "fd_0181",
+    "title": "Certified quality bounds",
+    "description": "on the loss incurred in translation",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "10c1074c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:34:12.186028+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -2535,21 +2563,6 @@
     "timestamp": "2026-05-14T16:17:39.952876+00:00"
   },
   {
-    "id": "fd_0118",
-    "title": "Summary Table",
-    "description": "| Direction | Key Innovation | Difficulty | Dependencies |\n|-----------|---------------|------------|--------------|\n| 1. Multi-Invariant | Simultaneous multi-certificate transfer | Medium | None |\n| 2. Adjunctions | Optimal translation characterization | Medium-High | Direction 1 (optional) |\n| 3. Predicate Transport | Schema-level theorem transfer | Medium | None |\n| 4. Bicategory | Quality ordering on translations | High | Direction 3 (for 2-cells) |\n| 5. Automated Search | Machine discovery of bridges | Very High | Directions 1-3 (for targets) |",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "10c1074c",
-    "timestamp": "2026-05-14T16:17:39.955358+00:00"
-  },
-  {
     "id": "fd_0119",
     "title": "Team Directive",
     "description": "Each direction should be pursued by a team that:\n1. Formalizes the core definitions and 2-3 key lemmas within the first sprint.\n2. Validates the approach with a concrete catalog example before scaling.\n3. Cross-references with other directions to identify shared infrastructure.\n4. Documents both successes and failures — a proven *impossibility* (e.g., \"no adjunction exists between X and Y\") is as valuable as a positive construction.\n\nThe long-term goal is a **library of research compilers**: certified transformations that create new mathematics by composing proven cross-domain bridges.",
@@ -2685,10 +2698,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8259b94",
     "timestamp": "2026-05-14T17:33:19.347274+00:00"
   },
   {

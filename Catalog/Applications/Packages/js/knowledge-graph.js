@@ -136,12 +136,13 @@
         const NODE_SPACING = 65;          // Spacing between nodes within a cluster
         const K_SPRING = 0.008;          // Spring constant for provenance edges
         const REST_LENGTH = 150;          // Rest length for provenance springs
-        const K_GRAVITY = 0.0003;         // Gentle center pull to prevent drift
-        const DAMPING = 0.85;
+        const K_GRAVITY = 0.00015;        // Gentle center pull to prevent drift
+        const K_REPULSION = 800;          // Node-node repulsion strength
+        const MIN_REPULSION_DIST = 55;    // Minimum distance for repulsion
+        const DAMPING = 0.88;
         const NODE_RADIUS = 22;
-        const GALAXY_ROTATION = 0.0002;   // Slow overall galaxy spin
-        const OSCILLATION_SPEED = 0.008;  // How fast nodes drift around target
-        const OSCILLATION_RADIUS = 8;     // How far nodes drift from target
+        const GALAXY_ROTATION = 0.00015;  // Slow overall galaxy spin
+        const OSCILLATION_AMP = 0.015;    // Gentle drift amplitude
 
         // ─── Domain-clustered layout ───
         const DOMAIN_ORDER = ['Algebra','Tropical','Geometry','Cryptography','Physics',
@@ -217,12 +218,8 @@
                 const nx = n.x * cosG - n.y * sinG;
                 const ny = n.x * sinG + n.y * cosG;
                 n.x = nx; n.y = ny;
-                // Also rotate target position
-                const ntx = n.targetX * cosG - n.targetY * sinG;
-                const nty = n.targetX * sinG + n.targetY * cosG;
-                n.targetX = ntx; n.targetY = nty;
             });
-            // Rotate cluster centroids along with the galaxy
+            // Rotate cluster centroids along with the galaxy (for labels)
             Object.values(clusterData.centroids).forEach(c => {
                 const cx = c.x * cosG - c.y * sinG;
                 const cy = c.x * sinG + c.y * cosG;
@@ -241,22 +238,37 @@
                 b.vx -= fx; b.vy -= fy;
             });
 
+            // ─── Node-node repulsion (prevents overlap) ───
+            for (let i = 0; i < graphNodes.length; i++) {
+                const a = graphNodes[i];
+                if (a === dragNode) continue;
+                for (let j = i + 1; j < graphNodes.length; j++) {
+                    const b = graphNodes[j];
+                    if (b === dragNode) continue;
+                    let dx = b.x - a.x, dy = b.y - a.y;
+                    const d2 = dx * dx + dy * dy;
+                    if (d2 < MIN_REPULSION_DIST * MIN_REPULSION_DIST) {
+                        const d = Math.sqrt(d2) || 1;
+                        const force = K_REPULSION / (d2 + 100);
+                        const fx = (dx / d) * force;
+                        const fy = (dy / d) * force;
+                        a.vx -= fx; a.vy -= fy;
+                        b.vx += fx; b.vy += fy;
+                    }
+                }
+            }
+
             // ─── Gentle center gravity (prevents drift) ───
             graphNodes.forEach(n => {
                 n.vx -= n.x * K_GRAVITY;
                 n.vy -= n.y * K_GRAVITY;
             });
 
-            // ─── Spring to target position (cluster arrangement) ───
+            // ─── Gentle organic drift for liveliness ───
             graphNodes.forEach(n => {
                 if (n === dragNode) return;
-                const dx = n.targetX - n.x;
-                const dy = n.targetY - n.y;
-                n.vx += dx * OSCILLATION_SPEED;
-                n.vy += dy * OSCILLATION_SPEED;
-                // Add gentle oscillation for liveliness
-                n.vx += Math.sin(time * 0.5 + n.phase) * 0.02;
-                n.vy += Math.cos(time * 0.7 + n.phase) * 0.02;
+                n.vx += Math.sin(time * 0.5 + n.phase) * OSCILLATION_AMP;
+                n.vy += Math.cos(time * 0.7 + n.phase * 1.3) * OSCILLATION_AMP;
             });
 
             // ─── Damping + integrate ───
@@ -540,15 +552,32 @@
                 ctx.fill();
             });
 
-            // ─── Domain cluster boundaries and labels ───
+            // ─── Domain cluster boundaries and labels (dynamic centroids) ───
             const centroids = clusterData.centroids;
+            // Recompute cluster centroids from actual node positions
+            const liveClusters = {};
+            graphNodes.forEach(n => {
+                const domain = n.clusterDomain || n.primary_domain || 'Bridges';
+                if (!liveClusters[domain]) liveClusters[domain] = { xs: [], ys: [] };
+                liveClusters[domain].xs.push(n.x);
+                liveClusters[domain].ys.push(n.y);
+            });
+            Object.keys(liveClusters).forEach(domain => {
+                const lc = liveClusters[domain];
+                const c = centroids[domain];
+                if (!c) return;
+                // Update centroid to actual center of mass of member nodes
+                c.x = lc.xs.reduce((a, b) => a + b, 0) / lc.xs.length;
+                c.y = lc.ys.reduce((a, b) => a + b, 0) / lc.ys.length;
+            });
             Object.values(centroids).forEach(c => {
-                const sp = worldToScreen(c.x, c.y);
                 const domain = c.domain;
+                if (!liveClusters[domain]) return;
+                const sp = worldToScreen(c.x, c.y);
                 const col = DOMAIN_COLORS[domain] || DOMAIN_COLORS['Bridges'];
 
                 // Compute cluster radius from member nodes
-                const members = graphNodes.filter(n => n.clusterDomain === domain);
+                const members = graphNodes.filter(n => (n.clusterDomain || n.primary_domain || 'Bridges') === domain);
                 if (members.length === 0) return;
                 let maxDist = 0;
                 members.forEach(n => {
