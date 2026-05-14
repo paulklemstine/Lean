@@ -89,10 +89,10 @@
       "Bridges"
     ],
     "priority_score": 0.92,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b5c09027",
     "timestamp": "2026-05-14T02:49:10.853072+00:00"
   },
   {
@@ -953,10 +953,10 @@
       "Bridges"
     ],
     "priority_score": 0.71,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ae0e471",
     "timestamp": "2026-05-14T02:49:10.882672+00:00"
   },
   {

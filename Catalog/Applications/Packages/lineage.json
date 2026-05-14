@@ -7,7 +7,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T01:50:13Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T01:57:43Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T02:00:38Z",
-      "hue": 271
+      "hue": 100
     },
     {
       "id": "pythagorean_lattice_reduction_for_integer_factorin",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:16:39Z",
-      "hue": 281
+      "hue": 112
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T02:16:56Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -61,7 +61,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T02:24:17Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "collatz_convergence_via_tropical_contracting_dynam",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:29:12Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T03:01:11Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "quantum_pythagorean_teleportation_berggren_orbits_",
@@ -88,7 +88,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T03:01:28Z",
-      "hue": 270
+      "hue": 90
+    },
+    {
+      "id": "sheaf_cohomology_and_certified_adversarial_robustn",
+      "title": "Sheaf-Theoretic Certified Adversarial Robustness",
+      "domain": "Machine Learning / Algebraic Topology",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-14T03:04:15Z",
+      "hue": 91
     }
   ],
   "edges": []
