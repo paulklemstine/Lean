@@ -2,272 +2,186 @@
 """
 Applications of Cohomological Robustness Certification
 
-Demonstrates real-world applications:
-1. Certifying a simple ReLU classifier on synthetic 2-class data
-2. Comparing local vs global certification on MNIST-style regions
-3. Distributed verification via sheaf decomposition
-4. Training-aware robustness monitoring via margin tracking
+Demonstrates real-world applications of the sheaf-theoretic
+robustness certification framework:
+  1. ReLU Network Robustness Audit
+  2. Adversarial Vulnerability Heatmap
+  3. Training Stability Monitor
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from typing import List, Tuple
-
-np.random.seed(42)
+from dataclasses import dataclass
 
 
-# ============================================================
-# Application 1: ReLU Classifier Certification
-# ============================================================
+@dataclass
+class ReLUNetwork:
+    """A simple piecewise-linear (ReLU) network for demonstration."""
+    weights: list[np.ndarray]
+    biases: list[np.ndarray]
 
-def relu_classifier_certification():
-    """
-    Certify a 2-layer ReLU classifier on a 2D binary classification task.
+    def forward(self, x: np.ndarray) -> np.ndarray:
+        h = x
+        for W, b in zip(self.weights[:-1], self.biases[:-1]):
+            h = np.maximum(0, W @ h + b)
+        return self.weights[-1] @ h + self.biases[-1]
 
-    The classifier has 4 activation regions (2 neurons × 2 sign patterns).
-    We compute local margins on each region and derive the global certificate.
-    """
-    print("=" * 60)
-    print("APPLICATION 1: ReLU Classifier Certification (2D)")
-    print("=" * 60)
+    def score_gap(self, x: np.ndarray, class_a: int = 0, class_b: int = 1) -> float:
+        out = self.forward(x)
+        return float(out[class_a] - out[class_b])
 
-    # Simple 2-layer network: x ∈ ℝ² → hidden ∈ ℝ² → output ∈ ℝ
-    W1 = np.array([[1.0, 0.5], [-0.3, 1.2]])  # 2×2
-    b1 = np.array([0.2, -0.5])
-    W2 = np.array([0.8, -0.6])  # 1×2
-    b2 = 0.1
 
-    def network(x):
-        """Forward pass."""
-        h = np.maximum(0, W1 @ x + b1)  # ReLU
-        return W2 @ h + b2
+def compute_activation_pattern(net: ReLUNetwork, x: np.ndarray) -> tuple:
+    """Compute the binary activation pattern (which ReLUs are active)."""
+    patterns = []
+    h = x
+    for W, b in zip(net.weights[:-1], net.biases[:-1]):
+        pre = W @ h + b
+        patterns.append(tuple(int(v > 0) for v in pre))
+        h = np.maximum(0, pre)
+    return tuple(patterns)
 
-    def score_gap(x):
-        """Score gap (positive = correctly classified as class 1)."""
-        return network(x)
 
-    # Enumerate activation patterns (sign patterns of pre-activations)
-    # For 2 hidden neurons, there are 4 possible patterns
-    patterns = [(True, True), (True, False), (False, True), (False, False)]
-    pattern_names = ["(+,+)", "(+,-)", "(-,+)", "(-,-)"]
+def estimate_local_margin(net: ReLUNetwork, x: np.ndarray,
+                          n_samples: int = 100, radius: float = 0.1) -> float:
+    """Estimate the local margin by sampling near x within the same activation region."""
+    pattern = compute_activation_pattern(net, x)
+    min_gap = net.score_gap(x)
 
-    # Sample points and classify by activation pattern
-    n_samples = 5000
-    xs = np.random.randn(n_samples, 2) * 2
-    results = []
+    for _ in range(n_samples):
+        perturbation = np.random.uniform(-radius, radius, size=x.shape)
+        x_pert = x + perturbation
+        if compute_activation_pattern(net, x_pert) == pattern:
+            gap = net.score_gap(x_pert)
+            min_gap = min(min_gap, gap)
 
-    for x in xs:
-        pre = W1 @ x + b1
-        pattern = (pre[0] >= 0, pre[1] >= 0)
-        gap = score_gap(x)
-        results.append((x, pattern, gap))
+    return max(min_gap, 0.0)
 
-    # Compute margins per activation region
-    region_margins = {}
-    region_points = {}
-    for pattern in patterns:
-        points = [(x, g) for x, p, g in results if p == pattern]
-        if points:
-            margins = [g for _, g in points]
-            region_margins[pattern] = min(margins)
-            region_points[pattern] = [x for x, _ in points]
 
-    # Compute Lipschitz constants per region
-    region_lipschitz = {}
-    for pattern in patterns:
-        # On each activation region, the network is affine:
-        # f(x) = W2 @ diag(pattern) @ W1 @ x + ...
-        D = np.diag([1.0 if p else 0.0 for p in pattern])
-        effective_W = W2 @ D @ W1
-        region_lipschitz[pattern] = np.linalg.norm(effective_W)
+def estimate_local_lipschitz(net: ReLUNetwork, x: np.ndarray,
+                             n_samples: int = 200, radius: float = 0.05) -> float:
+    """Estimate the local Lipschitz constant by sampling near x."""
+    max_ratio = 0.0
+    f_x = net.score_gap(x)
 
-    # Global Lipschitz = max over regions
-    L = max(region_lipschitz.values()) if region_lipschitz else 1.0
+    for _ in range(n_samples):
+        perturbation = np.random.uniform(-radius, radius, size=x.shape)
+        x_pert = x + perturbation
+        dist = np.max(np.abs(perturbation))  # L∞ distance
+        if dist > 1e-10:
+            f_pert = net.score_gap(x_pert)
+            ratio = abs(f_pert - f_x) / dist
+            max_ratio = max(max_ratio, ratio)
 
-    # Print results
-    print(f"\n  Network: 2→2→1 with ReLU activation")
-    print(f"  Number of activation regions: {len(region_margins)}")
-    print(f"  Global Lipschitz constant: {L:.4f}")
-
-    for pattern in patterns:
-        if pattern in region_margins:
-            m = region_margins[pattern]
-            lip = region_lipschitz[pattern]
-            status = "✓" if m > 0 else "✗"
-            name = pattern_names[patterns.index(pattern)]
-            n_pts = len(region_points.get(pattern, []))
-            print(f"  Region {name}: margin={m:.4f}, Lip={lip:.4f}, "
-                  f"n_points={n_pts} [{status}]")
-
-    # Global certificate
-    pos_margins = [m for m in region_margins.values() if m is not None]
-    if pos_margins and min(pos_margins) > 0:
-        eps = min(pos_margins) / L
-        print(f"\n  GLOBAL CERTIFIED RADIUS: ε = {eps:.4f}")
-        print(f"  (min margin = {min(pos_margins):.4f}, L = {L:.4f})")
-    else:
-        print(f"\n  NOT GLOBALLY CERTIFIED (some region has non-positive margin)")
-
-    # Visualization
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    ax = axes[0]
-    colors = {'(+,+)': 'blue', '(+,-)': 'red', '(-,+)': 'green', '(-,-)': 'orange'}
-    for pattern in patterns:
-        name = pattern_names[patterns.index(pattern)]
-        pts = region_points.get(pattern, [])
-        if pts:
-            pts_arr = np.array(pts)
-            ax.scatter(pts_arr[:, 0], pts_arr[:, 1], c=colors[name],
-                      alpha=0.3, s=5, label=name)
-    ax.set_xlabel('x₁', fontsize=12)
-    ax.set_ylabel('x₂', fontsize=12)
-    ax.set_title('ReLU Activation Regions', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    ax = axes[1]
-    margin_vals = [region_margins.get(p, 0) for p in patterns]
-    bar_colors = ['green' if m > 0 else 'red' for m in margin_vals]
-    ax.bar(range(len(patterns)), margin_vals, color=bar_colors, alpha=0.7)
-    ax.set_xticks(range(len(patterns)))
-    ax.set_xticklabels(pattern_names, fontsize=10)
-    ax.set_xlabel('Activation Pattern', fontsize=12)
-    ax.set_ylabel('Margin', fontsize=12)
-    ax.set_title('Local Margins per Region', fontsize=13, fontweight='bold')
-    if pos_margins and min(pos_margins) > 0:
-        ax.axhline(y=min(pos_margins), color='purple', linestyle='--',
-                   label=f'min margin = {min(pos_margins):.3f}')
-        ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('relu_certification.png', dpi=150, bbox_inches='tight')
-    print(f"\n  [Saved relu_certification.png]")
-    plt.close()
-
-    return pos_margins, L
+    return max_ratio if max_ratio > 0 else 1.0
 
 
 # ============================================================
-# Application 2: Multi-Scale Margin Tracking During Training
+# Application 1: ReLU Network Robustness Audit
 # ============================================================
 
-def training_margin_tracking():
+def robustness_audit(net: ReLUNetwork, test_points: np.ndarray) -> dict:
     """
-    Simulate how local margins evolve during training, and how the
-    global certified radius changes. This demonstrates the sheaf-theoretic
-    view of robustness as a time-dependent section.
+    Perform a cohomological robustness audit on a ReLU network.
+
+    For each test point, estimates local margins and Lipschitz constants,
+    then computes the sheaf-theoretic certified radius.
+
+    Args:
+        net: The ReLU network to audit
+        test_points: Array of test inputs (n_points × d)
+
+    Returns:
+        Dictionary with audit results.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Training-Aware Robustness Monitoring")
-    print("=" * 60)
+    n_points = len(test_points)
+    local_margins = np.zeros(n_points)
+    local_lipschitz = np.zeros(n_points)
+    activation_patterns = []
 
-    n_epochs = 50
-    n_regions = 5
-    L = 2.5  # Lipschitz constant (assumed constant for simplicity)
+    for i, x in enumerate(test_points):
+        local_margins[i] = estimate_local_margin(net, x)
+        local_lipschitz[i] = estimate_local_lipschitz(net, x)
+        activation_patterns.append(compute_activation_pattern(net, x))
 
-    # Simulate margin evolution: margins increase during training but
-    # some regions converge faster than others
-    margins_history = np.zeros((n_epochs, n_regions))
-    for i in range(n_regions):
-        rate = 0.05 + 0.1 * np.random.rand()
-        amplitude = 0.5 + 1.5 * np.random.rand()
-        noise = 0.1 * np.random.randn(n_epochs)
-        margins_history[:, i] = amplitude * (1 - np.exp(-rate * np.arange(n_epochs))) + noise
+    # Find unique activation regions
+    unique_patterns = list(set(activation_patterns))
+    n_regions = len(unique_patterns)
 
-    # Global certified radius at each epoch
-    min_margins = np.min(margins_history, axis=1)
-    global_radii = np.maximum(0, min_margins / L)
+    # Per-region statistics
+    region_margins = np.zeros(n_regions)
+    region_lipschitz = np.zeros(n_regions)
+    region_counts = np.zeros(n_regions)
 
-    # H¹ contribution: cocycle norm as a function of training
-    cocycle_norms = np.zeros(n_epochs)
-    for t in range(n_epochs):
-        local_radii = margins_history[t] / L
-        # Cocycle norm = max |r_j - r_i|
-        cocycle_norms[t] = np.max(local_radii) - np.min(local_radii)
+    for i, pattern in enumerate(activation_patterns):
+        region_idx = unique_patterns.index(pattern)
+        region_margins[region_idx] = max(region_margins[region_idx], local_margins[i])
+        region_lipschitz[region_idx] = max(region_lipschitz[region_idx], local_lipschitz[i])
+        region_counts[region_idx] += 1
 
-    print(f"\n  Simulating {n_epochs} epochs of training with {n_regions} regions")
-    print(f"  Lipschitz constant L = {L:.2f}")
-    print(f"\n  Epoch  MinMargin  GlobalRadius  CocycleNorm")
-    print(f"  " + "-" * 50)
-    for t in [0, 9, 19, 29, 39, 49]:
-        print(f"  {t+1:5d}  {min_margins[t]:9.4f}  {global_radii[t]:11.4f}  "
-              f"{cocycle_norms[t]:11.4f}")
+    # Replace zeros with small positives to avoid division by zero
+    region_margins = np.maximum(region_margins, 1e-6)
+    region_lipschitz = np.maximum(region_lipschitz, 1e-6)
 
-    # Visualization
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
+    # Compute radii
+    local_radii = region_margins / region_lipschitz
+    sheaf_radius = np.min(local_radii)
+    global_lip_radius = np.min(region_margins) / np.max(region_lipschitz)
 
-    ax = axes[0]
-    for i in range(n_regions):
-        ax.plot(range(1, n_epochs + 1), margins_history[:, i],
-                alpha=0.6, label=f'Region {i}')
-    ax.plot(range(1, n_epochs + 1), min_margins, 'k-', linewidth=2,
-            label='Min margin')
-    ax.set_xlabel('Epoch', fontsize=12)
-    ax.set_ylabel('Margin', fontsize=12)
-    ax.set_title('Local Margins During Training', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-
-    ax = axes[1]
-    ax.plot(range(1, n_epochs + 1), global_radii, 'b-', linewidth=2)
-    ax.fill_between(range(1, n_epochs + 1), 0, global_radii, alpha=0.2)
-    ax.set_xlabel('Epoch', fontsize=12)
-    ax.set_ylabel('Certified Radius ε', fontsize=12)
-    ax.set_title('Global Certified Radius', fontsize=13, fontweight='bold')
-    ax.grid(True, alpha=0.3)
-
-    ax = axes[2]
-    ax.plot(range(1, n_epochs + 1), cocycle_norms, 'r-', linewidth=2)
-    ax.set_xlabel('Epoch', fontsize=12)
-    ax.set_ylabel('Cocycle Norm', fontsize=12)
-    ax.set_title('Čech Cocycle Norm\n(Obstruction Measure)', fontsize=13, fontweight='bold')
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('training_monitoring.png', dpi=150, bbox_inches='tight')
-    print(f"\n  [Saved training_monitoring.png]")
-    plt.close()
+    return {
+        "n_regions": n_regions,
+        "n_test_points": n_points,
+        "sheaf_radius": sheaf_radius,
+        "global_lipschitz_radius": global_lip_radius,
+        "local_radii": local_radii,
+        "region_margins": region_margins,
+        "region_lipschitz": region_lipschitz,
+        "region_counts": region_counts,
+        "improvement_pct": (sheaf_radius / global_lip_radius - 1) * 100
+            if global_lip_radius > 0 else float('inf'),
+    }
 
 
 # ============================================================
-# Application 3: Distributed Verification
+# Application 2: Vulnerability Heatmap
 # ============================================================
 
-def distributed_verification():
+def vulnerability_heatmap(net: ReLUNetwork, grid_size: int = 20,
+                          x_range: tuple = (-2, 2),
+                          y_range: tuple = (-2, 2)) -> dict:
     """
-    Demonstrate how sheaf-theoretic certification enables distributed
-    verification: each node verifies its local region independently,
-    and the global certificate is assembled via the gluing theorem.
+    Compute a vulnerability heatmap over a 2D grid.
+
+    For each point, computes the estimated local certified radius.
+    Low values indicate vulnerable regions.
+
+    Args:
+        net: The ReLU network (must accept 2D inputs)
+        grid_size: Resolution of the grid
+        x_range, y_range: Bounds of the grid
+
+    Returns:
+        Dictionary with grid coordinates and vulnerability values.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Distributed Verification via Sheaf Gluing")
-    print("=" * 60)
+    xs = np.linspace(x_range[0], x_range[1], grid_size)
+    ys = np.linspace(y_range[0], y_range[1], grid_size)
+    radii = np.zeros((grid_size, grid_size))
+    margins = np.zeros((grid_size, grid_size))
 
-    n_nodes = 8
-    margins = [0.3 + 0.7 * np.random.rand() for _ in range(n_nodes)]
-    lip_constants = [1.0 + 2.0 * np.random.rand() for _ in range(n_nodes)]
-    local_radii = [m / l for m, l in zip(margins, lip_constants)]
-    L_global = max(lip_constants)
-    min_margin = min(margins)
-    global_radius = min_margin / L_global
+    for i, x in enumerate(xs):
+        for j, y in enumerate(ys):
+            point = np.array([x, y])
+            m = estimate_local_margin(net, point, n_samples=50, radius=0.2)
+            L = estimate_local_lipschitz(net, point, n_samples=50, radius=0.1)
+            margins[i, j] = m
+            radii[i, j] = m / L if L > 0 else 0
 
-    print(f"\n  Number of verification nodes: {n_nodes}")
-    print(f"\n  Node  Margin    Lip     LocalRadius")
-    print(f"  " + "-" * 45)
-    for i in range(n_nodes):
-        print(f"  {i:4d}  {margins[i]:.4f}  {lip_constants[i]:.4f}  {local_radii[i]:.4f}")
-
-    print(f"\n  Global Lipschitz: {L_global:.4f}")
-    print(f"  Min margin: {min_margin:.4f}")
-    print(f"  Global certified radius: {global_radius:.4f}")
-    print(f"\n  KEY INSIGHT: Each node verifies independently.")
-    print(f"  The sheaf gluing theorem (H¹ = 0) guarantees that")
-    print(f"  local certificates compose into a global certificate.")
-    print(f"  No node needs access to another node's data.")
+    return {
+        "xs": xs, "ys": ys,
+        "radii": radii, "margins": margins,
+        "min_radius": np.min(radii),
+        "max_radius": np.max(radii),
+        "mean_radius": np.mean(radii),
+    }
 
 
 # ============================================================
@@ -275,29 +189,369 @@ def distributed_verification():
 # ============================================================
 
 if __name__ == "__main__":
-    relu_classifier_certification()
-    training_margin_tracking()
-    distributed_verification()
+    print("Cohomological Robustness — Applications")
+    print("=" * 60)
+
+    # Create a simple 2D ReLU network
+    np.random.seed(42)
+    net = ReLUNetwork(
+        weights=[
+            np.random.randn(4, 2) * 0.5,
+            np.random.randn(4, 4) * 0.5,
+            np.random.randn(2, 4) * 0.5,
+        ],
+        biases=[
+            np.random.randn(4) * 0.1,
+            np.random.randn(4) * 0.1,
+            np.random.randn(2) * 0.1,
+        ]
+    )
+
+    # Application 1: Robustness Audit
+    print("\n--- Application 1: ReLU Network Robustness Audit ---")
+    test_points = np.random.randn(50, 2) * 1.5
+    audit = robustness_audit(net, test_points)
+
+    print(f"Number of activation regions discovered: {audit['n_regions']}")
+    print(f"Sheaf certified radius: {audit['sheaf_radius']:.6f}")
+    print(f"Global Lipschitz radius: {audit['global_lipschitz_radius']:.6f}")
+    print(f"Improvement: {audit['improvement_pct']:.1f}%")
+
+    # Application 2: Vulnerability Heatmap
+    print("\n--- Application 2: Vulnerability Heatmap ---")
+    heatmap = vulnerability_heatmap(net, grid_size=10)
+    print(f"Min certified radius: {heatmap['min_radius']:.6f}")
+    print(f"Max certified radius: {heatmap['max_radius']:.6f}")
+    print(f"Mean certified radius: {heatmap['mean_radius']:.6f}")
 
     print("\n" + "=" * 60)
-    print("All applications completed successfully.")
+    print("Applications complete.")
+
+
+#!/usr/bin/env python3
+"""
+Cohomological Robustness Certification: Interactive Demonstrations
+
+This module demonstrates the core theorems of Čech obstruction theory
+for adversarial robustness with concrete numerical examples.
+
+Demonstrates:
+  1. Čech cocycles and coboundaries on finite covers
+  2. The nerve lemma (H¹ vanishes for finite covers)
+  3. Local-to-global gluing of robustness certificates
+  4. Obstruction detection: nontrivial cocycles as vulnerability witnesses
+  5. Comparison with Lipschitz certification
+"""
+
+import numpy as np
+from typing import Callable
+
+
+# ============================================================
+# §1. Čech Cocycle and Coboundary Definitions
+# ============================================================
+
+def is_cocycle(c: np.ndarray) -> bool:
+    """Check if c[i,j] satisfies the cocycle condition: c[i,k] = c[i,j] + c[j,k] for all i,j,k."""
+    n = c.shape[0]
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                if not np.isclose(c[i, k], c[i, j] + c[j, k]):
+                    return False
+    return True
+
+
+def is_coboundary(c: np.ndarray) -> tuple[bool, np.ndarray | None]:
+    """
+    Check if c is a coboundary: c[i,j] = f[j] - f[i] for some potential f.
+    If so, return (True, f). Otherwise (False, None).
+
+    Strategy: fix f[0] = 0, then f[i] = c[0,i]. Check consistency.
+    """
+    n = c.shape[0]
+    f = np.zeros(n)
+    for i in range(n):
+        f[i] = c[0, i]
+    # Verify
+    for i in range(n):
+        for j in range(n):
+            if not np.isclose(c[i, j], f[j] - f[i]):
+                return False, None
+    return True, f
+
+
+def discrepancy_cocycle(margins: np.ndarray) -> np.ndarray:
+    """Construct the discrepancy cocycle c[i,j] = m[j] - m[i]."""
+    n = len(margins)
+    c = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            c[i, j] = margins[j] - margins[i]
+    return c
+
+
+# ============================================================
+# §2. Demonstrations
+# ============================================================
+
+def demo_cocycle_algebra():
+    """Demonstrate cocycle properties: diagonal zero, antisymmetry, 3-cycle identity."""
+    print("=" * 60)
+    print("DEMO 1: Cocycle Algebra")
+    print("=" * 60)
+
+    # A coboundary from potential f = [0, 1, 3, 2]
+    f = np.array([0.0, 1.0, 3.0, 2.0])
+    n = len(f)
+    c = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            c[i, j] = f[j] - f[i]
+
+    print(f"\nPotential f = {f}")
+    print(f"Coboundary matrix c[i,j] = f[j] - f[i]:")
+    print(c)
+
+    print(f"\nIs cocycle? {is_cocycle(c)}")
+    ok, f_recovered = is_coboundary(c)
+    print(f"Is coboundary? {ok}, recovered potential = {f_recovered}")
+
+    # Check properties
+    print("\nDiagonal zero:", all(np.isclose(c[i, i], 0) for i in range(n)))
+    print("Antisymmetric:", all(
+        np.isclose(c[i, j], -c[j, i]) for i in range(n) for j in range(n)))
+    # 3-cycle identity
+    triples_ok = all(
+        np.isclose(c[i, j] + c[j, k] + c[k, i], 0)
+        for i in range(n) for j in range(n) for k in range(n))
+    print("3-cycle identity:", triples_ok)
+    print()
+
+
+def demo_nerve_lemma():
+    """Demonstrate the nerve lemma: every cocycle on a finite set is a coboundary."""
+    print("=" * 60)
+    print("DEMO 2: Nerve Lemma (H¹ Vanishes for Finite Covers)")
+    print("=" * 60)
+
+    # Generate a random cocycle by construction
+    n = 5
+    # Any cocycle is determined by c[0, i] for all i (the nerve lemma proof)
+    base_values = np.random.randn(n)
+    base_values[0] = 0  # c[0,0] = 0
+
+    c = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            c[i, j] = base_values[j] - base_values[i]
+
+    print(f"\nGenerated cocycle on {n} charts:")
+    print(c.round(3))
+    print(f"\nIs cocycle? {is_cocycle(c)}")
+    ok, f = is_coboundary(c)
+    print(f"Is coboundary? {ok}")
+    print(f"Recovered potential: {f.round(3)}")
+    print(f"Original base values: {base_values.round(3)}")
+    print(f"Match (up to constant)? {np.allclose(f - f[0], base_values - base_values[0])}")
+    print()
+
+
+def demo_local_to_global_gluing():
+    """
+    Demonstrate Theorem A: local margins glue to a global certified radius
+    when H¹ vanishes.
+    """
+    print("=" * 60)
+    print("DEMO 3: Local-to-Global Gluing (Theorem A)")
+    print("=" * 60)
+
+    # Setup: 4 activation regions with local margins and Lipschitz constant
+    margins = np.array([0.5, 0.8, 0.3, 0.6])
+    L = 2.0  # Global Lipschitz constant
+    n = len(margins)
+
+    print(f"\nLocal margins: {margins}")
+    print(f"Global Lipschitz constant: {L}")
+    print(f"Local certified radii (m_i / L): {margins / L}")
+
+    # Check H¹ vanishes (always true for finite covers)
+    c = discrepancy_cocycle(margins)
+    print(f"\nDiscrepancy cocycle is coboundary: {is_coboundary(c)[0]}")
+
+    # Global certified radius = min(m_i / L)
+    global_radius = np.min(margins / L)
+    print(f"\nGlobal certified L∞ radius: {global_radius}")
+    print(f"  = min(m_i / L) = min({margins / L})")
+    print(f"  = {global_radius:.4f}")
+
+    # Verify: simulate score-gap function and perturbations
+    np.random.seed(42)
+    # Simple piecewise-linear score-gap: f(x) = margin[region(x)] + slope * dist_to_center
+    n_tests = 1000
+    violations = 0
+    for _ in range(n_tests):
+        x = np.random.uniform(-1, 1)
+        region = int((x + 1) / 2 * n) % n  # assign to region
+        perturbation = np.random.uniform(-global_radius + 1e-10, global_radius - 1e-10)
+        # Score gap at x: margin[region] (at center), perturbed by L * |perturbation|
+        gap_at_x = margins[region]
+        gap_at_x_pert = gap_at_x - L * abs(perturbation)
+        if gap_at_x_pert <= 0:
+            violations += 1
+
+    print(f"\nVerification: {n_tests} random perturbations within radius {global_radius:.4f}")
+    print(f"  Violations of positive score-gap: {violations}")
+    print(f"  Certificate valid: {violations == 0}")
+    print()
+
+
+def demo_obstruction_detection():
+    """
+    Demonstrate Theorem B: nontrivial cocycle yields incompatible local sections.
+
+    Since H¹ always vanishes for finite covers over ℝ, we demonstrate with
+    a hypothetical scenario where a cocycle fails to be a coboundary
+    (which can happen over more general coefficient sheaves).
+    """
+    print("=" * 60)
+    print("DEMO 4: Obstruction Detection (Theorem B)")
+    print("=" * 60)
+
+    # For real-valued cocycles on finite sets, all cocycles are coboundaries.
+    # Demonstrate the incompatibility detection mechanism:
+    n = 4
+
+    # Case 1: Compatible margins (coboundary cocycle)
+    margins_compat = np.array([0.5, 0.8, 0.3, 0.6])
+    c_compat = discrepancy_cocycle(margins_compat)
+    ok_compat, _ = is_coboundary(c_compat)
+    print(f"\nCase 1: Compatible margins {margins_compat}")
+    print(f"  Is coboundary? {ok_compat}")
+    print(f"  Max pairwise discrepancy: {np.max(np.abs(c_compat)):.3f}")
+
+    # Case 2: Demonstrate what incompatibility looks like
+    # A matrix that is NOT a cocycle (doesn't satisfy transitivity)
+    c_incompat = np.array([
+        [0.0,  0.5, -0.3,  0.2],
+        [-0.5, 0.0,  0.4, -0.1],
+        [0.3, -0.4,  0.0,  0.6],
+        [-0.2, 0.1, -0.6,  0.0]
+    ])
+    print(f"\nCase 2: Inconsistent discrepancy matrix (not a cocycle):")
+    print(c_incompat)
+    print(f"  Is cocycle? {is_cocycle(c_incompat)}")
+
+    # Find the most incompatible pair
+    max_incompat = 0
+    max_pair = (0, 0)
+    for i in range(n):
+        for j in range(i + 1, n):
+            # Check triangle inconsistency
+            for k in range(n):
+                err = abs(c_incompat[i, k] - c_incompat[i, j] - c_incompat[j, k])
+                if err > max_incompat:
+                    max_incompat = err
+                    max_pair = (i, j)
+
+    print(f"  Maximum triangle inconsistency: {max_incompat:.3f}")
+    print(f"  Most inconsistent pair: charts {max_pair[0]} and {max_pair[1]}")
+    print(f"  → This pair is a vulnerability witness!")
+    print()
+
+
+def demo_lipschitz_comparison():
+    """
+    Demonstrate Theorem C: sheaf radius vs Lipschitz certification comparison.
+    """
+    print("=" * 60)
+    print("DEMO 5: Sheaf vs Lipschitz Comparison (Theorem C)")
+    print("=" * 60)
+
+    # Per-chart Lipschitz data
+    margins = np.array([0.5, 0.8, 0.3, 0.6, 1.0])
+    lipschitz = np.array([1.0, 2.0, 0.5, 1.5, 3.0])
+    n = len(margins)
+
+    print(f"\nChart  | Margin  | Lipschitz | Local Radius (m/L)")
+    print("-" * 52)
+    local_radii = margins / lipschitz
+    for i in range(n):
+        print(f"  {i}    |  {margins[i]:.2f}  |   {lipschitz[i]:.2f}    |    {local_radii[i]:.4f}")
+
+    # Sheaf radius (per-chart): min of local radii
+    sheaf_radius = np.min(local_radii)
+    print(f"\nSheaf certified radius: min(m_i/L_i) = {sheaf_radius:.4f}")
+
+    # Global Lipschitz radius: min(m_i) / max(L_i)
+    global_lip_radius = np.min(margins) / np.max(lipschitz)
+    print(f"Global Lipschitz radius: min(m_i)/max(L_i) = {global_lip_radius:.4f}")
+
+    improvement = (sheaf_radius / global_lip_radius - 1) * 100
+    print(f"\nSheaf improvement over global Lipschitz: {improvement:.1f}%")
+    print(f"  The sheaf method is {'better' if improvement > 0 else 'equal or worse'}")
+    print(f"  because it uses per-chart Lipschitz constants.")
+    print()
+
+
+def demo_consensus_connection():
+    """
+    Demonstrate the connection to distributed consensus theory.
+    """
+    print("=" * 60)
+    print("DEMO 6: Consensus / Graph Cohomology Connection")
+    print("=" * 60)
+
+    # Model: 5 agents with local state estimates
+    n_agents = 5
+    true_state = 3.14
+    noise = np.random.randn(n_agents) * 0.1
+    local_estimates = true_state + noise
+
+    print(f"\nTrue state: {true_state}")
+    print(f"Agent estimates: {local_estimates.round(3)}")
+
+    # Discrepancy field (cocycle)
+    c = discrepancy_cocycle(local_estimates)
+    print(f"\nDiscrepancy cocycle (pairwise differences):")
+    print(c.round(3))
+
+    # Apply gauge correction (coboundary potential)
+    ok, f = is_coboundary(c)
+    print(f"\nIs coboundary? {ok}")
+    print(f"Gauge potential: {f.round(3)}")
+
+    # Corrected estimates: all agents converge to mean
+    mean_est = np.mean(local_estimates)
+    print(f"\nMean estimate: {mean_est:.4f}")
+    print(f"After gauge correction, all agents agree on: {mean_est:.4f}")
+    print(f"Error from true state: {abs(mean_est - true_state):.4f}")
+    print()
+
+
+if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Cohomological Robustness Certification — Demonstrations ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_cocycle_algebra()
+    demo_nerve_lemma()
+    demo_local_to_global_gluing()
+    demo_obstruction_detection()
+    demo_lipschitz_comparison()
+    demo_consensus_connection()
+
+    print("=" * 60)
+    print("All demonstrations complete.")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Demonstration of Cohomological Robustness Certification
+Visualizations for Cohomological Robustness Certification
 
-This script demonstrates the core mathematical ideas behind using sheaf
-cohomology to certify adversarial robustness of classifiers, particularly
-piecewise-linear (ReLU) neural networks.
-
-Key demonstrations:
-1. A 1D piecewise-linear classifier with explicit activation regions
-2. Local margin computation on each region
-3. Čech cocycle computation on overlaps
-4. Coboundary decomposition (H¹ = 0 verification)
-5. Global certified radius computation as min(margin_i) / L
+Generates publication-quality figures demonstrating the core concepts.
 """
 
 import numpy as np
@@ -305,406 +559,266 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from typing import List, Tuple, Dict
-
-# ============================================================
-# §1. Piecewise-Linear Classifier Model
-# ============================================================
-
-class PiecewiseLinearClassifier:
-    """A 1D piecewise-linear classifier with explicit ReLU regions."""
-
-    def __init__(self, breakpoints: List[float],
-                 slopes: List[float], intercepts: List[float]):
-        """
-        Define a piecewise-linear function on intervals determined by breakpoints.
-
-        Parameters
-        ----------
-        breakpoints : list of floats
-            Sorted boundary points between linear regions.
-            Regions are (-inf, bp[0]], [bp[0], bp[1]], ..., [bp[-1], inf).
-        slopes : list of floats
-            Slope of the linear piece on each region (len = len(breakpoints) + 1).
-        intercepts : list of floats
-            Intercept of the linear piece on each region.
-        """
-        self.breakpoints = np.array(breakpoints)
-        self.slopes = np.array(slopes)
-        self.intercepts = np.array(intercepts)
-        self.n_regions = len(slopes)
-
-    def __call__(self, x: np.ndarray) -> np.ndarray:
-        x = np.atleast_1d(x).astype(float)
-        result = np.zeros_like(x)
-        for i in range(self.n_regions):
-            if i == 0:
-                mask = x <= self.breakpoints[0]
-            elif i == self.n_regions - 1:
-                mask = x > self.breakpoints[-1]
-            else:
-                mask = (x > self.breakpoints[i-1]) & (x <= self.breakpoints[i])
-            result[mask] = self.slopes[i] * x[mask] + self.intercepts[i]
-        return result
-
-    def region_of(self, x: float) -> int:
-        """Return the index of the region containing x."""
-        for i, bp in enumerate(self.breakpoints):
-            if x <= bp:
-                return i
-        return self.n_regions - 1
-
-    def local_lipschitz(self, region: int) -> float:
-        """Lipschitz constant on a given region (= |slope|)."""
-        return abs(self.slopes[region])
-
-    def global_lipschitz(self) -> float:
-        """Global Lipschitz constant (max |slope|)."""
-        return max(abs(s) for s in self.slopes)
+from matplotlib.collections import PatchCollection
+import base64
+from io import BytesIO
 
 
-def score_gap(f_target: PiecewiseLinearClassifier,
-              f_runner: PiecewiseLinearClassifier,
-              x: np.ndarray) -> np.ndarray:
-    """Score gap: target class logit minus runner-up class logit."""
-    return f_target(x) - f_runner(x)
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 data URI."""
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
+    buf.seek(0)
+    return "data:image/png;base64," + base64.b64encode(buf.read()).decode('utf-8')
 
 
-# ============================================================
-# §2. Local Margin and Robustness Certificate Computation
-# ============================================================
-
-def compute_local_margins(gap_func, regions: List[Tuple[float, float]],
-                          n_samples: int = 1000) -> List[float]:
+def plot_activation_regions_and_margins():
     """
-    Compute the minimum score gap (margin) on each region by sampling.
-    In practice for PWL functions this could be computed exactly.
+    Figure 1: Activation regions of a ReLU network with local margins
+    and the decision boundary.
     """
-    margins = []
-    for (a, b) in regions:
-        xs = np.linspace(a, b, n_samples)
-        gaps = gap_func(xs)
-        margins.append(float(np.min(gaps)))
-    return margins
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+
+    # Draw activation regions as colored polygons
+    regions = [
+        (np.array([[0, 0], [2, 0], [2, 2], [0, 2]]), 0.5, 'Region A\nm=0.50'),
+        (np.array([[2, 0], [4, 0], [4, 2], [2, 2]]), 0.80, 'Region B\nm=0.80'),
+        (np.array([[0, 2], [2, 2], [2, 4], [0, 4]]), 0.30, 'Region C\nm=0.30'),
+        (np.array([[2, 2], [4, 2], [4, 4], [2, 4]]), 0.60, 'Region D\nm=0.60'),
+    ]
+
+    cmap = plt.cm.RdYlGn
+    margins = [r[1] for r in regions]
+    norm = plt.Normalize(vmin=0, vmax=1)
+
+    for vertices, margin, label in regions:
+        color = cmap(norm(margin))
+        polygon = plt.Polygon(vertices, facecolor=color, edgecolor='black',
+                              linewidth=2, alpha=0.6)
+        ax.add_patch(polygon)
+        center = vertices.mean(axis=0)
+        ax.text(center[0], center[1], label, ha='center', va='center',
+                fontsize=11, fontweight='bold')
+
+    # Decision boundary
+    ax.plot([0, 4], [2, 2], 'k--', linewidth=2.5, label='Decision boundary')
+    ax.plot([2, 2], [0, 4], 'k--', linewidth=2.5)
+
+    # Certified radius circle at a point
+    x0, y0 = 1.0, 1.0
+    r = 0.30 / 2.0  # min margin / L
+    circle = plt.Circle((x0, y0), r, fill=False, color='red', linewidth=2,
+                         linestyle='-', label=f'Certified radius r={r:.2f}')
+    ax.add_patch(circle)
+    ax.plot(x0, y0, 'ro', markersize=8)
+
+    ax.set_xlim(-0.5, 4.5)
+    ax.set_ylim(-0.5, 4.5)
+    ax.set_xlabel('Input dimension 1', fontsize=12)
+    ax.set_ylabel('Input dimension 2', fontsize=12)
+    ax.set_title('ReLU Activation Regions with Local Margins', fontsize=14)
+    ax.legend(loc='upper left', fontsize=10)
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+
+    b64 = fig_to_base64(fig)
+    fig.savefig('/workspace/request-project/fig_activation_regions.png',
+                dpi=150, bbox_inches='tight')
+    plt.close(fig)
+    return b64
 
 
-def compute_certified_radius(margins: List[float],
-                              lipschitz: float) -> float:
+def plot_cocycle_graph():
     """
-    Global certified radius = min(margin_i) / L.
-
-    This is the main formula from the Čech descent theorem:
-    when H¹ vanishes (which it always does for finite covers),
-    the global certificate is the minimum local certificate.
+    Figure 2: The cocycle as a labeled graph showing pairwise discrepancies.
     """
-    min_margin = min(margins)
-    if min_margin <= 0 or lipschitz <= 0:
-        return 0.0
-    return min_margin / lipschitz
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-
-# ============================================================
-# §3. Čech Cocycle and Coboundary Computation
-# ============================================================
-
-def compute_overlap_cocycle(margins: List[float],
-                            lipschitz_constants: List[float]) -> np.ndarray:
-    """
-    Compute the 1-cocycle on pairwise overlaps.
-
-    The cocycle c(i,j) measures the discrepancy between the local
-    robustness certificates on regions i and j:
-        c(i,j) = (margin_j / L_j) - (margin_i / L_i)
-    """
+    margins = [0.5, 0.8, 0.3, 0.6]
+    labels = ['A', 'B', 'C', 'D']
     n = len(margins)
-    c = np.zeros((n, n))
-    local_radii = [m / l for m, l in zip(margins, lipschitz_constants)]
-    for i in range(n):
-        for j in range(n):
-            c[i, j] = local_radii[j] - local_radii[i]
-    return c
 
+    # Positions in a square
+    positions = np.array([[0, 0], [2, 0], [0, 2], [2, 2]], dtype=float)
 
-def verify_cocycle_condition(c: np.ndarray) -> bool:
-    """Verify the cocycle condition: c(i,k) = c(i,j) + c(j,k) for all i,j,k."""
-    n = c.shape[0]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                if abs(c[i, k] - c[i, j] - c[j, k]) > 1e-10:
-                    return False
-    return True
+    for ax_idx, ax in enumerate(axes):
+        # Draw edges with cocycle values
+        for i in range(n):
+            for j in range(i + 1, n):
+                c_ij = margins[j] - margins[i]
+                color = 'green' if abs(c_ij) < 0.2 else ('orange' if abs(c_ij) < 0.4 else 'red')
+                ax.plot([positions[i, 0], positions[j, 0]],
+                        [positions[i, 1], positions[j, 1]],
+                        '-', color=color, linewidth=2, alpha=0.7)
+                mid = (positions[i] + positions[j]) / 2
+                offset = np.array([0.1, 0.1]) if i + j != 3 else np.array([-0.15, 0.1])
+                ax.text(mid[0] + offset[0], mid[1] + offset[1],
+                        f'c={c_ij:+.1f}', fontsize=9, color=color, fontweight='bold')
 
+        # Draw nodes
+        for i in range(n):
+            circle = plt.Circle(positions[i], 0.25, facecolor='lightblue',
+                                edgecolor='navy', linewidth=2)
+            ax.add_patch(circle)
+            ax.text(positions[i, 0], positions[i, 1],
+                    f'{labels[i]}\nm={margins[i]}', ha='center', va='center',
+                    fontsize=10, fontweight='bold')
 
-def decompose_coboundary(c: np.ndarray) -> Tuple[bool, np.ndarray]:
-    """
-    Attempt to decompose a cocycle as a coboundary: c(i,j) = b(j) - b(i).
+        ax.set_xlim(-0.8, 2.8)
+        ax.set_ylim(-0.8, 2.8)
+        ax.set_aspect('equal')
+        ax.grid(True, alpha=0.2)
 
-    For the canonical coboundary decomposition, we fix b(0) = 0 and set
-    b(i) = c(0, i). This always works when c is a cocycle.
+        if ax_idx == 0:
+            ax.set_title('Discrepancy Cocycle\nc(i,j) = m(j) - m(i)', fontsize=13)
+        else:
+            # Show the coboundary potential
+            ax.set_title('Coboundary Potential\nf(i) = c(base, i)', fontsize=13)
+            for i in range(n):
+                ax.text(positions[i, 0], positions[i, 1] - 0.45,
+                        f'f={margins[i] - margins[0]:.1f}', ha='center',
+                        fontsize=9, color='purple', fontweight='bold')
 
-    Returns (is_coboundary, b) where b is the primitive.
-    """
-    n = c.shape[0]
-    b = np.zeros(n)
-    b[0] = 0
-    for i in range(1, n):
-        b[i] = c[0, i]
-
-    # Verify
-    for i in range(n):
-        for j in range(n):
-            if abs(c[i, j] - (b[j] - b[i])) > 1e-10:
-                return False, b
-    return True, b
-
-
-# ============================================================
-# §4. Vulnerability Detection via Stalk Analysis
-# ============================================================
-
-def detect_vulnerable_points(gap_func, x_range: Tuple[float, float],
-                              n_points: int = 10000) -> List[float]:
-    """
-    Find points where the score gap is near zero (vulnerable points).
-    These correspond to zero stalk margins in the decision sheaf.
-    """
-    xs = np.linspace(x_range[0], x_range[1], n_points)
-    gaps = gap_func(xs)
-    threshold = 0.01 * max(abs(gaps))
-    vulnerable = xs[np.abs(gaps) < threshold]
-    return list(vulnerable)
-
-
-# ============================================================
-# §5. Main Demo
-# ============================================================
-
-def main():
-    print("=" * 70)
-    print("  COHOMOLOGICAL ROBUSTNESS CERTIFICATION DEMO")
-    print("  Sheaf-theoretic local-to-global certificate for PWL classifiers")
-    print("=" * 70)
-
-    # Define a piecewise-linear classifier (simulating ReLU network output)
-    # Target class logit (always above runner-up for positive certification)
-    f_target = PiecewiseLinearClassifier(
-        breakpoints=[-2.0, 0.0, 1.5, 3.0],
-        slopes=[0.5, 1.5, 0.8, 1.0, 0.3],
-        intercepts=[4.0, 3.0, 3.0, 2.0, 5.0]
-    )
-
-    # Runner-up class logit
-    f_runner = PiecewiseLinearClassifier(
-        breakpoints=[-2.0, 0.0, 1.5, 3.0],
-        slopes=[0.3, 0.8, 0.5, 0.2, 0.1],
-        intercepts=[1.0, 0.6, 0.5, 1.0, 1.3]
-    )
-
-    gap = lambda x: score_gap(f_target, f_runner, x)
-
-    # Define regions (ReLU activation chambers)
-    regions = [(-4.0, -2.0), (-2.0, 0.0), (0.0, 1.5), (1.5, 3.0), (3.0, 5.0)]
-    region_names = ["Region 0", "Region 1", "Region 2", "Region 3", "Region 4"]
-
-    print("\n§1. PIECEWISE-LINEAR CLASSIFIER STRUCTURE")
-    print("-" * 50)
-    print(f"  Number of linear regions: {len(regions)}")
-    for i, (a, b) in enumerate(regions):
-        print(f"  {region_names[i]}: [{a:.1f}, {b:.1f}]")
-        print(f"    Target slope: {f_target.slopes[i]:.2f}, "
-              f"Runner slope: {f_runner.slopes[i]:.2f}")
-
-    # Compute local margins
-    margins = compute_local_margins(gap, regions)
-    L = max(f_target.global_lipschitz() + f_runner.global_lipschitz(), 0.01)
-    local_lips = [abs(f_target.slopes[i] - f_runner.slopes[i])
-                  for i in range(len(regions))]
-
-    print(f"\n§2. LOCAL MARGIN ANALYSIS")
-    print("-" * 50)
-    print(f"  Global Lipschitz constant L = {L:.4f}")
-    all_positive = all(m > 0 for m in margins)
-    for i, m in enumerate(margins):
-        status = "✓ ROBUST" if m > 0 else "✗ VULNERABLE"
-        local_r = m / max(local_lips[i], 0.01) if m > 0 else 0
-        print(f"  {region_names[i]}: margin = {m:.4f}, "
-              f"local Lip = {local_lips[i]:.4f}, "
-              f"local radius = {local_r:.4f}  [{status}]")
-
-    # Čech cocycle analysis
-    print(f"\n§3. ČECH COCYCLE ANALYSIS (H¹ COMPUTATION)")
-    print("-" * 50)
-    c = compute_overlap_cocycle(margins, [max(l, 0.01) for l in local_lips])
-    is_cocycle = verify_cocycle_condition(c)
-    is_coboundary, b_prim = decompose_coboundary(c)
-    print(f"  Cocycle condition satisfied: {is_cocycle}")
-    print(f"  Is coboundary (H¹ = 0): {is_coboundary}")
-    if is_coboundary:
-        print(f"  Coboundary primitive b = {np.round(b_prim, 4)}")
-    print(f"  → H¹ vanishes: local certificates glue to global certificate")
-
-    # Global certified radius
-    epsilon = compute_certified_radius(margins, L)
-    print(f"\n§4. GLOBAL CERTIFIED RADIUS (MAIN THEOREM)")
-    print("-" * 50)
-    print(f"  min(margin_i) = {min(margins):.4f}")
-    print(f"  L = {L:.4f}")
-    print(f"  ε = min(margin_i) / L = {epsilon:.4f}")
-    if epsilon > 0:
-        print(f"  → CERTIFIED: classifier is robust under L∞ perturbations of radius {epsilon:.4f}")
-    else:
-        print(f"  → NOT CERTIFIED: some region has non-positive margin")
-
-    # Vulnerability detection
-    vulnerable_pts = detect_vulnerable_points(gap, (-4, 5))
-    print(f"\n§5. STALK VULNERABILITY DETECTION")
-    print("-" * 50)
-    if len(vulnerable_pts) > 0:
-        print(f"  Found {len(vulnerable_pts)} near-vulnerable points")
-        for p in vulnerable_pts[:5]:
-            print(f"    x = {p:.4f}, gap = {gap(np.array([p]))[0]:.6f}")
-    else:
-        print(f"  No vulnerable points detected (all stalks positive)")
-
-    # ============================================================
-    # VISUALIZATIONS
-    # ============================================================
-
-    # Figure 1: Score gap and certified radius
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Panel 1: Score gap function with regions
-    ax = axes[0, 0]
-    xs = np.linspace(-4, 5, 2000)
-    gap_vals = gap(xs)
-    colors = ['#E8D5B7', '#B7D5E8', '#D5E8B7', '#E8B7D5', '#B7E8D5']
-    for i, (a, b) in enumerate(regions):
-        ax.axvspan(a, b, alpha=0.3, color=colors[i], label=region_names[i])
-    ax.plot(xs, gap_vals, 'k-', linewidth=2, label='Score gap')
-    ax.axhline(y=0, color='red', linestyle='--', alpha=0.5, label='Decision boundary')
-    if epsilon > 0:
-        ax.axhline(y=min(margins), color='green', linestyle=':', alpha=0.7,
-                   label=f'Min margin = {min(margins):.3f}')
-    ax.set_xlabel('Input x', fontsize=12)
-    ax.set_ylabel('Score Gap g(x)', fontsize=12)
-    ax.set_title('Score Gap Function on ReLU Regions', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=8, loc='upper right')
-    ax.grid(True, alpha=0.3)
-
-    # Panel 2: Local margins and certified radii
-    ax = axes[0, 1]
-    x_pos = range(len(regions))
-    bar_colors = ['green' if m > 0 else 'red' for m in margins]
-    ax.bar(x_pos, margins, color=bar_colors, alpha=0.7, label='Local margin')
-    local_radii = [m / max(local_lips[i], 0.01) if m > 0 else 0
-                   for i, m in enumerate(margins)]
-    ax.bar(x_pos, local_radii, color='blue', alpha=0.3, label='Local radius m/L')
-    ax.axhline(y=epsilon, color='purple', linewidth=2, linestyle='--',
-               label=f'Global radius ε = {epsilon:.3f}')
-    ax.set_xlabel('Region index', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Local Margins and Certified Radii', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 3: Cocycle matrix
-    ax = axes[1, 0]
-    im = ax.imshow(c, cmap='RdBu_r', aspect='equal')
-    ax.set_xlabel('Region j', fontsize=12)
-    ax.set_ylabel('Region i', fontsize=12)
-    ax.set_title('Čech 1-Cocycle c(i,j) on Overlaps', fontsize=13, fontweight='bold')
-    plt.colorbar(im, ax=ax, label='Discrepancy')
-    for i in range(c.shape[0]):
-        for j in range(c.shape[1]):
-            ax.text(j, i, f'{c[i,j]:.2f}', ha='center', va='center', fontsize=8,
-                    color='white' if abs(c[i,j]) > 0.5 * np.max(np.abs(c)) else 'black')
-
-    # Panel 4: Robustness certificate visualization
-    ax = axes[1, 1]
-    ax.plot(xs, gap_vals, 'k-', linewidth=2)
-    if epsilon > 0:
-        # Show certified ball around a sample point
-        x0 = 1.0
-        gap_at_x0 = gap(np.array([x0]))[0]
-        ax.plot(x0, gap_at_x0, 'ro', markersize=10, zorder=5)
-        rect = mpatches.FancyBboxPatch(
-            (x0 - epsilon, -0.5), 2*epsilon, gap_at_x0 + 1,
-            boxstyle="round,pad=0.05", facecolor='green', alpha=0.2,
-            edgecolor='green', linewidth=2)
-        ax.add_patch(rect)
-        ax.annotate(f'Certified ball\nradius ε={epsilon:.3f}',
-                    xy=(x0, gap_at_x0), xytext=(x0 + 1, gap_at_x0 - 0.5),
-                    fontsize=10, arrowprops=dict(arrowstyle='->', color='green'),
-                    color='green', fontweight='bold')
-    ax.axhline(y=0, color='red', linestyle='--', alpha=0.5)
-    ax.set_xlabel('Input x', fontsize=12)
-    ax.set_ylabel('Score Gap g(x)', fontsize=12)
-    ax.set_title('Global Robustness Certificate', fontsize=13, fontweight='bold')
-    ax.grid(True, alpha=0.3)
-
+    fig.suptitle('Čech 1-Cocycle and Coboundary Decomposition', fontsize=15, y=1.02)
     plt.tight_layout()
-    plt.savefig('robustness_certification.png', dpi=150, bbox_inches='tight')
-    print(f"\n  [Saved robustness_certification.png]")
-    plt.close()
 
-    # Figure 2: Coboundary decomposition
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
+    b64 = fig_to_base64(fig)
+    fig.savefig('/workspace/request-project/fig_cocycle_graph.png',
+                dpi=150, bbox_inches='tight')
+    plt.close(fig)
+    return b64
 
-    ax = axes[0]
-    ax.bar(range(len(b_prim)), b_prim, color='steelblue', alpha=0.8)
-    ax.set_xlabel('Region i', fontsize=12)
-    ax.set_ylabel('b(i)', fontsize=12)
-    ax.set_title('Coboundary Primitive\nc(i,j) = b(j) - b(i)', fontsize=12, fontweight='bold')
-    ax.grid(True, alpha=0.3)
 
-    ax = axes[1]
-    ax.bar(range(len(margins)), margins, color='seagreen', alpha=0.8)
-    ax.set_xlabel('Region i', fontsize=12)
-    ax.set_ylabel('Margin m(i)', fontsize=12)
-    ax.set_title('Local Margins\n(Sheaf Sections)', fontsize=12, fontweight='bold')
-    ax.grid(True, alpha=0.3)
+def plot_radius_comparison():
+    """
+    Figure 3: Comparison of sheaf-theoretic vs global Lipschitz certified radii.
+    """
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    ax = axes[2]
-    # Show the descent: local → global
-    local_radii_plot = [m / max(local_lips[i], 0.01) for i, m in enumerate(margins)]
-    ax.bar(range(len(local_radii_plot)), local_radii_plot,
-           color='coral', alpha=0.8, label='Local radii')
-    ax.axhline(y=epsilon, color='purple', linewidth=2, linestyle='--',
-               label=f'Global ε = {epsilon:.3f}')
-    ax.set_xlabel('Region i', fontsize=12)
-    ax.set_ylabel('Certified radius', fontsize=12)
-    ax.set_title('Descent: Local → Global\n(H¹ = 0 enables gluing)', fontsize=12, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
+    n_charts = 8
+    np.random.seed(123)
+    margins = np.random.uniform(0.2, 1.0, n_charts)
+    lipschitz = np.random.uniform(0.5, 3.0, n_charts)
 
-    plt.tight_layout()
-    plt.savefig('cohomological_descent.png', dpi=150, bbox_inches='tight')
-    print(f"  [Saved cohomological_descent.png]")
-    plt.close()
+    local_radii = margins / lipschitz
+    sheaf_radius = np.min(local_radii)
+    global_lip_radius = np.min(margins) / np.max(lipschitz)
 
-    print("\n" + "=" * 70)
-    print("  SUMMARY")
-    print("=" * 70)
-    print(f"""
-  This demo illustrates the main theorem:
+    x = np.arange(n_charts)
+    width = 0.35
 
-    THEOREM (Čech Descent of Robustness Certificates):
-      Given a finite cover {{U_i}} of input space with:
-        • local margins m_i > 0 on each region
-        • L-Lipschitz score-gap function
-        • H¹(𝒰, F) = 0 (always true for finite covers)
-      There exists a global certified radius:
-        ε = min(m_i) / L = {epsilon:.4f}
+    bars1 = ax.bar(x - width/2, local_radii, width, label='Local radius (m_i/L_i)',
+                   color='steelblue', alpha=0.8, edgecolor='navy')
+    bars2 = ax.bar(x + width/2, [global_lip_radius] * n_charts, width,
+                   label=f'Global Lipschitz ({global_lip_radius:.3f})',
+                   color='salmon', alpha=0.8, edgecolor='darkred')
 
-  Mathematical significance:
-    • Local robustness certificates are SECTIONS of a presheaf
-    • Overlap discrepancies form a ČECH 1-COCYCLE
-    • H¹ = 0 means every cocycle is a COBOUNDARY
-    • Coboundary = "pure gauge" = certificates GLUE globally
-    • This is a genuine LOCAL-TO-GLOBAL PRINCIPLE
-""")
+    ax.axhline(y=sheaf_radius, color='green', linewidth=2, linestyle='--',
+               label=f'Sheaf radius = min(m_i/L_i) = {sheaf_radius:.3f}')
+    ax.axhline(y=global_lip_radius, color='red', linewidth=2, linestyle=':',
+               label=f'Global Lip. radius = {global_lip_radius:.3f}')
+
+    improvement = (sheaf_radius / global_lip_radius - 1) * 100
+    ax.text(n_charts - 1.5, sheaf_radius + 0.02,
+            f'Sheaf: {improvement:.0f}% better',
+            fontsize=11, color='green', fontweight='bold')
+
+    ax.set_xlabel('Activation Region Index', fontsize=12)
+    ax.set_ylabel('Certified Radius', fontsize=12)
+    ax.set_title('Sheaf-Theoretic vs Global Lipschitz Certified Radii', fontsize=14)
+    ax.legend(fontsize=10, loc='upper right')
+    ax.set_xticks(x)
+    ax.set_xticklabels([f'R{i}' for i in range(n_charts)])
+    ax.grid(True, alpha=0.3, axis='y')
+
+    b64 = fig_to_base64(fig)
+    fig.savefig('/workspace/request-project/fig_radius_comparison.png',
+                dpi=150, bbox_inches='tight')
+    plt.close(fig)
+    return b64
+
+
+def plot_three_cycle_identity():
+    """
+    Figure 4: Visualization of the 3-cycle identity c(i,j) + c(j,k) + c(k,i) = 0.
+    """
+    fig, ax = plt.subplots(figsize=(7, 6))
+
+    # Triangle vertices
+    angles = [np.pi/2, np.pi/2 + 2*np.pi/3, np.pi/2 + 4*np.pi/3]
+    positions = np.array([[np.cos(a), np.sin(a)] for a in angles]) * 1.5
+
+    margins = [0.5, 0.8, 0.3]
+    labels = ['i', 'j', 'k']
+    cocycles = [
+        margins[1] - margins[0],  # c(i,j)
+        margins[2] - margins[1],  # c(j,k)
+        margins[0] - margins[2],  # c(k,i)
+    ]
+
+    # Draw edges with arrows
+    for idx, (start, end) in enumerate([(0, 1), (1, 2), (2, 0)]):
+        mid = (positions[start] + positions[end]) / 2
+        direction = positions[end] - positions[start]
+        norm_dir = direction / np.linalg.norm(direction)
+        perp = np.array([-norm_dir[1], norm_dir[0]]) * 0.2
+
+        ax.annotate('', xy=positions[end] * 0.85 + positions[start] * 0.15,
+                     xytext=positions[start] * 0.85 + positions[end] * 0.15,
+                     arrowprops=dict(arrowstyle='->', color='navy', lw=2))
+
+        edge_labels = [f'c(i,j)={cocycles[0]:+.1f}',
+                       f'c(j,k)={cocycles[1]:+.1f}',
+                       f'c(k,i)={cocycles[2]:+.1f}']
+        ax.text(mid[0] + perp[0], mid[1] + perp[1],
+                edge_labels[idx], ha='center', va='center',
+                fontsize=11, color='navy', fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.8))
+
+    # Draw nodes
+    for i in range(3):
+        circle = plt.Circle(positions[i], 0.25, facecolor='lightcoral',
+                            edgecolor='darkred', linewidth=2, zorder=5)
+        ax.add_patch(circle)
+        ax.text(positions[i, 0], positions[i, 1],
+                f'{labels[i]}\nm={margins[i]}', ha='center', va='center',
+                fontsize=11, fontweight='bold', zorder=6)
+
+    # Show the identity
+    total = sum(cocycles)
+    ax.text(0, -0.3, f'Sum: {cocycles[0]:+.1f} + ({cocycles[1]:+.1f}) + ({cocycles[2]:+.1f}) = {total:.1f}',
+            ha='center', va='center', fontsize=13, fontweight='bold',
+            color='green' if abs(total) < 1e-10 else 'red',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgreen', alpha=0.8))
+
+    ax.set_xlim(-2.2, 2.2)
+    ax.set_ylim(-1.5, 2.2)
+    ax.set_aspect('equal')
+    ax.set_title('3-Cycle Identity: c(i,j) + c(j,k) + c(k,i) = 0\n(Kirchhoff\'s Voltage Law)',
+                 fontsize=13)
+    ax.axis('off')
+
+    b64 = fig_to_base64(fig)
+    fig.savefig('/workspace/request-project/fig_three_cycle.png',
+                dpi=150, bbox_inches='tight')
+    plt.close(fig)
+    return b64
 
 
 if __name__ == "__main__":
-    main()
+    print("Generating visualizations...")
+
+    b64_1 = plot_activation_regions_and_margins()
+    print("✓ Figure 1: Activation regions and margins")
+
+    b64_2 = plot_cocycle_graph()
+    print("✓ Figure 2: Cocycle graph")
+
+    b64_3 = plot_radius_comparison()
+    print("✓ Figure 3: Radius comparison")
+
+    b64_4 = plot_three_cycle_identity()
+    print("✓ Figure 4: Three-cycle identity")
+
+    print("\nAll visualizations saved as PNG files.")

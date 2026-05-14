@@ -1561,20 +1561,6 @@
     "timestamp": "2026-05-14T16:17:56.772471+00:00"
   },
   {
-    "id": "fd_0131",
-    "title": "Transitivity",
-    "description": ": If `v ∈ causalCone W s T₁` and `w ∈ causalCone W v T₂`, then `w ∈ causalCone W s (T₁ + T₂)` (triangle inequality).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.099821+00:00"
-  },
-  {
     "id": "fd_0132",
     "title": "Surgery enlargement",
     "description": ": Wormhole surgery strictly enlarges the causal cone: `causalCone W s T ⊂ causalCone (wormholeSurgery W u v τ) s T` under appropriate conditions.",
@@ -1694,21 +1680,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.129036+00:00"
-  },
-  {
-    "id": "fd_0142",
-    "title": "Functoriality",
-    "description": ": Composition of surgeries maps to min-plus multiplication of update matrices.",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "5896784e",
-    "timestamp": "2026-05-14T16:24:30.131427+00:00"
   },
   {
     "id": "fd_0143",
@@ -2172,48 +2143,6 @@
     "timestamp": "2026-05-14T17:33:00.530641+00:00"
   },
   {
-    "id": "fd_0178",
-    "title": "Optimize for large systems",
-    "description": ": Use sparse matrix representations and incremental algorithms for systems with millions of states.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.537124+00:00"
-  },
-  {
-    "id": "fd_0186",
-    "title": "Cross-pollinates",
-    "description": "with other directions: e.g., Direction 3's packing bounds inform Direction 5's choice of embedding dimension; Direction 2's normalization reduces Direction 1's graph distances.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "52d57c84",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:36.872366+00:00"
-  },
-  {
-    "id": "fd_0187",
-    "title": "Iterates weekly",
-    "description": "with updated knowledge base: which lemmas are proved, which conjectures are refuted, which new conjectures emerge.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "52d57c84",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:36.875337+00:00"
-  },
-  {
     "id": "fd_0182",
     "title": "Validates computationally",
     "description": "using Python experiments before attempting formal proofs.",
@@ -2272,35 +2201,6 @@
     "timestamp": "2026-05-14T18:35:19.822758+00:00"
   },
   {
-    "id": "fd_0186",
-    "title": "Bridge Team",
-    "description": ": Cross-cutting — connect tropical results to ML, physics, optimization",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "831fce32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:19.827837+00:00"
-  },
-  {
-    "id": "fd_0187",
-    "title": "Direct algebraic approach",
-    "description": ": Apply `pathWeight_charged_eq` to both paths and subtract. The result follows immediately from linearity.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.288665+00:00"
-  },
-  {
     "id": "fd_0188",
     "title": "Cycle-based approach",
     "description": ": Construct the loop $p_1 \\cdot \\bar{p}_2$, apply `magneticSum_exact` and the telescoping property to decompose the flux into gauge and curl components.\n\n### Cross-Domain Connection\n**Quantum mechanics**: The Aharonov–Bohm effect shows that electrons traveling around a solenoid on opposite sides acquire a relative phase proportional to enclosed magnetic flux. This tropical version replaces quantum phase with min-plus cost difference, preserving the topological structure.\n\n---\n\n## Direction 2: Bellman Operator Perturbation Theorem\n\n### Precise Statement\nDefine the Bellman operator $T_W : (V \\to \\mathbb{R}) \\to (V \\to \\mathbb{R})$ by\n$$T_W(f)(v) = \\min_{u \\in N(v)} \\{W(u,v) + f(u)\\}$$\nThen the charged Bellman operator satisfies:\n$$\\|T_{W_q}(f) - T_W(f)\\|_\\infty \\leq |q| \\cdot \\max|A|$$\nand a",
@@ -2316,51 +2216,6 @@
     "source_exp_id": "497bcb15",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:35:35.295119+00:00"
-  },
-  {
-    "id": "fd_0189",
-    "title": "Pointwise via finite-minimum stability",
-    "description": ": For each $v$, the Bellman update is a minimum over a finite set. Apply `finset_min_perturbation_le` with the single-edge bound $|q| \\cdot \\max|A|$.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.299258+00:00"
-  },
-  {
-    "id": "fd_0190",
-    "title": "Iteration bound by induction",
-    "description": ": Prove the $k$-step bound by induction on $k$, using the triangle inequality and the one-step bound at each iteration.\n\n### Cross-Domain Connection\n**Dynamic programming / reinforcement learning**: The Bellman operator is the foundation of value iteration in Markov decision processes. This result certifies that magnetic-type perturbations to transition costs produce bounded perturbation of value functions, relevant to robust RL.\n\n---\n\n## Direction 3: Magnetic Tropical Curvature and Geodesic Deviation\n\n### Precise Statement\nDefine the *cycle flux curvature* of a vector potential $A$ at a triangle $(u,v,w)$ as:\n$$\\kappa_A(u,v,w) = A(u,v) + A(v,w) + A(w,u)$$\nThis is the discrete magnetic field strength (analogue of $F_{ij} = \\partial_i A_j - \\partial_j A_i$). For exact potentials, $\\kappa = ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.304027+00:00"
-  },
-  {
-    "id": "fd_0191",
-    "title": "Induction on triangle flips",
-    "description": ": Show each elementary flip changes the magnetic sum by exactly one triangle flux, then sum the changes.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.307851+00:00"
   },
   {
     "id": "fd_0192",
@@ -2437,6 +2292,48 @@
     "source_exp_id": "497bcb15",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:35:35.333170+00:00"
+  },
+  {
+    "id": "fd_0185",
+    "title": "States hypotheses precisely",
+    "description": "as Lean type signatures before attempting proofs.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5896784e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:53.065775+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Documents connections",
+    "description": "to at least two application domains per theorem.\n\nThe iteration cycle is: hypothesize → formalize statement → test computationally → decompose → prove → verify → document → iterate.\n\n---\n\n## Priority Ranking",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5896784e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:53.080555+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Direction 5",
+    "description": "(Tropical TQFT) — most visionary, longest timeline.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5896784e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:35:53.097475+00:00"
   },
   {
     "id": "seed_078",
