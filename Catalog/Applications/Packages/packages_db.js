@@ -1076,10 +1076,10 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.94,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1e86301e",
     "timestamp": "2026-05-14T02:49:10.857924+00:00"
   },
   {

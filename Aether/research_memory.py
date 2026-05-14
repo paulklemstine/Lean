@@ -11,6 +11,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 
+# Default maximum number of available non-seed directions to keep
+DEFAULT_DIRECTION_CAP = 100
+
 
 @dataclass
 class ExperimentRecord:
@@ -404,6 +407,10 @@ class FutureDirectionsManager:
                     self.add_direction(fd)
                     added += 1
 
+        # Auto-prune if the list has grown beyond the cap
+        if len(self._directions) > DEFAULT_DIRECTION_CAP:
+            self.prune_directions(cap=DEFAULT_DIRECTION_CAP)
+
         return added
 
     @staticmethod
@@ -516,6 +523,7 @@ class FutureDirectionsManager:
             "available": statuses.get("available", 0),
             "in_progress": statuses.get("in_progress", 0),
             "completed": statuses.get("completed", 0),
+            "pruned": len(self._pruned),
         }
 
     def reset_directions(self, new_directions: Optional[List["FutureDirection"]] = None) -> dict:
@@ -721,6 +729,9 @@ class FutureDirectionsManager:
     def get_pruned(self, limit: int = 50) -> List[FutureDirection]:
         """Return pruned directions, most recently pruned first."""
         return list(reversed(self._pruned[-limit:]))
+
+
+if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Manage future directions")
     sub = parser.add_subparsers(dest="command")
@@ -730,6 +741,16 @@ class FutureDirectionsManager:
                          help="Keep completed directions (default: wipe all)")
 
     stats_p = sub.add_parser("stats", help="Show direction statistics")
+
+    prune_p = sub.add_parser("prune", help="Prune low-quality future directions")
+    prune_p.add_argument("--cap", type=int, default=DEFAULT_DIRECTION_CAP,
+                         help=f"Max available non-seed directions to keep (default: {DEFAULT_DIRECTION_CAP})")
+    prune_p.add_argument("--dry-run", action="store_true",
+                         help="Show what would be pruned without actually pruning")
+    prune_p.add_argument("--min-quality", type=float, default=0.0,
+                         help="Minimum quality score threshold (0-1); prune directions below this")
+    prune_p.add_argument("--restore", type=str, default=None,
+                         help="Restore a pruned direction by ID")
 
     args = parser.parse_args()
     workspace = Path(".aether_workspace")
@@ -750,5 +771,21 @@ class FutureDirectionsManager:
         print(f"\nTop available directions:")
         for d in available[:5]:
             print(f"  [{d.priority_score:.2f}] {d.title} ({d.status})")
+    elif args.command == "prune":
+        mgr = FutureDirectionsManager(workspace)
+        if args.restore:
+            success = mgr.restore_direction(args.restore)
+            print(f"Direction {args.restore} restored: {success}")
+        else:
+            result = mgr.prune_directions(
+                cap=args.cap,
+                dry_run=args.dry_run,
+                min_quality=args.min_quality,
+            )
+            print(json.dumps(result, indent=2))
+            if result["pruned_details"]:
+                print(f"\nPruned directions:")
+                for d in result["pruned_details"]:
+                    print(f"  [{d['quality_score']:.4f}] {d['id']}: {d['title']}")
     else:
         parser.print_help()

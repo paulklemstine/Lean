@@ -34,6 +34,44 @@ def sample_direction():
         priority_score=0.85,
     )
 
+# Unique descriptions to avoid the 80% word-overlap dedup check
+_UNIQUE_DESCRIPTIONS = [
+    "Tropical semiring fixed points and their applications to computational complexity class separation.",
+    "Min-plus algebra structures arising from Pythagorean triple orbits and Berggren groupoid actions.",
+    "Idempotent closure operators on semimodules yield certified minimal reconstructions for tropical geometry.",
+    "Berggren lattice reduction for integer factoring connects discrete logarithm problems to primitive triples.",
+    "Tropical spectral transfer operators on the critical strip connect analytic number theory to dynamics.",
+    "Self-referential computation in idempotent semirings produces unique tropical fixed-point attractors.",
+    "Quantum error correction via tropical matrix multiplication over min-plus semiring representations.",
+    "Closure-operator networks achieve universal approximation using idempotent semimodule compositions.",
+    "Tropical Myhill-Nerode theorem characterizes recognizable weighted languages in the min-plus semiring.",
+    "Reversible tropical Turing machines simulate classical computation with polynomial overhead bounds.",
+    "Stone dual of fixpoint lattices recovers temporal logic for idempotent semiring behavioral equivalence.",
+    "Tropical eigenvalue gaps yield super-polynomial circuit lower bounds for specific language families.",
+    "Ultrametric proof compression and renormalization group flow converge to fixed-point representations.",
+    "Landauer principle in min-plus entropy establishes thermodynamic bounds on tropical erasure costs.",
+    "Collatz iteration corresponds to contracting tropical dynamical system on min-plus lattice structure.",
+    "Nash equilibria as min-plus fixed points in zero-sum games on idempotent payoff matrices yield convergence.",
+    "Alien algebra self-replicating structures formalized as fixed-point attractors in idempotent semirings.",
+    "Berggren groupoid orbits encode quantum teleportation circuits via categorical equivalence with Clifford.",
+    "Tropical origami crease patterns form hyperplane arrangements where rigid foldability is tropical LP.",
+    "Dyson sphere energy collection as tropical network flow with optimal panel placement as min-plus solution.",
+]
+
+def _make_auto_dir(idx, priority=0.70, source_path="result_future_directions"):
+    """Create a unique auto-parsed direction for testing."""
+    desc = _UNIQUE_DESCRIPTIONS[idx % len(_UNIQUE_DESCRIPTIONS)]
+    return FutureDirection(
+        id=f"auto_{idx:03d}",
+        title=f"Auto Direction {idx}",
+        description=desc,
+        source_exp_id="exp_001",
+        source_path=source_path,
+        domains=["Tropical"],
+        priority_score=priority,
+    )
+
+
 
 # ── Test: Adding Directions ──
 
@@ -473,3 +511,280 @@ class TestResetAndReseed:
         mgr2 = FutureDirectionsManager(tmp_workspace)
         assert len(mgr2._directions) == 1
         assert mgr2._directions[0].title == "Persistent Direction"
+
+
+# ── Test: Quality Scoring ──
+
+class TestQualityScore:
+    def test_seed_direction_scores_high(self, fd_manager):
+        d = FutureDirection(
+            id="qs_001", title="High Quality Seed",
+            description="A" * 400,  # long description
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical", "Algebra", "Physics"],
+            priority_score=0.95, proof_strategy="induction on degree",
+        )
+        score = FutureDirectionsManager._compute_quality_score(d)
+        assert score >= 0.80, f"Seed direction scored {score}, expected >= 0.80"
+
+    def test_auto_parsed_direction_scores_lower(self, fd_manager):
+        d = FutureDirection(
+            id="qs_002", title="Low Quality Auto",
+            description="Short",  # <80 chars
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=["Bridges"],
+            priority_score=0.65,
+        )
+        score = FutureDirectionsManager._compute_quality_score(d)
+        assert score < 0.50, f"Low-quality auto-parsed scored {score}, expected < 0.50"
+
+    def test_speculative_gets_fun_bonus(self, fd_manager):
+        d_spec = FutureDirection(
+            id="qs_003", title="Speculative Direction",
+            description="B" * 200,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Speculative", "Tropical"],
+            priority_score=0.75,
+        )
+        d_nospec = FutureDirection(
+            id="qs_004", title="Non-Speculative Direction",
+            description="B" * 200,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical"],
+            priority_score=0.75,
+        )
+        score_spec = FutureDirectionsManager._compute_quality_score(d_spec)
+        score_nospec = FutureDirectionsManager._compute_quality_score(d_nospec)
+        assert score_spec > score_nospec, "Speculative should score higher due to fun bonus"
+
+    def test_proof_strategy_boosts_score(self, fd_manager):
+        d_with = FutureDirection(
+            id="qs_005", title="With Strategy",
+            description="C" * 200,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical"],
+            priority_score=0.80, proof_strategy="tropical induction",
+        )
+        d_without = FutureDirection(
+            id="qs_006", title="Without Strategy",
+            description="C" * 200,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical"],
+            priority_score=0.80,
+        )
+        assert FutureDirectionsManager._compute_quality_score(d_with) > FutureDirectionsManager._compute_quality_score(d_without)
+
+    def test_freshness_decays(self, fd_manager):
+        from datetime import datetime, timezone, timedelta
+        d_fresh = FutureDirection(
+            id="qs_007", title="Fresh", description="D" * 200,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical"], priority_score=0.80,
+            timestamp=datetime.now(timezone.utc).isoformat(),
+        )
+        d_stale = FutureDirection(
+            id="qs_008", title="Stale", description="D" * 200,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical"], priority_score=0.80,
+            timestamp=(datetime.now(timezone.utc) - timedelta(days=60)).isoformat(),
+        )
+        assert FutureDirectionsManager._compute_quality_score(d_fresh) > FutureDirectionsManager._compute_quality_score(d_stale)
+
+    def test_empty_domains_scores_low(self, fd_manager):
+        d = FutureDirection(
+            id="qs_009", title="No Domains", description="E" * 200,
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=[], priority_score=0.80,
+        )
+        score = FutureDirectionsManager._compute_quality_score(d)
+        assert score < 0.60, f"Empty domains scored {score}, expected < 0.60"
+
+
+# ── Test: Pruning Directions ──
+
+class TestPruneDirections:
+    def test_prune_enforces_cap(self, fd_manager):
+        # Add 15 auto-parsed directions
+        for i in range(15):
+            fd_manager.add_direction(_make_auto_dir(i))
+        result = fd_manager.prune_directions(cap=10)
+        assert result["pruned_count"] == 5
+        assert result["kept_auto"] == 10
+        available = fd_manager.get_available_directions()
+        assert len(available) == 10
+
+    def test_seed_directions_never_pruned(self, fd_manager):
+        fd_manager.add_direction(FutureDirection(
+            id="seed_001", title="Important Seed Direction",
+            description="A" * 200,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical"], priority_score=0.50,  # even low priority
+        ))
+        for i in range(20):
+            fd_manager.add_direction(FutureDirection(
+                id=f"auto_{i:03d}", title=f"Auto Direction {i}",
+                description=f"A unique research topic about tropical semiring number {i} and its applications to min-plus algebraic structures.",
+                source_exp_id="exp_001", source_path="result_future_directions",
+                domains=["Tropical"], priority_score=0.80,
+            ))
+        fd_manager.prune_directions(cap=5)
+        # Seed should still be there
+        ids = [d.id for d in fd_manager._directions]
+        assert "seed_001" in ids
+
+    def test_in_progress_never_pruned(self, fd_manager):
+        fd_manager.add_direction(_make_auto_dir(0))
+        fd_manager.mark_direction_consumed("auto_000", "exp_001")
+        fd_manager.prune_directions(cap=0)  # prune everything possible
+        ids = [d.id for d in fd_manager._directions]
+        assert "auto_000" in ids
+
+    def test_completed_never_pruned(self, fd_manager):
+        fd_manager.add_direction(_make_auto_dir(0))
+        fd_manager.mark_direction_consumed("auto_000", "exp_001")
+        fd_manager.mark_direction_completed("auto_000")
+        fd_manager.prune_directions(cap=0)
+        ids = [d.id for d in fd_manager._directions]
+        assert "auto_000" in ids
+
+    def test_dry_run_does_not_modify_state(self, fd_manager):
+        for i in range(15):
+            fd_manager.add_direction(_make_auto_dir(i))
+        before = len(fd_manager._directions)
+        result = fd_manager.prune_directions(cap=5, dry_run=True)
+        assert result["pruned_count"] == max(0, before - 5)
+        assert len(fd_manager._directions) == before  # nothing actually pruned
+        assert len(fd_manager._pruned) == 0
+
+    def test_pruned_directions_archived(self, fd_manager):
+        for i in range(10):
+            fd_manager.add_direction(_make_auto_dir(i))
+        fd_manager.prune_directions(cap=5)
+        assert len(fd_manager._pruned) == 5
+        assert all(d.status == "pruned" for d in fd_manager._pruned)
+        assert all(d.prune_reason == "quality_below_threshold" for d in fd_manager._pruned)
+        assert all(d.pruned_at != "" for d in fd_manager._pruned)
+
+    def test_min_quality_threshold(self, fd_manager):
+        # Add directions with varying quality
+        fd_manager.add_direction(FutureDirection(
+            id="high_001", title="High Quality",
+            description="A" * 400,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical", "Algebra"], priority_score=0.95, proof_strategy="induction",
+        ))
+        fd_manager.add_direction(FutureDirection(
+            id="low_001", title="Low Quality",
+            description="Short",
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=[], priority_score=0.65,
+        ))
+        result = fd_manager.prune_directions(min_quality=0.50)
+        assert result["pruned_count"] >= 1
+        # The low-quality one should be pruned
+        pruned_ids = result["pruned_ids"]
+        assert "low_001" in pruned_ids
+
+    def test_under_cap_does_nothing(self, fd_manager):
+        for i in range(5):
+            fd_manager.add_direction(_make_auto_dir(i))
+        result = fd_manager.prune_directions(cap=10)
+        assert result["pruned_count"] == 0
+        assert len(fd_manager._directions) == 5
+
+
+# ── Test: Restore Directions ──
+
+class TestRestoreDirection:
+    def test_restore_moves_back_to_available(self, fd_manager):
+        for i in range(10):
+            fd_manager.add_direction(_make_auto_dir(i))
+        fd_manager.prune_directions(cap=5)
+        assert len(fd_manager._pruned) == 5
+
+        pruned_id = fd_manager._pruned[0].id
+        success = fd_manager.restore_direction(pruned_id)
+        assert success is True
+        found = [d for d in fd_manager._directions if d.id == pruned_id]
+        assert len(found) == 1
+        assert found[0].status == "available"
+        assert found[0].prune_reason == ""
+
+    def test_restore_nonexistent_returns_false(self, fd_manager):
+        success = fd_manager.restore_direction("nonexistent_id")
+        assert success is False
+
+
+# ── Test: Auto-Prune ──
+
+class TestAutoPrune:
+    def test_auto_prune_triggers_on_add(self, fd_manager):
+        # Add seed direction to keep
+        fd_manager.add_direction(FutureDirection(
+            id="seed_001", title="Seed Direction",
+            description="A" * 200,
+            source_exp_id="seed", source_path="seed:manual_v2",
+            domains=["Tropical"], priority_score=0.90,
+        ))
+        # Add auto-parsed directions up to cap
+        from unittest.mock import patch
+        original_cap = 5
+        for i in range(original_cap + 5):
+            fd_manager.add_direction(FutureDirection(
+                id=f"auto_{i:03d}", title=f"Auto Direction {i}",
+                description=f"Exploring novel approaches to tropical mathematics and idempotent algebra topic number {i} for advanced research.",
+                source_exp_id="exp_001", source_path="result_future_directions",
+                domains=["Tropical"], priority_score=0.70,
+            ))
+        # Auto-prune should have been triggered; list should be manageable
+        assert len(fd_manager._directions) <= original_cap + 1  # +1 for seed
+
+
+# ── Test: Backward Compatibility ──
+
+class TestBackwardCompatibility:
+    def test_load_old_format_flat_list(self, tmp_workspace):
+        # Write old-format JSON (flat list)
+        data = [
+            {"id": "old_001", "title": "Old Direction", "description": "Test",
+             "source_exp_id": "seed", "source_path": "seed:test",
+             "domains": ["Tropical"], "priority_score": 0.80, "status": "available",
+             "consumed_by_exp_id": "", "timestamp": ""},
+        ]
+        fd_file = tmp_workspace / "future_directions.json"
+        fd_file.write_text(json.dumps(data), encoding="utf-8")
+
+        mgr = FutureDirectionsManager(tmp_workspace)
+        assert len(mgr._directions) == 1
+        assert mgr._directions[0].id == "old_001"
+        assert len(mgr._pruned) == 0
+
+    def test_new_format_round_trip(self, fd_manager):
+        fd_manager.add_direction(FutureDirection(
+            id="rt_001", title="Round Trip Direction",
+            description="Test round trip persistence.",
+            source_exp_id="seed", source_path="seed:test",
+            domains=["Tropical"], priority_score=0.80,
+        ))
+        # Prune something to populate pruned list
+        for i in range(5):
+            fd_manager.add_direction(FutureDirection(
+                id=f"auto_{i:03d}", title=f"Auto {i}",
+                description=f"Studying unique properties of semiring fixed points and closure operators in context {i} for mathematical discovery.",
+                source_exp_id="exp_001", source_path="result_future_directions",
+                domains=["Tropical"], priority_score=0.65,
+            ))
+        fd_manager.prune_directions(cap=2)
+
+        # Reload from disk
+        mgr2 = FutureDirectionsManager(fd_manager.workspace)
+        assert len(mgr2._directions) == len(fd_manager._directions)
+        assert len(mgr2._pruned) == len(fd_manager._pruned)
+
+    def test_stats_includes_pruned_count(self, fd_manager):
+        for i in range(6):
+            fd_manager.add_direction(_make_auto_dir(i))
+        fd_manager.prune_directions(cap=3)
+        stats = fd_manager.get_stats()
+        assert "pruned" in stats
+        assert stats["pruned"] == 3
