@@ -287,22 +287,6 @@
     "timestamp": "2026-05-14T16:03:53.813608+00:00"
   },
   {
-    "id": "seed_023",
-    "title": "Transformer Attention as Tropical Matrix Multiplication",
-    "description": "Prove that softmax attention in transformers is a tropical (min-plus) matrix multiplication in the log-semiring, and that multi-head attention corresponds to computing in a product of tropical semirings. Show that the attention sink phenomenon is a tropical fixed point, and that the convergence of deep transformer layers is governed by the tropical spectral radius of the attention matrix.",
-    "domains": [
-      "MachineLearning",
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.9,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "9b6e4e14",
-    "timestamp": "2026-05-14T16:03:53.823374+00:00"
-  },
-  {
     "id": "seed_036",
     "title": "String Theory T-Duality as Tropical Duality: Min-Plus Mirror Symmetry",
     "description": "Prove that T-duality in string theory is precisely tropical duality in the min-plus semiring: compactification on a circle of radius R is dual to compactification on a circle of tropical radius 1/R. Show that mirror symmetry between Calabi-Yau manifolds is the tropical Legendre transform of their potential functions, and that the conifold transition is a tropical corner locus.",
@@ -1276,20 +1260,6 @@
     "timestamp": "2026-05-14T16:17:00.731557+00:00"
   },
   {
-    "id": "fd_0106",
-    "title": "Efficiency",
-    "description": "(Direction 5): Enable compression and pruning through tropical invariants.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "adc29728",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:17:00.733777+00:00"
-  },
-  {
     "id": "fd_0107",
     "title": "Formalizes definitions and conjectures",
     "description": "in Lean 4, building on the existing `TropicalCurryHoward` module.",
@@ -1303,20 +1273,6 @@
     "source_exp_id": "b8bbbc75",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:21.765666+00:00"
-  },
-  {
-    "id": "fd_0109",
-    "title": "Proves helper lemmas",
-    "description": "incrementally, validating the proof skeleton before attacking main theorems.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b8bbbc75",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:17:21.770418+00:00"
   },
   {
     "id": "fd_0110",
@@ -1349,20 +1305,6 @@
     "timestamp": "2026-05-14T16:17:21.774209+00:00"
   },
   {
-    "id": "fd_0122",
-    "title": "Reversible automata",
-    "description": "(Direction 3) — opens new territory with physics connections",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "705e2def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:17:56.770099+00:00"
-  },
-  {
     "id": "fd_0133",
     "title": "Chronological ordering",
     "description": ": Define a partial order from tropical distances and show it satisfies antisymmetry for nonneg-weight graphs with no negative cycles.\n\n### Proof Strategy\nUse the triangle inequality for tropical distance (which follows from path concatenation) and the surgery distance-drop theorem already proved.\n\n### Cross-Domain Connections\n- Causal set theory in quantum gravity\n- Reachability analysis in timed automata\n- Network influence propagation bounds\n\n---\n\n## Direction 2: Tropical Black Hole Horizons as Min-Cut Barriers\n\n### Hypothesis\nA \"tropical event horizon\" is a min-cut in the weighted spacetime graph separating an interior region from an exterior region. The horizon's \"area\" (total cut weight) controls the maximum information throughput, yielding a discrete analogue of the Bekenstein–Hawkin",
@@ -1379,20 +1321,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.105861+00:00"
-  },
-  {
-    "id": "fd_0136",
-    "title": "Area-entropy bound",
-    "description": ": `tropicalEntropy ≤ C * horizonArea` for an explicit constant `C`.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.113020+00:00"
   },
   {
     "id": "fd_0137",
@@ -1543,20 +1471,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.150755+00:00"
-  },
-  {
-    "id": "fd_0152",
-    "title": "Certificate generation",
-    "description": ": Produce a Lean proof that the computed ranking satisfies `IsCurriculum`.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:32:45.372232+00:00"
   },
   {
     "id": "fd_0153",
@@ -1819,20 +1733,6 @@
     "timestamp": "2026-05-14T17:33:00.524947+00:00"
   },
   {
-    "id": "fd_0175",
-    "title": "Implement Karp's algorithm in Lean",
-    "description": ": Compute minimum cycle cost with a correctness proof.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.527705+00:00"
-  },
-  {
     "id": "fd_0176",
     "title": "Generate certificates",
     "description": ": For a given $W$ and computed $g$, output a proof term of type `MinCycleCost n W g`.",
@@ -1845,34 +1745,6 @@
     "source_exp_id": "e06c3817",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:00.530641+00:00"
-  },
-  {
-    "id": "fd_0182",
-    "title": "Validates computationally",
-    "description": "using Python experiments before attempting formal proofs.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bfa06f11",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:54.626752+00:00"
-  },
-  {
-    "id": "fd_0182",
-    "title": "Algebraic Foundations Team",
-    "description": ": Directions 2, 6 — extend entropy and spectral analysis",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "831fce32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:19.811676+00:00"
   },
   {
     "id": "fd_0183",
@@ -1888,37 +1760,6 @@
     "source_exp_id": "831fce32",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:35:19.816031+00:00"
-  },
-  {
-    "id": "fd_0194",
-    "title": "Martingale approach",
-    "description": ": Construct a martingale from partial sums of $A(v_i, v_{i+1})$ along the path and apply Azuma's inequality.\n\n### Cross-Domain Connection\n**Statistical mechanics**: Random gauge fields on lattices are central to lattice QCD. This direction provides a rigorous probabilistic framework for studying how random magnetic perturbations affect tropical observables, connecting to disordered systems and spin glasses.\n\n---\n\n## Direction 5: Tropical Yang–Mills Functional and Optimal Gauge Configurations\n\n### Precise Statement\nDefine the *tropical Yang–Mills functional* on a graph $G = (V, E)$ with a set of fundamental cycles $\\mathcal{C}$:\n$$\\text{YM}(A) = \\sum_{C \\in \\mathcal{C}} (\\Phi_A(C))^2$$\nProve:\n1. $\\text{YM}(A) = 0$ if and only if $A$ is exact (pure gauge).\n2. For fixed cycle fluxes $\\{\\Phi_C",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.324230+00:00"
-  },
-  {
-    "id": "fd_0194",
-    "title": "Define tropical cycle cost",
-    "description": ": For a cycle `i₀ → i₁ → ... → iₖ = i₀`, the tropical cost is `∑ W(iₘ, iₘ₊₁) + b(iₖ₋₁) - b(i₀)`.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:44.251440+00:00"
   },
   {
     "id": "fd_0199",
@@ -1938,39 +1779,6 @@
     "timestamp": "2026-05-14T19:34:44.284959+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "Characterize broadcast",
-    "description": ": A fixed point broadcasts iff it dominates all SCCs — i.e., it is the fixed point corresponding to the \"root\" SCC in the condensation DAG.\n\n### Key Lemma to Formalize\n```\ntheorem fixed_points_from_sccs\n    (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ) :\n    ∀ x, tropReflect hn W b x = x ↔ \n      ∀ scc ∈ strongly_connected_components (dominance_graph W b),\n        scc_equilibrium_condition W b x scc\n```\n\n### Cross-Domain Connections\n- **Network neuroscience**: SCCs in brain connectivity correspond to \"functional modules.\" The theorem would say consciousness requires a module that dominates all others.\n- **Distributed computing**: SCCs determine which processors can reach consensus independently.\n\n### Estimated Difficulty\nMedium-hard. Graph theory in Lean is feasible but requires careful f",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:44.301813+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Define balanced consciousness",
-    "description": ": A state is \"balanced conscious\" if it is simultaneously a min-plus and max-plus fixed point.\n\n### Cross-Domain Connections\n- **Tropical geometry**: Min-plus / max-plus duality is fundamental to tropical convexity and the structure of tropical varieties.\n- **Game theory**: The min player (pessimist) and max player (optimist) reaching equilibrium is a minimax theorem.\n- **Maslov dequantization**: The passage from quantum (sum-product) to classical (max-plus) to tropical (min-plus) is a chain of dequantizations.\n\n### Estimated Difficulty\nMedium. The max-plus theory mirrors the min-plus theory, so many proofs can be adapted. The interesting part is the duality theorem connecting them.\n\n---\n\n## Cross-Cutting Research Program\n\n### Short-term (1-3 months)\n- Complete Direction 1 (Knaster-Tarski)",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "918eb128",
-    "timestamp": "2026-05-14T19:34:44.327007+00:00"
-  },
-  {
     "id": "fd_0206",
     "title": "Is there a polynomial-time algorithm for tropical Φ?",
     "description": "The current exponential algorithm is the main barrier to practical application for large networks.",
@@ -1984,20 +1792,6 @@
     "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "b8a30d25",
     "timestamp": "2026-05-14T19:34:44.332467+00:00"
-  },
-  {
-    "id": "fd_0208",
-    "title": "What is the \"right\" topology on the space of tropical reflective systems?",
-    "description": "When does a small perturbation of (W, b) lead to a small perturbation of the fixed point?",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:44.344455+00:00"
   },
   {
     "id": "fd_0209",
@@ -2028,20 +1822,6 @@
     "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:34:44.354883+00:00"
-  },
-  {
-    "id": "fd_0182",
-    "title": "Validate",
-    "description": "each conjecture computationally on 2×2 and 3×3 examples before attempting formal proof.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c337fb05",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:35:20.578796+00:00"
   },
   {
     "id": "fd_0183",
@@ -2086,20 +1866,6 @@
     "timestamp": "2026-05-14T20:34:15.721141+00:00"
   },
   {
-    "id": "fd_0191",
-    "title": "Prove the key lemma",
-    "description": "identified in each proof strategy, then compose into the main theorem.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "08ca2eef",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:34:15.731779+00:00"
-  },
-  {
     "id": "fd_0192",
     "title": "\"≥\" direction",
     "description": ": Already established by `weighted_le_log_sum_exp` (Theorem A). For any $p \\in \\Delta_n$, $\\sum p_i x_i \\leq \\log(\\sum p_i e^{x_i}) \\leq \\log(\\sum e^{x_i})$ (the second inequality needs $p_i \\leq 1$, which follows from a separate lemma using the KL divergence).\n\n   Correction: The \"≥\" direction is: $\\sum p_i x_i + H(p) \\leq \\text{LSE}(x)$, which follows from Theorem A applied with the substitution $y_i = x_i - \\log p_i$ (or directly from $D_{KL}(p \\| q) \\geq 0$ with $q_i = e^{x_i}/Z$).",
@@ -2114,20 +1880,6 @@
     "timestamp": "2026-05-14T20:34:34.590983+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Supremum attainment",
-    "description": ": Show the sup is achieved, hence is a max.\n\n### Cross-Domain Significance\n\n- **Statistical mechanics**: This is the Gibbs variational principle, the foundation of equilibrium statistical mechanics.\n- **Information theory**: Establishes log-sum-exp as the Legendre-Fenchel conjugate of the negative entropy.\n- **Optimization**: Opens the door to formalizing duality in convex optimization.\n\n---\n\n## Direction 2: KL-Divergence Nonnegativity (Gibbs' Inequality)\n\n### Theorem Statement\n\nFor probability distributions $p, q$ on $\\text{Fin}(n)$ with $q_i > 0$ for all $i$:\n\n$$D_{KL}(p \\| q) = \\sum_i p_i \\log\\frac{p_i}{q_i} \\geq 0$$\n\nwith equality if and only if $p = q$.\n\n### Lean Type Signature\n\n```lean\ntheorem kl_divergence_nonneg\n    {n : ℕ} (hn : 0 < n)\n    (p q : Fin n → ℝ)\n    (hp_nonneg : ∀ i, 0",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "074afb83",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:34:34.603685+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Documentation",
     "description": ": Write detailed docstrings explaining mathematical significance and usage patterns.",
@@ -2140,20 +1892,6 @@
     "source_exp_id": "074afb83",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T20:34:34.632055+00:00"
-  },
-  {
-    "id": "fd_0188",
-    "title": "Direction 4",
-    "description": "(Certified executable) — Most immediately useful; builds directly on current infrastructure.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f8259b94",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:38:12.084286+00:00"
   },
   {
     "id": "fd_0189",
@@ -2185,18 +1923,199 @@
     "timestamp": "2026-05-14T20:38:12.094619+00:00"
   },
   {
-    "id": "fd_0191",
-    "title": "Direction 2",
-    "description": "(Coalgebraic semantics) — Deepest conceptually; connects to category theory.",
+    "id": "fd_0195",
+    "title": "Prove that `tropAttentionOp A` is a contraction",
+    "description": "in this metric when A has a positive spectral gap: `d_H(T_A x, T_A y) ≤ λ · d_H(x, y)` for some `λ < 1`.",
     "domains": [
       "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f8259b94",
+    "source_exp_id": "9b6e4e14",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:38:12.100201+00:00"
+    "timestamp": "2026-05-14T21:34:38.125230+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "Connect the contraction coefficient",
+    "description": "to the tropical spectral gap of A (difference between largest and second-largest cycle means).",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.129124+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Apply Banach fixed-point theorem",
+    "description": "in the projective space to deduce unique convergence.\n\n### Cross-Domain Connections\n- **Nonlinear Perron-Frobenius theory**: Birkhoff's theorem on positive linear operators; Nussbaum's extensions to nonlinear monotone maps.\n- **Information geometry**: The Hilbert metric is the natural metric on the positive cone; connects to KL divergence asymptotics.\n- **Mechanistic interpretability**: Contraction rate quantifies how fast deep transformers \"forget\" early-layer information.\n\n### Expected Impact\nA formal contraction theorem would provide the first mathematical guarantee that deep transformer attention converges, with computable convergence rates. This directly addresses the empirical \"layer collapse\" phenomenon and could inform depth-pruning strategies.\n\n---\n\n## Direction 2: Formalization o",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.133895+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Define the tropical spectral radius",
+    "description": ": `ρ_t(A) = max_{γ cycle} (weight(γ) / length(γ))`.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.143504+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Prove CSR (Critical Graph) theorem",
+    "description": ": after a transient of length ≤ n², the growth is exactly linear with slope ρ_t.\n\n### Cross-Domain Connections\n- **Optimal control**: ρ_t is the optimal average reward per step in a Markov decision process.\n- **Dynamic programming**: Howard's policy iteration computes ρ_t in O(n³).\n- **Statistical physics**: ρ_t is the ground-state energy per site in a transfer matrix formulation.\n\n### Expected Impact\nA fully formalized tropical spectral radius would give precise growth/decay rates for deep attention stacks, enabling principled depth selection and early-stopping criteria for transformer training.\n\n---\n\n## Direction 3: Equivalence Between Sink Formation and Unique Tropical Eigenspace\n\n### Hypothesis\nThe attention sink phenomenon (one token absorbing all attention mass in deep layers) is equ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.159892+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Define tropical eigenvectors",
+    "description": ": `x` is an eigenvector with eigenvalue `λ` if `T_A(x) = x + λ·1` (in projective sense).",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.164612+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "Prove converse under mild conditions",
+    "description": ": if the eigenspace is unique, there exists a projectively dominant direction, which corresponds to a \"soft sink\" in the original attention.\n\n### Cross-Domain Connections\n- **Markov chain theory**: unique stationary distribution ↔ irreducibility/aperiodicity.\n- **Tropical convexity**: eigenspaces are tropical polytopes; uniqueness relates to tropical rank.\n- **Mechanistic interpretability**: sink tokens are empirically observed in GPT-family models; this gives a checkable algebraic criterion.\n\n### Expected Impact\nThis would transform \"attention sinks\" from an empirical curiosity to a mathematically predictable phenomenon, enabling their detection, prevention, or deliberate engineering.\n\n---\n\n## Direction 4: Tropical Expressivity Lower Bounds for Transformers\n\n### Hypothesis\nThe class of fu",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.179410+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Formalize tropical circuits",
+    "description": ": a tropical attention layer as a max-plus affine map composed with a tropical projection.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.185020+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "Prove matching lower bounds",
+    "description": ": construct specific tropical attention networks that achieve n^L distinct linear regions.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.194311+00:00"
+  },
+  {
+    "id": "fd_0210",
+    "title": "Connect to VC dimension / Rademacher complexity",
+    "description": "of the resulting function class.\n\n### Cross-Domain Connections\n- **Tropical geometry**: Newton polytopes, tropical varieties, and their combinatorial complexity.\n- **Circuit complexity**: tropical circuits as algebraic circuits over the max-plus semiring; connections to VP and VNP.\n- **Deep learning theory**: depth separation results for ReLU networks via tropical geometry (Zhang et al., 2018).\n\n### Expected Impact\nThis would give the first tight expressivity characterization of transformer attention through tropical geometry, providing a mathematical foundation for architecture design decisions (depth vs. width vs. number of heads).\n\n---\n\n## Direction 5: Certified Pruning and Compression via Headwise Tropical Redundancy\n\n### Hypothesis\nTwo attention heads are \"tropically equivalent\" if th",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.199582+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Define tropical head equivalence",
+    "description": ": heads r₁, r₂ are equivalent if `argmax_j A_r₁(i,j) = argmax_j A_r₂(i,j)` for all i.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.204316+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Bound the finite-temperature error",
+    "description": "from pruning: use the LSE-tropical bound to show that removing a redundant head changes the output by at most `τ · log n`.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.213479+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Define tropical head rank",
+    "description": "(number of distinct tropical patterns) and prove it lower-bounds the number of heads needed for exact tropical computation.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b6e4e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:34:38.217919+00:00"
   },
   {
     "id": "seed_078",
@@ -2470,24 +2389,6 @@
     "timestamp": "2026-05-14T17:33:19.336802+00:00"
   },
   {
-    "id": "fd_0182",
-    "title": "Direction 4: Weighted MSO Logic and Cost Logic Characterization",
-    "description": "**Hypothesis.** Tropically recognizable languages correspond exactly to languages definable in a weighted MSO logic over the min-plus semiring.\n\n**Why it matters.** Büchi's theorem (regular = MSO-definable) is one of the deepest results in automata theory. A tropical analogue would:\n- Provide a logical specification language for optimization problems\n- Enable model-checking algorithms for quantitative properties\n- Bridge automata theory with verification and formal methods\n\n**Proof Strategy.**\n1. Define a weighted MSO logic where quantifiers are interpreted as min (∀) and sup (∃) over the tropical semiring.\n2. Prove that every weighted MSO formula defines a tropically recognizable language (by induction on formula structure, constructing automata).\n3. Prove the converse by expressing autom",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "7498ad19",
-    "timestamp": "2026-05-14T17:33:19.352870+00:00"
-  },
-  {
     "id": "fd_0179",
     "title": "1. Activation-Region Nerve as a Simplicial Complex",
     "description": "**Objective**: Formalize the nerve of the activation region decomposition of a ReLU network as a finite simplicial complex, and identify certified robustness with exactness of a margin cosheaf on this nerve.\n\n**Approach**: A ReLU network with $n$ layers and widths $w_1, \\ldots, w_n$ partitions $\\mathbb{R}^d$ into at most $\\prod_i \\binom{w_i}{k}$ polyhedral activation regions, each determined by a sign pattern. The nerve of this cover — where simplices correspond to nonempty intersections of activation regions — encodes the combinatorial topology of the classifier. Define a cosheaf $\\mathcal{M}$ on this nerve assigning to each simplex the minimum margin over its closure, and prove that exactness of the cosheaf complex $\\mathcal{M}_0 \\to \\mathcal{M}_1 \\to \\cdots$ in degree 1 is equivalent to",
@@ -2533,21 +2434,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.855472+00:00"
-  },
-  {
-    "id": "fd_0182",
-    "title": "4. Persistent Cohomological Robustness Under Parameter Drift",
-    "description": "**Objective**: Define persistent cohomological robustness as a parametric family of Čech cohomology groups indexed by perturbation magnitude, and prove stability of robustness certificates under small weight perturbations.\n\n**Approach**: Let $\\theta \\mapsto f_\\theta$ be a parametric family of ReLU networks. As $\\theta$ varies, activation region boundaries shift, and the nerve of the cover changes. Define the persistent $H^1$ diagram:\n$$H^1(\\mathcal{U}_\\theta, \\mathcal{M}_\\theta) \\quad \\text{as } \\theta \\in B_\\epsilon(\\theta_0)$$\n\n**Key hypotheses**:\n- For generic weight perturbations of magnitude $\\leq \\epsilon$, activation region boundaries move by at most $C \\epsilon$ (Lipschitz dependence on parameters).\n- The certified radius varies Lipschitz-continuously with $\\theta$ when $H^1 = 0$ i",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:36:13.860888+00:00"
   },
   {
     "id": "fd_0183",
@@ -2639,22 +2525,6 @@
     "timestamp": "2026-05-14T20:33:57.945591+00:00"
   },
   {
-    "id": "fd_0188",
-    "title": "Deliverables",
-    "description": "- Formal framework for infinite closure in dependent type theory\n- ω-stabilization theorem for compact consequence operators\n- Hierarchy theorem relating closure ordinals to rule complexity\n\n---",
-    "domains": [
-      "EML",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5ff854ab",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:33:57.958015+00:00"
-  },
-  {
     "id": "fd_0192",
     "title": "Hypothesis",
     "description": "The tropical (min-plus) channel capacity can be defined as a max-min variational problem over input potentials and channel kernels, and it satisfies an exact finite duality theorem analogous to the rate-distortion exactness theorem.",
@@ -2667,19 +2537,5 @@
     "source_exp_id": "5c101a52",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:31:58.196051+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "Expected Difficulty",
-    "description": "Medium. The graph-theoretic interpretation is natural and should formalize cleanly with Mathlib's combinatorics library.\n\n---",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c101a52",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:31:58.209969+00:00"
   }
 ]
