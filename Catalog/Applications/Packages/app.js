@@ -819,10 +819,10 @@ document.addEventListener('DOMContentLoaded', () => {
             rotSpeed: 0.3 + Math.random() * 0.5,
             rotAngle: Math.random() * Math.PI * 2
         }));
-        // Only load provenance edges (factual parent→child from future directions)
-        let graphEdges = (graphData.edges || []).filter(e => e.type === 'provenance').map(e => ({
+        // Load provenance and heuristic edges
+        let graphEdges = (graphData.edges || []).filter(e => e.type === 'provenance' || e.type === 'heuristic').map(e => ({
             ...e,
-            edgeType: 'provenance'
+            edgeType: e.type,
         }));
 
         // Fallback: build nodes from PACKAGE_INDEX if no graph data
