@@ -239,22 +239,6 @@
     "timestamp": "2026-05-14T16:03:53.854964+00:00"
   },
   {
-    "id": "seed_021",
-    "title": "Sheaf Cohomology and Certified Adversarial Robustness",
-    "description": "Formalize the relationship between sheaf cohomology groups on neural network weight spaces and adversarial robustness bounds. Prove that vanishing first cohomology implies certified L-infinity perturbation radius, and construct explicit sheaf structures on ReLU network decision boundaries whose stalk cohomology detects vulnerability to adversarial examples.",
-    "domains": [
-      "MachineLearning",
-      "EML",
-      "Bridges"
-    ],
-    "priority_score": 0.92,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "5198167b",
-    "timestamp": "2026-05-14T16:03:53.822515+00:00"
-  },
-  {
     "id": "seed_035",
     "title": "Quantum Gravity as Tropical Geometry: Min-Plus Spacetime at Planck Scale",
     "description": "Prove that at the Planck scale, spacetime geometry becomes tropical: the metric reduces to a min-plus distance function, and quantum superposition corresponds to the idempotent property of tropical addition. Show that the tropical Einstein equations yield a well-posed initial value problem, and that the tropical Schwarzschild solution has a horizon at the tropical fixed point of the radial coordinate.",
@@ -646,10 +630,10 @@
       "Algebra"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7dd46539",
     "timestamp": "2026-05-14T16:03:53.848866+00:00"
   },
   {
@@ -1305,10 +1289,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c337fb05",
     "timestamp": "2026-05-14T16:16:22.742438+00:00"
   },
   {
@@ -2595,10 +2579,10 @@
       "Bridges"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8fece6dc",
     "timestamp": "2026-05-14T16:24:05.755955+00:00"
   },
   {
@@ -2632,10 +2616,87 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fafc44be",
     "timestamp": "2026-05-14T17:33:19.352870+00:00"
+  },
+  {
+    "id": "fd_0179",
+    "title": "1. Activation-Region Nerve as a Simplicial Complex",
+    "description": "**Objective**: Formalize the nerve of the activation region decomposition of a ReLU network as a finite simplicial complex, and identify certified robustness with exactness of a margin cosheaf on this nerve.\n\n**Approach**: A ReLU network with $n$ layers and widths $w_1, \\ldots, w_n$ partitions $\\mathbb{R}^d$ into at most $\\prod_i \\binom{w_i}{k}$ polyhedral activation regions, each determined by a sign pattern. The nerve of this cover — where simplices correspond to nonempty intersections of activation regions — encodes the combinatorial topology of the classifier. Define a cosheaf $\\mathcal{M}$ on this nerve assigning to each simplex the minimum margin over its closure, and prove that exactness of the cosheaf complex $\\mathcal{M}_0 \\to \\mathcal{M}_1 \\to \\cdots$ in degree 1 is equivalent to",
+    "domains": [
+      "EML",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:36:13.844636+00:00"
+  },
+  {
+    "id": "fd_0180",
+    "title": "2. Hodge Decomposition for Adversarial Inconsistency Fields",
+    "description": "**Objective**: Prove a graph-theoretic Hodge decomposition theorem for the space of 1-cochains on the activation region overlap graph, decomposing any inconsistency field into a gradient (coboundary), a curl (cocycle), and a harmonic component.\n\n**Approach**: On the complete graph $K_\\iota$ with edge weights given by overlap volumes, define the combinatorial Laplacian $\\Delta = \\delta^* \\delta + \\delta \\delta^*$ where $\\delta$ is the coboundary operator. The Hodge decomposition gives:\n$$C^1(K_\\iota, \\mathbb{R}) = \\mathrm{im}(\\delta) \\oplus \\mathrm{im}(\\delta^*) \\oplus \\ker(\\Delta)$$\n\nThe gradient component is the \"fixable\" part of margin inconsistency; the harmonic component is the irreducible topological obstruction; the curl component detects local rotation in the margin field.\n\n**Key hy",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:36:13.850536+00:00"
+  },
+  {
+    "id": "fd_0181",
+    "title": "3. Extension from $L_\\infty$ to $L_2$ Robustness via Sheaves of Quadratic Forms",
+    "description": "**Objective**: Extend the cohomological certification framework from $L_\\infty$ perturbation balls to $L_2$ (Euclidean) perturbation balls by replacing real-valued margin sections with sections valued in positive-definite quadratic forms.\n\n**Approach**: On each activation region $U_i$, the network is affine: $f(x) = W_i x + b_i$. The local $L_2$-robustness radius at $x \\in U_i$ is $\\|W_i^{-1}\\| \\cdot (\\text{margin at } x)$, which depends on the local Hessian structure. Define a sheaf $\\mathcal{Q}$ assigning to $U_i$ the quadratic form $Q_i(v) = v^T W_i^T W_i \\, v$ (the local metric tensor). The overlap compatibility condition becomes: on $U_i \\cap U_j$, $Q_i$ and $Q_j$ must be comparable (within a multiplicative factor).\n\n**Key hypotheses**:\n- The $L_2$ certified radius is controlled by th",
+    "domains": [
+      "EML",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:36:13.855472+00:00"
+  },
+  {
+    "id": "fd_0182",
+    "title": "4. Persistent Cohomological Robustness Under Parameter Drift",
+    "description": "**Objective**: Define persistent cohomological robustness as a parametric family of Čech cohomology groups indexed by perturbation magnitude, and prove stability of robustness certificates under small weight perturbations.\n\n**Approach**: Let $\\theta \\mapsto f_\\theta$ be a parametric family of ReLU networks. As $\\theta$ varies, activation region boundaries shift, and the nerve of the cover changes. Define the persistent $H^1$ diagram:\n$$H^1(\\mathcal{U}_\\theta, \\mathcal{M}_\\theta) \\quad \\text{as } \\theta \\in B_\\epsilon(\\theta_0)$$\n\n**Key hypotheses**:\n- For generic weight perturbations of magnitude $\\leq \\epsilon$, activation region boundaries move by at most $C \\epsilon$ (Lipschitz dependence on parameters).\n- The certified radius varies Lipschitz-continuously with $\\theta$ when $H^1 = 0$ i",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:36:13.860888+00:00"
+  },
+  {
+    "id": "fd_0183",
+    "title": "Cross-Cutting Themes",
+    "description": "All five directions share a common architecture:\n- **Local-to-global principle**: compute locally, certify globally, diagnose obstructions topologically.\n- **Finite combinatorial models**: finite simplicial complexes, graph Laplacians, finite-dimensional cohomology.\n- **Quantitative topology**: not just existence/nonexistence of obstructions, but numerical bounds derived from cocycle norms.\n- **Formal verification**: all results are candidates for machine-checked proofs, extending the foundation established in this work.\n\nThe long-term vision is a **cohomological robustness calculus** — a systematic algebraic framework where robustness certificates are local-and-compositional, vulnerability diagnoses are topological invariants, and formal verification ensures correctness of safety-critical",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:36:13.866477+00:00"
   }
 ]

@@ -14,7 +14,8 @@
             ...n,
             x: 0, y: 0, vx: 0, vy: 0,
             targetX: 0, targetY: 0,
-            radius: 22,
+            mass: 1.0 + (n.priority_score || 0.5) * 2.0,  // heavier = more priority
+            radius: 18 + (n.priority_score || 0.5) * 12,    // bigger = more priority
             phase: Math.random() * Math.PI * 2,
             rotSpeed: 0.3 + Math.random() * 0.5,
             rotAngle: Math.random() * Math.PI * 2
@@ -94,6 +95,7 @@
         let animating = false;
         let camera = { x: 0, y: 0, zoom: 1 };
         let dragNode = null;
+        let dragCluster = null;   // domain string when dragging a cluster label
         let isPanning = false;
         let panStart = { x: 0, y: 0 };
         let mouseDownPos = { x: 0, y: 0 };
@@ -102,6 +104,7 @@
         let mouseWorld = { x: 0, y: 0 };
         let mouseScreen = { x: 0, y: 0 };
         let hoveredNode = null;
+        let hoveredCluster = null;
         let time = 0;
 
         // ─── Stars (background) ───
@@ -131,18 +134,20 @@
             }
         });
 
-        // ─── Layout constants ───
+        // ─── Layout constants (gravitational solar-system feel) ───
         const CLUSTER_RADIUS = 280;      // Distance of cluster centroids from center
         const NODE_SPACING = 65;          // Spacing between nodes within a cluster
-        const K_SPRING = 0.008;          // Spring constant for provenance edges
-        const REST_LENGTH = 150;          // Rest length for provenance springs
-        const K_GRAVITY = 0.00015;        // Gentle center pull to prevent drift
-        const K_REPULSION = 800;          // Node-node repulsion strength
+        const K_SPRING = 0.004;          // Spring constant for provenance edges
+        const REST_LENGTH = 180;          // Rest length for provenance springs
+        const G_CONST = 0.3;             // Gravitational constant between nodes
+        const SOFTENING = 80;             // Softening distance to prevent singularities
+        const K_REPULSION = 1200;         // Close-range repulsion strength
         const MIN_REPULSION_DIST = 55;    // Minimum distance for repulsion
-        const DAMPING = 0.88;
+        const DAMPING = 0.992;            // Very low friction — floaty
         const NODE_RADIUS = 22;
-        const GALAXY_ROTATION = 0.00015;  // Slow overall galaxy spin
-        const OSCILLATION_AMP = 0.015;    // Gentle drift amplitude
+        const GALAXY_ROTATION = 0.00012;  // Slow overall galaxy spin
+        const ORBITAL_SPEED = 0.15;       // Initial tangential velocity factor
+        const MAX_VELOCITY = 1.5;         // Cap speed to prevent ejections
 
         // ─── Domain-clustered layout ───
         const DOMAIN_ORDER = ['Algebra','Tropical','Geometry','Cryptography','Physics',
@@ -203,11 +208,24 @@
         const clusterData = computeClusterLayout();
 
         // Initialize node positions to their target cluster positions
+        // Give each node an orbital velocity around its cluster center
         graphNodes.forEach(n => {
-            n.x = n.targetX + (Math.random() - 0.5) * 30;
-            n.y = n.targetY + (Math.random() - 0.5) * 30;
-            n.vx = 0;
-            n.vy = 0;
+            n.x = n.targetX + (Math.random() - 0.5) * 20;
+            n.y = n.targetY + (Math.random() - 0.5) * 20;
+            // Tangential velocity for orbital motion around cluster center
+            const cluster = clusterData.centroids[n.clusterDomain];
+            if (cluster) {
+                const dx = n.x - cluster.x;
+                const dy = n.y - cluster.y;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                // Orbital speed: faster for closer nodes, all prograde
+                const speed = ORBITAL_SPEED * Math.sqrt(Math.max(dist, 30) / 100);
+                n.vx = -dy / dist * speed + (Math.random() - 0.5) * 0.05;
+                n.vy = dx / dist * speed + (Math.random() - 0.5) * 0.05;
+            } else {
+                n.vx = (Math.random() - 0.5) * 0.1;
+                n.vy = (Math.random() - 0.5) * 0.1;
+            }
         });
 
         function simulate() {
@@ -215,6 +233,7 @@
             const cosG = Math.cos(GALAXY_ROTATION), sinG = Math.sin(GALAXY_ROTATION);
             graphNodes.forEach(n => {
                 if (n === dragNode) return;
+                if (dragCluster && (n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) return;
                 const nx = n.x * cosG - n.y * sinG;
                 const ny = n.x * sinG + n.y * cosG;
                 n.x = nx; n.y = ny;
@@ -242,9 +261,13 @@
             for (let i = 0; i < graphNodes.length; i++) {
                 const a = graphNodes[i];
                 if (a === dragNode) continue;
+                const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
+                if (dragCluster && aDomain === dragCluster) continue;
                 for (let j = i + 1; j < graphNodes.length; j++) {
                     const b = graphNodes[j];
                     if (b === dragNode) continue;
+                    const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
+                    if (dragCluster && bDomain === dragCluster) continue;
                     let dx = b.x - a.x, dy = b.y - a.y;
                     const d2 = dx * dx + dy * dy;
                     if (d2 < MIN_REPULSION_DIST * MIN_REPULSION_DIST) {
@@ -587,19 +610,20 @@
                 });
                 const clusterR = (maxDist + 40) * camera.zoom;
 
-                // Filled circle with domain color (very subtle)
+                // Filled circle with domain color
+                const isClusterActive = (domain === hoveredCluster) || (domain === dragCluster);
                 ctx.beginPath();
                 ctx.arc(sp.x, sp.y, clusterR, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, 0.04)`;
+                ctx.fillStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, ${isClusterActive ? 0.08 : 0.04})`;
                 ctx.fill();
                 // Border circle
-                ctx.strokeStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, 0.12)`;
-                ctx.lineWidth = 1;
+                ctx.strokeStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, ${isClusterActive ? 0.35 : 0.12})`;
+                ctx.lineWidth = isClusterActive ? 2 : 1;
                 ctx.stroke();
 
                 // Domain label
-                ctx.fillStyle = `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 85)}%, 0.35)`;
-                ctx.font = `${Math.max(11, 13 * camera.zoom)}px 'Segoe UI', system-ui, sans-serif`;
+                ctx.fillStyle = `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 85)}%, ${isClusterActive ? 0.8 : 0.35})`;
+                ctx.font = `${isClusterActive ? 'bold ' : ''}${Math.max(11, (isClusterActive ? 14 : 13) * camera.zoom)}px 'Segoe UI', system-ui, sans-serif`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(domain, sp.x, sp.y - clusterR + 14 * camera.zoom);
@@ -760,6 +784,33 @@
             return closest;
         }
 
+        function findClusterAt(sx, sy) {
+            // Check if click is near a domain label
+            const centroids = clusterData.centroids;
+            const domains = Object.keys(centroids);
+            for (let i = 0; i < domains.length; i++) {
+                const domain = domains[i];
+                const c = centroids[domain];
+                const members = graphNodes.filter(n => (n.clusterDomain || n.primary_domain || 'Bridges') === domain);
+                if (members.length === 0) continue;
+                // Label is above the cluster circle
+                let maxDist = 0;
+                members.forEach(n => {
+                    const dx = n.x - c.x, dy = n.y - c.y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    if (d > maxDist) maxDist = d;
+                });
+                const labelY = c.y - (maxDist + 40) + 14 / camera.zoom;
+                const sp = worldToScreen(c.x, labelY);
+                const labelHitRadius = (domain.length * 4 + 20) * camera.zoom;
+                const dx = sx - sp.x, dy = sy - sp.y;
+                if (Math.sqrt(dx * dx + dy * dy) < Math.max(labelHitRadius, 30)) {
+                    return domain;
+                }
+            }
+            return null;
+        }
+
         const tooltip = document.getElementById('graph-tooltip');
 
         canvas.addEventListener('mousedown', e => {
@@ -770,9 +821,15 @@
                 dragNode = node;
                 canvas.style.cursor = 'grabbing';
             } else {
-                isPanning = true;
-                panStart = { x: e.clientX, y: e.clientY };
-                canvas.style.cursor = 'grabbing';
+                const cluster = findClusterAt(e.offsetX, e.offsetY);
+                if (cluster) {
+                    dragCluster = cluster;
+                    canvas.style.cursor = 'grabbing';
+                } else {
+                    isPanning = true;
+                    panStart = { x: e.clientX, y: e.clientY };
+                    canvas.style.cursor = 'grabbing';
+                }
             }
             fadeWelcome();
         });
@@ -793,6 +850,23 @@
                 dragNode.vy = 0;
                 // Hide tooltip while dragging a node
                 if (tooltip) tooltip.classList.add('tooltip-hidden');
+            } else if (dragCluster) {
+                // Move all nodes in the cluster together
+                const prevWorld = screenToWorld(mouseDownPos.x, mouseDownPos.y);
+                const dx = mouseWorld.x - prevWorld.x;
+                const dy = mouseWorld.y - prevWorld.y;
+                graphNodes.forEach(n => {
+                    if ((n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) {
+                        n.x += dx;
+                        n.y += dy;
+                        n.vx = 0;
+                        n.vy = 0;
+                    }
+                });
+                // Also shift the cluster centroid
+                const c = clusterData.centroids[dragCluster];
+                if (c) { c.x += dx; c.y += dy; }
+                if (tooltip) tooltip.classList.add('tooltip-hidden');
             } else if (isPanning) {
                 const pdx = e.clientX - panStart.x;
                 const pdy = e.clientY - panStart.y;
@@ -802,7 +876,8 @@
             } else {
                 const node = findNodeAt(e.offsetX, e.offsetY);
                 hoveredNode = node;
-                canvas.style.cursor = node ? 'pointer' : 'grab';
+                hoveredCluster = !node ? findClusterAt(e.offsetX, e.offsetY) : null;
+                canvas.style.cursor = node ? 'pointer' : (hoveredCluster ? 'grab' : 'grab');
 
                 // Graph node hover → highlight sidebar item
                 document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
@@ -831,12 +906,14 @@
 
         canvas.addEventListener('mouseup', e => {
             dragNode = null;
+            dragCluster = null;
             isPanning = false;
             canvas.style.cursor = hoveredNode ? 'pointer' : 'grab';
         });
 
         canvas.addEventListener('mouseleave', () => {
             dragNode = null;
+            dragCluster = null;
             isPanning = false;
             hoveredNode = null;
             if (tooltip) tooltip.classList.add('tooltip-hidden');
@@ -871,17 +948,25 @@
 
         // Touch support
         let lastTouchDist = 0;
+        let prevTouchWorld = null;
         canvas.addEventListener('touchstart', e => {
             fadeWelcome();
             if (e.touches.length === 1) {
                 const touch = e.touches[0];
                 const rect = canvas.getBoundingClientRect();
-                const node = findNodeAt(touch.clientX - rect.left, touch.clientY - rect.top);
+                const sx = touch.clientX - rect.left;
+                const sy = touch.clientY - rect.top;
+                const node = findNodeAt(sx, sy);
                 if (node) {
                     dragNode = node;
                 } else {
-                    isPanning = true;
-                    panStart = { x: touch.clientX, y: touch.clientY };
+                    const cluster = findClusterAt(sx, sy);
+                    if (cluster) {
+                        dragCluster = cluster;
+                    } else {
+                        isPanning = true;
+                        panStart = { x: touch.clientX, y: touch.clientY };
+                    }
                 }
             } else if (e.touches.length === 2) {
                 const dx = e.touches[0].clientX - e.touches[1].clientX;
@@ -904,6 +989,22 @@
                     dragNode.y = mouseWorld.y;
                     dragNode.vx = 0;
                     dragNode.vy = 0;
+                } else if (dragCluster) {
+                    if (prevTouchWorld) {
+                        const dx = mouseWorld.x - prevTouchWorld.x;
+                        const dy = mouseWorld.y - prevTouchWorld.y;
+                        graphNodes.forEach(n => {
+                            if ((n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) {
+                                n.x += dx;
+                                n.y += dy;
+                                n.vx = 0;
+                                n.vy = 0;
+                            }
+                        });
+                        const c = clusterData.centroids[dragCluster];
+                        if (c) { c.x += dx; c.y += dy; }
+                    }
+                    prevTouchWorld = { x: mouseWorld.x, y: mouseWorld.y };
                 } else if (isPanning) {
                     const dx = touch.clientX - panStart.x;
                     const dy = touch.clientY - panStart.y;
@@ -936,6 +1037,8 @@
                 }
             }
             dragNode = null;
+            dragCluster = null;
+            prevTouchWorld = null;
             isPanning = false;
             lastTouchDist = 0;
             hasDragged = false;
