@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.869875+00:00"
   },
   {
-    "id": "seed_068",
-    "title": "Aristotle Quality Amplification: Proof Strategy Mining from Millennial-Grade Mathematics",
-    "description": "Reverse-engineer the proof strategies of the deepest results in mathematics (Fermat's Last Theorem, Poincaré conjecture, the classification of finite simple groups) and construct a Lean 4 formalization that extracts their reusable structural patterns. Prove that these strategies compose into higher-order proof schemata that generalize across domains, and show that Aristotle can be bootstrapped with these schemata to produce master-class research rather than shallow variations.",
-    "domains": [
-      "Meta",
-      "Logic",
-      "Bridges"
-    ],
-    "priority_score": 0.98,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "5fa1c5eb",
-    "timestamp": "2026-05-14T16:03:53.863987+00:00"
-  },
-  {
     "id": "seed_076",
     "title": "Master-Class Research via Conceptual Dependency Graphs and Critical Path Analysis",
     "description": "Prove that the conceptual dependency graph of a mathematical theory has a critical path whose length bounds the minimum conceptual depth required to discover any result in that theory. Construct a Lean 4 formalization that extracts conceptual dependency graphs from proof terms, computes the critical path, and proves that results discovered by traversing the critical path are deeper than those discovered by shallow exploration. Show that Aether can use critical path analysis to guide research toward master-class results that require conceptual breakthroughs rather than incremental variations.",
@@ -1697,34 +1681,6 @@
     "timestamp": "2026-05-14T19:35:20.593956+00:00"
   },
   {
-    "id": "fd_0189",
-    "title": "Validate the conjecture",
-    "description": "computationally on real proof libraries (e.g., run dependency extraction on Mathlib's 100K+ declarations).",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "08ca2eef",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:34:15.721141+00:00"
-  },
-  {
-    "id": "fd_0189",
-    "title": "Direction 1",
-    "description": "(Nondeterministic complexity) — Most theoretically impactful; identifies the tractability boundary.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f8259b94",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:38:12.089110+00:00"
-  },
-  {
     "id": "fd_0202",
     "title": "Prove CSR (Critical Graph) theorem",
     "description": ": after a transient of length ≤ n², the growth is exactly linear with slope ρ_t.\n\n### Cross-Domain Connections\n- **Optimal control**: ρ_t is the optimal average reward per step in a Markov decision process.\n- **Dynamic programming**: Howard's policy iteration computes ρ_t in O(n³).\n- **Statistical physics**: ρ_t is the ground-state energy per site in a transfer matrix formulation.\n\n### Expected Impact\nA fully formalized tropical spectral radius would give precise growth/decay rates for deep attention stacks, enabling principled depth selection and early-stopping criteria for transformer training.\n\n---\n\n## Direction 3: Equivalence Between Sink Formation and Unique Tropical Eigenspace\n\n### Hypothesis\nThe attention sink phenomenon (one token absorbing all attention mass in deep layers) is equ",
@@ -1845,106 +1801,6 @@
     "source_exp_id": "9b6e4e14",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:34:38.217919+00:00"
-  },
-  {
-    "id": "fd_0188",
-    "title": "Direct algebraic approach",
-    "description": ": For each λ, show |a(b-b') + a'(b+b')| ≤ 2 by case analysis on {±1}⁴. Sum with weights P(λ).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7498ad19",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:41:38.435877+00:00"
-  },
-  {
-    "id": "fd_0189",
-    "title": "Fine-Braunstein-Caves approach",
-    "description": ": Use the observation that S = 2cos(θ) for appropriate angle parameterization, bounded by 2.\n\n### Cross-Domain Connection\n\nThis connects to quantum computing via Tsirelson's bound: quantum mechanics achieves 2√2, violating the classical 2. A tight classical bound in our framework would precisely delineate the \"quantum advantage window\" [2, 2√2] for prediction correlations.\n\n---\n\n## Direction 2: Minimax Coherence-Regret Phase Transition\n\n### Precise Theorem Statement\n\n```\ntheorem regret_phase_transition\n    (n : ℕ) (hn : 2 ≤ n) :\n    ∃ C_star : ℝ, 0 < C_star ∧ C_star < 1 ∧\n    (∀ C ≥ C_star, regretBound n (⌈1 / (1 - C)⌉.toNat) ≤ 1 / (1 - C)) ∧\n    (∀ C < C_star, ∃ T, regretBound n T > T * (1 - C))\n```\n\n### Why Breakthrough-Level\n\nThis would establish that coherence-constrained prediction ex",
-    "domains": [
-      "Physics",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7498ad19",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:41:38.443041+00:00"
-  },
-  {
-    "id": "fd_0191",
-    "title": "Fixed-point approach",
-    "description": ": Find C_star as the unique fixed point of f(C) = √(log n / (2(1-C)²)), which gives C_star = 1 - √(log n / 2).\n\n### Cross-Domain Connection\n\nThis connects to the theory of phase transitions in machine learning (e.g., the interpolation threshold in overparameterized models) and to thermodynamic phase transitions in information engines.\n\n---\n\n## Direction 3: Free-Energy Variational Principle for Evidence\n\n### Precise Theorem Statement\n\n```\ntheorem evidence_free_energy_principle\n    {n : ℕ} (hn : 0 < n) (b : BState' n) (l : Fin n → ℝ)\n    (hb : BState'.Valid b) (hl : ∀ i, 0 ≤ l i) :\n    log(evidence b l) ≤ sup_i log(l i) - KL(b ‖ uniform_n)\n```\n\nwhere KL is the Kullback-Leibler divergence and uniform_n is the uniform distribution on Fin n.\n\n### Why Breakthrough-Level\n\nThis would be a machine-",
-    "domains": [
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7498ad19",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:41:38.453645+00:00"
-  },
-  {
-    "id": "fd_0188",
-    "title": "Hypothesize",
-    "description": ": Formulate a precise conjecture based on computational evidence or theoretical reasoning.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "792d0062",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:28:53.514189+00:00"
-  },
-  {
-    "id": "fd_0189",
-    "title": "Experiment",
-    "description": ": Test the conjecture computationally on small examples.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "792d0062",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:28:53.520307+00:00"
-  },
-  {
-    "id": "fd_0190",
-    "title": "Prove",
-    "description": ": If evidence supports the conjecture, attempt a formal proof.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "792d0062",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:28:53.525749+00:00"
-  },
-  {
-    "id": "fd_0191",
-    "title": "Publish",
-    "description": ": Document results, update the knowledge base, and identify new directions.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "792d0062",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:28:53.531667+00:00"
   },
   {
     "id": "fd_0193",
@@ -2383,69 +2239,6 @@
     "timestamp": "2026-05-14T21:35:00.982044+00:00"
   },
   {
-    "id": "fd_0188",
-    "title": "Direction 4: Categorical Duality of Balanced States",
-    "description": "**Goal.** Express balanced consciousness as an equalizer in a suitable category.\n\n**Conjecture.** Define the category $\\mathbf{TropOrd}$ whose objects are linearly ordered sets equipped with a pair of monotone endofunctors $(F, G)$ (the \"pessimistic\" and \"optimistic\" operators). Morphisms are order-preserving maps that intertwine both operators. Then:\n\n1. The balanced conscious states form the **equalizer** of $F$ and $G$ in this category.\n2. The duality theorem (Theorem 3) is a natural isomorphism between the balanced-state functor and its opposite.\n3. The interval characterization (Theorem 4) identifies balanced states with a representable functor $\\mathrm{Hom}(-, [l,u])$ in the category of intervals.\n\n**Proof strategy.** Define the relevant category and functors in Lean using Mathlib's ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "918eb128",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:35:00.986993+00:00"
-  },
-  {
-    "id": "fd_0189",
-    "title": "Direction 5: Logical Semantics of Balance — Tropical Soundness/Completeness",
-    "description": "**Goal.** Interpret balanced consciousness as a coincidence of lower and upper logical semantics.\n\n**Conjecture.** Define a tropical propositional logic where:\n- Formulas are evaluated in $(\\mathbb{R}, \\min, +)$ (min-plus / \"pessimistic\" semantics) or $(\\mathbb{R}, \\max, +)$ (max-plus / \"optimistic\" semantics).\n- A valuation $v$ is **sound** if $\\mathrm{val}_{\\min}(\\varphi, v) \\leq \\mathrm{val}_{\\max}(\\varphi, v)$ for all formulas $\\varphi$.\n- A valuation is **complete** if equality holds: $\\mathrm{val}_{\\min}(\\varphi, v) = \\mathrm{val}_{\\max}(\\varphi, v)$.\n\nThen:\n1. Sound valuations exist for all formula sets (they form the tropical analogue of satisfiable assignments).\n2. Complete valuations exist iff the formula set has a \"balanced\" structure (tropical analogue of determinacy).\n3. The b",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "918eb128",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:35:00.992129+00:00"
-  },
-  {
-    "id": "fd_0189",
-    "title": "Precise Theorem Statement",
-    "description": "For any tropical protocol tree T, construct a weighted directed acyclic graph G(T) with a source vertex (the root) and a sink vertex, such that the shortest-path distance from source to sink in G(T) equals T.value. Conversely, any finite weighted DAG with designated source and sink can be \"unfolded\" into a (possibly exponentially larger) tropical protocol tree with the same optimal value.",
-    "domains": [
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1849e719",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:07:13.407179+00:00"
-  },
-  {
-    "id": "fd_0191",
-    "title": "Cross-Domain Significance",
-    "description": "This connects tropical protocols to tropical linear algebra, the Floyd-Warshall algorithm (which computes the tropical closure of a matrix), and algebraic path problems. It opens the door to spectral methods for protocol analysis — eigenvalues of tropical matrices characterize long-run communication costs.\n\n---",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1849e719",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:07:13.434811+00:00"
-  },
-  {
     "id": "fd_0196",
     "title": "Statement",
     "description": "In classical convex analysis, the Fenchel–Moreau theorem states that a lower semicontinuous convex function equals its biconjugate. The tropical analogue states: a function f : ℝⁿ → ℝ ∪ {+∞} that is the supremum of a finite family of max-plus linear forms equals its tropical biconjugate.\n\n**Precise theorem:** Let f : Fin n → ℝ be defined as f(i) = sup_j (c_j + V_j(i)). Define the tropical Legendre transform:\n\n- f*(a) = inf_i (f(i) - a(i))\n- f**(i) = sup_a (f*(a) + a(i))\n\nThen f** = f.",
@@ -2594,5 +2387,81 @@
     "source_exp_id": "51f002b7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T22:34:47.525121+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Target Definitions",
+    "description": "```\nstructure TheoremFamily (I : Type*) where\n  carrier : I → Type*\n  predicate : ∀ i, carrier i → Prop\n\nstructure ProofMorphism (F G : TheoremFamily I) where\n  map : ∀ i, F.carrier i → G.carrier i\n  transfer : ∀ i x, G.predicate i (map i x) → F.predicate i x\n\ndef ProofCategory (I : Type*) : Category (TheoremFamily I) where\n  Hom := ProofMorphism\n  id := ...\n  comp := ...\n```",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5fa1c5eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:34:31.191617+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Target Theorems",
+    "description": "1. `ProofCategory` satisfies the category axioms (associativity, identity laws).\n2. The forgetful functor from `ProofCategory` to `Type` preserves composition.\n3. Natural transformations between proof morphisms correspond to proof equivalences.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5fa1c5eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:34:31.197926+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Why This Opens a Field",
+    "description": "A categorical framework for proof transfer would enable:\n- **Formal proof reuse**: Morphisms between theorem families give certified methods for transferring proofs between domains.\n- **Adjunctions as duality**: Left/right adjoints between proof categories would formalize the duality between \"more assumptions\" and \"stronger conclusions.\"\n- **Sheaf-theoretic proof gluing**: Local proofs on an open cover of a parameter space could be glued into global proofs, formalizing the local-to-global principle categorically.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5fa1c5eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:34:31.205848+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Implementation Priorities",
+    "description": "| Direction | Difficulty | Impact | Dependencies | Recommended Order |\n|-----------|-----------|--------|-------------|-------------------|\n| 1. Category of Proof Architectures | Medium | Very High | Current work | 1st |\n| 3. ATP Search Strategies | Medium | High | Direction 1 | 2nd |\n| 2. Graph Minor Obstruction Theory | High | Very High | Mathlib graph theory | 3rd |\n| 4. Elliptic Curve Bridge | Very High | Very High | Mathlib EC theory | 4th |\n| 5. Renormalization Formalization | Very High | Revolutionary | Directions 1, 3 | 5th |",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5fa1c5eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:34:31.245648+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Team Structure Recommendation",
+    "description": "- **Core Theory Team** (Directions 1, 5): Formal proof theorists with categorical expertise.\n- **Combinatorics Team** (Direction 2): Graph theorists with formalization experience.\n- **ATP Integration Team** (Direction 3): Proof automation researchers.\n- **Arithmetic Geometry Team** (Direction 4): Number theorists with Mathlib experience.\n\nEach team should maintain a shared lemma library built on the `ProofSchema` / `DescentSchema` / `ConstructiveSchema` framework, ensuring interoperability across directions.",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5fa1c5eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:34:31.259341+00:00"
   }
 ]
