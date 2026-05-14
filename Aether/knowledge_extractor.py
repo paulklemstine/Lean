@@ -1935,13 +1935,72 @@ Research mode: {concept.research_mode}
                     job = await self.extract_async(job)
                     job = self.evaluate(job)
                     job = await self.integrate_async(job)
+
+                    # Extract future directions and mark consumed direction as completed
+                    if job.status == "integrated" and job.job_id:
+                        try:
+                            from research_memory import FutureDirectionsManager
+                            fd_manager = FutureDirectionsManager(self.workspace)
+                            fd_added = 0
+                            if job.result_future_directions and len(job.result_future_directions) > 100:
+                                added = fd_manager.add_directions_from_text(
+                                    job.result_future_directions, job.job_id, "result_future_directions"
+                                )
+                                if added:
+                                    fd_added += added
+                            if fd_added == 0 and job.result_json_package:
+                                try:
+                                    pkg = json.loads(job.result_json_package)
+                                    fd_text = pkg.get("future_directions", "")
+                                    if fd_text and len(fd_text) > 100:
+                                        added = fd_manager.add_directions_from_text(
+                                            fd_text, job.job_id, "json_package"
+                                        )
+                                        if added:
+                                            fd_added += added
+                                except Exception:
+                                    pass
+                            if fd_added == 0 and job.project_dir and job.project_dir.exists():
+                                for fd_file in job.project_dir.rglob("FUTURE_DIRECTIONS*.md"):
+                                    try:
+                                        fd_content = fd_file.read_text(encoding="utf-8", errors="replace")
+                                        if len(fd_content) > 100:
+                                            added = fd_manager.add_directions_from_text(
+                                                fd_content, job.job_id, str(fd_file)
+                                            )
+                                            if added:
+                                                fd_added += added
+                                    except Exception:
+                                        pass
+                            if fd_added > 0:
+                                print(f"[Continuous] Added {fd_added} future directions from cycle {job.job_id}")
+                            for d in fd_manager._directions:
+                                if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
+                                    fd_manager.mark_direction_completed(d.id)
+                                    print(f"[Continuous] Marked direction {d.id} as completed")
+                                    break
+                        except Exception as e:
+                            print(f"[Continuous] Warning: Failed to extract future directions: {e}")
+
                     job = await self.cleanup_catalog_async(job)
                     self.commit(job)
-                    
+
                     if job.project_id in self.inflight:
                         del self.inflight[job.project_id]
                 else:
                     self.failed_count += 1
+                    # Release the consumed direction so it can be retried
+                    if job.job_id:
+                        try:
+                            from research_memory import FutureDirectionsManager
+                            fd_mgr = FutureDirectionsManager(self.workspace)
+                            for d in fd_mgr._directions:
+                                if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
+                                    fd_mgr.mark_direction_available(d.id)
+                                    print(f"[Continuous] Released direction {d.id}: {d.title[:50]}")
+                                    break
+                        except Exception as e:
+                            print(f"[Continuous] Warning: could not release direction: {e}")
                     if job.project_id in self.inflight:
                         del self.inflight[job.project_id]
             

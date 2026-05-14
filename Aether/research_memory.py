@@ -293,6 +293,46 @@ class FutureDirectionsManager:
             self._directions = []
             self._pruned = []
 
+        # Recover stale in_progress directions whose jobs no longer exist
+        self._recover_stale_directions()
+
+    def _recover_stale_directions(self) -> None:
+        """Release in_progress directions whose consumed_by_exp_id references a job
+        that no longer exists in inflight_jobs.json."""
+        inflight_path = self.workspace / "inflight_jobs.json"
+        if not inflight_path.exists():
+            # No active jobs file — all in_progress directions are stale
+            active_job_ids = set()
+        else:
+            try:
+                inflight_data = json.loads(inflight_path.read_text(encoding="utf-8"))
+                # Handle both dict format {uuid: {job_id: ...}} and list format
+                if isinstance(inflight_data, dict):
+                    active_job_ids = {
+                        v.get("job_id", "") for v in inflight_data.values()
+                        if isinstance(v, dict) and v.get("job_id")
+                    }
+                elif isinstance(inflight_data, list):
+                    active_job_ids = {
+                        j.get("job_id", "") for j in inflight_data
+                        if isinstance(j, dict) and j.get("job_id")
+                    }
+                else:
+                    active_job_ids = set()
+            except Exception:
+                active_job_ids = set()
+
+        recovered = 0
+        for d in self._directions:
+            if d.status == "in_progress" and d.consumed_by_exp_id:
+                if d.consumed_by_exp_id not in active_job_ids:
+                    d.status = "available"
+                    d.consumed_by_exp_id = ""
+                    recovered += 1
+        if recovered:
+            self._save()
+            print(f"Recovered {recovered} stale direction(s) back to available")
+
     def _save(self) -> None:
         self.workspace.mkdir(parents=True, exist_ok=True)
         self._file.write_text(

@@ -6,6 +6,7 @@
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
+        const welcomeScreen = document.getElementById('welcome-screen');
 
         // ─── Data ───
         const graphData = window.PACKAGE_GRAPH || { nodes: [], edges: [], domain_bridges: [] };
