@@ -1,700 +1,677 @@
 #!/usr/bin/env python3
 """
-Temporal Stone Duality: Applications
+Applications of Temporal Stone Duality
+=======================================
 
-Real-world applications of the temporal Stone duality theorems:
-1. Network protocol safety verification
-2. State-space reduction via behavioral quotients
-3. Idempotent semiring computation for shortest safety paths
+Real-world applications of fixpoint-based temporal model checking:
+1. Network protocol verification (deadlock detection)
+2. Concurrent system safety analysis
+3. Game-theoretic safety verification
+4. Distributed system invariant checking
 """
 
-from typing import Set, Dict, Tuple, List
-
-
-def universal_pre(R: Dict[int, Set[int]], X: Set[int], states: Set[int]) -> Set[int]:
-    return {s for s in states if all(t in X for t in R.get(s, set()))}
-
-
-def existential_pre(R: Dict[int, Set[int]], X: Set[int], states: Set[int]) -> Set[int]:
-    return {s for s in states if any(t in X for t in R.get(s, set()))}
-
-
-def gfp_safety(R: Dict[int, Set[int]], p: Set[int], states: Set[int]) -> Set[int]:
-    X = set(states)
-    while True:
-        X_new = p & universal_pre(R, X, states)
-        if X_new == X:
-            return X
-        X = X_new
-
-
-def lfp_reach(R: Dict[int, Set[int]], p: Set[int], states: Set[int]) -> Set[int]:
-    X: Set[int] = set()
-    while True:
-        X_new = p | existential_pre(R, X, states)
-        if X_new == X:
-            return X
-        X = X_new
+from typing import Dict, FrozenSet, List, Set, Tuple
+from algorithms import (
+    TransitionSystem, safety_model_check, compute_dual_points,
+    descending_kleene_iteration
+)
 
 
 # ============================================================
-# APPLICATION 1: Network Protocol Safety
+# Application 1: Network Protocol Verification
 # ============================================================
-print("=" * 60)
-print("APPLICATION 1: Network Protocol Safety Verification")
-print("=" * 60)
 
-# Model a simple token-ring protocol with 4 nodes
-# Each node can be: idle (0), requesting (1), or holding_token (2)
-# State = n0*9 + n1*3 + n2 (3 nodes for simplicity, encoded in base 3)
-# Token must be held by exactly one node at a time
-
-n_nodes = 3
-states_net = set(range(3**n_nodes))
-
-def decode_state(s: int, n: int = 3) -> Tuple[int, ...]:
-    result = []
-    for _ in range(n):
-        result.append(s % 3)
-        s //= 3
-    return tuple(result)
-
-def encode_state(vals: Tuple[int, ...]) -> int:
-    s = 0
-    for i in range(len(vals) - 1, -1, -1):
-        s = s * 3 + vals[i]
-    return s
-
-# Valid states: exactly one node holds token
-valid_states = set()
-for s in states_net:
-    d = decode_state(s)
-    if sum(1 for x in d if x == 2) == 1:
-        valid_states.add(s)
-
-# Transitions: token holder can pass to next node (ring topology)
-R_net: Dict[int, Set[int]] = {}
-for s in states_net:
-    d = list(decode_state(s))
-    successors = set()
-
-    for i in range(n_nodes):
-        if d[i] == 2:  # Node i holds token
-            # Pass token to next node
-            new_d = list(d)
-            new_d[i] = 0  # Become idle
-            new_d[(i + 1) % n_nodes] = 2  # Next gets token
-            successors.add(encode_state(tuple(new_d)))
-
-            # Node can also keep token (self-loop)
-            successors.add(s)
-
-    if not successors:
-        successors.add(s)  # Deadlock self-loop
-
-    R_net[s] = successors
-
-# Safety: token uniqueness (at most one holder)
-safe_net = valid_states
-
-gfp_net = gfp_safety(R_net, safe_net, states_net)
-
-print(f"\nTotal states: {len(states_net)}")
-print(f"Valid states (exactly one token holder): {len(valid_states)}")
-print(f"□*(token_unique) = {len(gfp_net)} states")
-print(f"All valid states are safe: {valid_states <= gfp_net}")
-
-# Show which invalid starting states could lead to safety violation
-unsafe_starts = states_net - gfp_net
-if unsafe_starts:
-    print(f"Unsafe starting states: {len(unsafe_starts)}")
-    for s in sorted(list(unsafe_starts))[:5]:
-        d = decode_state(s)
-        print(f"  State {s}: nodes={d}")
-
-# ============================================================
-# APPLICATION 2: State-Space Reduction
-# ============================================================
-print("\n" + "=" * 60)
-print("APPLICATION 2: State-Space Reduction via Behavioral Quotient")
-print("=" * 60)
-
-# Create a system with redundant states that can be collapsed
-# Model: 6 states where {0,1} are equivalent and {3,4} are equivalent
-states_red = set(range(6))
-R_red = {
-    0: {2, 5}, 1: {2, 5},  # 0 and 1 behave identically
-    2: {3, 4},
-    3: {0, 1}, 4: {0, 1},  # 3 and 4 behave identically
-    5: {5},                 # 5 is a sink
-}
-atoms_red = {0: {0, 1, 2}}  # Atom: "in upper half"
-
-# Compute behavioral quotient
-from itertools import combinations
-from collections import defaultdict
-
-def compute_quotient(R: Dict[int, Set[int]], states: Set[int],
-                     atoms: Dict[int, Set[int]], depth: int = 4) -> List[Set[int]]:
-    """Compute behavioral quotient via dual points."""
-    preds = {frozenset(states), frozenset()}
-    for p in atoms.values():
-        preds.add(frozenset(p))
-
-    for _ in range(depth):
-        new_preds = set(preds)
-        for X in list(preds):
-            Xs = set(X)
-            new_preds.add(frozenset(states - Xs))
-            new_preds.add(frozenset(universal_pre(R, Xs, states)))
-            new_preds.add(frozenset(existential_pre(R, Xs, states)))
-        for X in list(preds):
-            for Y in list(preds):
-                new_preds.add(X & Y)
-                new_preds.add(X | Y)
-        preds = new_preds
-
-    dual_pts: Dict[int, frozenset] = {}
-    for s in states:
-        dual_pts[s] = frozenset(X for X in preds if s in X)
-
-    classes: Dict[frozenset, Set[int]] = {}
-    for s, dp in dual_pts.items():
-        if dp not in classes:
-            classes[dp] = set()
-        classes[dp].add(s)
-
-    return list(classes.values())
-
-quotient_red = compute_quotient(R_red, states_red, atoms_red)
-print(f"\nOriginal states: {len(states_red)}")
-print(f"Behavioral equivalence classes: {len(quotient_red)}")
-for cls in quotient_red:
-    print(f"  {cls}")
-reduction = (1 - len(quotient_red) / len(states_red)) * 100
-print(f"State-space reduction: {reduction:.0f}%")
-
-# Verify: check that equivalent states satisfy the same safety properties
-p_test = {0, 1, 2, 3}
-gfp_test = gfp_safety(R_red, p_test, states_red)
-print(f"\n□*({{0,1,2,3}}) = {sorted(gfp_test)}")
-print("Equivalent states agree on safety: ", end="")
-all_agree = True
-for cls in quotient_red:
-    cls_list = list(cls)
-    for i in range(len(cls_list)):
-        for j in range(i+1, len(cls_list)):
-            if (cls_list[i] in gfp_test) != (cls_list[j] in gfp_test):
-                all_agree = False
-print("✓" if all_agree else "✗")
-
-# ============================================================
-# APPLICATION 3: Tropical-Style Shortest Safety Paths
-# ============================================================
-print("\n" + "=" * 60)
-print("APPLICATION 3: Weighted Safety via Idempotent Semiring")
-print("=" * 60)
-
-# Instead of Boolean safety, compute minimum cost to maintain safety
-# This is the tropical analogue: min replaces ∩, + replaces successor cost
-
-def weighted_safety(R: Dict[int, Set[int]],
-                    weights: Dict[Tuple[int,int], float],
-                    p_cost: Dict[int, float],
-                    states: Set[int],
-                    max_iters: int = 100) -> Dict[int, float]:
-    """Tropical safety computation.
-
-    For each state, compute the minimum cost to maintain safety forever.
-    This is the tropical analogue of gfp(Φ) where
-    Φ(f)(s) = p_cost(s) + min_{t: R(s,t)} (w(s,t) + f(t)).
-
-    Uses value iteration (tropical Kleene iteration).
+def app_network_protocol():
     """
-    INF = float('inf')
+    Verify safety properties of a simplified TCP-like protocol.
 
-    # Initialize: all states have cost 0 (optimistic)
-    f = {s: 0.0 for s in states}
-
-    for iteration in range(max_iters):
-        f_new = {}
-        changed = False
-        for s in states:
-            if s not in p_cost:
-                f_new[s] = INF  # Unsafe state
-                continue
-
-            succ_costs = []
-            for t in R.get(s, set()):
-                edge_cost = weights.get((s, t), 1.0)
-                succ_costs.append(edge_cost + f[t])
-
-            if succ_costs:
-                f_new[s] = p_cost[s] + min(succ_costs)
-            else:
-                f_new[s] = p_cost[s]  # No successors
-
-            if abs(f_new[s] - f[s]) > 1e-10:
-                changed = True
-
-        f = f_new
-        if not changed:
-            print(f"  Converged in {iteration + 1} iterations")
-            break
-
-    return f
-
-# Example: 4-node system with weighted transitions
-states_w = {0, 1, 2, 3}
-R_w = {0: {1, 2}, 1: {0, 3}, 2: {0, 3}, 3: {1, 2}}
-weights_w = {
-    (0, 1): 1.0, (0, 2): 2.0,
-    (1, 0): 1.0, (1, 3): 3.0,
-    (2, 0): 2.0, (2, 3): 1.0,
-    (3, 1): 3.0, (3, 2): 1.0,
-}
-# Safety cost: state 3 is "expensive" to be in
-p_cost_w = {0: 0.0, 1: 0.0, 2: 0.0, 3: 5.0}
-
-print(f"\n4-node weighted system:")
-print(f"States: {sorted(states_w)}")
-print(f"Safety costs: {p_cost_w}")
-
-costs = weighted_safety(R_w, weights_w, p_cost_w, states_w)
-print(f"\nMinimum perpetual safety cost from each state:")
-for s in sorted(states_w):
-    cost_str = f"{costs[s]:.1f}" if costs[s] < float('inf') else "∞"
-    print(f"  State {s}: {cost_str}")
-
-print(f"\nNote: This is the tropical analogue of □*(safe)")
-print(f"Boolean safety: {sorted(gfp_safety(R_w, set(p_cost_w.keys()), states_w))}")
-
-# ============================================================
-# APPLICATION 4: Reactive System Monitor
-# ============================================================
-print("\n" + "=" * 60)
-print("APPLICATION 4: Certified Runtime Monitor")
-print("=" * 60)
-
-# Build a minimal monitor automaton from the safety specification
-# The monitor tracks whether the system is still "always safe"
-
-def build_safety_monitor(R: Dict[int, Set[int]], p: Set[int],
-                          states: Set[int]) -> Dict[str, any]:
-    """Build a certified safety monitor.
-
-    The monitor has two states: SAFE and VIOLATED.
-    It transitions to VIOLATED if the system leaves the gfp of safety.
+    States represent connection phases:
+    0 = Closed
+    1 = SYN_SENT
+    2 = SYN_RECEIVED
+    3 = ESTABLISHED
+    4 = FIN_WAIT
+    5 = TIME_WAIT
+    6 = ERROR (unrecoverable)
     """
-    safe_set = gfp_safety(R, p, states)
+    print("=" * 60)
+    print("Application 1: Network Protocol Verification")
+    print("=" * 60)
 
-    return {
-        "safe_states": safe_set,
-        "violated_states": states - safe_set,
-        "initial_state": "SAFE",
-        "transition": lambda current, obs: (
-            "SAFE" if current == "SAFE" and obs in safe_set else "VIOLATED"
-        ),
-        "size": 2,
-        "certified": True,
+    ts = TransitionSystem.from_edges(7, [
+        (0, 1),  # Closed → SYN_SENT
+        (1, 2),  # SYN_SENT → SYN_RECEIVED
+        (1, 6),  # SYN_SENT → ERROR (timeout)
+        (2, 3),  # SYN_RECEIVED → ESTABLISHED
+        (2, 6),  # SYN_RECEIVED → ERROR
+        (3, 4),  # ESTABLISHED → FIN_WAIT
+        (3, 3),  # ESTABLISHED → ESTABLISHED (data transfer)
+        (4, 5),  # FIN_WAIT → TIME_WAIT
+        (5, 0),  # TIME_WAIT → Closed
+        (6, 6),  # ERROR → ERROR (stuck)
+    ])
+
+    state_names = {
+        0: "Closed", 1: "SYN_SENT", 2: "SYN_RECEIVED",
+        3: "ESTABLISHED", 4: "FIN_WAIT", 5: "TIME_WAIT", 6: "ERROR"
     }
 
-# Build monitor for the token ring protocol
-monitor = build_safety_monitor(R_net, safe_net, states_net)
-print(f"\nToken ring safety monitor:")
-print(f"  Safe states: {len(monitor['safe_states'])}")
-print(f"  Monitor states: {monitor['size']}")
-print(f"  Certified: {monitor['certified']}")
+    # Safety property: "always not in ERROR state"
+    P_no_error = frozenset([0, 1, 2, 3, 4, 5])
+    result = safety_model_check(ts, P_no_error)
 
-# Simulate a run
-run = [encode_state((2, 0, 0)), encode_state((0, 2, 0)),
-       encode_state((0, 0, 2)), encode_state((2, 0, 0))]
-print(f"\n  Simulated run:")
-monitor_state = "SAFE"
-for obs in run:
-    monitor_state = monitor["transition"](monitor_state, obs)
-    d = decode_state(obs)
-    print(f"    State {obs} (nodes={d}): monitor={monitor_state}")
+    print("\nSafety: 'Connection never enters ERROR state'")
+    safe_states = result.fixpoint
+    print(f"Safe states: {{{', '.join(state_names[s] for s in sorted(safe_states))}}}")
+    print(f"Unsafe states: {{{', '.join(state_names[s] for s in sorted(set(range(7)) - safe_states))}}}")
+    print(f"Iterations to converge: {result.iterations}")
 
-print("\n" + "=" * 60)
-print("All applications completed successfully.")
-print("=" * 60)
+    # Safety property: "always can eventually close"
+    P_closable = frozenset([0, 3, 4, 5])  # States from which closing is possible
+    result2 = safety_model_check(ts, P_closable)
+    print(f"\nSafety: 'Always in a closable state'")
+    print(f"Result: {{{', '.join(state_names[s] for s in sorted(result2.fixpoint))}}}")
 
-
-#!/usr/bin/env python3
-"""
-Temporal Stone Duality: Demonstrations
-
-Concrete numerical examples demonstrating the three main theorems:
-A. Duality recovery (dual points ↔ behavioral equivalence)
-B. Fixpoint reduction (always/eventually = gfp/lfp)
-C. Finite decidability (Kleene iteration stabilizes)
-"""
-
-from typing import Set, Dict, FrozenSet, Callable, Tuple, List
-from itertools import product
+    # Behavioral analysis
+    dp = compute_dual_points(ts)
+    print(f"\nBehavioral analysis:")
+    print(f"  Definable predicates: {dp.n_predicates}")
+    print(f"  All states distinguishable: {all(dp.separation_matrix.values())}")
 
 
-def universal_pre(R: Dict[int, Set[int]], X: Set[int], states: Set[int]) -> Set[int]:
-    """Universal predecessor: states all of whose successors lie in X."""
-    return {s for s in states if all(t in X for t in R.get(s, set()))}
+# ============================================================
+# Application 2: Concurrent System Safety
+# ============================================================
 
-
-def existential_pre(R: Dict[int, Set[int]], X: Set[int], states: Set[int]) -> Set[int]:
-    """Existential predecessor: states with at least one successor in X."""
-    return {s for s in states if any(t in X for t in R.get(s, set()))}
-
-
-def safety_op(R: Dict[int, Set[int]], p: Set[int], X: Set[int], states: Set[int]) -> Set[int]:
-    """Safety operator: Φ(X) = p ∩ pre(X)."""
-    return p & universal_pre(R, X, states)
-
-
-def reach_op(R: Dict[int, Set[int]], p: Set[int], X: Set[int], states: Set[int]) -> Set[int]:
-    """Reachability operator: Ψ(X) = p ∪ ∃pre(X)."""
-    return p | existential_pre(R, X, states)
-
-
-def gfp_kleene(R: Dict[int, Set[int]], p: Set[int], states: Set[int]) -> Tuple[Set[int], int]:
-    """Compute greatest fixpoint by descending Kleene iteration.
-    Returns (fixpoint, number_of_iterations)."""
-    X = set(states)
-    n = 0
-    while True:
-        X_new = safety_op(R, p, X, states)
-        n += 1
-        if X_new == X:
-            return X, n
-        X = X_new
-
-
-def lfp_kleene(R: Dict[int, Set[int]], p: Set[int], states: Set[int]) -> Tuple[Set[int], int]:
-    """Compute least fixpoint by ascending Kleene iteration.
-    Returns (fixpoint, number_of_iterations)."""
-    X: Set[int] = set()
-    n = 0
-    while True:
-        X_new = reach_op(R, p, X, states)
-        n += 1
-        if X_new == X:
-            return X, n
-        X = X_new
-
-
-def compute_dual_points(R: Dict[int, Set[int]], states: Set[int],
-                         atoms: Dict[int, Set[int]]) -> Dict[int, FrozenSet[FrozenSet[int]]]:
-    """Compute dual points for each state.
-
-    We compute a representative set of definable predicates by closing
-    the atoms under boolean operations and the box operator, then
-    map each state to the set of definable predicates containing it.
+def app_concurrent_safety():
     """
-    # Start with atoms and build definable predicates
-    definable: Set[FrozenSet[int]] = set()
-    definable.add(frozenset(states))  # ⊤
-    definable.add(frozenset())         # ⊥
+    Verify mutual exclusion in a Peterson-style protocol.
 
-    for p in atoms.values():
-        definable.add(frozenset(p))
+    States encode (process1_state, process2_state):
+    0 = (idle, idle)
+    1 = (requesting, idle)
+    2 = (idle, requesting)
+    3 = (critical, idle)
+    4 = (idle, critical)
+    5 = (requesting, requesting)  → one wins
+    6 = (critical, requesting)    → p1 in critical, p2 waiting
+    7 = (requesting, critical)    → p2 in critical, p1 waiting
+    # NO state (critical, critical) — mutual exclusion
+    """
+    print("\n" + "=" * 60)
+    print("Application 2: Concurrent System Safety (Mutex)")
+    print("=" * 60)
 
-    # Close under complement, intersection, union, box (fixed iterations)
-    for _ in range(3):
-        new_preds = set(definable)
-        for X in list(definable):
-            # Complement
-            new_preds.add(frozenset(states - set(X)))
-            # Box
-            new_preds.add(frozenset(universal_pre(R, set(X), states)))
-            # Diamond
-            new_preds.add(frozenset(existential_pre(R, set(X), states)))
+    ts = TransitionSystem.from_edges(8, [
+        (0, 1), (0, 2),     # Either process requests
+        (1, 3), (1, 5),     # p1 enters critical or p2 also requests
+        (2, 4), (2, 5),     # p2 enters critical or p1 also requests
+        (3, 0),             # p1 leaves critical
+        (4, 0),             # p2 leaves critical
+        (5, 6), (5, 7),     # Contention: one wins
+        (6, 4),             # p1 done, p2 enters
+        (7, 3),             # p2 done, p1 enters
+    ])
 
-        for X in list(definable):
-            for Y in list(definable):
-                # Intersection
-                new_preds.add(X & Y)
-                # Union
-                new_preds.add(X | Y)
+    # Safety: "never in mutual violation" (no state (critical, critical))
+    # All states are safe since we don't have a (critical, critical) state
+    P_mutex = frozenset(range(8))  # All states preserve mutex
+    result = safety_model_check(ts, P_mutex)
+    print(f"\nMutual exclusion holds from: {set(result.fixpoint)}")
+    print(f"  (All {len(result.fixpoint)} states are safe)")
 
-        definable = new_preds
-
-    # Compute dual points
-    dual_points: Dict[int, FrozenSet[FrozenSet[int]]] = {}
-    for s in states:
-        dual_points[s] = frozenset(X for X in definable if s in X)
-
-    return dual_points
-
-
-def behavioral_quotient(dual_points: Dict[int, FrozenSet[FrozenSet[int]]]) -> List[Set[int]]:
-    """Compute behavioral equivalence classes from dual points."""
-    classes: Dict[FrozenSet[FrozenSet[int]], Set[int]] = {}
-    for s, dp in dual_points.items():
-        if dp not in classes:
-            classes[dp] = set()
-        classes[dp].add(s)
-    return list(classes.values())
+    # Liveness-related safety: "requesting processes eventually get served"
+    # Check: from any state, can we always stay in non-deadlock states?
+    P_no_deadlock = frozenset(s for s in range(8) if ts.successors(s))
+    result2 = safety_model_check(ts, P_no_deadlock)
+    print(f"\nNo deadlock: {set(result2.fixpoint)}")
 
 
 # ============================================================
-# DEMO 1: Traffic Light Controller
+# Application 3: Game Safety (Reachability Games)
 # ============================================================
-print("=" * 60)
-print("DEMO 1: Traffic Light Controller Safety")
-print("=" * 60)
 
-# Two traffic lights: states 0-2 for each (0=red, 1=yellow, 2=green)
-# Encoded as state = 3*a + b where a,b ∈ {0,1,2}
-states_tl = set(range(9))
-label = {0: "RR", 1: "RY", 2: "RG", 3: "YR", 4: "YY", 5: "YG",
-         6: "GR", 7: "GY", 8: "GG"}
+def app_game_safety():
+    """
+    Safety verification for a simple pursuit-evasion game.
 
-# Transition: each light cycles R→G→Y→R independently
-R_tl: Dict[int, Set[int]] = {}
-cycle = {0: 2, 1: 0, 2: 1}  # R→G, G→Y, Y→R
-for a in range(3):
-    for b in range(3):
-        s = 3 * a + b
-        R_tl[s] = {3 * cycle[a] + b, 3 * a + cycle[b], 3 * cycle[a] + cycle[b]}
+    The evader wants to always stay safe; the pursuer wants to
+    eventually catch the evader. The gfp of the safety operator
+    gives the evader's winning region.
 
-# Safety property: not both green = ¬(state 8)
-safe = states_tl - {8}
+    Grid: 3x3, evader moves first, pursuer mirrors
+    States encode (evader_pos, pursuer_pos) but simplified here.
+    """
+    print("\n" + "=" * 60)
+    print("Application 3: Game Safety (Pursuit-Evasion)")
+    print("=" * 60)
 
-print(f"\nStates: {sorted(states_tl)}")
-print(f"Labels: {label}")
-print(f"Safety property (¬GG): {sorted(safe)}")
+    # Simplified: 6 states representing game positions
+    # 0,1,2 = evader safe, 3,4,5 = evader caught (unsafe)
+    ts = TransitionSystem.from_edges(6, [
+        (0, 1), (0, 2),     # Evader moves
+        (1, 0), (1, 3),     # Safe → safe or caught
+        (2, 0), (2, 4),     # Safe → safe or caught
+        (3, 3),             # Caught (absorbing)
+        (4, 4),             # Caught (absorbing)
+        (5, 5),             # Caught (absorbing)
+    ])
 
-# Theorem B: □*(safe) = gfp of safety operator
-gfp_result, gfp_iters = gfp_kleene(R_tl, safe, states_tl)
-print(f"\n□*(safe) = gfp = {sorted(gfp_result)}")
-print(f"  = {{{', '.join(label[s] for s in sorted(gfp_result))}}}")
-print(f"Converged in {gfp_iters} iterations (Theorem C)")
+    P_safe = frozenset([0, 1, 2])
+    result = safety_model_check(ts, P_safe)
+    print(f"\nEvader's winning region (always safe): {set(result.fixpoint)}")
+    print(f"Iterations: {result.iterations}")
 
-# Theorem A: Dual points and behavioral equivalence
-atoms_tl = {0: {s for s in states_tl if s // 3 == 0},  # light1=R
-            1: {s for s in states_tl if s // 3 == 1},  # light1=Y
-            2: {s for s in states_tl if s // 3 == 2},  # light1=G
-            3: {s for s in states_tl if s % 3 == 0},    # light2=R
-            4: {s for s in states_tl if s % 3 == 1},    # light2=Y
-            5: {s for s in states_tl if s % 3 == 2}}    # light2=G
+    if result.fixpoint:
+        print("  Evader can guarantee safety from these positions!")
+    else:
+        print("  Pursuer wins from all positions.")
 
-dual_pts_tl = compute_dual_points(R_tl, states_tl, atoms_tl)
-equiv_classes_tl = behavioral_quotient(dual_pts_tl)
-print(f"\nBehavioral equivalence classes (Theorem A):")
-for cls in equiv_classes_tl:
-    labels = [label[s] for s in sorted(cls)]
-    print(f"  {{{', '.join(labels)}}}")
-print(f"Number of classes: {len(equiv_classes_tl)}")
+    # The trace shows how the safe region shrinks
+    print("\nIteration trace (safe region shrinks):")
+    for i, X in enumerate(result.trace):
+        print(f"  Step {i}: {set(X)}")
+
 
 # ============================================================
-# DEMO 2: Simple Three-State System
+# Application 4: Distributed Invariant Checking
 # ============================================================
-print("\n" + "=" * 60)
-print("DEMO 2: Three-State Reachability and Safety")
-print("=" * 60)
 
-# States: 0, 1, 2
-# Transitions: 0→1, 1→2, 2→0 (cycle)
-states_3 = {0, 1, 2}
-R_3 = {0: {1}, 1: {2}, 2: {0}}
+def app_distributed_invariant():
+    """
+    Check invariants of a token-ring protocol.
 
-# Property: state 0
-p_reach = {0}
-p_safe = {0, 1}
+    States represent which node holds the token in a 4-node ring.
+    The invariant: exactly one node holds the token at all times.
+    """
+    print("\n" + "=" * 60)
+    print("Application 4: Distributed System (Token Ring)")
+    print("=" * 60)
 
-print(f"\nStates: {sorted(states_3)}")
-print(f"Transitions: {R_3}")
+    # 4 nodes, token passes around the ring
+    # State i = node i holds the token
+    # Plus error states 4,5 for token loss/duplication
+    ts = TransitionSystem.from_edges(6, [
+        (0, 1),  # Pass token 0→1
+        (1, 2),  # Pass token 1→2
+        (2, 3),  # Pass token 2→3
+        (3, 0),  # Pass token 3→0
+        (0, 4),  # Token lost (error)
+        (4, 4),  # Error absorbing
+        (5, 5),  # Duplicate token error absorbing
+    ])
 
-# Eventually reach state 0
-lfp_result, lfp_iters = lfp_kleene(R_3, p_reach, states_3)
-print(f"\n◇*({{0}}) = lfp = {sorted(lfp_result)}")
-print(f"Converged in {lfp_iters} iterations")
+    # Safety: "token is always held by exactly one node"
+    P_valid = frozenset([0, 1, 2, 3])  # Valid states
+    result = safety_model_check(ts, P_valid)
+    print(f"\nValid token states: {set(result.fixpoint)}")
+    print(f"  These states guarantee the token-ring invariant forever.")
 
-# Always in {0, 1}
-gfp_result2, gfp_iters2 = gfp_kleene(R_3, p_safe, states_3)
-print(f"\n□*({{0,1}}) = gfp = {sorted(gfp_result2)}")
-print(f"Converged in {gfp_iters2} iterations")
+    unsafe = set(range(6)) - result.fixpoint
+    if unsafe:
+        print(f"  Unsafe states (can lose invariant): {unsafe}")
 
-# ============================================================
-# DEMO 3: Idempotent Semiring Properties
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 3: Idempotent Semiring Properties")
-print("=" * 60)
+    # Behavioral equivalence analysis
+    dp = compute_dual_points(ts)
+    print(f"\nBehavioral equivalence classes:")
+    classes: Dict[FrozenSet, List[int]] = {}
+    for s in range(ts.n_states):
+        key = dp.dual_points[s]
+        if key not in classes:
+            classes[key] = []
+        classes[key].append(s)
 
-A = {1, 2, 3}
-B = {2, 3, 4}
+    for i, (_, states) in enumerate(classes.items()):
+        state_names = [str(s) for s in states]
+        print(f"  Class {i}: {{{', '.join(state_names)}}}")
 
-print(f"\nA = {A}")
-print(f"B = {B}")
-print(f"A ∪ A = {A | A}  (idempotent: A ∪ A = A ✓)" if A | A == A else "")
-print(f"A ⊆ B ↔ A ∪ B = B: {A <= B} ↔ {(A | B) == B}")
-print(f"A ∩ (B ∪ {{5}}) = (A ∩ B) ∪ (A ∩ {{5}}): "
-      f"{A & (B | {5})} = {(A & B) | (A & {5})}  (distributivity ✓)")
 
-# ============================================================
-# DEMO 4: Convergence Analysis
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 4: Kleene Iteration Convergence")
-print("=" * 60)
-
-# Larger system: chain of 10 states
-n = 10
-states_chain = set(range(n))
-R_chain = {i: {(i + 1) % n} for i in range(n)}
-p_chain = {0, 1, 2}  # Safe region
-
-print(f"\n{n}-state cycle: 0→1→2→...→{n-1}→0")
-print(f"Safety property: p = {{0, 1, 2}}")
-
-# Show Kleene chain
-X = set(states_chain)
-print(f"\nDescending Kleene chain for □*(p):")
-for step in range(n + 2):
-    print(f"  Step {step}: {sorted(X)}")
-    X_new = safety_op(R_chain, p_chain, X, states_chain)
-    if X_new == X:
-        print(f"  → Stabilized at step {step}!")
-        break
-    X = X_new
-
-gfp_chain, iters_chain = gfp_kleene(R_chain, p_chain, states_chain)
-print(f"\nFinal: □*({{0,1,2}}) = {sorted(gfp_chain)}")
-print(f"Iterations: {iters_chain}")
-
-# ============================================================
-# DEMO 5: Dual Point Separation
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 5: Dual Point Separation (Theorem A)")
-print("=" * 60)
-
-# System with behavioral equivalence
-# States: 0,1 are equivalent (same transitions), 2 is different
-states_sym = {0, 1, 2}
-R_sym = {0: {2}, 1: {2}, 2: {0, 1}}
-atoms_sym = {0: {2}}  # Only atom: "is state 2"
-
-dual_pts_sym = compute_dual_points(R_sym, states_sym, atoms_sym)
-equiv_classes_sym = behavioral_quotient(dual_pts_sym)
-
-print(f"\nStates: {{0, 1, 2}}")
-print(f"Transitions: 0→2, 1→2, 2→{{0,1}}")
-print(f"Atoms: atom₀ = {{2}}")
-print(f"\nDual points:")
-for s in sorted(states_sym):
-    n_preds = len(dual_pts_sym[s])
-    print(f"  State {s}: {n_preds} definable predicates contain it")
-
-print(f"\nBehavioral equivalence classes:")
-for cls in equiv_classes_sym:
-    print(f"  {cls}")
-
-if dual_pts_sym[0] == dual_pts_sym[1]:
-    print("\n✓ States 0 and 1 have equal dual points → behaviorally equivalent")
-if dual_pts_sym[0] != dual_pts_sym[2]:
-    print("✓ States 0 and 2 have different dual points → distinguishable")
-
-print("\n" + "=" * 60)
-print("All demos completed successfully.")
-print("=" * 60)
+if __name__ == "__main__":
+    app_network_protocol()
+    app_concurrent_safety()
+    app_game_safety()
+    app_distributed_invariant()
+    print("\n" + "=" * 60)
+    print("All applications completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
-"""Generate PACKAGE.json with all deliverables embedded."""
+"""
+Temporal Stone Duality: Recovering Temporal Logic from Fixpoint Algebra
+=======================================================================
+
+Concrete demonstrations of the theorems proved in the formal development.
+Shows how model checking reduces to fixpoint iteration, how behavioral
+equivalence is captured by dual points, and how the idempotent semiring
+structure enables algebraic verification.
+"""
+
+import itertools
+from typing import Dict, FrozenSet, Set, Tuple, List
+
+
+# --- Finite Transition System ---
+
+class FTS:
+    """A finite transition system with states 0..n-1."""
+
+    def __init__(self, n: int, edges: List[Tuple[int, int]]):
+        self.n = n
+        self.states = set(range(n))
+        self.edges = {}  # state -> set of successors
+        for s in range(n):
+            self.edges[s] = set()
+        for s, t in edges:
+            self.edges[s].add(t)
+
+    def successors(self, s: int) -> Set[int]:
+        return self.edges.get(s, set())
+
+    def __repr__(self):
+        return f"FTS(n={self.n}, edges={self.edges})"
+
+
+# --- Predecessor Operators ---
+
+def pre_all(fts: FTS, X: FrozenSet[int]) -> FrozenSet[int]:
+    """Universal predecessor: states whose ALL successors are in X."""
+    return frozenset(s for s in fts.states if fts.successors(s).issubset(X))
+
+
+def pre_ex(fts: FTS, X: FrozenSet[int]) -> FrozenSet[int]:
+    """Existential predecessor: states with SOME successor in X."""
+    return frozenset(s for s in fts.states if fts.successors(s) & X)
+
+
+# --- Safety Operator and GFP Computation ---
+
+def box_op(fts: FTS, P: FrozenSet[int], X: FrozenSet[int]) -> FrozenSet[int]:
+    """Safety operator: Φ_P(X) = P ∩ preAll(X)."""
+    return P & pre_all(fts, X)
+
+
+def compute_gfp(fts: FTS, P: FrozenSet[int]) -> Tuple[FrozenSet[int], int, List[FrozenSet[int]]]:
+    """
+    Compute the greatest fixpoint of the safety operator by
+    descending Kleene iteration from ⊤ (= all states).
+
+    Returns (gfp, num_iterations, trace_of_iterates).
+    """
+    top = frozenset(fts.states)
+    current = top
+    trace = [current]
+    n_iter = 0
+
+    while True:
+        next_val = box_op(fts, P, current)
+        n_iter += 1
+        trace.append(next_val)
+        if next_val == current:
+            break
+        current = next_val
+
+    return current, n_iter, trace
+
+
+# --- "Always P" Semantics (direct definition) ---
+
+def satisfies_always(fts: FTS, P: FrozenSet[int], s: int, max_depth: int = 100) -> bool:
+    """
+    Check if state s satisfies 'always P': P holds at s and at
+    every state reachable from s (BFS up to max_depth).
+    """
+    visited = set()
+    frontier = {s}
+    depth = 0
+
+    while frontier and depth <= max_depth:
+        for state in frontier:
+            if state not in P:
+                return False
+        visited |= frontier
+        next_frontier = set()
+        for state in frontier:
+            next_frontier |= fts.successors(state) - visited
+        frontier = next_frontier
+        depth += 1
+
+    return True
+
+
+def compute_always_set(fts: FTS, P: FrozenSet[int]) -> FrozenSet[int]:
+    """Compute {s | satisfiesAlways(T, P, s)} directly."""
+    return frozenset(s for s in fts.states if satisfies_always(fts, P, s))
+
+
+# --- Behavioral Equivalence and Dual Points ---
+
+def compute_definable_preds(fts: FTS) -> Set[FrozenSet[int]]:
+    """
+    Compute the set of all definable predicates (reachable by TLF formulas).
+    This is a finite Boolean algebra over the finite state space.
+    """
+    preds = set()
+
+    # Atoms: all singletons
+    for s in fts.states:
+        preds.add(frozenset([s]))
+
+    # Top
+    preds.add(frozenset(fts.states))
+
+    # Generate all conjunctions and box applications up to closure
+    changed = True
+    while changed:
+        changed = False
+        new_preds = set()
+        for p in preds:
+            # box (pre_all)
+            bp = pre_all(fts, p)
+            if bp not in preds:
+                new_preds.add(bp)
+
+            # always (gfp)
+            gfp, _, _ = compute_gfp(fts, p)
+            if gfp not in preds:
+                new_preds.add(gfp)
+
+        # Conjunctions (pairwise)
+        preds_list = list(preds)
+        for i in range(len(preds_list)):
+            for j in range(i, len(preds_list)):
+                conj = preds_list[i] & preds_list[j]
+                if conj not in preds:
+                    new_preds.add(conj)
+
+        if new_preds:
+            preds |= new_preds
+            changed = True
+
+    return preds
+
+
+def dual_point(fts: FTS, s: int, preds: Set[FrozenSet[int]]) -> FrozenSet:
+    """The dual point of state s: the set of definable predicates containing s."""
+    return frozenset(p for p in preds if s in p)
+
+
+# === DEMO 1: Fixpoint Iteration ===
+
+def demo_fixpoint_iteration():
+    """Demonstrate that gfp of safety operator = 'always P' semantics."""
+    print("=" * 70)
+    print("DEMO 1: Fixpoint Iteration = 'Always P' Semantics")
+    print("=" * 70)
+
+    # A simple transition system: 0 → 1 → 2 → 3 → 3 (self-loop)
+    #                              0 → 4 (deadlock)
+    fts = FTS(5, [(0, 1), (0, 4), (1, 2), (2, 3), (3, 3)])
+    P = frozenset([0, 1, 2, 3])  # P = all except state 4
+
+    print(f"\nTransition system: {fts.n} states")
+    for s in range(fts.n):
+        print(f"  {s} → {fts.successors(s)}")
+    print(f"\nPredicate P = {set(P)}")
+
+    # Compute gfp
+    gfp, n_iter, trace = compute_gfp(fts, P)
+    print(f"\nDescending Kleene iteration (from ⊤ = {set(fts.states)}):")
+    for i, t in enumerate(trace):
+        print(f"  Iter {i}: {set(t)}")
+    print(f"\nGFP = {set(gfp)} (converged in {n_iter} iterations)")
+
+    # Compute always set directly
+    always_set = compute_always_set(fts, P)
+    print(f"Always-P set (direct) = {set(always_set)}")
+    print(f"\n✓ GFP == Always-P: {gfp == always_set}")
+
+    # Verify: state 0 reaches state 4 ∉ P, so 0 ∉ always-P
+    # States 1,2,3 stay in P forever (3 loops)
+    print("\nInterpretation:")
+    for s in range(fts.n):
+        status = "✓ always P" if s in always_set else "✗ not always P"
+        print(f"  State {s}: {status}")
+
+
+# === DEMO 2: Convergence Bound ===
+
+def demo_convergence_bound():
+    """Show that iteration converges within |states| steps."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: Convergence Bound")
+    print("=" * 70)
+
+    # Chain of states: 0 → 1 → 2 → ... → n-1 → n-1
+    for n in [3, 5, 8, 10]:
+        edges = [(i, i + 1) for i in range(n - 1)] + [(n - 1, n - 1)]
+        fts = FTS(n, edges)
+        P = frozenset(range(1, n))  # P excludes state 0
+
+        gfp, n_iter, trace = compute_gfp(fts, P)
+        print(f"  n={n}: converged in {n_iter} iterations (bound = {2**n}), "
+              f"gfp = {set(gfp)}")
+
+
+# === DEMO 3: Dual Points and Behavioral Equivalence ===
+
+def demo_dual_points():
+    """Demonstrate that dual points separate states."""
+    print("\n" + "=" * 70)
+    print("DEMO 3: Dual Points and Behavioral Equivalence")
+    print("=" * 70)
+
+    # Two states with identical local structure but different global behavior
+    # 0 → 1, 1 → 1 (loop)
+    # 2 → 3, 3 → 4, 4 → 4 (longer chain then loop)
+    fts = FTS(5, [(0, 1), (1, 1), (2, 3), (3, 4), (4, 4)])
+
+    print(f"\nTransition system:")
+    for s in range(fts.n):
+        print(f"  {s} → {fts.successors(s)}")
+
+    preds = compute_definable_preds(fts)
+    print(f"\nNumber of definable predicates: {len(preds)}")
+
+    print("\nDual points (theories of states):")
+    dual_points = {}
+    for s in range(fts.n):
+        dp = dual_point(fts, s, preds)
+        dual_points[s] = dp
+        print(f"  State {s}: |theory| = {len(dp)}")
+
+    print("\nSeparation check (distinct states → distinct dual points):")
+    for s in range(fts.n):
+        for t in range(s + 1, fts.n):
+            separated = dual_points[s] != dual_points[t]
+            print(f"  States {s}, {t}: {'separated ✓' if separated else 'NOT separated ✗'}")
+
+
+# === DEMO 4: Idempotent Semiring Structure ===
+
+def demo_semiring():
+    """Demonstrate the idempotent semiring structure of Set σ."""
+    print("\n" + "=" * 70)
+    print("DEMO 4: Idempotent Semiring Structure")
+    print("=" * 70)
+
+    states = frozenset(range(4))
+    A = frozenset([0, 1])
+    B = frozenset([1, 2])
+    C = frozenset([2, 3])
+
+    print(f"\nStates = {set(states)}")
+    print(f"A = {set(A)}, B = {set(B)}, C = {set(C)}")
+
+    # Union is idempotent (addition)
+    print(f"\nA ∪ A = {set(A | A)} (idempotent: {A | A == A})")
+
+    # Intersection distributes over union (multiplication over addition)
+    lhs = A & (B | C)
+    rhs = (A & B) | (A & C)
+    print(f"A ∩ (B ∪ C) = {set(lhs)}")
+    print(f"(A ∩ B) ∪ (A ∩ C) = {set(rhs)}")
+    print(f"Distributivity: {lhs == rhs}")
+
+    # Natural order: A ⊆ B iff A ∪ B = B
+    print(f"\nA ⊆ (A ∪ B) ↔ A ∪ (A ∪ B) = (A ∪ B): "
+          f"{A | (A | B) == A | B}")
+
+
+# === DEMO 5: Safety/Reachability Duality ===
+
+def demo_duality():
+    """Demonstrate ν/μ duality via complementation."""
+    print("\n" + "=" * 70)
+    print("DEMO 5: Safety/Reachability (ν/μ) Duality")
+    print("=" * 70)
+
+    # Ring: 0 → 1 → 2 → 0
+    fts = FTS(3, [(0, 1), (1, 2), (2, 0)])
+    P = frozenset([0, 1])  # P = {0, 1}
+
+    print(f"\nTransition system (ring): {fts.n} states")
+    for s in range(fts.n):
+        print(f"  {s} → {fts.successors(s)}")
+    print(f"P = {set(P)}")
+
+    # GFP (safety / "always P")
+    gfp, _, _ = compute_gfp(fts, P)
+    print(f"\nν(safety operator) = {set(gfp)}")
+    print(f"  = states where P holds invariantly")
+
+    # Complement = LFP of dual (reachability / "eventually ¬P")
+    complement = fts.states - gfp
+    print(f"\nComplement of ν = {set(complement)}")
+    print(f"  = states that eventually reach ¬P")
+
+    # Direct reachability check
+    not_P = fts.states - P
+    print(f"\n¬P = {set(not_P)}")
+    for s in fts.states:
+        reaches_not_P = any(
+            satisfies_always(fts, frozenset(fts.states - not_P), s) is False
+            for _ in [None]
+        )
+        # Actually check if s can reach ¬P
+        visited = set()
+        frontier = {s}
+        can_reach = False
+        while frontier:
+            for state in frontier:
+                if state in not_P:
+                    can_reach = True
+                    break
+            if can_reach:
+                break
+            visited |= frontier
+            frontier = set().union(*(fts.successors(x) for x in frontier)) - visited
+        status = "reaches ¬P" if can_reach else "never reaches ¬P"
+        in_complement = "in complement" if s in complement else "not in complement"
+        print(f"  State {s}: {status} ({in_complement})")
+
+
+if __name__ == "__main__":
+    demo_fixpoint_iteration()
+    demo_convergence_bound()
+    demo_dual_points()
+    demo_semiring()
+    demo_duality()
+    print("\n" + "=" * 70)
+    print("All demos completed successfully.")
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all artifacts."""
 
 import json
-import base64
-from pathlib import Path
+import sys
 
-def read_file(path: str) -> str:
-    return Path(path).read_text()
+# Read all source files
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
 
-def read_binary_base64(path: str) -> str:
-    data = Path(path).read_bytes()
-    return f"data:image/png;base64,{base64.b64encode(data).decode()}"
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+lean_code = read_file('Logic/TemporalFixpointSemantics.lean')
+lean_bridge = read_file('Bridges/LogicComputation/TemporalStoneSemiringDuality.lean')
 
-# Read all content
-article = read_file("ARTICLE.md")
-research_paper = read_file("RESEARCH_PAPER.md")
-future_directions = read_file("FUTURE_DIRECTIONS.md")
-lean_code = read_file("Logic/TemporalStoneBridge.lean")
-demo_code = read_file("demo.py")
-algorithms_code = read_file("algorithms.py")
-applications_code = read_file("applications.py")
-visualizations_code = read_file("visualizations.py")
+# Generate visualizations
+import matplotlib
+matplotlib.use('Agg')
+from visualizations import viz_fixpoint_convergence, viz_dual_points, viz_safety_operator, viz_duality
 
-# Read images
-img_kleene = read_binary_base64("fig_kleene_convergence.png")
-img_quotient = read_binary_base64("fig_behavioral_quotient.png")
-img_lattice = read_binary_base64("fig_fixpoint_lattice.png")
-img_duality = read_binary_base64("fig_duality_diagram.png")
+b64_conv = viz_fixpoint_convergence()
+b64_dual = viz_dual_points()
+b64_safety = viz_safety_operator()
+b64_duality = viz_duality()
 
 package = {
     "title": "Temporal Stone Duality: Recovering Temporal Logic from Idempotent Semiring Fixpoints",
-    "domain": "Logic / Formal Verification / Algebra",
+    "domain": "Logic / Order Theory / Formal Verification",
     "article": article,
     "research_paper": research_paper,
     "future_directions": future_directions,
     "demos": [
         {
-            "name": "Temporal Logic Model Checking Demonstrations",
+            "name": "Fixpoint Iteration and Model Checking Demo",
             "code": demo_code
         },
         {
-            "name": "Real-World Applications",
+            "name": "Applications: Protocol and System Verification",
             "code": applications_code
         }
     ],
     "algorithms": [
         {
-            "name": "GFP-SAFETY: Greatest Fixpoint by Descending Kleene Iteration",
-            "pseudocode": "Algorithm: GFP-SAFETY(R, p, σ)\nInput: Transition relation R, property p, finite state space σ\nOutput: Set of states satisfying □*p\n\n1. X ← σ\n2. repeat\n3.   X' ← p ∩ {s | ∀t. R(s,t) → t ∈ X}\n4.   if X' = X then return X\n5.   X ← X'\n6. end repeat\n\nComplexity: O(|σ|² · |R|) time, O(|σ|) space\nConvergence: At most |σ| iterations",
-            "code": algorithms_code
-        },
-        {
-            "name": "LFP-REACH: Least Fixpoint by Ascending Kleene Iteration",
-            "pseudocode": "Algorithm: LFP-REACH(R, p, σ)\nInput: Transition relation R, property p, finite state space σ\nOutput: Set of states satisfying ◇*p\n\n1. X ← ∅\n2. repeat\n3.   X' ← p ∪ {s | ∃t. R(s,t) ∧ t ∈ X}\n4.   if X' = X then return X\n5.   X ← X'\n6. end repeat\n\nComplexity: O(|σ|² · |R|) time, O(|σ|) space\nConvergence: At most |σ| iterations",
-            "code": algorithms_code
-        },
-        {
-            "name": "BEHAVIORAL-QUOTIENT: State-Space Reduction via Dual Points",
-            "pseudocode": "Algorithm: BEHAVIORAL-QUOTIENT(R, V, σ)\nInput: Transition relation R, valuation V, finite state space σ\nOutput: Partition of σ into behavioral equivalence classes\n\n1. Compute definablePreds by closing atoms under ∪, ∩, ᶜ, □, ◇\n2. For each s ∈ σ: dualPt(s) ← {X ∈ definablePreds | s ∈ X}\n3. Partition σ by equal dualPt values\n4. Return partition\n\nComplexity: O(2^|σ| · |σ| · depth) worst case",
+            "name": "Descending Kleene Iteration (GFP Computation)",
+            "pseudocode": "Input: Finite lattice α, monotone F : α → α\nOutput: gfp(F)\n\nX ← ⊤\nrepeat\n    X' ← F(X)\n    if X' = X then return X\n    X ← X'\n\nComplexity: O(|α| · cost(F)) time, O(|α|) space\nTermination: Guaranteed in ≤ |α| iterations (Theorem 3.4)",
             "code": algorithms_code
         }
     ],
     "visualizations": [
         {
-            "name": "Kleene Iteration Convergence",
-            "data": img_kleene
+            "name": "Fixpoint Iteration Convergence",
+            "data": b64_conv
         },
         {
-            "name": "Behavioral Quotient State-Space Reduction",
-            "data": img_quotient
+            "name": "Dual Point Structure and Behavioral Separation",
+            "data": b64_dual
         },
         {
-            "name": "Fixpoint Lattice Structure",
-            "data": img_lattice
+            "name": "Safety Operator and Fixpoint Structure",
+            "data": b64_safety
         },
         {
-            "name": "Temporal Stone Duality Diagram",
-            "data": img_duality
+            "name": "Order Duality: Greatest vs Least Fixpoints",
+            "data": b64_duality
         }
     ],
-    "lean_proofs": lean_code
+    "lean_proofs": lean_code + "\n\n-- Bridge file:\n\n" + lean_bridge
 }
 
-with open("PACKAGE.json", "w") as f:
-    json.dump(package, f, ensure_ascii=False, indent=2)
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
 
-print(f"Generated PACKAGE.json ({Path('PACKAGE.json').stat().st_size / 1024:.1f} KB)")
+print(f"Generated PACKAGE.json ({len(json.dumps(package))} chars)")
 
 
 #!/usr/bin/env python3
 """
-Temporal Stone Duality: Visualizations
+Visualizations for Temporal Stone Duality
+==========================================
 
-Generates matplotlib figures illustrating the key mathematical structures.
+Generates matplotlib figures showing:
+1. Fixpoint iteration convergence
+2. Lattice of definable predicates
+3. Dual point separation
+4. Safety operator action
 """
 
 import matplotlib
@@ -702,331 +679,321 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-from typing import Set, Dict, Tuple, List
+from algorithms import TransitionSystem, safety_model_check, compute_dual_points
 import base64
-from io import BytesIO
+import io
 
 
 def fig_to_base64(fig) -> str:
-    """Convert a matplotlib figure to a base64-encoded PNG data URI."""
-    buf = BytesIO()
+    """Convert a matplotlib figure to a base64 data URI."""
+    buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    b64 = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{encoded}"
+    return f"data:image/png;base64,{b64}"
 
 
-# ============================================================
-# Helper functions
-# ============================================================
-
-def universal_pre(R: Dict[int, Set[int]], X: Set[int], states: Set[int]) -> Set[int]:
-    return {s for s in states if all(t in X for t in R.get(s, set()))}
-
-
-def gfp_chain(R: Dict[int, Set[int]], p: Set[int], states: Set[int]) -> List[Set[int]]:
-    chain = []
-    X = set(states)
-    chain.append(set(X))
-    while True:
-        X_new = p & universal_pre(R, X, states)
-        chain.append(set(X_new))
-        if X_new == X:
-            return chain
-        X = X_new
-
-
-# ============================================================
-# FIGURE 1: Kleene Iteration Convergence
-# ============================================================
-
-def plot_kleene_convergence():
-    """Visualize the descending Kleene chain for a 10-state cycle."""
-    n = 10
-    states = set(range(n))
-    R = {i: {(i + 1) % n} for i in range(n)}
-
+def viz_fixpoint_convergence():
+    """Visualize the descending Kleene iteration converging to the GFP."""
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    for idx, p_size in enumerate([3, 5, 8]):
-        p = set(range(p_size))
-        chain = gfp_chain(R, p, states)
+    # Example: chain 0 → 1 → 2 → 3 → 4 → 4
+    # P = {1, 2, 3, 4} (exclude state 0)
+    ts = TransitionSystem.from_edges(5, [
+        (0, 1), (1, 2), (2, 3), (3, 4), (4, 4)
+    ])
+    P = frozenset([1, 2, 3, 4])
+    result = safety_model_check(ts, P)
 
-        # Plot cardinality at each step
-        cardinalities = [len(s) for s in chain]
-        ax = axes[idx]
-        ax.plot(range(len(cardinalities)), cardinalities, 'b-o', linewidth=2, markersize=8)
-        ax.set_xlabel('Iteration', fontsize=12)
-        ax.set_ylabel('|X_n|', fontsize=12)
-        ax.set_title(f'p = {{0,...,{p_size-1}}}\ngfp = {sorted(chain[-1])}', fontsize=11)
-        ax.set_ylim(-0.5, n + 0.5)
-        ax.axhline(y=len(chain[-1]), color='r', linestyle='--', alpha=0.5, label='fixpoint')
-        ax.legend(fontsize=10)
-        ax.grid(True, alpha=0.3)
+    # Plot 1: Set sizes over iterations
+    ax = axes[0]
+    sizes = [len(X) for X in result.trace]
+    ax.plot(range(len(sizes)), sizes, 'bo-', linewidth=2, markersize=8)
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('|X_n|', fontsize=12)
+    ax.set_title('Descending Chain\n(Set Size vs Iteration)', fontsize=13)
+    ax.set_xticks(range(len(sizes)))
+    ax.grid(True, alpha=0.3)
+    ax.fill_between(range(len(sizes)), sizes, alpha=0.15, color='blue')
 
-    fig.suptitle('Descending Kleene Chain Convergence (Theorem C)\n10-state cycle', fontsize=14, fontweight='bold')
+    # Plot 2: State membership across iterations
+    ax = axes[1]
+    n_states = ts.n_states
+    n_iters = len(result.trace)
+    membership = np.zeros((n_states, n_iters))
+    for j, X in enumerate(result.trace):
+        for s in X:
+            membership[s, j] = 1
+
+    im = ax.imshow(membership, cmap='Blues', aspect='auto',
+                   interpolation='nearest')
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('State', fontsize=12)
+    ax.set_title('State Membership\n(Blue = in X_n)', fontsize=13)
+    ax.set_xticks(range(n_iters))
+    ax.set_yticks(range(n_states))
+    plt.colorbar(im, ax=ax, shrink=0.8)
+
+    # Plot 3: Convergence for different system sizes
+    ax = axes[2]
+    sizes_list = [3, 5, 8, 12, 15]
+    iters_list = []
+    for n in sizes_list:
+        edges = [(i, i+1) for i in range(n-1)] + [(n-1, n-1)]
+        ts_n = TransitionSystem.from_edges(n, edges)
+        P_n = frozenset(range(1, n))
+        res = safety_model_check(ts_n, P_n)
+        iters_list.append(res.iterations)
+
+    ax.bar(range(len(sizes_list)), iters_list, color='steelblue', alpha=0.7)
+    ax.plot(range(len(sizes_list)), sizes_list, 'r--', linewidth=2,
+            label='|states| bound')
+    ax.set_xticks(range(len(sizes_list)))
+    ax.set_xticklabels([str(n) for n in sizes_list])
+    ax.set_xlabel('Number of States', fontsize=12)
+    ax.set_ylabel('Iterations to Converge', fontsize=12)
+    ax.set_title('Convergence Speed\nvs System Size', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    fig.suptitle('Fixpoint Iteration Convergence', fontsize=15, fontweight='bold')
     plt.tight_layout()
-    return fig
+    fig.savefig('viz_convergence.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    print("Generated viz_convergence.png")
+    return b64
 
 
-# ============================================================
-# FIGURE 2: Behavioral Equivalence Classes
-# ============================================================
+def viz_dual_points():
+    """Visualize the dual point structure and separation."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-def plot_behavioral_quotient():
-    """Visualize behavioral equivalence classes in a transition system."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    # Example transition system
+    ts = TransitionSystem.from_edges(5, [
+        (0, 1), (1, 1), (2, 3), (3, 4), (4, 4)
+    ])
 
-    # System with symmetry: 6 states, {0,1} equiv, {3,4} equiv
-    states = set(range(6))
-    R = {0: {2, 5}, 1: {2, 5}, 2: {3, 4}, 3: {0, 1}, 4: {0, 1}, 5: {5}}
+    dp = compute_dual_points(ts)
 
-    # Original system
-    positions = {0: (0, 2), 1: (1, 2), 2: (0.5, 1), 3: (0, 0), 4: (1, 0), 5: (2, 1)}
-    colors = {0: '#ff6b6b', 1: '#ff6b6b', 2: '#4ecdc4', 3: '#45b7d1', 4: '#45b7d1', 5: '#96ceb4'}
+    # Plot 1: Dual point sizes
+    ax = axes[0]
+    sizes = [len(dp.dual_points[s]) for s in range(ts.n_states)]
+    colors = plt.cm.Set2(np.linspace(0, 1, ts.n_states))
+    bars = ax.bar(range(ts.n_states), sizes, color=colors, edgecolor='black',
+                  linewidth=1.5)
+    ax.set_xlabel('State', fontsize=12)
+    ax.set_ylabel('|Theory(s)|', fontsize=12)
+    ax.set_title('Theory Size per State\n(Dual Point Cardinality)', fontsize=13)
+    ax.set_xticks(range(ts.n_states))
+    for i, (bar, size) in enumerate(zip(bars, sizes)):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
+                str(size), ha='center', va='bottom', fontweight='bold')
+    ax.grid(True, alpha=0.3, axis='y')
 
-    ax1.set_title('Original System (6 states)', fontsize=13, fontweight='bold')
-    for s, (x, y) in positions.items():
-        circle = plt.Circle((x, y), 0.15, color=colors[s], ec='black', linewidth=2, zorder=3)
-        ax1.add_patch(circle)
-        ax1.text(x, y, str(s), ha='center', va='center', fontsize=14, fontweight='bold', zorder=4)
+    # Plot 2: Separation matrix (Hamming distance between dual points)
+    ax = axes[1]
+    n = ts.n_states
+    dist_matrix = np.zeros((n, n))
+    for s in range(n):
+        for t in range(n):
+            # Symmetric difference of theories
+            diff = dp.dual_points[s].symmetric_difference(dp.dual_points[t])
+            dist_matrix[s, t] = len(diff)
 
-    for s, succs in R.items():
-        for t in succs:
-            if s != t:
-                sx, sy = positions[s]
-                tx, ty = positions[t]
-                dx, dy = tx - sx, ty - sy
-                d = (dx**2 + dy**2)**0.5
-                ax1.annotate('', xy=(tx - 0.18*dx/d, ty - 0.18*dy/d),
-                           xytext=(sx + 0.18*dx/d, sy + 0.18*dy/d),
-                           arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
-            else:
-                x, y = positions[s]
-                arc = mpatches.FancyArrowPatch((x+0.15, y+0.05), (x+0.05, y+0.15),
-                                                connectionstyle="arc3,rad=0.8",
-                                                arrowstyle='->', color='gray', lw=1.5)
-                ax1.add_patch(arc)
+    im = ax.imshow(dist_matrix, cmap='YlOrRd', interpolation='nearest')
+    ax.set_xlabel('State', fontsize=12)
+    ax.set_ylabel('State', fontsize=12)
+    ax.set_title('Theory Distance Matrix\n(|Theory(s) △ Theory(t)|)', fontsize=13)
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    for i in range(n):
+        for j in range(n):
+            ax.text(j, i, str(int(dist_matrix[i, j])),
+                    ha='center', va='center', fontsize=11,
+                    color='white' if dist_matrix[i, j] > dist_matrix.max()/2 else 'black')
+    plt.colorbar(im, ax=ax, shrink=0.8)
 
-    ax1.set_xlim(-0.5, 2.5)
-    ax1.set_ylim(-0.5, 2.5)
-    ax1.set_aspect('equal')
-    ax1.axis('off')
-
-    # Quotient system
-    ax2.set_title('Behavioral Quotient (4 classes)\n(Theorem A: dual points separate classes)',
-                  fontsize=13, fontweight='bold')
-
-    q_positions = {'{0,1}': (0.5, 2), '{2}': (0.5, 1), '{3,4}': (0.5, 0), '{5}': (2, 1)}
-    q_colors = {'#ff6b6b': '{0,1}', '#4ecdc4': '{2}', '#45b7d1': '{3,4}', '#96ceb4': '{5}'}
-
-    for label, (x, y) in q_positions.items():
-        r = 0.25
-        circle = plt.Circle((x, y), r, color=list(q_colors.keys())[list(q_colors.values()).index(label)],
-                           ec='black', linewidth=2, zorder=3)
-        ax2.add_patch(circle)
-        ax2.text(x, y, label, ha='center', va='center', fontsize=11, fontweight='bold', zorder=4)
-
-    # Quotient transitions
-    q_edges = [('{0,1}', '{2}'), ('{0,1}', '{5}'), ('{2}', '{3,4}'),
-               ('{3,4}', '{0,1}')]
-    for s, t in q_edges:
-        sx, sy = q_positions[s]
-        tx, ty = q_positions[t]
-        dx, dy = tx - sx, ty - sy
-        d = (dx**2 + dy**2)**0.5
-        ax2.annotate('', xy=(tx - 0.28*dx/d, ty - 0.28*dy/d),
-                     xytext=(sx + 0.28*dx/d, sy + 0.28*dy/d),
-                     arrowprops=dict(arrowstyle='->', color='gray', lw=2))
-
-    # Self-loop on {5}
-    x, y = q_positions['{5}']
-    arc = mpatches.FancyArrowPatch((x+0.25, y+0.05), (x+0.05, y+0.25),
-                                    connectionstyle="arc3,rad=0.8",
-                                    arrowstyle='->', color='gray', lw=2)
-    ax2.add_patch(arc)
-
-    ax2.set_xlim(-0.5, 2.8)
-    ax2.set_ylim(-0.5, 2.5)
-    ax2.set_aspect('equal')
-    ax2.axis('off')
-
-    reduction_text = "33% state-space reduction"
-    fig.text(0.5, 0.02, reduction_text, ha='center', fontsize=12, style='italic')
-
+    fig.suptitle('Dual Point Structure and Behavioral Separation',
+                 fontsize=15, fontweight='bold')
     plt.tight_layout()
-    return fig
+    fig.savefig('viz_dual_points.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    print("Generated viz_dual_points.png")
+    return b64
 
 
-# ============================================================
-# FIGURE 3: Fixpoint Lattice Structure
-# ============================================================
+def viz_safety_operator():
+    """Visualize the safety operator's action on the predicate lattice."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-def plot_fixpoint_lattice():
-    """Visualize the lattice of fixpoints of the safety operator."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+    # Traffic light: 0=Red, 1=Yellow, 2=Green
+    ts = TransitionSystem.from_edges(3, [(0, 2), (2, 1), (1, 0)])
 
-    # For a 3-state system, compute all fixpoints of universalPre
-    states = {0, 1, 2}
-    R = {0: {1}, 1: {2}, 2: {0}}
-
-    # Find all fixpoints of universalPre: sets X where universalPre(R, X, states) = X
-    fixpoints = []
-    for mask in range(2**len(states)):
-        X = {i for i in range(len(states)) if mask & (1 << i)}
-        pre_X = universal_pre(R, X, states)
-        if pre_X == X:
-            fixpoints.append(frozenset(X))
-
-    # Hasse diagram: draw edges for cover relations
-    fixpoints.sort(key=len)
-
-    # Position by size
-    levels = {}
-    for fp in fixpoints:
-        sz = len(fp)
-        if sz not in levels:
-            levels[sz] = []
-        levels[sz].append(fp)
-
-    positions = {}
-    for sz, fps in levels.items():
-        width = len(fps)
-        for i, fp in enumerate(fps):
-            x = (i - (width - 1) / 2) * 2
-            y = sz * 2.5
-            positions[fp] = (x, y)
-
-    # Draw edges (cover relations)
-    for i, fp1 in enumerate(fixpoints):
-        for j, fp2 in enumerate(fixpoints):
-            if fp1 < fp2 and len(fp2) == len(fp1) + 1:
-                # Check it's a cover (no element between them)
-                is_cover = True
-                for fp3 in fixpoints:
-                    if fp1 < fp3 < fp2:
-                        is_cover = False
-                        break
-                # For fixpoints of monotone operators, we draw if subset
-                if fp1.issubset(fp2):
-                    x1, y1 = positions[fp1]
-                    x2, y2 = positions[fp2]
-                    ax.plot([x1, x2], [y1, y2], 'k-', linewidth=1.5, zorder=1)
-
-    # Draw nodes
-    for fp, (x, y) in positions.items():
-        label = '{' + ','.join(str(s) for s in sorted(fp)) + '}' if fp else '∅'
-        circle = plt.Circle((x, y), 0.35,
-                           color='#ff9f43' if fp == frozenset(states) else
-                                  '#ee5a24' if not fp else '#0abde3',
-                           ec='black', linewidth=2, zorder=2)
-        ax.add_patch(circle)
-        ax.text(x, y, label, ha='center', va='center', fontsize=10,
-                fontweight='bold', zorder=3)
-
-    ax.set_title('Fixpoints of universalPre on 3-state cycle\n(ordered by inclusion)',
-                fontsize=14, fontweight='bold')
-    ax.set_xlim(-4, 4)
-    ax.set_ylim(-1, 8)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-    # Legend
-    legend_elements = [
-        mpatches.Patch(color='#ff9f43', label='⊤ = {0,1,2}'),
-        mpatches.Patch(color='#0abde3', label='Intermediate fixpoints'),
-        mpatches.Patch(color='#ee5a24', label='⊥ = ∅'),
+    # Plot 1: Iteration trace for different predicates
+    ax = axes[0]
+    predicates = [
+        (frozenset([0, 1, 2]), "All states", 'steelblue'),
+        (frozenset([1, 2]), "Not-Red", 'coral'),
+        (frozenset([0, 1]), "Not-Green", 'mediumseagreen'),
+        (frozenset([0]), "Only Red", 'gold'),
     ]
-    ax.legend(handles=legend_elements, loc='lower right', fontsize=11)
 
+    for P, label, color in predicates:
+        result = safety_model_check(ts, P)
+        sizes = [len(X) for X in result.trace]
+        ax.plot(range(len(sizes)), sizes, 'o-', label=label,
+                color=color, linewidth=2, markersize=7)
+
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('|X_n|', fontsize=12)
+    ax.set_title('Safety Iteration\nfor Different Predicates', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(range(6))
+
+    # Plot 2: Lattice of fixpoint-definable predicates
+    ax = axes[1]
+    all_subsets = []
+    for r in range(4):
+        for s in __import__('itertools').combinations(range(3), r):
+            all_subsets.append(frozenset(s))
+
+    # Compute which are fixpoint-definable
+    fixpoint_preds = set()
+    for sub in all_subsets:
+        result = safety_model_check(ts, sub)
+        fixpoint_preds.add(result.fixpoint)
+
+    # Draw Hasse diagram (simplified)
+    positions = {}
+    y_levels = {0: [], 1: [], 2: [], 3: []}
+    for s in all_subsets:
+        y_levels[len(s)].append(s)
+
+    for level, subsets in y_levels.items():
+        for i, s in enumerate(subsets):
+            x = (i - len(subsets)/2 + 0.5) * 1.5
+            positions[s] = (x, level)
+
+    for s, (x, y) in positions.items():
+        is_fp = s in fixpoint_preds
+        color = 'steelblue' if is_fp else 'lightgray'
+        edge = 'darkblue' if is_fp else 'gray'
+        size = 800 if is_fp else 400
+        ax.scatter(x, y, s=size, c=color, edgecolors=edge,
+                   linewidths=2, zorder=5)
+        label = str(set(s)) if s else '∅'
+        ax.annotate(label, (x, y), textcoords="offset points",
+                    xytext=(0, -20), ha='center', fontsize=8)
+
+    # Draw edges (inclusion)
+    for s in all_subsets:
+        for t in all_subsets:
+            if s < t and len(t) == len(s) + 1:
+                x1, y1 = positions[s]
+                x2, y2 = positions[t]
+                ax.plot([x1, x2], [y1, y2], 'gray', alpha=0.3, linewidth=1)
+
+    ax.set_title('Predicate Lattice\n(Blue = Fixpoint-Definable)', fontsize=13)
+    ax.set_ylabel('Subset Size', fontsize=12)
+    ax.set_yticks(range(4))
+    ax.set_xlim(-3, 3)
+
+    legend_elements = [
+        mpatches.Patch(facecolor='steelblue', edgecolor='darkblue',
+                       label='Fixpoint-definable'),
+        mpatches.Patch(facecolor='lightgray', edgecolor='gray',
+                       label='Not fixpoint-definable'),
+    ]
+    ax.legend(handles=legend_elements, fontsize=10, loc='upper right')
+
+    fig.suptitle('Safety Operator and Fixpoint Structure',
+                 fontsize=15, fontweight='bold')
     plt.tight_layout()
-    return fig
+    fig.savefig('viz_safety_operator.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    print("Generated viz_safety_operator.png")
+    return b64
 
 
-# ============================================================
-# FIGURE 4: Duality Diagram
-# ============================================================
+def viz_duality():
+    """Visualize ν/μ duality: safety vs reachability."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-def plot_duality_diagram():
-    """Conceptual diagram of the temporal Stone duality."""
-    fig, ax = plt.subplots(1, 1, figsize=(12, 6))
+    # Ring: 0 → 1 → 2 → 3 → 0
+    ts = TransitionSystem.from_edges(4, [(0, 1), (1, 2), (2, 3), (3, 0)])
 
-    # Left: States
-    ax.text(1.5, 5, 'State Space σ', ha='center', fontsize=14, fontweight='bold')
-    state_positions = [(0.5, 3.5), (1.5, 4), (2.5, 3.5), (1, 2.5), (2, 2.5)]
-    state_labels = ['s₀', 's₁', 's₂', 's₃', 's₄']
-    state_colors = ['#ff6b6b', '#ff6b6b', '#4ecdc4', '#45b7d1', '#45b7d1']
+    predicates_to_check = [
+        frozenset([0, 1]),
+        frozenset([0, 1, 2]),
+        frozenset([0]),
+        frozenset([0, 1, 2, 3]),
+    ]
 
-    for (x, y), label, color in zip(state_positions, state_labels, state_colors):
-        circle = plt.Circle((x, y), 0.2, color=color, ec='black', linewidth=1.5, zorder=3)
-        ax.add_patch(circle)
-        ax.text(x, y, label, ha='center', va='center', fontsize=11, fontweight='bold', zorder=4)
+    # Plot 1: GFP sizes for different predicates
+    ax = axes[0]
+    gfp_sizes = []
+    complement_sizes = []
+    labels = []
+    for P in predicates_to_check:
+        result = safety_model_check(ts, P)
+        gfp_sizes.append(len(result.fixpoint))
+        complement_sizes.append(4 - len(result.fixpoint))
+        labels.append(str(set(P)))
 
-    # Right: Dual Space
-    ax.text(9, 5, 'Dual Space D', ha='center', fontsize=14, fontweight='bold')
-    dual_positions = [(8.5, 3.5), (9, 2.5), (9.5, 3.5)]
-    dual_labels = ['d₀', 'd₁', 'd₂']
-    dual_colors = ['#ff6b6b', '#4ecdc4', '#45b7d1']
+    x = np.arange(len(labels))
+    width = 0.35
+    bars1 = ax.bar(x - width/2, gfp_sizes, width, label='νF (Safety)',
+                   color='steelblue', alpha=0.8)
+    bars2 = ax.bar(x + width/2, complement_sizes, width, label='μ(dual F) (Reach)',
+                   color='coral', alpha=0.8)
+    ax.set_xlabel('Predicate P', fontsize=12)
+    ax.set_ylabel('Number of States', fontsize=12)
+    ax.set_title('ν/μ Duality\n(Safety vs Reachability)', fontsize=13)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, fontsize=9)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3, axis='y')
 
-    for (x, y), label, color in zip(dual_positions, dual_labels, dual_colors):
-        rect = plt.Rectangle((x-0.25, y-0.2), 0.5, 0.4, color=color, ec='black', linewidth=1.5, zorder=3)
-        ax.add_patch(rect)
-        ax.text(x, y, label, ha='center', va='center', fontsize=11, fontweight='bold', zorder=4)
+    # Plot 2: Convergence comparison
+    ax = axes[1]
+    # Compare safety and reachability convergence speeds
+    sizes_range = range(3, 12)
+    safety_iters = []
+    for n in sizes_range:
+        edges = [(i, (i+1) % n) for i in range(n)]
+        ts_n = TransitionSystem.from_edges(n, edges)
+        P = frozenset(range(n // 2))
+        res = safety_model_check(ts_n, P)
+        safety_iters.append(res.iterations)
 
-    # Middle: Definable Predicates
-    ax.text(5, 5, 'Definable\nPredicates', ha='center', fontsize=12, fontweight='bold',
-            bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', edgecolor='black'))
+    ax.plot(list(sizes_range), safety_iters, 'bo-', linewidth=2,
+            markersize=7, label='Iterations')
+    ax.plot(list(sizes_range), list(sizes_range), 'r--', linewidth=2,
+            label='Linear bound', alpha=0.7)
+    ax.set_xlabel('Ring Size (n)', fontsize=12)
+    ax.set_ylabel('Iterations to Converge', fontsize=12)
+    ax.set_title('Convergence on\nn-state Ring', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
 
-    # Arrows: state → dual point
-    for (sx, sy), (dx, dy), color in [
-        (state_positions[0], dual_positions[0], '#ff6b6b'),
-        (state_positions[1], dual_positions[0], '#ff6b6b'),
-        (state_positions[2], dual_positions[1], '#4ecdc4'),
-        (state_positions[3], dual_positions[2], '#45b7d1'),
-        (state_positions[4], dual_positions[2], '#45b7d1'),
-    ]:
-        ax.annotate('', xy=(dx-0.3, dy), xytext=(sx+0.25, sy),
-                   arrowprops=dict(arrowstyle='->', color=color, lw=2, alpha=0.6))
-
-    # Labels
-    ax.text(5, 1.2, 's ~ t  ⟺  dualPt(s) = dualPt(t)', ha='center', fontsize=13,
-            fontweight='bold', style='italic',
-            bbox=dict(boxstyle='round,pad=0.4', facecolor='#dfe6e9', edgecolor='black'))
-
-    ax.text(5, 0.3, 'Theorem A: Behavioral equivalence = equal dual points',
-            ha='center', fontsize=11, style='italic', color='gray')
-
-    ax.set_xlim(-0.5, 10.5)
-    ax.set_ylim(-0.2, 5.8)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
+    fig.suptitle('Order Duality: Greatest vs Least Fixpoints',
+                 fontsize=15, fontweight='bold')
     plt.tight_layout()
-    return fig
+    fig.savefig('viz_duality.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    print("Generated viz_duality.png")
+    return b64
 
-
-# ============================================================
-# Generate all figures
-# ============================================================
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-
-    fig1 = plot_kleene_convergence()
-    fig1.savefig('fig_kleene_convergence.png', dpi=150, bbox_inches='tight')
-    print("  Saved fig_kleene_convergence.png")
-
-    fig2 = plot_behavioral_quotient()
-    fig2.savefig('fig_behavioral_quotient.png', dpi=150, bbox_inches='tight')
-    print("  Saved fig_behavioral_quotient.png")
-
-    fig3 = plot_fixpoint_lattice()
-    fig3.savefig('fig_fixpoint_lattice.png', dpi=150, bbox_inches='tight')
-    print("  Saved fig_fixpoint_lattice.png")
-
-    fig4 = plot_duality_diagram()
-    fig4.savefig('fig_duality_diagram.png', dpi=150, bbox_inches='tight')
-    print("  Saved fig_duality_diagram.png")
-
-    print("All visualizations generated.")
+    b64_conv = viz_fixpoint_convergence()
+    b64_dual = viz_dual_points()
+    b64_safety = viz_safety_operator()
+    b64_duality = viz_duality()
+    print("\nAll visualizations generated successfully.")
+    print(f"  viz_convergence.png: {len(b64_conv)} chars (base64)")
+    print(f"  viz_dual_points.png: {len(b64_dual)} chars (base64)")
+    print(f"  viz_safety_operator.png: {len(b64_safety)} chars (base64)")
+    print(f"  viz_duality.png: {len(b64_duality)} chars (base64)")

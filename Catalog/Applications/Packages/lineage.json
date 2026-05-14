@@ -10,22 +10,13 @@
       "hue": 270
     },
     {
-      "id": "temporal_stone_duality_recovering_temporal_logic_f",
-      "title": "Temporal Stone Duality: Recovering Temporal Logic from Idempotent Semiring Fixpoints",
-      "domain": "Logic / Formal Verification / Algebra",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "2026-05-14T01:57:43Z",
-      "hue": 270
-    },
-    {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
       "title": "Tropical Myhill-Nerode Theorem for Min-Plus Automata",
       "domain": "Computation / Automata Theory / Tropical Algebra",
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T02:00:38Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "pythagorean_lattice_reduction_for_integer_factorin",
@@ -34,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T02:13:58Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
@@ -43,7 +34,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:16:39Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -52,7 +43,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T02:16:56Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -61,7 +52,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T02:24:17Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "collatz_convergence_via_tropical_contracting_dynam",
@@ -70,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:29:12Z",
-      "hue": 89
+      "hue": 270
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -79,7 +70,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T03:01:11Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "quantum_pythagorean_teleportation_berggren_orbits_",
@@ -88,16 +79,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T03:01:28Z",
-      "hue": 179
+      "hue": 91
     },
     {
       "id": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
       "title": "Tropical Rainfall: Nash Equilibria as Min-Plus Fixed Points",
       "domain": "Tropical Algebra and Game Theory",
-      "primary_domain": "Tropical",
-      "shape": "star",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-14T03:04:29Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "holographic_proof_renormalization_ultrametric_comp",
@@ -106,7 +97,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T03:08:28Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "emergent_computation_in_pythagorean_orbit_lattices",
@@ -115,7 +106,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T03:32:42Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -124,7 +115,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T04:02:16Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "closure_operator_networks_universal_approximation_",
@@ -133,7 +124,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T04:04:29Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_neural_code_classification_with_provable_",
@@ -142,7 +133,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T04:04:46Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "dragon_curve_fractals_as_tropical_curve_generators",
@@ -151,7 +142,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T04:05:00Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "sheaf_cohomology_and_certified_adversarial_robustn",
@@ -161,6 +152,15 @@
       "shape": "sphere_rings",
       "date": "2026-05-14T04:05:16Z",
       "hue": 272
+    },
+    {
+      "id": "temporal_stone_duality_recovering_temporal_logic_f",
+      "title": "Temporal Stone Duality: Recovering Temporal Logic from Idempotent Semiring Fixpoints",
+      "domain": "Logic / Order Theory / Formal Verification",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-14T04:05:25Z",
+      "hue": 90
     }
   ],
   "edges": []
