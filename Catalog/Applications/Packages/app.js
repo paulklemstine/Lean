@@ -813,20 +813,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ctx) return;
 
         // ─── Data ───
-        const graphData = window.PACKAGE_GRAPH || { nodes: [], edges: [] };
+        const graphData = window.PACKAGE_GRAPH || { nodes: [], edges: [], domain_bridges: [] };
         const graphNodes = (graphData.nodes || []).map(n => ({
             ...n,
             x: 0, y: 0, vx: 0, vy: 0,
+            targetX: 0, targetY: 0,
             radius: 22,
             phase: Math.random() * Math.PI * 2,
             rotSpeed: 0.3 + Math.random() * 0.5,
             rotAngle: Math.random() * Math.PI * 2
         }));
-        // Load provenance and heuristic edges
-        let graphEdges = (graphData.edges || []).filter(e => e.type === 'provenance' || e.type === 'heuristic').map(e => ({
+        // Only provenance edges (no heuristic edges)
+        let graphEdges = (graphData.edges || []).filter(e => e.type === 'provenance').map(e => ({
             ...e,
             edgeType: e.type,
         }));
+        // Domain bridges for cluster-level connections
+        const domainBridges = graphData.domain_bridges || [];
 
         // Fallback: build nodes from PACKAGE_INDEX if no graph data
         if (graphNodes.length === 0 && window.PACKAGE_INDEX) {
@@ -854,7 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: slug, title: pkg.title || slug, domain: pkg.domain || 'Bridges',
                     primary_domain: 'Bridges', shape: DOMAIN_SHAPES[pkg.domain] || 'icosahedron',
                     date: pkg.date || '', hue: (rng() % 360),
-                    x: 0, y: 0, vx: 0, vy: 0, radius: 18,
+                    x: 0, y: 0, vx: 0, vy: 0, targetX: 0, targetY: 0, radius: 18,
                     phase: rng() / 4294967296 * Math.PI * 2,
                     rotSpeed: 0.3 + (rng() / 4294967296) * 0.5,
                     rotAngle: rng() / 4294967296 * Math.PI * 2
@@ -932,77 +935,65 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // ─── Physics ───
-        const K_REPEL = 8000;
-        const K_SPRING = 0.008;
-        const REST_LENGTH = 150;
-        const K_GRAVITY = 0.0005;
-        const DAMPING = 0.82;
+        // ─── Layout constants ───
+        const CLUSTER_RADIUS = 280;      // Distance of cluster centroids from center
+        const NODE_SPACING = 65;          // Spacing between nodes within a cluster
+        const K_SPRING = 0.008;          // Spring constant for provenance edges
+        const REST_LENGTH = 150;          // Rest length for provenance springs
+        const K_GRAVITY = 0.0003;         // Gentle center pull to prevent drift
+        const DAMPING = 0.85;
         const NODE_RADIUS = 22;
-        const GALAXY_ROTATION = 0.0003;   // Slow overall galaxy spin
-        const FLOCK_SEPARATION = 0.4;      // Avoid crowding neighbors
-        const FLOCK_ALIGNMENT = 0.02;      // Steer towards average heading
-        const FLOCK_COHESION = 0.001;      // Steer towards center of nearby flock
-        const FLOCK_RADIUS = 200;          // Perception radius for flocking
+        const GALAXY_ROTATION = 0.0002;   // Slow overall galaxy spin
+        const OSCILLATION_SPEED = 0.008;  // How fast nodes drift around target
+        const OSCILLATION_RADIUS = 8;     // How far nodes drift from target
 
-        // ─── Cluster detection (connected components via provenance edges) ───
-        function findClusters() {
+        // ─── Domain-clustered layout ───
+        const DOMAIN_ORDER = ['Algebra','Tropical','Geometry','Cryptography','Physics',
+            'EML','Computation','MachineLearning','Logic','Pythagorean','Speculative','Bridges'];
+        const domainIndexMap = {};
+        DOMAIN_ORDER.forEach((d, i) => { domainIndexMap[d] = i; });
+
+        function computeClusterLayout() {
+            // Group nodes by primary_domain
             const clusters = {};
-            let clusterId = 0;
-            const visited = new Set();
-            // Build adjacency from all edges
-            const adj = {};
-            graphNodes.forEach(n => { adj[n.id] = []; });
-            graphEdges.forEach(e => {
-                if (adj[e.source]) adj[e.source].push(e.target);
-                if (adj[e.target]) adj[e.target].push(e.source);
-            });
-            // BFS to find connected components
             graphNodes.forEach(n => {
-                if (visited.has(n.id)) return;
-                const component = [];
-                const queue = [n.id];
-                while (queue.length) {
-                    const cur = queue.shift();
-                    if (visited.has(cur)) continue;
-                    visited.add(cur);
-                    component.push(cur);
-                    (adj[cur] || []).forEach(nb => {
-                        if (!visited.has(nb)) queue.push(nb);
-                    });
-                }
-                // Each cluster gets a random rotation direction and speed
-                const rotation = (Math.random() < 0.5 ? 1 : -1) * (0.0001 + Math.random() * 0.0004);
-                component.forEach(id => {
-                    clusters[id] = { clusterId, rotation, cx: 0, cy: 0, count: component.length };
-                });
-                clusterId++;
+                const domain = n.primary_domain || 'Bridges';
+                if (!clusters[domain]) clusters[domain] = [];
+                clusters[domain].push(n);
             });
-            // Compute cluster centers
-            const clusterSums = {};
-            Object.entries(clusters).forEach(([id, c]) => {
-                if (!clusterSums[c.clusterId]) clusterSums[c.clusterId] = { sx: 0, sy: 0, n: 0 };
-                const node = nodeMap[id];
-                if (node) { clusterSums[c.clusterId].sx += node.x; clusterSums[c.clusterId].sy += node.y; clusterSums[c.clusterId].n++; }
-            });
-            Object.entries(clusters).forEach(([id, c]) => {
-                const s = clusterSums[c.clusterId];
-                if (s && s.n > 0) { c.cx = s.sx / s.n; c.cy = s.sy / s.n; }
-            });
-            return clusters;
-        }
 
-        function initPositions() {
-            const count = graphNodes.length;
-            const radius = Math.sqrt(count) * 60;
-            graphNodes.forEach((node, i) => {
-                const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
-                const r = radius * (0.5 + Math.random() * 0.5);
-                node.x = Math.cos(angle) * r;
-                node.y = Math.sin(angle) * r;
-                node.vx = 0;
-                node.vy = 0;
+            // Sort domains by DOMAIN_ORDER, unknown domains go last
+            const domainList = Object.keys(clusters).sort((a, b) => {
+                const ia = domainIndexMap[a] ?? 999;
+                const ib = domainIndexMap[b] ?? 999;
+                return ia - ib;
             });
+
+            const numClusters = domainList.length;
+            const clusterCentroids = {};
+            const nodeAssignments = {};
+
+            domainList.forEach((domain, ci) => {
+                const angle = (ci / numClusters) * Math.PI * 2 - Math.PI / 2;
+                const cx = Math.cos(angle) * CLUSTER_RADIUS;
+                const cy = Math.sin(angle) * CLUSTER_RADIUS;
+                clusterCentroids[domain] = { x: cx, y: cy, angle, domain };
+
+                const nodes = clusters[domain];
+                const innerRadius = Math.sqrt(nodes.length) * NODE_SPACING * 0.6;
+                nodes.forEach((node, ni) => {
+                    const nodeAngle = (ni / nodes.length) * Math.PI * 2 + Math.random() * 0.3;
+                    const nodeR = innerRadius * (0.4 + Math.random() * 0.5);
+                    const tx = cx + Math.cos(nodeAngle) * nodeR;
+                    const ty = cy + Math.sin(nodeAngle) * nodeR;
+                    node.targetX = tx;
+                    node.targetY = ty;
+                    node.clusterDomain = domain;
+                    nodeAssignments[node.id] = domain;
+                });
+            });
+
+            return { centroids: clusterCentroids, domainList };
         }
 
         function buildNodeMap() {
@@ -1012,16 +1003,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let nodeMap = buildNodeMap();
-        let nodeClusters = findClusters();
-        let clusterUpdateTimer = 0;
+        const clusterData = computeClusterLayout();
+
+        // Initialize node positions to their target cluster positions
+        graphNodes.forEach(n => {
+            n.x = n.targetX + (Math.random() - 0.5) * 30;
+            n.y = n.targetY + (Math.random() - 0.5) * 30;
+            n.vx = 0;
+            n.vy = 0;
+        });
 
         function simulate() {
-            clusterUpdateTimer++;
-            // Recompute cluster centers every 60 frames
-            if (clusterUpdateTimer % 60 === 0) {
-                nodeClusters = findClusters();
-            }
-
             // ─── Galaxy rotation: slowly rotate entire scene ───
             const cosG = Math.cos(GALAXY_ROTATION), sinG = Math.sin(GALAXY_ROTATION);
             graphNodes.forEach(n => {
@@ -1029,105 +1021,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 const nx = n.x * cosG - n.y * sinG;
                 const ny = n.x * sinG + n.y * cosG;
                 n.x = nx; n.y = ny;
-                // Also rotate velocity
-                const nvx = n.vx * cosG - n.vy * sinG;
-                const nvy = n.vx * sinG + n.vy * cosG;
-                n.vx = nvx; n.vy = nvy;
+                // Also rotate target position
+                const ntx = n.targetX * cosG - n.targetY * sinG;
+                const nty = n.targetX * sinG + n.targetY * cosG;
+                n.targetX = ntx; n.targetY = nty;
+            });
+            // Rotate cluster centroids along with the galaxy
+            Object.values(clusterData.centroids).forEach(c => {
+                const cx = c.x * cosG - c.y * sinG;
+                const cy = c.x * sinG + c.y * cosG;
+                c.x = cx; c.y = cy;
             });
 
-            // ─── Cluster rotation: each connected component orbits its center ───
-            graphNodes.forEach(n => {
-                if (n === dragNode) return;
-                const cluster = nodeClusters[n.id];
-                if (!cluster || cluster.count < 2) return;
-                const cx = cluster.cx, cy = cluster.cy;
-                const dx = n.x - cx, dy = n.y - cy;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 1) return;
-                const cosC = Math.cos(cluster.rotation), sinC = Math.sin(cluster.rotation);
-                // Rotate position around cluster center
-                const rx = cx + dx * cosC - dy * sinC;
-                const ry = cy + dx * sinC + dy * cosC;
-                n.x = rx; n.y = ry;
-            });
-
-            // ─── Coulomb repulsion ───
-            for (let i = 0; i < graphNodes.length; i++) {
-                for (let j = i + 1; j < graphNodes.length; j++) {
-                    const a = graphNodes[i], b = graphNodes[j];
-                    let dx = b.x - a.x, dy = b.y - a.y;
-                    let d2 = dx * dx + dy * dy;
-                    if (d2 < 1) d2 = 1;
-                    const f = K_REPEL / d2;
-                    const d = Math.sqrt(d2);
-                    const fx = (dx / d) * f, fy = (dy / d) * f;
-                    a.vx -= fx; a.vy -= fy;
-                    b.vx += fx; b.vy += fy;
-                }
-            }
-
-            // ─── Spring edges ───
+            // ─── Provenance spring edges ───
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
                 const dx = b.x - a.x, dy = b.y - a.y;
                 const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                // Provenance edges: strong springs pull nodes together tightly
-                // Heuristic edges: weak springs — subtle connections, don't clump
-                const isProv = (e.edgeType || e.type) === 'provenance';
-                const springK = isProv ? K_SPRING : K_SPRING * 0.15;
-                const restLen = isProv ? REST_LENGTH * 0.7 : REST_LENGTH * 1.5;
-                const f = springK * (d - restLen);
+                const f = K_SPRING * (d - REST_LENGTH * 0.7);
                 const fx = (dx / d) * f, fy = (dy / d) * f;
                 a.vx += fx; a.vy += fy;
                 b.vx -= fx; b.vy -= fy;
             });
 
-            // ─── Center gravity ───
+            // ─── Gentle center gravity (prevents drift) ───
             graphNodes.forEach(n => {
                 n.vx -= n.x * K_GRAVITY;
                 n.vy -= n.y * K_GRAVITY;
             });
 
-            // ─── Flocking behavior ───
+            // ─── Spring to target position (cluster arrangement) ───
             graphNodes.forEach(n => {
                 if (n === dragNode) return;
-                let sepX = 0, sepY = 0, sepCount = 0;
-                let aliVx = 0, aliVy = 0, aliCount = 0;
-                let cohX = 0, cohY = 0, cohCount = 0;
-                const flockR2 = FLOCK_RADIUS * FLOCK_RADIUS;
-
-                for (let i = 0; i < graphNodes.length; i++) {
-                    const other = graphNodes[i];
-                    if (other === n || other === dragNode) continue;
-                    const dx = other.x - n.x, dy = other.y - n.y;
-                    const d2 = dx * dx + dy * dy;
-                    if (d2 > flockR2 || d2 < 0.01) continue;
-                    const d = Math.sqrt(d2);
-                    // Separation: steer away from very close neighbors
-                    if (d < FLOCK_RADIUS * 0.4) {
-                        sepX -= dx / d; sepY -= dy / d; sepCount++;
-                    }
-                    // Alignment: match velocity of nearby nodes
-                    aliVx += other.vx; aliVy += other.vy; aliCount++;
-                    // Cohesion: steer towards center of nearby flock
-                    cohX += other.x; cohY += other.y; cohCount++;
-                }
-                // Apply separation
-                if (sepCount > 0) {
-                    n.vx += (sepX / sepCount) * FLOCK_SEPARATION;
-                    n.vy += (sepY / sepCount) * FLOCK_SEPARATION;
-                }
-                // Apply alignment — subtle gentle nudge
-                if (aliCount > 0) {
-                    n.vx += ((aliVx / aliCount) - n.vx) * FLOCK_ALIGNMENT;
-                    n.vy += ((aliVy / aliCount) - n.vy) * FLOCK_ALIGNMENT;
-                }
-                // Apply cohesion — gentle attraction to center of neighbors
-                if (cohCount > 0) {
-                    n.vx += ((cohX / cohCount - n.x) * FLOCK_COHESION);
-                    n.vy += ((cohY / cohCount - n.y) * FLOCK_COHESION);
-                }
+                const dx = n.targetX - n.x;
+                const dy = n.targetY - n.y;
+                n.vx += dx * OSCILLATION_SPEED;
+                n.vy += dy * OSCILLATION_SPEED;
+                // Add gentle oscillation for liveliness
+                n.vx += Math.sin(time * 0.5 + n.phase) * 0.02;
+                n.vy += Math.cos(time * 0.7 + n.phase) * 0.02;
             });
 
             // ─── Damping + integrate ───
@@ -1139,10 +1072,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 n.y += n.vy;
             });
         }
-
-        // Warmup: run 300 iterations
-        initPositions();
-        for (let i = 0; i < 300; i++) simulate();
 
         // ─── Shape renderers ───
         function project3D(points3d, rotX, rotY) {
@@ -1415,9 +1344,74 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.fill();
             });
 
-            // Edges (glow + line + particles)
-            // Provenance edges: solid, bright, thicker
-            // Heuristic edges: dashed, subtle, thinner
+            // ─── Domain cluster boundaries and labels ───
+            const centroids = clusterData.centroids;
+            Object.values(centroids).forEach(c => {
+                const sp = worldToScreen(c.x, c.y);
+                const domain = c.domain;
+                const col = DOMAIN_COLORS[domain] || DOMAIN_COLORS['Bridges'];
+
+                // Compute cluster radius from member nodes
+                const members = graphNodes.filter(n => n.clusterDomain === domain);
+                if (members.length === 0) return;
+                let maxDist = 0;
+                members.forEach(n => {
+                    const dx = n.x - c.x, dy = n.y - c.y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    if (d > maxDist) maxDist = d;
+                });
+                const clusterR = (maxDist + 40) * camera.zoom;
+
+                // Filled circle with domain color (very subtle)
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, clusterR, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, 0.04)`;
+                ctx.fill();
+                // Border circle
+                ctx.strokeStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, 0.12)`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Domain label
+                ctx.fillStyle = `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 85)}%, 0.35)`;
+                ctx.font = `${Math.max(11, 13 * camera.zoom)}px 'Segoe UI', system-ui, sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(domain, sp.x, sp.y - clusterR + 14 * camera.zoom);
+            });
+
+            // ─── Domain bridges (subtle arcs between cluster centroids) ───
+            domainBridges.forEach(bridge => {
+                const cA = centroids[bridge.domain_a];
+                const cB = centroids[bridge.domain_b];
+                if (!cA || !cB) return;
+                const spA = worldToScreen(cA.x, cA.y);
+                const spB = worldToScreen(cB.x, cB.y);
+                const colA = DOMAIN_COLORS[bridge.domain_a] || DOMAIN_COLORS['Bridges'];
+                const colB = DOMAIN_COLORS[bridge.domain_b] || DOMAIN_COLORS['Bridges'];
+                const strength = bridge.strength || 0.3;
+                const alpha = 0.06 + strength * 0.12;
+
+                // Draw curved arc between cluster centroids
+                const mx = (spA.x + spB.x) / 2;
+                const my = (spA.y + spB.y) / 2;
+                // Curve outward from center
+                const dx = spB.x - spA.x, dy = spB.y - spA.y;
+                const curveOffset = -dy * 0.15; // perpendicular offset
+                const cpx = mx + dx * 0 + curveOffset;
+                const cpy = my + dy * 0 + Math.abs(dx) * 0.15;
+
+                ctx.beginPath();
+                ctx.moveTo(spA.x, spA.y);
+                ctx.quadraticCurveTo(cpx, cpy, spB.x, spB.y);
+                ctx.strokeStyle = `hsla(${(colA.h + colB.h) / 2}, 50%, 65%, ${alpha})`;
+                ctx.lineWidth = 1 + strength * 1.5;
+                ctx.setLineDash([4 * camera.zoom, 6 * camera.zoom]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            });
+
+            // ─── Provenance edges ───
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
@@ -1426,18 +1420,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sa = worldToScreen(a.x, a.y), sb = worldToScreen(b.x, b.y);
                 const colA = nodeColor(a), colB = nodeColor(b);
                 const blendH = (colA.h + colB.h) / 2;
-                const strength = e.strength || 0.5;
-                const isProvenance = (e.edgeType || e.type) === 'provenance';
-                const lineW = isProvenance ? (1.5 + strength * 2.5) : (0.3 + strength * 0.8);
-                const glowAlpha = isProvenance ? (0.25 + 0.3 * strength) : (0.05 + 0.1 * strength);
-                const coreAlpha = isProvenance ? (0.7 + 0.3 * strength) : (0.15 + 0.2 * strength);
+                const strength = e.strength || 1.0;
+                const lineW = 1.5 + strength * 2.5;
+                const glowAlpha = 0.25 + 0.3 * strength;
+                const coreAlpha = 0.7 + 0.3 * strength;
 
                 // Glow line (thick, semi-transparent)
                 ctx.beginPath();
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
                 ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
-                ctx.lineWidth = lineW * (isProvenance ? 5 : 4);
+                ctx.lineWidth = lineW * 5;
                 ctx.stroke();
 
                 // Core line
@@ -1449,14 +1442,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
                 ctx.strokeStyle = edgeGrad;
                 ctx.lineWidth = lineW;
-                if (!isProvenance) {
-                    ctx.setLineDash([6 * camera.zoom, 4 * camera.zoom]);
-                }
                 ctx.stroke();
-                ctx.setLineDash([]);
             });
 
-            // Edge particles
+            // Edge particles (provenance only)
             edgeParticles.forEach(p => {
                 p.t += p.speed;
                 if (p.t > 1) p.t -= 1;
@@ -1469,9 +1458,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sp = worldToScreen(wx, wy);
                 const colA = nodeColor(a), colB = nodeColor(b);
                 const blendH = (colA.h + colB.h) / 2;
-                const isProv = (p.edge.edgeType || p.edge.type) === 'provenance';
-                const alpha = isProv ? (0.6 + 0.4 * Math.sin(p.t * Math.PI)) : (0.15 + 0.15 * Math.sin(p.t * Math.PI));
-                const pSize = isProv ? p.size * 1.4 : p.size * 0.7;
+                const alpha = 0.6 + 0.4 * Math.sin(p.t * Math.PI);
+                const pSize = p.size * 1.4;
 
                 ctx.beginPath();
                 ctx.arc(sp.x, sp.y, pSize * camera.zoom, 0, Math.PI * 2);
@@ -1734,8 +1722,7 @@ document.addEventListener('DOMContentLoaded', () => {
             newEdges.forEach(e => {
                 // Avoid duplicates
                 if (graphEdges.some(ge => ge.source === e.source && ge.target === e.target)) return;
-                // Tag with edgeType for visual distinction
-                e.edgeType = e.type || 'heuristic';
+                e.edgeType = e.type || 'provenance';
                 graphEdges.push(e);
                 // Spawn particles for the new edge
                 const count = 2 + Math.floor(Math.random() * 2);
@@ -1748,18 +1735,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
-            // Refresh clusters since connectivity changed
-            nodeClusters = findClusters();
         };
 
         window.addGraphNode = function(nodeData) {
             if (!nodeData || !nodeData.id) return;
             if (graphNodes.some(n => n.id === nodeData.id)) return;
+            const domain = nodeData.primary_domain || nodeData.domain || 'Bridges';
+            const centroid = clusterData.centroids[domain] || clusterData.centroids[Object.keys(clusterData.centroids)[0]];
             const node = {
                 ...nodeData,
-                x: (Math.random() - 0.5) * 200,
-                y: (Math.random() - 0.5) * 200,
+                x: centroid ? centroid.x + (Math.random() - 0.5) * 60 : (Math.random() - 0.5) * 200,
+                y: centroid ? centroid.y + (Math.random() - 0.5) * 60 : (Math.random() - 0.5) * 200,
+                targetX: centroid ? centroid.x + (Math.random() - 0.5) * 40 : 0,
+                targetY: centroid ? centroid.y + (Math.random() - 0.5) * 40 : 0,
                 vx: 0, vy: 0,
+                clusterDomain: domain,
                 radius: 22,
                 phase: Math.random() * Math.PI * 2,
                 rotSpeed: 0.3 + Math.random() * 0.5,

@@ -273,7 +273,7 @@ def generate_graph_data(script_dir):
         try:
             with open(lineage_path, 'r', encoding='utf-8') as f:
                 graph_data = json.load(f)
-            print(f"Loaded lineage.json: {len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges")
+            print(f"Loaded lineage.json: {len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges, {len(graph_data.get('domain_bridges', []))} bridges")
         except Exception as e:
             print(f"Warning: failed to load lineage.json: {e}")
 
@@ -301,7 +301,7 @@ def generate_graph_data(script_dir):
                 "date": pkg.get("date", ""),
                 "hue": slug_to_hue(slug),
             })
-        graph_data = {"nodes": nodes, "edges": []}
+        graph_data = {"nodes": nodes, "edges": [], "domain_bridges": []}
     else:
         # Enrich nodes with shape and hue if missing
         for node in graph_data.get("nodes", []):
@@ -320,7 +320,7 @@ window.PACKAGE_GRAPH = {json.dumps(graph_data, indent=2)};
     with open(db_path, 'a', encoding='utf-8') as f:
         f.write(graph_js)
 
-    print(f"Appended PACKAGE_GRAPH to packages_db.js ({len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges)")
+    print(f"Appended PACKAGE_GRAPH to packages_db.js ({len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges, {len(graph_data.get('domain_bridges', []))} bridges)")
 
 
 def append_future_directions(script_dir, db_path):

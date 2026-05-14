@@ -3901,7 +3901,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T03:08:28Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "dragon_curve_fractals_as_tropical_curve_generators",
@@ -3910,7 +3910,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T04:05:00Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -3919,7 +3919,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T04:05:25Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "tropical_knot_theory_min_plus_invariants_for_knot_",
@@ -3928,7 +3928,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T05:32:59Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
@@ -3937,7 +3937,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T05:33:18Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "emergent_computation_in_pythagorean_orbit_lattices",
@@ -3946,7 +3946,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T05:33:35Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "collatz_convergence_via_tropical_contracting_dynam",
@@ -3955,7 +3955,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:33:53Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -3964,7 +3964,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T05:34:09Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "riemann_hypothesis_via_tropical_spectral_transfer",
@@ -3982,7 +3982,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:34:33Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "p_vs_space_via_tropical_time_space_tradeoffs",
@@ -3991,7 +3991,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T06:33:48Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "homomorphic_encryption_over_tropical_semirings",
@@ -4000,7 +4000,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T06:34:03Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "sheaf_cohomology_and_certified_adversarial_robustn",
@@ -4009,7 +4009,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T06:34:20Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "consciousness_as_tropical_fixed_point_min_plus_ref",
@@ -4018,7 +4018,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T06:42:14Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "aristotle_prompt_engineering_category_theoretic_pr",
@@ -4027,7 +4027,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T07:32:50Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "navier_stokes_regularity_via_tropical_diffusion_op",
@@ -4036,7 +4036,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:09Z",
-      "hue": 280
+      "hue": 92
     },
     {
       "id": "thermodynamic_computation_via_tropical_landauers_p",
@@ -4045,7 +4045,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:24Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "quantum_pythagorean_teleportation_berggren_orbits_",
@@ -4054,7 +4054,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-14T07:33:40Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "twin_prime_conjecture_via_tropical_sieve_methods",
@@ -4063,7 +4063,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T07:33:50Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "neural_tangent_kernel_in_the_tropical_limit",
@@ -4090,7 +4090,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T08:32:40Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
@@ -4099,7 +4099,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T08:32:58Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "amortized_complexity_via_tropical_amortization",
@@ -4108,7 +4108,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T08:33:13Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "adversarial_training_as_tropical_regularization_pr",
@@ -4117,7 +4117,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T08:33:24Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "research_package_quality_via_certified_mathematica",
@@ -4126,7 +4126,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T08:39:16Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -4135,7 +4135,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T09:32:30Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "tropical_time_travel_min_plus_closed_timelike_curv",
@@ -4144,7 +4144,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T09:32:46Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "closure_operator_networks_universal_approximation_",
@@ -4162,7 +4162,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T09:33:10Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "alien_mathematics_what_theorems_would_non_carbon_l",
@@ -4171,7 +4171,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T09:33:21Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -4189,7 +4189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:33:48Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "tropical_sudoku_min_plus_constraint_satisfaction_a",
@@ -4207,7 +4207,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:04Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "quantum_gravity_as_tropical_geometry_min_plus_spac",
@@ -4216,7 +4216,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:22Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "birch_swinnerton_dyer_via_tropical_l_function_spec",
@@ -4234,7 +4234,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T10:34:57Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "semantic_compression_via_tropical_information_geom",
@@ -4243,7 +4243,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T10:35:16Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "alien_algebra_non_archimedean_life_forms_in_idempo",
@@ -4252,7 +4252,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T11:34:10Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "research_depth_guarantees_via_proof_theoretic_ordi",
@@ -4261,7 +4261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T11:34:50Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "aether_self_improvement_certified_novelty_detectio",
@@ -4279,7 +4279,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T11:35:43Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
@@ -4288,7 +4288,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T11:36:00Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "from_shallow_to_deep_formalizing_the_depth_gap_in_",
@@ -4297,7 +4297,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T12:34:45Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "goldbach_via_tropical_additive_combinatorics",
@@ -4306,7 +4306,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T12:35:03Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "tropical_type_theory_dependent_types_in_the_min_pl",
@@ -4324,7 +4324,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T13:22:26Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "category_theoretic_composition_of_neural_architect",
@@ -4333,7 +4333,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T13:22:43Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -4342,7 +4342,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T13:23:00Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -4351,7 +4351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T13:23:19Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "hyperbolic_crafting_optimal_nether_portals_via_tro",
@@ -4360,7 +4360,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T13:30:14Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "aristotle_quality_amplification_proof_strategy_min",
@@ -4369,7 +4369,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T13:30:31Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "dyson_sphere_optimization_tropical_light_network_f",
@@ -4378,7 +4378,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T14:08:56Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "post_quantum_lattices_from_pythagorean_triple_grou",
@@ -4387,7 +4387,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T14:11:36Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "p_vs_np_tropical_semiring_barrier",
@@ -4396,7 +4396,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T14:11:57Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_neural_code_classification_with_provable_",
@@ -4405,7 +4405,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T14:14:30Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_origami_min_plus_fold_structures_and_rigi",
@@ -4414,1059 +4414,136 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T14:19:39Z",
-      "hue": 270
+      "hue": 90
     }
   ],
-  "edges": [
+  "edges": [],
+  "domain_bridges": [
     {
-      "source": "holographic_proof_renormalization_ultrametric_comp",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "`semantic_entropy_bound`",
-      "type": "heuristic"
+      "domain_a": "Geometry",
+      "domain_b": "MachineLearning",
+      "package_count": 6,
+      "strength": 1.0
     },
     {
-      "source": "holographic_proof_renormalization_ultrametric_comp",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 0.8625,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 21,
+      "strength": 1.0
     },
     {
-      "source": "holographic_proof_renormalization_ultrametric_comp",
-      "target": "homotopy_type_theory_via_tropical_higher_inductive",
-      "strength": 0.8282710280373831,
-      "label": "`tropical_barycenter_is_fixed_point`",
-      "type": "heuristic"
+      "domain_a": "MachineLearning",
+      "domain_b": "Tropical",
+      "package_count": 6,
+      "strength": 1.0
     },
     {
-      "source": "dragon_curve_fractals_as_tropical_curve_generators",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
+      "domain_a": "Algebra",
+      "domain_b": "Geometry",
+      "package_count": 8,
+      "strength": 1.0
     },
     {
-      "source": "dragon_curve_fractals_as_tropical_curve_generators",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Semantic Compression",
-      "type": "heuristic"
+      "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 25,
+      "strength": 1.0
     },
     {
-      "source": "dragon_curve_fractals_as_tropical_curve_generators",
-      "target": "riemann_hypothesis_via_tropical_spectral_transfer",
-      "strength": 1.0,
-      "label": "Tropical Spectral Transfer",
-      "type": "heuristic"
+      "domain_a": "Algebra",
+      "domain_b": "Computation",
+      "package_count": 6,
+      "strength": 1.0
     },
     {
-      "source": "temporal_stone_duality_recovering_temporal_logic_f",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 1.0,
-      "label": "Tropical Type Theory",
-      "type": "heuristic"
+      "domain_a": "Computation",
+      "domain_b": "Tropical",
+      "package_count": 9,
+      "strength": 1.0
     },
     {
-      "source": "temporal_stone_duality_recovering_temporal_logic_f",
-      "target": "homotopy_type_theory_via_tropical_higher_inductive",
-      "strength": 1.0,
-      "label": "Tropical Homotopy Type Theory",
-      "type": "heuristic"
+      "domain_a": "Physics",
+      "domain_b": "Tropical",
+      "package_count": 6,
+      "strength": 1.0
     },
     {
-      "source": "temporal_stone_duality_recovering_temporal_logic_f",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
+      "domain_a": "Logic",
+      "domain_b": "Tropical",
+      "package_count": 3,
+      "strength": 0.9000000000000001
     },
     {
-      "source": "tropical_knot_theory_min_plus_invariants_for_knot_",
-      "target": "p_vs_space_via_tropical_time_space_tradeoffs",
-      "strength": 1.0,
-      "label": "Direction 1: Tropical Khovanov Homology",
-      "type": "heuristic"
+      "domain_a": "Computation",
+      "domain_b": "Geometry",
+      "package_count": 3,
+      "strength": 0.9000000000000001
     },
     {
-      "source": "tropical_knot_theory_min_plus_invariants_for_knot_",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Direction 1: Tropical Khovanov Homology",
-      "type": "heuristic"
+      "domain_a": "Algebra",
+      "domain_b": "Physics",
+      "package_count": 3,
+      "strength": 0.9000000000000001
     },
     {
-      "source": "tropical_knot_theory_min_plus_invariants_for_knot_",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Direction 3: Circuit Complexity Lower Bo",
-      "type": "heuristic"
+      "domain_a": "Geometry",
+      "domain_b": "Physics",
+      "package_count": 3,
+      "strength": 0.9000000000000001
     },
     {
-      "source": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
+      "domain_a": "Algebra",
+      "domain_b": "Cryptography",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
-      "source": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
-      "target": "thermodynamic_computation_via_tropical_landauers_p",
-      "strength": 1.0,
-      "label": "Tropical,Algebra bridge",
-      "type": "heuristic"
+      "domain_a": "Cryptography",
+      "domain_b": "Tropical",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
-      "source": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
-      "target": "tropical_myhill_nerode_theorem_for_min_plus_automa",
-      "strength": 1.0,
-      "label": "Tropical Myhill",
-      "type": "heuristic"
+      "domain_a": "Algebra",
+      "domain_b": "Logic",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
-      "source": "emergent_computation_in_pythagorean_orbit_lattices",
-      "target": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "strength": 0.85,
-      "label": "Computation bridge",
-      "type": "heuristic"
+      "domain_a": "Algebra",
+      "domain_b": "MachineLearning",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
-      "source": "emergent_computation_in_pythagorean_orbit_lattices",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 0.85,
-      "label": "Computation bridge",
-      "type": "heuristic"
+      "domain_a": "Geometry",
+      "domain_b": "Logic",
+      "package_count": 1,
+      "strength": 0.5
     },
     {
-      "source": "emergent_computation_in_pythagorean_orbit_lattices",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 0.85,
-      "label": "Computation bridge",
-      "type": "heuristic"
+      "domain_a": "Computation",
+      "domain_b": "Physics",
+      "package_count": 1,
+      "strength": 0.5
     },
     {
-      "source": "collatz_convergence_via_tropical_contracting_dynam",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Information Theory Lead",
-      "type": "heuristic"
+      "domain_a": "Algebra",
+      "domain_b": "Bridges",
+      "package_count": 1,
+      "strength": 0.5
     },
     {
-      "source": "collatz_convergence_via_tropical_contracting_dynam",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
+      "domain_a": "Bridges",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
     },
     {
-      "source": "collatz_convergence_via_tropical_contracting_dynam",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Formalization target",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_myhill_nerode_theorem_for_min_plus_automa",
-      "target": "tropical_sudoku_min_plus_constraint_satisfaction_a",
-      "strength": 1.0,
-      "label": "Tropical Sudoku",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_myhill_nerode_theorem_for_min_plus_automa",
-      "target": "p_vs_space_via_tropical_time_space_tradeoffs",
-      "strength": 1.0,
-      "label": "Tropical Complexity Theory",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_myhill_nerode_theorem_for_min_plus_automa",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "riemann_hypothesis_via_tropical_spectral_transfer",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "riemann_hypothesis_via_tropical_spectral_transfer",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Tropical algebraic geometry",
-      "type": "heuristic"
-    },
-    {
-      "source": "riemann_hypothesis_via_tropical_spectral_transfer",
-      "target": "hodge_conjecture_through_tropical_algebraic_cycles",
-      "strength": 1.0,
-      "label": "Tropical Hodge Correspondence",
-      "type": "heuristic"
-    },
-    {
-      "source": "hodge_conjecture_through_tropical_algebraic_cycles",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Representation theory",
-      "type": "heuristic"
-    },
-    {
-      "source": "hodge_conjecture_through_tropical_algebraic_cycles",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "hodge_conjecture_through_tropical_algebraic_cycles",
-      "target": "birch_swinnerton_dyer_via_tropical_l_function_spec",
-      "strength": 1.0,
-      "label": "Tropical",
-      "type": "heuristic"
-    },
-    {
-      "source": "p_vs_space_via_tropical_time_space_tradeoffs",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "p_vs_space_via_tropical_time_space_tradeoffs",
-      "target": "thermodynamic_computation_via_tropical_landauers_p",
-      "strength": 1.0,
-      "label": "Tropical Thermodynamics",
-      "type": "heuristic"
-    },
-    {
-      "source": "p_vs_space_via_tropical_time_space_tradeoffs",
-      "target": "tropical_sudoku_min_plus_constraint_satisfaction_a",
-      "strength": 1.0,
-      "label": "Tropical,Computation,Algebra bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "homomorphic_encryption_over_tropical_semirings",
-      "target": "tropical_quadratic_sieve_min_plus_factoring_algori",
-      "strength": 1.0,
-      "label": "Tropical Quadratic Sieve",
-      "type": "heuristic"
-    },
-    {
-      "source": "homomorphic_encryption_over_tropical_semirings",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Semantic Compression",
-      "type": "heuristic"
-    },
-    {
-      "source": "homomorphic_encryption_over_tropical_semirings",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "sheaf_cohomology_and_certified_adversarial_robustn",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "adversarial transition cycles",
-      "type": "heuristic"
-    },
-    {
-      "source": "sheaf_cohomology_and_certified_adversarial_robustn",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "adversarial transition cycles",
-      "type": "heuristic"
-    },
-    {
-      "source": "sheaf_cohomology_and_certified_adversarial_robustn",
-      "target": "deep_double_descent_as_tropical_phase_diagram",
-      "strength": 1.0,
-      "label": "persistence diagram",
-      "type": "heuristic"
-    },
-    {
-      "source": "consciousness_as_tropical_fixed_point_min_plus_ref",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "consciousness_as_tropical_fixed_point_min_plus_ref",
-      "target": "tropical_sudoku_min_plus_constraint_satisfaction_a",
-      "strength": 1.0,
-      "label": "Apply domain-theoretic fixed-point theor",
-      "type": "heuristic"
-    },
-    {
-      "source": "consciousness_as_tropical_fixed_point_min_plus_ref",
-      "target": "birch_swinnerton_dyer_via_tropical_l_function_spec",
-      "strength": 1.0,
-      "label": "Apply domain-theoretic fixed-point theor",
-      "type": "heuristic"
-    },
-    {
-      "source": "aristotle_prompt_engineering_category_theoretic_pr",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Complexity constraints",
-      "type": "heuristic"
-    },
-    {
-      "source": "aristotle_prompt_engineering_category_theoretic_pr",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "aristotle_prompt_engineering_category_theoretic_pr",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 0.9642857142857142,
-      "label": "types",
-      "type": "heuristic"
-    },
-    {
-      "source": "navier_stokes_regularity_via_tropical_diffusion_op",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "navier_stokes_regularity_via_tropical_diffusion_op",
-      "target": "thermodynamic_computation_via_tropical_landauers_p",
-      "strength": 1.0,
-      "label": "Tropical,Physics,Algebra bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "navier_stokes_regularity_via_tropical_diffusion_op",
-      "target": "tropical_time_travel_min_plus_closed_timelike_curv",
-      "strength": 1.0,
-      "label": "Tropical Time Travel",
-      "type": "heuristic"
-    },
-    {
-      "source": "thermodynamic_computation_via_tropical_landauers_p",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "\u2014 clarify the min vs. max distinction fo",
-      "type": "heuristic"
-    },
-    {
-      "source": "thermodynamic_computation_via_tropical_landauers_p",
-      "target": "amortized_complexity_via_tropical_amortization",
-      "strength": 1.0,
-      "label": "via tropical circuit complexity\n5.",
-      "type": "heuristic"
-    },
-    {
-      "source": "thermodynamic_computation_via_tropical_landauers_p",
-      "target": "tropical_time_travel_min_plus_closed_timelike_curv",
-      "strength": 1.0,
-      "label": "\u2014 clarify the min vs. max distinction fo",
-      "type": "heuristic"
-    },
-    {
-      "source": "quantum_pythagorean_teleportation_berggren_orbits_",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 0.9,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "quantum_pythagorean_teleportation_berggren_orbits_",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 0.9,
-      "label": "Tropical Neural Code Classification",
-      "type": "heuristic"
-    },
-    {
-      "source": "twin_prime_conjecture_via_tropical_sieve_methods",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "twin_prime_conjecture_via_tropical_sieve_methods",
-      "target": "tropical_sudoku_min_plus_constraint_satisfaction_a",
-      "strength": 1.0,
-      "label": "Constraint satisfaction",
-      "type": "heuristic"
-    },
-    {
-      "source": "twin_prime_conjecture_via_tropical_sieve_methods",
-      "target": "tropical_quadratic_sieve_min_plus_factoring_algori",
-      "strength": 1.0,
-      "label": "Tropical Quadratic Sieve",
-      "type": "heuristic"
-    },
-    {
-      "source": "neural_tangent_kernel_in_the_tropical_limit",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Lean Formalization Target",
-      "type": "heuristic"
-    },
-    {
-      "source": "neural_tangent_kernel_in_the_tropical_limit",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Characteristic classes",
-      "type": "heuristic"
-    },
-    {
-      "source": "neural_tangent_kernel_in_the_tropical_limit",
-      "target": "grokking_as_tropical_phase_transition_in_neural_lo",
-      "strength": 1.0,
-      "label": "Grokking",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_source_coding_min_plus_rate_distortion_th",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Tropical coding rate",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_source_coding_min_plus_rate_distortion_th",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_source_coding_min_plus_rate_distortion_th",
-      "target": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "strength": 1.0,
-      "label": "Closure",
-      "type": "heuristic"
-    },
-    {
-      "source": "homotopy_type_theory_via_tropical_higher_inductive",
-      "target": "quantum_gravity_as_tropical_geometry_min_plus_spac",
-      "strength": 1.0,
-      "label": "Computational complexity \u00d7 type theory.",
-      "type": "heuristic"
-    },
-    {
-      "source": "homotopy_type_theory_via_tropical_higher_inductive",
-      "target": "string_theory_t_duality_as_tropical_duality_min_pl",
-      "strength": 1.0,
-      "label": "Higher category theory \u00d7 tropical geomet",
-      "type": "heuristic"
-    },
-    {
-      "source": "homotopy_type_theory_via_tropical_higher_inductive",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 1.0,
-      "label": "Dependent type theory \u00d7 metric geometry.",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Lean Formalization Target",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
-      "target": "tropical_time_travel_min_plus_closed_timelike_curv",
-      "strength": 1.0,
-      "label": "Tropical Time Travel",
-      "type": "heuristic"
-    },
-    {
-      "source": "amortized_complexity_via_tropical_amortization",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "amortized_complexity_via_tropical_amortization",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Semantic Compression",
-      "type": "heuristic"
-    },
-    {
-      "source": "amortized_complexity_via_tropical_amortization",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 1.0,
-      "label": "Tropical Type Theory",
-      "type": "heuristic"
-    },
-    {
-      "source": "adversarial_training_as_tropical_regularization_pr",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Semantic Compression",
-      "type": "heuristic"
-    },
-    {
-      "source": "adversarial_training_as_tropical_regularization_pr",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Key Definition to Formalize",
-      "type": "heuristic"
-    },
-    {
-      "source": "adversarial_training_as_tropical_regularization_pr",
-      "target": "grokking_as_tropical_phase_transition_in_neural_lo",
-      "strength": 1.0,
-      "label": "Grokking",
-      "type": "heuristic"
-    },
-    {
-      "source": "research_package_quality_via_certified_mathematica",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Semantic Compression",
-      "type": "heuristic"
-    },
-    {
-      "source": "research_package_quality_via_certified_mathematica",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "research_package_quality_via_certified_mathematica",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 0.95,
-      "label": "",
-      "type": "heuristic"
-    },
-    {
-      "source": "self_referential_proof_systems_and_tropical_godel_",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 1.0,
-      "label": "Tropical Type Theory",
-      "type": "heuristic"
-    },
-    {
-      "source": "self_referential_proof_systems_and_tropical_godel_",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "self_referential_proof_systems_and_tropical_godel_",
-      "target": "tropical_sudoku_min_plus_constraint_satisfaction_a",
-      "strength": 1.0,
-      "label": "Recover tropical incompleteness",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_time_travel_min_plus_closed_timelike_curv",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_time_travel_min_plus_closed_timelike_curv",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 1.0,
-      "label": "Tropical algebra as a universal language",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_time_travel_min_plus_closed_timelike_curv",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical algebra as a universal language",
-      "type": "heuristic"
-    },
-    {
-      "source": "closure_operator_networks_universal_approximation_",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Semantic Compression",
-      "type": "heuristic"
-    },
-    {
-      "source": "closure_operator_networks_universal_approximation_",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "MachineLearning bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "closure_operator_networks_universal_approximation_",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "pythagorean_lattice_reduction_for_integer_factorin",
-      "target": "tropical_quadratic_sieve_min_plus_factoring_algori",
-      "strength": 0.95,
-      "label": "Tropical Quadratic Sieve",
-      "type": "heuristic"
-    },
-    {
-      "source": "pythagorean_lattice_reduction_for_integer_factorin",
-      "target": "post_quantum_lattices_from_pythagorean_triple_grou",
-      "strength": 0.9,
-      "label": "Post",
-      "type": "heuristic"
-    },
-    {
-      "source": "alien_mathematics_what_theorems_would_non_carbon_l",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Semantic Compression",
-      "type": "heuristic"
-    },
-    {
-      "source": "alien_mathematics_what_theorems_would_non_carbon_l",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "alien_mathematics_what_theorems_would_non_carbon_l",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical Graph Optimization",
-      "type": "heuristic"
-    },
-    {
-      "source": "reversible_computing_via_tropical_isomorphisms",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Lean Formalization Target",
-      "type": "heuristic"
-    },
-    {
-      "source": "reversible_computing_via_tropical_isomorphisms",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "reversible_computing_via_tropical_isomorphisms",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Computation bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "deep_double_descent_as_tropical_phase_diagram",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "tropical hypersurface",
-      "type": "heuristic"
-    },
-    {
-      "source": "deep_double_descent_as_tropical_phase_diagram",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "tropical Morse complex",
-      "type": "heuristic"
-    },
-    {
-      "source": "deep_double_descent_as_tropical_phase_diagram",
-      "target": "grokking_as_tropical_phase_transition_in_neural_lo",
-      "strength": 1.0,
-      "label": "tropical Morse complex",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_sudoku_min_plus_constraint_satisfaction_a",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_sudoku_min_plus_constraint_satisfaction_a",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 1.0,
-      "label": "Tropical Type Theory",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_sudoku_min_plus_constraint_satisfaction_a",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical Graph Optimization",
-      "type": "heuristic"
-    },
-    {
-      "source": "string_theory_t_duality_as_tropical_duality_min_pl",
-      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
-      "strength": 1.0,
-      "label": "Tropical Origami",
-      "type": "heuristic"
-    },
-    {
-      "source": "string_theory_t_duality_as_tropical_duality_min_pl",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "string_theory_t_duality_as_tropical_duality_min_pl",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Tropical Neural Code Classification",
-      "type": "heuristic"
-    },
-    {
-      "source": "quantum_gravity_as_tropical_geometry_min_plus_spac",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "quantum_gravity_as_tropical_geometry_min_plus_spac",
-      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
-      "strength": 1.0,
-      "label": "Tropical,Geometry,Physics bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "quantum_gravity_as_tropical_geometry_min_plus_spac",
-      "target": "birch_swinnerton_dyer_via_tropical_l_function_spec",
-      "strength": 1.0,
-      "label": "Tropical",
-      "type": "heuristic"
-    },
-    {
-      "source": "birch_swinnerton_dyer_via_tropical_l_function_spec",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "birch_swinnerton_dyer_via_tropical_l_function_spec",
-      "target": "semantic_compression_via_tropical_information_geom",
-      "strength": 1.0,
-      "label": "Theorem (Tropical Tauberian):",
-      "type": "heuristic"
-    },
-    {
-      "source": "birch_swinnerton_dyer_via_tropical_l_function_spec",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical,Geometry,Algebra bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "semantic_compression_via_tropical_information_geom",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "semantic_compression_via_tropical_information_geom",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical,Geometry,Algebra bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "semantic_compression_via_tropical_information_geom",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Tropical,Geometry,MachineLearning bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "alien_algebra_non_archimedean_life_forms_in_idempo",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "alien_algebra_non_archimedean_life_forms_in_idempo",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Tropical,Geometry bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "alien_algebra_non_archimedean_life_forms_in_idempo",
-      "target": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "strength": 1.0,
-      "label": "Closure",
-      "type": "heuristic"
-    },
-    {
-      "source": "aether_self_improvement_certified_novelty_detectio",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "aether_self_improvement_certified_novelty_detectio",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Geometry bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "aether_self_improvement_certified_novelty_detectio",
-      "target": "grokking_as_tropical_phase_transition_in_neural_lo",
-      "strength": 0.85,
-      "label": "Geometry bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "aether_evolution_self_modifying_research_strategie",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "aether_evolution_self_modifying_research_strategie",
-      "target": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "strength": 1.0,
-      "label": "Closure",
-      "type": "heuristic"
-    },
-    {
-      "source": "aether_evolution_self_modifying_research_strategie",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 0.9214285714285714,
-      "label": "Tropical Type Theory",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_arithmetic_coding_shannon_optimal_min_plu",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical Graph Optimization",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_arithmetic_coding_shannon_optimal_min_plu",
-      "target": "tropical_quadratic_sieve_min_plus_factoring_algori",
-      "strength": 1.0,
-      "label": "Tropical Quadratic Sieve",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_arithmetic_coding_shannon_optimal_min_plu",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "from_shallow_to_deep_formalizing_the_depth_gap_in_",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 0.95,
-      "label": "with",
-      "type": "heuristic"
-    },
-    {
-      "source": "goldbach_via_tropical_additive_combinatorics",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Abstraction",
-      "type": "heuristic"
-    },
-    {
-      "source": "goldbach_via_tropical_additive_combinatorics",
-      "target": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "strength": 1.0,
-      "label": "Tropical Type Theory",
-      "type": "heuristic"
-    },
-    {
-      "source": "goldbach_via_tropical_additive_combinatorics",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical Graph Optimization",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical Graph Optimization",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_type_theory_dependent_types_in_the_min_pl",
-      "target": "tropical_quadratic_sieve_min_plus_factoring_algori",
-      "strength": 1.0,
-      "label": "Tropical Quadratic Sieve",
-      "type": "heuristic"
-    },
-    {
-      "source": "grokking_as_tropical_phase_transition_in_neural_lo",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "tropical mutual information",
-      "type": "heuristic"
-    },
-    {
-      "source": "grokking_as_tropical_phase_transition_in_neural_lo",
-      "target": "hyperbolic_crafting_optimal_nether_portals_via_tro",
-      "strength": 1.0,
-      "label": "tropical distance",
-      "type": "heuristic"
-    },
-    {
-      "source": "grokking_as_tropical_phase_transition_in_neural_lo",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "tropical mutual information",
-      "type": "heuristic"
-    },
-    {
-      "source": "category_theoretic_composition_of_neural_architect",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 0.85,
-      "label": "MachineLearning bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Tropical Neural Code Classification",
-      "type": "heuristic"
-    },
-    {
-      "source": "kolmogorov_complexity_closure_and_idempotent_compr",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical,Geometry bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_quadratic_sieve_min_plus_factoring_algori",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_quadratic_sieve_min_plus_factoring_algori",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
-      "strength": 1.0,
-      "label": "Tropical Graph Optimization",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_quadratic_sieve_min_plus_factoring_algori",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Tropical bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "hyperbolic_crafting_optimal_nether_portals_via_tro",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "hyperbolic_crafting_optimal_nether_portals_via_tro",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Tropical,Geometry bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "hyperbolic_crafting_optimal_nether_portals_via_tro",
-      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
-      "strength": 1.0,
-      "label": "Tropical,Geometry bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "dyson_sphere_optimization_tropical_light_network_f",
-      "target": "p_vs_np_tropical_semiring_barrier",
-      "strength": 1.0,
-      "label": "Tropical Semiring Barrier Theorems",
-      "type": "heuristic"
-    },
-    {
-      "source": "dyson_sphere_optimization_tropical_light_network_f",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Tropical,Geometry bridge",
-      "type": "heuristic"
-    },
-    {
-      "source": "dyson_sphere_optimization_tropical_light_network_f",
-      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
-      "strength": 1.0,
-      "label": "Tropical Origami",
-      "type": "heuristic"
-    },
-    {
-      "source": "p_vs_np_tropical_semiring_barrier",
-      "target": "tropical_neural_code_classification_with_provable_",
-      "strength": 1.0,
-      "label": "Theme A: Formal Verification as a Resear",
-      "type": "heuristic"
-    },
-    {
-      "source": "p_vs_np_tropical_semiring_barrier",
-      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
-      "strength": 1.0,
-      "label": ": Implement tropical circuit simulators,",
-      "type": "heuristic"
-    },
-    {
-      "source": "tropical_neural_code_classification_with_provable_",
-      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
-      "strength": 1.0,
-      "label": "Tropical,Geometry bridge",
-      "type": "heuristic"
+      "domain_a": "Computation",
+      "domain_b": "MachineLearning",
+      "package_count": 1,
+      "strength": 0.5
     }
   ]
 };
@@ -6060,10 +5137,10 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b8bbbc75",
     "timestamp": "2026-05-14T04:01:04.712714+00:00"
   },
   {

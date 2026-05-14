@@ -9,7 +9,6 @@ import json
 import os
 import re
 import glob
-import yaml
 from difflib import SequenceMatcher
 from collections import defaultdict, Counter
 from pathlib import Path
@@ -138,169 +137,34 @@ def extract_concepts_from_future_directions(text):
     return concepts
 
 
-def compute_edge_score(source_pkg, target_pkg, concepts, all_packages_by_slug, arcs):
-    """Compute a score for whether source_pkg's future_directions led to target_pkg.
+def build_domain_bridges(packages_by_slug):
+    """Compute domain-level bridges between domain clusters.
 
-    Higher scores = more likely lineage connection.
+    A bridge exists between two domains when packages span both domains.
+    Returns a list of {domain_a, domain_b, package_count, strength} dicts,
+    sorted by strength descending.
     """
-    score = 0.0
-    reasons = []
+    pair_counts = Counter()
+    total_packages = len(packages_by_slug)
 
-    source_domains = canonicalize_domain(source_pkg.get("domain", ""))
-    target_domains = canonicalize_domain(target_pkg.get("domain", ""))
+    for slug, pkg in packages_by_slug.items():
+        domains = canonicalize_domain(pkg.get("domain", ""))
+        for i, d1 in enumerate(domains):
+            for d2 in domains[i + 1:]:
+                pair = tuple(sorted([d1, d2]))
+                pair_counts[pair] += 1
 
-    # Domain overlap: +3 per shared canonical domain
-    shared = set(source_domains) & set(target_domains)
-    if shared:
-        score += 3.0 * len(shared)
-        reasons.append(f"domain_overlap:{','.join(shared)}")
+    bridges = []
+    for (d1, d2), count in pair_counts.items():
+        bridges.append({
+            "domain_a": d1,
+            "domain_b": d2,
+            "package_count": count,
+            "strength": min(0.3 + 0.2 * count, 1.0),
+        })
 
-    # Cross-domain: if source mentions a domain that target is IN, +2
-    source_fd = source_pkg.get("future_directions", "")
-    source_fd_lower = source_fd.lower()
-    for td in target_domains:
-        td_lower = td.lower()
-        if td == "EML":
-            if "eml" in source_fd_lower:
-                score += 2.0
-                reasons.append(f"fd_mentions_domain:{td}")
-        elif td == "MachineLearning":
-            if "machine learning" in source_fd_lower or "machinelearning" in source_fd_lower:
-                score += 2.0
-                reasons.append(f"fd_mentions_domain:{td}")
-        else:
-            if td_lower in source_fd_lower:
-                score += 2.0
-                reasons.append(f"fd_mentions_domain:{td}")
-
-    # Title keyword overlap: fuzzy match between concept headings and target title
-    target_title = target_pkg.get("title", "").lower()
-    target_title_words = set(re.findall(r'\w+', target_title))
-
-    for ctype, cvalue in concepts:
-        if ctype == "heading":
-            # Fuzzy match heading to target title
-            ratio = SequenceMatcher(None, cvalue.lower(), target_title).ratio()
-            if ratio > 0.4:
-                score += 2.0 * ratio
-                reasons.append(f"heading_match:{cvalue[:40]}")
-
-        elif ctype == "theorem":
-            # Exact or fuzzy match theorem name to target title/lean_proofs
-            thm_lower = cvalue.lower()
-            if thm_lower in target_title:
-                score += 2.0
-                reasons.append(f"theorem_in_title:{cvalue}")
-
-        elif ctype == "cross_domain":
-            # Fuzzy match cross-domain phrase to target title
-            ratio = SequenceMatcher(None, cvalue.lower(), target_title).ratio()
-            if ratio > 0.35:
-                score += 1.5 * ratio
-                reasons.append(f"cross_domain_match:{cvalue[:40]}")
-
-        elif ctype == "theorem_stmt":
-            # Extract key identifiers from theorem statement
-            stmt_words = set(re.findall(r'\w+', cvalue.lower()))
-            overlap = len(stmt_words & target_title_words)
-            if overlap > 2:
-                score += 1.0 * overlap
-                reasons.append(f"stmt_overlap:{overlap}")
-
-    # Shared modules: extract function names from code strings or dict keys
-    def _get_module_names(pkg):
-        mods = pkg.get("modules", {})
-        if isinstance(mods, dict):
-            alg = mods.get("algorithms", {})
-            if isinstance(alg, dict):
-                return set(alg.keys())
-            if isinstance(alg, str):
-                return set(re.findall(r'def\s+(\w+)', alg))
-        return set()
-
-    source_modules = _get_module_names(source_pkg)
-    target_modules = _get_module_names(target_pkg)
-    shared_mods = source_modules & target_modules
-    if shared_mods:
-        score += 1.0 * len(shared_mods)
-        reasons.append(f"shared_modules:{','.join(shared_mods)}")
-
-    # Arc co-membership: if both packages' domains appear in the same arc
-    for arc in arcs:
-        arc_domains = set(arc.get("seed_domains", []))
-        if arc_domains & set(source_domains) and arc_domains & set(target_domains):
-            score += 1.5
-            reasons.append(f"arc:{arc.get('id', '?')}")
-            break  # Count arc bonus once
-
-    # Title keyword overlap with future_directions text
-    # If source's future_directions mentions keywords from target's title
-    target_title_keywords = set(re.findall(r'\w{4,}', target_title))
-    meaningful_keywords = target_title_keywords - {
-        'theorem', 'lemma', 'proof', 'via', 'with', 'for', 'from', 'and',
-        'the', 'using', 'over', 'under', 'between', 'through', 'based',
-        'new', 'generalized', 'extended', 'discovery', 'breakthrough',
-    }
-    fd_words = set(re.findall(r'\w{4,}', source_fd_lower))
-    keyword_overlap = meaningful_keywords & fd_words
-    if len(keyword_overlap) >= 3:
-        overlap_ratio = len(keyword_overlap) / max(len(meaningful_keywords), 1)
-        score += 3.0 * overlap_ratio
-        reasons.append(f"title_fd_overlap:{len(keyword_overlap)}/{len(meaningful_keywords)}")
-
-    return score, reasons
-
-
-def load_config_arcs(config_path):
-    """Load research arcs from config.yaml."""
-    if not os.path.exists(config_path):
-        return []
-    with open(config_path, 'r') as f:
-        config = yaml.safe_load(f)
-    return config.get("research", {}).get("arcs", [])
-
-
-def deduplicate_transitive_edges(edges, min_strength=0.4):
-    """Remove weak transitive edges: if A→B and B→C exist, remove A→C
-    only if A→C is weaker than both A→B and B→C.
-
-    Also remove edges below min_strength threshold.
-    """
-    # Build adjacency with strengths for transitive check
-    by_source = defaultdict(dict)
-    for e in edges:
-        by_source[e["source"]][e["target"]] = e["strength"]
-
-    # Build edge lookup for strength comparison
-    edge_strength = {}
-    for e in edges:
-        edge_strength[(e["source"], e["target"])] = e["strength"]
-
-    filtered = []
-    for e in edges:
-        src, tgt, strength = e["source"], e["target"], e["strength"]
-
-        # Skip edges below minimum strength
-        if strength < min_strength:
-            continue
-
-        # Check if this is a transitive edge with a stronger 2-hop path
-        is_weak_transitive = False
-        for mid in by_source.get(src, {}):
-            if mid == tgt:
-                continue
-            if tgt in by_source.get(mid, {}):
-                ab_strength = by_source[src][mid]
-                bc_strength = by_source[mid][tgt]
-                # If both intermediate edges are stronger, skip this one
-                if ab_strength > strength and bc_strength > strength:
-                    is_weak_transitive = True
-                    break
-
-        if not is_weak_transitive:
-            filtered.append(e)
-
-    return filtered
+    bridges.sort(key=lambda b: b["strength"], reverse=True)
+    return bridges
 
 
 def mulberry32(seed):
@@ -375,15 +239,11 @@ def extract_edge_label(reasons, source_title="", target_title=""):
     return ""
 
 
-def build_lineage(packages_dir, config_path=None):
+def build_lineage(packages_dir):
     """Build lineage graph from package JSON files.
 
-    Returns a dict with 'nodes' and 'edges' lists.
+    Returns a dict with 'nodes', 'edges', and 'domain_bridges' lists.
     """
-    if config_path is None:
-        config_path = os.path.join(os.path.dirname(__file__), "config.yaml")
-
-    arcs = load_config_arcs(config_path)
 
     # Load all packages
     json_files = sorted(glob.glob(os.path.join(packages_dir, "*.json")))
@@ -542,85 +402,29 @@ def build_lineage(packages_dir, config_path=None):
 
     print(f"Provenance edges: {len(provenance_edges)}")
 
-    # ── Phase 2: Heuristic edges for packages without provenance ──
-    # Use domain/concept overlap to infer likely lineage connections
-    heuristic_edges = []
-    heuristic_pairs = set()
-
-    # Only generate heuristic edges for packages that lack provenance
-    packages_with_provenance = set()
-    for e in provenance_edges:
-        packages_with_provenance.add(e["source"])
-        packages_with_provenance.add(e["target"])
-
-    MIN_HEURISTIC_SCORE = 8.0
-    MAX_HEURISTIC_EDGES_PER_SOURCE = 3
-    for i, src_slug in enumerate(sorted_slugs):
-        if src_slug in packages_with_provenance:
-            continue  # provenance already connects this package
-        src_pkg = packages[src_slug]
-        src_fd = src_pkg.get("future_directions", "")
-        if not src_fd or len(src_fd) < 100:
-            continue
-        src_concepts = extract_concepts_from_future_directions(src_fd)
-        if not src_concepts:
-            continue
-
-        # Collect all candidate edges from this source, then keep top N
-        candidates = []
-        for j in range(i + 1, len(sorted_slugs)):
-            tgt_slug = sorted_slugs[j]
-            tgt_pkg = packages[tgt_slug]
-
-            score, reasons = compute_edge_score(
-                src_pkg, tgt_pkg, src_concepts, packages, arcs
-            )
-            if score >= MIN_HEURISTIC_SCORE:
-                pair = (src_slug, tgt_slug)
-                if pair not in heuristic_pairs and pair not in provenance_pairs:
-                    candidates.append((score, pair, reasons))
-
-        # Keep only top N edges per source by score
-        candidates.sort(key=lambda x: x[0], reverse=True)
-        for score, pair, reasons in candidates[:MAX_HEURISTIC_EDGES_PER_SOURCE]:
-            src_slug, tgt_slug = pair
-            heuristic_pairs.add(pair)
-            src_pkg = packages[src_slug]
-            tgt_pkg = packages[tgt_slug]
-            label = extract_edge_label(reasons, src_pkg.get("title", ""), tgt_pkg.get("title", ""))
-            heuristic_edges.append({
-                "source": src_slug,
-                "target": tgt_slug,
-                "strength": min(score / 10.0, 1.0),
-                "label": label,
-                "type": "heuristic",
-            })
-
-    print(f"Heuristic edges: {len(heuristic_edges)}")
-
-    # Combine provenance and heuristic edges, deduplicate
-    all_edges = provenance_edges + heuristic_edges
-
     # Remove edges that reference non-existent packages (ghost nodes)
     real_slugs = {n["id"] for n in nodes}
-    before = len(all_edges)
-    edges = [e for e in all_edges if e["source"] in real_slugs and e["target"] in real_slugs]
+    before = len(provenance_edges)
+    edges = [e for e in provenance_edges if e["source"] in real_slugs and e["target"] in real_slugs]
     if before != len(edges):
         print(f"Removed {before - len(edges)} edges with ghost nodes")
 
-    print(f"Built lineage: {len(nodes)} nodes, {len(edges)} edges")
-    return {"nodes": nodes, "edges": edges}
+    # ── Domain bridges: cross-domain connections for visualization ──
+    domain_bridges = build_domain_bridges(packages)
+    print(f"Domain bridges: {len(domain_bridges)}")
+
+    print(f"Built lineage: {len(nodes)} nodes, {len(edges)} edges, {len(domain_bridges)} bridges")
+    return {"nodes": nodes, "edges": edges, "domain_bridges": domain_bridges}
 
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    config_path = os.path.join(script_dir, "config.yaml")
     packages_dir = os.path.join(
         os.path.dirname(script_dir),
         "Catalog", "Applications", "Packages"
     )
 
-    lineage = build_lineage(packages_dir, config_path)
+    lineage = build_lineage(packages_dir)
 
     output_path = os.path.join(packages_dir, "lineage.json")
     with open(output_path, 'w', encoding='utf-8') as f:
@@ -629,10 +433,11 @@ def main():
     print(f"Wrote lineage.json to {output_path}")
     print(f"  Nodes: {len(lineage['nodes'])}")
     print(f"  Edges: {len(lineage['edges'])}")
+    print(f"  Domain bridges: {len(lineage['domain_bridges'])}")
 
-    # Print edge summary
-    for e in lineage["edges"][:20]:
-        print(f"  {e['source']} → {e['target']} (strength={e['strength']:.2f}, label={e['label']})")
+    # Print bridge summary
+    for b in lineage["domain_bridges"][:10]:
+        print(f"  {b['domain_a']} ↔ {b['domain_b']} (packages={b['package_count']}, strength={b['strength']:.2f})")
 
 
 if __name__ == "__main__":
