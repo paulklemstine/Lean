@@ -1942,5 +1942,80 @@
     "source_exp_id": "ea1c2257",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:39.958244+00:00"
+  },
+  {
+    "id": "fd_0125",
+    "title": "Vision",
+    "description": "Extend the two-voice framework to four-part SATB (soprano, alto, tenor, bass) chorale writing, where vertical constraints become hyperedge penalties on 4-tuples and voice-leading costs form a layered tropical hypergraph.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f37e592e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:05.734533+00:00"
+  },
+  {
+    "id": "fd_0126",
+    "title": "Specific Hypotheses",
+    "description": "- **H1.1**: Bach chorale voice-leading can be characterized as shortest paths in a tropical hypergraph where nodes are 4-note chords and hyperedges encode simultaneous constraints (parallel fifths between any pair, voice spacing, voice crossing).\n- **H1.2**: The four-voice generalization of the zero-cost theorem holds: legal SATB counterpoint = zero locus of a 6-component penalty (one per voice pair).\n- **H1.3**: The exponential blowup in candidate space (P^4n vs P^n) can be managed via tropical tensor decomposition, factoring the 4-voice problem into coupled 2-voice subproblems.",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f37e592e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:05.738126+00:00"
+  },
+  {
+    "id": "fd_0127",
+    "title": "Proof Strategy",
+    "description": "1. Define `Chorale (n : ℕ) := Fin 4 → Melody n` (four voices).\n2. Extend `totalCost` to sum over all 6 voice pairs with additional spacing penalties.\n3. Prove the zero-cost theorem by reduction to the two-voice case on each pair.\n4. For DP, define a tropical tensor product `⊗_trop` and prove that 4-voice optimization decomposes as `min_{S,A,T,B} = min_S min_A (⊗_trop ...)`.",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f37e592e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:05.740910+00:00"
+  },
+  {
+    "id": "fd_0128",
+    "title": "Cross-Domain Connections",
+    "description": "- **Applied category theory**: Connects to Fong-Spivak's compositional frameworks for open systems.\n- **Formal methods**: Style categories as refinement lattices for musical specifications.\n- **Machine learning**: Categorical abstraction enables compositional transfer learning across musical styles.\n\n---",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f37e592e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:05.747567+00:00"
+  },
+  {
+    "id": "fd_0129",
+    "title": "Implementation Priority",
+    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 5. Mod-12 | Medium | High | Self-contained |\n| 2. Rate-Distortion | Medium | Very High | Pareto theorem |\n| 4. Optimal Transport | High | Very High | Self-contained |\n| 1. Four-Part | High | Transformative | Two-voice theory |\n| 3. Categorical | Very High | Foundational | All above |\n\n**Recommended next step**: Direction 5 (mod-12), as it is self-contained, computationally concrete, and provides a test bed for all other directions. Direction 2 follows naturally from the Pareto machinery already formalized.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f37e592e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:05.755955+00:00"
   }
 ]
