@@ -982,10 +982,10 @@
       "Tropical"
     ],
     "priority_score": 0.8,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5ff854ab",
     "timestamp": "2026-05-14T16:03:53.882790+00:00"
   },
   {
@@ -1219,20 +1219,6 @@
     "source_exp_id": "3cb1c42c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:16:22.734067+00:00"
-  },
-  {
-    "id": "fd_0087",
-    "title": "Sigma protocol structure",
-    "description": ": Commit → Challenge → Response. Prove honest-verifier zero-knowledge by simulation. Prove special soundness by extraction.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:22.735537+00:00"
   },
   {
     "id": "fd_0088",
@@ -1530,21 +1516,6 @@
     "timestamp": "2026-05-14T16:17:56.770099+00:00"
   },
   {
-    "id": "fd_0123",
-    "title": "Circuit universality",
-    "description": "(Direction 4) — high-impact but requires significant gadget engineering",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "705e2def",
-    "consumed_by_exp_id": "82942422",
-    "timestamp": "2026-05-14T16:17:56.772471+00:00"
-  },
-  {
     "id": "fd_0132",
     "title": "Surgery enlargement",
     "description": ": Wormhole surgery strictly enlarges the causal cone: `causalCone W s T ⊂ causalCone (wormholeSurgery W u v τ) s T` under appropriate conditions.",
@@ -1575,20 +1546,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.105861+00:00"
-  },
-  {
-    "id": "fd_0134",
-    "title": "Max-flow min-cut duality",
-    "description": ": The maximum number of edge-disjoint paths from interior to exterior equals the min-cut (discrete max-flow min-cut theorem).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.108164+00:00"
   },
   {
     "id": "fd_0136",
@@ -2318,6 +2275,111 @@
     "source_exp_id": "5896784e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:35:53.097475+00:00"
+  },
+  {
+    "id": "fd_0184",
+    "title": "Forward direction (easier):",
+    "description": "If `G` escapes all five clones, show it generates NOT and AND (hence NAND), then invoke `nand_universal`. This requires five \"escape\" lemmas showing how breaking each invariant yields a useful gate.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82942422",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:40:55.772040+00:00"
+  },
+  {
+    "id": "fd_0185",
+    "title": "Backward direction:",
+    "description": "Show each maximal clone is closed under composition, projections, and substitution. If `G ⊆ C` for some clone `C`, then `Clone(G) ⊆ C ⊊ AllBoolFun`, so `G` is not universal.\n\n### Cross-Domain Significance\n- **Logic:** Mechanizes a cornerstone of finite model theory (Post's lattice).\n- **Hardware design:** Gives an automated decision procedure for gate set sufficiency.\n- **Complexity theory:** Provides the semantic foundation for circuit complexity lower bounds.\n\n---\n\n## 2. Quantitative Synthesis Bounds\n\n### Theorem Statement\nThe DNF synthesis produces circuits of size at most exponential in `n`, matching the Lupanov bound for the worst case.\n\n```lean\ntheorem dnf_size_bound {n : ℕ} (f : BFun n) :\n    ∃ c : Circuit n, (∀ σ, Circuit.eval c σ = f σ) ∧\n      Circuit.size c ≤ (n + 3) * 2^n\n\ntheo",
+    "domains": [
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82942422",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:40:55.778282+00:00"
+  },
+  {
+    "id": "fd_0186",
+    "title": "Upper bound:",
+    "description": "Analyze the DNF construction. Each minterm uses O(n) gates, there are at most 2^n minterms, and the OR-tree adds at most 2^n gates.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82942422",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:40:55.782457+00:00"
+  },
+  {
+    "id": "fd_0187",
+    "title": "Lower bound (Shannon counting):",
+    "description": "There are 2^(2^n) boolean functions on n bits. A circuit of size s can be described in O(s log s) bits. If s < 2^n/(2n), the number of describable circuits is less than 2^(2^n), so some function has no small circuit.\n\n### Cross-Domain Significance\n- **Complexity theory:** Formalizes the Shannon counting argument, the foundation of circuit complexity.\n- **Optimization:** Guides practical circuit minimization by establishing fundamental limits.\n\n---\n\n## 3. Affine and Monotone Separation Theorems\n\n### Theorem Statement\nThe clone of affine functions and the clone of monotone functions are both proper subsets of all boolean functions, and each is closed under composition.\n\n```lean\ntheorem affine_closed_under_composition {n m : ℕ}\n    (f : BFun n) (gs : Fin n → BFun m)\n    (hf : IsAffine f) (hgs",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82942422",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:40:55.788276+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Affine closure:",
+    "description": "Substitution of affine functions into an affine function preserves linearity over GF(2). Direct algebraic computation.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82942422",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:40:55.792721+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Monotone closure:",
+    "description": "If all component functions are monotone and the outer function is monotone, pointwise composition preserves the ordering.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82942422",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:40:55.796888+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "XOR non-universality:",
+    "description": "AND is not affine (already proved). Any XOR circuit computes an affine function. Therefore AND cannot be computed by XOR circuits.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82942422",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T18:40:55.801401+00:00"
   },
   {
     "id": "seed_078",

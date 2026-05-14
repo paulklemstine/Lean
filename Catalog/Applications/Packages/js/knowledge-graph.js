@@ -142,8 +142,7 @@
         const REST_LENGTH = 180;          // Rest length for provenance springs
         const G_CONST = 0.3;             // Gravitational constant between nodes
         const SOFTENING = 80;             // Softening distance to prevent singularities
-        const K_REPULSION = 1200;         // Close-range repulsion strength
-        const MIN_REPULSION_DIST = 55;    // Minimum distance for repulsion
+        const MIN_REPULSION_DIST = 55;    // Bumper collision radius
         const DAMPING = 0.992;            // Very low friction — floaty
         const NODE_RADIUS = 22;
         const GALAXY_ROTATION = 0.00012;  // Slow overall galaxy spin
@@ -286,13 +285,34 @@
                     a.vx += fx; a.vy += fy;
                     b.vx -= fx; b.vy -= fy;
 
-                    // Close-range repulsion (prevents collision/overlap)
+                    // Pinball bumper collision: bounce with extra energy
                     if (d < MIN_REPULSION_DIST) {
-                        const repForce = K_REPULSION / (d2 + 100);
-                        const rfx = (dx / d) * repForce;
-                        const rfy = (dy / d) * repForce;
-                        a.vx -= rfx; a.vy -= rfy;
-                        b.vx += rfx; b.vy += rfy;
+                        // Collision normal (a → b)
+                        const nx = dx / d, ny = dy / d;
+                        // Relative velocity of a toward b along collision axis
+                        const relVx = a.vx - b.vx, relVy = a.vy - b.vy;
+                        const relVn = relVx * nx + relVy * ny;  // positive = approaching
+                        // Only bounce if approaching
+                        if (relVn > 0) {
+                            // Elastic collision with restitution > 1 = bumper energy boost
+                            const BOUNCE = 1.6;  // pinball bumper factor (>1 = adds energy)
+                            const totalMass = a.mass + b.mass;
+                            const impulseA = (1 + BOUNCE) * relVn * b.mass / totalMass;
+                            const impulseB = (1 + BOUNCE) * relVn * a.mass / totalMass;
+                            a.vx -= impulseA * nx;
+                            a.vy -= impulseA * ny;
+                            b.vx += impulseB * nx;
+                            b.vy += impulseB * ny;
+                        }
+                        // Always push apart to prevent overlap
+                        const overlap = MIN_REPULSION_DIST - d;
+                        if (overlap > 0) {
+                            const pushForce = overlap * 0.5;
+                            a.x -= nx * pushForce;
+                            a.y -= ny * pushForce;
+                            b.x += nx * pushForce;
+                            b.y += ny * pushForce;
+                        }
                     }
                 }
             }

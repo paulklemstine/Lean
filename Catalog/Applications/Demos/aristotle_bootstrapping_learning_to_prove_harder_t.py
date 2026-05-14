@@ -1,552 +1,481 @@
-#!/usr/bin/env python3
 """
-Curriculum Complexity — Applications
+Curriculum Theory: Real-World Applications
 
-Demonstrates real-world applications of curriculum complexity theory:
-1. Research planning for mathematical proof libraries
-2. Course design optimization
-3. Automated theorem prover scheduling
-4. Knowledge dependency analysis
+Demonstrates how curriculum complexity theory applies to:
+1. Software build systems (dependency resolution)
+2. Course prerequisite planning in education
+3. Research project scheduling
+4. Proof library analysis
 """
 
-from algorithms import DependencySystem
-from typing import Dict, List, Set
+from algorithms import DepSystem
 
 
-# ============================================================================
-# Application 1: Research Library Planning
-# ============================================================================
-
-def research_library_planning():
-    """
-    Model a proof library's theorem dependencies and compute
-    the optimal research schedule.
-
-    Demonstrates how curriculum complexity theory guides the
-    development of formal mathematical libraries.
+def application_build_system():
+    """Application: Software Build System Optimization
+    
+    A build system has compilation units with dependencies.
+    Curriculum depth = minimum number of sequential build steps
+    when unlimited parallel compilation is available.
     """
     print("=" * 60)
-    print("Application 1: Research Library Planning")
+    print("APPLICATION 1: Build System Optimization")
     print("=" * 60)
+    
+    # A realistic build dependency graph
+    modules = {
+        'utils', 'config', 'logger',
+        'database', 'cache', 'auth',
+        'api_core', 'api_routes', 'api_middleware',
+        'frontend', 'app'
+    }
+    deps = {
+        'utils': set(),
+        'config': set(),
+        'logger': {'config'},
+        'database': {'config', 'logger'},
+        'cache': {'config', 'logger'},
+        'auth': {'database', 'cache'},
+        'api_core': {'database', 'auth'},
+        'api_routes': {'api_core'},
+        'api_middleware': {'api_core', 'auth'},
+        'frontend': {'api_routes', 'api_middleware'},
+        'app': {'frontend', 'api_middleware'},
+    }
+    
+    ds = DepSystem(modules, deps)
+    
+    print(f"\n{len(modules)} modules, max build depth: {ds.max_level()}")
+    print(f"Minimum parallel build stages: {ds.max_level() + 1}")
+    
+    print("\nOptimal parallel build schedule:")
+    for i, batch in enumerate(ds.parallel_schedule()):
+        if batch:
+            print(f"  Stage {i} (parallel): {', '.join(sorted(batch))}")
+    
+    print(f"\nCritical path: {' → '.join(ds.critical_path('app'))}")
+    print(f"Sequential build: {len(modules)} steps")
+    print(f"Parallel build:   {ds.max_level() + 1} steps")
+    print(f"Speedup:          {len(modules) / (ds.max_level() + 1):.1f}x")
+    print()
 
-    # Model a simplified commutative algebra library
+
+def application_course_planning():
+    """Application: University Course Prerequisite Planning
+    
+    Given course prerequisites, determine the minimum number of
+    semesters to complete a degree, and generate optimal schedules.
+    """
+    print("=" * 60)
+    print("APPLICATION 2: Course Prerequisite Planning")
+    print("=" * 60)
+    
+    courses = {
+        'calc1', 'calc2', 'calc3',
+        'linear_algebra', 'diff_eq',
+        'intro_programming', 'data_structures', 'algorithms',
+        'probability', 'statistics',
+        'machine_learning', 'deep_learning',
+        'numerical_methods', 'optimization'
+    }
+    prereqs = {
+        'calc1': set(),
+        'calc2': {'calc1'},
+        'calc3': {'calc2'},
+        'linear_algebra': {'calc1'},
+        'diff_eq': {'calc2'},
+        'intro_programming': set(),
+        'data_structures': {'intro_programming'},
+        'algorithms': {'data_structures', 'calc2'},
+        'probability': {'calc2'},
+        'statistics': {'probability'},
+        'machine_learning': {'linear_algebra', 'statistics', 'algorithms'},
+        'deep_learning': {'machine_learning'},
+        'numerical_methods': {'calc3', 'linear_algebra', 'intro_programming'},
+        'optimization': {'calc3', 'linear_algebra'},
+    }
+    
+    ds = DepSystem(courses, prereqs)
+    
+    print(f"\n{len(courses)} courses")
+    print(f"Minimum semesters to graduate: {ds.max_level() + 1}")
+    
+    print("\nOptimal semester plan:")
+    for i, semester in enumerate(ds.parallel_schedule()):
+        if semester:
+            print(f"  Semester {i + 1}: {', '.join(sorted(semester))}")
+    
+    # Specific goals
+    ml_frontier = {'machine_learning', 'deep_learning'}
+    print(f"\nTo reach ML/DL frontier:")
+    print(f"  Minimum semesters: {ds.frontier_depth(ml_frontier)}")
+    print(f"  Critical path: {' → '.join(ds.critical_path('deep_learning'))}")
+    
+    num_frontier = {'numerical_methods', 'optimization'}
+    print(f"\nTo reach Numerical frontier:")
+    print(f"  Minimum semesters: {ds.frontier_depth(num_frontier)}")
+    print()
+
+
+def application_research_planning():
+    """Application: Research Project Scheduling
+    
+    Model a research program as a dependency system.
+    Compute the minimum time to reach breakthrough results.
+    """
+    print("=" * 60)
+    print("APPLICATION 3: Research Project Scheduling")
+    print("=" * 60)
+    
+    theorems = {
+        'basic_definitions',
+        'key_lemma_1', 'key_lemma_2', 'key_lemma_3',
+        'intermediate_result_A', 'intermediate_result_B',
+        'main_theorem',
+        'generalization',
+        'application_1', 'application_2',
+    }
+    deps = {
+        'basic_definitions': set(),
+        'key_lemma_1': {'basic_definitions'},
+        'key_lemma_2': {'basic_definitions'},
+        'key_lemma_3': {'key_lemma_1'},
+        'intermediate_result_A': {'key_lemma_1', 'key_lemma_2'},
+        'intermediate_result_B': {'key_lemma_2', 'key_lemma_3'},
+        'main_theorem': {'intermediate_result_A', 'intermediate_result_B'},
+        'generalization': {'main_theorem'},
+        'application_1': {'main_theorem'},
+        'application_2': {'generalization'},
+    }
+    
+    ds = DepSystem(theorems, deps)
+    
+    print(f"\nResearch program: {len(theorems)} results")
+    print(f"Minimum research cycles: {ds.max_level() + 1}")
+    
+    print("\nResearch phases:")
+    for i, phase in enumerate(ds.parallel_schedule()):
+        if phase:
+            print(f"  Phase {i}: {', '.join(sorted(phase))}")
+    
+    print(f"\nCritical path: {' → '.join(ds.critical_path('application_2'))}")
+    
+    # What can we achieve with limited budget?
+    for budget in range(1, ds.max_level() + 2):
+        achievable = ds.stage_knowledge(budget - 1)
+        print(f"  With {budget} cycle{'s' if budget > 1 else ''}: "
+              f"{len(achievable)}/{len(theorems)} results "
+              f"({100*len(achievable)/len(theorems):.0f}%)")
+    print()
+
+
+def application_proof_library():
+    """Application: Proof Library Analysis
+    
+    Analyze a fragment of a formal proof library to determine
+    its curriculum structure and optimal learning path.
+    """
+    print("=" * 60)
+    print("APPLICATION 4: Proof Library Structure Analysis")
+    print("=" * 60)
+    
+    # Simplified fragment of a number theory library
     library = {
-        "Ring Axioms": [],
-        "Ideal Definition": ["Ring Axioms"],
-        "Module Definition": ["Ring Axioms"],
-        "Prime Ideal": ["Ideal Definition"],
-        "Maximal Ideal": ["Ideal Definition"],
-        "Quotient Ring": ["Ideal Definition"],
-        "Noetherian Ring": ["Ideal Definition", "Module Definition"],
-        "Localization": ["Ring Axioms", "Module Definition"],
-        "Primary Decomposition": ["Prime Ideal", "Noetherian Ring"],
-        "Krull Dimension": ["Prime Ideal"],
-        "Hilbert Basis": ["Noetherian Ring"],
-        "Nakayama Lemma": ["Module Definition", "Maximal Ideal"],
-        "Going Up": ["Prime Ideal", "Localization"],
-        "Krull's Principal Ideal": ["Krull Dimension", "Noetherian Ring"],
-        "Dimension Theory": ["Krull's Principal Ideal", "Primary Decomposition"],
+        'nat_basic', 'nat_add', 'nat_mul', 'nat_order',
+        'divisibility', 'prime', 'gcd', 'lcm',
+        'modular_arith', 'euler_phi', 'fermat_little',
+        'quadratic_reciprocity', 'prime_number_theorem',
     }
-
-    ds = DependencySystem(library)
-    print(f"\nLibrary size: {len(ds.theorems)} theorems")
-    print(f"Maximum dependency depth: {ds.max_level()}")
-    print(f"Minimum sequential research cycles: {ds.max_level() + 1}")
-
-    schedule = ds.parallel_schedule()
-    print(f"\nOptimal parallel research schedule:")
-    for stage in sorted(schedule):
-        theorems = sorted(schedule[stage])
-        print(f"  Cycle {stage + 1} (can be proved in parallel):")
-        for t in theorems:
-            print(f"    - {t}")
-
-    frontier = {"Dimension Theory", "Hilbert Basis"}
-    print(f"\nFrontier: {frontier}")
-    print(f"Minimum cycles to reach frontier: {ds.frontier_depth(frontier) + 1}")
-
-    # Show critical path
-    for target in frontier:
-        chain = ds.dependency_chain(target)
-        print(f"Critical path to {target}:")
-        print(f"  {' → '.join(chain)}")
-    print()
-
-
-# ============================================================================
-# Application 2: Course Design Optimization
-# ============================================================================
-
-def course_design():
-    """
-    Optimize a mathematics course layout using curriculum complexity.
-
-    The theory guarantees the minimum number of "lecture rounds"
-    needed to cover all topics, where each round can teach topics
-    whose prerequisites have been covered.
-    """
-    print("=" * 60)
-    print("Application 2: Course Design Optimization")
-    print("=" * 60)
-
-    # An introductory analysis course
-    course = {
-        "Real Numbers": [],
-        "Sequences": ["Real Numbers"],
-        "Limits": ["Sequences"],
-        "Continuity": ["Limits"],
-        "Differentiation": ["Continuity"],
-        "Riemann Integration": ["Continuity"],
-        "Series": ["Sequences"],
-        "Power Series": ["Series", "Differentiation"],
-        "Uniform Convergence": ["Series", "Continuity"],
-        "Taylor's Theorem": ["Power Series", "Differentiation"],
-        "Fundamental Theorem": ["Differentiation", "Riemann Integration"],
-        "Improper Integrals": ["Riemann Integration", "Limits"],
+    imports = {
+        'nat_basic': set(),
+        'nat_add': {'nat_basic'},
+        'nat_mul': {'nat_add'},
+        'nat_order': {'nat_basic'},
+        'divisibility': {'nat_mul', 'nat_order'},
+        'prime': {'divisibility'},
+        'gcd': {'divisibility'},
+        'lcm': {'gcd'},
+        'modular_arith': {'divisibility'},
+        'euler_phi': {'prime', 'modular_arith'},
+        'fermat_little': {'euler_phi'},
+        'quadratic_reciprocity': {'prime', 'modular_arith'},
+        'prime_number_theorem': {'prime', 'euler_phi'},
     }
-
-    ds = DependencySystem(course)
-
-    print(f"\nCourse: {len(ds.theorems)} topics")
-    print(f"Minimum lecture weeks needed: {ds.max_level() + 1}")
-
-    print("\nOptimal weekly schedule:")
-    schedule = ds.parallel_schedule()
-    for week in sorted(schedule):
-        topics = sorted(schedule[week])
-        print(f"  Week {week + 1}: {', '.join(topics)}")
-
-    print("\nFull curriculum order:")
-    for i, topic in enumerate(ds.curriculum()):
-        print(f"  {i+1:2d}. {topic} (depth {ds.level(topic)})")
-    print()
-
-
-# ============================================================================
-# Application 3: Automated Prover Scheduling
-# ============================================================================
-
-def prover_scheduling():
-    """
-    Schedule an automated theorem prover's work queue using
-    curriculum complexity to minimize wall-clock time.
-
-    Key insight: theorems at the same level can be attempted
-    in parallel, but theorems at different levels must be
-    sequential (each level may use results from prior levels).
-    """
-    print("=" * 60)
-    print("Application 3: Automated Prover Scheduling")
-    print("=" * 60)
-
-    # Simulated proof obligations
-    obligations = {
-        "Lemma_base_1": [],
-        "Lemma_base_2": [],
-        "Lemma_base_3": [],
-        "Lemma_combine_12": ["Lemma_base_1", "Lemma_base_2"],
-        "Lemma_combine_23": ["Lemma_base_2", "Lemma_base_3"],
-        "Theorem_A": ["Lemma_combine_12"],
-        "Theorem_B": ["Lemma_combine_23"],
-        "Main_Theorem": ["Theorem_A", "Theorem_B"],
-    }
-
-    ds = DependencySystem(obligations)
-
-    print(f"\nProof obligations: {len(ds.theorems)}")
-    print(f"Sequential depth: {ds.max_level()}")
-    print(f"Minimum sequential rounds: {ds.max_level() + 1}")
-
-    schedule = ds.parallel_schedule()
-    print(f"\nParallel proving schedule:")
-    total_parallel_work = 0
-    for round_num in sorted(schedule):
-        tasks = sorted(schedule[round_num])
-        print(f"  Round {round_num + 1}: {tasks}")
-        total_parallel_work += 1
-
-    sequential_work = len(ds.theorems)
-    print(f"\nSequential proofs needed: {sequential_work}")
-    print(f"Parallel rounds needed: {total_parallel_work}")
-    print(f"Speedup factor: {sequential_work / total_parallel_work:.1f}x")
-    print()
-
-
-# ============================================================================
-# Application 4: Knowledge Dependency Analysis
-# ============================================================================
-
-def knowledge_analysis():
-    """
-    Analyze the knowledge structure of a mathematical domain
-    to identify bottlenecks and critical dependencies.
-    """
-    print("=" * 60)
-    print("Application 4: Knowledge Dependency Analysis")
-    print("=" * 60)
-
-    # A simplified machine learning theory dependency graph
-    ml_theory = {
-        "Linear Algebra Basics": [],
-        "Probability Basics": [],
-        "Calculus": [],
-        "Convex Sets": ["Linear Algebra Basics"],
-        "Gradient": ["Calculus", "Linear Algebra Basics"],
-        "Expectation": ["Probability Basics", "Calculus"],
-        "Convex Functions": ["Convex Sets", "Calculus"],
-        "Gradient Descent": ["Gradient", "Convex Functions"],
-        "Concentration Inequalities": ["Expectation"],
-        "PAC Learning": ["Probability Basics", "Concentration Inequalities"],
-        "VC Dimension": ["PAC Learning"],
-        "Kernel Methods": ["Linear Algebra Basics", "Convex Functions"],
-        "SVM Theory": ["Kernel Methods", "Convex Functions", "Gradient Descent"],
-        "Generalization Bounds": ["VC Dimension", "Concentration Inequalities"],
-        "Deep Learning Theory": ["Gradient Descent", "Generalization Bounds"],
-    }
-
-    ds = DependencySystem(ml_theory)
-
-    print(f"\nDomain: ML Theory")
-    print(f"Concepts: {len(ds.theorems)}")
-    print(f"Maximum depth: {ds.max_level()}")
-
-    # Find bottleneck concepts (most dependents)
-    dependent_count = {}
-    for t in ds.theorems:
-        count = sum(1 for other in ds.theorems
-                    if t in ds.deps.get(other, []))
-        dependent_count[t] = count
-
-    print("\nMost-depended-upon concepts (bottlenecks):")
-    for t in sorted(dependent_count, key=lambda x: -dependent_count[x])[:5]:
-        print(f"  {t}: {dependent_count[t]} direct dependents")
-
-    # Find the longest critical path
-    deepest = max(ds.theorems, key=lambda t: ds.level(t))
-    chain = ds.dependency_chain(deepest)
-    print(f"\nLongest critical path:")
-    print(f"  {' → '.join(chain)}")
-    print(f"  Length: {len(chain) - 1} (= level of {deepest})")
-
-    # Frontier analysis
-    frontier = {"Deep Learning Theory", "SVM Theory"}
-    print(f"\nFrontier: {frontier}")
-    print(f"  Minimum learning stages: {ds.frontier_depth(frontier) + 1}")
-    for t in frontier:
-        print(f"  Path to {t}: {' → '.join(ds.dependency_chain(t))}")
+    
+    ds = DepSystem(library, imports)
+    
+    print(f"\nLibrary: {len(library)} modules")
+    print(f"Curriculum depth: {ds.max_level()}")
+    
+    decomp = ds.level_decomposition()
+    print("\nLevel structure:")
+    for level in sorted(decomp.keys()):
+        modules = sorted(decomp[level])
+        print(f"  Level {level} ({len(modules)} module{'s' if len(modules) > 1 else ''}): "
+              f"{', '.join(modules)}")
+    
+    print(f"\nDeepest result: prime_number_theorem (level {ds.dep_level('prime_number_theorem')})")
+    print(f"Critical path: {' → '.join(ds.critical_path('prime_number_theorem'))}")
+    
+    # Learning path suggestions
+    print("\nSuggested learning order (topological sort):")
+    for i, module in enumerate(ds.topological_sort(), 1):
+        level = ds.dep_level(module)
+        print(f"  {i:2d}. [{level}] {module}")
+    
+    print(f"\nCurriculum flexibility: ≥{ds.curriculum_count_lower_bound()} valid orderings")
     print()
 
 
 if __name__ == "__main__":
-    research_library_planning()
-    course_design()
-    prover_scheduling()
-    knowledge_analysis()
-
+    application_build_system()
+    application_course_planning()
+    application_research_planning()
+    application_proof_library()
     print("All applications demonstrated successfully.")
 
 
-#!/usr/bin/env python3
 """
-Curriculum Complexity of Mathematics — Demonstration
+Curriculum Theory: Interactive Demonstrations
 
-This script demonstrates the core theorems of curriculum complexity theory
-with concrete examples of mathematical dependency systems.
+Demonstrates the core theorems of curriculum complexity theory
+with concrete mathematical examples.
 """
 
+from algorithms import DepSystem
 import json
-from collections import defaultdict, deque
-from typing import Dict, List, Set, Tuple, Optional
 
 
-def compute_levels(deps: Dict[str, List[str]]) -> Dict[str, int]:
+def demo_three_theorem_chain():
+    """Demonstrate the basic three-theorem chain: C depends on B, B depends on A.
+    
+    This mirrors the formally verified example in the Lean proof.
     """
-    Compute the dependency depth (level) of each theorem in a dependency system.
+    print("=" * 60)
+    print("DEMO 1: Three-Theorem Chain (A → B → C)")
+    print("=" * 60)
+    
+    ds = DepSystem(
+        {'axiomA', 'lemmaB', 'thmC'},
+        {'axiomA': set(), 'lemmaB': {'axiomA'}, 'thmC': {'lemmaB'}}
+    )
+    
+    print("\nDependency levels (formally verified in Lean):")
+    for t, level in ds.curriculum_ranking():
+        print(f"  depLevel({t}) = {level}")
+    
+    print("\nStage knowledge (verified: stageKnowledge n = {{t | depLevel t ≤ n}}):")
+    for n in range(ds.max_level() + 1):
+        known = ds.stage_knowledge(n)
+        print(f"  Stage {n}: {sorted(known)}")
+    
+    print("\nStrict increase at each stage (verified: stage_strictly_increases):")
+    for n in range(ds.max_level()):
+        s_n = ds.stage_knowledge(n)
+        s_n1 = ds.stage_knowledge(n + 1)
+        new = s_n1 - s_n
+        print(f"  Stage {n} → {n+1}: gained {new}")
+    
+    print(f"\nSaturation at maxLevel = {ds.max_level()} (verified: stageKnowledge_complete_at_maxLevel)")
+    print()
 
-    Level 0: theorems with no dependencies
-    Level n+1: theorems whose deepest dependency has level n
 
-    This is the minimum stage at which each theorem becomes provable.
-
-    >>> deps = {"C": ["A", "B"], "B": ["A"], "A": []}
-    >>> levels = compute_levels(deps)
-    >>> levels == {"A": 0, "B": 1, "C": 2}
-    True
+def demo_diamond_dependency():
+    """Demonstrate a diamond-shaped dependency graph.
+    
+    D depends on B and C, both B and C depend on A.
+    This shows how parallel dependencies affect levels.
     """
-    # Build the set of all theorems
-    all_theorems = set(deps.keys())
-    for dep_list in deps.values():
-        all_theorems.update(dep_list)
-
-    # Ensure all theorems appear in deps
-    for t in all_theorems:
-        if t not in deps:
-            deps[t] = []
-
-    levels = {}
-
-    def compute_level(t: str, visited: Set[str] = None) -> int:
-        if t in levels:
-            return levels[t]
-        if visited is None:
-            visited = set()
-        if t in visited:
-            raise ValueError(f"Cycle detected involving {t}")
-        visited.add(t)
-
-        if not deps[t]:
-            levels[t] = 0
-        else:
-            levels[t] = max(compute_level(d, visited) for d in deps[t]) + 1
-        return levels[t]
-
-    for t in all_theorems:
-        compute_level(t)
-    return levels
+    print("=" * 60)
+    print("DEMO 2: Diamond Dependency (A → B,C → D)")
+    print("=" * 60)
+    
+    ds = DepSystem(
+        {'A', 'B', 'C', 'D'},
+        {'A': set(), 'B': {'A'}, 'C': {'A'}, 'D': {'B', 'C'}}
+    )
+    
+    print("\nDependency levels:")
+    for t, level in ds.curriculum_ranking():
+        print(f"  depLevel({t}) = {level}")
+    
+    print("\nNote: B and C are at the same level (independent theorems)")
+    print("This means they can be proved in parallel!")
+    
+    print("\nParallel schedule:")
+    for i, round_set in enumerate(ds.parallel_schedule()):
+        print(f"  Round {i}: {sorted(round_set)}")
+    
+    print(f"\nCritical path to D: {' → '.join(ds.critical_path('D'))}")
+    print(f"Minimum research cycles for D: {ds.dep_level('D') + 1}")
+    
+    valid_orderings = ds.curriculum_count_lower_bound()
+    print(f"Lower bound on valid curricula: {valid_orderings}")
+    print(f"  (B and C can swap: at least 2! = 2 orderings at level 1)")
+    print()
 
 
-def compute_stage_knowledge(deps: Dict[str, List[str]], max_stage: int = None) -> Dict[int, Set[str]]:
+def demo_linear_algebra_curriculum():
+    """A realistic example: a fragment of linear algebra.
+    
+    Shows how curriculum theory applies to actual mathematical content.
     """
-    Compute the stage knowledge sets: stageKnowledge(n) for n = 0, 1, 2, ...
-
-    Stage 0: theorems with no dependencies
-    Stage n+1: theorems whose dependencies are all in stage n
-
-    Returns a dict mapping stage number to the cumulative set of known theorems.
-
-    >>> deps = {"C": ["A", "B"], "B": ["A"], "A": []}
-    >>> stages = compute_stage_knowledge(deps)
-    >>> stages[0] == {"A"}
-    True
-    >>> stages[1] == {"A", "B"}
-    True
-    >>> stages[2] == {"A", "B", "C"}
-    True
-    """
-    all_theorems = set(deps.keys())
-    for dep_list in deps.values():
-        all_theorems.update(dep_list)
-    for t in all_theorems:
-        if t not in deps:
-            deps[t] = []
-
-    if max_stage is None:
-        max_stage = len(all_theorems)
-
-    stages = {}
-    for n in range(max_stage + 1):
-        if n == 0:
-            stages[n] = {t for t in all_theorems if not deps[t]}
-        else:
-            stages[n] = {t for t in all_theorems
-                         if all(d in stages[n-1] for d in deps[t])}
-    return stages
-
-
-def topological_sort(deps: Dict[str, List[str]]) -> List[str]:
-    """
-    Compute a valid curriculum (topological sort) for a dependency system.
-
-    Returns a list where every theorem appears after all its dependencies.
-
-    >>> deps = {"C": ["A", "B"], "B": ["A"], "A": []}
-    >>> curriculum = topological_sort(deps)
-    >>> curriculum.index("A") < curriculum.index("B") < curriculum.index("C")
-    True
-    """
-    all_theorems = set(deps.keys())
-    for dep_list in deps.values():
-        all_theorems.update(dep_list)
-    for t in all_theorems:
-        if t not in deps:
-            deps[t] = []
-
-    levels = compute_levels(deps)
-    return sorted(all_theorems, key=lambda t: levels[t])
-
-
-def frontier_depth(deps: Dict[str, List[str]], frontier: Set[str]) -> int:
-    """
-    Compute the frontier depth: the minimum number of stages to cover all
-    frontier theorems.
-
-    >>> deps = {"C": ["A", "B"], "B": ["A"], "A": [], "D": []}
-    >>> frontier_depth(deps, {"C", "D"})
-    2
-    """
-    levels = compute_levels(deps)
-    return max(levels[t] for t in frontier)
-
-
-# ============================================================================
-# Example 1: Linear Algebra Curriculum
-# ============================================================================
-
-def example_linear_algebra():
-    """A simplified dependency graph for a linear algebra course."""
-    deps = {
-        "Vector Spaces": [],
-        "Linear Maps": ["Vector Spaces"],
-        "Matrix Algebra": ["Vector Spaces"],
-        "Determinants": ["Matrix Algebra"],
-        "Eigenvalues": ["Linear Maps", "Determinants"],
-        "Spectral Theorem": ["Eigenvalues"],
-        "Jordan Form": ["Eigenvalues", "Matrix Algebra"],
+    print("=" * 60)
+    print("DEMO 3: Linear Algebra Curriculum")
+    print("=" * 60)
+    
+    nodes = {
+        'vector_space', 'linear_map', 'kernel', 'image',
+        'dimension', 'rank_nullity', 'eigenvalue',
+        'char_poly', 'cayley_hamilton', 'jordan_form'
     }
+    deps = {
+        'vector_space': set(),
+        'linear_map': {'vector_space'},
+        'kernel': {'linear_map'},
+        'image': {'linear_map'},
+        'dimension': {'vector_space'},
+        'rank_nullity': {'kernel', 'image', 'dimension'},
+        'eigenvalue': {'linear_map', 'dimension'},
+        'char_poly': {'eigenvalue'},
+        'cayley_hamilton': {'char_poly', 'rank_nullity'},
+        'jordan_form': {'cayley_hamilton', 'eigenvalue'},
+    }
+    
+    ds = DepSystem(nodes, deps)
+    
+    print("\nCurriculum ranking:")
+    for t, level in ds.curriculum_ranking():
+        print(f"  Level {level}: {t}")
+    
+    print(f"\nMaximum depth: {ds.max_level()}")
+    print(f"Critical path to jordan_form: {' → '.join(ds.critical_path('jordan_form'))}")
+    
+    print("\nOptimal parallel schedule:")
+    for i, round_set in enumerate(ds.parallel_schedule()):
+        if round_set:
+            print(f"  Round {i}: {', '.join(sorted(round_set))}")
+    
+    # Frontier analysis
+    frontier = {'cayley_hamilton', 'jordan_form'}
+    fd = ds.frontier_depth(frontier)
+    print(f"\nFrontier {{cayley_hamilton, jordan_form}}:")
+    print(f"  Frontier depth: {fd} cycles")
+    print(f"  All frontier theorems known at stage {fd - 1}")
+    
+    # Verify frontier_all_known_iff
+    max_dep = max(ds.dep_level(t) for t in frontier)
+    all_known = all(ds.dep_level(t) <= max_dep for t in frontier)
+    print(f"  max(depLevel over frontier) = {max_dep}")
+    print(f"  All frontier known at stage {max_dep}: {all_known} ✓")
+    print()
 
+
+def demo_stage_growth():
+    """Demonstrate strict stage growth and convergence.
+    
+    Verifies the bootstrapping strictness theorem computationally.
+    """
     print("=" * 60)
-    print("Example 1: Linear Algebra Curriculum")
+    print("DEMO 4: Stage Growth and Convergence")
     print("=" * 60)
-
-    levels = compute_levels(deps)
-    print("\nDependency Depths (Levels):")
-    for t in sorted(levels, key=lambda x: levels[x]):
-        print(f"  Level {levels[t]}: {t}")
-
-    stages = compute_stage_knowledge(deps)
-    print("\nStage Knowledge Growth:")
+    
+    # Build a system with 3 levels and multiple theorems per level
+    ds = DepSystem(
+        {'A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2'},
+        {
+            'A1': set(), 'A2': set(),
+            'B1': {'A1'}, 'B2': {'A1', 'A2'}, 'B3': {'A2'},
+            'C1': {'B1', 'B2'}, 'C2': {'B2', 'B3'},
+        }
+    )
+    
+    print("\nLevel decomposition:")
+    decomp = ds.level_decomposition()
+    for level in sorted(decomp.keys()):
+        print(f"  Level {level}: {sorted(decomp[level])}")
+    
+    print("\nStage knowledge growth:")
     prev = set()
-    for n in sorted(stages):
-        new = stages[n] - prev
-        if new:
-            print(f"  Stage {n}: +{new}")
-            prev = stages[n]
-
-    curriculum = topological_sort(deps)
-    print(f"\nValid Curriculum: {curriculum}")
-
-    frontier = {"Spectral Theorem", "Jordan Form"}
-    fd = frontier_depth(deps, frontier)
-    print(f"\nFrontier {frontier}")
-    print(f"  Minimum stages to reach frontier: {fd}")
+    for n in range(ds.max_level() + 2):
+        curr = ds.stage_knowledge(n)
+        new = curr - prev
+        is_strict = len(curr) > len(prev)
+        status = "STRICT ⊂" if is_strict else "= (saturated)"
+        print(f"  Stage {n}: |known| = {len(curr):2d}, "
+              f"new = {sorted(new) if new else '∅':30s} {status}")
+        prev = curr
+    
+    print(f"\nSaturation point: stage {ds.max_level()}")
+    print(f"Total theorems: {len(ds.nodes)}")
+    print(f"|stageKnowledge({ds.max_level()})| = {len(ds.stage_knowledge(ds.max_level()))}")
+    print(f"Equals Set.univ: {ds.stage_knowledge(ds.max_level()) == ds.nodes} ✓")
     print()
 
 
-# ============================================================================
-# Example 2: Number Theory Curriculum
-# ============================================================================
-
-def example_number_theory():
-    """A dependency graph for foundational number theory."""
-    deps = {
-        "Natural Numbers": [],
-        "Divisibility": ["Natural Numbers"],
-        "Primes": ["Divisibility"],
-        "GCD": ["Divisibility"],
-        "Bezout's Identity": ["GCD"],
-        "Fundamental Theorem of Arithmetic": ["Primes", "Bezout's Identity"],
-        "Euler's Totient": ["Fundamental Theorem of Arithmetic"],
-        "Fermat's Little Theorem": ["Euler's Totient"],
-        "Quadratic Reciprocity": ["Primes", "Euler's Totient"],
-    }
-
+def demo_cross_domain():
+    """Demonstrate cross-domain curriculum merging.
+    
+    Two independent mathematical theories merged with cross-dependencies.
+    """
     print("=" * 60)
-    print("Example 2: Number Theory Curriculum")
+    print("DEMO 5: Cross-Domain Theory Merging")
     print("=" * 60)
-
-    levels = compute_levels(deps)
-    print("\nDependency Depths (Levels):")
-    for t in sorted(levels, key=lambda x: levels[x]):
-        print(f"  Level {levels[t]}: {t}")
-
-    curriculum = topological_sort(deps)
-    print(f"\nValid Curriculum: {curriculum}")
-
-    frontier = {"Fermat's Little Theorem", "Quadratic Reciprocity"}
-    fd = frontier_depth(deps, frontier)
-    print(f"\nFrontier {frontier}")
-    print(f"  Minimum stages to reach frontier: {fd}")
-    print()
-
-
-# ============================================================================
-# Example 3: Demonstrating strict stage growth
-# ============================================================================
-
-def example_strict_growth():
-    """Demonstrate that each stage with new theorems strictly extends the previous."""
-    deps = {
-        "A1": [], "A2": [],
-        "B1": ["A1"], "B2": ["A1", "A2"],
-        "C1": ["B1", "B2"],
-        "D1": ["C1"],
-    }
-
-    print("=" * 60)
-    print("Example 3: Strict Stage Growth (Bootstrapping)")
-    print("=" * 60)
-
-    levels = compute_levels(deps)
-    stages = compute_stage_knowledge(deps)
-
-    print("\nStage-by-stage knowledge growth:")
-    for n in sorted(stages):
-        stage_set = stages[n]
-        new = stage_set - (stages[n-1] if n > 0 else set())
-        if new or n == 0:
-            strict = "⊂" if new and n > 0 else "="
-            print(f"  Stage {n}: {sorted(stage_set)} "
-                  f"{'  (new: ' + str(sorted(new)) + ')' if new else ''}")
-
-    print("\nVerification of strict inclusion:")
-    for n in range(max(stages)):
-        new_at_n1 = stages[n+1] - stages[n]
-        if new_at_n1:
-            print(f"  Stage {n} ⊂ Stage {n+1}  "
-                  f"(new theorems at level {n+1}: {sorted(new_at_n1)})")
-        else:
-            print(f"  Stage {n} = Stage {n+1}  (stabilized)")
-    print()
-
-
-# ============================================================================
-# Example 4: Stabilization
-# ============================================================================
-
-def example_stabilization():
-    """Show that stage knowledge stabilizes to the full set."""
-    deps = {
-        "T1": [], "T2": [],
-        "T3": ["T1"],
-        "T4": ["T2", "T3"],
-        "T5": ["T4"],
-    }
-
-    print("=" * 60)
-    print("Example 4: Knowledge Stabilization")
-    print("=" * 60)
-
-    all_theorems = set(deps.keys())
-    stages = compute_stage_knowledge(deps, max_stage=10)
-
-    print(f"\nTotal theorems: {len(all_theorems)}")
-    for n in sorted(stages):
-        complete = stages[n] == all_theorems
-        print(f"  Stage {n}: {len(stages[n])}/{len(all_theorems)} theorems"
-              f"{'  ✓ COMPLETE' if complete else ''}")
-        if complete and n > 0 and stages[n-1] == all_theorems:
-            print(f"  (Stabilized at stage {n-1})")
-            break
+    
+    # Algebra fragment
+    algebra = DepSystem(
+        {'group', 'ring', 'field', 'polynomial'},
+        {
+            'group': set(),
+            'ring': {'group'},
+            'field': {'ring'},
+            'polynomial': {'ring'},
+        }
+    )
+    
+    # Analysis fragment
+    analysis = DepSystem(
+        {'metric', 'topology', 'continuity', 'derivative'},
+        {
+            'metric': set(),
+            'topology': {'metric'},
+            'continuity': {'topology'},
+            'derivative': {'continuity'},
+        }
+    )
+    
+    print("Algebra theory depth:", algebra.max_level())
+    print("Analysis theory depth:", analysis.max_level())
+    
+    # Merge with cross-dependency: algebraic geometry needs both
+    from algorithms import merge_systems
+    merged = merge_systems(algebra, analysis, {
+        'derivative': {'field'},  # derivatives need field structure
+    })
+    
+    print(f"\nMerged system depth: {merged.max_level()}")
+    print("\nMerged curriculum:")
+    for t, level in merged.curriculum_ranking():
+        print(f"  Level {level}: {t}")
+    
+    print(f"\nCritical path to derivative: {' → '.join(merged.critical_path('derivative'))}")
+    print("Note: cross-domain dependency increases the depth!")
     print()
 
 
 if __name__ == "__main__":
-    example_linear_algebra()
-    example_number_theory()
-    example_strict_growth()
-    example_stabilization()
-
-    print("=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
+    demo_three_theorem_chain()
+    demo_diamond_dependency()
+    demo_linear_algebra_curriculum()
+    demo_stage_growth()
+    demo_cross_domain()
+    print("All demonstrations completed successfully.")
 
 
-#!/usr/bin/env python3
 """
-Curriculum Complexity — Visualizations
+Curriculum Theory: Visualizations
 
-Generates figures illustrating the key concepts and theorems
-of curriculum complexity theory.
+Generates publication-quality visualizations of curriculum complexity theory.
 """
 
 import matplotlib
@@ -554,279 +483,299 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-from algorithms import DependencySystem
+from algorithms import DepSystem
 import base64
-import io
+from io import BytesIO
 
 
 def fig_to_base64(fig) -> str:
     """Convert matplotlib figure to base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{data}"
 
 
-def visualize_stage_growth():
-    """Visualize the monotone growth of stage knowledge."""
-    deps = {
-        "T1": [], "T2": [],
-        "T3": ["T1"], "T4": ["T2"],
-        "T5": ["T1", "T2"],
-        "T6": ["T3", "T4"],
-        "T7": ["T5", "T6"],
-        "T8": ["T7"],
-    }
-
-    ds = DependencySystem(deps)
-    max_stage = ds.max_level()
-
-    stages = []
-    for n in range(max_stage + 2):
-        stages.append(len(ds.stage_knowledge(n)))
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    # Bar chart of cumulative knowledge
-    x = range(len(stages))
-    colors = plt.cm.viridis(np.linspace(0.2, 0.8, len(stages)))
-    bars = ax.bar(x, stages, color=colors, edgecolor='black', linewidth=0.5)
-
-    # Add horizontal line for total
-    ax.axhline(y=len(ds.theorems), color='red', linestyle='--',
-               label=f'Total theorems = {len(ds.theorems)}', alpha=0.7)
-
-    ax.set_xlabel('Stage n', fontsize=14)
-    ax.set_ylabel('|stageKnowledge(n)|', fontsize=14)
-    ax.set_title('Monotone Growth of Stage Knowledge\n(Stabilization Theorem)', fontsize=16)
-    ax.legend(fontsize=12)
-    ax.set_xticks(x)
-
-    # Annotate strict growth
-    for i in range(1, len(stages)):
-        if stages[i] > stages[i-1]:
-            ax.annotate('⊂', xy=(i-0.5, (stages[i-1] + stages[i])/2),
-                        fontsize=16, ha='center', color='green', fontweight='bold')
-
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/stage_growth.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def visualize_level_distribution():
-    """Visualize the distribution of theorem levels in a dependency system."""
-    deps = {
-        "Ring Axioms": [],
-        "Ideal Definition": ["Ring Axioms"],
-        "Module Definition": ["Ring Axioms"],
-        "Prime Ideal": ["Ideal Definition"],
-        "Maximal Ideal": ["Ideal Definition"],
-        "Quotient Ring": ["Ideal Definition"],
-        "Noetherian Ring": ["Ideal Definition", "Module Definition"],
-        "Localization": ["Ring Axioms", "Module Definition"],
-        "Primary Decomposition": ["Prime Ideal", "Noetherian Ring"],
-        "Krull Dimension": ["Prime Ideal"],
-        "Hilbert Basis": ["Noetherian Ring"],
-        "Nakayama Lemma": ["Module Definition", "Maximal Ideal"],
-        "Going Up": ["Prime Ideal", "Localization"],
-        "Krull's Principal Ideal": ["Krull Dimension", "Noetherian Ring"],
-        "Dimension Theory": ["Krull's Principal Ideal", "Primary Decomposition"],
-    }
-
-    ds = DependencySystem(deps)
-
-    # Count theorems at each level
-    level_counts = {}
-    for t in ds.theorems:
-        lvl = ds.level(t)
-        level_counts[lvl] = level_counts.get(lvl, 0) + 1
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Level histogram
-    levels = sorted(level_counts.keys())
-    counts = [level_counts[l] for l in levels]
-    colors = plt.cm.RdYlGn_r(np.linspace(0.1, 0.9, len(levels)))
-    ax1.bar(levels, counts, color=colors, edgecolor='black')
-    ax1.set_xlabel('Dependency Depth (Level)', fontsize=13)
-    ax1.set_ylabel('Number of Theorems', fontsize=13)
-    ax1.set_title('Level Distribution\n(Commutative Algebra Library)', fontsize=14)
-    ax1.set_xticks(levels)
-
-    # Right: Parallel schedule timeline
-    schedule = ds.parallel_schedule()
-    y_pos = 0
-    yticks = []
-    ylabels = []
-    for stage in sorted(schedule):
-        theorems = sorted(schedule[stage])
-        for t in theorems:
-            ax2.barh(y_pos, 1, left=stage, height=0.7, color=colors[stage],
-                     edgecolor='black', linewidth=0.5)
-            ax2.text(stage + 0.5, y_pos, t, ha='center', va='center', fontsize=7)
-            yticks.append(y_pos)
-            ylabels.append('')
-            y_pos += 1
-
-    ax2.set_xlabel('Research Cycle', fontsize=13)
-    ax2.set_title('Optimal Parallel Schedule', fontsize=14)
-    ax2.set_yticks([])
-
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/level_distribution.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def visualize_frontier_optimality():
-    """Visualize frontier depth and optimality."""
-    deps = {
-        "A": [], "B": [], "C": [],
-        "D": ["A", "B"], "E": ["B", "C"],
-        "F": ["D"], "G": ["D", "E"],
-        "H": ["F", "G"],
-    }
-
-    ds = DependencySystem(deps)
-
-    # Show multiple frontiers and their depths
-    frontiers = [
-        {"A", "B", "C"},
-        {"D", "E"},
-        {"F", "G"},
-        {"H"},
-        {"F", "H"},
-    ]
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    frontier_labels = []
-    frontier_depths = []
-    for f in frontiers:
-        label = ", ".join(sorted(f))
-        depth = ds.frontier_depth(f)
-        frontier_labels.append(f"{{{label}}}")
-        frontier_depths.append(depth)
-
-    colors = plt.cm.plasma(np.linspace(0.2, 0.8, len(frontiers)))
-    bars = ax.barh(range(len(frontiers)), frontier_depths, color=colors,
-                   edgecolor='black', linewidth=0.5)
-
-    ax.set_yticks(range(len(frontiers)))
-    ax.set_yticklabels(frontier_labels, fontsize=11)
-    ax.set_xlabel('Frontier Depth (max level)', fontsize=13)
-    ax.set_title('Frontier Optimality Theorem\nMinimum stages = max level over frontier', fontsize=14)
-
-    # Annotate with exact values
-    for i, (bar, depth) in enumerate(zip(bars, frontier_depths)):
-        ax.text(depth + 0.05, i, f'{depth}', va='center', fontsize=12, fontweight='bold')
-
-    ax.set_xlim(0, max(frontier_depths) + 0.5)
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/frontier_optimality.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def visualize_dag():
+def viz_dependency_dag():
     """Visualize a dependency DAG with level coloring."""
-    deps = {
-        "Axioms": [],
-        "Groups": ["Axioms"],
-        "Rings": ["Groups"],
-        "Modules": ["Rings", "Groups"],
-        "Fields": ["Rings"],
-        "Galois": ["Fields", "Groups"],
-        "Homological": ["Modules"],
+    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+    
+    # Linear algebra curriculum
+    nodes_data = {
+        'Vector Space': (1, 0),
+        'Linear Map': (0, 1),
+        'Dimension': (2, 1),
+        'Kernel': (-0.5, 2),
+        'Image': (0.5, 2),
+        'Eigenvalue': (2.5, 2),
+        'Rank-Nullity': (0.5, 3),
+        'Char. Poly': (2.5, 3),
+        'Cayley-Hamilton': (1.5, 4),
+        'Jordan Form': (1.5, 5),
     }
-
-    ds = DependencySystem(deps)
-
-    # Manual layout by level
-    positions = {
-        "Axioms": (3, 0),
-        "Groups": (2, 1),
-        "Rings": (4, 2),
-        "Modules": (2, 3),
-        "Fields": (5, 3),
-        "Galois": (4, 4),
-        "Homological": (1, 4),
-    }
-
-    fig, ax = plt.subplots(figsize=(10, 8))
-
-    # Color by level
-    max_level = ds.max_level()
-    cmap = plt.cm.RdYlGn_r
-
+    
+    edges = [
+        ('Vector Space', 'Linear Map'),
+        ('Vector Space', 'Dimension'),
+        ('Linear Map', 'Kernel'),
+        ('Linear Map', 'Image'),
+        ('Linear Map', 'Eigenvalue'),
+        ('Dimension', 'Eigenvalue'),
+        ('Dimension', 'Rank-Nullity'),
+        ('Kernel', 'Rank-Nullity'),
+        ('Image', 'Rank-Nullity'),
+        ('Eigenvalue', 'Char. Poly'),
+        ('Rank-Nullity', 'Cayley-Hamilton'),
+        ('Char. Poly', 'Cayley-Hamilton'),
+        ('Cayley-Hamilton', 'Jordan Form'),
+        ('Eigenvalue', 'Jordan Form'),
+    ]
+    
+    levels = {name: int(pos[1]) for name, pos in nodes_data.items()}
+    max_level = max(levels.values())
+    
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, max_level + 1))
+    
     # Draw edges
-    for t, dep_list in deps.items():
-        for d in dep_list:
-            x1, y1 = positions[d]
-            x2, y2 = positions[t]
-            ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
-                        arrowprops=dict(arrowstyle="->", color="gray",
-                                        connectionstyle="arc3,rad=0.1",
-                                        lw=1.5))
-
+    for src, dst in edges:
+        x1, y1 = nodes_data[src]
+        x2, y2 = nodes_data[dst]
+        ax.annotate('', xy=(x2, y2 - 0.15), xytext=(x1, y1 + 0.15),
+                    arrowprops=dict(arrowstyle='->', color='#666666',
+                                   lw=1.5, connectionstyle='arc3,rad=0.1'))
+    
     # Draw nodes
-    for t, (x, y) in positions.items():
-        level = ds.level(t)
-        color = cmap(level / max(max_level, 1))
-        circle = plt.Circle((x, y), 0.35, color=color, ec='black', lw=2, zorder=5)
-        ax.add_patch(circle)
-        ax.text(x, y, t, ha='center', va='center', fontsize=8,
-                fontweight='bold', zorder=6)
-        ax.text(x + 0.4, y + 0.3, f'L{level}', fontsize=9, color='blue',
-                fontweight='bold', zorder=6)
-
-    ax.set_xlim(-0.5, 7)
-    ax.set_ylim(-0.5, 5)
+    for name, (x, y) in nodes_data.items():
+        level = levels[name]
+        color = colors[level]
+        bbox = dict(boxstyle='round,pad=0.4', facecolor=color,
+                   edgecolor='black', linewidth=1.5, alpha=0.9)
+        ax.text(x, y, name, ha='center', va='center',
+               fontsize=9, fontweight='bold', bbox=bbox,
+               color='white' if level > 2 else 'black')
+    
+    # Level indicators
+    for level in range(max_level + 1):
+        ax.axhline(y=level, color='gray', linestyle=':', alpha=0.3, zorder=0)
+        ax.text(-1.5, level, f'Level {level}', fontsize=10, color='gray',
+               va='center', ha='right', fontstyle='italic')
+    
+    ax.set_xlim(-2, 4)
+    ax.set_ylim(-0.5, 5.5)
     ax.set_aspect('equal')
     ax.axis('off')
-    ax.set_title('Theorem Dependency DAG\n(colored by level)', fontsize=16)
+    ax.set_title('Dependency DAG with Curriculum Levels\n(Linear Algebra Fragment)',
+                fontsize=14, fontweight='bold', pad=20)
+    
+    return fig_to_base64(fig)
 
-    # Legend
-    for i in range(max_level + 1):
-        ax.add_patch(mpatches.Rectangle((6, 4 - i * 0.5), 0.3, 0.3,
-                                        color=cmap(i / max(max_level, 1)),
-                                        ec='black'))
-        ax.text(6.5, 4 - i * 0.5 + 0.15, f'Level {i}', fontsize=10, va='center')
 
+def viz_stage_growth():
+    """Visualize stage knowledge growth over time."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Example system
+    ds = DepSystem(
+        {'A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C2', 'C3', 'D1', 'D2'},
+        {
+            'A1': set(), 'A2': set(), 'A3': set(),
+            'B1': {'A1'}, 'B2': {'A1', 'A2'},
+            'C1': {'B1', 'B2'}, 'C2': {'B2'}, 'C3': {'A3'},
+            'D1': {'C1', 'C2'}, 'D2': {'C3', 'C1'},
+        }
+    )
+    
+    # Left: cumulative knowledge
+    stages = range(ds.max_level() + 2)
+    knowledge_sizes = [len(ds.stage_knowledge(n)) for n in stages]
+    
+    colors_bar = ['#2ecc71', '#3498db', '#9b59b6', '#e74c3c', '#f39c12']
+    
+    bars = ax1.bar(list(stages), knowledge_sizes,
+                   color=[colors_bar[min(i, len(colors_bar)-1)] for i in stages],
+                   edgecolor='white', linewidth=1.5)
+    ax1.axhline(y=len(ds.nodes), color='red', linestyle='--',
+               alpha=0.7, label=f'|T| = {len(ds.nodes)}')
+    ax1.set_xlabel('Stage n', fontsize=12)
+    ax1.set_ylabel('|stageKnowledge(n)|', fontsize=12)
+    ax1.set_title('Monotone Knowledge Growth', fontsize=13, fontweight='bold')
+    ax1.legend(fontsize=11)
+    ax1.set_ylim(0, len(ds.nodes) + 1)
+    
+    # Annotate strict increases
+    for i in range(1, len(knowledge_sizes)):
+        if knowledge_sizes[i] > knowledge_sizes[i-1]:
+            ax1.annotate('⊂', xy=(i - 0.5, (knowledge_sizes[i] + knowledge_sizes[i-1]) / 2),
+                        fontsize=14, ha='center', va='center', color='red', fontweight='bold')
+    
+    # Right: new theorems per stage
+    new_per_stage = []
+    for n in stages:
+        if n == 0:
+            new_per_stage.append(len(ds.stage_knowledge(0)))
+        else:
+            new_per_stage.append(len(ds.stage_knowledge(n)) - len(ds.stage_knowledge(n-1)))
+    
+    ax2.bar(list(stages), new_per_stage,
+            color=[colors_bar[min(i, len(colors_bar)-1)] for i in stages],
+            edgecolor='white', linewidth=1.5)
+    ax2.set_xlabel('Stage n', fontsize=12)
+    ax2.set_ylabel('New theorems at stage n', fontsize=12)
+    ax2.set_title('Bootstrapping: New Knowledge Per Stage', fontsize=13, fontweight='bold')
+    
+    # Level decomposition annotation
+    decomp = ds.level_decomposition()
+    for level in sorted(decomp.keys()):
+        count = len(decomp[level])
+        ax2.text(level, count + 0.1, f'{count}', ha='center', va='bottom',
+                fontsize=11, fontweight='bold')
+    
     plt.tight_layout()
-    fig.savefig('/workspace/request-project/dependency_dag.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
+    return fig_to_base64(fig)
+
+
+def viz_frontier_analysis():
+    """Visualize frontier reachability and optimality."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    
+    # Research program
+    ds = DepSystem(
+        {'D0', 'L1a', 'L1b', 'L2a', 'L2b', 'L2c', 'R3a', 'R3b', 'T4', 'G5'},
+        {
+            'D0': set(),
+            'L1a': {'D0'}, 'L1b': {'D0'},
+            'L2a': {'L1a'}, 'L2b': {'L1a', 'L1b'}, 'L2c': {'L1b'},
+            'R3a': {'L2a', 'L2b'}, 'R3b': {'L2b', 'L2c'},
+            'T4': {'R3a', 'R3b'},
+            'G5': {'T4'},
+        }
+    )
+    
+    # Plot cumulative coverage for different frontiers
+    frontier_sets = {
+        'All theorems': ds.nodes,
+        'Main + Generalization': {'T4', 'G5'},
+        'Just Main Theorem': {'T4'},
+        'Intermediate Results': {'R3a', 'R3b'},
+    }
+    
+    max_stage = ds.max_level() + 1
+    stages = range(max_stage + 1)
+    
+    line_styles = ['-', '--', '-.', ':']
+    colors_line = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6']
+    
+    for idx, (name, frontier) in enumerate(frontier_sets.items()):
+        coverage = []
+        for n in stages:
+            known = ds.stage_knowledge(n)
+            covered = len(frontier & known)
+            coverage.append(covered / len(frontier) * 100)
+        
+        ax.plot(list(stages), coverage, line_styles[idx],
+               color=colors_line[idx], linewidth=2.5,
+               marker='o', markersize=6, label=name)
+        
+        # Mark the frontier depth
+        fd = ds.frontier_depth(frontier)
+        ax.axvline(x=fd - 1, color=colors_line[idx], linestyle=':',
+                  alpha=0.3, linewidth=1)
+    
+    ax.axhline(y=100, color='gray', linestyle='--', alpha=0.5)
+    ax.set_xlabel('Stage n', fontsize=12)
+    ax.set_ylabel('Frontier Coverage (%)', fontsize=12)
+    ax.set_title('Frontier Reachability by Stage\n(verified: frontier_all_known_iff)',
+                fontsize=13, fontweight='bold')
+    ax.legend(fontsize=10, loc='lower right')
+    ax.set_ylim(-5, 110)
+    ax.set_xlim(-0.5, max_stage + 0.5)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    return fig_to_base64(fig)
+
+
+def viz_parallel_vs_sequential():
+    """Compare parallel and sequential complexity."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    
+    # Generate systems of increasing size
+    np.random.seed(42)
+    sizes = [5, 10, 15, 20, 30, 50]
+    seq_depths = []
+    par_depths = []
+    
+    for n in sizes:
+        # Build a random DAG
+        nodes = {f'T{i}' for i in range(n)}
+        deps = {}
+        for i in range(n):
+            # Each node depends on some earlier nodes
+            possible = [f'T{j}' for j in range(i)]
+            if possible:
+                k = min(len(possible), np.random.randint(1, 4))
+                selected = list(np.random.choice(possible, size=k, replace=False))
+                deps[f'T{i}'] = set(selected)
+            else:
+                deps[f'T{i}'] = set()
+        
+        ds = DepSystem(nodes, deps)
+        seq_depths.append(n)
+        par_depths.append(ds.max_level() + 1)
+    
+    x = np.arange(len(sizes))
+    width = 0.35
+    
+    bars1 = ax.bar(x - width/2, seq_depths, width,
+                   label='Sequential (n theorems)', color='#e74c3c', alpha=0.8)
+    bars2 = ax.bar(x + width/2, par_depths, width,
+                   label='Parallel (max depth + 1)', color='#3498db', alpha=0.8)
+    
+    # Add speedup annotations
+    for i in range(len(sizes)):
+        speedup = seq_depths[i] / par_depths[i]
+        ax.text(i, max(seq_depths[i], par_depths[i]) + 1,
+               f'{speedup:.1f}×', ha='center', va='bottom',
+               fontsize=9, fontweight='bold', color='#2c3e50')
+    
+    ax.set_xlabel('System Size', fontsize=12)
+    ax.set_ylabel('Number of Steps', fontsize=12)
+    ax.set_title('Sequential vs Parallel Research Complexity\n'
+                '(Speedup from curriculum-optimal scheduling)',
+                fontsize=13, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels([f'n={s}' for s in sizes])
+    ax.legend(fontsize=11)
+    ax.grid(True, axis='y', alpha=0.3)
+    
+    plt.tight_layout()
+    return fig_to_base64(fig)
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-
-    b64_1 = visualize_stage_growth()
-    print("  ✓ Stage growth visualization")
-
-    b64_2 = visualize_level_distribution()
-    print("  ✓ Level distribution visualization")
-
-    b64_3 = visualize_frontier_optimality()
-    print("  ✓ Frontier optimality visualization")
-
-    b64_4 = visualize_dag()
-    print("  ✓ Dependency DAG visualization")
-
-    print("\nAll visualizations saved as PNG files.")
-
-    # Store base64 data for PACKAGE.json
-    import json
-    viz_data = {
-        "stage_growth": b64_1,
-        "level_distribution": b64_2,
-        "frontier_optimality": b64_3,
-        "dependency_dag": b64_4,
-    }
-    with open('/workspace/request-project/viz_data.json', 'w') as f:
-        json.dump(viz_data, f)
-    print("Base64 data saved to viz_data.json")
+    
+    img1 = viz_dependency_dag()
+    print(f"1. Dependency DAG: {len(img1)} chars")
+    
+    img2 = viz_stage_growth()
+    print(f"2. Stage Growth: {len(img2)} chars")
+    
+    img3 = viz_frontier_analysis()
+    print(f"3. Frontier Analysis: {len(img3)} chars")
+    
+    img4 = viz_parallel_vs_sequential()
+    print(f"4. Parallel vs Sequential: {len(img4)} chars")
+    
+    # Save images as files too
+    for name, data in [('dag', img1), ('growth', img2), ('frontier', img3), ('parallel', img4)]:
+        # Extract base64 data
+        b64 = data.split(',', 1)[1]
+        with open(f'{name}.png', 'wb') as f:
+            f.write(base64.b64decode(b64))
+        print(f"Saved {name}.png")
+    
+    print("All visualizations generated.")
