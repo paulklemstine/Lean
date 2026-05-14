@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "phase_1_immediate_1_2_weeks.json",
+    "title": "Voice-Leading Geometry: A Verified Metric Theory of Four-Voice Harmonic Motion",
+    "domain": "Logic / Music Theory / Optimal Transport",
+    "date": "2026-05-14T23:49:00Z",
+    "exp_id": "00fcfe9a"
+  },
+  {
     "filename": "iterate.json",
     "title": "Compositional Certification: A Formal Framework for Modular Verified Reasoning",
     "domain": "Logic / Compositional Verification",
@@ -1389,6 +1396,57 @@ window.PACKAGE_DB = {
     "exp_id": "5a27d642",
     "source_exp_ids": [
       "seed"
+    ]
+  },
+  "phase_1_immediate_1_2_weeks.json": {
+    "title": "Voice-Leading Geometry: A Verified Metric Theory of Four-Voice Harmonic Motion",
+    "domain": "Logic / Music Theory / Optimal Transport",
+    "article": "# The Hidden Geometry of Harmony\n\n**How mathematicians discovered that the movement between musical chords obeys the same laws as the shortest routes on a map**\n\n---\n\nWhen a choir shifts from one chord to the next, something mathematically remarkable happens. Each voice\u2014soprano, alto, tenor, bass\u2014must travel some distance in pitch to reach its new note. The total distance traveled is a kind of \"effort\" or \"cost\" of the harmonic transition. For centuries, composers have intuitively minimized this cost, writing voice leadings where each part moves as little as possible. What no one realized until recently is that this intuition encodes a deep geometric truth: the space of all possible chords, measured by voice-leading cost, forms a genuine geometric landscape\u2014with distances, shortest paths, and a rigorous triangular structure that mirrors the geometry of physical space.\n\n## The Four-Voice Problem\n\nConsider four voices singing a C major chord: perhaps C3, E3, G3, and C4 (the notes at pitches 48, 52, 55, and 60 in the standard MIDI numbering). Now suppose they need to transition to an F major chord: F3, A3, C4, F4 (pitches 53, 57, 60, 65). How should the voices move?\n\nThe naive answer\u2014each voice slides to the corresponding position\u2014costs 20 semitones of total motion. But what if we could reassign voices? Maybe the soprano (on C4) should take the C4 note in the new chord, instead of jumping to F4. To find the true minimum, we must check every possible reassignment of voices to notes\u2014all 24 permutations of four voices.\n\nThis is not a toy problem. It is, in disguise, a classic *assignment problem* from optimization theory: given four workers and four jobs, find the assignment that minimizes total cost. What makes the musical version special is what happens when you chain these transitions together.\n\n## The Triangle Inequality: Harmony Obeys Geometry\n\nHere is the central discovery. Define the *voice-leading cost* between two chords as the minimum total pitch movement over all possible voice assignments. Then this cost satisfies the **triangle inequality**:\n\n> *The cost of going directly from chord A to chord C is never more than the cost of going from A to B, plus the cost of going from B to C.*\n\nThis may sound obvious\u2014isn't a shortcut always shorter? But remember: at each stage, the voices are being *reassigned optimally*. Going from A to B uses one assignment; going from B to C uses another. There is no guarantee that composing these two optimal assignments produces anything close to optimal for A to C directly. The theorem says it does\u2014and this is far from trivial.\n\nThe proof works by a beautiful composition argument. If permutation \u03c3 is optimal for A\u2192B and permutation \u03c4 is optimal for B\u2192C, then the composed permutation \u03c4\u2218\u03c3 gives a *feasible* (though not necessarily optimal) assignment for A\u2192C. Its cost is bounded by the triangle inequality for absolute values applied voice by voice, and a clever reindexing shows the bound matches the sum of the two stage costs.\n\nThis single theorem transforms chord space from a formless collection of pitch tuples into a genuine **metric space**\u2014a geometric world with well-defined distances, shortest paths, and all the analytical tools that come with metric geometry.\n\n## Why Voice Labels Don't Matter\n\nA second theorem deepens the picture. The voice-leading cost is *invariant under relabeling of voices*. If you scramble which voice is called \"soprano\" and which \"tenor\"\u2014in both the source and target chords, independently\u2014the optimal cost doesn't change.\n\nThis means the true objects of study are not specific voicings but *chord configurations*: unordered collections of pitches. The cost descends to a well-defined distance on the quotient space, where two arrangements of the same notes are identified. This is the conceptual leap from \"voices as fixed registers\" to \"harmonic state space,\" and it opens the door to studying chords as abstract geometric objects rather than specific arrangements of singers.\n\n## The Sorting Theorem: Nature Prefers Order\n\nThe deepest result is also the most surprising. Suppose both the source chord and the target chord happen to be sorted in pitch order\u2014lowest voice to highest voice. Then the *identity matching* is optimal: the lowest note goes to the lowest note, the next-lowest to the next-lowest, and so on. No voice crossing can improve the total cost.\n\nThis is a manifestation of the **rearrangement inequality**, one of the most elegant results in classical mathematics. It says that when you pair up two sorted sequences to minimize the sum of absolute differences, the natural sorted pairing wins. In the language of optimization, the cost matrix has **Monge structure**\u2014a condition that guarantees the diagonal assignment is optimal.\n\nThe proof hinges on what we might call the *uncrossing lemma*. Consider two pairs of values: *a \u2264 b* and *c \u2264 d*. If you assign *a* to *d* and *b* to *c* (the \"crossed\" assignment), the total cost |*a* \u2212 *d*| + |*b* \u2212 *c*| is always at least as large as the \"uncrossed\" cost |*a* \u2212 *c*| + |*b* \u2212 *d*|. By repeatedly uncrossing pairs, any permutation can be improved step by step until the identity matching is reached\u2014and every step reduces or maintains the total cost.\n\n## From Music to Maps\n\nThese results place music theory squarely within the mathematical framework of **optimal transport**\u2014the branch of mathematics that studies the cheapest way to move mass from one distribution to another. In the one-dimensional case with equal discrete masses (which is exactly what four voices singing four notes represents), the optimal transport plan is always the sorted matching. Our sorting theorem is a discrete, four-point version of this deep result.\n\nThe connection runs even deeper. The triangle inequality means that voice-leading cost is not just any distance function\u2014it's a *path metric*. You can compute shortest paths through chord space, identify clusters of harmonically similar chords, measure the \"diameter\" of a harmonic vocabulary, and analyze the tension profile of a chord progression. All of these computations are geometrically grounded.\n\n## A Landscape of Harmony\n\nTo see what this geometry looks like in practice, consider a small corpus of common chords: C major, C minor, D minor seventh, F major, G dominant seventh, A minor, and E major, all in standard four-voice close position. Computing all pairwise voice-leading costs reveals a rich landscape:\n\nThe closest pair is C major and C minor, separated by a cost of just 1 semitone (the single half-step that distinguishes major from minor). The most distant pair is G dominant seventh and A minor, at a cost of 39 semitones. The cost table reveals clusters: the chords F major and E major are surprisingly close (cost 4), connected by smooth voice leading despite being distant in traditional tonal theory.\n\nThis cost landscape is not just a curiosity\u2014it's a navigation tool. A composer seeking the smoothest path from one chord to another can simply compute shortest paths through the chord graph. The triangle inequality guarantees that these paths are geometrically meaningful.\n\n## The Tropical Connection\n\nThere is an unexpected link to a branch of mathematics called **tropical geometry**, which replaces ordinary addition with minimization and ordinary multiplication with addition. In a tropical world, the \"sum\" of two costs is their minimum, and the \"product\" is their ordinary sum. The voice-leading triangle inequality is exactly the statement that chord-space distances compose tropically: the minimum-cost path through an intermediate chord is bounded by the sum of the two legs.\n\nThis is not a superficial analogy. Tropical geometry provides a framework for understanding optimization problems through the lens of algebraic geometry, and the voice-leading cost function is a natural tropical polynomial. This connection suggests that the deep structure of harmonic motion may be illuminated by the same tools that mathematicians use to study algebraic curves, combinatorial optimization, and phylogenetic trees.\n\n## What Machines Can Prove\n\nAll three main results\u2014the triangle inequality, permutation invariance, and sorted matching optimality\u2014have been fully verified by machine-checked mathematical proof. Every logical step has been validated by a computer, leaving no room for error or hidden assumptions. This is significant because the proofs involve subtle interactions between permutation algebra, integer arithmetic, and optimization\u2014exactly the kind of argument where human mathematicians occasionally make mistakes.\n\nThe machine verification also opens a path to generalization. The proofs for four voices are structured so that they can be extended to any number of voices, and the key ideas\u2014permutation composition for the triangle inequality, relabeling bijections for invariance, iterative uncrossing for sorted optimality\u2014work identically in higher dimensions.\n\n## The Road Ahead\n\nThis is just the beginning. The metric structure of chord space suggests a wealth of further questions:\n\n- **How large is the harmonic universe?** What is the diameter of the graph connecting all common chord types through smooth voice leadings?\n- **Are there geodesic normal forms?** Is there a canonical way to decompose any chord transition into a sequence of elementary moves?\n- **What about rhythm?** Can temporal structure be integrated into the cost metric to create a joint geometry of harmony and time?\n- **Can algorithms compose?** If a computer knows the cost landscape, can it generate musically compelling progressions by navigating shortest paths?\n\nThe marriage of music theory and metric geometry is young, but its foundations are now provably solid. The space of chords is not a wilderness\u2014it is a landscape with roads, distances, and shortcuts, all obeying the clean laws of geometry. Every chord progression is a journey through this landscape, and the mathematics tells us exactly how far each journey goes.\n\n---\n\n*The results described in this article represent a new approach to the mathematical foundations of music theory, establishing that four-voice harmonic motion forms a metric space with computable optimal transport structure. The triangle inequality, permutation invariance, and sorted matching optimality theorems are fully machine-verified.*\n",
+    "research_paper": "# Voice-Leading Geometry: A Verified Metric Theory of Four-Voice Harmonic Motion\n\n## Abstract\n\nWe develop a formally verified mathematical theory of four-voice harmonic motion, establishing that the space of four-voice chords, equipped with permutation-minimized voice-leading cost, forms a pseudometric space. Our three main results are: (1) the voice-leading cost satisfies the triangle inequality, endowing chord space with geodesic structure; (2) the cost is invariant under independent permutation of voices in source and target chords, enabling passage to chord-class quotients; and (3) when both chords are sorted in pitch order, the identity matching is optimal\u2014a discrete Monge/rearrangement theorem. All proofs are machine-checked. We provide algorithms, computational experiments, and applications to harmonic path planning and chord similarity analysis.\n\n**Keywords:** voice leading, metric geometry, optimal transport, assignment problem, Monge arrays, formal verification, tropical geometry, harmonic analysis\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nVoice leading\u2014the movement of individual melodic lines from one chord to another\u2014is a central concept in Western music theory. The problem of finding *optimal* voice leadings (those minimizing total pitch displacement) connects music theory to combinatorial optimization, specifically the linear assignment problem.\n\nWhile music theorists have long studied voice-leading distances (Tymoczko 2006, 2011; Callender, Quinn & Tymoczko 2008; Cohn 1996), formal machine-verified proofs of the foundational metric properties have not previously been established. This gap matters because the properties are not trivial: the triangle inequality for a permutation-minimized cost requires a non-obvious composition argument, and sorted matching optimality is a discrete optimal transport result.\n\n### 1.2 Contributions\n\nWe formalize and prove three theorems:\n\n1. **Triangle Inequality** (`vlCost4_triangle`): For all chords x, y, z \u2208 \u2124\u2074,\n   vlCost4(x, z) \u2264 vlCost4(x, y) + vlCost4(y, z).\n\n2. **Permutation Invariance** (`vlCost4_perm_invariant`): For all permutations \u03c4\u2081, \u03c4\u2082,\n   vlCost4(x \u2218 \u03c4\u2081, y \u2218 \u03c4\u2082) = vlCost4(x, y).\n\n3. **Sorted Matching Optimality** (`vlCost4_sorted_optimal`): If x and y are both monotone nondecreasing, then vlCost4(x, y) = \u03a3\u1d62 |x\u1d62 \u2212 y\u1d62|.\n\nAdditionally, we prove:\n- `vlCost4_self`: vlCost4(x, x) = 0 (reflexivity)\n- `vlCost4_symm`: vlCost4(x, y) = vlCost4(y, x) (symmetry)\n- `abs_swap_uncross`: The atomic uncrossing inequality for absolute values\n- `permCost_triangle_comp`: Composition bound for permutation costs\n\n### 1.3 Related Work\n\n**Music theory:** Tymoczko (2006) studied voice-leading geometry using continuous methods, embedding chord space in orbifolds. Our approach is discrete and combinatorial, working directly with integer pitches and finite permutation groups. Callender, Quinn, and Tymoczko (2008) classified chord spaces by symmetry type; our permutation invariance theorem is the formal foundation for their chord-class quotients.\n\n**Optimal transport:** The sorted matching theorem is a discrete version of the Monge transport theorem in one dimension (Villani 2003). For equal-mass problems on the real line, the monotone rearrangement is optimal; our result specializes this to four discrete mass points with L\u00b9 cost.\n\n**Assignment problems:** The permutation cost vlCost4 is the objective function of a 4\u00d74 linear assignment problem. The Monge structure of sorted inputs guarantees that the identity assignment is optimal without needing the Hungarian algorithm.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Core Objects\n\n**Definition 1 (Chord).** A *four-voice chord* is a function x : Fin 4 \u2192 \u2124, assigning an integer pitch (in semitones) to each of four voice indices.\n\n```\nabbrev Chord4 := Fin 4 \u2192 \u2124\n```\n\n**Definition 2 (Permutation Cost).** For chords x, y and a permutation \u03c3 \u2208 S\u2084, the *permutation cost* is:\n\n```\npermCost(x, y, \u03c3) := \u03a3\u1d62 |x(i) \u2212 y(\u03c3(i))|\n```\n\nwhere |\u00b7| denotes `Int.natAbs`, the absolute value with codomain \u2115.\n\n```\ndef permCost (x y : Chord4) (\u03c3 : Equiv.Perm (Fin 4)) : \u2115 :=\n  \u2211 i : Fin 4, Int.natAbs (x i - y (\u03c3 i))\n```\n\n**Definition 3 (Voice-Leading Cost).** The *optimal voice-leading cost* is the minimum permutation cost:\n\n```\nvlCost4(x, y) := min_{\u03c3 \u2208 S\u2084} permCost(x, y, \u03c3)\n```\n\nImplemented using `Finset.inf'` over the finite set of permutations of Fin 4:\n\n```\nnoncomputable def vlCost4 (x y : Chord4) : \u2115 :=\n  Finset.inf' Finset.univ \u27e81, Finset.mem_univ 1\u27e9 (permCost x y)\n```\n\n**Definition 4 (Monotone Chord).** A chord x is *monotone* if x(i) \u2264 x(j) whenever i \u2264 j.\n\n```\ndef MonotoneFin4 (x : Chord4) : Prop :=\n  \u2200 \u2983i j : Fin 4\u2984, i \u2264 j \u2192 x i \u2264 x j\n```\n\n---\n\n## 3. Main Results\n\n### 3.1 Triangle Inequality\n\n**Theorem 1** (`vlCost4_triangle`). *For all x, y, z : Chord4,*\n*vlCost4(x, z) \u2264 vlCost4(x, y) + vlCost4(y, z).*\n\n**Proof sketch.** Choose optimal permutations \u03c3 for (x, y) and \u03c4 for (y, z) using `vlCost4_exists_optimal`. The composed permutation \u03c4 \u2218 \u03c3 is a feasible (not necessarily optimal) assignment for (x, z), so:\n\nvlCost4(x, z) \u2264 permCost(x, z, \u03c4 \u2218 \u03c3)\n\nThe key bound is `permCost_triangle_comp`:\n\npermCost(x, z, \u03c4 \u2218 \u03c3) \u2264 permCost(x, y, \u03c3) + permCost(y, z, \u03c4)\n\nThis follows from the pointwise triangle inequality |a \u2212 c| \u2264 |a \u2212 b| + |b \u2212 c| applied to each voice, combined with a reindexing via `Equiv.sum_comp`:\n\n\u03a3\u1d62 |x(i) \u2212 z(\u03c4(\u03c3(i)))| \u2264 \u03a3\u1d62 |x(i) \u2212 y(\u03c3(i))| + \u03a3\u1d62 |y(\u03c3(i)) \u2212 z(\u03c4(\u03c3(i)))|\n                        = \u03a3\u1d62 |x(i) \u2212 y(\u03c3(i))| + \u03a3\u2c7c |y(j) \u2212 z(\u03c4(j))|\n\nThe second equality substitutes j = \u03c3(i) and uses that \u03c3 is a bijection. \u25a1\n\n**Remark.** Combined with `vlCost4_self` (vlCost4(x, x) = 0) and `vlCost4_symm` (symmetry), this makes (Chord4, vlCost4) a pseudometric space. It becomes a metric on chord-classes where chords related by voice permutation are identified.\n\n### 3.2 Permutation Invariance\n\n**Theorem 2** (`vlCost4_perm_invariant`). *For all x, y : Chord4 and \u03c4\u2081, \u03c4\u2082 : Perm(Fin 4),*\n*vlCost4(x \u2218 \u03c4\u2081, y \u2218 \u03c4\u2082) = vlCost4(x, y).*\n\n**Proof sketch.** For any assignment \u03c3 in the permuted problem, the assignment \u03c4\u2082 \u2218 \u03c3 \u2218 \u03c4\u2081\u207b\u00b9 achieves the same cost in the original problem (by reindexing the sum). Conversely, for any assignment \u03c3 in the original problem, \u03c4\u2082\u207b\u00b9 \u2218 \u03c3 \u2218 \u03c4\u2081 achieves the same cost in the permuted problem. Since both maps \u03c3 \u21a6 \u03c4\u2082\u03c3 \u03c4\u2081\u207b\u00b9 and \u03c3 \u21a6 \u03c4\u2082\u207b\u00b9 \u03c3 \u03c4\u2081 are bijections on S\u2084, the infima coincide. \u25a1\n\n**Corollary.** vlCost4 descends to a well-defined function on unordered pitch multisets (chord classes).\n\n### 3.3 Sorted Matching Optimality\n\n**Theorem 3** (`vlCost4_sorted_optimal`). *If x and y are both monotone nondecreasing (MonotoneFin4), then*\n*vlCost4(x, y) = \u03a3\u1d62 |x(i) \u2212 y(i)|.*\n\n**Proof sketch.** The identity permutation achieves cost \u03a3\u1d62 |x(i) \u2212 y(i)|, so vlCost4(x, y) \u2264 \u03a3\u1d62 |x(i) \u2212 y(i)|. For the reverse inequality, we show that every permutation \u03c3 satisfies permCost(x, y, \u03c3) \u2265 permCost(x, y, id).\n\nThe proof exploits the finite structure of Fin 4. For any permutation \u03c3, the cost can be written as |x(0) \u2212 y(\u03c3(0))| + |x(1) \u2212 y(\u03c3(1))| + |x(2) \u2212 y(\u03c3(2))| + |x(3) \u2212 y(\u03c3(3))|, and by exhaustive case analysis over all 24 permutations (facilitated by `fin_cases`), each case reduces to showing that the identity assignment cost is minimal given the monotonicity constraints.\n\nThe key atomic inequality used throughout is `abs_swap_uncross`: if a \u2264 b and c \u2264 d, then |a \u2212 c| + |b \u2212 d| \u2264 |a \u2212 d| + |b \u2212 c|. This \"uncrossing\" lemma ensures that any crossed voice assignment can be improved by swapping. \u25a1\n\n**Remark.** This is a discrete analogue of the classical result in optimal transport theory: for the L\u00b9 cost on the real line, the monotone rearrangement (sorted matching) is the optimal transport plan.\n\n### 3.4 Uncrossing Lemma\n\n**Theorem 4** (`abs_swap_uncross`). *For integers a \u2264 b and c \u2264 d,*\n*|a \u2212 c| + |b \u2212 d| \u2264 |a \u2212 d| + |b \u2212 c|.*\n\nThis is proved by the `omega` tactic, which handles linear integer arithmetic. Despite its simplicity, this lemma is the fundamental engine of Monge optimality: it expresses the convexity of the absolute value function on sorted pairs.\n\n---\n\n## 4. Algorithms\n\n### 4.1 Brute-Force Algorithm\n\n```\nAlgorithm: BruteForceVLCost(x, y)\nInput: chords x, y \u2208 \u2124\u2074\nOutput: optimal cost and permutation\n\nfor each \u03c3 \u2208 S\u2084:\n    cost(\u03c3) \u2190 \u03a3\u1d62 |x(i) \u2212 y(\u03c3(i))|\nreturn min_{\u03c3} cost(\u03c3), argmin_{\u03c3} cost(\u03c3)\n```\n\n**Complexity:** O(n! \u00b7 n) = O(24 \u00b7 4) = O(96) for four voices. Constant time, but scales poorly.\n\n### 4.2 Sorted Matching Algorithm\n\n```\nAlgorithm: SortedVLCost(x, y)\nInput: chords x, y \u2208 \u2124\u207f\nOutput: optimal cost and permutation\n\n(x_sorted, \u03c0_x) \u2190 sort x with index tracking\n(y_sorted, \u03c0_y) \u2190 sort y with index tracking\ncost \u2190 \u03a3\u1d62 |x_sorted(i) \u2212 y_sorted(i)|\n\u03c3 \u2190 \u03c0_y \u2218 \u03c0_x\u207b\u00b9\nreturn cost, \u03c3\n```\n\n**Complexity:** O(n log n) for sorting, O(n) for cost computation. Total: O(n log n).\n\n**Correctness:** Follows directly from `vlCost4_sorted_optimal` and `vlCost4_perm_invariant`. The sorted matching theorem guarantees optimality on sorted inputs; permutation invariance ensures that pre-sorting preserves the optimal cost.\n\n### 4.3 Chord Graph Shortest Path\n\n```\nAlgorithm: HarmonicShortestPath(corpus, start, end)\nInput: finite chord corpus, start/end chord names\nOutput: minimum-cost path\n\nBuild weighted graph G with vlCost4 edge weights\nRun Dijkstra's algorithm from start\nReturn shortest path to end\n```\n\n**Complexity:** O(|V|\u00b2 \u00b7 n log n) for graph construction, O(|V|\u00b2 log |V|) for Dijkstra. Total: O(|V|\u00b2 \u00b7 n log n).\n\n---\n\n## 5. Computational Experiments\n\n### 5.1 Pairwise Cost Table\n\nWe computed pairwise voice-leading costs for a corpus of seven common chords in standard four-voice close position:\n\n| | C maj | C min | F maj | G dom7 | A min | D min7 | E maj |\n|---|---|---|---|---|---|---|---|\n| **C maj** | 0 | 1 | 20 | 26 | 13 | 7 | 16 |\n| **C min** | 1 | 0 | 21 | 27 | 12 | 8 | 17 |\n| **F maj** | 20 | 21 | 0 | 6 | 33 | 13 | 4 |\n| **G dom7** | 26 | 27 | 6 | 0 | 39 | 19 | 10 |\n| **A min** | 13 | 12 | 33 | 39 | 0 | 20 | 29 |\n| **D min7** | 7 | 8 | 13 | 19 | 20 | 0 | 9 |\n| **E maj** | 16 | 17 | 4 | 10 | 29 | 9 | 0 |\n\n### 5.2 Key Observations\n\n1. **Closest pair:** C major \u2194 C minor, cost 1 (the single semitone E\u2192E\u266d).\n2. **Most distant pair:** G dom7 \u2194 A minor, cost 39.\n3. **Surprising proximity:** F major \u2194 E major, cost 4, despite being a semitone apart in root.\n4. **Cluster structure:** {C maj, C min, D min7} form a tight cluster (max pairwise cost 8).\n\n### 5.3 Triangle Inequality Verification\n\nRandom stress testing with 10,000 chord triples found zero violations, consistent with the formal proof. In the musical example C maj \u2192 F maj \u2192 G7:\n\n- vlCost4(C maj, F maj) = 20\n- vlCost4(F maj, G7) = 6\n- vlCost4(C maj, G7) = 26 \u2264 20 + 6 = 26\n\nThe triangle inequality is tight in this case.\n\n### 5.4 Sorted Matching Verification\n\nFor all tested pairs of sorted chords, the identity matching was confirmed optimal, consistent with `vlCost4_sorted_optimal`. The brute-force and sorted algorithms agree on all inputs.\n\n---\n\n## 6. Applications\n\n### 6.1 Harmonic Path Planning\n\nGiven a chord corpus and a desired start/end chord, the shortest-path algorithm finds the smoothest harmonic progression. For example, planning from C major to A\u266d major through a corpus of 10 common chords yields multi-step progressions with lower per-step costs than the direct transition.\n\n### 6.2 Chord Similarity Analysis\n\nThe cost function induces a notion of chord similarity that captures voice-leading proximity rather than pitch-class content. This enables:\n- **Clustering:** Grouping chords by voice-leading accessibility\n- **Tension profiling:** Measuring harmonic tension as cumulative voice-leading cost\n- **Style analysis:** Characterizing a composer's harmonic vocabulary by the diameter and structure of their chord graph\n\n### 6.3 Algorithmic Composition\n\nThe sorted matching algorithm provides an O(n log n) tool for real-time voice-leading optimization in n voices. Combined with shortest-path planning, it enables constraint-based composition where the composer specifies harmonic goals and the algorithm finds maximally smooth voice leadings.\n\n---\n\n## 7. Discussion\n\n### 7.1 Significance\n\nThe triangle inequality is the foundational result. Without it, voice-leading cost is merely a function; with it, chord space becomes a geometric object supporting shortest paths, metric balls, diameter computations, and all the tools of metric geometry. The permutation invariance theorem enables passage to chord-class quotients, and the sorted matching theorem provides algorithmic efficiency.\n\n### 7.2 Connections to Optimal Transport\n\nOur vlCost4 is precisely the discrete Wasserstein-1 (Earth Mover's) distance on the integers with uniform 4-point mass distributions. The sorted matching theorem is the discrete Monge optimality result: in one dimension with L\u00b9 cost, the monotone rearrangement is the optimal transport plan. This connects voice-leading geometry to the deep theory of optimal transport (Villani 2003, 2009).\n\n### 7.3 Tropical Structure\n\nThe triangle inequality can be rewritten in min-plus (tropical) notation:\n\nvlCost4(x, z) \u2295 (vlCost4(x, y) \u2297 vlCost4(y, z)) = vlCost4(x, y) \u2297 vlCost4(y, z)\n\nwhere \u2295 = min and \u2297 = +. This identifies vlCost4 as a tropical polynomial in the path costs, connecting to the `tropPath_cost_compose_bound` theorem from the tropical homotopy type theory module.\n\n### 7.4 Limitations\n\n- The current formalization is specialized to Fin 4; generalization to Fin n is straightforward but not yet proved.\n- We work with absolute pitches (\u2124) rather than pitch classes (\u2124/12\u2124); the pitch-class case introduces additional complications from circular distance.\n- The cost function uses L\u00b9 (taxicab) distance; L\u00b2 (Euclidean) or L\u221e (Chebyshev) alternatives may better model perceptual salience.\n\n---\n\n## 8. Future Work\n\n1. **n-voice generalization:** Prove the triangle inequality and sorted optimality for Fin n \u2192 \u2124.\n2. **Pitch-class geometry:** Extend to \u2124/12\u2124 with circular distance.\n3. **Certified algorithms:** Formalize the O(n log n) sorted matching algorithm with a correctness proof.\n4. **Graph invariants:** Compute exact diameters and connectivity of chord-type graphs.\n5. **Tropical harmonic semiring:** Develop a min-plus algebra of chord progression costs.\n\n---\n\n## 9. References\n\n- Callender, C., Quinn, I., & Tymoczko, D. (2008). Generalized voice-leading spaces. *Science*, 320(5874), 346-348.\n- Cohn, R. (1996). Maximally smooth cycles, hexatonic systems, and the analysis of late-romantic triadic progressions. *Music Analysis*, 15(1), 9-40.\n- Tymoczko, D. (2006). The geometry of musical chords. *Science*, 313(5783), 72-74.\n- Tymoczko, D. (2011). *A Geometry of Music*. Oxford University Press.\n- Villani, C. (2003). *Topics in Optimal Transportation*. American Mathematical Society.\n- Villani, C. (2009). *Optimal Transport: Old and New*. Springer.\n\n---\n\n## Appendix A: Complete Lean 4 Theorem Statements\n\n```lean\n-- Core definitions\nabbrev Chord4 := Fin 4 \u2192 \u2124\n\ndef permCost (x y : Chord4) (\u03c3 : Equiv.Perm (Fin 4)) : \u2115 :=\n  \u2211 i : Fin 4, Int.natAbs (x i - y (\u03c3 i))\n\nnoncomputable def vlCost4 (x y : Chord4) : \u2115 :=\n  Finset.inf' Finset.univ \u27e81, Finset.mem_univ 1\u27e9 (permCost x y)\n\ndef MonotoneFin4 (x : Chord4) : Prop :=\n  \u2200 \u2983i j : Fin 4\u2984, i \u2264 j \u2192 x i \u2264 x j\n\n-- Main theorems (all fully proved, zero sorry)\ntheorem vlCost4_triangle (x y z : Chord4) :\n    vlCost4 x z \u2264 vlCost4 x y + vlCost4 y z\n\ntheorem vlCost4_perm_invariant (x y : Chord4) (\u03c4\u2081 \u03c4\u2082 : Equiv.Perm (Fin 4)) :\n    vlCost4 (x \u2218 \u03c4\u2081) (y \u2218 \u03c4\u2082) = vlCost4 x y\n\ntheorem vlCost4_sorted_optimal (x y : Chord4)\n    (hx : MonotoneFin4 x) (hy : MonotoneFin4 y) :\n    vlCost4 x y = \u2211 i : Fin 4, Int.natAbs (x i - y i)\n\ntheorem abs_swap_uncross {a b c d : \u2124} (hab : a \u2264 b) (hcd : c \u2264 d) :\n    Int.natAbs (a - c) + Int.natAbs (b - d) \u2264\n    Int.natAbs (a - d) + Int.natAbs (b - c)\n\ntheorem vlCost4_self (x : Chord4) : vlCost4 x x = 0\ntheorem vlCost4_symm (x y : Chord4) : vlCost4 x y = vlCost4 y x\n```\n\n## Appendix B: Axiom Audit\n\nAll theorems depend only on the standard foundational axioms:\n- `propext` (propositional extensionality)\n- `Classical.choice` (classical axiom of choice)\n- `Quot.sound` (quotient soundness)\n\nNo custom axioms, `sorry`, or `@[implemented_by]` are used.\n",
+    "future_directions": "# Future Directions: Voice-Leading Geometry\n\n## Overview\n\nThis document outlines five concrete research directions opened by the verified metric theory of four-voice harmonic motion. Each direction includes an exact theorem target, formalization strategy, and cross-domain connections.\n\n---\n\n## Direction 1: n-Voice Generalization\n\n### Theorem Target\n\n```lean\nnoncomputable def vlCostN {n : \u2115} (x y : Fin n \u2192 \u2124) : \u2115 :=\n  Finset.inf' Finset.univ \u27e81, Finset.mem_univ 1\u27e9\n    (fun \u03c3 : Equiv.Perm (Fin n) => \u2211 i, Int.natAbs (x i - y (\u03c3 i)))\n\ntheorem vlCostN_triangle {n : \u2115} (x y z : Fin n \u2192 \u2124) :\n    vlCostN x z \u2264 vlCostN x y + vlCostN y z\n\ntheorem vlCostN_sorted_optimal {n : \u2115} (x y : Fin n \u2192 \u2124)\n    (hx : Monotone x) (hy : Monotone y) :\n    vlCostN x y = \u2211 i, Int.natAbs (x i - y i)\n```\n\n### Proof Strategy Ideas\n\n1. **Direct generalization:** The proofs for Fin 4 already use abstract lemmas (`Equiv.sum_comp`, `Finset.inf'_le`, pointwise triangle inequality). Lift these to Fin n by replacing `Fin 4`-specific case analysis with induction or abstract permutation arguments. The triangle inequality proof generalizes directly. The sorted optimality proof requires replacing `fin_cases` with an inductive uncrossing argument: show that any permutation with a crossing (\u03c3(i) > \u03c3(j) for i < j) can be improved by a transposition, and iterate until the identity is reached.\n\n2. **Bubble sort argument:** Prove that bubble sort on the permutation (swapping adjacent crossed pairs) monotonically decreases the cost. Since bubble sort terminates in O(n\u00b2) transpositions, this gives a constructive proof of sorted optimality. Each swap step uses `abs_swap_uncross`.\n\n### Cross-Domain Connection\n\nThe n-voice generalization connects directly to the **Wasserstein-1 distance** on discrete measures with n atoms on the integers. The sorted matching theorem for general n is the discrete Monge optimality result, a cornerstone of optimal transport theory. This could lead to a formalized library of discrete optimal transport in Lean.\n\n---\n\n## Direction 2: Quotient Geometry of Chord Classes\n\n### Theorem Target\n\n```lean\n-- Define chord equivalence: two chords are equivalent if one is a voice permutation of the other\ndef ChordEquiv (x y : Fin n \u2192 \u2124) : Prop :=\n  \u2203 \u03c3 : Equiv.Perm (Fin n), \u2200 i, y i = x (\u03c3 i)\n\n-- The quotient distance is well-defined\ntheorem vlCostN_quotient_well_defined {n : \u2115}\n    (x\u2081 x\u2082 y\u2081 y\u2082 : Fin n \u2192 \u2124)\n    (hx : ChordEquiv x\u2081 x\u2082) (hy : ChordEquiv y\u2081 y\u2082) :\n    vlCostN x\u2081 y\u2081 = vlCostN x\u2082 y\u2082\n\n-- The quotient space is a genuine metric (not just pseudometric)\ntheorem vlCostN_quotient_separates {n : \u2115}\n    (x y : Fin n \u2192 \u2124) (h : vlCostN x y = 0) :\n    ChordEquiv x y\n```\n\n### Proof Strategy Ideas\n\n1. **Via permutation invariance:** `vlCost4_perm_invariant` already shows invariance under voice relabeling. For the quotient to be a metric (not pseudometric), we need that zero cost implies equivalence. This follows from: if vlCostN(x, y) = 0, there exists \u03c3 with \u03a3\u1d62 |x(i) \u2212 y(\u03c3(i))| = 0, hence x(i) = y(\u03c3(i)) for all i.\n\n2. **Sorted representative:** Define the canonical representative of a chord class as its sorted version. Show that vlCostN on sorted representatives equals vlCostN on the original chords, using permutation invariance and sorted optimality. This gives a concrete computational handle on the quotient.\n\n### Cross-Domain Connection\n\nThe quotient space {chord classes} with the induced metric is an **orbifold** in the sense of Tymoczko's geometric music theory. Formalizing this quotient construction bridges combinatorial group theory (permutation group actions) with metric geometry, and could connect to formalized orbifold theory.\n\n---\n\n## Direction 3: Certified Optimal Matching Algorithm\n\n### Theorem Target\n\n```lean\n-- A computable function that returns the optimal cost\ndef vlCostN_compute {n : \u2115} (x y : Fin n \u2192 \u2124) : \u2115 :=\n  let xs := List.mergeSort (List.ofFn x)\n  let ys := List.mergeSort (List.ofFn y)\n  (List.zip xs ys).foldl (fun acc (a, b) => acc + Int.natAbs (a - b)) 0\n\n-- Correctness theorem\ntheorem vlCostN_compute_correct {n : \u2115} (x y : Fin n \u2192 \u2124) :\n    vlCostN_compute x y = vlCostN x y\n```\n\n### Proof Strategy Ideas\n\n1. **Sort-and-match:** Prove that sorting both inputs and matching in order gives the same result as the noncomputable infimum. This requires: (a) showing that sorting is a permutation, (b) applying permutation invariance to reduce to the sorted case, (c) applying sorted optimality. The main Lean challenge is connecting `List.mergeSort` with `Equiv.Perm` and `Finset.inf'`.\n\n2. **Decision procedure:** For fixed small n (e.g., n = 4), use `native_decide` to verify the algorithm on all inputs up to some bound, then prove correctness abstractly for general inputs.\n\n### Cross-Domain Connection\n\nThis connects to **certified algorithmics**: producing not just algorithms but machine-checked proofs of their correctness and complexity bounds. The O(n log n) sorting algorithm replaces the O(n!) brute force, and the correctness proof is a formal certificate. This is directly relevant to verified software for music production and algorithmic composition.\n\n---\n\n## Direction 4: Finite Harmonic Graph Diameter Theorem\n\n### Theorem Target\n\n```lean\n-- Define a finite corpus of chord types (e.g., all major/minor triads + seventh chords in Fin 4 \u2192 ZMod 12)\ndef chordCorpus : Finset (Fin 4 \u2192 ZMod 12) := sorry -- enumerated\n\n-- Define the chord graph: vertices = corpus, edges weighted by vlCost\n-- Prove connectivity\ntheorem chord_graph_connected :\n    \u2200 x y \u2208 chordCorpus, \u2203 path : List (Fin 4 \u2192 ZMod 12),\n      path.head? = some x \u2227 path.getLast? = some y \u2227\n      \u2200 i, (path.get? i, path.get? (i+1)) match with\n        | (some a, some b) => vlCost4 a b \u2264 threshold\n        | _ => True\n\n-- Prove an exact diameter bound\ntheorem chord_graph_diameter :\n    \u2200 x y \u2208 chordCorpus,\n      shortestPathCost x y \u2264 D -- for some explicit constant D\n```\n\n### Proof Strategy Ideas\n\n1. **Computational verification:** For small corpora (50-200 chords), compute all-pairs shortest paths by Floyd-Warshall, verify the diameter computationally, and certify the result via `native_decide` or explicit witness construction.\n\n2. **Structural argument:** Prove that every chord in the corpus is reachable from a fixed \"hub\" chord (e.g., C major in root position) with bounded cost. Then the diameter is at most twice the maximum hub distance. This requires enumerating the corpus and checking reachability.\n\n### Cross-Domain Connection\n\nThis connects to **graph theory** and **network science**. The chord graph is a small-world network (short diameter despite sparse local connectivity), and its structure encodes the navigability of harmonic space. Diameter bounds have applications in algorithmic composition (bounding the length of optimal harmonic paths) and music information retrieval (clustering chord vocabularies).\n\n---\n\n## Direction 5: Tropical Harmonic Composition Law\n\n### Theorem Target\n\n```lean\n-- Define a tropical semiring of chord progression costs\n-- The \"product\" of two progression costs is their sum\n-- The \"sum\" of two alternatives is their minimum\n\n-- Progression cost: minimum total voice-leading cost over a sequence of chords\nnoncomputable def progressionCost (chords : List Chord4) : \u2115 :=\n  (List.zip chords chords.tail).foldl\n    (fun acc (x, y) => acc + vlCost4 x y) 0\n\n-- Tropical composition: the cost of concatenating progressions\n-- is bounded by the sum of their costs\ntheorem tropical_composition (p\u2081 p\u2082 : List Chord4)\n    (h\u2081 : p\u2081 \u2260 []) (h\u2082 : p\u2082 \u2260 [])\n    (hjoin : p\u2081.getLast h\u2081 = p\u2082.head h\u2082) :\n    progressionCost (p\u2081 ++ p\u2082.tail) \u2264\n    progressionCost p\u2081 + progressionCost p\u2082\n\n-- The tropical \"shortest path\" is subadditive\ntheorem tropical_path_subadditive (x y z : Chord4)\n    (p\u2081 : List Chord4) (p\u2082 : List Chord4)\n    (h\u2081 : p\u2081.head? = some x) (h\u2081' : p\u2081.getLast? = some y)\n    (h\u2082 : p\u2082.head? = some y) (h\u2082' : p\u2082.getLast? = some z) :\n    \u2203 p : List Chord4,\n      p.head? = some x \u2227 p.getLast? = some z \u2227\n      progressionCost p \u2264 progressionCost p\u2081 + progressionCost p\u2082\n```\n\n### Proof Strategy Ideas\n\n1. **Direct concatenation:** The concatenated path p\u2081 ++ p\u2082.tail has cost equal to progressionCost(p\u2081) + progressionCost(p\u2082) minus the zero-cost self-transition at the join point. This gives a direct proof of subadditivity.\n\n2. **Min-plus matrix formulation:** Represent the chord space as vertices of a weighted graph and define the tropical matrix product M\u2081 \u2297 M\u2082 where (M\u2081 \u2297 M\u2082)(i,j) = min_k (M\u2081(i,k) + M\u2082(k,j)). Prove that this product is associative (tropical matrix multiplication is associative in the min-plus semiring) and connects to multi-step progression costs.\n\n### Cross-Domain Connection\n\nThis extends `tropPath_cost_compose_bound` from the existing tropical HoTT module to the voice-leading setting. The tropical semiring structure on progression costs connects to:\n- **Tropical geometry:** algebraic geometry over the min-plus semifield\n- **Dynamic programming:** the Bellman equation for shortest paths is tropical matrix multiplication\n- **Formal language theory:** tropical semirings appear in weighted automata and the Viterbi algorithm\n\nThis direction could lead to a unified \"tropical harmonic semiring\" framework where chord progressions are elements of a tropical polynomial ring, and musical analysis becomes tropical algebraic geometry.\n\n---\n\n## Priority Ordering\n\n1. **Direction 1** (n-voice generalization) \u2014 highest impact, most tractable\n2. **Direction 3** (certified algorithm) \u2014 immediate practical value\n3. **Direction 2** (quotient geometry) \u2014 conceptual depth\n4. **Direction 5** (tropical composition) \u2014 novel cross-domain bridge\n5. **Direction 4** (graph diameter) \u2014 requires significant computation\n\n## Team Assignments\n\n- **Team A (Formal Proofs):** Directions 1, 2, 3\n- **Team B (Computation):** Directions 4, 5 (computational experiments)\n- **Team C (Synthesis):** Cross-domain paper connecting all directions\n",
+    "demos": [
+      {
+        "name": "Voice-Leading Geometry Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nVoice-Leading Geometry: Computational Demonstrations\n\nThis script demonstrates the key theorems about four-voice voice-leading cost:\n1. Triangle inequality (metric structure)\n2. Permutation invariance (symmetry under voice relabeling)\n3. Sorted matching optimality (identity matching is optimal for sorted chords)\n4. The atomic uncrossing lemma\n\nAll computations mirror the formally verified results.\n\"\"\"\n\nfrom itertools import permutations\nfrom typing import List, Tuple\nimport math\n\n\n# \u2500\u2500\u2500 Core Definitions \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef perm_cost(x: List[int], y: List[int], sigma: List[int]) -> int:\n    \"\"\"Cost of a specific voice assignment: sum of |x[i] - y[sigma[i]]|.\"\"\"\n    return sum(abs(x[i] - y[sigma[i]]) for i in range(len(x)))\n\n\ndef vl_cost4(x: List[int], y: List[int]) -> int:\n    \"\"\"Optimal 4-voice voice-leading cost: min over all permutations.\"\"\"\n    return min(perm_cost(x, y, list(p)) for p in permutations(range(4)))\n\n\ndef optimal_perm(x: List[int], y: List[int]) -> Tuple[List[int], int]:\n    \"\"\"Find the optimal permutation and its cost.\"\"\"\n    best_cost = float('inf')\n    best_perm = None\n    for p in permutations(range(4)):\n        c = perm_cost(x, y, list(p))\n        if c < best_cost:\n            best_cost = c\n            best_perm = list(p)\n    return best_perm, best_cost\n\n\n# \u2500\u2500\u2500 Demo 1: Triangle Inequality \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_triangle_inequality():\n    \"\"\"Demonstrate vlCost4(x,z) \u2264 vlCost4(x,y) + vlCost4(y,z).\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Triangle Inequality for Voice-Leading Cost\")\n    print(\"=\" * 70)\n\n    # Musical example: C major \u2192 F major \u2192 G7\n    x = [48, 52, 55, 60]  # C major (C3 E3 G3 C4)\n    y = [53, 57, 60, 65]  # F major (F3 A3 C4 F4)\n    z = [55, 59, 62, 65]  # G7 (G3 B3 D4 F4)\n\n    cost_xy = vl_cost4(x, y)\n    cost_yz = vl_cost4(y, z)\n    cost_xz = vl_cost4(x, z)\n\n    print(f\"\\n  x = {x}  (C major)\")\n    print(f\"  y = {y}  (F major)\")\n    print(f\"  z = {z}  (G7)\")\n    print(f\"\\n  vlCost4(x, y) = {cost_xy}\")\n    print(f\"  vlCost4(y, z) = {cost_yz}\")\n    print(f\"  vlCost4(x, z) = {cost_xz}\")\n    print(f\"\\n  Triangle inequality: {cost_xz} \u2264 {cost_xy} + {cost_yz} = {cost_xy + cost_yz}\")\n    print(f\"  Verified: {cost_xz <= cost_xy + cost_yz} \u2713\")\n\n    # Random stress test\n    import random\n    random.seed(42)\n    violations = 0\n    n_tests = 10000\n    for _ in range(n_tests):\n        x = [random.randint(-20, 80) for _ in range(4)]\n        y = [random.randint(-20, 80) for _ in range(4)]\n        z = [random.randint(-20, 80) for _ in range(4)]\n        if vl_cost4(x, z) > vl_cost4(x, y) + vl_cost4(y, z):\n            violations += 1\n\n    print(f\"\\n  Random stress test ({n_tests} triples): {violations} violations\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 2: Permutation Invariance \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_permutation_invariance():\n    \"\"\"Demonstrate vlCost4(x\u2218\u03c4\u2081, y\u2218\u03c4\u2082) = vlCost4(x, y).\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 2: Permutation Invariance of Voice-Leading Cost\")\n    print(\"=\" * 70)\n\n    x = [48, 52, 55, 60]\n    y = [53, 57, 60, 65]\n    base_cost = vl_cost4(x, y)\n\n    print(f\"\\n  x = {x}\")\n    print(f\"  y = {y}\")\n    print(f\"  vlCost4(x, y) = {base_cost}\")\n\n    # Test several permutations\n    test_perms = [\n        ([1, 0, 2, 3], [0, 1, 2, 3]),\n        ([3, 2, 1, 0], [0, 1, 2, 3]),\n        ([0, 1, 2, 3], [2, 3, 0, 1]),\n        ([1, 2, 3, 0], [3, 0, 1, 2]),\n        ([2, 0, 3, 1], [1, 3, 0, 2]),\n    ]\n\n    print(f\"\\n  Applying voice permutations \u03c4\u2081, \u03c4\u2082:\")\n    for tau1, tau2 in test_perms:\n        x_perm = [x[tau1[i]] for i in range(4)]\n        y_perm = [y[tau2[i]] for i in range(4)]\n        cost = vl_cost4(x_perm, y_perm)\n        print(f\"    \u03c4\u2081={tau1}, \u03c4\u2082={tau2} \u2192 vlCost4 = {cost}  {'\u2713' if cost == base_cost else '\u2717'}\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 3: Sorted Matching Optimality \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_sorted_optimality():\n    \"\"\"Demonstrate that sorted chords have identity matching as optimal.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 3: Sorted Matching Optimality (Discrete Monge Theorem)\")\n    print(\"=\" * 70)\n\n    examples = [\n        ([40, 50, 60, 70], [42, 48, 63, 72]),\n        ([0, 10, 20, 30], [5, 15, 25, 35]),\n        ([10, 20, 30, 40], [11, 19, 31, 39]),\n        ([0, 0, 0, 0], [1, 2, 3, 4]),\n    ]\n\n    for x, y in examples:\n        opt_p, opt_cost = optimal_perm(x, y)\n        id_cost = perm_cost(x, y, [0, 1, 2, 3])\n        print(f\"\\n  x = {x}\")\n        print(f\"  y = {y}\")\n        print(f\"  Identity matching cost:   {id_cost}\")\n        print(f\"  Optimal matching cost:    {opt_cost}  (perm = {opt_p})\")\n        print(f\"  Identity is optimal:      {id_cost == opt_cost} \u2713\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 4: Uncrossing Lemma \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_uncrossing():\n    \"\"\"Demonstrate the atomic uncrossing inequality.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 4: Atomic Uncrossing Lemma\")\n    print(\"=\" * 70)\n    print(\"\\n  For a \u2264 b, c \u2264 d:\")\n    print(\"  |a-c| + |b-d| \u2264 |a-d| + |b-c|  (uncrossed \u2264 crossed)\")\n\n    examples = [\n        (0, 10, 3, 8),\n        (-5, 5, -3, 7),\n        (0, 0, 0, 0),\n        (1, 100, 50, 60),\n        (-10, 20, -5, 15),\n    ]\n\n    for a, b, c, d in examples:\n        uncrossed = abs(a - c) + abs(b - d)\n        crossed = abs(a - d) + abs(b - c)\n        print(f\"\\n  a={a:>4}, b={b:>4}, c={c:>4}, d={d:>4}\")\n        print(f\"    uncrossed = |{a}-{c}| + |{b}-{d}| = {uncrossed}\")\n        print(f\"    crossed   = |{a}-{d}| + |{b}-{c}| = {crossed}\")\n        print(f\"    {uncrossed} \u2264 {crossed}: {uncrossed <= crossed} \u2713\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 5: Chord Transition Cost Table \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_cost_table():\n    \"\"\"Compute pairwise costs for a small corpus of chord types.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 5: Pairwise Voice-Leading Cost Table\")\n    print(\"=\" * 70)\n\n    chords = {\n        \"C maj\":  [48, 52, 55, 60],\n        \"C min\":  [48, 51, 55, 60],\n        \"F maj\":  [53, 57, 60, 65],\n        \"G dom7\": [55, 59, 62, 65],\n        \"A min\":  [45, 48, 52, 57],\n        \"D min7\": [50, 53, 57, 62],\n        \"E maj\":  [52, 56, 59, 64],\n    }\n\n    names = list(chords.keys())\n    print(f\"\\n  {'':>8}\", end=\"\")\n    for n in names:\n        print(f\" {n:>7}\", end=\"\")\n    print()\n\n    for n1 in names:\n        print(f\"  {n1:>8}\", end=\"\")\n        for n2 in names:\n            cost = vl_cost4(chords[n1], chords[n2])\n            print(f\" {cost:>7}\", end=\"\")\n        print()\n\n    # Find minimum nonzero cost\n    min_cost = float('inf')\n    min_pair = None\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            if i != j:\n                c = vl_cost4(chords[n1], chords[n2])\n                if c < min_cost:\n                    min_cost = c\n                    min_pair = (n1, n2)\n\n    print(f\"\\n  Closest pair: {min_pair[0]} \u2192 {min_pair[1]}, cost = {min_cost}\")\n\n    # Diameter\n    max_cost = 0\n    max_pair = None\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            c = vl_cost4(chords[n1], chords[n2])\n            if c > max_cost:\n                max_cost = c\n                max_pair = (n1, n2)\n\n    print(f\"  Most distant pair: {max_pair[0]} \u2192 {max_pair[1]}, cost = {max_cost}\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 6: Self-cost and Symmetry \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_metric_properties():\n    \"\"\"Demonstrate metric space properties: self-cost = 0, symmetry.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 6: Metric Space Properties\")\n    print(\"=\" * 70)\n\n    import random\n    random.seed(123)\n\n    print(\"\\n  Self-cost = 0:\")\n    for _ in range(5):\n        x = sorted([random.randint(30, 80) for _ in range(4)])\n        print(f\"    vlCost4({x}, {x}) = {vl_cost4(x, x)} \u2713\")\n\n    print(\"\\n  Symmetry:\")\n    for _ in range(5):\n        x = [random.randint(30, 80) for _ in range(4)]\n        y = [random.randint(30, 80) for _ in range(4)]\n        c1 = vl_cost4(x, y)\n        c2 = vl_cost4(y, x)\n        print(f\"    vlCost4(x, y) = {c1}, vlCost4(y, x) = {c2}  {'\u2713' if c1 == c2 else '\u2717'}\")\n    print()\n\n\n# \u2500\u2500\u2500 Main \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"\u2501\" * 70)\n    print(\"  VOICE-LEADING GEOMETRY: Computational Demonstrations\")\n    print(\"\u2501\" * 70 + \"\\n\")\n\n    demo_triangle_inequality()\n    demo_permutation_invariance()\n    demo_sorted_optimality()\n    demo_uncrossing()\n    demo_cost_table()\n    demo_metric_properties()\n\n    print(\"\u2501\" * 70)\n    print(\"  All demonstrations completed successfully.\")\n    print(\"\u2501\" * 70)\n"
+      },
+      {
+        "name": "Applications Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Voice-Leading Geometry\n\nReal-world applications demonstrating how the verified mathematical framework\nenables practical tools for music analysis and composition.\n\nApplications:\n1. Optimal voice leading between any two chords\n2. Smooth harmonic progression planning (shortest path)\n3. Chord similarity clustering\n4. Harmonic tension analysis via cost gradients\n\"\"\"\n\nfrom itertools import permutations\nfrom typing import List, Tuple, Dict\nfrom collections import defaultdict\nimport heapq\n\n\ndef sorted_vl_cost(x: List[int], y: List[int]) -> Tuple[int, List[int]]:\n    \"\"\"Optimal voice-leading cost via sorted matching (O(n log n)).\"\"\"\n    n = len(x)\n    x_idx = sorted(enumerate(x), key=lambda p: p[1])\n    y_idx = sorted(enumerate(y), key=lambda p: p[1])\n    cost = sum(abs(x_idx[i][1] - y_idx[i][1]) for i in range(n))\n    perm = [0] * n\n    for i in range(n):\n        perm[x_idx[i][0]] = y_idx[i][0]\n    return cost, perm\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 1: Optimal Voice Leading\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef optimal_voice_leading(source: Dict[str, int], target: Dict[str, int]) -> None:\n    \"\"\"\n    Given two chords with named voices, find the smoothest voice leading.\n\n    This directly applies the sorted matching optimality theorem: after sorting\n    pitches, the identity matching minimizes total motion.\n    \"\"\"\n    print(\"\\n  APPLICATION 1: Optimal Voice Leading\")\n    print(\"  \" + \"\u2500\" * 50)\n\n    voice_names = list(source.keys())\n    x = list(source.values())\n    y = list(target.values())\n    target_names = list(target.keys())\n\n    cost, perm = sorted_vl_cost(x, y)\n\n    print(f\"\\n  Source chord: {source}\")\n    print(f\"  Target chord: {target}\")\n    print(f\"\\n  Optimal total motion: {cost} semitones\")\n    print(f\"\\n  Voice assignments:\")\n    for i, vn in enumerate(voice_names):\n        target_voice = target_names[perm[i]]\n        motion = y[perm[i]] - x[i]\n        direction = \"\u2191\" if motion > 0 else (\"\u2193\" if motion < 0 else \"\u2014\")\n        print(f\"    {vn} ({x[i]}) \u2192 {target_voice} ({y[perm[i]]})  \"\n              f\"{direction} {abs(motion)} semitones\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 2: Smooth Harmonic Progression Planning\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef plan_progression(corpus: Dict[str, List[int]],\n                     start: str, end: str,\n                     max_step_cost: int = 15) -> None:\n    \"\"\"\n    Find the smoothest harmonic path from start to end chord,\n    using only transitions with cost \u2264 max_step_cost.\n\n    Uses Dijkstra's algorithm on the chord graph. The triangle inequality\n    guarantees that the direct cost is always \u2264 the path cost, so this\n    finds genuinely useful intermediate harmonies.\n    \"\"\"\n    print(f\"\\n  APPLICATION 2: Harmonic Path Planning\")\n    print(\"  \" + \"\u2500\" * 50)\n    print(f\"\\n  Finding smoothest path: {start} \u2192 {end}\")\n    print(f\"  Maximum step cost: {max_step_cost} semitones\")\n\n    names = list(corpus.keys())\n\n    # Dijkstra\n    dist = {n: float('inf') for n in names}\n    prev = {n: None for n in names}\n    dist[start] = 0\n    pq = [(0, start)]\n\n    while pq:\n        d, u = heapq.heappop(pq)\n        if d > dist[u]:\n            continue\n        for v in names:\n            if v != u:\n                step_cost = sorted_vl_cost(corpus[u], corpus[v])[0]\n                if step_cost <= max_step_cost:\n                    new_dist = d + step_cost\n                    if new_dist < dist[v]:\n                        dist[v] = new_dist\n                        prev[v] = u\n                        heapq.heappush(pq, (new_dist, v))\n\n    if dist[end] == float('inf'):\n        print(f\"\\n  No path found with step cost \u2264 {max_step_cost}!\")\n        return\n\n    # Reconstruct path\n    path = []\n    current = end\n    while current:\n        path.append(current)\n        current = prev[current]\n    path.reverse()\n\n    direct_cost = sorted_vl_cost(corpus[start], corpus[end])[0]\n\n    print(f\"\\n  Direct cost: {direct_cost} semitones\")\n    print(f\"  Path cost:   {dist[end]} semitones\")\n    print(f\"\\n  Optimal progression ({len(path)} chords):\")\n    for i, chord in enumerate(path):\n        if i > 0:\n            step = sorted_vl_cost(corpus[path[i-1]], corpus[path[i]])[0]\n            print(f\"    {'':>4}  \u2193  (cost: {step})\")\n        print(f\"    [{i+1}] {chord:>10}: {corpus[chord]}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 3: Chord Similarity Clustering\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef cluster_chords(corpus: Dict[str, List[int]], threshold: int = 10) -> None:\n    \"\"\"\n    Cluster chords by proximity in voice-leading cost space.\n\n    Uses single-linkage clustering: two clusters merge if any pair\n    of their members has cost \u2264 threshold.\n    \"\"\"\n    print(f\"\\n  APPLICATION 3: Chord Similarity Clustering\")\n    print(\"  \" + \"\u2500\" * 50)\n    print(f\"\\n  Clustering threshold: {threshold} semitones\")\n\n    names = list(corpus.keys())\n\n    # Union-Find\n    parent = {n: n for n in names}\n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]\n            x = parent[x]\n        return x\n    def union(a, b):\n        parent[find(a)] = find(b)\n\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            if i < j:\n                cost = sorted_vl_cost(corpus[n1], corpus[n2])[0]\n                if cost <= threshold:\n                    union(n1, n2)\n\n    clusters = defaultdict(list)\n    for n in names:\n        clusters[find(n)].append(n)\n\n    print(f\"\\n  Found {len(clusters)} cluster(s):\")\n    for i, (_, members) in enumerate(clusters.items()):\n        print(f\"\\n    Cluster {i+1}: {members}\")\n        if len(members) > 1:\n            for a in members:\n                for b in members:\n                    if a < b:\n                        c = sorted_vl_cost(corpus[a], corpus[b])[0]\n                        print(f\"      {a} \u2194 {b}: cost {c}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 4: Harmonic Tension Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef analyze_tension(progression: List[Tuple[str, List[int]]]) -> None:\n    \"\"\"\n    Analyze the harmonic tension profile of a chord progression.\n\n    Uses voice-leading cost as a proxy for perceived harmonic \"distance\"\n    or tension. Higher costs = more dramatic harmonic motion.\n    \"\"\"\n    print(f\"\\n  APPLICATION 4: Harmonic Tension Analysis\")\n    print(\"  \" + \"\u2500\" * 50)\n\n    print(f\"\\n  Progression: {' \u2192 '.join(name for name, _ in progression)}\")\n    print()\n\n    total_cost = 0\n    costs = []\n    for i in range(len(progression) - 1):\n        n1, c1 = progression[i]\n        n2, c2 = progression[i + 1]\n        cost = sorted_vl_cost(c1, c2)[0]\n        costs.append(cost)\n        total_cost += cost\n\n    max_cost = max(costs) if costs else 1\n    for i, (cost) in enumerate(costs):\n        n1, _ = progression[i]\n        n2, _ = progression[i + 1]\n        bar_len = int(40 * cost / max_cost) if max_cost > 0 else 0\n        bar = \"\u2588\" * bar_len\n        print(f\"  {n1:>10} \u2192 {n2:<10} cost={cost:>3}  {bar}\")\n\n    print(f\"\\n  Total harmonic motion: {total_cost} semitones\")\n    print(f\"  Average step cost:    {total_cost / len(costs):.1f} semitones\")\n    print(f\"  Peak tension:         {max(costs)} semitones \"\n          f\"(step {costs.index(max(costs)) + 1})\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"\u2501\" * 60)\n    print(\"  VOICE-LEADING GEOMETRY: Real-World Applications\")\n    print(\"\u2501\" * 60)\n\n    # Corpus of common chords\n    corpus = {\n        \"C maj\":   [48, 52, 55, 60],\n        \"C min\":   [48, 51, 55, 60],\n        \"Dm7\":     [50, 53, 57, 60],\n        \"Em\":      [52, 55, 59, 64],\n        \"F maj\":   [53, 57, 60, 65],\n        \"G7\":      [55, 59, 62, 65],\n        \"Am\":      [45, 48, 52, 57],\n        \"Bdim\":    [47, 50, 53, 59],\n        \"Eb maj\":  [51, 55, 58, 63],\n        \"Ab maj\":  [44, 48, 51, 56],\n    }\n\n    # App 1: Optimal voice leading\n    optimal_voice_leading(\n        {\"Soprano\": 60, \"Alto\": 55, \"Tenor\": 52, \"Bass\": 48},\n        {\"Soprano\": 65, \"Alto\": 60, \"Tenor\": 57, \"Bass\": 53}\n    )\n\n    # App 2: Path planning\n    plan_progression(corpus, \"C maj\", \"Ab maj\", max_step_cost=12)\n\n    # App 3: Clustering\n    cluster_chords(corpus, threshold=8)\n\n    # App 4: Tension analysis (I-vi-IV-V-I in C major)\n    analyze_tension([\n        (\"C maj\", [48, 52, 55, 60]),\n        (\"Am\",    [45, 48, 52, 57]),\n        (\"F maj\", [53, 57, 60, 65]),\n        (\"G7\",    [55, 59, 62, 65]),\n        (\"C maj\", [48, 52, 55, 60]),\n    ])\n\n    print(\"\\n\" + \"\u2501\" * 60)\n    print(\"  All applications completed successfully.\")\n    print(\"\u2501\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Brute-Force Optimal Voice-Leading Cost",
+        "pseudocode": "Algorithm: BruteForceVLCost(x, y)\nInput: chords x, y in Z^4\nOutput: optimal cost and permutation\n\nfor each sigma in S_4:\n    cost(sigma) = sum_i |x(i) - y(sigma(i))|\nreturn min cost(sigma), argmin cost(sigma)\n\nComplexity: O(n! * n)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Voice-Leading Geometry\n\nImplements the core algorithms from the research, with full docstrings,\ntype hints, and complexity analysis.\n\nAlgorithms:\n1. Brute-force optimal matching (O(n! * n))\n2. Sorted matching shortcut (O(n log n))\n3. Chord graph construction and shortest path\n4. Cost landscape enumeration\n\"\"\"\n\nfrom itertools import permutations\nfrom typing import List, Tuple, Dict, Optional, Set\nfrom collections import defaultdict\nimport heapq\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 1: Brute-Force Optimal Voice-Leading Cost\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef brute_force_vl_cost(x: List[int], y: List[int]) -> Tuple[int, List[int]]:\n    \"\"\"\n    Compute the optimal voice-leading cost by brute-force enumeration\n    of all n! permutations.\n\n    Algorithm:\n        For each permutation \u03c3 of {0, ..., n-1}:\n            cost(\u03c3) = \u03a3\u1d62 |x[i] - y[\u03c3(i)]|\n        Return min over all \u03c3.\n\n    Complexity:\n        Time:  O(n! \u00b7 n)\n        Space: O(n)\n\n    Args:\n        x: Source chord (list of n integer pitches)\n        y: Target chord (list of n integer pitches)\n\n    Returns:\n        (optimal_cost, optimal_permutation)\n\n    Example:\n        >>> brute_force_vl_cost([48, 52, 55, 60], [53, 57, 60, 65])\n        (20, [0, 1, 2, 3])\n    \"\"\"\n    n = len(x)\n    assert len(y) == n, \"Chords must have same number of voices\"\n\n    best_cost = float('inf')\n    best_perm = list(range(n))\n\n    for perm in permutations(range(n)):\n        cost = sum(abs(x[i] - y[perm[i]]) for i in range(n))\n        if cost < best_cost:\n            best_cost = cost\n            best_perm = list(perm)\n\n    return best_cost, best_perm\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 2: Sorted Matching (Optimal for Monotone Chords)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef sorted_vl_cost(x: List[int], y: List[int]) -> Tuple[int, List[int]]:\n    \"\"\"\n    Compute voice-leading cost using the sorted matching strategy.\n\n    By the discrete Monge/rearrangement theorem (vlCost4_sorted_optimal),\n    when both sequences are sorted, the identity matching is optimal.\n    For general sequences, we sort both, compute the identity matching cost,\n    and reconstruct the optimal permutation.\n\n    Algorithm:\n        1. Sort x to get x_sorted, recording the permutation \u03c0_x\n        2. Sort y to get y_sorted, recording the permutation \u03c0_y\n        3. The optimal cost is \u03a3\u1d62 |x_sorted[i] - y_sorted[i]|\n        4. The optimal permutation is \u03c0_y \u2218 \u03c0_x\u207b\u00b9\n\n    Complexity:\n        Time:  O(n log n)\n        Space: O(n)\n\n    This is a massive improvement over O(n!) brute force.\n\n    Args:\n        x: Source chord\n        y: Target chord\n\n    Returns:\n        (optimal_cost, optimal_permutation)\n\n    Example:\n        >>> sorted_vl_cost([60, 48, 55, 52], [65, 53, 60, 57])\n        (20, [0, 1, 2, 3])\n    \"\"\"\n    n = len(x)\n    assert len(y) == n\n\n    # Sort with index tracking\n    x_indexed = sorted(enumerate(x), key=lambda p: p[1])\n    y_indexed = sorted(enumerate(y), key=lambda p: p[1])\n\n    # Compute cost on sorted sequences\n    cost = sum(abs(x_indexed[i][1] - y_indexed[i][1]) for i in range(n))\n\n    # Reconstruct permutation: voice x_indexed[i][0] maps to y_indexed[i][0]\n    perm = [0] * n\n    for i in range(n):\n        perm[x_indexed[i][0]] = y_indexed[i][0]\n\n    return cost, perm\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 3: Chord Graph Construction\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass ChordGraph:\n    \"\"\"\n    A weighted graph on a finite corpus of chords, with edges weighted\n    by voice-leading cost.\n\n    The graph supports:\n    - Shortest path computation (Dijkstra)\n    - Diameter computation\n    - Adjacency queries at various cost thresholds\n    - Connected component analysis\n\n    Complexity:\n        Construction: O(|V|\u00b2 \u00b7 n!)  for brute-force, O(|V|\u00b2 \u00b7 n log n) for sorted\n        Shortest path: O(|V|\u00b2 log |V|) via Dijkstra\n        Diameter: O(|V|\u00b3) via all-pairs shortest paths\n    \"\"\"\n\n    def __init__(self, chords: Dict[str, List[int]], use_sorted: bool = True):\n        \"\"\"\n        Build the chord graph from a dictionary of named chords.\n\n        Args:\n            chords: Map from chord name to pitch list\n            use_sorted: Use O(n log n) sorted algorithm (True) or brute force (False)\n        \"\"\"\n        self.chords = chords\n        self.names = list(chords.keys())\n        self.n = len(self.names)\n        self.cost_fn = sorted_vl_cost if use_sorted else brute_force_vl_cost\n\n        # Compute all pairwise costs\n        self.costs: Dict[Tuple[str, str], int] = {}\n        for n1 in self.names:\n            for n2 in self.names:\n                cost, _ = self.cost_fn(chords[n1], chords[n2])\n                self.costs[(n1, n2)] = cost\n\n    def get_cost(self, name1: str, name2: str) -> int:\n        \"\"\"Get the voice-leading cost between two named chords.\"\"\"\n        return self.costs[(name1, name2)]\n\n    def adjacency(self, threshold: int) -> Dict[str, List[str]]:\n        \"\"\"\n        Return adjacency lists for chords connected by cost \u2264 threshold.\n        \"\"\"\n        adj = defaultdict(list)\n        for n1 in self.names:\n            for n2 in self.names:\n                if n1 != n2 and self.costs[(n1, n2)] <= threshold:\n                    adj[n1].append(n2)\n        return dict(adj)\n\n    def shortest_path(self, start: str, end: str) -> Tuple[int, List[str]]:\n        \"\"\"\n        Compute shortest path between two chords using Dijkstra's algorithm.\n\n        Returns:\n            (total_cost, path_as_list_of_chord_names)\n        \"\"\"\n        dist = {name: float('inf') for name in self.names}\n        prev = {name: None for name in self.names}\n        dist[start] = 0\n        pq = [(0, start)]\n\n        while pq:\n            d, u = heapq.heappop(pq)\n            if d > dist[u]:\n                continue\n            for v in self.names:\n                if v != u:\n                    new_dist = d + self.costs[(u, v)]\n                    if new_dist < dist[v]:\n                        dist[v] = new_dist\n                        prev[v] = u\n                        heapq.heappush(pq, (new_dist, v))\n\n        # Reconstruct path\n        path = []\n        current = end\n        while current is not None:\n            path.append(current)\n            current = prev[current]\n        path.reverse()\n\n        return dist[end], path\n\n    def diameter(self) -> Tuple[int, Tuple[str, str]]:\n        \"\"\"\n        Compute the diameter of the chord graph (maximum shortest path distance).\n\n        Returns:\n            (diameter_value, (chord1, chord2) achieving it)\n        \"\"\"\n        max_dist = 0\n        max_pair = (self.names[0], self.names[0])\n\n        for n1 in self.names:\n            for n2 in self.names:\n                d, _ = self.shortest_path(n1, n2)\n                if d > max_dist:\n                    max_dist = d\n                    max_pair = (n1, n2)\n\n        return max_dist, max_pair\n\n    def cost_table(self) -> str:\n        \"\"\"Return a formatted cost table as a string.\"\"\"\n        header = f\"{'':>10}\" + \"\".join(f\" {n:>8}\" for n in self.names)\n        rows = [header]\n        for n1 in self.names:\n            row = f\"{n1:>10}\" + \"\".join(\n                f\" {self.costs[(n1, n2)]:>8}\" for n2 in self.names\n            )\n            rows.append(row)\n        return \"\\n\".join(rows)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 4: Cost Landscape Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef cost_histogram(chords: Dict[str, List[int]]) -> Dict[int, int]:\n    \"\"\"\n    Compute the histogram of pairwise voice-leading costs.\n\n    Returns:\n        Dictionary mapping cost value \u2192 number of chord pairs with that cost\n    \"\"\"\n    hist = defaultdict(int)\n    names = list(chords.keys())\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            if i < j:\n                cost, _ = sorted_vl_cost(chords[n1], chords[n2])\n                hist[cost] += 1\n    return dict(sorted(hist.items()))\n\n\ndef identify_symmetry_classes(chords: Dict[str, List[int]]) -> Dict[Tuple[int, ...], List[str]]:\n    \"\"\"\n    Group chords by their cost profile (distance vector to all other chords).\n\n    Chords in the same class have identical distance vectors (up to reordering),\n    indicating they occupy equivalent positions in the cost geometry.\n\n    Returns:\n        Dictionary mapping sorted cost tuple \u2192 list of chord names\n    \"\"\"\n    profiles = {}\n    names = list(chords.keys())\n    for n1 in names:\n        dists = tuple(sorted(\n            sorted_vl_cost(chords[n1], chords[n2])[0]\n            for n2 in names if n2 != n1\n        ))\n        if dists not in profiles:\n            profiles[dists] = []\n        profiles[dists].append(n1)\n    return profiles\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Example Usage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == \"__main__\":\n    print(\"Voice-Leading Geometry: Algorithm Demonstrations\")\n    print(\"=\" * 60)\n\n    # Define a corpus of common chord types\n    corpus = {\n        \"C maj\":   [48, 52, 55, 60],\n        \"C min\":   [48, 51, 55, 60],\n        \"F maj\":   [53, 57, 60, 65],\n        \"G dom7\":  [55, 59, 62, 65],\n        \"A min\":   [45, 48, 52, 57],\n        \"D min7\":  [50, 53, 57, 62],\n        \"E maj\":   [52, 56, 59, 64],\n        \"Bb maj\":  [46, 50, 53, 58],\n    }\n\n    # Algorithm 1 vs 2: verify agreement\n    print(\"\\n--- Brute Force vs Sorted Matching ---\")\n    for n1 in list(corpus.keys())[:4]:\n        for n2 in list(corpus.keys())[:4]:\n            c1, _ = brute_force_vl_cost(corpus[n1], corpus[n2])\n            c2, _ = sorted_vl_cost(corpus[n1], corpus[n2])\n            status = \"\u2713\" if c1 == c2 else \"\u2717 MISMATCH\"\n            if n1 != n2:\n                print(f\"  {n1:>8} \u2192 {n2:>8}: brute={c1}, sorted={c2} {status}\")\n\n    # Algorithm 3: Graph analysis\n    print(\"\\n--- Chord Graph Analysis ---\")\n    G = ChordGraph(corpus)\n    print(\"\\nCost Table:\")\n    print(G.cost_table())\n\n    print(\"\\nShortest path C maj \u2192 G dom7:\")\n    dist, path = G.shortest_path(\"C maj\", \"G dom7\")\n    print(f\"  Distance: {dist}\")\n    print(f\"  Path: {' \u2192 '.join(path)}\")\n\n    # Algorithm 4: Cost landscape\n    print(\"\\n--- Cost Histogram ---\")\n    hist = cost_histogram(corpus)\n    for cost, count in hist.items():\n        bar = \"\u2588\" * count\n        print(f\"  cost {cost:>3}: {bar} ({count})\")\n\n    print(\"\\n--- Symmetry Classes ---\")\n    classes = identify_symmetry_classes(corpus)\n    for profile, members in classes.items():\n        if len(members) > 1:\n            print(f\"  Equivalent: {members}\")\n",
+        "code_file": "visualizations/phase_1_immediate_1_2_weeks_brute_force_optimal_voice_leading_cost.py"
+      },
+      {
+        "name": "Sorted Matching Algorithm",
+        "pseudocode": "Algorithm: SortedVLCost(x, y)\nInput: chords x, y in Z^n\nOutput: optimal cost and permutation\n\n(x_sorted, pi_x) = sort x with index tracking\n(y_sorted, pi_y) = sort y with index tracking\ncost = sum_i |x_sorted(i) - y_sorted(i)|\nsigma = pi_y . pi_x^(-1)\nreturn cost, sigma\n\nComplexity: O(n log n)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Voice-Leading Geometry\n\nImplements the core algorithms from the research, with full docstrings,\ntype hints, and complexity analysis.\n\nAlgorithms:\n1. Brute-force optimal matching (O(n! * n))\n2. Sorted matching shortcut (O(n log n))\n3. Chord graph construction and shortest path\n4. Cost landscape enumeration\n\"\"\"\n\nfrom itertools import permutations\nfrom typing import List, Tuple, Dict, Optional, Set\nfrom collections import defaultdict\nimport heapq\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 1: Brute-Force Optimal Voice-Leading Cost\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef brute_force_vl_cost(x: List[int], y: List[int]) -> Tuple[int, List[int]]:\n    \"\"\"\n    Compute the optimal voice-leading cost by brute-force enumeration\n    of all n! permutations.\n\n    Algorithm:\n        For each permutation \u03c3 of {0, ..., n-1}:\n            cost(\u03c3) = \u03a3\u1d62 |x[i] - y[\u03c3(i)]|\n        Return min over all \u03c3.\n\n    Complexity:\n        Time:  O(n! \u00b7 n)\n        Space: O(n)\n\n    Args:\n        x: Source chord (list of n integer pitches)\n        y: Target chord (list of n integer pitches)\n\n    Returns:\n        (optimal_cost, optimal_permutation)\n\n    Example:\n        >>> brute_force_vl_cost([48, 52, 55, 60], [53, 57, 60, 65])\n        (20, [0, 1, 2, 3])\n    \"\"\"\n    n = len(x)\n    assert len(y) == n, \"Chords must have same number of voices\"\n\n    best_cost = float('inf')\n    best_perm = list(range(n))\n\n    for perm in permutations(range(n)):\n        cost = sum(abs(x[i] - y[perm[i]]) for i in range(n))\n        if cost < best_cost:\n            best_cost = cost\n            best_perm = list(perm)\n\n    return best_cost, best_perm\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 2: Sorted Matching (Optimal for Monotone Chords)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef sorted_vl_cost(x: List[int], y: List[int]) -> Tuple[int, List[int]]:\n    \"\"\"\n    Compute voice-leading cost using the sorted matching strategy.\n\n    By the discrete Monge/rearrangement theorem (vlCost4_sorted_optimal),\n    when both sequences are sorted, the identity matching is optimal.\n    For general sequences, we sort both, compute the identity matching cost,\n    and reconstruct the optimal permutation.\n\n    Algorithm:\n        1. Sort x to get x_sorted, recording the permutation \u03c0_x\n        2. Sort y to get y_sorted, recording the permutation \u03c0_y\n        3. The optimal cost is \u03a3\u1d62 |x_sorted[i] - y_sorted[i]|\n        4. The optimal permutation is \u03c0_y \u2218 \u03c0_x\u207b\u00b9\n\n    Complexity:\n        Time:  O(n log n)\n        Space: O(n)\n\n    This is a massive improvement over O(n!) brute force.\n\n    Args:\n        x: Source chord\n        y: Target chord\n\n    Returns:\n        (optimal_cost, optimal_permutation)\n\n    Example:\n        >>> sorted_vl_cost([60, 48, 55, 52], [65, 53, 60, 57])\n        (20, [0, 1, 2, 3])\n    \"\"\"\n    n = len(x)\n    assert len(y) == n\n\n    # Sort with index tracking\n    x_indexed = sorted(enumerate(x), key=lambda p: p[1])\n    y_indexed = sorted(enumerate(y), key=lambda p: p[1])\n\n    # Compute cost on sorted sequences\n    cost = sum(abs(x_indexed[i][1] - y_indexed[i][1]) for i in range(n))\n\n    # Reconstruct permutation: voice x_indexed[i][0] maps to y_indexed[i][0]\n    perm = [0] * n\n    for i in range(n):\n        perm[x_indexed[i][0]] = y_indexed[i][0]\n\n    return cost, perm\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 3: Chord Graph Construction\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass ChordGraph:\n    \"\"\"\n    A weighted graph on a finite corpus of chords, with edges weighted\n    by voice-leading cost.\n\n    The graph supports:\n    - Shortest path computation (Dijkstra)\n    - Diameter computation\n    - Adjacency queries at various cost thresholds\n    - Connected component analysis\n\n    Complexity:\n        Construction: O(|V|\u00b2 \u00b7 n!)  for brute-force, O(|V|\u00b2 \u00b7 n log n) for sorted\n        Shortest path: O(|V|\u00b2 log |V|) via Dijkstra\n        Diameter: O(|V|\u00b3) via all-pairs shortest paths\n    \"\"\"\n\n    def __init__(self, chords: Dict[str, List[int]], use_sorted: bool = True):\n        \"\"\"\n        Build the chord graph from a dictionary of named chords.\n\n        Args:\n            chords: Map from chord name to pitch list\n            use_sorted: Use O(n log n) sorted algorithm (True) or brute force (False)\n        \"\"\"\n        self.chords = chords\n        self.names = list(chords.keys())\n        self.n = len(self.names)\n        self.cost_fn = sorted_vl_cost if use_sorted else brute_force_vl_cost\n\n        # Compute all pairwise costs\n        self.costs: Dict[Tuple[str, str], int] = {}\n        for n1 in self.names:\n            for n2 in self.names:\n                cost, _ = self.cost_fn(chords[n1], chords[n2])\n                self.costs[(n1, n2)] = cost\n\n    def get_cost(self, name1: str, name2: str) -> int:\n        \"\"\"Get the voice-leading cost between two named chords.\"\"\"\n        return self.costs[(name1, name2)]\n\n    def adjacency(self, threshold: int) -> Dict[str, List[str]]:\n        \"\"\"\n        Return adjacency lists for chords connected by cost \u2264 threshold.\n        \"\"\"\n        adj = defaultdict(list)\n        for n1 in self.names:\n            for n2 in self.names:\n                if n1 != n2 and self.costs[(n1, n2)] <= threshold:\n                    adj[n1].append(n2)\n        return dict(adj)\n\n    def shortest_path(self, start: str, end: str) -> Tuple[int, List[str]]:\n        \"\"\"\n        Compute shortest path between two chords using Dijkstra's algorithm.\n\n        Returns:\n            (total_cost, path_as_list_of_chord_names)\n        \"\"\"\n        dist = {name: float('inf') for name in self.names}\n        prev = {name: None for name in self.names}\n        dist[start] = 0\n        pq = [(0, start)]\n\n        while pq:\n            d, u = heapq.heappop(pq)\n            if d > dist[u]:\n                continue\n            for v in self.names:\n                if v != u:\n                    new_dist = d + self.costs[(u, v)]\n                    if new_dist < dist[v]:\n                        dist[v] = new_dist\n                        prev[v] = u\n                        heapq.heappush(pq, (new_dist, v))\n\n        # Reconstruct path\n        path = []\n        current = end\n        while current is not None:\n            path.append(current)\n            current = prev[current]\n        path.reverse()\n\n        return dist[end], path\n\n    def diameter(self) -> Tuple[int, Tuple[str, str]]:\n        \"\"\"\n        Compute the diameter of the chord graph (maximum shortest path distance).\n\n        Returns:\n            (diameter_value, (chord1, chord2) achieving it)\n        \"\"\"\n        max_dist = 0\n        max_pair = (self.names[0], self.names[0])\n\n        for n1 in self.names:\n            for n2 in self.names:\n                d, _ = self.shortest_path(n1, n2)\n                if d > max_dist:\n                    max_dist = d\n                    max_pair = (n1, n2)\n\n        return max_dist, max_pair\n\n    def cost_table(self) -> str:\n        \"\"\"Return a formatted cost table as a string.\"\"\"\n        header = f\"{'':>10}\" + \"\".join(f\" {n:>8}\" for n in self.names)\n        rows = [header]\n        for n1 in self.names:\n            row = f\"{n1:>10}\" + \"\".join(\n                f\" {self.costs[(n1, n2)]:>8}\" for n2 in self.names\n            )\n            rows.append(row)\n        return \"\\n\".join(rows)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 4: Cost Landscape Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef cost_histogram(chords: Dict[str, List[int]]) -> Dict[int, int]:\n    \"\"\"\n    Compute the histogram of pairwise voice-leading costs.\n\n    Returns:\n        Dictionary mapping cost value \u2192 number of chord pairs with that cost\n    \"\"\"\n    hist = defaultdict(int)\n    names = list(chords.keys())\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            if i < j:\n                cost, _ = sorted_vl_cost(chords[n1], chords[n2])\n                hist[cost] += 1\n    return dict(sorted(hist.items()))\n\n\ndef identify_symmetry_classes(chords: Dict[str, List[int]]) -> Dict[Tuple[int, ...], List[str]]:\n    \"\"\"\n    Group chords by their cost profile (distance vector to all other chords).\n\n    Chords in the same class have identical distance vectors (up to reordering),\n    indicating they occupy equivalent positions in the cost geometry.\n\n    Returns:\n        Dictionary mapping sorted cost tuple \u2192 list of chord names\n    \"\"\"\n    profiles = {}\n    names = list(chords.keys())\n    for n1 in names:\n        dists = tuple(sorted(\n            sorted_vl_cost(chords[n1], chords[n2])[0]\n            for n2 in names if n2 != n1\n        ))\n        if dists not in profiles:\n            profiles[dists] = []\n        profiles[dists].append(n1)\n    return profiles\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Example Usage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == \"__main__\":\n    print(\"Voice-Leading Geometry: Algorithm Demonstrations\")\n    print(\"=\" * 60)\n\n    # Define a corpus of common chord types\n    corpus = {\n        \"C maj\":   [48, 52, 55, 60],\n        \"C min\":   [48, 51, 55, 60],\n        \"F maj\":   [53, 57, 60, 65],\n        \"G dom7\":  [55, 59, 62, 65],\n        \"A min\":   [45, 48, 52, 57],\n        \"D min7\":  [50, 53, 57, 62],\n        \"E maj\":   [52, 56, 59, 64],\n        \"Bb maj\":  [46, 50, 53, 58],\n    }\n\n    # Algorithm 1 vs 2: verify agreement\n    print(\"\\n--- Brute Force vs Sorted Matching ---\")\n    for n1 in list(corpus.keys())[:4]:\n        for n2 in list(corpus.keys())[:4]:\n            c1, _ = brute_force_vl_cost(corpus[n1], corpus[n2])\n            c2, _ = sorted_vl_cost(corpus[n1], corpus[n2])\n            status = \"\u2713\" if c1 == c2 else \"\u2717 MISMATCH\"\n            if n1 != n2:\n                print(f\"  {n1:>8} \u2192 {n2:>8}: brute={c1}, sorted={c2} {status}\")\n\n    # Algorithm 3: Graph analysis\n    print(\"\\n--- Chord Graph Analysis ---\")\n    G = ChordGraph(corpus)\n    print(\"\\nCost Table:\")\n    print(G.cost_table())\n\n    print(\"\\nShortest path C maj \u2192 G dom7:\")\n    dist, path = G.shortest_path(\"C maj\", \"G dom7\")\n    print(f\"  Distance: {dist}\")\n    print(f\"  Path: {' \u2192 '.join(path)}\")\n\n    # Algorithm 4: Cost landscape\n    print(\"\\n--- Cost Histogram ---\")\n    hist = cost_histogram(corpus)\n    for cost, count in hist.items():\n        bar = \"\u2588\" * count\n        print(f\"  cost {cost:>3}: {bar} ({count})\")\n\n    print(\"\\n--- Symmetry Classes ---\")\n    classes = identify_symmetry_classes(corpus)\n    for profile, members in classes.items():\n        if len(members) > 1:\n            print(f\"  Equivalent: {members}\")\n",
+        "code_file": "visualizations/phase_1_immediate_1_2_weeks_sorted_matching_algorithm.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Voice-Leading Cost Heatmap",
+        "file": "visualizations/phase_1_immediate_1_2_weeks_voice_leading_cost_heatmap.svg"
+      },
+      {
+        "name": "Chord Transition Graph",
+        "file": "visualizations/phase_1_immediate_1_2_weeks_chord_transition_graph.svg"
+      }
+    ],
+    "lean_proofs": "/-\n# Voice-Leading Geometry: Four-Voice Harmonic Motion as Metric Space\n\nThis file establishes that four-voice harmonic motion admits a formally verified\ngeodesic cost structure. The central object is `vlCost4`, a permutation-minimized\nvoice-leading cost on `Fin 4 \u2192 \u2124`, which we prove satisfies the triangle inequality,\nis invariant under voice permutations, and is optimized by sorted matching when both\nchords are monotone.\n\n## Main Results\n\n* `vlCost4_triangle`: The four-voice voice-leading cost satisfies the triangle inequality,\n  making it a pseudometric on chord space.\n* `vlCost4_perm_invariant`: The cost is invariant under independent permutation of voices\n  in both source and target chords.\n* `vlCost4_sorted_optimal`: When both chords are monotone nondecreasing, the identity\n  matching (no voice crossing) realizes the minimal cost.\n* `abs_swap_uncross`: The atomic uncrossing lemma: swapping crossed voice assignments\n  never increases total absolute deviation.\n\n## Mathematical Significance\n\nThese results formalize the geometry of harmonic motion: chord space becomes a metric\nspace under voice-leading cost, optimal voice assignment has canonical structure\n(sorted matching), and harmonic progressions compose with bounded cost (triangle\ninequality). This is the foundation for certified harmonic path planning, connections\nto discrete optimal transport, and tropical/min-plus algebraic structure on progression\nspaces.\n-/\n\nimport Mathlib\n\nopen Finset Function Equiv\n\n/-! ## Core Definitions -/\n\n/-- A four-voice chord: an assignment of integer pitches to four voices. -/\nabbrev Chord4 := Fin 4 \u2192 \u2124\n\n/-- The cost of a specific voice assignment given by permutation `\u03c3`:\n    the sum of absolute pitch differences across matched voices. -/\ndef permCost (x y : Chord4) (\u03c3 : Equiv.Perm (Fin 4)) : \u2115 :=\n  \u2211 i : Fin 4, Int.natAbs (x i - y (\u03c3 i))\n\n/-- The optimal four-voice voice-leading cost: the minimum over all 24 permutations\n    of the per-voice absolute pitch differences. This is a discrete assignment cost. -/\nnoncomputable def vlCost4 (x y : Chord4) : \u2115 :=\n  Finset.inf' Finset.univ \u27e81, Finset.mem_univ 1\u27e9 (permCost x y)\n\n/-- A chord is monotone nondecreasing (sorted in pitch order). -/\ndef MonotoneFin4 (x : Chord4) : Prop :=\n  \u2200 \u2983i j : Fin 4\u2984, i \u2264 j \u2192 x i \u2264 x j\n\n/-! ## Helper Lemmas -/\n\n/-- The voice-leading cost for a specific permutation is bounded below by the optimal cost. -/\ntheorem vlCost4_le_permCost (x y : Chord4) (\u03c3 : Equiv.Perm (Fin 4)) :\n    vlCost4 x y \u2264 permCost x y \u03c3 :=\n  Finset.inf'_le _ (Finset.mem_univ \u03c3)\n\n/-\nThere exists an optimal permutation realizing the voice-leading cost.\n-/\ntheorem vlCost4_exists_optimal (x y : Chord4) :\n    \u2203 \u03c3 : Equiv.Perm (Fin 4), vlCost4 x y = permCost x y \u03c3 := by\n  convert Finset.exists_mem_eq_inf' _ _;\n  rotate_left;\n  exact \u2115;\n  exact inferInstance;\n  exact Finset.univ;\n  exact \u27e8 1, Finset.mem_univ _ \u27e9;\n  exact fun \u03c3 => permCost x y \u03c3;\n  aesop\n\n/-\nPointwise triangle inequality for Int.natAbs.\n-/\ntheorem int_natAbs_triangle (a b c : \u2124) :\n    Int.natAbs (a - c) \u2264 Int.natAbs (a - b) + Int.natAbs (b - c) := by\n  grind +ring\n\n/-\nSum of natAbs differences satisfies triangle inequality under composition.\n-/\ntheorem permCost_triangle_comp (x y z : Chord4) (\u03c3 \u03c4 : Equiv.Perm (Fin 4)) :\n    permCost x z (\u03c4 * \u03c3) \u2264 permCost x y \u03c3 + permCost y z \u03c4 := by\n  unfold permCost at *;\n  convert Finset.sum_le_sum fun i _ => int_natAbs_triangle ( x i ) ( y ( \u03c3 i ) ) ( z ( \u03c4 ( \u03c3 i ) ) ) using 1;\n  rw [ Finset.sum_add_distrib, \u2190 Equiv.sum_comp \u03c3 fun i => Int.natAbs ( y i - z ( \u03c4 i ) ) ]\n\n/-! ## Theorem 1: Triangle Inequality -/\n\n/-\n**Main Theorem 1.** The four-voice voice-leading cost satisfies the triangle inequality.\n    This makes `(Chord4, vlCost4)` a pseudometric space, establishing that harmonic motion\n    admits a genuine geodesic cost geometry.\n-/\ntheorem vlCost4_triangle (x y z : Chord4) :\n    vlCost4 x z \u2264 vlCost4 x y + vlCost4 y z := by\n  -- By definition of $vlCost4$, we know that there exist permutations $\\sigma$ and $\\tau$ such that $vlCost4 x y = permCost x y \\sigma$ and $vlCost4 y z = permCost y z \\tau$.\n  obtain \u27e8\u03c3, h\u03c3\u27e9 := vlCost4_exists_optimal x y\n  obtain \u27e8\u03c4, h\u03c4\u27e9 := vlCost4_exists_optimal y z;\n  exact h\u03c3.symm \u25b8 h\u03c4.symm \u25b8 le_trans ( vlCost4_le_permCost x z ( \u03c4 * \u03c3 ) ) ( permCost_triangle_comp x y z \u03c3 \u03c4 )\n\n/-! ## Theorem 2: Permutation Invariance -/\n\n/-\n**Main Theorem 2.** The voice-leading cost is invariant under independent permutation\n    of voices in both chords. This identifies the true object of study as chord configuration\n    modulo voice labels\u2014the conceptual leap from \"voices as registers\" to \"harmonic state space.\"\n-/\ntheorem vlCost4_perm_invariant (x y : Chord4) (\u03c4\u2081 \u03c4\u2082 : Equiv.Perm (Fin 4)) :\n    vlCost4 (x \u2218 \u03c4\u2081) (y \u2218 \u03c4\u2082) = vlCost4 x y := by\n  refine' le_antisymm _ _;\n  \u00b7 -- Let $\\sigma$ be a permutation that realizes the minimum cost for $x$ and $y$.\n    obtain \u27e8\u03c3, h\u03c3\u27e9 : \u2203 \u03c3 : Equiv.Perm (Fin 4), vlCost4 x y = permCost x y \u03c3 := vlCost4_exists_optimal x y;\n    refine' le_trans ( Finset.inf'_le _ <| Finset.mem_univ <| \u03c4\u2082\u207b\u00b9 * \u03c3 * \u03c4\u2081 ) _;\n    unfold permCost at *; simp_all +decide [ Fin.sum_univ_four ] ;\n    have := Equiv.sum_comp \u03c4\u2081 fun i => Int.natAbs ( x i - y ( \u03c3 i ) ) ; ( have := Equiv.sum_comp ( Equiv.refl ( Fin 4 ) ) fun i => Int.natAbs ( x i - y ( \u03c3 i ) ) ; simp_all +decide [ Fin.sum_univ_four ] ; );\n  \u00b7 obtain \u27e8 \u03c3, h\u03c3 \u27e9 := vlCost4_exists_optimal ( x \u2218 \u03c4\u2081 ) ( y \u2218 \u03c4\u2082 );\n    convert vlCost4_le_permCost x y ( \u03c4\u2082 * \u03c3 * \u03c4\u2081\u207b\u00b9 ) using 1;\n    unfold permCost at *;\n    rw [ h\u03c3, \u2190 Equiv.sum_comp ( \u03c4\u2081\u207b\u00b9 ) ] ; aesop\n\n/-! ## Uncrossing Lemma -/\n\n/-\n**Atomic Uncrossing Lemma.** If `a \u2264 b` and `c \u2264 d`, then the \"crossed\" assignment\n    `|a - d| + |b - c|` costs at least as much as the \"uncrossed\" assignment\n    `|a - c| + |b - d|`. This is the engine behind Monge optimality.\n-/\ntheorem abs_swap_uncross {a b c d : \u2124} (hab : a \u2264 b) (hcd : c \u2264 d) :\n    Int.natAbs (a - c) + Int.natAbs (b - d) \u2264\n    Int.natAbs (a - d) + Int.natAbs (b - c) := by\n  omega\n\n/-! ## Theorem 3: Sorted Matching Optimality -/\n\n/-\n**Main Theorem 3.** When both chords are monotone nondecreasing, the identity matching\n    (no voice crossing) realizes the minimal cost. This is a discrete Monge/rearrangement\n    theorem: optimal four-voice transport in 1D is canonical after sorting.\n-/\ntheorem vlCost4_sorted_optimal (x y : Chord4) (hx : MonotoneFin4 x) (hy : MonotoneFin4 y) :\n    vlCost4 x y = \u2211 i : Fin 4, Int.natAbs (x i - y i) := by\n  refine' le_antisymm (vlCost4_le_permCost x y 1) _;\n  -- By the properties of the absolute value function and the monotonicity of $x$ and $y$, we can show that the sum of absolute differences is minimized when the voices are matched in order.\n  have h_abs_diff_min : \u2200 (\u03c3 : Equiv.Perm (Fin 4)), \u2211 i, Int.natAbs (x i - y (\u03c3 i)) \u2265 \u2211 i, Int.natAbs (x i - y i) := by\n    intro \u03c3;\n    -- By the properties of the absolute value function and the monotonicity of $x$ and $y$, we can show that the sum of absolute differences is minimized when the voices are matched in order. We can prove this by considering all possible permutations of the voices.\n    have h_permutations : \u2200 (\u03c3 : Equiv.Perm (Fin 4)), \u2211 i, Int.natAbs (x i - y (\u03c3 i)) \u2265 \u2211 i, Int.natAbs (x i - y i) := by\n      intro \u03c3\n      have h_cases : \u2200 (i j k l : Fin 4), i \u2260 j \u2227 i \u2260 k \u2227 i \u2260 l \u2227 j \u2260 k \u2227 j \u2260 l \u2227 k \u2260 l \u2192 Int.natAbs (x 0 - y i) + Int.natAbs (x 1 - y j) + Int.natAbs (x 2 - y k) + Int.natAbs (x 3 - y l) \u2265 Int.natAbs (x 0 - y 0) + Int.natAbs (x 1 - y 1) + Int.natAbs (x 2 - y 2) + Int.natAbs (x 3 - y 3) := by\n        intro i j k l hijkl\n        have h_cases : \u2200 (i j k l : Fin 4), i \u2260 j \u2227 i \u2260 k \u2227 i \u2260 l \u2227 j \u2260 k \u2227 j \u2260 l \u2227 k \u2260 l \u2192 Int.natAbs (x 0 - y i) + Int.natAbs (x 1 - y j) + Int.natAbs (x 2 - y k) + Int.natAbs (x 3 - y l) \u2265 Int.natAbs (x 0 - y 0) + Int.natAbs (x 1 - y 1) + Int.natAbs (x 2 - y 2) + Int.natAbs (x 3 - y 3) := by\n          intro i j k l hijkl\n          have h_monotone : x 0 \u2264 x 1 \u2227 x 1 \u2264 x 2 \u2227 x 2 \u2264 x 3 \u2227 y 0 \u2264 y 1 \u2227 y 1 \u2264 y 2 \u2227 y 2 \u2264 y 3 := by\n            exact \u27e8 hx ( by decide ), hx ( by decide ), hx ( by decide ), hy ( by decide ), hy ( by decide ), hy ( by decide ) \u27e9\n          fin_cases i <;> fin_cases j <;> simp +decide at hijkl \u22a2;\n          all_goals fin_cases k <;> fin_cases l <;> simp +decide at hijkl \u22a2;\n          grind +extAll;\n          lia;\n          grind +splitImp;\n          lia;\n          grind +splitImp;\n          bv_omega;\n          lia;\n          grind +splitIndPred;\n          grind +extAll;\n          lia;\n          lia;\n          lia;\n          grind +qlia;\n          lia;\n          grind +splitImp;\n          grind +splitImp;\n          lia;\n          grind +splitImp;\n          \u00b7 grind +splitImp;\n          \u00b7 grind +splitImp;\n          \u00b7 grind +splitImp;\n          \u00b7 grind +splitImp;\n          \u00b7 grind +splitImp;\n        exact h_cases i j k l hijkl\n      simp +decide [ Fin.sum_univ_four ];\n      exact h_cases _ _ _ _ \u27e8 \u03c3.injective.ne ( by decide ), \u03c3.injective.ne ( by decide ), \u03c3.injective.ne ( by decide ), \u03c3.injective.ne ( by decide ), \u03c3.injective.ne ( by decide ), \u03c3.injective.ne ( by decide ) \u27e9;\n    exact h_permutations \u03c3;\n  exact Finset.le_inf' _ _ fun \u03c3 _ => h_abs_diff_min \u03c3\n\n/-! ## Self-cost is zero -/\n\n/-\nThe voice-leading cost of a chord to itself is zero.\n-/\ntheorem vlCost4_self (x : Chord4) : vlCost4 x x = 0 := by\n  refine' le_antisymm _ _;\n  \u00b7 exact Finset.inf'_le _ ( Finset.mem_univ 1 ) |> le_trans <| by simp +decide [ permCost ] ;\n  \u00b7 exact Nat.zero_le _\n\n/-! ## Symmetry -/\n\n/-\nThe voice-leading cost is symmetric.\n-/\ntheorem vlCost4_symm (x y : Chord4) : vlCost4 x y = vlCost4 y x := by\n  -- By definition of `permCost`, we know that `permCost x y \u03c3 = permCost y x (\u03c3\u207b\u00b9)`.\n  have h_permCost_symm (\u03c3 : Equiv.Perm (Fin 4)) : permCost x y \u03c3 = permCost y x \u03c3\u207b\u00b9 := by\n    apply Finset.sum_bij (fun i _ => \u03c3 i);\n    \u00b7 exact fun _ _ => Finset.mem_univ _;\n    \u00b7 exact fun a\u2081 _ a\u2082 _ h => \u03c3.injective h;\n    \u00b7 exact fun b _ => \u27e8 \u03c3.symm b, Finset.mem_univ _, by simp +decide \u27e9;\n    \u00b7 exact fun a _ => by rw [ Equiv.Perm.inv_apply_self ] ; rw [ \u2190 Int.natAbs_neg ] ; ring;\n  unfold vlCost4;\n  refine' le_antisymm _ _ <;> simp_all +decide [ Finset.inf'_le, Finset.le_inf' ];\n  \u00b7 exact fun \u03c3 => \u27e8 \u03c3\u207b\u00b9, by simp +decide \u27e9;\n  \u00b7 exact fun \u03c3 => \u27e8 \u03c3\u207b\u00b9, le_rfl \u27e9\n\n/-! ## Computational Examples -/\n\n/-- C major triad doubled at root in close position: C3 E3 G3 C4 = [48, 52, 55, 60] -/\ndef cMajor4 : Chord4 := ![48, 52, 55, 60]\n\n/-- F major triad doubled at root: F3 A3 C4 F4 = [53, 57, 60, 65] -/\ndef fMajor4 : Chord4 := ![53, 57, 60, 65]\n\n/-- G dominant seventh: G3 B3 D4 F4 = [55, 59, 62, 65] -/\ndef gDom7 : Chord4 := ![55, 59, 62, 65]\n\n/-- The identity permutation cost for C major \u2192 F major is computable. -/\nexample : permCost cMajor4 fMajor4 1 = 20 := by native_decide\n\n/-- The voice-leading cost is at most the identity permutation cost. -/\ntheorem vlCost4_cMaj_fMaj_le : vlCost4 cMajor4 fMajor4 \u2264 20 := by\n  calc vlCost4 cMajor4 fMajor4 \u2264 permCost cMajor4 fMajor4 1 :=\n        vlCost4_le_permCost _ _ _\n    _ = 20 := by native_decide",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Voice-Leading Geometry\n\nImplements the core algorithms from the research, with full docstrings,\ntype hints, and complexity analysis.\n\nAlgorithms:\n1. Brute-force optimal matching (O(n! * n))\n2. Sorted matching shortcut (O(n log n))\n3. Chord graph construction and shortest path\n4. Cost landscape enumeration\n\"\"\"\n\nfrom itertools import permutations\nfrom typing import List, Tuple, Dict, Optional, Set\nfrom collections import defaultdict\nimport heapq\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 1: Brute-Force Optimal Voice-Leading Cost\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef brute_force_vl_cost(x: List[int], y: List[int]) -> Tuple[int, List[int]]:\n    \"\"\"\n    Compute the optimal voice-leading cost by brute-force enumeration\n    of all n! permutations.\n\n    Algorithm:\n        For each permutation \u03c3 of {0, ..., n-1}:\n            cost(\u03c3) = \u03a3\u1d62 |x[i] - y[\u03c3(i)]|\n        Return min over all \u03c3.\n\n    Complexity:\n        Time:  O(n! \u00b7 n)\n        Space: O(n)\n\n    Args:\n        x: Source chord (list of n integer pitches)\n        y: Target chord (list of n integer pitches)\n\n    Returns:\n        (optimal_cost, optimal_permutation)\n\n    Example:\n        >>> brute_force_vl_cost([48, 52, 55, 60], [53, 57, 60, 65])\n        (20, [0, 1, 2, 3])\n    \"\"\"\n    n = len(x)\n    assert len(y) == n, \"Chords must have same number of voices\"\n\n    best_cost = float('inf')\n    best_perm = list(range(n))\n\n    for perm in permutations(range(n)):\n        cost = sum(abs(x[i] - y[perm[i]]) for i in range(n))\n        if cost < best_cost:\n            best_cost = cost\n            best_perm = list(perm)\n\n    return best_cost, best_perm\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 2: Sorted Matching (Optimal for Monotone Chords)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef sorted_vl_cost(x: List[int], y: List[int]) -> Tuple[int, List[int]]:\n    \"\"\"\n    Compute voice-leading cost using the sorted matching strategy.\n\n    By the discrete Monge/rearrangement theorem (vlCost4_sorted_optimal),\n    when both sequences are sorted, the identity matching is optimal.\n    For general sequences, we sort both, compute the identity matching cost,\n    and reconstruct the optimal permutation.\n\n    Algorithm:\n        1. Sort x to get x_sorted, recording the permutation \u03c0_x\n        2. Sort y to get y_sorted, recording the permutation \u03c0_y\n        3. The optimal cost is \u03a3\u1d62 |x_sorted[i] - y_sorted[i]|\n        4. The optimal permutation is \u03c0_y \u2218 \u03c0_x\u207b\u00b9\n\n    Complexity:\n        Time:  O(n log n)\n        Space: O(n)\n\n    This is a massive improvement over O(n!) brute force.\n\n    Args:\n        x: Source chord\n        y: Target chord\n\n    Returns:\n        (optimal_cost, optimal_permutation)\n\n    Example:\n        >>> sorted_vl_cost([60, 48, 55, 52], [65, 53, 60, 57])\n        (20, [0, 1, 2, 3])\n    \"\"\"\n    n = len(x)\n    assert len(y) == n\n\n    # Sort with index tracking\n    x_indexed = sorted(enumerate(x), key=lambda p: p[1])\n    y_indexed = sorted(enumerate(y), key=lambda p: p[1])\n\n    # Compute cost on sorted sequences\n    cost = sum(abs(x_indexed[i][1] - y_indexed[i][1]) for i in range(n))\n\n    # Reconstruct permutation: voice x_indexed[i][0] maps to y_indexed[i][0]\n    perm = [0] * n\n    for i in range(n):\n        perm[x_indexed[i][0]] = y_indexed[i][0]\n\n    return cost, perm\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 3: Chord Graph Construction\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass ChordGraph:\n    \"\"\"\n    A weighted graph on a finite corpus of chords, with edges weighted\n    by voice-leading cost.\n\n    The graph supports:\n    - Shortest path computation (Dijkstra)\n    - Diameter computation\n    - Adjacency queries at various cost thresholds\n    - Connected component analysis\n\n    Complexity:\n        Construction: O(|V|\u00b2 \u00b7 n!)  for brute-force, O(|V|\u00b2 \u00b7 n log n) for sorted\n        Shortest path: O(|V|\u00b2 log |V|) via Dijkstra\n        Diameter: O(|V|\u00b3) via all-pairs shortest paths\n    \"\"\"\n\n    def __init__(self, chords: Dict[str, List[int]], use_sorted: bool = True):\n        \"\"\"\n        Build the chord graph from a dictionary of named chords.\n\n        Args:\n            chords: Map from chord name to pitch list\n            use_sorted: Use O(n log n) sorted algorithm (True) or brute force (False)\n        \"\"\"\n        self.chords = chords\n        self.names = list(chords.keys())\n        self.n = len(self.names)\n        self.cost_fn = sorted_vl_cost if use_sorted else brute_force_vl_cost\n\n        # Compute all pairwise costs\n        self.costs: Dict[Tuple[str, str], int] = {}\n        for n1 in self.names:\n            for n2 in self.names:\n                cost, _ = self.cost_fn(chords[n1], chords[n2])\n                self.costs[(n1, n2)] = cost\n\n    def get_cost(self, name1: str, name2: str) -> int:\n        \"\"\"Get the voice-leading cost between two named chords.\"\"\"\n        return self.costs[(name1, name2)]\n\n    def adjacency(self, threshold: int) -> Dict[str, List[str]]:\n        \"\"\"\n        Return adjacency lists for chords connected by cost \u2264 threshold.\n        \"\"\"\n        adj = defaultdict(list)\n        for n1 in self.names:\n            for n2 in self.names:\n                if n1 != n2 and self.costs[(n1, n2)] <= threshold:\n                    adj[n1].append(n2)\n        return dict(adj)\n\n    def shortest_path(self, start: str, end: str) -> Tuple[int, List[str]]:\n        \"\"\"\n        Compute shortest path between two chords using Dijkstra's algorithm.\n\n        Returns:\n            (total_cost, path_as_list_of_chord_names)\n        \"\"\"\n        dist = {name: float('inf') for name in self.names}\n        prev = {name: None for name in self.names}\n        dist[start] = 0\n        pq = [(0, start)]\n\n        while pq:\n            d, u = heapq.heappop(pq)\n            if d > dist[u]:\n                continue\n            for v in self.names:\n                if v != u:\n                    new_dist = d + self.costs[(u, v)]\n                    if new_dist < dist[v]:\n                        dist[v] = new_dist\n                        prev[v] = u\n                        heapq.heappush(pq, (new_dist, v))\n\n        # Reconstruct path\n        path = []\n        current = end\n        while current is not None:\n            path.append(current)\n            current = prev[current]\n        path.reverse()\n\n        return dist[end], path\n\n    def diameter(self) -> Tuple[int, Tuple[str, str]]:\n        \"\"\"\n        Compute the diameter of the chord graph (maximum shortest path distance).\n\n        Returns:\n            (diameter_value, (chord1, chord2) achieving it)\n        \"\"\"\n        max_dist = 0\n        max_pair = (self.names[0], self.names[0])\n\n        for n1 in self.names:\n            for n2 in self.names:\n                d, _ = self.shortest_path(n1, n2)\n                if d > max_dist:\n                    max_dist = d\n                    max_pair = (n1, n2)\n\n        return max_dist, max_pair\n\n    def cost_table(self) -> str:\n        \"\"\"Return a formatted cost table as a string.\"\"\"\n        header = f\"{'':>10}\" + \"\".join(f\" {n:>8}\" for n in self.names)\n        rows = [header]\n        for n1 in self.names:\n            row = f\"{n1:>10}\" + \"\".join(\n                f\" {self.costs[(n1, n2)]:>8}\" for n2 in self.names\n            )\n            rows.append(row)\n        return \"\\n\".join(rows)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 4: Cost Landscape Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef cost_histogram(chords: Dict[str, List[int]]) -> Dict[int, int]:\n    \"\"\"\n    Compute the histogram of pairwise voice-leading costs.\n\n    Returns:\n        Dictionary mapping cost value \u2192 number of chord pairs with that cost\n    \"\"\"\n    hist = defaultdict(int)\n    names = list(chords.keys())\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            if i < j:\n                cost, _ = sorted_vl_cost(chords[n1], chords[n2])\n                hist[cost] += 1\n    return dict(sorted(hist.items()))\n\n\ndef identify_symmetry_classes(chords: Dict[str, List[int]]) -> Dict[Tuple[int, ...], List[str]]:\n    \"\"\"\n    Group chords by their cost profile (distance vector to all other chords).\n\n    Chords in the same class have identical distance vectors (up to reordering),\n    indicating they occupy equivalent positions in the cost geometry.\n\n    Returns:\n        Dictionary mapping sorted cost tuple \u2192 list of chord names\n    \"\"\"\n    profiles = {}\n    names = list(chords.keys())\n    for n1 in names:\n        dists = tuple(sorted(\n            sorted_vl_cost(chords[n1], chords[n2])[0]\n            for n2 in names if n2 != n1\n        ))\n        if dists not in profiles:\n            profiles[dists] = []\n        profiles[dists].append(n1)\n    return profiles\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Example Usage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == \"__main__\":\n    print(\"Voice-Leading Geometry: Algorithm Demonstrations\")\n    print(\"=\" * 60)\n\n    # Define a corpus of common chord types\n    corpus = {\n        \"C maj\":   [48, 52, 55, 60],\n        \"C min\":   [48, 51, 55, 60],\n        \"F maj\":   [53, 57, 60, 65],\n        \"G dom7\":  [55, 59, 62, 65],\n        \"A min\":   [45, 48, 52, 57],\n        \"D min7\":  [50, 53, 57, 62],\n        \"E maj\":   [52, 56, 59, 64],\n        \"Bb maj\":  [46, 50, 53, 58],\n    }\n\n    # Algorithm 1 vs 2: verify agreement\n    print(\"\\n--- Brute Force vs Sorted Matching ---\")\n    for n1 in list(corpus.keys())[:4]:\n        for n2 in list(corpus.keys())[:4]:\n            c1, _ = brute_force_vl_cost(corpus[n1], corpus[n2])\n            c2, _ = sorted_vl_cost(corpus[n1], corpus[n2])\n            status = \"\u2713\" if c1 == c2 else \"\u2717 MISMATCH\"\n            if n1 != n2:\n                print(f\"  {n1:>8} \u2192 {n2:>8}: brute={c1}, sorted={c2} {status}\")\n\n    # Algorithm 3: Graph analysis\n    print(\"\\n--- Chord Graph Analysis ---\")\n    G = ChordGraph(corpus)\n    print(\"\\nCost Table:\")\n    print(G.cost_table())\n\n    print(\"\\nShortest path C maj \u2192 G dom7:\")\n    dist, path = G.shortest_path(\"C maj\", \"G dom7\")\n    print(f\"  Distance: {dist}\")\n    print(f\"  Path: {' \u2192 '.join(path)}\")\n\n    # Algorithm 4: Cost landscape\n    print(\"\\n--- Cost Histogram ---\")\n    hist = cost_histogram(corpus)\n    for cost, count in hist.items():\n        bar = \"\u2588\" * count\n        print(f\"  cost {cost:>3}: {bar} ({count})\")\n\n    print(\"\\n--- Symmetry Classes ---\")\n    classes = identify_symmetry_classes(corpus)\n    for profile, members in classes.items():\n        if len(members) > 1:\n            print(f\"  Equivalent: {members}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Voice-Leading Geometry\n\nReal-world applications demonstrating how the verified mathematical framework\nenables practical tools for music analysis and composition.\n\nApplications:\n1. Optimal voice leading between any two chords\n2. Smooth harmonic progression planning (shortest path)\n3. Chord similarity clustering\n4. Harmonic tension analysis via cost gradients\n\"\"\"\n\nfrom itertools import permutations\nfrom typing import List, Tuple, Dict\nfrom collections import defaultdict\nimport heapq\n\n\ndef sorted_vl_cost(x: List[int], y: List[int]) -> Tuple[int, List[int]]:\n    \"\"\"Optimal voice-leading cost via sorted matching (O(n log n)).\"\"\"\n    n = len(x)\n    x_idx = sorted(enumerate(x), key=lambda p: p[1])\n    y_idx = sorted(enumerate(y), key=lambda p: p[1])\n    cost = sum(abs(x_idx[i][1] - y_idx[i][1]) for i in range(n))\n    perm = [0] * n\n    for i in range(n):\n        perm[x_idx[i][0]] = y_idx[i][0]\n    return cost, perm\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 1: Optimal Voice Leading\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef optimal_voice_leading(source: Dict[str, int], target: Dict[str, int]) -> None:\n    \"\"\"\n    Given two chords with named voices, find the smoothest voice leading.\n\n    This directly applies the sorted matching optimality theorem: after sorting\n    pitches, the identity matching minimizes total motion.\n    \"\"\"\n    print(\"\\n  APPLICATION 1: Optimal Voice Leading\")\n    print(\"  \" + \"\u2500\" * 50)\n\n    voice_names = list(source.keys())\n    x = list(source.values())\n    y = list(target.values())\n    target_names = list(target.keys())\n\n    cost, perm = sorted_vl_cost(x, y)\n\n    print(f\"\\n  Source chord: {source}\")\n    print(f\"  Target chord: {target}\")\n    print(f\"\\n  Optimal total motion: {cost} semitones\")\n    print(f\"\\n  Voice assignments:\")\n    for i, vn in enumerate(voice_names):\n        target_voice = target_names[perm[i]]\n        motion = y[perm[i]] - x[i]\n        direction = \"\u2191\" if motion > 0 else (\"\u2193\" if motion < 0 else \"\u2014\")\n        print(f\"    {vn} ({x[i]}) \u2192 {target_voice} ({y[perm[i]]})  \"\n              f\"{direction} {abs(motion)} semitones\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 2: Smooth Harmonic Progression Planning\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef plan_progression(corpus: Dict[str, List[int]],\n                     start: str, end: str,\n                     max_step_cost: int = 15) -> None:\n    \"\"\"\n    Find the smoothest harmonic path from start to end chord,\n    using only transitions with cost \u2264 max_step_cost.\n\n    Uses Dijkstra's algorithm on the chord graph. The triangle inequality\n    guarantees that the direct cost is always \u2264 the path cost, so this\n    finds genuinely useful intermediate harmonies.\n    \"\"\"\n    print(f\"\\n  APPLICATION 2: Harmonic Path Planning\")\n    print(\"  \" + \"\u2500\" * 50)\n    print(f\"\\n  Finding smoothest path: {start} \u2192 {end}\")\n    print(f\"  Maximum step cost: {max_step_cost} semitones\")\n\n    names = list(corpus.keys())\n\n    # Dijkstra\n    dist = {n: float('inf') for n in names}\n    prev = {n: None for n in names}\n    dist[start] = 0\n    pq = [(0, start)]\n\n    while pq:\n        d, u = heapq.heappop(pq)\n        if d > dist[u]:\n            continue\n        for v in names:\n            if v != u:\n                step_cost = sorted_vl_cost(corpus[u], corpus[v])[0]\n                if step_cost <= max_step_cost:\n                    new_dist = d + step_cost\n                    if new_dist < dist[v]:\n                        dist[v] = new_dist\n                        prev[v] = u\n                        heapq.heappush(pq, (new_dist, v))\n\n    if dist[end] == float('inf'):\n        print(f\"\\n  No path found with step cost \u2264 {max_step_cost}!\")\n        return\n\n    # Reconstruct path\n    path = []\n    current = end\n    while current:\n        path.append(current)\n        current = prev[current]\n    path.reverse()\n\n    direct_cost = sorted_vl_cost(corpus[start], corpus[end])[0]\n\n    print(f\"\\n  Direct cost: {direct_cost} semitones\")\n    print(f\"  Path cost:   {dist[end]} semitones\")\n    print(f\"\\n  Optimal progression ({len(path)} chords):\")\n    for i, chord in enumerate(path):\n        if i > 0:\n            step = sorted_vl_cost(corpus[path[i-1]], corpus[path[i]])[0]\n            print(f\"    {'':>4}  \u2193  (cost: {step})\")\n        print(f\"    [{i+1}] {chord:>10}: {corpus[chord]}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 3: Chord Similarity Clustering\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef cluster_chords(corpus: Dict[str, List[int]], threshold: int = 10) -> None:\n    \"\"\"\n    Cluster chords by proximity in voice-leading cost space.\n\n    Uses single-linkage clustering: two clusters merge if any pair\n    of their members has cost \u2264 threshold.\n    \"\"\"\n    print(f\"\\n  APPLICATION 3: Chord Similarity Clustering\")\n    print(\"  \" + \"\u2500\" * 50)\n    print(f\"\\n  Clustering threshold: {threshold} semitones\")\n\n    names = list(corpus.keys())\n\n    # Union-Find\n    parent = {n: n for n in names}\n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]\n            x = parent[x]\n        return x\n    def union(a, b):\n        parent[find(a)] = find(b)\n\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            if i < j:\n                cost = sorted_vl_cost(corpus[n1], corpus[n2])[0]\n                if cost <= threshold:\n                    union(n1, n2)\n\n    clusters = defaultdict(list)\n    for n in names:\n        clusters[find(n)].append(n)\n\n    print(f\"\\n  Found {len(clusters)} cluster(s):\")\n    for i, (_, members) in enumerate(clusters.items()):\n        print(f\"\\n    Cluster {i+1}: {members}\")\n        if len(members) > 1:\n            for a in members:\n                for b in members:\n                    if a < b:\n                        c = sorted_vl_cost(corpus[a], corpus[b])[0]\n                        print(f\"      {a} \u2194 {b}: cost {c}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 4: Harmonic Tension Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef analyze_tension(progression: List[Tuple[str, List[int]]]) -> None:\n    \"\"\"\n    Analyze the harmonic tension profile of a chord progression.\n\n    Uses voice-leading cost as a proxy for perceived harmonic \"distance\"\n    or tension. Higher costs = more dramatic harmonic motion.\n    \"\"\"\n    print(f\"\\n  APPLICATION 4: Harmonic Tension Analysis\")\n    print(\"  \" + \"\u2500\" * 50)\n\n    print(f\"\\n  Progression: {' \u2192 '.join(name for name, _ in progression)}\")\n    print()\n\n    total_cost = 0\n    costs = []\n    for i in range(len(progression) - 1):\n        n1, c1 = progression[i]\n        n2, c2 = progression[i + 1]\n        cost = sorted_vl_cost(c1, c2)[0]\n        costs.append(cost)\n        total_cost += cost\n\n    max_cost = max(costs) if costs else 1\n    for i, (cost) in enumerate(costs):\n        n1, _ = progression[i]\n        n2, _ = progression[i + 1]\n        bar_len = int(40 * cost / max_cost) if max_cost > 0 else 0\n        bar = \"\u2588\" * bar_len\n        print(f\"  {n1:>10} \u2192 {n2:<10} cost={cost:>3}  {bar}\")\n\n    print(f\"\\n  Total harmonic motion: {total_cost} semitones\")\n    print(f\"  Average step cost:    {total_cost / len(costs):.1f} semitones\")\n    print(f\"  Peak tension:         {max(costs)} semitones \"\n          f\"(step {costs.index(max(costs)) + 1})\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"\u2501\" * 60)\n    print(\"  VOICE-LEADING GEOMETRY: Real-World Applications\")\n    print(\"\u2501\" * 60)\n\n    # Corpus of common chords\n    corpus = {\n        \"C maj\":   [48, 52, 55, 60],\n        \"C min\":   [48, 51, 55, 60],\n        \"Dm7\":     [50, 53, 57, 60],\n        \"Em\":      [52, 55, 59, 64],\n        \"F maj\":   [53, 57, 60, 65],\n        \"G7\":      [55, 59, 62, 65],\n        \"Am\":      [45, 48, 52, 57],\n        \"Bdim\":    [47, 50, 53, 59],\n        \"Eb maj\":  [51, 55, 58, 63],\n        \"Ab maj\":  [44, 48, 51, 56],\n    }\n\n    # App 1: Optimal voice leading\n    optimal_voice_leading(\n        {\"Soprano\": 60, \"Alto\": 55, \"Tenor\": 52, \"Bass\": 48},\n        {\"Soprano\": 65, \"Alto\": 60, \"Tenor\": 57, \"Bass\": 53}\n    )\n\n    # App 2: Path planning\n    plan_progression(corpus, \"C maj\", \"Ab maj\", max_step_cost=12)\n\n    # App 3: Clustering\n    cluster_chords(corpus, threshold=8)\n\n    # App 4: Tension analysis (I-vi-IV-V-I in C major)\n    analyze_tension([\n        (\"C maj\", [48, 52, 55, 60]),\n        (\"Am\",    [45, 48, 52, 57]),\n        (\"F maj\", [53, 57, 60, 65]),\n        (\"G7\",    [55, 59, 62, 65]),\n        (\"C maj\", [48, 52, 55, 60]),\n    ])\n\n    print(\"\\n\" + \"\u2501\" * 60)\n    print(\"  All applications completed successfully.\")\n    print(\"\u2501\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nVoice-Leading Geometry: Computational Demonstrations\n\nThis script demonstrates the key theorems about four-voice voice-leading cost:\n1. Triangle inequality (metric structure)\n2. Permutation invariance (symmetry under voice relabeling)\n3. Sorted matching optimality (identity matching is optimal for sorted chords)\n4. The atomic uncrossing lemma\n\nAll computations mirror the formally verified results.\n\"\"\"\n\nfrom itertools import permutations\nfrom typing import List, Tuple\nimport math\n\n\n# \u2500\u2500\u2500 Core Definitions \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef perm_cost(x: List[int], y: List[int], sigma: List[int]) -> int:\n    \"\"\"Cost of a specific voice assignment: sum of |x[i] - y[sigma[i]]|.\"\"\"\n    return sum(abs(x[i] - y[sigma[i]]) for i in range(len(x)))\n\n\ndef vl_cost4(x: List[int], y: List[int]) -> int:\n    \"\"\"Optimal 4-voice voice-leading cost: min over all permutations.\"\"\"\n    return min(perm_cost(x, y, list(p)) for p in permutations(range(4)))\n\n\ndef optimal_perm(x: List[int], y: List[int]) -> Tuple[List[int], int]:\n    \"\"\"Find the optimal permutation and its cost.\"\"\"\n    best_cost = float('inf')\n    best_perm = None\n    for p in permutations(range(4)):\n        c = perm_cost(x, y, list(p))\n        if c < best_cost:\n            best_cost = c\n            best_perm = list(p)\n    return best_perm, best_cost\n\n\n# \u2500\u2500\u2500 Demo 1: Triangle Inequality \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_triangle_inequality():\n    \"\"\"Demonstrate vlCost4(x,z) \u2264 vlCost4(x,y) + vlCost4(y,z).\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Triangle Inequality for Voice-Leading Cost\")\n    print(\"=\" * 70)\n\n    # Musical example: C major \u2192 F major \u2192 G7\n    x = [48, 52, 55, 60]  # C major (C3 E3 G3 C4)\n    y = [53, 57, 60, 65]  # F major (F3 A3 C4 F4)\n    z = [55, 59, 62, 65]  # G7 (G3 B3 D4 F4)\n\n    cost_xy = vl_cost4(x, y)\n    cost_yz = vl_cost4(y, z)\n    cost_xz = vl_cost4(x, z)\n\n    print(f\"\\n  x = {x}  (C major)\")\n    print(f\"  y = {y}  (F major)\")\n    print(f\"  z = {z}  (G7)\")\n    print(f\"\\n  vlCost4(x, y) = {cost_xy}\")\n    print(f\"  vlCost4(y, z) = {cost_yz}\")\n    print(f\"  vlCost4(x, z) = {cost_xz}\")\n    print(f\"\\n  Triangle inequality: {cost_xz} \u2264 {cost_xy} + {cost_yz} = {cost_xy + cost_yz}\")\n    print(f\"  Verified: {cost_xz <= cost_xy + cost_yz} \u2713\")\n\n    # Random stress test\n    import random\n    random.seed(42)\n    violations = 0\n    n_tests = 10000\n    for _ in range(n_tests):\n        x = [random.randint(-20, 80) for _ in range(4)]\n        y = [random.randint(-20, 80) for _ in range(4)]\n        z = [random.randint(-20, 80) for _ in range(4)]\n        if vl_cost4(x, z) > vl_cost4(x, y) + vl_cost4(y, z):\n            violations += 1\n\n    print(f\"\\n  Random stress test ({n_tests} triples): {violations} violations\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 2: Permutation Invariance \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_permutation_invariance():\n    \"\"\"Demonstrate vlCost4(x\u2218\u03c4\u2081, y\u2218\u03c4\u2082) = vlCost4(x, y).\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 2: Permutation Invariance of Voice-Leading Cost\")\n    print(\"=\" * 70)\n\n    x = [48, 52, 55, 60]\n    y = [53, 57, 60, 65]\n    base_cost = vl_cost4(x, y)\n\n    print(f\"\\n  x = {x}\")\n    print(f\"  y = {y}\")\n    print(f\"  vlCost4(x, y) = {base_cost}\")\n\n    # Test several permutations\n    test_perms = [\n        ([1, 0, 2, 3], [0, 1, 2, 3]),\n        ([3, 2, 1, 0], [0, 1, 2, 3]),\n        ([0, 1, 2, 3], [2, 3, 0, 1]),\n        ([1, 2, 3, 0], [3, 0, 1, 2]),\n        ([2, 0, 3, 1], [1, 3, 0, 2]),\n    ]\n\n    print(f\"\\n  Applying voice permutations \u03c4\u2081, \u03c4\u2082:\")\n    for tau1, tau2 in test_perms:\n        x_perm = [x[tau1[i]] for i in range(4)]\n        y_perm = [y[tau2[i]] for i in range(4)]\n        cost = vl_cost4(x_perm, y_perm)\n        print(f\"    \u03c4\u2081={tau1}, \u03c4\u2082={tau2} \u2192 vlCost4 = {cost}  {'\u2713' if cost == base_cost else '\u2717'}\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 3: Sorted Matching Optimality \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_sorted_optimality():\n    \"\"\"Demonstrate that sorted chords have identity matching as optimal.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 3: Sorted Matching Optimality (Discrete Monge Theorem)\")\n    print(\"=\" * 70)\n\n    examples = [\n        ([40, 50, 60, 70], [42, 48, 63, 72]),\n        ([0, 10, 20, 30], [5, 15, 25, 35]),\n        ([10, 20, 30, 40], [11, 19, 31, 39]),\n        ([0, 0, 0, 0], [1, 2, 3, 4]),\n    ]\n\n    for x, y in examples:\n        opt_p, opt_cost = optimal_perm(x, y)\n        id_cost = perm_cost(x, y, [0, 1, 2, 3])\n        print(f\"\\n  x = {x}\")\n        print(f\"  y = {y}\")\n        print(f\"  Identity matching cost:   {id_cost}\")\n        print(f\"  Optimal matching cost:    {opt_cost}  (perm = {opt_p})\")\n        print(f\"  Identity is optimal:      {id_cost == opt_cost} \u2713\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 4: Uncrossing Lemma \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_uncrossing():\n    \"\"\"Demonstrate the atomic uncrossing inequality.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 4: Atomic Uncrossing Lemma\")\n    print(\"=\" * 70)\n    print(\"\\n  For a \u2264 b, c \u2264 d:\")\n    print(\"  |a-c| + |b-d| \u2264 |a-d| + |b-c|  (uncrossed \u2264 crossed)\")\n\n    examples = [\n        (0, 10, 3, 8),\n        (-5, 5, -3, 7),\n        (0, 0, 0, 0),\n        (1, 100, 50, 60),\n        (-10, 20, -5, 15),\n    ]\n\n    for a, b, c, d in examples:\n        uncrossed = abs(a - c) + abs(b - d)\n        crossed = abs(a - d) + abs(b - c)\n        print(f\"\\n  a={a:>4}, b={b:>4}, c={c:>4}, d={d:>4}\")\n        print(f\"    uncrossed = |{a}-{c}| + |{b}-{d}| = {uncrossed}\")\n        print(f\"    crossed   = |{a}-{d}| + |{b}-{c}| = {crossed}\")\n        print(f\"    {uncrossed} \u2264 {crossed}: {uncrossed <= crossed} \u2713\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 5: Chord Transition Cost Table \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_cost_table():\n    \"\"\"Compute pairwise costs for a small corpus of chord types.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 5: Pairwise Voice-Leading Cost Table\")\n    print(\"=\" * 70)\n\n    chords = {\n        \"C maj\":  [48, 52, 55, 60],\n        \"C min\":  [48, 51, 55, 60],\n        \"F maj\":  [53, 57, 60, 65],\n        \"G dom7\": [55, 59, 62, 65],\n        \"A min\":  [45, 48, 52, 57],\n        \"D min7\": [50, 53, 57, 62],\n        \"E maj\":  [52, 56, 59, 64],\n    }\n\n    names = list(chords.keys())\n    print(f\"\\n  {'':>8}\", end=\"\")\n    for n in names:\n        print(f\" {n:>7}\", end=\"\")\n    print()\n\n    for n1 in names:\n        print(f\"  {n1:>8}\", end=\"\")\n        for n2 in names:\n            cost = vl_cost4(chords[n1], chords[n2])\n            print(f\" {cost:>7}\", end=\"\")\n        print()\n\n    # Find minimum nonzero cost\n    min_cost = float('inf')\n    min_pair = None\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            if i != j:\n                c = vl_cost4(chords[n1], chords[n2])\n                if c < min_cost:\n                    min_cost = c\n                    min_pair = (n1, n2)\n\n    print(f\"\\n  Closest pair: {min_pair[0]} \u2192 {min_pair[1]}, cost = {min_cost}\")\n\n    # Diameter\n    max_cost = 0\n    max_pair = None\n    for i, n1 in enumerate(names):\n        for j, n2 in enumerate(names):\n            c = vl_cost4(chords[n1], chords[n2])\n            if c > max_cost:\n                max_cost = c\n                max_pair = (n1, n2)\n\n    print(f\"  Most distant pair: {max_pair[0]} \u2192 {max_pair[1]}, cost = {max_cost}\")\n    print()\n\n\n# \u2500\u2500\u2500 Demo 6: Self-cost and Symmetry \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_metric_properties():\n    \"\"\"Demonstrate metric space properties: self-cost = 0, symmetry.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 6: Metric Space Properties\")\n    print(\"=\" * 70)\n\n    import random\n    random.seed(123)\n\n    print(\"\\n  Self-cost = 0:\")\n    for _ in range(5):\n        x = sorted([random.randint(30, 80) for _ in range(4)])\n        print(f\"    vlCost4({x}, {x}) = {vl_cost4(x, x)} \u2713\")\n\n    print(\"\\n  Symmetry:\")\n    for _ in range(5):\n        x = [random.randint(30, 80) for _ in range(4)]\n        y = [random.randint(30, 80) for _ in range(4)]\n        c1 = vl_cost4(x, y)\n        c2 = vl_cost4(y, x)\n        print(f\"    vlCost4(x, y) = {c1}, vlCost4(y, x) = {c2}  {'\u2713' if c1 == c2 else '\u2717'}\")\n    print()\n\n\n# \u2500\u2500\u2500 Main \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"\u2501\" * 70)\n    print(\"  VOICE-LEADING GEOMETRY: Computational Demonstrations\")\n    print(\"\u2501\" * 70 + \"\\n\")\n\n    demo_triangle_inequality()\n    demo_permutation_invariance()\n    demo_sorted_optimality()\n    demo_uncrossing()\n    demo_cost_table()\n    demo_metric_properties()\n\n    print(\"\u2501\" * 70)\n    print(\"  All demonstrations completed successfully.\")\n    print(\"\u2501\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\nGenerate visualizations for Voice-Leading Geometry.\nProduces SVG files for the cost landscape and chord graph.\n\"\"\"\n\nimport base64\nimport io\nimport json\nimport sys\n\ndef sorted_vl_cost(x, y):\n    n = len(x)\n    x_idx = sorted(enumerate(x), key=lambda p: p[1])\n    y_idx = sorted(enumerate(y), key=lambda p: p[1])\n    cost = sum(abs(x_idx[i][1] - y_idx[i][1]) for i in range(n))\n    return cost\n\n\ndef generate_cost_heatmap_svg():\n    \"\"\"Generate an SVG heatmap of pairwise voice-leading costs.\"\"\"\n    chords = {\n        \"C maj\":   [48, 52, 55, 60],\n        \"C min\":   [48, 51, 55, 60],\n        \"Dm7\":     [50, 53, 57, 60],\n        \"Em\":      [52, 55, 59, 64],\n        \"F maj\":   [53, 57, 60, 65],\n        \"G7\":      [55, 59, 62, 65],\n        \"Am\":      [45, 48, 52, 57],\n        \"Bdim\":    [47, 50, 53, 59],\n    }\n\n    names = list(chords.keys())\n    n = len(names)\n\n    # Compute cost matrix\n    costs = [[0]*n for _ in range(n)]\n    max_cost = 0\n    for i in range(n):\n        for j in range(n):\n            c = sorted_vl_cost(chords[names[i]], chords[names[j]])\n            costs[i][j] = c\n            if c > max_cost:\n                max_cost = c\n\n    # SVG dimensions\n    cell = 60\n    margin_left = 80\n    margin_top = 80\n    w = margin_left + n * cell + 20\n    h = margin_top + n * cell + 20\n\n    svg_parts = []\n    svg_parts.append(f'<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{w}\" height=\"{h}\" '\n                     f'viewBox=\"0 0 {w} {h}\">')\n    svg_parts.append(f'<rect width=\"{w}\" height=\"{h}\" fill=\"white\"/>')\n    svg_parts.append(f'<text x=\"{w//2}\" y=\"20\" text-anchor=\"middle\" font-size=\"16\" '\n                     f'font-family=\"sans-serif\" font-weight=\"bold\">Voice-Leading Cost Heatmap</text>')\n\n    # Column headers\n    for j, name in enumerate(names):\n        x = margin_left + j * cell + cell // 2\n        svg_parts.append(f'<text x=\"{x}\" y=\"{margin_top - 10}\" text-anchor=\"middle\" '\n                         f'font-size=\"11\" font-family=\"sans-serif\" '\n                         f'transform=\"rotate(-45 {x} {margin_top - 10})\">{name}</text>')\n\n    # Row headers and cells\n    for i in range(n):\n        y = margin_top + i * cell + cell // 2\n        svg_parts.append(f'<text x=\"{margin_left - 8}\" y=\"{y + 4}\" text-anchor=\"end\" '\n                         f'font-size=\"11\" font-family=\"sans-serif\">{names[i]}</text>')\n\n        for j in range(n):\n            x = margin_left + j * cell\n            cy = margin_top + i * cell\n            c = costs[i][j]\n\n            # Color: green (low cost) \u2192 yellow \u2192 red (high cost)\n            if max_cost > 0:\n                t = c / max_cost\n            else:\n                t = 0\n            if t < 0.5:\n                r = int(255 * (2 * t))\n                g = 200\n                b = int(100 * (1 - 2 * t))\n            else:\n                r = 255\n                g = int(200 * (2 * (1 - t)))\n                b = 0\n\n            svg_parts.append(f'<rect x=\"{x}\" y=\"{cy}\" width=\"{cell}\" height=\"{cell}\" '\n                             f'fill=\"rgb({r},{g},{b})\" stroke=\"white\" stroke-width=\"2\"/>')\n            svg_parts.append(f'<text x=\"{x + cell//2}\" y=\"{cy + cell//2 + 5}\" '\n                             f'text-anchor=\"middle\" font-size=\"13\" font-family=\"sans-serif\" '\n                             f'fill=\"{\"white\" if t > 0.7 else \"black\"}\">{c}</text>')\n\n    svg_parts.append('</svg>')\n    return '\\n'.join(svg_parts)\n\n\ndef generate_chord_graph_svg():\n    \"\"\"Generate an SVG showing the chord transition graph.\"\"\"\n    chords = {\n        \"C maj\":   [48, 52, 55, 60],\n        \"C min\":   [48, 51, 55, 60],\n        \"Dm7\":     [50, 53, 57, 60],\n        \"F maj\":   [53, 57, 60, 65],\n        \"G7\":      [55, 59, 62, 65],\n        \"Am\":      [45, 48, 52, 57],\n    }\n\n    names = list(chords.keys())\n    n = len(names)\n\n    # Layout: circular\n    import math\n    cx, cy = 300, 250\n    radius = 160\n    positions = {}\n    for i, name in enumerate(names):\n        angle = 2 * math.pi * i / n - math.pi / 2\n        positions[name] = (cx + radius * math.cos(angle), cy + radius * math.sin(angle))\n\n    # Compute costs\n    edges = []\n    max_cost = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            c = sorted_vl_cost(chords[names[i]], chords[names[j]])\n            edges.append((names[i], names[j], c))\n            max_cost = max(max_cost, c)\n\n    w, h = 600, 500\n    svg_parts = []\n    svg_parts.append(f'<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{w}\" height=\"{h}\">')\n    svg_parts.append(f'<rect width=\"{w}\" height=\"{h}\" fill=\"#fafafa\"/>')\n    svg_parts.append(f'<text x=\"{w//2}\" y=\"25\" text-anchor=\"middle\" font-size=\"16\" '\n                     f'font-family=\"sans-serif\" font-weight=\"bold\">'\n                     f'Chord Transition Graph (edge = vl cost)</text>')\n\n    # Draw edges (thinner = higher cost)\n    threshold = 15\n    for n1, n2, c in edges:\n        if c <= threshold:\n            x1, y1 = positions[n1]\n            x2, y2 = positions[n2]\n            t = c / max_cost if max_cost > 0 else 0\n            stroke_width = max(1, 5 * (1 - t))\n            opacity = max(0.2, 1 - t * 0.7)\n            mx = (x1 + x2) / 2\n            my = (y1 + y2) / 2\n            svg_parts.append(f'<line x1=\"{x1:.0f}\" y1=\"{y1:.0f}\" x2=\"{x2:.0f}\" y2=\"{y2:.0f}\" '\n                             f'stroke=\"#4477aa\" stroke-width=\"{stroke_width:.1f}\" '\n                             f'opacity=\"{opacity:.2f}\"/>')\n            svg_parts.append(f'<text x=\"{mx:.0f}\" y=\"{my:.0f}\" text-anchor=\"middle\" '\n                             f'font-size=\"10\" font-family=\"sans-serif\" fill=\"#666\">{c}</text>')\n\n    # Draw nodes\n    for name, (x, y) in positions.items():\n        svg_parts.append(f'<circle cx=\"{x:.0f}\" cy=\"{y:.0f}\" r=\"30\" fill=\"#2255aa\" '\n                         f'stroke=\"white\" stroke-width=\"2\"/>')\n        svg_parts.append(f'<text x=\"{x:.0f}\" y=\"{y:.0f}\" text-anchor=\"middle\" '\n                         f'dominant-baseline=\"central\" font-size=\"11\" '\n                         f'font-family=\"sans-serif\" fill=\"white\" font-weight=\"bold\">'\n                         f'{name}</text>')\n\n    svg_parts.append('</svg>')\n    return '\\n'.join(svg_parts)\n\n\nif __name__ == \"__main__\":\n    heatmap = generate_cost_heatmap_svg()\n    graph = generate_chord_graph_svg()\n\n    with open(\"cost_heatmap.svg\", \"w\") as f:\n        f.write(heatmap)\n    with open(\"chord_graph.svg\", \"w\") as f:\n        f.write(graph)\n\n    print(\"Generated: cost_heatmap.svg, chord_graph.svg\")\n    print(f\"Heatmap: {len(heatmap)} chars\")\n    print(f\"Graph: {len(graph)} chars\")\n"
+    },
+    "date": "2026-05-14T23:49:00Z",
+    "exp_id": "00fcfe9a",
+    "source_exp_ids": [
+      "28ca9606"
     ]
   },
   "aether_self_improvement_certified_novelty_detectio.json": {
@@ -6143,7 +6201,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T04:05:25Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
@@ -6152,7 +6210,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T05:33:18Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "emergent_computation_in_pythagorean_orbit_lattices",
@@ -6161,7 +6219,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T05:33:35Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "collatz_convergence_via_tropical_contracting_dynam",
@@ -6170,7 +6228,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:33:53Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "riemann_hypothesis_via_tropical_spectral_transfer",
@@ -6179,7 +6237,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:34:23Z",
-      "hue": 359
+      "hue": 90
     },
     {
       "id": "homomorphic_encryption_over_tropical_semirings",
@@ -6188,7 +6246,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T06:34:03Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "aristotle_prompt_engineering_category_theoretic_pr",
@@ -6197,7 +6255,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T07:32:50Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "navier_stokes_regularity_via_tropical_diffusion_op",
@@ -6206,7 +6264,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:09Z",
-      "hue": 275
+      "hue": 89
     },
     {
       "id": "thermodynamic_computation_via_tropical_landauers_p",
@@ -6215,7 +6273,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:24Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "quantum_pythagorean_teleportation_berggren_orbits_",
@@ -6224,7 +6282,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-14T07:33:40Z",
-      "hue": 179
+      "hue": 90
     },
     {
       "id": "twin_prime_conjecture_via_tropical_sieve_methods",
@@ -6242,7 +6300,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T07:34:05Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "homotopy_type_theory_via_tropical_higher_inductive",
@@ -6251,7 +6309,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T08:32:40Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
@@ -6260,7 +6318,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T08:32:58Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "amortized_complexity_via_tropical_amortization",
@@ -6269,7 +6327,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T08:33:13Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "adversarial_training_as_tropical_regularization_pr",
@@ -6278,7 +6336,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T08:33:24Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "research_package_quality_via_certified_mathematica",
@@ -6287,7 +6345,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T08:39:16Z",
-      "hue": 90
+      "hue": 134
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -6296,7 +6354,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T09:32:30Z",
-      "hue": 112
+      "hue": 91
     },
     {
       "id": "tropical_time_travel_min_plus_closed_timelike_curv",
@@ -6305,7 +6363,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T09:32:46Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "closure_operator_networks_universal_approximation_",
@@ -6314,7 +6372,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:32:57Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "pythagorean_lattice_reduction_for_integer_factorin",
@@ -6323,7 +6381,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T09:33:10Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "alien_mathematics_what_theorems_would_non_carbon_l",
@@ -6332,7 +6390,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T09:33:21Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -6341,7 +6399,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T09:33:33Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "deep_double_descent_as_tropical_phase_diagram",
@@ -6350,7 +6408,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:33:48Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "tropical_sudoku_min_plus_constraint_satisfaction_a",
@@ -6359,7 +6417,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T10:33:46Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "string_theory_t_duality_as_tropical_duality_min_pl",
@@ -6377,7 +6435,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:22Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "birch_swinnerton_dyer_via_tropical_l_function_spec",
@@ -6386,7 +6444,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T10:34:39Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "aether_quality_control_automated_counterexample_ge",
@@ -6404,7 +6462,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T10:35:16Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "research_depth_guarantees_via_proof_theoretic_ordi",
@@ -6413,7 +6471,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T11:34:50Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "aether_evolution_self_modifying_research_strategie",
@@ -6422,7 +6480,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T11:35:43Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
@@ -6431,7 +6489,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T11:36:00Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "from_shallow_to_deep_formalizing_the_depth_gap_in_",
@@ -6440,7 +6498,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T12:34:45Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "goldbach_via_tropical_additive_combinatorics",
@@ -6458,7 +6516,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T12:35:20Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "grokking_as_tropical_phase_transition_in_neural_lo",
@@ -6467,7 +6525,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T13:22:26Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "category_theoretic_composition_of_neural_architect",
@@ -6476,7 +6534,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T13:22:43Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -6485,7 +6543,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T13:23:00Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -6494,7 +6552,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T13:23:19Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "hyperbolic_crafting_optimal_nether_portals_via_tro",
@@ -6503,7 +6561,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T13:30:14Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "dyson_sphere_optimization_tropical_light_network_f",
@@ -6512,7 +6570,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T14:08:56Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "post_quantum_lattices_from_pythagorean_triple_grou",
@@ -6521,7 +6579,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T14:11:36Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "p_vs_np_tropical_semiring_barrier",
@@ -6530,7 +6588,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T14:11:57Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "tropical_neural_code_classification_with_provable_",
@@ -6539,7 +6597,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T14:14:30Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "tropical_origami_min_plus_fold_structures_and_rigi",
@@ -6548,7 +6606,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T14:19:39Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "galaxy_scale_computation_tropical_distributed_syst",
@@ -6557,7 +6615,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T15:02:18Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_language_evolution_min_plus_phylogenetics",
@@ -6566,7 +6624,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T15:02:51Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "master_class_research_via_conceptual_dependency_gr",
@@ -6575,7 +6633,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T15:03:10Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "pythagorean_music_theory_harmonic_ratios_from_trip",
@@ -6584,7 +6642,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T15:03:27Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "tropical_rsa_min_plus_public_key_cryptosystem_with",
@@ -6611,7 +6669,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T16:17:17Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "conways_game_of_life_on_tropical_semirings_emergen",
@@ -6620,7 +6678,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T16:17:52Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "musical_counterpoint_as_tropical_voice_leading_opt",
@@ -6629,7 +6687,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T16:24:00Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "wormhole_topology_via_tropical_surgery_min_plus_sp",
@@ -6638,7 +6696,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T16:24:25Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "p_vs_space_via_tropical_time_space_tradeoffs",
@@ -6656,7 +6714,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T17:33:15Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "aether_self_improvement_certified_novelty_detectio",
@@ -6665,7 +6723,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T17:33:33Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "garden_of_eden",
@@ -6692,7 +6750,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T18:35:16Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "lorentz_force_analogue",
@@ -6701,7 +6759,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T18:35:30Z",
-      "hue": 314
+      "hue": 271
     },
     {
       "id": "functoriality",
@@ -6710,7 +6768,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T18:35:49Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "sheaf_cohomology_and_certified_adversarial_robustn",
@@ -6719,7 +6777,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T18:36:09Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "circuit_universality",
@@ -6728,7 +6786,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T18:40:52Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "aristotle_bootstrapping_learning_to_prove_harder_t",
@@ -6737,7 +6795,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T19:31:41Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "circuit_lower_bounds_from_tropical_spectral_theory",
@@ -6746,7 +6804,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T19:34:10Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "hodge_conjecture_through_tropical_algebraic_cycles",
@@ -6755,7 +6813,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T19:34:28Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "consciousness_as_tropical_fixed_point_min_plus_ref",
@@ -6764,7 +6822,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T19:34:40Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "implementation_priority",
@@ -6773,7 +6831,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T19:34:58Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "connect_to_orbit_structure",
@@ -6782,7 +6840,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T19:35:16Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "emergent_math_self_organizing_theorem_discovery_in",
@@ -6791,7 +6849,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T20:33:52Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "dependency_extraction",
@@ -6800,7 +6858,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T20:34:12Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "tests_conjectures_computationally",
@@ -6809,7 +6867,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T20:34:31Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_3_decidability_and_complexity_of_tropica",
@@ -6818,7 +6876,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-14T20:38:08Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "tropical_source_coding_min_plus_rate_distortion_th",
@@ -6827,7 +6885,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T21:31:53Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "transformer_attention_as_tropical_matrix_multiplic",
@@ -6845,7 +6903,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T21:34:56Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "aristotle_architecture_compositional_research_via_",
@@ -6854,7 +6912,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T21:35:16Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "is_there_a_polynomial_time_algorithm_for_tropical_",
@@ -6863,7 +6921,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T21:35:29Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "cross_domain_connections",
@@ -6872,7 +6930,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T21:35:52Z",
-      "hue": 92
+      "hue": 280
     },
     {
       "id": "validates_computationally",
@@ -6881,7 +6939,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T21:41:35Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "define_tropical_protocols",
@@ -6890,7 +6948,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-14T22:07:09Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "lossy_compression_optimality_via_tropical_lagrangi",
@@ -6899,7 +6957,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T22:09:31Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "scaling_laws_as_tropical_power_law_fixed_points",
@@ -6917,7 +6975,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T22:26:22Z",
-      "hue": 281
+      "hue": 272
     },
     {
       "id": "tropical_knot_theory_min_plus_invariants_for_knot_",
@@ -6926,7 +6984,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T22:28:49Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "dragon_curve_fractals_as_tropical_curve_generators",
@@ -6944,7 +7002,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T22:34:43Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "aristotle_quality_amplification_proof_strategy_min",
@@ -6953,7 +7011,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T23:34:27Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "apply_to_mixing_lower_bounds",
@@ -6971,7 +7029,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T23:35:09Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "iterate",
@@ -6981,6 +7039,15 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-14T23:35:31Z",
       "hue": 91
+    },
+    {
+      "id": "phase_1_immediate_1_2_weeks",
+      "title": "Voice-Leading Geometry: A Verified Metric Theory of Four-Voice Harmonic Motion",
+      "domain": "Logic / Music Theory / Optimal Transport",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-14T23:49:00Z",
+      "hue": 271
     }
   ],
   "edges": [
@@ -7094,6 +7161,13 @@ window.PACKAGE_GRAPH = {
       "target": "lorentz_force_analogue",
       "strength": 1.0,
       "label": "Key Definitions to Formalize",
+      "type": "provenance"
+    },
+    {
+      "source": "tropical_myhill_nerode_theorem_for_min_plus_automa",
+      "target": "phase_1_immediate_1_2_weeks",
+      "strength": 1.0,
+      "label": "inspired by",
       "type": "provenance"
     },
     {
@@ -7665,10 +7739,10 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc69d6dd",
     "timestamp": "2026-05-14T16:03:53.834459+00:00"
   },
   {
@@ -8177,10 +8251,10 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9743e28c",
     "timestamp": "2026-05-14T16:03:53.844242+00:00"
   },
   {
@@ -8495,10 +8569,10 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "be18c0b2",
     "timestamp": "2026-05-14T16:24:30.122635+00:00"
   },
   {
@@ -8879,20 +8953,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T19:35:20.582859+00:00"
   },
   {
-    "id": "fd_0186",
-    "title": "Iterate",
-    "description": "on failed proof attempts by decomposing into smaller lemmas, leveraging the modular structure established in this work.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c337fb05",
-    "consumed_by_exp_id": "1f802c0a",
-    "timestamp": "2026-05-14T19:35:20.593956+00:00"
-  },
-  {
     "id": "fd_0206",
     "title": "Prove converse under mild conditions",
     "description": ": if the eigenspace is unique, there exists a projectively dominant direction, which corresponds to a \"soft sink\" in the original attention.\n\n### Cross-Domain Connections\n- **Markov chain theory**: unique stationary distribution \u2194 irreducibility/aperiodicity.\n- **Tropical convexity**: eigenspaces are tropical polytopes; uniqueness relates to tropical rank.\n- **Mechanistic interpretability**: sink tokens are empirically observed in GPT-family models; this gives a checkable algebraic criterion.\n\n### Expected Impact\nThis would transform \"attention sinks\" from an empirical curiosity to a mathematically predictable phenomenon, enabling their detection, prevention, or deliberate engineering.\n\n---\n\n## Direction 4: Tropical Expressivity Lower Bounds for Transformers\n\n### Hypothesis\nThe class of fu",
@@ -9078,20 +9138,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T23:35:13.267033+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "Index-based argument",
-    "description": ": The kernel lattice `L` has index dividing `q` in `\u2124^n`. The number of cosets of `L` in the box is at most `(2B+1)^n / index(L)`. When this exceeds 1, two box vectors lie in the same coset, yielding a kernel vector.",
-    "domains": [
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.273199+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Smith normal form",
     "description": ": Express the kernel lattice via Smith normal form of the map `x \u21a6 \u2211 a_i x_i mod q`. The tropical determinant relates to the product of diagonal entries, connecting to the determinant bound.\n\n### Cross-Domain Significance\n- **Geometry of numbers**: Formal discrete analog of Minkowski's first theorem relating lattice determinant to shortest vector length.\n- **Complexity theory**: The tropical determinant becomes a formal measure of \"cryptographic hardness\" \u2014 larger determinant = harder to find short vectors = more secure.\n- **Optimization**: Connects to tropical geometry and min-plus algebra interpretations of lattice problems.\n\n---\n\n## 5. Coding-Theoretic Corollary: Bounded Syndrome-Zero Patterns\n\n### Goal\nReinterpret the matrix SIS theorem as a statement about error-correcting codes: if a",
@@ -9127,6 +9173,62 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "9d04e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:35:13.293278+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Validates hypotheses",
+    "description": "computationally before attempting formal proofs",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f802c0a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:35:35.153202+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "Iterates on lemma decomposition",
+    "description": "\u2014 break each theorem into 5\u201310 helper lemmas",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f802c0a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:35:35.159765+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Cross-references",
+    "description": "with Mathlib for available infrastructure",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f802c0a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:35:35.166613+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Identifies",
+    "description": "new connections between domains that emerge during formalization",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f802c0a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:35:35.179833+00:00"
   },
   {
     "id": "seed_078",
@@ -9579,20 +9681,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T22:26:25.331134+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "Expected Lean Signatures",
-    "description": "```lean\ntheorem tropical_helly {n m : \u2115} [NeZero n]\n    (H : Fin m \u2192 Set (Fin n \u2192 \u211d))\n    (hhalf : \u2200 j, \u2203 a b : Fin n \u2192 \u211d, H j = tropHalfspace a b)\n    (hsmall : \u2200 I : Finset (Fin m), I.card \u2264 n + 1 \u2192\n      (\u22c2 j \u2208 I, H j).Nonempty) :\n    (\u22c2 j, H j).Nonempty := by sorry\n\ntheorem tropical_radon {n : \u2115} [NeZero n]\n    (P : Fin (n + 2) \u2192 Fin n \u2192 \u211d) :\n    \u2203 (A B : Finset (Fin (n + 2))),\n      A \u222a B = Finset.univ \u2227 Disjoint A B \u2227\n      (tropHullFinset A P \u2229 tropHullFinset B P).Nonempty := by sorry\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23e88b22",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:26:25.342024+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Research Program Summary",
     "description": "| Direction | Difficulty | Prerequisites | Impact |\n|-----------|-----------|--------------|--------|\n| 1. Fenchel\u2013Moreau | Medium | Tropical Young ineq | Duality theory |\n| 2. Hahn\u2013Banach | Hard | Carath\u00e9odory + LP theory | Certificates |\n| 3. Helly\u2013Radon | Hard | Carath\u00e9odory + combinatorics | Feasibility |\n| 4. Sparse certificates | Medium | Carath\u00e9odory + LP | Algorithms |\n| 5. Invariant cones | Very Hard | All above + spectral theory | Control |\n\n**Recommended order:** 1 \u2192 4 \u2192 2 \u2192 3 \u2192 5\n\nEach direction builds on the tropical Carath\u00e9odory theorem established here. Together, they would constitute a comprehensive formally verified library for tropical convex analysis \u2014 the first of its kind in any proof assistant.",
@@ -9682,39 +9770,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T22:34:47.517739+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "5. Categorical Semantics of Tropical Organisms as Closure Spaces",
-    "description": "**Hypothesis:** Tropical replicators form a category where morphisms are equivariant maps (maps that commute with the replication step). This category is equivalent to the category of closure spaces (complete lattices with closure operators). The fixed-point functor sending a replicator to its set of fixed points is a faithful functor to the category of sets.\n\n**Proof Strategy:**\n- Define the category TropRep with objects = TropicalReplicators and morphisms = monotone maps \u03c6 satisfying \u03c6 \u2218 R\u2081.step = R\u2082.step \u2218 \u03c6.\n- Prove that this category has products (product replicators on product lattices), coproducts (disjoint union), and an initial object (the trivial replicator on a singleton).\n- Prove the equivalence with closure spaces by showing that every closure operator is a tropical replicator",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f002b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:34:47.525121+00:00"
-  },
-  {
-    "id": "fd_0198",
-    "title": "Target Definitions",
-    "description": "```\nstructure TheoremFamily (I : Type*) where\n  carrier : I \u2192 Type*\n  predicate : \u2200 i, carrier i \u2192 Prop\n\nstructure ProofMorphism (F G : TheoremFamily I) where\n  map : \u2200 i, F.carrier i \u2192 G.carrier i\n  transfer : \u2200 i x, G.predicate i (map i x) \u2192 F.predicate i x\n\ndef ProofCategory (I : Type*) : Category (TheoremFamily I) where\n  Hom := ProofMorphism\n  id := ...\n  comp := ...\n```",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5fa1c5eb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:34:31.191617+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Target Theorems",
     "description": "1. `ProofCategory` satisfies the category axioms (associativity, identity laws).\n2. The forgetful functor from `ProofCategory` to `Type` preserves composition.\n3. Natural transformations between proof morphisms correspond to proof equivalences.",
@@ -9739,10 +9794,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5fa1c5eb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "102555eb",
     "timestamp": "2026-05-14T23:34:31.245648+00:00"
   },
   {

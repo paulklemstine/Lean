@@ -406,10 +406,10 @@
       "Tropical"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc69d6dd",
     "timestamp": "2026-05-14T16:03:53.834459+00:00"
   },
   {
@@ -918,10 +918,10 @@
       "Physics"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9743e28c",
     "timestamp": "2026-05-14T16:03:53.844242+00:00"
   },
   {
@@ -1236,10 +1236,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "be18c0b2",
     "timestamp": "2026-05-14T16:24:30.122635+00:00"
   },
   {
@@ -1620,20 +1620,6 @@
     "timestamp": "2026-05-14T19:35:20.582859+00:00"
   },
   {
-    "id": "fd_0186",
-    "title": "Iterate",
-    "description": "on failed proof attempts by decomposing into smaller lemmas, leveraging the modular structure established in this work.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c337fb05",
-    "consumed_by_exp_id": "1f802c0a",
-    "timestamp": "2026-05-14T19:35:20.593956+00:00"
-  },
-  {
     "id": "fd_0206",
     "title": "Prove converse under mild conditions",
     "description": ": if the eigenspace is unique, there exists a projectively dominant direction, which corresponds to a \"soft sink\" in the original attention.\n\n### Cross-Domain Connections\n- **Markov chain theory**: unique stationary distribution ↔ irreducibility/aperiodicity.\n- **Tropical convexity**: eigenspaces are tropical polytopes; uniqueness relates to tropical rank.\n- **Mechanistic interpretability**: sink tokens are empirically observed in GPT-family models; this gives a checkable algebraic criterion.\n\n### Expected Impact\nThis would transform \"attention sinks\" from an empirical curiosity to a mathematically predictable phenomenon, enabling their detection, prevention, or deliberate engineering.\n\n---\n\n## Direction 4: Tropical Expressivity Lower Bounds for Transformers\n\n### Hypothesis\nThe class of fu",
@@ -1819,20 +1805,6 @@
     "timestamp": "2026-05-14T23:35:13.267033+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "Index-based argument",
-    "description": ": The kernel lattice `L` has index dividing `q` in `ℤ^n`. The number of cosets of `L` in the box is at most `(2B+1)^n / index(L)`. When this exceeds 1, two box vectors lie in the same coset, yielding a kernel vector.",
-    "domains": [
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.273199+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Smith normal form",
     "description": ": Express the kernel lattice via Smith normal form of the map `x ↦ ∑ a_i x_i mod q`. The tropical determinant relates to the product of diagonal entries, connecting to the determinant bound.\n\n### Cross-Domain Significance\n- **Geometry of numbers**: Formal discrete analog of Minkowski's first theorem relating lattice determinant to shortest vector length.\n- **Complexity theory**: The tropical determinant becomes a formal measure of \"cryptographic hardness\" — larger determinant = harder to find short vectors = more secure.\n- **Optimization**: Connects to tropical geometry and min-plus algebra interpretations of lattice problems.\n\n---\n\n## 5. Coding-Theoretic Corollary: Bounded Syndrome-Zero Patterns\n\n### Goal\nReinterpret the matrix SIS theorem as a statement about error-correcting codes: if a",
@@ -1868,6 +1840,62 @@
     "source_exp_id": "9d04e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:35:13.293278+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Validates hypotheses",
+    "description": "computationally before attempting formal proofs",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f802c0a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:35:35.153202+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "Iterates on lemma decomposition",
+    "description": "— break each theorem into 5–10 helper lemmas",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f802c0a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:35:35.159765+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Cross-references",
+    "description": "with Mathlib for available infrastructure",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f802c0a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:35:35.166613+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Identifies",
+    "description": "new connections between domains that emerge during formalization",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f802c0a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:35:35.179833+00:00"
   },
   {
     "id": "seed_078",
@@ -2320,20 +2348,6 @@
     "timestamp": "2026-05-14T22:26:25.331134+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "Expected Lean Signatures",
-    "description": "```lean\ntheorem tropical_helly {n m : ℕ} [NeZero n]\n    (H : Fin m → Set (Fin n → ℝ))\n    (hhalf : ∀ j, ∃ a b : Fin n → ℝ, H j = tropHalfspace a b)\n    (hsmall : ∀ I : Finset (Fin m), I.card ≤ n + 1 →\n      (⋂ j ∈ I, H j).Nonempty) :\n    (⋂ j, H j).Nonempty := by sorry\n\ntheorem tropical_radon {n : ℕ} [NeZero n]\n    (P : Fin (n + 2) → Fin n → ℝ) :\n    ∃ (A B : Finset (Fin (n + 2))),\n      A ∪ B = Finset.univ ∧ Disjoint A B ∧\n      (tropHullFinset A P ∩ tropHullFinset B P).Nonempty := by sorry\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23e88b22",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:26:25.342024+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Research Program Summary",
     "description": "| Direction | Difficulty | Prerequisites | Impact |\n|-----------|-----------|--------------|--------|\n| 1. Fenchel–Moreau | Medium | Tropical Young ineq | Duality theory |\n| 2. Hahn–Banach | Hard | Carathéodory + LP theory | Certificates |\n| 3. Helly–Radon | Hard | Carathéodory + combinatorics | Feasibility |\n| 4. Sparse certificates | Medium | Carathéodory + LP | Algorithms |\n| 5. Invariant cones | Very Hard | All above + spectral theory | Control |\n\n**Recommended order:** 1 → 4 → 2 → 3 → 5\n\nEach direction builds on the tropical Carathéodory theorem established here. Together, they would constitute a comprehensive formally verified library for tropical convex analysis — the first of its kind in any proof assistant.",
@@ -2423,39 +2437,6 @@
     "timestamp": "2026-05-14T22:34:47.517739+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "5. Categorical Semantics of Tropical Organisms as Closure Spaces",
-    "description": "**Hypothesis:** Tropical replicators form a category where morphisms are equivariant maps (maps that commute with the replication step). This category is equivalent to the category of closure spaces (complete lattices with closure operators). The fixed-point functor sending a replicator to its set of fixed points is a faithful functor to the category of sets.\n\n**Proof Strategy:**\n- Define the category TropRep with objects = TropicalReplicators and morphisms = monotone maps φ satisfying φ ∘ R₁.step = R₂.step ∘ φ.\n- Prove that this category has products (product replicators on product lattices), coproducts (disjoint union), and an initial object (the trivial replicator on a singleton).\n- Prove the equivalence with closure spaces by showing that every closure operator is a tropical replicator",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f002b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:34:47.525121+00:00"
-  },
-  {
-    "id": "fd_0198",
-    "title": "Target Definitions",
-    "description": "```\nstructure TheoremFamily (I : Type*) where\n  carrier : I → Type*\n  predicate : ∀ i, carrier i → Prop\n\nstructure ProofMorphism (F G : TheoremFamily I) where\n  map : ∀ i, F.carrier i → G.carrier i\n  transfer : ∀ i x, G.predicate i (map i x) → F.predicate i x\n\ndef ProofCategory (I : Type*) : Category (TheoremFamily I) where\n  Hom := ProofMorphism\n  id := ...\n  comp := ...\n```",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5fa1c5eb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:34:31.191617+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Target Theorems",
     "description": "1. `ProofCategory` satisfies the category axioms (associativity, identity laws).\n2. The forgetful functor from `ProofCategory` to `Type` preserves composition.\n3. Natural transformations between proof morphisms correspond to proof equivalences.",
@@ -2480,10 +2461,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5fa1c5eb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "102555eb",
     "timestamp": "2026-05-14T23:34:31.245648+00:00"
   },
   {

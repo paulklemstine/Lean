@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="500">
+<rect width="600" height="500" fill="#fafafa"/>
+<text x="300" y="25" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="bold">Chord Transition Graph (edge = vl cost)</text>
+<line x1="300" y1="90" x2="439" y2="170" stroke="#4477aa" stroke-width="4.9" opacity="0.98"/>
+<text x="369" y="130" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#666">1</text>
+<line x1="300" y1="90" x2="439" y2="330" stroke="#4477aa" stroke-width="4.4" opacity="0.91"/>
+<text x="369" y="210" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#666">5</text>
+<line x1="300" y1="90" x2="161" y2="170" stroke="#4477aa" stroke-width="3.3" opacity="0.77"/>
+<text x="231" y="130" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#666">13</text>
+<line x1="439" y1="170" x2="439" y2="330" stroke="#4477aa" stroke-width="4.2" opacity="0.89"/>
+<text x="439" y="250" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#666">6</text>
+<line x1="439" y1="170" x2="161" y2="170" stroke="#4477aa" stroke-width="3.5" opacity="0.78"/>
+<text x="300" y="170" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#666">12</text>
+<line x1="439" y1="330" x2="300" y2="410" stroke="#4477aa" stroke-width="3.1" opacity="0.73"/>
+<text x="369" y="370" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#666">15</text>
+<line x1="300" y1="410" x2="161" y2="330" stroke="#4477aa" stroke-width="4.2" opacity="0.89"/>
+<text x="231" y="370" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#666">6</text>
+<circle cx="300" cy="90" r="30" fill="#2255aa" stroke="white" stroke-width="2"/>
+<text x="300" y="90" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="sans-serif" fill="white" font-weight="bold">C maj</text>
+<circle cx="439" cy="170" r="30" fill="#2255aa" stroke="white" stroke-width="2"/>
+<text x="439" y="170" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="sans-serif" fill="white" font-weight="bold">C min</text>
+<circle cx="439" cy="330" r="30" fill="#2255aa" stroke="white" stroke-width="2"/>
+<text x="439" y="330" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="sans-serif" fill="white" font-weight="bold">Dm7</text>
+<circle cx="300" cy="410" r="30" fill="#2255aa" stroke="white" stroke-width="2"/>
+<text x="300" y="410" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="sans-serif" fill="white" font-weight="bold">F maj</text>
+<circle cx="161" cy="330" r="30" fill="#2255aa" stroke="white" stroke-width="2"/>
+<text x="161" y="330" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="sans-serif" fill="white" font-weight="bold">G7</text>
+<circle cx="161" cy="170" r="30" fill="#2255aa" stroke="white" stroke-width="2"/>
+<text x="161" y="170" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="sans-serif" fill="white" font-weight="bold">Am</text>
+</svg>
