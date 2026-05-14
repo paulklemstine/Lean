@@ -1371,11 +1371,7 @@ body.light-theme .gallery-img-container {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--bg-panel);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-primary);
+    object-fit: cover;
     flex-shrink: 0;
 }
 
