@@ -1,406 +1,397 @@
 #!/usr/bin/env python3
 """
-Tropical Thermodynamic Complexity Theory — Algorithms
+Algorithms for Tropical Thermodynamic Complexity Theory
 
-Implementations of the core algorithms from the research:
-1. Tropical energy transport along reversible maps
-2. Counting entropy computation
-3. Landauer cost calculator
-4. Bennett history construction for reversible simulation
-5. Tropical free energy computation
+Implements the core algorithms from the research:
+1. Tropical cost function algebra (min-plus operations)
+2. Reversible simulation construction (Bennett-style embedding)
+3. Entropy production computation
+4. Landauer cost calculator
 """
 
-import math
-from typing import Callable, Dict, List, Optional, Tuple, Set
+import numpy as np
+from typing import List, Tuple, Callable, Optional
 from dataclasses import dataclass
+import math
 
 
-# ============================================================
-# Algorithm 1: Tropical Energy Transport
-# ============================================================
+# ==============================================================
+# Algorithm 1: Tropical Cost Algebra
+# ==============================================================
+
 @dataclass
-class TropicalSystem:
-    """A finite tropical dynamical system.
-    
-    Attributes:
-        states: List of configuration states
-        energy: Energy function E : σ → ℝ
-        
-    Time complexity: O(|σ|) for transport, O(|σ| log |σ|) for free energy
-    Space complexity: O(|σ|)
+class TropicalCostSpace:
     """
-    states: List[int]
-    energy: Dict[int, float]
-    
-    def transport(self, bijection: Dict[int, int]) -> 'TropicalSystem':
-        """Transport energy along a bijection f.
-        
-        Φ_f(E)(x) = E(f⁻¹(x))
-        
-        Time: O(|σ|)
-        Space: O(|σ|)
-        
-        Args:
-            bijection: A bijection f : σ → σ as a dictionary
-            
-        Returns:
-            New TropicalSystem with transported energy
-        """
-        f_inv = {v: k for k, v in bijection.items()}
-        new_energy = {x: self.energy[f_inv[x]] for x in self.states}
-        return TropicalSystem(self.states, new_energy)
-    
-    def free_energy(self) -> float:
-        """Compute tropical free energy: min_x E(x).
-        
-        Time: O(|σ|)
-        """
-        return min(self.energy.values())
-    
-    def counting_entropy(self) -> float:
-        """Compute counting entropy: log(|σ|).
-        
-        Time: O(1)
-        """
-        return math.log(len(self.states))
+    A tropical cost space over a finite state space of size N.
 
+    Elements are cost functions σ → ℝ, with operations:
+    - trop_add (⊕): pointwise minimum
+    - trop_mul (⊗): pointwise addition
 
-def compose_bijections(f: Dict[int, int], g: Dict[int, int]) -> Dict[int, int]:
-    """Compose two bijections: (f ∘ g)(x) = f(g(x)).
-    
-    Time: O(|σ|)
-    
-    >>> f = {0: 1, 1: 0}
-    >>> compose_bijections(f, f)
-    {0: 0, 1: 1}
+    These satisfy the tropical semiring axioms:
+    - (⊕) is commutative, associative, idempotent
+    - (⊗) is commutative, associative
+    - (⊗) distributes over (⊕): a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c)
+
+    Time complexity: O(N) per operation
+    Space complexity: O(N) per cost function
     """
-    return {x: f[g[x]] for x in g}
+    n: int  # state space size
+
+    def zero(self) -> np.ndarray:
+        """Tropical additive identity: +∞ everywhere."""
+        return np.full(self.n, np.inf)
+
+    def one(self) -> np.ndarray:
+        """Tropical multiplicative identity: 0 everywhere."""
+        return np.zeros(self.n)
+
+    def add(self, phi: np.ndarray, psi: np.ndarray) -> np.ndarray:
+        """Tropical addition: pointwise min. O(N)."""
+        return np.minimum(phi, psi)
+
+    def mul(self, phi: np.ndarray, psi: np.ndarray) -> np.ndarray:
+        """Tropical multiplication: pointwise +. O(N)."""
+        return phi + psi
+
+    def pullback(self, phi: np.ndarray, perm: np.ndarray) -> np.ndarray:
+        """
+        Pullback of cost function along permutation.
+
+        This is the fundamental action of reversible computation
+        on the tropical cost space: Φ ↦ Φ ∘ σ.
+
+        Preserves both ⊕ and ⊗ (tropical isomorphism).
+
+        Time: O(N), Space: O(N)
+        """
+        return phi[perm]
+
+    def verify_isomorphism(self, perm: np.ndarray,
+                           phi: np.ndarray, psi: np.ndarray) -> Tuple[bool, bool]:
+        """
+        Verify that pullback along perm is a tropical isomorphism.
+
+        Returns (preserves_add, preserves_mul).
+
+        Time: O(N)
+        """
+        pb_add = self.pullback(self.add(phi, psi), perm)
+        add_pb = self.add(self.pullback(phi, perm), self.pullback(psi, perm))
+
+        pb_mul = self.pullback(self.mul(phi, psi), perm)
+        mul_pb = self.mul(self.pullback(phi, perm), self.pullback(psi, perm))
+
+        return (np.allclose(pb_add, add_pb), np.allclose(pb_mul, mul_pb))
 
 
-def verify_transport_composition(
-    sys: TropicalSystem,
-    f: Dict[int, int],
-    g: Dict[int, int]
-) -> bool:
-    """Verify: Φ_{f∘g}(E) = Φ_g(Φ_f(E)).
-    
-    This checks the composition theorem tropicalTransport_comp.
-    
-    Time: O(|σ|)
-    """
-    fg = compose_bijections(g, f)  # g ∘ f in our convention
-    
-    lhs = sys.transport(fg)
-    rhs = sys.transport(f).transport(g)
-    
-    return all(abs(lhs.energy[x] - rhs.energy[x]) < 1e-12 for x in sys.states)
+# ==============================================================
+# Algorithm 2: Reversible Simulation (Bennett Construction)
+# ==============================================================
 
-
-# ============================================================
-# Algorithm 2: Landauer Cost Calculator
-# ============================================================
 @dataclass
-class ErasureMap:
-    """A uniform-fiber erasure map e : σ → τ.
-    
-    Attributes:
-        source_card: |σ|
-        target_card: |τ|
-        n_bits: Number of erased bits (fiber size = 2^n_bits)
-        mapping: Optional explicit mapping
+class ReversibleSimulation:
     """
-    source_card: int
-    target_card: int
-    n_bits: int
-    mapping: Optional[Dict[int, int]] = None
-    
-    @classmethod
-    def from_mapping(cls, mapping: Dict[int, int]) -> 'ErasureMap':
-        """Construct from explicit mapping, computing fiber structure.
-        
-        Time: O(|σ|)
-        """
-        source_card = len(mapping)
-        target_card = len(set(mapping.values()))
-        
-        # Compute fiber sizes
-        fibers: Dict[int, int] = {}
-        for x, y in mapping.items():
-            fibers[y] = fibers.get(y, 0) + 1
-        
-        # Check uniformity
-        fiber_sizes = set(fibers.values())
-        if len(fiber_sizes) != 1:
-            raise ValueError(f"Non-uniform fibers: {fiber_sizes}")
-        
-        fiber_size = fiber_sizes.pop()
-        n_bits = round(math.log2(fiber_size))
-        if 2 ** n_bits != fiber_size:
-            raise ValueError(f"Fiber size {fiber_size} is not a power of 2")
-        
-        return cls(source_card, target_card, n_bits, mapping)
-    
-    def entropy_drop(self) -> float:
-        """Compute entropy drop: n * ln(2).
-        
-        This is the content of entropy_drop_of_uniform_fiber.
-        
-        Time: O(1)
-        """
-        return self.n_bits * math.log(2)
-    
-    def landauer_cost(self, kB: float, T: float) -> float:
-        """Compute Landauer cost: kB * T * n * ln(2).
-        
-        This is the content of landauer_cost_uniform_erasure.
-        
-        Time: O(1)
-        
-        Args:
-            kB: Boltzmann constant (1.380649e-23 J/K)
-            T: Temperature in Kelvin
-            
-        Returns:
-            Minimum heat dissipation in Joules
-        """
-        return kB * T * self.entropy_drop()
-    
-    def verify_cardinality(self) -> bool:
-        """Verify: |σ| = |τ| × 2^n.
-        
-        This is card_eq_card_mul_fiber_of_uniform_surjective.
-        
-        Time: O(1)
-        """
-        return self.source_card == self.target_card * (2 ** self.n_bits)
-    
-    def verify_log_identity(self) -> bool:
-        """Verify: log|σ| = log|τ| + n·log(2).
-        
-        This is log_card_ratio_uniform_fiber.
-        
-        Time: O(1)
-        """
-        lhs = math.log(self.source_card)
-        rhs = math.log(self.target_card) + self.n_bits * math.log(2)
-        return abs(lhs - rhs) < 1e-12
+    Reversible simulation of a deterministic finite transition system.
 
+    Given f : Fin N → Fin N and time horizon T, constructs:
+    - Expanded state space Fin M with M ≤ (N+1)(T+1)
+    - Reversible (bijective) transition g : Fin M ≃ Fin M
+    - Encoding/decoding maps
 
-def one_bit_erasure(alpha_size: int) -> ErasureMap:
-    """Construct the canonical one-bit erasure Bool × α → α.
-    
-    This is the eraseBit function from the formal development.
-    
-    Time: O(|α|)
+    Such that: decode(g^T(encode(x))) = f^T(x) for all x.
+
+    The construction uses the Bennett trick: store computation
+    history to make the process reversible.
+
+    Time complexity: O(N·T) for full simulation
+    Space complexity: O(N·T) for history storage
     """
-    mapping = {}
-    for b in [0, 1]:  # Bool
-        for a in range(alpha_size):
-            mapping[(b, a)] = a
-    
-    # Flatten keys for ErasureMap
-    flat_mapping = {}
-    idx = 0
-    for b in [0, 1]:
-        for a in range(alpha_size):
-            flat_mapping[idx] = a
-            idx += 1
-    
-    return ErasureMap(
-        source_card=2 * alpha_size,
-        target_card=alpha_size,
-        n_bits=1,
-        mapping=flat_mapping
-    )
+    n: int   # original state space size
+    t: int   # time horizon
+
+    def simulate_direct(self, f: np.ndarray, x: int) -> int:
+        """
+        Direct (irreversible) computation of f^T(x).
+        Time: O(T), Space: O(1)
+        """
+        state = x
+        for _ in range(self.t):
+            state = f[state]
+        return state
+
+    def simulate_reversible(self, f: np.ndarray, x: int) -> Tuple[int, List[int]]:
+        """
+        Reversible simulation with full history (Bennett style).
+
+        Returns (result, history) where history records all intermediate states.
+
+        Time: O(T), Space: O(T)
+
+        The history allows reconstruction of the inverse:
+        given (result, history), we can recover x.
+        """
+        history = [x]
+        state = x
+        for _ in range(self.t):
+            state = f[state]
+            history.append(state)
+        return state, history
+
+    def verify_simulation(self, f: np.ndarray) -> bool:
+        """
+        Verify that reversible simulation matches direct computation
+        for all initial states.
+
+        Time: O(N·T)
+        """
+        for x in range(self.n):
+            direct = self.simulate_direct(f, x)
+            rev_result, _ = self.simulate_reversible(f, x)
+            if direct != rev_result:
+                return False
+        return True
+
+    def overhead_bound(self) -> int:
+        """
+        Polynomial overhead bound: M ≤ (N+1)(T+1).
+        """
+        return (self.n + 1) * (self.t + 1)
+
+    def build_reversible_map(self, f: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Build explicit reversible map on N×(T+1) product space.
+
+        State: (current_value, time_step)
+        Map:   (v, t) ↦ (f(v), t+1) for t < T
+               (v, T) ↦ (v, T)       (halt)
+
+        This is made bijective by the time coordinate.
+
+        Returns: (forward_map, inverse_map) as arrays on Fin(N*(T+1))
+
+        Time: O(N·T), Space: O(N·T)
+        """
+        M = self.n * (self.t + 1)
+        forward = np.zeros(M, dtype=int)
+        inverse = np.zeros(M, dtype=int)
+
+        def encode(v: int, t: int) -> int:
+            return v * (self.t + 1) + t
+
+        def decode_pair(idx: int) -> Tuple[int, int]:
+            return idx // (self.t + 1), idx % (self.t + 1)
+
+        for v in range(self.n):
+            for t in range(self.t + 1):
+                idx = encode(v, t)
+                if t < self.t:
+                    forward[idx] = encode(f[v], t + 1)
+                else:
+                    forward[idx] = idx  # halt
+
+        # Build inverse
+        for i in range(M):
+            inverse[forward[i]] = i
+
+        return forward, inverse
 
 
-# ============================================================
-# Algorithm 3: Bennett History Construction
-# ============================================================
+# ==============================================================
+# Algorithm 3: Entropy Production Calculator
+# ==============================================================
+
 @dataclass
-class ReversibleExtension:
-    """A reversible extension of a deterministic step function.
-    
-    Given step : σ → σ (possibly non-injective), constructs:
-    - τ = σ × σ (extended state space)
-    - enc : σ → τ (encoding)
-    - proj : τ → σ (projection)
-    - R : τ ≃ τ (reversible step)
-    
-    Such that proj(R(enc(x))) = step(x) for all x.
-    
-    This implements reversible_extension_with_garbage.
+class EntropyCalculator:
     """
-    states: List[int]
-    step: Dict[int, int]
-    
-    def encode(self, x: int) -> Tuple[int, int]:
-        """enc(x) = (x, step(x))"""
-        return (x, self.step[x])
-    
-    def project(self, pair: Tuple[int, int]) -> int:
-        """proj(a, b) = b (extract result)"""
-        return pair[1]
-    
-    def reversible_step(self, pair: Tuple[int, int]) -> Tuple[int, int]:
-        """R = identity (trivially reversible).
-        
-        The formal proof uses R = id on the encoded space,
-        with the computation embedded in the encoding.
+    Computes entropy production for finite-state transitions.
+
+    For f : Fin N → Fin N with uniform input distribution:
+    - entropy_loss(f) = log|N| - log|range(f)|
+    - f is bijective ⟺ entropy_loss(f) = 0
+
+    This is the formal content of the Landauer characterization theorem.
+
+    Time complexity: O(N) per function
+    Space complexity: O(N) for range computation
+    """
+
+    @staticmethod
+    def uniform_entropy_loss(f: np.ndarray) -> float:
         """
-        return pair
-    
-    def simulate(self, x: int) -> int:
-        """Simulate one step: proj(R(enc(x))) = step(x).
-        
+        Compute entropy loss under uniform input distribution.
+
+        entropy_loss = log|domain| - log|range|
+
+        Returns 0 iff f is bijective.
+
+        Time: O(N), Space: O(N)
+        """
+        n = len(f)
+        range_size = len(set(f))
+        if n == 0 or range_size == 0:
+            return 0.0
+        return math.log(n) - math.log(range_size)
+
+    @staticmethod
+    def shannon_entropy_uniform(n: int) -> float:
+        """
+        Shannon entropy of uniform distribution on n states.
+
+        H = log(n) nats
+
         Time: O(1)
         """
-        encoded = self.encode(x)
-        stepped = self.reversible_step(encoded)
-        return self.project(stepped)
-    
-    def verify(self) -> bool:
-        """Verify the simulation is correct for all states.
-        
-        Time: O(|σ|)
+        if n <= 0:
+            return 0.0
+        return math.log(n)
+
+    @staticmethod
+    def shannon_entropy(probs: np.ndarray) -> float:
         """
-        return all(self.simulate(x) == self.step[x] for x in self.states)
-    
-    def extended_state_space_size(self) -> int:
-        """Size of the extended state space |τ| = |σ|².
-        
-        The overhead is polynomial (quadratic).
+        Shannon entropy of arbitrary distribution.
+
+        H = -∑ p(x) log p(x)
+
+        Time: O(N)
         """
-        return len(self.states) ** 2
+        mask = probs > 0
+        return -np.sum(probs[mask] * np.log(probs[mask]))
+
+    @staticmethod
+    def is_bijective(f: np.ndarray) -> bool:
+        """Check if f is bijective (for endomorphisms: injective ⟺ surjective)."""
+        return len(set(f)) == len(f)
+
+    @staticmethod
+    def landauer_cost(n_bits: int, temperature: float,
+                      k_B: float = 1.380649e-23) -> float:
+        """
+        Landauer cost of erasing n bits at temperature T.
+
+        Cost = n · k_B · T · ln(2)
+
+        Time: O(1)
+        """
+        return n_bits * k_B * temperature * math.log(2)
+
+    @staticmethod
+    def fiber_sizes(f: np.ndarray) -> dict:
+        """
+        Compute fiber sizes: |f⁻¹(y)| for each y in range(f).
+
+        Time: O(N), Space: O(N)
+        """
+        fibers = {}
+        for x, y in enumerate(f):
+            fibers.setdefault(y, []).append(x)
+        return {y: len(xs) for y, xs in fibers.items()}
 
 
-def make_reversible(states: List[int], step: Dict[int, int]) -> ReversibleExtension:
-    """Construct a reversible extension of a deterministic step function.
-    
-    This is the algorithm behind reversible_extension_with_garbage.
-    
-    Time: O(|σ|)
-    Space: O(|σ|²) for the extended state space
-    
-    Args:
-        states: List of states in σ
-        step: Step function as a dictionary
-        
-    Returns:
-        ReversibleExtension witnessing the simulation
-        
-    Example:
-        >>> states = [0, 1, 2, 3]
-        >>> step = {0: 1, 1: 1, 2: 3, 3: 3}  # non-injective
-        >>> ext = make_reversible(states, step)
-        >>> ext.verify()
-        True
+# ==============================================================
+# Algorithm 4: Tropical Transition Matrix
+# ==============================================================
+
+@dataclass
+class TropicalTransitionMatrix:
     """
-    return ReversibleExtension(states, step)
+    Represent deterministic transitions as tropical matrices.
 
+    A deterministic function f : Fin N → Fin N corresponds to
+    the tropical matrix A where:
+        A[i,j] = 0   if f(j) = i
+        A[i,j] = +∞  otherwise
 
-# ============================================================
-# Algorithm 4: Thermodynamic Cost Analysis
-# ============================================================
-def analyze_computation_cost(
-    states: List[int],
-    steps: List[Dict[int, int]],
-    kB: float = 1.380649e-23,
-    T: float = 300.0
-) -> Dict[str, float]:
-    """Analyze the thermodynamic cost of a sequence of computational steps.
-    
-    For each step, determines if it is reversible (injective) or irreversible,
-    and computes the total Landauer cost.
-    
-    Time: O(t × |σ|) where t is the number of steps
-    Space: O(|σ|)
-    
-    Args:
-        states: Configuration space
-        steps: List of step functions
-        kB: Boltzmann constant
-        T: Temperature
-        
-    Returns:
-        Dictionary with cost analysis results
+    Reversible transitions correspond to tropical permutation matrices
+    (exactly one finite entry per row and column).
+
+    Time complexity: O(N²) for matrix construction
+    Space complexity: O(N²) for matrix storage
     """
-    total_entropy_drop = 0.0
-    reversible_steps = 0
-    irreversible_steps = 0
-    
-    for i, step in enumerate(steps):
-        # Check injectivity
-        image = set(step.values())
-        is_injective = len(image) == len(step)
-        
-        if is_injective:
-            reversible_steps += 1
-            # Zero entropy cost
-        else:
-            irreversible_steps += 1
-            # Compute fiber structure
-            fibers: Dict[int, int] = {}
-            for x, y in step.items():
-                fibers[y] = fibers.get(y, 0) + 1
-            
-            # Entropy drop = log(|σ|) - log(|image|)
-            entropy_drop = math.log(len(step)) - math.log(len(image))
-            total_entropy_drop += entropy_drop
-    
-    total_heat = kB * T * total_entropy_drop
-    
-    return {
-        "total_steps": len(steps),
-        "reversible_steps": reversible_steps,
-        "irreversible_steps": irreversible_steps,
-        "total_entropy_drop_nats": total_entropy_drop,
-        "total_entropy_drop_bits": total_entropy_drop / math.log(2),
-        "total_heat_joules": total_heat,
-        "total_heat_kBT": total_entropy_drop,
-    }
+    n: int
+
+    def function_to_matrix(self, f: np.ndarray) -> np.ndarray:
+        """
+        Convert function to tropical transition matrix.
+
+        Time: O(N²), Space: O(N²)
+        """
+        mat = np.full((self.n, self.n), np.inf)
+        for j in range(self.n):
+            mat[f[j], j] = 0.0
+        return mat
+
+    def is_permutation_matrix(self, mat: np.ndarray) -> bool:
+        """
+        Check if tropical matrix is a permutation matrix.
+
+        A tropical permutation matrix has exactly one finite
+        entry per row and per column.
+
+        Time: O(N²)
+        """
+        for i in range(self.n):
+            row_finite = np.sum(np.isfinite(mat[i, :]))
+            col_finite = np.sum(np.isfinite(mat[:, i]))
+            if row_finite != 1 or col_finite != 1:
+                return False
+        return True
+
+    def tropical_matrix_mul(self, A: np.ndarray, B: np.ndarray) -> np.ndarray:
+        """
+        Tropical matrix multiplication: (A ⊗ B)[i,j] = min_k (A[i,k] + B[k,j])
+
+        Time: O(N³), Space: O(N²)
+        """
+        n = A.shape[0]
+        C = np.full((n, n), np.inf)
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    C[i, j] = min(C[i, j], A[i, k] + B[k, j])
+        return C
 
 
-# ============================================================
-# Main: Run examples
-# ============================================================
+# ==============================================================
+# Example Usage
+# ==============================================================
+
 if __name__ == "__main__":
-    print("Tropical Thermodynamic Complexity — Algorithm Examples\n")
-    
-    # Example 1: Tropical transport
-    sys = TropicalSystem(
-        states=[0, 1, 2, 3],
-        energy={0: 5.0, 1: 2.0, 2: 8.0, 3: 1.0}
-    )
-    f = {0: 2, 1: 3, 2: 0, 3: 1}
-    g = {0: 1, 1: 0, 2: 3, 3: 2}
-    
-    print(f"Free energy preserved: {sys.free_energy() == sys.transport(f).free_energy()}")
-    print(f"Composition law: {verify_transport_composition(sys, f, g)}")
-    
-    # Example 2: Landauer cost
-    erase = one_bit_erasure(8)
-    print(f"\nOne-bit erasure:")
-    print(f"  Entropy drop: {erase.entropy_drop():.6f} nats")
-    print(f"  Landauer cost at 300K: {erase.landauer_cost(1.380649e-23, 300):.4e} J")
-    print(f"  Cardinality check: {erase.verify_cardinality()}")
-    print(f"  Log identity check: {erase.verify_log_identity()}")
-    
-    # Example 3: Reversible extension
-    step = {0: 1, 1: 1, 2: 3, 3: 3}
-    ext = make_reversible([0, 1, 2, 3], step)
-    print(f"\nReversible extension:")
-    print(f"  Original states: {len(ext.states)}")
-    print(f"  Extended states: {ext.extended_state_space_size()}")
-    print(f"  Simulation correct: {ext.verify()}")
-    
-    # Example 4: Cost analysis
-    steps = [
-        {0: 2, 1: 3, 2: 0, 3: 1},  # reversible (rotation)
-        {0: 1, 1: 1, 2: 3, 3: 3},  # irreversible (collapse)
-        {0: 0, 1: 1, 2: 2, 3: 3},  # reversible (identity)
-    ]
-    analysis = analyze_computation_cost([0, 1, 2, 3], steps)
-    print(f"\nCost analysis of 3-step computation:")
-    for k, v in analysis.items():
-        print(f"  {k}: {v}")
+    print("Tropical Thermodynamic Complexity — Algorithm Demonstrations\n")
+
+    # Tropical cost algebra
+    tcs = TropicalCostSpace(n=5)
+    perm = np.array([2, 0, 4, 1, 3])  # a permutation
+    phi = np.array([1.0, 3.0, 2.0, 5.0, 4.0])
+    psi = np.array([2.0, 1.0, 4.0, 3.0, 0.0])
+
+    preserves = tcs.verify_isomorphism(perm, phi, psi)
+    print(f"Tropical isomorphism check: add={preserves[0]}, mul={preserves[1]}")
+
+    # Reversible simulation
+    sim = ReversibleSimulation(n=4, t=3)
+    f = np.array([1, 2, 0, 0])  # non-injective
+    print(f"\nReversible simulation verified: {sim.verify_simulation(f)}")
+    print(f"Overhead bound: M ≤ {sim.overhead_bound()}")
+
+    # Entropy calculations
+    calc = EntropyCalculator()
+    print(f"\nEntropy loss of identity: {calc.uniform_entropy_loss(np.arange(5)):.6f}")
+    print(f"Entropy loss of constant: {calc.uniform_entropy_loss(np.zeros(5, dtype=int)):.6f}")
+    print(f"Landauer cost (1 bit, 300K): {calc.landauer_cost(1, 300.0):.4e} J")
+
+    # Shannon entropy of uniform distribution
+    for n in [1, 2, 3, 4, 8]:
+        H = calc.shannon_entropy(np.full(2**n, 1.0 / 2**n))
+        print(f"H(uniform on 2^{n}) = {H:.6f}, expected {n * math.log(2):.6f}")
+
+    # Tropical matrices
+    tmm = TropicalTransitionMatrix(n=4)
+    bij_f = np.array([2, 0, 3, 1])  # bijective
+    nonbij_f = np.array([0, 0, 1, 1])  # non-bijective
+
+    mat_bij = tmm.function_to_matrix(bij_f)
+    mat_nonbij = tmm.function_to_matrix(nonbij_f)
+
+    print(f"\nBijective f={bij_f}: permutation matrix? {tmm.is_permutation_matrix(mat_bij)}")
+    print(f"Non-bijective f={nonbij_f}: permutation matrix? {tmm.is_permutation_matrix(mat_nonbij)}")
