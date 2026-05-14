@@ -41,10 +41,10 @@
       "Computation"
     ],
     "priority_score": 0.98,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da3ad38e",
     "timestamp": "2026-05-14T04:01:04.750401+00:00"
   },
   {
@@ -137,10 +137,10 @@
       "Tropical"
     ],
     "priority_score": 0.95,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1bcb151e",
     "timestamp": "2026-05-14T04:01:04.696172+00:00"
   },
   {
