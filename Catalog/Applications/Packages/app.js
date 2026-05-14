@@ -262,6 +262,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 60000);
 
+    // Author popover
+    const authorLink = document.getElementById('author-link');
+    const authorPopover = document.getElementById('author-popover');
+    const authorPopoverClose = document.getElementById('author-popover-close');
+
+    if (authorLink && authorPopover) {
+        authorLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            authorPopover.classList.toggle('hidden');
+        });
+        authorPopoverClose.addEventListener('click', () => {
+            authorPopover.classList.add('hidden');
+        });
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!authorPopover.contains(e.target) && e.target !== authorLink) {
+                authorPopover.classList.add('hidden');
+            }
+        });
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') authorPopover.classList.add('hidden');
+        });
+    }
+
     // Search filter
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
