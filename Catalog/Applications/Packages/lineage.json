@@ -7,7 +7,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T01:50:13Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T01:57:43Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -34,7 +34,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T02:13:58Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:16:39Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T02:16:56Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -61,7 +61,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T02:24:17Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "collatz_convergence_via_tropical_contracting_dynam",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:29:12Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T03:01:11Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "quantum_pythagorean_teleportation_berggren_orbits_",
@@ -88,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T03:01:28Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "sheaf_cohomology_and_certified_adversarial_robustn",
@@ -97,7 +97,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T03:04:15Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
@@ -106,7 +106,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-14T03:04:29Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "holographic_proof_renormalization_ultrametric_comp",
@@ -115,7 +115,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T03:08:28Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "emergent_computation_in_pythagorean_orbit_lattices",
@@ -133,7 +133,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T04:02:16Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "closure_operator_networks_universal_approximation_",
@@ -142,16 +142,25 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T04:04:29Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "tropical_neural_code_classification_with_provable_",
       "title": "Tropical Neural Code Classification with Provable Margins",
       "domain": "Machine Learning / Tropical Geometry / Computational Neuroscience",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-14T04:04:46Z",
+      "hue": 90
+    },
+    {
+      "id": "dragon_curve_fractals_as_tropical_curve_generators",
+      "title": "Tropical Substitution Fractals: Min-Plus Generation of Dragon Curve Approximants",
+      "domain": "Algebra / Tropical Geometry / Fractal Geometry",
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
-      "date": "2026-05-14T04:04:46Z",
-      "hue": 271
+      "date": "2026-05-14T04:05:00Z",
+      "hue": 275
     }
   ],
   "edges": []
