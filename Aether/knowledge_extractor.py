@@ -1796,6 +1796,18 @@ Research mode: {concept.research_mode}
 
         if job.status not in ("completed",):
             print(f"[Cycle] Job {job.job_id} ended with status: {job.status}")
+            # Mark the consumed direction as abandoned so it's available again
+            if job.job_id:
+                try:
+                    from research_memory import FutureDirectionsManager
+                    fd_mgr = FutureDirectionsManager(self.workspace)
+                    for d in fd_mgr._directions:
+                        if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
+                            fd_mgr.mark_direction_abandoned(d.id)
+                            print(f"[Cycle] Abandoned direction {d.id}: {d.title[:50]}")
+                            break
+                except Exception as e:
+                    print(f"[Cycle] Warning: could not abandon direction: {e}")
             return job
 
         # 4. EXTRACT

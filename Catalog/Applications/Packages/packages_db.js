@@ -344,7 +344,7 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.95,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "53771932",
@@ -392,7 +392,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.92,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "20834c3d",
@@ -408,7 +408,7 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "priority_score": 0.92,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "a6a82243",
@@ -440,7 +440,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "a9b70184",
@@ -456,7 +456,7 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.9,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "fe61d30c",
@@ -472,7 +472,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.89,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "9590c6d3",
@@ -520,7 +520,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.86,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "07e325b2",
@@ -536,7 +536,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.85,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "7cf55235",
@@ -568,7 +568,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.83,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "c0e6134c",
@@ -584,7 +584,7 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "priority_score": 0.82,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "d31aa671",
@@ -600,7 +600,7 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "priority_score": 0.81,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "04b8c0b1",
@@ -648,7 +648,7 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.78,
-    "status": "in_progress",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "11e89186",
@@ -680,10 +680,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.76,
-    "status": "available",
+    "status": "completed",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3692e74b",
     "timestamp": "2026-05-13T23:34:44.961540+00:00"
   }
 ];
