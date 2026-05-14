@@ -1,168 +1,23 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Myhill–Nerode Theory
+Algorithms for Tropical Automata Theory
 
-Implements the core algorithms arising from the tropical Myhill–Nerode theorem:
-1. Residual computation and Nerode class discovery
-2. Canonical Nerode automaton construction
-3. Automaton minimization via residual quotient
-4. Syntactic transformation monoid computation
-5. Recognizability testing
-
-All algorithms work over the min-plus semiring (WithTop ℕ):
-  - addition = min
-  - multiplication = +
-  - zero = ∞ (None)
-  - one = 0
+Implements the key algorithms from the Tropical Myhill-Nerode Theorem:
+1. Tropical DFA evaluation
+2. Residual computation and Nerode equivalence
+3. Tropical DFA minimization (partition refinement)
+4. Nerode automaton construction
+5. Equivalence testing
+6. Syntactic monoid computation
 """
 
-from __future__ import annotations
-from typing import (Callable, Dict, FrozenSet, List, Optional,
-                     Set, Tuple, Any)
+from typing import Dict, List, Tuple, Set, Optional, FrozenSet
 from dataclasses import dataclass, field
 from collections import defaultdict
 import itertools
 
-# ---------------------------------------------------------------------------
-# Types
-# ---------------------------------------------------------------------------
+INF = float('inf')
 
-Cost = Optional[int]       # None represents ∞ (top)
-Symbol = Any               # alphabet symbol
-Word = Tuple[Symbol, ...]  # a word is a tuple of symbols
-
-
-# ---------------------------------------------------------------------------
-# Min-Plus Semiring Operations
-# ---------------------------------------------------------------------------
-
-def tropical_add(a: Cost, b: Cost) -> Cost:
-    """Tropical addition: min(a, b), with None = ∞."""
-    if a is None: return b
-    if b is None: return a
-    return min(a, b)
-
-
-def tropical_mul(a: Cost, b: Cost) -> Cost:
-    """Tropical multiplication: a + b, with None = ∞."""
-    if a is None or b is None: return None
-    return a + b
-
-
-# ---------------------------------------------------------------------------
-# Algorithm 1: Word Enumeration
-# ---------------------------------------------------------------------------
-
-def enumerate_words(alphabet: List[Symbol], max_length: int) -> List[Word]:
-    """
-    Enumerate all words over alphabet up to max_length.
-
-    Time complexity: O(|Σ|^(max_length+1))
-    Space complexity: O(|Σ|^(max_length+1))
-
-    Args:
-        alphabet: List of symbols
-        max_length: Maximum word length
-
-    Returns:
-        List of all words (as tuples) of length 0..max_length
-    """
-    words: List[Word] = [()]
-    frontier = [()]
-    for _ in range(max_length):
-        new_frontier = []
-        for w in frontier:
-            for a in alphabet:
-                new_word = w + (a,)
-                words.append(new_word)
-                new_frontier.append(new_word)
-        frontier = new_frontier
-    return words
-
-
-# ---------------------------------------------------------------------------
-# Algorithm 2: Residual Computation
-# ---------------------------------------------------------------------------
-
-def compute_residual(
-    L: Callable[[Word], Cost],
-    prefix: Word,
-    test_suffixes: List[Word]
-) -> Tuple[Cost, ...]:
-    """
-    Compute a finite approximation of the residual function at prefix u.
-
-    The residual is: (Res_L u)(v) = L(u ++ v)
-
-    We approximate it by evaluating on a finite set of test suffixes.
-
-    Time complexity: O(|test_suffixes| · T_L) where T_L is cost of evaluating L
-    Space complexity: O(|test_suffixes|)
-
-    Args:
-        L: Weighted language function
-        prefix: The prefix word u
-        test_suffixes: Finite set of suffix words to test
-
-    Returns:
-        Tuple of costs, one per test suffix (the "residual signature")
-    """
-    return tuple(L(prefix + v) for v in test_suffixes)
-
-
-# ---------------------------------------------------------------------------
-# Algorithm 3: Nerode Equivalence Class Discovery
-# ---------------------------------------------------------------------------
-
-def discover_nerode_classes(
-    L: Callable[[Word], Cost],
-    alphabet: List[Symbol],
-    max_prefix_len: int = 5,
-    max_suffix_len: int = 5
-) -> Dict[Tuple[Cost, ...], List[Word]]:
-    """
-    Discover Nerode equivalence classes by residual fingerprinting.
-
-    Two prefixes u, v are Nerode-equivalent iff their residuals agree
-    on all suffixes. We approximate this by testing suffixes up to
-    max_suffix_len.
-
-    Time complexity: O(|Σ|^max_prefix_len · |Σ|^max_suffix_len · T_L)
-    Space complexity: O(|Σ|^max_prefix_len · |Σ|^max_suffix_len)
-
-    Pseudocode:
-        NERODE-CLASSES(L, Σ, k_pre, k_suf):
-        1. suffixes ← ENUMERATE(Σ, k_suf)
-        2. prefixes ← ENUMERATE(Σ, k_pre)
-        3. classes ← empty map
-        4. for each u in prefixes:
-        5.     sig ← (L(u++v) : v ∈ suffixes)
-        6.     classes[sig].append(u)
-        7. return classes
-
-    Args:
-        L: Weighted language
-        alphabet: Alphabet symbols
-        max_prefix_len: Max length of prefixes to explore
-        max_suffix_len: Max length of suffixes to test
-
-    Returns:
-        Dictionary mapping residual signatures to lists of equivalent prefixes
-    """
-    suffixes = enumerate_words(alphabet, max_suffix_len)
-    prefixes = enumerate_words(alphabet, max_prefix_len)
-
-    classes: Dict[Tuple[Cost, ...], List[Word]] = defaultdict(list)
-    for u in prefixes:
-        sig = compute_residual(L, u, suffixes)
-        classes[sig].append(u)
-
-    return dict(classes)
-
-
-# ---------------------------------------------------------------------------
-# Algorithm 4: Tropical DFA
-# ---------------------------------------------------------------------------
 
 @dataclass
 class TropicalDFA:
@@ -170,358 +25,380 @@ class TropicalDFA:
     A deterministic tropical (min-plus) finite automaton.
 
     Attributes:
-        states: List of state identifiers
-        alphabet: List of alphabet symbols
-        delta: Transition function as dict (state, symbol) -> state
+        states: Set of state identifiers
+        alphabet: Set of input symbols
+        transitions: Dict mapping (state, symbol) -> state
         initial: Initial state
-        output: Output function as dict state -> Cost
+        output: Dict mapping state -> tropical weight (float, inf = ⊤)
     """
-    states: List[Any]
-    alphabet: List[Symbol]
-    delta: Dict[Tuple[Any, Symbol], Any]
-    initial: Any
-    output: Dict[Any, Cost]
+    states: Set[str]
+    alphabet: Set[str]
+    transitions: Dict[Tuple[str, str], str]
+    initial: str
+    output: Dict[str, float]
 
-    def run(self, state: Any, word: Word) -> Any:
-        """Process word from given state. O(|word|)."""
-        for a in word:
-            state = self.delta[(state, a)]
+    def eval_from(self, state: str, word: str) -> str:
+        """Return the state reached from 'state' after reading 'word'."""
+        for ch in word:
+            state = self.transitions[(state, ch)]
         return state
 
-    def evaluate(self, word: Word) -> Cost:
-        """Compute cost of word. O(|word|)."""
-        return self.output[self.run(self.initial, word)]
+    def eval_cost(self, word: str) -> float:
+        """Compute the tropical cost of a word."""
+        return self.output[self.eval_from(self.initial, word)]
 
-    def reachable_states(self, max_len: int = 10) -> Set[Any]:
-        """Find all reachable states via BFS."""
-        visited = {self.initial}
-        frontier = {self.initial}
-        for _ in range(max_len):
-            new_frontier = set()
-            for q in frontier:
-                for a in self.alphabet:
-                    q2 = self.delta.get((q, a))
-                    if q2 is not None and q2 not in visited:
-                        visited.add(q2)
-                        new_frontier.add(q2)
-            frontier = new_frontier
-            if not frontier:
-                break
+    def reachable_states(self) -> Set[str]:
+        """Compute the set of states reachable from the initial state."""
+        visited: Set[str] = set()
+        queue = [self.initial]
+        while queue:
+            state = queue.pop()
+            if state in visited:
+                continue
+            visited.add(state)
+            for a in self.alphabet:
+                next_state = self.transitions[(state, a)]
+                if next_state not in visited:
+                    queue.append(next_state)
         return visited
 
-    def transition_function(self, word: Word) -> Dict[Any, Any]:
-        """Compute the transition function induced by word on all states."""
-        return {q: self.run(q, word) for q in self.states}
+    def residual_of_state(self, state: str, suffixes: List[str]) -> Tuple[float, ...]:
+        """Compute the residual function at a state, evaluated on given suffixes."""
+        return tuple(self.output[self.eval_from(state, w)] for w in suffixes)
 
 
-# ---------------------------------------------------------------------------
-# Algorithm 5: Nerode Automaton Construction
-# ---------------------------------------------------------------------------
+def generate_words(alphabet: Set[str], max_length: int) -> List[str]:
+    """Generate all words over the alphabet up to max_length."""
+    words = [""]
+    alpha_list = sorted(alphabet)
+    for length in range(1, max_length + 1):
+        for combo in itertools.product(alpha_list, repeat=length):
+            words.append("".join(combo))
+    return words
 
-def build_nerode_automaton(
-    L: Callable[[Word], Cost],
-    alphabet: List[Symbol],
-    max_prefix_len: int = 5,
-    max_suffix_len: int = 5
-) -> TropicalDFA:
+
+# =============================================================================
+# Algorithm 1: Tropical DFA Minimization
+# =============================================================================
+
+def minimize_tropical_dfa(dfa: TropicalDFA, max_suffix_length: int = 10) -> TropicalDFA:
     """
-    Construct the canonical minimal Nerode automaton for L.
+    Minimize a tropical DFA using partition refinement.
 
-    This is the central construction from the tropical Myhill–Nerode theorem.
-    States are Nerode equivalence classes (identified by residual signatures).
-    The transition on symbol a sends [u] to [u·a].
-    Output at [u] is L(u).
-
-    Time complexity: O(|Σ|^max_prefix_len · |Σ|^max_suffix_len · T_L)
-    Space complexity: O(|classes| · |Σ|)
-
-    Pseudocode:
-        NERODE-AUTOMATON(L, Σ, k_pre, k_suf):
-        1. classes ← NERODE-CLASSES(L, Σ, k_pre, k_suf)
-        2. states ← keys of classes
-        3. for each state sig, symbol a:
-        4.     rep ← shortest member of classes[sig]
-        5.     sig' ← RESIDUAL(L, rep·a, suffixes)
-        6.     delta[sig, a] ← sig'
-        7. init ← RESIDUAL(L, ε, suffixes)
-        8. output[sig] ← L(shortest rep of sig)
-        9. return DFA(states, delta, init, output)
+    The algorithm identifies Nerode-equivalent states (states with identical
+    residual functions) and merges them.
 
     Args:
-        L: Weighted language
-        alphabet: Alphabet
-        max_prefix_len: Exploration depth for prefixes
-        max_suffix_len: Test depth for suffixes
+        dfa: Input tropical DFA
+        max_suffix_length: Maximum suffix length for equivalence testing
 
     Returns:
-        A TropicalDFA that is the canonical Nerode automaton for L
+        Minimal equivalent tropical DFA
+
+    Complexity: O(n² · |Σ| · L) where L = max_suffix_length
     """
-    suffixes = enumerate_words(alphabet, max_suffix_len)
-    classes = discover_nerode_classes(L, alphabet, max_prefix_len, max_suffix_len)
+    reachable = dfa.reachable_states()
+    suffixes = generate_words(dfa.alphabet, max_suffix_length)
 
-    # Representative for each class: shortest word
-    reps = {sig: min(members, key=len) for sig, members in classes.items()}
+    # Compute residual for each reachable state
+    state_residuals: Dict[str, Tuple[float, ...]] = {}
+    for state in reachable:
+        state_residuals[state] = dfa.residual_of_state(state, suffixes)
 
-    # State identifiers are the signatures themselves
-    states = list(classes.keys())
+    # Group states by residual (= Nerode classes)
+    classes: Dict[Tuple[float, ...], List[str]] = defaultdict(list)
+    for state in reachable:
+        classes[state_residuals[state]].append(state)
 
-    # Build transitions using worklist (capped to avoid infinite loops)
-    delta = {}
-    worklist = list(states)
-    visited = set(states)
-    max_states = len(states) * len(alphabet) * 2 + 100  # safety cap
-    while worklist and len(visited) < max_states:
-        sig = worklist.pop(0)
-        rep = reps[sig]
+    # Build representative map
+    representative: Dict[str, str] = {}
+    for members in classes.values():
+        rep = min(members)  # canonical representative
+        for state in members:
+            representative[state] = rep
+
+    # Build minimal automaton
+    min_states = set(representative.values())
+    min_transitions: Dict[Tuple[str, str], str] = {}
+    min_output: Dict[str, float] = {}
+
+    for state in min_states:
+        min_output[state] = dfa.output[state]
+        for a in dfa.alphabet:
+            next_state = dfa.transitions[(state, a)]
+            min_transitions[(state, a)] = representative[next_state]
+
+    return TropicalDFA(
+        states=min_states,
+        alphabet=dfa.alphabet,
+        transitions=min_transitions,
+        initial=representative[dfa.initial],
+        output=min_output,
+    )
+
+
+# =============================================================================
+# Algorithm 2: Nerode Automaton Construction
+# =============================================================================
+
+def build_nerode_automaton(
+    language_func,
+    alphabet: Set[str],
+    max_prefix_length: int = 5,
+    max_suffix_length: int = 8
+) -> TropicalDFA:
+    """
+    Construct the canonical Nerode automaton from a language function.
+
+    The Nerode automaton has states = distinct residual functions,
+    transitions = appending a letter, output = residual at empty word.
+
+    Args:
+        language_func: Function mapping words to tropical costs
+        alphabet: Input alphabet
+        max_prefix_length: Maximum prefix length to explore
+        max_suffix_length: Maximum suffix length for residual comparison
+
+    Returns:
+        The Nerode automaton (canonical minimal recognizer)
+    """
+    prefixes = generate_words(alphabet, max_prefix_length)
+    suffixes = generate_words(alphabet, max_suffix_length)
+
+    # Compute residuals for all prefixes
+    residual_map: Dict[str, Tuple[float, ...]] = {}
+    for u in prefixes:
+        residual_map[u] = tuple(language_func(u + w) for w in suffixes)
+
+    # Identify distinct residuals
+    residual_to_state: Dict[Tuple[float, ...], str] = {}
+    state_to_prefix: Dict[str, str] = {}
+
+    for u in prefixes:
+        res = residual_map[u]
+        if res not in residual_to_state:
+            state_name = f"[{u}]" if u else "[ε]"
+            residual_to_state[res] = state_name
+            state_to_prefix[state_name] = u
+
+    states = set(residual_to_state.values())
+    initial = residual_to_state[residual_map[""]]
+
+    # Build transitions
+    transitions: Dict[Tuple[str, str], str] = {}
+    for state_name in states:
+        prefix = state_to_prefix[state_name]
         for a in alphabet:
-            extended = rep + (a,)
-            ext_sig = compute_residual(L, extended, suffixes)
-            if ext_sig not in visited:
-                visited.add(ext_sig)
-                states.append(ext_sig)
-                reps[ext_sig] = extended
-                classes[ext_sig] = [extended]
-                worklist.append(ext_sig)
-            delta[(sig, a)] = ext_sig
+            extended = prefix + a
+            if extended in residual_map:
+                target_res = residual_map[extended]
+                if target_res in residual_to_state:
+                    transitions[(state_name, a)] = residual_to_state[target_res]
+                else:
+                    # Create new state for this residual
+                    new_name = f"[{extended}]"
+                    residual_to_state[target_res] = new_name
+                    state_to_prefix[new_name] = extended
+                    states.add(new_name)
+                    transitions[(state_name, a)] = new_name
 
-    # Initial state
-    init_sig = compute_residual(L, (), suffixes)
+    # Build output
+    output: Dict[str, float] = {}
+    for state_name in states:
+        prefix = state_to_prefix[state_name]
+        output[state_name] = language_func(prefix)
 
-    # Output
-    output = {sig: L(reps[sig]) for sig in states}
+    # Fill missing transitions with a sink state if needed
+    for state in list(states):
+        for a in alphabet:
+            if (state, a) not in transitions:
+                if "SINK" not in states:
+                    states.add("SINK")
+                    output["SINK"] = INF
+                    for b in alphabet:
+                        transitions[("SINK", b)] = "SINK"
+                transitions[(state, a)] = "SINK"
 
     return TropicalDFA(
         states=states,
         alphabet=alphabet,
-        delta=delta,
-        initial=init_sig,
-        output=output
+        transitions=transitions,
+        initial=initial,
+        output=output,
     )
 
 
-# ---------------------------------------------------------------------------
-# Algorithm 6: Automaton Minimization via Nerode Quotient
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Algorithm 3: Equivalence Testing
+# =============================================================================
 
-def minimize_automaton(
-    A: TropicalDFA,
-    max_suffix_len: int = 6
-) -> TropicalDFA:
+def test_equivalence(
+    dfa1: TropicalDFA,
+    dfa2: TropicalDFA,
+    max_word_length: int = 10
+) -> Tuple[bool, Optional[str]]:
     """
-    Minimize a tropical DFA by quotienting by the Nerode equivalence.
-
-    Two states q, q' are merged iff they have identical future behavior:
-    ∀ w, output(run(q, w)) = output(run(q', w))
-
-    This is guaranteed to produce the unique minimal automaton by the
-    tropical Myhill–Nerode theorem (nerode_index_le_card).
-
-    Time complexity: O(|Q|^2 · |Σ|^max_suffix_len)
-    Space complexity: O(|Q| · |Σ|^max_suffix_len)
+    Test whether two tropical DFAs recognize the same weighted language.
 
     Args:
-        A: Input tropical DFA
-        max_suffix_len: Depth for distinguishing states
+        dfa1, dfa2: Input DFAs (must have the same alphabet)
+        max_word_length: Maximum word length to test
 
     Returns:
-        Minimized TropicalDFA
+        (equivalent, counterexample) where counterexample is None if equivalent
+
+    Complexity: O(n₁ · n₂ · |Σ|^L)
     """
-    suffixes = enumerate_words(A.alphabet, max_suffix_len)
+    assert dfa1.alphabet == dfa2.alphabet, "Alphabets must match"
 
-    # Compute state signatures (future behavior fingerprints)
-    state_sigs = {}
-    for q in A.states:
-        sig = tuple(A.output.get(A.run(q, w)) for w in suffixes)
-        state_sigs[q] = sig
+    words = generate_words(dfa1.alphabet, max_word_length)
+    for w in words:
+        c1 = dfa1.eval_cost(w)
+        c2 = dfa2.eval_cost(w)
+        if c1 != c2:
+            return False, w
 
-    # Group states by signature
-    sig_to_states: Dict[tuple, List] = defaultdict(list)
-    for q, sig in state_sigs.items():
-        sig_to_states[sig].append(q)
-
-    # Build minimized automaton
-    new_states = list(sig_to_states.keys())
-    state_to_class = {q: sig for q, sig in state_sigs.items()}
-
-    new_delta = {}
-    for sig in new_states:
-        rep = sig_to_states[sig][0]
-        for a in A.alphabet:
-            next_state = A.delta[(rep, a)]
-            new_delta[(sig, a)] = state_to_class[next_state]
-
-    new_output = {}
-    for sig in new_states:
-        rep = sig_to_states[sig][0]
-        new_output[sig] = A.output[rep]
-
-    new_initial = state_to_class[A.initial]
-
-    return TropicalDFA(
-        states=new_states,
-        alphabet=A.alphabet,
-        delta=new_delta,
-        initial=new_initial,
-        output=new_output
-    )
+    return True, None
 
 
-# ---------------------------------------------------------------------------
-# Algorithm 7: Syntactic Transformation Monoid Computation
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Algorithm 4: Syntactic Monoid Computation
+# =============================================================================
 
 def compute_syntactic_monoid(
-    A: TropicalDFA,
-    max_word_len: int = 5
-) -> Dict[Tuple, Dict[Any, Any]]:
+    dfa: TropicalDFA,
+    max_word_length: int = 6
+) -> Dict[Tuple[str, ...], str]:
     """
-    Compute the syntactic transformation monoid of a tropical DFA.
+    Compute the syntactic monoid of the language recognized by a DFA.
 
-    Each word w induces a transformation τ_w : Q → Q on states.
-    The syntactic monoid is the set of all such transformations
-    (under composition).
-
-    Time complexity: O(|Σ|^max_word_len · |Q|)
-    Space complexity: O(min(|Q|^|Q|, |Σ|^max_word_len) · |Q|)
+    The syntactic monoid is the set of distinct transition functions
+    induced by words, under composition.
 
     Args:
-        A: Tropical DFA
-        max_word_len: Maximum word length to explore
+        dfa: Input tropical DFA
+        max_word_length: Maximum word length to explore
 
     Returns:
-        Dictionary mapping transformation tuples to a representative word
+        Dict mapping transition function (as tuple) -> representative word
     """
-    words = enumerate_words(A.alphabet, max_word_len)
+    reachable = sorted(dfa.reachable_states())
+    words = generate_words(dfa.alphabet, max_word_length)
 
-    monoid: Dict[Tuple, Word] = {}
+    monoid_elements: Dict[Tuple[str, ...], str] = {}
+
     for w in words:
-        # Compute the transformation induced by w
-        transform = tuple(A.run(q, w) for q in A.states)
-        if transform not in monoid:
-            monoid[transform] = w
+        # Compute transition function for word w
+        trans = tuple(dfa.eval_from(s, w) for s in reachable)
+        if trans not in monoid_elements:
+            monoid_elements[trans] = w
 
-    return monoid
-
-
-def check_idempotent(transform: Tuple, states: List, A: TropicalDFA,
-                      word: Word) -> bool:
-    """Check if a transformation is idempotent: f∘f = f."""
-    # Apply transform twice
-    first_app = {q: A.run(q, word) for q in states}
-    second_app = {q: A.run(first_app[q], word) for q in states}
-    return all(first_app[q] == second_app[q] for q in states)
+    return monoid_elements
 
 
-# ---------------------------------------------------------------------------
-# Algorithm 8: Recognizability Test
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Algorithm 5: Nerode Index Computation
+# =============================================================================
 
-def test_recognizability(
-    L: Callable[[Word], Cost],
-    alphabet: List[Symbol],
-    max_depth: int = 6
-) -> Tuple[bool, int, Optional[TropicalDFA]]:
+def compute_nerode_index(dfa: TropicalDFA, max_suffix_length: int = 8) -> int:
     """
-    Test whether a weighted language appears recognizable.
+    Compute the Nerode index of the language recognized by a DFA.
 
-    Uses the tropical Myhill–Nerode theorem: L is recognizable iff
-    the set of residuals is finite. We check whether the number of
-    distinct residuals stabilizes as we increase the exploration depth.
-
-    Time complexity: O(|Σ|^max_depth · |Σ|^max_depth · T_L)
+    This is the number of distinct residual functions, which equals
+    the number of states in the minimal equivalent DFA.
 
     Args:
-        L: Weighted language
-        alphabet: Alphabet
-        max_depth: Maximum exploration depth
+        dfa: Input tropical DFA
+        max_suffix_length: Maximum suffix length for residual comparison
 
     Returns:
-        (appears_recognizable, num_classes, automaton_if_recognizable)
+        The Nerode index
     """
-    prev_count = 0
-    stable_count = 0
+    reachable = dfa.reachable_states()
+    suffixes = generate_words(dfa.alphabet, max_suffix_length)
 
-    for depth in range(1, max_depth + 1):
-        classes = discover_nerode_classes(L, alphabet, depth, depth)
-        count = len(classes)
+    residuals: Set[Tuple[float, ...]] = set()
+    for state in reachable:
+        res = dfa.residual_of_state(state, suffixes)
+        residuals.add(res)
 
-        if count == prev_count:
-            stable_count += 1
-        else:
-            stable_count = 0
-
-        prev_count = count
-
-        # If class count stabilized for 2 consecutive depths,
-        # likely recognizable
-        if stable_count >= 2:
-            automaton = build_nerode_automaton(L, alphabet, depth, depth)
-            return (True, count, automaton)
-
-    # Count still growing — likely not recognizable
-    return (False, prev_count, None)
+    return len(residuals)
 
 
-# ---------------------------------------------------------------------------
-# Demonstration
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Main: Run all algorithms on example instances
+# =============================================================================
 
-if __name__ == '__main__':
-    print("Tropical Myhill–Nerode: Algorithm Demonstrations")
-    print("=" * 60)
+if __name__ == "__main__":
+    print("=" * 70)
+    print("TROPICAL AUTOMATA ALGORITHMS — DEMONSTRATION")
+    print("=" * 70)
 
-    # Example: parity language
-    def parity_cost(w: Word) -> Cost:
-        """Cost = 0 if even number of a's, 1 if odd."""
-        return sum(1 for c in w if c == 'a') % 2
-
-    alphabet = ['a', 'b']
-
-    print("\n1. Nerode Class Discovery (parity language)")
-    classes = discover_nerode_classes(parity_cost, alphabet, 3, 3)
-    print(f"   Found {len(classes)} Nerode classes")
-
-    print("\n2. Nerode Automaton Construction")
-    nerode = build_nerode_automaton(parity_cost, alphabet, 4, 4)
-    print(f"   States: {len(nerode.states)}")
-
-    # Verify
-    test_words = enumerate_words(alphabet, 4)
-    all_correct = all(nerode.evaluate(w) == parity_cost(w) for w in test_words)
-    print(f"   Correct on all words up to length 4: {all_correct}")
-
-    print("\n3. Minimization")
-    # Build a redundant 4-state automaton
-    big_dfa = TropicalDFA(
-        states=['q0', 'q1', 'q2', 'q3'],
-        alphabet=['a', 'b'],
-        delta={
-            ('q0', 'a'): 'q1', ('q0', 'b'): 'q2',
-            ('q1', 'a'): 'q0', ('q1', 'b'): 'q3',
-            ('q2', 'a'): 'q3', ('q2', 'b'): 'q0',
-            ('q3', 'a'): 'q2', ('q3', 'b'): 'q1',
+    # Create a test automaton
+    dfa = TropicalDFA(
+        states={"q0", "q1", "q2", "q3", "q4", "q5"},
+        alphabet={"a", "b"},
+        transitions={
+            ("q0", "a"): "q1", ("q0", "b"): "q2",
+            ("q1", "a"): "q3", ("q1", "b"): "q4",
+            ("q2", "a"): "q3", ("q2", "b"): "q5",
+            ("q3", "a"): "q3", ("q3", "b"): "q3",
+            ("q4", "a"): "q3", ("q4", "b"): "q3",
+            ("q5", "a"): "q3", ("q5", "b"): "q3",
         },
-        initial='q0',
-        output={'q0': 0, 'q1': 1, 'q2': 0, 'q3': 1}
+        initial="q0",
+        output={"q0": 0, "q1": 1, "q2": 2, "q3": 5, "q4": 3, "q5": 3},
     )
-    minimized = minimize_automaton(big_dfa)
-    print(f"   Original states: {len(big_dfa.states)}")
-    print(f"   Minimized states: {len(minimized.states)}")
 
-    print("\n4. Syntactic Monoid Computation")
-    monoid = compute_syntactic_monoid(big_dfa, max_word_len=4)
-    print(f"   Monoid size: {len(monoid)} transformations")
+    print("\n1. NERODE INDEX COMPUTATION")
+    print("-" * 40)
+    index = compute_nerode_index(dfa)
+    print(f"   Original states: {len(dfa.states)}")
+    print(f"   Nerode index: {index}")
 
-    # Check idempotence
-    non_idempotent = 0
-    for transform, word in monoid.items():
-        if not check_idempotent(transform, big_dfa.states, big_dfa, word):
-            non_idempotent += 1
-    print(f"   Non-idempotent elements: {non_idempotent}")
+    print("\n2. MINIMIZATION")
+    print("-" * 40)
+    min_dfa = minimize_tropical_dfa(dfa)
+    print(f"   Original states: {len(dfa.states)}")
+    print(f"   Minimal states: {len(min_dfa.states)}")
+    print(f"   Minimal states: {sorted(min_dfa.states)}")
 
-    print("\n5. Recognizability Test")
-    recognizable, n_classes, auto = test_recognizability(parity_cost, alphabet)
-    print(f"   Parity language recognizable: {recognizable}")
-    print(f"   Number of classes: {n_classes}")
+    print("\n3. EQUIVALENCE TEST")
+    print("-" * 40)
+    equiv, counter = test_equivalence(dfa, min_dfa, max_word_length=6)
+    print(f"   Original ≡ Minimal: {equiv}")
+    if counter:
+        print(f"   Counterexample: \"{counter}\"")
 
-    print("\nAll algorithms executed successfully.")
+    print("\n4. SYNTACTIC MONOID")
+    print("-" * 40)
+    monoid = compute_syntactic_monoid(dfa, max_word_length=4)
+    print(f"   Monoid size: {len(monoid)}")
+    for trans, word in sorted(monoid.items(), key=lambda x: (len(x[1]), x[1])):
+        word_str = f'"{word}"' if word else '"ε"'
+        trans_str = " → ".join(f"{s}↦{t}" for s, t in
+                               zip(sorted(dfa.reachable_states()), trans))
+        print(f"   {word_str:8s}: {trans_str}")
+
+    print("\n5. NERODE AUTOMATON CONSTRUCTION")
+    print("-" * 40)
+    nerode = build_nerode_automaton(dfa.eval_cost, dfa.alphabet,
+                                     max_prefix_length=4, max_suffix_length=5)
+    print(f"   Nerode automaton states: {len(nerode.states)}")
+    print(f"   States: {sorted(nerode.states)}")
+
+    # Verify correctness
+    words = generate_words(dfa.alphabet, 5)
+    mismatches = 0
+    for w in words:
+        c1 = dfa.eval_cost(w)
+        c2 = nerode.eval_cost(w)
+        if c1 != c2:
+            mismatches += 1
+            print(f"   MISMATCH on \"{w}\": DFA={c1}, Nerode={c2}")
+    if mismatches == 0:
+        print(f"   ✓ Verified on {len(words)} words: Nerode automaton is correct")
+
+    print("\n" + "=" * 70)
+    print("All algorithms completed successfully.")
+    print("=" * 70)
