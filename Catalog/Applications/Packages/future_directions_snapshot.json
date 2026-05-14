@@ -1522,6 +1522,78 @@
     "timestamp": "2026-05-14T16:16:40.316976+00:00"
   },
   {
+    "id": "fd_0102",
+    "title": "Depth",
+    "description": "(Direction 1): Understand vertical composition through tropical spectral theory.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "adc29728",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:00.725031+00:00"
+  },
+  {
+    "id": "fd_0103",
+    "title": "Precision",
+    "description": "(Direction 2): Quantify the tropical approximation at operational temperatures.",
+    "domains": [
+      "Tropical",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "adc29728",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:00.727665+00:00"
+  },
+  {
+    "id": "fd_0104",
+    "title": "Structure",
+    "description": "(Direction 3): Discover the categorical architecture of multi-head attention.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "adc29728",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:00.729586+00:00"
+  },
+  {
+    "id": "fd_0105",
+    "title": "Dynamics",
+    "description": "(Direction 4): Explain training phenomena through tropical stability.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "adc29728",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:00.731557+00:00"
+  },
+  {
+    "id": "fd_0106",
+    "title": "Efficiency",
+    "description": "(Direction 5): Enable compression and pruning through tropical invariants.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "adc29728",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:00.733777+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
