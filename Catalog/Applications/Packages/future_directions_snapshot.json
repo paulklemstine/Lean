@@ -153,10 +153,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.95,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8612b286",
     "timestamp": "2026-05-14T04:01:04.743245+00:00"
   },
   {
@@ -249,10 +249,10 @@
       "EML"
     ],
     "priority_score": 0.93,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a27d642",
     "timestamp": "2026-05-14T04:01:04.703331+00:00"
   },
   {
@@ -265,10 +265,10 @@
       "Bridges"
     ],
     "priority_score": 0.92,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1bf69a95",
     "timestamp": "2026-05-14T04:01:04.698457+00:00"
   },
   {
@@ -281,10 +281,10 @@
       "Cryptography"
     ],
     "priority_score": 0.92,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d847f4e",
     "timestamp": "2026-05-14T04:01:04.702548+00:00"
   },
   {
@@ -313,10 +313,10 @@
       "Tropical"
     ],
     "priority_score": 0.91,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4d4033f",
     "timestamp": "2026-05-14T04:01:04.700599+00:00"
   },
   {
@@ -633,10 +633,10 @@
       "Algebra"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "76e17df0",
     "timestamp": "2026-05-14T04:01:04.723003+00:00"
   },
   {
@@ -873,10 +873,10 @@
       "Bridges"
     ],
     "priority_score": 0.81,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c817edc6",
     "timestamp": "2026-05-14T04:01:04.721415+00:00"
   },
   {
