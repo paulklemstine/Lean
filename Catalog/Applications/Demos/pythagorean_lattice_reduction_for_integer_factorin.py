@@ -1,864 +1,812 @@
 #!/usr/bin/env python3
 """
-Pythagorean Lattice Reduction — Applications
+Applications of Pythagorean Lattice Reduction
 
-Demonstrates real-world applications of the formally verified theorems:
-1. RSA modulus analysis via Pythagorean collisions
-2. Primality certification via absence of collisions
-3. Cryptographic hash collision analysis
+Demonstrates practical applications connecting Pythagorean triple arithmetic
+to cryptographic analysis and number theory.
 """
 
 import math
-import random
-from typing import Optional
+from typing import List, Tuple, Optional, Dict
+from algorithms import (
+    find_nontrivial_sqrt_one_crt, 
+    factor_via_sqrt_collision,
+    congruence_lattice_basis,
+    lattice_reduce_2d,
+    generate_berggren_tree,
+    scan_pythagorean_collisions,
+    extended_gcd
+)
 
+# ============================================================
+# Application 1: RSA-Style Key Analysis
+# ============================================================
 
-# ─────────────────────────────────────────────────────────────────────
-# Application 1: RSA Modulus Analysis
-# ─────────────────────────────────────────────────────────────────────
-
-def analyze_rsa_modulus(n: int, trials: int = 10000) -> dict:
+def analyze_rsa_structure(p: int, q: int) -> Dict:
     """
-    Analyze an RSA modulus by searching for square-root collisions.
-
-    For each random x, computes x² mod n and checks whether two different
-    x values yield the same residue (a collision). A collision x² ≡ y² (mod n)
-    with x ≢ ±y (mod n) reveals a factor.
-
-    This demonstrates the formally verified `square_collision_yields_factor`.
-
-    Args:
-        n: RSA modulus to analyze
-        trials: Number of random trials
-
-    Returns:
-        Dict with analysis results.
+    Analyze the lattice structure of an RSA-style modulus n = p*q.
+    
+    Shows how the congruence lattice encodes the factorization
+    and computes relevant lattice parameters.
+    
+    >>> result = analyze_rsa_structure(101, 103)
+    >>> result['factors']
+    (101, 103)
     """
-    residues: dict[int, list[int]] = {}
-    factor = None
-
-    for _ in range(trials):
-        x = random.randint(2, n - 2)
-        r = (x * x) % n
-
-        if r in residues:
-            for y in residues[r]:
-                if (x - y) % n != 0 and (x + y) % n != 0:
-                    d = math.gcd(abs(x - y), n)
-                    if 1 < d < n:
-                        factor = d
-                        return {
-                            "factored": True,
-                            "factor": d,
-                            "cofactor": n // d,
-                            "collision": (x, y),
-                            "residue": r,
-                            "trials_used": _ + 1,
-                        }
-            residues[r].append(x)
-        else:
-            residues[r] = [x]
-
+    n = p * q
+    
+    # Find nontrivial square root
+    r = find_nontrivial_sqrt_one_crt(p, q)
+    
+    if r is None:
+        return {'n': n, 'factors': (p, q), 'error': 'No nontrivial sqrt (need both ≥ 3)'}
+    
+    # Build and reduce lattice
+    basis = congruence_lattice_basis(n, r)
+    b1_red, b2_red = lattice_reduce_2d(basis[0], basis[1])
+    
+    # Compute lattice parameters
+    det = abs(basis[0][0] * basis[1][1] - basis[0][1] * basis[1][0])
+    lambda1_sq = b1_red[0]**2 + b1_red[1]**2
+    lambda2_sq = b2_red[0]**2 + b2_red[1]**2
+    
+    # Factor extraction
+    d1 = math.gcd(abs(r - 1), n)
+    d2 = math.gcd(abs(r + 1), n)
+    
     return {
-        "factored": False,
-        "unique_residues": len(residues),
-        "collision_density": len(residues) / n,
-        "trials_used": trials,
+        'n': n,
+        'factors': (p, q),
+        'sqrt_one': r,
+        'lattice_det': det,
+        'original_basis': basis,
+        'reduced_basis': [b1_red, b2_red],
+        'lambda1_sq': lambda1_sq,
+        'lambda2_sq': lambda2_sq,
+        'hermite_ratio': lambda1_sq / det,  # λ₁² / det(L)
+        'factor_via_gcd': (d1 if 1 < d1 < n else d2),
     }
 
+print("=" * 70)
+print("APPLICATION 1: RSA Modulus Lattice Analysis")
+print("=" * 70)
 
-# ─────────────────────────────────────────────────────────────────────
-# Application 2: Primality Witness via Collision Absence
-# ─────────────────────────────────────────────────────────────────────
-
-def collision_primality_test(n: int, confidence_trials: int = 100) -> dict:
-    """
-    Heuristic primality test based on square-root collision theory.
-
-    For a prime p, every square root collision is trivial (x ≡ ±y mod p).
-    For composites, nontrivial collisions exist and are easy to find.
-
-    Args:
-        n: Number to test
-        confidence_trials: Number of trials
-
-    Returns:
-        Dict with primality assessment.
-    """
-    if n < 2:
-        return {"n": n, "probably_prime": False, "reason": "too small"}
-    if n % 2 == 0:
-        return {"n": n, "probably_prime": n == 2, "reason": "even"}
-
-    nontrivial_found = False
-
-    for _ in range(confidence_trials):
-        x = random.randint(2, n - 1)
-        x_sq = (x * x) % n
-
-        # Check if x and n-x are the only square roots
-        # For primes, x² mod p has exactly two roots: x and p-x
-        # For composites, there can be more
-        roots = []
-        # Quick check: try a few random values
-        for _ in range(20):
-            y = random.randint(1, n - 1)
-            if (y * y) % n == x_sq:
-                roots.append(y)
-
-        roots_mod = set(r % n for r in roots)
-        if len(roots_mod) > 2:
-            # More than 2 square roots → composite
-            for r1 in roots_mod:
-                for r2 in roots_mod:
-                    if r1 != r2 and (r1 + r2) % n != 0:
-                        d = math.gcd(abs(r1 - r2), n)
-                        if 1 < d < n:
-                            return {
-                                "n": n,
-                                "probably_prime": False,
-                                "reason": "nontrivial collision found",
-                                "factor": d,
-                                "roots": sorted(roots_mod),
-                            }
-            nontrivial_found = True
-
-    return {
-        "n": n,
-        "probably_prime": not nontrivial_found,
-        "reason": "no nontrivial collisions found" if not nontrivial_found
-                  else "suspicious collisions",
-    }
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 3: Pythagorean Triple Fingerprinting
-# ─────────────────────────────────────────────────────────────────────
-
-BERGGREN_MATS = [
-    [[1, -2, 2], [2, -1, 2], [2, -2, 3]],
-    [[1, 2, 2], [2, 1, 2], [2, 2, 3]],
-    [[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]],
+rsa_examples = [
+    (7, 11), (13, 17), (31, 37), (61, 67), (101, 103),
+    (127, 131), (251, 257), (509, 521)
 ]
 
+print(f"\n{'n':<12} {'p×q':<14} {'r':<8} {'det(L)':<8} {'λ₁²':<10} {'λ₁²/det':<10} {'Factor'}")
+print("-" * 75)
 
-def mat_vec(M, v):
-    return tuple(sum(M[i][j] * v[j] for j in range(3)) for i in range(3))
+for p, q in rsa_examples:
+    result = analyze_rsa_structure(p, q)
+    if 'error' not in result:
+        print(f"{result['n']:<12} {p}×{q:<8} {result['sqrt_one']:<8} "
+              f"{result['lattice_det']:<8} {result['lambda1_sq']:<10} "
+              f"{result['hermite_ratio']:<10.4f} {result['factor_via_gcd']}")
 
+# ============================================================
+# Application 2: Pythagorean Collision Scanner
+# ============================================================
 
-def pythagorean_fingerprint(n: int, depth: int = 5) -> dict:
+print("\n" + "=" * 70)
+print("APPLICATION 2: Pythagorean Collision Scanner for Factoring")
+print("=" * 70)
+
+def pythagorean_factor_attempt(n: int, max_param: int = 200) -> Optional[Dict]:
     """
-    Create a Pythagorean fingerprint of n by computing collision patterns
-    of Berggren triples modulo n.
-
-    Different values of n produce different collision signatures, which
-    reveals structural information about n's factorization.
-
-    Args:
-        n: Modulus
-        depth: Berggren tree depth
-
-    Returns:
-        Dict mapping collision type to count.
+    Attempt to factor n by scanning Pythagorean triples for modular collisions.
+    
+    This implements the informal factoring strategy: generate Pythagorean triples
+    (a, b, c) and check whether n | (a² + b²) but n ∤ c, or whether
+    a² ≡ b² (mod n) nontrivially. Either condition yields a factor.
     """
-    from itertools import product as iprod
+    for m in range(2, max_param):
+        for k in range(1, m):
+            if math.gcd(m, k) != 1 or (m - k) % 2 == 0:
+                continue
+            a = m**2 - k**2
+            b = 2 * m * k
+            c = m**2 + k**2
+            
+            # Check: n | c² but n ∤ c
+            if c**2 % n == 0 and c % n != 0:
+                d = math.gcd(c, n)
+                if 1 < d < n:
+                    return {
+                        'method': 'hypotenuse_gcd',
+                        'triple': (a, b, c),
+                        'params': (m, k),
+                        'factor': d,
+                        'complement': n // d
+                    }
+            
+            # Check: a² ≡ b² (mod n) nontrivially
+            if (a**2 - b**2) % n == 0:
+                if (a - b) % n != 0 and (a + b) % n != 0:
+                    d = math.gcd(abs(a - b), n)
+                    if 1 < d < n:
+                        return {
+                            'method': 'leg_collision',
+                            'triple': (a, b, c),
+                            'params': (m, k),
+                            'factor': d,
+                            'complement': n // d
+                        }
+    
+    return None
 
-    stats = {
-        "total_triples": 0,
-        "hyp_divisible": 0,     # n | c
-        "hyp_sq_divisible": 0,  # n | c²
-        "collision_a_b": 0,     # n | a²-b²
-        "nontrivial_gcd": 0,    # 1 < gcd(c, n) < n
-    }
+print("\nAttempting to factor composites via Pythagorean collision scanning:")
+test_numbers = [15, 21, 35, 77, 91, 143, 221, 323, 437, 667, 899, 1147]
 
-    for d in range(depth + 1):
-        for word in iprod(range(3), repeat=d):
-            v = (3, 4, 5)
-            for g in reversed(word):
-                v = mat_vec(BERGGREN_MATS[g], v)
-            a, b, c = v
-            stats["total_triples"] += 1
+for n in test_numbers:
+    result = pythagorean_factor_attempt(n)
+    if result:
+        print(f"  {n} = {result['factor']} × {result['complement']} "
+              f"via {result['method']}, triple = {result['triple']}")
+    else:
+        print(f"  {n}: no collision found in range")
 
-            if c % n == 0:
-                stats["hyp_divisible"] += 1
-            if (c * c) % n == 0:
-                stats["hyp_sq_divisible"] += 1
-            if (a * a - b * b) % n == 0:
-                stats["collision_a_b"] += 1
+# ============================================================
+# Application 3: Berggren Tree Depth Analysis
+# ============================================================
 
-            g = math.gcd(abs(c), n)
-            if 1 < g < n:
-                stats["nontrivial_gcd"] += 1
+print("\n" + "=" * 70)
+print("APPLICATION 3: Berggren Tree Structure Analysis")
+print("=" * 70)
 
-    return stats
+triples = generate_berggren_tree(1000)
+print(f"\nPrimitive Pythagorean triples with hypotenuse ≤ 1000: {len(triples)}")
 
+# Analyze distribution of legs
+even_legs = [min(a, b) if min(a, b) % 2 == 0 else max(a, b) for a, b, c in triples]
+odd_legs = [max(a, b) if min(a, b) % 2 == 0 else min(a, b) for a, b, c in triples]
 
-def demo_applications():
-    """Run all application demonstrations."""
-    print("=" * 70)
-    print("APPLICATION 1: RSA Modulus Analysis via Square-Root Collisions")
-    print("=" * 70)
-    print()
+print(f"Average even leg: {sum(even_legs) / len(even_legs):.1f}")
+print(f"Average odd leg: {sum(odd_legs) / len(odd_legs):.1f}")
+print(f"Average hypotenuse: {sum(c for _, _, c in triples) / len(triples):.1f}")
 
-    # Small RSA-like moduli
-    test_moduli = [
-        (3 * 5, "3 × 5"),
-        (7 * 11, "7 × 11"),
-        (13 * 17, "13 × 17"),
-        (23 * 29, "23 × 29"),
-        (101 * 103, "101 × 103"),
-        (1009 * 1013, "1009 × 1013"),
-    ]
+# Count triples with hypotenuse in various ranges
+ranges = [(0, 100), (100, 200), (200, 500), (500, 1000)]
+for lo, hi in ranges:
+    count = sum(1 for _, _, c in triples if lo < c <= hi)
+    print(f"  Triples with {lo} < c ≤ {hi}: {count}")
 
-    random.seed(42)
-    for n, desc in test_moduli:
-        result = analyze_rsa_modulus(n, trials=5000)
-        if result["factored"]:
-            x, y = result["collision"]
-            print(f"  n = {n:>10} ({desc:>12}): "
-                  f"FACTORED in {result['trials_used']:>4} trials — "
-                  f"{result['factor']} × {result['cofactor']} "
-                  f"[collision: {x}² ≡ {y}² mod {n}]")
-        else:
-            print(f"  n = {n:>10} ({desc:>12}): "
-                  f"Not factored in {result['trials_used']} trials "
-                  f"({result['unique_residues']} unique residues)")
+# ============================================================
+# Application 4: Lattice Gap Analysis
+# ============================================================
 
-    print()
-    print("=" * 70)
-    print("APPLICATION 2: Primality Testing via Collision Absence")
-    print("=" * 70)
-    print()
+print("\n" + "=" * 70)
+print("APPLICATION 4: Lattice Gap Ratio Analysis")
+print("=" * 70)
 
-    test_numbers = [7, 11, 13, 15, 21, 25, 29, 35, 37, 41, 49, 51, 53, 91]
-    random.seed(123)
-    for n in test_numbers:
-        result = collision_primality_test(n, confidence_trials=50)
-        is_actually_prime = all(n % i != 0 for i in range(2, int(n**0.5) + 1)) and n > 1
-        status = "✓" if result["probably_prime"] == is_actually_prime else "✗"
-        print(f"  {status} n={n:>3}: {'probably prime' if result['probably_prime'] else 'composite':>15} "
-              f"(actually {'prime' if is_actually_prime else 'composite'})")
+print("\nHermite ratio λ₁²/det(L) for various RSA-style moduli:")
+print("(Smaller ratio = better lattice reduction quality)")
+print()
 
-    print()
-    print("=" * 70)
-    print("APPLICATION 3: Pythagorean Fingerprinting of Composites")
-    print("=" * 70)
-    print()
+gaps = []
+for p in [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73]:
+    for q in [p + 2, p + 4, p + 6]:
+        if all(q % i != 0 for i in range(2, int(q**0.5) + 1)) and q > p:
+            n = p * q
+            r = find_nontrivial_sqrt_one_crt(p, q)
+            if r is not None:
+                basis = congruence_lattice_basis(n, r)
+                b1, b2 = lattice_reduce_2d(basis[0], basis[1])
+                lam1_sq = b1[0]**2 + b1[1]**2
+                ratio = lam1_sq / n
+                gaps.append((n, p, q, ratio))
 
-    fingerprint_targets = [15, 21, 35, 77, 91, 143]
-    for n in fingerprint_targets:
-        fp = pythagorean_fingerprint(n, depth=4)
-        print(f"  n={n:>4}: {fp['total_triples']} triples checked, "
-              f"hyp_div={fp['hyp_divisible']}, "
-              f"sq_div={fp['hyp_sq_divisible']}, "
-              f"collisions={fp['collision_a_b']}, "
-              f"nontrivial_gcd={fp['nontrivial_gcd']}")
+gaps.sort(key=lambda x: x[0])
+print(f"{'n':<10} {'p':<6} {'q':<6} {'λ₁²/n ratio':<15}")
+print("-" * 40)
+for n, p, q, ratio in gaps[:20]:
+    print(f"{n:<10} {p:<6} {q:<6} {ratio:<15.6f}")
 
-    print()
+avg_ratio = sum(r for _, _, _, r in gaps) / len(gaps) if gaps else 0
+print(f"\nAverage Hermite ratio: {avg_ratio:.6f}")
+print(f"Minkowski bound (2D): {2 / math.pi:.6f}")
 
-
-if __name__ == "__main__":
-    demo_applications()
+print("\n" + "=" * 70)
+print("All applications complete.")
+print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Pythagorean Lattice Reduction for Integer Factoring — Demonstrations
+Pythagorean Lattice Reduction for Integer Factoring — Demonstration
 
-This script demonstrates the core theorems connecting Pythagorean triple
-arithmetic to integer factoring:
-
-1. Square-root collision factor extraction
-2. Euclid parametrization of Pythagorean triples
-3. Berggren tree generation and factor witness search
-4. Hypotenuse-gcd factor extraction
+This script demonstrates the key mathematical constructions connecting
+Pythagorean triples, congruence lattices, and integer factoring.
 """
 
 import math
-import random
-from typing import Optional
-
-
-def square_collision_factor(n: int, x: int, y: int) -> Optional[int]:
-    """
-    Extract a nontrivial factor of n from a square-root collision x² ≡ y² (mod n)
-    where x ≢ ±y (mod n).
-
-    This is the arithmetic engine behind our formalized theorem
-    `square_collision_yields_factor`.
-
-    Returns a nontrivial factor d with 1 < d < n, or None if the collision is trivial.
-    """
-    if (x**2 - y**2) % n != 0:
-        return None  # Not a valid collision
-    if (x - y) % n == 0 or (x + y) % n == 0:
-        return None  # Trivial collision
-
-    d = math.gcd(abs(x - y), n)
-    if 1 < d < n:
-        return d
-
-    d = math.gcd(abs(x + y), n)
-    if 1 < d < n:
-        return d
-
-    return None
-
-
-def euclid_triple(m: int, k: int) -> tuple[int, int, int]:
-    """
-    Generate a Pythagorean triple using Euclid's parametrization.
-
-    Returns (m²-k², 2mk, m²+k²) satisfying a² + b² = c².
-    This corresponds to our formalized `EuclidTriple` and `euclidTriple_pythagorean`.
-    """
-    a = m**2 - k**2
-    b = 2 * m * k
-    c = m**2 + k**2
-    assert a**2 + b**2 == c**2, "Pythagorean identity must hold"
-    return (a, b, c)
-
-
-# Berggren matrices
-BERGGREN_U = [[1, -2, 2], [2, -1, 2], [2, -2, 3]]
-BERGGREN_A = [[1, 2, 2], [2, 1, 2], [2, 2, 3]]
-BERGGREN_D = [[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]]
-BERGGREN_GENS = [BERGGREN_U, BERGGREN_A, BERGGREN_D]
-
-
-def mat_vec_mul(M: list[list[int]], v: tuple[int, int, int]) -> tuple[int, int, int]:
-    """Multiply a 3x3 matrix by a 3-vector."""
-    return tuple(sum(M[i][j] * v[j] for j in range(3)) for i in range(3))
-
-
-def berggren_triple(word: list[int], root: tuple[int, int, int] = (3, 4, 5)) -> tuple[int, int, int]:
-    """
-    Apply a Berggren word to the root triple.
-
-    word: list of generator indices (0=U, 1=A, 2=D)
-    root: starting triple, default (3,4,5)
-
-    Returns the resulting Pythagorean triple.
-    """
-    v = root
-    for g in reversed(word):
-        v = mat_vec_mul(BERGGREN_GENS[g], v)
-    assert v[0]**2 + v[1]**2 == v[2]**2, f"Pythagorean identity violated: {v}"
-    return v
-
-
-def hypotenuse_gcd_factor(n: int, triple: tuple[int, int, int]) -> Optional[int]:
-    """
-    Try to extract a factor of n from a Pythagorean triple using the
-    hypotenuse-gcd method.
-
-    If n | c² but n ∤ c, then gcd(c, n) is a nontrivial factor.
-    This corresponds to our formalized `factor_of_square_dvd_not_dvd`.
-    """
-    a, b, c = triple
-    if (a**2 + b**2) % n != 0:
-        return None
-    if c % n == 0:
-        return None  # n | c, so gcd(c,n) might be n
-
-    d = math.gcd(abs(c), n)
-    if 1 < d < n:
-        return d
-    return None
-
-
-def search_berggren_factor_witness(n: int, max_depth: int = 8) -> Optional[dict]:
-    """
-    Search the Berggren tree for a Pythagorean triple that yields a factor of n.
-
-    Uses both the hypotenuse-gcd method and the square-collision method.
-
-    Returns a dict with the factor and witness information, or None.
-    """
-    from itertools import product as iproduct
-
-    for depth in range(max_depth + 1):
-        for word in iproduct(range(3), repeat=depth):
-            triple = berggren_triple(list(word))
-            a, b, c = triple
-
-            # Method 1: Hypotenuse-gcd
-            d = hypotenuse_gcd_factor(n, triple)
-            if d is not None:
-                return {
-                    "method": "hypotenuse_gcd",
-                    "factor": d,
-                    "triple": triple,
-                    "word": list(word),
-                    "depth": depth,
-                }
-
-            # Method 2: Square collision on (a, b)
-            d = square_collision_factor(n, a, b)
-            if d is not None:
-                return {
-                    "method": "square_collision",
-                    "factor": d,
-                    "triple": triple,
-                    "word": list(word),
-                    "depth": depth,
-                }
-
-    return None
-
-
-def demo_square_collision():
-    """Demonstrate the square-root collision theorem."""
-    print("=" * 70)
-    print("DEMO 1: Square-Root Collision Factor Extraction")
-    print("=" * 70)
-    print()
-    print("Theorem: If x² ≡ y² (mod n) but x ≢ ±y (mod n),")
-    print("         then gcd(x-y, n) is a nontrivial factor of n.")
-    print()
-
-    examples = [
-        (15, 4, 1),   # 4² = 16 ≡ 1 = 1² (mod 15), gcd(3, 15) = 3
-        (21, 8, 1),   # 8² = 64 ≡ 1 = 1² (mod 21), gcd(7, 21) = 7
-        (35, 6, 1),   # 6² = 36 ≡ 1 = 1² (mod 35), gcd(5, 35) = 5
-        (91, 10, 3),  # 10² - 3² = 91, gcd(7, 91) = 7
-        (143, 12, 1), # 12² = 144 ≡ 1 (mod 143), gcd(11, 143) = 11
-    ]
-
-    for n, x, y in examples:
-        d = square_collision_factor(n, x, y)
-        status = f"Factor found: {d}" if d else "Trivial collision"
-        print(f"  n={n:>4}, x={x:>3}, y={y:>3}: "
-              f"x²-y²={x**2 - y**2:>5} ≡ {(x**2-y**2) % n} (mod {n}), "
-              f"gcd(x-y, n)={math.gcd(abs(x-y), n):>3} → {status}")
-        if d:
-            print(f"       Verification: {n} = {d} × {n // d}")
-    print()
-
-
-def demo_euclid_triples():
-    """Demonstrate Euclid parametrization."""
-    print("=" * 70)
-    print("DEMO 2: Euclid Parametrization of Pythagorean Triples")
-    print("=" * 70)
-    print()
-    print("Identity: (m²-k²)² + (2mk)² = (m²+k²)²")
-    print()
-
-    for m in range(2, 8):
-        for k in range(1, m):
-            if math.gcd(m, k) == 1 and (m - k) % 2 == 1:
-                a, b, c = euclid_triple(m, k)
-                print(f"  m={m}, k={k}: ({a}, {b}, {c})  "
-                      f"[{a}² + {b}² = {a**2} + {b**2} = {c**2} = {c}²]")
-    print()
-
-
-def demo_berggren_tree():
-    """Demonstrate the Berggren tree generation."""
-    print("=" * 70)
-    print("DEMO 3: Berggren Tree of Primitive Pythagorean Triples")
-    print("=" * 70)
-    print()
-    print("Starting from (3,4,5), applying generators U, A, D:")
-    print()
-
-    gen_names = {0: "U", 1: "A", 2: "D"}
-
-    # Show first two levels
-    root = (3, 4, 5)
-    print(f"  Root: {root}")
-    print()
-
-    for g in range(3):
-        child = berggren_triple([g])
-        print(f"  {gen_names[g]}(3,4,5) = {child}")
-
-    print()
-    print("  Level 2 (9 triples):")
-    for g1 in range(3):
-        for g2 in range(3):
-            triple = berggren_triple([g1, g2])
-            a, b, c = triple
-            print(f"    {gen_names[g1]}{gen_names[g2]}: ({a}, {b}, {c})  "
-                  f"[Q = {a**2 + b**2 - c**2}]")
-    print()
-
-
-def demo_berggren_factoring():
-    """Demonstrate factor search via Berggren tree."""
-    print("=" * 70)
-    print("DEMO 4: Factor Search via Berggren Tree")
-    print("=" * 70)
-    print()
-
-    semiprimes = [15, 21, 35, 51, 77, 91, 119, 143, 187, 221, 323, 437, 667, 899]
-
-    for n in semiprimes:
-        result = search_berggren_factor_witness(n, max_depth=6)
-        if result:
-            d = result["factor"]
-            gen_names = {0: "U", 1: "A", 2: "D"}
-            word_str = "".join(gen_names[g] for g in result["word"]) or "ε"
-            print(f"  n={n:>4}: factor {d:>3} (= {n//d} × {d}), "
-                  f"method={result['method']}, "
-                  f"word={word_str}, "
-                  f"triple={result['triple']}")
-        else:
-            print(f"  n={n:>4}: no witness found in depth ≤ 6")
-    print()
-
-
-def demo_hypotenuse_gcd():
-    """Demonstrate hypotenuse-gcd factor extraction."""
-    print("=" * 70)
-    print("DEMO 5: Hypotenuse-GCD Factor Extraction from Pythagorean Triples")
-    print("=" * 70)
-    print()
-    print("If a²+b²=c² and n | c² but n ∤ c, then gcd(c,n) is a factor of n.")
-    print()
-
-    # Find triples where hypotenuse has interesting gcd properties
-    for m in range(2, 20):
-        for k in range(1, m):
-            a, b, c = euclid_triple(m, k)
-            # Try some composites n that divide c²
-            for p in [2, 3, 5, 7, 11, 13]:
-                for q in [3, 5, 7, 11, 13, 17]:
-                    if p >= q:
-                        continue
-                    n = p * q
-                    if c**2 % n == 0 and c % n != 0:
-                        d = math.gcd(abs(c), n)
-                        if 1 < d < n:
-                            print(f"  n={n:>4}={p}×{q}: triple ({a},{b},{c}), "
-                                  f"c²={c**2}, gcd(c,n)={d}")
-
-    print()
-
-
-if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║   Pythagorean Lattice Reduction for Integer Factoring              ║")
-    print("║   Demonstrations of Formally Verified Theorems                     ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_square_collision()
-    demo_euclid_triples()
-    demo_berggren_tree()
-    demo_berggren_factoring()
-    demo_hypotenuse_gcd()
-
-    print("All demonstrations complete.")
-
-
-#!/usr/bin/env python3
-"""
-Pythagorean Lattice Reduction — Visualizations
-
-Generates figures showing:
-1. The Berggren tree of Pythagorean triples
-2. Pythagorean triples modulo n and collision patterns
-3. Euclid-parameter lattice and LLL reduction
-4. Factor extraction success rates
-"""
-
-import math
-import os
 import numpy as np
+from typing import List, Tuple, Optional
+
+# ============================================================
+# Section 1: Berggren Tree of Primitive Pythagorean Triples
+# ============================================================
+
+# The three Berggren matrices
+U = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])
+A = np.array([[1,  2, 2], [2,  1, 2], [2,  2, 3]])
+D = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])
+
+BERGGREN_GENS = [U, A, D]
+GEN_NAMES = ['U', 'A', 'D']
+
+def generate_berggren_triples(depth: int) -> List[Tuple[np.ndarray, str]]:
+    """Generate all primitive Pythagorean triples up to given depth in the Berggren tree."""
+    root = np.array([3, 4, 5])
+    results = [(root, "")]
+    queue = [(root, "", 0)]
+    
+    while queue:
+        triple, word, d = queue.pop(0)
+        if d >= depth:
+            continue
+        for i, gen in enumerate(BERGGREN_GENS):
+            new_triple = gen @ triple
+            new_word = word + GEN_NAMES[i]
+            results.append((new_triple, new_word))
+            queue.append((new_triple, new_word, d + 1))
+    
+    return results
+
+def verify_pythagorean(a, b, c) -> bool:
+    """Verify a² + b² = c²."""
+    return a**2 + b**2 == c**2
+
+def verify_primitive(a, b, c) -> bool:
+    """Verify gcd(a, b, c) = 1."""
+    return math.gcd(math.gcd(abs(a), abs(b)), abs(c)) == 1
+
+print("=" * 70)
+print("DEMO 1: Berggren Tree of Primitive Pythagorean Triples")
+print("=" * 70)
+print()
+
+triples = generate_berggren_triples(3)
+print(f"Generated {len(triples)} triples (depth ≤ 3):")
+print(f"{'Word':<8} {'Triple':<25} {'Pythagorean?':<14} {'Primitive?'}")
+print("-" * 65)
+for triple, word in triples[:20]:
+    a, b, c = triple
+    is_pyth = verify_pythagorean(a, b, c)
+    is_prim = verify_primitive(a, b, c)
+    word_display = word if word else "(root)"
+    print(f"{word_display:<8} ({a:>4}, {b:>4}, {c:>4})      {str(is_pyth):<14} {is_prim}")
+
+print(f"\n... and {len(triples) - 20} more triples")
+
+# Verify all are Pythagorean
+all_pyth = all(verify_pythagorean(*t) for t, _ in triples)
+all_prim = all(verify_primitive(*t) for t, _ in triples)
+print(f"\nAll {len(triples)} triples Pythagorean: {all_pyth}")
+print(f"All {len(triples)} triples primitive: {all_prim}")
+
+# Verify determinants
+print("\nBerggren generator determinants:")
+for name, gen in zip(GEN_NAMES, BERGGREN_GENS):
+    det = int(round(np.linalg.det(gen)))
+    print(f"  det({name}) = {det}")
+
+# ============================================================
+# Section 2: Square-Root Collision Factoring
+# ============================================================
+
+print("\n" + "=" * 70)
+print("DEMO 2: Square-Root Collision Factoring")
+print("=" * 70)
+
+def find_nontrivial_sqrt_one(n: int) -> Optional[int]:
+    """Find r with r² ≡ 1 (mod n), r ≢ ±1 (mod n)."""
+    for r in range(2, n - 1):
+        if (r * r) % n == 1:
+            return r
+    return None
+
+def factor_via_collision(n: int, x: int, y: int) -> int:
+    """Extract factor via gcd(x - y, n) when x² ≡ y² (mod n)."""
+    d = math.gcd(abs(x - y), n)
+    return d
+
+print("\nFactoring composites via nontrivial square roots of 1:")
+print(f"{'n':<8} {'p×q':<12} {'r (r²≡1)':<12} {'gcd(r-1,n)':<14} {'Factor?'}")
+print("-" * 60)
+
+test_composites = [
+    (15, 3, 5), (21, 3, 7), (35, 5, 7), (77, 7, 11),
+    (91, 7, 13), (143, 11, 13), (221, 13, 17), (323, 17, 19),
+    (1001, 7, 143), (10403, 101, 103)
+]
+
+for n, p, q in test_composites:
+    r = find_nontrivial_sqrt_one(n)
+    if r is not None:
+        d = factor_via_collision(n, r, 1)
+        is_factor = 1 < d < n and n % d == 0
+        print(f"{n:<8} {p}×{q:<8} {r:<12} {d:<14} {is_factor}")
+    else:
+        print(f"{n:<8} {p}×{q:<8} {'None':<12} {'—':<14} (no nontrivial sqrt)")
+
+# Show why n=6 has no nontrivial sqrt
+print("\nWhy n = 6 = 2×3 has no nontrivial square root of 1:")
+print("  Square roots of 1 mod 6:", [r for r in range(6) if (r*r) % 6 == 1])
+print("  Both 1 and 5 ≡ -1 are trivial (confirming our formal counterexample)")
+
+# ============================================================  
+# Section 3: Congruence Lattice Construction
+# ============================================================
+
+print("\n" + "=" * 70)
+print("DEMO 3: Congruence Lattice L_{n,r}")
+print("=" * 70)
+
+def congruence_lattice_basis(n: int, r: int) -> np.ndarray:
+    """Return a basis for L_{n,r} = {(x,y) : x ≡ ry (mod n)}."""
+    return np.array([[n, 0], [r, 1]])
+
+def verify_lattice_membership(v: np.ndarray, n: int, r: int) -> bool:
+    """Check if v ∈ L_{n,r}, i.e., n | (v[0] - r*v[1])."""
+    return (v[0] - r * v[1]) % n == 0
+
+def verify_square_congruence(v: np.ndarray, n: int) -> bool:
+    """Check if v[0]² ≡ v[1]² (mod n)."""
+    return (v[0]**2 - v[1]**2) % n == 0
+
+n, p, q = 91, 7, 13
+r = find_nontrivial_sqrt_one(n)
+print(f"\nExample: n = {n} = {p}×{q}, nontrivial sqrt r = {r}")
+print(f"  Verification: {r}² = {r**2} ≡ {r**2 % n} (mod {n})")
+
+basis = congruence_lattice_basis(n, r)
+print(f"\nLattice L_{{n,r}} basis:")
+print(f"  b₁ = ({basis[0,0]}, {basis[0,1]})")
+print(f"  b₂ = ({basis[1,0]}, {basis[1,1]})")
+print(f"  det = {abs(int(np.linalg.det(basis)))}")
+
+# Generate some lattice vectors and verify properties
+print(f"\nSample lattice vectors and their properties:")
+print(f"{'(x, y)':<20} {'∈ L?':<8} {'x²≡y²?':<10} {'gcd(x-y,n)':<14} {'Factor?'}")
+print("-" * 60)
+
+for a in range(-3, 4):
+    for b in range(-3, 4):
+        if a == 0 and b == 0:
+            continue
+        v = a * basis[0] + b * basis[1]
+        in_L = verify_lattice_membership(v, n, r)
+        sq_cong = verify_square_congruence(v, n)
+        d = math.gcd(abs(int(v[0] - v[1])), n)
+        is_factor = 1 < d < n and n % d == 0
+        if abs(a) + abs(b) <= 2:  # Only show small combinations
+            print(f"({v[0]:>5}, {v[1]:>5})     {str(in_L):<8} {str(sq_cong):<10} {d:<14} {is_factor}")
+
+# ============================================================
+# Section 4: Euclid Parametrization
+# ============================================================
+
+print("\n" + "=" * 70)
+print("DEMO 4: Euclid Parametrization (m² - k², 2mk, m² + k²)")
+print("=" * 70)
+
+print(f"\n{'m':<4} {'k':<4} {'a=m²-k²':<10} {'b=2mk':<10} {'c=m²+k²':<10} {'a²+b²=c²?'}")
+print("-" * 52)
+for m in range(2, 8):
+    for k in range(1, m):
+        if math.gcd(m, k) == 1 and (m - k) % 2 == 1:
+            a = m**2 - k**2
+            b = 2 * m * k
+            c = m**2 + k**2
+            check = a**2 + b**2 == c**2
+            print(f"{m:<4} {k:<4} {a:<10} {b:<10} {c:<10} {check}")
+
+# ============================================================
+# Section 5: Complete Factoring Example
+# ============================================================
+
+print("\n" + "=" * 70)
+print("DEMO 5: Complete Factoring Pipeline")
+print("=" * 70)
+
+def full_factoring_pipeline(n: int):
+    """Demonstrate the complete reduction: composite → lattice → factor."""
+    print(f"\nFactoring n = {n}:")
+    
+    # Step 1: Find nontrivial square root
+    r = find_nontrivial_sqrt_one(n)
+    if r is None:
+        print(f"  No nontrivial square root of 1 mod {n} found.")
+        print(f"  (This happens when n has a factor of 2 — need odd composites)")
+        return
+    
+    print(f"  Step 1: Found r = {r} with r² = {r*r} ≡ {(r*r)%n} (mod {n})")
+    
+    # Step 2: Build lattice
+    basis = congruence_lattice_basis(n, r)
+    print(f"  Step 2: Lattice basis = ({basis[0,0]},{basis[0,1]}), ({basis[1,0]},{basis[1,1]})")
+    
+    # Step 3: The vector (r, 1) is in the lattice
+    v = np.array([r, 1])
+    print(f"  Step 3: Vector v = ({v[0]}, {v[1]}) ∈ L_{{n,r}}")
+    print(f"          x² - y² = {v[0]**2} - {v[1]**2} = {v[0]**2 - v[1]**2}")
+    print(f"          (x² - y²) mod n = {(v[0]**2 - v[1]**2) % n}")
+    
+    # Step 4: Extract factor
+    d1 = math.gcd(abs(r - 1), n)
+    d2 = math.gcd(abs(r + 1), n)
+    print(f"  Step 4: gcd(r-1, n) = gcd({r-1}, {n}) = {d1}")
+    print(f"          gcd(r+1, n) = gcd({r+1}, {n}) = {d2}")
+    
+    factors = []
+    if 1 < d1 < n:
+        factors.append(d1)
+    if 1 < d2 < n:
+        factors.append(d2)
+    
+    if factors:
+        d = factors[0]
+        print(f"  Result: {n} = {d} × {n // d} ✓")
+    else:
+        print(f"  No nontrivial factor found from this r")
+
+for n in [15, 35, 77, 91, 143, 221, 1001, 10403]:
+    full_factoring_pipeline(n)
+
+print("\n" + "=" * 70)
+print("All demonstrations complete.")
+print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""Generate the PACKAGE.json deliverable."""
+
+import json
+import base64
+
+# Read all markdown files
+with open('ARTICLE.md', 'r') as f:
+    article = f.read()
+
+with open('RESEARCH_PAPER.md', 'r') as f:
+    research_paper = f.read()
+
+with open('FUTURE_DIRECTIONS.md', 'r') as f:
+    future_directions = f.read()
+
+# Read code files
+with open('demo.py', 'r') as f:
+    demo_code = f.read()
+
+with open('algorithms.py', 'r') as f:
+    algorithms_code = f.read()
+
+with open('applications.py', 'r') as f:
+    applications_code = f.read()
+
+# Read Lean file
+with open('Cryptography/PythagoreanLatticeReduction.lean', 'r') as f:
+    lean_code = f.read()
+
+# Read images as base64
+visualizations = []
+for name, fname in [
+    ("Berggren Tree of Primitive Pythagorean Triples", "berggren_tree.png"),
+    ("Congruence Lattice Before and After Reduction", "congruence_lattice.png"),
+    ("Square Root Distribution for Composite Numbers", "sqrt_distribution.png"),
+]:
+    with open(fname, 'rb') as f:
+        b64 = base64.b64encode(f.read()).decode('utf-8')
+    visualizations.append({
+        "name": name,
+        "data": f"data:image/png;base64,{b64}"
+    })
+
+package = {
+    "title": "Pythagorean Lattice Reduction for Integer Factoring",
+    "domain": "Cryptography / Number Theory",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Pythagorean Lattice Reduction Demo",
+            "code": demo_code
+        },
+        {
+            "name": "Applications Demo",
+            "code": applications_code.replace(
+                "from algorithms import (\n    find_nontrivial_sqrt_one_crt, \n    factor_via_sqrt_collision,\n    congruence_lattice_basis,\n    lattice_reduce_2d,\n    generate_berggren_tree,\n    scan_pythagorean_collisions,\n    extended_gcd\n)",
+                "# Self-contained: core algorithms included inline\nimport math\nfrom typing import List, Tuple, Optional, Dict\n\n" + open('algorithms.py').read().split("if __name__")[0]
+            )
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Congruence Lattice Factoring",
+            "pseudocode": """Algorithm: Factor via Congruence Lattice
+Input: Composite n = p*q, p, q >= 3, coprime
+Output: Nontrivial factor d of n
+
+1. Compute Bezout coefficients: a*p + b*q = 1
+2. Set r = 1 - 2*a*p (mod n)
+   // r^2 ≡ 1 (mod n), r ≢ ±1 (mod n)
+3. Construct lattice basis B = {(n,0), (r,1)}
+4. Reduce basis using Gauss/LLL: B' = {b1, b2}
+5. For each short vector v in B':
+     d = gcd(v[0] - v[1], n)
+     if 1 < d < n: return d
+6. Return gcd(r - 1, n)""",
+            "code": algorithms_code
+        },
+        {
+            "name": "Berggren Tree Generation",
+            "pseudocode": """Algorithm: Generate Berggren Tree
+Input: Maximum hypotenuse C
+Output: All primitive Pythagorean triples with c <= C
+
+1. Initialize queue with root = (3, 4, 5)
+2. While queue is not empty:
+   a. Pop triple (a, b, c) from queue
+   b. If c > C: skip
+   c. Output (|a|, |b|, c)
+   d. For each generator M in {U, A, D}:
+      Push M * (a, b, c) to queue
+3. Return sorted unique triples""",
+            "code": algorithms_code
+        }
+    ],
+    "visualizations": visualizations,
+    "lean_proofs": lean_code
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print(f"Generated PACKAGE.json ({len(json.dumps(package))} chars)")
+
+
+#!/usr/bin/env python3
+"""
+Visualizations for Pythagorean Lattice Reduction
+
+Generates publication-quality figures showing:
+1. The Berggren tree of primitive Pythagorean triples
+2. Congruence lattice structure
+3. Square-root collision geometry
+"""
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch
+import matplotlib.patches as patches
+import numpy as np
+import math
 import base64
-from io import BytesIO
+import io
 
-
-BERGGREN_MATRICES = [
-    np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]]),
-    np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]]),
-    np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]]),
-]
-
-
-def berggren_apply(word, root=np.array([3, 4, 5])):
-    v = root.copy()
-    for g in reversed(word):
-        v = BERGGREN_MATRICES[g] @ v
-    return v
-
-
-def fig_to_base64(fig):
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+def save_fig_base64(fig) -> str:
+    """Save figure as base64 PNG data URI."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', 
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    b64 = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{encoded}"
+    return f"data:image/png;base64,{b64}"
 
+# ============================================================
+# Figure 1: Berggren Tree of Primitive Pythagorean Triples
+# ============================================================
 
 def plot_berggren_tree():
-    """Plot the Berggren tree with the first few levels."""
-    fig, ax = plt.subplots(1, 1, figsize=(14, 8))
-
-    gen_names = ['U', 'A', 'D']
-    colors = ['#2196F3', '#4CAF50', '#FF9800']
-
-    # Generate tree positions
-    levels = {}
-    levels[0] = {(): (7, 7)}  # root
-
-    for depth in range(1, 4):
-        levels[depth] = {}
-        parent_count = 3 ** (depth - 1)
-        child_count = 3 ** depth
-        for idx, parent_word in enumerate(sorted(levels[depth - 1].keys())):
-            px, py = levels[depth - 1][parent_word]
-            for g in range(3):
-                child_word = parent_word + (g,)
-                child_idx = idx * 3 + g
-                cx = (child_idx + 0.5) / child_count * 14
-                cy = 7 - depth * 2
-                levels[depth][child_word] = (cx, cy)
-
-                # Draw edge
-                ax.plot([px, cx], [py, cy], color=colors[g], alpha=0.4, linewidth=1.5)
-
-    # Draw nodes
-    for depth in range(4):
-        for word, (x, y) in levels[depth].items():
-            triple = berggren_apply(list(word))
-            a, b, c = int(triple[0]), int(triple[1]), int(triple[2])
-            label = f"({a},{b},{c})"
-
-            fontsize = max(5, 9 - depth)
-            bbox_props = dict(boxstyle="round,pad=0.3", facecolor='white',
-                             edgecolor='gray', alpha=0.9)
-            ax.text(x, y, label, ha='center', va='center',
-                   fontsize=fontsize, bbox=bbox_props, fontfamily='monospace')
-
-    ax.set_xlim(-0.5, 14.5)
-    ax.set_ylim(-0.5, 8)
-    ax.set_title('Berggren Tree of Primitive Pythagorean Triples', fontsize=14, fontweight='bold')
-    ax.axis('off')
-
-    # Legend
-    for i, name in enumerate(gen_names):
-        ax.plot([], [], color=colors[i], linewidth=2, label=f'Generator {name}')
-    ax.legend(loc='upper right', fontsize=10)
-
+    """Plot primitive Pythagorean triples in (a, b) plane, colored by tree depth."""
+    U = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])
+    A = np.array([[1,  2, 2], [2,  1, 2], [2,  2, 3]])
+    D = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])
+    gens = [U, A, D]
+    
+    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+    
+    root = np.array([3, 4, 5])
+    max_c = 500
+    
+    # BFS with depth tracking
+    queue = [(root, 0)]
+    triples_by_depth = {}
+    
+    while queue:
+        triple, depth = queue.pop(0)
+        a, b, c = triple
+        if c > max_c:
+            continue
+        if depth not in triples_by_depth:
+            triples_by_depth[depth] = []
+        triples_by_depth[depth].append((abs(a), abs(b), c))
+        for gen in gens:
+            child = gen @ triple
+            if child[2] <= max_c:
+                queue.append((child, depth + 1))
+    
+    colors = plt.cm.viridis(np.linspace(0, 0.85, max(triples_by_depth.keys()) + 1))
+    
+    for depth in sorted(triples_by_depth.keys()):
+        triples = triples_by_depth[depth]
+        aa = [t[0] for t in triples]
+        bb = [t[1] for t in triples]
+        sizes = [max(8, 60 - depth * 8) for _ in triples]
+        ax.scatter(aa, bb, c=[colors[depth]], s=sizes, 
+                  label=f'Depth {depth}', alpha=0.8, edgecolors='white', linewidth=0.5)
+    
+    # Draw the unit circle quadrant (a² + b² = c²)
+    theta = np.linspace(0, np.pi/2, 100)
+    for c_val in [100, 200, 300, 400, 500]:
+        ax.plot(c_val * np.cos(theta), c_val * np.sin(theta), 
+                'k-', alpha=0.1, linewidth=0.5)
+    
+    ax.set_xlabel('a (odd leg)', fontsize=14)
+    ax.set_ylabel('b (even leg)', fontsize=14)
+    ax.set_title('Berggren Tree: Primitive Pythagorean Triples (a, b)\n'
+                 'with a² + b² = c², c ≤ 500', fontsize=16)
+    ax.legend(loc='upper left', fontsize=11)
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+    
     return fig
 
+# ============================================================
+# Figure 2: Congruence Lattice with Short Vectors
+# ============================================================
 
-def plot_triples_mod_n():
-    """Plot Pythagorean triples reduced modulo n, showing collision patterns."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    for idx, n in enumerate([15, 21, 35]):
-        ax = axes[idx]
-
-        # Generate many Berggren triples
-        triples_mod = set()
-        for depth in range(7):
-            from itertools import product as iprod
-            for word in iprod(range(3), repeat=depth):
-                triple = berggren_apply(list(word))
-                a_mod = int(triple[0]) % n
-                b_mod = int(triple[1]) % n
-                triples_mod.add((a_mod, b_mod))
-
-        xs = [t[0] for t in triples_mod]
-        ys = [t[1] for t in triples_mod]
-
-        # Color by whether they give a collision
-        collision_colors = []
-        for a_mod, b_mod in triples_mod:
-            d = math.gcd(abs(a_mod - b_mod), n)
-            if 1 < d < n:
-                collision_colors.append('#FF5722')
-            elif math.gcd(abs(a_mod + b_mod), n) > 1 and math.gcd(abs(a_mod + b_mod), n) < n:
-                collision_colors.append('#FFC107')
-            else:
-                collision_colors.append('#2196F3')
-
-        ax.scatter(xs, ys, c=collision_colors, s=20, alpha=0.7, edgecolors='none')
-        ax.set_title(f'Triples mod {n}', fontsize=12, fontweight='bold')
-        ax.set_xlabel('a mod n')
-        ax.set_ylabel('b mod n')
-        ax.set_xlim(-0.5, n - 0.5)
-        ax.set_ylim(-0.5, n - 0.5)
-        ax.set_aspect('equal')
-        ax.grid(True, alpha=0.3)
-
-    plt.suptitle('Berggren Triples Modulo n — Collision Patterns', fontsize=14, fontweight='bold')
+def plot_congruence_lattice():
+    """Plot the congruence lattice L_{n,r} and highlight short vectors."""
+    n = 35
+    r = 6  # 6² = 36 ≡ 1 (mod 35), nontrivial
+    
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+    
+    # Left: unreduced lattice
+    ax = axes[0]
+    b1 = np.array([n, 0])
+    b2 = np.array([r, 1])
+    
+    # Generate lattice points
+    points = []
+    for i in range(-3, 4):
+        for j in range(-20, 21):
+            p = i * b1 + j * b2
+            if abs(p[0]) <= 50 and abs(p[1]) <= 15:
+                points.append(p)
+    
+    points = np.array(points)
+    ax.scatter(points[:, 0], points[:, 1], c='steelblue', s=20, alpha=0.6, zorder=2)
+    ax.arrow(0, 0, b1[0], b1[1], head_width=0.3, head_length=0.5, fc='red', ec='red', zorder=3)
+    ax.arrow(0, 0, b2[0], b2[1], head_width=0.3, head_length=0.5, fc='green', ec='green', zorder=3)
+    ax.scatter([0], [0], c='black', s=50, zorder=4)
+    ax.text(b1[0]/2, b1[1]-1.2, f'b₁=({b1[0]},{b1[1]})', color='red', fontsize=11, ha='center')
+    ax.text(b2[0]+1, b2[1]+0.5, f'b₂=({b2[0]},{b2[1]})', color='green', fontsize=11)
+    ax.set_title(f'Unreduced Lattice L₃₅,₆\nBasis: ({b1[0]},{b1[1]}), ({b2[0]},{b2[1]})', fontsize=14)
+    ax.set_xlabel('x', fontsize=12)
+    ax.set_ylabel('y', fontsize=12)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(-52, 52)
+    ax.set_ylim(-17, 17)
+    
+    # Right: reduced lattice
+    ax = axes[1]
+    
+    # 2D Gauss reduction
+    def norm_sq(v): return v[0]**2 + v[1]**2
+    def dot(u, v): return u[0]*v[0] + u[1]*v[1]
+    
+    rb1 = list(b2)
+    rb2 = list(b1)
+    if norm_sq(rb1) > norm_sq(rb2):
+        rb1, rb2 = rb2, rb1
+    while True:
+        mu = round(dot(rb2, rb1) / norm_sq(rb1))
+        rb2 = [rb2[0] - mu*rb1[0], rb2[1] - mu*rb1[1]]
+        if norm_sq(rb1) <= norm_sq(rb2):
+            break
+        rb1, rb2 = rb2, rb1
+    
+    rb1 = np.array(rb1)
+    rb2 = np.array(rb2)
+    
+    ax.scatter(points[:, 0], points[:, 1], c='steelblue', s=20, alpha=0.6, zorder=2)
+    ax.arrow(0, 0, rb1[0], rb1[1], head_width=0.3, head_length=0.5, fc='red', ec='red', zorder=3)
+    ax.arrow(0, 0, rb2[0], rb2[1], head_width=0.3, head_length=0.5, fc='green', ec='green', zorder=3)
+    ax.scatter([0], [0], c='black', s=50, zorder=4)
+    ax.text(rb1[0]+0.5, rb1[1]+0.5, f'b₁\'=({rb1[0]},{rb1[1]})', color='red', fontsize=11)
+    ax.text(rb2[0]+0.5, rb2[1]+0.5, f'b₂\'=({rb2[0]},{rb2[1]})', color='green', fontsize=11)
+    
+    # Highlight short vector that gives factor
+    # Check which lattice point gives nontrivial gcd
+    for p in points:
+        d = math.gcd(abs(int(p[0] - p[1])), n)
+        if 1 < d < n and norm_sq(p) < 200:
+            ax.scatter([p[0]], [p[1]], c='gold', s=100, zorder=5, 
+                      edgecolors='black', linewidth=1.5)
+    
+    ax.set_title(f'Reduced Lattice L₃₅,₆\nBasis: ({rb1[0]},{rb1[1]}), ({rb2[0]},{rb2[1]})', fontsize=14)
+    ax.set_xlabel('x', fontsize=12)
+    ax.set_ylabel('y', fontsize=12)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(-52, 52)
+    ax.set_ylim(-17, 17)
+    
+    plt.suptitle('Congruence Lattice Before and After Reduction (n=35, r=6)\n'
+                 'Gold points yield nontrivial factors', fontsize=15, y=1.02)
     plt.tight_layout()
+    
     return fig
 
+# ============================================================
+# Figure 3: Square Root Distribution
+# ============================================================
 
-def plot_factor_success_rate():
-    """Plot factor extraction success rate vs tree depth."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-
-    # Test semiprimes of various sizes
-    semiprimes = []
-    primes_list = [p for p in range(3, 100) if all(p % i != 0 for i in range(2, int(p**0.5)+1))]
-    for i in range(len(primes_list)):
-        for j in range(i+1, min(i+5, len(primes_list))):
-            semiprimes.append(primes_list[i] * primes_list[j])
-
-    max_depth = 8
-    success_counts = [0] * (max_depth + 1)
-    total = len(semiprimes)
-
-    from itertools import product as iprod
-
-    for n in semiprimes:
-        found_depth = None
-        for depth in range(max_depth + 1):
-            for word in iprod(range(3), repeat=depth):
-                triple = berggren_apply(list(word))
-                a, b, c = int(triple[0]), int(triple[1]), int(triple[2])
-
-                # Check various collision conditions
-                for x, y in [(a, b), (a, c), (b, c)]:
-                    if (x*x - y*y) % n == 0:
-                        d_minus = math.gcd(abs(x - y), n)
-                        d_plus = math.gcd(abs(x + y), n)
-                        if (1 < d_minus < n) or (1 < d_plus < n):
-                            found_depth = depth
-                            break
-                if found_depth is not None:
-                    break
-
-                # Hypotenuse gcd
-                if c*c % n == 0 and c % n != 0:
-                    d = math.gcd(abs(c), n)
-                    if 1 < d < n:
-                        found_depth = depth
-                        break
-            if found_depth is not None:
-                break
-
-        if found_depth is not None:
-            for d in range(found_depth, max_depth + 1):
-                success_counts[d] += 1
-
-    success_rates = [c / total * 100 for c in success_counts]
-
-    ax.bar(range(max_depth + 1), success_rates, color='#2196F3', alpha=0.8, edgecolor='white')
-    ax.set_xlabel('Maximum Berggren Tree Depth', fontsize=12)
-    ax.set_ylabel('Factoring Success Rate (%)', fontsize=12)
-    ax.set_title('Factor Extraction via Berggren Tree Traversal', fontsize=14, fontweight='bold')
-    ax.set_ylim(0, 105)
-
-    for i, rate in enumerate(success_rates):
-        if rate > 0:
-            ax.text(i, rate + 2, f'{rate:.0f}%', ha='center', fontsize=9)
-
-    ax.text(0.5, 0.95, f'Tested on {total} semiprimes (products of primes < 100)',
-           transform=ax.transAxes, ha='center', va='top', fontsize=10,
-           style='italic', color='gray')
-
+def plot_sqrt_distribution():
+    """Plot distribution of square roots of 1 mod n for various composites."""
+    fig, ax = plt.subplots(figsize=(12, 6))
+    
+    composites = []
+    sqrt_counts = []
+    has_nontrivial = []
+    
+    for n in range(4, 200):
+        # Check if composite
+        if all(n % i != 0 for i in range(2, int(n**0.5) + 1)):
+            continue
+        sqrts = [r for r in range(n) if (r*r) % n == 1]
+        trivial = {1, n-1}
+        nontrivial = [r for r in sqrts if r not in trivial]
+        composites.append(n)
+        sqrt_counts.append(len(sqrts))
+        has_nontrivial.append(len(nontrivial) > 0)
+    
+    colors = ['#2ecc71' if nt else '#e74c3c' for nt in has_nontrivial]
+    ax.bar(range(len(composites)), sqrt_counts, color=colors, alpha=0.7, width=1.0)
+    ax.set_xticks(range(0, len(composites), 10))
+    ax.set_xticklabels([str(composites[i]) for i in range(0, len(composites), 10)], 
+                       rotation=45, fontsize=9)
+    ax.set_xlabel('Composite number n', fontsize=13)
+    ax.set_ylabel('Number of square roots of 1 mod n', fontsize=13)
+    ax.set_title('Square Roots of Unity mod n for Composite Numbers\n'
+                 'Green = has nontrivial roots (factorable), Red = only ±1', fontsize=14)
+    
+    # Add legend
+    import matplotlib.lines as mlines
+    green_patch = mlines.Line2D([], [], color='#2ecc71', marker='s', linestyle='None',
+                                markersize=10, label='Has nontrivial √1')
+    red_patch = mlines.Line2D([], [], color='#e74c3c', marker='s', linestyle='None',
+                              markersize=10, label='Only ±1 (prime powers, 2p)')
+    ax.legend(handles=[green_patch, red_patch], loc='upper left', fontsize=11)
+    
+    ax.grid(True, alpha=0.3, axis='y')
     plt.tight_layout()
+    
     return fig
 
-
-def plot_quadratic_form_preservation():
-    """Visualize the quadratic form Q = a²+b²-c² = 0 along Berggren orbits."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Q values for random vectors vs Berggren triples
-    from itertools import product as iprod
-
-    # Berggren triples
-    berggren_qs = []
-    berggren_cs = []
-    for depth in range(6):
-        for word in iprod(range(3), repeat=depth):
-            triple = berggren_apply(list(word))
-            a, b, c = triple
-            q = a**2 + b**2 - c**2
-            berggren_qs.append(q)
-            berggren_cs.append(c)
-
-    ax1.scatter(berggren_cs, berggren_qs, c='#2196F3', s=15, alpha=0.7,
-               label='Berggren triples', zorder=5)
-
-    # Random vectors for comparison
-    rng = np.random.RandomState(42)
-    random_cs = []
-    random_qs = []
-    for _ in range(200):
-        v = rng.randint(1, 500, size=3)
-        q = v[0]**2 + v[1]**2 - v[2]**2
-        random_qs.append(q)
-        random_cs.append(v[2])
-
-    ax1.scatter(random_cs, random_qs, c='#FF5722', s=10, alpha=0.3,
-               label='Random vectors', zorder=3)
-    ax1.axhline(y=0, color='black', linewidth=2, linestyle='--', alpha=0.5)
-    ax1.set_xlabel('c (hypotenuse)', fontsize=12)
-    ax1.set_ylabel('Q = a² + b² - c²', fontsize=12)
-    ax1.set_title('Quadratic Form Preservation', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=10)
-
-    # Right: Hypotenuse growth by word length
-    depths = list(range(7))
-    hyps_by_depth = {d: [] for d in depths}
-    for depth in depths:
-        for word in iprod(range(3), repeat=depth):
-            triple = berggren_apply(list(word))
-            hyps_by_depth[depth].append(int(triple[2]))
-
-    bp = ax2.boxplot([hyps_by_depth[d] for d in depths],
-                     labels=[str(d) for d in depths],
-                     patch_artist=True)
-    for patch in bp['boxes']:
-        patch.set_facecolor('#4CAF50')
-        patch.set_alpha(0.6)
-
-    ax2.set_xlabel('Berggren Word Length', fontsize=12)
-    ax2.set_ylabel('Hypotenuse c', fontsize=12)
-    ax2.set_title('Hypotenuse Growth in Berggren Tree', fontsize=13, fontweight='bold')
-    ax2.set_yscale('log')
-
-    plt.tight_layout()
-    return fig
-
-
-def generate_all_visualizations():
-    """Generate all visualization figures and save them."""
-    os.makedirs('/workspace/request-project/figures', exist_ok=True)
-
-    figures = {}
-
-    print("Generating Berggren tree visualization...")
-    fig = plot_berggren_tree()
-    fig.savefig('/workspace/request-project/figures/berggren_tree.png', dpi=150, bbox_inches='tight')
-    figures['berggren_tree'] = fig_to_base64(fig)
-
-    print("Generating triples mod n visualization...")
-    fig = plot_triples_mod_n()
-    fig.savefig('/workspace/request-project/figures/triples_mod_n.png', dpi=150, bbox_inches='tight')
-    figures['triples_mod_n'] = fig_to_base64(fig)
-
-    print("Generating factor success rate visualization...")
-    fig = plot_factor_success_rate()
-    fig.savefig('/workspace/request-project/figures/factor_success_rate.png', dpi=150, bbox_inches='tight')
-    figures['factor_success_rate'] = fig_to_base64(fig)
-
-    print("Generating quadratic form preservation visualization...")
-    fig = plot_quadratic_form_preservation()
-    fig.savefig('/workspace/request-project/figures/quadratic_form.png', dpi=150, bbox_inches='tight')
-    figures['quadratic_form'] = fig_to_base64(fig)
-
-    print("All visualizations generated.")
-    return figures
-
+# ============================================================
+# Generate all figures
+# ============================================================
 
 if __name__ == "__main__":
-    figures = generate_all_visualizations()
-    for name in figures:
-        print(f"  {name}: {len(figures[name])} bytes (base64)")
+    print("Generating visualizations...")
+    
+    fig1 = plot_berggren_tree()
+    fig1.savefig('berggren_tree.png', dpi=150, bbox_inches='tight', facecolor='white')
+    print("  ✓ berggren_tree.png")
+    
+    fig2 = plot_congruence_lattice()
+    fig2.savefig('congruence_lattice.png', dpi=150, bbox_inches='tight', facecolor='white')
+    print("  ✓ congruence_lattice.png")
+    
+    fig3 = plot_sqrt_distribution()
+    fig3.savefig('sqrt_distribution.png', dpi=150, bbox_inches='tight', facecolor='white')
+    print("  ✓ sqrt_distribution.png")
+    
+    print("\nAll visualizations generated.")
