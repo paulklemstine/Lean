@@ -934,10 +934,10 @@
       "Algebra"
     ],
     "priority_score": 0.77,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51f002b7",
     "timestamp": "2026-05-14T16:03:53.838094+00:00"
   },
   {
@@ -1833,36 +1833,6 @@
     "timestamp": "2026-05-14T20:38:12.094619+00:00"
   },
   {
-    "id": "fd_0196",
-    "title": "Connect the contraction coefficient",
-    "description": "to the tropical spectral gap of A (difference between largest and second-largest cycle means).",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.129124+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "Apply Banach fixed-point theorem",
-    "description": "in the projective space to deduce unique convergence.\n\n### Cross-Domain Connections\n- **Nonlinear Perron-Frobenius theory**: Birkhoff's theorem on positive linear operators; Nussbaum's extensions to nonlinear monotone maps.\n- **Information geometry**: The Hilbert metric is the natural metric on the positive cone; connects to KL divergence asymptotics.\n- **Mechanistic interpretability**: Contraction rate quantifies how fast deep transformers \"forget\" early-layer information.\n\n### Expected Impact\nA formal contraction theorem would provide the first mathematical guarantee that deep transformer attention converges, with computable convergence rates. This directly addresses the empirical \"layer collapse\" phenomenon and could inform depth-pruning strategies.\n\n---\n\n## Direction 2: Formalization o",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.133895+00:00"
-  },
-  {
     "id": "fd_0202",
     "title": "Prove CSR (Critical Graph) theorem",
     "description": ": after a transient of length ≤ n², the growth is exactly linear with slope ρ_t.\n\n### Cross-Domain Connections\n- **Optimal control**: ρ_t is the optimal average reward per step in a Markov decision process.\n- **Dynamic programming**: Howard's policy iteration computes ρ_t in O(n³).\n- **Statistical physics**: ρ_t is the ground-state energy per site in a transfer matrix formulation.\n\n### Expected Impact\nA fully formalized tropical spectral radius would give precise growth/decay rates for deep attention stacks, enabling principled depth selection and early-stopping criteria for transformer training.\n\n---\n\n## Direction 3: Equivalence Between Sink Formation and Unique Tropical Eigenspace\n\n### Hypothesis\nThe attention sink phenomenon (one token absorbing all attention mass in deep layers) is equ",
@@ -1985,20 +1955,92 @@
     "timestamp": "2026-05-14T21:34:38.217919+00:00"
   },
   {
-    "id": "fd_0196",
-    "title": "Cross-domain impact:",
-    "description": "At least one concrete application in a domain outside tropical geometry",
+    "id": "fd_0188",
+    "title": "Direct algebraic approach",
+    "description": ": For each λ, show |a(b-b') + a'(b+b')| ≤ 2 by case analysis on {±1}⁴. Sum with weights P(λ).",
     "domains": [
-      "Tropical",
-      "Bridges",
-      "Geometry"
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b8a30d25",
+    "source_exp_id": "7498ad19",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:35:32.888357+00:00"
+    "timestamp": "2026-05-14T21:41:38.435877+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Fine-Braunstein-Caves approach",
+    "description": ": Use the observation that S = 2cos(θ) for appropriate angle parameterization, bounded by 2.\n\n### Cross-Domain Connection\n\nThis connects to quantum computing via Tsirelson's bound: quantum mechanics achieves 2√2, violating the classical 2. A tight classical bound in our framework would precisely delineate the \"quantum advantage window\" [2, 2√2] for prediction correlations.\n\n---\n\n## Direction 2: Minimax Coherence-Regret Phase Transition\n\n### Precise Theorem Statement\n\n```\ntheorem regret_phase_transition\n    (n : ℕ) (hn : 2 ≤ n) :\n    ∃ C_star : ℝ, 0 < C_star ∧ C_star < 1 ∧\n    (∀ C ≥ C_star, regretBound n (⌈1 / (1 - C)⌉.toNat) ≤ 1 / (1 - C)) ∧\n    (∀ C < C_star, ∃ T, regretBound n T > T * (1 - C))\n```\n\n### Why Breakthrough-Level\n\nThis would establish that coherence-constrained prediction ex",
+    "domains": [
+      "Physics",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7498ad19",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:41:38.443041+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Variational analysis",
+    "description": ": Minimize regretBound(n, T) / T over T, finding the critical ratio at which √(T log n / 2) / T = 1 - C.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7498ad19",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:41:38.447852+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Fixed-point approach",
+    "description": ": Find C_star as the unique fixed point of f(C) = √(log n / (2(1-C)²)), which gives C_star = 1 - √(log n / 2).\n\n### Cross-Domain Connection\n\nThis connects to the theory of phase transitions in machine learning (e.g., the interpolation threshold in overparameterized models) and to thermodynamic phase transitions in information engines.\n\n---\n\n## Direction 3: Free-Energy Variational Principle for Evidence\n\n### Precise Theorem Statement\n\n```\ntheorem evidence_free_energy_principle\n    {n : ℕ} (hn : 0 < n) (b : BState' n) (l : Fin n → ℝ)\n    (hb : BState'.Valid b) (hl : ∀ i, 0 ≤ l i) :\n    log(evidence b l) ≤ sup_i log(l i) - KL(b ‖ uniform_n)\n```\n\nwhere KL is the Kullback-Leibler divergence and uniform_n is the uniform distribution on Fin n.\n\n### Why Breakthrough-Level\n\nThis would be a machine-",
+    "domains": [
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7498ad19",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:41:38.453645+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Gibbs variational principle",
+    "description": ": Express evidence as a partition function and apply the variational formula for log-partition functions.\n\n### Cross-Domain Connection\n\nThis directly connects to the free energy principle in neuroscience (Friston), providing a rigorous mathematical foundation for the claim that prediction minimizes free energy.\n\n---\n\n## Direction 4: Bell Inequality for Adversarial Expert Systems\n\n### Precise Theorem Statement\n\n```\ntheorem adversarial_bell_inequality\n    {n : ℕ} (hn : 4 ≤ n)\n    (strategy : Fin n → Fin 2 → Bool) -- expert strategies for 2 questions\n    (weights : Fin n → ℝ) -- positive weights summing to 1\n    (hw : ∀ i, 0 ≤ weights i) (hs : ∑ i, weights i = 1) :\n    |Σ_ij correlation_ij * tensor_weight_ij| ≤ 2\n```\n\n### Why Breakthrough-Level\n\nThis would show that adversarial expert systems",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7498ad19",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:41:38.464850+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Direct combinatorial proof",
+    "description": ": Enumerate ±1 assignments and show the weighted combination is bounded.\n\n### Cross-Domain Connection\n\nThis connects to mechanism design (can prediction markets exceed classical correlation limits?) and to the foundations of quantum computing (is there a quantum advantage for expert advice?).\n\n---\n\n## Direction 5: Categorical Unification of Models and Games\n\n### Precise Theorem Statement\n\n```\ndef PredictionCategory : Category where\n  Obj := Σ n, (BState' n × LocalModel' n × CoherenceBudget)\n  Hom X Y := ResourceMorphism X Y  -- maps preserving resource bounds\n  -- Composition preserves the Full Resource Inequality\n```\n\n```\ntheorem category_preserves_resource_inequality\n    (f : ResourceMorphism X Y) :\n    resourceBound Y ≤ resourceBound X + morphismCost f\n```\n\n### Why Breakthrough-Level\n\nT",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7498ad19",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:41:38.476152+00:00"
   },
   {
     "id": "seed_078",
@@ -2500,23 +2542,6 @@
     "timestamp": "2026-05-14T21:36:06.334098+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Direction 3: Galois Connections Between Musical Vocabularies",
-    "description": "**Goal**: Formalize a full Galois connection between fine-grained and coarse-grained musical event alphabets, with both abstraction and concretization maps, and prove that the connection preserves compositional structure.\n\n**Theorem targets**:\n```\nstructure MusicGalois (α β : Type*) where\n  abs : α → β\n  conc : β → Set α\n  sound : ∀ a, a ∈ conc (abs a)\n  optimal : ∀ b, abs '' (conc b) ⊆ {b}\n\ntheorem galois_preserves_compose\n    (G : MusicGalois α β) (S T : MusicSpec α) :\n    mapSpec G.abs (compose S T) ⊆\n    compose (mapSpec G.abs S) (mapSpec G.abs T)\n\ntheorem galois_concretization_antitone\n    (G : MusicGalois α β) {S T : MusicSpec β}\n    (h : refines S T) :\n    refines (concSpec G S) (concSpec G T)\n```\n\n**Cross-domain impact**: Connects to abstract interpretation (Cousot & Cousot, 1977) ",
-    "domains": [
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "df7f8eaf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:36:06.343778+00:00"
-  },
-  {
     "id": "fd_0195",
     "title": "Direction 4: Hierarchical Composition via Operads",
     "description": "**Goal**: Extend flat concatenation to hierarchical (tree-structured) composition using operads or multicategories, modeling nested musical structure (motif → phrase → section → movement).\n\n**Theorem targets**:\n```\ninductive MusicTree (α : Type*) where\n  | leaf : α → MusicTree α\n  | node : List (MusicTree α) → MusicTree α\n\ndef TreeSpec (α : Type*) := Set (MusicTree α)\n\ndef tree_compose (S : TreeSpec α) (children : List (TreeSpec α)) : TreeSpec α :=\n  { t | ∃ root ∈ S, ∃ subs, (∀ i, subs.get i ∈ (children.get i)) ∧ t = graft root subs }\n\ntheorem tree_refines_compose_mono\n    (hS : refines S₁ S₂) (hC : ∀ i, refines (C₁.get i) (C₂.get i)) :\n    refines (tree_compose S₁ C₁) (tree_compose S₂ C₂)\n```\n\n**Cross-domain impact**: Connects to operad theory in applied category theory and to context-fr",
@@ -2530,23 +2555,5 @@
     "source_exp_id": "df7f8eaf",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:36:06.353077+00:00"
-  },
-  {
-    "id": "fd_0196",
-    "title": "Direction 5: Differentiable Encoders and Certified Latent Representations",
-    "description": "**Goal**: Prove that if an encoder-decoder pair between a discrete musical specification and a continuous latent space satisfies certain fidelity conditions, then refinement in the discrete domain implies a corresponding ordering in the latent space.\n\n**Theorem targets**:\n```\ndef latent_faithful (enc : List α → ℝ^d) (dec : ℝ^d → Set (List α)) : Prop :=\n  ∀ w, w ∈ dec (enc w)\n\ntheorem faithful_encoder_reflects_refinement\n    (hfaith : latent_faithful enc dec)\n    (hS : refines S T)\n    (w : List α) (hw : w ∈ S) :\n    enc w ∈ enc '' T\n\n-- Stronger: latent ordering\ndef latent_refines (enc : List α → ℝ^d) (S T : MusicSpec α) : Prop :=\n  enc '' S ⊆ enc '' T\n\ntheorem latent_refines_of_refines\n    (hS : refines S T) :\n    latent_refines enc S T\n```\n\n**Cross-domain impact**: Bridges the gap betwee",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "df7f8eaf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:36:06.360715+00:00"
   }
 ]

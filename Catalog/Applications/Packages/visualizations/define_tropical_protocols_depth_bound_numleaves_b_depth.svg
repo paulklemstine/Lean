@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400">
+<rect width="100%" height="100%" fill="white"/>
+<text x="300.0" y="25" text-anchor="middle" font-size="16" font-weight="bold">Depth Bound: numLeaves ≤ b^depth</text>
+<line x1="60" y1="340" x2="540" y2="340" stroke="black" stroke-width="2"/>
+<line x1="60" y1="60" x2="60" y2="340" stroke="black" stroke-width="2"/>
+<text x="300.0" y="390" text-anchor="middle" font-size="12">Depth</text>
+<text x="15" y="200.0" text-anchor="middle" font-size="12" transform="rotate(-90,15,200.0)">Leaves / Bound</text>
+<polyline points="60.0,319.9 140.0,308.1 220.0,293.3 300.0,276.3 380.0,257.8 460.0,238.6 540.0,219.0" fill="none" stroke="#e74c3c" stroke-width="2"/>
+<text x="545.0" y="219.0" font-size="11" fill="#e74c3c">b=2</text>
+<polyline points="60.0,319.9 140.0,299.8 220.0,273.2 300.0,243.4 380.0,212.2 460.0,180.6 540.0,148.8" fill="none" stroke="#3498db" stroke-width="2"/>
+<text x="545.0" y="148.8" font-size="11" fill="#3498db">b=3</text>
+<polyline points="60.0,319.9 140.0,293.3 220.0,257.8 300.0,219.0 380.0,179.1 460.0,139.0 540.0,98.8" fill="none" stroke="#2ecc71" stroke-width="2"/>
+<text x="545.0" y="98.8" font-size="11" fill="#2ecc71">b=4</text>
+<polyline points="60.0,319.9 140.0,288.0 220.0,245.5 300.0,199.8 380.0,153.3 460.0,106.7 540.0,60.0" fill="none" stroke="#f39c12" stroke-width="2"/>
+<text x="545.0" y="60.0" font-size="11" fill="#f39c12">b=5</text>
+<text x="60.0" y="355" text-anchor="middle" font-size="10">0</text>
+<text x="140.0" y="355" text-anchor="middle" font-size="10">1</text>
+<text x="220.0" y="355" text-anchor="middle" font-size="10">2</text>
+<text x="300.0" y="355" text-anchor="middle" font-size="10">3</text>
+<text x="380.0" y="355" text-anchor="middle" font-size="10">4</text>
+<text x="460.0" y="355" text-anchor="middle" font-size="10">5</text>
+<text x="540.0" y="355" text-anchor="middle" font-size="10">6</text>
+</svg>
