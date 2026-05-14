@@ -1,324 +1,318 @@
 #!/usr/bin/env python3
 """
-Algorithms for Pythagorean Lattice Reduction
+Algorithms for Pythagorean Lattice Factoring
 
 Implements the core algorithms from the research:
-1. Berggren tree generation
-2. Congruence lattice construction
-3. Square-root collision factoring
-4. LLL-based lattice reduction (2D case)
+1. Factor extraction from square-root collisions
+2. Berggren tree traversal and triple generation
+3. Euclid parametrization with congruence data
+4. Divisibility lattice construction and factor embedding
+5. Pythagorean-guided factoring search
 """
 
 import math
-from typing import List, Tuple, Optional, Dict
+from typing import Tuple, List, Optional, Set
+from dataclasses import dataclass
 
-# ============================================================
-# Algorithm 1: Extended GCD and Modular Inverse
-# ============================================================
 
-def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
-    """
-    Extended Euclidean algorithm.
-    Returns (g, x, y) such that a*x + b*y = g = gcd(a, b).
-    
-    Time complexity: O(log(min(a,b)))
-    Space complexity: O(log(min(a,b))) (recursion depth)
-    
-    >>> extended_gcd(35, 15)
-    (5, 1, -2)
-    """
-    if b == 0:
-        return a, 1, 0
-    g, x, y = extended_gcd(b, a % b)
-    return g, y, x - (a // b) * y
+# ────────────────────────────────────────────────────────────────
+# Algorithm 1: Factor Extraction from Square Congruences
+# ────────────────────────────────────────────────────────────────
 
-def mod_inverse(a: int, m: int) -> Optional[int]:
+def extract_factor(n: int, x: int, y: int) -> Optional[int]:
     """
-    Compute a⁻¹ mod m if it exists.
-    Returns None if gcd(a, m) ≠ 1.
+    Extract a nontrivial factor of n from a square congruence x² ≡ y² (mod n).
     
-    >>> mod_inverse(3, 7)
-    5
+    Algorithm:
+        1. Verify x² ≡ y² (mod n)
+        2. Compute d = gcd(x - y, n)
+        3. If 1 < d < n, return d
+        4. Otherwise try gcd(x + y, n)
+    
+    Complexity: O(log n) via Euclidean algorithm
+    
+    Args:
+        n: The composite number to factor
+        x, y: Integers with x² ≡ y² (mod n), x ≢ ±y (mod n)
+    
+    Returns:
+        A nontrivial factor of n, or None if the collision is trivial
     """
-    g, x, _ = extended_gcd(a % m, m)
-    if g != 1:
-        return None
-    return x % m
-
-# ============================================================
-# Algorithm 2: Nontrivial Square Root of Unity
-# ============================================================
-
-def find_nontrivial_sqrt_one_crt(p: int, q: int) -> Optional[int]:
-    """
-    Find r with r² ≡ 1 (mod n) and r ≢ ±1 (mod n), where n = p*q.
-    Uses CRT: set r ≡ 1 (mod p), r ≡ -1 (mod q).
+    assert n > 1, "n must be > 1"
+    assert (x**2 - y**2) % n == 0, "Not a valid square congruence"
     
-    Requires: p, q ≥ 3, coprime.
-    
-    Time complexity: O(log(p) + log(q)) via extended GCD
-    Space complexity: O(1)
-    
-    >>> r = find_nontrivial_sqrt_one_crt(7, 13)
-    >>> n = 91
-    >>> (r * r) % n == 1 and r % n != 1 and r % n != n - 1
-    True
-    """
-    n = p * q
-    if math.gcd(p, q) != 1 or p < 3 or q < 3:
-        return None
-    
-    # Bezout: a*p + b*q = 1
-    _, a, b = extended_gcd(p, q)
-    
-    # r = 1 - 2*a*p gives r ≡ 1 (mod p), r ≡ -1 (mod q)
-    r = (1 - 2 * a * p) % n
-    
-    # Verify
-    assert (r * r) % n == 1, f"r² ≢ 1 (mod {n})"
-    if r == 1 or r == n - 1:
-        return None  # This shouldn't happen for p,q ≥ 3
-    
-    return r
-
-# ============================================================
-# Algorithm 3: Factor via Square-Root Collision
-# ============================================================
-
-def factor_via_sqrt_collision(n: int, r: int) -> Tuple[int, int]:
-    """
-    Factor n given a nontrivial square root r of 1 mod n.
-    Uses gcd(r - 1, n) to extract a nontrivial factor.
-    
-    Precondition: r² ≡ 1 (mod n), r ≢ ±1 (mod n)
-    
-    Time complexity: O(log n) for GCD
-    Space complexity: O(1)
-    
-    >>> factor_via_sqrt_collision(91, 27)
-    (13, 7)
-    """
-    d = math.gcd(r - 1, n)
+    d = math.gcd(abs(x - y), n)
     if 1 < d < n:
-        return d, n // d
-    d = math.gcd(r + 1, n)
+        return d
+    
+    d = math.gcd(abs(x + y), n)
     if 1 < d < n:
-        return d, n // d
-    raise ValueError(f"r = {r} is not a nontrivial square root of 1 mod {n}")
-
-# ============================================================
-# Algorithm 4: Congruence Lattice Construction
-# ============================================================
-
-def congruence_lattice_basis(n: int, r: int) -> List[List[int]]:
-    """
-    Construct basis for L_{n,r} = {(x,y) ∈ ℤ² : x ≡ ry (mod n)}.
+        return d
     
-    The lattice has basis {(n, 0), (r, 1)} and determinant n.
-    
-    Time complexity: O(1)
-    Space complexity: O(1)
-    
-    >>> congruence_lattice_basis(91, 27)
-    [[91, 0], [27, 1]]
-    """
-    return [[n, 0], [r % n, 1]]
-
-def lattice_reduce_2d(b1: List[int], b2: List[int]) -> Tuple[List[int], List[int]]:
-    """
-    Lagrange/Gauss lattice reduction for 2D lattices.
-    Returns a reduced basis with |b1| ≤ |b2|.
-    
-    This is the 2D analogue of LLL and always finds the shortest vector.
-    
-    Time complexity: O(log(max(|b_i|))²)
-    Space complexity: O(1)
-    
-    >>> lattice_reduce_2d([91, 0], [27, 1])
-    ([1, -3], [4, 1])
-    """
-    def norm_sq(v):
-        return v[0]**2 + v[1]**2
-    
-    def dot(u, v):
-        return u[0]*v[0] + u[1]*v[1]
-    
-    # Ensure |b1| ≤ |b2|
-    if norm_sq(b1) > norm_sq(b2):
-        b1, b2 = b2, b1
-    
-    while True:
-        # Reduce b2 by b1
-        mu = round(dot(b2, b1) / norm_sq(b1))
-        b2 = [b2[0] - mu * b1[0], b2[1] - mu * b1[1]]
-        
-        if norm_sq(b1) <= norm_sq(b2):
-            break
-        b1, b2 = b2, b1
-    
-    return b1, b2
-
-# ============================================================
-# Algorithm 5: Complete Lattice-Based Factoring
-# ============================================================
-
-def lattice_factor(n: int) -> Optional[Tuple[int, int]]:
-    """
-    Attempt to factor n using the congruence lattice approach.
-    
-    Strategy:
-    1. For each candidate r, build L_{n,r}
-    2. Reduce the lattice to find short vectors
-    3. Check if any short vector yields a factor
-    
-    Note: Finding the right r is the hard part — it's equivalent to knowing
-    the factorization. This demonstrates the mathematical structure, not
-    an efficient factoring algorithm.
-    
-    Time complexity: O(n) in worst case (brute force r search)
-    Space complexity: O(1)
-    """
-    # Try to find nontrivial square root by brute force
-    for r in range(2, n - 1):
-        if (r * r) % n == 1:
-            d = math.gcd(r - 1, n)
-            if 1 < d < n:
-                return d, n // d
-            d = math.gcd(r + 1, n)
-            if 1 < d < n:
-                return d, n // d
     return None
 
-# ============================================================
-# Algorithm 6: Berggren Tree Generation
-# ============================================================
 
-# Berggren matrices as nested lists
-BERGGREN_U = [[1, -2, 2], [2, -1, 2], [2, -2, 3]]
-BERGGREN_A = [[1, 2, 2], [2, 1, 2], [2, 2, 3]]
-BERGGREN_D = [[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]]
-BERGGREN_GENS = [BERGGREN_U, BERGGREN_A, BERGGREN_D]
+# ────────────────────────────────────────────────────────────────
+# Algorithm 2: Berggren Tree Traversal
+# ────────────────────────────────────────────────────────────────
 
-def mat_vec_mul(M: List[List[int]], v: List[int]) -> List[int]:
-    """Multiply 3×3 matrix by 3-vector."""
-    return [sum(M[i][j] * v[j] for j in range(3)) for i in range(3)]
+@dataclass(frozen=True)
+class PythTriple:
+    """A Pythagorean triple (a, b, c) with a² + b² = c²."""
+    a: int
+    b: int
+    c: int
+    
+    def verify(self) -> bool:
+        return self.a**2 + self.b**2 == self.c**2
+    
+    def is_primitive(self) -> bool:
+        return math.gcd(math.gcd(abs(self.a), abs(self.b)), abs(self.c)) == 1
+    
+    def as_list(self) -> List[int]:
+        return [self.a, self.b, self.c]
 
-def generate_berggren_tree(max_hypotenuse: int = 1000) -> List[Tuple[int, int, int]]:
+
+# Berggren matrices (3×3 integer matrices)
+BERGGREN = {
+    'U': [[1, -2, 2], [2, -1, 2], [2, -2, 3]],
+    'A': [[1, 2, 2], [2, 1, 2], [2, 2, 3]],
+    'D': [[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]],
+}
+
+
+def apply_berggren(matrix_name: str, triple: PythTriple) -> PythTriple:
     """
-    Generate all primitive Pythagorean triples with hypotenuse ≤ max_hypotenuse.
+    Apply a Berggren generator to a Pythagorean triple.
     
-    Uses BFS on the Berggren tree starting from (3, 4, 5).
+    The three generators U, A, D form a ternary tree whose nodes
+    enumerate ALL primitive Pythagorean triples exactly once.
     
-    Time complexity: O(N) where N = number of triples generated
-    Space complexity: O(N)
-    
-    >>> triples = generate_berggren_tree(50)
-    >>> (3, 4, 5) in triples
-    True
-    >>> all(a**2 + b**2 == c**2 for a, b, c in triples)
-    True
+    Complexity: O(1) — fixed 3×3 matrix-vector multiply
     """
-    root = [3, 4, 5]
-    triples = []
-    queue = [root]
+    M = BERGGREN[matrix_name]
+    v = triple.as_list()
+    result = [sum(M[i][j] * v[j] for j in range(3)) for i in range(3)]
+    return PythTriple(*result)
+
+
+def berggren_bfs(max_hypotenuse: int) -> List[Tuple[PythTriple, str]]:
+    """
+    Breadth-first enumeration of primitive Pythagorean triples
+    via the Berggren tree, up to a given hypotenuse bound.
+    
+    Complexity: O(N) where N is the number of primitive triples with c ≤ max_hypotenuse.
+    By Lehmer's theorem, N ~ max_hypotenuse / (2π).
+    
+    Args:
+        max_hypotenuse: Upper bound on the hypotenuse c
+    
+    Returns:
+        List of (triple, word) pairs where word is the Berggren generator sequence
+    """
+    root = PythTriple(3, 4, 5)
+    results = [(root, "")]
+    queue = [(root, "")]
     
     while queue:
-        triple = queue.pop(0)
-        a, b, c = triple
-        if c > max_hypotenuse:
-            continue
-        triples.append((abs(a), abs(b), c))
-        for gen in BERGGREN_GENS:
-            child = mat_vec_mul(gen, triple)
-            if child[2] <= max_hypotenuse:
-                queue.append(child)
+        triple, word = queue.pop(0)
+        for name in ['U', 'A', 'D']:
+            child = apply_berggren(name, triple)
+            if child.c <= max_hypotenuse:
+                child_word = word + name
+                results.append((child, child_word))
+                queue.append((child, child_word))
     
-    return sorted(set(triples), key=lambda t: t[2])
+    return results
 
-# ============================================================
-# Algorithm 7: Pythagorean Triple Modular Scanning
-# ============================================================
 
-def scan_pythagorean_collisions(n: int, max_param: int = 100) -> List[Dict]:
+# ────────────────────────────────────────────────────────────────
+# Algorithm 3: Euclid Parametrization
+# ────────────────────────────────────────────────────────────────
+
+def euclid_triple(m: int, k: int) -> PythTriple:
     """
-    Scan Euclid-parametrized triples (m²-k², 2mk, m²+k²) for
-    square congruences modulo n.
+    Generate Pythagorean triple via Euclid's parametrization:
+        a = m² - k², b = 2mk, c = m² + k²
     
-    For each triple, checks whether c² ≡ 0 (mod n) with n ∤ c,
-    or a² ≡ b² (mod n) with n ∤ (a±b).
+    The triple is primitive iff gcd(m, k) = 1 and m - k is odd.
     
-    Returns list of collision records.
+    Key identities:
+        c - a = 2k²
+        c + a = 2m²
+    
+    These give square congruence data: c² - a² = (c-a)(c+a) = 4m²k² = b².
     """
-    collisions = []
-    for m in range(2, max_param):
+    a = m**2 - k**2
+    b = 2 * m * k
+    c = m**2 + k**2
+    return PythTriple(a, b, c)
+
+
+def euclid_congruence_data(m: int, k: int) -> dict:
+    """
+    Extract congruence data from an Euclid triple.
+    
+    Returns:
+        Dictionary with the triple and its sum-difference decomposition
+    """
+    t = euclid_triple(m, k)
+    return {
+        'triple': t,
+        'c_minus_a': t.c - t.a,  # = 2k²
+        'c_plus_a': t.c + t.a,   # = 2m²
+        'b_squared': t.b**2,     # = (c-a)(c+a)
+        'identity_check': (t.c - t.a) * (t.c + t.a) == t.b**2,
+    }
+
+
+# ────────────────────────────────────────────────────────────────
+# Algorithm 4: Divisibility Lattice
+# ────────────────────────────────────────────────────────────────
+
+@dataclass
+class LatticeVector:
+    """A 2D integer vector with norm computation."""
+    x: int
+    y: int
+    
+    def sq_norm(self) -> int:
+        return self.x**2 + self.y**2
+    
+    def is_zero(self) -> bool:
+        return self.x == 0 and self.y == 0
+    
+    def in_divisibility_lattice(self, n: int) -> bool:
+        return (self.x * self.y) % n == 0
+
+
+def factor_to_lattice_vector(n: int, d: int) -> LatticeVector:
+    """
+    Embed a factor d | n as a vector (d, n/d) in the divisibility lattice.
+    
+    Properties (proven in the formal development):
+        - (d, n/d) ∈ DivisibilityLattice(n) because n | d·(n/d)
+        - ‖(d, n/d)‖² = d² + (n/d)² ≤ n²
+    """
+    assert n % d == 0, f"{d} does not divide {n}"
+    return LatticeVector(d, n // d)
+
+
+def enumerate_lattice_vectors(n: int) -> List[LatticeVector]:
+    """
+    Find all factor-derived vectors in the divisibility lattice of n.
+    
+    Each nontrivial divisor d of n contributes the vector (d, n/d).
+    """
+    vectors = []
+    for d in range(2, n):
+        if n % d == 0:
+            vectors.append(factor_to_lattice_vector(n, d))
+    return vectors
+
+
+# ────────────────────────────────────────────────────────────────
+# Algorithm 5: Pythagorean-Guided Factoring
+# ────────────────────────────────────────────────────────────────
+
+def pythagorean_factor_search(n: int, search_bound: int = 1000) -> Optional[int]:
+    """
+    Search for a factor of n using Pythagorean triple congruence data.
+    
+    Strategy:
+        For each Euclid pair (m, k), compute the triple (a, b, c) and check:
+        1. If n | b², then c² ≡ a² (mod n), so gcd(c ± a, n) may give a factor
+        2. If n | (c² - a²) nontrivially, extract factor via gcd
+    
+    This is NOT a practical factoring algorithm — it's a demonstration that
+    Pythagorean arithmetic naturally produces the square-congruence data
+    needed for factoring.
+    
+    Complexity: O(search_bound² · log n)
+    
+    Args:
+        n: The number to factor (should be composite, not a prime power)
+        search_bound: Upper bound on the Euclid parameters m, k
+    
+    Returns:
+        A nontrivial factor of n, or None
+    """
+    for m in range(2, search_bound):
         for k in range(1, m):
-            if math.gcd(m, k) != 1 or (m - k) % 2 == 0:
-                continue
-            a = m**2 - k**2
-            b = 2 * m * k
-            c = m**2 + k**2
+            a, b, c = m**2 - k**2, 2*m*k, m**2 + k**2
             
-            # Check hypotenuse divisibility
-            if (a**2 + b**2) % n == 0 and c % n != 0:
-                d = math.gcd(c, n)
-                if 1 < d < n:
-                    collisions.append({
-                        'type': 'hypotenuse',
-                        'triple': (a, b, c),
-                        'params': (m, k),
-                        'factor': d,
-                        'complement': n // d
-                    })
-            
-            # Check leg collision
-            diff = (a**2 - b**2) % n
-            if diff == 0 and (a - b) % n != 0 and (a + b) % n != 0:
-                d = math.gcd(abs(a - b), n)
-                if 1 < d < n:
-                    collisions.append({
-                        'type': 'leg_collision',
-                        'triple': (a, b, c),
-                        'params': (m, k),
-                        'factor': d,
-                        'complement': n // d
-                    })
+            # Check if c² ≡ a² (mod n) nontrivially
+            if (c**2 - a**2) % n == 0:
+                if (c - a) % n != 0 and (c + a) % n != 0:
+                    d = extract_factor(n, c, a)
+                    if d is not None:
+                        return d
+                elif (c - a) % n != 0:
+                    d = math.gcd(abs(c - a), n)
+                    if 1 < d < n:
+                        return d
+                elif (c + a) % n != 0:
+                    d = math.gcd(abs(c + a), n)
+                    if 1 < d < n:
+                        return d
     
-    return collisions
+    return None
 
 
-# ============================================================
-# Demo / Self-test
-# ============================================================
+# ────────────────────────────────────────────────────────────────
+# Main: Run all algorithms with examples
+# ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Testing algorithms...")
+    print("=" * 60)
+    print("ALGORITHM DEMONSTRATIONS")
+    print("=" * 60)
     
-    # Test CRT-based square root
-    for p, q in [(3, 5), (7, 11), (13, 17), (101, 103)]:
-        n = p * q
-        r = find_nontrivial_sqrt_one_crt(p, q)
-        assert r is not None, f"Failed for p={p}, q={q}"
-        assert (r * r) % n == 1
-        assert r % n != 1 and r % n != n - 1
-        factors = factor_via_sqrt_collision(n, r)
-        assert set(factors) == {p, q}, f"Wrong factors for {n}: {factors}"
-        print(f"  ✓ {n} = {p} × {q}, r = {r}")
+    # Algorithm 1: Factor extraction
+    print("\n1. Factor Extraction from Square Congruences")
+    test_cases = [(91, 27, 1), (143, 12, 1), (221, 47, 21)]
+    for n, x, y in test_cases:
+        if (x**2 - y**2) % n == 0:
+            d = extract_factor(n, x, y)
+            print(f"   n={n}, x={x}, y={y}: factor = {d}")
     
-    # Test lattice reduction
-    b1, b2 = lattice_reduce_2d([91, 0], [27, 1])
-    print(f"  ✓ Reduced basis for L_91,27: {b1}, {b2}")
+    # Algorithm 2: Berggren tree
+    print("\n2. Berggren Tree (triples with c ≤ 100)")
+    triples = berggren_bfs(100)
+    for t, w in sorted(triples, key=lambda x: x[0].c):
+        print(f"   {w or '(root)':<10} ({t.a}, {t.b}, {t.c})")
     
-    # Test Berggren tree
-    triples = generate_berggren_tree(100)
-    assert all(a**2 + b**2 == c**2 for a, b, c in triples)
-    assert all(math.gcd(math.gcd(a, b), c) == 1 for a, b, c in triples)
-    print(f"  ✓ Generated {len(triples)} primitive Pythagorean triples with c ≤ 100")
+    # Algorithm 3: Euclid parametrization
+    print("\n3. Euclid Parametrization (first 10 primitive triples)")
+    count = 0
+    for m in range(2, 20):
+        for k in range(1, m):
+            if math.gcd(m, k) == 1 and (m - k) % 2 == 1:
+                data = euclid_congruence_data(m, k)
+                t = data['triple']
+                print(f"   (m={m},k={k}): ({t.a},{t.b},{t.c}), "
+                      f"c-a={data['c_minus_a']}=2·{k}²={2*k**2}, "
+                      f"c+a={data['c_plus_a']}=2·{m}²={2*m**2}")
+                count += 1
+                if count >= 10:
+                    break
+        if count >= 10:
+            break
     
-    # Test Pythagorean collision scanning
-    collisions = scan_pythagorean_collisions(91, max_param=50)
-    if collisions:
-        print(f"  ✓ Found {len(collisions)} Pythagorean collisions mod 91")
-        for c in collisions[:3]:
-            print(f"    {c['type']}: triple={c['triple']}, factor={c['factor']}")
+    # Algorithm 4: Divisibility lattice
+    print("\n4. Divisibility Lattice Vectors")
+    for n in [15, 35, 91]:
+        vectors = enumerate_lattice_vectors(n)
+        print(f"   n={n}: ", end="")
+        for v in vectors:
+            print(f"({v.x},{v.y}) ‖v‖²={v.sq_norm()} ", end="")
+        print(f"  [n²={n**2}]")
     
-    print("\nAll tests passed! ✓")
+    # Algorithm 5: Pythagorean factoring
+    print("\n5. Pythagorean-Guided Factoring")
+    for n in [91, 143, 221, 323, 1001, 10403]:
+        d = pythagorean_factor_search(n)
+        if d:
+            print(f"   n={n}: factor = {d}, {n} = {d} × {n//d}")
+        else:
+            print(f"   n={n}: no factor found in search range")
