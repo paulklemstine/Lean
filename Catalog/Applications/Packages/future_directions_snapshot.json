@@ -1576,24 +1576,6 @@
     "timestamp": "2026-05-14T17:33:00.515491+00:00"
   },
   {
-    "id": "fd_0174",
-    "title": "Apply to mixing lower bounds",
-    "description": ": Use tropical cycle gaps to give new proofs of mixing time lower bounds for Markov chains.\n\n### Proof Strategy\n- Build on the existing `spectral_moment_gap` theorem.\n- Use log-Sobolev inequality techniques adapted to the tropical setting.\n- Formalize the connection via a shared abstract semiring framework.\n\n### Cross-domain Impact\n- Markov chain Monte Carlo (mixing time analysis)\n- Quantum computing (quantum walk analysis)\n- Statistical physics (phase transition detection)\n\n---\n\n## Direction 5: Certified Algorithms for Tropical Spectral Gap Computation\n\n### Goal\nDevelop algorithms that compute tropical spectral gaps of finite machines and output machine-checkable lower-bound certificates.\n\n### Background\nThe tropical cycle gap is computable (via Karp's algorithm for minimum cycle mean), b",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "ad615ded",
-    "timestamp": "2026-05-14T17:33:00.524947+00:00"
-  },
-  {
     "id": "fd_0176",
     "title": "Generate certificates",
     "description": ": For a given $W$ and computed $g$, output a proof term of type `MinCycleCost n W g`.",
@@ -2463,5 +2445,37 @@
     "source_exp_id": "5fa1c5eb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:34:31.259341+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Implementation Plan",
+    "description": "1. Formalize Karp's algorithm in Lean 4 with correctness proof.\n2. Define a `CertifiedTropicalGap` structure containing the computed gap and its proof of validity.\n3. Compose with the bridge theorem to produce a certified spectral/mixing bound.\n4. Extract the algorithm to executable code via Lean's code generation.",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad615ded",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:34:54.003639+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Algorithmic Certification",
+    "description": "All five directions share a common goal: producing *machine-checkable certificates* for mixing properties. The tropical framework is uniquely suited to this because:\n- Tropical invariants are finitely computable\n- The inequalities involve only real arithmetic\n- The proofs are constructive and amenable to formal verification",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad615ded",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:34:54.012190+00:00"
   }
 ]
