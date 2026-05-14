@@ -342,6 +342,35 @@ class FutureDirectionsManager:
             }, indent=2, ensure_ascii=False),
             encoding="utf-8",
         )
+        self._update_snapshot()
+
+    def _update_snapshot(self) -> None:
+        """Write a display-friendly snapshot for CI/GitHub Pages consumption."""
+        # Walk up from .aether_workspace to find repo root, then into Catalog
+        repo_root = self.workspace.parent
+        snapshot_path = repo_root / "Catalog" / "Applications" / "Packages" / "future_directions_snapshot.json"
+        if not snapshot_path.parent.exists():
+            return
+        active = [d for d in self._directions if d.status not in ("completed", "pruned")]
+        display = []
+        for d in active:
+            display.append({
+                "id": d.id,
+                "title": d.title,
+                "description": d.description,
+                "domains": d.domains,
+                "priority_score": d.priority_score,
+                "status": d.status,
+                "research_mode": d.research_mode,
+                "source_exp_id": d.source_exp_id,
+                "consumed_by_exp_id": d.consumed_by_exp_id,
+                "timestamp": d.timestamp,
+            })
+        display.sort(key=lambda x: x["priority_score"], reverse=True)
+        snapshot_path.write_text(
+            json.dumps(display, indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
 
     def add_direction(self, direction: FutureDirection) -> None:
         """Add a new future direction. Skips if a very similar title already exists."""
