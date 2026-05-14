@@ -1072,7 +1072,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!a || !b) return;
                 const dx = b.x - a.x, dy = b.y - a.y;
                 const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                const f = K_SPRING * (d - REST_LENGTH);
+                // Provenance edges: strong springs pull nodes together tightly
+                // Heuristic edges: weak springs — subtle connections, don't clump
+                const isProv = (e.edgeType || e.type) === 'provenance';
+                const springK = isProv ? K_SPRING : K_SPRING * 0.15;
+                const restLen = isProv ? REST_LENGTH * 0.7 : REST_LENGTH * 1.5;
+                const f = springK * (d - restLen);
                 const fx = (dx / d) * f, fy = (dy / d) * f;
                 a.vx += fx; a.vy += fy;
                 b.vx -= fx; b.vy -= fy;
@@ -1423,9 +1428,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const blendH = (colA.h + colB.h) / 2;
                 const strength = e.strength || 0.5;
                 const isProvenance = (e.edgeType || e.type) === 'provenance';
-                const lineW = isProvenance ? (1.5 + strength * 2.5) : (0.5 + strength * 1.5);
-                const glowAlpha = isProvenance ? (0.25 + 0.3 * strength) : (0.1 + 0.15 * strength);
-                const coreAlpha = isProvenance ? (0.7 + 0.3 * strength) : (0.35 + 0.35 * strength);
+                const lineW = isProvenance ? (1.5 + strength * 2.5) : (0.3 + strength * 0.8);
+                const glowAlpha = isProvenance ? (0.25 + 0.3 * strength) : (0.05 + 0.1 * strength);
+                const coreAlpha = isProvenance ? (0.7 + 0.3 * strength) : (0.15 + 0.2 * strength);
 
                 // Glow line (thick, semi-transparent)
                 ctx.beginPath();
@@ -1465,8 +1470,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const colA = nodeColor(a), colB = nodeColor(b);
                 const blendH = (colA.h + colB.h) / 2;
                 const isProv = (p.edge.edgeType || p.edge.type) === 'provenance';
-                const alpha = isProv ? (0.6 + 0.4 * Math.sin(p.t * Math.PI)) : (0.3 + 0.3 * Math.sin(p.t * Math.PI));
-                const pSize = isProv ? p.size * 1.4 : p.size;
+                const alpha = isProv ? (0.6 + 0.4 * Math.sin(p.t * Math.PI)) : (0.15 + 0.15 * Math.sin(p.t * Math.PI));
+                const pSize = isProv ? p.size * 1.4 : p.size * 0.7;
 
                 ctx.beginPath();
                 ctx.arc(sp.x, sp.y, pSize * camera.zoom, 0, Math.PI * 2);

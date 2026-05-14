@@ -7,7 +7,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T03:08:28Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "dragon_curve_fractals_as_tropical_curve_generators",
@@ -16,7 +16,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T04:05:00Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -25,7 +25,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T04:05:25Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "tropical_knot_theory_min_plus_invariants_for_knot_",
@@ -34,7 +34,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T05:32:59Z",
-      "hue": 89
+      "hue": 270
     },
     {
       "id": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T05:33:18Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "emergent_computation_in_pythagorean_orbit_lattices",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:33:53Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -70,7 +70,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T05:34:09Z",
-      "hue": 292
+      "hue": 271
     },
     {
       "id": "riemann_hypothesis_via_tropical_spectral_transfer",
@@ -79,7 +79,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:34:23Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "hodge_conjecture_through_tropical_algebraic_cycles",
@@ -97,7 +97,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T06:33:48Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "homomorphic_encryption_over_tropical_semirings",
@@ -106,7 +106,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T06:34:03Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "sheaf_cohomology_and_certified_adversarial_robustn",
@@ -115,7 +115,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T06:34:20Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "consciousness_as_tropical_fixed_point_min_plus_ref",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T06:42:14Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "aristotle_prompt_engineering_category_theoretic_pr",
@@ -142,7 +142,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:09Z",
-      "hue": 275
+      "hue": 280
     },
     {
       "id": "thermodynamic_computation_via_tropical_landauers_p",
@@ -151,7 +151,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:24Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "quantum_pythagorean_teleportation_berggren_orbits_",
@@ -169,7 +169,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T07:33:50Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "neural_tangent_kernel_in_the_tropical_limit",
@@ -187,7 +187,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T07:34:18Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "homotopy_type_theory_via_tropical_higher_inductive",
@@ -196,7 +196,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T08:32:40Z",
-      "hue": 272
+      "hue": 280
     },
     {
       "id": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
@@ -205,7 +205,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T08:32:58Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "amortized_complexity_via_tropical_amortization",
@@ -214,7 +214,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T08:33:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "adversarial_training_as_tropical_regularization_pr",
@@ -223,7 +223,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T08:33:24Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "research_package_quality_via_certified_mathematica",
@@ -232,7 +232,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T08:39:16Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -241,7 +241,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T09:32:30Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "tropical_time_travel_min_plus_closed_timelike_curv",
@@ -250,7 +250,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T09:32:46Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "closure_operator_networks_universal_approximation_",
@@ -259,7 +259,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:32:57Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "pythagorean_lattice_reduction_for_integer_factorin",
@@ -268,7 +268,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T09:33:10Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "alien_mathematics_what_theorems_would_non_carbon_l",
@@ -277,7 +277,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T09:33:21Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -286,7 +286,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T09:33:33Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "deep_double_descent_as_tropical_phase_diagram",
@@ -295,7 +295,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:33:48Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "tropical_sudoku_min_plus_constraint_satisfaction_a",
@@ -313,7 +313,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:04Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "quantum_gravity_as_tropical_geometry_min_plus_spac",
@@ -322,7 +322,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:22Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "birch_swinnerton_dyer_via_tropical_l_function_spec",
@@ -331,7 +331,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T10:34:39Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "aether_quality_control_automated_counterexample_ge",
@@ -340,7 +340,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T10:34:57Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "semantic_compression_via_tropical_information_geom",
@@ -349,7 +349,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T10:35:16Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "alien_algebra_non_archimedean_life_forms_in_idempo",
@@ -358,7 +358,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T11:34:10Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "research_depth_guarantees_via_proof_theoretic_ordi",
@@ -376,7 +376,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T11:35:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "aether_evolution_self_modifying_research_strategie",
@@ -385,7 +385,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T11:35:43Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
@@ -394,7 +394,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T11:36:00Z",
-      "hue": 359
+      "hue": 91
     },
     {
       "id": "from_shallow_to_deep_formalizing_the_depth_gap_in_",
@@ -421,7 +421,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T12:35:20Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "grokking_as_tropical_phase_transition_in_neural_lo",
@@ -430,7 +430,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T13:22:26Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "category_theoretic_composition_of_neural_architect",
@@ -439,7 +439,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T13:22:43Z",
-      "hue": 270
+      "hue": 101
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -448,7 +448,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T13:23:00Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -457,7 +457,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T13:23:19Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "hyperbolic_crafting_optimal_nether_portals_via_tro",
@@ -466,7 +466,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T13:30:14Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "aristotle_quality_amplification_proof_strategy_min",
@@ -475,7 +475,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T13:30:31Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "dyson_sphere_optimization_tropical_light_network_f",
@@ -484,7 +484,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T14:08:56Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "post_quantum_lattices_from_pythagorean_triple_grou",
@@ -493,7 +493,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T14:11:36Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "p_vs_np_tropical_semiring_barrier",
@@ -502,7 +502,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T14:11:57Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "tropical_neural_code_classification_with_provable_",
@@ -511,7 +511,16 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T14:14:30Z",
-      "hue": 92
+      "hue": 270
+    },
+    {
+      "id": "tropical_origami_min_plus_fold_structures_and_rigi",
+      "title": "Tropical Origami: Min-Plus Fold Structures and Rigid Origami Classification",
+      "domain": "Tropical Geometry / Structural Mechanics / Physics",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-14T14:19:39Z",
+      "hue": 270
     }
   ],
   "edges": [
@@ -743,7 +752,7 @@
       "source": "p_vs_space_via_tropical_time_space_tradeoffs",
       "target": "tropical_sudoku_min_plus_constraint_satisfaction_a",
       "strength": 1.0,
-      "label": "Computation,Tropical,Algebra bridge",
+      "label": "Tropical,Computation,Algebra bridge",
       "type": "heuristic"
     },
     {
@@ -841,7 +850,7 @@
       "source": "navier_stokes_regularity_via_tropical_diffusion_op",
       "target": "thermodynamic_computation_via_tropical_landauers_p",
       "strength": 1.0,
-      "label": "Algebra,Tropical,Physics bridge",
+      "label": "Tropical,Physics,Algebra bridge",
       "type": "heuristic"
     },
     {
@@ -1217,6 +1226,13 @@
     },
     {
       "source": "string_theory_t_duality_as_tropical_duality_min_pl",
+      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
+      "strength": 1.0,
+      "label": "Tropical Origami",
+      "type": "heuristic"
+    },
+    {
+      "source": "string_theory_t_duality_as_tropical_duality_min_pl",
       "target": "p_vs_np_tropical_semiring_barrier",
       "strength": 1.0,
       "label": "Tropical Semiring Barrier Theorems",
@@ -1230,13 +1246,6 @@
       "type": "heuristic"
     },
     {
-      "source": "string_theory_t_duality_as_tropical_duality_min_pl",
-      "target": "quantum_gravity_as_tropical_geometry_min_plus_spac",
-      "strength": 1.0,
-      "label": "Tropical,Geometry,Physics bridge",
-      "type": "heuristic"
-    },
-    {
       "source": "quantum_gravity_as_tropical_geometry_min_plus_spac",
       "target": "p_vs_np_tropical_semiring_barrier",
       "strength": 1.0,
@@ -1245,16 +1254,16 @@
     },
     {
       "source": "quantum_gravity_as_tropical_geometry_min_plus_spac",
-      "target": "birch_swinnerton_dyer_via_tropical_l_function_spec",
+      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
       "strength": 1.0,
-      "label": "Tropical",
+      "label": "Tropical,Geometry,Physics bridge",
       "type": "heuristic"
     },
     {
       "source": "quantum_gravity_as_tropical_geometry_min_plus_spac",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
+      "target": "birch_swinnerton_dyer_via_tropical_l_function_spec",
       "strength": 1.0,
-      "label": "Tropical,Geometry bridge",
+      "label": "Tropical",
       "type": "heuristic"
     },
     {
@@ -1518,9 +1527,9 @@
     },
     {
       "source": "hyperbolic_crafting_optimal_nether_portals_via_tro",
-      "target": "dyson_sphere_optimization_tropical_light_network_f",
+      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
       "strength": 1.0,
-      "label": "Tropical Graph Optimization",
+      "label": "Tropical,Geometry bridge",
       "type": "heuristic"
     },
     {
@@ -1538,10 +1547,31 @@
       "type": "heuristic"
     },
     {
+      "source": "dyson_sphere_optimization_tropical_light_network_f",
+      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
+      "strength": 1.0,
+      "label": "Tropical Origami",
+      "type": "heuristic"
+    },
+    {
       "source": "p_vs_np_tropical_semiring_barrier",
       "target": "tropical_neural_code_classification_with_provable_",
       "strength": 1.0,
       "label": "Theme A: Formal Verification as a Resear",
+      "type": "heuristic"
+    },
+    {
+      "source": "p_vs_np_tropical_semiring_barrier",
+      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
+      "strength": 1.0,
+      "label": ": Implement tropical circuit simulators,",
+      "type": "heuristic"
+    },
+    {
+      "source": "tropical_neural_code_classification_with_provable_",
+      "target": "tropical_origami_min_plus_fold_structures_and_rigi",
+      "strength": 1.0,
+      "label": "Tropical,Geometry bridge",
       "type": "heuristic"
     }
   ]

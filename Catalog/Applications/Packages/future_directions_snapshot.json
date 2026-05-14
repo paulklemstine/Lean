@@ -393,10 +393,10 @@
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "adc29728",
     "timestamp": "2026-05-14T04:01:04.706770+00:00"
   },
   {
