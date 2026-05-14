@@ -5030,10 +5030,10 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "priority_score": 0.97,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68311f72",
     "timestamp": "2026-05-14T04:01:04.755941+00:00"
   },
   {
@@ -5110,10 +5110,10 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.95,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea1c2257",
     "timestamp": "2026-05-14T04:01:04.748007+00:00"
   },
   {
@@ -5462,10 +5462,10 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6bbd4646",
     "timestamp": "2026-05-14T04:01:04.722145+00:00"
   },
   {
@@ -5542,10 +5542,10 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "efd37502",
     "timestamp": "2026-05-14T04:01:04.699590+00:00"
   },
   {
@@ -5862,10 +5862,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.8,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "705e2def",
     "timestamp": "2026-05-14T04:01:04.717511+00:00"
   },
   {
@@ -5958,10 +5958,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.77,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f37e592e",
     "timestamp": "2026-05-14T04:01:04.718561+00:00"
   },
   {

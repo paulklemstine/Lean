@@ -221,8 +221,109 @@
         </div>
     </div>
 
+    <script src="js/state.js"></script>
     <script src="packages_db.js"></script>
-    <script src="app.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/lightbox.js"></script>
+    <script src="js/packages.js"></script>
+    <script src="js/pyodide-runner.js"></script>
+    <script src="js/knowledge-graph.js"></script>
+    <script src="js/directions.js"></script>
+    <script>
+    // Cross-module coordination and initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initial data load
+        if (window.PACKAGE_INDEX) {
+            window.Aether.packages = window.PACKAGE_INDEX;
+            if (window.renderSidebar) window.renderSidebar(window.PACKAGE_INDEX);
+        } else {
+            const pl = document.getElementById('package-list');
+            if (pl) pl.innerHTML = '<li class="nav-item"><div class="nav-item-title text-red">Please run update_index.py to bundle packages</div></li>';
+        }
+        if (window.FUTURE_DIRECTIONS && window.populateDomainFilter) {
+            window.populateDomainFilter();
+        }
+
+        // Periodic refresh: check for new packages every 60 seconds
+        // Skip on file:// protocol (CORS blocks fetch on local files)
+        if (location.protocol !== 'file:') {
+            setInterval(async () => {
+                try {
+                    const response = await fetch('packages_db.js', { cache: 'no-store' });
+                    if (!response.ok) return;
+                    const text = await response.text();
+                    const prevCount = (window.PACKAGE_INDEX || []).length;
+                    const fn = new Function(text + '; return { INDEX: window.PACKAGE_INDEX, DB: window.PACKAGE_DB, GRAPH: window.PACKAGE_GRAPH, DIRECTIONS: window.FUTURE_DIRECTIONS };');
+                    const newData = fn();
+                    if (newData.INDEX && newData.INDEX.length > prevCount) {
+                        window.PACKAGE_INDEX = newData.INDEX;
+                        window.PACKAGE_DB = newData.DB;
+                        window.Aether.packages = newData.INDEX;
+                        if (window.renderSidebar) window.renderSidebar(newData.INDEX);
+                        if (newData.GRAPH && newData.GRAPH.nodes) {
+                            newData.GRAPH.nodes.forEach(n => {
+                                if (window.addGraphNode) window.addGraphNode(n);
+                            });
+                        }
+                    }
+                    if (newData.GRAPH && newData.GRAPH.edges && newData.GRAPH.edges.length > 0) {
+                        const newEdges = newData.GRAPH.edges.filter(e =>
+                            !(window.PACKAGE_GRAPH?.edges || []).some(oe => oe.source === e.source && oe.target === e.target)
+                        );
+                        if (newEdges.length > 0 && window.addGraphEdges) {
+                            window.addGraphEdges(newEdges);
+                        }
+                        window.PACKAGE_GRAPH = newData.GRAPH;
+                    }
+                    if (newData.DIRECTIONS && newData.DIRECTIONS.length >= (window.FUTURE_DIRECTIONS || []).length) {
+                        window.FUTURE_DIRECTIONS = newData.DIRECTIONS;
+                        if (window.populateDomainFilter) window.populateDomainFilter();
+                        if (window.Aether.directionsVisible && window.renderDirectionsView) window.renderDirectionsView();
+                    }
+                } catch (err) {
+                    // Silently fail — refresh is best-effort
+                }
+            }, 60000);
+        }
+
+        // Author popover
+        const authorLink = document.getElementById('author-link');
+        const authorPopover = document.getElementById('author-popover');
+        const authorPopoverClose = document.getElementById('author-popover-close');
+        if (authorLink && authorPopover) {
+            authorLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                authorPopover.classList.toggle('hidden');
+            });
+            authorPopoverClose.addEventListener('click', () => {
+                authorPopover.classList.add('hidden');
+            });
+            document.addEventListener('click', (e) => {
+                if (!authorPopover.contains(e.target) && e.target !== authorLink) {
+                    authorPopover.classList.add('hidden');
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') authorPopover.classList.add('hidden');
+            });
+        }
+
+        // Override loadPackage to also hide directions view
+        const origLoadPackage = window.loadPackage;
+        window.loadPackage = function(filename) {
+            if (window.hideDirectionsView) window.hideDirectionsView();
+            origLoadPackage(filename);
+        };
+
+        // Override renderSidebar to also populate domain filter
+        const origRenderSidebar = window.renderSidebar;
+        window.renderSidebar = function(pkgArray) {
+            origRenderSidebar(pkgArray);
+            if (window.populateDomainFilter) window.populateDomainFilter();
+        };
+    });
+    </script>
 </body>
 
 </html>

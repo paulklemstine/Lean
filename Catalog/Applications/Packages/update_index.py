@@ -197,6 +197,12 @@ window.PACKAGE_DB = {json.dumps(package_db, indent=2)};
     # Append future research directions
     append_future_directions(script_dir, os.path.join(script_dir, "packages_db.js"))
 
+    # Ensure .nojekyll exists for GitHub Pages
+    nojekyll_path = os.path.join(script_dir, ".nojekyll")
+    if not os.path.exists(nojekyll_path):
+        open(nojekyll_path, 'w').close()
+        print("Created .nojekyll for GitHub Pages")
+
     os.chdir(original_dir)
 
 
