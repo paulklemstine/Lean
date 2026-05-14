@@ -233,10 +233,10 @@
       "Physics"
     ],
     "priority_score": 0.93,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e7c79405",
     "timestamp": "2026-05-14T04:01:04.700328+00:00"
   },
   {
@@ -441,10 +441,10 @@
       "Computation"
     ],
     "priority_score": 0.89,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3cb1c42c",
     "timestamp": "2026-05-14T04:01:04.704748+00:00"
   },
   {

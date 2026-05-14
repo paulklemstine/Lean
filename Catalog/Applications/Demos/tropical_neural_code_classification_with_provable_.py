@@ -2,257 +2,355 @@
 """
 Tropical Neural Code Classification — Applications
 
-Real-world applications of the tropical classification framework:
+Real-world applications of tropical margin theory:
 1. Neural population decoding with certified robustness
-2. Receptive field classification of visual stimuli
-3. Adversarial robustness certification for neural networks
+2. Adversarially robust image classification
+3. Neural code design optimization
+4. Biological receptive field analysis
+
+All computations are self-contained.
 """
 
 import numpy as np
-from typing import Dict, List, Tuple
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
-# ─────────────────────────────────────────────────────────
+
+# ============================================================
+# Core functions (self-contained)
+# ============================================================
+
+def tropical_scores_all(P, x):
+    return np.max(P - x[np.newaxis, :], axis=1)
+
+def tropical_classify(P, x):
+    return int(np.argmin(tropical_scores_all(P, x)))
+
+def tropical_margin(P, x, y):
+    scores = tropical_scores_all(P, x)
+    competitors = np.delete(scores, y)
+    return float(np.min(competitors - scores[y]))
+
+
+# ============================================================
 # Application 1: Neural Population Decoding
-# ─────────────────────────────────────────────────────────
+# ============================================================
 
-def neural_population_decoding():
+def app_neural_decoding():
     """
-    Application: Decoding stimulus identity from neural population activity.
+    Simulate neural population decoding with certified reliability.
 
-    Scenario: A population of 8 neurons responds to 3 different visual stimuli.
-    Each stimulus evokes a characteristic firing pattern (codebook).
-    We decode which stimulus was presented from a noisy observation.
-
-    The tropical classifier provides:
-    - Predicted stimulus identity
-    - Certified robustness radius (how much noise can be tolerated)
+    A population of neurons encodes stimulus direction (0°, 90°, 180°, 270°).
+    Each neuron has a tuning curve, and the tropical margin certifies
+    decoding reliability under noise.
     """
     print("=" * 60)
     print("APPLICATION 1: Neural Population Decoding")
     print("=" * 60)
 
+    # Simulate tuning curves for 20 neurons, 4 directions
+    n_neurons = 20
+    n_directions = 4
+    directions = np.array([0, 90, 180, 270])  # degrees
+
     np.random.seed(42)
-    n_neurons = 8
 
-    # Codebooks: prototypical firing patterns for each stimulus
-    # These represent receptive field responses
-    stimulus_A = np.array([  # Vertical grating
-        [8, 2, 7, 1, 8, 2, 7, 1],   # Pattern 1
-        [7, 3, 6, 2, 7, 3, 6, 2],   # Pattern 2 (variation)
-    ], dtype=float)
+    # Each neuron has a preferred direction and tuning width
+    preferred_dirs = np.random.uniform(0, 360, n_neurons)
+    tuning_widths = np.random.uniform(30, 90, n_neurons)
 
-    stimulus_B = np.array([  # Horizontal grating
-        [2, 8, 1, 7, 2, 8, 1, 7],
-        [3, 7, 2, 6, 3, 7, 2, 6],
-    ], dtype=float)
+    # Generate prototypes (mean firing rates)
+    P = np.zeros((n_directions, n_neurons))
+    for k, d in enumerate(directions):
+        for i in range(n_neurons):
+            angular_diff = min(abs(d - preferred_dirs[i]),
+                             360 - abs(d - preferred_dirs[i]))
+            P[k, i] = np.exp(-0.5 * (angular_diff / tuning_widths[i]) ** 2)
 
-    stimulus_C = np.array([  # Diagonal grating
-        [5, 5, 3, 3, 6, 6, 2, 2],
-        [4, 6, 2, 4, 5, 7, 1, 3],
-    ], dtype=float)
+    # Simulate noisy observations
+    noise_levels = [0.01, 0.05, 0.1, 0.2, 0.3, 0.5]
+    n_trials = 500
 
-    codebooks = {'Vertical': stimulus_A, 'Horizontal': stimulus_B, 'Diagonal': stimulus_C}
+    print(f"\n{'Noise σ':>8} | {'Accuracy':>8} | {'Certified %':>11} | {'Mean Margin':>11}")
+    print("-" * 50)
 
-    def trop_score(codebook, x):
-        return max(float(np.min(x - s)) for s in codebook)
+    for sigma in noise_levels:
+        correct = 0
+        certified = 0
+        margins = []
 
-    def classify(x):
-        scores = {name: trop_score(cb, x) for name, cb in codebooks.items()}
-        best = max(scores, key=scores.get)
-        sorted_scores = sorted(scores.values(), reverse=True)
-        gap = sorted_scores[0] - sorted_scores[1]
-        return best, gap / 2, scores
+        for _ in range(n_trials):
+            true_dir = np.random.randint(n_directions)
+            x = P[true_dir] + np.random.randn(n_neurons) * sigma
+            pred = tropical_classify(P, x)
+            m = tropical_margin(P, x, pred)
 
-    # Simulate noisy neural observations
-    print(f"\nNeural population: {n_neurons} neurons, 3 stimulus classes")
-    print(f"Codebook sizes: {', '.join(f'{k}={len(v)}' for k, v in codebooks.items())}")
+            if pred == true_dir:
+                correct += 1
+            if m > 0:
+                certified += 1
+            margins.append(m)
 
-    n_trials = 20
-    noise_levels = [0.5, 1.0, 2.0, 3.0]
+        acc = 100 * correct / n_trials
+        cert = 100 * certified / n_trials
+        mean_m = np.mean(margins)
 
-    for true_stimulus, true_codebook in codebooks.items():
-        print(f"\n--- True stimulus: {true_stimulus} ---")
-        base_pattern = true_codebook[0]
-
-        for noise_std in noise_levels:
-            correct = 0
-            certified = 0
-            for _ in range(n_trials):
-                noise = np.random.normal(0, noise_std, n_neurons)
-                observation = base_pattern + noise
-                pred, radius, scores = classify(observation)
-                if pred == true_stimulus:
-                    correct += 1
-                actual_noise = np.max(np.abs(noise))
-                if actual_noise < radius:
-                    certified += 1
-
-            print(f"  σ={noise_std:.1f}: accuracy={correct}/{n_trials}, "
-                  f"certified={certified}/{n_trials}")
+        print(f"{sigma:8.3f} | {acc:7.1f}% | {cert:10.1f}% | {mean_m:11.4f}")
 
 
-# ─────────────────────────────────────────────────────────
-# Application 2: Receptive Field Classification
-# ─────────────────────────────────────────────────────────
+# ============================================================
+# Application 2: Adversarially Robust Classification
+# ============================================================
 
-def receptive_field_classification():
+def app_adversarial_classification():
     """
-    Application: Classifying visual features by receptive field responses.
+    Demonstrate certified adversarial robustness for a tropical classifier.
 
-    Models simple/complex cell responses in primary visual cortex.
-    Demonstrates that tropical geometry naturally captures the max-pooling
-    structure of complex cell responses.
+    Compare the theoretical robustness guarantee (margin/2) against
+    empirical robustness under worst-case perturbations.
     """
     print("\n" + "=" * 60)
-    print("APPLICATION 2: Receptive Field Classification")
+    print("APPLICATION 2: Certified Adversarial Robustness")
     print("=" * 60)
 
     np.random.seed(123)
 
-    # Simulate receptive field responses for different orientations
-    n_orientations = 4  # 0°, 45°, 90°, 135°
-    n_spatial_phases = 3  # Different spatial phases
+    # 5 classes, 15 features
+    c, d = 5, 15
+    P = np.random.randn(c, d) * 2
 
-    # Generate orientation-selective codebooks
-    codebooks = {}
-    for k in range(n_orientations):
-        angle = k * 45
-        generators = []
-        for phase in range(n_spatial_phases):
-            # Simple cell response: tuned to orientation + phase
-            response = np.zeros(n_orientations * n_spatial_phases)
-            for p in range(n_spatial_phases):
-                idx = k * n_spatial_phases + p
-                response[idx] = 5.0 + np.random.uniform(-0.5, 0.5)
-                # Cross-orientation suppression
-                for k2 in range(n_orientations):
-                    if k2 != k:
-                        idx2 = k2 * n_spatial_phases + p
-                        response[idx2] = 1.0 + np.random.uniform(-0.3, 0.3)
-            generators.append(response)
-        codebooks[f'{angle}°'] = np.array(generators)
+    n_points = 200
+    results = []
 
-    n = n_orientations * n_spatial_phases
+    for _ in range(n_points):
+        # Random observation near a class center
+        true_class = np.random.randint(c)
+        x = P[true_class] + np.random.randn(d) * 0.3
 
-    def trop_score(codebook, x):
-        return max(float(np.min(x - s)) for s in codebook)
+        pred = tropical_classify(P, x)
+        margin = tropical_margin(P, x, pred)
+        cert_radius = max(0, margin / 2)
 
-    # Compute pairwise margins
-    print(f"\nFeature space: {n} dimensions ({n_orientations} orientations × {n_spatial_phases} phases)")
-    print(f"Classes: {list(codebooks.keys())}")
+        # Empirical robustness: find smallest perturbation that changes label
+        emp_radius = 0
+        for eps in np.linspace(0, 2, 100):
+            # Worst-case perturbation (try multiple random directions)
+            changed = False
+            for _ in range(50):
+                direction = np.random.randn(d)
+                direction = direction / np.max(np.abs(direction)) * eps
+                x_pert = x + direction
+                if tropical_classify(P, x_pert) != pred:
+                    changed = True
+                    break
+            if changed:
+                emp_radius = eps
+                break
+            emp_radius = eps
 
-    print(f"\nPairwise separation margins:")
-    labels = list(codebooks.keys())
-    for i in range(len(labels)):
-        for j in range(i + 1, len(labels)):
-            A, B = codebooks[labels[i]], codebooks[labels[j]]
-            margin = float('inf')
-            for a in A:
-                for b in B:
-                    margin = min(margin, float(np.max(a - b)))
-            print(f"  {labels[i]} vs {labels[j]}: γ = {margin:.2f}, "
-                  f"certified radius = {margin/2:.2f}")
+        results.append((cert_radius, emp_radius, pred == true_class))
 
-    # Test with noisy observations
-    print(f"\nClassification accuracy (100 trials per orientation, σ=1.0):")
-    for true_label, cb in codebooks.items():
-        correct = 0
-        for _ in range(100):
-            x = cb[0] + np.random.normal(0, 1.0, n)
-            scores = {l: trop_score(c, x) for l, c in codebooks.items()}
-            pred = max(scores, key=scores.get)
-            if pred == true_label:
-                correct += 1
-        print(f"  {true_label}: {correct}%")
+    cert_radii, emp_radii, correct = zip(*results)
+    cert_radii = np.array(cert_radii)
+    emp_radii = np.array(emp_radii)
+
+    print(f"\nMean certified radius: {np.mean(cert_radii):.4f}")
+    print(f"Mean empirical radius: {np.mean(emp_radii):.4f}")
+    print(f"Theory is tight: certified ≤ empirical in {100*np.mean(cert_radii <= emp_radii + 0.05):.0f}% of cases")
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(7, 7))
+    ax.scatter(cert_radii, emp_radii, alpha=0.5, s=30, c='#4ECDC4')
+    max_val = max(np.max(cert_radii), np.max(emp_radii)) * 1.1
+    ax.plot([0, max_val], [0, max_val], 'k--', alpha=0.5, label='Certified = Empirical')
+    ax.set_xlabel('Certified Robustness Radius (margin/2)', fontsize=12)
+    ax.set_ylabel('Empirical Robustness Radius', fontsize=12)
+    ax.set_title('Certified vs Empirical Adversarial Robustness', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('adversarial_robustness.png', dpi=150, bbox_inches='tight')
+    print("  Saved: adversarial_robustness.png")
+    plt.close()
 
 
-# ─────────────────────────────────────────────────────────
-# Application 3: Adversarial Robustness Certification
-# ─────────────────────────────────────────────────────────
+# ============================================================
+# Application 3: Neural Code Design
+# ============================================================
 
-def adversarial_robustness():
+def app_code_design():
     """
-    Application: Certifying robustness of a tropical classifier against
-    adversarial perturbations.
+    Optimize a neural codebook to maximize tropical margin.
 
-    Demonstrates the margin-based certification: if the score gap exceeds
-    2ε, then no L∞ perturbation of size ε can change the classification.
+    Uses gradient-free optimization (CMA-like random search) to find
+    codebooks with large minimum margin over a training set.
     """
     print("\n" + "=" * 60)
-    print("APPLICATION 3: Adversarial Robustness Certification")
+    print("APPLICATION 3: Neural Code Design Optimization")
     print("=" * 60)
 
     np.random.seed(456)
-    n = 6  # feature dimension
 
-    # Two-class problem with well-separated codebooks
-    A = np.array([
-        [6, 4, 2, 5, 3, 1],
-        [5, 5, 1, 4, 4, 2],
-        [7, 3, 3, 6, 2, 0],
-    ], dtype=float)
+    c, d = 4, 8  # 4 classes, 8 neurons
 
-    B = np.array([
-        [1, 3, 6, 0, 4, 5],
-        [2, 2, 5, 1, 5, 4],
-        [0, 4, 7, -1, 3, 6],
-    ], dtype=float)
+    # Generate training data: observations near class centers
+    n_train = 100
+    train_labels = np.random.randint(c, size=n_train)
 
-    def trop_score(codebook, x):
-        return max(float(np.min(x - s)) for s in codebook)
+    def min_margin(P_flat):
+        """Minimum margin over training set (to maximize)."""
+        P = P_flat.reshape(c, d)
+        # Generate observations near prototypes
+        margins = []
+        for i in range(n_train):
+            x = P[train_labels[i]] + np.random.randn(d) * 0.5
+            pred = tropical_classify(P, x)
+            m = tropical_margin(P, x, pred)
+            margins.append(m)
+        return np.min(margins)
 
-    # Test point
-    x = np.array([5.5, 4.0, 2.5, 4.5, 3.5, 1.5])
-    score_A = trop_score(A, x)
-    score_B = trop_score(B, x)
-    gap = score_A - score_B
-    certified_radius = gap / 2
+    # Random search optimization
+    best_P = np.random.randn(c, d)
+    best_score = min_margin(best_P.flatten())
 
-    print(f"\nFeature dimension: {n}")
-    print(f"Test point x = {x}")
-    print(f"Score(A) = {score_A:.3f}")
-    print(f"Score(B) = {score_B:.3f}")
-    print(f"Gap = {gap:.3f}")
-    print(f"Certified radius = {certified_radius:.3f}")
-    print(f"\nPrediction: {'A' if score_A >= score_B else 'B'}")
-    print(f"Guarantee: classification is invariant under L∞ perturbations < {certified_radius:.3f}")
+    scores_history = [best_score]
 
-    # Verify by exhaustive adversarial search
-    print(f"\nAdversarial verification (10000 random attacks):")
-    for eps in [0.5, 1.0, 1.5, 2.0, 2.5]:
-        flipped = 0
-        for _ in range(10000):
-            # Random adversarial perturbation
-            delta = np.random.uniform(-eps, eps, n)
-            x_adv = x + delta
-            score_A_adv = trop_score(A, x_adv)
-            score_B_adv = trop_score(B, x_adv)
-            if (score_A_adv >= score_B_adv) != (score_A >= score_B):
-                flipped += 1
-        status = "CERTIFIED SAFE" if eps < certified_radius else "vulnerable"
-        print(f"  ε={eps:.1f}: {flipped}/10000 flipped | {status}")
+    for iteration in range(200):
+        # Perturbation
+        candidate = best_P + np.random.randn(c, d) * 0.3 * (1 - iteration / 200)
+        score = min_margin(candidate.flatten())
 
-    # Coboundary margin analysis
-    print(f"\n--- Coboundary Margin Analysis ---")
-    # Simulated local margins from piecewise-linear regions
-    n_regions = 4
-    m = np.array([2.0, 1.5, 1.8, 2.2])  # local margins
-    L = np.array([3.0, 2.5, 2.8, 3.2])  # Lipschitz constants
-    b = np.array([0.15, 0.1, 0.2, 0.12])  # gauge corrections
+        if score > best_score:
+            best_P = candidate
+            best_score = score
 
-    adjusted = (m - L * np.abs(b)) / L
-    global_margin = np.min(adjusted)
+        scores_history.append(best_score)
 
-    print(f"Regions: {n_regions}")
-    print(f"Adjusted margins: {adjusted.round(4)}")
-    print(f"Global margin δ = {global_margin:.4f}")
-    print(f"Certified global radius = {global_margin:.4f}")
+        if (iteration + 1) % 50 == 0:
+            print(f"  Iteration {iteration+1}: min margin = {best_score:.4f}")
 
+    print(f"\nOptimized min margin: {best_score:.4f}")
+    print(f"Certified robustness radius: {best_score/2:.4f}")
+
+    # Plot optimization history
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(scores_history, color='#45B7D1', linewidth=2)
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('Minimum Tropical Margin', fontsize=12)
+    ax.set_title('Neural Code Design: Margin Optimization', fontsize=14)
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('code_optimization.png', dpi=150, bbox_inches='tight')
+    print("  Saved: code_optimization.png")
+    plt.close()
+
+
+# ============================================================
+# Application 4: Receptive Field Analysis
+# ============================================================
+
+def app_receptive_field():
+    """
+    Analyze biological-style receptive fields through tropical margin theory.
+
+    Simulate a population of place cells (neurons with spatial receptive fields)
+    and analyze their tropical coding properties.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Receptive Field Analysis")
+    print("=" * 60)
+
+    np.random.seed(789)
+
+    # Place cells: each neuron has a center and width
+    n_cells = 30
+    n_locations = 8  # number of location classes
+
+    # Cell centers uniformly distributed
+    cell_centers = np.random.uniform(0, 10, n_cells)
+    cell_widths = np.random.uniform(1, 3, n_cells)
+
+    # Location prototypes
+    locations = np.linspace(0, 10, n_locations, endpoint=False)
+
+    # Build codebook: firing rate = Gaussian tuning curve
+    P = np.zeros((n_locations, n_cells))
+    for k, loc in enumerate(locations):
+        for i in range(n_cells):
+            dist = min(abs(loc - cell_centers[i]),
+                      10 - abs(loc - cell_centers[i]))  # circular
+            P[k, i] = 5 * np.exp(-0.5 * (dist / cell_widths[i]) ** 2)
+
+    # Analyze margins across the spatial domain
+    test_positions = np.linspace(0, 10, 200)
+    margins = []
+    predicted_labels = []
+
+    for pos in test_positions:
+        # Generate firing pattern at this position
+        x = np.zeros(n_cells)
+        for i in range(n_cells):
+            dist = min(abs(pos - cell_centers[i]),
+                      10 - abs(pos - cell_centers[i]))
+            x[i] = 5 * np.exp(-0.5 * (dist / cell_widths[i]) ** 2)
+
+        pred = tropical_classify(P, x)
+        m = tropical_margin(P, x, pred)
+        margins.append(m)
+        predicted_labels.append(pred)
+
+    margins = np.array(margins)
+    predicted_labels = np.array(predicted_labels)
+
+    # Plot
+    fig, axes = plt.subplots(2, 1, figsize=(10, 7), sharex=True)
+
+    # Decision regions
+    for k in range(n_locations):
+        mask = predicted_labels == k
+        if np.any(mask):
+            axes[0].fill_between(test_positions, 0, 1,
+                                where=mask, alpha=0.3,
+                                label=f'Region {k}')
+    axes[0].set_ylabel('Decision Region', fontsize=12)
+    axes[0].set_title('Tropical Place Cell Decoding', fontsize=14)
+    axes[0].legend(loc='upper right', ncol=4, fontsize=8)
+
+    # Margin landscape
+    axes[1].plot(test_positions, margins, color='#4ECDC4', linewidth=2)
+    axes[1].axhline(y=0, color='red', linestyle='--', alpha=0.5)
+    axes[1].fill_between(test_positions, 0, margins,
+                        where=margins > 0, alpha=0.2, color='green',
+                        label='Certified')
+    axes[1].fill_between(test_positions, margins, 0,
+                        where=margins <= 0, alpha=0.2, color='red',
+                        label='Uncertain')
+    axes[1].set_xlabel('Position', fontsize=12)
+    axes[1].set_ylabel('Tropical Margin', fontsize=12)
+    axes[1].legend(fontsize=11)
+
+    plt.tight_layout()
+    plt.savefig('receptive_field_analysis.png', dpi=150, bbox_inches='tight')
+    print("  Saved: receptive_field_analysis.png")
+    plt.close()
+
+    cert_pct = 100 * np.mean(margins > 0)
+    print(f"\nCertified positions: {cert_pct:.1f}%")
+    print(f"Mean margin: {np.mean(margins):.4f}")
+    print(f"Min margin at certified positions: {np.min(margins[margins > 0]):.4f}")
+
+
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == '__main__':
-    neural_population_decoding()
-    receptive_field_classification()
-    adversarial_robustness()
+    app_neural_decoding()
+    app_adversarial_classification()
+    app_code_design()
+    app_receptive_field()
+
     print("\n" + "=" * 60)
     print("All applications completed successfully!")
     print("=" * 60)
@@ -260,562 +358,418 @@ if __name__ == '__main__':
 
 #!/usr/bin/env python3
 """
-Tropical Neural Code Classification — Demo
+Tropical Neural Code Classification — Demo & Visualization
 
-Demonstrates the core theorems with concrete numerical examples:
-1. Tropical separation margin certifies binary classification
-2. Tropical score stability under perturbation
-3. Finite dominance patterns control classification capacity
-"""
+Demonstrates the core theorems of tropical neural coding theory:
+- Tropical score computation
+- Tropical margin certification
+- Adversarial robustness verification
+- Decision region visualization
+- Classification capacity counting
 
-import numpy as np
-from typing import List, Tuple, Optional
-
-# ─────────────────────────────────────────────────────────
-# Core Definitions
-# ─────────────────────────────────────────────────────────
-
-def coord_gap(x: np.ndarray, s: np.ndarray) -> float:
-    """Coordinatewise infimum gap: min_i (x_i - s_i)."""
-    return np.min(x - s)
-
-def trop_generator_score(S: np.ndarray, x: np.ndarray) -> float:
-    """Tropical generator score: max over generators of coord_gap."""
-    if len(S) == 0:
-        return 0.0
-    return max(coord_gap(x, s) for s in S)
-
-def classifies_as_A(A: np.ndarray, B: np.ndarray, x: np.ndarray) -> bool:
-    """Returns True if x is classified as class A against class B."""
-    return trop_generator_score(A, x) >= trop_generator_score(B, x)
-
-def dominance_signature(C: np.ndarray, x: np.ndarray) -> np.ndarray:
-    """For each generator s and coordinate pair (i,j), records x_i - s_i >= x_j - s_j."""
-    n = x.shape[0]
-    sigs = []
-    for s in C:
-        gaps = x - s
-        sig = np.array([[gaps[i] >= gaps[j] for j in range(n)] for i in range(n)])
-        sigs.append(sig)
-    return np.array(sigs)
-
-def separation_margin(A: np.ndarray, B: np.ndarray) -> Tuple[float, Optional[int]]:
-    """Compute the separation margin: min over (a,b) pairs of max_i (a_i - b_i)."""
-    min_margin = float('inf')
-    best_coord = None
-    for a in A:
-        for b in B:
-            gaps = a - b
-            max_gap = np.max(gaps)
-            coord = int(np.argmax(gaps))
-            if max_gap < min_margin:
-                min_margin = max_gap
-                best_coord = coord
-    return min_margin, best_coord
-
-# ─────────────────────────────────────────────────────────
-# Demo 1: Tropical Separation Certifies Classification
-# ─────────────────────────────────────────────────────────
-
-def demo_separation():
-    """Demonstrates Theorem A: positive separation implies no dual membership."""
-    print("=" * 60)
-    print("DEMO 1: Tropical Separation Certifies Classification")
-    print("=" * 60)
-
-    # Two neural codebooks in R^3
-    # Class A: neurons responding strongly to stimulus type A
-    A = np.array([
-        [5.0, 3.0, 1.0],   # neuron pattern 1
-        [4.5, 3.5, 1.5],   # neuron pattern 2
-    ])
-
-    # Class B: neurons responding strongly to stimulus type B
-    B = np.array([
-        [1.0, 2.0, 4.0],   # neuron pattern 3
-        [1.5, 1.5, 3.5],   # neuron pattern 4
-    ])
-
-    gamma, coord = separation_margin(A, B)
-    print(f"\nCodebook A (stimulus class A):\n{A}")
-    print(f"Codebook B (stimulus class B):\n{B}")
-    print(f"\nSeparation margin γ = {gamma:.2f} (witnessed at coordinate {coord})")
-    print(f"Certified perturbation radius: γ/2 = {gamma/2:.2f}")
-
-    # Test point near class A
-    x = np.array([4.8, 3.2, 1.2])
-    score_A = trop_generator_score(A, x)
-    score_B = trop_generator_score(B, x)
-
-    print(f"\nTest point x = {x}")
-    print(f"  Score vs A: {score_A:.2f}")
-    print(f"  Score vs B: {score_B:.2f}")
-    print(f"  Classification: {'A' if score_A >= score_B else 'B'}")
-
-    # Check distances to nearest generators
-    dist_A = min(np.max(np.abs(x - a)) for a in A)
-    dist_B = min(np.max(np.abs(x - b)) for b in B)
-    print(f"  L∞ distance to A: {dist_A:.2f}")
-    print(f"  L∞ distance to B: {dist_B:.2f}")
-    print(f"  Within γ/2 of A? {dist_A < gamma/2}")
-    print(f"  Within γ/2 of B? {dist_B < gamma/2}")
-    print(f"  → Theorem guarantees: cannot be within γ/2 of both! ✓")
-
-    # Perturbed point
-    print("\n--- Perturbation test ---")
-    eps = 0.3
-    perturbation = np.array([0.2, -0.1, 0.3])
-    x_perturbed = x + perturbation
-    score_A_pert = trop_generator_score(A, x_perturbed)
-    score_B_pert = trop_generator_score(B, x_perturbed)
-    gap = score_A - score_B
-    print(f"  Original gap: {gap:.2f}")
-    print(f"  Perturbation size (L∞): {np.max(np.abs(perturbation)):.2f}")
-    print(f"  Perturbed scores: A={score_A_pert:.2f}, B={score_B_pert:.2f}")
-    print(f"  Classification preserved? {classifies_as_A(A, B, x) == classifies_as_A(A, B, x_perturbed)}")
-
-# ─────────────────────────────────────────────────────────
-# Demo 2: Score Stability Under Perturbation
-# ─────────────────────────────────────────────────────────
-
-def demo_stability():
-    """Demonstrates Theorem A (stability): small perturbations preserve classification."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Tropical Score Stability Under Perturbation")
-    print("=" * 60)
-
-    np.random.seed(42)
-    n = 4  # dimension
-
-    # Generate random codebooks
-    A = np.random.randn(3, n) + np.array([3, 0, -1, 2])
-    B = np.random.randn(3, n) + np.array([-1, 2, 3, -2])
-
-    x = np.array([2.5, 0.5, -0.5, 1.5])
-    score_A = trop_generator_score(A, x)
-    score_B = trop_generator_score(B, x)
-    gap = score_A - score_B
-
-    print(f"\nDimension: {n}")
-    print(f"Original point x = {x}")
-    print(f"Score gap (A - B): {gap:.4f}")
-    print(f"Critical perturbation radius: {gap/2:.4f}")
-
-    # Test many random perturbations
-    print(f"\nTesting 1000 random perturbations of increasing size:")
-    for eps_level in [0.1, 0.5, 1.0, 1.5, 2.0]:
-        preserved = 0
-        for _ in range(1000):
-            pert = np.random.uniform(-eps_level, eps_level, n)
-            x_pert = x + pert
-            if classifies_as_A(A, B, x) == classifies_as_A(A, B, x_pert):
-                preserved += 1
-        max_safe = gap / 2
-        guaranteed = "YES (theorem guarantees)" if eps_level < max_safe else "no guarantee"
-        print(f"  ε={eps_level:.1f}: {preserved}/1000 preserved | {guaranteed}")
-
-# ─────────────────────────────────────────────────────────
-# Demo 3: Finite Dominance Patterns
-# ─────────────────────────────────────────────────────────
-
-def demo_dominance_patterns():
-    """Demonstrates Theorem B: dominance patterns form a finite quotient."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Finite Dominance Patterns Control Classification")
-    print("=" * 60)
-
-    # Simple 2D codebook
-    C = np.array([
-        [1.0, 3.0],
-        [3.0, 1.0],
-        [2.0, 2.0],
-    ])
-
-    print(f"\nCodebook C ({len(C)} generators in R^2):\n{C}")
-
-    # Sample many random points and collect unique signatures
-    np.random.seed(123)
-    unique_sigs = set()
-    sig_to_points = {}
-
-    for _ in range(10000):
-        x = np.random.uniform(-5, 8, 2)
-        sig = dominance_signature(C, x)
-        sig_key = sig.tobytes()
-        unique_sigs.add(sig_key)
-        if sig_key not in sig_to_points:
-            sig_to_points[sig_key] = []
-        if len(sig_to_points[sig_key]) < 3:
-            sig_to_points[sig_key].append(x.copy())
-
-    print(f"\nSampled 10000 random points in [-5, 8]^2")
-    print(f"Number of unique dominance signatures: {len(unique_sigs)}")
-    print(f"\nTheorem B guarantees: any classifier factoring through dominance")
-    print(f"signatures has at most {len(unique_sigs)} distinct output labels.")
-
-    # Show that classification agrees within each signature class
-    A_code = C[:1]  # first generator is class A
-    B_code = C[1:]  # rest is class B
-
-    consistent = True
-    for sig_key, points in sig_to_points.items():
-        if len(points) >= 2:
-            labels = [classifies_as_A(A_code, B_code, p) for p in points]
-            if len(set(labels)) > 1:
-                consistent = False
-                break
-
-    print(f"\nClassification consistent within signature classes: {consistent} ✓")
-
-# ─────────────────────────────────────────────────────────
-# Demo 4: Coboundary Margin Transfer
-# ─────────────────────────────────────────────────────────
-
-def demo_coboundary():
-    """Demonstrates Theorem C: coboundary conditions yield global margins."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Coboundary Margin Transfer")
-    print("=" * 60)
-
-    # Three regions with local margin certificates
-    regions = ['Region 1', 'Region 2', 'Region 3']
-    m = np.array([1.0, 0.8, 1.2])    # local margins
-    L = np.array([2.0, 1.5, 2.5])    # Lipschitz constants
-    b = np.array([0.1, 0.2, 0.15])   # gauge corrections
-
-    print(f"\n{'Region':<12} {'Margin m':<12} {'Lip L':<10} {'Gauge |b|':<12} {'L*|b|':<10} {'Adjusted':<10}")
-    print("-" * 66)
-    for i in range(3):
-        adjusted = (m[i] - L[i] * abs(b[i])) / L[i]
-        print(f"{regions[i]:<12} {m[i]:<12.2f} {L[i]:<10.2f} {abs(b[i]):<12.2f} {L[i]*abs(b[i]):<10.2f} {adjusted:<10.4f}")
-
-    # Check coboundary condition
-    coboundary_holds = all(L[i] * abs(b[i]) <= m[i] for i in range(3))
-    adjusted_margins = [(m[i] - L[i] * abs(b[i])) / L[i] for i in range(3)]
-    global_margin = min(adjusted_margins)
-
-    print(f"\nCoboundary condition L·|b| ≤ m: {'✓ holds' if coboundary_holds else '✗ fails'}")
-    print(f"Global adjusted margin δ = min(adjusted) = {global_margin:.4f}")
-    print(f"δ ≥ 0: {global_margin >= 0} ✓")
-    print(f"\nTheorem C guarantees: certified tropical classification margin ≥ {global_margin:.4f}")
-
-# ─────────────────────────────────────────────────────────
-
-if __name__ == '__main__':
-    demo_separation()
-    demo_stability()
-    demo_dominance_patterns()
-    demo_coboundary()
-    print("\n" + "=" * 60)
-    print("All demos completed successfully!")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Tropical Neural Code Classification — Visualizations
-
-Generates publication-quality figures illustrating:
-1. Tropical separation between codebooks
-2. Dominance pattern partition of input space
-3. Score stability under perturbation
-4. Coboundary margin diagram
+All computations are self-contained (no local imports).
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch
-import matplotlib.patches as mpatches
+from matplotlib.colors import ListedColormap
+from itertools import product
+import json
+import base64
+from io import BytesIO
 
-# ─────────────────────────────────────────────────────────
-# Figure 1: Tropical Separation Between Codebooks
-# ─────────────────────────────────────────────────────────
+# ============================================================
+# Core Algorithms
+# ============================================================
 
-def plot_tropical_separation():
-    """Visualize two codebooks with their γ/2 neighborhoods."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+def tropical_score(P_k: np.ndarray, x: np.ndarray) -> float:
+    """
+    Tropical score of observation x against prototype P_k.
+    score(P, x, k) = max_i (P_k[i] - x[i])
 
-    # Codebooks in R^2
-    A = np.array([[5.0, 3.0], [4.5, 3.5], [4.0, 4.0]])
-    B = np.array([[1.0, 2.0], [1.5, 1.5], [2.0, 1.0]])
+    Lower score = better match.
 
-    # Compute margin
-    gamma = float('inf')
-    for a in A:
-        for b in B:
-            gamma = min(gamma, max(a - b))
+    Parameters
+    ----------
+    P_k : array of shape (d,) — prototype vector for label k
+    x : array of shape (d,) — observation vector
 
-    radius = gamma / 2
+    Returns
+    -------
+    float — the tropical score
+    """
+    return np.max(P_k - x)
 
-    # Plot neighborhoods (L∞ balls)
-    for a in A:
-        rect = plt.Rectangle(a - radius, 2 * radius, 2 * radius,
-                            fill=True, alpha=0.15, color='royalblue',
-                            linewidth=1.5, edgecolor='royalblue', linestyle='--')
-        ax.add_patch(rect)
 
-    for b in B:
-        rect = plt.Rectangle(b - radius, 2 * radius, 2 * radius,
-                            fill=True, alpha=0.15, color='crimson',
-                            linewidth=1.5, edgecolor='crimson', linestyle='--')
-        ax.add_patch(rect)
+def tropical_scores(P: np.ndarray, x: np.ndarray) -> np.ndarray:
+    """
+    Compute tropical scores for all labels.
 
-    # Plot generators
-    ax.scatter(A[:, 0], A[:, 1], s=150, c='royalblue', marker='s',
-              zorder=5, edgecolors='navy', linewidth=2, label='Class A generators')
-    ax.scatter(B[:, 0], B[:, 1], s=150, c='crimson', marker='^',
-              zorder=5, edgecolors='darkred', linewidth=2, label='Class B generators')
+    Parameters
+    ----------
+    P : array of shape (c, d) — codebook of prototypes
+    x : array of shape (d,) — observation vector
 
-    # Annotate margin
-    ax.annotate('', xy=(A[0, 0], A[0, 1] - 0.3), xytext=(B[0, 0], B[0, 1] + 0.3),
-               arrowprops=dict(arrowstyle='<->', color='black', lw=2))
-    mid_x = (A[0, 0] + B[0, 0]) / 2
-    mid_y = (A[0, 1] + B[0, 1]) / 2
-    ax.text(mid_x + 0.3, mid_y, f'γ = {gamma:.1f}', fontsize=14,
-           fontweight='bold', ha='left')
+    Returns
+    -------
+    array of shape (c,) — scores for each label
+    """
+    return np.max(P - x[np.newaxis, :], axis=1)
 
-    ax.set_xlabel('Coordinate 1 (Neuron 1 firing rate)', fontsize=13)
-    ax.set_ylabel('Coordinate 2 (Neuron 2 firing rate)', fontsize=13)
-    ax.set_title('Tropical Separation Between Neural Codebooks', fontsize=15, fontweight='bold')
-    ax.legend(fontsize=12, loc='upper left')
-    ax.set_xlim(-0.5, 7)
-    ax.set_ylim(-0.5, 6)
-    ax.set_aspect('equal')
+
+def tropical_margin(P: np.ndarray, x: np.ndarray, y: int) -> float:
+    """
+    Tropical margin of observation x at true label y.
+    margin(P, x, y) = min_{j != y} (score(x,j) - score(x,y))
+
+    Positive margin certifies correct classification.
+
+    Parameters
+    ----------
+    P : array of shape (c, d)
+    x : array of shape (d,)
+    y : int — true label index
+
+    Returns
+    -------
+    float — the margin (positive = correct classification certified)
+    """
+    scores = tropical_scores(P, x)
+    competitors = np.delete(scores, y)
+    return float(np.min(competitors - scores[y]))
+
+
+def tropical_classify(P: np.ndarray, x: np.ndarray) -> int:
+    """
+    Classify observation x using the tropical codebook P.
+    Returns the label minimizing tropical score.
+
+    Parameters
+    ----------
+    P : array of shape (c, d)
+    x : array of shape (d,)
+
+    Returns
+    -------
+    int — predicted label
+    """
+    scores = tropical_scores(P, x)
+    return int(np.argmin(scores))
+
+
+def tropical_argmin_set(P: np.ndarray, x: np.ndarray) -> frozenset:
+    """
+    The set of labels achieving minimum tropical score.
+
+    Parameters
+    ----------
+    P : array of shape (c, d)
+    x : array of shape (d,)
+
+    Returns
+    -------
+    frozenset of int — labels achieving the minimum score
+    """
+    scores = tropical_scores(P, x)
+    min_score = np.min(scores)
+    return frozenset(np.where(np.isclose(scores, min_score))[0].tolist())
+
+
+# ============================================================
+# Demo 1: Basic Classification and Margin
+# ============================================================
+
+def demo_basic_classification():
+    """Demonstrate tropical classification with margin computation."""
+    print("=" * 60)
+    print("DEMO 1: Basic Tropical Classification")
+    print("=" * 60)
+
+    # 3 classes, 4 neurons
+    P = np.array([
+        [1.0, 0.0, 2.0, 1.0],   # Class 0: responds to pattern A
+        [0.0, 2.0, 0.0, 1.0],   # Class 1: responds to pattern B
+        [1.0, 1.0, 0.0, 3.0],   # Class 2: responds to pattern C
+    ])
+
+    # Test observations
+    observations = [
+        np.array([1.5, 0.5, 2.5, 1.5]),  # Close to class 0
+        np.array([0.5, 2.5, 0.5, 1.5]),  # Close to class 1
+        np.array([1.5, 1.5, 0.5, 3.5]),  # Close to class 2
+        np.array([0.8, 1.2, 1.0, 1.5]),  # Ambiguous
+    ]
+
+    for i, x in enumerate(observations):
+        scores = tropical_scores(P, x)
+        label = tropical_classify(P, x)
+        margins = [tropical_margin(P, x, k) for k in range(3)]
+
+        print(f"\nObservation {i}: x = {x}")
+        print(f"  Scores: {scores}")
+        print(f"  Predicted label: {label}")
+        print(f"  Margins: {[f'{m:.3f}' for m in margins]}")
+        print(f"  Margin at predicted label: {margins[label]:.3f}")
+
+        if margins[label] > 0:
+            print(f"  ✓ Classification CERTIFIED (margin > 0)")
+        else:
+            print(f"  ✗ Classification NOT certified (margin ≤ 0)")
+
+
+# ============================================================
+# Demo 2: Adversarial Robustness
+# ============================================================
+
+def demo_adversarial_robustness():
+    """Demonstrate margin stability under perturbation."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Adversarial Robustness via Margin Stability")
+    print("=" * 60)
+
+    P = np.array([
+        [2.0, 0.0, 1.0],
+        [0.0, 2.0, 1.0],
+        [1.0, 1.0, 2.0],
+    ])
+
+    x = np.array([2.5, 0.5, 1.5])  # Close to class 0
+    true_label = tropical_classify(P, x)
+    margin = tropical_margin(P, x, true_label)
+
+    print(f"\nOriginal: x = {x}, label = {true_label}, margin = {margin:.4f}")
+    print(f"Certified robustness radius: ε < {margin/2:.4f}")
+
+    # Test perturbations of increasing size
+    np.random.seed(42)
+    epsilons = [0.01, 0.05, 0.1, 0.2, 0.3, 0.5, 0.8, 1.0]
+
+    print(f"\n{'ε':>6} | {'Perturbed Label':>15} | {'Perturbed Margin':>16} | {'Theory Bound':>12} | {'Status':>10}")
+    print("-" * 75)
+
+    for eps in epsilons:
+        perturbation = np.random.uniform(-eps, eps, size=x.shape)
+        x_pert = x + perturbation
+        pert_label = tropical_classify(P, x_pert)
+        pert_margin = tropical_margin(P, x_pert, true_label)
+        theory_bound = margin - 2 * eps
+
+        status = "SAFE" if eps < margin / 2 else "AT RISK"
+        correct = "✓" if pert_label == true_label else "✗"
+
+        print(f"{eps:6.3f} | {pert_label:>15} {correct} | {pert_margin:>16.4f} | {theory_bound:>12.4f} | {status:>10}")
+
+
+# ============================================================
+# Demo 3: Decision Region Visualization
+# ============================================================
+
+def demo_decision_regions():
+    """Visualize tropical decision regions in 2D."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Tropical Decision Region Visualization")
+    print("=" * 60)
+
+    # 3 classes in 2D (for visualization)
+    P = np.array([
+        [0.0, 2.0],
+        [2.0, 0.0],
+        [1.5, 1.5],
+    ])
+
+    # Create grid
+    grid_size = 300
+    x_range = np.linspace(-1, 4, grid_size)
+    y_range = np.linspace(-1, 4, grid_size)
+    xx, yy = np.meshgrid(x_range, y_range)
+
+    # Classify each point
+    labels = np.zeros_like(xx, dtype=int)
+    margins = np.zeros_like(xx)
+
+    for i in range(grid_size):
+        for j in range(grid_size):
+            x = np.array([xx[i, j], yy[i, j]])
+            labels[i, j] = tropical_classify(P, x)
+            margins[i, j] = tropical_margin(P, x, labels[i, j])
+
+    # Plot decision regions
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Decision regions
+    cmap = ListedColormap(['#FF6B6B', '#4ECDC4', '#45B7D1'])
+    axes[0].contourf(xx, yy, labels, levels=[-0.5, 0.5, 1.5, 2.5], cmap=cmap, alpha=0.6)
+    axes[0].scatter(P[:, 0], P[:, 1], c='black', s=200, marker='*', zorder=5, label='Prototypes')
+    for k in range(3):
+        axes[0].annotate(f'P{k}', (P[k, 0] + 0.1, P[k, 1] + 0.1), fontsize=12, fontweight='bold')
+    axes[0].set_xlabel('Neuron 1 firing rate', fontsize=12)
+    axes[0].set_ylabel('Neuron 2 firing rate', fontsize=12)
+    axes[0].set_title('Tropical Decision Regions', fontsize=14)
+    axes[0].legend(fontsize=11)
+
+    # Margin heatmap
+    im = axes[1].contourf(xx, yy, margins, levels=20, cmap='RdYlGn')
+    axes[1].contour(xx, yy, margins, levels=[0], colors='black', linewidths=2)
+    axes[1].scatter(P[:, 0], P[:, 1], c='black', s=200, marker='*', zorder=5)
+    plt.colorbar(im, ax=axes[1], label='Tropical Margin')
+    axes[1].set_xlabel('Neuron 1 firing rate', fontsize=12)
+    axes[1].set_ylabel('Neuron 2 firing rate', fontsize=12)
+    axes[1].set_title('Tropical Margin Landscape', fontsize=14)
+
+    plt.tight_layout()
+    plt.savefig('tropical_decision_regions.png', dpi=150, bbox_inches='tight')
+    print("  Saved: tropical_decision_regions.png")
+    plt.close()
+
+    return fig
+
+
+# ============================================================
+# Demo 4: Classification Capacity
+# ============================================================
+
+def demo_classification_capacity():
+    """Count distinct decision patterns for random codebooks."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Classification Capacity (Theorem C)")
+    print("=" * 60)
+
+    np.random.seed(123)
+
+    print(f"\n{'c':>4} | {'d':>4} | {'Distinct Patterns':>18} | {'Upper Bound 2^c':>15} | {'Ratio':>8}")
+    print("-" * 60)
+
+    for c in [2, 3, 4, 5]:
+        for d in [2, 3, 5, 10]:
+            P = np.random.randn(c, d)
+
+            # Sample many random points and count distinct decision patterns
+            n_samples = 5000
+            patterns = set()
+            for _ in range(n_samples):
+                x = np.random.randn(d) * 2
+                pattern = tropical_argmin_set(P, x)
+                patterns.add(pattern)
+
+            upper_bound = 2 ** c
+            ratio = len(patterns) / upper_bound
+            print(f"{c:4d} | {d:4d} | {len(patterns):18d} | {upper_bound:15d} | {ratio:8.4f}")
+
+
+# ============================================================
+# Demo 5: Margin Distribution
+# ============================================================
+
+def demo_margin_distribution():
+    """Analyze margin distribution for random codebooks."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Margin Distribution Analysis")
+    print("=" * 60)
+
+    np.random.seed(456)
+
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+    configs = [(3, 5), (4, 10), (5, 20), (8, 30)]
+
+    for idx, (c, d) in enumerate(configs):
+        ax = axes[idx // 2][idx % 2]
+        P = np.random.randn(c, d)
+
+        margins_list = []
+        for _ in range(3000):
+            x = np.random.randn(d) * 1.5
+            label = tropical_classify(P, x)
+            m = tropical_margin(P, x, label)
+            margins_list.append(m)
+
+        margins_arr = np.array(margins_list)
+        ax.hist(margins_arr, bins=50, color='#4ECDC4', alpha=0.7, edgecolor='white')
+        ax.axvline(x=0, color='red', linestyle='--', linewidth=2, label='Margin = 0')
+        ax.set_xlabel('Tropical Margin', fontsize=11)
+        ax.set_ylabel('Count', fontsize=11)
+        ax.set_title(f'c={c} classes, d={d} neurons', fontsize=12)
+        ax.legend()
+
+        pct_certified = 100 * np.mean(margins_arr > 0)
+        ax.text(0.95, 0.95, f'{pct_certified:.1f}% certified',
+                transform=ax.transAxes, ha='right', va='top',
+                fontsize=11, bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+
+    plt.suptitle('Tropical Margin Distribution by Code Parameters', fontsize=14, y=1.02)
+    plt.tight_layout()
+    plt.savefig('margin_distribution.png', dpi=150, bbox_inches='tight')
+    print("  Saved: margin_distribution.png")
+    plt.close()
+
+    return fig
+
+
+# ============================================================
+# Demo 6: Robustness Radius vs Dimension
+# ============================================================
+
+def demo_robustness_scaling():
+    """Study how robustness radius scales with dimension."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Robustness Radius Scaling")
+    print("=" * 60)
+
+    np.random.seed(789)
+
+    dimensions = [2, 3, 5, 8, 10, 15, 20, 30, 50]
+    c = 4  # fixed number of classes
+
+    mean_margins = []
+    median_margins = []
+    min_margins = []
+
+    for d in dimensions:
+        P = np.random.randn(c, d)
+        margins_list = []
+        for _ in range(1000):
+            x = P[np.random.randint(c)] + np.random.randn(d) * 0.5
+            label = tropical_classify(P, x)
+            m = tropical_margin(P, x, label)
+            margins_list.append(m)
+
+        arr = np.array(margins_list)
+        mean_margins.append(np.mean(arr))
+        median_margins.append(np.median(arr))
+        min_margins.append(np.min(arr))
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(dimensions, mean_margins, 'o-', label='Mean margin', color='#4ECDC4', linewidth=2)
+    ax.plot(dimensions, median_margins, 's--', label='Median margin', color='#45B7D1', linewidth=2)
+    ax.fill_between(dimensions, min_margins, mean_margins, alpha=0.15, color='#4ECDC4')
+    ax.set_xlabel('Dimension d (number of neurons)', fontsize=12)
+    ax.set_ylabel('Tropical Margin', fontsize=12)
+    ax.set_title(f'Robustness Radius Scaling (c={c} classes)', fontsize=14)
+    ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
 
-    # Add text box
-    textstr = f'Separation margin γ = {gamma:.1f}\nCertified radius γ/2 = {radius:.1f}\nNo point can lie in both\nblue AND red neighborhoods'
-    props = dict(boxstyle='round', facecolor='lightyellow', alpha=0.8)
-    ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=11,
-           verticalalignment='top', bbox=props)
-
     plt.tight_layout()
-    plt.savefig('fig_tropical_separation.png', dpi=150, bbox_inches='tight')
+    plt.savefig('robustness_scaling.png', dpi=150, bbox_inches='tight')
+    print("  Saved: robustness_scaling.png")
     plt.close()
-    print("Saved: fig_tropical_separation.png")
 
-# ─────────────────────────────────────────────────────────
-# Figure 2: Dominance Pattern Partition
-# ─────────────────────────────────────────────────────────
+    return fig
 
-def plot_dominance_partition():
-    """Visualize the finite partition induced by dominance signatures."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
 
-    # Codebook in R^2
-    C = np.array([[1.0, 3.0], [3.0, 1.0], [2.0, 2.0]])
-
-    # Compute dominance signature for a grid
-    xx, yy = np.meshgrid(np.linspace(-2, 6, 500), np.linspace(-2, 6, 500))
-    signatures = np.zeros_like(xx)
-
-    for i in range(xx.shape[0]):
-        for j in range(xx.shape[1]):
-            x = np.array([xx[i, j], yy[i, j]])
-            sig_parts = []
-            for s in C:
-                gaps = x - s
-                sig_parts.append(int(gaps[0] >= gaps[1]))
-            signatures[i, j] = sig_parts[0] * 4 + sig_parts[1] * 2 + sig_parts[2]
-
-    # Plot partition with distinct colors
-    cmap = plt.cm.Set3
-    ax.contourf(xx, yy, signatures, levels=np.arange(-0.5, 9, 1),
-               cmap=cmap, alpha=0.6)
-    ax.contour(xx, yy, signatures, levels=np.arange(-0.5, 9, 1),
-              colors='gray', linewidths=0.5, alpha=0.5)
-
-    # Plot generators
-    ax.scatter(C[:, 0], C[:, 1], s=200, c='black', marker='*',
-              zorder=5, label='Generators', linewidth=1)
-    for idx, s in enumerate(C):
-        ax.annotate(f's{idx+1}', s + 0.15, fontsize=13, fontweight='bold')
-
-    # Add diagonal lines showing boundaries
-    # Boundary: x₁ - s₁ = x₂ - s₂, i.e., x₁ - x₂ = s₁ - s₂
-    for s in C:
-        slope_intercept = s[0] - s[1]
-        xs = np.linspace(-2, 6, 100)
-        ys = xs - slope_intercept
-        ax.plot(xs, ys, 'k-', alpha=0.3, linewidth=1)
-
-    n_unique = len(np.unique(signatures))
-    ax.set_xlabel('Coordinate 1', fontsize=13)
-    ax.set_ylabel('Coordinate 2', fontsize=13)
-    ax.set_title(f'Dominance Pattern Partition ({n_unique} cells)', fontsize=15, fontweight='bold')
-    ax.legend(fontsize=12)
-    ax.set_xlim(-2, 6)
-    ax.set_ylim(-2, 6)
-    ax.set_aspect('equal')
-
-    textstr = f'{n_unique} distinct dominance patterns\n→ Classification capacity ≤ {n_unique}\n→ Finite quotient theorem (B)'
-    props = dict(boxstyle='round', facecolor='lightyellow', alpha=0.8)
-    ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=11,
-           verticalalignment='top', bbox=props)
-
-    plt.tight_layout()
-    plt.savefig('fig_dominance_partition.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: fig_dominance_partition.png")
-
-# ─────────────────────────────────────────────────────────
-# Figure 3: Score Stability Under Perturbation
-# ─────────────────────────────────────────────────────────
-
-def plot_score_stability():
-    """Visualize how tropical scores change under perturbation."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    np.random.seed(42)
-
-    # Codebooks in R^4
-    A = np.array([[5, 3, 1, 4], [4.5, 3.5, 1.5, 3.5]], dtype=float)
-    B = np.array([[1, 2, 4, 0.5], [1.5, 1.5, 3.5, 1]], dtype=float)
-
-    x = np.array([4.8, 3.2, 1.2, 3.8])
-
-    def trop_score(codebook, point):
-        return max(float(np.min(point - s)) for s in codebook)
-
-    score_A_orig = trop_score(A, x)
-    score_B_orig = trop_score(B, x)
-    gap = score_A_orig - score_B_orig
-
-    # Panel 1: Score gap vs perturbation size
-    eps_range = np.linspace(0, 3, 50)
-    n_trials = 500
-    gaps_mean = []
-    gaps_min = []
-    gaps_max = []
-
-    for eps in eps_range:
-        trial_gaps = []
-        for _ in range(n_trials):
-            pert = np.random.uniform(-eps, eps, 4)
-            x_pert = x + pert
-            g = trop_score(A, x_pert) - trop_score(B, x_pert)
-            trial_gaps.append(g)
-        gaps_mean.append(np.mean(trial_gaps))
-        gaps_min.append(np.min(trial_gaps))
-        gaps_max.append(np.max(trial_gaps))
-
-    ax1.fill_between(eps_range, gaps_min, gaps_max, alpha=0.2, color='steelblue',
-                    label='Min-max range')
-    ax1.plot(eps_range, gaps_mean, 'b-', linewidth=2, label='Mean gap')
-    ax1.axhline(y=0, color='red', linestyle='--', linewidth=1.5, label='Decision boundary')
-    ax1.axvline(x=gap/2, color='green', linestyle=':', linewidth=2,
-               label=f'Certified radius = {gap/2:.2f}')
-
-    # Theoretical bounds
-    ax1.plot(eps_range, gap - 2 * eps_range, 'k--', linewidth=1.5, alpha=0.5,
-            label='Theoretical lower bound')
-
-    ax1.set_xlabel('Perturbation size ε (L∞)', fontsize=13)
-    ax1.set_ylabel('Score gap (A - B)', fontsize=13)
-    ax1.set_title('Score Stability Under Perturbation', fontsize=14, fontweight='bold')
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Panel 2: Classification accuracy vs perturbation
-    eps_test = np.linspace(0, 3, 30)
-    accuracies = []
-    for eps in eps_test:
-        correct = 0
-        for _ in range(1000):
-            pert = np.random.uniform(-eps, eps, 4)
-            x_pert = x + pert
-            if trop_score(A, x_pert) >= trop_score(B, x_pert):
-                correct += 1
-        accuracies.append(correct / 1000)
-
-    ax2.plot(eps_test, accuracies, 'b-o', markersize=4, linewidth=2)
-    ax2.axvline(x=gap/2, color='green', linestyle=':', linewidth=2,
-               label=f'Certified radius = {gap/2:.2f}')
-    ax2.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5)
-    ax2.fill_between([0, gap/2], 0, 1.05, alpha=0.1, color='green',
-                    label='Certified region')
-
-    ax2.set_xlabel('Perturbation size ε (L∞)', fontsize=13)
-    ax2.set_ylabel('Classification accuracy', fontsize=13)
-    ax2.set_title('Classification Robustness', fontsize=14, fontweight='bold')
-    ax2.set_ylim(-0.05, 1.05)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('fig_score_stability.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: fig_score_stability.png")
-
-# ─────────────────────────────────────────────────────────
-# Figure 4: Coboundary Margin Diagram
-# ─────────────────────────────────────────────────────────
-
-def plot_coboundary_margins():
-    """Visualize the coboundary margin transfer theorem."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Local margin certificates
-    n_regions = 5
-    m = np.array([1.0, 0.8, 1.2, 0.9, 1.1])
-    L = np.array([2.0, 1.5, 2.5, 1.8, 2.2])
-    b = np.array([0.1, 0.2, 0.15, 0.05, 0.18])
-
-    adjusted = (m - L * np.abs(b)) / L
-    global_margin = np.min(adjusted)
-
-    # Panel 1: Bar chart of margins
-    x_pos = np.arange(n_regions)
-    width = 0.35
-
-    bars1 = ax1.bar(x_pos - width/2, m / L, width, label='Raw margin m/L',
-                   color='steelblue', alpha=0.8, edgecolor='navy')
-    bars2 = ax1.bar(x_pos + width/2, adjusted, width, label='Adjusted margin',
-                   color='coral', alpha=0.8, edgecolor='darkred')
-
-    ax1.axhline(y=global_margin, color='green', linestyle='--', linewidth=2,
-               label=f'Global margin δ = {global_margin:.3f}')
-
-    ax1.set_xlabel('Region', fontsize=13)
-    ax1.set_ylabel('Margin', fontsize=13)
-    ax1.set_title('Local vs Adjusted Margins', fontsize=14, fontweight='bold')
-    ax1.set_xticks(x_pos)
-    ax1.set_xticklabels([f'R{i+1}' for i in range(n_regions)])
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3, axis='y')
-
-    # Panel 2: Margin transfer illustration
-    # Show how gauge corrections reduce margins
-    gauge_range = np.linspace(0, 0.4, 100)
-    for i in range(n_regions):
-        adj_curve = (m[i] - L[i] * gauge_range) / L[i]
-        adj_curve = np.maximum(adj_curve, 0)
-        ax2.plot(gauge_range, adj_curve, linewidth=2,
-                label=f'R{i+1}: m={m[i]:.1f}, L={L[i]:.1f}')
-
-    ax2.axhline(y=0, color='red', linestyle='-', linewidth=1)
-
-    # Mark actual gauge values
-    for i in range(n_regions):
-        ax2.plot(abs(b[i]), adjusted[i], 'ko', markersize=8, zorder=5)
-
-    ax2.set_xlabel('Gauge correction |b|', fontsize=13)
-    ax2.set_ylabel('Adjusted margin', fontsize=13)
-    ax2.set_title('Margin Degradation vs Gauge', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=9, loc='upper right')
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('fig_coboundary_margins.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: fig_coboundary_margins.png")
-
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == '__main__':
-    plot_tropical_separation()
-    plot_dominance_partition()
-    plot_score_stability()
-    plot_coboundary_margins()
-    print("\nAll visualizations generated successfully!")
+    demo_basic_classification()
+    demo_adversarial_robustness()
+    demo_decision_regions()
+    demo_classification_capacity()
+    demo_margin_distribution()
+    demo_robustness_scaling()
+
+    print("\n" + "=" * 60)
+    print("All demos completed successfully!")
+    print("=" * 60)

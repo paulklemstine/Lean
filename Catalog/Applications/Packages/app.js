@@ -218,6 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Periodic refresh: check for new packages every 60 seconds
+    // Skip on file:// protocol (CORS blocks fetch on local files)
+    if (location.protocol !== 'file:') {
     setInterval(async () => {
         try {
             const response = await fetch('packages_db.js', { cache: 'no-store' });
@@ -261,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Silently fail — refresh is best-effort
         }
     }, 60000);
+    } // end file:// check
 
     // Author popover
     const authorLink = document.getElementById('author-link');

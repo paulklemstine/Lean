@@ -2,297 +2,330 @@
 """
 Tropical Neural Code Classification — Algorithms
 
-Implements the core algorithms for tropical code classification:
-1. TropicalCodeClassifier — certified binary/multiclass classifier
-2. DominancePartition — finite combinatorial quotient computation
-3. CoboundaryMarginEstimator — margin transfer from local certificates
+Complete implementations of the algorithms from the research paper,
+with docstrings, type hints, and example usage.
 """
 
 import numpy as np
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple, Set
+from typing import List, Tuple, FrozenSet, Optional
 
-# ═══════════════════════════════════════════════════════════
-# Algorithm 1: Tropical Code Classifier
-# ═══════════════════════════════════════════════════════════
 
-@dataclass
-class TropicalCodeClassifier:
+def tropical_score(prototype: np.ndarray, observation: np.ndarray) -> float:
     """
-    Certified binary or multiclass classifier using tropical geometry.
+    Compute the tropical score of an observation against a prototype.
 
-    Given codebooks for each class, classifies inputs by comparing
-    tropical generator scores (max over generators of min coordinatewise gap).
+    The tropical score is the max-plus inner product:
+        score(P_k, x) = max_i (P_k[i] - x[i])
 
-    Complexity:
-    - Training: O(K * |C_k| * n) where K = number of classes
-    - Prediction: O(K * max|C_k| * n) per input
-    - Certification: O(K^2 * max|C_k|^2 * n) for pairwise margins
+    Lower score means better match — the prototype is closer to or
+    below the observation in every coordinate.
 
-    Attributes:
-        codebooks: Dict mapping labels to arrays of shape (num_generators, n)
-        margins: Pairwise separation margins (computed lazily)
+    Parameters
+    ----------
+    prototype : np.ndarray of shape (d,)
+        The prototype vector for a label.
+    observation : np.ndarray of shape (d,)
+        The observed firing pattern.
+
+    Returns
+    -------
+    float
+        The tropical score.
+
+    Complexity
+    ----------
+    Time: O(d), Space: O(1)
+
+    Example
+    -------
+    >>> tropical_score(np.array([1.0, 2.0, 0.0]), np.array([1.5, 1.0, 0.5]))
+    1.0
     """
-    codebooks: Dict[str, np.ndarray] = field(default_factory=dict)
-    margins: Dict[Tuple[str, str], float] = field(default_factory=dict)
-
-    def add_class(self, label: str, generators: np.ndarray):
-        """Add a class with its codebook of generators.
-
-        Args:
-            label: Class name
-            generators: Array of shape (num_generators, n)
-        """
-        self.codebooks[label] = np.array(generators)
-        self.margins.clear()  # invalidate cached margins
-
-    def _coord_gap(self, x: np.ndarray, s: np.ndarray) -> float:
-        """min_i (x_i - s_i)"""
-        return float(np.min(x - s))
-
-    def score(self, x: np.ndarray, label: str) -> float:
-        """Tropical generator score of x against class `label`.
-
-        score(x, label) = max_{s in C_label} min_i (x_i - s_i)
-        """
-        C = self.codebooks[label]
-        if len(C) == 0:
-            return 0.0
-        return float(max(self._coord_gap(x, s) for s in C))
-
-    def predict(self, x: np.ndarray) -> str:
-        """Classify x by argmax of tropical scores.
-
-        Returns:
-            Label of the class with highest tropical score.
-        """
-        return max(self.codebooks.keys(), key=lambda l: self.score(x, l))
-
-    def predict_with_scores(self, x: np.ndarray) -> Dict[str, float]:
-        """Return all class scores for input x."""
-        return {label: self.score(x, label) for label in self.codebooks}
-
-    def pairwise_margin(self, label_a: str, label_b: str) -> float:
-        """Compute separation margin between two classes.
-
-        margin(A, B) = min_{a in A, b in B} max_i (a_i - b_i)
-
-        A positive margin guarantees classification robustness.
-        """
-        key = (label_a, label_b)
-        if key not in self.margins:
-            A, B = self.codebooks[label_a], self.codebooks[label_b]
-            margin = float('inf')
-            for a in A:
-                for b in B:
-                    margin = min(margin, float(np.max(a - b)))
-            self.margins[key] = margin
-        return self.margins[key]
-
-    def certified_radius(self, x: np.ndarray) -> Tuple[str, float]:
-        """Compute the certified classification with perturbation radius.
-
-        Returns:
-            (predicted_label, certified_radius) where classification is
-            guaranteed correct for all perturbations of L∞ size < radius.
-        """
-        scores = self.predict_with_scores(x)
-        sorted_labels = sorted(scores.keys(), key=lambda l: scores[l], reverse=True)
-        best = sorted_labels[0]
-        if len(sorted_labels) < 2:
-            return best, float('inf')
-        second_best = sorted_labels[1]
-        gap = scores[best] - scores[second_best]
-        return best, gap / 2
-
-    def minimum_separation(self) -> float:
-        """Minimum pairwise separation margin across all class pairs."""
-        labels = list(self.codebooks.keys())
-        min_margin = float('inf')
-        for i in range(len(labels)):
-            for j in range(i + 1, len(labels)):
-                m = self.pairwise_margin(labels[i], labels[j])
-                min_margin = min(min_margin, m)
-        return min_margin
+    return float(np.max(prototype - observation))
 
 
-# ═══════════════════════════════════════════════════════════
-# Algorithm 2: Dominance Pattern Partition
-# ═══════════════════════════════════════════════════════════
-
-@dataclass
-class DominancePartition:
+def tropical_scores_all(codebook: np.ndarray, observation: np.ndarray) -> np.ndarray:
     """
-    Computes the finite dominance pattern partition of input space.
+    Compute tropical scores for all labels in a codebook.
 
-    For each input x and generator s, the dominance signature records
-    the coordinatewise ordering of gaps x_i - s_i. This induces a finite
-    partition of ℝ^n with at most (n!)^|C| cells.
+    Parameters
+    ----------
+    codebook : np.ndarray of shape (c, d)
+        Matrix of prototypes, one per label.
+    observation : np.ndarray of shape (d,)
+        The observed firing pattern.
 
-    Complexity:
-    - Signature computation: O(|C| * n^2) per input
-    - Partition enumeration: O(N * |C| * n^2) for N sample points
+    Returns
+    -------
+    np.ndarray of shape (c,)
+        Scores for each label.
+
+    Complexity
+    ----------
+    Time: O(cd), Space: O(c)
     """
-    codebook: np.ndarray  # shape (num_generators, n)
-
-    def signature(self, x: np.ndarray) -> tuple:
-        """Compute the dominance signature of x.
-
-        For each generator s, records the ordering of coordinates
-        by gap x_i - s_i. Returns a hashable tuple.
-        """
-        sigs = []
-        for s in self.codebook:
-            gaps = x - s
-            # Record pairwise ordering
-            n = len(x)
-            ordering = tuple(
-                int(gaps[i] >= gaps[j])
-                for i in range(n) for j in range(n)
-            )
-            sigs.append(ordering)
-        return tuple(sigs)
-
-    def partition_samples(self, points: np.ndarray) -> Dict[int, List[int]]:
-        """Partition sample points by dominance signature.
-
-        Args:
-            points: Array of shape (num_points, n)
-
-        Returns:
-            Dict mapping cell_id to list of point indices.
-        """
-        sig_to_id: Dict[tuple, int] = {}
-        partition: Dict[int, List[int]] = {}
-
-        for idx, x in enumerate(points):
-            sig = self.signature(x)
-            if sig not in sig_to_id:
-                sig_to_id[sig] = len(sig_to_id)
-            cell_id = sig_to_id[sig]
-            if cell_id not in partition:
-                partition[cell_id] = []
-            partition[cell_id].append(idx)
-
-        return partition
-
-    def count_cells(self, points: np.ndarray) -> int:
-        """Count the number of distinct dominance cells observed."""
-        return len(self.partition_samples(points))
-
-    def classification_capacity(self, points: np.ndarray) -> int:
-        """Upper bound on classification capacity from observed cells."""
-        return self.count_cells(points)
+    return np.max(codebook - observation[np.newaxis, :], axis=1)
 
 
-# ═══════════════════════════════════════════════════════════
-# Algorithm 3: Coboundary Margin Estimator
-# ═══════════════════════════════════════════════════════════
-
-@dataclass
-class CoboundaryMarginEstimator:
+def tropical_margin(codebook: np.ndarray, observation: np.ndarray,
+                    true_label: int) -> float:
     """
-    Estimates the global adjusted margin from local margin certificates
-    and coboundary gauge corrections.
+    Compute the tropical margin at a true label.
 
-    Given:
-    - m[i]: local margin at region i
-    - L[i]: Lipschitz constant at region i
-    - b[i]: gauge correction (coboundary primitive) at region i
+    margin(P, x, y) = min_{j ≠ y} (score(x, j) - score(x, y))
 
-    Computes:
-    - adjusted_margin[i] = (m[i] - L[i] * |b[i]|) / L[i]
-    - global_margin = min_i adjusted_margin[i]
+    A positive margin certifies correct classification (Theorem A).
+    The margin lower-bounds the robustness radius: perturbations
+    of size < margin/2 preserve classification (Theorem 7.2).
 
-    Complexity: O(K) where K = number of regions.
+    Parameters
+    ----------
+    codebook : np.ndarray of shape (c, d)
+    observation : np.ndarray of shape (d,)
+    true_label : int
+
+    Returns
+    -------
+    float
+        The tropical margin. Positive = certified correct.
+
+    Complexity
+    ----------
+    Time: O(cd), Space: O(c)
     """
-    margins: np.ndarray      # local margins m[i]
-    lipschitz: np.ndarray     # Lipschitz constants L[i]
-    gauge: np.ndarray         # gauge corrections b[i]
-
-    def check_coboundary_condition(self) -> bool:
-        """Check if L[i] * |b[i]| <= m[i] for all i."""
-        return bool(np.all(self.lipschitz * np.abs(self.gauge) <= self.margins))
-
-    def adjusted_margins(self) -> np.ndarray:
-        """Compute adjusted margins for each region."""
-        return (self.margins - self.lipschitz * np.abs(self.gauge)) / self.lipschitz
-
-    def global_margin(self) -> float:
-        """Compute the global adjusted margin (minimum of local)."""
-        return float(np.min(self.adjusted_margins()))
-
-    def critical_region(self) -> int:
-        """Return the index of the region with smallest adjusted margin."""
-        return int(np.argmin(self.adjusted_margins()))
-
-    def summary(self) -> str:
-        """Human-readable summary of the margin analysis."""
-        adj = self.adjusted_margins()
-        lines = [
-            f"Coboundary Margin Analysis ({len(self.margins)} regions)",
-            "-" * 50,
-        ]
-        for i in range(len(self.margins)):
-            lines.append(
-                f"  Region {i}: m={self.margins[i]:.3f}, L={self.lipschitz[i]:.3f}, "
-                f"|b|={abs(self.gauge[i]):.3f}, adj={adj[i]:.4f}"
-            )
-        lines.append(f"\nCoboundary condition: {'✓' if self.check_coboundary_condition() else '✗'}")
-        lines.append(f"Global margin δ = {self.global_margin():.4f}")
-        lines.append(f"Critical region: {self.critical_region()}")
-        return "\n".join(lines)
+    scores = tropical_scores_all(codebook, observation)
+    true_score = scores[true_label]
+    competitors = np.delete(scores, true_label)
+    return float(np.min(competitors - true_score))
 
 
-# ═══════════════════════════════════════════════════════════
+def tropical_classify(codebook: np.ndarray, observation: np.ndarray) -> int:
+    """
+    Classify an observation using the tropical codebook.
+
+    Returns the label minimizing tropical score (best match).
+
+    Parameters
+    ----------
+    codebook : np.ndarray of shape (c, d)
+    observation : np.ndarray of shape (d,)
+
+    Returns
+    -------
+    int
+        The predicted label.
+
+    Complexity
+    ----------
+    Time: O(cd), Space: O(c)
+    """
+    scores = tropical_scores_all(codebook, observation)
+    return int(np.argmin(scores))
+
+
+def tropical_argmin_set(codebook: np.ndarray, observation: np.ndarray,
+                        tol: float = 1e-10) -> FrozenSet[int]:
+    """
+    Compute the set of labels achieving minimum tropical score.
+
+    In the non-degenerate case, this is a singleton (the classifier output).
+    Ties produce multi-element sets, corresponding to decision boundaries.
+
+    Parameters
+    ----------
+    codebook : np.ndarray of shape (c, d)
+    observation : np.ndarray of shape (d,)
+    tol : float
+        Tolerance for floating-point comparison.
+
+    Returns
+    -------
+    FrozenSet[int]
+        The set of optimal labels.
+
+    Complexity
+    ----------
+    Time: O(cd), Space: O(c)
+    """
+    scores = tropical_scores_all(codebook, observation)
+    min_score = np.min(scores)
+    return frozenset(int(i) for i in np.where(np.abs(scores - min_score) < tol)[0])
+
+
+def certified_robustness_radius(codebook: np.ndarray, observation: np.ndarray,
+                                 true_label: int) -> float:
+    """
+    Compute the certified adversarial robustness radius.
+
+    By the margin stability theorem (Theorem 7.2), any perturbation
+    of size ε < margin/2 preserves classification.
+
+    Parameters
+    ----------
+    codebook : np.ndarray of shape (c, d)
+    observation : np.ndarray of shape (d,)
+    true_label : int
+
+    Returns
+    -------
+    float
+        The certified robustness radius (margin/2).
+        Non-negative; zero if classification is not certified.
+
+    Complexity
+    ----------
+    Time: O(cd), Space: O(c)
+    """
+    m = tropical_margin(codebook, observation, true_label)
+    return max(0.0, m / 2.0)
+
+
+def count_decision_patterns(codebook: np.ndarray, n_samples: int = 10000,
+                            seed: Optional[int] = None) -> int:
+    """
+    Estimate the number of distinct tropical decision patterns.
+
+    By Theorem C, this is at most 2^c where c is the number of labels.
+
+    Parameters
+    ----------
+    codebook : np.ndarray of shape (c, d)
+    n_samples : int
+        Number of random samples to test.
+    seed : int, optional
+        Random seed for reproducibility.
+
+    Returns
+    -------
+    int
+        Number of distinct decision patterns observed.
+
+    Complexity
+    ----------
+    Time: O(n_samples * cd), Space: O(n_samples)
+    """
+    rng = np.random.RandomState(seed)
+    c, d = codebook.shape
+    patterns = set()
+
+    for _ in range(n_samples):
+        x = rng.randn(d) * 3
+        pattern = tropical_argmin_set(codebook, x)
+        patterns.add(pattern)
+
+    return len(patterns)
+
+
+def coboundary_margin_bound(local_margins: np.ndarray,
+                            lipschitz_constants: np.ndarray,
+                            gauge_corrections: np.ndarray) -> float:
+    """
+    Compute the global margin lower bound from coboundary data.
+
+    Given local margin certificates m_i, Lipschitz constants L_i,
+    and gauge corrections b_i, the global adjusted margin is:
+
+        δ = min_i (m_i - L_i * |b_i|) / L_i
+
+    By Theorem B, if δ > 0, classification is certified.
+
+    Parameters
+    ----------
+    local_margins : np.ndarray of shape (n,)
+        Local margin certificates (must be non-negative).
+    lipschitz_constants : np.ndarray of shape (n,)
+        Lipschitz constants (must be positive).
+    gauge_corrections : np.ndarray of shape (n,)
+        Gauge corrections from coboundary computation.
+
+    Returns
+    -------
+    float
+        The global adjusted margin δ.
+
+    Complexity
+    ----------
+    Time: O(n), Space: O(n)
+    """
+    adjusted = (local_margins - lipschitz_constants * np.abs(gauge_corrections)) / lipschitz_constants
+    return float(np.min(adjusted))
+
+
+def tropical_decision_region_membership(codebook: np.ndarray,
+                                         observation: np.ndarray,
+                                         label: int) -> bool:
+    """
+    Check if an observation lies in the decision region of a label.
+
+    An observation is in the decision region of label y if y
+    achieves the minimum tropical score (possibly tied).
+
+    Parameters
+    ----------
+    codebook : np.ndarray of shape (c, d)
+    observation : np.ndarray of shape (d,)
+    label : int
+
+    Returns
+    -------
+    bool
+        True if label is an argmin of tropical score at observation.
+
+    Complexity
+    ----------
+    Time: O(cd), Space: O(c)
+    """
+    return label in tropical_argmin_set(codebook, observation)
+
+
+# ============================================================
 # Example Usage
-# ═══════════════════════════════════════════════════════════
+# ============================================================
 
 if __name__ == '__main__':
-    print("=" * 60)
-    print("Tropical Code Classifier — Example")
-    print("=" * 60)
-
-    clf = TropicalCodeClassifier()
-    clf.add_class("cat", np.array([[5, 3, 1], [4.5, 3.5, 1.5]]))
-    clf.add_class("dog", np.array([[1, 2, 4], [1.5, 1.5, 3.5]]))
-
-    test_points = [
-        np.array([4.8, 3.2, 1.2]),
-        np.array([1.2, 1.8, 3.8]),
-        np.array([3.0, 2.5, 2.5]),
-    ]
-
-    for x in test_points:
-        label, radius = clf.certified_radius(x)
-        scores = clf.predict_with_scores(x)
-        print(f"\nx = {x}")
-        print(f"  Scores: {scores}")
-        print(f"  Prediction: {label} (certified radius: {radius:.3f})")
-
-    print(f"\nMinimum separation: {clf.minimum_separation():.3f}")
-
-    print("\n" + "=" * 60)
-    print("Dominance Partition — Example")
+    print("Tropical Neural Code Classification — Algorithm Examples")
     print("=" * 60)
 
-    C = np.array([[1.0, 3.0], [3.0, 1.0], [2.0, 2.0]])
-    dp = DominancePartition(C)
+    # Create a codebook: 4 classes, 6 neurons
+    P = np.array([
+        [2.0, 0.0, 1.0, 0.5, 1.5, 0.0],
+        [0.0, 2.0, 0.5, 1.0, 0.0, 1.5],
+        [1.0, 1.0, 2.0, 0.0, 0.5, 0.5],
+        [0.5, 0.5, 0.0, 2.0, 1.0, 1.0],
+    ])
 
-    np.random.seed(42)
-    points = np.random.uniform(-5, 8, (5000, 2))
-    n_cells = dp.count_cells(points)
-    print(f"\nCodebook: {len(C)} generators in R^2")
-    print(f"Observed dominance cells (5000 samples): {n_cells}")
-    print(f"Classification capacity bound: {n_cells}")
+    # Observation close to class 0
+    x = np.array([2.3, 0.2, 1.1, 0.6, 1.4, 0.1])
 
-    print("\n" + "=" * 60)
-    print("Coboundary Margin Estimator — Example")
-    print("=" * 60)
+    print(f"\nCodebook shape: {P.shape}")
+    print(f"Observation: {x}")
 
-    estimator = CoboundaryMarginEstimator(
-        margins=np.array([1.0, 0.8, 1.2]),
-        lipschitz=np.array([2.0, 1.5, 2.5]),
-        gauge=np.array([0.1, 0.2, 0.15])
-    )
-    print(f"\n{estimator.summary()}")
+    # Score computation
+    scores = tropical_scores_all(P, x)
+    print(f"\nScores: {scores}")
+
+    # Classification
+    label = tropical_classify(P, x)
+    print(f"Predicted label: {label}")
+
+    # Margin
+    margin = tropical_margin(P, x, label)
+    print(f"Margin: {margin:.4f}")
+
+    # Robustness radius
+    radius = certified_robustness_radius(P, x, label)
+    print(f"Certified robustness radius: {radius:.4f}")
+
+    # Decision pattern counting
+    n_patterns = count_decision_patterns(P, n_samples=5000, seed=42)
+    print(f"\nDistinct decision patterns: {n_patterns}")
+    print(f"Upper bound (2^c): {2**P.shape[0]}")
+
+    # Coboundary bound example
+    local_m = np.array([1.0, 0.8, 1.2, 0.9])
+    local_L = np.array([0.5, 0.6, 0.4, 0.7])
+    local_b = np.array([0.1, -0.2, 0.15, 0.05])
+    delta = coboundary_margin_bound(local_m, local_L, local_b)
+    print(f"\nCoboundary margin bound: {delta:.4f}")
+    if delta > 0:
+        print("  ✓ Classification certified via coboundary")
