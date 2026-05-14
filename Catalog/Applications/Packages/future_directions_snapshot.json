@@ -1281,10 +1281,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "831fce32",
     "timestamp": "2026-05-14T16:16:22.732498+00:00"
   },
   {
@@ -1738,6 +1738,302 @@
     "timestamp": "2026-05-14T16:17:56.774740+00:00"
   },
   {
+    "id": "fd_0130",
+    "title": "Monotonicity",
+    "description": ": `T₁ ≤ T₂ → causalCone W s T₁ ⊆ causalCone W s T₂`",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.096281+00:00"
+  },
+  {
+    "id": "fd_0131",
+    "title": "Transitivity",
+    "description": ": If `v ∈ causalCone W s T₁` and `w ∈ causalCone W v T₂`, then `w ∈ causalCone W s (T₁ + T₂)` (triangle inequality).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.099821+00:00"
+  },
+  {
+    "id": "fd_0132",
+    "title": "Surgery enlargement",
+    "description": ": Wormhole surgery strictly enlarges the causal cone: `causalCone W s T ⊂ causalCone (wormholeSurgery W u v τ) s T` under appropriate conditions.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.102483+00:00"
+  },
+  {
+    "id": "fd_0133",
+    "title": "Chronological ordering",
+    "description": ": Define a partial order from tropical distances and show it satisfies antisymmetry for nonneg-weight graphs with no negative cycles.\n\n### Proof Strategy\nUse the triangle inequality for tropical distance (which follows from path concatenation) and the surgery distance-drop theorem already proved.\n\n### Cross-Domain Connections\n- Causal set theory in quantum gravity\n- Reachability analysis in timed automata\n- Network influence propagation bounds\n\n---\n\n## Direction 2: Tropical Black Hole Horizons as Min-Cut Barriers\n\n### Hypothesis\nA \"tropical event horizon\" is a min-cut in the weighted spacetime graph separating an interior region from an exterior region. The horizon's \"area\" (total cut weight) controls the maximum information throughput, yielding a discrete analogue of the Bekenstein–Hawkin",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.105861+00:00"
+  },
+  {
+    "id": "fd_0134",
+    "title": "Max-flow min-cut duality",
+    "description": ": The maximum number of edge-disjoint paths from interior to exterior equals the min-cut (discrete max-flow min-cut theorem).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.108164+00:00"
+  },
+  {
+    "id": "fd_0135",
+    "title": "Horizon monotonicity under surgery",
+    "description": ": Adding a wormhole bridge that crosses the horizon strictly increases the min-cut value.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.110587+00:00"
+  },
+  {
+    "id": "fd_0136",
+    "title": "Area-entropy bound",
+    "description": ": `tropicalEntropy ≤ C * horizonArea` for an explicit constant `C`.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.113020+00:00"
+  },
+  {
+    "id": "fd_0137",
+    "title": "Horizon stability",
+    "description": ": Small perturbations of edge weights produce small changes in the horizon location (Lipschitz stability).\n\n### Proof Strategy\nLeverage Mathlib's existing graph theory for max-flow min-cut. The tropical entropy bound should follow from counting arguments and the min-cut structure.\n\n### Cross-Domain Connections\n- Bekenstein–Hawking entropy in black hole thermodynamics\n- Network reliability and fault tolerance\n- Information-theoretic security (wiretap channels)\n- Ryu–Takayanagi formula in holographic entanglement entropy\n\n---\n\n## Direction 3: Tropical Einstein–Maxwell Systems on Weighted Graphs\n\n### Hypothesis\nExtend the tropical Einstein equation to include a \"gauge field\" (a second weight matrix `A : Matrix (Fin n) (Fin n) ℝ` representing electromagnetic potential). The coupled system has ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.116622+00:00"
+  },
+  {
+    "id": "fd_0138",
+    "title": "Reduction to standard Bellman",
+    "description": ": `TropicalEinsteinMaxwell W A s q Φ ↔ TropicalEinsteinEquation (chargedWeight W A q) s Φ`",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.119497+00:00"
+  },
+  {
+    "id": "fd_0139",
+    "title": "Charge-reversal symmetry",
+    "description": ": The tropical distance in `chargedWeight W A q` relates to that in `chargedWeight W A (-q)` via the transpose.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.122635+00:00"
+  },
+  {
+    "id": "fd_0140",
+    "title": "Lorentz force analogue",
+    "description": ": The difference `tropicalDistance (chargedWeight W A q) s t - tropicalDistance W s t` is bounded by `|q| * maxA * pathLength`, giving a discrete analogue of the Lorentz force deflection.",
+    "domains": [
+      "Tropical",
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.125539+00:00"
+  },
+  {
+    "id": "fd_0141",
+    "title": "Gauge invariance",
+    "description": ": Adding a \"pure gauge\" `A i j = φ j - φ i` does not change charged tropical distances.\n\n### Proof Strategy\nMost results reduce to properties of the standard tropical Einstein equation via the chargedWeight substitution. Gauge invariance follows from telescoping sums along paths.\n\n### Cross-Domain Connections\n- Electromagnetic geodesics in general relativity\n- Pricing with transaction costs in financial networks\n- Weighted routing with toll roads\n- Magnetic Laplacians on graphs\n\n---\n\n## Direction 4: Categorical Functor from Graph Surgeries to Tropical Linear Operators\n\n### Hypothesis\nGraph surgeries (edge insertions, deletions, weight modifications) form a category where objects are weighted graphs and morphisms are surgery operations. There exists a functor from this category to the categ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.129036+00:00"
+  },
+  {
+    "id": "fd_0142",
+    "title": "Functoriality",
+    "description": ": Composition of surgeries maps to min-plus multiplication of update matrices.",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.131427+00:00"
+  },
+  {
+    "id": "fd_0143",
+    "title": "Rank-1 structure",
+    "description": ": A single wormhole surgery corresponds to a rank-1 tropical matrix update, enabling efficient recomputation of all-pairs shortest paths.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.133880+00:00"
+  },
+  {
+    "id": "fd_0144",
+    "title": "Kleene star update",
+    "description": ": The tropical closure (all-pairs shortest paths) of the surgered graph equals a specific algebraic expression involving the original closure and the surgery parameters.",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.136424+00:00"
+  },
+  {
+    "id": "fd_0145",
+    "title": "Idempotent convergence",
+    "description": ": The sequence of tropical matrix powers `W, W², W³, ...` stabilizes at `W^(n-1)` for n-vertex graphs (Kleene star finiteness).\n\n### Proof Strategy\nUse the connection between tropical matrix multiplication and min-plus path composition. The rank-1 update formula is the tropical analogue of the Sherman–Morrison formula.\n\n### Cross-Domain Connections\n- Tropical linear algebra and the Kleene star\n- Dynamic graph algorithms (incremental shortest paths)\n- Operadic composition in higher algebra\n- Transfer matrix methods in statistical physics\n\n---\n\n## Direction 5: Tropical Holography via Boundary Distance Reconstruction\n\n### Hypothesis\nA weighted graph's internal structure can be reconstructed (up to isomorphism) from the boundary-to-boundary tropical distance matrix. This is a discrete analogue",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.140249+00:00"
+  },
+  {
+    "id": "fd_0146",
+    "title": "Boundary determines bulk distances",
+    "description": ": If two graphs with the same vertex set and boundary have identical boundary distance matrices, their interior tropical distances agree (under tree-like or uniqueness conditions).",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.143125+00:00"
+  },
+  {
+    "id": "fd_0147",
+    "title": "Reconstruction algorithm",
+    "description": ": Given a boundary distance matrix satisfying metric properties, construct a graph (tree or series-parallel graph) realizing those distances, with explicit complexity bounds.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.145614+00:00"
+  },
+  {
+    "id": "fd_0148",
+    "title": "Surgery detection from boundary",
+    "description": ": A wormhole surgery in the bulk creates a detectable signature in the boundary distance matrix (at least one boundary-to-boundary distance strictly decreases).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.148193+00:00"
+  },
+  {
+    "id": "fd_0149",
+    "title": "Entanglement wedge",
+    "description": ": The \"entanglement wedge\" of a boundary region B is the set of bulk vertices whose tropical distance to B is minimized compared to the complement, and surgery inside the wedge is detectable from B.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bbd4646",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:24:30.150755+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -1923,10 +2219,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "10c1074c",
     "timestamp": "2026-05-14T16:17:39.955358+00:00"
   },
   {
