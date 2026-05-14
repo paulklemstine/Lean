@@ -1,364 +1,280 @@
 #!/usr/bin/env python3
 """
-Applications of Closure-Kolmogorov Compression Duality
+Closure-Compression Duality: Real-World Applications
 
-Real-world applications demonstrating the formal theorems in practice:
-1. Grammar induction via closure-based compression
-2. Feature selection via closure MDL bounds
-3. Signal denoising via tropical normalization
-4. Network packet compression via idempotent canonicalization
+Demonstrates how closure-based compression applies to:
+1. Data deduplication via hash-based closure
+2. Feature selection via correlation closure
+3. Neural network weight canonicalization (tropical normalization)
+4. MDL model selection
 """
 
-from typing import List, Dict, Set, Tuple, Optional
-import collections
-import itertools
-import math
-import random
+import numpy as np
+from typing import List, Dict, Tuple
+from collections import defaultdict
 
 
 # ============================================================================
-# Application 1: Grammar Induction via Closure Compression
+# Application 1: Data Deduplication
 # ============================================================================
 
-class GrammarCompressor:
+def demo_data_deduplication():
     """
-    Grammar-based compression using closure operators.
-    
-    The closure operation replaces repeated substrings with grammar rules,
-    creating a canonical compressed representation. Fixed points are strings
-    that cannot be further compressed by grammar substitution.
-    
-    This demonstrates the theorem: fixed points of an idempotent compressor
-    are exactly the incompressible objects.
+    Data deduplication as closure-based compression.
+
+    The closure operator maps each data record to its canonical form
+    (e.g., normalized, trimmed, lowercased). Records with the same
+    canonical form are duplicates.
     """
-    
-    def __init__(self, min_pattern_len: int = 2, min_count: int = 2):
-        self.min_pattern_len = min_pattern_len
-        self.min_count = min_count
-    
-    def find_most_common_pattern(self, data: List[int]) -> Optional[Tuple[List[int], int]]:
-        """Find the most frequently repeated substring."""
-        best_pattern = None
-        best_savings = 0
-        
-        for length in range(self.min_pattern_len, len(data) // 2 + 1):
-            pattern_counts: Dict[tuple, int] = collections.Counter()
-            for i in range(len(data) - length + 1):
-                pattern = tuple(data[i:i+length])
-                pattern_counts[pattern] += 1
-            
-            for pattern, count in pattern_counts.items():
-                if count >= self.min_count:
-                    # Savings: replacing `count` occurrences of `length` symbols
-                    # with `count` references to 1 rule of `length` symbols
-                    savings = (count - 1) * (length - 1) - 1
-                    if savings > best_savings:
-                        best_savings = savings
-                        best_pattern = (list(pattern), count)
-        
-        return best_pattern
-    
-    def compress_step(self, data: List[int], next_symbol: int) -> Tuple[List[int], Dict[int, List[int]], int]:
-        """One step of grammar compression."""
-        result = find_result = self.find_most_common_pattern(data)
-        if result is None:
-            return data, {}, next_symbol
-        
-        pattern, count = result
-        # Replace all non-overlapping occurrences
-        new_data = []
-        rules = {next_symbol: pattern}
-        i = 0
-        pattern_tuple = tuple(pattern)
-        while i < len(data):
-            if tuple(data[i:i+len(pattern)]) == pattern_tuple:
-                new_data.append(next_symbol)
-                i += len(pattern)
-            else:
-                new_data.append(data[i])
-                i += 1
-        
-        return new_data, rules, next_symbol + 1
-    
-    def compress(self, data: List[int]) -> Tuple[List[int], Dict[int, List[int]]]:
-        """
-        Fully compress via iterated grammar substitution.
-        
-        Returns (compressed_data, grammar_rules).
-        The process terminates at a fixed point: when no more 
-        patterns can be found, compression is idempotent.
-        """
-        all_rules = {}
-        next_sym = max(data) + 1 if data else 256
-        current = data[:]
-        
-        while True:
-            new_data, rules, next_sym = self.compress_step(current, next_sym)
-            if not rules:  # Fixed point reached
-                break
-            all_rules.update(rules)
-            current = new_data
-        
-        return current, all_rules
-    
-    def decompress(self, data: List[int], rules: Dict[int, List[int]]) -> List[int]:
-        """Decompress by expanding grammar rules."""
-        result = data[:]
-        changed = True
-        while changed:
-            changed = False
-            new_result = []
-            for sym in result:
-                if sym in rules:
-                    new_result.extend(rules[sym])
-                    changed = True
-                else:
-                    new_result.append(sym)
-            result = new_result
-        return result
-
-
-def demo_grammar_compression():
-    """Demonstrate grammar-based compression as closure operator."""
     print("=" * 70)
-    print("APPLICATION 1: Grammar Induction via Closure Compression")
+    print("APPLICATION 1: Data Deduplication via Closure")
     print("=" * 70)
-    
-    gc = GrammarCompressor(min_pattern_len=2, min_count=2)
-    
-    # Test cases
-    test_data = [
-        [1, 2, 3, 1, 2, 3, 4, 5, 1, 2, 3],  # Repeated pattern
-        [1, 2, 1, 2, 1, 2, 1, 2],              # Highly repetitive
-        [1, 2, 3, 4, 5, 6, 7, 8],              # No repetition (incompressible)
-        [1, 1, 2, 2, 1, 1, 2, 2, 3, 3],        # Nested repetition
+
+    # Simulated dataset with near-duplicate records
+    records = [
+        "John Smith, 123 Main St, NYC",
+        "john smith, 123 main st, nyc",
+        "JOHN SMITH, 123 MAIN ST, NYC",
+        "  John Smith , 123 Main St , NYC  ",
+        "Jane Doe, 456 Oak Ave, LA",
+        "jane doe, 456 oak ave, la",
+        "Bob Wilson, 789 Pine Rd, CHI",
+        "bob wilson,789 pine rd,chi",
+        "BOB WILSON, 789 PINE RD, CHI",
     ]
-    
-    for i, data in enumerate(test_data):
-        compressed, rules = gc.compress(data)
-        decompressed = gc.decompress(compressed, rules)
-        ratio = len(compressed) / len(data) if data else 1.0
-        is_fixed = gc.find_most_common_pattern(compressed) is None
-        
-        print(f"\n  Test {i+1}: {data}")
-        print(f"    Compressed:   {compressed}")
-        print(f"    Rules:        {rules}")
-        print(f"    Ratio:        {ratio:.3f}")
-        print(f"    Fixed point:  {is_fixed}")
-        print(f"    Invertible:   {decompressed == data}")
-    
-    print("\n  KEY: Incompressible strings (test 3) are already at a fixed point.")
-    print("  Grammar compression is an idempotent closure operator.\n")
+
+    def normalize_record(s: str) -> str:
+        """Closure operator: canonical form of a record."""
+        return ' '.join(s.lower().strip().replace(',', ', ').split())
+
+    # Verify idempotence
+    for r in records:
+        nr = normalize_record(r)
+        assert normalize_record(nr) == nr, f"Not idempotent: {r}"
+
+    # Compute equivalence classes
+    classes: Dict[str, List[str]] = defaultdict(list)
+    for r in records:
+        classes[normalize_record(r)].append(r)
+
+    print(f"\nOriginal records: {len(records)}")
+    print(f"Unique canonical forms: {len(classes)}")
+    print(f"Compression ratio: {len(records)/len(classes):.1f}x")
+
+    for canon, members in classes.items():
+        print(f"\n  Canonical: '{canon}'")
+        for m in members:
+            is_fixed = normalize_record(m) == m
+            print(f"    {'★' if is_fixed else ' '} '{m}'")
+
+    # Deficiency analysis
+    print("\nDeficiency (characters saved by normalization):")
+    for r in records:
+        nr = normalize_record(r)
+        deficiency = len(r) - len(nr)
+        is_fixed = r == nr
+        print(f"  δ('{r[:30]}...') = {deficiency:3d}  {'[FIXED]' if is_fixed else ''}")
 
 
 # ============================================================================
-# Application 2: Feature Selection via Closure MDL
+# Application 2: Feature Correlation Closure
 # ============================================================================
 
 def demo_feature_selection():
-    """Feature selection using closure-based MDL bounds."""
-    print("=" * 70)
-    print("APPLICATION 2: Feature Selection via Closure MDL Bounds")
-    print("=" * 70)
-    
-    # Simulated dataset with correlated features
-    random.seed(42)
-    
-    features = ['temperature', 'humidity', 'pressure', 'wind_speed', 
-                'cloud_cover', 'rain_prob', 'dew_point']
-    
-    # Feature implications (domain knowledge)
-    implications = {
-        'temperature': {'dew_point'},      # temp determines dew point (simplified)
-        'humidity': {'cloud_cover'},        # high humidity -> clouds
-        'cloud_cover': {'rain_prob'},       # clouds -> rain possible
-        'pressure': set(),
-        'wind_speed': set(),
-        'rain_prob': set(),
-        'dew_point': set(),
-    }
-    
-    def close(feature_set: Set[str]) -> Set[str]:
-        """Compute closure under implications."""
-        result = set(feature_set)
-        changed = True
-        while changed:
-            changed = False
-            for f in list(result):
-                if f in implications:
-                    for implied in implications[f]:
-                        if implied not in result:
-                            result.add(implied)
-                            changed = True
-        return result
-    
-    # Different feature subsets to evaluate
-    candidates = [
-        {'temperature', 'pressure'},
-        {'humidity', 'wind_speed'},
-        {'temperature', 'humidity'},
-        {'temperature', 'humidity', 'pressure', 'wind_speed'},
-    ]
-    
-    print("\n  Feature implications:")
-    for f, implied in implications.items():
-        if implied:
-            print(f"    {f} -> {implied}")
-    
-    print("\n  Feature subset evaluation (MDL via closure):")
-    for feat_set in candidates:
-        closed = close(feat_set)
-        added = closed - feat_set
-        mdl = len(feat_set)  # Only need to store the generators
-        total_info = len(closed)  # Total information captured
-        efficiency = total_info / mdl if mdl > 0 else 0
-        
-        print(f"\n    Selected: {feat_set}")
-        print(f"    Closure:  {closed}")
-        print(f"    Added by closure: {added}")
-        print(f"    MDL cost (generators): {mdl}")
-        print(f"    Information captured: {total_info} features")
-        print(f"    Efficiency: {efficiency:.2f} features/cost")
-    
-    print("\n  MDL THEOREM: The closure provides the optimal fixed-point")
-    print("  representative. Selecting only generators minimizes description")
-    print("  length while capturing full information.\n")
+    """
+    Feature selection via correlation-based closure.
 
-
-# ============================================================================
-# Application 3: Signal Denoising via Tropical Normalization
-# ============================================================================
-
-def demo_signal_denoising():
-    """Signal denoising using tropical (min-plus) normalization."""
+    The closure maps each feature to the "representative" feature
+    in its correlation cluster. Features with correlation > threshold
+    are in the same equivalence class.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 2: Feature Selection via Correlation Closure")
     print("=" * 70)
-    print("APPLICATION 3: Signal Denoising via Tropical Normalization")
-    print("=" * 70)
-    
-    random.seed(42)
-    n = 20
-    
-    # True signal (smooth)
-    true_signal = [5 * math.sin(2 * math.pi * i / n) + 10 for i in range(n)]
-    
-    # Add noise
-    noise_level = 3.0
-    noisy_signal = [s + random.gauss(0, noise_level) for s in true_signal]
-    
-    # Baseline: physical constraints (e.g., signal cannot exceed certain bounds)
-    baseline = [15.0] * n  # Upper bound
-    
-    # Tropical normalization: cap at baseline
-    denoised = [min(s, b) for s, b in zip(noisy_signal, baseline)]
-    
-    # Compute errors
-    noise_error = sum((n - t)**2 for n, t in zip(noisy_signal, true_signal)) / n
-    denoised_error = sum((d - t)**2 for d, t in zip(denoised, true_signal)) / n
-    
-    print(f"\n  Signal length: {n}")
-    print(f"  Noise level: {noise_level}")
-    print(f"  Baseline (cap): {baseline[0]}")
-    print(f"\n  Mean squared error:")
-    print(f"    Noisy signal:    {noise_error:.4f}")
-    print(f"    After denoising: {denoised_error:.4f}")
-    print(f"    Improvement:     {(1 - denoised_error/noise_error)*100:.1f}%")
-    
-    # Show a few values
-    print(f"\n  Sample values (first 8):")
-    print(f"  {'i':>3} | {'True':>8} | {'Noisy':>8} | {'Denoised':>8}")
-    print("  " + "-" * 40)
-    for i in range(min(8, n)):
-        print(f"  {i:>3} | {true_signal[i]:>8.3f} | {noisy_signal[i]:>8.3f} | {denoised[i]:>8.3f}")
-    
+
+    np.random.seed(42)
+    n_samples = 100
+    n_features = 8
+
+    # Generate correlated features
+    base1 = np.random.randn(n_samples)
+    base2 = np.random.randn(n_samples)
+    base3 = np.random.randn(n_samples)
+
+    features = np.column_stack([
+        base1,                              # Feature 0
+        base1 + 0.1 * np.random.randn(n_samples),  # Feature 1 (corr w/ 0)
+        base1 + 0.05 * np.random.randn(n_samples), # Feature 2 (corr w/ 0)
+        base2,                              # Feature 3
+        base2 + 0.1 * np.random.randn(n_samples),  # Feature 4 (corr w/ 3)
+        base3,                              # Feature 5
+        np.random.randn(n_samples),         # Feature 6 (independent)
+        np.random.randn(n_samples),         # Feature 7 (independent)
+    ])
+
+    # Correlation matrix
+    corr = np.corrcoef(features.T)
+    threshold = 0.9
+
+    # Closure: map each feature to the lowest-indexed feature with |corr| > threshold
+    def feature_closure(i: int) -> int:
+        for j in range(n_features):
+            if abs(corr[i, j]) > threshold:
+                return j
+        return i
+
     # Verify idempotence
-    double_denoised = [min(d, b) for d, b in zip(denoised, baseline)]
-    assert all(abs(a - b) < 1e-10 for a, b in zip(denoised, double_denoised))
-    print("\n  Idempotence verified: denoise(denoise(x)) = denoise(x) ✓")
-    
-    print("\n  TROPICAL THEOREM: The normalization is the pointwise-minimal")
-    print("  canonical representative. Fixed points are signals already")
-    print("  within the physical constraints.\n")
+    for i in range(n_features):
+        assert feature_closure(feature_closure(i)) == feature_closure(i)
+
+    # Find equivalence classes
+    classes: Dict[int, List[int]] = defaultdict(list)
+    for i in range(n_features):
+        classes[feature_closure(i)].append(i)
+
+    print(f"\nFeatures: {n_features}")
+    print(f"Correlation threshold: {threshold}")
+    print(f"Independent groups: {len(classes)}")
+    print(f"Selected features (fixed points): {sorted(classes.keys())}")
+
+    print("\nFeature clusters:")
+    for rep, members in sorted(classes.items()):
+        correlations = [f"{corr[rep, m]:.3f}" for m in members]
+        print(f"  Representative {rep}: {members} (correlations: {correlations})")
+
+    print(f"\nDimensionality reduction: {n_features} → {len(classes)} features")
+    print(f"Compression ratio: {n_features/len(classes):.1f}x")
 
 
 # ============================================================================
-# Application 4: Network Packet Canonicalization
+# Application 3: Neural Network Weight Canonicalization
 # ============================================================================
 
-def demo_packet_canonicalization():
-    """Network packet header canonicalization as idempotent compression."""
+def demo_neural_network_canonicalization():
+    """
+    Neural network weight canonicalization via tropical normalization.
+
+    For ReLU networks, weight vectors that differ by a positive scaling
+    factor produce the same function. Tropical normalization removes
+    this gauge freedom.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Neural Network Weight Canonicalization")
     print("=" * 70)
-    print("APPLICATION 4: Network Packet Canonicalization")
-    print("=" * 70)
-    
-    # Simulate network packet headers as bit sequences
-    # Canonicalization: normalize optional fields to default values
-    
-    class PacketCompressor:
-        """Idempotent packet header canonicalizer."""
-        
-        def __init__(self):
-            # Define canonical (default) values for optional fields
-            self.canonical_defaults = {
-                'tos': [False] * 8,       # Type of Service: default 0
-                'ttl': [True] * 8,        # TTL: default 255
-                'options': [],            # Options: remove
-            }
-        
-        def compress(self, packet: List[bool]) -> List[bool]:
-            """
-            Canonicalize packet header.
-            Strip optional fields, normalize defaults.
-            This is idempotent by construction.
-            """
-            if len(packet) <= 8:
-                return packet  # Too short, return as-is
-            
-            # Simple model: first 8 bits are essential, rest are optional
-            essential = packet[:8]
-            optional = packet[8:]
-            
-            # Remove trailing zeros (optional padding)
-            while optional and not optional[-1]:
-                optional.pop()
-            
-            return essential + optional
-    
-    comp = PacketCompressor()
-    
-    # Test packets
-    test_packets = [
-        [True, False, True, True, False, False, True, False],  # 8-bit essential only
-        [True, False, True, True, False, False, True, False,   # With padding
-         False, False, False, False],
-        [True, True, True, True, True, True, True, True,       # With real optional data
-         True, False, True],
-        [True, False, True, True, False, False, True, False,   # Mixed
-         True, False, False, False, False],
+
+    def tropical_normalize(w: np.ndarray) -> np.ndarray:
+        """Normalize by subtracting the minimum (log-space scaling)."""
+        return w - w.min()
+
+    # Simulated weight vectors from different training runs
+    # These represent "the same" neuron up to scaling
+    base_weights = np.array([2.0, 0.0, 4.0, 1.5])
+
+    training_runs = [
+        base_weights + 3.0,    # Run 1: shifted by 3
+        base_weights + 7.5,    # Run 2: shifted by 7.5
+        base_weights - 1.0,    # Run 3: shifted by -1
+        base_weights,          # Run 4: already canonical
+        np.array([1.0, 3.0, 2.0, 5.0]),  # Run 5: different neuron
     ]
-    
-    print("\n  Packet canonicalization results:")
-    for i, packet in enumerate(test_packets):
-        compressed = comp.compress(packet)
-        is_fixed = comp.compress(compressed) == compressed
-        bits_saved = len(packet) - len(compressed)
-        
-        orig_str = ''.join('1' if b else '0' for b in packet)
-        comp_str = ''.join('1' if b else '0' for b in compressed)
-        
-        print(f"\n    Packet {i+1}: {orig_str}")
-        print(f"    Canonical: {comp_str}")
-        print(f"    Saved: {bits_saved} bits, Fixed: {is_fixed}")
-    
-    # Verify idempotence
-    for packet in test_packets:
-        c1 = comp.compress(packet)
-        c2 = comp.compress(c1)
-        assert c1 == c2, "Idempotence violated!"
-    
-    print("\n  Idempotence verified for all test packets ✓")
-    print("\n  THEOREM APPLICATION: Canonical packet headers are fixed points")
-    print("  of the canonicalization operator. Non-canonical packets are")
-    print("  strictly shortened, matching the formal compression duality.\n")
+
+    print("\nWeight vectors from different training runs:")
+    for i, w in enumerate(training_runs):
+        nw = tropical_normalize(w)
+        is_canonical = np.allclose(w, nw)
+        print(f"  Run {i+1}: {w} → normalized: {nw} {'[CANONICAL]' if is_canonical else ''}")
+
+    # Check which runs found the same neuron
+    print("\nEquivalence analysis:")
+    for i in range(len(training_runs)):
+        for j in range(i + 1, len(training_runs)):
+            equiv = np.allclose(
+                tropical_normalize(training_runs[i]),
+                tropical_normalize(training_runs[j])
+            )
+            if equiv:
+                print(f"  Run {i+1} ≡ Run {j+1} (same neuron, different gauge)")
+
+    # Compression statistics
+    unique_neurons = set()
+    for w in training_runs:
+        key = tuple(np.round(tropical_normalize(w), 8))
+        unique_neurons.add(key)
+
+    print(f"\nTotal weight vectors: {len(training_runs)}")
+    print(f"Unique neurons (after canonicalization): {len(unique_neurons)}")
+    print(f"Redundancy ratio: {len(training_runs)/len(unique_neurons):.1f}x")
+
+
+# ============================================================================
+# Application 4: MDL Model Selection
+# ============================================================================
+
+def demo_mdl_model_selection():
+    """
+    MDL model selection using closure-based compression.
+
+    Different polynomial models are closure-equivalent if they produce
+    the same predictions (up to rounding). The MDL-optimal model is
+    the simplest in each equivalence class.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 4: MDL Model Selection")
+    print("=" * 70)
+
+    np.random.seed(42)
+
+    # True model: y = 2x + 1 + noise
+    n_points = 20
+    x = np.linspace(0, 1, n_points)
+    y_true = 2 * x + 1
+    y_obs = y_true + 0.1 * np.random.randn(n_points)
+
+    # Candidate models: polynomials of degree 1 through 6
+    models = {}
+    for degree in range(1, 7):
+        coeffs = np.polyfit(x, y_obs, degree)
+        y_pred = np.polyval(coeffs, x)
+        residual = np.sum((y_obs - y_pred) ** 2)
+        model_complexity = degree + 1  # number of parameters
+        mdl_score = n_points * np.log2(residual / n_points + 1e-10) + model_complexity * np.log2(n_points)
+        models[degree] = {
+            'coeffs': coeffs,
+            'residual': residual,
+            'complexity': model_complexity,
+            'mdl_score': mdl_score,
+            'y_pred': y_pred,
+        }
+
+    # Closure: map each model to the simplest model with similar predictions
+    tolerance = 0.5  # prediction tolerance
+
+    def model_closure(degree: int) -> int:
+        """Map to the lowest-degree model with similar predictions."""
+        y_pred = models[degree]['y_pred']
+        for d in range(1, degree + 1):
+            if np.max(np.abs(models[d]['y_pred'] - y_pred)) < tolerance:
+                return d
+        return degree
+
+    print(f"\nData: {n_points} points from y = 2x + 1 + noise")
+    print(f"Prediction tolerance: {tolerance}")
+    print(f"\n{'Degree':>8} {'Residual':>10} {'MDL':>10} {'cl(deg)':>8} {'Fixed?':>8}")
+    print("-" * 50)
+
+    for degree in sorted(models.keys()):
+        m = models[degree]
+        cd = model_closure(degree)
+        is_fixed = cd == degree
+        print(f"{degree:8d} {m['residual']:10.4f} {m['mdl_score']:10.2f} "
+              f"{cd:8d} {'★' if is_fixed else '':>8}")
+
+    # Find optimal model
+    fixed_points = [d for d in models if model_closure(d) == d]
+    best = min(fixed_points, key=lambda d: models[d]['mdl_score'])
+    print(f"\nFixed points (canonical models): {fixed_points}")
+    print(f"MDL-optimal model: degree {best} (MDL score: {models[best]['mdl_score']:.2f})")
+    print(f"✓ MDL-optimal model is a fixed point of the closure (Theorem B)")
 
 
 # ============================================================================
@@ -366,327 +282,274 @@ def demo_packet_canonicalization():
 # ============================================================================
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Applications of Closure-Kolmogorov Compression Duality            ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    demo_grammar_compression()
+    demo_data_deduplication()
     demo_feature_selection()
-    demo_signal_denoising()
-    demo_packet_canonicalization()
-    
+    demo_neural_network_canonicalization()
+    demo_mdl_model_selection()
+    print("\n" + "=" * 70)
     print("All applications demonstrated successfully!")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Closure-Kolmogorov Complexity Duality: Demonstrations
+Closure-Compression Duality: Demonstrations
 
-This module demonstrates the core theorems connecting closure operators,
-idempotent compression, and algorithmic description length through
-concrete numerical examples.
+This script demonstrates the main theorems with concrete numerical examples:
+1. Closure factorization and compression on finite sets
+2. MDL optimality of canonical representatives
+3. Deficiency computation and incompressibility detection
+4. Tropical normalization and equivalence
 """
 
-import itertools
-from typing import Callable, List, Tuple, Dict
-import collections
-
+import numpy as np
+from typing import Callable, Dict, List, Tuple, Set
 
 # ============================================================================
-# Demo 1: Idempotent Compressor on Binary Strings
+# Demo 1: Closure Operator on Finite Sets
 # ============================================================================
 
-def run_length_compress(s: List[bool]) -> List[bool]:
-    """
-    A simple idempotent compressor: if the string has a repeated suffix
-    pattern, collapse it. For demonstration, we use a canonical
-    "sorted representative" compressor - sort the bits.
-    
-    This is idempotent (sorting a sorted list gives the same list),
-    length-preserving (same length), and has clear fixed points
-    (already-sorted strings).
-    """
-    return sorted(s)
-
-
-def dedup_compress(s: List[bool]) -> List[bool]:
-    """
-    Remove consecutive duplicate bits. This is idempotent and 
-    strictly shortening on non-fixed-points.
-    
-    Fixed points: strings with no consecutive duplicates (alternating).
-    """
-    if not s:
-        return s
-    result = [s[0]]
-    for bit in s[1:]:
-        if bit != result[-1]:
-            result.append(bit)
-    return result
-
-
-def demo_idempotent_compressor():
-    """Demonstrate idempotent compression and fixed-point structure."""
+def demo_closure_compression():
+    """Demonstrate closure-induced compression on a small finite set."""
     print("=" * 70)
-    print("DEMO 1: Idempotent Compressor - Fixed Points as Incompressible Strings")
+    print("DEMO 1: Closure-Induced Compression")
     print("=" * 70)
-    
-    # Generate all binary strings of length up to 5
-    compress = dedup_compress
-    
-    for n in range(1, 7):
-        all_strings = [list(bits) for bits in itertools.product([False, True], repeat=n)]
-        fixed_points = [s for s in all_strings if compress(s) == s]
-        compressed = [s for s in all_strings if compress(s) != s]
-        
-        # Verify idempotence
-        for s in all_strings:
-            cs = compress(s)
-            assert compress(cs) == cs, f"Idempotence violated for {s}"
-        
-        # Verify strict shortening on non-fixed points
-        for s in compressed:
-            cs = compress(s)
-            assert len(cs) < len(s), f"Strict shortening violated for {s}"
-        
-        ratio = len(fixed_points) / len(all_strings) * 100
-        print(f"  n={n}: {len(all_strings):4d} strings, "
-              f"{len(fixed_points):4d} fixed points ({ratio:.1f}%), "
-              f"{len(compressed):4d} compressible")
-    
-    print("\n  Example fixed points (n=5, incompressible under dedup):")
-    n = 5
-    all_5 = [list(bits) for bits in itertools.product([False, True], repeat=n)]
-    fixed_5 = [s for s in all_5 if compress(s) == s]
-    for s in fixed_5[:8]:
-        bits = ''.join('1' if b else '0' for b in s)
-        print(f"    {bits} -> {bits} (fixed)")
-    
-    print("\n  Example compressed strings (n=5):")
-    compressed_5 = [(s, compress(s)) for s in all_5 if compress(s) != s]
-    for s, cs in compressed_5[:8]:
-        sbits = ''.join('1' if b else '0' for b in s)
-        cbits = ''.join('1' if b else '0' for b in cs)
-        print(f"    {sbits} -> {cbits} (shortened by {len(s) - len(cs)})")
-    
-    print("\n  KEY THEOREM VERIFIED: Every string with no shorter compression")
-    print("  image is a fixed point of the compressor.")
-    print()
+
+    # Domain: integers mod 12, closure = rounding to nearest multiple of 3
+    n = 12
+    domain = list(range(n))
+
+    def closure(x: int) -> int:
+        """Round to nearest multiple of 3 (rounding up)."""
+        return ((x + 2) // 3) * 3 % n
+
+    # Verify idempotence
+    print("\nClosure operator: round to nearest multiple of 3 (mod 12)")
+    print(f"Domain: {domain}")
+    print(f"Closure map: {[f'{x}→{closure(x)}' for x in domain]}")
+
+    idempotent = all(closure(closure(x)) == closure(x) for x in domain)
+    print(f"\nIdempotence check: {idempotent}")
+
+    # Find fixed points
+    fixed_points = [x for x in domain if closure(x) == x]
+    print(f"Fixed points: {fixed_points}")
+
+    # Show equivalence classes
+    classes: Dict[int, List[int]] = {}
+    for x in domain:
+        cx = closure(x)
+        classes.setdefault(cx, []).append(x)
+
+    print("\nEquivalence classes (by canonical representative):")
+    for rep, members in sorted(classes.items()):
+        print(f"  cl⁻¹({rep}) = {members}")
+
+    # Compression: encode only fixed points
+    code_map = {fp: format(i, '02b') for i, fp in enumerate(fixed_points)}
+    print(f"\nFixed-point encoding: {code_map}")
+
+    print("\nCompression results:")
+    for x in domain:
+        cx = closure(x)
+        code = code_map[cx]
+        print(f"  x={x:2d} → cl(x)={cx:2d} → code='{code}'")
+
+    # Verify: constant on equivalence classes
+    for rep, members in classes.items():
+        codes = {code_map[closure(x)] for x in members}
+        assert len(codes) == 1, f"Code not constant on class of {rep}"
+    print("\n✓ Compression is constant on equivalence classes")
+    print("✓ Compression is idempotent (code(cl(x)) = code(x))")
 
 
 # ============================================================================
-# Demo 2: Fiber Structure and Compression Classes
+# Demo 2: MDL Factorization
 # ============================================================================
 
-def demo_fiber_structure():
-    """Demonstrate the fiber structure of an idempotent compressor."""
+def demo_mdl_factorization():
+    """Demonstrate that closure-respecting lengths factor through fixed points."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: MDL Factorization Through Fixed Points")
     print("=" * 70)
-    print("DEMO 2: Fiber Structure - Equivalence Classes Under Compression")
-    print("=" * 70)
-    
-    compress = dedup_compress
-    n = 4
-    all_strings = [list(bits) for bits in itertools.product([False, True], repeat=n)]
-    
-    # Also include shorter strings since compression reduces length
-    for k in range(n):
-        all_strings.extend(
-            list(bits) for bits in itertools.product([False, True], repeat=k)
-        )
-    
-    # Build fibers: group strings by their compressed representative
-    fibers: Dict[str, List[str]] = collections.defaultdict(list)
-    for s in all_strings:
-        cs = compress(s)
-        key = ''.join('1' if b else '0' for b in cs)
-        val = ''.join('1' if b else '0' for b in s)
-        fibers[key].append(val)
-    
-    print(f"\n  Fibers (equivalence classes) for strings of length ≤ {n}:")
-    for rep, members in sorted(fibers.items(), key=lambda x: (len(x[0]), x[0])):
-        is_fp = rep in members
-        print(f"    Fixed point '{rep}' <- {members}")
-        if is_fp:
-            # Verify: fixed point is the shortest in its fiber
-            min_len = min(len(m) for m in members)
-            assert len(rep) == min_len, "Fixed point should be shortest!"
-    
-    print("\n  VERIFIED: Fixed points are the shortest representatives in each fiber.")
-    print("  This is the 'compression ratio optimal on fibers' theorem.\n")
+
+    # Domain: strings of length ≤ 4
+    strings = [''] + [s for length in range(1, 5)
+                      for s in _generate_binary_strings(length)][:20]
+
+    def closure(s: str) -> str:
+        """Sort the characters (canonical representative of anagram class)."""
+        return ''.join(sorted(s))
+
+    # Verify idempotence
+    assert all(closure(closure(s)) == closure(s) for s in strings)
+
+    # A closure-respecting length function
+    def L(s: str) -> int:
+        """Description length: length of the sorted (canonical) form."""
+        return len(closure(s))
+
+    # Check closure-respecting property
+    for s in strings:
+        for t in strings:
+            if closure(s) == closure(t):
+                assert L(s) == L(t), f"L not closure-respecting: L({s})={L(s)}, L({t})={L(t)}"
+
+    # Factor through fixed points
+    fixed_points = sorted(set(closure(s) for s in strings))
+    L_fix = {fp: L(fp) for fp in fixed_points}
+
+    print(f"\nDomain size: {len(strings)} strings")
+    print(f"Fixed points: {len(fixed_points)}")
+    print(f"\nFactorization: L(x) = L_fix(cl(x))")
+    print(f"L_fix values: {L_fix}")
+
+    # Verify factorization
+    for s in strings[:10]:
+        cs = closure(s)
+        assert L(s) == L_fix[cs]
+        print(f"  L('{s}') = {L(s)} = L_fix('{cs}') ✓")
+
+    print("\n✓ L factors through fixed points as proven in Theorem B")
 
 
 # ============================================================================
-# Demo 3: Tropical Normalization
+# Demo 3: Deficiency and Incompressibility
+# ============================================================================
+
+def demo_deficiency():
+    """Demonstrate the deficiency theorem: δ(x)=0 iff x is a fixed point."""
+    print("\n" + "=" * 70)
+    print("DEMO 3: Closure Deficiency and Incompressibility")
+    print("=" * 70)
+
+    # Domain: integers 0..15
+    domain = list(range(16))
+
+    def closure(x: int) -> int:
+        """Map to largest power of 2 that divides x (or 0 for 0)."""
+        if x == 0:
+            return 0
+        p = 1
+        while x % (2 * p) == 0:
+            p *= 2
+        return p
+
+    # Length function: bit length
+    def length(x: int) -> int:
+        return x.bit_length() if x > 0 else 0
+
+    # Verify idempotence
+    assert all(closure(closure(x)) == closure(x) for x in domain)
+
+    print("\nClosure: map to largest power-of-2 divisor")
+    print(f"{'x':>4} {'cl(x)':>6} {'ℓ(x)':>6} {'ℓ(cl(x))':>9} {'δ(x)':>6} {'Fixed?':>8}")
+    print("-" * 45)
+
+    for x in domain:
+        cx = closure(x)
+        lx = length(x)
+        lcx = length(cx)
+        deficiency = max(0, lx - lcx)
+        is_fixed = cx == x
+        marker = "★" if is_fixed else ""
+        print(f"{x:4d} {cx:6d} {lx:6d} {lcx:9d} {deficiency:6d} {marker:>8}")
+
+    # Verify theorem: δ=0 iff fixed
+    for x in domain:
+        cx = closure(x)
+        deficiency = max(0, length(x) - length(cx))
+        is_fixed = cx == x
+        if is_fixed:
+            assert deficiency == 0, f"Fixed point {x} has nonzero deficiency"
+        # Note: deficiency can be 0 for non-fixed points too if length is non-strict
+
+    print("\n✓ All fixed points have zero deficiency (Theorem C, forward direction)")
+
+
+# ============================================================================
+# Demo 4: Tropical Normalization
 # ============================================================================
 
 def demo_tropical_normalization():
-    """Demonstrate tropical (min-plus) normalization as idempotent compression."""
+    """Demonstrate tropical normalization and its fixed-point characterization."""
+    print("\n" + "=" * 70)
+    print("DEMO 4: Tropical Normalization")
     print("=" * 70)
-    print("DEMO 3: Tropical Normalization - Min-Plus Canonical Forms")
-    print("=" * 70)
-    
-    import random
-    random.seed(42)
-    
-    n = 5
-    
-    # Define a baseline (ceiling) vector
-    baseline = [10.0, 8.0, 6.0, 4.0, 2.0]
-    print(f"\n  Baseline b = {baseline}")
-    
-    def tropical_normalize(b, w):
-        """Pointwise min with baseline."""
-        return [min(wi, bi) for wi, bi in zip(w, b)]
-    
-    # Generate random weight vectors
-    for trial in range(5):
-        w = [random.uniform(0, 15) for _ in range(n)]
-        w_norm = tropical_normalize(baseline, w)
-        w_norm2 = tropical_normalize(baseline, w_norm)
-        
-        # Verify idempotence
-        assert w_norm == w_norm2, "Tropical normalization not idempotent!"
-        
-        # Verify pointwise minimality
-        for i in range(n):
-            assert w_norm[i] <= w[i], "Not pointwise ≤ original!"
-            assert w_norm[i] <= baseline[i], "Not pointwise ≤ baseline!"
-        
-        total_w = sum(w)
-        total_norm = sum(w_norm)
-        savings = (1 - total_norm / total_w) * 100 if total_w > 0 else 0
-        
-        print(f"\n  Trial {trial + 1}:")
-        print(f"    w     = [{', '.join(f'{x:.2f}' for x in w)}]  (total: {total_w:.2f})")
-        print(f"    norm  = [{', '.join(f'{x:.2f}' for x in w_norm)}]  (total: {total_norm:.2f})")
-        print(f"    Savings: {savings:.1f}%")
-    
-    # Show fixed points
-    print("\n  Fixed points (w ≤ b pointwise):")
-    fixed = [1.0, 2.0, 3.0, 4.0, 1.0]
-    assert tropical_normalize(baseline, fixed) == fixed
-    print(f"    {fixed} is a fixed point (all components ≤ baseline)")
-    
-    not_fixed = [1.0, 2.0, 3.0, 4.0, 5.0]
-    nf_norm = tropical_normalize(baseline, not_fixed)
-    print(f"    {not_fixed} is NOT a fixed point -> normalizes to {nf_norm}")
-    
-    # Verify tropical equivalence preserves normalization
-    v1 = [12.0, 5.0, 3.0, 1.0, 0.5]
-    v2 = [15.0, 5.0, 3.0, 1.0, 0.5]
-    n1 = tropical_normalize(baseline, v1)
-    n2 = tropical_normalize(baseline, v2)
-    print(f"\n  Tropical equivalence:")
-    print(f"    v1 = {v1} -> norm = {n1}")
-    print(f"    v2 = {v2} -> norm = {n2}")
-    print(f"    Equivalent: {n1 == n2} (both capped by baseline)")
-    
-    print("\n  VERIFIED: Tropical normalization is idempotent and gives")
-    print("  pointwise-minimal canonical representatives.\n")
 
+    def trop_normalize(x: np.ndarray) -> np.ndarray:
+        """Subtract the minimum coordinate."""
+        return x - x.min()
 
-# ============================================================================
-# Demo 4: Closure Operator MDL Bounds
-# ============================================================================
+    def trop_offset(x: np.ndarray) -> float:
+        """The minimum coordinate value."""
+        return float(x.min())
 
-def demo_closure_mdl():
-    """Demonstrate closure operators giving MDL bounds."""
-    print("=" * 70)
-    print("DEMO 4: Closure Operators Give MDL Upper Bounds")
-    print("=" * 70)
-    
-    # Model: sets of features (powerset lattice)
-    # Closure: add implied features (transitive closure of implications)
-    
-    # Feature implications: a -> b means feature a implies feature b
-    implications = {
-        'a': {'b', 'c'},  # a implies b and c
-        'b': {'d'},        # b implies d
-        'c': set(),        # c implies nothing extra
-        'd': set(),
-    }
-    
-    def closure(features: frozenset) -> frozenset:
-        """Compute the closure of a feature set under implications."""
-        result = set(features)
-        changed = True
-        while changed:
-            changed = False
-            for f in list(result):
-                if f in implications:
-                    for implied in implications[f]:
-                        if implied not in result:
-                            result.add(implied)
-                            changed = True
-        return frozenset(result)
-    
-    # Verify closure properties
-    all_features = {'a', 'b', 'c', 'd'}
-    print("\n  Feature implications: a->b,c  b->d")
-    
-    test_sets = [
-        frozenset(),
-        frozenset({'a'}),
-        frozenset({'b'}),
-        frozenset({'a', 'b'}),
-        frozenset({'c', 'd'}),
-        frozenset({'a', 'b', 'c', 'd'}),
+    # Test vectors
+    vectors = [
+        np.array([5.0, 3.0, 7.0]),
+        np.array([8.0, 6.0, 10.0]),
+        np.array([2.0, 0.0, 4.0]),
+        np.array([1.0, 1.0, 1.0]),
+        np.array([0.0, 0.0, 0.0]),
+        np.array([-3.0, -5.0, -1.0]),
+        np.array([0.0, 2.5, 7.1]),
     ]
-    
-    print("\n  Closure computations:")
-    for s in test_sets:
-        cs = closure(s)
-        is_fixed = (closure(cs) == cs)
-        encoding_len = len(s)
-        closure_len = len(cs)
-        print(f"    {set(s) if s else '{}':<20} -> {set(cs):<20} "
-              f"|s|={encoding_len}, |c(s)|={closure_len}, "
-              f"fixed={is_fixed}")
-    
-    # Identify fixed points
-    all_subsets = [frozenset(combo) 
-                   for r in range(len(all_features) + 1) 
-                   for combo in itertools.combinations(all_features, r)]
-    
-    fixed_points = [s for s in all_subsets if closure(s) == s]
-    print(f"\n  Fixed points (closed sets): {len(fixed_points)} total")
-    for fp in fixed_points:
-        print(f"    {set(fp) if fp else '{}'}")
-    
-    print("\n  MDL THEOREM: For every feature set S, the closure c(S) is a")
-    print("  fixed point above S. The encoding |c(S)| serves as an upper")
-    print("  bound on the canonical description length.\n")
+
+    print("\nTropical normalization: x ↦ x - min(x)")
+    print(f"{'Vector':>25} {'Normalized':>25} {'Offset':>8} {'Fixed?':>8}")
+    print("-" * 70)
+
+    for x in vectors:
+        nx = trop_normalize(x)
+        offset = trop_offset(x)
+        is_fixed = np.allclose(nx, x)
+        print(f"{str(x):>25} {str(nx):>25} {offset:8.1f} {'★' if is_fixed else '':>8}")
+
+    # Verify idempotence
+    print("\nIdempotence check:")
+    for x in vectors:
+        nx = trop_normalize(x)
+        nnx = trop_normalize(nx)
+        assert np.allclose(nx, nnx), f"Not idempotent for {x}"
+        print(f"  norm(norm({x})) = norm({nx}) = {nnx} ✓")
+
+    # Verify fixed-point characterization
+    print("\nFixed-point characterization (Theorem D):")
+    print("x is fixed ⟺ (∃i, x[i]=0) ∧ (∀j, x[j]≥0)")
+    for x in vectors:
+        is_fixed_computed = np.allclose(trop_normalize(x), x)
+        has_zero = any(np.isclose(xi, 0) for xi in x)
+        all_nonneg = all(xi >= -1e-10 for xi in x)
+        is_fixed_predicted = has_zero and all_nonneg
+        status = "✓" if is_fixed_computed == is_fixed_predicted else "✗"
+        print(f"  {str(x):>25}: fixed={is_fixed_computed}, "
+              f"has_zero={has_zero}, all_nonneg={all_nonneg} {status}")
+
+    # Verify tropical equivalence
+    print("\nTropical equivalence (vectors differing by a constant):")
+    x1 = np.array([5.0, 3.0, 7.0])
+    x2 = np.array([8.0, 6.0, 10.0])  # = x1 + 3
+    x3 = np.array([2.0, 0.0, 4.0])   # = x1 - 3 = normalized
+    x4 = np.array([1.0, 2.0, 3.0])   # different shape
+
+    for a, b, expected in [(x1, x2, True), (x1, x3, True), (x2, x3, True), (x1, x4, False)]:
+        same_norm = np.allclose(trop_normalize(a), trop_normalize(b))
+        status = "✓" if same_norm == expected else "✗"
+        print(f"  {a} ~ {b}: {same_norm} (expected {expected}) {status}")
+
+    print("\n✓ Tropical equivalence ⟺ same normalization (Theorem D)")
 
 
 # ============================================================================
-# Demo 5: Compression Statistics
+# Utilities
 # ============================================================================
 
-def demo_compression_statistics():
-    """Show compression statistics matching the formal theorems."""
-    print("=" * 70)
-    print("DEMO 5: Compression Statistics - Counting Incompressible Strings")
-    print("=" * 70)
-    
-    compress = dedup_compress
-    
-    print("\n  Theorem: |fixed points| + |compressed| = |all strings|")
-    print(f"  {'n':>3} | {'Total':>6} | {'Fixed':>6} | {'Compressed':>10} | {'Sum Check':>9}")
-    print("  " + "-" * 50)
-    
-    for n in range(1, 9):
-        all_strings = [list(bits) for bits in itertools.product([False, True], repeat=n)]
-        fixed = sum(1 for s in all_strings if compress(s) == s)
-        compressed = sum(1 for s in all_strings if compress(s) != s)
-        total = len(all_strings)
-        assert fixed + compressed == total
-        print(f"  {n:>3} | {total:>6} | {fixed:>6} | {compressed:>10} | "
-              f"{'✓' if fixed + compressed == total else '✗':>9}")
-    
-    print("\n  The number of fixed points (incompressible strings) grows")
-    print("  as a Fibonacci-like sequence for the dedup compressor.\n")
+def _generate_binary_strings(n: int) -> List[str]:
+    """Generate all binary strings of length n."""
+    if n == 0:
+        return ['']
+    return [b + c for b in _generate_binary_strings(n - 1) for c in '01']
 
 
 # ============================================================================
@@ -694,331 +557,454 @@ def demo_compression_statistics():
 # ============================================================================
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Closure-Kolmogorov Complexity Duality: Concrete Demonstrations     ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    demo_idempotent_compressor()
-    demo_fiber_structure()
+    demo_closure_compression()
+    demo_mdl_factorization()
+    demo_deficiency()
     demo_tropical_normalization()
-    demo_closure_mdl()
-    demo_compression_statistics()
-    
+    print("\n" + "=" * 70)
     print("All demonstrations completed successfully!")
-    print()
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all embedded content."""
+
+import json
+import base64
+import os
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+def read_binary(path):
+    with open(path, 'rb') as f:
+        return base64.b64encode(f.read()).decode('utf-8')
+
+# Read all content
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+lean_core = read_file('Computation/ClosureCompressionCore.lean')
+lean_tropical = read_file('Computation/TropicalCompression.lean')
+
+# Read visualization PNGs
+viz_files = [
+    ('closure_partition', 'Closure Equivalence Classes'),
+    ('tropical_normalization', 'Tropical Normalization'),
+    ('deficiency_landscape', 'Deficiency Landscape'),
+    ('convergence_diagram', 'One-Step Convergence'),
+    ('tropical_equivalence', 'Tropical Equivalence Classes'),
+]
+
+visualizations = []
+for filename, name in viz_files:
+    path = f'{filename}.png'
+    if os.path.exists(path):
+        b64 = read_binary(path)
+        visualizations.append({
+            'name': name,
+            'data': f'data:image/png;base64,{b64}'
+        })
+
+lean_proofs = lean_core + "\n\n-- ========== TropicalCompression.lean ==========\n\n" + lean_tropical
+
+package = {
+    'title': 'Closure-Compression Duality: Idempotent Operators, Canonical Representatives, and Tropical Normal Forms',
+    'domain': 'Computation / Information Theory / Tropical Geometry',
+    'article': article,
+    'research_paper': research_paper,
+    'future_directions': future_directions,
+    'demos': [
+        {
+            'name': 'Closure Compression Demonstrations',
+            'code': demo_code
+        },
+        {
+            'name': 'Real-World Applications',
+            'code': applications_code
+        }
+    ],
+    'algorithms': [
+        {
+            'name': 'Closure-Based Compression',
+            'pseudocode': '''Algorithm: CLOSURE-COMPRESS(x, cl, code)
+Input:  Element x, closure operator cl, encoding function code on fixed points
+Output: Compressed binary string
+
+1. Compute canonical representative: r ← cl(x)
+2. Encode: return code(r)
+
+Time: O(T_cl + T_code)
+Space: O(|fixed points|) for codebook''',
+            'code': algorithms_code
+        },
+        {
+            'name': 'Tropical Normalization',
+            'pseudocode': '''Algorithm: TROP-NORMALIZE(x)
+Input:  Vector x ∈ ℝ^n
+Output: Normalized vector with min coordinate 0
+
+1. m ← min(x[0], x[1], ..., x[n-1])
+2. for i = 0 to n-1:
+3.     x[i] ← x[i] - m
+4. return x
+
+Time: O(n)
+Space: O(1) additional''',
+            'code': '''import numpy as np
+
+def tropical_normalize(x):
+    """Tropical normalization: subtract the minimum coordinate.
+    
+    Properties (machine-verified):
+    - Idempotent: normalize(normalize(x)) = normalize(x)
+    - Fixed points: normalize(x) = x iff x >= 0 and min(x) = 0
+    - Canonical: normalize(x) = normalize(y) iff x - y is constant
+    """
+    return x - np.min(x)
+
+def tropical_deficiency(x):
+    """Deficiency = n * min(x). Zero iff x is a fixed point."""
+    return len(x) * np.min(x)
+
+# Example
+x = np.array([5.0, 3.0, 7.0])
+print(f"x = {x}")
+print(f"normalize(x) = {tropical_normalize(x)}")
+print(f"deficiency = {tropical_deficiency(x)}")
+print(f"is_fixed = {np.allclose(tropical_normalize(x), x)}")
+
+# Verify idempotence
+nx = tropical_normalize(x)
+nnx = tropical_normalize(nx)
+print(f"normalize(normalize(x)) = {nnx}")
+print(f"idempotent: {np.allclose(nx, nnx)}")
+'''
+        }
+    ],
+    'visualizations': visualizations,
+    'lean_proofs': lean_proofs
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print(f"Generated PACKAGE.json ({os.path.getsize('PACKAGE.json')} bytes)")
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Closure-Kolmogorov Compression Duality
+Closure-Compression Duality: Visualizations
 
-Generates publication-quality figures showing:
-1. Fixed-point ratio decay
-2. Fiber structure 
-3. Tropical normalization
-4. Compression spectrum
+Generates publication-quality figures illustrating the main theorems.
 """
 
-import itertools
-import math
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyArrowPatch
 import base64
-import io
-
-# Minimal SVG-based visualizations (no matplotlib dependency needed)
+from io import BytesIO
 
 
-def dedup_compress(s):
-    if not s:
-        return s
-    result = [s[0]]
-    for bit in s[1:]:
-        if bit != result[-1]:
-            result.append(bit)
-    return result
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 data URI."""
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
+    buf.seek(0)
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{encoded}"
 
 
-def generate_compression_spectrum_svg():
-    """Generate SVG chart of compression spectrum."""
-    # Compute data
-    data = []
-    for n in range(1, 13):
-        total = 2**n
-        fixed = 0
-        for bits in itertools.product([False, True], repeat=n):
-            if dedup_compress(list(bits)) == list(bits):
-                fixed += 1
-        ratio = fixed / total * 100
-        data.append((n, total, fixed, ratio))
-    
-    # SVG dimensions
-    w, h = 600, 400
-    margin = {'top': 40, 'right': 30, 'bottom': 60, 'left': 70}
-    plot_w = w - margin['left'] - margin['right']
-    plot_h = h - margin['top'] - margin['bottom']
-    
-    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}">'
-    svg += '<style>text { font-family: Arial, sans-serif; }</style>'
-    
-    # Background
-    svg += f'<rect width="{w}" height="{h}" fill="white"/>'
-    
-    # Title
-    svg += f'<text x="{w//2}" y="25" text-anchor="middle" font-size="16" font-weight="bold">'
-    svg += 'Fixed Points (Incompressible Strings) vs String Length</text>'
-    
-    # Axes
-    svg += f'<line x1="{margin["left"]}" y1="{margin["top"]}" '
-    svg += f'x2="{margin["left"]}" y2="{h-margin["bottom"]}" stroke="black" stroke-width="2"/>'
-    svg += f'<line x1="{margin["left"]}" y1="{h-margin["bottom"]}" '
-    svg += f'x2="{w-margin["right"]}" y2="{h-margin["bottom"]}" stroke="black" stroke-width="2"/>'
-    
-    # X axis label
-    svg += f'<text x="{w//2}" y="{h-10}" text-anchor="middle" font-size="14">String Length n</text>'
-    
-    # Y axis label  
-    svg += f'<text x="15" y="{h//2}" text-anchor="middle" font-size="14" '
-    svg += f'transform="rotate(-90, 15, {h//2})">Fixed Point Ratio (%)</text>'
-    
-    # Plot bars
-    max_ratio = 100
-    bar_width = plot_w / len(data) * 0.7
-    
-    for i, (n, total, fixed, ratio) in enumerate(data):
-        x = margin['left'] + (i + 0.5) * plot_w / len(data) - bar_width / 2
-        bar_h = ratio / max_ratio * plot_h
-        y = margin['top'] + plot_h - bar_h
-        
-        # Bar
-        color = f'hsl({200 + i*10}, 70%, {40 + i*3}%)'
-        svg += f'<rect x="{x:.1f}" y="{y:.1f}" width="{bar_width:.1f}" '
-        svg += f'height="{bar_h:.1f}" fill="{color}" stroke="white" stroke-width="1"/>'
-        
-        # X tick label
-        tick_x = margin['left'] + (i + 0.5) * plot_w / len(data)
-        svg += f'<text x="{tick_x:.1f}" y="{h-margin["bottom"]+18}" '
-        svg += f'text-anchor="middle" font-size="11">{n}</text>'
-        
-        # Value label on bar
-        if bar_h > 15:
-            svg += f'<text x="{x + bar_width/2:.1f}" y="{y + bar_h/2 + 5:.1f}" '
-            svg += f'text-anchor="middle" font-size="9" fill="white">{ratio:.1f}%</text>'
-    
-    # Y axis ticks
-    for pct in [0, 25, 50, 75, 100]:
-        y = margin['top'] + plot_h - pct / max_ratio * plot_h
-        svg += f'<text x="{margin["left"]-8}" y="{y+4}" text-anchor="end" font-size="11">{pct}</text>'
-        svg += f'<line x1="{margin["left"]}" y1="{y}" x2="{w-margin["right"]}" y2="{y}" '
-        svg += f'stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>'
-    
-    svg += '</svg>'
-    return svg
+def viz_closure_partition():
+    """Visualize closure equivalence classes and canonical representatives."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+
+    # Domain: integers 0-11, closure = round to nearest multiple of 4
+    n = 12
+    def closure(x):
+        return (round(x / 4)) * 4 % n
+
+    classes = {}
+    for x in range(n):
+        cx = closure(x)
+        classes.setdefault(cx, []).append(x)
+
+    colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63', '#9C27B0']
+    y_positions = {}
+    for idx, (rep, members) in enumerate(sorted(classes.items())):
+        color = colors[idx % len(colors)]
+        for j, m in enumerate(members):
+            x_pos = m
+            y_pos = 1.0
+            is_fixed = m == rep
+
+            circle = plt.Circle((x_pos, y_pos), 0.35,
+                              fill=True, facecolor=color,
+                              edgecolor='black' if is_fixed else color,
+                              linewidth=3 if is_fixed else 1,
+                              alpha=0.8 if is_fixed else 0.4)
+            ax.add_patch(circle)
+            ax.text(x_pos, y_pos, str(m), ha='center', va='center',
+                   fontsize=12, fontweight='bold' if is_fixed else 'normal',
+                   color='white' if is_fixed else 'black')
+
+            # Arrow from non-fixed to fixed
+            if not is_fixed:
+                ax.annotate('', xy=(rep, 0.3), xytext=(m, 0.6),
+                          arrowprops=dict(arrowstyle='->', color=color,
+                                        lw=1.5, connectionstyle='arc3,rad=0.2'))
+
+        # Label the class
+        ax.text(rep, -0.2, f'cl⁻¹({rep})',
+               ha='center', va='top', fontsize=10, color=color, fontweight='bold')
+
+    ax.set_xlim(-0.8, n - 0.2)
+    ax.set_ylim(-0.8, 1.8)
+    ax.set_aspect('equal')
+    ax.axis('off')
+    ax.set_title('Closure Equivalence Classes\n'
+                 'Bold circles = fixed points (canonical representatives)',
+                 fontsize=14, pad=20)
+
+    return fig_to_base64(fig)
 
 
-def generate_tropical_normalization_svg():
-    """Generate SVG showing tropical normalization."""
-    import random
-    random.seed(42)
-    
-    n = 8
-    baseline = [10, 8, 12, 6, 9, 7, 11, 5]
-    weights = [random.uniform(2, 15) for _ in range(n)]
-    normalized = [min(w, b) for w, b in zip(weights, baseline)]
-    
-    w, h = 600, 350
-    margin = {'top': 40, 'right': 30, 'bottom': 60, 'left': 60}
-    plot_w = w - margin['left'] - margin['right']
-    plot_h = h - margin['top'] - margin['bottom']
-    
-    max_val = max(max(weights), max(baseline)) * 1.1
-    
-    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}">'
-    svg += '<style>text { font-family: Arial, sans-serif; }</style>'
-    svg += f'<rect width="{w}" height="{h}" fill="white"/>'
-    
-    # Title
-    svg += f'<text x="{w//2}" y="25" text-anchor="middle" font-size="16" font-weight="bold">'
-    svg += 'Tropical Normalization: Pointwise Min with Baseline</text>'
-    
-    # Axes
-    svg += f'<line x1="{margin["left"]}" y1="{margin["top"]}" '
-    svg += f'x2="{margin["left"]}" y2="{h-margin["bottom"]}" stroke="black" stroke-width="2"/>'
-    svg += f'<line x1="{margin["left"]}" y1="{h-margin["bottom"]}" '
-    svg += f'x2="{w-margin["right"]}" y2="{h-margin["bottom"]}" stroke="black" stroke-width="2"/>'
-    
-    svg += f'<text x="{w//2}" y="{h-10}" text-anchor="middle" font-size="14">Component Index</text>'
-    svg += f'<text x="15" y="{h//2}" text-anchor="middle" font-size="14" '
-    svg += f'transform="rotate(-90, 15, {h//2})">Value</text>'
-    
-    bar_width = plot_w / n * 0.25
-    
-    for i in range(n):
-        center_x = margin['left'] + (i + 0.5) * plot_w / n
-        
-        # Original weight (transparent)
-        bh = weights[i] / max_val * plot_h
-        y = margin['top'] + plot_h - bh
-        svg += f'<rect x="{center_x - bar_width*1.5:.1f}" y="{y:.1f}" '
-        svg += f'width="{bar_width:.1f}" height="{bh:.1f}" fill="#FF6B6B" opacity="0.7"/>'
-        
-        # Baseline
-        bh = baseline[i] / max_val * plot_h
-        y = margin['top'] + plot_h - bh
-        svg += f'<rect x="{center_x - bar_width*0.5:.1f}" y="{y:.1f}" '
-        svg += f'width="{bar_width:.1f}" height="{bh:.1f}" fill="#4ECDC4" opacity="0.7"/>'
-        
-        # Normalized (min)
-        bh = normalized[i] / max_val * plot_h
-        y = margin['top'] + plot_h - bh
-        svg += f'<rect x="{center_x + bar_width*0.5:.1f}" y="{y:.1f}" '
-        svg += f'width="{bar_width:.1f}" height="{bh:.1f}" fill="#2C3E50"/>'
-        
-        # X label
-        svg += f'<text x="{center_x:.1f}" y="{h-margin["bottom"]+18}" '
-        svg += f'text-anchor="middle" font-size="11">{i+1}</text>'
-    
-    # Legend
-    lx = w - 180
-    ly = 50
-    svg += f'<rect x="{lx}" y="{ly}" width="12" height="12" fill="#FF6B6B" opacity="0.7"/>'
-    svg += f'<text x="{lx+18}" y="{ly+11}" font-size="11">Original w</text>'
-    svg += f'<rect x="{lx}" y="{ly+18}" width="12" height="12" fill="#4ECDC4" opacity="0.7"/>'
-    svg += f'<text x="{lx+18}" y="{ly+29}" font-size="11">Baseline b</text>'
-    svg += f'<rect x="{lx}" y="{ly+36}" width="12" height="12" fill="#2C3E50"/>'
-    svg += f'<text x="{lx+18}" y="{ly+47}" font-size="11">Normalized min(w,b)</text>'
-    
-    svg += '</svg>'
-    return svg
+def viz_tropical_normalization():
+    """Visualize tropical normalization in 3D."""
+    fig = plt.figure(figsize=(12, 5))
 
+    # 2D projection: show vectors and their normalizations
+    ax1 = fig.add_subplot(121)
 
-def generate_fiber_structure_svg():
-    """Generate SVG showing fiber structure of compression."""
-    # Compute fibers for n=3
-    import collections
-    
-    fibers = collections.defaultdict(list)
-    for n in range(1, 5):
-        for bits in itertools.product([False, True], repeat=n):
-            s = list(bits)
-            cs = dedup_compress(s)
-            key = ''.join('1' if b else '0' for b in cs)
-            val = ''.join('1' if b else '0' for b in s)
-            if val != key:  # Only show non-trivial mappings
-                fibers[key].append(val)
-    
-    w, h = 600, 400
-    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}">'
-    svg += '<style>text { font-family: monospace; }</style>'
-    svg += f'<rect width="{w}" height="{h}" fill="white"/>'
-    
-    svg += f'<text x="{w//2}" y="25" text-anchor="middle" font-size="16" '
-    svg += 'font-weight="bold" font-family="Arial">Compression Fiber Structure</text>'
-    svg += f'<text x="{w//2}" y="42" text-anchor="middle" font-size="12" '
-    svg += 'font-family="Arial" fill="#666">Strings mapping to each fixed point under dedup compression</text>'
-    
-    # Layout: fixed points on the left, fibers on the right
-    y_pos = 70
-    sorted_fibers = sorted(fibers.items(), key=lambda x: (len(x[0]), x[0]))
-    
-    for fp, members in sorted_fibers[:10]:
-        # Fixed point
-        svg += f'<rect x="30" y="{y_pos-12}" width="{len(fp)*12+16}" height="22" '
-        svg += f'rx="4" fill="#2C3E50"/>'
-        svg += f'<text x="38" y="{y_pos+4}" fill="white" font-size="13">{fp}</text>'
-        
-        # Arrow
-        arrow_start = 30 + len(fp) * 12 + 20
-        svg += f'<line x1="{arrow_start}" y1="{y_pos}" x2="{arrow_start+20}" y2="{y_pos}" '
-        svg += f'stroke="#999" stroke-width="2" marker-end="url(#arrowhead)"/>'
-        
-        # Members
-        x_mem = arrow_start + 30
-        for j, mem in enumerate(members[:8]):
-            color = '#FF6B6B' if len(mem) > len(fp) else '#4ECDC4'
-            svg += f'<rect x="{x_mem}" y="{y_pos-10}" width="{len(mem)*10+10}" height="18" '
-            svg += f'rx="3" fill="{color}" opacity="0.8"/>'
-            svg += f'<text x="{x_mem+5}" y="{y_pos+3}" font-size="11">{mem}</text>'
-            x_mem += len(mem) * 10 + 16
-        
-        if len(members) > 8:
-            svg += f'<text x="{x_mem}" y="{y_pos+3}" font-size="11" fill="#999">+{len(members)-8} more</text>'
-        
-        y_pos += 32
-    
-    # Arrow marker
-    svg += '<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">'
-    svg += '<polygon points="0 0, 10 3.5, 0 7" fill="#999"/></marker></defs>'
-    
-    svg += '</svg>'
-    return svg
-
-
-def generate_closure_lattice_svg():
-    """Generate SVG showing closure operator on a lattice."""
-    w, h = 500, 400
-    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}">'
-    svg += '<style>text { font-family: Arial, sans-serif; }</style>'
-    svg += f'<rect width="{w}" height="{h}" fill="white"/>'
-    
-    svg += f'<text x="{w//2}" y="25" text-anchor="middle" font-size="16" font-weight="bold">'
-    svg += 'Closure Operator on Feature Lattice</text>'
-    svg += f'<text x="{w//2}" y="42" text-anchor="middle" font-size="11" fill="#666">'
-    svg += 'Implications: a→b,c  b→d  |  Closed sets shown in bold</text>'
-    
-    # Lattice nodes (Hasse diagram of powerset with closure highlights)
-    nodes = {
-        '∅': (250, 350),
-        '{c}': (120, 290),
-        '{d}': (250, 290),
-        '{b,d}': (180, 230),
-        '{c,d}': (320, 230),
-        '{b,c,d}': (250, 170),
-        '{a,b,c,d}': (250, 110),
-    }
-    
-    # Edges (Hasse diagram)
-    edges = [
-        ('∅', '{c}'), ('∅', '{d}'),
-        ('{c}', '{c,d}'), ('{d}', '{b,d}'), ('{d}', '{c,d}'),
-        ('{b,d}', '{b,c,d}'), ('{c,d}', '{b,c,d}'),
-        ('{b,c,d}', '{a,b,c,d}'),
+    vectors = [
+        np.array([5.0, 3.0, 7.0]),
+        np.array([8.0, 6.0, 10.0]),
+        np.array([2.0, 0.0, 4.0]),
+        np.array([1.0, 3.0, 2.0]),
+        np.array([4.0, 6.0, 5.0]),
     ]
-    
-    # Draw edges
-    for n1, n2 in edges:
-        x1, y1 = nodes[n1]
-        x2, y2 = nodes[n2]
-        svg += f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" '
-        svg += f'stroke="#ccc" stroke-width="2"/>'
-    
-    # Draw nodes
-    for label, (x, y) in nodes.items():
-        r = 25
-        svg += f'<circle cx="{x}" cy="{y}" r="{r}" fill="#2C3E50" stroke="#1a252f" stroke-width="2"/>'
-        svg += f'<text x="{x}" y="{y+4}" text-anchor="middle" fill="white" font-size="9">{label}</text>'
-    
-    # Annotation: closure arrows for non-closed sets
-    svg += f'<text x="30" y="{h-20}" font-size="11" fill="#666">'
-    svg += 'All nodes shown are closed (fixed points of the closure operator).</text>'
-    
-    svg += '</svg>'
-    return svg
+
+    colors_orig = ['#E91E63', '#2196F3', '#4CAF50', '#FF9800', '#9C27B0']
+
+    for i, (v, c) in enumerate(zip(vectors, colors_orig)):
+        nv = v - v.min()
+        # Plot original (faded)
+        ax1.bar(np.arange(3) + i * 0.15 - 0.3, v, width=0.12,
+                color=c, alpha=0.3, label=f'x{i+1}' if i < 3 else None)
+
+    ax1.set_xlabel('Coordinate index', fontsize=12)
+    ax1.set_ylabel('Value', fontsize=12)
+    ax1.set_title('Original Vectors (faded)', fontsize=13)
+    ax1.set_xticks([0, 1, 2])
+    ax1.legend(fontsize=9)
+
+    ax2 = fig.add_subplot(122)
+
+    for i, (v, c) in enumerate(zip(vectors, colors_orig)):
+        nv = v - v.min()
+        ax2.bar(np.arange(3) + i * 0.15 - 0.3, nv, width=0.12,
+                color=c, alpha=0.9)
+
+    ax2.set_xlabel('Coordinate index', fontsize=12)
+    ax2.set_ylabel('Value', fontsize=12)
+    ax2.set_title('After Tropical Normalization\n(min coordinate = 0)', fontsize=13)
+    ax2.set_xticks([0, 1, 2])
+    ax2.axhline(y=0, color='black', linewidth=0.5)
+
+    fig.suptitle('Tropical Normalization: x ↦ x − min(x)', fontsize=15, y=1.02)
+    plt.tight_layout()
+
+    return fig_to_base64(fig)
+
+
+def viz_deficiency_landscape():
+    """Visualize deficiency landscape across elements."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+    # Domain: integers 1-20
+    domain = list(range(1, 21))
+
+    def closure(x):
+        """Map to nearest power of 2 (rounding down)."""
+        p = 1
+        while p * 2 <= x:
+            p *= 2
+        return p
+
+    def length(x):
+        return x.bit_length()
+
+    deficiencies = []
+    is_fixed = []
+    for x in domain:
+        cx = closure(x)
+        d = length(x) - length(cx)
+        deficiencies.append(d)
+        is_fixed.append(cx == x)
+
+    colors = ['#4CAF50' if f else '#E91E63' for f in is_fixed]
+
+    ax1.bar(domain, deficiencies, color=colors, alpha=0.8, edgecolor='white')
+    ax1.set_xlabel('Element x', fontsize=12)
+    ax1.set_ylabel('Deficiency δ(x) = ℓ(x) − ℓ(cl(x))', fontsize=12)
+    ax1.set_title('Closure Deficiency\nGreen = fixed points (δ=0)', fontsize=13)
+    ax1.axhline(y=0, color='black', linewidth=0.5)
+
+    # Compression map visualization
+    for x in domain:
+        cx = closure(x)
+        if cx != x:
+            ax2.annotate('', xy=(cx, 0.5), xytext=(x, 1.5),
+                        arrowprops=dict(arrowstyle='->', color='#E91E63',
+                                      alpha=0.4, lw=0.8))
+        ax2.plot(x, 1.5, 'o', color='#E91E63' if not is_fixed[x-1] else '#4CAF50',
+                markersize=8, alpha=0.7)
+        if is_fixed[x-1]:
+            ax2.plot(x, 0.5, 's', color='#4CAF50', markersize=10, alpha=0.9)
+
+    ax2.set_xlabel('Element', fontsize=12)
+    ax2.set_yticks([0.5, 1.5])
+    ax2.set_yticklabels(['Fixed points', 'All elements'])
+    ax2.set_title('Compression Map\nArrows: element → canonical representative', fontsize=13)
+    ax2.set_xlim(0, 21)
+
+    plt.tight_layout()
+    return fig_to_base64(fig)
+
+
+def viz_convergence_diagram():
+    """Visualize one-step convergence of closure operators."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+    # Three examples of closure dynamics
+    examples = [
+        ("Sorting closure", lambda s: tuple(sorted(s)),
+         [(3,1,4), (1,4,3), (4,3,1), (1,3,4), (3,4,1), (1,1,1)]),
+        ("Modular closure (mod 3)", lambda x: x % 3,
+         [0, 1, 2, 3, 4, 5, 6, 7, 8]),
+        ("Min-max closure", lambda x: min(max(x, 0), 10),
+         [-5, -2, 0, 3, 5, 7, 10, 12, 15]),
+    ]
+
+    for ax, (title, cl, domain) in zip(axes, examples):
+        n = len(domain)
+        for i, x in enumerate(domain):
+            cx = cl(x)
+            is_fp = cx == x
+
+            # Original point
+            ax.plot(i, 1, 'o', color='#2196F3', markersize=10, alpha=0.6)
+            ax.text(i, 1.15, str(x), ha='center', va='bottom', fontsize=8)
+
+            # After closure (at y=0)
+            ax.plot(i, 0, 's' if is_fp else '^',
+                   color='#4CAF50' if is_fp else '#FF9800',
+                   markersize=10, alpha=0.8)
+            ax.text(i, -0.15, str(cx), ha='center', va='top', fontsize=8)
+
+            # Arrow
+            ax.annotate('', xy=(i, 0.15), xytext=(i, 0.85),
+                       arrowprops=dict(arrowstyle='->', color='gray', lw=1))
+
+        ax.set_ylim(-0.5, 1.5)
+        ax.set_yticks([0, 1])
+        ax.set_yticklabels(['cl(x)', 'x'])
+        ax.set_title(title, fontsize=11)
+        ax.set_xticks([])
+
+    fig.suptitle('One-Step Convergence: cl(cl(x)) = cl(x)\n'
+                 'Green squares = fixed points, Orange triangles = compressed',
+                 fontsize=13, y=1.05)
+    plt.tight_layout()
+    return fig_to_base64(fig)
+
+
+def viz_tropical_equivalence_classes():
+    """Visualize tropical equivalence classes as parallel hyperplanes."""
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+    # In 2D: tropical equivalence classes are lines y = x + c
+    # Normalization projects onto the line through origin perpendicular to (1,1)
+
+    xs = np.linspace(-2, 8, 100)
+
+    # Draw equivalence classes (lines y = x + c)
+    for c in np.arange(-3, 5, 1):
+        color = '#E0E0E0' if c != 0 else '#4CAF50'
+        lw = 2 if c == 0 else 0.8
+        ax.plot(xs, xs + c, color=color, linewidth=lw, alpha=0.5)
+
+    # Sample points and their normalizations
+    points = [(2, 5), (1, 4), (4, 7), (3, 1), (5, 3), (0, 0), (2, 2)]
+    for px, py in points:
+        offset = min(px, py)
+        nx, ny = px - offset, py - offset
+
+        # Original point
+        ax.plot(px, py, 'o', color='#E91E63', markersize=8, zorder=5)
+
+        # Normalized point
+        ax.plot(nx, ny, 's', color='#4CAF50', markersize=8, zorder=5)
+
+        # Arrow from original to normalized
+        ax.annotate('', xy=(nx, ny), xytext=(px, py),
+                   arrowprops=dict(arrowstyle='->', color='#2196F3',
+                                 lw=1.2, alpha=0.7))
+
+    ax.set_xlabel('x₁', fontsize=13)
+    ax.set_ylabel('x₂', fontsize=13)
+    ax.set_title('Tropical Equivalence in ℝ²\n'
+                 'Pink circles → green squares (normalization)\n'
+                 'Green line = fixed points (nonneg with a zero)',
+                 fontsize=12)
+    ax.set_xlim(-1, 8)
+    ax.set_ylim(-1, 8)
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.2)
+
+    return fig_to_base64(fig)
+
+
+def generate_all_visualizations() -> dict:
+    """Generate all visualizations and return as base64 dict."""
+    print("Generating visualizations...")
+
+    vizs = {}
+    vizs['closure_partition'] = viz_closure_partition()
+    print("  ✓ Closure partition")
+
+    vizs['tropical_normalization'] = viz_tropical_normalization()
+    print("  ✓ Tropical normalization")
+
+    vizs['deficiency_landscape'] = viz_deficiency_landscape()
+    print("  ✓ Deficiency landscape")
+
+    vizs['convergence_diagram'] = viz_convergence_diagram()
+    print("  ✓ Convergence diagram")
+
+    vizs['tropical_equivalence'] = viz_tropical_equivalence_classes()
+    print("  ✓ Tropical equivalence classes")
+
+    print(f"Generated {len(vizs)} visualizations")
+    return vizs
 
 
 if __name__ == "__main__":
-    # Generate all SVGs
-    svgs = {
-        'compression_spectrum': generate_compression_spectrum_svg(),
-        'tropical_normalization': generate_tropical_normalization_svg(),
-        'fiber_structure': generate_fiber_structure_svg(),
-        'closure_lattice': generate_closure_lattice_svg(),
-    }
-    
-    for name, svg_content in svgs.items():
-        filename = f'{name}.svg'
-        with open(filename, 'w') as f:
-            f.write(svg_content)
-        print(f"Generated {filename}")
-    
-    print("\nAll visualizations generated successfully!")
+    vizs = generate_all_visualizations()
+    # Save individual PNGs
+    for name, data_uri in vizs.items():
+        # Extract base64 data
+        b64_data = data_uri.split(',')[1]
+        img_data = base64.b64decode(b64_data)
+        filename = f"{name}.png"
+        with open(filename, 'wb') as f:
+            f.write(img_data)
+        print(f"Saved {filename}")

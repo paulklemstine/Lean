@@ -1,466 +1,319 @@
 #!/usr/bin/env python3
 """
-Algorithms for Closure-Kolmogorov Compression Duality
+Closure-Compression Duality: Core Algorithms
 
-Implements the core algorithms from the research paper:
-1. Idempotent compressor construction
+Implements the algorithms described in the research paper:
+1. Generic closure-based compression
 2. Tropical normalization
-3. Fixed-point detection
-4. Compression ratio analysis
-5. Fiber structure computation
+3. Deficiency computation
+4. Closure equivalence class computation
+5. MDL-optimal code construction
 """
 
-from typing import List, Tuple, Set, Dict, Optional, Callable, FrozenSet
+import numpy as np
+from typing import (
+    Callable, Dict, Generic, List, Optional, Set, Tuple, TypeVar,
+    Hashable
+)
 from dataclasses import dataclass
-import collections
-import itertools
+from collections import defaultdict
+import heapq
+
+T = TypeVar('T', bound=Hashable)
 
 
 # ============================================================================
-# Algorithm 1: Generic Idempotent Compressor Framework
-# ============================================================================
-
-@dataclass
-class CompressionResult:
-    """Result of applying an idempotent compressor."""
-    original: List[bool]
-    compressed: List[bool]
-    is_fixed: bool
-    compression_ratio: float
-    
-    def __repr__(self):
-        orig = ''.join('1' if b else '0' for b in self.original)
-        comp = ''.join('1' if b else '0' for b in self.compressed)
-        return (f"CompressionResult('{orig}' -> '{comp}', "
-                f"fixed={self.is_fixed}, ratio={self.compression_ratio:.3f})")
-
-
-class IdempotentCompressor:
-    """
-    Abstract idempotent compressor satisfying the formal axioms:
-    - Idempotence: compress(compress(s)) = compress(s)
-    - Length-nonincreasing: len(compress(s)) <= len(s) 
-    - Strict shortening: if compress(s) != s then len(compress(s)) < len(s)
-    
-    Time complexity: O(n) per compression where n = len(s)
-    Space complexity: O(n)
-    """
-    
-    def __init__(self, compress_fn: Callable[[List[bool]], List[bool]],
-                 name: str = "generic"):
-        self._compress = compress_fn
-        self.name = name
-    
-    def compress(self, s: List[bool]) -> List[bool]:
-        """Apply the compressor. O(n) time."""
-        return self._compress(s)
-    
-    def compress_result(self, s: List[bool]) -> CompressionResult:
-        """Compress and return detailed result."""
-        cs = self.compress(s)
-        ratio = len(cs) / len(s) if len(s) > 0 else 1.0
-        return CompressionResult(
-            original=s,
-            compressed=cs,
-            is_fixed=(cs == s),
-            compression_ratio=ratio
-        )
-    
-    def verify_axioms(self, max_length: int = 6) -> bool:
-        """
-        Verify the three axioms on all strings up to max_length.
-        
-        Time complexity: O(2^n * n) where n = max_length
-        """
-        for n in range(max_length + 1):
-            for bits in itertools.product([False, True], repeat=n):
-                s = list(bits)
-                cs = self.compress(s)
-                ccs = self.compress(cs)
-                
-                # Axiom 1: Idempotence
-                if ccs != cs:
-                    print(f"IDEMPOTENCE VIOLATED: {s}")
-                    return False
-                
-                # Axiom 2: Length-nonincreasing
-                if len(cs) > len(s):
-                    print(f"LENGTH INCREASE: {s}")
-                    return False
-                
-                # Axiom 3: Strict shortening on non-fixed-points
-                if cs != s and len(cs) >= len(s):
-                    print(f"NOT STRICTLY SHORTENED: {s}")
-                    return False
-        
-        return True
-    
-    def fixed_points(self, length: int) -> List[List[bool]]:
-        """
-        Enumerate all fixed points of given length.
-        
-        Time complexity: O(2^n * n)
-        """
-        result = []
-        for bits in itertools.product([False, True], repeat=length):
-            s = list(bits)
-            if self.compress(s) == s:
-                result.append(s)
-        return result
-    
-    def fiber(self, fixed_pt: List[bool], max_length: int) -> List[List[bool]]:
-        """
-        Compute the fiber (preimage) of a fixed point.
-        
-        Time complexity: O(sum_{k=0}^{max_length} 2^k * k)
-        """
-        result = []
-        for n in range(max_length + 1):
-            for bits in itertools.product([False, True], repeat=n):
-                s = list(bits)
-                if self.compress(s) == fixed_pt:
-                    result.append(s)
-        return result
-
-
-# ============================================================================
-# Algorithm 2: Concrete Compressors
-# ============================================================================
-
-def dedup_compress(s: List[bool]) -> List[bool]:
-    """
-    Remove consecutive duplicate bits.
-    
-    Properties:
-    - Idempotent: alternating strings are unchanged by dedup
-    - Strictly shortening: any string with consecutive duplicates gets shorter
-    - Fixed points: strings without consecutive duplicates
-    
-    Time: O(n), Space: O(n)
-    """
-    if not s:
-        return s
-    result = [s[0]]
-    for bit in s[1:]:
-        if bit != result[-1]:
-            result.append(bit)
-    return result
-
-
-def canonical_sort_compress(s: List[bool]) -> List[bool]:
-    """
-    Sort the bits (all 0s before all 1s).
-    Note: This is length-PRESERVING, not length-reducing.
-    Fixed points: already-sorted strings.
-    
-    Time: O(n), Space: O(n)
-    """
-    return sorted(s)
-
-
-def prefix_dedup_compress(s: List[bool]) -> List[bool]:
-    """
-    Remove duplicate consecutive bits, keeping track of the pattern.
-    This is a more aggressive compressor.
-    
-    Time: O(n), Space: O(n)  
-    """
-    if len(s) <= 1:
-        return s
-    result = [s[0]]
-    for bit in s[1:]:
-        if bit != result[-1]:
-            result.append(bit)
-    return result
-
-
-# ============================================================================
-# Algorithm 3: Tropical Normalization
+# Algorithm 1: Generic Closure-Based Compressor
 # ============================================================================
 
 @dataclass
-class TropicalNormResult:
-    """Result of tropical normalization."""
-    original: List[float]
-    baseline: List[float]
-    normalized: List[float]
-    total_original: float
-    total_normalized: float
-    savings_pct: float
-    is_fixed: bool
-
-
-def tropical_normalize(baseline: List[float], 
-                       weights: List[float]) -> List[float]:
+class ClosureCompressor(Generic[T]):
     """
-    Tropical (min-plus) normalization: pointwise minimum with baseline.
-    
-    Properties (proven formally):
-    - Idempotent: normalize(normalize(w)) = normalize(w)
-    - Pointwise ≤ original: norm(w)[i] ≤ w[i]
-    - Pointwise ≤ baseline: norm(w)[i] ≤ b[i]
-    - Minimal among equivalents bounded by baseline
-    
-    Time: O(n), Space: O(n)
-    
-    Args:
-        baseline: The ceiling vector b
-        weights: The weight vector w to normalize
-    
-    Returns:
-        Normalized vector min(w, b) pointwise
+    A compression scheme induced by a closure operator.
+
+    Given a closure operator cl : T → T and an encoding of fixed points,
+    compresses any element by mapping it to its canonical representative
+    and encoding that representative.
+
+    Time complexity: O(T_cl + T_encode) per compression
+    Space complexity: O(|fixed points|) for the codebook
     """
-    assert len(baseline) == len(weights), "Dimension mismatch"
-    return [min(w, b) for w, b in zip(weights, baseline)]
+    closure: Callable[[T], T]
+    domain: List[T]
 
+    def __post_init__(self):
+        # Verify idempotence on domain
+        for x in self.domain:
+            cx = self.closure(x)
+            ccx = self.closure(cx)
+            assert cx == ccx, f"Not idempotent: cl(cl({x})) = {ccx} ≠ {cx} = cl({x})"
 
-def tropical_normalize_result(baseline: List[float],
-                              weights: List[float]) -> TropicalNormResult:
-    """Compute tropical normalization with detailed statistics."""
-    normalized = tropical_normalize(baseline, weights)
-    total_orig = sum(weights)
-    total_norm = sum(normalized)
-    savings = (1 - total_norm / total_orig) * 100 if total_orig > 0 else 0
-    is_fixed = all(w <= b for w, b in zip(weights, baseline))
-    
-    return TropicalNormResult(
-        original=weights,
-        baseline=baseline,
-        normalized=normalized,
-        total_original=total_orig,
-        total_normalized=total_norm,
-        savings_pct=savings,
-        is_fixed=is_fixed
-    )
+        # Compute fixed points and build codebook
+        self.fixed_points = sorted(set(
+            x for x in self.domain if self.closure(x) == x
+        ))
+        self._code_map: Dict[T, str] = {}
+        bits_needed = max(1, (len(self.fixed_points) - 1).bit_length())
+        for i, fp in enumerate(self.fixed_points):
+            self._code_map[fp] = format(i, f'0{bits_needed}b')
 
+        self._decode_map = {v: k for k, v in self._code_map.items()}
 
-def verify_tropical_idempotence(baseline: List[float],
-                                 weights: List[float]) -> bool:
-    """Verify that tropical normalization is idempotent for given inputs."""
-    n1 = tropical_normalize(baseline, weights)
-    n2 = tropical_normalize(baseline, n1)
-    return all(abs(a - b) < 1e-12 for a, b in zip(n1, n2))
+    def compress(self, x: T) -> str:
+        """Compress x by encoding its canonical representative."""
+        return self._code_map[self.closure(x)]
 
+    def decompress(self, code: str) -> T:
+        """Decompress to the canonical representative."""
+        return self._decode_map[code]
 
-def tropical_equivalence_class(baseline: List[float],
-                                representative: List[float],
-                                samples: List[List[float]]) -> List[List[float]]:
-    """
-    Find all weight vectors in samples that are tropically equivalent
-    to the representative (same normalization).
-    
-    Time: O(|samples| * n)
-    """
-    target = tropical_normalize(baseline, representative)
-    return [w for w in samples
-            if tropical_normalize(baseline, w) == target]
+    def deficiency(self, x: T, length_fn: Callable[[T], int]) -> int:
+        """Compute closure deficiency δ(x) = ℓ(x) - ℓ(cl(x))."""
+        return max(0, length_fn(x) - length_fn(self.closure(x)))
+
+    def is_incompressible(self, x: T) -> bool:
+        """Check if x is a fixed point (incompressible)."""
+        return self.closure(x) == x
+
+    def equivalence_classes(self) -> Dict[T, List[T]]:
+        """Compute all closure-equivalence classes."""
+        classes: Dict[T, List[T]] = defaultdict(list)
+        for x in self.domain:
+            classes[self.closure(x)].append(x)
+        return dict(classes)
+
+    def compression_ratio(self) -> float:
+        """Ratio of domain size to number of fixed points."""
+        return len(self.domain) / max(1, len(self.fixed_points))
+
+    def summary(self) -> str:
+        """Print a summary of the compression scheme."""
+        classes = self.equivalence_classes()
+        lines = [
+            f"Closure Compressor Summary",
+            f"  Domain size:      {len(self.domain)}",
+            f"  Fixed points:     {len(self.fixed_points)}",
+            f"  Compression ratio: {self.compression_ratio():.2f}x",
+            f"  Code length:      {len(next(iter(self._code_map.values())))} bits",
+            f"  Equivalence classes: {len(classes)}",
+        ]
+        return '\n'.join(lines)
 
 
 # ============================================================================
-# Algorithm 4: Closure Operator on Finite Lattice
+# Algorithm 2: Tropical Normalization
 # ============================================================================
 
-class ClosureOperator:
+def tropical_normalize(x: np.ndarray) -> np.ndarray:
     """
-    A closure operator on a finite powerset lattice.
-    
-    Models the formal ClosureOperator from Mathlib:
-    - Extensive: x ≤ c(x) (subset inclusion)
-    - Monotone: x ≤ y implies c(x) ≤ c(y)
-    - Idempotent: c(c(x)) = c(x)
-    
-    Time complexity: O(n * |implications|) per closure computation
+    Tropical normalization: subtract the minimum coordinate.
+
+    Given x ∈ ℝ^n, returns y where y[i] = x[i] - min(x).
+    The result is nonneg with at least one zero coordinate.
+
+    Properties (proven in Lean):
+    - Idempotent: trop_normalize(trop_normalize(x)) = trop_normalize(x)
+    - Fixed points: trop_normalize(x) = x ⟺ (∃i, x[i]=0) ∧ (∀j, x[j]≥0)
+    - Canonical: trop_normalize(x) = trop_normalize(y) ⟺ x ~ y (tropical equiv)
+
+    Time: O(n)
+    Space: O(1) additional
     """
-    
-    def __init__(self, universe: Set[str],
-                 implications: Dict[str, Set[str]]):
-        self.universe = universe
-        self.implications = implications
-    
-    def close(self, features: FrozenSet[str]) -> FrozenSet[str]:
-        """
-        Compute the closure of a feature set.
-        
-        Time: O(n * |implications|) where n = |universe|
-        """
-        result = set(features)
-        changed = True
-        while changed:
-            changed = False
-            for f in list(result):
-                if f in self.implications:
-                    for implied in self.implications[f]:
-                        if implied not in result:
-                            result.add(implied)
-                            changed = True
-        return frozenset(result)
-    
-    def is_closed(self, features: FrozenSet[str]) -> bool:
-        """Check if a set is closed (fixed point)."""
-        return self.close(features) == features
-    
-    def all_closed_sets(self) -> List[FrozenSet[str]]:
-        """
-        Enumerate all closed sets (fixed points).
-        
-        Time: O(2^n * n * |implications|)
-        """
-        result = []
-        for r in range(len(self.universe) + 1):
-            for combo in itertools.combinations(self.universe, r):
-                s = frozenset(combo)
-                if self.is_closed(s):
-                    result.append(s)
-        return result
-    
-    def mdl_bound(self, features: FrozenSet[str],
-                  length_fn: Callable[[FrozenSet[str]], int]) -> Tuple[FrozenSet[str], int]:
-        """
-        Compute the MDL bound via the closure fixed-point witness.
-        
-        Returns (witness, bound) where witness is a fixed point above
-        features with length_fn(witness) as the bound.
-        
-        This implements the closure_mdl_bound_strengthened theorem:
-        the closure c(x) is always a fixed point above x.
-        """
-        closed = self.close(features)
-        return closed, length_fn(closed)
-    
-    def verify_axioms(self) -> bool:
-        """Verify closure operator axioms on all subsets."""
-        for r in range(len(self.universe) + 1):
-            for combo in itertools.combinations(self.universe, r):
-                s = frozenset(combo)
-                cs = self.close(s)
-                
-                # Extensive: s ⊆ c(s)
-                if not s.issubset(cs):
-                    return False
-                
-                # Idempotent: c(c(s)) = c(s)
-                if self.close(cs) != cs:
-                    return False
-        
-        # Monotone: s ⊆ t implies c(s) ⊆ c(t)
-        all_subsets = []
-        for r in range(len(self.universe) + 1):
-            for combo in itertools.combinations(self.universe, r):
-                all_subsets.append(frozenset(combo))
-        
-        for s in all_subsets:
-            for t in all_subsets:
-                if s.issubset(t):
-                    if not self.close(s).issubset(self.close(t)):
-                        return False
-        
-        return True
+    return x - np.min(x)
+
+
+def tropical_offset(x: np.ndarray) -> float:
+    """The minimum coordinate value (gauge offset)."""
+    return float(np.min(x))
+
+
+def tropical_deficiency(x: np.ndarray) -> float:
+    """
+    Tropical deficiency: the total excess over the normalized form.
+
+    δ(x) = sum(x) - sum(trop_normalize(x)) = n * min(x)
+
+    This is zero iff x is already normalized (a fixed point).
+    """
+    n = len(x)
+    return n * tropical_offset(x)
+
+
+def is_tropically_equivalent(x: np.ndarray, y: np.ndarray,
+                              tol: float = 1e-10) -> bool:
+    """
+    Check if two vectors are tropically equivalent (differ by a constant).
+
+    x ~ y ⟺ trop_normalize(x) = trop_normalize(y)
+    ⟺ ∃c, ∀i, y[i] = x[i] + c
+    """
+    return np.allclose(tropical_normalize(x), tropical_normalize(y), atol=tol)
+
+
+def tropical_canonical_class(vectors: List[np.ndarray],
+                              tol: float = 1e-10
+                              ) -> Dict[str, List[int]]:
+    """
+    Partition vectors into tropical equivalence classes.
+
+    Returns a dict mapping normalized form (as string) to list of indices.
+    """
+    classes: Dict[str, List[int]] = defaultdict(list)
+    for i, v in enumerate(vectors):
+        key = str(np.round(tropical_normalize(v), 10))
+        classes[key].append(i)
+    return dict(classes)
 
 
 # ============================================================================
-# Algorithm 5: Compression Analysis
+# Algorithm 3: MDL-Optimal Code Construction
 # ============================================================================
 
-def compression_spectrum(compressor: IdempotentCompressor,
-                         max_length: int) -> Dict[int, Dict[str, int]]:
+def mdl_optimal_code(
+    domain: List[T],
+    closure: Callable[[T], T],
+    length_fn: Callable[[T], float]
+) -> Dict[T, str]:
     """
-    Compute the compression spectrum: for each length n, count
-    fixed points, compressed strings, and total strings.
-    
-    Time: O(sum_{n=0}^{max_length} 2^n * n)
-    
-    Returns: {length: {total, fixed, compressed, avg_compression}}
+    Construct an MDL-optimal code using closure-based compression.
+
+    By Theorem B, any closure-respecting code factors through fixed points.
+    This constructs a Huffman-like code on fixed points, weighted by
+    class size, giving the optimal prefix-free code.
+
+    Time: O(n log n) where n = |domain|
+    Space: O(n)
     """
-    spectrum = {}
-    for n in range(max_length + 1):
-        total = 0
-        fixed = 0
-        total_compressed_len = 0
-        
-        for bits in itertools.product([False, True], repeat=n):
-            s = list(bits)
-            cs = compressor.compress(s)
-            total += 1
-            total_compressed_len += len(cs)
-            if cs == s:
-                fixed += 1
-        
-        spectrum[n] = {
-            'total': total,
-            'fixed': fixed,
-            'compressed': total - fixed,
-            'avg_compressed_length': total_compressed_len / total if total > 0 else 0,
-            'fixed_ratio': fixed / total if total > 0 else 1.0
-        }
-    
-    return spectrum
+    # Compute equivalence classes
+    classes: Dict[T, List[T]] = defaultdict(list)
+    for x in domain:
+        classes[closure(x)].append(x)
+
+    # Fixed points with their class sizes
+    fixed_points = [(fp, len(members)) for fp, members in classes.items()]
+
+    # Build Huffman code on fixed points
+    if len(fixed_points) <= 1:
+        code = {fixed_points[0][0]: '0'} if fixed_points else {}
+    else:
+        code = _huffman_code(fixed_points)
+
+    # Extend to full domain via closure
+    full_code: Dict[T, str] = {}
+    for x in domain:
+        full_code[x] = code[closure(x)]
+
+    return full_code
 
 
-def fiber_analysis(compressor: IdempotentCompressor,
-                   max_length: int) -> Dict[str, List[str]]:
-    """
-    Compute the complete fiber structure of a compressor.
-    
-    Returns: mapping from fixed point (as string) to list of 
-    strings in its fiber (as strings).
-    
-    Time: O(sum_{n=0}^{max_length} 2^n * n)
-    """
-    fibers: Dict[str, List[str]] = collections.defaultdict(list)
-    
-    for n in range(max_length + 1):
-        for bits in itertools.product([False, True], repeat=n):
-            s = list(bits)
-            cs = compressor.compress(s)
-            key = ''.join('1' if b else '0' for b in cs)
-            val = ''.join('1' if b else '0' for b in s)
-            fibers[key].append(val)
-    
-    return dict(fibers)
+def _huffman_code(symbols_weights: List[Tuple[T, int]]) -> Dict[T, str]:
+    """Build a Huffman code from (symbol, weight) pairs."""
+    if len(symbols_weights) == 1:
+        return {symbols_weights[0][0]: '0'}
+
+    # Build Huffman tree
+    heap: List[Tuple[int, int, object]] = []
+    counter = 0
+    for sym, weight in symbols_weights:
+        heapq.heappush(heap, (weight, counter, sym))
+        counter += 1
+
+    while len(heap) > 1:
+        w1, _, left = heapq.heappop(heap)
+        w2, _, right = heapq.heappop(heap)
+        heapq.heappush(heap, (w1 + w2, counter, (left, right)))
+        counter += 1
+
+    # Extract codes from tree
+    codes: Dict[T, str] = {}
+    def traverse(node, prefix):
+        if isinstance(node, tuple) and len(node) == 2:
+            traverse(node[0], prefix + '0')
+            traverse(node[1], prefix + '1')
+        else:
+            codes[node] = prefix if prefix else '0'
+    traverse(heap[0][2], '')
+    return codes
 
 
 # ============================================================================
-# Example Usage
+# Algorithm 4: Iterative Closure Discovery
+# ============================================================================
+
+def discover_closure_structure(
+    domain: List[T],
+    closure: Callable[[T], T]
+) -> dict:
+    """
+    Analyze the complete structure of a closure operator.
+
+    Returns a dictionary with:
+    - fixed_points: list of fixed points
+    - classes: equivalence classes
+    - class_sizes: histogram of class sizes
+    - compression_ratio: domain size / fixed points
+    - is_idempotent: verification of idempotence
+
+    Time: O(n * T_cl)
+    """
+    fixed_points = []
+    classes: Dict[T, List[T]] = defaultdict(list)
+    is_idempotent = True
+
+    for x in domain:
+        cx = closure(x)
+        ccx = closure(cx)
+        if cx != ccx:
+            is_idempotent = False
+        if cx == x:
+            fixed_points.append(x)
+        classes[cx].append(x)
+
+    class_sizes = sorted([len(v) for v in classes.values()], reverse=True)
+
+    return {
+        'fixed_points': fixed_points,
+        'classes': dict(classes),
+        'class_sizes': class_sizes,
+        'compression_ratio': len(domain) / max(1, len(fixed_points)),
+        'is_idempotent': is_idempotent,
+        'domain_size': len(domain),
+        'num_fixed_points': len(fixed_points),
+    }
+
+
+# ============================================================================
+# Example usage
 # ============================================================================
 
 if __name__ == "__main__":
-    # Create compressor
-    comp = IdempotentCompressor(dedup_compress, "dedup")
-    
-    # Verify axioms
-    print("Verifying compressor axioms...")
-    assert comp.verify_axioms(6), "Axiom verification failed!"
-    print("All axioms verified ✓\n")
-    
-    # Compression spectrum
-    print("Compression spectrum:")
-    spectrum = compression_spectrum(comp, 8)
-    print(f"{'n':>3} | {'Total':>6} | {'Fixed':>6} | {'Ratio':>8} | {'Avg Len':>8}")
-    print("-" * 45)
-    for n, stats in spectrum.items():
-        print(f"{n:>3} | {stats['total']:>6} | {stats['fixed']:>6} | "
-              f"{stats['fixed_ratio']:>7.3f} | {stats['avg_compressed_length']:>7.2f}")
-    
-    # Tropical normalization
-    print("\nTropical normalization example:")
-    baseline = [10.0, 8.0, 6.0, 4.0, 2.0]
-    weights = [12.0, 5.0, 3.0, 7.0, 1.0]
-    result = tropical_normalize_result(baseline, weights)
-    print(f"  Baseline:   {result.baseline}")
-    print(f"  Original:   {result.original} (total: {result.total_original:.1f})")
-    print(f"  Normalized: {result.normalized} (total: {result.total_normalized:.1f})")
-    print(f"  Savings:    {result.savings_pct:.1f}%")
-    print(f"  Is fixed:   {result.is_fixed}")
-    
-    # Closure operator
-    print("\nClosure operator example:")
-    universe = {'a', 'b', 'c', 'd'}
-    implications = {'a': {'b', 'c'}, 'b': {'d'}, 'c': set(), 'd': set()}
-    cl = ClosureOperator(universe, implications)
-    assert cl.verify_axioms(), "Closure axioms failed!"
-    print("  Axioms verified ✓")
-    
-    closed_sets = cl.all_closed_sets()
-    print(f"  Closed sets: {len(closed_sets)}")
-    for cs in closed_sets:
-        print(f"    {set(cs) if cs else '{}'}")
+    # Example: GCD-based closure on integers
+    from math import gcd
+
+    def gcd_closure(x: int) -> int:
+        """Map each number to its largest prime factor (simplified: to GCD with 60)."""
+        return gcd(x, 60)
+
+    domain = list(range(1, 61))
+    compressor = ClosureCompressor(closure=gcd_closure, domain=domain)
+    print(compressor.summary())
+    print()
+
+    # Tropical example
+    vectors = [
+        np.array([5.0, 3.0, 7.0]),
+        np.array([8.0, 6.0, 10.0]),
+        np.array([2.0, 0.0, 4.0]),
+        np.array([1.0, 2.0, 3.0]),
+    ]
+
+    print("Tropical Normalization:")
+    for v in vectors:
+        nv = tropical_normalize(v)
+        delta = tropical_deficiency(v)
+        print(f"  {v} → {nv}, deficiency = {delta:.1f}")
+
+    print("\nTropical equivalence classes:")
+    classes = tropical_canonical_class(vectors)
+    for key, indices in classes.items():
+        print(f"  Class {key}: vectors {indices}")
