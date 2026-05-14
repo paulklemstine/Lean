@@ -1610,20 +1610,6 @@
     "timestamp": "2026-05-14T17:33:00.498533+00:00"
   },
   {
-    "id": "fd_0167",
-    "title": "Define tropical protocols",
-    "description": ": A protocol tree where each leaf has a value in $\\mathbb{N} \\cup \\{\\infty\\}$ and each edge has a communication cost.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "1849e719",
-    "timestamp": "2026-05-14T17:33:00.502341+00:00"
-  },
-  {
     "id": "fd_0168",
     "title": "Prove the rectangle bound",
     "description": ": If the communication matrix has minimum cycle cost $g$ (viewing Alice's states as rows and Bob's as columns), then any protocol has cost $\\geq g \\cdot \\lfloor R/n \\rfloor$ where $R$ is the number of rounds and $n$ is the number of distinct messages.",
@@ -1696,10 +1682,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad615ded",
     "timestamp": "2026-05-14T17:33:00.524947+00:00"
   },
   {
@@ -2555,5 +2541,82 @@
     "source_exp_id": "df7f8eaf",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:36:06.353077+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Precise Theorem Statement",
+    "description": "For any tropical protocol tree T, construct a weighted directed acyclic graph G(T) with a source vertex (the root) and a sink vertex, such that the shortest-path distance from source to sink in G(T) equals T.value. Conversely, any finite weighted DAG with designated source and sink can be \"unfolded\" into a (possibly exponentially larger) tropical protocol tree with the same optimal value.",
+    "domains": [
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1849e719",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:07:13.407179+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Lean Formalization Target",
+    "description": "```lean\nstructure WeightedDAG where\n  vertices : Finset ℕ\n  edges : Finset (ℕ × ℕ × ℕ)  -- (src, dst, weight)\n  source : ℕ\n  sink : ℕ\n\ndef dagOfTree : TropProtocolTree → WeightedDAG := ...\n\ntheorem dag_shortest_path_eq_value (T : TropProtocolTree) :\n    shortestPath (dagOfTree T) = T.value\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1849e719",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:07:13.414745+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Cross-Domain Significance",
+    "description": "This connects tropical protocols to tropical linear algebra, the Floyd-Warshall algorithm (which computes the tropical closure of a matrix), and algebraic path problems. It opens the door to spectral methods for protocol analysis — eigenvalues of tropical matrices characterize long-run communication costs.\n\n---",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1849e719",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:07:13.434811+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Research Team Structure",
+    "description": "Each direction should be pursued by a team with these roles:\n\n- **Definition Architect**: Designs the core data structures and recursion principles\n- **Semantics Engineer**: Proves the semantic equivalences (value characterizations, path correspondences)\n- **Complexity Theorist**: Derives bounds, lower bounds, and counting arguments\n- **Cross-Domain Synthesist**: Identifies and formalizes connections to other mathematical areas\n- **Lean Integrator**: Ensures proof quality, minimizes dependencies, documents reusable patterns",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1849e719",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:07:13.457216+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Priority Order",
+    "description": "1. Direction 1 (DAGs) — most directly extends the current work\n2. Direction 2 (Cut-sets) — highest impact for complexity applications\n3. Direction 4 (Entropy) — builds on existing depth bounds\n4. Direction 3 (Matrix powers) — requires more algebraic infrastructure\n5. Direction 5 (Normal forms) — most ambitious, benefits from all prior work",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1849e719",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:07:13.465694+00:00"
   }
 ]
