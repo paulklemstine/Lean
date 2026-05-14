@@ -73,10 +73,10 @@
       "EML"
     ],
     "priority_score": 0.97,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ca89920",
     "timestamp": "2026-05-14T04:01:04.744420+00:00"
   },
   {
@@ -361,10 +361,10 @@
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "38374f83",
     "timestamp": "2026-05-14T04:01:04.697672+00:00"
   },
   {
@@ -553,10 +553,10 @@
       "Algebra"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68d84306",
     "timestamp": "2026-05-14T04:01:04.698627+00:00"
   },
   {
@@ -681,10 +681,10 @@
       "EML"
     ],
     "priority_score": 0.85,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4fe041f5",
     "timestamp": "2026-05-14T04:01:04.709082+00:00"
   },
   {
@@ -793,10 +793,10 @@
       "Logic"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4671d083",
     "timestamp": "2026-05-14T04:01:04.723891+00:00"
   },
   {
@@ -905,10 +905,10 @@
       "Tropical"
     ],
     "priority_score": 0.8,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92bd83cb",
     "timestamp": "2026-05-14T04:01:04.713647+00:00"
   },
   {
@@ -1033,10 +1033,10 @@
       "Computation"
     ],
     "priority_score": 0.76,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4cc9490",
     "timestamp": "2026-05-14T04:01:04.702168+00:00"
   },
   {
