@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <style>
+    text { font-family: 'Helvetica Neue', Arial, sans-serif; }
+    .title { font-size: 16px; font-weight: bold; fill: #333; }
+    .label { font-size: 12px; fill: #666; }
+    .tick { font-size: 10px; fill: #888; }
+  </style>
+  <rect width="600" height="400" fill="white"/>
+  <text x="300.0" y="25" text-anchor="middle" class="title">
+    Computation as Fiber Geometry
+  </text>
+  <text x="150" y="55" text-anchor="middle" class="label" font-weight="bold">Reversible (Bijection)</text>
+  <circle cx="100" cy="130" r="8" fill="#3498db" opacity="0.8"/>
+  <text x="100" y="134" text-anchor="middle" fill="white" font-size="10">0</text>
+  <line x1="110" y1="130" x2="190" y2="130" stroke="#3498db" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <circle cx="200" cy="130" r="8" fill="#3498db" opacity="0.8"/>
+  <text x="200" y="134" text-anchor="middle" fill="white" font-size="10">2</text>
+  <circle cx="100" cy="170" r="8" fill="#2ecc71" opacity="0.8"/>
+  <text x="100" y="174" text-anchor="middle" fill="white" font-size="10">1</text>
+  <line x1="110" y1="170" x2="190" y2="170" stroke="#2ecc71" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <circle cx="200" cy="170" r="8" fill="#2ecc71" opacity="0.8"/>
+  <text x="200" y="174" text-anchor="middle" fill="white" font-size="10">3</text>
+  <circle cx="100" cy="210" r="8" fill="#e74c3c" opacity="0.8"/>
+  <text x="100" y="214" text-anchor="middle" fill="white" font-size="10">2</text>
+  <line x1="110" y1="210" x2="190" y2="210" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <circle cx="200" cy="210" r="8" fill="#e74c3c" opacity="0.8"/>
+  <text x="200" y="214" text-anchor="middle" fill="white" font-size="10">0</text>
+  <circle cx="100" cy="250" r="8" fill="#f39c12" opacity="0.8"/>
+  <text x="100" y="254" text-anchor="middle" fill="white" font-size="10">3</text>
+  <line x1="110" y1="250" x2="190" y2="250" stroke="#f39c12" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <circle cx="200" cy="250" r="8" fill="#f39c12" opacity="0.8"/>
+  <text x="200" y="254" text-anchor="middle" fill="white" font-size="10">1</text>
+  <text x="150" y="290" text-anchor="middle" class="tick">ΔS = 0</text>
+  <text x="150" y="305" text-anchor="middle" class="tick" fill="#2ecc71">Zero heat cost</text>
+  <text x="450" y="55" text-anchor="middle" class="label" font-weight="bold">Erasure (Many-to-One)</text>
+  <circle cx="400" cy="130" r="8" fill="#3498db" opacity="0.8"/>
+  <text x="400" y="134" text-anchor="middle" fill="white" font-size="10">0</text>
+  <line x1="410" y1="130" x2="490" y2="150" stroke="#3498db" stroke-width="2" opacity="0.6"/>
+  <circle cx="400" cy="170" r="8" fill="#2ecc71" opacity="0.8"/>
+  <text x="400" y="174" text-anchor="middle" fill="white" font-size="10">1</text>
+  <line x1="410" y1="170" x2="490" y2="150" stroke="#2ecc71" stroke-width="2" opacity="0.6"/>
+  <circle cx="400" cy="210" r="8" fill="#e74c3c" opacity="0.8"/>
+  <text x="400" y="214" text-anchor="middle" fill="white" font-size="10">2</text>
+  <line x1="410" y1="210" x2="490" y2="230" stroke="#e74c3c" stroke-width="2" opacity="0.6"/>
+  <circle cx="400" cy="250" r="8" fill="#f39c12" opacity="0.8"/>
+  <text x="400" y="254" text-anchor="middle" fill="white" font-size="10">3</text>
+  <line x1="410" y1="250" x2="490" y2="230" stroke="#f39c12" stroke-width="2" opacity="0.6"/>
+  <circle cx="500" cy="150" r="10" fill="#8e44ad" opacity="0.8"/>
+  <text x="500" y="154" text-anchor="middle" fill="white" font-size="10">A</text>
+  <circle cx="500" cy="230" r="10" fill="#8e44ad" opacity="0.8"/>
+  <text x="500" y="234" text-anchor="middle" fill="white" font-size="10">B</text>
+  <text x="450" y="290" text-anchor="middle" class="tick">ΔS = ln(2) ≈ 0.693</text>
+  <text x="450" y="305" text-anchor="middle" class="tick" fill="#e74c3c">Heat cost = kB·T·ln(2)</text>
+  <rect x="515" y="135" width="60" height="35" rx="5" fill="#f0e6ff" stroke="#8e44ad" stroke-width="1"/>
+  <text x="545" y="157" text-anchor="middle" class="tick" fill="#8e44ad">Fiber: 2</text>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <line x1="300.0" y1="50" x2="300.0" y2="320" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="300.0" y="355" text-anchor="middle" class="label">Fiber size determines entropy cost: |fiber| = 2ⁿ → cost = n·kB·T·ln(2)</text>
+  <text x="300.0" y="375" text-anchor="middle" class="tick">Formally verified: entropy_drop_of_uniform_fiber, landauer_cost_uniform_erasure</text>
+</svg>

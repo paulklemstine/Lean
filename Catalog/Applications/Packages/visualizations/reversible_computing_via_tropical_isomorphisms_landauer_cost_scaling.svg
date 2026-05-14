@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <style>
+    text { font-family: 'Helvetica Neue', Arial, sans-serif; }
+    .title { font-size: 16px; font-weight: bold; fill: #333; }
+    .label { font-size: 12px; fill: #666; }
+    .tick { font-size: 10px; fill: #888; }
+  </style>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="white"/>
+  
+  <!-- Title -->
+  <text x="300.0" y="25" text-anchor="middle" class="title">
+    Landauer Cost: Entropy Drop vs Erased Bits
+  </text>
+  
+  <!-- Axes -->
+  <line x1="60" y1="340" x2="540" y2="340" 
+        stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="60" x2="60" y2="340" 
+        stroke="#333" stroke-width="2"/>
+  
+  <!-- X-axis label -->
+  <text x="300.0" y="385" text-anchor="middle" class="label">
+    Number of erased bits (n)
+  </text>
+  
+  <!-- Y-axis label -->
+  <text x="15" y="200.0" text-anchor="middle" class="label" 
+        transform="rotate(-90, 15, 200.0)">
+    Entropy drop (nats)
+  </text>
+  <line x1="60.0" y1="340" x2="60.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="60.0" y="358" text-anchor="middle" class="tick">0</text>
+  <line x1="120.0" y1="340" x2="120.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="120.0" y="358" text-anchor="middle" class="tick">1</text>
+  <line x1="60" y1="305.0" x2="540" y2="305.0" stroke="#eee" stroke-width="1"/>
+  <line x1="180.0" y1="340" x2="180.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="180.0" y="358" text-anchor="middle" class="tick">2</text>
+  <line x1="60" y1="270.0" x2="540" y2="270.0" stroke="#eee" stroke-width="1"/>
+  <line x1="240.0" y1="340" x2="240.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="240.0" y="358" text-anchor="middle" class="tick">3</text>
+  <line x1="60" y1="235.0" x2="540" y2="235.0" stroke="#eee" stroke-width="1"/>
+  <line x1="300.0" y1="340" x2="300.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="300.0" y="358" text-anchor="middle" class="tick">4</text>
+  <line x1="60" y1="200.0" x2="540" y2="200.0" stroke="#eee" stroke-width="1"/>
+  <line x1="360.0" y1="340" x2="360.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="360.0" y="358" text-anchor="middle" class="tick">5</text>
+  <line x1="60" y1="165.0" x2="540" y2="165.0" stroke="#eee" stroke-width="1"/>
+  <line x1="420.0" y1="340" x2="420.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="420.0" y="358" text-anchor="middle" class="tick">6</text>
+  <line x1="60" y1="130.00000000000003" x2="540" y2="130.00000000000003" stroke="#eee" stroke-width="1"/>
+  <line x1="480.0" y1="340" x2="480.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="480.0" y="358" text-anchor="middle" class="tick">7</text>
+  <line x1="60" y1="95.0" x2="540" y2="95.0" stroke="#eee" stroke-width="1"/>
+  <line x1="540.0" y1="340" x2="540.0" y2="345" stroke="#333" stroke-width="1"/>
+  <text x="540.0" y="358" text-anchor="middle" class="tick">8</text>
+  <line x1="60" y1="60.0" x2="540" y2="60.0" stroke="#eee" stroke-width="1"/>
+  <line x1="55" y1="340.0" x2="60" y2="340.0" stroke="#333" stroke-width="1"/>
+  <text x="52" y="344.0" text-anchor="end" class="tick">0</text>
+  <line x1="55" y1="289.50567356888627" x2="60" y2="289.50567356888627" stroke="#333" stroke-width="1"/>
+  <text x="52" y="293.50567356888627" text-anchor="end" class="tick">1</text>
+  <line x1="55" y1="239.01134713777256" x2="60" y2="239.01134713777256" stroke="#333" stroke-width="1"/>
+  <text x="52" y="243.01134713777256" text-anchor="end" class="tick">2</text>
+  <line x1="55" y1="188.51702070665885" x2="60" y2="188.51702070665885" stroke="#333" stroke-width="1"/>
+  <text x="52" y="192.51702070665885" text-anchor="end" class="tick">3</text>
+  <line x1="55" y1="138.02269427554512" x2="60" y2="138.02269427554512" stroke="#333" stroke-width="1"/>
+  <text x="52" y="142.02269427554512" text-anchor="end" class="tick">4</text>
+  <line x1="55" y1="87.52836784443139" x2="60" y2="87.52836784443139" stroke="#333" stroke-width="1"/>
+  <text x="52" y="91.52836784443139" text-anchor="end" class="tick">5</text>
+  <path d="M 60.0 340.0 L 120.0 305.0 L 180.0 270.0 L 240.0 235.0 L 300.0 200.0 L 360.0 165.0 L 420.0 130.00000000000003 L 480.0 95.0 L 540.0 60.0" fill="none" stroke="#e74c3c" stroke-width="2.5"/>
+  <circle cx="60.0" cy="340.0" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <circle cx="120.0" cy="305.0" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <circle cx="180.0" cy="270.0" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <circle cx="240.0" cy="235.0" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <circle cx="300.0" cy="200.0" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <circle cx="360.0" cy="165.0" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <circle cx="420.0" cy="130.00000000000003" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <circle cx="480.0" cy="95.0" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <circle cx="540.0" cy="60.0" r="4" fill="#e74c3c" stroke="white" stroke-width="1.5"/>
+  <text x="130.0" y="297.0" class="tick" fill="#e74c3c">n=1: ln(2) ≈ 0.693</text>
+  <text x="530" y="80" text-anchor="end" class="label" fill="#e74c3c">ΔS = n · ln(2)</text>
+</svg>
