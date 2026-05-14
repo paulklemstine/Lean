@@ -457,10 +457,10 @@
       "Algebra"
     ],
     "priority_score": 0.89,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16773a0f",
     "timestamp": "2026-05-14T04:01:04.734840+00:00"
   },
   {
@@ -745,10 +745,10 @@
       "Bridges"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b81c0e8b",
     "timestamp": "2026-05-14T04:01:04.738217+00:00"
   },
   {
@@ -777,10 +777,10 @@
       "EML"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cf70f0fe",
     "timestamp": "2026-05-14T04:01:04.710844+00:00"
   },
   {
@@ -809,10 +809,10 @@
       "Algebra"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb359714",
     "timestamp": "2026-05-14T04:01:04.733900+00:00"
   },
   {
