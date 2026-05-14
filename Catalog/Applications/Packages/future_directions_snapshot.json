@@ -473,10 +473,10 @@
       "Tropical"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b1df958",
     "timestamp": "2026-05-14T04:01:04.698109+00:00"
   },
   {
@@ -505,10 +505,10 @@
       "Physics"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cac2d056",
     "timestamp": "2026-05-14T04:01:04.707494+00:00"
   },
   {
@@ -537,10 +537,10 @@
       "Algebra"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "955f4235",
     "timestamp": "2026-05-14T04:01:04.735826+00:00"
   },
   {
@@ -617,10 +617,10 @@
       "Bridges"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47b84c8e",
     "timestamp": "2026-05-14T04:01:04.708300+00:00"
   },
   {
@@ -649,10 +649,10 @@
       "Tropical"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3c0e8992",
     "timestamp": "2026-05-14T04:01:04.736962+00:00"
   },
   {
@@ -1049,10 +1049,10 @@
       "Physics"
     ],
     "priority_score": 0.76,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a2a949ad",
     "timestamp": "2026-05-14T04:01:04.716821+00:00"
   },
   {
@@ -1081,10 +1081,10 @@
       "Tropical"
     ],
     "priority_score": 0.74,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28d26b9a",
     "timestamp": "2026-05-14T04:01:04.724823+00:00"
   },
   {
@@ -1145,10 +1145,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "83bac4fd",
     "timestamp": "2026-05-14T04:01:04.719925+00:00"
   }
 ]
