@@ -1451,6 +1451,77 @@
     "timestamp": "2026-05-14T16:16:22.752502+00:00"
   },
   {
+    "id": "fd_0097",
+    "title": "Direction 4",
+    "description": "(Certified Prover) — most immediately applicable, builds directly on current theorems",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7c79405",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:40.309174+00:00"
+  },
+  {
+    "id": "fd_0098",
+    "title": "Direction 1",
+    "description": "(p-adic Trees) — natural mathematical extension, moderate difficulty",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7c79405",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:40.311465+00:00"
+  },
+  {
+    "id": "fd_0099",
+    "title": "Direction 2",
+    "description": "(Rate-Distortion) — connects to information theory, high impact",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7c79405",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:40.313438+00:00"
+  },
+  {
+    "id": "fd_0100",
+    "title": "Direction 5",
+    "description": "(Banach Fixed Point) — foundational, potential Mathlib contribution",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7c79405",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:40.315123+00:00"
+  },
+  {
+    "id": "fd_0101",
+    "title": "Direction 3",
+    "description": "(Tropical Convexity) — most speculative, highest conceptual payoff",
+    "domains": [
+      "Tropical",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7c79405",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:40.316976+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
