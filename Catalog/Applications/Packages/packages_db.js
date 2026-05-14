@@ -27,10 +27,10 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.95,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53771932",
     "timestamp": "2026-05-13T23:34:44.955957+00:00"
   },
   {
@@ -123,10 +123,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9b70184",
     "timestamp": "2026-05-13T23:34:44.956864+00:00"
   },
   {
@@ -139,10 +139,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe61d30c",
     "timestamp": "2026-05-13T23:34:44.960584+00:00"
   },
   {
@@ -155,10 +155,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.89,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9590c6d3",
     "timestamp": "2026-05-13T23:34:44.960305+00:00"
   },
   {
@@ -203,10 +203,10 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07e325b2",
     "timestamp": "2026-05-13T23:34:44.959178+00:00"
   },
   {
@@ -267,10 +267,10 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "priority_score": 0.82,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d31aa671",
     "timestamp": "2026-05-13T23:34:44.958923+00:00"
   },
   {
@@ -283,10 +283,10 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "priority_score": 0.81,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04b8c0b1",
     "timestamp": "2026-05-13T23:34:44.957939+00:00"
   },
   {
@@ -331,10 +331,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.78,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "11e89186",
     "timestamp": "2026-05-13T23:34:44.956651+00:00"
   },
   {

@@ -1885,6 +1885,15 @@ document.addEventListener('DOMContentLoaded', () => {
         showDirectionsView();
     });
 
+    // Welcome screen directions link
+    const welcomeDirectionsLink = document.getElementById('welcome-directions-link');
+    if (welcomeDirectionsLink) {
+        welcomeDirectionsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showDirectionsView();
+        });
+    }
+
     // Filter change handlers
     directionsStatusFilter.addEventListener('change', renderDirectionsView);
     directionsDomainFilter.addEventListener('change', renderDirectionsView);
