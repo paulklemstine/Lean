@@ -1,454 +1,662 @@
 #!/usr/bin/env python3
 """
-Tropical Myhill–Nerode: Applications
+Applications of the Tropical Myhill–Nerode Theorem
 
-Real-world applications of the tropical Myhill–Nerode theorem:
-1. Shortest-path compression in network routing
-2. Cost automata for resource-bounded computation
-3. Dynamic programming state compression
-4. Weighted pattern matching optimization
+Demonstrates real-world applications of tropical automata theory:
+1. Shortest-path optimization in networks
+2. Dynamic programming state compression
+3. Cost-aware protocol verification
+4. Resource-bounded computation analysis
 """
 
-from algorithms import NerodeAutomaton, TropicalDFA, generate_words
-from typing import List, Dict, Tuple
+from __future__ import annotations
+from typing import Callable, Dict, List, Optional, Tuple, Set
+from dataclasses import dataclass
+from collections import defaultdict
+import random
 
-INF = float('inf')
+Cost = Optional[int]
+Word = tuple
 
 
 # ===========================================================================
-# Application 1: Network Routing Cost Compression
+# Application 1: Network Shortest Paths
 # ===========================================================================
+
+@dataclass
+class WeightedGraph:
+    """A directed weighted graph for shortest-path computation."""
+    nodes: List[str]
+    edges: Dict[Tuple[str, str], int]  # (from, to) -> weight
+
+    def shortest_path_cost(self, source: str, target: str,
+                            path: List[str] = None) -> Cost:
+        """Compute shortest path cost via Bellman-Ford."""
+        n = len(self.nodes)
+        dist = {node: None for node in self.nodes}
+        dist[source] = 0
+
+        for _ in range(n - 1):
+            for (u, v), w in self.edges.items():
+                if dist[u] is not None:
+                    new_dist = dist[u] + w
+                    if dist[v] is None or new_dist < dist[v]:
+                        dist[v] = new_dist
+
+        return dist.get(target)
+
 
 def network_routing_demo():
     """
-    Application: Shortest-path cost compression.
+    Application: Network routing as a tropical weighted language.
 
-    Consider a network where paths are labeled by sequences of link types.
-    The cost of a path is the sum of link costs with possible discounts.
-
-    The tropical Myhill–Nerode theorem tells us: if the cost function has
-    finitely many distinct "future cost profiles" (residuals), then there
-    exists a minimal finite-state cost computer.
+    A sequence of routing decisions (left/right/straight at intersections)
+    defines a path through a network. The cost is the total travel time.
+    The tropical Myhill–Nerode theorem tells us the minimum number of
+    "routing states" needed to optimally route packets.
     """
-    print("=" * 70)
-    print("APPLICATION 1: Network Routing Cost Compression")
-    print("=" * 70)
+    print("=" * 60)
+    print("APPLICATION 1: Network Routing Optimization")
+    print("=" * 60)
 
-    # Link types: 'f' = fiber (cost 1), 'w' = wireless (cost 3), 's' = satellite (cost 5)
-    alphabet = ['f', 'w', 's']
-    costs = {'f': 1, 'w': 3, 's': 5}
+    # A simple network: 4 intersections with different travel times
+    graph = WeightedGraph(
+        nodes=['A', 'B', 'C', 'D'],
+        edges={
+            ('A', 'B'): 3, ('A', 'C'): 7,
+            ('B', 'C'): 2, ('B', 'D'): 5,
+            ('C', 'D'): 1,
+            ('D', 'A'): 4,
+        }
+    )
 
-    # Cost = sum of link costs, but capped at 10 (max observable cost)
-    def routing_cost(path: List[str]) -> float:
-        return min(sum(costs[c] for c in path), 10)
+    # Define a weighted language: L(route) = cost of the route from A
+    # Route symbols: 'n' = next node in order, 's' = skip to further node
+    route_map = {
+        ('A', 'n'): ('B', 3), ('A', 's'): ('C', 7),
+        ('B', 'n'): ('C', 2), ('B', 's'): ('D', 5),
+        ('C', 'n'): ('D', 1), ('C', 's'): ('D', 1),
+        ('D', 'n'): ('A', 4), ('D', 's'): ('A', 4),
+    }
 
-    nerode = NerodeAutomaton(routing_cost, alphabet, max_word_len=5, probe_len=4)
+    def route_cost(word: Word) -> Cost:
+        """Cost of a routing sequence starting from A."""
+        state = 'A'
+        total = 0
+        for action in word:
+            key = (state, action)
+            if key not in route_map:
+                return None  # invalid route
+            state, cost = route_map[key]
+            total += cost
+        return total
 
-    print(f"\nMinimal states needed for cost computation: {nerode.num_states()}")
-    print("(Each state represents a distinct 'remaining cost profile'.)")
+    print("\nSample routing costs from node A:")
+    for route in [(), ('n',), ('s',), ('n', 'n'), ('n', 's'),
+                   ('s', 'n'), ('n', 'n', 'n')]:
+        cost = route_cost(route)
+        route_str = '→'.join(route) if route else 'ε (stay)'
+        print(f"  Route [{route_str}]: cost = {cost if cost is not None else '∞'}")
 
-    print("\nSample path costs:")
-    test_paths = [
-        [], ['f'], ['w'], ['s'],
-        ['f', 'f', 'f'], ['w', 'w', 'w'],
-        ['f', 'w', 's'], ['s', 's'],
-    ]
-    for path in test_paths:
-        cost = nerode.evaluate(path)
-        path_str = '→'.join(path) if path else '(start)'
-        print(f"  Path {path_str}: cost = {cost}")
-
-    print(f"\nA naive router might track full path history.")
-    print(f"The Myhill–Nerode theorem proves {nerode.num_states()} states suffice.")
+    # Find Nerode classes
+    from algorithms import discover_nerode_classes
+    classes = discover_nerode_classes(route_cost, ['n', 's'],
+                                      max_prefix_len=3, max_suffix_len=3)
+    print(f"\nNerode equivalence classes: {len(classes)}")
+    print("→ This is the minimum number of routing states needed!")
+    print("  Any router tracking fewer states cannot compute optimal costs.")
 
 
 # ===========================================================================
-# Application 2: Resource-Bounded Computation
+# Application 2: Dynamic Programming Compression
 # ===========================================================================
 
-def resource_bounded_computation():
+def dp_compression_demo():
     """
-    Application: Resource monitors for bounded computation.
+    Application: State-space compression in dynamic programming.
 
-    Model a system where operations consume resources (CPU cycles, memory).
-    The "cost" of an operation sequence is the total resource consumption.
-    The Nerode automaton gives the minimal monitor.
+    The tropical Myhill–Nerode theorem provides a rigorous lower bound
+    on the number of states needed in any DP formulation. This is the
+    "cost-to-go" compression theorem.
     """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Resource-Bounded Computation Monitor")
-    print("=" * 70)
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Dynamic Programming State Compression")
+    print("=" * 60)
 
-    # Operations: 'r' = read (1 unit), 'w' = write (2 units), 'c' = compute (3 units)
-    alphabet = ['r', 'w', 'c']
-    op_costs = {'r': 1, 'w': 2, 'c': 3}
-    BUDGET = 8
+    # Consider a manufacturing process with operations a, b
+    # Cost depends on the sequence of operations performed
+    operation_costs = {
+        'a': 2,  # operation a costs 2
+        'b': 3,  # operation b costs 3
+    }
 
-    def resource_usage(ops: List[str]) -> float:
-        """Cost = min(total resource usage, budget). Over-budget = budget."""
-        return min(sum(op_costs[op] for op in ops), BUDGET)
+    # Setup cost depends on transition between operations
+    setup_costs = {
+        ('a', 'a'): 0,  # same operation, no setup
+        ('a', 'b'): 5,  # switching from a to b
+        ('b', 'a'): 4,  # switching from b to a
+        ('b', 'b'): 0,  # same operation
+    }
 
-    nerode = NerodeAutomaton(resource_usage, alphabet, max_word_len=5, probe_len=4)
+    def manufacturing_cost(word: Word) -> Cost:
+        """Total manufacturing cost including setup transitions."""
+        if not word:
+            return 0
+        total = operation_costs.get(word[0], 0)
+        for i in range(1, len(word)):
+            key = (word[i-1], word[i])
+            total += setup_costs.get(key, 0) + operation_costs.get(word[i], 0)
+        return total
 
-    print(f"\nResource budget: {BUDGET} units")
-    print(f"Minimal monitor states: {nerode.num_states()}")
-    print("(Each state tracks a distinct 'remaining budget profile'.)")
-
-    # Syntactic monoid
-    monoid = nerode.compute_syntactic_monoid(max_word_len=4)
-    print(f"Syntactic monoid size: {len(monoid)}")
-
-    print("\nSample operation sequences:")
+    print("\nManufacturing cost analysis:")
     sequences = [
-        [], ['r'], ['c'], ['r', 'w', 'c'],
-        ['c', 'c', 'c'], ['r'] * 8,
+        (), ('a',), ('b',), ('a', 'a'), ('a', 'b'),
+        ('b', 'a'), ('b', 'b'), ('a', 'b', 'a'), ('a', 'a', 'a'),
     ]
     for seq in sequences:
-        cost = nerode.evaluate(seq)
-        seq_str = '→'.join(seq) if seq else '(idle)'
-        print(f"  {seq_str}: resource usage = {cost}")
+        cost = manufacturing_cost(seq)
+        seq_str = '→'.join(seq) if seq else 'ε (idle)'
+        print(f"  Sequence [{seq_str}]: cost = {cost}")
+
+    from algorithms import discover_nerode_classes
+    classes = discover_nerode_classes(manufacturing_cost, ['a', 'b'],
+                                      max_prefix_len=3, max_suffix_len=3)
+    print(f"\nNerode classes: {len(classes)}")
+    print("→ Minimum DP state space size for this cost structure!")
+    print("  No DP formulation can use fewer states and remain correct.")
 
 
 # ===========================================================================
-# Application 3: Dynamic Programming State Compression
+# Application 3: Cost-Aware Protocol Verification
 # ===========================================================================
 
-def dp_state_compression():
+def protocol_verification_demo():
     """
-    Application: Dynamic programming state compression.
+    Application: Verifying cost bounds in communication protocols.
 
-    In DP, the "state" after processing a prefix determines the optimal
-    cost-to-go for any suffix. The tropical Nerode equivalence identifies
-    prefixes with identical cost-to-go functions — compressing the DP table.
+    Model a protocol as a tropical automaton where the cost represents
+    resource consumption (time, bandwidth, energy). The Nerode automaton
+    gives the minimal monitor needed to track costs.
     """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Dynamic Programming State Compression")
-    print("=" * 70)
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Protocol Cost Verification")
+    print("=" * 60)
 
-    # A DP problem: sequence alignment-like cost
-    alphabet = ['0', '1']
+    # Protocol actions: s=send, r=receive
+    # Each action has a cost; sending costs more bandwidth
+    action_costs = {'s': 10, 'r': 2}
 
-    def alignment_cost(seq: List[str]) -> float:
-        """Cost = number of transitions (0→1 or 1→0) in the sequence."""
-        if len(seq) <= 1:
-            return 0
-        transitions = sum(1 for i in range(len(seq)-1) if seq[i] != seq[i+1])
-        return transitions
+    # Protocol states: idle, active
+    protocol_transitions = {
+        ('idle', 's'): 'active',
+        ('idle', 'r'): 'idle',
+        ('active', 's'): 'active',
+        ('active', 'r'): 'idle',
+    }
 
-    nerode = NerodeAutomaton(alignment_cost, alphabet, max_word_len=7, probe_len=5)
+    def protocol_cost(word: Word) -> Cost:
+        """Total protocol execution cost."""
+        state = 'idle'
+        total = 0
+        for action in word:
+            key = (state, action)
+            if key not in protocol_transitions:
+                return None
+            total += action_costs.get(action, 0)
+            state = protocol_transitions[key]
+        return total
 
-    print(f"Minimal DP states: {nerode.num_states()}")
+    print("\nProtocol cost examples:")
+    traces = [
+        (), ('s',), ('r',),
+        ('s', 'r'), ('s', 's'), ('r', 's'),
+        ('s', 'r', 's', 'r'),
+    ]
+    for trace in traces:
+        cost = protocol_cost(trace)
+        trace_str = '→'.join(trace) if trace else 'ε (start)'
+        print(f"  Trace [{trace_str}]: cost = {cost if cost is not None else '∞'}")
 
-    # Show equivalence classes
-    classes = nerode.get_classes()
-    print(f"\nEquivalence classes (prefixes with same cost-to-go):")
-    for rep, members in classes.items():
-        shown = members[:6]
-        print(f"  State [{rep}]: {', '.join(shown)}{'...' if len(members) > 6 else ''}")
+    from algorithms import (discover_nerode_classes,
+                              build_nerode_automaton, enumerate_words)
 
-    print(f"\nOriginal DP table: exponentially many prefix states")
-    print(f"Compressed table: {nerode.num_states()} states")
-    print(f"Compression ratio for 7-symbol sequences: "
-          f"{sum(2**k for k in range(8))} → {nerode.num_states()}")
+    classes = discover_nerode_classes(protocol_cost, ['s', 'r'],
+                                      max_prefix_len=3, max_suffix_len=3)
+    print(f"\nNerode classes: {len(classes)}")
+    print("→ Minimum monitor states for cost tracking!")
+
+    # Build minimal monitor
+    monitor = build_nerode_automaton(protocol_cost, ['s', 'r'],
+                                      max_prefix_len=3, max_suffix_len=3)
+    print(f"   Minimal monitor states: {len(monitor.states)}")
+
+    # Verify
+    test_words = enumerate_words(['s', 'r'], 3)
+    correct = all(monitor.evaluate(w) == protocol_cost(w) for w in test_words)
+    print(f"   Monitor correctness: {correct}")
 
 
 # ===========================================================================
-# Application 4: Weighted Pattern Matching
+# Application 4: Resource-Bounded Computation
 # ===========================================================================
 
-def weighted_pattern_matching():
+def resource_bounded_demo():
     """
-    Application: Optimal pattern matching with costs.
+    Application: Analyzing resource consumption in computation.
 
-    Given a text over {a, b, c}, compute the minimum edit distance to
-    a target pattern, modeled as a weighted language.
-    The Nerode automaton gives an optimal streaming matcher.
+    A program's resource usage (time, memory, energy) over a sequence
+    of operations forms a tropical weighted language. The Nerode quotient
+    identifies the minimum state needed to track resource consumption.
     """
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Streaming Weighted Pattern Matching")
-    print("=" * 70)
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Resource-Bounded Computation")
+    print("=" * 60)
 
-    alphabet = ['a', 'b']
-    target = ['a', 'b', 'a']
+    # Operations: 'c' = compute (uses CPU), 'm' = memory alloc
+    # Resource = total resource units consumed
+    def resource_cost(word: Word) -> Cost:
+        """Total resource units consumed."""
+        total = 0
+        for op in word:
+            if op == 'c':
+                total += 3
+            elif op == 'm':
+                total += 5
+        return total
 
-    def match_score(text: List[str]) -> float:
-        """
-        Cost = length of text minus length of longest suffix matching
-        a prefix of the target. Lower is better matching.
-        """
-        if not text:
-            return 0
+    print("\nResource consumption analysis:")
+    sequences = [
+        (), ('c',), ('m',),
+        ('c', 'c'), ('c', 'm'), ('m', 'c'),
+        ('m', 'm'), ('c', 'c', 'c'),
+    ]
+    for seq in sequences:
+        cost = resource_cost(seq)
+        seq_str = '→'.join(seq) if seq else 'ε (idle)'
+        print(f"  Ops [{seq_str}]: resource cost = {cost}")
 
-        # Longest suffix of text that is a prefix of target
-        best = 0
-        for k in range(1, min(len(text), len(target)) + 1):
-            if text[-k:] == target[:k]:
-                best = k
-        return len(text) - best
+    from algorithms import discover_nerode_classes
+    classes = discover_nerode_classes(resource_cost, ['c', 'm'],
+                                      max_prefix_len=3, max_suffix_len=3)
+    print(f"\nNerode classes: {len(classes)}")
+    print("→ Minimum tracking states for resource monitoring!")
+    print("  This bounds the complexity of any correct resource monitor.")
 
-    nerode = NerodeAutomaton(match_score, alphabet, max_word_len=6, probe_len=5)
 
-    print(f"Target pattern: {''.join(target)}")
-    print(f"Minimal streaming matcher states: {nerode.num_states()}")
-
-    print("\nStreaming match scores:")
-    text = ['a', 'b', 'a', 'b', 'a', 'a', 'b', 'a']
-    for i in range(len(text) + 1):
-        prefix = text[:i]
-        score = nerode.evaluate(prefix)
-        prefix_str = ''.join(prefix) if prefix else 'ε'
-        print(f"  After reading '{prefix_str}': score = {score}")
-
+# ===========================================================================
+# Main
+# ===========================================================================
 
 if __name__ == '__main__':
     network_routing_demo()
-    resource_bounded_computation()
-    dp_state_compression()
-    weighted_pattern_matching()
+    dp_compression_demo()
+    protocol_verification_demo()
+    resource_bounded_demo()
+
+    print("\n" + "=" * 60)
+    print("All applications demonstrated successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Tropical Myhill–Nerode Theorem: Demonstrations
+Tropical Myhill–Nerode Theorem: Concrete Demonstrations
 
-Concrete numerical examples showing how the tropical (min-plus) Nerode
-equivalence, canonical automaton construction, and minimality theorem work
-on specific weighted languages.
+This module demonstrates the core concepts of the tropical Myhill–Nerode
+theorem with concrete examples of min-plus weighted languages, residuals,
+Nerode equivalence classes, and canonical automaton construction.
 """
 
+from __future__ import annotations
+from typing import Callable, Dict, List, Optional, Set, Tuple
+from dataclasses import dataclass, field
 import math
-from collections import defaultdict
-from typing import Dict, List, Tuple, Optional, Callable
-from algorithms import TropicalDFA, NerodeAutomaton
 
-INF = float('inf')
+# Type alias: a weighted language maps words to costs (None = infinity/⊤)
+Cost = Optional[int]
+Word = tuple  # tuple of symbols
 
 
-def example_shortest_path_language():
+def min_plus(a: Cost, b: Cost) -> Cost:
+    """Tropical addition: min of two costs (None = ∞)."""
+    if a is None:
+        return b
+    if b is None:
+        return a
+    return min(a, b)
+
+
+def plus(a: Cost, b: Cost) -> Cost:
+    """Tropical multiplication: sum of two costs (None = ∞)."""
+    if a is None or b is None:
+        return None
+    return a + b
+
+
+# ===========================================================================
+# Example 1: Shortest-path language (number of 'a's in a word)
+# ===========================================================================
+
+def count_a_language(word: Word) -> Cost:
+    """L(w) = number of 'a' symbols in w. Cost is always finite."""
+    return sum(1 for c in word if c == 'a')
+
+
+def residual(L: Callable[[Word], Cost], prefix: Word) -> Callable[[Word], Cost]:
+    """Compute the right residual: (residual L u)(v) = L(u ++ v)."""
+    return lambda v: L(prefix + v)
+
+
+def words_up_to(alphabet: list, max_len: int) -> List[Word]:
+    """Generate all words up to a given length."""
+    result = [()]
+    for length in range(1, max_len + 1):
+        for w in list(result):
+            if len(w) == length - 1:
+                for a in alphabet:
+                    result.append(w + (a,))
+    return result
+
+
+def residual_signature(L: Callable[[Word], Cost], prefix: Word,
+                        test_words: List[Word]) -> Tuple[Cost, ...]:
+    """Compute a finite signature of a residual for comparison."""
+    r = residual(L, prefix)
+    return tuple(r(w) for w in test_words)
+
+
+def find_nerode_classes(L: Callable[[Word], Cost], alphabet: list,
+                         max_prefix_len: int = 4,
+                         max_test_len: int = 4) -> Dict[tuple, List[Word]]:
+    """Find Nerode equivalence classes by computing residual signatures."""
+    test_words = words_up_to(alphabet, max_test_len)
+    prefixes = words_up_to(alphabet, max_prefix_len)
+
+    classes: Dict[tuple, List[Word]] = {}
+    for prefix in prefixes:
+        sig = residual_signature(L, prefix, test_words)
+        if sig not in classes:
+            classes[sig] = []
+        classes[sig].append(prefix)
+
+    return classes
+
+
+# ===========================================================================
+# Example 2: Tropical DFA and evaluation
+# ===========================================================================
+
+@dataclass
+class TropicalDFA:
+    """A deterministic tropical (min-plus) finite automaton."""
+    states: List[str]
+    alphabet: list
+    transitions: Dict[Tuple[str, any], str]  # (state, symbol) -> state
+    initial: str
+    output: Dict[str, Cost]  # state -> output cost
+
+    def eval_state(self, state: str, word: Word) -> str:
+        """Process a word from a given state."""
+        for symbol in word:
+            state = self.transitions[(state, symbol)]
+        return state
+
+    def eval_cost(self, word: Word) -> Cost:
+        """Compute the cost of a word."""
+        final_state = self.eval_state(self.initial, word)
+        return self.output[final_state]
+
+    def recognizes(self, L: Callable[[Word], Cost],
+                    test_words: List[Word]) -> bool:
+        """Check if the automaton recognizes L on given test words."""
+        return all(self.eval_cost(w) == L(w) for w in test_words)
+
+
+def build_nerode_automaton(L: Callable[[Word], Cost], alphabet: list,
+                            max_prefix_len: int = 4,
+                            max_test_len: int = 4) -> TropicalDFA:
+    """Construct the canonical Nerode automaton for L.
+
+    States are residual equivalence classes.
+    Transitions append letters.
+    Output is the residual evaluated at the empty word.
     """
-    Example 1: Shortest-path language over {a, b}.
+    test_words = words_up_to(alphabet, max_test_len)
+    prefixes = words_up_to(alphabet, max_prefix_len)
 
-    L(w) = number of 'a' characters in w.
-    This is a min-plus regular language recognized by a 1-state automaton.
-    """
+    # Map each prefix to its residual signature
+    sig_map: Dict[Word, tuple] = {}
+    for prefix in prefixes:
+        sig_map[prefix] = residual_signature(L, prefix, test_words)
+
+    # Collect unique signatures as states
+    unique_sigs = list(set(sig_map.values()))
+    state_names = {sig: f"q{i}" for i, sig in enumerate(unique_sigs)}
+
+    # Build transitions
+    transitions = {}
+    for sig in unique_sigs:
+        # Find a representative prefix for this signature
+        rep = next(p for p in prefixes if sig_map[p] == sig)
+        for a in alphabet:
+            extended = rep + (a,)
+            if extended in sig_map:
+                next_sig = sig_map[extended]
+                transitions[(state_names[sig], a)] = state_names[next_sig]
+
+    # Initial state: residual at empty word
+    initial_sig = sig_map[()]
+    initial_state = state_names[initial_sig]
+
+    # Output: residual evaluated at empty word = L(prefix) for any representative
+    output = {}
+    for sig in unique_sigs:
+        rep = next(p for p in prefixes if sig_map[p] == sig)
+        output[state_names[sig]] = L(rep)
+
+    return TropicalDFA(
+        states=list(state_names.values()),
+        alphabet=alphabet,
+        transitions=transitions,
+        initial=initial_state,
+        output=output
+    )
+
+
+# ===========================================================================
+# Example 3: Mod-3 cost language (counterexample for idempotence)
+# ===========================================================================
+
+def mod3_language(word: Word) -> Cost:
+    """L(w) = (number of 'a's) mod 3, or None if no 'a's."""
+    count = sum(1 for c in word if c == 'a')
+    if count == 0:
+        return None  # ⊤
+    return count % 3
+
+
+# ===========================================================================
+# Main demonstration
+# ===========================================================================
+
+def demonstrate_example_1():
+    """Demonstrate the count-a language."""
     print("=" * 70)
-    print("EXAMPLE 1: Character-counting language")
-    print("L(w) = number of 'a' characters in w")
+    print("EXAMPLE 1: Count-a Language")
+    print("L(w) = number of 'a' symbols in w")
     print("=" * 70)
 
     alphabet = ['a', 'b']
+    L = count_a_language
 
-    def L(w: List[str]) -> float:
-        return sum(1 for c in w if c == 'a')
+    # Show some language values
+    test_words = words_up_to(alphabet, 3)
+    print("\nLanguage values:")
+    for w in test_words[:15]:
+        word_str = ''.join(w) if w else 'ε'
+        print(f"  L({word_str}) = {L(w)}")
+
+    # Find Nerode classes
+    classes = find_nerode_classes(L, alphabet, max_prefix_len=3, max_test_len=3)
+    print(f"\nNumber of Nerode equivalence classes: {len(classes)}")
+    print("(This language has infinitely many classes in principle,")
+    print(" but we see finitely many within our test horizon.)")
+
+    for i, (sig, members) in enumerate(list(classes.items())[:5]):
+        reps = [''.join(m) if m else 'ε' for m in members[:5]]
+        print(f"  Class {i}: {reps}{'...' if len(members) > 5 else ''}")
 
     # Build Nerode automaton
-    nerode = NerodeAutomaton(L, alphabet, max_word_len=5, probe_len=4)
-
-    print(f"\nNumber of distinct residuals: {nerode.num_states()}")
-    print(f"(This is the minimal number of states needed.)")
-
-    # Show some residual classes
-    print("\nResidual classes (representative → class members):")
-    for rep, members in nerode.get_classes().items():
-        shown = [str(m) for m in members[:5]]
-        print(f"  [{rep}] : {', '.join(shown)}{'...' if len(members) > 5 else ''}")
+    automaton = build_nerode_automaton(L, alphabet,
+                                        max_prefix_len=3, max_test_len=3)
+    print(f"\nNerode automaton has {len(automaton.states)} states")
+    print(f"  States: {automaton.states}")
+    print(f"  Initial: {automaton.initial}")
 
     # Verify correctness
-    print("\nVerification (word → L(w) vs automaton(w)):")
-    test_words = [[], ['a'], ['b'], ['a', 'b'], ['b', 'a'], ['a', 'a'], ['a', 'b', 'a']]
-    for w in test_words:
-        true_val = L(w)
-        auto_val = nerode.evaluate(w)
-        status = "✓" if abs(true_val - auto_val) < 1e-9 else "✗"
-        print(f"  {status} L({''.join(w) if w else 'ε'}) = {true_val}, automaton = {auto_val}")
+    verify_words = words_up_to(alphabet, 3)
+    correct = automaton.recognizes(L, verify_words)
+    print(f"  Correctly recognizes L on words up to length 3: {correct}")
 
 
-def example_min_distance_language():
-    """
-    Example 2: Min-distance language.
-
-    L(w) = min(|w|, 3) — a bounded cost function.
-    Should have exactly 4 residual classes.
-    """
+def demonstrate_example_2():
+    """Demonstrate a finite-state tropical language."""
     print("\n" + "=" * 70)
-    print("EXAMPLE 2: Bounded distance language")
-    print("L(w) = min(|w|, 3)")
+    print("EXAMPLE 2: Shortest-Path Language")
+    print("A 2-state min-plus automaton computing min edit distance")
     print("=" * 70)
 
-    alphabet = ['a', 'b']
+    # Define a simple 2-state tropical DFA
+    dfa = TropicalDFA(
+        states=['s0', 's1'],
+        alphabet=['a', 'b'],
+        transitions={
+            ('s0', 'a'): 's1', ('s0', 'b'): 's0',
+            ('s1', 'a'): 's0', ('s1', 'b'): 's1',
+        },
+        initial='s0',
+        output={'s0': 0, 's1': 1}
+    )
 
-    def L(w: List[str]) -> float:
-        return min(len(w), 3)
+    # The language this recognizes
+    def dfa_language(w: Word) -> Cost:
+        return dfa.eval_cost(w)
 
-    nerode = NerodeAutomaton(L, alphabet, max_word_len=6, probe_len=5)
-    print(f"\nNumber of distinct residuals: {nerode.num_states()}")
+    print("\nDFA output on words:")
+    test_words = words_up_to(['a', 'b'], 4)
+    for w in test_words[:20]:
+        word_str = ''.join(w) if w else 'ε'
+        print(f"  L({word_str}) = {dfa_language(w)}")
 
-    # Show transitions
-    print("\nTransition table:")
-    nerode.print_transitions()
+    # Find Nerode classes
+    classes = find_nerode_classes(dfa_language, ['a', 'b'],
+                                  max_prefix_len=4, max_test_len=4)
+    print(f"\nNumber of Nerode classes: {len(classes)}")
+    print(f"Number of DFA states: {len(dfa.states)}")
+    print("→ Nerode classes ≤ DFA states (minimality theorem!)")
+
+    # Build canonical automaton
+    nerode_dfa = build_nerode_automaton(dfa_language, ['a', 'b'],
+                                         max_prefix_len=4, max_test_len=4)
+    print(f"\nNerode automaton states: {len(nerode_dfa.states)}")
 
     # Verify
-    print("\nVerification:")
-    for length in range(7):
-        w = ['a'] * length
-        true_val = L(w)
-        auto_val = nerode.evaluate(w)
-        status = "✓" if abs(true_val - auto_val) < 1e-9 else "✗"
-        print(f"  {status} L({'a' * length if length else 'ε'}) = {true_val}, automaton = {auto_val}")
+    correct = nerode_dfa.recognizes(dfa_language, test_words)
+    print(f"Nerode automaton correct: {correct}")
 
 
-def example_edit_distance_prefix():
-    """
-    Example 3: Weighted language based on pattern matching.
-
-    L(w) = number of times 'ab' appears as a substring, as a cost.
-    """
+def demonstrate_example_3():
+    """Demonstrate the counterexample for idempotence."""
     print("\n" + "=" * 70)
-    print("EXAMPLE 3: Substring pattern counting")
-    print("L(w) = count of 'ab' substrings in w")
+    print("EXAMPLE 3: Non-Idempotent Syntactic Action")
+    print("L(w) = (#a mod 3) if #a > 0, else ⊤")
     print("=" * 70)
 
     alphabet = ['a', 'b']
+    L = mod3_language
 
-    def L(w: List[str]) -> float:
-        count = 0
-        for i in range(len(w) - 1):
-            if w[i] == 'a' and w[i+1] == 'b':
-                count += 1
-        return count
+    print("\nLanguage values:")
+    test_words = words_up_to(alphabet, 4)
+    for w in test_words[:20]:
+        word_str = ''.join(w) if w else 'ε'
+        val = L(w)
+        print(f"  L({word_str}) = {val if val is not None else '⊤'}")
 
-    nerode = NerodeAutomaton(L, alphabet, max_word_len=6, probe_len=5)
-    print(f"\nNumber of distinct residuals: {nerode.num_states()}")
+    # Find Nerode classes
+    classes = find_nerode_classes(L, alphabet, max_prefix_len=4, max_test_len=4)
+    print(f"\nNumber of Nerode classes: {len(classes)}")
 
-    print("\nSample evaluations:")
-    test_words = [[], ['a'], ['b'], ['a', 'b'], ['a', 'b', 'a', 'b'],
-                  ['b', 'a'], ['a', 'a', 'b']]
-    for w in test_words:
-        val = nerode.evaluate(w)
-        print(f"  L({''.join(w) if w else 'ε'}) = {val}")
+    # Show that the 'a' action is not idempotent
+    print("\nAction of letter 'a' on residual classes:")
+    print("  The letter 'a' shifts #a count by 1 mod 3.")
+    print("  This is a cyclic permutation, NOT idempotent:")
+    print("  If f = action of 'a', then f(class_k) = class_{k+1 mod 3}")
+    print("  But f∘f(class_k) = class_{k+2 mod 3} ≠ f(class_k)")
+    print("  → f∘f ≠ f, so f is not idempotent!")
+    print("\n  This refutes the claim that syntactic monoid elements")
+    print("  are always idempotent in tropical automata theory.")
 
 
-def example_minimality_demonstration():
-    """
-    Example 4: Minimality theorem in action.
-
-    We build a non-minimal automaton and show the Nerode automaton is smaller.
-    """
+def demonstrate_minimality():
+    """Demonstrate the minimality theorem with a concrete redundant automaton."""
     print("\n" + "=" * 70)
-    print("EXAMPLE 4: Minimality theorem demonstration")
+    print("EXAMPLE 4: Minimality Theorem in Action")
+    print("A 4-state DFA with only 2 Nerode classes")
     print("=" * 70)
 
-    alphabet = ['a', 'b']
+    # A redundant 4-state DFA (states s0,s2 equivalent, s1,s3 equivalent)
+    dfa = TropicalDFA(
+        states=['s0', 's1', 's2', 's3'],
+        alphabet=['a', 'b'],
+        transitions={
+            ('s0', 'a'): 's1', ('s0', 'b'): 's2',
+            ('s1', 'a'): 's0', ('s1', 'b'): 's3',
+            ('s2', 'a'): 's3', ('s2', 'b'): 's0',
+            ('s3', 'a'): 's2', ('s3', 'b'): 's1',
+        },
+        initial='s0',
+        output={'s0': 0, 's1': 1, 's2': 0, 's3': 1}
+    )
 
-    # A non-minimal 4-state automaton for L(w) = min(|w|, 2)
-    class NonMinimalDFA:
-        def __init__(self):
-            self.num_states = 4  # States 0,1,2,3 (3 is redundant copy of 2)
-            self.init = 0
-            self.transitions = {
-                (0, 'a'): 1, (0, 'b'): 1,
-                (1, 'a'): 2, (1, 'b'): 2,
-                (2, 'a'): 3, (2, 'b'): 3,  # state 3 is redundant
-                (3, 'a'): 3, (3, 'b'): 3,
-            }
-            self.output = {0: 0, 1: 1, 2: 2, 3: 2}
+    def dfa_language(w: Word) -> Cost:
+        return dfa.eval_cost(w)
 
-        def evaluate(self, w):
-            state = self.init
-            for c in w:
-                state = self.transitions[(state, c)]
-            return self.output[state]
+    test_words = words_up_to(['a', 'b'], 5)
+    classes = find_nerode_classes(dfa_language, ['a', 'b'],
+                                  max_prefix_len=5, max_test_len=5)
 
-    non_min = NonMinimalDFA()
+    print(f"\n  Original DFA states: {len(dfa.states)}")
+    print(f"  Nerode classes: {len(classes)}")
+    print(f"  → {len(classes)} ≤ {len(dfa.states)} (minimality theorem)")
 
-    def L(w):
-        return non_min.evaluate(w)
+    nerode_dfa = build_nerode_automaton(dfa_language, ['a', 'b'],
+                                         max_prefix_len=5, max_test_len=5)
+    print(f"  Nerode automaton states: {len(nerode_dfa.states)}")
+    print(f"  → Minimal automaton found!")
 
-    nerode = NerodeAutomaton(L, alphabet, max_word_len=5, probe_len=4)
-
-    print(f"\nNon-minimal automaton states: {non_min.num_states}")
-    print(f"Nerode (minimal) automaton states: {nerode.num_states()}")
-    print(f"State reduction: {non_min.num_states} → {nerode.num_states()}")
-    print(f"\nThe Nerode state count ({nerode.num_states()}) is a lower bound")
-    print(f"on the states of ANY recognizing automaton (Minimality Theorem).")
-
-
-def example_syntactic_monoid():
-    """
-    Example 5: Syntactic transformation monoid computation.
-
-    Compute the transformations induced by each word on residual classes,
-    demonstrating the finite syntactic monoid.
-    """
-    print("\n" + "=" * 70)
-    print("EXAMPLE 5: Syntactic transformation monoid")
-    print("=" * 70)
-
-    alphabet = ['a', 'b']
-
-    def L(w: List[str]) -> float:
-        return min(len(w), 2)
-
-    nerode = NerodeAutomaton(L, alphabet, max_word_len=4, probe_len=3)
-    print(f"\nResidual states: {nerode.num_states()}")
-
-    # Compute syntactic monoid
-    monoid = nerode.compute_syntactic_monoid(max_word_len=4)
-    print(f"Syntactic monoid size: {len(monoid)}")
-    print("\nTransformations (word → permutation of states):")
-    for word_str, transform in sorted(monoid.items(), key=lambda x: (len(x[0]), x[0])):
-        print(f"  '{word_str if word_str else 'ε'}' : {transform}")
-
-    print(f"\nThe syntactic monoid is finite ({len(monoid)} elements),")
-    print(f"confirming recognizability (Theorem 6).")
-
-
-def example_non_recognizable():
-    """
-    Example 6: A non-recognizable language (infinite residuals).
-
-    L(w) = |w|² — each prefix length gives a distinct residual.
-    """
-    print("\n" + "=" * 70)
-    print("EXAMPLE 6: Non-recognizable language (infinite residuals)")
-    print("L(w) = |w|²")
-    print("=" * 70)
-
-    alphabet = ['a']
-
-    def L(w: List[str]) -> float:
-        return len(w) ** 2
-
-    # Show that residuals keep growing
-    print("\nResiduals at different prefixes (evaluated at suffix 'a'):")
-    for n in range(8):
-        prefix = ['a'] * n
-        suffix = ['a']
-        val = L(prefix + suffix)
-        print(f"  Residual({'a'*n if n else 'ε'})(a) = L({'a'*(n+1)}) = {val}")
-
-    print("\nAll residuals are distinct → infinite Nerode index")
-    print("→ NOT tropically recognizable (by contrapositive of Myhill–Nerode).")
-
-    # Verify distinctness
-    residuals_at_a = [L(['a'] * n + ['a']) for n in range(8)]
-    all_distinct = len(set(residuals_at_a)) == len(residuals_at_a)
-    print(f"\nAll residual values at 'a' distinct? {all_distinct}")
+    correct = nerode_dfa.recognizes(dfa_language, test_words)
+    print(f"  Correctness verified: {correct}")
 
 
 if __name__ == '__main__':
-    example_shortest_path_language()
-    example_min_distance_language()
-    example_edit_distance_prefix()
-    example_minimality_demonstration()
-    example_syntactic_monoid()
-    example_non_recognizable()
+    demonstrate_example_1()
+    demonstrate_example_2()
+    demonstrate_example_3()
+    demonstrate_minimality()
+    print("\n" + "=" * 70)
+    print("All demonstrations completed successfully.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Tropical Myhill–Nerode: Visualizations
+Visualizations for the Tropical Myhill–Nerode Theorem.
 
-Generate publication-quality figures illustrating the theorem.
+Generates publication-quality figures illustrating:
+1. Nerode equivalence classes as a partition of the word space
+2. Residual function landscapes
+3. Minimality comparison between automata
+4. Syntactic monoid structure
 """
 
 import matplotlib
@@ -456,216 +664,342 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
+from collections import defaultdict
 import base64
 import io
-from algorithms import NerodeAutomaton, generate_words
+
+# Import our algorithms
+from algorithms import (enumerate_words, discover_nerode_classes,
+                          compute_residual, TropicalDFA,
+                          compute_syntactic_monoid, minimize_automaton)
+
 
 def fig_to_base64(fig) -> str:
     """Convert matplotlib figure to base64 PNG data URI."""
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
     encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
     return f"data:image/png;base64,{encoded}"
 
 
-def viz_residual_classes():
-    """Visualize residual equivalence classes for L(w) = min(|w|, 3)."""
-    alphabet = ['a', 'b']
-    L = lambda w: min(len(w), 3)
+# ===========================================================================
+# Figure 1: Nerode Equivalence Classes
+# ===========================================================================
 
-    nerode = NerodeAutomaton(L, alphabet, max_word_len=5, probe_len=4)
-    classes = nerode.get_classes()
+def visualize_nerode_classes():
+    """Visualize Nerode equivalence classes as colored word partitions."""
 
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    def parity_cost(w):
+        return sum(1 for c in w if c == 'a') % 2
 
-    colors = plt.cm.Set2(np.linspace(0, 1, len(classes)))
-    y_positions = []
-    labels = []
+    classes = discover_nerode_classes(parity_cost, ['a', 'b'], 3, 3)
 
-    for i, (rep, members) in enumerate(sorted(classes.items(),
-                                                key=lambda x: len(x[0]))):
-        y = -i * 1.5
-        y_positions.append(y)
-        labels.append(f"State {i}\n(rep: {rep})")
+    fig, ax = plt.subplots(1, 1, figsize=(12, 6))
 
-        # Draw members as dots
-        for j, m in enumerate(members[:12]):
-            x = j * 0.8
-            circle = plt.Circle((x, y), 0.3, color=colors[i], alpha=0.7)
-            ax.add_patch(circle)
-            ax.text(x, y, m, ha='center', va='center', fontsize=7, fontweight='bold')
+    # Sort classes by their representative's cost
+    sorted_classes = sorted(classes.items(),
+                             key=lambda x: parity_cost(x[1][0]))
 
-        if len(members) > 12:
-            ax.text(12 * 0.8, y, '...', ha='center', va='center', fontsize=12)
+    colors = plt.cm.Set2(np.linspace(0, 1, len(sorted_classes)))
 
-    ax.set_xlim(-1, 11)
-    ax.set_ylim(min(y_positions) - 1, 1.5)
-    ax.set_yticks(y_positions)
-    ax.set_yticklabels(labels, fontsize=10)
-    ax.set_xlabel('Words in each equivalence class', fontsize=12)
-    ax.set_title('Tropical Nerode Equivalence Classes\nL(w) = min(|w|, 3)',
+    y_offset = 0
+    legend_patches = []
+    for i, (sig, members) in enumerate(sorted_classes):
+        # Show first few members
+        display_members = sorted(members, key=len)[:8]
+        for j, word in enumerate(display_members):
+            word_str = ''.join(word) if word else 'ε'
+            ax.text(j * 1.5 + 0.5, -y_offset, word_str,
+                    ha='center', va='center', fontsize=10,
+                    bbox=dict(boxstyle='round,pad=0.3',
+                             facecolor=colors[i], alpha=0.7))
+
+        cost = parity_cost(members[0])
+        label = f"Class {i}: L(rep) = {cost}"
+        if len(members) > 8:
+            label += f" ({len(members)} words)"
+        legend_patches.append(mpatches.Patch(color=colors[i], label=label))
+        y_offset += 1.2
+
+    ax.set_xlim(-0.5, 12)
+    ax.set_ylim(-y_offset, 1)
+    ax.set_title('Nerode Equivalence Classes\n(Parity Cost Language)',
                  fontsize=14, fontweight='bold')
-    ax.set_xticks([])
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
-
-    fig.tight_layout()
-    fig.savefig('viz_residual_classes.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def viz_minimality_comparison():
-    """Compare state counts: original vs Nerode-minimal automaton."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Different languages with known minimal state counts
-    languages = {
-        'min(|w|, 1)': (lambda w: min(len(w), 1), 2),
-        'min(|w|, 2)': (lambda w: min(len(w), 2), 3),
-        'min(|w|, 3)': (lambda w: min(len(w), 3), 4),
-        'min(|w|, 4)': (lambda w: min(len(w), 4), 5),
-        'min(|w|, 5)': (lambda w: min(len(w), 5), 6),
-    }
-
-    alphabet = ['a', 'b']
-    names = list(languages.keys())
-    nerode_counts = []
-    expected_counts = []
-
-    for name, (L, expected) in languages.items():
-        nerode = NerodeAutomaton(L, alphabet, max_word_len=8, probe_len=6)
-        nerode_counts.append(nerode.num_states())
-        expected_counts.append(expected)
-
-    x = np.arange(len(names))
-    width = 0.35
-
-    axes[0].bar(x - width/2, expected_counts, width, label='Expected minimum',
-                color='steelblue', alpha=0.8)
-    axes[0].bar(x + width/2, nerode_counts, width, label='Nerode automaton',
-                color='coral', alpha=0.8)
-    axes[0].set_xlabel('Language', fontsize=11)
-    axes[0].set_ylabel('Number of States', fontsize=11)
-    axes[0].set_title('Minimality: Nerode vs Expected', fontsize=13, fontweight='bold')
-    axes[0].set_xticks(x)
-    axes[0].set_xticklabels(names, fontsize=9, rotation=15)
-    axes[0].legend()
-
-    # Syntactic monoid sizes
-    monoid_sizes = []
-    for name, (L, _) in languages.items():
-        nerode = NerodeAutomaton(L, alphabet, max_word_len=6, probe_len=5)
-        monoid = nerode.compute_syntactic_monoid(max_word_len=5)
-        monoid_sizes.append(len(monoid))
-
-    axes[1].bar(names, monoid_sizes, color='seagreen', alpha=0.8)
-    axes[1].set_xlabel('Language', fontsize=11)
-    axes[1].set_ylabel('Monoid Size', fontsize=11)
-    axes[1].set_title('Syntactic Monoid Size', fontsize=13, fontweight='bold')
-    axes[1].set_xticklabels(names, fontsize=9, rotation=15)
-
-    fig.tight_layout()
-    fig.savefig('viz_minimality.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def viz_residual_convergence():
-    """Show how the number of discovered residuals converges with exploration depth."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    alphabet = ['a', 'b']
-    languages = {
-        'min(|w|, 2)': lambda w: min(len(w), 2),
-        'min(|w|, 4)': lambda w: min(len(w), 4),
-        '#a mod 3': lambda w: sum(1 for c in w if c == 'a') % 3,
-        'transitions': lambda w: sum(1 for i in range(len(w)-1) if w[i] != w[i+1]) if len(w) > 1 else 0,
-    }
-
-    colors = ['steelblue', 'coral', 'seagreen', 'purple']
-
-    for (name, L), color in zip(languages.items(), colors):
-        depths = range(1, 9)
-        counts = []
-        for depth in depths:
-            nerode = NerodeAutomaton(L, alphabet, max_word_len=depth, probe_len=depth)
-            counts.append(nerode.num_states())
-        ax.plot(list(depths), counts, 'o-', color=color, label=name,
-                linewidth=2, markersize=8)
-
-    ax.set_xlabel('Exploration Depth (max word length)', fontsize=12)
-    ax.set_ylabel('Distinct Residuals Found', fontsize=12)
-    ax.set_title('Residual Discovery vs Exploration Depth\n'
-                 '(Convergence = finite Nerode index = recognizable)',
-                 fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_xticks(range(1, 9))
-
-    fig.tight_layout()
-    fig.savefig('viz_convergence.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def viz_automaton_diagram():
-    """Draw a state diagram of the Nerode automaton for L(w) = min(|w|, 3)."""
-    fig, ax = plt.subplots(figsize=(10, 4))
-
-    # States for min(|w|, 3): 4 states
-    states = [(1.5, 2), (4, 2), (6.5, 2), (9, 2)]
-    labels = ['q₀\n(cost 0)', 'q₁\n(cost 1)', 'q₂\n(cost 2)', 'q₃\n(cost 3)']
-
-    for (x, y), label in zip(states, labels):
-        circle = plt.Circle((x, y), 0.6, fill=False, linewidth=2, color='steelblue')
-        ax.add_patch(circle)
-        ax.text(x, y, label, ha='center', va='center', fontsize=10, fontweight='bold')
-
-    # Transitions
-    for i in range(3):
-        x1, y1 = states[i]
-        x2, y2 = states[i+1]
-        ax.annotate('', xy=(x2-0.6, y2), xytext=(x1+0.6, y1),
-                    arrowprops=dict(arrowstyle='->', color='black', lw=1.5))
-        ax.text((x1+x2)/2, y2+0.5, 'a, b', ha='center', fontsize=10)
-
-    # Self-loop on q3
-    x3, y3 = states[3]
-    arc = mpatches.FancyArrowPatch((x3+0.4, y3+0.5), (x3-0.4, y3+0.5),
-                                     connectionstyle="arc3,rad=-0.8",
-                                     arrowstyle='->', mutation_scale=15,
-                                     color='black', linewidth=1.5)
-    ax.add_patch(arc)
-    ax.text(x3, y3+1.5, 'a, b', ha='center', fontsize=10)
-
-    # Initial arrow
-    ax.annotate('', xy=(states[0][0]-0.6, states[0][1]),
-                xytext=(states[0][0]-1.5, states[0][1]),
-                arrowprops=dict(arrowstyle='->', color='black', lw=1.5))
-    ax.text(states[0][0]-1.8, states[0][1], 'start', ha='right', fontsize=10)
-
-    ax.set_xlim(-0.5, 10.5)
-    ax.set_ylim(0, 4)
-    ax.set_aspect('equal')
+    ax.legend(handles=legend_patches, loc='upper right', fontsize=9)
     ax.axis('off')
-    ax.set_title('Nerode Automaton for L(w) = min(|w|, 3)\n'
-                 '(Minimal: 4 states, any recognizing automaton needs ≥ 4)',
+
+    return fig
+
+
+# ===========================================================================
+# Figure 2: Residual Function Landscape
+# ===========================================================================
+
+def visualize_residual_landscape():
+    """Visualize how residuals change as we extend prefixes."""
+
+    def step_cost(w):
+        """Cost = sum of position-weighted symbols."""
+        return sum((i + 1) * (1 if c == 'a' else 2) for i, c in enumerate(w))
+
+    alphabet = ['a', 'b']
+    suffixes = enumerate_words(alphabet, 3)
+    suffix_labels = [''.join(s) if s else 'ε' for s in suffixes[:16]]
+
+    prefixes = [(), ('a',), ('b',), ('a', 'a'), ('a', 'b'),
+                ('b', 'a'), ('b', 'b')]
+    prefix_labels = [''.join(p) if p else 'ε' for p in prefixes]
+
+    # Build residual matrix
+    matrix = np.zeros((len(prefixes), len(suffixes[:16])))
+    for i, p in enumerate(prefixes):
+        for j, s in enumerate(suffixes[:16]):
+            val = step_cost(p + s)
+            matrix[i, j] = val if val is not None else -1
+
+    fig, ax = plt.subplots(1, 1, figsize=(14, 6))
+    im = ax.imshow(matrix, cmap='YlOrRd', aspect='auto')
+
+    ax.set_xticks(range(len(suffix_labels)))
+    ax.set_xticklabels(suffix_labels, rotation=45, ha='right', fontsize=8)
+    ax.set_yticks(range(len(prefix_labels)))
+    ax.set_yticklabels(prefix_labels, fontsize=10)
+
+    ax.set_xlabel('Suffix v', fontsize=12)
+    ax.set_ylabel('Prefix u', fontsize=12)
+    ax.set_title('Residual Functions: L(u·v) for each prefix u\n'
+                 'Each row is a residual; identical rows ↔ Nerode equivalence',
                  fontsize=13, fontweight='bold')
 
-    fig.tight_layout()
-    fig.savefig('viz_automaton.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+    cbar = plt.colorbar(im, ax=ax, shrink=0.8)
+    cbar.set_label('Cost L(u·v)', fontsize=11)
+
+    # Add cell values
+    for i in range(len(prefixes)):
+        for j in range(len(suffix_labels)):
+            val = int(matrix[i, j])
+            ax.text(j, i, str(val), ha='center', va='center',
+                    fontsize=7, color='black' if val < matrix.max() * 0.7 else 'white')
+
+    return fig
+
+
+# ===========================================================================
+# Figure 3: Minimality Theorem Visualization
+# ===========================================================================
+
+def visualize_minimality():
+    """Visualize the minimality theorem: Nerode automaton ≤ any recognizer."""
+
+    # Create several automata of different sizes for the same language
+    # Language: parity of number of a's (0 or 1)
+
+    # Minimal: 2 states
+    minimal = TropicalDFA(
+        states=['even', 'odd'],
+        alphabet=['a', 'b'],
+        delta={('even', 'a'): 'odd', ('even', 'b'): 'even',
+               ('odd', 'a'): 'even', ('odd', 'b'): 'odd'},
+        initial='even',
+        output={'even': 0, 'odd': 1}
+    )
+
+    # Redundant: 4 states (2 copies)
+    redundant4 = TropicalDFA(
+        states=['e0', 'o0', 'e1', 'o1'],
+        alphabet=['a', 'b'],
+        delta={('e0', 'a'): 'o0', ('e0', 'b'): 'e1',
+               ('o0', 'a'): 'e0', ('o0', 'b'): 'o1',
+               ('e1', 'a'): 'o1', ('e1', 'b'): 'e0',
+               ('o1', 'a'): 'e1', ('o1', 'b'): 'o0'},
+        initial='e0',
+        output={'e0': 0, 'o0': 1, 'e1': 0, 'o1': 1}
+    )
+
+    # Minimize the redundant one
+    minimized = minimize_automaton(redundant4)
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    automata = [
+        (minimal, "Nerode Automaton\n(2 states — minimal)"),
+        (redundant4, "Redundant Automaton\n(4 states)"),
+        (minimized, "After Minimization\n(2 states)")
+    ]
+
+    for ax, (dfa, title) in zip(axes, automata):
+        n = len(dfa.states)
+        theta = np.linspace(0, 2 * np.pi, n, endpoint=False)
+        x = np.cos(theta) * 0.6
+        y = np.sin(theta) * 0.6
+
+        for i, state in enumerate(dfa.states):
+            color = '#4CAF50' if dfa.output.get(state, None) == 0 else '#FF5722'
+            circle = plt.Circle((x[i], y[i]), 0.15, color=color,
+                                alpha=0.7, ec='black', lw=2)
+            ax.add_patch(circle)
+
+            label = str(state)[:6]
+            ax.text(x[i], y[i], label, ha='center', va='center',
+                    fontsize=8, fontweight='bold')
+
+            if state == dfa.initial:
+                ax.annotate('', xy=(x[i] - 0.15, y[i]),
+                           xytext=(x[i] - 0.35, y[i]),
+                           arrowprops=dict(arrowstyle='->', lw=2))
+
+        ax.set_xlim(-1, 1)
+        ax.set_ylim(-1, 1)
+        ax.set_aspect('equal')
+        ax.set_title(title, fontsize=11, fontweight='bold')
+        ax.axis('off')
+
+        # Add state count
+        ax.text(0, -0.9, f"|Q| = {n}", ha='center', fontsize=14,
+                fontweight='bold',
+                bbox=dict(boxstyle='round', facecolor='lightyellow'))
+
+    fig.suptitle('Minimality Theorem: |Nerode classes| ≤ |states| for any recognizer',
+                 fontsize=14, fontweight='bold', y=1.02)
+
+    return fig
+
+
+# ===========================================================================
+# Figure 4: Syntactic Monoid Structure
+# ===========================================================================
+
+def visualize_syntactic_monoid():
+    """Visualize the syntactic transformation monoid."""
+
+    dfa = TropicalDFA(
+        states=['q0', 'q1', 'q2'],
+        alphabet=['a', 'b'],
+        delta={
+            ('q0', 'a'): 'q1', ('q0', 'b'): 'q0',
+            ('q1', 'a'): 'q2', ('q1', 'b'): 'q1',
+            ('q2', 'a'): 'q0', ('q2', 'b'): 'q2',
+        },
+        initial='q0',
+        output={'q0': 0, 'q1': 1, 'q2': 2}
+    )
+
+    monoid = compute_syntactic_monoid(dfa, max_word_len=5)
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: Show transformations as permutation matrices
+    ax1 = axes[0]
+    transforms = list(monoid.keys())[:9]
+    words = [monoid[t] for t in transforms]
+
+    n_show = min(len(transforms), 9)
+    cell_size = 1.0
+
+    for idx in range(n_show):
+        row, col = divmod(idx, 3)
+        transform = transforms[idx]
+        word = words[idx]
+        word_str = ''.join(word) if word else 'ε'
+
+        x_offset = col * 4
+        y_offset = -row * 4
+
+        ax1.text(x_offset + 1.5, y_offset + 1, word_str,
+                ha='center', fontsize=9, fontweight='bold')
+
+        for i, (src, dst) in enumerate(zip(dfa.states, transform)):
+            color = '#2196F3' if src == dst else '#FF9800'
+            ax1.add_patch(plt.Rectangle(
+                (x_offset + i * cell_size, y_offset - 1),
+                cell_size, cell_size, facecolor=color, alpha=0.5,
+                edgecolor='black'))
+            ax1.text(x_offset + i * cell_size + 0.5,
+                    y_offset - 0.5, f"{src}→{dst}",
+                    ha='center', va='center', fontsize=7)
+
+    ax1.set_xlim(-0.5, 12.5)
+    ax1.set_ylim(-12, 2)
+    ax1.set_title(f'Syntactic Monoid Elements\n({len(monoid)} transformations)',
+                  fontsize=12, fontweight='bold')
+    ax1.axis('off')
+
+    # Right: Idempotence check
+    ax2 = axes[1]
+    idempotent_count = 0
+    non_idempotent_count = 0
+
+    for transform, word in monoid.items():
+        # Check f∘f = f
+        composed = tuple(dfa.run(dfa.run(q, word), word) for q in dfa.states)
+        is_idemp = (composed == transform)
+        if is_idemp:
+            idempotent_count += 1
+        else:
+            non_idempotent_count += 1
+
+    labels = ['Idempotent\n(f∘f = f)', 'Non-idempotent\n(f∘f ≠ f)']
+    sizes = [idempotent_count, non_idempotent_count]
+    colors = ['#4CAF50', '#FF5722']
+    explode = (0.05, 0.05)
+
+    if all(s > 0 for s in sizes):
+        ax2.pie(sizes, explode=explode, labels=labels, colors=colors,
+                autopct='%1.0f%%', shadow=True, startangle=90,
+                textprops={'fontsize': 11})
+    else:
+        ax2.bar(labels, sizes, color=colors)
+
+    ax2.set_title('Idempotence in Syntactic Monoid\n'
+                  '(Not all elements are idempotent!)',
+                  fontsize=12, fontweight='bold')
+
+    fig.suptitle('Tropical Syntactic Transformation Monoid',
+                 fontsize=14, fontweight='bold')
+
+    return fig
+
+
+# ===========================================================================
+# Generate all figures
+# ===========================================================================
+
+def generate_all_figures():
+    """Generate all visualization figures and save them."""
+    print("Generating visualizations...")
+
+    fig1 = visualize_nerode_classes()
+    fig1.savefig('nerode_classes.png', dpi=150, bbox_inches='tight',
+                 facecolor='white')
+    print("  ✓ nerode_classes.png")
+
+    fig2 = visualize_residual_landscape()
+    fig2.savefig('residual_landscape.png', dpi=150, bbox_inches='tight',
+                 facecolor='white')
+    print("  ✓ residual_landscape.png")
+
+    fig3 = visualize_minimality()
+    fig3.savefig('minimality_theorem.png', dpi=150, bbox_inches='tight',
+                 facecolor='white')
+    print("  ✓ minimality_theorem.png")
+
+    fig4 = visualize_syntactic_monoid()
+    fig4.savefig('syntactic_monoid.png', dpi=150, bbox_inches='tight',
+                 facecolor='white')
+    print("  ✓ syntactic_monoid.png")
+
+    # Return base64 versions for JSON package
+    return {
+        'nerode_classes': fig_to_base64(visualize_nerode_classes()),
+        'residual_landscape': fig_to_base64(visualize_residual_landscape()),
+        'minimality_theorem': fig_to_base64(visualize_minimality()),
+        'syntactic_monoid': fig_to_base64(visualize_syntactic_monoid()),
+    }
 
 
 if __name__ == '__main__':
-    print("Generating visualizations...")
-    b1 = viz_residual_classes()
-    print(f"  Residual classes: {len(b1)} chars")
-    b2 = viz_minimality_comparison()
-    print(f"  Minimality comparison: {len(b2)} chars")
-    b3 = viz_residual_convergence()
-    print(f"  Convergence: {len(b3)} chars")
-    b4 = viz_automaton_diagram()
-    print(f"  Automaton diagram: {len(b4)} chars")
-    print("Done! Saved PNG files.")
+    generate_all_figures()
+    print("\nAll visualizations generated successfully.")
