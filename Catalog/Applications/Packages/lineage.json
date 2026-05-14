@@ -7,7 +7,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T01:50:13Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T01:57:43Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -34,7 +34,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T02:13:58Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:16:39Z",
-      "hue": 270
+      "hue": 281
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T02:16:56Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -61,7 +61,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T02:24:17Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "collatz_convergence_via_tropical_contracting_dynam",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T02:29:12Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -79,7 +79,16 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T03:01:11Z",
-      "hue": 91
+      "hue": 95
+    },
+    {
+      "id": "quantum_pythagorean_teleportation_berggren_orbits_",
+      "title": "Berggren Orbits as Integral Lorentz Symmetries: Quadratic Form Invariance and Parity Shadows",
+      "domain": "Number Theory / Arithmetic Dynamics / Quantum Information",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-14T03:01:28Z",
+      "hue": 270
     }
   ],
   "edges": []
