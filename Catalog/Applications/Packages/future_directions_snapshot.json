@@ -57,10 +57,10 @@
       "Algebra"
     ],
     "priority_score": 0.97,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9a02d374",
     "timestamp": "2026-05-14T04:01:04.739427+00:00"
   },
   {
@@ -105,10 +105,10 @@
       "Computation"
     ],
     "priority_score": 0.96,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c00f2e17",
     "timestamp": "2026-05-14T04:01:04.741905+00:00"
   },
   {
@@ -201,10 +201,10 @@
       "Tropical"
     ],
     "priority_score": 0.94,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c496e6bd",
     "timestamp": "2026-05-14T04:01:04.702926+00:00"
   },
   {
@@ -217,10 +217,10 @@
       "Computation"
     ],
     "priority_score": 0.94,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e81db005",
     "timestamp": "2026-05-14T04:01:04.749221+00:00"
   },
   {
@@ -297,10 +297,10 @@
       "Speculative"
     ],
     "priority_score": 0.92,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7573b738",
     "timestamp": "2026-05-14T04:01:04.725860+00:00"
   },
   {
@@ -841,10 +841,10 @@
       "Computation"
     ],
     "priority_score": 0.82,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f93fa6a",
     "timestamp": "2026-05-14T04:01:04.711849+00:00"
   },
   {
@@ -1001,10 +1001,10 @@
       "Algebra"
     ],
     "priority_score": 0.77,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "489c9113",
     "timestamp": "2026-05-14T04:01:04.701825+00:00"
   },
   {
