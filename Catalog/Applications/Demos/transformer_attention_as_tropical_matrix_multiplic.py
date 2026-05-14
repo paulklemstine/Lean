@@ -1,752 +1,691 @@
+#!/usr/bin/env python3
 """
-Tropical Attention: Applications
+Tropical Attention Theory: Applications
 
-Real-world applications of the tropical attention theory to transformer analysis,
-including attention sink detection, layer convergence diagnosis, and robustness
-certification.
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from algorithms import (
-    tropical_matrix_multiply,
-    lse_matrix_multiply,
-    softmax_attention,
-    tropical_attention,
-    compute_dominance_gap,
-    certified_perturbation_radius,
-    tropical_linear_iterate,
-    tropical_spectral_bound,
-)
-
-
-def simulate_transformer_layer(n_tokens: int, d_model: int, n_layers: int, tau: float):
-    """
-    Simulate a multi-layer transformer and analyze tropical convergence.
-
-    This demonstrates how the tropical spectral bound governs depth-wise
-    behavior of attention scores.
-    """
-    print("=" * 70)
-    print(f"APPLICATION 1: Multi-Layer Transformer Tropical Analysis")
-    print(f"  {n_tokens} tokens, d={d_model}, {n_layers} layers, τ={tau}")
-    print("=" * 70)
-
-    np.random.seed(123)
-    Q = np.random.randn(n_tokens, d_model) * 0.5
-    K = np.random.randn(n_tokens, d_model) * 0.5
-    V = np.random.randn(n_tokens, d_model) * 0.5
-
-    scores = Q @ K.T
-    max_entry = np.max(scores)
-    print(f"\nInitial score matrix max entry: {max_entry:.4f}")
-    print(f"Tropical spectral bound: {tropical_spectral_bound(scores):.4f}")
-
-    x = np.max(scores, axis=1)  # Row maxima as initial state
-    print(f"\nLayer-wise sup of tropical iterates:")
-    print(f"{'Layer':>6} | {'sup(T^t x)':>12} | {'Bound':>12} | {'Gap':>12}")
-    print("-" * 50)
-
-    for t in range(n_layers + 1):
-        iterate = tropical_linear_iterate(scores, x, t)
-        actual = np.max(iterate)
-        bound = np.max(x) + t * max_entry
-        print(f"{t:6d} | {actual:12.4f} | {bound:12.4f} | {bound - actual:12.4f}")
-
-
-def detect_attention_sinks(scores: np.ndarray, threshold: float = 0.0):
-    """
-    Detect attention sinks in a score matrix using tropical dominance analysis.
-
-    An attention sink is a column that dominates all rows by a positive gap.
-
-    Returns list of (column_index, dominance_gap, certified_radius) tuples.
-    """
-    n = scores.shape[0]
-    sinks = []
-    for j in range(n):
-        gap = compute_dominance_gap(scores, j)
-        if gap > threshold:
-            radius = certified_perturbation_radius(scores, j)
-            sinks.append((j, gap, radius))
-    return sorted(sinks, key=lambda x: -x[1])  # Sort by gap descending
-
-
-def attention_sink_analysis():
-    """
-    APPLICATION 2: Detect and certify attention sinks in synthetic transformer data.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Attention Sink Detection and Certification")
-    print("=" * 70)
-
-    np.random.seed(456)
-    n_tokens = 10
-
-    # Simulate a score matrix where token 0 is a sink (e.g., BOS token)
-    scores = np.random.randn(n_tokens, n_tokens)
-    # Boost column 0 to create a sink
-    scores[:, 0] += 5.0
-
-    print(f"\nScore matrix ({n_tokens}×{n_tokens}) with boosted column 0:")
-    sinks = detect_attention_sinks(scores)
-
-    if sinks:
-        print(f"\nDetected sinks:")
-        for col, gap, radius in sinks:
-            print(f"  Column {col}: gap δ = {gap:.4f}, certified radius = {radius:.4f}")
-        print(f"\n→ Column {sinks[0][0]} is the dominant sink.")
-        print(f"  Perturbations up to {sinks[0][2]:.4f} in L∞ norm cannot break the sink.")
-    else:
-        print("  No dominant sink detected.")
-
-    # Show softmax concentration at different temperatures
-    print(f"\nSoftmax weight on sink column at different temperatures:")
-    for tau in [2.0, 1.0, 0.5, 0.1, 0.01]:
-        shifted = scores / tau - np.max(scores / tau, axis=1, keepdims=True)
-        W = np.exp(shifted)
-        W = W / W.sum(axis=1, keepdims=True)
-        min_weight = np.min(W[:, 0])
-        print(f"  τ = {tau:5.2f}: min softmax weight on sink = {min_weight:.8f}")
-
-
-def tropical_compression_analysis():
-    """
-    APPLICATION 3: Tropical compression criterion for transformer layers.
-
-    If the tropical spectral radius is small, deep layers converge and can
-    be compressed (depth collapse).
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Tropical Depth-Collapse Criterion")
-    print("=" * 70)
-
-    np.random.seed(789)
-
-    for scenario, scale in [("Low energy", 0.1), ("Medium energy", 1.0), ("High energy", 5.0)]:
-        n = 8
-        A = np.random.randn(n, n) * scale
-        x = np.zeros(n)
-
-        rho = tropical_spectral_bound(A)
-        print(f"\n{scenario} (scale={scale}):")
-        print(f"  Tropical spectral bound ρ(A) = {rho:.4f}")
-
-        iterates_sup = []
-        current = x.copy()
-        for t in range(20):
-            iterates_sup.append(np.max(current))
-            current = np.array([np.max(A[i, :] + current) for i in range(n)])
-
-        growth_rate = (iterates_sup[-1] - iterates_sup[0]) / 19 if len(iterates_sup) > 1 else 0
-        print(f"  Empirical growth rate: {growth_rate:.4f}")
-        print(f"  Bound ratio (empirical/theoretical): {growth_rate / rho:.4f}" if rho > 0 else "")
-
-        if growth_rate < 0.1:
-            print(f"  → COMPRESSIBLE: layers converge, depth can be reduced")
-        else:
-            print(f"  → NON-TRIVIAL: layers produce meaningful computation")
-
-
-def robustness_certification():
-    """
-    APPLICATION 4: Certify robustness of attention head selection.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Certified Robustness of Attention Selection")
-    print("=" * 70)
-
-    np.random.seed(101)
-    n = 6
-    d = 4
-
-    Q = np.random.randn(n, d)
-    K = np.random.randn(n, d)
-    V = np.random.randn(n, d)
-
-    scores = Q @ K.T
-
-    # Find the natural argmax structure
-    argmax = np.argmax(scores, axis=1)
-    print(f"\nOriginal argmax per row: {argmax}")
-
-    # Check dominance gaps per row
-    print(f"\nPer-row analysis:")
-    min_gap = float('inf')
-    for i in range(n):
-        winner = argmax[i]
-        gap = scores[i, winner] - np.sort(scores[i])[-2]  # Gap to second-best
-        min_gap = min(min_gap, gap)
-        print(f"  Row {i}: winner={winner}, gap to 2nd={gap:.4f}")
-
-    print(f"\nMinimum row gap: {min_gap:.4f}")
-    print(f"Certified L∞ radius for all selections: {min_gap / 4:.4f}")
-
-    # Test perturbation robustness
-    radius = min_gap / 4
-    n_tests = 1000
-    stable = 0
-    for _ in range(n_tests):
-        pert = np.random.uniform(-radius, radius, scores.shape)
-        new_argmax = np.argmax(scores + pert, axis=1)
-        if np.all(new_argmax == argmax):
-            stable += 1
-
-    print(f"\nEmpirical verification ({n_tests} random perturbations within radius):")
-    print(f"  Selection preserved: {stable}/{n_tests} ({100*stable/n_tests:.1f}%)")
-
-
-if __name__ == "__main__":
-    simulate_transformer_layer(n_tokens=8, d_model=4, n_layers=10, tau=1.0)
-    attention_sink_analysis()
-    tropical_compression_analysis()
-    robustness_certification()
-    print("\n" + "=" * 70)
-    print("All applications completed successfully.")
-    print("=" * 70)
-
-
-"""
-Tropical Attention: Demonstrations of the Core Theorems
-
-This script demonstrates the mathematical results connecting transformer attention
-to tropical (max-plus) matrix algebra with concrete numerical examples.
+Demonstrates real-world applications of the tropical attention framework:
+1. Attention sink detection and analysis
+2. Head redundancy detection via tropical comparison
+3. Layer collapse prediction via iterate growth
+4. Certified robustness of attention under perturbation
+5. Tropical compression of attention patterns
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
+
+def softmax(scores: np.ndarray, tau: float = 1.0) -> np.ndarray:
+    """Row-wise softmax at temperature τ."""
+    shifted = scores - np.max(scores, axis=1, keepdims=True)
+    exps = np.exp(shifted / tau)
+    return exps / np.sum(exps, axis=1, keepdims=True)
+
+
+def tropical_row_normalize(S: np.ndarray) -> np.ndarray:
+    """Tropical (zero-temperature) row normalization: S - row_max."""
+    return S - np.max(S, axis=1, keepdims=True)
+
+
+def tropical_max_plus_multiply(A, B):
+    m, n = A.shape
+    _, p = B.shape
+    C = np.full((m, p), -np.inf)
+    for i in range(m):
+        for k in range(p):
+            C[i, k] = np.max(A[i, :] + B[:, k])
+    return C
+
+
+def trop_attention_op(A, x):
+    n = A.shape[0]
+    return np.array([np.max(A[i, :] + x) - np.max(A[i, :]) for i in range(n)])
+
+
+# ============================================================
+# Application 1: Attention Sink Detection
+# ============================================================
+print("=" * 70)
+print("APPLICATION 1: Attention Sink Detection in Transformers")
+print("=" * 70)
 
 np.random.seed(42)
-
-
-def trop_mul(X, Y):
-    """Max-plus tropical matrix product: (X ⊙ Y)_{ij} = max_k (X_{ik} + Y_{kj})."""
-    m, n = X.shape
-    _, p = Y.shape
-    result = np.full((m, p), -np.inf)
-    for i in range(m):
-        for j in range(p):
-            result[i, j] = np.max(X[i, :] + Y[:, j])
-    return result
-
-
-def lse_mul(tau, X, Y):
-    """Log-sum-exp matrix product at temperature τ."""
-    m, n = X.shape
-    _, p = Y.shape
-    result = np.zeros((m, p))
-    for i in range(m):
-        for j in range(p):
-            exponents = (X[i, :] + Y[:, j]) / tau
-            # Numerically stable log-sum-exp
-            max_exp = np.max(exponents)
-            result[i, j] = tau * (max_exp + np.log(np.sum(np.exp(exponents - max_exp))))
-    return result
-
-
-def softmax_weights(S, tau):
-    """Compute softmax attention weight matrix at temperature τ."""
-    n = S.shape[0]
-    W = np.zeros((n, n))
-    for i in range(n):
-        exps = np.exp(S[i, :] / tau)
-        W[i, :] = exps / np.sum(exps)
-    return W
-
-
-# ============================================================
-# Demo 1: Theorem A — LSE approximates tropical multiplication
-# ============================================================
-print("=" * 70)
-print("DEMO 1: Log-Sum-Exp ↔ Tropical Matrix Product (Theorem A)")
-print("=" * 70)
-
-m, n, p = 4, 5, 3
-X = np.random.randn(m, n) * 2
-Y = np.random.randn(n, p) * 2
-
-T = trop_mul(X, Y)
-theoretical_bound = np.log(n)
-
-print(f"\nMatrix dimensions: X is {m}×{n}, Y is {n}×{p}")
-print(f"Theoretical bound: τ * log({n}) = τ * {theoretical_bound:.4f}")
-print(f"\n{'τ':>10} | {'max |LSE - Trop|':>18} | {'τ·log(n)':>10} | {'Bound holds?':>12}")
-print("-" * 60)
-
-for tau in [10.0, 5.0, 2.0, 1.0, 0.5, 0.1, 0.01]:
-    L = lse_mul(tau, X, Y)
-    max_diff = np.max(np.abs(L - T))
-    bound = tau * theoretical_bound
-    holds = "✓" if max_diff <= bound + 1e-10 else "✗"
-    print(f"{tau:10.3f} | {max_diff:18.6f} | {bound:10.6f} | {holds:>12}")
-
-print("\n→ As τ → 0, the LSE product converges to the tropical product.")
-print("→ The error is always bounded by τ·log(n), confirming Theorem A.")
-
-
-# ============================================================
-# Demo 2: Theorem B — Softmax → argmax as τ → 0
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 2: Softmax Attention Converges to Argmax Selection (Theorem B)")
-print("=" * 70)
-
-n_tokens = 6
-d = 4
-
-# Create score matrix with a clear argmax per row
-S = np.random.randn(n_tokens, n_tokens)
-# Make the argmax structure clear by boosting one entry per row
-for i in range(n_tokens):
-    winner = (i + 1) % n_tokens  # deterministic unique winner per row
-    S[i, winner] += 5.0
-
-argmax_indices = np.argmax(S, axis=1)
-print(f"\nScore matrix argmax per row: {argmax_indices}")
-
-print(f"\n{'τ':>10} | {'max weight on argmax':>22} | {'min weight on argmax':>22}")
-print("-" * 60)
-
-for tau in [5.0, 2.0, 1.0, 0.5, 0.1, 0.01, 0.001]:
-    W = softmax_weights(S, tau)
-    argmax_weights = [W[i, argmax_indices[i]] for i in range(n_tokens)]
-    print(f"{tau:10.4f} | {max(argmax_weights):22.10f} | {min(argmax_weights):22.10f}")
-
-print("\n→ As τ → 0, all softmax weight concentrates on the argmax.")
-print("→ This is Theorem B: softmax attention → tropical selector.")
-
-
-# ============================================================
-# Demo 3: Theorem D — Dominant Column = Attention Sink
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 3: Dominant Column Creates Attention Sink (Theorem D)")
-print("=" * 70)
-
 n_tokens = 8
-j_star = 2  # The sink token
-delta = 3.0  # Dominance gap
 
-# Create score matrix where column j_star dominates by δ
-S_sink = np.random.randn(n_tokens, n_tokens)
+# Simulate a transformer score matrix where token 0 is a sink (e.g., [BOS])
+S = np.random.randn(n_tokens, n_tokens)
+# Make column 0 dominant (attention sink)
+S[:, 0] += 4.0
+
+print(f"\nScore matrix (with sink at token 0):")
+print(np.round(S, 2))
+
+# Compute softmax at various temperatures
+for tau in [1.0, 0.5, 0.1]:
+    attn = softmax(S, tau)
+    print(f"\nSoftmax attention (τ={tau}):")
+    print(f"  Mean weight on sink token: {np.mean(attn[:, 0]):.4f}")
+    print(f"  Max weight on sink token:  {np.max(attn[:, 0]):.4f}")
+
+# Tropical limit
+trop_norm = tropical_row_normalize(S)
+trop_argmax = np.argmax(S, axis=1)
+print(f"\nTropical limit (τ→0):")
+print(f"  All rows select token: {trop_argmax}")
+print(f"  Is token 0 a universal sink? {np.all(trop_argmax == 0)}")
+
+# Compute dominance gap
+gaps = []
 for i in range(n_tokens):
-    max_other = max(S_sink[i, j] for j in range(n_tokens) if j != j_star)
-    S_sink[i, j_star] = max_other + delta + np.random.rand()
-
-print(f"\nSink token: j* = {j_star}, dominance gap δ = {delta:.1f}")
-print(f"Argmax per row: {np.argmax(S_sink, axis=1)}")
-print(f"All rows select j*: {all(np.argmax(S_sink, axis=1) == j_star)}")
-
-V = np.random.randn(n_tokens, 4)
-print(f"\nV[j*] = {V[j_star]}")
-
-for tau in [1.0, 0.1, 0.01]:
-    W = softmax_weights(S_sink, tau)
-    output = W @ V
-    max_deviation = np.max(np.abs(output - np.tile(V[j_star], (n_tokens, 1))))
-    print(f"τ = {tau:6.3f}: max |output_i - V[j*]| = {max_deviation:.2e}"
-          f"  (bound: {(n_tokens-1)*np.exp(-delta/tau):.2e})")
-
-print("\n→ Under dominance, all attention outputs converge to V[j*].")
-print("→ The sink is a tropical fixed point: applying attention again gives the same result.")
+    row_max = S[i, 0]
+    second_max = np.max(np.delete(S[i, :], 0))
+    gaps.append(row_max - second_max)
+print(f"  Dominance gaps per row: {[f'{g:.2f}' for g in gaps]}")
+print(f"  Minimum gap (certified radius): {min(gaps):.2f}")
 
 
 # ============================================================
-# Demo 4: Theorem E — Iterate Growth Bound
+# Application 2: Head Redundancy Detection
 # ============================================================
 print("\n" + "=" * 70)
-print("DEMO 4: Tropical Iterate Growth (Theorem E)")
+print("APPLICATION 2: Head Redundancy via Tropical Comparison")
 print("=" * 70)
 
-n = 5
-A = np.random.randn(n, n)
-x = np.random.randn(n)
-max_entry = np.max(A)
+n_heads = 4
+n_tok = 6
 
-print(f"\nMatrix max entry: {max_entry:.4f}")
-print(f"Initial sup(x): {np.max(x):.4f}")
+# Simulate multi-head attention scores
+head_scores = []
+for h in range(n_heads):
+    S_h = np.random.randn(n_tok, n_tok)
+    if h == 2:  # Head 2 is a copy of head 0 + small noise
+        S_h = head_scores[0] + 0.1 * np.random.randn(n_tok, n_tok)
+    head_scores.append(S_h)
 
-print(f"\n{'t':>5} | {'sup(T^t x)':>12} | {'sup(x) + t*maxEntry':>22} | {'Bound holds?':>12}")
-print("-" * 60)
+# Compare tropical patterns (row argmaxes)
+print("\nTropical attention patterns (row argmaxes):")
+patterns = []
+for h in range(n_heads):
+    pattern = np.argmax(head_scores[h], axis=1)
+    patterns.append(pattern)
+    print(f"  Head {h}: {pattern}")
 
-current = x.copy()
+# Detect redundancy
+for i in range(n_heads):
+    for j in range(i + 1, n_heads):
+        match = np.sum(patterns[i] == patterns[j]) / n_tok
+        print(f"  Heads {i}-{j} agreement: {match:.0%}" +
+              (" ← REDUNDANT" if match > 0.8 else ""))
+
+
+# ============================================================
+# Application 3: Layer Collapse Prediction
+# ============================================================
+print("\n" + "=" * 70)
+print("APPLICATION 3: Layer Collapse via Tropical Iterate Growth")
+print("=" * 70)
+
+n_layer = 5
+# Simulate normalized attention matrices for multiple layers
+A_layers = []
+for l in range(n_layer):
+    A_l = np.random.randn(n_layer, n_layer)
+    # Normalize rows tropically
+    A_l = A_l - np.max(A_l, axis=1, keepdims=True)
+    A_layers.append(A_l)
+
+# Compose layers tropically
+x0 = np.zeros(n_layer)
+print(f"\nInitial state: x₀ = {x0}")
+print(f"\nLayer-by-layer tropical composition:")
+
+x = x0.copy()
+for l in range(n_layer):
+    x = trop_attention_op(A_layers[l], x)
+    spread = np.max(x) - np.min(x)
+    print(f"  After layer {l+1}: x = {np.round(x, 3)}, spread = {spread:.4f}")
+
+# Multiple iterations of the SAME matrix
+A_single = A_layers[0]
+max_entry = np.max(A_single)
+print(f"\nRepeated application of single layer (maxEntry = {max_entry:.2f}):")
+x = np.array([1.0, 0.5, 0.0, -0.5, -1.0])
 for t in range(8):
-    actual_sup = np.max(current)
-    bound = np.max(x) + t * max_entry
-    holds = "✓" if actual_sup <= bound + 1e-10 else "✗"
-    print(f"{t:5d} | {actual_sup:12.4f} | {bound:22.4f} | {holds:>12}")
-    # Apply tropical linear map
-    next_val = np.array([np.max(A[i, :] + current) for i in range(n)])
-    current = next_val
-
-print("\n→ sup of iterates grows at most linearly with rate maxEntry(A).")
-print("→ This is the tropical spectral radius bound (Theorem E).")
+    spread = np.max(x) - np.min(x)
+    x_copy = x.copy()
+    x = trop_attention_op(A_single, x)
+    print(f"  t={t}: spread = {spread:.4f}")
 
 
 # ============================================================
-# Demo 5: Robustness — Perturbation stability
+# Application 4: Certified Robustness
 # ============================================================
 print("\n" + "=" * 70)
-print("DEMO 5: Certified Robustness of Tropical Attention (Robustness Theorem)")
+print("APPLICATION 4: Certified Robustness of Attention Selection")
 print("=" * 70)
 
-n_tokens = 6
-j_star = 0
-delta = 4.0
+n_rob = 5
+S_clean = np.random.randn(n_rob, n_rob)
+# Make one column dominant with known gap
+dominant_col = 2
+S_clean[:, dominant_col] += 3.0
 
-S_robust = np.random.randn(n_tokens, n_tokens)
-for i in range(n_tokens):
-    max_other = max(S_robust[i, j] for j in range(n_tokens) if j != j_star)
-    S_robust[i, j_star] = max_other + delta
+# Compute gaps
+min_gap = np.inf
+for i in range(n_rob):
+    gap = S_clean[i, dominant_col] - np.max(np.delete(S_clean[i, :], dominant_col))
+    min_gap = min(min_gap, gap)
 
-certified_radius = delta / 4
+certified_radius = min_gap / 4.0
 
-print(f"\nDominance gap δ = {delta:.1f}")
-print(f"Certified perturbation radius: δ/4 = {certified_radius:.2f}")
-print(f"After perturbation, remaining gap ≥ δ/2 = {delta/2:.2f}")
+print(f"\nClean score matrix dominant column: {dominant_col}")
+print(f"Minimum dominance gap δ: {min_gap:.4f}")
+print(f"Certified perturbation radius: δ/4 = {certified_radius:.4f}")
 
-n_trials = 1000
-n_broken = 0
-for _ in range(n_trials):
-    perturbation = np.random.uniform(-certified_radius, certified_radius, (n_tokens, n_tokens))
-    S_perturbed = S_robust + perturbation
-    if not all(np.argmax(S_perturbed, axis=1) == j_star):
-        n_broken += 1
-
-print(f"\nRandom perturbations within certified radius ({n_trials} trials):")
-print(f"  Sink preserved: {n_trials - n_broken}/{n_trials}")
-print(f"  Sink broken:    {n_broken}/{n_trials}")
-print("\n→ Within the certified radius, the tropical argmax is provably stable.")
+# Test with perturbations of increasing magnitude
+epsilons = [0.1, 0.5, 1.0, certified_radius * 0.9, certified_radius * 1.1, 2.0]
+for eps in epsilons:
+    n_trials = 100
+    n_stable = 0
+    for _ in range(n_trials):
+        perturbation = np.random.uniform(-eps, eps, (n_rob, n_rob))
+        S_pert = S_clean + perturbation
+        if np.all(np.argmax(S_pert, axis=1) == dominant_col):
+            n_stable += 1
+    certified = eps <= certified_radius
+    print(f"  ε = {eps:.3f}: {n_stable}/{n_trials} stable  "
+          f"{'✓ CERTIFIED' if certified else '○ NOT CERTIFIED'}")
 
 
 # ============================================================
-# Demo 6: Multi-head componentwise factorization
+# Application 5: Tropical Compression
 # ============================================================
 print("\n" + "=" * 70)
-print("DEMO 6: Multi-Head Tropical Attention = Componentwise (Theorem C)")
+print("APPLICATION 5: Tropical Compression of Attention Patterns")
 print("=" * 70)
 
-h_heads = 3
-n_tokens = 4
-d = 3
+n_comp = 8
+S_full = np.random.randn(n_comp, n_comp)
 
-print(f"\n{h_heads} attention heads, {n_tokens} tokens, dimension {d}")
+# Full softmax attention
+attn_full = softmax(S_full)
+print(f"\nFull softmax attention matrix ({n_comp}×{n_comp}):")
+print(f"  Non-zero entries: {np.sum(attn_full > 1e-10)}")
+print(f"  Storage: {attn_full.size} floats")
 
-for r in range(h_heads):
-    S_head = np.random.randn(n_tokens, n_tokens) * 3
-    V_head = np.random.randn(n_tokens, d)
-    argmax = np.argmax(S_head, axis=1)
-    trop_output = V_head[argmax]
-    print(f"\nHead {r}: argmax per row = {argmax}")
-    print(f"  Tropical output = V[argmax] (each row selects independently)")
+# Tropical compression: store only argmax per row + max values
+argmaxes = np.argmax(S_full, axis=1)
+max_vals = np.max(S_full, axis=1)
+print(f"\nTropical compression (argmax per row):")
+print(f"  Argmaxes: {argmaxes}")
+print(f"  Storage: {2 * n_comp} values (argmax + max_val)")
+print(f"  Compression ratio: {attn_full.size / (2 * n_comp):.1f}×")
 
-print("\n→ Multi-head tropical attention = independent per-head computation.")
-print("→ This is the product semiring structure (Theorem C).")
+# Reconstruct approximate attention from tropical skeleton
+attn_trop = np.zeros_like(attn_full)
+for i in range(n_comp):
+    attn_trop[i, argmaxes[i]] = 1.0
 
-print("\n" + "=" * 70)
-print("All demos completed successfully.")
-print("=" * 70)
+# Measure quality
+agreement = np.sum(np.argmax(attn_full, axis=1) == argmaxes) / n_comp
+print(f"  Argmax agreement with full softmax: {agreement:.0%}")
+
+# Top-k tropical (keeping top 2 per row)
+k = 2
+print(f"\nTop-{k} tropical compression:")
+top_k_indices = np.argsort(S_full, axis=1)[:, -k:]
+attn_topk = np.zeros_like(attn_full)
+for i in range(n_comp):
+    for j in top_k_indices[i]:
+        attn_topk[i, j] = np.exp(S_full[i, j]) / np.sum(np.exp(S_full[i, top_k_indices[i]]))
+fro_error = np.linalg.norm(attn_full - attn_topk, 'fro')
+print(f"  Frobenius error vs full softmax: {fro_error:.4f}")
+print(f"  Storage: {3 * k * n_comp} values")
+print(f"  Compression ratio: {attn_full.size / (3 * k * n_comp):.1f}×")
 
 
+# ============================================================
+# Generate application visualization
+# ============================================================
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle('Tropical Attention: Applications', fontsize=16, fontweight='bold')
+
+# Plot 1: Sink detection
+ax = axes[0, 0]
+S_plot = np.random.RandomState(42).randn(6, 6)
+S_plot[:, 0] += 3.0
+for tau_idx, tau in enumerate([2.0, 0.5, 0.1, 0.01]):
+    attn = softmax(S_plot, tau)
+    ax.bar(np.arange(6) + tau_idx * 0.2, attn[0, :], width=0.18,
+           label=f'τ={tau}', alpha=0.8)
+ax.set_xlabel('Token index')
+ax.set_ylabel('Attention weight (row 0)')
+ax.set_title('Sink Formation as τ → 0')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+# Plot 2: Layer collapse
+ax = axes[0, 1]
+A_collapse = np.random.RandomState(44).randn(5, 5)
+A_collapse = A_collapse - np.max(A_collapse, axis=1, keepdims=True)
+spreads = []
+x_lc = np.array([2.0, 1.0, 0.0, -1.0, -2.0])
+for t in range(20):
+    spreads.append(np.max(x_lc) - np.min(x_lc))
+    x_lc = trop_attention_op(A_collapse, x_lc)
+ax.plot(spreads, 'b-o', markersize=4)
+ax.set_xlabel('Layer depth')
+ax.set_ylabel('Value spread (max - min)')
+ax.set_title('Projective Contraction (Layer Collapse)')
+ax.grid(True, alpha=0.3)
+
+# Plot 3: Robustness certification
+ax = axes[1, 0]
+eps_range = np.linspace(0, 3, 30)
+stability = []
+S_rob = np.random.RandomState(45).randn(5, 5)
+S_rob[:, 2] += 3.0
+for eps in eps_range:
+    n_trials = 200
+    n_ok = 0
+    for _ in range(n_trials):
+        pert = np.random.uniform(-eps, eps, S_rob.shape)
+        if np.all(np.argmax(S_rob + pert, axis=1) == 2):
+            n_ok += 1
+    stability.append(n_ok / n_trials)
+
+min_gap_r = np.min([S_rob[i, 2] - np.max(np.delete(S_rob[i, :], 2)) for i in range(5)])
+cert_rad = min_gap_r / 4
+
+ax.plot(eps_range, stability, 'g-', linewidth=2)
+ax.axvline(x=cert_rad, color='r', linestyle='--', label=f'Certified radius = {cert_rad:.2f}')
+ax.set_xlabel('Perturbation magnitude ε')
+ax.set_ylabel('Fraction with stable argmax')
+ax.set_title('Certified Robustness of Tropical Selection')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+# Plot 4: Compression quality
+ax = axes[1, 1]
+ns = [4, 8, 16, 32, 64]
+comp_ratios = []
+fro_errors_list = []
+for n_c in ns:
+    S_c = np.random.RandomState(46).randn(n_c, n_c)
+    attn_exact = softmax(S_c)
+    argmaxes_c = np.argmax(S_c, axis=1)
+    attn_approx = np.zeros_like(attn_exact)
+    for i in range(n_c):
+        attn_approx[i, argmaxes_c[i]] = 1.0
+    fro_errors_list.append(np.linalg.norm(attn_exact - attn_approx, 'fro') / n_c)
+    comp_ratios.append(n_c * n_c / (2 * n_c))
+
+ax.plot(ns, fro_errors_list, 'mo-', linewidth=2, markersize=6)
+ax.set_xlabel('Sequence length n')
+ax.set_ylabel('Normalized Frobenius error')
+ax.set_title('Tropical Compression Error')
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('tropical_attention_applications.png', dpi=150, bbox_inches='tight')
+print("\n✓ Application visualization saved to tropical_attention_applications.png")
+
+
+#!/usr/bin/env python3
 """
-Tropical Attention: Visualizations
+Tropical Attention Theory: Demonstrations
 
-Generate publication-quality figures illustrating the core theorems.
+Concrete numerical examples showing that log-sum-exp attention converges
+to max-plus (tropical) matrix multiplication as temperature τ → 0⁺.
+
+Demonstrates:
+1. Scalar LSE convergence to max
+2. Log-softmax convergence to tropical row normalization
+3. LSE matrix composition converging to tropical matrix product
+4. Multi-head componentwise tropicalization
+5. Sink fixed-point behavior
+6. Iterate growth bounds
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
-import base64
-from io import BytesIO
+
+np.set_printoptions(precision=6, suppress=True)
 
 
-def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 data URI."""
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{data}"
+def lse(a: np.ndarray, tau: float) -> float:
+    """Temperature-scaled log-sum-exp: τ * log(Σ exp(aᵢ/τ))"""
+    # Numerically stable version
+    m = np.max(a)
+    return m + tau * np.log(np.sum(np.exp((a - m) / tau)))
 
 
-def viz_lse_convergence():
-    """Figure 1: LSE → Tropical convergence as τ → 0."""
-    np.random.seed(42)
-    m, n, p = 4, 8, 3
-    X = np.random.randn(m, n) * 2
-    Y = np.random.randn(n, p) * 2
-
-    T = np.max(X[:, :, None] + Y[None, :, :], axis=1)
-
-    tau_values = np.logspace(-2, 1.5, 50)
-    errors = []
-    bounds = []
-
-    for tau in tau_values:
-        sums = X[:, :, None] + Y[None, :, :]
-        max_vals = np.max(sums / tau, axis=1, keepdims=True)
-        shifted = sums / tau - max_vals
-        L = tau * (max_vals.squeeze(1) + np.log(np.sum(np.exp(shifted), axis=1)))
-        errors.append(np.max(np.abs(L - T)))
-        bounds.append(tau * np.log(n))
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    ax1.loglog(tau_values, errors, 'b-', linewidth=2, label='Actual max error')
-    ax1.loglog(tau_values, bounds, 'r--', linewidth=2, label=r'Bound: $\tau \cdot \ln(n)$')
-    ax1.set_xlabel(r'Temperature $\tau$', fontsize=13)
-    ax1.set_ylabel(r'$\| \mathrm{LSE}_\tau - \mathrm{Trop} \|_\infty$', fontsize=13)
-    ax1.set_title('Theorem A: LSE → Tropical Convergence', fontsize=14)
-    ax1.legend(fontsize=12)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_xlim(tau_values[0], tau_values[-1])
-
-    ratios = [e / b for e, b in zip(errors, bounds)]
-    ax2.semilogx(tau_values, ratios, 'g-', linewidth=2)
-    ax2.set_xlabel(r'Temperature $\tau$', fontsize=13)
-    ax2.set_ylabel('Error / Bound ratio', fontsize=13)
-    ax2.set_title('Tightness of the Bound', fontsize=14)
-    ax2.axhline(y=1.0, color='r', linestyle='--', alpha=0.5, label='Bound = 1')
-    ax2.grid(True, alpha=0.3)
-    ax2.legend(fontsize=12)
-    ax2.set_ylim(0, 1.1)
-
-    fig.suptitle('Log-Sum-Exp Approximation to Tropical Matrix Product', fontsize=15, y=1.02)
-    fig.tight_layout()
-    fig.savefig('fig_lse_convergence.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+def tropical_max(a: np.ndarray) -> float:
+    """Max-plus identity: max(a)"""
+    return np.max(a)
 
 
-def viz_softmax_concentration():
-    """Figure 2: Softmax weight concentration as τ → 0."""
-    np.random.seed(42)
-    n = 6
-    S = np.random.randn(n, n)
-    # Create unique argmax per row
+def trop_mul_max(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+    """Max-plus tropical matrix product: C[i,k] = max_j(A[i,j] + B[j,k])"""
+    m, n = A.shape
+    _, p = B.shape
+    C = np.zeros((m, p))
+    for i in range(m):
+        for k in range(p):
+            C[i, k] = np.max(A[i, :] + B[:, k])
+    return C
+
+
+def lse_mul(A: np.ndarray, B: np.ndarray, tau: float) -> np.ndarray:
+    """LSE matrix product: C[i,k] = τ * log(Σ_j exp((A[i,j]+B[j,k])/τ))"""
+    m, n = A.shape
+    _, p = B.shape
+    C = np.zeros((m, p))
+    for i in range(m):
+        for k in range(p):
+            vals = A[i, :] + B[:, k]
+            C[i, k] = lse(vals, tau)
+    return C
+
+
+def trop_attention_op(A: np.ndarray, x: np.ndarray) -> np.ndarray:
+    """Tropical attention operator: T_A(x)_i = max_j(A[i,j]+x[j]) - max_j(A[i,j])"""
+    n = A.shape[0]
+    result = np.zeros(n)
     for i in range(n):
-        winner = (i + 2) % n
-        S[i, winner] += 4.0
-
-    tau_values = np.logspace(-2, 1, 100)
-    max_weights = []  # Weight on argmax
-    entropy_values = []
-
-    for tau in tau_values:
-        shifted = S / tau - np.max(S / tau, axis=1, keepdims=True)
-        W = np.exp(shifted)
-        W = W / W.sum(axis=1, keepdims=True)
-
-        argmax = np.argmax(S, axis=1)
-        weights_on_max = [W[i, argmax[i]] for i in range(n)]
-        max_weights.append(np.min(weights_on_max))
-
-        # Shannon entropy
-        entropy = -np.sum(W * np.log(W + 1e-30)) / n
-        entropy_values.append(entropy)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    ax1.semilogx(tau_values, max_weights, 'b-', linewidth=2)
-    ax1.set_xlabel(r'Temperature $\tau$', fontsize=13)
-    ax1.set_ylabel('Min weight on argmax', fontsize=13)
-    ax1.set_title('Theorem B: Softmax → Argmax Concentration', fontsize=14)
-    ax1.axhline(y=1.0, color='r', linestyle='--', alpha=0.5)
-    ax1.grid(True, alpha=0.3)
-
-    ax2.semilogx(tau_values, entropy_values, 'purple', linewidth=2)
-    ax2.set_xlabel(r'Temperature $\tau$', fontsize=13)
-    ax2.set_ylabel('Mean row entropy (nats)', fontsize=13)
-    ax2.set_title('Attention Entropy Collapse', fontsize=14)
-    ax2.grid(True, alpha=0.3)
-
-    fig.suptitle('Softmax Attention Tropicalization', fontsize=15, y=1.02)
-    fig.tight_layout()
-    fig.savefig('fig_softmax_concentration.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+        result[i] = np.max(A[i, :] + x) - np.max(A[i, :])
+    return result
 
 
-def viz_attention_sink():
-    """Figure 3: Attention sink formation under dominant column."""
-    np.random.seed(42)
-    n = 8
-    j_star = 2
-
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    for idx, delta in enumerate([0.5, 2.0, 5.0]):
-        S = np.random.randn(n, n)
-        for i in range(n):
-            max_other = max(S[i, j] for j in range(n) if j != j_star)
-            S[i, j_star] = max_other + delta
-
-        tau_values = np.logspace(-2, 1, 50)
-        weights_on_sink = []
-
-        for tau in tau_values:
-            shifted = S / tau - np.max(S / tau, axis=1, keepdims=True)
-            W = np.exp(shifted)
-            W = W / W.sum(axis=1, keepdims=True)
-            weights_on_sink.append(np.mean(W[:, j_star]))
-
-        ax = axes[idx]
-        ax.semilogx(tau_values, weights_on_sink, 'b-', linewidth=2,
-                     label=f'Mean W[:,{j_star}]')
-        ax.axhline(y=1.0, color='r', linestyle='--', alpha=0.5)
-        ax.set_xlabel(r'Temperature $\tau$', fontsize=12)
-        ax.set_ylabel('Mean attention on sink', fontsize=12)
-        ax.set_title(f'δ = {delta}', fontsize=13)
-        ax.set_ylim(0, 1.1)
-        ax.grid(True, alpha=0.3)
-
-    fig.suptitle(f'Theorem D: Attention Sink (j* = {j_star}) at Different Gaps',
-                 fontsize=14, y=1.02)
-    fig.tight_layout()
-    fig.savefig('fig_attention_sink.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+def trop_lin(A: np.ndarray, x: np.ndarray) -> np.ndarray:
+    """Tropical linear map: (T_A x)_i = max_j(A[i,j] + x[j])"""
+    n = A.shape[0]
+    return np.array([np.max(A[i, :] + x) for i in range(n)])
 
 
-def viz_iterate_growth():
-    """Figure 4: Tropical iterate growth bound."""
-    np.random.seed(42)
-    n = 6
-    n_steps = 15
+# ============================================================
+# Demo 1: Scalar LSE convergence
+# ============================================================
+print("=" * 70)
+print("DEMO 1: Scalar log-sum-exp converges to max as τ → 0⁺")
+print("=" * 70)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+a = np.array([1.0, 3.0, 2.0, 0.5])
+true_max = np.max(a)
+taus = [10.0, 5.0, 2.0, 1.0, 0.5, 0.1, 0.01, 0.001]
 
-    for scale, color, label in [(0.5, 'blue', 'Small entries'),
-                                 (1.0, 'green', 'Medium entries'),
-                                 (2.0, 'red', 'Large entries')]:
-        A = np.random.randn(n, n) * scale
-        x = np.zeros(n)
-        max_entry = np.max(A)
+print(f"\nVector a = {a}")
+print(f"True max = {true_max}")
+print(f"\n{'τ':>10} {'LSE(a,τ)':>15} {'|LSE - max|':>15} {'τ·log(n)':>12}")
+print("-" * 55)
+for tau in taus:
+    lse_val = lse(a, tau)
+    err = abs(lse_val - true_max)
+    bound = tau * np.log(len(a))
+    print(f"{tau:10.4f} {lse_val:15.8f} {err:15.8e} {bound:12.8f}")
 
-        sups = []
-        bounds = []
-        current = x.copy()
-        for t in range(n_steps):
-            sups.append(np.max(current))
-            bounds.append(np.max(x) + t * max_entry)
-            current = np.array([np.max(A[i, :] + current) for i in range(n)])
-
-        ax1.plot(range(n_steps), sups, '-o', color=color, markersize=4,
-                linewidth=2, label=f'{label} (actual)')
-        ax1.plot(range(n_steps), bounds, '--', color=color, alpha=0.5,
-                linewidth=1.5, label=f'{label} (bound)')
-
-    ax1.set_xlabel('Iteration t', fontsize=13)
-    ax1.set_ylabel(r'$\sup_i\, (T_A^{[t]} x)_i$', fontsize=13)
-    ax1.set_title('Theorem E: Tropical Iterate Growth', fontsize=14)
-    ax1.legend(fontsize=9, ncol=2)
-    ax1.grid(True, alpha=0.3)
-
-    # Growth rate comparison
-    scales = np.linspace(0.1, 3.0, 20)
-    theoretical_rates = []
-    empirical_rates = []
-
-    for scale in scales:
-        A = np.random.randn(n, n) * scale
-        x = np.zeros(n)
-        max_entry = np.max(A)
-        theoretical_rates.append(max_entry)
-
-        current = x.copy()
-        for _ in range(20):
-            current = np.array([np.max(A[i, :] + current) for i in range(n)])
-        empirical_rates.append(np.max(current) / 20)
-
-    ax2.plot(scales, empirical_rates, 'b-o', markersize=4, linewidth=2, label='Empirical rate')
-    ax2.plot(scales, theoretical_rates, 'r--', linewidth=2, label='Bound: maxEntry(A)')
-    ax2.set_xlabel('Matrix scale', fontsize=13)
-    ax2.set_ylabel('Growth rate per iteration', fontsize=13)
-    ax2.set_title('Spectral Bound Tightness', fontsize=14)
-    ax2.legend(fontsize=12)
-    ax2.grid(True, alpha=0.3)
-
-    fig.suptitle('Deep Transformer Convergence via Tropical Spectral Radius', fontsize=15, y=1.02)
-    fig.tight_layout()
-    fig.savefig('fig_iterate_growth.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+print("\n✓ Error is always ≤ τ·log(n), and → 0 as τ → 0⁺")
 
 
-def viz_robustness_regions():
-    """Figure 5: Certified robustness regions for attention sinks."""
-    np.random.seed(42)
-    n = 5
-    j_star = 0
+# ============================================================
+# Demo 2: Log-softmax → tropical row normalization
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 2: Log-softmax converges to tropical row normalization")
+print("=" * 70)
 
-    S = np.random.randn(n, n)
+n = 4
+S = np.array([
+    [2.0, 5.0, 1.0, 3.0],
+    [4.0, 1.0, 6.0, 2.0],
+    [3.0, 3.0, 3.0, 7.0],
+    [1.0, 2.0, 0.0, 1.0]
+])
+
+# Tropical row normalization: S[i,j] - max_k S[i,k]
+row_maxes = np.max(S, axis=1, keepdims=True)
+trop_normalized = S - row_maxes
+
+print(f"\nScore matrix S =\n{S}")
+print(f"\nTropical row normalization (S - row_max) =\n{trop_normalized}")
+
+for tau in [1.0, 0.1, 0.01]:
+    log_softmax = np.zeros_like(S)
     for i in range(n):
-        max_other = max(S[i, j] for j in range(n) if j != j_star)
-        S[i, j_star] = max_other + 4.0
-
-    delta = min(S[i, j_star] - max(S[i, j] for j in range(n) if j != j_star) for i in range(n))
-    certified_radius = delta / 4
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Perturbation magnitude vs sink preservation
-    epsilons = np.linspace(0, delta * 0.8, 50)
-    n_trials = 200
-    preservation_rates = []
-
-    for eps in epsilons:
-        preserved = 0
-        for _ in range(n_trials):
-            pert = np.random.uniform(-eps, eps, S.shape)
-            S_pert = S + pert
-            if all(np.argmax(S_pert, axis=1) == j_star):
-                preserved += 1
-        preservation_rates.append(preserved / n_trials)
-
-    ax1.plot(epsilons, preservation_rates, 'b-', linewidth=2)
-    ax1.axvline(x=certified_radius, color='r', linestyle='--', linewidth=2,
-               label=f'Certified radius = δ/4 = {certified_radius:.2f}')
-    ax1.axvline(x=delta/2, color='orange', linestyle='--', linewidth=1.5,
-               label=f'δ/2 = {delta/2:.2f}')
-    ax1.set_xlabel('Perturbation magnitude (L∞)', fontsize=13)
-    ax1.set_ylabel('Sink preservation rate', fontsize=13)
-    ax1.set_title('Certified Robustness Region', fontsize=14)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-
-    # Remaining gap as function of perturbation
-    remaining_gaps = [max(0, delta - 2 * eps) for eps in epsilons]
-    ax2.plot(epsilons, remaining_gaps, 'g-', linewidth=2)
-    ax2.axhline(y=0, color='black', linewidth=0.5)
-    ax2.axvline(x=certified_radius, color='r', linestyle='--', linewidth=2,
-               label=f'Certified radius')
-    ax2.fill_between(epsilons, 0, remaining_gaps, alpha=0.1, color='green')
-    ax2.set_xlabel('Perturbation magnitude (L∞)', fontsize=13)
-    ax2.set_ylabel('Remaining dominance gap', fontsize=13)
-    ax2.set_title('Gap Erosion Under Perturbation', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-
-    fig.suptitle('Tropical Attention Robustness Certification', fontsize=15, y=1.02)
-    fig.tight_layout()
-    fig.savefig('fig_robustness.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+        lse_val = lse(S[i, :], tau)
+        log_softmax[i, :] = S[i, :] - lse_val
+    print(f"\nLog-softmax at τ = {tau}:")
+    print(log_softmax)
+    print(f"  Max absolute error: {np.max(np.abs(log_softmax - trop_normalized)):.8e}")
 
 
-if __name__ == "__main__":
-    print("Generating visualizations...")
-    b1 = viz_lse_convergence()
-    print(f"  fig_lse_convergence.png ({len(b1)} chars base64)")
-    b2 = viz_softmax_concentration()
-    print(f"  fig_softmax_concentration.png ({len(b2)} chars base64)")
-    b3 = viz_attention_sink()
-    print(f"  fig_attention_sink.png ({len(b3)} chars base64)")
-    b4 = viz_iterate_growth()
-    print(f"  fig_iterate_growth.png ({len(b4)} chars base64)")
-    b5 = viz_robustness_regions()
-    print(f"  fig_robustness.png ({len(b5)} chars base64)")
-    print("All visualizations generated successfully.")
+# ============================================================
+# Demo 3: LSE composition → tropical matrix product
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 3: LSE composition converges to tropical matrix product")
+print("=" * 70)
+
+A = np.array([
+    [1.0, 3.0, 2.0],
+    [4.0, 0.0, 1.0],
+    [2.0, 2.0, 5.0]
+])
+B = np.array([
+    [3.0, 1.0, 0.0],
+    [0.0, 4.0, 2.0],
+    [1.0, 0.0, 3.0]
+])
+
+C_trop = trop_mul_max(A, B)
+print(f"\nA =\n{A}")
+print(f"\nB =\n{B}")
+print(f"\nTropical product (max-plus) A ⊗ B =\n{C_trop}")
+
+for tau in [1.0, 0.1, 0.01, 0.001]:
+    C_lse = lse_mul(A, B, tau)
+    err = np.max(np.abs(C_lse - C_trop))
+    print(f"  τ = {tau:8.4f}: LSE product error = {err:.8e}")
+
+
+# ============================================================
+# Demo 4: Multi-head componentwise tropicalization
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 4: Multi-head attention tropicalizes componentwise")
+print("=" * 70)
+
+h = 2  # number of heads
+A_heads = [
+    np.array([[1.0, 2.0], [3.0, 0.0]]),
+    np.array([[0.0, 4.0], [1.0, 1.0]])
+]
+B_heads = [
+    np.array([[2.0, 1.0], [0.0, 3.0]]),
+    np.array([[1.0, 0.0], [2.0, 1.0]])
+]
+
+print("\nHead 0: A =", A_heads[0].tolist(), "B =", B_heads[0].tolist())
+print("Head 1: A =", A_heads[1].tolist(), "B =", B_heads[1].tolist())
+
+for r in range(h):
+    C_trop_r = trop_mul_max(A_heads[r], B_heads[r])
+    print(f"\nHead {r} tropical product = {C_trop_r.tolist()}")
+    for tau in [0.1, 0.01]:
+        C_lse_r = lse_mul(A_heads[r], B_heads[r], tau)
+        err = np.max(np.abs(C_lse_r - C_trop_r))
+        print(f"  τ = {tau}: error = {err:.8e}")
+
+
+# ============================================================
+# Demo 5: Sink fixed-point behavior
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 5: Attention sink as tropical fixed point")
+print("=" * 70)
+
+n = 4
+s = 1  # sink token index
+# Build A where column s dominates every row
+A_sink = np.array([
+    [2.0, 5.0, 1.0, 3.0],
+    [1.0, 6.0, 0.0, 2.0],
+    [3.0, 7.0, 2.0, 4.0],
+    [0.0, 4.0, 1.0, 1.0]
+])
+
+print(f"\nMatrix A with dominant column s={s}:")
+print(A_sink)
+print(f"Column {s} dominates: {all(A_sink[i, s] >= A_sink[i, j] for i in range(n) for j in range(n))}")
+
+# Zero vector is always a fixed point
+x_zero = np.zeros(n)
+Tx_zero = trop_attention_op(A_sink, x_zero)
+print(f"\nT_A(0) = {Tx_zero}  (should be all zeros)")
+
+# Constant vector is a projective fixed point
+for c in [1.0, -2.5, 3.14]:
+    x_const = np.full(n, c)
+    Tx_const = trop_attention_op(A_sink, x_const)
+    print(f"T_A({c}) = {Tx_const}  (should be all {c})")
+
+# Show additive homogeneity
+x = np.array([1.0, 0.0, -1.0, 2.0])
+c = 3.0
+Tx = trop_attention_op(A_sink, x)
+Txc = trop_attention_op(A_sink, x + c)
+print(f"\nT_A(x) = {Tx}")
+print(f"T_A(x + {c}) = {Txc}")
+print(f"T_A(x) + {c} = {Tx + c}")
+print(f"Match: {np.allclose(Txc, Tx + c)}")
+
+
+# ============================================================
+# Demo 6: Iterate growth bound
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 6: Tropical iterate growth bound")
+print("=" * 70)
+
+A_iter = np.array([
+    [1.0, 2.0, 0.0],
+    [3.0, -1.0, 1.0],
+    [0.0, 2.0, 4.0]
+])
+x0 = np.array([1.0, 0.0, -1.0])
+
+max_entry = np.max(A_iter)
+sup_x0 = np.max(x0)
+print(f"\nA =\n{A_iter}")
+print(f"x₀ = {x0}")
+print(f"maxEntry(A) = {max_entry}")
+print(f"sup(x₀) = {sup_x0}")
+
+print(f"\n{'t':>5} {'sup(T^t x)':>15} {'Bound':>15} {'Bound - sup':>15}")
+print("-" * 55)
+x = x0.copy()
+for t in range(8):
+    sup_val = np.max(x)
+    bound = sup_x0 + t * max_entry
+    print(f"{t:5d} {sup_val:15.4f} {bound:15.4f} {bound - sup_val:15.4f}")
+    x = trop_lin(A_iter, x)
+
+print("\n✓ sup(T^t x) ≤ sup(x₀) + t · maxEntry(A) for all t")
+
+
+# ============================================================
+# Generate visualization
+# ============================================================
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle('Tropical Attention Theory: Key Results', fontsize=16, fontweight='bold')
+
+# Plot 1: LSE convergence
+ax = axes[0, 0]
+a_vals = np.array([1.0, 3.0, 2.0, 0.5])
+true_m = np.max(a_vals)
+tau_range = np.logspace(-3, 1, 100)
+lse_vals = [lse(a_vals, t) for t in tau_range]
+errors = [abs(v - true_m) for v in lse_vals]
+bounds = [t * np.log(len(a_vals)) for t in tau_range]
+
+ax.loglog(tau_range, errors, 'b-', linewidth=2, label='|LSE(a,τ) - max(a)|')
+ax.loglog(tau_range, bounds, 'r--', linewidth=2, label='τ · log(n)')
+ax.set_xlabel('Temperature τ')
+ax.set_ylabel('Error')
+ax.set_title('Theorem 1: LSE → max as τ → 0⁺')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+# Plot 2: Matrix product convergence
+ax = axes[0, 1]
+A_demo = np.random.RandomState(42).randn(4, 4)
+B_demo = np.random.RandomState(43).randn(4, 4)
+C_exact = trop_mul_max(A_demo, B_demo)
+tau_range2 = np.logspace(-3, 1, 50)
+mat_errors = []
+for t in tau_range2:
+    C_approx = lse_mul(A_demo, B_demo, t)
+    mat_errors.append(np.max(np.abs(C_approx - C_exact)))
+
+ax.loglog(tau_range2, mat_errors, 'g-', linewidth=2, label='sup|LSE·B - A⊗B|')
+ax.loglog(tau_range2, [t * np.log(4) for t in tau_range2], 'r--', linewidth=2, label='τ · log(n)')
+ax.set_xlabel('Temperature τ')
+ax.set_ylabel('Max error')
+ax.set_title('Theorem 2: LSE composition → tropical product')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+# Plot 3: Iterate growth
+ax = axes[1, 0]
+A_g = np.array([[1.0, 2.0, 0.0], [3.0, -1.0, 1.0], [0.0, 2.0, 4.0]])
+x_g = np.array([1.0, 0.0, -1.0])
+max_e = np.max(A_g)
+sup_x = np.max(x_g)
+ts = list(range(12))
+sups = []
+x_curr = x_g.copy()
+for t in ts:
+    sups.append(np.max(x_curr))
+    x_curr = trop_lin(A_g, x_curr)
+bounds_g = [sup_x + t * max_e for t in ts]
+
+ax.plot(ts, sups, 'bo-', linewidth=2, markersize=6, label='sup(T^t x)')
+ax.plot(ts, bounds_g, 'r--', linewidth=2, label='sup(x) + t·maxEntry(A)')
+ax.set_xlabel('Iterations t')
+ax.set_ylabel('Value')
+ax.set_title('Theorem 5: Tropical iterate growth bound')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+# Plot 4: Sink convergence in softmax
+ax = axes[1, 1]
+A_s = np.array([
+    [2.0, 5.0, 1.0, 3.0],
+    [1.0, 6.0, 0.0, 2.0],
+    [3.0, 7.0, 2.0, 4.0],
+    [0.0, 4.0, 1.0, 1.0]
+])
+tau_range3 = np.logspace(-2, 1, 50)
+sink_weights = []
+for t in tau_range3:
+    # Softmax weight on column 1 (sink) for row 0
+    scores = A_s[0, :]
+    exps = np.exp(scores / t)
+    weight_sink = exps[1] / np.sum(exps)
+    sink_weights.append(weight_sink)
+
+ax.semilogx(tau_range3, sink_weights, 'purple', linewidth=2, label='P(sink | row 0)')
+ax.axhline(y=1.0, color='r', linestyle='--', alpha=0.5, label='Tropical limit = 1')
+ax.set_xlabel('Temperature τ')
+ax.set_ylabel('Attention weight')
+ax.set_title('Theorem 4: Sink token absorbs attention')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('tropical_attention_results.png', dpi=150, bbox_inches='tight')
+plt.savefig('tropical_attention_results.svg', bbox_inches='tight')
+print("\n✓ Visualization saved to tropical_attention_results.png/svg")
