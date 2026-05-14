@@ -41,10 +41,10 @@
       "Physics"
     ],
     "priority_score": 0.93,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b55df62f",
     "timestamp": "2026-05-13T23:34:44.959641+00:00"
   },
   {
@@ -153,10 +153,10 @@
       "Tropical"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e2cd002",
     "timestamp": "2026-05-13T23:34:44.957179+00:00"
   },
   {
