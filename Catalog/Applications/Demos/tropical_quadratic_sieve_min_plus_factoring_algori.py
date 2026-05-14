@@ -1,351 +1,24 @@
 #!/usr/bin/env python3
 """
-Tropical Quadratic Sieve — Applications
+Tropical Quadratic Sieve: Real-World Applications
 
-Demonstrates real-world applications of tropical sieve scoring:
-1. Smooth number detection as shortest-path computation
-2. Hardware-amenable min-plus sieve kernels
-3. Tropical entropy of factorization support
-4. Batch relation collection via min-plus matrix operations
+Demonstrates applications of tropical smoothness cost theory to:
+1. Factoring small composites via tropical QS
+2. Adaptive factor base design using monotonicity
+3. Relation scoring and candidate filtering
+4. Cryptographic security estimation
 """
 
 import math
-import time
-from typing import Dict, List, Tuple
-
-
-# ============================================================================
-# Utility functions
-# ============================================================================
-
-def sieve_primes(bound: int) -> List[int]:
-    """Sieve of Eratosthenes."""
-    if bound < 2:
-        return []
-    is_prime = [True] * (bound + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(bound**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, bound + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, bound + 1) if is_prime[i]]
-
-
-def factorize(n: int) -> Dict[int, int]:
-    if n <= 1:
-        return {}
-    factors = {}
-    d = 2
-    while d * d <= n:
-        while n % d == 0:
-            factors[d] = factors.get(d, 0) + 1
-            n //= d
-        d += 1
-    if n > 1:
-        factors[n] = factors.get(n, 0) + 1
-    return factors
-
-
-def p_adic_val(p: int, n: int) -> int:
-    if n == 0:
-        return 0
-    v = 0
-    while n % p == 0:
-        v += 1
-        n //= p
-    return v
-
-
-# ============================================================================
-# Application 1: Smoothness as Shortest Path
-# ============================================================================
-
-def smoothness_as_shortest_path():
-    """
-    Smooth number detection recast as a shortest-path problem.
-
-    The "graph": nodes = prime powers, edges = valuation steps.
-    A number n is B-smooth iff there exists a path of length log(n)
-    through primes ≤ B. The tropical score computes this path length.
-    """
-    print("=" * 70)
-    print("APPLICATION 1: Smoothness Detection as Shortest Path")
-    print("=" * 70)
-
-    N = 10007  # prime, so Q_N(x) will have interesting structure
-    B = 30
-    factor_base = sieve_primes(B)
-    sqrt_N = int(math.isqrt(N)) + 1
-
-    print(f"\nN = {N}, B = {B}")
-    print(f"Factor base: {factor_base}")
-    print(f"\nInterpretation: Each Q_N(x) = x² - N defines a 'distance'")
-    print(f"in the prime factorization graph. Smooth numbers have")
-    print(f"zero 'unexplained distance' — they are fully reachable")
-    print(f"through the factor base.\n")
-
-    print(f"{'x':>5} | {'Q(x)':>8} | {'log Q(x)':>8} | {'Explained':>9} | {'Gap':>8} | {'Status'}")
-    print("-" * 65)
-
-    for x in range(sqrt_N, sqrt_N + 25):
-        q = x * x - N
-        if q <= 0:
-            continue
-        log_q = math.log(q)
-        explained = sum(p_adic_val(p, q) * math.log(p) for p in factor_base)
-        gap = log_q - explained
-
-        if gap < 0.01:
-            status = "SMOOTH — zero gap ✓"
-        elif gap < 2:
-            status = f"almost (1 large prime?)"
-        else:
-            status = "rough"
-
-        print(f"{x:>5} | {q:>8} | {log_q:>8.3f} | {explained:>9.3f} | {gap:>8.3f} | {status}")
-
-
-# ============================================================================
-# Application 2: Hardware Min-Plus Kernel Simulation
-# ============================================================================
-
-def hardware_kernel_simulation():
-    """
-    Simulates a systolic min-plus array for sieve scoring.
-
-    A min-plus systolic array processes one (x, p) pair per clock cycle,
-    computing the tropical score in R × |FB| cycles. This is directly
-    implementable on FPGAs as a pipeline of add-compare-select units.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Hardware Min-Plus Sieve Kernel")
-    print("=" * 70)
-
-    N = 3571
-    B = 20
-    factor_base = sieve_primes(B)
-    sqrt_N = int(math.isqrt(N)) + 1
-    R = 20  # sieve interval size
-
-    print(f"\nN = {N}, B = {B}, R = {R}")
-    print(f"Factor base ({len(factor_base)} primes): {factor_base}")
-    print(f"\nSystolic array: {R} rows × {len(factor_base)} columns")
-    print(f"Total clock cycles: {R * len(factor_base)}")
-    print(f"Operations per cycle: 1 add + 1 compare = 2 gates")
-    print()
-
-    # Simulate the systolic pipeline
-    weights = [round(math.log(p), 3) for p in factor_base]
-    cycle = 0
-    scores = {}
-
-    print(f"{'Cycle':>6} | {'x':>5} | {'p':>4} | {'v_p(Q)':>6} | {'w_p':>6} | {'Accum':>8}")
-    print("-" * 55)
-
-    for i, x in enumerate(range(sqrt_N, sqrt_N + min(R, 5))):  # show first 5
-        q = abs(x * x - N)
-        accum = 0.0
-        for j, p in enumerate(factor_base):
-            v = p_adic_val(p, q) if q > 0 else 0
-            contribution = v * weights[j]
-            accum += contribution
-            cycle += 1
-            if v > 0:  # only show non-zero contributions
-                print(f"{cycle:>6} | {x:>5} | {p:>4} | {v:>6} | {weights[j]:>6} | {accum:>8.3f}")
-        scores[x] = accum
-
-    # Timing comparison
-    print(f"\n--- Performance comparison (R={200}, |FB|={len(factor_base)}) ---")
-
-    t0 = time.perf_counter()
-    for _ in range(100):
-        for x in range(sqrt_N, sqrt_N + 200):
-            q = abs(x * x - N)
-            _ = sum(p_adic_val(p, q) * math.log(p) for p in factor_base)
-    t_classical = (time.perf_counter() - t0) / 100
-
-    t0 = time.perf_counter()
-    for _ in range(100):
-        for x in range(sqrt_N, sqrt_N + 200):
-            q = abs(x * x - N)
-            _ = min(p_adic_val(p, q) + math.log(p) for p in factor_base)
-    t_tropical = (time.perf_counter() - t0) / 100
-
-    print(f"Classical scoring (sum): {t_classical*1000:.2f} ms")
-    print(f"Tropical scoring (min): {t_tropical*1000:.2f} ms")
-    print(f"Both use O(R·|FB|) = O({200 * len(factor_base)}) operations")
-
-
-# ============================================================================
-# Application 3: Tropical Entropy of Factorization
-# ============================================================================
-
-def tropical_entropy():
-    """
-    Tropical entropy: measures the "information content" of a number's
-    factorization relative to a factor base.
-
-    Smooth numbers have low tropical entropy (fully described by FB).
-    Rough numbers have high tropical entropy (require information beyond FB).
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Tropical Entropy of Factorization")
-    print("=" * 70)
-
-    B = 50
-    factor_base = sieve_primes(B)
-
-    print(f"\nFactor base: primes ≤ {B} ({len(factor_base)} primes)")
-    print(f"\nTropical entropy H_T(n) = log(n) - Σ v_p(n)·log(p) for p ∈ FB")
-    print(f"  = 0 for B-smooth numbers")
-    print(f"  = log(large_factor) for numbers with one large prime")
-    print()
-
-    test_numbers = [
-        2**10,                          # 1024, very smooth
-        2**3 * 3**2 * 5 * 7,            # 2520, smooth
-        2**2 * 3 * 53,                  # 636, one prime just above B
-        2 * 3 * 5 * 101,               # 3030, one large prime
-        97 * 103,                       # 9991, two large primes
-        7919,                           # large prime itself
-        2**4 * 3**3 * 5**2 * 7 * 11,   # 83160, very smooth
-    ]
-
-    print(f"{'n':>8} | {'log(n)':>8} | {'Explained':>9} | {'H_T(n)':>8} | {'Type'}")
-    print("-" * 60)
-
-    for n in test_numbers:
-        log_n = math.log(n)
-        explained = sum(p_adic_val(p, n) * math.log(p) for p in factor_base)
-        entropy = log_n - explained
-
-        factors = factorize(n)
-        large = [p for p in factors if p > B]
-        if not large:
-            ntype = "B-smooth"
-        elif len(large) == 1:
-            ntype = f"1-partial ({large[0]})"
-        else:
-            ntype = f"rough ({large})"
-
-        print(f"{n:>8} | {log_n:>8.3f} | {explained:>9.3f} | {entropy:>8.3f} | {ntype}")
-
-
-# ============================================================================
-# Application 4: Batch Relation Collection
-# ============================================================================
-
-def batch_relation_collection():
-    """
-    Batch relation collection using min-plus matrix operations.
-
-    Instead of scoring candidates one at a time, build the full
-    valuation matrix and compute all scores simultaneously via
-    tropical matrix-vector multiplication.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Batch Tropical Relation Collection")
-    print("=" * 70)
-
-    N = 91643  # composite
-    B = 40
-    factor_base = sieve_primes(B)
-    sqrt_N = int(math.isqrt(N)) + 1
-    R = 100
-
-    print(f"\nN = {N}, B = {B}")
-    print(f"Factor base: {len(factor_base)} primes")
-    print(f"Sieve interval: [{sqrt_N}, {sqrt_N + R - 1}]")
-
-    # Build valuation matrix
-    sieve_points = list(range(sqrt_N, sqrt_N + R))
-    M = []  # M[i][j] = v_{p_j}(Q_N(x_i))
-    Q_vals = []
-    for x in sieve_points:
-        q = abs(x * x - N)
-        Q_vals.append(q)
-        row = [p_adic_val(p, q) if q > 0 else 0 for p in factor_base]
-        M.append(row)
-
-    # Weight vector
-    w = [math.log(p) for p in factor_base]
-
-    # Compute all scores via matrix-vector product (classical: dot product)
-    classical_scores = [
-        sum(M[i][j] * w[j] for j in range(len(factor_base)))
-        for i in range(R)
-    ]
-
-    # Compute all deficiencies
-    deficiencies = []
-    smooth_count = 0
-    for i in range(R):
-        q = Q_vals[i]
-        if q <= 0:
-            continue
-        log_q = math.log(q)
-        deficiency = log_q - classical_scores[i]
-        is_smooth = deficiency < 0.01
-
-        if is_smooth:
-            smooth_count += 1
-        deficiencies.append((sieve_points[i], q, deficiency, is_smooth))
-
-    # Sort by deficiency (tropical ranking)
-    deficiencies.sort(key=lambda t: t[2])
-
-    print(f"\nResults:")
-    print(f"  Total candidates scored: {R}")
-    print(f"  Smooth relations found: {smooth_count}")
-    print(f"  Matrix operations: {R} × {len(factor_base)} = {R * len(factor_base)}")
-    print()
-
-    print(f"Top 15 candidates by tropical deficiency:")
-    print(f"{'Rank':>4} | {'x':>6} | {'Q(x)':>10} | {'Defic.':>8} | {'Status'}")
-    print("-" * 50)
-    for rank, (x, q, d, smooth) in enumerate(deficiencies[:15], 1):
-        status = "SMOOTH ✓" if smooth else ""
-        factors = factorize(q)
-        large = [p for p in factors if p > B]
-        if not smooth and large:
-            status = f"large: {large}"
-        print(f"{rank:>4} | {x:>6} | {q:>10} | {d:>8.3f} | {status}")
-
-
-# ============================================================================
-# Main
-# ============================================================================
-
-if __name__ == "__main__":
-    smoothness_as_shortest_path()
-    hardware_kernel_simulation()
-    tropical_entropy()
-    batch_relation_collection()
-
-    print("\n" + "=" * 70)
-    print("ALL APPLICATIONS COMPLETE")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Tropical Quadratic Sieve — Demonstration
-
-Concrete numerical examples showing how min-plus (tropical) algebra
-exactly captures the scoring criterion of the quadratic sieve's
-relation-collection stage.
-"""
-
-import math
+from typing import Dict, Set, List, Tuple
 from collections import defaultdict
-from typing import Dict, List, Tuple
 
 
 def factorize(n: int) -> Dict[int, int]:
-    """Return the prime factorization of n as {prime: exponent}."""
+    """Prime factorization of n."""
     if n <= 1:
         return {}
-    factors = {}
+    factors: Dict[int, int] = {}
     d = 2
     while d * d <= n:
         while n % d == 0:
@@ -357,318 +30,517 @@ def factorize(n: int) -> Dict[int, int]:
     return factors
 
 
-def classical_weight_score(n: int, w: Dict[int, float]) -> float:
-    """Classical weight score: Σ v_p(n) · w(p) over prime factors of n."""
+def smooth_cost(P: Set[int], n: int) -> float:
+    """Tropical smoothness cost."""
+    if n == 0:
+        return float('inf')
     factors = factorize(n)
-    return sum(exp * w.get(p, 0) for p, exp in factors.items())
+    return sum(e for p, e in factors.items() if p not in P)
 
 
-def tropical_score(n: int, factor_base: List[int], w: Dict[int, float]) -> float:
-    """Tropical score: Σ v_p(n) · w(p) over the factor base S."""
-    factors = factorize(n)
-    return sum(factors.get(p, 0) * w.get(p, 0) for p in factor_base)
+def primes_up_to(B: int) -> List[int]:
+    """Sieve of Eratosthenes."""
+    if B < 2:
+        return []
+    sieve = [True] * (B + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(B**0.5) + 1):
+        if sieve[i]:
+            for j in range(i*i, B + 1, i):
+                sieve[j] = False
+    return [i for i in range(2, B + 1) if sieve[i]]
 
 
-def is_smooth(n: int, factor_base: List[int]) -> bool:
-    """Check if n is B-smooth (all prime factors in the factor base)."""
-    factors = factorize(n)
-    return all(p in factor_base for p in factors)
+def gcd(a: int, b: int) -> int:
+    """Greatest common divisor."""
+    while b:
+        a, b = b, a % b
+    return a
 
 
-def Q_N(x: int, N: int) -> int:
-    """Quadratic sieve polynomial: Q_N(x) = x² - N."""
-    return x * x - N
+# ============================================================
+# Application 1: Factor a composite via tropical QS
+# ============================================================
 
-
-def demo_tropical_classical_equivalence():
+def tropical_factor(N: int, B: int = 50, R_half: int = 2000) -> Tuple[int, int]:
     """
-    THEOREM DEMONSTRATION: Tropical score = Classical score on smooth inputs.
+    Factor N using tropical quadratic sieve.
 
-    For B-smooth numbers, the tropical score (summing over the factor base)
-    exactly equals the classical weight score (summing over actual prime factors).
+    Uses smooth cost = 0 detection (Theorem 1) for relation collection,
+    then combines relations via GF(2) linear algebra.
+
+    This is a simplified version for demonstration — full QS uses
+    more sophisticated linear algebra and large-prime variations.
     """
-    print("=" * 70)
-    print("DEMO 1: Tropical-Classical Equivalence on Smooth Inputs")
-    print("=" * 70)
+    if N % 2 == 0:
+        return (2, N // 2)
 
-    N = 15347  # composite number to factor
-    B = 20     # smoothness bound
-    factor_base = [p for p in range(2, B + 1) if all(p % d != 0 for d in range(2, p))]
-    weights = {p: math.log(p) for p in factor_base}
+    P_primes = [p for p in primes_up_to(B)
+                if p == 2 or pow(N % p, (p - 1) // 2, p) <= 1]
+    P = set(P_primes)
 
-    print(f"\nTarget: N = {N}")
-    print(f"Factor base (primes ≤ {B}): {factor_base}")
-    print(f"Weights w(p) = ln(p): {{{', '.join(f'{p}: {w:.3f}' for p, w in weights.items())}}}")
-    print()
+    sqrt_N = int(math.isqrt(N))
+    if sqrt_N * sqrt_N < N:
+        sqrt_N += 1
 
-    # Scan sieve interval for smooth values
-    sqrt_N = int(math.isqrt(N)) + 1
-    smooth_count = 0
-    non_smooth_count = 0
-
-    print(f"{'x':>6} | {'Q_N(x)':>10} | {'Smooth?':>7} | {'Classical':>10} | {'Tropical':>10} | {'Match?':>6}")
-    print("-" * 70)
-
-    for x in range(sqrt_N, sqrt_N + 30):
-        q = Q_N(x, N)
-        if q <= 0:
+    # Collect smooth relations using tropical cost = 0 criterion
+    relations = []
+    for x in range(sqrt_N, sqrt_N + R_half + 1):
+        Q = x * x - N
+        if Q <= 0:
             continue
+        if smooth_cost(P, Q) == 0:
+            relations.append((x, Q, factorize(Q)))
 
-        smooth = is_smooth(q, factor_base)
-        c_score = classical_weight_score(q, weights)
-        t_score = tropical_score(q, factor_base, weights)
+    # Try to find a non-trivial factor from pairs of relations
+    # Simple approach: look for pairs whose product is a perfect square
+    for i in range(len(relations)):
+        for j in range(i + 1, len(relations)):
+            x1, q1, f1 = relations[i]
+            x2, q2, f2 = relations[j]
 
-        match = "✓" if abs(c_score - t_score) < 1e-10 else "✗"
+            # Combine exponent vectors
+            combined: Dict[int, int] = defaultdict(int)
+            for p, e in f1.items():
+                combined[p] += e
+            for p, e in f2.items():
+                combined[p] += e
 
-        if smooth:
-            smooth_count += 1
-            print(f"{x:>6} | {q:>10} | {'YES':>7} | {c_score:>10.4f} | {t_score:>10.4f} | {match:>6}")
-        else:
-            non_smooth_count += 1
-            factors = factorize(q)
-            large_primes = [p for p in factors if p > B]
-            if non_smooth_count <= 5:  # show a few non-smooth examples
-                print(f"{x:>6} | {q:>10} | {'NO':>7} | {c_score:>10.4f} | {t_score:>10.4f} | {'—':>6}  large: {large_primes}")
+            # Check if all exponents are even
+            if all(e % 2 == 0 for e in combined.values()):
+                # q1 * q2 is a perfect square
+                y_sq = q1 * q2
+                y = int(math.isqrt(y_sq))
+                if y * y == y_sq:
+                    x_prod = (x1 * x2) % N
+                    g = gcd(abs(x_prod - y), N)
+                    if 1 < g < N:
+                        return (g, N // g)
 
-    print(f"\nSmooth values found: {smooth_count}")
-    print(f"KEY RESULT: On ALL smooth inputs, tropical score = classical score ✓")
-    print(f"(Non-smooth inputs: scores differ because tropical misses large primes)")
+    # Try combining three relations
+    for i in range(len(relations)):
+        for j in range(i + 1, min(len(relations), i + 20)):
+            x1, q1, f1 = relations[i]
+            x2, q2, f2 = relations[j]
+            combined_ij: Dict[int, int] = defaultdict(int)
+            for p, e in f1.items():
+                combined_ij[p] += e
+            for p, e in f2.items():
+                combined_ij[p] += e
+            # Find what's needed
+            needed = {p: e % 2 for p, e in combined_ij.items() if e % 2 != 0}
+            if not needed:
+                continue
+            for k in range(j + 1, len(relations)):
+                x3, q3, f3 = relations[k]
+                combined = dict(combined_ij)
+                for p, e in f3.items():
+                    combined[p] = combined.get(p, 0) + e
+                if all(e % 2 == 0 for e in combined.values()):
+                    y_sq = q1 * q2 * q3
+                    y = int(math.isqrt(y_sq))
+                    if y * y == y_sq:
+                        x_prod = (x1 * x2 * x3) % N
+                        g = gcd(abs(x_prod - y), N)
+                        if 1 < g < N:
+                            return (g, N // g)
+
+    return (N, 1)  # Failed
 
 
-def demo_min_plus_convolution():
+# ============================================================
+# Application 2: Adaptive Factor Base Design
+# ============================================================
+
+def adaptive_factor_base(N: int, target_smooth: int = 20, R_half: int = 500) -> Set[int]:
     """
-    THEOREM DEMONSTRATION: Associativity of min-plus convolution.
+    Design an optimal factor base using tropical cost monotonicity (Theorem 3).
 
-    (f ★ g) ★ h = f ★ (g ★ h) where (f ★ g)(n) = min_k (f(k) + g(n-k)).
+    Greedy algorithm: iteratively add the prime that maximally reduces
+    total smooth cost across the sieve interval. By Theorem 3, each
+    addition is guaranteed to not increase any individual cost.
     """
-    print("\n" + "=" * 70)
-    print("DEMO 2: Associativity of Min-Plus Convolution")
-    print("=" * 70)
+    sqrt_N = int(math.isqrt(N))
+    if sqrt_N * sqrt_N < N:
+        sqrt_N += 1
 
-    def tropical_conv(f, g, n):
-        """Min-plus convolution: min over k in [0,n] of f(k) + g(n-k)."""
-        return min(f(k) + g(n - k) for k in range(n + 1))
+    # Compute Q_N values
+    Q_values = []
+    for x in range(sqrt_N, sqrt_N + R_half + 1):
+        Q = x * x - N
+        if Q > 0:
+            Q_values.append(Q)
 
-    # Define test functions (simulating sieve scoring patterns)
-    f = lambda k: k * k % 7 + 1      # valuation-like function
-    g = lambda k: (k + 3) % 5 + 2    # weight-like function
-    h = lambda k: abs(k - 4) + 1     # penalty-like function
+    candidates = primes_up_to(100)
+    P: Set[int] = set()
 
-    print("\nTest functions:")
-    print(f"  f(k) = k² mod 7 + 1:  {[f(k) for k in range(10)]}")
-    print(f"  g(k) = (k+3) mod 5 + 2: {[g(k) for k in range(10)]}")
-    print(f"  h(k) = |k-4| + 1:     {[h(k) for k in range(10)]}")
-    print()
+    print(f"  Starting adaptive factor base design for N={N}")
+    print(f"  Sieve interval size: {len(Q_values)}")
 
-    max_n = 15
-    all_match = True
+    for step in range(15):
+        best_prime = None
+        best_reduction = 0
+        best_smooth_count = 0
 
-    print(f"{'n':>4} | {'(f★g)★h':>10} | {'f★(g★h)':>10} | {'Match':>6}")
-    print("-" * 40)
+        for p in candidates:
+            if p in P:
+                continue
+            P_new = P | {p}
+            reduction = sum(smooth_cost(P, q) - smooth_cost(P_new, q)
+                           for q in Q_values[:200])  # Sample for speed
+            sc = sum(1 for q in Q_values if smooth_cost(P_new, q) == 0)
+            if reduction > best_reduction:
+                best_reduction = reduction
+                best_prime = p
+                best_smooth_count = sc
 
-    for n in range(max_n + 1):
-        fg = lambda m, _f=f, _g=g: tropical_conv(_f, _g, m)
-        gh = lambda m, _g=g, _h=h: tropical_conv(_g, _h, m)
+        if best_prime is None:
+            break
 
-        lhs = tropical_conv(fg, h, n)
-        rhs = tropical_conv(f, gh, n)
-        match = lhs == rhs
-        all_match = all_match and match
+        P.add(best_prime)
+        smooth_count = sum(1 for q in Q_values if smooth_cost(P, q) == 0)
+        print(f"  Step {step+1}: Added prime {best_prime:>3}, "
+              f"smooth relations: {smooth_count:>4}, "
+              f"cost reduction: {best_reduction:.0f}")
 
-        print(f"{n:>4} | {lhs:>10} | {rhs:>10} | {'✓' if match else '✗':>6}")
+        if smooth_count >= target_smooth:
+            break
 
-    print(f"\nAssociativity verified for all n in [0, {max_n}]: {'✓ ALL MATCH' if all_match else '✗ MISMATCH'}")
+    return P
 
 
-def demo_min_plus_matrix_vector():
+# ============================================================
+# Application 3: Cryptographic Security Estimation
+# ============================================================
+
+def estimate_qs_security(key_bits: int) -> Dict[str, float]:
     """
-    THEOREM DEMONSTRATION: Min-plus matrix-vector multiplication.
+    Estimate the security of an RSA key against quadratic sieve attack.
 
-    Shows how sieve scoring is naturally a tropical linear algebra operation,
-    and demonstrates the monotonicity theorem.
+    Uses the tropical framework to compute:
+    - Optimal factor base size B
+    - Expected sieve interval size R
+    - Total tropical kernel work R × B
+    - Estimated operations (using L-notation)
     """
-    print("\n" + "=" * 70)
-    print("DEMO 3: Min-Plus Matrix-Vector Product (Tropical Sieve Kernel)")
-    print("=" * 70)
+    N_log = key_bits * math.log(2)
+    N_loglog = math.log(N_log)
 
-    N = 2041
-    sqrt_N = int(math.isqrt(N)) + 1
-    factor_base = [2, 3, 5, 7, 11, 13]
-    sieve_points = list(range(sqrt_N, sqrt_N + 8))
+    # Classical QS parameters
+    # B ≈ exp(√(log N · log log N))
+    # R ≈ exp(√(log N · log log N))
+    L = math.exp(math.sqrt(N_log * N_loglog))
 
-    print(f"\nN = {N}, factor base = {factor_base}")
-    print(f"Sieve points: {sieve_points}")
+    B_optimal = L
+    R_optimal = L
 
-    # Build valuation matrix M[i][j] = v_{p_j}(Q_N(x_i))
-    M = []
-    for x in sieve_points:
-        q = Q_N(x, N)
-        if q <= 0:
-            q = 1
-        factors = factorize(q)
-        row = [factors.get(p, 0) for p in factor_base]
-        M.append(row)
+    # Tropical kernel work = R × B (Theorem: complexity transport)
+    kernel_work = R_optimal * B_optimal
 
-    print("\nValuation matrix M[x_i, p_j] = v_{p_j}(Q_N(x_i)):")
-    header = f"{'x':>6} | {'Q_N(x)':>8} |" + "".join(f"  p={p:>2}" for p in factor_base) + " | smooth?"
-    print(header)
-    print("-" * len(header))
-    for i, x in enumerate(sieve_points):
-        q = Q_N(x, N)
-        smooth = is_smooth(max(q, 1), factor_base)
-        row_str = "".join(f"  {M[i][j]:>4}" for j in range(len(factor_base)))
-        print(f"{x:>6} | {q:>8} |{row_str} | {'YES ✓' if smooth else 'no'}")
+    # Convert to log2 for interpretability
+    log2_work = math.log2(kernel_work)
 
-    # Min-plus matrix-vector product with weight vector
-    w = [int(math.log(p) * 10) for p in factor_base]  # discretized log weights
-    print(f"\nWeight vector w = [10·ln(p)]: {w}")
-
-    print("\nMin-plus product (M ⊗ w)[i] = min_j (M[i,j] + w[j]):")
-    for i, x in enumerate(sieve_points):
-        vals = [M[i][j] + w[j] for j in range(len(factor_base))]
-        result = min(vals)
-        argmin = vals.index(result)
-        print(f"  x={x}: min({vals}) = {result} (via p={factor_base[argmin]})")
-
-    # Demonstrate monotonicity
-    w2 = [v + 5 for v in w]
-    print(f"\nMonotonicity: w' = w + 5 = {w2}")
-    print("  (M ⊗ w)[i] ≤ (M ⊗ w')[i] for all i:")
-    for i, x in enumerate(sieve_points):
-        v1 = min(M[i][j] + w[j] for j in range(len(factor_base)))
-        v2 = min(M[i][j] + w2[j] for j in range(len(factor_base)))
-        print(f"  x={x}: {v1} ≤ {v2} {'✓' if v1 <= v2 else '✗'}")
+    return {
+        "key_bits": key_bits,
+        "optimal_B": B_optimal,
+        "optimal_R": R_optimal,
+        "kernel_work_log2": log2_work,
+        "L_exponent": math.sqrt(N_log * N_loglog) / N_log,
+        "classical_equivalent": log2_work,
+    }
 
 
-def demo_idempotent_no_go():
-    """
-    THEOREM DEMONSTRATION: Idempotent additive groups are trivial.
-
-    Shows why the parity-solving stage of QS cannot be tropicalized:
-    requiring both idempotent addition and additive inverses forces triviality.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 4: No-Go Theorem — Idempotent Groups are Trivial")
-    print("=" * 70)
-
-    print("\nThe quadratic sieve has two stages:")
-    print("  1. Relation collection (scoring): uses + and min → TROPICALIZES ✓")
-    print("  2. Linear algebra over GF(2): uses + and − → CANNOT tropicalize ✗")
-    print()
-    print("WHY? If a + a = a (idempotent) and the group has inverses:")
-    print("  a + a = a")
-    print("  ⟹ (a + a) + (-a) = a + (-a)")
-    print("  ⟹ a + 0 = 0")
-    print("  ⟹ a = 0")
-    print()
-    print("So the only group with idempotent addition is {0}.")
-    print()
-
-    # Verify computationally with Z/nZ for various n
-    print("Computational verification — elements with a+a=a in Z/nZ:")
-    for n in range(2, 13):
-        idempotents = [a for a in range(n) if (2 * a) % n == a]
-        print(f"  Z/{n}Z: idempotent elements = {idempotents} "
-              f"({'only 0 — trivial!' if idempotents == [0] else 'NOT a group property'})")
-
-    print()
-    print("CONCLUSION: Only Z/1Z has ALL elements idempotent under addition.")
-    print("This is why GF(2) linear algebra (the sieve's final stage)")
-    print("is structurally incompatible with tropical (idempotent) algebra.")
-
-
-def demo_sieve_scoring_comparison():
-    """
-    DEMO 5: Full sieve scoring comparison — classical vs tropical.
-
-    Shows the complete workflow of scoring candidates in both frameworks,
-    demonstrating exact agreement on smooth inputs and the information
-    structure of the tropical deficiency score.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 5: Complete Sieve Scoring — Classical vs Tropical")
-    print("=" * 70)
-
-    N = 7429  # = 89 × 83 + 42... let's check
-    print(f"\nN = {N} = ", end="")
-    fN = factorize(N)
-    print(" × ".join(f"{p}^{e}" if e > 1 else str(p) for p, e in sorted(fN.items())))
-
-    B = 30
-    factor_base = [p for p in range(2, B + 1) if all(p % d != 0 for d in range(2, p))]
-    weights = {p: round(math.log(p), 4) for p in factor_base}
-
-    print(f"Factor base (B={B}): {factor_base}")
-    print(f"Weight = ln(p)")
-    print()
-
-    sqrt_N = int(math.isqrt(N)) + 1
-    results = []
-
-    for x in range(sqrt_N, sqrt_N + 50):
-        q = Q_N(x, N)
-        if q <= 0:
-            continue
-        smooth = is_smooth(q, factor_base)
-        c_score = classical_weight_score(q, weights)
-        t_score = tropical_score(q, factor_base, weights)
-        deficiency = c_score - t_score  # how much is "missed" by tropical
-        results.append((x, q, smooth, c_score, t_score, deficiency))
-
-    print(f"{'x':>5} | {'Q(x)':>8} | {'Smooth':>6} | {'Class.':>8} | {'Trop.':>8} | {'Defic.':>8} | Factors")
-    print("-" * 80)
-    for x, q, smooth, cs, ts, defic in results[:20]:
-        facts = factorize(q)
-        fact_str = " · ".join(f"{p}^{e}" if e > 1 else str(p) for p, e in sorted(facts.items()))
-        print(f"{x:>5} | {q:>8} | {'YES ✓' if smooth else 'no':>6} | {cs:>8.3f} | {ts:>8.3f} | {defic:>8.3f} | {fact_str}")
-
-    smooth_results = [(x, q, cs, ts) for x, q, sm, cs, ts, _ in results if sm]
-    print(f"\n{len(smooth_results)} smooth values found in interval.")
-    if smooth_results:
-        print("On ALL smooth values: tropical score = classical score ✓")
-        for x, q, cs, ts in smooth_results:
-            assert abs(cs - ts) < 1e-10, f"Mismatch at x={x}!"
-
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
-    demo_tropical_classical_equivalence()
-    demo_min_plus_convolution()
-    demo_min_plus_matrix_vector()
-    demo_idempotent_no_go()
-    demo_sieve_scoring_comparison()
+    print("=" * 70)
+    print("TROPICAL QUADRATIC SIEVE: APPLICATIONS")
+    print("=" * 70)
+
+    # Application 1: Factor composites
+    print("\n--- Application 1: Tropical Factoring ---")
+    test_composites = [
+        (143, "Small"),
+        (1073, "Medium"),
+        (10403, "Larger"),
+        (15347, "Demo value"),
+        (100127, "5-digit"),
+    ]
+
+    for N, label in test_composites:
+        p, q = tropical_factor(N, B=50, R_half=3000)
+        status = "✓" if p * q == N and p > 1 and q > 1 else "✗"
+        print(f"  {label:>10}: N = {N:>7} = {p} × {q}  {status}")
+
+    # Application 2: Adaptive factor base
+    print("\n--- Application 2: Adaptive Factor Base Design ---")
+    P_opt = adaptive_factor_base(15347, target_smooth=15, R_half=500)
+    print(f"  Final factor base: {sorted(P_opt)}")
+
+    # Application 3: Security estimation
+    print("\n--- Application 3: RSA Security vs Tropical QS ---")
+    print(f"  {'Key bits':>10} | {'B (optimal)':>15} | {'R (optimal)':>15} | {'Work (log₂)':>12} | {'Security':>10}")
+    print("  " + "-" * 70)
+    for bits in [512, 768, 1024, 2048, 3072, 4096]:
+        est = estimate_qs_security(bits)
+        security = "BROKEN" if est["kernel_work_log2"] < 80 else (
+            "WEAK" if est["kernel_work_log2"] < 128 else "SECURE")
+        print(f"  {bits:>10} | {est['optimal_B']:>15.2e} | {est['optimal_R']:>15.2e} | "
+              f"{est['kernel_work_log2']:>12.1f} | {security:>10}")
+
+    print("\n  Note: The tropical kernel work R×B matches the classical QS work")
+    print("  by the complexity transport theorem (Theorem 5).")
+
+    # Application 4: Smooth number distribution
+    print("\n--- Application 4: Smooth Number Distribution ---")
+    for B in [5, 10, 20, 50]:
+        P = set(primes_up_to(B))
+        counts = {}
+        for N_bound in [100, 1000, 10000]:
+            count = sum(1 for n in range(1, N_bound + 1) if smooth_cost(P, n) == 0)
+            counts[N_bound] = count
+
+        print(f"  B={B:>3}: ", end="")
+        for N_bound, count in counts.items():
+            pct = 100 * count / N_bound
+            print(f"Ψ({N_bound},{B})={count:>5} ({pct:>5.1f}%)  ", end="")
+        print()
 
     print("\n" + "=" * 70)
-    print("ALL DEMONSTRATIONS COMPLETE")
+    print("All applications completed.")
     print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Tropical Quadratic Sieve — Visualizations
+Tropical Quadratic Sieve: Demonstration of Core Theorems
 
-Generates publication-quality figures showing:
-1. Tropical vs classical sieve scores
-2. Min-plus convolution associativity
-3. Smoothness landscape (tropical entropy)
-4. Valuation matrix heatmap
+This script demonstrates the three main theorems with concrete numerical examples:
+1. smoothCost = 0 ↔ B-smooth (Theorem 1)
+2. smoothCost(a*b) = smoothCost(a) + smoothCost(b) (Theorem 2)
+3. smoothCost monotonicity under factor base enlargement (Theorem 3)
+"""
+
+from collections import Counter
+from typing import Dict, Set, Optional
+import math
+
+
+def factorize(n: int) -> Dict[int, int]:
+    """Return prime factorization of n as {prime: exponent}."""
+    if n <= 1:
+        return {}
+    factors: Dict[int, int] = {}
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            n //= d
+        d += 1
+    if n > 1:
+        factors[n] = factors.get(n, 0) + 1
+    return factors
+
+
+def smooth_cost(P: Set[int], n: int) -> Optional[int]:
+    """
+    Compute the tropical smoothness cost of n relative to factor base P.
+    Returns None for n=0 (representing ⊤), otherwise the sum of valuations
+    at primes outside P.
+    """
+    if n == 0:
+        return None  # ⊤
+    factors = factorize(n)
+    return sum(e for p, e in factors.items() if p not in P)
+
+
+def is_bsmooth(P: Set[int], n: int) -> bool:
+    """Check if n is P-smooth (all prime factors in P)."""
+    if n <= 0:
+        return False
+    factors = factorize(n)
+    return all(p in P for p in factors)
+
+
+# ============================================================
+# Demo 1: Theorem 1 — smoothCost = 0 ↔ B-smooth
+# ============================================================
+print("=" * 70)
+print("THEOREM 1: smoothCost(P, n) = 0 ↔ n is P-smooth")
+print("=" * 70)
+
+P = {2, 3, 5, 7}
+print(f"\nFactor base P = {P}")
+print(f"\n{'n':>6} | {'factorization':>20} | {'smoothCost':>10} | {'P-smooth?':>9} | {'Match?':>6}")
+print("-" * 70)
+
+test_numbers = [1, 2, 6, 12, 30, 42, 60, 77, 100, 210, 360, 385, 1000, 2310]
+for n in test_numbers:
+    factors = factorize(n)
+    factor_str = " × ".join(f"{p}^{e}" if e > 1 else str(p) for p, e in sorted(factors.items()))
+    if not factor_str:
+        factor_str = "1"
+    cost = smooth_cost(P, n)
+    smooth = is_bsmooth(P, n)
+    match = (cost == 0) == smooth
+    print(f"{n:>6} | {factor_str:>20} | {cost:>10} | {str(smooth):>9} | {'✓' if match else '✗':>6}")
+
+# Count smooth numbers
+smooth_count = sum(1 for n in range(1, 1001) if smooth_cost(P, n) == 0)
+print(f"\nNumbers in [1, 1000] with smoothCost = 0: {smooth_count}")
+print(f"Numbers in [1, 1000] that are {P}-smooth: {sum(1 for n in range(1, 1001) if is_bsmooth(P, n))}")
+
+# ============================================================
+# Demo 2: Theorem 2 — Multiplicative Additivity
+# ============================================================
+print("\n" + "=" * 70)
+print("THEOREM 2: smoothCost(P, a·b) = smoothCost(P, a) + smoothCost(P, b)")
+print("=" * 70)
+
+P = {2, 3, 5}
+print(f"\nFactor base P = {P}")
+print(f"\n{'a':>5} | {'b':>5} | {'a*b':>8} | {'cost(a)':>7} | {'cost(b)':>7} | {'cost(a*b)':>9} | {'sum':>5} | {'Equal?':>6}")
+print("-" * 70)
+
+pairs = [(6, 10), (7, 11), (12, 35), (30, 77), (1, 100), (8, 27), (13, 17), (100, 100)]
+for a, b in pairs:
+    ca = smooth_cost(P, a)
+    cb = smooth_cost(P, b)
+    cab = smooth_cost(P, a * b)
+    s = ca + cb
+    print(f"{a:>5} | {b:>5} | {a*b:>8} | {ca:>7} | {cb:>7} | {cab:>9} | {s:>5} | {'✓' if cab == s else '✗':>6}")
+
+# Exhaustive verification
+print("\nExhaustive verification for a, b ∈ [1, 100]...")
+violations = 0
+for a in range(1, 101):
+    for b in range(1, 101):
+        if smooth_cost(P, a * b) != smooth_cost(P, a) + smooth_cost(P, b):
+            violations += 1
+print(f"Violations: {violations} / 10000")
+
+# ============================================================
+# Demo 3: Theorem 3 — Factor Base Monotonicity
+# ============================================================
+print("\n" + "=" * 70)
+print("THEOREM 3: P ⊆ Q ⟹ smoothCost(Q, n) ≤ smoothCost(P, n)")
+print("=" * 70)
+
+bases = [
+    {2},
+    {2, 3},
+    {2, 3, 5},
+    {2, 3, 5, 7},
+    {2, 3, 5, 7, 11},
+    {2, 3, 5, 7, 11, 13},
+]
+
+test_ns = [60, 77, 210, 385, 1001, 2310, 5005]
+print(f"\n{'n':>6}", end="")
+for P in bases:
+    label = ",".join(str(p) for p in sorted(P))
+    print(f" | P={{{label}}}".rjust(16), end="")
+print()
+print("-" * (6 + 16 * len(bases) + len(bases) * 3))
+
+for n in test_ns:
+    print(f"{n:>6}", end="")
+    prev_cost = float('inf')
+    for P in bases:
+        cost = smooth_cost(P, n)
+        arrow = "≤" if cost <= prev_cost else "!!"
+        print(f" | {cost:>10} {arrow:>3}", end="")
+        prev_cost = cost
+    print()
+
+# Exhaustive monotonicity check
+print("\nExhaustive monotonicity check for n ∈ [1, 5000]...")
+mono_violations = 0
+for n in range(1, 5001):
+    costs = [smooth_cost(P, n) for P in bases]
+    for i in range(len(costs) - 1):
+        if costs[i + 1] > costs[i]:
+            mono_violations += 1
+print(f"Monotonicity violations: {mono_violations}")
+
+# ============================================================
+# Demo 4: No-Go Theorem — Idempotent groups are trivial
+# ============================================================
+print("\n" + "=" * 70)
+print("THEOREM 4: Idempotent additive group ⟹ trivial")
+print("=" * 70)
+print("\nIf a + a = a for all a in a group G, then a = 0 for all a.")
+print("Proof: a + a = a = a + 0, so by cancellation, a = 0.")
+print("\nThis means GF(2) linear algebra (where 1+1=0 ≠ 1) CANNOT be tropical:")
+print("  In GF(2): 1 + 1 = 0 ≠ 1, so addition is NOT idempotent.")
+print("  Tropical addition (min) IS idempotent: min(a, a) = a.")
+print("  ⟹ The QS parity-solving stage resists tropicalization.")
+
+# ============================================================
+# Demo 5: Quadratic Sieve Application
+# ============================================================
+print("\n" + "=" * 70)
+print("APPLICATION: Tropical Sieve Scoring for N = 15347")
+print("=" * 70)
+
+N = 15347
+M = int(math.isqrt(N)) + 1  # Start of sieve interval
+R = 100
+P = {2, 3, 5, 7, 11, 13}
+print(f"\nN = {N}, sieve interval [{M}, {M+R}), factor base P = {P}")
+print(f"\n{'x':>5} | {'Q_N(x)':>10} | {'cost':>5} | {'smooth?':>7} | factorization")
+print("-" * 70)
+
+smooth_found = []
+for x in range(M, M + R):
+    qn = x * x - N
+    if qn <= 0:
+        continue
+    cost = smooth_cost(P, qn)
+    if cost <= 2:  # Show candidates with low cost
+        factors = factorize(qn)
+        factor_str = " × ".join(f"{p}^{e}" if e > 1 else str(p) for p, e in sorted(factors.items()))
+        smooth_label = "YES" if cost == 0 else "almost"
+        print(f"{x:>5} | {qn:>10} | {cost:>5} | {smooth_label:>7} | {factor_str}")
+        if cost == 0:
+            smooth_found.append((x, qn))
+
+print(f"\nSmooth relations found: {len(smooth_found)}")
+for x, qn in smooth_found:
+    print(f"  x={x}: {x}² - {N} = {qn} = {factorize(qn)}")
+
+print("\n" + "=" * 70)
+print("All demonstrations completed successfully.")
+print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""
+Tropical Quadratic Sieve: Visualizations
+
+Generates publication-quality figures illustrating the core theorems
+and their applications to the quadratic sieve.
 """
 
 import math
 import base64
 import io
-from typing import Dict, List
+from typing import Dict, Set, List
 
+# Use Agg backend for headless rendering
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.colors as mcolors
 import numpy as np
 
 
 def factorize(n: int) -> Dict[int, int]:
     if n <= 1:
         return {}
-    factors = {}
+    factors: Dict[int, int] = {}
     d = 2
     while d * d <= n:
         while n % d == 0:
@@ -680,235 +552,281 @@ def factorize(n: int) -> Dict[int, int]:
     return factors
 
 
-def p_adic_val(p: int, n: int) -> int:
+def smooth_cost(P: Set[int], n: int) -> float:
     if n == 0:
-        return 0
-    v = 0
-    while n % p == 0:
-        v += 1
-        n //= p
-    return v
+        return float('inf')
+    factors = factorize(n)
+    return sum(e for p, e in factors.items() if p not in P)
 
 
-def sieve_primes(bound: int) -> List[int]:
-    if bound < 2:
+def primes_up_to(B: int) -> List[int]:
+    if B < 2:
         return []
-    is_prime = [True] * (bound + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(bound**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, bound + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, bound + 1) if is_prime[i]]
+    sieve = [True] * (B + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(B**0.5) + 1):
+        if sieve[i]:
+            for j in range(i*i, B + 1, i):
+                sieve[j] = False
+    return [i for i in range(2, B + 1) if sieve[i]]
 
 
 def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
+    """Convert matplotlib figure to base64 PNG data URI."""
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{encoded}"
 
 
-def plot_score_comparison():
-    """Figure 1: Tropical vs Classical Sieve Scores."""
-    N = 15347
-    B = 30
-    fb = sieve_primes(B)
-    sqrt_N = int(math.isqrt(N)) + 1
-    interval = list(range(sqrt_N, sqrt_N + 60))
+# ============================================================
+# Figure 1: Smooth Cost Landscape
+# ============================================================
 
-    xs = []
-    classical = []
-    tropical = []
-    smooth_x = []
-    smooth_y = []
+def plot_smooth_cost_landscape():
+    """Visualize smoothCost over [1, 200] for different factor bases."""
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle('Tropical Smoothness Cost Landscape', fontsize=16, fontweight='bold')
 
-    for x in interval:
-        q = x * x - N
-        if q <= 0:
-            continue
-        xs.append(x)
+    bases = [
+        ({2}, '{2}'),
+        ({2, 3}, '{2, 3}'),
+        ({2, 3, 5}, '{2, 3, 5}'),
+        ({2, 3, 5, 7}, '{2, 3, 5, 7}'),
+    ]
 
-        factors = factorize(q)
-        c_score = sum(e * math.log(p) for p, e in factors.items())
-        t_score = sum(p_adic_val(p, q) * math.log(p) for p in fb)
+    N = 200
+    ns = list(range(1, N + 1))
 
-        classical.append(c_score)
-        tropical.append(t_score)
+    for ax, (P, label) in zip(axes.flat, bases):
+        costs = [smooth_cost(P, n) for n in ns]
+        colors = ['#2ecc71' if c == 0 else '#e74c3c' if c >= 3 else '#f39c12' for c in costs]
+        ax.bar(ns, costs, color=colors, width=1.0, edgecolor='none')
+        ax.set_title(f'P = {label}', fontsize=13)
+        ax.set_xlabel('n')
+        ax.set_ylabel('smoothCost(P, n)')
+        ax.set_ylim(0, max(costs) + 1)
 
-        large_primes = [p for p in factors if p > B]
-        if not large_primes:
-            smooth_x.append(x)
-            smooth_y.append(c_score)
+        zero_count = sum(1 for c in costs if c == 0)
+        ax.annotate(f'{zero_count} smooth', xy=(0.95, 0.95),
+                   xycoords='axes fraction', ha='right', va='top',
+                   fontsize=11, color='#2ecc71', fontweight='bold',
+                   bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
 
-    fig, ax = plt.subplots(1, 1, figsize=(12, 6))
-    ax.plot(xs, classical, 'b-', linewidth=1.5, alpha=0.8, label='Classical score (all primes)')
-    ax.plot(xs, tropical, 'r--', linewidth=1.5, alpha=0.8, label='Tropical score (factor base only)')
-    ax.scatter(smooth_x, smooth_y, c='green', s=80, zorder=5,
-               label='B-smooth (scores match exactly)', edgecolors='darkgreen', linewidth=1)
+    plt.tight_layout()
+    return fig_to_base64(fig)
 
-    ax.set_xlabel('Sieve point x', fontsize=13)
-    ax.set_ylabel('Weight score', fontsize=13)
-    ax.set_title(f'Tropical vs Classical Sieve Scoring (N={N}, B={B})', fontsize=15)
-    ax.legend(fontsize=11)
+
+# ============================================================
+# Figure 2: Multiplicative Additivity Verification
+# ============================================================
+
+def plot_multiplicative_additivity():
+    """Scatter plot verifying smoothCost(ab) = smoothCost(a) + smoothCost(b)."""
+    fig, ax = plt.subplots(figsize=(8, 8))
+
+    P = {2, 3, 5}
+    points_x = []
+    points_y = []
+
+    for a in range(1, 81):
+        for b in range(a, 81):
+            cost_ab = smooth_cost(P, a * b)
+            cost_sum = smooth_cost(P, a) + smooth_cost(P, b)
+            points_x.append(cost_sum)
+            points_y.append(cost_ab)
+
+    ax.scatter(points_x, points_y, alpha=0.3, s=10, c='#3498db', edgecolors='none')
+    max_val = max(max(points_x), max(points_y)) + 1
+    ax.plot([0, max_val], [0, max_val], 'r-', linewidth=2, label='y = x (perfect equality)')
+    ax.set_xlabel('smoothCost(P, a) + smoothCost(P, b)', fontsize=12)
+    ax.set_ylabel('smoothCost(P, a·b)', fontsize=12)
+    ax.set_title('Theorem 2: Multiplicative Additivity\nsmoothCost(P, a·b) = smoothCost(P, a) + smoothCost(P, b)',
+                fontsize=14, fontweight='bold')
+    ax.legend(fontsize=12)
+    ax.set_aspect('equal')
     ax.grid(True, alpha=0.3)
 
-    fig.tight_layout()
+    plt.tight_layout()
     return fig_to_base64(fig)
 
 
-def plot_tropical_entropy():
-    """Figure 2: Tropical entropy landscape over sieve interval."""
-    N = 10007
-    B = 30
-    fb = sieve_primes(B)
+# ============================================================
+# Figure 3: Factor Base Monotonicity
+# ============================================================
+
+def plot_monotonicity():
+    """Visualize how smooth cost decreases as factor base grows."""
+    fig, ax = plt.subplots(figsize=(12, 6))
+
+    bases = [
+        {2},
+        {2, 3},
+        {2, 3, 5},
+        {2, 3, 5, 7},
+        {2, 3, 5, 7, 11},
+        {2, 3, 5, 7, 11, 13},
+    ]
+    labels = ['{2}', '{2,3}', '{2,3,5}', '{2,3,5,7}', '{2,..,11}', '{2,..,13}']
+
+    N = 500
+    ns = list(range(1, N + 1))
+
+    colors = plt.cm.viridis(np.linspace(0.1, 0.9, len(bases)))
+
+    for P, label, color in zip(bases, labels, colors):
+        # Compute running average of smooth cost
+        costs = [smooth_cost(P, n) for n in ns]
+        window = 20
+        avg = [sum(costs[max(0,i-window):i+1]) / min(i+1, window+1) for i in range(len(costs))]
+        ax.plot(ns, avg, label=f'P = {label}', color=color, linewidth=2)
+
+    ax.set_xlabel('n', fontsize=12)
+    ax.set_ylabel('Smoothness Cost (running average)', fontsize=12)
+    ax.set_title('Theorem 3: Factor Base Monotonicity\nLarger factor base → lower cost (curves never cross upward)',
+                fontsize=14, fontweight='bold')
+    ax.legend(fontsize=10, loc='upper left')
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    return fig_to_base64(fig)
+
+
+# ============================================================
+# Figure 4: QS Sieve Scoring
+# ============================================================
+
+def plot_sieve_scoring():
+    """Visualize tropical sieve scores for a specific N."""
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 8), gridspec_kw={'height_ratios': [2, 1]})
+    fig.suptitle('Tropical Sieve Scoring for N = 15347', fontsize=16, fontweight='bold')
+
+    N = 15347
+    P = set(primes_up_to(20))
     sqrt_N = int(math.isqrt(N)) + 1
-    R = 100
 
-    xs = []
-    entropies = []
-    colors = []
+    xs = list(range(sqrt_N, sqrt_N + 150))
+    Qs = [x * x - N for x in xs]
+    costs = [smooth_cost(P, q) if q > 0 else float('inf') for q in Qs]
 
-    for x in range(sqrt_N, sqrt_N + R):
-        q = x * x - N
-        if q <= 0:
-            continue
-        xs.append(x)
-        log_q = math.log(q)
-        explained = sum(p_adic_val(p, q) * math.log(p) for p in fb)
-        entropy = log_q - explained
-        entropies.append(entropy)
+    # Cap infinity for display
+    max_display = 10
+    costs_display = [min(c, max_display) for c in costs]
 
-        if entropy < 0.01:
-            colors.append('green')
-        elif entropy < 3:
-            colors.append('orange')
-        else:
-            colors.append('red')
+    colors = ['#2ecc71' if c == 0 else '#3498db' if c <= 2 else '#e74c3c' for c in costs]
 
-    fig, ax = plt.subplots(1, 1, figsize=(12, 5))
-    ax.bar(xs, entropies, color=colors, alpha=0.7, width=0.8)
-    ax.axhline(y=0, color='green', linestyle='-', linewidth=2, alpha=0.5)
+    ax1.bar(xs, costs_display, color=colors, width=1.0, edgecolor='none')
+    ax1.set_ylabel('smoothCost(P, Q_N(x))', fontsize=12)
+    ax1.set_xlabel('x', fontsize=12)
+    ax1.axhline(y=0, color='green', linestyle='--', alpha=0.5)
 
-    green_patch = mpatches.Patch(color='green', alpha=0.7, label='B-smooth (entropy ≈ 0)')
-    orange_patch = mpatches.Patch(color='orange', alpha=0.7, label='Near-smooth (1 large prime)')
-    red_patch = mpatches.Patch(color='red', alpha=0.7, label='Rough (high entropy)')
-    ax.legend(handles=[green_patch, orange_patch, red_patch], fontsize=11)
+    # Annotate smooth values
+    for x, c in zip(xs, costs):
+        if c == 0:
+            ax1.annotate('smooth', xy=(x, 0.3), fontsize=7, ha='center',
+                        color='#27ae60', fontweight='bold', rotation=90)
 
-    ax.set_xlabel('Sieve point x', fontsize=13)
-    ax.set_ylabel('Tropical entropy H_T(x)', fontsize=13)
-    ax.set_title(f'Tropical Entropy Landscape (N={N}, B={B})', fontsize=15)
-    ax.grid(True, alpha=0.3, axis='y')
+    ax1.set_title(f'P = primes ≤ 20, sieve interval [{xs[0]}, {xs[-1]}]', fontsize=12)
+    ax1.legend(['Cost = 0 (smooth)', 'Cost 1-2 (almost smooth)', 'Cost ≥ 3'],
+              loc='upper right', fontsize=10)
 
-    fig.tight_layout()
+    # Bottom plot: Q_N values (log scale)
+    ax2.semilogy(xs, [abs(q) for q in Qs], color='#8e44ad', linewidth=1)
+    for x, c, q in zip(xs, costs, Qs):
+        if c == 0 and q > 0:
+            ax2.plot(x, q, 'go', markersize=8)
+    ax2.set_ylabel('|Q_N(x)| = |x² - N|', fontsize=12)
+    ax2.set_xlabel('x', fontsize=12)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
     return fig_to_base64(fig)
 
 
-def plot_valuation_heatmap():
-    """Figure 3: Valuation matrix heatmap."""
-    N = 2041
-    B = 20
-    fb = sieve_primes(B)
-    sqrt_N = int(math.isqrt(N)) + 1
-    R = 20
+# ============================================================
+# Figure 5: Smooth Number Density
+# ============================================================
 
-    M = np.zeros((R, len(fb)))
-    x_labels = []
-    for i, x in enumerate(range(sqrt_N, sqrt_N + R)):
-        q = abs(x * x - N)
-        x_labels.append(str(x))
-        for j, p in enumerate(fb):
-            M[i, j] = p_adic_val(p, q) if q > 0 else 0
+def plot_smooth_density():
+    """Visualize the density of smooth numbers Ψ(x, B) / x."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-    im = ax.imshow(M, aspect='auto', cmap='YlOrRd', interpolation='nearest')
-    ax.set_xticks(range(len(fb)))
-    ax.set_xticklabels([str(p) for p in fb], fontsize=10)
-    ax.set_yticks(range(R))
-    ax.set_yticklabels(x_labels, fontsize=9)
-    ax.set_xlabel('Factor base prime p', fontsize=13)
-    ax.set_ylabel('Sieve point x', fontsize=13)
-    ax.set_title(f'Valuation Matrix v_p(Q_N(x)) (N={N}, B={B})', fontsize=15)
+    B_values = [5, 10, 20, 50, 100]
+    N_max = 5000
+    ns = list(range(1, N_max + 1))
 
-    cbar = fig.colorbar(im, ax=ax)
-    cbar.set_label('p-adic valuation', fontsize=12)
+    colors = plt.cm.plasma(np.linspace(0.1, 0.9, len(B_values)))
 
-    # Annotate cells
-    for i in range(R):
-        for j in range(len(fb)):
-            if M[i, j] > 0:
-                ax.text(j, i, str(int(M[i, j])), ha='center', va='center',
-                        fontsize=8, color='white' if M[i, j] > 2 else 'black')
+    for B, color in zip(B_values, colors):
+        P = set(primes_up_to(B))
+        # Cumulative count of smooth numbers
+        cum_count = 0
+        densities = []
+        sample_points = list(range(50, N_max + 1, 50))
 
-    fig.tight_layout()
+        for n in ns:
+            if smooth_cost(P, n) == 0:
+                cum_count += 1
+            if n in sample_points:
+                densities.append((n, cum_count / n))
+
+        xs_plot = [d[0] for d in densities]
+        ys_plot = [d[1] for d in densities]
+        ax.plot(xs_plot, ys_plot, color=color, linewidth=2, label=f'B = {B}')
+
+    ax.set_xlabel('N', fontsize=12)
+    ax.set_ylabel('Ψ(N, B) / N  (smooth number density)', fontsize=12)
+    ax.set_title('Density of B-Smooth Numbers\n(Numbers with tropical cost = 0)',
+                fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(0, 1)
+
+    plt.tight_layout()
     return fig_to_base64(fig)
 
 
-def plot_convolution_associativity():
-    """Figure 4: Min-plus convolution associativity verification."""
-    f = lambda k: (k * k) % 7 + 1
-    g = lambda k: (k + 3) % 5 + 2
-    h = lambda k: abs(k - 4) + 1
-
-    def tconv(f_func, g_func, n):
-        return min(f_func(k) + g_func(n - k) for k in range(n + 1))
-
-    ns = list(range(20))
-    lhs = [tconv(lambda m: tconv(f, g, m), h, n) for n in ns]
-    rhs = [tconv(f, lambda m: tconv(g, h, m), n) for n in ns]
-
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
-
-    ax1.plot(ns, lhs, 'bo-', markersize=8, linewidth=2, label='(f ★ g) ★ h')
-    ax1.plot(ns, rhs, 'r^--', markersize=8, linewidth=2, label='f ★ (g ★ h)')
-    ax1.set_xlabel('n', fontsize=13)
-    ax1.set_ylabel('Value', fontsize=13)
-    ax1.set_title('Min-Plus Convolution: Associativity Verification', fontsize=15)
-    ax1.legend(fontsize=12)
-    ax1.grid(True, alpha=0.3)
-
-    # Show difference
-    diff = [abs(l - r) for l, r in zip(lhs, rhs)]
-    ax2.bar(ns, diff, color='green', alpha=0.7)
-    ax2.set_xlabel('n', fontsize=13)
-    ax2.set_ylabel('|LHS - RHS|', fontsize=13)
-    ax2.set_title('Difference (all zeros confirms associativity)', fontsize=15)
-    ax2.grid(True, alpha=0.3, axis='y')
-
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_all_visualizations():
-    """Generate all visualizations and return as dict of base64 strings."""
-    print("Generating visualizations...")
-    viz = {}
-
-    print("  1/4: Score comparison...")
-    viz['score_comparison'] = plot_score_comparison()
-
-    print("  2/4: Tropical entropy...")
-    viz['tropical_entropy'] = plot_tropical_entropy()
-
-    print("  3/4: Valuation heatmap...")
-    viz['valuation_heatmap'] = plot_valuation_heatmap()
-
-    print("  4/4: Convolution associativity...")
-    viz['convolution_assoc'] = plot_convolution_associativity()
-
-    print("Done!")
-    return viz
-
+# ============================================================
+# Generate all figures
+# ============================================================
 
 if __name__ == "__main__":
-    vizs = generate_all_visualizations()
-    # Save to files as well
-    for name, b64 in vizs.items():
-        # Extract raw PNG data
-        raw = base64.b64decode(b64.split(',')[1])
-        with open(f'{name}.png', 'wb') as f:
-            f.write(raw)
-        print(f"Saved {name}.png ({len(raw)} bytes)")
+    print("Generating visualizations...")
+
+    print("  Figure 1: Smooth cost landscape...")
+    uri1 = plot_smooth_cost_landscape()
+    print(f"    Generated ({len(uri1)} chars)")
+
+    print("  Figure 2: Multiplicative additivity...")
+    uri2 = plot_multiplicative_additivity()
+    print(f"    Generated ({len(uri2)} chars)")
+
+    print("  Figure 3: Factor base monotonicity...")
+    uri3 = plot_monotonicity()
+    print(f"    Generated ({len(uri3)} chars)")
+
+    print("  Figure 4: QS sieve scoring...")
+    uri4 = plot_sieve_scoring()
+    print(f"    Generated ({len(uri4)} chars)")
+
+    print("  Figure 5: Smooth number density...")
+    uri5 = plot_smooth_density()
+    print(f"    Generated ({len(uri5)} chars)")
+
+    # Save URIs for PACKAGE.json consumption
+    import json
+    viz_data = [
+        {"name": "Smooth Cost Landscape", "data": uri1},
+        {"name": "Multiplicative Additivity Verification", "data": uri2},
+        {"name": "Factor Base Monotonicity", "data": uri3},
+        {"name": "Quadratic Sieve Scoring", "data": uri4},
+        {"name": "Smooth Number Density", "data": uri5},
+    ]
+    with open("viz_data.json", "w") as f:
+        json.dump(viz_data, f)
+
+    print("\nAll visualizations generated successfully.")
+    print("Data saved to viz_data.json")
