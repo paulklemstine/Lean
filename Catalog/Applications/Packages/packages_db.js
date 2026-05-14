@@ -1100,6 +1100,134 @@ window.PACKAGE_GRAPH = {
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "id": "seed_067",
+    "title": "Aether Evolution: Self-Modifying Research Strategies via Reflective Type Theory",
+    "description": "Prove that a research system can be formalized as a dependent type where the type of the next research cycle depends on the outcomes of previous cycles. Construct a reflective type theory where the system's own research strategy is a first-class citizen that can be analyzed, improved, and verified. Show that this reflective architecture enables Aether to prove theorems about its own proof strategies, identify systematic weaknesses, and self-correct toward higher-quality output. Formalize the metatheorem that reflective self-improvement converges.",
+    "domains": [
+      "Meta",
+      "Logic",
+      "Algebra"
+    ],
+    "priority_score": 0.99,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.745549+00:00"
+  },
+  {
+    "id": "seed_063",
+    "title": "Aristotle Quality Amplification: Proof Strategy Mining from Millennial-Grade Mathematics",
+    "description": "Reverse-engineer the proof strategies of the deepest results in mathematics (Fermat's Last Theorem, Poincar\u00e9 conjecture, the classification of finite simple groups) and construct a Lean 4 formalization that extracts their reusable structural patterns. Prove that these strategies compose into higher-order proof schemata that generalize across domains, and show that Aristotle can be bootstrapped with these schemata to produce master-class research rather than shallow variations.",
+    "domains": [
+      "Meta",
+      "Logic",
+      "Bridges"
+    ],
+    "priority_score": 0.98,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.740698+00:00"
+  },
+  {
+    "id": "seed_071",
+    "title": "Master-Class Research via Conceptual Dependency Graphs and Critical Path Analysis",
+    "description": "Prove that the conceptual dependency graph of a mathematical theory has a critical path whose length bounds the minimum conceptual depth required to discover any result in that theory. Construct a Lean 4 formalization that extracts conceptual dependency graphs from proof terms, computes the critical path, and proves that results discovered by traversing the critical path are deeper than those discovered by shallow exploration. Show that Aether can use critical path analysis to guide research toward master-class results that require conceptual breakthroughs rather than incremental variations.",
+    "domains": [
+      "Meta",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.98,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.750401+00:00"
+  },
+  {
+    "id": "seed_062",
+    "title": "Aether Self-Improvement: Certified Novelty Detection via Theorem Embedding Uniqueness",
+    "description": "Design and prove correct a novelty certification system for Aether that formally verifies each research output contains genuinely new mathematics, not trivial rephrasings of known results. Construct a theorem embedding space where each known result occupies a unique region, and prove that the embedding distance between a proposed result and the nearest known result bounds the novelty gap. Show that this certification can be automated as a Lean 4 tactic that rejects derivative work and flags genuinely novel contributions.",
+    "domains": [
+      "Meta",
+      "Logic",
+      "Algebra"
+    ],
+    "priority_score": 0.97,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.739427+00:00"
+  },
+  {
+    "id": "seed_066",
+    "title": "Research Package Quality via Certified Mathematical Significance Metrics",
+    "description": "Define and formalize a mathematical significance metric that goes beyond correctness to measure the depth, novelty, and impact of a research result. Prove that the significance metric is a monotone function on the lattice of mathematical knowledge, and that results exceeding a significance threshold are guaranteed to advance the field. Show that this metric can be computed from the Lean 4 proof term structure alone, enabling fully automated quality gates that reject shallow work and elevate master-class contributions.",
+    "domains": [
+      "Meta",
+      "Logic",
+      "EML"
+    ],
+    "priority_score": 0.97,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.744420+00:00"
+  },
+  {
+    "id": "seed_072",
+    "title": "Aristotle Bootstrapping: Learning to Prove Harder Theorems from Easy Ones via Curricula",
+    "description": "Prove that a mathematical curriculum \u2014 an ordered sequence of theorems of increasing difficulty \u2014 can be formally constructed such that each theorem's proof only requires techniques learned from the preceding theorems. Show that such curricula exist for any mathematical theory of sufficient depth, and that the curriculum length bounds the minimum number of research cycles needed to reach the theory's frontier. Formalize curriculum construction in Lean 4 and prove that Aristotle bootstrapped with a curriculum produces progressively deeper results, converging to master-class quality.",
+    "domains": [
+      "Meta",
+      "Logic",
+      "MachineLearning"
+    ],
+    "priority_score": 0.97,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.755941+00:00"
+  },
+  {
+    "id": "seed_064",
+    "title": "Research Depth Guarantees via Proof-Theoretic Ordinal Analysis",
+    "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research, and construct a Lean 4 formalization that computes the proof-theoretic ordinal of each Aether output. Show that results exceeding a threshold ordinal depth are guaranteed to be non-trivial, and prove that the ordinal depth of a research cycle bounds the conceptual innovation of its output. Establish that cycles with depth below the threshold can be automatically rejected or escalated for deeper investigation.",
+    "domains": [
+      "Meta",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.96,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.741905+00:00"
+  },
+  {
+    "id": "seed_068",
+    "title": "From Shallow to Deep: Formalizing the Depth Gap in Automated Mathematics",
+    "description": "Prove that there exists a formal depth gap between trivial rephrasings of known results and genuinely new mathematics, and construct a Lean 4 formalization that computes this gap. Show that the depth gap is characterized by the minimum number of conceptual leaps (definition introductions, type changes, perspective shifts) required to connect the new result to the nearest known result. Prove that Aether outputs below a depth threshold are provably derivative, and establish that the depth gap is computable from proof terms.",
+    "domains": [
+      "Meta",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.96,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.746822+00:00"
+  },
+  {
     "id": "seed_001",
     "title": "P vs NP: Tropical Semiring Barrier",
     "description": "Prove that tropical semiring morphisms cannot polynomially simulate Boolean circuit satisfiability, establishing a structural barrier via min-plus idempotent completions that separates P from NP. Construct a family of Boolean formulas whose tropical evaluation requires super-polynomial min-plus circuit size, and prove that the idempotent closure of the tropical semiring yields a natural complexity class incomparable with P.",
@@ -1113,7 +1241,39 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.850566+00:00"
+    "timestamp": "2026-05-14T04:01:04.696172+00:00"
+  },
+  {
+    "id": "seed_065",
+    "title": "Aristotle Prompt Engineering: Category-Theoretic Prompt Optimization via Adjunction",
+    "description": "Prove that the space of research prompts forms a category where prompt quality is measured by the adjunction between the prompt functor and the output quality functor. Construct a universal property that characterizes optimal prompts as those that are left-adjoint to the evaluation functor, and show that this adjunction can be computed via a Galois connection between prompt features and output quality metrics. Formalize this in Lean 4 and prove that iteratively applying the adjunction converges to a fixed-point prompt that maximizes research depth.",
+    "domains": [
+      "Meta",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.743245+00:00"
+  },
+  {
+    "id": "seed_069",
+    "title": "Aristotle Architecture: Compositional Research via Mathematical Theory Morphisms",
+    "description": "Prove that mathematical theories form a category where theory morphisms preserve structure and enable compositional research. Construct a Lean 4 formalization of theory morphisms that allows Aristotle to compose results across domains by applying structure-preserving maps. Show that master-class research emerges from composing deep theory morphisms that no single domain could produce alone, and prove that the compositionality law guarantees that composed results are at least as deep as their components.",
+    "domains": [
+      "Meta",
+      "Algebra",
+      "Bridges"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.748007+00:00"
   },
   {
     "id": "seed_002",
@@ -1129,7 +1289,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.850854+00:00"
+    "timestamp": "2026-05-14T04:01:04.697219+00:00"
   },
   {
     "id": "seed_023",
@@ -1141,11 +1301,27 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.94,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "1e86301e",
-    "timestamp": "2026-05-14T02:49:10.857924+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.702926+00:00"
+  },
+  {
+    "id": "seed_070",
+    "title": "Aether Quality Control: Automated Counterexample Generation as Research Stress Testing",
+    "description": "Prove that automated counterexample generation is a sound method for stress-testing mathematical conjectures before they are promoted to theorems. Construct a Lean 4 tactic that, given a proposed result, generates maximally-difficult counterexample candidates in the negation of the result's type, and proves that a conjecture that survives this stress test has a provably lower false-positive rate. Show that integrating this into Aether's research pipeline eliminates shallow or false conjectures before resources are spent on proof attempts.",
+    "domains": [
+      "Meta",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.94,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.749221+00:00"
   },
   {
     "id": "seed_015",
@@ -1161,7 +1337,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.855226+00:00"
+    "timestamp": "2026-05-14T04:01:04.700328+00:00"
   },
   {
     "id": "seed_024",
@@ -1177,7 +1353,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.858658+00:00"
+    "timestamp": "2026-05-14T04:01:04.703331+00:00"
   },
   {
     "id": "seed_008",
@@ -1189,11 +1365,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.92,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "b5c09027",
-    "timestamp": "2026-05-14T02:49:10.853072+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.698457+00:00"
   },
   {
     "id": "seed_022",
@@ -1209,7 +1385,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.857523+00:00"
+    "timestamp": "2026-05-14T04:01:04.702548+00:00"
   },
   {
     "id": "seed_051",
@@ -1225,7 +1401,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.878847+00:00"
+    "timestamp": "2026-05-14T04:01:04.725860+00:00"
   },
   {
     "id": "seed_016",
@@ -1241,7 +1417,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.855513+00:00"
+    "timestamp": "2026-05-14T04:01:04.700599+00:00"
   },
   {
     "id": "seed_025",
@@ -1257,7 +1433,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.859298+00:00"
+    "timestamp": "2026-05-14T04:01:04.704081+00:00"
   },
   {
     "id": "seed_038",
@@ -1273,7 +1449,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.867978+00:00"
+    "timestamp": "2026-05-14T04:01:04.714696+00:00"
   },
   {
     "id": "seed_004",
@@ -1285,11 +1461,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "d22b3442",
-    "timestamp": "2026-05-14T02:49:10.852108+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.697672+00:00"
   },
   {
     "id": "seed_018",
@@ -1305,7 +1481,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.856084+00:00"
+    "timestamp": "2026-05-14T04:01:04.701147+00:00"
   },
   {
     "id": "seed_029",
@@ -1321,7 +1497,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.861467+00:00"
+    "timestamp": "2026-05-14T04:01:04.706770+00:00"
   },
   {
     "id": "seed_052",
@@ -1337,7 +1513,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.879731+00:00"
+    "timestamp": "2026-05-14T04:01:04.726693+00:00"
   },
   {
     "id": "seed_017",
@@ -1353,7 +1529,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.855795+00:00"
+    "timestamp": "2026-05-14T04:01:04.700868+00:00"
   },
   {
     "id": "seed_026",
@@ -1369,7 +1545,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.859777+00:00"
+    "timestamp": "2026-05-14T04:01:04.704748+00:00"
   },
   {
     "id": "seed_058",
@@ -1385,7 +1561,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.885930+00:00"
+    "timestamp": "2026-05-14T04:01:04.734840+00:00"
   },
   {
     "id": "seed_006",
@@ -1401,7 +1577,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.852605+00:00"
+    "timestamp": "2026-05-14T04:01:04.698109+00:00"
   },
   {
     "id": "seed_027",
@@ -1417,7 +1593,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.860330+00:00"
+    "timestamp": "2026-05-14T04:01:04.705417+00:00"
   },
   {
     "id": "seed_030",
@@ -1433,7 +1609,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.862000+00:00"
+    "timestamp": "2026-05-14T04:01:04.707494+00:00"
   },
   {
     "id": "seed_047",
@@ -1449,7 +1625,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.875322+00:00"
+    "timestamp": "2026-05-14T04:01:04.722145+00:00"
   },
   {
     "id": "seed_059",
@@ -1465,7 +1641,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.887220+00:00"
+    "timestamp": "2026-05-14T04:01:04.735826+00:00"
   },
   {
     "id": "seed_009",
@@ -1481,7 +1657,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.853297+00:00"
+    "timestamp": "2026-05-14T04:01:04.698627+00:00"
   },
   {
     "id": "seed_028",
@@ -1497,7 +1673,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.860915+00:00"
+    "timestamp": "2026-05-14T04:01:04.706090+00:00"
   },
   {
     "id": "seed_036",
@@ -1513,7 +1689,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.866548+00:00"
+    "timestamp": "2026-05-14T04:01:04.712714+00:00"
   },
   {
     "id": "seed_013",
@@ -1525,11 +1701,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.86,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "81fb3abc",
-    "timestamp": "2026-05-14T02:49:10.854603+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.699590+00:00"
   },
   {
     "id": "seed_031",
@@ -1545,7 +1721,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.862613+00:00"
+    "timestamp": "2026-05-14T04:01:04.708300+00:00"
   },
   {
     "id": "seed_048",
@@ -1561,7 +1737,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.876122+00:00"
+    "timestamp": "2026-05-14T04:01:04.723003+00:00"
   },
   {
     "id": "seed_060",
@@ -1577,7 +1753,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.888183+00:00"
+    "timestamp": "2026-05-14T04:01:04.736962+00:00"
   },
   {
     "id": "seed_011",
@@ -1593,7 +1769,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.853794+00:00"
+    "timestamp": "2026-05-14T04:01:04.699047+00:00"
   },
   {
     "id": "seed_032",
@@ -1609,7 +1785,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.863450+00:00"
+    "timestamp": "2026-05-14T04:01:04.709082+00:00"
   },
   {
     "id": "seed_056",
@@ -1625,7 +1801,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.883900+00:00"
+    "timestamp": "2026-05-14T04:01:04.732950+00:00"
   },
   {
     "id": "seed_010",
@@ -1641,7 +1817,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.853527+00:00"
+    "timestamp": "2026-05-14T04:01:04.698804+00:00"
   },
   {
     "id": "seed_033",
@@ -1657,7 +1833,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.864061+00:00"
+    "timestamp": "2026-05-14T04:01:04.709982+00:00"
   },
   {
     "id": "seed_061",
@@ -1673,7 +1849,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.889149+00:00"
+    "timestamp": "2026-05-14T04:01:04.738217+00:00"
   },
   {
     "id": "seed_005",
@@ -1689,7 +1865,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.852315+00:00"
+    "timestamp": "2026-05-14T04:01:04.697893+00:00"
   },
   {
     "id": "seed_034",
@@ -1705,7 +1881,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.864807+00:00"
+    "timestamp": "2026-05-14T04:01:04.710844+00:00"
   },
   {
     "id": "seed_049",
@@ -1721,7 +1897,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.876970+00:00"
+    "timestamp": "2026-05-14T04:01:04.723891+00:00"
   },
   {
     "id": "seed_057",
@@ -1737,7 +1913,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.884926+00:00"
+    "timestamp": "2026-05-14T04:01:04.733900+00:00"
   },
   {
     "id": "seed_012",
@@ -1753,7 +1929,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.854092+00:00"
+    "timestamp": "2026-05-14T04:01:04.699334+00:00"
   },
   {
     "id": "seed_035",
@@ -1769,7 +1945,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.865616+00:00"
+    "timestamp": "2026-05-14T04:01:04.711849+00:00"
   },
   {
     "id": "seed_007",
@@ -1785,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.852828+00:00"
+    "timestamp": "2026-05-14T04:01:04.698284+00:00"
   },
   {
     "id": "seed_046",
@@ -1797,11 +1973,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.81,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "0bc255d0",
-    "timestamp": "2026-05-14T02:49:10.874525+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.721415+00:00"
   },
   {
     "id": "seed_014",
@@ -1817,7 +1993,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.854885+00:00"
+    "timestamp": "2026-05-14T04:01:04.699967+00:00"
   },
   {
     "id": "seed_037",
@@ -1833,7 +2009,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.867344+00:00"
+    "timestamp": "2026-05-14T04:01:04.713647+00:00"
   },
   {
     "id": "seed_041",
@@ -1849,7 +2025,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.870358+00:00"
+    "timestamp": "2026-05-14T04:01:04.717511+00:00"
   },
   {
     "id": "seed_019",
@@ -1865,7 +2041,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.856390+00:00"
+    "timestamp": "2026-05-14T04:01:04.701509+00:00"
   },
   {
     "id": "seed_045",
@@ -1881,7 +2057,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.873613+00:00"
+    "timestamp": "2026-05-14T04:01:04.720697+00:00"
   },
   {
     "id": "seed_003",
@@ -1897,7 +2073,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.851799+00:00"
+    "timestamp": "2026-05-14T04:01:04.697463+00:00"
   },
   {
     "id": "seed_039",
@@ -1913,7 +2089,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.868644+00:00"
+    "timestamp": "2026-05-14T04:01:04.715960+00:00"
   },
   {
     "id": "seed_020",
@@ -1929,7 +2105,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.856791+00:00"
+    "timestamp": "2026-05-14T04:01:04.701825+00:00"
   },
   {
     "id": "seed_042",
@@ -1945,7 +2121,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.871194+00:00"
+    "timestamp": "2026-05-14T04:01:04.718561+00:00"
   },
   {
     "id": "seed_021",
@@ -1961,7 +2137,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.857169+00:00"
+    "timestamp": "2026-05-14T04:01:04.702168+00:00"
   },
   {
     "id": "seed_040",
@@ -1977,7 +2153,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.869530+00:00"
+    "timestamp": "2026-05-14T04:01:04.716821+00:00"
   },
   {
     "id": "seed_043",
@@ -1993,7 +2169,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.871950+00:00"
+    "timestamp": "2026-05-14T04:01:04.719234+00:00"
   },
   {
     "id": "seed_050",
@@ -2009,7 +2185,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.877875+00:00"
+    "timestamp": "2026-05-14T04:01:04.724823+00:00"
   },
   {
     "id": "seed_054",
@@ -2025,7 +2201,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.881405+00:00"
+    "timestamp": "2026-05-14T04:01:04.728475+00:00"
   },
   {
     "id": "seed_053",
@@ -2041,7 +2217,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.880568+00:00"
+    "timestamp": "2026-05-14T04:01:04.727541+00:00"
   },
   {
     "id": "seed_055",
@@ -2053,11 +2229,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.71,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "2ae0e471",
-    "timestamp": "2026-05-14T02:49:10.882672+00:00"
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T04:01:04.731885+00:00"
   },
   {
     "id": "seed_044",
@@ -2073,6 +2249,6 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T02:49:10.872751+00:00"
+    "timestamp": "2026-05-14T04:01:04.719925+00:00"
   }
 ];
