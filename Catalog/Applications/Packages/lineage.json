@@ -1,4 +1,14 @@
 {
-  "nodes": [],
+  "nodes": [
+    {
+      "id": "p_vs_np_tropical_semiring_barrier",
+      "title": "Tropical Semiring Barrier Theorems: Monotonicity Obstructions for Min-Plus Circuits",
+      "domain": "Algebra / Computational Complexity",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-14T01:50:13Z",
+      "hue": 275
+    }
+  ],
   "edges": []
 }
