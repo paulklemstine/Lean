@@ -1745,5 +1745,131 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.845232+00:00"
+  },
+  {
+    "id": "fd_0112",
+    "title": "Overview",
+    "description": "The formal framework of `ResearchTheory` and `TheoryHom` established in this project provides a certified foundation for cross-domain mathematical synthesis. Below are five concrete, breakthrough-level research directions that build on this work. Each direction is specified with precise hypotheses, proof strategies, and cross-domain connections.\n\n---",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ea1c2257",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:39.935956+00:00"
+  },
+  {
+    "id": "fd_0113",
+    "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
+    "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ea1c2257",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:39.939717+00:00"
+  },
+  {
+    "id": "fd_0114",
+    "title": "Direction 2: Adjunctions Between Research Theories",
+    "description": "**Hypothesis:** Certain pairs of research theories are connected by *adjoint* morphism pairs `(F, G)` where `F : T → U` and `G : U → T` satisfy a Galois-connection-like property: `F(x) ≤_U y ⟺ x ≤_T G(y)` in the invariant preorder. Such adjunctions would characterize *optimal* cross-domain translations.\n\n**Proof Strategy:**\n1. Define `TheoryAdjunction (F : TheoryHom T U) (G : TheoryHom U T)` encoding the Galois connection.\n2. Prove that adjunctions compose (from the standard proof for Galois connections).\n3. Show that if `(F, G)` is an adjunction, then `F` preserves *exact* lower bounds (not just existential ones): if `T.Inv x = n`, then `U.Inv (F x) ≥ n` with a tight characterization via `G`.\n4. Construct a concrete adjunction between `HeightTheory` and `CellTheory` if the invariant funct",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ea1c2257",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:39.942722+00:00"
+  },
+  {
+    "id": "fd_0115",
+    "title": "Direction 3: Predicate and Structure Transport Beyond Lower Bounds",
+    "description": "**Hypothesis:** The current `SatisfiesLowerBound` transfer theorem can be generalized to transport arbitrary predicates `P : T.Carrier → Prop` along morphisms, provided the predicate is \"invariant-determined\" — i.e., depends only on the invariant value.\n\n**Proof Strategy:**\n1. Define `InvariantDetermined (P : T.Carrier → Prop)` as: `∀ x y, T.Inv x = T.Inv y → (P x ↔ P y)`.\n2. Define `TransferablePredicate (f : TheoryHom T U) (P : T.Carrier → Prop) (Q : U.Carrier → Prop)` as: `∀ x, P x → Q (f.toFun x)`.\n3. Prove that for invariant-determined predicates, the existence transfer generalizes: `(∃ x, P x) → (∃ y, Q y)`.\n4. Show that \"upper bound\" predicates `∀ x, T.Inv x ≤ n` also transfer (contravariantly, via pullback).\n5. Prove a \"functor on predicates\" theorem: composition of transferable pr",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ea1c2257",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:39.945939+00:00"
+  },
+  {
+    "id": "fd_0116",
+    "title": "Direction 4: A Bicategory of Theories, Interpretations, and Proof Transformation",
+    "description": "**Hypothesis:** Theory morphisms should be organized into a *bicategory* (or 2-category) where:\n- 0-cells are `ResearchTheory` objects\n- 1-cells are `TheoryHom` morphisms\n- 2-cells are \"proof transformations\" — natural transformations between morphisms that witness one translation being \"at least as good as\" another\n\n**Proof Strategy:**\n1. Define `TheoryHom2 (f g : TheoryHom T U)` as: `∀ x, U.Inv (f.toFun x) ≤ U.Inv (g.toFun x)` (pointwise invariant comparison).\n2. Prove that 2-cells compose vertically and horizontally.\n3. Prove interchange law and unit laws.\n4. Show that this bicategory has a *terminal object*: the theory with carrier `Unit` and invariant `fun _ => 0`, receiving a unique morphism from every theory.\n5. Prove that 2-cells induce a preorder on `TheoryHom T U`, and characteri",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ea1c2257",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:39.949505+00:00"
+  },
+  {
+    "id": "fd_0117",
+    "title": "Direction 5: Automated Search for Bridge Morphisms Across the Catalog",
+    "description": "**Hypothesis:** Given a catalog of proven theorems, it is possible to *automatically* search for theory morphisms connecting them. The search algorithm would:\n1. Extract invariant functions from theorem statements (e.g., recognizing \"height ≤ dimension\" as a monotonicity witness).\n2. Attempt to construct `TheoryHom` instances by matching source/target types and proving monotonicity via `omega` or `nlinarith`.\n3. Compose discovered morphisms to find indirect bridges.\n\n**Proof Strategy:**\n1. Define a `TheorySpec` structure that records the carrier type, invariant function, and a list of known theorems (as `SatisfiesLowerBound` witnesses).\n2. Write a Lean metaprogram (tactic or `Decidable` instance) that attempts to construct `TheoryHom` between two `TheorySpec` objects.\n3. Prove soundness: a",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ea1c2257",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:39.952876+00:00"
+  },
+  {
+    "id": "fd_0118",
+    "title": "Summary Table",
+    "description": "| Direction | Key Innovation | Difficulty | Dependencies |\n|-----------|---------------|------------|--------------|\n| 1. Multi-Invariant | Simultaneous multi-certificate transfer | Medium | None |\n| 2. Adjunctions | Optimal translation characterization | Medium-High | Direction 1 (optional) |\n| 3. Predicate Transport | Schema-level theorem transfer | Medium | None |\n| 4. Bicategory | Quality ordering on translations | High | Direction 3 (for 2-cells) |\n| 5. Automated Search | Machine discovery of bridges | Very High | Directions 1-3 (for targets) |",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ea1c2257",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:39.955358+00:00"
+  },
+  {
+    "id": "fd_0119",
+    "title": "Team Directive",
+    "description": "Each direction should be pursued by a team that:\n1. Formalizes the core definitions and 2-3 key lemmas within the first sprint.\n2. Validates the approach with a concrete catalog example before scaling.\n3. Cross-references with other directions to identify shared infrastructure.\n4. Documents both successes and failures — a proven *impossibility* (e.g., \"no adjunction exists between X and Y\") is as valuable as a positive construction.\n\nThe long-term goal is a **library of research compilers**: certified transformations that create new mathematics by composing proven cross-domain bridges.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ea1c2257",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:17:39.958244+00:00"
   }
 ]
