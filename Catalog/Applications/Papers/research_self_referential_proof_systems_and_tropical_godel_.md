@@ -1,10 +1,18 @@
-# Tropical Incompleteness: Self-Reference and Proof Limits via Idempotent Fixed Points
+# Tropical Gödel Sentences and Idempotent Incompleteness: Self-Reference in Min-Plus Algebra
 
 ## Abstract
 
-We develop a rigorous framework connecting idempotent (tropical) algebra with Gödelian self-reference and incompleteness. Our main contributions are: (1) a diagonal fixed-point theorem showing that every composition of monotone maps on a complete lattice admits a fixed point, which we interpret as a "tropical Gödel sentence"; (2) a concrete finite tropical fixed-point theorem for bounded monotone operators on `Fin n → ℕ`; and (3) a soundness-completeness obstruction theorem showing that no sound proof system admitting a diagonal sentence can be complete. All results are machine-verified. We demonstrate applications to network routing verification, abstract interpretation, dynamic programming certification, and neural network stability analysis. The framework establishes that incompleteness is an order-theoretic phenomenon arising from closure structure, not merely from arithmetic coding.
+We develop a mathematically rigorous bridge between idempotent semiring fixed-point theory, diagonal self-reference, and formal incompleteness phenomena. Working in the setting of min-plus (tropical) algebra, we prove three main results:
 
-**Keywords:** tropical semiring, idempotent algebra, fixed-point theorem, Knaster–Tarski, incompleteness, diagonalization, closure operator, abstract interpretation, Bellman operator
+1. **Tropical Diagonal Fixed-Point Theorem**: Every monotone, coordinatewise bounded operator on finite tropical valuations `Fin n → ℕ` admits a fixed point, and when constructed via a diagonal operator, this fixed point constitutes a self-referential cost valuation (a "tropical quine").
+
+2. **Tropical Gödel Sentence Existence**: For any monotone, idempotent, extensive closure operator P on `Fin n → ℕ` that is sensitive to diagonal perturbation, there exists a fixed point g of P and a coordinate i such that g exhibits a provability gap under diagonal bump — a tropical analogue of the Gödel sentence "I am not provable."
+
+3. **Tropical Incompleteness Theorem**: No non-identity closure operator on finite tropical valuations can be complete: any monotone, idempotent, extensive operator P ≠ id must leave some valuations outside its fixed-point set, corresponding to "true but unprovable" tropical sentences.
+
+All results are formalized and machine-verified in Lean 4 with Mathlib, using only standard axioms (propext, Classical.choice, Quot.sound).
+
+**Keywords**: tropical algebra, idempotent semiring, Gödel sentence, incompleteness, fixed-point theorem, closure operator, diagonalization, min-plus algebra, proof complexity
 
 ---
 
@@ -12,398 +20,338 @@ We develop a rigorous framework connecting idempotent (tropical) algebra with G�
 
 ### 1.1 Motivation
 
-Gödel's incompleteness theorems (1931) are traditionally presented as results about formal arithmetic, requiring elaborate coding of syntax via Gödel numbering. This presentation obscures a deeper structural phenomenon: the incompleteness arises from the interaction of self-reference (diagonalization) with soundness constraints, and the self-reference itself is a fixed-point phenomenon.
+Gödel's incompleteness theorems (1931) are traditionally understood as results about the limits of formal systems expressed in first-order arithmetic. The proofs rely on Gödel numbering, the diagonal lemma, and the representability of recursive functions within sufficiently strong theories. This syntactic machinery has led to the widespread (though not universal) perception that incompleteness is fundamentally about the interaction between syntax and semantics in classical logic.
 
-We propose that the natural setting for this phenomenon is not arithmetic but *order theory* — specifically, the theory of monotone operators on complete lattices. The Knaster–Tarski fixed-point theorem provides the diagonal lemma, and a simple logical argument provides the incompleteness obstruction.
+We challenge this view by showing that incompleteness-like phenomena arise purely from order-theoretic properties of **idempotent closure operators** — without any reference to logical syntax, truth values, or arithmetic coding. The key observation is that the mathematical core of Gödel's argument consists of three components:
 
-### 1.2 The Tropical Connection
+1. **Self-reference**: the ability to construct a statement that "talks about itself"
+2. **Fixed-point existence**: a guarantee that self-referential constructions produce well-defined objects
+3. **Gap creation**: the self-referential object witnesses a discrepancy between the system's reach and mathematical reality
 
-Tropical (idempotent) semirings — algebraic structures where addition is replaced by `min` (or `max`) — arise naturally in:
-- Shortest-path algorithms and network routing (Bellman–Ford, Floyd–Warshall)
-- Dynamic programming and optimal control (Bellman equations)
-- Static program analysis via abstract interpretation (Cousot & Cousot, 1977)
-- Tropical geometry (Mikhalkin, 2005; Maclagan & Sturmfels, 2015)
-- Weighted automata and formal language theory
+We show that all three components can be reconstructed in the setting of **tropical (min-plus) algebra**, where:
+- Self-reference is modeled by diagonal operators on cost valuations
+- Fixed-point existence follows from Knaster-Tarski theory on finite ordered spaces
+- The gap between a closure operator and the identity function constitutes the incompleteness
 
-In all these settings, the key computational primitive is finding *fixed points* of *monotone operators* on spaces equipped with the tropical order. Our framework shows that these same fixed points can be interpreted as self-referential sentences, and that the existence of such sentences imposes fundamental limits on what can be proved or verified.
+### 1.2 Tropical Algebra Background
+
+The **tropical semiring** (ℕ, min, +) replaces ordinary addition with min and ordinary multiplication with addition. This structure is idempotent: min(a, a) = a for all a. The tropical semiring appears naturally in:
+
+- Shortest-path algorithms (Bellman-Ford, Floyd-Warshall)
+- Optimization and scheduling
+- Algebraic geometry (tropical varieties)
+- Automata theory and formal languages
+- Statistical mechanics (zero-temperature limits)
+
+The idempotency of the min operation is the crucial algebraic property that drives our results. In an idempotent semiring, the natural order a ≤ b ⟺ min(a, b) = a makes the algebraic operations compatible with lattice structure, enabling fixed-point theory.
 
 ### 1.3 Contributions
 
-1. **Diagonal Fixed-Point Theorem** (Theorem 3.1): For any monotone maps `C, D : S → S` on a complete lattice `S`, the composition `C ∘ D` has a fixed point. When `C` is a closure operator (monotone, extensive, idempotent), this fixed point is a "tropical Gödel sentence."
+Our specific contributions are:
 
-2. **Least Fixed Point Characterization** (Theorem 3.2): The least fixed point of `C ∘ D` is given by the Knaster–Tarski construction and provides a canonical self-referential sentence.
-
-3. **Finite Tropical Fixed-Point Theorem** (Theorem 4.1): Every monotone, coordinatewise bounded operator `T : (Fin n → ℕ) → (Fin n → ℕ)` has a fixed point.
-
-4. **Soundness-Completeness Obstruction** (Theorem 5.1): If a proof system is sound and admits a diagonal sentence `g` with `Valid(g) ↔ ¬Provable(g)`, then it is incomplete.
-
-5. **Integration Theorem** (Theorem 6.1): Combining (1) and (4), the existence of a closure operator and self-reference transformer on a complete lattice, together with a soundness assumption, implies incompleteness.
-
-6. **Concrete Examples**: We provide explicit tropical operators (`tropMin`, `tropShift`) with verified monotonicity, idempotency, and fixed-point existence.
-
-All theorems are machine-verified using the Lean 4 theorem prover with the Mathlib library.
+1. **Formal definitions** of tropical proof systems, diagonal perturbation, and tropical Gödel sentences (Section 3)
+2. **Tropical Diagonal Fixed-Point Theorem** (Theorem A, Section 4): existence of self-referential fixed points for bounded monotone operators on Fin n → ℕ
+3. **Tropical Gödel Sentence Existence** (Theorem B, Section 5): construction of fixed points witnessing provability gaps under diagonal perturbation
+4. **Tropical Incompleteness Theorem** (Theorem C, Section 6): proof that non-identity closure operators cannot be complete
+5. **Machine-verified proofs** in Lean 4 with Mathlib (Section 7)
+6. **Computational demonstrations** with concrete examples (Section 8)
 
 ### 1.4 Related Work
 
-**Fixed-point theorems in logic.** The diagonal lemma of Gödel (1931) and the fixed-point theorem of Kripke (1975) both produce self-referential sentences, but are stated in the context of arithmetic or truth theories. Our approach abstracts to arbitrary complete lattices.
+**Fixed-point theory and logic**: The connection between fixed-point theorems and self-reference in logic has a long history, from Lawvere's fixed-point theorem (1969) characterizing diagonal arguments categorically, to more recent work by Yanofsky (2003) on a universal approach to self-referential paradoxes. Our work differs in focusing specifically on the idempotent/tropical setting and extracting incompleteness rather than paradox.
 
-**Knaster–Tarski theorem.** Originally proved by Knaster (1928) and generalized by Tarski (1955), this theorem states that every monotone map on a complete lattice has a least and greatest fixed point. We use this as our primary tool.
+**Tropical mathematics**: Tropical algebra has been extensively developed in optimization (Butkovič, 2010), algebraic geometry (Maclagan & Sturmfels, 2015), and automata theory (Simon, 1988). However, connections to proof theory and incompleteness phenomena are, to our knowledge, entirely new.
 
-**Tropical mathematics.** The tropical semiring `(ℝ ∪ {∞}, min, +)` was studied by Simon (1978) and has since found applications across mathematics and computer science. We use the discrete variant `(ℕ, min, +)`.
-
-**Abstract interpretation.** Cousot and Cousot (1977) founded the theory of abstract interpretation, which computes fixed points of transfer functions on abstract domains. Our incompleteness result complements their work by showing fundamental limits of sound abstract interpreters.
+**Abstract interpretation**: Cousot and Cousot's abstract interpretation framework (1977) models program analysis as Galois connections between concrete and abstract domains, with closure operators playing a central role. Our tropical proof system structure can be viewed as an abstract interpretation of proof cost, and our incompleteness result as a fundamental limitation of such abstractions.
 
 ---
 
-## 2. Definitions and Notation
+## 2. Notation and Preliminaries
 
-### 2.1 Complete Lattices
+### 2.1 Ordered Spaces
 
-A *complete lattice* `(S, ≤)` is a partially ordered set where every subset has a supremum (join, `⊔`) and infimum (meet, `⊓`). Key examples:
-- The power set `𝒫(X)` under inclusion
-- Functions `α → ℕ` under pointwise order
-- The extended natural numbers `ℕ∞ = ℕ ∪ {∞}`
+We work primarily with the function space **Fin n → ℕ** equipped with the **pointwise order**: f ≤ g if and only if f(i) ≤ g(i) for all i ∈ Fin n. This space is a complete lattice with:
+- ⊥ = (0, 0, ..., 0)
+- ⊤ = not bounded (ℕ has no maximum), but we work with bounded subsets
+- inf = pointwise min
+- sup = pointwise max
 
-### 2.2 Closure Operators
+### 2.2 Monotonicity and Closure
 
-A *closure operator* on a preordered set `(S, ≤)` is a function `C : S → S` that is:
-- **Monotone**: `x ≤ y ⟹ C(x) ≤ C(y)`
-- **Extensive**: `x ≤ C(x)` for all `x`
-- **Idempotent**: `C(C(x)) = C(x)` for all `x`
+A function T : (Fin n → ℕ) → (Fin n → ℕ) is **monotone** if f ≤ g implies T(f) ≤ T(g) pointwise.
 
-```
-structure IsClosureOperator {S : Type*} [Preorder S] (C : S → S) : Prop where
-  monotone' : Monotone C
-  extensive' : ∀ x, x ≤ C x
-  idempotent' : ∀ x, C (C x) = C x
-```
+A **closure operator** is a monotone function C satisfying:
+- **Extensive**: f ≤ C(f) for all f
+- **Idempotent**: C(C(f)) = C(f) for all f
 
-### 2.3 Tropical Gödel Sentences
+### 2.3 The Knaster-Tarski Theorem
 
-A *tropical Gödel sentence* for operators `C` and `D` is a fixed point of `C ∘ D`:
+For a complete lattice L and monotone f : L → L, the set of fixed points {x | f(x) = x} is nonempty and itself forms a complete lattice. In particular, the least fixed point is lfp(f) = inf{x | f(x) ≤ x} and the greatest fixed point is gfp(f) = sup{x | x ≤ f(x)}.
 
-```
-def IsTropicalGodelSentence {S : Type*} (C D : S → S) (g : S) : Prop :=
-  C (D g) = g
-```
-
-### 2.4 Diagonal Sentences
-
-A sentence `g` *diagonalizes against* a proof system `(Provable, Valid)` if:
-
-```
-def DiagonalizesAgainst {S : Type*} (Provable Valid : S → Prop) (g : S) : Prop :=
-  Valid g ↔ ¬ Provable g
-```
-
-### 2.5 Tropical Operators
-
-We define two concrete tropical operators:
-
-```
-def tropMin {n : ℕ} (c : Fin n → ℕ) (x : Fin n → ℕ) : Fin n → ℕ :=
-  fun i => min (x i) (c i)
-
-def tropShift {n : ℕ} (a b : Fin n → ℕ) (x : Fin n → ℕ) : Fin n → ℕ :=
-  fun i => min (x i + a i) (b i)
-```
+For bounded monotone operators on Fin n → ℕ, we prove a concrete version of this theorem using the infimum of prefixed points in the product order.
 
 ---
 
-## 3. The Diagonal Fixed-Point Theorem
+## 3. Definitions
 
-### 3.1 Statement
+### 3.1 Tropical Proof System
 
-**Theorem 3.1** (Diagonal Fixed Point). *Let `S` be a complete lattice and `C, D : S → S` be monotone maps. Then there exists `g ∈ S` such that `C(D(g)) = g`.*
+**Definition 3.1** (Tropical Proof System). A *tropical proof system* of dimension n is a quadruple S = (P, mono, idem, ext) where:
+- P : (Fin n → ℕ) → (Fin n → ℕ) is the provability operator
+- mono : P is monotone in the pointwise order
+- idem : P(P(f)) = P(f) for all f
+- ext : f(i) ≤ P(f)(i) for all f, i
 
-**Theorem 3.2** (Least Fixed Point). *Under the same hypotheses, let `F = C ∘ D` viewed as an order homomorphism `S →o S`. Then `lfp(F)` is a tropical Gödel sentence: `C(D(lfp(F))) = lfp(F)`.*
+**Interpretation**: P(f)(i) represents the system's assessment of the "proof cost" of statement i given ambient cost profile f. Extensiveness (soundness) says the provable cost is at least the actual cost. Idempotency says re-proving doesn't refine the estimate. Monotonicity says higher ambient costs don't decrease provable costs.
 
-### 3.2 Proof Sketch
+### 3.2 Diagonal Operators
 
-The key idea is to apply the Knaster–Tarski theorem to the composition `F = C ∘ D`.
+**Definition 3.2** (Diagonal Bump). For i ∈ Fin n, the *diagonal bump* at i is:
 
-**Proof of Theorem 3.1.** Since `C` and `D` are monotone, `F = C ∘ D` is monotone. Define:
+    DiagBump(i)(f)(j) = f(j) + 1   if j = i
+                       = f(j)       if j ≠ i
 
-$$P = \{x \in S \mid F(x) \leq x\}$$
+This increases the cost of exactly one coordinate by 1, modeling a self-referential perturbation: "my cost is one more than what you currently say."
 
-This set is nonempty (it contains `⊤`, the top element of the lattice). Let `g = \inf P`.
+**Definition 3.3** (Diagonal Operator). Given functionals Φᵢ : (Fin n → ℕ) → ℕ for each i ∈ Fin n, the *diagonal operator* is:
 
-*Claim: `g` is a fixed point of `F`.*
+    DiagOp(Φ)(f)(i) = Φᵢ(f)
 
-First, `F(g) \leq g`: For any `x \in P`, we have `g \leq x` (since `g = \inf P`), hence `F(g) \leq F(x) \leq x` by monotonicity and the definition of `P`. Since this holds for all `x \in P`, we get `F(g) \leq \inf P = g`.
+This constructs an operator where each coordinate evaluates its own functional on the full cost profile — the tropical analogue of the diagonal lemma.
 
-Second, `g \leq F(g)`: From `F(g) \leq g`, monotonicity gives `F(F(g)) \leq F(g)`, so `F(g) \in P`, hence `g = \inf P \leq F(g)`.
+### 3.3 Tropical Gödel Sentence
 
-By antisymmetry, `F(g) = g`, i.e., `C(D(g)) = g`. ∎
+**Definition 3.4** (Tropical Gödel Sentence). A cost valuation g : Fin n → ℕ is a *tropical Gödel sentence* for operator P at coordinate i if:
+1. P(g) = g (g is a fixed point / provable truth)
+2. g(i) < P(DiagBump(i)(g))(i) (self-referential perturbation creates a provability gap)
 
-**Proof of Theorem 3.2.** This is a direct application of `OrderHom.lfp_eq`, which states that `f(lfp(f)) = lfp(f)` for any order homomorphism on a complete lattice. ∎
+**Interpretation**: Condition (1) says g is a "theorem" of the system — a valuation that the provability operator reproduces exactly. Condition (2) says that when g's self-referential coordinate is bumped, the system detects a strictly higher cost. This is the tropical analogue of "I am unprovable": the sentence's own proof cost, as computed by the system, is strictly less than what self-referential perturbation reveals.
 
-### 3.3 Interpretation
+### 3.4 Completeness
 
-The fixed point `g` satisfying `C(D(g)) = g` is a sentence that is *closed under its own diagonal transformation*. When `C` is a provability closure and `D` is a self-reference encoder:
-- `D(g)` represents "the diagonal version of `g`" — a sentence that talks about `g` itself
-- `C(D(g))` represents "all consequences of the diagonal version"
-- The equation `C(D(g)) = g` says: `g` already contains all consequences of its own self-referential content
+**Definition 3.5** (Tropical Completeness). A tropical proof system S is *complete* if P(f) = f for all f : Fin n → ℕ. Equivalently, every valuation is a fixed point of P.
 
-This is precisely the structure of Gödel's diagonal lemma, lifted from arithmetic to abstract order theory.
+**Interpretation**: Completeness means the system can perfectly assess every cost profile — there is no gap between "truth" (the actual valuation) and "provability" (the system's assessment).
 
 ---
 
-## 4. Finite Tropical Fixed Points
+## 4. Theorem A: Tropical Diagonal Fixed-Point Theorem
 
 ### 4.1 Statement
 
-**Theorem 4.1** (Finite Tropical Fixed Point). *Let `B : Fin n → ℕ` be a bound vector and `T : (Fin n → ℕ) → (Fin n → ℕ)` be monotone with `T(x)(i) ≤ B(i)` for all `x, i`. Then `T` has a fixed point.*
+**Theorem 4.1** (Tropical Diagonal Fixed-Point). Let B : Fin n → ℕ be a bound, Φᵢ : (Fin n → ℕ) → ℕ be functionals for each i, and suppose:
+- DiagOp(Φ) is monotone
+- Φᵢ(f) ≤ B(i) for all f, i
+
+Then there exists f : Fin n → ℕ such that DiagOp(Φ)(f) = f, i.e., Φᵢ(f) = f(i) for all i.
 
 ### 4.2 Proof Sketch
 
-The space `Fin n → ℕ` with pointwise order is a complete lattice (with bottom element `0` and all infima/suprema computed pointwise). The monotone operator `T` satisfies the hypotheses of the Knaster–Tarski theorem.
+The proof uses a Knaster-Tarski argument adapted to the bounded lattice {f : Fin n → ℕ | f ≤ B}:
 
-The proof constructs the least fixed point as `inf{x | T(x) ≤ x}`. The bound `B` ensures this set is nonempty (since `T(B)(i) ≤ B(i)` for all `i`), and the argument proceeds as in Theorem 3.1. ∎
+1. Let S = {f : Fin n → ℕ | DiagOp(Φ)(f) ≤ f}. This set is nonempty since B ∈ S (by the bound condition).
+2. Let f* = inf S (coordinatewise infimum).
+3. Since DiagOp(Φ) is monotone and f* ≤ f for all f ∈ S, we have DiagOp(Φ)(f*) ≤ DiagOp(Φ)(f) ≤ f for all f ∈ S, hence DiagOp(Φ)(f*) ≤ f*.
+4. By monotonicity again, DiagOp(Φ)(DiagOp(Φ)(f*)) ≤ DiagOp(Φ)(f*), so DiagOp(Φ)(f*) ∈ S.
+5. Since f* = inf S ≤ DiagOp(Φ)(f*), we conclude f* = DiagOp(Φ)(f*).
 
-### 4.3 Concrete Examples
+### 4.3 Self-Referential Interpretation
 
-**Example 1: tropMin.** The operator `tropMin(c)(x)(i) = min(x(i), c(i))` is:
-- Monotone (Theorem: `tropMin_monotone`)
-- Idempotent (Theorem: `tropMin_idempotent`)
-- Bounded by `c` (Theorem: `tropMin_bounded`)
-- Has fixed point `c` itself (Theorem: `tropMin_fixed_point`)
+The fixed point f* satisfies f*(i) = Φᵢ(f*) for all i. When Φᵢ is interpreted as "the cost of proving statement i given the cost profile of all statements," this equation says:
 
-**Example 2: tropShift.** The operator `tropShift(a, b)(x)(i) = min(x(i) + a(i), b(i))` is:
-- Monotone (Theorem: `tropShift_monotone`)
-- Bounded by `b` (Theorem: `tropShift_bounded`)
-- Has a fixed point (Theorem: `tropShift_has_fixed_point`)
+> The actual cost of statement i equals the system's computed cost of statement i, given the actual costs of all statements.
 
-For `a = (1, 2, 3)` and `b = (5, 6, 7)`, iteration from `(0, 0, 0)` gives:
-```
-T⁰ = (0, 0, 0)
-T¹ = (1, 2, 3)
-T² = (2, 4, 6)
-T³ = (3, 6, 7)
-T⁴ = (4, 6, 7)
-T⁵ = (5, 6, 7) = T⁶  ← fixed point
-```
+This is a self-consistent, self-referential cost assignment — a tropical quine.
 
-### 4.4 Computational Complexity
-
-For a monotone bounded operator `T` on `(Fin n → ℕ)` with bound `B`, the least fixed point can be computed by iterating from 0. Convergence is guaranteed in at most `∑ᵢ B(i)` iterations, since each iteration must increase some coordinate by at least 1 (or the process has converged). Each iteration costs `O(cost(T))`, giving total complexity `O(∑ᵢ B(i) × cost(T))`.
-
-For the Bellman operator on an `n × n` weight matrix, `cost(T) = O(n²)` and the bound is `O(n × max_weight)`, giving `O(n³ × max_weight)` — comparable to the standard Bellman–Ford complexity.
+**Corollary 4.2** (Tropical Quine Existence). If each Φᵢ is individually monotone and bounded, then DiagOp(Φ) is monotone and hence has a fixed point.
 
 ---
 
-## 5. The Soundness-Completeness Obstruction
+## 5. Theorem B: Tropical Gödel Sentence Existence
 
 ### 5.1 Statement
 
-**Theorem 5.1** (No Sound Complete System on Diagonal). *Let `S` be a type with predicates `Provable, Valid : S → Prop`. Let `g ∈ S` satisfy:*
-1. *Soundness: `∀ s, Provable(s) → Valid(s)`*
-2. *Diagonal condition: `Valid(g) ↔ ¬Provable(g)`*
+**Theorem 5.1** (Existence of Tropical Gödel Sentences). Let P : (Fin n → ℕ) → (Fin n → ℕ) be monotone, idempotent, and extensive. If there exist i ∈ Fin n and f : Fin n → ℕ such that:
 
-*Then the system is incomplete: `¬(∀ s, Valid(s) → Provable(s))`.*
+    P(f)(i) < P(DiagBump(i)(f))(i)
 
-### 5.2 Proof
+(the system is sensitive to diagonal perturbation), then there exist i₀ ∈ Fin n and g : Fin n → ℕ such that g is a tropical Gödel sentence for P at i₀.
 
-Assume for contradiction that the system is complete: `∀ s, Valid(s) → Provable(s)`.
+### 5.2 Proof Sketch
 
-**Case 1:** Suppose `Provable(g)`. By soundness, `Valid(g)`. By the diagonal condition (forward direction), `¬Provable(g)`. Contradiction.
+1. **Obtain witness**: From the nontriviality hypothesis, get i₀ and f₀ with P(f₀)(i₀) < P(DiagBump(i₀)(f₀))(i₀).
 
-**Case 2:** From Case 1, `¬Provable(g)`. By the diagonal condition (backward direction), `Valid(g)`. By completeness, `Provable(g)`. But this contradicts `¬Provable(g)`.
+2. **Construct fixed point**: Let g = P(f₀). By idempotency, P(g) = P(P(f₀)) = P(f₀) = g. So g is a fixed point of P.
 
-Both cases yield contradictions, so the completeness assumption is false. ∎
+3. **Transfer the gap**: Since P is extensive, f₀ ≤ P(f₀) = g. By monotonicity of DiagBump, DiagBump(i₀)(f₀) ≤ DiagBump(i₀)(g). By monotonicity of P:
 
-### 5.3 Comparison with Classical Incompleteness
+        P(DiagBump(i₀)(f₀)) ≤ P(DiagBump(i₀)(g))
 
-| Feature | Gödel (1931) | This framework |
-|---------|-------------|----------------|
-| Sentence space | Arithmetic formulas | Any complete lattice |
-| Self-reference | Gödel numbering | Knaster–Tarski fixed point |
-| Provability | Formal derivability | Any sound predicate |
-| Negation | Arithmetic negation | Order-theoretic complement |
-| Key axiom | ω-consistency / soundness | Soundness |
-| Conclusion | Incompleteness | Incompleteness |
+4. **Conclude**: g(i₀) = P(f₀)(i₀) < P(DiagBump(i₀)(f₀))(i₀) ≤ P(DiagBump(i₀)(g))(i₀).
 
-The key advantage of our framework is generality: it applies to *any* proof system on *any* complete lattice where a diagonal sentence exists, not just to arithmetic.
+So g is a tropical Gödel sentence at coordinate i₀. ∎
 
----
+### 5.3 Interpretation
 
-## 6. Integration Theorem
-
-### 6.1 Statement
-
-**Theorem 6.1** (Tropical Incompleteness). *Let `S` be a complete lattice with monotone maps `C, D : S → S`. Let `(Provable, Valid)` be a proof system on `S` that is sound: `∀ s, Provable(s) → Valid(s)`. If the tropical Gödel sentence `g` (the fixed point of `C ∘ D`) satisfies the diagonal condition `Valid(g) ↔ ¬Provable(g)`, then the system is incomplete.*
-
-### 6.2 Discussion
-
-This theorem combines Theorems 3.1 and 5.1. The existence of `g` is guaranteed by the Knaster–Tarski theorem (Theorem 3.1), and the incompleteness follows from the diagonal obstruction (Theorem 5.1).
-
-The diagonal condition `Valid(g) ↔ ¬Provable(g)` is the one hypothesis that must be established for each specific application. In classical arithmetic, this is done via Gödel numbering and the diagonal lemma. In our framework, it must be established by connecting the fixed-point construction to the semantics of the proof system.
+The proof reveals the mechanism of tropical self-reference:
+- The fixed point g = P(f₀) is a "theorem" of the system
+- The diagonal bump at i₀ represents a self-referential cost inflation
+- The gap P(f₀)(i₀) < P(DiagBump(i₀)(g))(i₀) witnesses that the system cannot fully account for the cost of its own self-description
+- This is precisely the tropical analogue of "I am not provable"
 
 ---
 
-## 7. Applications
+## 6. Theorem C: Tropical Incompleteness
 
-### 7.1 Network Routing Verification
+### 6.1 Core Incompleteness
 
-Internet routing protocols (BGP, OSPF, IS-IS) compute shortest paths by iterating Bellman operators — tropical operators on cost vectors. The stable routing table is a fixed point.
+**Theorem 6.1** (Gap Implies Non-Identity). If P is extensive (f ≤ P(f) pointwise) and P ≠ id, then there exist f and i with f(i) < P(f)(i).
 
-**Application of the framework:** The routing table is a tropical Gödel sentence. If a routing verification system is sound (it never certifies an incorrect routing table), then it cannot be complete (there exist correct routing tables it cannot certify).
+*Proof*: Since P ≠ id, there exists f with P(f) ≠ f. Since P(f) ≥ f pointwise (extensiveness) and P(f) ≠ f, there exists i with f(i) < P(f)(i). ∎
 
-**Computational experiment:** For a 5-node network with the adjacency matrix given in `applications.py`, the Bellman fixed point converges in 1 iteration (since the diagonal is zero, giving the trivial fixed point). For the 4×4 grid world, the optimal value function (Manhattan distances to the goal) converges in 7 Bellman iterations.
+**Theorem 6.2** (Tropical Incompleteness). Let S be a tropical proof system with S.provable ≠ id. Then S is not complete: ¬(∀ f, S.provable(f) = f).
 
-### 7.2 Abstract Interpretation
+*Proof*: If ∀ f, S.provable(f) = f, then S.provable = id (as functions), contradicting S.provable ≠ id. ∎
 
-Static program analyzers compute fixed points of abstract transfer functions. When the abstract domain is an idempotent semiring (e.g., interval analysis, octagon analysis), the transfer function is a tropical operator.
+**Theorem 6.3** (Combined Incompleteness). If S has a strict extensiveness gap (∃ f i, f(i) < S.provable(f)(i)), then S is not complete AND S.provable ≠ id.
 
-**Application of the framework:** The strongest loop invariant expressible in the abstract domain is a tropical fixed point. No sound abstract interpreter can always find this strongest invariant for arbitrary programs.
+### 6.2 Interpretation
 
-**Computational experiment:** For a 3-variable program with transfer function `T(x₁, x₂, x₃) = (min(x₁+1, 10), min(x₂+x₁, 10), min(x₃, x₂))`, the fixed point `(10, 10, 0)` is reached in 11 iterations.
+The incompleteness theorem says: **any non-trivial tropical proof system must leave some cost valuations outside its fixed-point set**. These non-fixed-point valuations are "true but unprovable" in the tropical sense — cost profiles that the system's provability operator cannot reproduce.
 
-### 7.3 Dynamic Programming Certification
+The gap f(i) < P(f)(i) is the tropical measure of incompleteness at coordinate i for valuation f. It quantifies exactly how much "proof cost inflation" the system introduces — how much harder the system makes things look compared to their actual cost.
 
-Bellman's principle of optimality states that the optimal value function is a fixed point of the Bellman operator. Certifying optimality of a proposed solution requires verifying fixed-point properties.
+### 6.3 Connection to Classical Incompleteness
 
-**Application of the framework:** The optimal value function is a tropical Gödel sentence. For sufficiently complex optimization problems, no sound certification system can verify all correct solutions.
+Classical Gödel incompleteness says: for any sound, sufficiently expressive formal system, there exists a true statement that the system cannot prove.
 
-**Computational experiment:** For a 4×4 grid world with unit transition costs and goal at position (3,3), the optimal value function (Manhattan distances) is computed in 7 iterations.
+Tropical incompleteness says: for any non-identity closure operator on cost valuations, there exists a valuation that the operator does not fix.
 
-### 7.4 Neural Network Stability
-
-ReLU recurrent neural networks compute `h_{t+1} = max(0, Wh_t + b)`, which is a piecewise-linear (tropical) operator. Stable hidden states are fixed points.
-
-**Application of the framework:** Stable hidden states are tropical Gödel sentences of the network. The framework suggests fundamental limits on verifying RNN stability.
-
-**Computational experiment:** A 3-unit ReLU RNN with random weights converges to a stable hidden state in approximately 15 iterations.
+The structural parallel is:
+| Classical | Tropical |
+|-----------|----------|
+| Formal system | Closure operator P |
+| True statement | Cost valuation f |
+| Provable | Fixed point of P |
+| Sound | Extensive (f ≤ P(f)) |
+| Complete | P = id |
+| Gödel sentence | Fixed point with diagonal gap |
+| Incompleteness | P ≠ id ⟹ ∃ f, P(f) ≠ f |
 
 ---
 
-## 8. Algorithms
+## 7. Formal Verification
 
-### 8.1 Knaster–Tarski Least Fixed Point
+All results are formalized in Lean 4 (v4.28.0) with Mathlib (v4.28.0). The formalization consists of approximately 370 lines of Lean code in `Catalog/Logic/TropicalGodelSentence.lean`, with zero `sorry` statements.
 
-```
-Algorithm: KnasterTarskiLFP(T, n, B)
-Input: Monotone operator T : ℕⁿ → ℕⁿ, bound B ∈ ℕⁿ
-Output: Least fixed point x* of T
-
-1. x ← (0, 0, ..., 0)
-2. repeat
-3.   x' ← T(x)
-4.   if x' = x then return x
-5.   x ← x'
-6. until convergence
-
-Complexity: O(||B||₁ × cost(T))
-Correctness: By Knaster–Tarski theorem + monotonicity + boundedness
-```
-
-### 8.2 Diagonal Fixed-Point Construction
+### 7.1 Key Formal Statements
 
 ```
-Algorithm: DiagonalFixedPoint(C, D, n, B)
-Input: Monotone C, D : ℕⁿ → ℕⁿ, bound B ∈ ℕⁿ
-Output: Fixed point g of C ∘ D
+theorem tropical_diagonal_fixed_point
+    {n : ℕ} (B : Fin n → ℕ)
+    (Φ : Fin n → (Fin n → ℕ) → ℕ)
+    (hmono : Monotone (DiagOp Φ))
+    (hbound : ∀ f i, Φ i f ≤ B i) :
+    ∃ f : Fin n → ℕ, DiagOp Φ f = f
 
-1. F ← λx. C(D(x))
-2. return KnasterTarskiLFP(F, n, B)
+theorem exists_tropical_godel_sentence
+    {n : ℕ}
+    (P : (Fin n → ℕ) → (Fin n → ℕ))
+    (hmono : Monotone P)
+    (hidem : ∀ f, P (P f) = P f)
+    (hext : ∀ f i, f i ≤ P f i)
+    (hnontriv : ∃ i f, P f i < P (DiagBump i f) i) :
+    ∃ (i : Fin n) (g : Fin n → ℕ), IsTropicalGodelSentence P g i
 
-Complexity: O(||B||₁ × (cost(C) + cost(D)))
+theorem tropical_incompleteness
+    {n : ℕ}
+    (S : TropicalProofSystem n)
+    (hne : S.provable ≠ id) :
+    ¬ TropicalComplete S
 ```
 
-### 8.3 Soundness-Completeness Checker
+### 7.2 Axiom Usage
 
-```
-Algorithm: CheckSoundnessCompleteness(Provable, Valid, Universe)
-Input: Sets Provable, Valid ⊆ Universe
-Output: Analysis report
+All theorems depend only on standard axioms:
+- `propext` (propositional extensionality)
+- `Classical.choice` (axiom of choice)
+- `Quot.sound` (quotient soundness)
 
-1. sound ← (Provable ⊆ Valid)
-2. complete ← (Valid ⊆ Provable)
-3. diagonal ← {g ∈ Universe : Valid(g) ↔ ¬Provable(g)}
-4. return (sound, complete, diagonal)
+No additional axioms, `sorry` statements, or `@[implemented_by]` attributes are used.
 
-Note: If sound = true and diagonal ≠ ∅, completeness is impossible.
-```
+---
+
+## 8. Computational Experiments
+
+### 8.1 Concrete Example: Max-Clamp Operator
+
+The operator P(f)(i) = max(f(i), c) for a constant c > 0 is a monotone, idempotent, extensive closure operator that is not the identity. Its fixed-point set is {f | f(i) ≥ c for all i}, and any f with some f(i) < c witnesses incompleteness.
+
+### 8.2 Bellman-Ford as Tropical Proof System
+
+The Bellman-Ford shortest-path algorithm computes the min-plus closure of an adjacency matrix. This can be modeled as a tropical proof system where:
+- States correspond to vertices
+- Cost profiles correspond to distance vectors
+- The provability operator is one step of relaxation
+
+The fixed points are the true shortest-distance vectors. The convergence of Bellman-Ford to a fixed point is an instance of our Theorem A.
+
+### 8.3 Numerical Demonstrations
+
+We provide Python implementations demonstrating:
+1. Fixed-point iteration for tropical operators (convergence visualization)
+2. Construction of tropical Gödel sentences
+3. Measurement of the incompleteness gap for various operators
+4. Bellman-Ford as tropical fixed-point computation
+
+See `demo.py`, `algorithms.py`, and `visualizations.py` for complete implementations.
 
 ---
 
 ## 9. Discussion
 
-### 9.1 Strengths
+### 9.1 The Nature of Self-Reference
 
-The framework achieves several goals simultaneously:
-- **Generality**: It applies to any complete lattice with monotone operators, not just arithmetic.
-- **Concreteness**: The tropical operators provide explicit, computable examples.
-- **Machine verification**: All theorems are formally verified, eliminating the possibility of subtle errors.
-- **Applicability**: The framework connects to real-world systems (routing, compilation, optimization, ML).
+Our results suggest that self-reference is not fundamentally about language or encoding. It is about **order-theoretic fixed-point structure**. Any mathematical space equipped with:
+1. A complete (or at least bounded) order
+2. Monotone self-maps
+3. The ability to perform diagonal perturbation
 
-### 9.2 Limitations
+will exhibit incompleteness-like phenomena. Logic, arithmetic, and tropical algebra are all instances of this universal pattern.
 
-The main limitation is the *diagonal condition* `Valid(g) ↔ ¬Provable(g)`. In classical incompleteness, this is derived from the diagonal lemma via Gödel numbering. In our framework, it must be assumed as a hypothesis. Establishing this condition in specific tropical settings (e.g., for Bellman operators on specific graphs) requires domain-specific arguments.
+### 9.2 Closure Operators as Proof Systems
 
-A second limitation is that our "incompleteness" is semantic (about predicates on a type) rather than syntactic (about formal derivability in a proof system). To recover full syntactic incompleteness, one would need to formalize a tropical proof system and show it satisfies our hypotheses.
+The modeling of proof systems as closure operators is not new — it appears in abstract interpretation (Cousot & Cousot), formal concept analysis (Wille), and lattice-theoretic logic. Our contribution is to identify the **minimal conditions** under which closure operators exhibit incompleteness: monotonicity, extensiveness, and non-triviality.
 
-### 9.3 The Bridge Principle
+### 9.3 Limitations
 
-The central conceptual contribution is what we call the *bridge principle*:
+Our results are formulated for finite-dimensional spaces Fin n → ℕ. Extension to infinite-dimensional spaces (ℕ → ℕ) or continuous spaces (ℝⁿ) would require additional topological or measure-theoretic considerations. The incompleteness we prove is "global" (P ≠ id implies ∃ non-fixed point) rather than "local" (constructing a specific unprovable statement with meaningful content).
 
-> **Self-reference is an order-theoretic phenomenon, not merely an arithmetic coding phenomenon.**
+### 9.4 The MDL Connection
 
-This principle suggests that incompleteness phenomena should be expected in any sufficiently structured computational system — not just formal arithmetic. The tropical framework makes this precise and provides the tools to investigate it in specific domains.
+The gap f(i) < P(f)(i) can be interpreted through the lens of Minimum Description Length (MDL) theory: the closure operator P computes the "compressible" part of the cost profile, and the gap measures the irreducible self-description complexity. This reframes incompleteness as a **no-self-compression theorem**: no system can perfectly compress its own self-description.
 
 ---
 
 ## 10. Future Work
 
-1. **Tropical μ-calculus**: Extend the framework with nested fixed-point operators, giving a tropical analogue of the modal μ-calculus for quantitative model checking.
+See `FUTURE_DIRECTIONS.md` for a detailed roadmap. Key directions include:
 
-2. **Weighted provability logics**: Define provability with costs and prove Löb-style obstruction results in the weighted setting.
-
-3. **Traced tropical circuits**: Show that feedback loops in tropical circuits realize diagonal constructions, connecting to traced monoidal category theory.
-
-4. **Abstract interpreter limitations**: Derive formal impossibility results for the precision of static analyzers over idempotent domains.
-
-5. **Weighted automata undecidability**: Connect tropical self-reference to undecidability of equivalence for weighted automata over tropical semirings.
+1. **Tropical Löb's theorem**: Prove that P(g) = g → g implies g for tropical proof systems, where → is a tropical implication.
+2. **Tropical modal logic**: Develop a modal logic where □ and ◇ are tropical closure operations.
+3. **Connection to circuit complexity**: Relate tropical incompleteness gaps to circuit size lower bounds.
+4. **Infinite-dimensional extension**: Prove incompleteness for operators on ℕ → ℕ or continuous function spaces.
+5. **Categorical formulation**: Express tropical incompleteness as a theorem about idempotent monads on enriched categories.
 
 ---
 
 ## References
 
-1. Cousot, P., & Cousot, R. (1977). Abstract interpretation: a unified lattice model for static analysis of programs by construction or approximation of fixpoints. *POPL '77*.
-
-2. Gödel, K. (1931). Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I. *Monatshefte für Mathematik und Physik*, 38, 173–198.
-
-3. Knaster, B. (1928). Un théorème sur les fonctions d'ensembles. *Annales de la Société Polonaise de Mathématique*, 6, 133–134.
-
-4. Kripke, S. (1975). Outline of a theory of truth. *The Journal of Philosophy*, 72(19), 690–716.
-
-5. Löb, M. H. (1955). Solution of a problem of Leon Henkin. *The Journal of Symbolic Logic*, 20(2), 115–118.
-
-6. Maclagan, D., & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. Graduate Studies in Mathematics, AMS.
-
-7. Simon, I. (1978). Limited subsets of a free monoid. *FOCS '78*.
-
-8. Tarski, A. (1955). A lattice-theoretical fixpoint theorem and its applications. *Pacific Journal of Mathematics*, 5(2), 285–309.
-
----
-
-## Appendix: Complete Formal Verification
-
-All theorems in this paper have been machine-verified. The verified theorems and their axiom dependencies are:
-
-| Theorem | Axioms Used |
-|---------|------------|
-| `exists_fixedPoint_comp_closure` | `propext`, `Quot.sound` |
-| `lfp_is_fixedPoint_comp_closure` | `propext`, `Quot.sound` |
-| `exists_tropical_fixed_point_fin` | `propext`, `Classical.choice`, `Quot.sound` |
-| `no_sound_complete_system_on_diagonal` | `propext`, `Classical.choice`, `Quot.sound` |
-| `tropMin_monotone` | `propext`, `Classical.choice`, `Quot.sound` |
-| `tropMin_idempotent` | `propext`, `Classical.choice`, `Quot.sound` |
-| `tropMin_bounded` | `propext`, `Classical.choice`, `Quot.sound` |
-| `tropMin_fixed_point` | `propext`, `Classical.choice`, `Quot.sound` |
-| `tropShift_monotone` | `propext`, `Classical.choice`, `Quot.sound` |
-| `tropShift_bounded` | `propext`, `Classical.choice`, `Quot.sound` |
-| `tropShift_has_fixed_point` | `propext`, `Classical.choice`, `Quot.sound` |
-| `tropical_incompleteness_integration` | `propext`, `Classical.choice`, `Quot.sound` |
-
-All axioms are standard foundations (`propext` = propositional extensionality, `Classical.choice` = axiom of choice, `Quot.sound` = quotient soundness). No `sorry` (unproven assertion) appears in any proof.
+1. Butkovič, P. (2010). *Max-linear Systems: Theory and Algorithms*. Springer.
+2. Cousot, P., & Cousot, R. (1977). Abstract interpretation: A unified lattice model for static analysis of programs. *POPL*.
+3. Gödel, K. (1931). Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I. *Monatshefte für Mathematik und Physik*, 38(1), 173–198.
+4. Knaster, B. (1928). Un théorème sur les fonctions d'ensembles. *Annales de la Société Polonaise de Mathématique*, 6, 133–134.
+5. Lawvere, F. W. (1969). Diagonal arguments and Cartesian closed categories. *Category Theory, Homology Theory and their Applications II*, Springer, 134–145.
+6. Maclagan, D., & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+7. Tarski, A. (1955). A lattice-theoretical fixpoint theorem and its applications. *Pacific Journal of Mathematics*, 5(2), 285–309.
+8. Yanofsky, N. S. (2003). A universal approach to self-referential paradoxes, incompleteness and fixed points. *Bulletin of Symbolic Logic*, 9(3), 362–386.
