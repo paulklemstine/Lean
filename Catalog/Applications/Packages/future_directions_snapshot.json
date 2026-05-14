@@ -1197,6 +1197,260 @@
     "timestamp": "2026-05-14T16:03:53.844242+00:00"
   },
   {
+    "id": "fd_0080",
+    "title": "Reduce from Shortest Path with Forbidden Pairs",
+    "description": ": This problem (known to be NP-hard) asks: given a graph and pairs of vertices that cannot both appear on a path, find a shortest path avoiding all forbidden pairs. Encode the forbidden-pair constraints as tropical matrix factorization constraints.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.718724+00:00"
+  },
+  {
+    "id": "fd_0081",
+    "title": "Reduce from 3-Partition",
+    "description": ": The entries of the factorization matrices must \"partition\" the path-cost budget among intermediate vertices, analogous to 3-Partition.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.720326+00:00"
+  },
+  {
+    "id": "fd_0082",
+    "title": "Alternative",
+    "description": ": Reduce from the Assignment Problem with precedence constraints, which is NP-hard and naturally maps to tropical matrix structure.\n\n### Key Lemmas Needed\n- `karp_reduction_forbidden_pairs_to_trop_factor`: A computable function from Shortest-Path-with-Forbidden-Pairs instances to tropical factorization instances, preserving YES/NO.\n- `trop_factor_in_NP`: A certificate (A, B) can be verified in polynomial time (tropMul is O(n³)).\n- `forbidden_pairs_is_NP_hard`: Standard NP-hardness result (from Gabow et al., 1976).\n\n### Candidate Lean Files\n- `Cryptography/TropicalNPHardness.lean`\n- `Cryptography/KarpReductions.lean`\n\n### Cross-Domain Connections\n- **Computational Complexity → Cryptography**: First formal Cook/Karp reduction linking tropical algebra to classical complexity classes.\n- **Oper",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.727172+00:00"
+  },
+  {
+    "id": "fd_0083",
+    "title": "Define TropicalKEM",
+    "description": ": Encapsulate the tropical shared secret as a symmetric key, using a hash function for key derivation.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.728869+00:00"
+  },
+  {
+    "id": "fd_0084",
+    "title": "Apply FO Transform",
+    "description": ": The standard FO transform (Hofheinz-Hövelmanns-Kiltz variant) converts CPA-secure PKE to CCA2-secure KEM. Verify that tropical ElGamal satisfies the required structural properties: correctness, γ-spreadness (the ciphertext has sufficient entropy).",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.730452+00:00"
+  },
+  {
+    "id": "fd_0085",
+    "title": "Prove γ-spreadness",
+    "description": ": Show that tropical ciphertexts have high min-entropy, using the non-commutativity and dimension bounds already established.\n\n### Key Lemmas Needed\n- `tropical_gamma_spread`: For random r, the distribution of (tropPow G r, tropMul (tropPow (tropPow G a) r) M) has min-entropy ≥ γ.\n- `fo_transform_cca2`: Generic FO transform theorem (may need to be formalized from scratch).\n- `tropical_kem_correctness`: The KEM decapsulation recovers the encapsulated key.\n- `tropical_kem_cca2_security`: The full CCA2 security theorem.\n\n### Candidate Lean Files\n- `Cryptography/TropicalKEM.lean`\n- `Cryptography/FujisakiOkamoto.lean`\n\n### Cross-Domain Connections\n- **Standardization → Deployment**: A formally verified KEM with concrete security bounds could be submitted to future NIST post-quantum rounds.\n- **",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.732498+00:00"
+  },
+  {
+    "id": "fd_0086",
+    "title": "Commitment-based protocol",
+    "description": ": The prover commits to A and B using a binding commitment scheme. The verifier challenges with a random row index i. The prover reveals row i of A and the corresponding column contributions to K, allowing the verifier to check consistency without learning the full matrices.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.734067+00:00"
+  },
+  {
+    "id": "fd_0087",
+    "title": "Sigma protocol structure",
+    "description": ": Commit → Challenge → Response. Prove honest-verifier zero-knowledge by simulation. Prove special soundness by extraction.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.735537+00:00"
+  },
+  {
+    "id": "fd_0088",
+    "title": "Tropical-specific optimization",
+    "description": ": The min-plus structure allows a more efficient protocol: the prover can commit to the \"argmin witnesses\" (which k achieves the minimum for each (i,j)) rather than the full matrices.\n\n### Key Lemmas Needed\n- `tropical_zkp_completeness`: An honest prover always convinces the verifier.\n- `tropical_zkp_soundness`: A cheating prover is caught with probability ≥ 1/2.\n- `tropical_zkp_zero_knowledge`: The verifier's view can be simulated without the witness.\n- `tropical_zkp_knowledge_extraction`: From two accepting transcripts with different challenges, one can extract A and B.\n\n### Candidate Lean Files\n- `Cryptography/TropicalZeroKnowledge.lean`\n- `Cryptography/SigmaProtocol.lean`\n\n### Cross-Domain Connections\n- **Graph Theory → ZK Proofs**: Path witnesses in layered graphs become the \"knowledg",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.737665+00:00"
+  },
+  {
+    "id": "fd_0089",
+    "title": "Lower bound via collision probability",
+    "description": ": Show that Pr[tropPow G (a₁·b₁) = tropPow G (a₂·b₂)] is small by analyzing when two different exponent products yield the same tropical power.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.739213+00:00"
+  },
+  {
+    "id": "fd_0090",
+    "title": "Use tropical rank",
+    "description": ": The tropical rank of G^m grows with m (up to n), and matrices of high tropical rank have large image sets under tropical powering.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.740801+00:00"
+  },
+  {
+    "id": "fd_0091",
+    "title": "Connect to orbit structure",
+    "description": ": The orbit {G, G², G³, ...} in tropical matrix space has size related to the tropical spectral radius, providing entropy bounds.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.742438+00:00"
+  },
+  {
+    "id": "fd_0092",
+    "title": "Apply the existing `post_quantum_key_security_from_minEntropy`",
+    "description": "to convert the entropy lower bound into a semantic security statement.\n\n### Key Lemmas Needed\n- `tropical_collision_probability_bound`: Upper bound on Pr[G^a = G^b] for random a ≠ b.\n- `tropical_rank_growth`: tropRank(tropPow G m) is non-decreasing in m.\n- `tropical_orbit_size_lower_bound`: |{tropPow G m : 0 ≤ m ≤ T}| ≥ f(n, B, T).\n- `tropical_min_entropy_lower_bound`: The main entropy bound.\n- `tropical_hashed_key_security`: Applying LHL to derive a key with negligible statistical distance to uniform.\n\n### Candidate Lean Files\n- `Cryptography/TropicalEntropy.lean`\n- `Cryptography/TropicalRankTheory.lean`\n\n### Cross-Domain Connections\n- **Information Theory → Cryptography**: Min-entropy bounds provide quantitative security guarantees.\n- **Tropical Geometry → Entropy**: The geometry of trop",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.744769+00:00"
+  },
+  {
+    "id": "fd_0093",
+    "title": "Low-rank attack",
+    "description": ": If G has tropical rank r < n, then G can be written as a tropical product of an n×r and an r×n matrix. This decomposition reveals structural information about G^a, potentially allowing recovery of a.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.746644+00:00"
+  },
+  {
+    "id": "fd_0094",
+    "title": "Residuation attack",
+    "description": ": The residual A\\B (largest X with A⊗X ≤ B) can be computed in polynomial time. Investigate whether iterating residuation operations can recover factorization witnesses.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.748585+00:00"
+  },
+  {
+    "id": "fd_0095",
+    "title": "Eigenvalue attack",
+    "description": ": The tropical eigenvalue λ of G satisfies G^n[i,i] = n·λ for all i (Cuninghame-Green theorem). If λ can be computed efficiently, it constrains the exponent a.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.750444+00:00"
+  },
+  {
+    "id": "fd_0096",
+    "title": "Defend via parameter selection",
+    "description": ": Use the attack analysis to establish minimum parameter requirements (dimension, entry bound, tropical rank) for security.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb1c42c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T16:16:22.752502+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
