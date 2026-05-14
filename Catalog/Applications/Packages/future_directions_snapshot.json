@@ -697,10 +697,10 @@
       "EML"
     ],
     "priority_score": 0.85,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92a61d99",
     "timestamp": "2026-05-14T04:01:04.732950+00:00"
   },
   {
@@ -825,10 +825,10 @@
       "Physics"
     ],
     "priority_score": 0.82,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9fb43618",
     "timestamp": "2026-05-14T04:01:04.699334+00:00"
   },
   {
@@ -953,10 +953,10 @@
       "Logic"
     ],
     "priority_score": 0.79,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "010a2547",
     "timestamp": "2026-05-14T04:01:04.720697+00:00"
   },
   {
@@ -1113,10 +1113,10 @@
       "Bridges"
     ],
     "priority_score": 0.72,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b94c4992",
     "timestamp": "2026-05-14T04:01:04.727541+00:00"
   },
   {
