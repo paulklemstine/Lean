@@ -909,22 +909,6 @@
     "timestamp": "2026-05-14T16:03:53.842628+00:00"
   },
   {
-    "id": "seed_080",
-    "title": "Emergent Math: Self-Organizing Theorem Discovery in Idempotent Algebras",
-    "description": "Prove that idempotent algebras exhibit self-organizing theorem discovery: given a set of axioms, the idempotent closure automatically generates a lattice of consequences that converges to a fixed-point theory. Show that this fixed-point theory contains all theorems provable from the axioms, and that the tropical spectral radius of the closure operator bounds the depth of the deepest discoverable theorem. Construct a Lean 4 formalization that demonstrates emergent theorem discovery in the min-plus semiring.",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Tropical"
-    ],
-    "priority_score": 0.8,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "5ff854ab",
-    "timestamp": "2026-05-14T16:03:53.882790+00:00"
-  },
-  {
     "id": "seed_041",
     "title": "Pythagorean Music Theory: Harmonic Ratios from Triple Lattices",
     "description": "Prove that Berggren-generated Pythagorean triples map to harmonic frequency ratios via tropical logarithm, and formalize the musical intervals of primitive triples as consonance/dissonance classifications. Show that the (3,4,5) triple corresponds to a perfect fourth, and that the orbit structure of the Berggren tree encodes the circle of fifths in min-plus arithmetic.",
@@ -2642,5 +2626,37 @@
     "source_exp_id": "8fece6dc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:35:01.991565+00:00"
+  },
+  {
+    "id": "fd_0187",
+    "title": "Proof Strategies",
+    "description": "1. Define tropical rank of the rule adjacency matrix M as the minimum dimension of a tropical factorization M = A ⊗ B.\n2. Show that if the tropical rank is r, then the Kleene star M* requires at least r iterations to stabilize.\n3. Connect to circuit complexity: viewing inference rules as gates, proof depth is circuit depth. Tropical rank bounds translate to depth-width tradeoffs.",
+    "domains": [
+      "Tropical",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5ff854ab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:33:57.945591+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Deliverables",
+    "description": "- Formal framework for infinite closure in dependent type theory\n- ω-stabilization theorem for compact consequence operators\n- Hierarchy theorem relating closure ordinals to rule complexity\n\n---",
+    "domains": [
+      "EML",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5ff854ab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T20:33:57.958015+00:00"
   }
 ]
