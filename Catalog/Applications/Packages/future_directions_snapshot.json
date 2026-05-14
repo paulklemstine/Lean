@@ -909,22 +909,6 @@
     "timestamp": "2026-05-14T16:03:53.822104+00:00"
   },
   {
-    "id": "seed_032",
-    "title": "Circuit Lower Bounds from Tropical Spectral Theory",
-    "description": "Prove that tropical eigenvalue gaps of circuit matrices yield super-polynomial circuit lower bounds for specific language families, advancing structural complexity theory. Show that the min-plus permanent of a circuit matrix bounds its computational depth, and that tropical spectral analysis provides a constructive path to separating complexity classes via idempotent linear algebra.",
-    "domains": [
-      "Computation",
-      "Algebra",
-      "Tropical"
-    ],
-    "priority_score": 0.8,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "709f1672",
-    "timestamp": "2026-05-14T16:03:53.829851+00:00"
-  },
-  {
     "id": "seed_033",
     "title": "Amortized Complexity via Tropical Amortization",
     "description": "Prove that amortized analysis of data structures has a natural formulation as tropical sequence optimization, where the min-plus amortized cost is the tropical convolution of operation costs over the sequence. Show that the potential method corresponds to a tropical potential function, and that the accounting method is tropical bookkeeping in the idempotent semiring.",
@@ -2267,33 +2251,18 @@
     "timestamp": "2026-05-14T18:40:55.792721+00:00"
   },
   {
-    "id": "fd_0189",
-    "title": "Monotone closure:",
-    "description": "If all component functions are monotone and the outer function is monotone, pointwise composition preserves the ordering.",
+    "id": "fd_0191",
+    "title": "Reports monthly",
+    "description": "with: theorems proved, counterexamples found, revised conjectures, and updated feasibility assessments.",
     "domains": [
-      "EML",
-      "Algebra"
+      "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "82942422",
+    "source_exp_id": "709f1672",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.796888+00:00"
-  },
-  {
-    "id": "fd_0190",
-    "title": "XOR non-universality:",
-    "description": "AND is not affine (already proved). Any XOR circuit computes an affine function. Therefore AND cannot be computed by XOR circuits.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "82942422",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.801401+00:00"
+    "timestamp": "2026-05-14T19:34:14.219507+00:00"
   },
   {
     "id": "seed_078",
@@ -2674,37 +2643,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.866477+00:00"
-  },
-  {
-    "id": "fd_0189",
-    "title": "1. Infinite Curricula via Ordinal-Valued Ranks",
-    "description": "**Target Theorem:** For any countable well-founded dependency system `(T, dep)`, there exists an ordinal-valued rank function `rank : T → Ordinal` such that `dep a b → rank b < rank a`, and the rank of every element is a countable ordinal.\n\n**Proof Strategy:** Use transfinite induction on the well-founded relation `flip dep`. Define `rank(t) = sup{rank(s) + 1 | dep t s}`. The well-foundedness of `flip dep` guarantees termination. For countable `T`, all ranks are countable ordinals (below ω₁).\n\n**Cross-Domain Connection:** This generalizes the finite curriculum existence theorem to infinite mathematical theories — modeling, for example, the entirety of Mathlib as a single dependency system with a well-founded import/dependency graph.\n\n**Concrete Next Step:** Formalize `OrdinalDepSystem` for",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f0d321",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:31:45.833806+00:00"
-  },
-  {
-    "id": "fd_0190",
-    "title": "2. Category of Theories and Functoriality of Frontier Depth",
-    "description": "**Target Theorem:** Define a category `DepSysCat` whose objects are dependency systems and whose morphisms are dependency-preserving maps (i.e., functions `f : T → T'` such that `dep' (f a) (f b)` whenever `dep a b`). Prove that `depLevel` is functorial: `depLevel_{T'} (f t) ≤ depLevel_T t` for any morphism `f`.\n\n**Proof Strategy:** A morphism maps dependency chains to dependency chains (possibly collapsing some), so chain lengths can only decrease. Formalize this as a functor from `DepSysCat` to `(ℕ, ≤)`.\n\n**Cross-Domain Connection:** This captures the idea of **conservative theory extension**: embedding a smaller theory into a larger one preserves (or reduces) curriculum depth. This is the formal analogue of \"prerequisites transfer across fields.\"\n\n**Concrete Next Step:** Define `DepSyst",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f0d321",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:31:45.840336+00:00"
   },
   {
     "id": "fd_0191",
