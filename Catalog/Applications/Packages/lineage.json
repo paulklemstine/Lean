@@ -4,10 +4,10 @@
       "id": "p_vs_np_tropical_semiring_barrier",
       "title": "Tropical Semiring Barrier Theorems: Monotonicity Obstructions for Min-Plus Circuits",
       "domain": "Algebra / Computational Complexity",
-      "primary_domain": "Computation",
-      "shape": "cube",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-14T01:50:13Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "temporal_stone_duality_recovering_temporal_logic_f",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T01:57:43Z",
-      "hue": 280
+      "hue": 272
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-14T02:00:38Z",
-      "hue": 359
+      "hue": 272
     },
     {
       "id": "pythagorean_lattice_reduction_for_integer_factorin",
@@ -34,7 +34,16 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T02:13:58Z",
-      "hue": 270
+      "hue": 91
+    },
+    {
+      "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
+      "title": "Tropical Arithmetic Coding: Shannon-Optimal Min-Plus Compression",
+      "domain": "Computation / Information Theory / Tropical Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-14T02:16:39Z",
+      "hue": 90
     }
   ],
   "edges": []
