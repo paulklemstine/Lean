@@ -48,22 +48,6 @@
     "timestamp": "2026-05-14T16:03:53.876807+00:00"
   },
   {
-    "id": "seed_067",
-    "title": "Aether Self-Improvement: Certified Novelty Detection via Theorem Embedding Uniqueness",
-    "description": "Design and prove correct a novelty certification system for Aether that formally verifies each research output contains genuinely new mathematics, not trivial rephrasings of known results. Construct a theorem embedding space where each known result occupies a unique region, and prove that the embedding distance between a proposed result and the nearest known result bounds the novelty gap. Show that this certification can be automated as a Lean 4 tactic that rejects derivative work and flags genuinely novel contributions.",
-    "domains": [
-      "Meta",
-      "Logic",
-      "Algebra"
-    ],
-    "priority_score": 0.97,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "52d57c84",
-    "timestamp": "2026-05-14T16:03:53.862725+00:00"
-  },
-  {
     "id": "seed_071",
     "title": "Research Package Quality via Certified Mathematical Significance Metrics",
     "description": "Define and formalize a mathematical significance metric that goes beyond correctness to measure the depth, novelty, and impact of a research result. Prove that the significance metric is a monotone function on the lattice of mathematical knowledge, and that results exceeding a significance threshold are guaranteed to advance the field. Show that this metric can be computed from the Lean 4 proof term structure alone, enabling fully automated quality gates that reject shallow work and elevate master-class contributions.",
@@ -1520,20 +1504,6 @@
     "timestamp": "2026-05-14T16:17:00.727665+00:00"
   },
   {
-    "id": "fd_0104",
-    "title": "Structure",
-    "description": "(Direction 3): Discover the categorical architecture of multi-head attention.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "adc29728",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:17:00.729586+00:00"
-  },
-  {
     "id": "fd_0105",
     "title": "Dynamics",
     "description": "(Direction 4): Explain training phenomena through tropical stability.",
@@ -1649,20 +1619,6 @@
     "timestamp": "2026-05-14T16:17:56.764520+00:00"
   },
   {
-    "id": "fd_0121",
-    "title": "Entropy bounds",
-    "description": "(Direction 2) — natural extension of orbit diversity results",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "705e2def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:17:56.767624+00:00"
-  },
-  {
     "id": "fd_0122",
     "title": "Reversible automata",
     "description": "(Direction 3) — opens new territory with physics connections",
@@ -1704,20 +1660,6 @@
     "source_exp_id": "705e2def",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:56.774740+00:00"
-  },
-  {
-    "id": "fd_0130",
-    "title": "Monotonicity",
-    "description": ": `T₁ ≤ T₂ → causalCone W s T₁ ⊆ causalCone W s T₂`",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.096281+00:00"
   },
   {
     "id": "fd_0131",
@@ -2014,20 +1956,6 @@
     "source_exp_id": "68311f72",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:32:45.366275+00:00"
-  },
-  {
-    "id": "fd_0151",
-    "title": "Level computation",
-    "description": ": Apply the longest-path algorithm from `algorithms.py`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:32:45.369472+00:00"
   },
   {
     "id": "fd_0152",
@@ -2402,6 +2330,62 @@
     "timestamp": "2026-05-14T17:33:00.537124+00:00"
   },
   {
+    "id": "fd_0184",
+    "title": "Runs computational experiments",
+    "description": "to validate or refute conjectures before attempting formal proof.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52d57c84",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:36.866581+00:00"
+  },
+  {
+    "id": "fd_0185",
+    "title": "Decomposes proofs",
+    "description": "into independently provable lemmas of ≤ 50 lines each.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52d57c84",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:36.869447+00:00"
+  },
+  {
+    "id": "fd_0186",
+    "title": "Cross-pollinates",
+    "description": "with other directions: e.g., Direction 3's packing bounds inform Direction 5's choice of embedding dimension; Direction 2's normalization reduces Direction 1's graph distances.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52d57c84",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:36.872366+00:00"
+  },
+  {
+    "id": "fd_0187",
+    "title": "Iterates weekly",
+    "description": "with updated knowledge base: which lemmas are proved, which conjectures are refuted, which new conjectures emerge.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52d57c84",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T17:33:36.875337+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -2752,24 +2736,6 @@
     "source_exp_id": "28ca9606",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:19.352870+00:00"
-  },
-  {
-    "id": "fd_0183",
-    "title": "Direction 5: Reversible Tropical Automata and Thermodynamic Bounds",
-    "description": "**Hypothesis.** Every minimal tropical automaton admits a reversible simulation with at most polynomial blowup, and the minimal entropy cost of irreversibility in tropical computation is bounded by the logarithm of the Nerode index.\n\n**Why it matters.** Landauer's principle states that irreversible computation dissipates energy. For tropical automata (which model energy-optimal scheduling), understanding reversibility bounds would:\n- Connect automata theory to thermodynamic computing\n- Provide entropy-based lower bounds on automaton size\n- Enable energy-aware controller synthesis\n\n**Proof Strategy.**\n1. Define reversible tropical automata (where the step function is a bijection for each letter).\n2. Show that the Nerode automaton is generally not reversible (construct a counterexample).\n3. ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:19.357383+00:00"
   },
   {
     "id": "fd_0184",
