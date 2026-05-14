@@ -637,22 +637,6 @@
     "timestamp": "2026-05-14T16:03:53.859237+00:00"
   },
   {
-    "id": "seed_027",
-    "title": "Scaling Laws as Tropical Power-Law Fixed Points",
-    "description": "Prove that neural network scaling laws are tropical fixed points of the form L(N,D) = min-plus(N^a, D^b, C^c) where the idempotent structure forces the loss to follow the dominant power-law regime. Show that phase transitions between data-limited and compute-limited scaling are corner points of the tropical polytope, predicting emergent capabilities from the geometry of the loss surface.",
-    "domains": [
-      "MachineLearning",
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.84,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "42c626d5",
-    "timestamp": "2026-05-14T16:03:53.827014+00:00"
-  },
-  {
     "id": "seed_034",
     "title": "Quantum Speedup via Tropical Dequantization",
     "description": "Prove that the dequantization of quantum algorithms—replacing quantum amplitude with tropical weights—preserves the speedup structure while eliminating quantum hardware requirements. Show that tropical dequantized algorithms achieve the same asymptotic complexity as their quantum counterparts for search and sampling problems, and that the min-plus interference pattern captures the essential quantum parallelism.",
@@ -966,10 +950,10 @@
       "Physics"
     ],
     "priority_score": 0.76,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c26006e9",
     "timestamp": "2026-05-14T16:03:53.841808+00:00"
   },
   {
@@ -2011,6 +1995,62 @@
     "source_exp_id": "e097f73b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T22:09:35.060560+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Phase structure",
+    "description": ": which resource is the binding constraint",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "42c626d5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:23:41.678042+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Transition sharpness",
+    "description": ": how quickly capabilities emerge",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "42c626d5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:23:41.684136+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Optimal allocation",
+    "description": ": how to distribute resources across regimes",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "42c626d5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:23:41.689999+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Forecasting",
+    "description": ": when capability thresholds will be crossed",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "42c626d5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T22:23:41.695542+00:00"
   },
   {
     "id": "seed_078",
