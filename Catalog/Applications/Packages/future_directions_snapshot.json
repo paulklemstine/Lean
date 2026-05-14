@@ -128,22 +128,6 @@
     "timestamp": "2026-05-14T16:03:53.866556+00:00"
   },
   {
-    "id": "seed_074",
-    "title": "Aristotle Architecture: Compositional Research via Mathematical Theory Morphisms",
-    "description": "Prove that mathematical theories form a category where theory morphisms preserve structure and enable compositional research. Construct a Lean 4 formalization of theory morphisms that allows Aristotle to compose results across domains by applying structure-preserving maps. Show that master-class research emerges from composing deep theory morphisms that no single domain could produce alone, and prove that the compositionality law guarantees that composed results are at least as deep as their components.",
-    "domains": [
-      "Meta",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.95,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "4aff04ca",
-    "timestamp": "2026-05-14T16:03:53.872578+00:00"
-  },
-  {
     "id": "seed_002",
     "title": "Riemann Hypothesis via Tropical Spectral Transfer",
     "description": "Formulate the Riemann Hypothesis as a statement about the spectrum of a tropical transfer operator on the critical strip. Prove that all non-trivial zeros lie on Re(s)=1/2 if and only if the tropical eigenvalue gap vanishes, connecting analytic number theory to tropical dynamics via a constructive spectral correspondence.",
@@ -2116,6 +2100,34 @@
     "source_exp_id": "9b6e4e14",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:34:38.217919+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Test computationally",
+    "description": "using the Python algorithms module.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4aff04ca",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:35:19.784378+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Update",
+    "description": "this roadmap with new directions discovered during formalization.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4aff04ca",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T21:35:19.797835+00:00"
   },
   {
     "id": "seed_078",
