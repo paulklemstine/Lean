@@ -25,10 +25,10 @@
       "Bridges"
     ],
     "priority_score": 0.98,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5732babf",
     "timestamp": "2026-05-14T04:01:04.740698+00:00"
   },
   {
@@ -761,10 +761,10 @@
       "Computation"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "315e6871",
     "timestamp": "2026-05-14T04:01:04.697893+00:00"
   },
   {
@@ -1129,10 +1129,10 @@
       "Bridges"
     ],
     "priority_score": 0.71,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "478c92ec",
     "timestamp": "2026-05-14T04:01:04.731885+00:00"
   },
   {

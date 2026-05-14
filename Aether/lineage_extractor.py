@@ -542,13 +542,69 @@ def build_lineage(packages_dir, config_path=None):
 
     print(f"Provenance edges: {len(provenance_edges)}")
 
-    # Use only provenance edges
-    edges = provenance_edges
+    # ── Phase 2: Heuristic edges for packages without provenance ──
+    # Use domain/concept overlap to infer likely lineage connections
+    heuristic_edges = []
+    heuristic_pairs = set()
+
+    # Only generate heuristic edges for packages that lack provenance
+    packages_with_provenance = set()
+    for e in provenance_edges:
+        packages_with_provenance.add(e["source"])
+        packages_with_provenance.add(e["target"])
+
+    MIN_HEURISTIC_SCORE = 8.0
+    MAX_HEURISTIC_EDGES_PER_SOURCE = 3
+    for i, src_slug in enumerate(sorted_slugs):
+        if src_slug in packages_with_provenance:
+            continue  # provenance already connects this package
+        src_pkg = packages[src_slug]
+        src_fd = src_pkg.get("future_directions", "")
+        if not src_fd or len(src_fd) < 100:
+            continue
+        src_concepts = extract_concepts_from_future_directions(src_fd)
+        if not src_concepts:
+            continue
+
+        # Collect all candidate edges from this source, then keep top N
+        candidates = []
+        for j in range(i + 1, len(sorted_slugs)):
+            tgt_slug = sorted_slugs[j]
+            tgt_pkg = packages[tgt_slug]
+
+            score, reasons = compute_edge_score(
+                src_pkg, tgt_pkg, src_concepts, packages, arcs
+            )
+            if score >= MIN_HEURISTIC_SCORE:
+                pair = (src_slug, tgt_slug)
+                if pair not in heuristic_pairs and pair not in provenance_pairs:
+                    candidates.append((score, pair, reasons))
+
+        # Keep only top N edges per source by score
+        candidates.sort(key=lambda x: x[0], reverse=True)
+        for score, pair, reasons in candidates[:MAX_HEURISTIC_EDGES_PER_SOURCE]:
+            src_slug, tgt_slug = pair
+            heuristic_pairs.add(pair)
+            src_pkg = packages[src_slug]
+            tgt_pkg = packages[tgt_slug]
+            label = extract_edge_label(reasons, src_pkg.get("title", ""), tgt_pkg.get("title", ""))
+            heuristic_edges.append({
+                "source": src_slug,
+                "target": tgt_slug,
+                "strength": min(score / 10.0, 1.0),
+                "label": label,
+                "type": "heuristic",
+            })
+
+    print(f"Heuristic edges: {len(heuristic_edges)}")
+
+    # Combine provenance and heuristic edges, deduplicate
+    all_edges = provenance_edges + heuristic_edges
 
     # Remove edges that reference non-existent packages (ghost nodes)
     real_slugs = {n["id"] for n in nodes}
-    before = len(edges)
-    edges = [e for e in edges if e["source"] in real_slugs and e["target"] in real_slugs]
+    before = len(all_edges)
+    edges = [e for e in all_edges if e["source"] in real_slugs and e["target"] in real_slugs]
     if before != len(edges):
         print(f"Removed {before - len(edges)} edges with ghost nodes")
 
