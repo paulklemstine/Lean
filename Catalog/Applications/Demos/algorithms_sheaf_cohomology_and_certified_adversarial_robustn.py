@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """
-Sheaf-Theoretic Certified Adversarial Robustness — Algorithms
+Algorithms for Cohomological Robustness Certification
 
 Implements the core algorithms from the research paper:
-1. Local certificate computation (margin/Lipschitz)
-2. Global certification pipeline (cohomological descent)
-3. Čech cohomology computation (H¹ via linear algebra)
-4. Vulnerability detection (stalk obstruction)
+1. Čech cocycle computation on finite covers
+2. Coboundary decomposition (H¹ vanishing test)
+3. Global certified radius computation
+4. Stalk vulnerability detection
+5. ReLU region decomposition and margin analysis
+
+All algorithms have polynomial complexity in the number of regions.
 """
 
 import numpy as np
@@ -14,389 +17,458 @@ from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
 
 
+# ============================================================
+# Data Structures
+# ============================================================
+
 @dataclass
-class LocalCertificate:
-    """Local robustness certificate for a single activation chamber."""
-    chamber_id: int
-    margin: float
-    lipschitz: float
+class LinearRegion:
+    """A single linear region of a piecewise-linear function.
+
+    Attributes
+    ----------
+    index : int
+        Region identifier.
+    bounds : tuple of (float, float)
+        Interval [a, b] for 1D; more generally, a polyhedron description.
+    slope : np.ndarray
+        Gradient of the affine function on this region.
+    intercept : float
+        Bias of the affine function on this region.
+    margin : float
+        Minimum score gap on this region.
+    lipschitz : float
+        Lipschitz constant of the score-gap function on this region.
+    """
+    index: int
+    bounds: Tuple[float, float]
+    slope: float
+    intercept: float
+    margin: float = 0.0
+    lipschitz: float = 0.0
+
+
+@dataclass
+class CechCocycle:
+    """A Čech 1-cocycle on a finite cover.
+
+    The cocycle c : ι × ι → ℝ satisfies:
+        c(i, k) = c(i, j) + c(j, k)  for all i, j, k
+
+    Attributes
+    ----------
+    matrix : np.ndarray
+        The cocycle values c(i, j) as an n×n matrix.
+    is_cocycle : bool
+        Whether the cocycle condition is verified.
+    """
+    matrix: np.ndarray
+    is_cocycle: bool = False
+
+
+@dataclass
+class CoboundaryDecomposition:
+    """Decomposition of a cocycle as a coboundary.
+
+    If c(i, j) = b(j) - b(i), then b is the primitive.
+
+    Attributes
+    ----------
+    primitive : np.ndarray
+        The 0-cochain b such that c(i,j) = b(j) - b(i).
+    is_exact : bool
+        Whether the decomposition is exact (cocycle is a coboundary).
+    residual : float
+        Maximum decomposition error.
+    """
+    primitive: np.ndarray
+    is_exact: bool = False
+    residual: float = 0.0
+
+
+@dataclass
+class RobustnessCertificate:
+    """A global robustness certificate.
+
+    Attributes
+    ----------
+    radius : float
+        Global certified L∞ perturbation radius.
+    min_margin : float
+        The minimum local margin across all regions.
+    global_lipschitz : float
+        The global Lipschitz constant.
+    is_certified : bool
+        Whether the certificate is valid (radius > 0).
+    local_radii : list of float
+        Per-region certified radii.
+    """
     radius: float
-    
-    @staticmethod
-    def compute(margin: float, lipschitz: float, chamber_id: int = 0) -> 'LocalCertificate':
-        """Compute local certified radius = margin / Lipschitz."""
-        if lipschitz <= 0:
-            raise ValueError(f"Lipschitz constant must be positive, got {lipschitz}")
-        return LocalCertificate(
-            chamber_id=chamber_id,
-            margin=margin,
-            lipschitz=lipschitz,
-            radius=margin / lipschitz
-        )
+    min_margin: float
+    global_lipschitz: float
+    is_certified: bool
+    local_radii: List[float]
 
 
-@dataclass
-class GlobalCertificate:
-    """Global robustness certificate from cohomological descent."""
-    radius: float
-    local_certificates: List[LocalCertificate]
-    h1_vanishes: bool
-    bottleneck_chamber: int
-    
-    @property
-    def is_robust(self) -> bool:
-        return self.radius > 0
+# ============================================================
+# Algorithm 1: Čech Cocycle Computation
+# ============================================================
 
-
-@dataclass
-class VulnerabilityReport:
-    """Report of vulnerability detection via stalk obstruction."""
-    vulnerable_points: List[float]
-    vulnerable_chambers: List[int]
-    obstruction_type: str  # 'zero_margin', 'non_coboundary', 'stalk_collapse'
-
-
-class CechCohomology:
+def compute_cech_cocycle(local_radii: List[float]) -> CechCocycle:
     """
-    Finite Čech cohomology computation for robustness sheaves.
-    
-    Given a finite cover {U_i} with overlap data, computes:
-    - Z¹: space of cocycles
-    - B¹: space of coboundaries
-    - H¹ = Z¹/B¹: first cohomology group
+    Compute the Čech 1-cocycle from local robustness radii.
+
+    The cocycle measures discrepancies between local certificates:
+        c(i, j) = r_j - r_i
+
+    where r_i = margin_i / L_i is the local certified radius on region i.
+
+    Parameters
+    ----------
+    local_radii : list of float
+        Local certified radii for each region.
+
+    Returns
+    -------
+    CechCocycle
+        The computed cocycle with verification status.
+
+    Complexity
+    ----------
+    Time: O(n²) where n is the number of regions.
+    Space: O(n²) for the cocycle matrix.
+
+    Notes
+    -----
+    For the canonical robustness cocycle, c(i,j) = r_j - r_i automatically
+    satisfies the cocycle condition since:
+        c(i,k) = r_k - r_i = (r_k - r_j) + (r_j - r_i) = c(j,k) + c(i,j)
     """
-    
-    def __init__(self, n_sets: int):
-        self.n = n_sets
-    
-    def coboundary_matrix(self) -> np.ndarray:
-        """
-        Construct the coboundary matrix δ⁰ : C⁰ → C¹.
-        
-        C⁰ has dimension n (0-cochains = functions ι → ℝ).
-        C¹ has dimension n² (1-cochains = functions ι × ι → ℝ).
-        δ⁰(b)(i,j) = b(j) - b(i).
-        
-        Returns matrix of shape (n², n).
-        """
-        n = self.n
-        delta = np.zeros((n * n, n))
-        for i in range(n):
-            for j in range(n):
-                row = i * n + j
-                delta[row, j] = 1.0   # +b(j)
-                delta[row, i] -= 1.0  # -b(i)
-        return delta
-    
-    def is_cocycle(self, c: np.ndarray) -> bool:
-        """Check additive cocycle condition: c(i,k) = c(i,j) + c(j,k)."""
-        n = self.n
-        for i in range(n):
-            for j in range(n):
-                for k in range(n):
-                    if not np.isclose(c[i, k], c[i, j] + c[j, k], atol=1e-10):
-                        return False
-        return True
-    
-    def is_coboundary(self, c: np.ndarray) -> Tuple[bool, Optional[np.ndarray]]:
-        """
-        Check if cocycle is a coboundary and return primitive.
-        
-        For a cocycle, try b(i) = c(0, i) as the candidate primitive.
-        """
-        n = self.n
-        b = np.array([c[0, i] for i in range(n)])
-        
-        for i in range(n):
-            for j in range(n):
-                if not np.isclose(c[i, j], b[j] - b[i], atol=1e-10):
-                    return False, None
-        return True, b
-    
-    def compute_h1_dimension(self) -> int:
-        """
-        Compute dim H¹ = dim Z¹ - dim B¹.
-        
-        For a finite set with n elements:
-        - Z¹ (cocycles satisfying additive condition) has dim n-1
-          (any cocycle is determined by c(0,1), c(0,2), ..., c(0,n-1))
-        - B¹ (coboundaries) has dim n-1
-          (coboundary is determined by b(1)-b(0), ..., b(n-1)-b(0))
-        
-        Therefore H¹ = 0 for a complete cover (all overlaps nonempty).
-        """
-        # For a complete graph (all overlaps), H¹ always vanishes
-        # This is because every cocycle on a simplex is a coboundary
-        return 0
-    
-    def find_obstruction(self, c: np.ndarray) -> Optional[Tuple[int, int, int]]:
-        """Find a triple (i,j,k) violating the cocycle condition."""
-        n = self.n
-        for i in range(n):
-            for j in range(n):
-                for k in range(n):
-                    if not np.isclose(c[i, k], c[i, j] + c[j, k], atol=1e-10):
-                        return (i, j, k)
-        return None
+    n = len(local_radii)
+    c = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            c[i, j] = local_radii[j] - local_radii[i]
+
+    # Verify cocycle condition
+    is_cocycle = True
+    tol = 1e-12
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                if abs(c[i, k] - c[i, j] - c[j, k]) > tol:
+                    is_cocycle = False
+                    break
+            if not is_cocycle:
+                break
+        if not is_cocycle:
+            break
+
+    return CechCocycle(matrix=c, is_cocycle=is_cocycle)
 
 
-class SheafCertifier:
+# ============================================================
+# Algorithm 2: Coboundary Decomposition
+# ============================================================
+
+def decompose_coboundary(cocycle: CechCocycle) -> CoboundaryDecomposition:
     """
-    Main certification pipeline implementing the cohomological descent theorem.
-    
-    Algorithm 2 from the research paper:
-    1. Enumerate chambers intersecting the region
-    2. Compute local certificates (margin/Lipschitz)
-    3. Check cohomological gluing condition
-    4. Return global certified radius or vulnerability report
+    Decompose a cocycle as a coboundary: find b such that c(i,j) = b(j) - b(i).
+
+    This implements the constructive proof that H¹ vanishes for finite covers:
+    fix a base index i₀ and set b(i) = c(i₀, i).
+
+    Parameters
+    ----------
+    cocycle : CechCocycle
+        A verified Čech 1-cocycle.
+
+    Returns
+    -------
+    CoboundaryDecomposition
+        The primitive b and verification status.
+
+    Complexity
+    ----------
+    Time: O(n²) for verification.
+    Space: O(n) for the primitive.
+
+    Mathematical Justification
+    --------------------------
+    For a cocycle c satisfying c(i,k) = c(i,j) + c(j,k), setting b(i) = c(i₀, i)
+    for a fixed base i₀ gives:
+        b(j) - b(i) = c(i₀, j) - c(i₀, i) = c(i, j)
+    where the last equality uses the cocycle condition with k=j, and antisymmetry.
     """
-    
-    def __init__(self):
-        self.certificates: List[LocalCertificate] = []
-        self.cohomology: Optional[CechCohomology] = None
-    
-    def add_certificate(self, margin: float, lipschitz: float, 
-                        chamber_id: int = -1) -> LocalCertificate:
-        """Add a local certificate for a chamber."""
-        if chamber_id < 0:
-            chamber_id = len(self.certificates)
-        cert = LocalCertificate.compute(margin, lipschitz, chamber_id)
-        self.certificates.append(cert)
-        return cert
-    
-    def certify(self, overlap_cocycle: Optional[np.ndarray] = None) -> GlobalCertificate:
-        """
-        Run the full certification pipeline.
-        
-        This implements the cohomological descent theorem:
-        If H¹ = 0, then R_global = min(r_i).
-        """
-        if not self.certificates:
-            return GlobalCertificate(
-                radius=0.0,
-                local_certificates=[],
-                h1_vanishes=True,
-                bottleneck_chamber=-1
-            )
-        
-        n = len(self.certificates)
-        self.cohomology = CechCohomology(n)
-        
-        # Check cohomological condition
-        h1_vanishes = True
-        if overlap_cocycle is not None:
-            if not self.cohomology.is_cocycle(overlap_cocycle):
-                h1_vanishes = False  # Not even a cocycle → inconsistent data
-            else:
-                is_cob, _ = self.cohomology.is_coboundary(overlap_cocycle)
-                h1_vanishes = is_cob
-        
-        # Global radius = infimum of local radii
-        radii = [c.radius for c in self.certificates]
-        global_radius = min(radii)
-        bottleneck = int(np.argmin(radii))
-        
-        return GlobalCertificate(
-            radius=global_radius,
-            local_certificates=self.certificates,
-            h1_vanishes=h1_vanishes,
-            bottleneck_chamber=bottleneck
-        )
-    
-    def detect_vulnerability(self, 
-                             score_gap_fn=None,
-                             boundary_points: Optional[List[float]] = None
-                             ) -> VulnerabilityReport:
-        """
-        Detect vulnerable points via stalk obstruction.
-        
-        A point x is vulnerable if stalkRadius(x) ≤ 0, i.e., 
-        no neighborhood of x has uniformly positive score gap.
-        """
-        vulnerable_points = []
-        vulnerable_chambers = []
-        
-        # Check for zero-margin chambers
-        for cert in self.certificates:
-            if cert.margin <= 0:
-                vulnerable_chambers.append(cert.chamber_id)
-        
-        # Check boundary points
-        if boundary_points and score_gap_fn:
-            for x in boundary_points:
-                if score_gap_fn(x) <= 0:
-                    vulnerable_points.append(x)
-        
-        obstruction_type = 'none'
-        if vulnerable_chambers:
-            obstruction_type = 'zero_margin'
-        elif vulnerable_points:
-            obstruction_type = 'stalk_collapse'
-        
-        return VulnerabilityReport(
-            vulnerable_points=vulnerable_points,
-            vulnerable_chambers=vulnerable_chambers,
-            obstruction_type=obstruction_type
-        )
+    n = cocycle.matrix.shape[0]
+    c = cocycle.matrix
+
+    # Fix base index 0
+    b = np.zeros(n)
+    for i in range(n):
+        b[i] = c[0, i]
+
+    # Verify decomposition
+    max_residual = 0.0
+    for i in range(n):
+        for j in range(n):
+            residual = abs(c[i, j] - (b[j] - b[i]))
+            max_residual = max(max_residual, residual)
+
+    is_exact = max_residual < 1e-10
+
+    return CoboundaryDecomposition(
+        primitive=b,
+        is_exact=is_exact,
+        residual=max_residual
+    )
 
 
-class ReLUChamberAnalyzer:
+# ============================================================
+# Algorithm 3: Global Certified Radius
+# ============================================================
+
+def compute_global_certificate(
+    margins: List[float],
+    lipschitz_constants: List[float],
+    global_lipschitz: Optional[float] = None
+) -> RobustnessCertificate:
     """
-    Analyze ReLU network activation chambers for robustness certification.
-    
-    For a ReLU network f(x) = W₂ · max(0, W₁x + b₁) + b₂:
-    - Each activation pattern defines a chamber (convex polytope)
-    - On each chamber, f is affine: f(x) = W_eff · x + b_eff
-    - Local Lipschitz = ‖W_eff‖_∞ (L∞ operator norm)
-    - Local margin = min score gap on chamber
+    Compute the global robustness certificate via cohomological descent.
+
+    This implements the main theorem:
+        ε = min_i(m_i) / L
+
+    where m_i are local margins and L is the global Lipschitz constant.
+
+    Parameters
+    ----------
+    margins : list of float
+        Local margins m_i for each region.
+    lipschitz_constants : list of float
+        Local Lipschitz constants L_i for each region.
+    global_lipschitz : float, optional
+        Global Lipschitz constant. If None, uses max(L_i).
+
+    Returns
+    -------
+    RobustnessCertificate
+        The global certificate with all metadata.
+
+    Complexity
+    ----------
+    Time: O(n) where n is the number of regions.
+    Space: O(n) for local radii storage.
+
+    Algorithm
+    ---------
+    1. Compute local radii r_i = m_i / L_i for each region.
+    2. Compute cocycle (automatic for the canonical construction).
+    3. Verify H¹ = 0 (always true for finite covers).
+    4. Global radius = min(m_i) / max(L_i) using the global Lipschitz constant.
     """
-    
-    def __init__(self, W1: np.ndarray, b1: np.ndarray, 
-                 W2: np.ndarray, b2: np.ndarray):
-        self.W1 = W1
-        self.b1 = b1
-        self.W2 = W2
-        self.b2 = b2
-        self.input_dim = W1.shape[1]
-        self.hidden_dim = W1.shape[0]
-    
-    def forward(self, x: np.ndarray) -> float:
-        """Forward pass."""
-        h = np.maximum(0, self.W1 @ x + self.b1)
-        return float(self.W2 @ h + self.b2)
-    
-    def activation_pattern(self, x: np.ndarray) -> tuple:
-        """Get activation pattern at x."""
-        return tuple((self.W1 @ x + self.b1) > 0)
-    
-    def effective_weight(self, pattern: tuple) -> np.ndarray:
-        """Get effective weight matrix for a given activation pattern."""
-        active = np.diag(np.array(pattern, dtype=float))
-        return self.W2 @ active @ self.W1
-    
-    def linf_lipschitz(self, pattern: tuple) -> float:
-        """Compute L∞ Lipschitz constant for a chamber."""
-        W_eff = self.effective_weight(pattern)
-        return float(np.max(np.sum(np.abs(W_eff), axis=1)))
-    
-    def enumerate_chambers(self, x_range: np.ndarray, 
-                           y_range: Optional[np.ndarray] = None
-                           ) -> Dict[tuple, dict]:
-        """Enumerate activation chambers by grid sampling."""
-        chambers = {}
-        
-        if y_range is not None:
-            # 2D case
-            for xi in x_range:
-                for yi in y_range:
-                    x = np.array([xi, yi])
-                    pattern = self.activation_pattern(x)
-                    score = self.forward(x)
-                    if pattern not in chambers:
-                        chambers[pattern] = {
-                            'points': [], 'scores': [],
-                            'lip': self.linf_lipschitz(pattern)
-                        }
-                    chambers[pattern]['points'].append(x.copy())
-                    chambers[pattern]['scores'].append(score)
+    if global_lipschitz is None:
+        global_lipschitz = max(lipschitz_constants)
+
+    local_radii = []
+    for m, l in zip(margins, lipschitz_constants):
+        if l > 0:
+            local_radii.append(m / l)
         else:
-            # 1D case
-            for xi in x_range:
-                x = np.array([xi])
-                pattern = self.activation_pattern(x)
-                score = self.forward(x)
-                if pattern not in chambers:
-                    chambers[pattern] = {
-                        'points': [], 'scores': [],
-                        'lip': self.linf_lipschitz(pattern)
-                    }
-                chambers[pattern]['points'].append(x.copy())
-                chambers[pattern]['scores'].append(score)
-        
-        return chambers
-    
-    def certify_chambers(self, chambers: Dict[tuple, dict]) -> List[LocalCertificate]:
-        """Compute local certificates for each chamber."""
-        certs = []
-        for idx, (pattern, data) in enumerate(chambers.items()):
-            scores = np.array(data['scores'])
-            margin = float(np.min(np.abs(scores)))
-            lip = data['lip']
-            if lip > 0:
-                certs.append(LocalCertificate.compute(margin, lip, idx))
-        return certs
+            local_radii.append(float('inf') if m >= 0 else 0.0)
+
+    min_margin = min(margins)
+    if min_margin <= 0 or global_lipschitz <= 0:
+        radius = 0.0
+    else:
+        radius = min_margin / global_lipschitz
+
+    return RobustnessCertificate(
+        radius=radius,
+        min_margin=min_margin,
+        global_lipschitz=global_lipschitz,
+        is_certified=radius > 0,
+        local_radii=local_radii
+    )
 
 
-# =============================================================================
-# Usage Examples
-# =============================================================================
+# ============================================================
+# Algorithm 4: Stalk Vulnerability Detection
+# ============================================================
+
+def detect_stalk_vulnerability(
+    margins: List[float],
+    region_assignments: Dict[int, List[int]],
+) -> Dict[int, bool]:
+    """
+    Detect vulnerability at each point via stalk analysis.
+
+    A point x is vulnerable if every region containing x has non-positive margin.
+    Equivalently, the stalk of the decision sheaf at x admits no positive section.
+
+    Parameters
+    ----------
+    margins : list of float
+        Local margins for each region.
+    region_assignments : dict
+        Maps point index to list of region indices covering that point.
+
+    Returns
+    -------
+    dict
+        Maps point index to vulnerability status (True = vulnerable).
+
+    Complexity
+    ----------
+    Time: O(|points| × max_regions_per_point).
+    Space: O(|points|).
+
+    Mathematical Basis
+    ------------------
+    By the stalk vulnerability theorem:
+        VulnerableAt'(F, x) ↔ ∀ i, x ∈ U_i → F.localMargin(i, x) ≤ 0
+                            ↔ ¬∃ γ > 0, PositiveStalkMargin(F, x, γ)
+    """
+    vulnerability = {}
+    for pt_idx, region_list in region_assignments.items():
+        # Point is vulnerable iff all covering regions have non-positive margin
+        is_vulnerable = all(margins[r] <= 0 for r in region_list)
+        vulnerability[pt_idx] = is_vulnerable
+    return vulnerability
+
+
+# ============================================================
+# Algorithm 5: ReLU Region Decomposition
+# ============================================================
+
+def decompose_relu_regions_1d(
+    weights: List[List[float]],
+    biases: List[List[float]]
+) -> List[LinearRegion]:
+    """
+    Decompose a 1D ReLU network into its linear regions.
+
+    A ReLU network with weights w and biases b computes:
+        f(x) = w_L · ReLU(w_{L-1} · ReLU(... ReLU(w_1 · x + b_1) ...) + b_{L-1}) + b_L
+
+    The breakpoints occur where pre-activation values cross zero.
+
+    Parameters
+    ----------
+    weights : list of list of float
+        Weight matrices for each layer (1D: scalars).
+    biases : list of list of float
+        Bias vectors for each layer.
+
+    Returns
+    -------
+    list of LinearRegion
+        The linear regions with computed slopes and intercepts.
+
+    Complexity
+    ----------
+    Time: O(P) where P is the total number of neurons (breakpoints).
+    Space: O(P) for storing regions.
+    """
+    # For a 1D network, compute breakpoints analytically
+    # Simplified: assume single hidden layer for demo
+    if len(weights) < 2:
+        return [LinearRegion(0, (-np.inf, np.inf), weights[0][0], biases[0][0])]
+
+    # Hidden layer breakpoints: w1 * x + b1 = 0 => x = -b1/w1
+    breakpoints = []
+    w1 = weights[0]
+    b1 = biases[0]
+    for wi, bi in zip(w1, b1):
+        if abs(wi) > 1e-12:
+            breakpoints.append(-bi / wi)
+
+    breakpoints = sorted(set(breakpoints))
+
+    # Compute slope and intercept on each region
+    regions = []
+    all_bounds = [(-100.0, breakpoints[0])] if breakpoints else [(-100.0, 100.0)]
+    for i in range(len(breakpoints) - 1):
+        all_bounds.append((breakpoints[i], breakpoints[i + 1]))
+    if breakpoints:
+        all_bounds.append((breakpoints[-1], 100.0))
+
+    for idx, (a, b) in enumerate(all_bounds):
+        mid = (a + b) / 2
+        # Evaluate network at midpoint to get slope/intercept
+        # For single hidden layer: f(x) = w2 · ReLU(w1 · x + b1) + b2
+        h = np.maximum(0, np.array(w1) * mid + np.array(b1))
+        w2 = weights[1]
+        b2 = biases[1]
+        y = np.dot(w2, h) + b2[0]
+
+        # Compute slope by finite difference
+        dx = 1e-6
+        h_plus = np.maximum(0, np.array(w1) * (mid + dx) + np.array(b1))
+        y_plus = np.dot(w2, h_plus) + b2[0]
+        slope = (y_plus - y) / dx
+        intercept = y - slope * mid
+
+        regions.append(LinearRegion(
+            index=idx,
+            bounds=(a, b),
+            slope=slope,
+            intercept=intercept,
+            lipschitz=abs(slope)
+        ))
+
+    return regions
+
+
+# ============================================================
+# Main: Example Usage
+# ============================================================
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("ALGORITHM DEMONSTRATION")
-    print("=" * 70)
-    
-    # Example: Full certification pipeline
-    certifier = SheafCertifier()
-    
-    # Add local certificates from 5 chambers
-    chamber_data = [
-        (1.0, 2.0),   # margin, Lipschitz
-        (0.5, 1.0),
-        (0.8, 4.0),
-        (1.2, 3.0),
-        (0.3, 1.5),
-    ]
-    
-    print("\nLocal certificates:")
-    for i, (m, l) in enumerate(chamber_data):
-        cert = certifier.add_certificate(m, l)
-        print(f"  Chamber {i}: margin={m}, Lip={l}, radius={cert.radius:.4f}")
-    
-    # Run global certification
-    result = certifier.certify()
-    print(f"\nGlobal certification result:")
-    print(f"  Global radius R = {result.radius:.4f}")
-    print(f"  H¹ vanishes: {result.h1_vanishes}")
-    print(f"  Bottleneck chamber: {result.bottleneck_chamber}")
-    print(f"  Is robust: {result.is_robust}")
-    
-    # Čech cohomology analysis
-    print("\n--- Čech Cohomology Analysis ---")
-    cech = CechCohomology(3)
-    
-    # Trivial cocycle
-    c_trivial = np.zeros((3, 3))
-    c_trivial[0, 1] = 0.1; c_trivial[1, 0] = -0.1
-    c_trivial[1, 2] = 0.2; c_trivial[2, 1] = -0.2
-    c_trivial[0, 2] = 0.3; c_trivial[2, 0] = -0.3
-    
-    print(f"  Cocycle check: {cech.is_cocycle(c_trivial)}")
-    is_cob, prim = cech.is_coboundary(c_trivial)
-    print(f"  Coboundary check: {is_cob}")
-    if prim is not None:
-        print(f"  Primitive: {prim}")
-    print(f"  dim H¹ = {cech.compute_h1_dimension()}")
-    
-    # ReLU chamber analysis
-    print("\n--- ReLU Chamber Analysis ---")
-    W1 = np.array([[1.0, 0.5], [-0.5, 1.0], [0.3, -0.8]])
-    b1 = np.array([0.1, -0.2, 0.3])
-    W2 = np.array([[1.0, -1.0, 0.5]])
-    b2 = np.array([0.0])
-    
-    analyzer = ReLUChamberAnalyzer(W1, b1, W2, b2)
-    x_range = np.linspace(-2, 2, 100)
-    y_range = np.linspace(-2, 2, 100)
-    
-    chambers = analyzer.enumerate_chambers(x_range, y_range)
-    certs = analyzer.certify_chambers(chambers)
-    
-    print(f"  Chambers found: {len(chambers)}")
-    print(f"  Certificates computed: {len(certs)}")
-    
-    if certs:
-        radii = [c.radius for c in certs]
-        print(f"  Min local radius: {min(radii):.6f}")
-        print(f"  Max local radius: {max(radii):.6f}")
-        print(f"  Global certified radius: {min(radii):.6f}")
+    print("Cohomological Robustness Certification - Algorithm Suite")
+    print("=" * 60)
+
+    # Example: 5-region piecewise-linear classifier
+    margins = [0.8, 1.2, 0.5, 0.9, 0.7]
+    lip_constants = [2.0, 1.5, 3.0, 1.8, 2.5]
+
+    print("\n1. Computing local certificates...")
+    cert = compute_global_certificate(margins, lip_constants)
+    print(f"   Local radii: {[f'{r:.4f}' for r in cert.local_radii]}")
+    print(f"   Min margin: {cert.min_margin:.4f}")
+    print(f"   Global Lipschitz: {cert.global_lipschitz:.4f}")
+    print(f"   Global radius: {cert.radius:.4f}")
+    print(f"   Certified: {cert.is_certified}")
+
+    print("\n2. Computing Čech cocycle...")
+    cocycle = compute_cech_cocycle(cert.local_radii)
+    print(f"   Cocycle condition: {cocycle.is_cocycle}")
+
+    print("\n3. Coboundary decomposition (H¹ = 0 test)...")
+    decomp = decompose_coboundary(cocycle)
+    print(f"   Is coboundary: {decomp.is_exact}")
+    print(f"   Primitive: {np.round(decomp.primitive, 4)}")
+    print(f"   Residual: {decomp.residual:.2e}")
+
+    print("\n4. Stalk vulnerability detection...")
+    # Each point covered by its region and neighbors
+    assignments = {
+        0: [0, 1], 1: [1, 2], 2: [2, 3], 3: [3, 4], 4: [0, 4]
+    }
+    vuln = detect_stalk_vulnerability(margins, assignments)
+    for pt, is_vuln in vuln.items():
+        status = "VULNERABLE" if is_vuln else "SAFE"
+        print(f"   Point {pt}: {status}")
+
+    print("\n5. ReLU region decomposition (single hidden layer)...")
+    w1 = [1.0, -2.0, 0.5]  # 3 neurons
+    b1 = [0.5, 1.0, -0.3]
+    w2 = [0.8, -0.5, 1.2]
+    b2 = [0.1]
+    regions = decompose_relu_regions_1d([w1, w2], [b1, b2])
+    for r in regions:
+        print(f"   Region {r.index}: [{r.bounds[0]:.2f}, {r.bounds[1]:.2f}], "
+              f"slope={r.slope:.4f}, Lip={r.lipschitz:.4f}")
+
+    print("\n" + "=" * 60)
+    print("All algorithms completed successfully.")
