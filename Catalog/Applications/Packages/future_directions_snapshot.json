@@ -489,10 +489,10 @@
       "Computation"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b194562e",
     "timestamp": "2026-05-14T04:01:04.705417+00:00"
   },
   {
@@ -713,10 +713,10 @@
       "Bridges"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fda9c7e7",
     "timestamp": "2026-05-14T04:01:04.698804+00:00"
   },
   {
@@ -889,10 +889,10 @@
       "Tropical"
     ],
     "priority_score": 0.8,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1edefb47",
     "timestamp": "2026-05-14T04:01:04.699967+00:00"
   },
   {
@@ -985,10 +985,10 @@
       "Bridges"
     ],
     "priority_score": 0.78,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "490622f1",
     "timestamp": "2026-05-14T04:01:04.715960+00:00"
   },
   {
@@ -1097,10 +1097,10 @@
       "Computation"
     ],
     "priority_score": 0.73,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54753f19",
     "timestamp": "2026-05-14T04:01:04.728475+00:00"
   },
   {
