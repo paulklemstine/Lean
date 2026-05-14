@@ -4,10 +4,19 @@
       "id": "p_vs_np_tropical_semiring_barrier",
       "title": "Tropical Semiring Barrier Theorems: Monotonicity Obstructions for Min-Plus Circuits",
       "domain": "Algebra / Computational Complexity",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
+      "primary_domain": "Computation",
+      "shape": "cube",
       "date": "2026-05-14T01:50:13Z",
-      "hue": 275
+      "hue": 281
+    },
+    {
+      "id": "temporal_stone_duality_recovering_temporal_logic_f",
+      "title": "Temporal Stone Duality: Recovering Temporal Logic from Idempotent Semiring Fixpoints",
+      "domain": "Logic / Formal Verification / Algebra",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-14T01:57:43Z",
+      "hue": 90
     }
   ],
   "edges": []
