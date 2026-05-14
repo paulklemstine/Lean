@@ -96,6 +96,7 @@
         let camera = { x: 0, y: 0, zoom: 1 };
         let dragNode = null;
         let dragCluster = null;   // domain string when dragging a cluster label
+        let prevDragWorld = null; // previous frame world position for cluster drag delta
         let isPanning = false;
         let panStart = { x: 0, y: 0 };
         let mouseDownPos = { x: 0, y: 0 };
@@ -237,6 +238,10 @@
                 const nx = n.x * cosG - n.y * sinG;
                 const ny = n.x * sinG + n.y * cosG;
                 n.x = nx; n.y = ny;
+                // Also rotate velocity to maintain orbital direction
+                const nvx = n.vx * cosG - n.vy * sinG;
+                const nvy = n.vx * sinG + n.vy * cosG;
+                n.vx = nvx; n.vy = nvy;
             });
             // Rotate cluster centroids along with the galaxy (for labels)
             Object.values(clusterData.centroids).forEach(c => {
@@ -245,19 +250,19 @@
                 c.x = cx; c.y = cy;
             });
 
-            // ─── Provenance spring edges ───
+            // ─── Provenance spring edges (gentle binding) ───
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
                 const dx = b.x - a.x, dy = b.y - a.y;
                 const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                const f = K_SPRING * (d - REST_LENGTH * 0.7);
+                const f = K_SPRING * (d - REST_LENGTH);
                 const fx = (dx / d) * f, fy = (dy / d) * f;
                 a.vx += fx; a.vy += fy;
                 b.vx -= fx; b.vy -= fy;
             });
 
-            // ─── Node-node repulsion (prevents overlap) ───
+            // ─── N-body gravitational attraction ───
             for (let i = 0; i < graphNodes.length; i++) {
                 const a = graphNodes[i];
                 if (a === dragNode) continue;
@@ -268,37 +273,50 @@
                     if (b === dragNode) continue;
                     const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
                     if (dragCluster && bDomain === dragCluster) continue;
-                    let dx = b.x - a.x, dy = b.y - a.y;
+
+                    const dx = b.x - a.x, dy = b.y - a.y;
                     const d2 = dx * dx + dy * dy;
-                    if (d2 < MIN_REPULSION_DIST * MIN_REPULSION_DIST) {
-                        const d = Math.sqrt(d2) || 1;
-                        const force = K_REPULSION / (d2 + 100);
-                        const fx = (dx / d) * force;
-                        const fy = (dy / d) * force;
-                        a.vx -= fx; a.vy -= fy;
-                        b.vx += fx; b.vy += fy;
+                    const d = Math.sqrt(d2) || 1;
+
+                    // Gravitational attraction: F = G * m1 * m2 / (r² + softening²)
+                    // Softening prevents singularities at close range
+                    const force = G_CONST * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
+                    const fx = (dx / d) * force;
+                    const fy = (dy / d) * force;
+                    a.vx += fx; a.vy += fy;
+                    b.vx -= fx; b.vy -= fy;
+
+                    // Close-range repulsion (prevents collision/overlap)
+                    if (d < MIN_REPULSION_DIST) {
+                        const repForce = K_REPULSION / (d2 + 100);
+                        const rfx = (dx / d) * repForce;
+                        const rfy = (dy / d) * repForce;
+                        a.vx -= rfx; a.vy -= rfy;
+                        b.vx += rfx; b.vy += rfy;
                     }
                 }
             }
 
-            // ─── Gentle center gravity (prevents drift) ───
-            graphNodes.forEach(n => {
-                n.vx -= n.x * K_GRAVITY;
-                n.vy -= n.y * K_GRAVITY;
-            });
-
             // ─── Gentle organic drift for liveliness ───
             graphNodes.forEach(n => {
                 if (n === dragNode) return;
-                n.vx += Math.sin(time * 0.5 + n.phase) * OSCILLATION_AMP;
-                n.vy += Math.cos(time * 0.7 + n.phase * 1.3) * OSCILLATION_AMP;
+                if (dragCluster && (n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) return;
+                n.vx += Math.sin(time * 0.3 + n.phase) * 0.005;
+                n.vy += Math.cos(time * 0.4 + n.phase * 1.3) * 0.005;
             });
 
-            // ─── Damping + integrate ───
+            // ─── Damping + velocity cap + integrate ───
             graphNodes.forEach(n => {
                 if (n === dragNode) return;
+                if (dragCluster && (n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) return;
                 n.vx *= DAMPING;
                 n.vy *= DAMPING;
+                // Cap velocity to prevent ejections
+                const speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+                if (speed > MAX_VELOCITY) {
+                    n.vx = (n.vx / speed) * MAX_VELOCITY;
+                    n.vy = (n.vy / speed) * MAX_VELOCITY;
+                }
                 n.x += n.vx;
                 n.y += n.vy;
             });
@@ -724,12 +742,25 @@
                 const col = nodeColor(node);
                 const isHovered = node === hoveredNode;
                 const pulse = 1 + 0.04 * Math.sin(time * 1.5 + node.phase);
-                const r = node.radius * pulse * camera.zoom;
+                const massScale = 0.7 + (node.mass || 1) * 0.3;  // bigger mass = bigger visual
+                const r = (node.radius || 22) * pulse * massScale * camera.zoom;
 
-                // Pulsing brightness
+                // Pulsing brightness — brighter for higher mass (suns vs planets)
                 const brightPulse = 0.8 + 0.2 * Math.sin(time * 2 + node.phase);
-                const adjustedL = Math.min(col.l * brightPulse + 15, 95);
+                const massBright = Math.min(1, (node.mass || 1) * 0.4);
+                const adjustedL = Math.min(col.l * brightPulse + 15 + massBright * 10, 95);
                 const adjColor = { h: col.h, s: col.s, l: adjustedL };
+
+                // Outer glow halo — brighter for massive nodes
+                const glowSize = r * (1.8 + massBright * 1.2);
+                const outerGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowSize);
+                outerGlow.addColorStop(0, `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 90)}%, ${0.15 + massBright * 0.15})`);
+                outerGlow.addColorStop(0.5, `hsla(${col.h}, ${col.s}%, ${col.l}%, ${0.05 + massBright * 0.05})`);
+                outerGlow.addColorStop(1, `hsla(${col.h}, ${col.s}%, ${col.l}%, 0)`);
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, glowSize, 0, Math.PI * 2);
+                ctx.fillStyle = outerGlow;
+                ctx.fill();
 
                 node.rotAngle += node.rotSpeed * 0.016;
 
@@ -824,6 +855,7 @@
                 const cluster = findClusterAt(e.offsetX, e.offsetY);
                 if (cluster) {
                     dragCluster = cluster;
+                    prevDragWorld = screenToWorld(e.offsetX, e.offsetY);
                     canvas.style.cursor = 'grabbing';
                 } else {
                     isPanning = true;
@@ -851,21 +883,22 @@
                 // Hide tooltip while dragging a node
                 if (tooltip) tooltip.classList.add('tooltip-hidden');
             } else if (dragCluster) {
-                // Move all nodes in the cluster together
-                const prevWorld = screenToWorld(mouseDownPos.x, mouseDownPos.y);
-                const dx = mouseWorld.x - prevWorld.x;
-                const dy = mouseWorld.y - prevWorld.y;
-                graphNodes.forEach(n => {
-                    if ((n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) {
-                        n.x += dx;
-                        n.y += dy;
-                        n.vx = 0;
-                        n.vy = 0;
-                    }
-                });
-                // Also shift the cluster centroid
-                const c = clusterData.centroids[dragCluster];
-                if (c) { c.x += dx; c.y += dy; }
+                // Move all nodes in the cluster together using frame-to-frame delta
+                if (prevDragWorld) {
+                    const dx = mouseWorld.x - prevDragWorld.x;
+                    const dy = mouseWorld.y - prevDragWorld.y;
+                    graphNodes.forEach(n => {
+                        if ((n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) {
+                            n.x += dx;
+                            n.y += dy;
+                            n.vx = 0;
+                            n.vy = 0;
+                        }
+                    });
+                    const c = clusterData.centroids[dragCluster];
+                    if (c) { c.x += dx; c.y += dy; }
+                }
+                prevDragWorld = { x: mouseWorld.x, y: mouseWorld.y };
                 if (tooltip) tooltip.classList.add('tooltip-hidden');
             } else if (isPanning) {
                 const pdx = e.clientX - panStart.x;
@@ -907,6 +940,7 @@
         canvas.addEventListener('mouseup', e => {
             dragNode = null;
             dragCluster = null;
+            prevDragWorld = null;
             isPanning = false;
             canvas.style.cursor = hoveredNode ? 'pointer' : 'grab';
         });
@@ -914,6 +948,7 @@
         canvas.addEventListener('mouseleave', () => {
             dragNode = null;
             dragCluster = null;
+            prevDragWorld = null;
             isPanning = false;
             hoveredNode = null;
             if (tooltip) tooltip.classList.add('tooltip-hidden');
@@ -1038,6 +1073,7 @@
             }
             dragNode = null;
             dragCluster = null;
+            prevDragWorld = null;
             prevTouchWorld = null;
             isPanning = false;
             lastTouchDist = 0;
@@ -1070,19 +1106,30 @@
             if (graphNodes.some(n => n.id === nodeData.id)) return;
             const domain = nodeData.primary_domain || nodeData.domain || 'Bridges';
             const centroid = clusterData.centroids[domain] || clusterData.centroids[Object.keys(clusterData.centroids)[0]];
+            const px = nodeData.priority_score || 0.5;
             const node = {
                 ...nodeData,
                 x: centroid ? centroid.x + (Math.random() - 0.5) * 60 : (Math.random() - 0.5) * 200,
                 y: centroid ? centroid.y + (Math.random() - 0.5) * 60 : (Math.random() - 0.5) * 200,
                 targetX: centroid ? centroid.x + (Math.random() - 0.5) * 40 : 0,
                 targetY: centroid ? centroid.y + (Math.random() - 0.5) * 40 : 0,
+                mass: 1.0 + px * 2.0,
                 vx: 0, vy: 0,
                 clusterDomain: domain,
-                radius: 22,
+                radius: 18 + px * 12,
                 phase: Math.random() * Math.PI * 2,
                 rotSpeed: 0.3 + Math.random() * 0.5,
                 rotAngle: Math.random() * Math.PI * 2
             };
+            // Give orbital velocity around cluster center
+            if (centroid) {
+                const dx = node.x - centroid.x;
+                const dy = node.y - centroid.y;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                const speed = ORBITAL_SPEED * Math.sqrt(Math.max(dist, 30) / 100);
+                node.vx = -dy / dist * speed + (Math.random() - 0.5) * 0.05;
+                node.vy = dx / dist * speed + (Math.random() - 0.5) * 0.05;
+            }
             graphNodes.push(node);
             nodeMap[node.id] = node;
         };
