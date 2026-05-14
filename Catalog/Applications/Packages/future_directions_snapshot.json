@@ -296,10 +296,10 @@
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9b6e4e14",
     "timestamp": "2026-05-14T16:03:53.823374+00:00"
   },
   {
@@ -758,10 +758,10 @@
       "EML"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c101a52",
     "timestamp": "2026-05-14T16:03:53.820702+00:00"
   },
   {
@@ -1189,21 +1189,6 @@
     "timestamp": "2026-05-14T16:16:22.740801+00:00"
   },
   {
-    "id": "fd_0091",
-    "title": "Connect to orbit structure",
-    "description": ": The orbit {G, G², G³, ...} in tropical matrix space has size related to the tropical spectral radius, providing entropy bounds.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "c337fb05",
-    "timestamp": "2026-05-14T16:16:22.742438+00:00"
-  },
-  {
     "id": "fd_0092",
     "title": "Apply the existing `post_quantum_key_security_from_minEntropy`",
     "description": "to convert the entropy lower bound into a semantic security statement.\n\n### Key Lemmas Needed\n- `tropical_collision_probability_bound`: Upper bound on Pr[G^a = G^b] for random a ≠ b.\n- `tropical_rank_growth`: tropRank(tropPow G m) is non-decreasing in m.\n- `tropical_orbit_size_lower_bound`: |{tropPow G m : 0 ≤ m ≤ T}| ≥ f(n, B, T).\n- `tropical_min_entropy_lower_bound`: The main entropy bound.\n- `tropical_hashed_key_security`: Applying LHL to derive a key with negligible statistical distance to uniform.\n\n### Candidate Lean Files\n- `Cryptography/TropicalEntropy.lean`\n- `Cryptography/TropicalRankTheory.lean`\n\n### Cross-Domain Connections\n- **Information Theory → Cryptography**: Min-entropy bounds provide quantitative security guarantees.\n- **Tropical Geometry → Entropy**: The geometry of trop",
@@ -1359,10 +1344,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b8bbbc75",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "074afb83",
     "timestamp": "2026-05-14T16:17:21.768401+00:00"
   },
   {
@@ -1808,10 +1793,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1849e719",
     "timestamp": "2026-05-14T17:33:00.502341+00:00"
   },
   {
@@ -2149,6 +2134,76 @@
     "timestamp": "2026-05-14T19:34:44.354883+00:00"
   },
   {
+    "id": "fd_0182",
+    "title": "Validate",
+    "description": "each conjecture computationally on 2×2 and 3×3 examples before attempting formal proof.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c337fb05",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:20.578796+00:00"
+  },
+  {
+    "id": "fd_0183",
+    "title": "Build",
+    "description": "the required infrastructure (critical graph definitions, semigroup orbit sets, DES trajectories) as Lean definitions with `sorry`-ed properties.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c337fb05",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:20.582859+00:00"
+  },
+  {
+    "id": "fd_0184",
+    "title": "Prove",
+    "description": "the simplest instances first (2×2 eventual periodicity, single-generator entropy collapse).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c337fb05",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:20.586552+00:00"
+  },
+  {
+    "id": "fd_0185",
+    "title": "Connect",
+    "description": "to existing Mathlib infrastructure for graph theory (connected components), combinatorics (pigeonhole), and analysis (limsup).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c337fb05",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:20.590404+00:00"
+  },
+  {
+    "id": "fd_0186",
+    "title": "Iterate",
+    "description": "on failed proof attempts by decomposing into smaller lemmas, leveraging the modular structure established in this work.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c337fb05",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:35:20.593956+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -2434,7 +2489,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "fafc44be",
+    "consumed_by_exp_id": "7498ad19",
     "timestamp": "2026-05-14T17:33:19.352870+00:00"
   },
   {
