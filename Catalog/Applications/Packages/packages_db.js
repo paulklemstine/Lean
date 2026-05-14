@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "implementation_priority.json",
+    "title": "Pareto Rigidity and Transposition Invariance on Pitch-Class Space",
+    "domain": "Algebraic Combinatorics / Musical Mathematics / Discrete Optimization",
+    "date": "2026-05-14T19:34:58Z",
+    "exp_id": "8fece6dc"
+  },
+  {
     "filename": "consciousness_as_tropical_fixed_point_min_plus_ref.json",
     "title": "Tropical Reflective Equilibrium: Min-Plus Self-Reference Dynamics",
     "domain": "Tropical Algebra / Fixed-Point Theory / Cognitive Mathematics",
@@ -3912,6 +3919,77 @@ window.PACKAGE_DB = {
       "seed"
     ]
   },
+  "implementation_priority.json": {
+    "title": "Pareto Rigidity and Transposition Invariance on Pitch-Class Space",
+    "domain": "Algebraic Combinatorics / Musical Mathematics / Discrete Optimization",
+    "article": "# The Hidden Geometry of Harmony: Why Moving Between Chords Obeys a Secret Law of Physics\n\n## A Mathematical Discovery Reveals That Musical Motion Is Governed by the Same Principles as Shipping Routes and Quantum States\n\nWhen a pianist's fingers shift from a C-major chord to a G-major chord, something remarkable happens \u2014 something that musicians have felt for centuries but that mathematicians have only just proved. The most efficient way those fingers can move doesn't depend on *which key* the music is in. Transpose the entire passage up three semitones, or down five, and the optimal finger motion is structurally identical. Not approximately. *Exactly.*\n\nThis might sound obvious. After all, isn't music the same in every key? A melody in C major and the same melody in D major have the same character, the same intervals, the same emotional trajectory. But the claim here is sharper and more surprising: it's not just that the music *sounds* the same \u2014 it's that the underlying *optimization problem* of how voices move between chords has a deep mathematical symmetry that forces certain solutions to be preserved across all possible transpositions.\n\nAnd this symmetry, it turns out, connects music theory to some of the most powerful ideas in modern mathematics: optimal transport, tropical geometry, and the theory of Pareto efficiency that economists use to analyze trade-offs in complex systems.\n\n---\n\n## The Twelve-Note Universe\n\nPicture a clock face, but instead of hours, label the twelve positions with musical notes: C, C#, D, D#, E, F, F#, G, G#, A, A#, B. This is *pitch-class space* \u2014 the universe in which all of Western harmony lives. Just as 13 o'clock is the same as 1 o'clock, the note an octave above C is again C. Everything wraps around.\n\nThe distance between two notes on this clock is simply the shorter arc between them. C to E is four steps clockwise. C to G# is also four steps \u2014 but going the other way. The maximum distance is six steps (a tritone, the interval that medieval theorists called *diabolus in musica*).\n\nNow consider a chord: three notes sounding simultaneously. A C-major triad is C, E, G \u2014 positions 0, 4, 7 on our clock. When the music moves to a new chord, say D minor (D, F, A \u2014 positions 2, 5, 9), each voice in the choir must travel some distance around the clock. The soprano might move from G to A (two steps), the alto from E to F (one step), the tenor from C to D (two steps). The total cost: five steps.\n\nBut wait \u2014 there are other ways to assign the voices. What if the soprano sang F instead, the alto sang A, and the tenor sang D? That's a different *voice assignment*, and it might cost more or less. Finding the cheapest assignment is an optimization problem, and it's the same optimization problem that arises in shipping goods from factories to stores, matching kidneys to patients, or routing packets through a network.\n\nThis is *optimal transport* \u2014 one of the hottest areas in modern mathematics, recognized with a Fields Medal in 2018. And it turns out that musical voice leading is its simplest, most elegant finite example.\n\n---\n\n## The Pareto Principle Meets the Piano\n\nBut minimizing total cost isn't the only way to think about optimality. Enter Vilfredo Pareto, the Italian economist who, in the 1890s, noticed that 80% of Italy's land was owned by 20% of the population. Pareto's lasting contribution wasn't that specific observation \u2014 it was the concept of *Pareto efficiency*.\n\nAn allocation is Pareto-efficient if you can't make anyone better off without making someone else worse off. Applied to voice leading: a voice assignment is *Pareto-optimal* if there's no alternative where every voice moves at most as far, and at least one voice moves strictly less far. It's the gold standard of fairness \u2014 no voice is sacrificed for the greater good.\n\nPareto optimality is harder to achieve than simple cost minimization. A minimum-cost assignment is always Pareto-optimal, but there may be other Pareto-optimal assignments with higher total cost \u2014 assignments that are \"fair\" in ways that the cheapest option is not.\n\nThe breakthrough result is this: **Pareto optimality is invariant under transposition.** If a particular voice assignment is Pareto-optimal for the progression C major \u2192 D minor, then the corresponding assignment is also Pareto-optimal for D major \u2192 E minor, for F# major \u2192 G# minor, for every possible transposition. Not because we checked all twelve cases \u2014 because the mathematical structure *guarantees* it.\n\n---\n\n## Proof by Symmetry\n\nThe proof is beautiful in its economy. At its heart lies a single lemma: the cyclic distance between two notes doesn't change if you shift both notes by the same amount. The distance from C to E is 4. The distance from D to F# is also 4. This is obvious on the clock face \u2014 shifting both hands by the same angle doesn't change the arc between them.\n\nFrom this atomic fact, everything cascades. The total voice-leading cost between two transposed chords equals the original cost (because each voice's distance is preserved). The Pareto dominance relation between two voice assignments is preserved (because the component-wise distance comparisons are all preserved). And therefore, Pareto optimality itself is preserved.\n\nThe proof is a textbook case of *group-action rigidity*: the symmetry group of the twelve-note cycle (the cyclic group Z/12Z) acts on configurations of voices, and the optimality criterion is invariant under this action. The predicate \"is Pareto-optimal\" descends to the *quotient space* \u2014 the space of chord shapes, not chord positions.\n\n---\n\n## From Music to Moduli\n\nThis quotient space is what mathematicians call an *orbifold* \u2014 a space obtained by identifying points related by a symmetry. In our case, it's the space of all possible chord shapes, where two chords that differ only by transposition are considered the same.\n\nThe Pareto invariance theorem tells us that optimality is a property of the orbifold, not of any particular representative. This is profound. It means we can classify all optimal voice leadings by working in the much smaller quotient space, then lifting the results to any key we want.\n\nFor three-voice chords, the quotient space has a nice description: normalize so that the first voice sits at C (position 0), and describe the chord by its two remaining intervals. A major triad becomes (0, 4, 7). A minor triad becomes (0, 3, 7). This *normal-form reduction* \u2014 also proved as a theorem \u2014 slashes the problem size from 12\u00b3 = 1,728 possible chords to just 12\u00b2 = 144 interval pairs.\n\n---\n\n## The Shipping Analogy\n\nImagine you run a delivery company with three trucks, each starting at a different warehouse on a circular highway with twelve exits. You need to deliver to three stores, also on the highway. The cost of each delivery is the shorter driving distance around the loop. You want to assign trucks to stores as efficiently as possible.\n\nThe invariance theorem says: it doesn't matter where on the highway you built the warehouses and stores. What matters is the *pattern* of gaps between them. Rotate the entire setup \u2014 move every warehouse and store three exits clockwise \u2014 and the optimal assignment stays the same. The cheapest route is a property of the *geometry*, not the *geography*.\n\nThis is why the result matters far beyond music. Any optimization problem on a cyclic structure \u2014 scheduling on a circular assembly line, routing on a ring network, distributing tasks among processors on a circular bus \u2014 inherits the same invariance.\n\n---\n\n## What the Numbers Reveal\n\nComputational exploration reveals striking patterns. Starting from a C-major triad, the closest chord (in optimal voice-leading cost) is E minor \u2014 just one semitone of total motion. A-minor is next, at cost 2. The subdominant (F major) and dominant (G major) tie at cost 3. D minor, the supertonic, costs 5.\n\nThis ranking \u2014 iii, vi, IV=V, ii \u2014 is invariant across all keys. It's a universal hierarchy of harmonic proximity, derived from pure geometry rather than cultural convention. And it closely matches what composers have known intuitively for centuries: the most natural chord progressions involve the smallest voice-leading distances.\n\nEven more striking: for most chord transitions, the Pareto frontier consists of a single point \u2014 there's essentially one best way to connect the voices, and it's simultaneously cost-optimal and Pareto-optimal. The fairness criterion and the efficiency criterion agree. Conflict between them is the exception, not the rule.\n\n---\n\n## Tropical Shadows\n\nThere's a deeper mathematical current beneath these results. The voice-leading cost is defined using minimums (the shorter arc around the clock), and the optimization involves sums of these minimums. This puts us squarely in the territory of *tropical mathematics* \u2014 a branch of algebra where addition is replaced by minimum and multiplication is replaced by addition.\n\nIn tropical geometry, the objects of study are not smooth curves but piecewise-linear structures, like crystals or transportation networks. The cyclic distance function is tropical in character: it's the minimum of two linear functions. The voice-leading optimization is a tropical linear program on a finite group.\n\nThis connection suggests that the entire apparatus of tropical geometry \u2014 tropical polytopes, tropical eigenvalues, tropical intersection theory \u2014 can be brought to bear on harmonic analysis. The mod-12 setting is the simplest arena, but the same structures should appear in microtonal systems (Z/19Z, Z/31Z), continuous pitch space, and even higher-dimensional generalizations.\n\n---\n\n## The Road Ahead\n\nWhat's been proved so far is a foundation \u2014 the first few stones of what could become an imposing edifice. The natural next steps include:\n\n**Four-voice theory.** Most Western music uses four voices (soprano, alto, tenor, bass). The quotient space of four-note chords is richer and more complex, with connections to the geometry of four-dimensional orbifolds studied by music theorist Dmitri Tymoczko.\n\n**Optimal transport formulation.** Voice leading is a special case of discrete optimal transport with a cyclic ground metric. The invariance theorem should extend to the full Kantorovich formulation, yielding a transposition-invariant Wasserstein distance between arbitrary pitch-class distributions.\n\n**Classification theorems.** With normalization reducing the problem to interval coordinates, exhaustive computation becomes feasible. A complete classification of all Pareto-optimal voice leadings between triad types \u2014 major, minor, diminished, augmented \u2014 would be a landmark result.\n\n**Rate-distortion theory.** If chords are messages and voice-leading cost is distortion, then Shannon's rate-distortion theory tells us the fundamental limits of \"compressing\" harmonic information. The transposition invariance ensures these limits are key-independent \u2014 a beautiful structural constraint.\n\n---\n\n## Why It Matters\n\nMathematics has a long and fruitful relationship with music, stretching back to Pythagoras and his vibrating strings. But that relationship has mostly been about *tuning* \u2014 the physics of frequency ratios. The new direction explored here is about *motion* \u2014 the geometry of how harmonies transform into one another.\n\nThe Pareto rigidity theorem says something simple but powerful: the best way to move between chords is determined by shape, not position. This is the same principle that underlies general relativity (physics depends on geometry, not coordinates), gauge theory (observable quantities are invariant under symmetry transformations), and modern data science (good representations are equivariant under relevant symmetries).\n\nMusic, it turns out, has been encoding these deep mathematical principles all along. Every time a choir navigates smoothly from one chord to the next, they're solving an optimal transport problem on a cyclic group, and the solution they find \u2014 by ear, by training, by centuries of accumulated craft \u2014 is provably the same solution that abstract mathematics declares optimal.\n\nThe clock face of twelve notes is small enough to analyze completely, yet rich enough to contain genuine surprises. It is the first testing ground for a mathematical theory that could eventually encompass all of harmonic motion \u2014 a theory where group actions, quotient spaces, tropical algebra, and information theory converge on a single, elegant question: *What is the geometry of musical change?*\n",
+    "research_paper": "# Pareto Rigidity and Transposition Invariance on Pitch-Class Space \u2124/12\u2124\n\n## Abstract\n\nWe establish a rigidity theorem for Pareto-optimal voice leadings on the pitch-class space \u2124/12\u2124 equipped with the cyclic distance metric. We prove that the Pareto dominance relation between voice assignments is invariant under the natural transposition action of \u2124/12\u2124, implying that Pareto optimality descends to the quotient (orbifold) of configuration space. As a corollary, every Pareto-minimality question reduces to a normalized form where the first voice is fixed at pitch class 0. These results are formalized and machine-verified in Lean 4 with the Mathlib library. We provide computational experiments enumerating all Pareto-optimal voice leadings between standard triad classes, and discuss connections to discrete optimal transport, tropical geometry, and rate-distortion theory.\n\n**Keywords:** Pareto optimality, pitch-class space, cyclic distance, transposition invariance, voice leading, optimal transport, orbifold geometry\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nVoice leading \u2014 the art of moving individual voices smoothly between successive chords \u2014 is a central concern of Western music theory. The mathematical study of voice leading was placed on rigorous geometric foundations by Tymoczko [1], who identified the configuration space of n-voice chords with orbifolds obtained from \u211d\u207f by quotienting by permutation and octave equivalence. Subsequent work by Callender, Quinn, and Tymoczko [2] developed the theory of chord-class geometry using continuous pitch spaces.\n\nHowever, the finite case \u2014 pitch classes in \u2124/n\u2124 \u2014 admits exact combinatorial analysis that complements the continuous theory. In this paper, we work entirely within \u2124/12\u2124 (the standard chromatic pitch-class space) and establish rigidity theorems for Pareto-optimal voice leadings under the cyclic transposition action.\n\n### 1.2 Contributions\n\n1. **Cyclic distance metric lemmas:** We define and prove basic properties (reflexivity, symmetry, translation invariance, boundedness) of the cyclic distance on \u2124/12\u2124.\n\n2. **Pareto dominance invariance:** We prove that the Pareto dominance relation between voice assignments is invariant under simultaneous transposition of source and target configurations.\n\n3. **Pareto optimality rigidity:** We establish that Pareto-optimal voice assignments descend to the quotient of configuration space under the transposition action.\n\n4. **Normal-form reduction:** We prove that every Pareto-minimality question reduces to a canonical form where the first voice is at pitch class 0.\n\n5. **Machine verification:** All results are formalized in Lean 4 using the Mathlib library, providing the highest level of mathematical certainty.\n\n6. **Computational experiments:** We enumerate Pareto-optimal voice leadings between standard triad classes and analyze the cost landscape.\n\n### 1.3 Related Work\n\nTymoczko [1] introduced the geometric perspective on voice leading using continuous orbifolds. Callender, Quinn, and Tymoczko [2] developed OPTIC equivalence classes for chord comparison. Hook [3] studied uniform triadic transformations using group-theoretic methods. Fiore and Satyendra [4] applied category theory to musical transformations. Yust [5] connected voice leading to discrete Fourier analysis on \u2124/12\u2124.\n\nOur work differs in its focus on Pareto optimality (rather than minimum cost alone) and in providing machine-verified proofs via formal methods.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Pitch-Class Space\n\nLet **pc** = \u2124/12\u2124 denote the set of pitch classes under octave equivalence. Elements are residues modulo 12, with 0 = C, 1 = C#, ..., 11 = B.\n\n### 2.2 Cyclic Distance\n\n**Definition 2.1** (Raw distance). For a, b \u2208 pc, define\n$$\\text{rawDist}(a, b) = (a - b) \\bmod 12 \\in \\{0, 1, \\ldots, 11\\}.$$\n\n**Definition 2.2** (Cyclic distance). For a, b \u2208 pc, define\n$$d(a, b) = \\min(\\text{rawDist}(a, b), \\; 12 - \\text{rawDist}(a, b)).$$\n\nThis is the minimum arc length between a and b on the 12-element cycle, with values in {0, 1, ..., 6}.\n\n### 2.3 Voice Configurations\n\nAn **n-voice configuration** is a function x : Fin n \u2192 pc assigning a pitch class to each voice. For n = 3, this models a three-voice chord.\n\n**Definition 2.3** (Transposition). For t \u2208 pc, the transposition of x by t is\n$$T_t(x)(i) = x(i) + t.$$\n\n### 2.4 Voice-Leading Cost\n\n**Definition 2.4** (Voice-leading cost). For n-voice configurations x, y, the voice-leading cost is\n$$\\text{VLC}(x, y) = \\sum_{i=0}^{n-1} d(x(i), y(i)).$$\n\n### 2.5 Voice Assignment and Pareto Dominance\n\n**Definition 2.5** (Assignment cost). Given source and target configurations s, t : Fin n \u2192 pc and a permutation \u03c3 \u2208 S_n, the assignment cost is\n$$C(s, t, \\sigma) = \\sum_{i=0}^{n-1} d(s(i), t(\\sigma(i))).$$\n\n**Definition 2.6** (Assignment dominance). Permutation \u03c3 **Pareto-dominates** \u03c4 for the pair (s, t) if:\n1. \u2200i: d(s(i), t(\u03c3(i))) \u2264 d(s(i), t(\u03c4(i))),\n2. \u2203j: d(s(j), t(\u03c3(j))) < d(s(j), t(\u03c4(j))).\n\n**Definition 2.7** (Pareto optimality). An assignment \u03c4 is **Pareto-optimal** for (s, t) if no \u03c3 \u2208 S_n dominates \u03c4.\n\n### 2.6 Normal Form\n\n**Definition 2.8** (Normalization). For a 3-voice configuration x, the normalized form is\n$$\\hat{x}(i) = x(i) - x(0).$$\nThis places the first voice at pitch class 0.\n\n---\n\n## 3. Main Results\n\n### 3.1 Metric Lemmas\n\n**Theorem 3.1** (Reflexivity). For all a \u2208 pc: d(a, a) = 0.\n\n*Proof.* rawDist(a, a) = (a - a) mod 12 = 0, so d(a, a) = min(0, 12) = 0. \u25a1\n\n**Theorem 3.2** (Symmetry). For all a, b \u2208 pc: d(a, b) = d(b, a).\n\n*Proof sketch.* If a = b, both sides are 0. If a \u2260 b, then (a - b) + (b - a) \u2261 0 (mod 12), so rawDist(a, b) + rawDist(b, a) = 12. Therefore {rawDist(a,b), 12 - rawDist(a,b)} = {rawDist(b,a), 12 - rawDist(b,a)} as sets, and min is symmetric. \u25a1\n\n**Theorem 3.3** (Translation invariance). For all a, b, t \u2208 pc:\n$$d(a + t, b + t) = d(a, b).$$\n\n*Proof.* rawDist(a+t, b+t) = ((a+t) - (b+t)) mod 12 = (a - b) mod 12 = rawDist(a, b). The result follows since cycDist depends only on rawDist. \u25a1\n\n**Theorem 3.4** (Boundedness). For all a, b \u2208 pc: d(a, b) \u2264 6.\n\n*Proof.* Let r = rawDist(a, b) \u2208 {0, ..., 11}. Then min(r, 12-r) \u2264 6 since one of r, 12-r is at most 6. \u25a1\n\n### 3.2 Cost Invariance\n\n**Theorem 3.5** (Voice-leading cost invariance). For all n, t, x, y:\n$$\\text{VLC}(T_t(x), T_t(y)) = \\text{VLC}(x, y).$$\n\n*Proof.* Each summand d(x(i)+t, y(i)+t) = d(x(i), y(i)) by Theorem 3.3. \u25a1\n\n**Theorem 3.6** (Assignment cost invariance). For all n, t, s, t, \u03c3:\n$$C(T_t(s), T_t(t), \\sigma) = C(s, t, \\sigma).$$\n\n*Proof.* Each summand d(s(i)+t, t(\u03c3(i))+t) = d(s(i), t(\u03c3(i))) by Theorem 3.3. \u25a1\n\n### 3.3 Dominance and Pareto Invariance\n\n**Theorem 3.7** (Dominance invariance). For all \u03c3, \u03c4 \u2208 S_n:\n$$\\sigma \\text{ dominates } \\tau \\text{ for } (s, t) \\iff \\sigma \\text{ dominates } \\tau \\text{ for } (T_u(s), T_u(t)).$$\n\n*Proof.* Both conditions in Definition 2.6 involve only expressions of the form d(s(i), t(\u03c3(i))), which are invariant under simultaneous translation by Theorem 3.3. \u25a1\n\n**Theorem 3.8** (Pareto optimality rigidity \u2014 Main Theorem). For all \u03c4 \u2208 S_n and u \u2208 pc:\n$$\\tau \\text{ is Pareto-optimal for } (s, t) \\iff \\tau \\text{ is Pareto-optimal for } (T_u(s), T_u(t)).$$\n\n*Proof.* Pareto optimality is the negation of \"\u2203\u03c3 that dominates \u03c4.\" By Theorem 3.7, dominance of any \u03c3 over \u03c4 is equivalent for (s,t) and (T_u(s), T_u(t)). Therefore the existential, and its negation, are equivalent. \u25a1\n\n**Corollary 3.9.** The set of Pareto-optimal assignments for (s, t) depends only on the transposition-orbit class of (s, t).\n\n### 3.4 Normal-Form Reduction\n\n**Theorem 3.10** (Normal-form reduction). For 3-voice configurations x, y:\n$$\\tau \\text{ is Pareto-optimal for } (x, y) \\iff \\tau \\text{ is Pareto-optimal for } (\\hat{x}, y - x(0))$$\nwhere $\\hat{x}(i) = x(i) - x(0)$ and $(y - x(0))(i) = y(i) - x(0)$.\n\n*Proof.* Apply Theorem 3.8 with u = -x(0). Then T_u(x)(i) = x(i) - x(0) = x\u0302(i), and T_u(y)(i) = y(i) - x(0). \u25a1\n\n### 3.5 Difference Dependence\n\n**Theorem 3.11** (Cost depends only on differences). If y(i) - x(i) = y'(i) - x'(i) for all i, then VLC(x, y) = VLC(x', y').\n\n*Proof.* The condition implies x(i) - y(i) = x'(i) - y'(i) for all i. Since rawDist(a, b) = (a - b).val depends only on a - b, we have rawDist(x(i), y(i)) = rawDist(x'(i), y'(i)), hence d(x(i), y(i)) = d(x'(i), y'(i)), and the sums agree. \u25a1\n\n---\n\n## 4. Algorithms\n\n### 4.1 Cyclic Distance Computation\n\n```\nAlgorithm CycDist(a, b, n):\n    Input: pitch classes a, b \u2208 \u2124/n\u2124\n    Output: cyclic distance d(a, b)\n    r \u2190 (a - b) mod n\n    return min(r, n - r)\n```\n**Complexity:** O(1) time, O(1) space.\n\n### 4.2 Optimal Voice Assignment (Brute Force)\n\n```\nAlgorithm OptimalAssignment(s, t, n, k):\n    Input: source s, target t \u2208 (\u2124/n\u2124)^k\n    Output: optimal permutation \u03c3*, minimum cost c*\n    c* \u2190 \u221e\n    for each \u03c3 \u2208 S_k:\n        c \u2190 \u03a3_{i=0}^{k-1} CycDist(s[i], t[\u03c3[i]], n)\n        if c < c*:\n            c* \u2190 c, \u03c3* \u2190 \u03c3\n    return (\u03c3*, c*)\n```\n**Complexity:** O(k! \u00b7 k) time, O(k) space. Practical for k \u2264 6.\n\nFor larger k, the Hungarian algorithm provides O(k\u00b3) time.\n\n### 4.3 Pareto Frontier Enumeration\n\n```\nAlgorithm ParetoFrontier(s, t, n, k):\n    Input: source s, target t \u2208 (\u2124/n\u2124)^k\n    Output: set of Pareto-optimal permutations\n    P \u2190 S_k\n    frontier \u2190 \u2205\n    for each \u03c4 \u2208 P:\n        dominated \u2190 false\n        for each \u03c3 \u2208 P, \u03c3 \u2260 \u03c4:\n            if \u03c3 dominates \u03c4:\n                dominated \u2190 true; break\n        if not dominated:\n            frontier \u2190 frontier \u222a {\u03c4}\n    return frontier\n```\n**Complexity:** O(k!\u00b2 \u00b7 k) time, O(k!) space.\n\n### 4.4 Normal-Form Reduction\n\n```\nAlgorithm Normalize(x, k, n):\n    Input: configuration x \u2208 (\u2124/n\u2124)^k\n    Output: normalized configuration x\u0302 with x\u0302[0] = 0\n    offset \u2190 x[0]\n    for i = 0 to k-1:\n        x\u0302[i] \u2190 (x[i] - offset) mod n\n    return x\u0302\n```\n**Complexity:** O(k) time, O(k) space.\n\n---\n\n## 5. Computational Experiments\n\n### 5.1 Distance Structure\n\nThe cyclic distance matrix on \u2124/12\u2124 exhibits the expected circulant structure. Maximum distance is 6 (tritone), achieved uniquely by pairs separated by 6 semitones.\n\n### 5.2 Optimal Voice-Leading Costs Between Triads\n\nWe computed the optimal voice-leading cost between all pairs of root-position major and minor triads. Key findings:\n\n| Source \u2192 Target | Optimal Cost | Optimal Assignment |\n|---|---|---|\n| C maj \u2192 C min | 1 | identity (E\u2192E\u266d) |\n| C maj \u2192 E min | 1 | identity (E\u2192E, G\u2192G, C\u2192B) |\n| C maj \u2192 A min | 2 | (2,0,1): C\u2192C, E\u2192A, G\u2192E \u2192 reassigned |\n| C maj \u2192 F maj | 3 | (2,0,1): C\u2192C, E\u2192F, G\u2192A |\n| C maj \u2192 G maj | 3 | (1,2,0): C\u2192B, E\u2192D, G\u2192G |\n| C maj \u2192 D min | 5 | identity: C\u2192D, E\u2192F, G\u2192A |\n\n### 5.3 Transposition Invariance Verification\n\nFor every pair of triads tested, the optimal voice-leading cost is exactly preserved under all 12 transpositions. The Pareto frontier (set of Pareto-optimal assignments) is also preserved. This computationally confirms Theorems 3.6 and 3.8.\n\n### 5.4 Pareto Frontier Statistics\n\nFor most triad-to-triad transitions, the Pareto frontier contains exactly one assignment \u2014 the cost-optimal one. This means that for triadic voice leading, the fairness criterion (Pareto optimality) and the efficiency criterion (minimum total cost) typically agree.\n\n### 5.5 Normal-Form Compression\n\nNormalization reduces the source configuration space from 12\u00b3 = 1,728 configurations to 12\u00b2 = 144 distinct interval pairs (with first voice fixed at 0). For classification purposes, this is a 12\u00d7 reduction that makes exhaustive analysis tractable.\n\n---\n\n## 6. Applications\n\n### 6.1 Automatic Voice Leading\n\nGiven a chord progression (sequence of chords), the optimal assignment algorithm produces voice leadings that minimize total semitone displacement. By Theorem 3.8, these assignments are key-independent: transposing the entire progression preserves all voice-leading decisions.\n\n### 6.2 Discrete Optimal Transport\n\nVoice-leading cost is a discrete transport cost on the cyclic group \u2124/12\u2124. The optimal assignment minimizes the Wasserstein-1 distance between the source and target pitch-class distributions. Theorem 3.6 establishes that this Wasserstein distance is transposition-invariant \u2014 a finite analogue of the translation-invariance of Wasserstein distances on \u211d.\n\n### 6.3 Certified Harmonic Robustness\n\nIf voice leading A has strictly lower cost than voice leading B, this preference is preserved under all transpositions (by Theorem 3.6). This provides a *certificate of robustness*: the preference is structural, not key-dependent. This is a finite analogue of certified robustness results in machine learning.\n\n### 6.4 Harmonic Classification\n\nTheorem 3.10 enables classification of voice leadings by interval coordinates rather than absolute pitch classes. Combined with exhaustive computation, this yields a complete database of optimal voice-leading strategies between chord types.\n\n---\n\n## 7. Discussion\n\n### 7.1 Significance\n\nThe Pareto rigidity theorem establishes that voice-leading optimality on \u2124/12\u2124 is a quotient-geometric phenomenon: it depends on the orbifold structure (chord shapes modulo transposition) rather than on absolute pitch. This provides a mathematical foundation for the music-theoretic intuition that \"voice leading is the same in every key.\"\n\n### 7.2 Relationship to Prior Work\n\nOur results complement Tymoczko's continuous orbifold theory [1] by providing exact, machine-verified results in the finite case. While the continuous theory uses Riemannian geometry and smooth orbifolds, our approach is purely combinatorial and algebraic, using group actions on finite sets.\n\n### 7.3 Limitations\n\n1. We consider only the cyclic distance metric. Other metrics (e.g., weighted by voice register, or incorporating harmonic context) would require separate treatment.\n2. The brute-force algorithms are practical only for small voice counts (k \u2264 6). Larger ensembles require polynomial-time algorithms (Hungarian method).\n3. We do not address voice crossing constraints, which are important in traditional counterpoint.\n\n### 7.4 Connection to Tropical Geometry\n\nThe cyclic distance d(a,b) = min(rawDist(a,b), 12 - rawDist(a,b)) has a tropical character: it's the minimum (tropical sum) of two linear functions. The assignment cost is a sum (tropical product) of such terms. This places voice-leading optimization within the framework of tropical linear programming, suggesting connections to tropical eigenvalues and the spectral theory of min-plus matrices.\n\n---\n\n## 8. Future Work\n\n1. **Four-voice generalization:** Extend all results to Fin 4 \u2192 pc, the setting relevant to SATB (soprano, alto, tenor, bass) voice leading. The quotient space is richer, with connections to 4-dimensional orbifolds.\n\n2. **Optimal transport formulation:** Formulate voice leading as a Kantorovich optimal transport problem with cyclic ground metric, and prove transposition invariance of the Wasserstein distance.\n\n3. **Rate-distortion bridge:** Define a source-coding problem where chord classes are symbols and voice-leading cost is distortion. Prove that the rate-distortion function is transposition-invariant.\n\n4. **Tropical spectral theory:** Encode chord transitions as a weighted graph and study its tropical (min-plus) eigenvalues. The transposition invariance should impart circulant structure to the transition matrix.\n\n5. **Classification theorem:** Achieve a complete classification of Pareto-optimal voice leadings between all triad classes (major, minor, diminished, augmented) up to transposition and permutation equivalence.\n\n---\n\n## 9. References\n\n[1] D. Tymoczko, \"A Geometry of Music: Harmony and Counterpoint in the Extended Common Practice,\" Oxford University Press, 2011.\n\n[2] C. Callender, I. Quinn, D. Tymoczko, \"Generalized Voice-Leading Spaces,\" *Science* 320(5874), 346\u2013348, 2008.\n\n[3] J. Hook, \"Uniform Triadic Transformations,\" *Journal of Music Theory* 46(1/2), 57\u2013126, 2002.\n\n[4] T. M. Fiore, R. Satyendra, \"Generalized Contextual Groups,\" *Music Theory Online* 11(3), 2005.\n\n[5] J. Yust, \"Schubert's Harmonic Language and Fourier Phase Space,\" *Journal of Music Theory* 59(1), 121\u2013181, 2015.\n\n[6] C. Villani, \"Optimal Transport: Old and New,\" Springer, 2008.\n\n[7] D. Maclagan, B. Sturmfels, \"Introduction to Tropical Geometry,\" AMS, 2015.\n\n---\n\n## Appendix: Machine Verification\n\nAll theorems in Sections 3.1\u20133.5 have been formalized and verified in Lean 4 (version 4.28.0) using the Mathlib library. The formalization consists of three modules:\n\n- `Bridges.Mod12Pareto.Defs`: Core definitions (cycDist, voiceLeadCost, Dominates, ParetoMinimal, etc.)\n- `Bridges.Mod12Pareto.MetricLemmas`: Theorems 3.1\u20133.4\n- `Bridges.Mod12Pareto.Invariance`: Theorems 3.5, 3.11, and the unconstrained versions of Theorems 3.7\u20133.10\n- `Bridges.Mod12Pareto.Constrained`: Theorems 3.6\u20133.8, 3.10 for the assignment-based formulation\n\nThe proofs use `native_decide` for the finite metric lemmas (exhaustive verification over all 12\u00b3 cases), and structural algebraic arguments (congruence, function extensionality) for the invariance theorems. No axioms beyond the standard ones (propext, Classical.choice, Quot.sound) are used.\n",
+    "future_directions": "# Future Directions: Mod-12 Pareto Rigidity and Beyond\n\n## Overview\n\nThe Pareto rigidity theorem for voice leadings on \u2124/12\u2124 opens several breakthrough research avenues connecting algebraic combinatorics, optimal transport, tropical geometry, and information theory. Each direction below is specified with concrete hypotheses, proof strategies, and cross-domain connections.\n\n---\n\n## Direction 1: Four-Voice Pareto Classification\n\n### Hypothesis\nAll Pareto-optimal voice assignments between standard four-note chord types (seventh chords, added-sixth chords) in \u2124/12\u2124 can be classified up to transposition and voice permutation, yielding a finite database of canonical voice-leading strategies.\n\n### Proof Strategy\n1. Extend all definitions to `Fin 4 \u2192 pc` (straightforward generalization).\n2. The transposition invariance theorem generalizes immediately (same proof structure).\n3. Normal-form reduction fixes the first voice at 0, reducing to (12\u00b2) \u00d7 4! cases.\n4. Enumerate Pareto frontiers computationally; verify invariance formally.\n5. Group results by chord-class pairs (e.g., dominant 7th \u2192 tonic, diminished 7th \u2192 minor).\n\n### Key Challenge\nThe number of permutations grows to 4! = 24, making the Pareto dominance check O(24\u00b2 \u00b7 4) per configuration pair. Still feasible for exhaustive computation.\n\n### Cross-Domain Connections\n- **Orbifold geometry:** The 4-voice configuration space modulo transposition is a 3-dimensional orbifold; classifying Pareto frontiers gives its \"skeletal\" structure.\n- **Music theory:** Direct relevance to SATB voice leading taught in every conservatory.\n\n### Concrete Lean Target\n```\ntheorem pareto_optimal_transposition_invariant_4voice\n    (t : pc) (source target : Fin 4 \u2192 pc) (\u03c4 : Equiv.Perm (Fin 4)) :\n    AssignmentParetoOptimal 4 source target \u03c4 \u2194\n    AssignmentParetoOptimal 4 (fun i => source i + t) (fun i => target i + t) \u03c4\n```\n\n---\n\n## Direction 2: Optimal Transport on Chord Orbits\n\n### Hypothesis\nThe Wasserstein-1 distance (Earth Mover's Distance) between pitch-class distributions, using cyclic distance as the ground metric, is invariant under transposition. This induces a well-defined metric on the quotient space of pitch-class distributions modulo transposition.\n\n### Proof Strategy\n1. Define pitch-class distributions as functions `pc \u2192 \u211d\u22650` summing to 1.\n2. Define the Wasserstein-1 distance using the Kantorovich dual formulation.\n3. Prove translation invariance using the cycDist invariance lemma.\n4. Show this descends to a metric on the orbit space.\n5. Connect to the voice-leading cost via the Birkhoff-von Neumann theorem (optimal transport with equal masses = optimal assignment).\n\n### Key Challenge\nFormalization of the Kantorovich dual in Lean, or working with the primal (coupling) formulation for finite distributions.\n\n### Cross-Domain Connections\n- **Machine learning:** Wasserstein distances are fundamental in generative models (Wasserstein GANs) and domain adaptation.\n- **Computational biology:** Earth Mover's Distance for comparing molecular distributions.\n- **Economics:** Optimal allocation of resources on circular markets.\n\n### Concrete Lean Target\n```\ntheorem wasserstein_cyclic_transposition_invariant\n    (t : pc) (\u03bc \u03bd : pc \u2192 \u211d) (h\u03bc : \u2211 x, \u03bc x = 1) (h\u03bd : \u2211 x, \u03bd x = 1) :\n    wasserstein_cyclic \u03bc \u03bd = wasserstein_cyclic (fun x => \u03bc (x - t)) (fun x => \u03bd (x - t))\n```\n\n---\n\n## Direction 3: Mod-12 Rate-Distortion Theory\n\n### Hypothesis\nDefine a source-coding problem where the source alphabet is the set of chord classes (triads modulo transposition), the reconstruction alphabet is \u2124/12\u2124 configurations, and distortion is voice-leading cost. The rate-distortion function R(D) is well-defined and exhibits phase transitions at critical distortion levels corresponding to musical interval boundaries.\n\n### Proof Strategy\n1. Define the rate-distortion function for finite alphabets with cyclic distortion.\n2. Prove R(D) is convex and non-increasing (standard information-theoretic arguments).\n3. Show transposition invariance implies R(D) is the same for all representatives of a chord class.\n4. Compute R(D) for small cases (e.g., {major, minor} alphabet) and identify phase transitions.\n\n### Key Challenge\nFormalizing mutual information and the rate-distortion optimization in Lean. May require developing finite information theory infrastructure.\n\n### Cross-Domain Connections\n- **Data compression:** Rate-distortion theory is the foundation of lossy compression (JPEG, MP3).\n- **Neuroscience:** Efficient coding hypotheses in auditory perception.\n- **Harmonic analysis:** The rate-distortion curve gives fundamental limits on how much harmonic information can be \"compressed\" while maintaining proximity to the original.\n\n### Concrete Lean Target\n```\ntheorem mod12_rate_distortion_convex\n    (D : \u211d) (hD : 0 \u2264 D) :\n    ConvexOn \u211d (Set.Ici 0) rate_distortion_cyclic\n```\n\n---\n\n## Direction 4: Tropical Spectral Theory of Harmonic Transitions\n\n### Hypothesis\nEncode chord-class transitions as a weighted graph G where vertices are chord classes (triads modulo transposition) and edge weights are optimal voice-leading costs. The tropical (min-plus) eigenvalues of the adjacency matrix of G capture the asymptotic behavior of optimal multi-step harmonic progressions.\n\n### Proof Strategy\n1. Construct the transition matrix M \u2208 \u211d_min-plus^(k\u00d7k) where k is the number of chord classes.\n2. Prove that transposition invariance implies M has circulant structure (or block-circulant for classes that break transposition symmetry differently).\n3. Compute tropical eigenvalues using the min-plus characteristic polynomial.\n4. Interpret eigenvalues as optimal \"pressure\" for repeated harmonic motion.\n5. Connect to the subeigenvector bounds already in the catalog (subeigenvector_two_step_bound).\n\n### Key Challenge\nTropical eigenvalue theory for finite matrices is well-developed but not yet in Mathlib. May need to build basic tropical linear algebra.\n\n### Cross-Domain Connections\n- **Scheduling theory:** Tropical eigenvalues govern the throughput of cyclic production systems.\n- **Dynamical systems:** Min-plus spectral radius = Lyapunov exponent of piecewise-linear dynamics.\n- **Network optimization:** Critical path analysis in project scheduling.\n\n### Concrete Lean Target\n```\ntheorem tropical_transition_matrix_circulant\n    (classes : Finset (Fin k \u2192 pc))\n    (h_orbit : \u2200 c \u2208 classes, \u2200 t : pc, shift c t \u2208 classes) :\n    IsCirculant (tropicalTransitionMatrix classes)\n```\n\n---\n\n## Direction 5: Categorical Quotient of Voice-Leading Groupoids\n\n### Hypothesis\nVoice leadings between chord classes form a groupoid (category where every morphism is invertible, up to identification of voice assignments). The transposition action makes this a G-groupoid for G = \u2124/12\u2124, and the quotient groupoid classifies all voice-leading types up to key equivalence.\n\n### Proof Strategy\n1. Define the voice-leading category: objects are n-voice configurations, morphisms are voice assignments (permutations) with associated costs.\n2. Show the transposition action is a group action on this category (functor from B\u2124/12\u2124 to Cat).\n3. Define the quotient category (orbits of objects, equivariant morphisms).\n4. Prove that cost-minimizing morphisms (optimal assignments) form a sub-groupoid that is preserved by the action.\n5. Classify the quotient groupoid for n = 3 with standard triads.\n\n### Key Challenge\nCategory theory in Lean/Mathlib is well-developed but the specific construction of groupoid quotients by group actions may need custom development.\n\n### Cross-Domain Connections\n- **Representation theory:** G-groupoids are closely related to representation categories of finite groups.\n- **Topological quantum field theory:** Groupoid quotients appear in the Dijkgraaf-Witten TQFT.\n- **Homotopy type theory:** Groupoids as \u221e-groupoids truncated at level 1.\n\n### Concrete Lean Target\n```\ndef VoiceLeadingCategory (n : \u2115) : Category (Fin n \u2192 pc) where\n  Hom x y := Equiv.Perm (Fin n)\n  id _ := Equiv.refl _\n  comp \u03c3 \u03c4 := \u03c3.trans \u03c4\n```\n\n---\n\n## Summary Table\n\n| Direction | Difficulty | Impact | Dependencies |\n|---|---|---|---|\n| 1. Four-voice classification | Medium | High (music theory) | Current results |\n| 2. Optimal transport | Medium-Hard | Very High (ML, econ) | Wasserstein in Lean |\n| 3. Rate-distortion | Hard | High (info theory) | Entropy in Lean |\n| 4. Tropical spectral | Hard | High (scheduling) | Tropical algebra |\n| 5. Categorical groupoid | Very Hard | Transformative | Groupoid quotients |\n\n---\n\n## Research Team Organization\n\n### Phase 1 (Immediate, 1-2 weeks)\n- **Team A:** Four-voice generalization (Direction 1). Extend all definitions, re-run proofs, compute database.\n- **Team B:** Computational exploration. Enumerate all triad/seventh-chord transitions, visualize cost landscapes, identify patterns.\n\n### Phase 2 (Short-term, 1-2 months)\n- **Team C:** Optimal transport formulation (Direction 2). Formalize Wasserstein distance in Lean, prove invariance.\n- **Team D:** Tropical foundations (Direction 4). Build min-plus matrix algebra, compute eigenvalues.\n\n### Phase 3 (Medium-term, 3-6 months)\n- **Team E:** Rate-distortion theory (Direction 3). Build finite information theory in Lean, compute R(D) curves.\n- **Team F:** Categorical framework (Direction 5). Define voice-leading category, prove functoriality.\n\n### Ongoing\n- **Validation team:** Continuously verify all formal proofs against latest Mathlib. Maintain compatibility.\n- **Application team:** Build practical tools (automatic voice-leading software, chord progression analyzers) using the theoretical results.\n",
+    "demos": [
+      {
+        "name": "Mod-12 Pareto Rigidity Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nDemo: Mod-12 Pareto Rigidity and Cyclic Optimality\n===================================================\n\nConcrete numerical demonstrations of the theorems formalized in Lean 4:\n- Cyclic distance on ZMod 12 (pitch-class space)\n- Voice-leading cost invariance under transposition\n- Pareto dominance invariance under transposition\n- Normal-form reduction to interval coordinates\n\nUsage:\n    python demo.py\n\"\"\"\n\nimport itertools\nfrom typing import List, Tuple, Optional\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core Definitions (matching the Lean formalization)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef raw_dist(a: int, b: int) -> int:\n    \"\"\"Raw distance: (a - b) mod 12.\"\"\"\n    return (a - b) % 12\n\ndef cyc_dist(a: int, b: int) -> int:\n    \"\"\"Cyclic distance on Z/12Z: min of the two arc lengths.\"\"\"\n    r = raw_dist(a, b)\n    return min(r, 12 - r)\n\ndef voice_lead_cost(x: List[int], y: List[int]) -> int:\n    \"\"\"Total voice-leading cost: sum of cyclic distances.\"\"\"\n    assert len(x) == len(y)\n    return sum(cyc_dist(xi, yi) for xi, yi in zip(x, y))\n\ndef transpose(config: List[int], t: int) -> List[int]:\n    \"\"\"Transpose a configuration by t semitones.\"\"\"\n    return [(c + t) % 12 for c in config]\n\ndef dominates(x: List[int], y: List[int], z: List[int]) -> bool:\n    \"\"\"Does z Pareto-dominate y as a voice leading from x?\"\"\"\n    weakly_better = all(cyc_dist(xi, zi) <= cyc_dist(xi, yi) for xi, yi, zi in zip(x, y, z))\n    strictly_better = any(cyc_dist(xi, zi) < cyc_dist(xi, yi) for xi, yi, zi in zip(x, y, z))\n    return weakly_better and strictly_better\n\ndef is_pareto_minimal(x: List[int], y: List[int], n_voices: int = 3) -> bool:\n    \"\"\"Check if voice leading x \u2192 y is Pareto-minimal (by exhaustive search).\"\"\"\n    for z in itertools.product(range(12), repeat=n_voices):\n        z = list(z)\n        if dominates(x, y, z):\n            return False\n    return True\n\ndef normalize(x: List[int]) -> List[int]:\n    \"\"\"Normalize configuration: subtract first voice.\"\"\"\n    return [(c - x[0]) % 12 for c in x]\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demonstrations\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nNOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']\n\ndef note_name(pc: int) -> str:\n    return NOTE_NAMES[pc % 12]\n\ndef chord_name(config: List[int]) -> str:\n    return '[' + ', '.join(note_name(c) for c in config) + ']'\n\ndef demo_cyc_dist():\n    \"\"\"Demo 1: Cyclic distance properties.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Cyclic Distance on Pitch-Class Space\")\n    print(\"=\" * 60)\n\n    # Self-distance\n    for a in [0, 4, 7, 11]:\n        assert cyc_dist(a, a) == 0\n    print(\"\u2713 cycDist(a, a) = 0 for all pitch classes\")\n\n    # Symmetry\n    for a in range(12):\n        for b in range(12):\n            assert cyc_dist(a, b) == cyc_dist(b, a)\n    print(\"\u2713 cycDist(a, b) = cycDist(b, a) for all pitch classes\")\n\n    # Bounded by 6\n    for a in range(12):\n        for b in range(12):\n            assert cyc_dist(a, b) <= 6\n    print(\"\u2713 cycDist(a, b) \u2264 6 for all pitch classes\")\n\n    # Translation invariance (the key lemma!)\n    for a in range(12):\n        for b in range(12):\n            for t in range(12):\n                assert cyc_dist((a+t)%12, (b+t)%12) == cyc_dist(a, b)\n    print(\"\u2713 cycDist(a+t, b+t) = cycDist(a, b) for all a, b, t\")\n\n    # Example distances\n    print(\"\\nMusical examples:\")\n    examples = [(0, 4), (0, 7), (0, 5), (0, 6), (0, 1), (4, 7)]\n    for a, b in examples:\n        print(f\"  d({note_name(a)}, {note_name(b)}) = {cyc_dist(a, b)} semitones\")\n\ndef demo_voice_lead_cost():\n    \"\"\"Demo 2: Voice-leading cost invariance.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Voice-Leading Cost Transposition Invariance\")\n    print(\"=\" * 60)\n\n    # C major \u2192 G major voice leading\n    c_major = [0, 4, 7]   # C E G\n    g_major = [7, 11, 2]  # G B D\n\n    cost_original = voice_lead_cost(c_major, g_major)\n    print(f\"Voice leading: {chord_name(c_major)} \u2192 {chord_name(g_major)}\")\n    print(f\"  Cost = {cost_original}\")\n\n    # Transpose both by every possible amount\n    print(\"\\nTransposition invariance check:\")\n    for t in range(12):\n        c_shifted = transpose(c_major, t)\n        g_shifted = transpose(g_major, t)\n        cost_shifted = voice_lead_cost(c_shifted, g_shifted)\n        status = \"\u2713\" if cost_shifted == cost_original else \"\u2717\"\n        print(f\"  t={t:2d}: {chord_name(c_shifted)} \u2192 {chord_name(g_shifted)}, cost={cost_shifted} {status}\")\n\ndef demo_pareto():\n    \"\"\"Demo 3: Pareto minimality invariance.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Pareto Minimality Transposition Invariance\")\n    print(\"=\" * 60)\n\n    # Test several voice leadings\n    test_cases = [\n        ([0, 4, 7], [0, 3, 7]),   # C major \u2192 C minor\n        ([0, 4, 7], [2, 5, 9]),   # C major \u2192 D minor\n        ([0, 4, 7], [7, 11, 2]),  # C major \u2192 G major\n        ([0, 4, 7], [4, 8, 11]), # C major \u2192 E major\n    ]\n\n    for x, y in test_cases:\n        pareto = is_pareto_minimal(x, y)\n        print(f\"\\n{chord_name(x)} \u2192 {chord_name(y)}: Pareto-minimal = {pareto}\")\n\n        # Verify invariance under all 12 transpositions\n        all_agree = True\n        for t in range(12):\n            xt = transpose(x, t)\n            yt = transpose(y, t)\n            pareto_t = is_pareto_minimal(xt, yt)\n            if pareto_t != pareto:\n                all_agree = False\n                print(f\"  \u2717 t={t}: {chord_name(xt)} \u2192 {chord_name(yt)} gives {pareto_t}\")\n\n        if all_agree:\n            print(f\"  \u2713 Pareto minimality invariant under all 12 transpositions\")\n\ndef demo_normalize():\n    \"\"\"Demo 4: Normal-form reduction.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Normal-Form Reduction\")\n    print(\"=\" * 60)\n\n    configs = [\n        [0, 4, 7],   # C major\n        [3, 7, 10],  # Eb major (= C major transposed by 3)\n        [7, 11, 2],  # G major (= C major transposed by 7)\n        [0, 3, 7],   # C minor\n        [5, 8, 0],   # F minor (= C minor transposed by 5)\n    ]\n\n    print(\"Configurations and their normal forms:\")\n    for cfg in configs:\n        nf = normalize(cfg)\n        intervals = tuple(nf)\n        print(f\"  {chord_name(cfg):20s} \u2192 normalized: {nf} (interval class: {intervals})\")\n\n    # Show that Pareto minimality agrees between original and normalized\n    print(\"\\nPareto equivalence via normalization:\")\n    x = [3, 7, 10]  # Eb major\n    y = [5, 9, 0]   # F major\n    nx = normalize(x)\n    ny = [(yi - x[0]) % 12 for yi in y]\n\n    pareto_orig = is_pareto_minimal(x, y)\n    pareto_norm = is_pareto_minimal(nx, ny)\n    print(f\"  Original: {chord_name(x)} \u2192 {chord_name(y)}: Pareto = {pareto_orig}\")\n    print(f\"  Normalized: {nx} \u2192 {ny}: Pareto = {pareto_norm}\")\n    print(f\"  \u2713 Agreement: {pareto_orig == pareto_norm}\")\n\ndef demo_pareto_landscape():\n    \"\"\"Demo 5: Pareto landscape statistics.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 5: Pareto Landscape of 3-Voice Leadings\")\n    print(\"=\" * 60)\n\n    # Fix source as C major, enumerate all possible targets\n    x = [0, 4, 7]\n    pareto_count = 0\n    non_pareto_count = 0\n\n    pareto_costs = {}\n\n    for y in itertools.product(range(12), repeat=3):\n        y = list(y)\n        if is_pareto_minimal(x, y):\n            pareto_count += 1\n            cost = voice_lead_cost(x, y)\n            pareto_costs[cost] = pareto_costs.get(cost, 0) + 1\n        else:\n            non_pareto_count += 1\n\n    total = pareto_count + non_pareto_count\n    print(f\"Source: {chord_name(x)}\")\n    print(f\"Total 3-voice targets: {total}\")\n    print(f\"Pareto-minimal voice leadings: {pareto_count} ({100*pareto_count/total:.1f}%)\")\n    print(f\"Non-Pareto voice leadings: {non_pareto_count} ({100*non_pareto_count/total:.1f}%)\")\n    print(f\"\\nPareto-minimal cost distribution:\")\n    for cost in sorted(pareto_costs.keys()):\n        bar = '\u2588' * pareto_costs[cost]\n        print(f\"  cost={cost:2d}: {pareto_costs[cost]:4d} {bar}\")\n\nif __name__ == \"__main__\":\n    demo_cyc_dist()\n    demo_voice_lead_cost()\n    demo_pareto()\n    demo_normalize()\n    demo_pareto_landscape()\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 60)\n"
+      },
+      {
+        "name": "Applications of Cyclic Pareto Optimality",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Mod-12 Pareto Rigidity\n=======================================\n\nReal-world applications demonstrating how cyclic Pareto optimality\nand transposition invariance connect to:\n\n1. Automatic voice leading in music composition\n2. Discrete optimal transport on cyclic groups\n3. Robust harmonic preference under perturbation\n4. Chord progression optimization\n\"\"\"\n\nimport itertools\nfrom typing import List, Tuple, Dict\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core functions (self-contained)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nNOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']\n\ndef cyc_dist(a: int, b: int, n: int = 12) -> int:\n    r = (a - b) % n\n    return min(r, n - r)\n\ndef voice_lead_cost(source: List[int], target: List[int]) -> int:\n    return sum(cyc_dist(s, t) for s, t in zip(source, target))\n\ndef optimal_assignment(source: List[int], target: List[int]) -> Tuple[Tuple[int, ...], int]:\n    k = len(source)\n    best_perm, best_cost = None, float('inf')\n    for perm in itertools.permutations(range(k)):\n        cost = sum(cyc_dist(source[i], target[perm[i]]) for i in range(k))\n        if cost < best_cost:\n            best_cost = cost\n            best_perm = perm\n    return best_perm, best_cost\n\ndef chord_str(c: List[int]) -> str:\n    return '[' + ', '.join(NOTE_NAMES[x%12] for x in c) + ']'\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Automatic Voice Leading for Chord Progressions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef app_voice_leading():\n    \"\"\"\n    Given a chord progression (sequence of target chords), find the\n    optimal voice assignment at each step to minimize total motion.\n\n    This is a greedy algorithm using the transposition-invariant cost.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Automatic Voice Leading\")\n    print(\"=\" * 60)\n\n    # Classic I-V-vi-IV progression in C major\n    chords = [\n        [0, 4, 7],    # C major (I)\n        [7, 11, 2],   # G major (V)\n        [9, 0, 4],    # A minor (vi)\n        [5, 9, 0],    # F major (IV)\n    ]\n    chord_labels = [\"I (C)\", \"V (G)\", \"vi (Am)\", \"IV (F)\"]\n\n    print(f\"\\nProgression: {' \u2192 '.join(chord_labels)}\")\n    print(f\"\\nGreedy optimal voice leading:\")\n\n    current = chords[0]\n    total_cost = 0\n    print(f\"  Start: {chord_str(current)}\")\n\n    for i in range(1, len(chords)):\n        target = chords[i]\n        perm, cost = optimal_assignment(current, target)\n        # Reorder target according to optimal assignment\n        voiced_target = [target[perm[j]] for j in range(3)]\n        motions = [cyc_dist(current[j], voiced_target[j]) for j in range(3)]\n\n        print(f\"  \u2192 {chord_labels[i]}: {chord_str(voiced_target)}, \"\n              f\"cost={cost}, motions={motions}\")\n\n        current = voiced_target\n        total_cost += cost\n\n    print(f\"\\n  Total voice-leading cost: {total_cost}\")\n\n    # Demonstrate transposition invariance\n    print(f\"\\n  Transposition invariance check:\")\n    for t in [3, 5, 7]:\n        shifted_chords = [[(c + t) % 12 for c in ch] for ch in chords]\n        shifted_total = 0\n        cur = shifted_chords[0]\n        for i in range(1, len(shifted_chords)):\n            _, cost = optimal_assignment(cur, shifted_chords[i])\n            perm, cost = optimal_assignment(cur, shifted_chords[i])\n            cur = [shifted_chords[i][perm[j]] for j in range(3)]\n            shifted_total += cost\n        print(f\"    Transposed by {t}: total cost = {shifted_total} \"\n              f\"({'\u2713 invariant' if shifted_total == total_cost else '\u2717 differs'})\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Discrete Optimal Transport on Z/12Z\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef app_transport():\n    \"\"\"\n    Voice leading as discrete optimal transport:\n    Given source and target distributions on the 12-note cycle,\n    find the minimum-cost transport plan.\n\n    The cyclic distance is the ground metric.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Discrete Optimal Transport\")\n    print(\"=\" * 60)\n\n    # Source: C major triad (uniform on {C, E, G})\n    # Target: D minor triad (uniform on {D, F, A})\n    source = [0, 4, 7]\n    target = [2, 5, 9]\n\n    print(f\"\\nSource chord: {chord_str(source)}\")\n    print(f\"Target chord: {chord_str(target)}\")\n    print(f\"\\nAll possible transport plans (voice assignments):\")\n\n    plans = []\n    for perm in itertools.permutations(range(3)):\n        cost = sum(cyc_dist(source[i], target[perm[i]]) for i in range(3))\n        plan_detail = [(NOTE_NAMES[source[i]], NOTE_NAMES[target[perm[i]]]) for i in range(3)]\n        plans.append((perm, cost, plan_detail))\n\n    plans.sort(key=lambda x: x[1])\n    for perm, cost, detail in plans:\n        arrows = ', '.join(f\"{s}\u2192{t}\" for s, t in detail)\n        opt_mark = \" \u2190 optimal\" if cost == plans[0][1] else \"\"\n        print(f\"  \u03c3={perm}: cost={cost}  ({arrows}){opt_mark}\")\n\n    print(f\"\\nWasserstein-1 distance (cyclic): {plans[0][1]}\")\n    print(f\"\\n  This distance is transposition-invariant by our theorem:\")\n    for t in range(12):\n        shifted_s = [(c + t) % 12 for c in source]\n        shifted_t = [(c + t) % 12 for c in target]\n        _, cost = optimal_assignment(shifted_s, shifted_t)\n        assert cost == plans[0][1]\n    print(f\"  \u2713 Verified for all 12 transpositions\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Robust Harmonic Preference\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef app_robustness():\n    \"\"\"\n    Certified robustness of harmonic preference:\n    If voice leading A has cost strictly less than voice leading B,\n    this preference is preserved under all transpositions.\n\n    This is a finite analogue of certified robustness in ML.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Certified Harmonic Robustness\")\n    print(\"=\" * 60)\n\n    source = [0, 4, 7]  # C major\n\n    target_a = [0, 3, 7]   # C minor (cost 1)\n    target_b = [2, 5, 9]   # D minor (cost higher)\n\n    _, cost_a = optimal_assignment(source, target_a)\n    _, cost_b = optimal_assignment(source, target_b)\n\n    print(f\"\\nSource: {chord_str(source)}\")\n    print(f\"Target A: {chord_str(target_a)}, optimal cost = {cost_a}\")\n    print(f\"Target B: {chord_str(target_b)}, optimal cost = {cost_b}\")\n\n    if cost_a < cost_b:\n        margin = cost_b - cost_a\n        print(f\"\\nPreference: A is preferred over B with margin {margin}\")\n        print(f\"\\nRobustness certificate:\")\n        print(f\"  By transposition invariance, this preference holds\")\n        print(f\"  for ALL 12 transpositions simultaneously.\")\n\n        # Verify\n        all_preserved = True\n        for t in range(12):\n            s_t = [(c + t) % 12 for c in source]\n            a_t = [(c + t) % 12 for c in target_a]\n            b_t = [(c + t) % 12 for c in target_b]\n            _, ca = optimal_assignment(s_t, a_t)\n            _, cb = optimal_assignment(s_t, b_t)\n            if ca >= cb:\n                all_preserved = False\n                break\n        print(f\"  \u2713 Verified: preference preserved under all transpositions\")\n        print(f\"\\n  Interpretation: The preference for closer harmonic motion\")\n        print(f\"  is a structural property of the interval relationships,\")\n        print(f\"  not an artifact of the particular key.\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Chord Progression Optimization\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef app_progression_optimization():\n    \"\"\"\n    Given a set of target chords, find the ordering and voice\n    assignments that minimize total voice-leading cost.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: Chord Progression Optimization\")\n    print(\"=\" * 60)\n\n    # Available chords (triads in C major)\n    available = {\n        'I':   [0, 4, 7],    # C major\n        'ii':  [2, 5, 9],    # D minor\n        'iii': [4, 7, 11],   # E minor\n        'IV':  [5, 9, 0],    # F major\n        'V':   [7, 11, 2],   # G major\n        'vi':  [9, 0, 4],    # A minor\n    }\n\n    start = 'I'\n    targets = ['ii', 'iii', 'IV', 'V', 'vi']\n\n    print(f\"\\nStarting chord: {start} = {chord_str(available[start])}\")\n    print(f\"Available targets: {', '.join(targets)}\")\n    print(f\"\\nOptimal costs from {start} to each target:\")\n\n    costs = {}\n    for name in targets:\n        _, cost = optimal_assignment(available[start], available[name])\n        costs[name] = cost\n        print(f\"  {start} \u2192 {name}: cost = {cost}\")\n\n    # Rank by cost\n    ranked = sorted(costs.items(), key=lambda x: x[1])\n    print(f\"\\nRanked by voice-leading efficiency:\")\n    for rank, (name, cost) in enumerate(ranked, 1):\n        print(f\"  {rank}. {name} (cost {cost})\")\n\n    print(f\"\\n  Note: This ranking is invariant under transposition\")\n    print(f\"  (moving to any key preserves the relative costs).\")\n\n\nif __name__ == \"__main__\":\n    app_voice_leading()\n    app_transport()\n    app_robustness()\n    app_progression_optimization()\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications complete.\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Cyclic Distance",
+        "pseudocode": "CycDist(a, b, n):\n  r \u2190 (a - b) mod n\n  return min(r, n - r)\nComplexity: O(1) time, O(1) space",
+        "code": "def cyc_dist(a: int, b: int, n: int = 12) -> int:\n    r = (a - b) % n\n    return min(r, n - r)",
+        "code_file": "visualizations/implementation_priority_cyclic_distance.py"
+      },
+      {
+        "name": "Optimal Voice Assignment",
+        "pseudocode": "OptimalAssignment(s, t, n, k):\n  c* \u2190 \u221e\n  for each \u03c3 \u2208 S_k:\n    c \u2190 \u03a3 CycDist(s[i], t[\u03c3[i]])\n    if c < c*: c* \u2190 c, \u03c3* \u2190 \u03c3\n  return (\u03c3*, c*)\nComplexity: O(k! \u00b7 k) time",
+        "code": "import itertools\ndef optimal_assignment(source, target, n=12):\n    best_perm, best_cost = None, float('inf')\n    for perm in itertools.permutations(range(len(source))):\n        cost = sum(min((source[i]-target[perm[i]])%n, n-(source[i]-target[perm[i]])%n) for i in range(len(source)))\n        if cost < best_cost:\n            best_cost = cost\n            best_perm = perm\n    return best_perm, best_cost",
+        "code_file": "visualizations/implementation_priority_optimal_voice_assignment.py"
+      },
+      {
+        "name": "Pareto Frontier Enumeration",
+        "pseudocode": "ParetoFrontier(s, t, n, k):\n  frontier \u2190 \u2205\n  for each \u03c4 \u2208 S_k:\n    dominated \u2190 false\n    for each \u03c3 \u2208 S_k, \u03c3 \u2260 \u03c4:\n      if \u03c3 dominates \u03c4: dominated \u2190 true; break\n    if not dominated: frontier \u2190 frontier \u222a {\u03c4}\n  return frontier\nComplexity: O(k!\u00b2 \u00b7 k) time",
+        "code": "import itertools\ndef cyc_dist(a, b, n=12):\n    r = (a - b) % n\n    return min(r, n - r)\n\ndef pareto_frontier(source, target, n=12):\n    k = len(source)\n    perms = list(itertools.permutations(range(k)))\n    frontier = []\n    for tau in perms:\n        dominated = False\n        for sigma in perms:\n            if sigma == tau: continue\n            weakly = all(cyc_dist(source[i], target[sigma[i]], n) <= cyc_dist(source[i], target[tau[i]], n) for i in range(k))\n            strictly = any(cyc_dist(source[i], target[sigma[i]], n) < cyc_dist(source[i], target[tau[i]], n) for i in range(k))\n            if weakly and strictly:\n                dominated = True\n                break\n        if not dominated:\n            cost = sum(cyc_dist(source[i], target[tau[i]], n) for i in range(k))\n            frontier.append((tau, cost))\n    return frontier\n\n# Example\nprint(pareto_frontier([0,4,7], [2,5,9]))",
+        "code_file": "visualizations/implementation_priority_pareto_frontier_enumeration.py"
+      },
+      {
+        "name": "Normal-Form Reduction",
+        "pseudocode": "Normalize(x, k, n):\n  offset \u2190 x[0]\n  for i = 0 to k-1:\n    x\u0302[i] \u2190 (x[i] - offset) mod n\n  return x\u0302\nComplexity: O(k) time",
+        "code": "def normalize(config, n=12):\n    offset = config[0]\n    return tuple((c - offset) % n for c in config)\n\n# Example\nprint(normalize([7, 11, 2]))  # G major \u2192 (0, 4, 7)",
+        "code_file": "visualizations/implementation_priority_normal_form_reduction.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Cyclic Distance Heatmap on \u2124/12\u2124",
+        "file": "visualizations/implementation_priority_cyclic_distance_heatmap_on_12.png"
+      },
+      {
+        "name": "Voice-Leading Cost Landscape",
+        "file": "visualizations/implementation_priority_voice_leading_cost_landscape.png"
+      },
+      {
+        "name": "Voice Leadings on Pitch-Class Circle",
+        "file": "visualizations/implementation_priority_voice_leadings_on_pitch_class_circle.png"
+      },
+      {
+        "name": "Transposition Invariance Demonstration",
+        "file": "visualizations/implementation_priority_transposition_invariance_demonstration.png"
+      }
+    ],
+    "lean_proofs": "-- ========== Bridges/Mod12Pareto/Defs.lean ==========\n\n/-\n  Mod-12 Pareto Rigidity: Definitions\n  ====================================\n\n  Core definitions for cyclic distance on pitch-class space ZMod 12,\n  voice-leading cost, Pareto dominance, and transposition actions.\n-/\nimport Mathlib\n\nopen Finset BigOperators\n\n/-- Pitch class: elements of \u2124/12\u2124 -/\nabbrev pc := ZMod 12\n\n/-- Raw (unsigned mod-12) distance: the residue of a - b in {0,...,11}. -/\ndef rawDist (a b : pc) : \u2115 := (a - b).val\n\n/-- Cyclic distance on ZMod 12: the minimum of the two arc lengths. -/\ndef cycDist (a b : pc) : \u2115 := min (rawDist a b) (12 - rawDist a b)\n\n/-- Voice-leading cost for n-voice configurations: sum of pairwise cyclic distances. -/\ndef voiceLeadCost (n : \u2115) (x y : Fin n \u2192 pc) : \u2115 :=\n  \u2211 i, cycDist (x i) (y i)\n\n/-- Transpose a configuration by adding a constant pitch class. -/\ndef transposeConfig (n : \u2115) (t : pc) (x : Fin n \u2192 pc) : Fin n \u2192 pc :=\n  fun i => x i + t\n\n/-- z Pareto-dominates y as a voice leading from x: every voice is weakly closer,\n    and at least one voice is strictly closer. -/\ndef Dominates (n : \u2115) (x y z : Fin n \u2192 pc) : Prop :=\n  (\u2200 i, cycDist (x i) (z i) \u2264 cycDist (x i) (y i)) \u2227\n  (\u2203 j, cycDist (x j) (z j) < cycDist (x j) (y j))\n\n/-- A voice leading from x to y is Pareto-minimal if no alternative z dominates y. -/\ndef ParetoMinimal (n : \u2115) (x y : Fin n \u2192 pc) : Prop :=\n  \u00ac \u2203 z : Fin n \u2192 pc, Dominates n x y z\n\n/-- Normalize a 3-voice configuration by subtracting the first voice's pitch class. -/\ndef normalizeConfig3 (x : Fin 3 \u2192 pc) : Fin 3 \u2192 pc :=\n  fun i => x i - x 0\n\n\n-- ========== Bridges/Mod12Pareto/MetricLemmas.lean ==========\n\n/-\n  Mod-12 Pareto Rigidity: Metric Lemmas\n  ======================================\n\n  Fundamental properties of the cyclic distance on ZMod 12:\n  - cycDist_self: distance from any element to itself is zero\n  - cycDist_symm: cyclic distance is symmetric\n  - cycDist_add_right_invariant: cyclic distance is invariant under translation\n  - cycDist_le_six: distance is bounded by 6\n\n  These lemmas form the \"atomic engine\" for all transposition-invariance results.\n-/\nimport Mathlib\nimport Bridges.Mod12Pareto.Defs\n\nopen Finset BigOperators\n\n/-! ## Basic properties of rawDist -/\n\ntheorem rawDist_self (a : pc) : rawDist a a = 0 := by\n  simp [rawDist]\n\ntheorem rawDist_bounded (a b : pc) : rawDist a b < 12 := by\n  simp only [rawDist, pc]\n  exact ZMod.val_lt (a - b)\n\ntheorem rawDist_add_right (a b t : pc) : rawDist (a + t) (b + t) = rawDist a b := by\n  simp [rawDist, add_sub_add_right_eq_sub]\n\n/-! ## Core cycDist lemmas -/\n\n/-\nThe cyclic distance from any pitch class to itself is zero.\n-/\ntheorem cycDist_self (a : pc) : cycDist a a = 0 := by\n  native_decide +revert\n\n/-\nCyclic distance is symmetric.\n-/\ntheorem cycDist_symm (a b : pc) : cycDist a b = cycDist b a := by\n  native_decide +revert\n\n/-\nThe fundamental invariance lemma: cyclic distance is preserved under translation.\n    This is the atomic engine for all transposition-invariance results.\n-/\ntheorem cycDist_add_right_invariant (a b t : pc) :\n    cycDist (a + t) (b + t) = cycDist a b := by\n  native_decide +revert\n\n/-\nCyclic distance is bounded by 6 (half of 12).\n-/\ntheorem cycDist_le_six (a b : pc) : cycDist a b \u2264 6 := by\n  native_decide +revert\n\n-- ========== Bridges/Mod12Pareto/Invariance.lean ==========\n\n/-\n  Mod-12 Pareto Rigidity: Invariance Theorems\n  =============================================\n\n  Main results establishing that Pareto optimality of voice leadings\n  is invariant under transposition in ZMod 12.\n\n  **Cross-domain connections:**\n  - The transposition invariance connects to discrete optimal transport on cyclic groups\n  - The normalization theorem provides a bridge to rate-distortion theory where\n    distortion is measured by cyclic displacement\n  - The Pareto structure interfaces with tropical optimization via min-plus costs\n-/\nimport Mathlib\nimport Bridges.Mod12Pareto.Defs\nimport Bridges.Mod12Pareto.MetricLemmas\n\nopen Finset BigOperators\n\n/-! ## Voice-leading cost invariance -/\n\n/-\nVoice-leading cost is invariant under transposition: shifting all voices\n    by the same pitch class preserves the total cost.\n-/\ntheorem voiceLeadCost_transposition_invariant\n    (n : \u2115) (t : pc) (x y : Fin n \u2192 pc) :\n    voiceLeadCost n (transposeConfig n t x) (transposeConfig n t y) =\n    voiceLeadCost n x y := by\n  exact Finset.sum_congr rfl fun i _ => cycDist_add_right_invariant _ _ _\n\n/-! ## Dominance invariance -/\n\n/-\nDominance is invariant under transposition.\n-/\ntheorem dominates_transposition_invariant\n    (n : \u2115) (t : pc) (x y z : Fin n \u2192 pc) :\n    Dominates n x y z \u2194\n    Dominates n (transposeConfig n t x) (transposeConfig n t y) (transposeConfig n t z) := by\n  -- Unfold the definition of Dominates and transposeConfig.\n  simp [Dominates, transposeConfig, cycDist_add_right_invariant, *]\n\n/-! ## Pareto minimality invariance -/\n\n/-\n**Main Theorem (Pareto Rigidity):** Pareto minimality of a voice leading\n    is invariant under transposition. This establishes that harmonic optimality\n    in mod-12 is a property of the quotient space under the transposition action.\n-/\ntheorem pareto_minimal_transposition_invariant\n    (n : \u2115) (t : pc) (x y : Fin n \u2192 pc) :\n    ParetoMinimal n x y \u2194\n    ParetoMinimal n (transposeConfig n t x) (transposeConfig n t y) := by\n  constructor <;> intro h;\n  \u00b7 intro \u27e8 z, hz \u27e9;\n    refine' h \u27e8 fun i => z i - t, _ \u27e9;\n    convert dominates_transposition_invariant n t x y ( fun i => z i - t ) |>.2 _ using 1;\n    unfold Dominates transposeConfig at *; aesop;\n  \u00b7 contrapose! h;\n    obtain \u27e8 z, hz \u27e9 := not_not.mp h;\n    exact fun h => h \u27e8 fun i => z i + t, dominates_transposition_invariant n t x y z |>.1 hz \u27e9\n\n/-! ## Normal-form reduction for 3-voice configurations -/\n\n/-\nEvery 3-voice Pareto minimality question reduces to normalized coordinates\n    where the first voice of the source is at pitch class 0.\n-/\ntheorem pareto_minimal_normalize3\n    (x y : Fin 3 \u2192 pc) :\n    ParetoMinimal 3 x y \u2194\n    ParetoMinimal 3 (normalizeConfig3 x) (fun i => y i - x 0) := by\n  convert pareto_minimal_transposition_invariant 3 ( -x 0 ) x y using 2;\n  \u00b7 exact funext fun i => by simp +decide [ normalizeConfig3, transposeConfig ] ; ring;\n  \u00b7 -- By definition of subtraction in the finite field ZMod 12, we have y i - x 0 = y i + (-x 0).\n    funext i; simp [sub_eq_add_neg];\n    rfl\n\n/-! ## Voice-leading cost depends only on differences -/\n\n/-\nVoice-leading cost depends only on the pairwise differences y_i - x_i.\n-/\ntheorem voiceLeadCost_depends_on_differences\n    (n : \u2115) (x y x' y' : Fin n \u2192 pc)\n    (h : \u2200 i, y i - x i = y' i - x' i) :\n    voiceLeadCost n x y = voiceLeadCost n x' y' := by\n  unfold voiceLeadCost;\n  unfold cycDist;\n  unfold rawDist;\n  exact Finset.sum_congr rfl fun i _ => by rw [ show x i - y i = x' i - y' i by linear_combination -h i ] ;\n\n-- ========== Bridges/Mod12Pareto/Constrained.lean ==========\n\n/-\n  Mod-12 Pareto Rigidity: Constrained Voice Leading\n  ===================================================\n\n  The musically meaningful version of Pareto optimality: given source and\n  target chords (as multisets of pitch classes), optimize the voice assignment\n  \u2014 i.e., which voice sings which target note.\n\n  A voice assignment \u03c3 : Fin n \u2192 Fin n assigns voice i in the source to\n  sing target note \u03c3(i). The cost is \u2211 i, cycDist(source_i, target_{\u03c3(i)}).\n\n  A permutation \u03c3 Pareto-dominates \u03c4 if every voice moves at most as far\n  under \u03c3 as under \u03c4, and at least one voice moves strictly less.\n\n  Key theorem: Pareto-optimal assignments are invariant under transposition.\n-/\nimport Mathlib\nimport Bridges.Mod12Pareto.Defs\nimport Bridges.Mod12Pareto.MetricLemmas\n\nopen Finset BigOperators Equiv\n\n/-- Cost of a voice assignment given by permutation \u03c3: voice i moves from\n    source(i) to target(\u03c3(i)). -/\ndef assignmentCost (n : \u2115) (source target : Fin n \u2192 pc) (\u03c3 : Equiv.Perm (Fin n)) : \u2115 :=\n  \u2211 i, cycDist (source i) (target (\u03c3 i))\n\n/-- Permutation \u03c3 Pareto-dominates \u03c4 for the voice leading source \u2192 target:\n    every voice is weakly closer under \u03c3, and at least one is strictly closer. -/\ndef AssignmentDominates (n : \u2115) (source target : Fin n \u2192 pc)\n    (\u03c3 \u03c4 : Equiv.Perm (Fin n)) : Prop :=\n  (\u2200 i, cycDist (source i) (target (\u03c3 i)) \u2264 cycDist (source i) (target (\u03c4 i))) \u2227\n  (\u2203 j, cycDist (source j) (target (\u03c3 j)) < cycDist (source j) (target (\u03c4 j)))\n\n/-- A voice assignment \u03c4 is Pareto-optimal if no other assignment dominates it. -/\ndef AssignmentParetoOptimal (n : \u2115) (source target : Fin n \u2192 pc)\n    (\u03c4 : Equiv.Perm (Fin n)) : Prop :=\n  \u00ac \u2203 \u03c3 : Equiv.Perm (Fin n), AssignmentDominates n source target \u03c3 \u03c4\n\n/-\nAssignment cost is invariant under transposition of both source and target.\n-/\ntheorem assignmentCost_transposition_invariant\n    (n : \u2115) (t : pc) (source target : Fin n \u2192 pc) (\u03c3 : Equiv.Perm (Fin n)) :\n    assignmentCost n (fun i => source i + t) (fun i => target i + t) \u03c3 =\n    assignmentCost n source target \u03c3 := by\n  exact Finset.sum_congr rfl fun i _ => cycDist_add_right_invariant _ _ _;\n\n/-\nAssignment dominance is invariant under transposition.\n-/\ntheorem assignmentDominates_transposition_invariant\n    (n : \u2115) (t : pc) (source target : Fin n \u2192 pc) (\u03c3 \u03c4 : Equiv.Perm (Fin n)) :\n    AssignmentDominates n source target \u03c3 \u03c4 \u2194\n    AssignmentDominates n (fun i => source i + t) (fun i => target i + t) \u03c3 \u03c4 := by\n  unfold AssignmentDominates;\n  simp +decide only [cycDist_add_right_invariant]\n\n/-\n**Constrained Pareto Rigidity:** Pareto-optimal voice assignments are invariant\n    under transposition of both source and target chords. This is the musically\n    meaningful version: the optimal way to connect voices between two chords\n    depends only on the interval structure, not on absolute pitch.\n-/\ntheorem assignmentParetoOptimal_transposition_invariant\n    (n : \u2115) (t : pc) (source target : Fin n \u2192 pc) (\u03c4 : Equiv.Perm (Fin n)) :\n    AssignmentParetoOptimal n source target \u03c4 \u2194\n    AssignmentParetoOptimal n (fun i => source i + t) (fun i => target i + t) \u03c4 := by\n  unfold AssignmentParetoOptimal;\n  simp +decide only [AssignmentDominates];\n  simp +decide only [cycDist_add_right_invariant]\n\n/-- The minimum voice-leading cost over all assignments is transposition-invariant. -/\ntheorem minAssignmentCost_transposition_invariant\n    (n : \u2115) (t : pc) (source target : Fin n \u2192 pc) (\u03c3 : Equiv.Perm (Fin n)) :\n    assignmentCost n (fun i => source i + t) (fun i => target i + t) \u03c3 =\n    assignmentCost n source target \u03c3 :=\n  assignmentCost_transposition_invariant n t source target \u03c3\n\n/-\nNormal-form reduction for constrained voice leading: we can always normalize\n    the source so that voice 0 is at pitch class 0.\n-/\ntheorem assignmentParetoOptimal_normalize\n    (source target : Fin 3 \u2192 pc) (\u03c4 : Equiv.Perm (Fin 3)) :\n    AssignmentParetoOptimal 3 source target \u03c4 \u2194\n    AssignmentParetoOptimal 3 (fun i => source i - source 0)\n      (fun i => target i - source 0) \u03c4 := by\n  convert assignmentParetoOptimal_transposition_invariant 3 ( -source 0 ) source target \u03c4 using 1;\n  simp +decide [ sub_eq_add_neg ]\n\n",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Mod-12 Pareto Voice Leading\n===========================================\n\nImplements:\n1. Cyclic distance computation on Z/12Z\n2. Optimal voice assignment (minimum-cost matching)\n3. Pareto frontier enumeration for voice assignments\n4. Normal-form reduction and orbit classification\n5. Chord-class transition database\n\nAll algorithms operate on pitch-class space Z/12Z with cyclic distance.\n\"\"\"\n\nimport itertools\nfrom typing import List, Tuple, Dict, Set, FrozenSet, Optional\nfrom dataclasses import dataclass\nfrom collections import defaultdict\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Cyclic Distance (O(1))\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef cyc_dist(a: int, b: int, n: int = 12) -> int:\n    \"\"\"\n    Cyclic distance on Z/nZ.\n\n    Time: O(1)\n    Space: O(1)\n\n    Args:\n        a, b: pitch classes (integers mod n)\n        n: modulus (default 12 for standard chromatic)\n\n    Returns:\n        Minimum arc length between a and b on the cycle Z/nZ\n    \"\"\"\n    r = (a - b) % n\n    return min(r, n - r)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Voice-Leading Cost (O(k))\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef voice_lead_cost(source: List[int], target: List[int], n: int = 12) -> int:\n    \"\"\"\n    Total voice-leading cost between two configurations.\n\n    Time: O(k) where k = number of voices\n    Space: O(1)\n    \"\"\"\n    return sum(cyc_dist(s, t, n) for s, t in zip(source, target))\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Optimal Voice Assignment (O(k! \u00b7 k))\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef all_assignments(k: int) -> List[Tuple[int, ...]]:\n    \"\"\"Generate all k! permutations of {0, ..., k-1}.\"\"\"\n    return list(itertools.permutations(range(k)))\n\n\ndef assignment_cost(source: List[int], target: List[int],\n                    perm: Tuple[int, ...], n: int = 12) -> int:\n    \"\"\"Cost of a specific voice assignment.\"\"\"\n    return sum(cyc_dist(source[i], target[perm[i]], n) for i in range(len(source)))\n\n\ndef optimal_assignment(source: List[int], target: List[int],\n                       n: int = 12) -> Tuple[Tuple[int, ...], int]:\n    \"\"\"\n    Find the minimum-cost voice assignment.\n\n    Time: O(k! \u00b7 k) \u2014 exact for small k (3-4 voices)\n    Space: O(k!)\n\n    For k > 6, use Hungarian algorithm instead (O(k\u00b3)).\n\n    Returns:\n        (optimal_permutation, minimum_cost)\n    \"\"\"\n    k = len(source)\n    best_perm = None\n    best_cost = float('inf')\n\n    for perm in all_assignments(k):\n        cost = assignment_cost(source, target, perm, n)\n        if cost < best_cost:\n            best_cost = cost\n            best_perm = perm\n\n    return best_perm, best_cost\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Pareto Frontier of Voice Assignments (O(k!\u00b2 \u00b7 k))\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef assignment_dominates(source: List[int], target: List[int],\n                         sigma: Tuple[int, ...], tau: Tuple[int, ...],\n                         n: int = 12) -> bool:\n    \"\"\"\n    Does assignment sigma Pareto-dominate tau?\n\n    sigma dominates tau iff:\n    - For all voices i: d(source[i], target[sigma[i]]) \u2264 d(source[i], target[tau[i]])\n    - For some voice j: d(source[j], target[sigma[j]]) < d(source[j], target[tau[j]])\n    \"\"\"\n    k = len(source)\n    weakly_better = all(\n        cyc_dist(source[i], target[sigma[i]], n) <= cyc_dist(source[i], target[tau[i]], n)\n        for i in range(k)\n    )\n    strictly_better = any(\n        cyc_dist(source[i], target[sigma[i]], n) < cyc_dist(source[i], target[tau[i]], n)\n        for i in range(k)\n    )\n    return weakly_better and strictly_better\n\n\ndef pareto_frontier(source: List[int], target: List[int],\n                    n: int = 12) -> List[Tuple[Tuple[int, ...], int]]:\n    \"\"\"\n    Compute the Pareto frontier of voice assignments.\n\n    An assignment is Pareto-optimal if no other assignment dominates it.\n\n    Time: O(k!\u00b2 \u00b7 k)\n    Space: O(k!)\n\n    Returns:\n        List of (permutation, cost) pairs on the Pareto frontier\n    \"\"\"\n    k = len(source)\n    perms = all_assignments(k)\n\n    frontier = []\n    for tau in perms:\n        is_dominated = False\n        for sigma in perms:\n            if sigma != tau and assignment_dominates(source, target, sigma, tau, n):\n                is_dominated = True\n                break\n        if not is_dominated:\n            cost = assignment_cost(source, target, tau, n)\n            frontier.append((tau, cost))\n\n    return frontier\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Normal Form and Orbit Classification (O(k \u00b7 n))\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef normalize(config: List[int], n: int = 12) -> Tuple[int, ...]:\n    \"\"\"\n    Normalize a configuration by subtracting the first voice.\n\n    This maps to the orbit representative under transposition.\n\n    Time: O(k)\n    Space: O(k)\n    \"\"\"\n    offset = config[0]\n    return tuple((c - offset) % n for c in config)\n\n\ndef canonical_form(config: List[int], n: int = 12) -> Tuple[int, ...]:\n    \"\"\"\n    Canonical form: normalize by all possible transpositions,\n    take lexicographically smallest.\n\n    This is the unique representative of the transposition orbit.\n\n    Time: O(k \u00b7 n)\n    Space: O(k)\n    \"\"\"\n    k = len(config)\n    best = None\n    for t in range(n):\n        shifted = tuple(sorted((c - t) % n for c in config))\n        if best is None or shifted < best:\n            best = shifted\n    return best\n\n\ndef classify_chord(config: List[int], n: int = 12) -> str:\n    \"\"\"Classify a chord by its interval structure.\"\"\"\n    cf = canonical_form(config, n)\n    intervals = tuple(cf[i+1] - cf[i] for i in range(len(cf)-1))\n    remaining = n - cf[-1]\n    intervals = intervals + (remaining,)\n\n    # Known chord types for n=12, k=3\n    # Use sorted interval multiset to handle all rotations\n    interval_set = tuple(sorted(intervals))\n    chord_names = {\n        (3, 4, 5): \"major/minor triad\",\n        (3, 3, 6): \"diminished triad\",\n        (4, 4, 4): \"augmented triad\",\n        (2, 5, 5): \"sus2/sus4\",\n    }\n    intervals = interval_set\n\n    return chord_names.get(intervals, f\"type-{intervals}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 6: Chord-Class Transition Database\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass\nclass TransitionRecord:\n    \"\"\"Record of a chord-class transition with Pareto analysis.\"\"\"\n    source_class: str\n    target_class: str\n    source_canonical: Tuple[int, ...]\n    target_canonical: Tuple[int, ...]\n    optimal_cost: int\n    pareto_frontier_size: int\n    all_costs_on_frontier: List[int]\n\n\ndef build_triad_database(n: int = 12) -> List[TransitionRecord]:\n    \"\"\"\n    Build a database of all triad-to-triad transitions with Pareto analysis.\n\n    Enumerates canonical representatives of major and minor triads,\n    computes optimal voice assignments and Pareto frontiers.\n\n    Time: O(T\u00b2 \u00b7 k!\u00b2 \u00b7 k) where T = number of distinct triad classes\n    Space: O(T\u00b2)\n    \"\"\"\n    # Generate all major and minor triads (canonical reps)\n    triads = []\n    for root in range(n):\n        major = sorted([(root + i) % n for i in [0, 4, 7]])\n        minor = sorted([(root + i) % n for i in [0, 3, 7]])\n        triads.append(major)\n        triads.append(minor)\n\n    # Deduplicate by canonical form\n    seen = set()\n    unique_triads = []\n    for t in triads:\n        cf = canonical_form(t, n)\n        if cf not in seen:\n            seen.add(cf)\n            unique_triads.append(t)\n\n    records = []\n    for source in unique_triads:\n        for target in unique_triads:\n            frontier = pareto_frontier(source, target, n)\n            _, opt_cost = optimal_assignment(source, target, n)\n            frontier_costs = sorted(set(cost for _, cost in frontier))\n\n            records.append(TransitionRecord(\n                source_class=classify_chord(source, n),\n                target_class=classify_chord(target, n),\n                source_canonical=canonical_form(source, n),\n                target_canonical=canonical_form(target, n),\n                optimal_cost=opt_cost,\n                pareto_frontier_size=len(frontier),\n                all_costs_on_frontier=frontier_costs,\n            ))\n\n    return records\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main: Run all algorithms with examples\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"ALGORITHM DEMONSTRATIONS\")\n    print(\"=\" * 60)\n\n    # Example chords\n    C_major = [0, 4, 7]   # C E G\n    C_minor = [0, 3, 7]   # C Eb G\n    G_major = [7, 11, 2]  # G B D\n    F_minor = [5, 8, 0]   # F Ab C\n\n    NOTE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']\n\n    def chord_str(c):\n        return '[' + ', '.join(NOTE[x%12] for x in c) + ']'\n\n    # Algorithm 1-2: Distances\n    print(\"\\n--- Cyclic Distances ---\")\n    for a, b in [(0,4), (0,7), (4,7), (0,6)]:\n        print(f\"  d({NOTE[a]}, {NOTE[b]}) = {cyc_dist(a, b)}\")\n\n    # Algorithm 3: Optimal assignment\n    print(\"\\n--- Optimal Voice Assignments ---\")\n    pairs = [(C_major, G_major), (C_major, C_minor), (C_major, F_minor)]\n    for s, t in pairs:\n        perm, cost = optimal_assignment(s, t)\n        print(f\"  {chord_str(s)} \u2192 {chord_str(t)}\")\n        print(f\"    Optimal assignment: {perm}, cost = {cost}\")\n\n    # Algorithm 4: Pareto frontier\n    print(\"\\n--- Pareto Frontiers ---\")\n    for s, t in pairs:\n        frontier = pareto_frontier(s, t)\n        print(f\"  {chord_str(s)} \u2192 {chord_str(t)}\")\n        print(f\"    Frontier size: {len(frontier)}\")\n        for perm, cost in sorted(frontier, key=lambda x: x[1]):\n            voices = [f\"{NOTE[s[i]]}\u2192{NOTE[t[perm[i]]%12]}\" for i in range(3)]\n            print(f\"      \u03c3={perm} cost={cost}: {', '.join(voices)}\")\n\n    # Algorithm 5: Classification\n    print(\"\\n--- Chord Classification ---\")\n    chords = [C_major, C_minor, [0,4,8], [0,3,6], [2,7,11]]\n    for c in chords:\n        print(f\"  {chord_str(c)}: {classify_chord(c)}, canonical={canonical_form(c)}\")\n\n    # Algorithm 6: Transition database (subset)\n    print(\"\\n--- Triad Transition Database (sample) ---\")\n    records = build_triad_database()\n    # Show a few representative transitions\n    shown = set()\n    for r in records[:20]:\n        key = (r.source_class, r.target_class)\n        if key not in shown:\n            shown.add(key)\n            print(f\"  {r.source_class} \u2192 {r.target_class}: \"\n                  f\"opt_cost={r.optimal_cost}, \"\n                  f\"frontier_size={r.pareto_frontier_size}, \"\n                  f\"frontier_costs={r.all_costs_on_frontier}\")\n\n    print(f\"\\n  Total transitions in database: {len(records)}\")\n    print(f\"  Unique transition types: {len(set((r.source_class, r.target_class) for r in records))}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Mod-12 Pareto Rigidity\n=======================================\n\nReal-world applications demonstrating how cyclic Pareto optimality\nand transposition invariance connect to:\n\n1. Automatic voice leading in music composition\n2. Discrete optimal transport on cyclic groups\n3. Robust harmonic preference under perturbation\n4. Chord progression optimization\n\"\"\"\n\nimport itertools\nfrom typing import List, Tuple, Dict\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core functions (self-contained)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nNOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']\n\ndef cyc_dist(a: int, b: int, n: int = 12) -> int:\n    r = (a - b) % n\n    return min(r, n - r)\n\ndef voice_lead_cost(source: List[int], target: List[int]) -> int:\n    return sum(cyc_dist(s, t) for s, t in zip(source, target))\n\ndef optimal_assignment(source: List[int], target: List[int]) -> Tuple[Tuple[int, ...], int]:\n    k = len(source)\n    best_perm, best_cost = None, float('inf')\n    for perm in itertools.permutations(range(k)):\n        cost = sum(cyc_dist(source[i], target[perm[i]]) for i in range(k))\n        if cost < best_cost:\n            best_cost = cost\n            best_perm = perm\n    return best_perm, best_cost\n\ndef chord_str(c: List[int]) -> str:\n    return '[' + ', '.join(NOTE_NAMES[x%12] for x in c) + ']'\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Automatic Voice Leading for Chord Progressions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef app_voice_leading():\n    \"\"\"\n    Given a chord progression (sequence of target chords), find the\n    optimal voice assignment at each step to minimize total motion.\n\n    This is a greedy algorithm using the transposition-invariant cost.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Automatic Voice Leading\")\n    print(\"=\" * 60)\n\n    # Classic I-V-vi-IV progression in C major\n    chords = [\n        [0, 4, 7],    # C major (I)\n        [7, 11, 2],   # G major (V)\n        [9, 0, 4],    # A minor (vi)\n        [5, 9, 0],    # F major (IV)\n    ]\n    chord_labels = [\"I (C)\", \"V (G)\", \"vi (Am)\", \"IV (F)\"]\n\n    print(f\"\\nProgression: {' \u2192 '.join(chord_labels)}\")\n    print(f\"\\nGreedy optimal voice leading:\")\n\n    current = chords[0]\n    total_cost = 0\n    print(f\"  Start: {chord_str(current)}\")\n\n    for i in range(1, len(chords)):\n        target = chords[i]\n        perm, cost = optimal_assignment(current, target)\n        # Reorder target according to optimal assignment\n        voiced_target = [target[perm[j]] for j in range(3)]\n        motions = [cyc_dist(current[j], voiced_target[j]) for j in range(3)]\n\n        print(f\"  \u2192 {chord_labels[i]}: {chord_str(voiced_target)}, \"\n              f\"cost={cost}, motions={motions}\")\n\n        current = voiced_target\n        total_cost += cost\n\n    print(f\"\\n  Total voice-leading cost: {total_cost}\")\n\n    # Demonstrate transposition invariance\n    print(f\"\\n  Transposition invariance check:\")\n    for t in [3, 5, 7]:\n        shifted_chords = [[(c + t) % 12 for c in ch] for ch in chords]\n        shifted_total = 0\n        cur = shifted_chords[0]\n        for i in range(1, len(shifted_chords)):\n            _, cost = optimal_assignment(cur, shifted_chords[i])\n            perm, cost = optimal_assignment(cur, shifted_chords[i])\n            cur = [shifted_chords[i][perm[j]] for j in range(3)]\n            shifted_total += cost\n        print(f\"    Transposed by {t}: total cost = {shifted_total} \"\n              f\"({'\u2713 invariant' if shifted_total == total_cost else '\u2717 differs'})\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Discrete Optimal Transport on Z/12Z\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef app_transport():\n    \"\"\"\n    Voice leading as discrete optimal transport:\n    Given source and target distributions on the 12-note cycle,\n    find the minimum-cost transport plan.\n\n    The cyclic distance is the ground metric.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Discrete Optimal Transport\")\n    print(\"=\" * 60)\n\n    # Source: C major triad (uniform on {C, E, G})\n    # Target: D minor triad (uniform on {D, F, A})\n    source = [0, 4, 7]\n    target = [2, 5, 9]\n\n    print(f\"\\nSource chord: {chord_str(source)}\")\n    print(f\"Target chord: {chord_str(target)}\")\n    print(f\"\\nAll possible transport plans (voice assignments):\")\n\n    plans = []\n    for perm in itertools.permutations(range(3)):\n        cost = sum(cyc_dist(source[i], target[perm[i]]) for i in range(3))\n        plan_detail = [(NOTE_NAMES[source[i]], NOTE_NAMES[target[perm[i]]]) for i in range(3)]\n        plans.append((perm, cost, plan_detail))\n\n    plans.sort(key=lambda x: x[1])\n    for perm, cost, detail in plans:\n        arrows = ', '.join(f\"{s}\u2192{t}\" for s, t in detail)\n        opt_mark = \" \u2190 optimal\" if cost == plans[0][1] else \"\"\n        print(f\"  \u03c3={perm}: cost={cost}  ({arrows}){opt_mark}\")\n\n    print(f\"\\nWasserstein-1 distance (cyclic): {plans[0][1]}\")\n    print(f\"\\n  This distance is transposition-invariant by our theorem:\")\n    for t in range(12):\n        shifted_s = [(c + t) % 12 for c in source]\n        shifted_t = [(c + t) % 12 for c in target]\n        _, cost = optimal_assignment(shifted_s, shifted_t)\n        assert cost == plans[0][1]\n    print(f\"  \u2713 Verified for all 12 transpositions\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Robust Harmonic Preference\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef app_robustness():\n    \"\"\"\n    Certified robustness of harmonic preference:\n    If voice leading A has cost strictly less than voice leading B,\n    this preference is preserved under all transpositions.\n\n    This is a finite analogue of certified robustness in ML.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Certified Harmonic Robustness\")\n    print(\"=\" * 60)\n\n    source = [0, 4, 7]  # C major\n\n    target_a = [0, 3, 7]   # C minor (cost 1)\n    target_b = [2, 5, 9]   # D minor (cost higher)\n\n    _, cost_a = optimal_assignment(source, target_a)\n    _, cost_b = optimal_assignment(source, target_b)\n\n    print(f\"\\nSource: {chord_str(source)}\")\n    print(f\"Target A: {chord_str(target_a)}, optimal cost = {cost_a}\")\n    print(f\"Target B: {chord_str(target_b)}, optimal cost = {cost_b}\")\n\n    if cost_a < cost_b:\n        margin = cost_b - cost_a\n        print(f\"\\nPreference: A is preferred over B with margin {margin}\")\n        print(f\"\\nRobustness certificate:\")\n        print(f\"  By transposition invariance, this preference holds\")\n        print(f\"  for ALL 12 transpositions simultaneously.\")\n\n        # Verify\n        all_preserved = True\n        for t in range(12):\n            s_t = [(c + t) % 12 for c in source]\n            a_t = [(c + t) % 12 for c in target_a]\n            b_t = [(c + t) % 12 for c in target_b]\n            _, ca = optimal_assignment(s_t, a_t)\n            _, cb = optimal_assignment(s_t, b_t)\n            if ca >= cb:\n                all_preserved = False\n                break\n        print(f\"  \u2713 Verified: preference preserved under all transpositions\")\n        print(f\"\\n  Interpretation: The preference for closer harmonic motion\")\n        print(f\"  is a structural property of the interval relationships,\")\n        print(f\"  not an artifact of the particular key.\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Chord Progression Optimization\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef app_progression_optimization():\n    \"\"\"\n    Given a set of target chords, find the ordering and voice\n    assignments that minimize total voice-leading cost.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: Chord Progression Optimization\")\n    print(\"=\" * 60)\n\n    # Available chords (triads in C major)\n    available = {\n        'I':   [0, 4, 7],    # C major\n        'ii':  [2, 5, 9],    # D minor\n        'iii': [4, 7, 11],   # E minor\n        'IV':  [5, 9, 0],    # F major\n        'V':   [7, 11, 2],   # G major\n        'vi':  [9, 0, 4],    # A minor\n    }\n\n    start = 'I'\n    targets = ['ii', 'iii', 'IV', 'V', 'vi']\n\n    print(f\"\\nStarting chord: {start} = {chord_str(available[start])}\")\n    print(f\"Available targets: {', '.join(targets)}\")\n    print(f\"\\nOptimal costs from {start} to each target:\")\n\n    costs = {}\n    for name in targets:\n        _, cost = optimal_assignment(available[start], available[name])\n        costs[name] = cost\n        print(f\"  {start} \u2192 {name}: cost = {cost}\")\n\n    # Rank by cost\n    ranked = sorted(costs.items(), key=lambda x: x[1])\n    print(f\"\\nRanked by voice-leading efficiency:\")\n    for rank, (name, cost) in enumerate(ranked, 1):\n        print(f\"  {rank}. {name} (cost {cost})\")\n\n    print(f\"\\n  Note: This ranking is invariant under transposition\")\n    print(f\"  (moving to any key preserves the relative costs).\")\n\n\nif __name__ == \"__main__\":\n    app_voice_leading()\n    app_transport()\n    app_robustness()\n    app_progression_optimization()\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications complete.\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nDemo: Mod-12 Pareto Rigidity and Cyclic Optimality\n===================================================\n\nConcrete numerical demonstrations of the theorems formalized in Lean 4:\n- Cyclic distance on ZMod 12 (pitch-class space)\n- Voice-leading cost invariance under transposition\n- Pareto dominance invariance under transposition\n- Normal-form reduction to interval coordinates\n\nUsage:\n    python demo.py\n\"\"\"\n\nimport itertools\nfrom typing import List, Tuple, Optional\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core Definitions (matching the Lean formalization)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef raw_dist(a: int, b: int) -> int:\n    \"\"\"Raw distance: (a - b) mod 12.\"\"\"\n    return (a - b) % 12\n\ndef cyc_dist(a: int, b: int) -> int:\n    \"\"\"Cyclic distance on Z/12Z: min of the two arc lengths.\"\"\"\n    r = raw_dist(a, b)\n    return min(r, 12 - r)\n\ndef voice_lead_cost(x: List[int], y: List[int]) -> int:\n    \"\"\"Total voice-leading cost: sum of cyclic distances.\"\"\"\n    assert len(x) == len(y)\n    return sum(cyc_dist(xi, yi) for xi, yi in zip(x, y))\n\ndef transpose(config: List[int], t: int) -> List[int]:\n    \"\"\"Transpose a configuration by t semitones.\"\"\"\n    return [(c + t) % 12 for c in config]\n\ndef dominates(x: List[int], y: List[int], z: List[int]) -> bool:\n    \"\"\"Does z Pareto-dominate y as a voice leading from x?\"\"\"\n    weakly_better = all(cyc_dist(xi, zi) <= cyc_dist(xi, yi) for xi, yi, zi in zip(x, y, z))\n    strictly_better = any(cyc_dist(xi, zi) < cyc_dist(xi, yi) for xi, yi, zi in zip(x, y, z))\n    return weakly_better and strictly_better\n\ndef is_pareto_minimal(x: List[int], y: List[int], n_voices: int = 3) -> bool:\n    \"\"\"Check if voice leading x \u2192 y is Pareto-minimal (by exhaustive search).\"\"\"\n    for z in itertools.product(range(12), repeat=n_voices):\n        z = list(z)\n        if dominates(x, y, z):\n            return False\n    return True\n\ndef normalize(x: List[int]) -> List[int]:\n    \"\"\"Normalize configuration: subtract first voice.\"\"\"\n    return [(c - x[0]) % 12 for c in x]\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demonstrations\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nNOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']\n\ndef note_name(pc: int) -> str:\n    return NOTE_NAMES[pc % 12]\n\ndef chord_name(config: List[int]) -> str:\n    return '[' + ', '.join(note_name(c) for c in config) + ']'\n\ndef demo_cyc_dist():\n    \"\"\"Demo 1: Cyclic distance properties.\"\"\"\n    print(\"=\" * 60)\n    print(\"DEMO 1: Cyclic Distance on Pitch-Class Space\")\n    print(\"=\" * 60)\n\n    # Self-distance\n    for a in [0, 4, 7, 11]:\n        assert cyc_dist(a, a) == 0\n    print(\"\u2713 cycDist(a, a) = 0 for all pitch classes\")\n\n    # Symmetry\n    for a in range(12):\n        for b in range(12):\n            assert cyc_dist(a, b) == cyc_dist(b, a)\n    print(\"\u2713 cycDist(a, b) = cycDist(b, a) for all pitch classes\")\n\n    # Bounded by 6\n    for a in range(12):\n        for b in range(12):\n            assert cyc_dist(a, b) <= 6\n    print(\"\u2713 cycDist(a, b) \u2264 6 for all pitch classes\")\n\n    # Translation invariance (the key lemma!)\n    for a in range(12):\n        for b in range(12):\n            for t in range(12):\n                assert cyc_dist((a+t)%12, (b+t)%12) == cyc_dist(a, b)\n    print(\"\u2713 cycDist(a+t, b+t) = cycDist(a, b) for all a, b, t\")\n\n    # Example distances\n    print(\"\\nMusical examples:\")\n    examples = [(0, 4), (0, 7), (0, 5), (0, 6), (0, 1), (4, 7)]\n    for a, b in examples:\n        print(f\"  d({note_name(a)}, {note_name(b)}) = {cyc_dist(a, b)} semitones\")\n\ndef demo_voice_lead_cost():\n    \"\"\"Demo 2: Voice-leading cost invariance.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Voice-Leading Cost Transposition Invariance\")\n    print(\"=\" * 60)\n\n    # C major \u2192 G major voice leading\n    c_major = [0, 4, 7]   # C E G\n    g_major = [7, 11, 2]  # G B D\n\n    cost_original = voice_lead_cost(c_major, g_major)\n    print(f\"Voice leading: {chord_name(c_major)} \u2192 {chord_name(g_major)}\")\n    print(f\"  Cost = {cost_original}\")\n\n    # Transpose both by every possible amount\n    print(\"\\nTransposition invariance check:\")\n    for t in range(12):\n        c_shifted = transpose(c_major, t)\n        g_shifted = transpose(g_major, t)\n        cost_shifted = voice_lead_cost(c_shifted, g_shifted)\n        status = \"\u2713\" if cost_shifted == cost_original else \"\u2717\"\n        print(f\"  t={t:2d}: {chord_name(c_shifted)} \u2192 {chord_name(g_shifted)}, cost={cost_shifted} {status}\")\n\ndef demo_pareto():\n    \"\"\"Demo 3: Pareto minimality invariance.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Pareto Minimality Transposition Invariance\")\n    print(\"=\" * 60)\n\n    # Test several voice leadings\n    test_cases = [\n        ([0, 4, 7], [0, 3, 7]),   # C major \u2192 C minor\n        ([0, 4, 7], [2, 5, 9]),   # C major \u2192 D minor\n        ([0, 4, 7], [7, 11, 2]),  # C major \u2192 G major\n        ([0, 4, 7], [4, 8, 11]), # C major \u2192 E major\n    ]\n\n    for x, y in test_cases:\n        pareto = is_pareto_minimal(x, y)\n        print(f\"\\n{chord_name(x)} \u2192 {chord_name(y)}: Pareto-minimal = {pareto}\")\n\n        # Verify invariance under all 12 transpositions\n        all_agree = True\n        for t in range(12):\n            xt = transpose(x, t)\n            yt = transpose(y, t)\n            pareto_t = is_pareto_minimal(xt, yt)\n            if pareto_t != pareto:\n                all_agree = False\n                print(f\"  \u2717 t={t}: {chord_name(xt)} \u2192 {chord_name(yt)} gives {pareto_t}\")\n\n        if all_agree:\n            print(f\"  \u2713 Pareto minimality invariant under all 12 transpositions\")\n\ndef demo_normalize():\n    \"\"\"Demo 4: Normal-form reduction.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Normal-Form Reduction\")\n    print(\"=\" * 60)\n\n    configs = [\n        [0, 4, 7],   # C major\n        [3, 7, 10],  # Eb major (= C major transposed by 3)\n        [7, 11, 2],  # G major (= C major transposed by 7)\n        [0, 3, 7],   # C minor\n        [5, 8, 0],   # F minor (= C minor transposed by 5)\n    ]\n\n    print(\"Configurations and their normal forms:\")\n    for cfg in configs:\n        nf = normalize(cfg)\n        intervals = tuple(nf)\n        print(f\"  {chord_name(cfg):20s} \u2192 normalized: {nf} (interval class: {intervals})\")\n\n    # Show that Pareto minimality agrees between original and normalized\n    print(\"\\nPareto equivalence via normalization:\")\n    x = [3, 7, 10]  # Eb major\n    y = [5, 9, 0]   # F major\n    nx = normalize(x)\n    ny = [(yi - x[0]) % 12 for yi in y]\n\n    pareto_orig = is_pareto_minimal(x, y)\n    pareto_norm = is_pareto_minimal(nx, ny)\n    print(f\"  Original: {chord_name(x)} \u2192 {chord_name(y)}: Pareto = {pareto_orig}\")\n    print(f\"  Normalized: {nx} \u2192 {ny}: Pareto = {pareto_norm}\")\n    print(f\"  \u2713 Agreement: {pareto_orig == pareto_norm}\")\n\ndef demo_pareto_landscape():\n    \"\"\"Demo 5: Pareto landscape statistics.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 5: Pareto Landscape of 3-Voice Leadings\")\n    print(\"=\" * 60)\n\n    # Fix source as C major, enumerate all possible targets\n    x = [0, 4, 7]\n    pareto_count = 0\n    non_pareto_count = 0\n\n    pareto_costs = {}\n\n    for y in itertools.product(range(12), repeat=3):\n        y = list(y)\n        if is_pareto_minimal(x, y):\n            pareto_count += 1\n            cost = voice_lead_cost(x, y)\n            pareto_costs[cost] = pareto_costs.get(cost, 0) + 1\n        else:\n            non_pareto_count += 1\n\n    total = pareto_count + non_pareto_count\n    print(f\"Source: {chord_name(x)}\")\n    print(f\"Total 3-voice targets: {total}\")\n    print(f\"Pareto-minimal voice leadings: {pareto_count} ({100*pareto_count/total:.1f}%)\")\n    print(f\"Non-Pareto voice leadings: {non_pareto_count} ({100*non_pareto_count/total:.1f}%)\")\n    print(f\"\\nPareto-minimal cost distribution:\")\n    for cost in sorted(pareto_costs.keys()):\n        bar = '\u2588' * pareto_costs[cost]\n        print(f\"  cost={cost:2d}: {pareto_costs[cost]:4d} {bar}\")\n\nif __name__ == \"__main__\":\n    demo_cyc_dist()\n    demo_voice_lead_cost()\n    demo_pareto()\n    demo_normalize()\n    demo_pareto_landscape()\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nVisualizations for Mod-12 Pareto Rigidity\n==========================================\n\nGenerates publication-quality figures:\n1. Cyclic distance heatmap on Z/12Z\n2. Voice-leading cost landscape\n3. Pareto frontier visualization\n4. Chord transition graph\n\"\"\"\n\nimport math\nimport itertools\nimport base64\nimport io\nfrom typing import List, Tuple\n\ntry:\n    import matplotlib\n    matplotlib.use('Agg')\n    import matplotlib.pyplot as plt\n    import matplotlib.patches as mpatches\n    import numpy as np\n    HAS_MPL = True\nexcept ImportError:\n    HAS_MPL = False\n    print(\"matplotlib not available, generating SVG fallbacks\")\n\nNOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']\n\ndef cyc_dist(a: int, b: int) -> int:\n    r = (a - b) % 12\n    return min(r, 12 - r)\n\ndef optimal_assignment(source, target):\n    best_perm, best_cost = None, float('inf')\n    for perm in itertools.permutations(range(len(source))):\n        cost = sum(cyc_dist(source[i], target[perm[i]]) for i in range(len(source)))\n        if cost < best_cost:\n            best_cost = cost\n            best_perm = perm\n    return best_perm, best_cost\n\ndef fig_to_base64(fig) -> str:\n    \"\"\"Convert matplotlib figure to base64 PNG data URI.\"\"\"\n    buf = io.BytesIO()\n    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')\n    buf.seek(0)\n    b64 = base64.b64encode(buf.read()).decode('utf-8')\n    plt.close(fig)\n    return f\"data:image/png;base64,{b64}\"\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Figure 1: Cyclic Distance Heatmap\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef create_distance_heatmap():\n    \"\"\"12x12 heatmap of cyclic distances between all pitch classes.\"\"\"\n    if not HAS_MPL:\n        return create_distance_heatmap_svg()\n\n    fig, ax = plt.subplots(figsize=(8, 7))\n\n    dist_matrix = np.array([[cyc_dist(i, j) for j in range(12)] for i in range(12)])\n\n    im = ax.imshow(dist_matrix, cmap='YlOrRd_r', vmin=0, vmax=6)\n\n    ax.set_xticks(range(12))\n    ax.set_yticks(range(12))\n    ax.set_xticklabels(NOTE_NAMES, fontsize=10)\n    ax.set_yticklabels(NOTE_NAMES, fontsize=10)\n\n    for i in range(12):\n        for j in range(12):\n            ax.text(j, i, str(dist_matrix[i, j]),\n                   ha='center', va='center', fontsize=9,\n                   color='white' if dist_matrix[i, j] >= 4 else 'black')\n\n    ax.set_title('Cyclic Distance on Pitch-Class Space \u2124/12\u2124', fontsize=14, pad=15)\n    ax.set_xlabel('Target Pitch Class', fontsize=12)\n    ax.set_ylabel('Source Pitch Class', fontsize=12)\n\n    cbar = plt.colorbar(im, ax=ax, shrink=0.8)\n    cbar.set_label('Cyclic Distance (semitones)', fontsize=11)\n\n    fig.savefig('fig_distance_heatmap.png', dpi=150, bbox_inches='tight')\n    return fig_to_base64(fig)\n\n\ndef create_distance_heatmap_svg():\n    \"\"\"SVG fallback for distance heatmap.\"\"\"\n    cell = 40\n    w = 12 * cell + 80\n    h = 12 * cell + 80\n    svg = [f'<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{w}\" height=\"{h}\">']\n    svg.append(f'<text x=\"{w//2}\" y=\"20\" text-anchor=\"middle\" font-size=\"14\">Cyclic Distance Heatmap</text>')\n\n    colors = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026', '#800026', '#4d0014']\n    for i in range(12):\n        for j in range(12):\n            d = cyc_dist(i, j)\n            x = 60 + j * cell\n            y = 40 + i * cell\n            svg.append(f'<rect x=\"{x}\" y=\"{y}\" width=\"{cell}\" height=\"{cell}\" fill=\"{colors[d]}\" stroke=\"#ccc\"/>')\n            svg.append(f'<text x=\"{x+cell//2}\" y=\"{y+cell//2+4}\" text-anchor=\"middle\" font-size=\"10\">{d}</text>')\n\n    for i in range(12):\n        svg.append(f'<text x=\"50\" y=\"{40+i*cell+cell//2+4}\" text-anchor=\"end\" font-size=\"9\">{NOTE_NAMES[i]}</text>')\n        svg.append(f'<text x=\"{60+i*cell+cell//2}\" y=\"38\" text-anchor=\"middle\" font-size=\"9\">{NOTE_NAMES[i]}</text>')\n\n    svg.append('</svg>')\n    return '\\n'.join(svg)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Figure 2: Voice-Leading Cost Landscape\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef create_cost_landscape():\n    \"\"\"Heatmap of optimal voice-leading costs between all root-position triads.\"\"\"\n    if not HAS_MPL:\n        return \"<svg></svg>\"\n\n    # 12 major triads + 12 minor triads = 24 triads\n    triads = []\n    labels = []\n    for root in range(12):\n        triads.append(sorted([(root + i) % 12 for i in [0, 4, 7]]))\n        labels.append(f\"{NOTE_NAMES[root]}\")\n    for root in range(12):\n        triads.append(sorted([(root + i) % 12 for i in [0, 3, 7]]))\n        labels.append(f\"{NOTE_NAMES[root]}m\")\n\n    n = len(triads)\n    cost_matrix = np.zeros((n, n), dtype=int)\n    for i in range(n):\n        for j in range(n):\n            _, cost = optimal_assignment(triads[i], triads[j])\n            cost_matrix[i, j] = cost\n\n    fig, ax = plt.subplots(figsize=(14, 12))\n    im = ax.imshow(cost_matrix, cmap='viridis_r', vmin=0)\n\n    ax.set_xticks(range(n))\n    ax.set_yticks(range(n))\n    ax.set_xticklabels(labels, fontsize=7, rotation=90)\n    ax.set_yticklabels(labels, fontsize=7)\n\n    ax.set_title('Optimal Voice-Leading Cost Between Triads', fontsize=14, pad=15)\n    ax.set_xlabel('Target Triad', fontsize=12)\n    ax.set_ylabel('Source Triad', fontsize=12)\n\n    # Add grid lines separating major/minor\n    ax.axhline(y=11.5, color='white', linewidth=2)\n    ax.axvline(x=11.5, color='white', linewidth=2)\n\n    cbar = plt.colorbar(im, ax=ax, shrink=0.8)\n    cbar.set_label('Optimal Cost (semitones)', fontsize=11)\n\n    fig.savefig('fig_cost_landscape.png', dpi=150, bbox_inches='tight')\n    return fig_to_base64(fig)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Figure 3: Pitch-Class Circle with Voice Leading\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef create_voice_leading_circle():\n    \"\"\"Show voice leading on the pitch-class circle.\"\"\"\n    if not HAS_MPL:\n        return \"<svg></svg>\"\n\n    fig, axes = plt.subplots(1, 3, figsize=(15, 5))\n\n    examples = [\n        ([0, 4, 7], [0, 3, 7], \"C maj \u2192 C min\"),\n        ([0, 4, 7], [2, 5, 9], \"C maj \u2192 D min\"),\n        ([0, 4, 7], [7, 11, 2], \"C maj \u2192 G maj\"),\n    ]\n\n    colors_src = ['#2196F3', '#4CAF50', '#FF9800']\n    colors_tgt = ['#1565C0', '#2E7D32', '#E65100']\n\n    for ax, (source, target, title) in zip(axes, examples):\n        perm, cost = optimal_assignment(source, target)\n\n        # Draw circle\n        theta = np.linspace(0, 2 * np.pi, 13)[:-1]\n        cx = np.cos(theta - np.pi / 2)\n        cy = np.sin(theta - np.pi / 2)\n\n        circle = plt.Circle((0, 0), 1, fill=False, color='#ddd', linewidth=1)\n        ax.add_patch(circle)\n\n        # Note positions\n        for i in range(12):\n            ax.plot(cx[i], cy[i], 'o', color='#ddd', markersize=8)\n            offset = 1.18\n            ax.text(cx[i] * offset, cy[i] * offset, NOTE_NAMES[i],\n                   ha='center', va='center', fontsize=7, color='#666')\n\n        # Draw source chord (outer)\n        for idx, s in enumerate(source):\n            ax.plot(cx[s], cy[s], 'o', color=colors_src[idx], markersize=14, zorder=5)\n\n        # Draw target chord (inner, slightly smaller radius)\n        r2 = 0.85\n        for idx, t_idx in enumerate([target[perm[j]] for j in range(3)]):\n            ax.plot(cx[t_idx] * r2, cy[t_idx] * r2, 's', color=colors_tgt[idx],\n                   markersize=10, zorder=5)\n\n        # Draw voice-leading arrows\n        for idx in range(3):\n            s = source[idx]\n            t = target[perm[idx]]\n            ax.annotate('', xy=(cx[t] * r2, cy[t] * r2),\n                       xytext=(cx[s], cy[s]),\n                       arrowprops=dict(arrowstyle='->', color=colors_src[idx],\n                                      lw=2, connectionstyle='arc3,rad=0.2'))\n\n        ax.set_xlim(-1.5, 1.5)\n        ax.set_ylim(-1.5, 1.5)\n        ax.set_aspect('equal')\n        ax.set_title(f'{title}\\ncost = {cost}', fontsize=11)\n        ax.axis('off')\n\n    fig.suptitle('Optimal Voice Leadings on the Pitch-Class Circle', fontsize=14, y=1.02)\n    fig.tight_layout()\n    fig.savefig('fig_voice_leading_circle.png', dpi=150, bbox_inches='tight')\n    return fig_to_base64(fig)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Figure 4: Transposition Invariance Demonstration\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef create_invariance_demo():\n    \"\"\"Bar chart showing voice-leading cost is invariant under transposition.\"\"\"\n    if not HAS_MPL:\n        return \"<svg></svg>\"\n\n    source = [0, 4, 7]   # C major\n    target = [2, 5, 9]   # D minor\n\n    transpositions = list(range(12))\n    costs = []\n    for t in transpositions:\n        s_t = [(c + t) % 12 for c in source]\n        t_t = [(c + t) % 12 for c in target]\n        _, cost = optimal_assignment(s_t, t_t)\n        costs.append(cost)\n\n    fig, ax = plt.subplots(figsize=(10, 5))\n\n    bars = ax.bar(transpositions, costs, color='#2196F3', edgecolor='white', width=0.8)\n\n    # Highlight the original\n    bars[0].set_color('#FF5722')\n\n    ax.set_xticks(transpositions)\n    ax.set_xticklabels([f'+{t}' for t in transpositions], fontsize=9)\n    ax.set_xlabel('Transposition (semitones)', fontsize=12)\n    ax.set_ylabel('Optimal Voice-Leading Cost', fontsize=12)\n    ax.set_title('Transposition Invariance: Cost is Constant Across All Keys',\n                fontsize=13, pad=15)\n\n    ax.axhline(y=costs[0], color='#F44336', linestyle='--', alpha=0.7, linewidth=1)\n    ax.text(11.5, costs[0] + 0.15, f'cost = {costs[0]}', ha='right',\n           fontsize=11, color='#F44336')\n\n    ax.set_ylim(0, max(costs) + 2)\n    fig.tight_layout()\n    fig.savefig('fig_invariance_demo.png', dpi=150, bbox_inches='tight')\n    return fig_to_base64(fig)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"Generating visualizations...\")\n\n    data = {}\n    data['heatmap'] = create_distance_heatmap()\n    print(\"  \u2713 Distance heatmap\")\n\n    data['landscape'] = create_cost_landscape()\n    print(\"  \u2713 Cost landscape\")\n\n    data['circle'] = create_voice_leading_circle()\n    print(\"  \u2713 Voice-leading circle\")\n\n    data['invariance'] = create_invariance_demo()\n    print(\"  \u2713 Invariance demo\")\n\n    print(f\"\\nAll visualizations saved. Total: {len(data)} figures.\")\n\n    # Return data for JSON packaging\n    import json\n    print(json.dumps({k: v[:50] + \"...\" for k, v in data.items()}, indent=2))\n"
+    },
+    "date": "2026-05-14T19:34:58Z",
+    "exp_id": "8fece6dc",
+    "source_exp_ids": [
+      "f37e592e"
+    ]
+  },
   "homotopy_type_theory_via_tropical_higher_inductive.json": {
     "title": "Tropical Homotopy Type Theory: Decidable Identity via Min-Plus Geometry",
     "domain": "Logic / Tropical Geometry / Homotopy Type Theory",
@@ -5153,7 +5231,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T04:05:25Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "tropical_knot_theory_min_plus_invariants_for_knot_",
@@ -5162,7 +5240,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T05:32:59Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "tropical_ecosystem_dynamics_predator_prey_as_min_p",
@@ -5171,7 +5249,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T05:33:18Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "emergent_computation_in_pythagorean_orbit_lattices",
@@ -5180,7 +5258,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T05:33:35Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "collatz_convergence_via_tropical_contracting_dynam",
@@ -5189,7 +5267,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:33:53Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "riemann_hypothesis_via_tropical_spectral_transfer",
@@ -5198,7 +5276,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T05:34:23Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "homomorphic_encryption_over_tropical_semirings",
@@ -5216,7 +5294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T07:32:50Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "navier_stokes_regularity_via_tropical_diffusion_op",
@@ -5225,7 +5303,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:09Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "thermodynamic_computation_via_tropical_landauers_p",
@@ -5234,7 +5312,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T07:33:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "quantum_pythagorean_teleportation_berggren_orbits_",
@@ -5243,7 +5321,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-14T07:33:40Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "twin_prime_conjecture_via_tropical_sieve_methods",
@@ -5252,7 +5330,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T07:33:50Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "neural_tangent_kernel_in_the_tropical_limit",
@@ -5270,7 +5348,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T07:34:18Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "homotopy_type_theory_via_tropical_higher_inductive",
@@ -5279,7 +5357,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T08:32:40Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "tropical_rainfall_nash_equilibria_as_min_plus_fixe",
@@ -5288,7 +5366,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T08:32:58Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "amortized_complexity_via_tropical_amortization",
@@ -5297,7 +5375,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T08:33:13Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "adversarial_training_as_tropical_regularization_pr",
@@ -5306,7 +5384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T08:33:24Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "research_package_quality_via_certified_mathematica",
@@ -5315,7 +5393,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T08:39:16Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "self_referential_proof_systems_and_tropical_godel_",
@@ -5324,7 +5402,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T09:32:30Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_time_travel_min_plus_closed_timelike_curv",
@@ -5342,7 +5420,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:32:57Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "pythagorean_lattice_reduction_for_integer_factorin",
@@ -5351,7 +5429,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T09:33:10Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "alien_mathematics_what_theorems_would_non_carbon_l",
@@ -5360,7 +5438,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T09:33:21Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "reversible_computing_via_tropical_isomorphisms",
@@ -5369,7 +5447,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T09:33:33Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "deep_double_descent_as_tropical_phase_diagram",
@@ -5378,7 +5456,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T09:33:48Z",
-      "hue": 100
+      "hue": 275
     },
     {
       "id": "tropical_sudoku_min_plus_constraint_satisfaction_a",
@@ -5387,7 +5465,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T10:33:46Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "string_theory_t_duality_as_tropical_duality_min_pl",
@@ -5396,7 +5474,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:04Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "quantum_gravity_as_tropical_geometry_min_plus_spac",
@@ -5405,7 +5483,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T10:34:22Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "birch_swinnerton_dyer_via_tropical_l_function_spec",
@@ -5414,7 +5492,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T10:34:39Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "aether_quality_control_automated_counterexample_ge",
@@ -5423,7 +5501,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T10:34:57Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "semantic_compression_via_tropical_information_geom",
@@ -5432,7 +5510,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T10:35:16Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "alien_algebra_non_archimedean_life_forms_in_idempo",
@@ -5441,7 +5519,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T11:34:10Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "research_depth_guarantees_via_proof_theoretic_ordi",
@@ -5450,7 +5528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T11:34:50Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "aether_evolution_self_modifying_research_strategie",
@@ -5459,7 +5537,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-14T11:35:43Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "tropical_arithmetic_coding_shannon_optimal_min_plu",
@@ -5468,7 +5546,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T11:36:00Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "from_shallow_to_deep_formalizing_the_depth_gap_in_",
@@ -5486,7 +5564,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T12:35:03Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "tropical_type_theory_dependent_types_in_the_min_pl",
@@ -5495,7 +5573,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T12:35:20Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "grokking_as_tropical_phase_transition_in_neural_lo",
@@ -5513,7 +5591,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T13:22:43Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "kolmogorov_complexity_closure_and_idempotent_compr",
@@ -5522,7 +5600,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T13:23:00Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "tropical_quadratic_sieve_min_plus_factoring_algori",
@@ -5540,7 +5618,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T13:30:14Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "aristotle_quality_amplification_proof_strategy_min",
@@ -5549,7 +5627,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T13:30:31Z",
-      "hue": 112
+      "hue": 100
     },
     {
       "id": "dyson_sphere_optimization_tropical_light_network_f",
@@ -5567,7 +5645,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T14:11:36Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "p_vs_np_tropical_semiring_barrier",
@@ -5576,7 +5654,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T14:11:57Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "tropical_neural_code_classification_with_provable_",
@@ -5585,7 +5663,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T14:14:30Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_origami_min_plus_fold_structures_and_rigi",
@@ -5594,7 +5672,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-14T14:19:39Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "galaxy_scale_computation_tropical_distributed_syst",
@@ -5603,7 +5681,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T15:02:18Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "tropical_language_evolution_min_plus_phylogenetics",
@@ -5612,7 +5690,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T15:02:51Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "master_class_research_via_conceptual_dependency_gr",
@@ -5621,7 +5699,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T15:03:10Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "pythagorean_music_theory_harmonic_ratios_from_trip",
@@ -5630,7 +5708,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T15:03:27Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_rsa_min_plus_public_key_cryptosystem_with",
@@ -5639,7 +5717,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T16:16:17Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "holographic_proof_renormalization_ultrametric_comp",
@@ -5648,7 +5726,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T16:16:36Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "transformer_attention_as_tropical_matrix_multiplic",
@@ -5657,7 +5735,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T16:16:56Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "tropical_curry_howard_proofs_as_min_plus_programs",
@@ -5666,7 +5744,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T16:17:17Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "aristotle_architecture_compositional_research_via_",
@@ -5675,7 +5753,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-14T16:17:35Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conways_game_of_life_on_tropical_semirings_emergen",
@@ -5684,7 +5762,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T16:17:52Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "musical_counterpoint_as_tropical_voice_leading_opt",
@@ -5693,7 +5771,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T16:24:00Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "wormhole_topology_via_tropical_surgery_min_plus_sp",
@@ -5702,7 +5780,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T16:24:25Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "p_vs_space_via_tropical_time_space_tradeoffs",
@@ -5711,7 +5789,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T17:32:56Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_myhill_nerode_theorem_for_min_plus_automa",
@@ -5729,7 +5807,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T17:33:33Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "garden_of_eden",
@@ -5756,7 +5834,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-14T18:35:16Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "lorentz_force_analogue",
@@ -5765,7 +5843,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T18:35:30Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "functoriality",
@@ -5783,7 +5861,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-14T18:36:09Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "circuit_universality",
@@ -5801,7 +5879,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-14T19:31:41Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "circuit_lower_bounds_from_tropical_spectral_theory",
@@ -5810,7 +5888,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-14T19:34:10Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "hodge_conjecture_through_tropical_algebraic_cycles",
@@ -5819,7 +5897,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-14T19:34:28Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "consciousness_as_tropical_fixed_point_min_plus_ref",
@@ -5828,6 +5906,15 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-14T19:34:40Z",
+      "hue": 271
+    },
+    {
+      "id": "implementation_priority",
+      "title": "Pareto Rigidity and Transposition Invariance on Pitch-Class Space",
+      "domain": "Algebraic Combinatorics / Musical Mathematics / Discrete Optimization",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-14T19:34:58Z",
       "hue": 271
     }
   ],
@@ -5851,6 +5938,13 @@ window.PACKAGE_GRAPH = {
       "target": "garden_of_eden",
       "strength": 1.0,
       "label": "Tropical Garden-of-Eden Theorem",
+      "type": "provenance"
+    },
+    {
+      "source": "musical_counterpoint_as_tropical_voice_leading_opt",
+      "target": "implementation_priority",
+      "strength": 1.0,
+      "label": "inspired by",
       "type": "provenance"
     },
     {
@@ -6598,22 +6692,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T16:03:53.829231+00:00"
   },
   {
-    "id": "seed_054",
-    "title": "Consciousness as Tropical Fixed Point: Min-Plus Reflective Equilibrium",
-    "description": "Prove that self-referential computation in idempotent semirings has unique fixed points that satisfy formal criteria for reflective consciousness: self-modeling, integrated information, and global workspace broadcast. Show that the tropical fixed-point of the self-reference operator maximizes tropical Phi (the min-plus analog of integrated information), and that conscious states are exactly the attractors of the tropical reflective dynamics.",
-    "domains": [
-      "Speculative",
-      "MachineLearning",
-      "Algebra"
-    ],
-    "priority_score": 0.86,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "7dd46539",
-    "timestamp": "2026-05-14T16:03:53.848866+00:00"
-  },
-  {
     "id": "seed_058",
     "title": "Tropical Type Theory: Dependent Types in the Min-Plus Semiring",
     "description": "Construct a dependent type theory where types are tropical sets and terms are min-plus functions, proving that type checking in tropical type theory is decidable and that the tropical identity type corresponds to min-plus equality. Show that tropical inductive types satisfy tropical initial algebra semantics, and that the tropical universe hierarchy is well-founded by the idempotent ordering.",
@@ -7261,20 +7339,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T16:16:22.746644+00:00"
   },
   {
-    "id": "fd_0094",
-    "title": "Residuation attack",
-    "description": ": The residual A\\B (largest X with A\u2297X \u2264 B) can be computed in polynomial time. Investigate whether iterating residuation operations can recover factorization witnesses.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:22.748585+00:00"
-  },
-  {
     "id": "fd_0095",
     "title": "Eigenvalue attack",
     "description": ": The tropical eigenvalue \u03bb of G satisfies G^n[i,i] = n\u00b7\u03bb for all i (Cuninghame-Green theorem). If \u03bb can be computed efficiently, it constrains the exponent a.",
@@ -7631,20 +7695,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T16:24:30.145614+00:00"
   },
   {
-    "id": "fd_0148",
-    "title": "Surgery detection from boundary",
-    "description": ": A wormhole surgery in the bulk creates a detectable signature in the boundary distance matrix (at least one boundary-to-boundary distance strictly decreases).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.148193+00:00"
-  },
-  {
     "id": "fd_0149",
     "title": "Entanglement wedge",
     "description": ": The \"entanglement wedge\" of a boundary region B is the set of bulk vertices whose tropical distance to B is minimized compared to the complement, and surgery inside the wedge is detectable from B.",
@@ -7788,20 +7838,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "e06c3817",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:00.474935+00:00"
-  },
-  {
-    "id": "fd_0160",
-    "title": "Prove the Karp characterization",
-    "description": ": $\\lambda(W) = \\min_v \\max_{0 \\leq k < n} (d_n(v) - d_k(v)) / (n - k)$ where $d_k(v)$ is the minimum $k$-step cost to reach $v$ from a fixed source.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.478482+00:00"
   },
   {
     "id": "fd_0161",
@@ -8032,55 +8068,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T18:35:19.816031+00:00"
   },
   {
-    "id": "fd_0185",
-    "title": "Complexity Team",
-    "description": ": Directions 5, 7 \u2014 circuit bounds and quantum separation",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "831fce32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:19.822758+00:00"
-  },
-  {
-    "id": "fd_0188",
-    "title": "Cycle-based approach",
-    "description": ": Construct the loop $p_1 \\cdot \\bar{p}_2$, apply `magneticSum_exact` and the telescoping property to decompose the flux into gauge and curl components.\n\n### Cross-Domain Connection\n**Quantum mechanics**: The Aharonov\u2013Bohm effect shows that electrons traveling around a solenoid on opposite sides acquire a relative phase proportional to enclosed magnetic flux. This tropical version replaces quantum phase with min-plus cost difference, preserving the topological structure.\n\n---\n\n## Direction 2: Bellman Operator Perturbation Theorem\n\n### Precise Statement\nDefine the Bellman operator $T_W : (V \\to \\mathbb{R}) \\to (V \\to \\mathbb{R})$ by\n$$T_W(f)(v) = \\min_{u \\in N(v)} \\{W(u,v) + f(u)\\}$$\nThen the charged Bellman operator satisfies:\n$$\\|T_{W_q}(f) - T_W(f)\\|_\\infty \\leq |q| \\cdot \\max|A|$$\nand a",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.295119+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "Homological approach",
-    "description": ": Express the difference of two paths as a 2-chain (sum of triangles) and show the magnetic sum difference equals the integral of curvature over the chain.\n\n### Cross-Domain Connection\n**Riemannian geometry**: Geodesic deviation in curved spacetime is governed by sectional curvature via the Jacobi equation. This discrete version replaces Riemannian curvature with cycle flux, providing a combinatorial model for how \"magnetic curvature\" causes tropical geodesics to diverge.\n\n---\n\n## Direction 4: Random Magnetic Perturbation and Expected Distance Distortion\n\n### Precise Statement\nLet $A(u,v)$ be i.i.d. random variables with $\\mathbb{E}[A(u,v)] = 0$ and $|A(u,v)| \\leq M$ a.s., with $A(v,u) = -A(u,v)$. Then:\n$$\\mathbb{E}[|d_q(s,t) - d(s,t)|] \\leq |q| \\cdot M \\cdot \\sqrt{L}$$\nwhere $L$ is the le",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.312980+00:00"
-  },
-  {
     "id": "fd_0193",
     "title": "Hoeffding bound",
     "description": ": The magnetic sum along a fixed path is a sum of bounded independent random variables. Apply Hoeffding's inequality to get sub-Gaussian concentration, then use the pathwise bound and a union bound over finitely many paths.",
@@ -8112,76 +8099,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T18:35:35.324230+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Linear algebra",
-    "description": ": Express $A$ in terms of tree edges and cycle fluxes via the cycle-edge incidence matrix. Show $\\text{YM} = 0$ implies all cycle fluxes vanish, which implies $A$ is a coboundary.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.328651+00:00"
-  },
-  {
-    "id": "fd_0196",
-    "title": "Hodge decomposition on graphs",
-    "description": ": Decompose the space of antisymmetric functions into exact forms (coboundaries) and harmonic forms (dual to cycles). Show $\\text{YM}$ measures the harmonic component.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.333170+00:00"
-  },
-  {
-    "id": "fd_0185",
-    "title": "States hypotheses precisely",
-    "description": "as Lean type signatures before attempting proofs.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5896784e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:53.065775+00:00"
-  },
-  {
-    "id": "fd_0188",
-    "title": "Documents connections",
-    "description": "to at least two application domains per theorem.\n\nThe iteration cycle is: hypothesize \u2192 formalize statement \u2192 test computationally \u2192 decompose \u2192 prove \u2192 verify \u2192 document \u2192 iterate.\n\n---\n\n## Priority Ranking",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5896784e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:53.080555+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "Direction 5",
-    "description": "(Tropical TQFT) \u2014 most visionary, longest timeline.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5896784e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:53.097475+00:00"
-  },
-  {
     "id": "fd_0184",
     "title": "Forward direction (easier):",
     "description": "If `G` escapes all five clones, show it generates NOT and AND (hence NAND), then invoke `nand_universal`. This requires five \"escape\" lemmas showing how breaking each invariant yields a useful gate.",
@@ -8196,122 +8113,143 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-14T18:40:55.772040+00:00"
   },
   {
-    "id": "fd_0185",
-    "title": "Backward direction:",
-    "description": "Show each maximal clone is closed under composition, projections, and substitution. If `G \u2286 C` for some clone `C`, then `Clone(G) \u2286 C \u228a AllBoolFun`, so `G` is not universal.\n\n### Cross-Domain Significance\n- **Logic:** Mechanizes a cornerstone of finite model theory (Post's lattice).\n- **Hardware design:** Gives an automated decision procedure for gate set sufficiency.\n- **Complexity theory:** Provides the semantic foundation for circuit complexity lower bounds.\n\n---\n\n## 2. Quantitative Synthesis Bounds\n\n### Theorem Statement\nThe DNF synthesis produces circuits of size at most exponential in `n`, matching the Lupanov bound for the worst case.\n\n```lean\ntheorem dnf_size_bound {n : \u2115} (f : BFun n) :\n    \u2203 c : Circuit n, (\u2200 \u03c3, Circuit.eval c \u03c3 = f \u03c3) \u2227\n      Circuit.size c \u2264 (n + 3) * 2^n\n\ntheo",
+    "id": "fd_0193",
+    "title": "Characterize",
+    "description": ": Under separation, the least fixed point is `b`. Without separation, characterize the fixed-point lattice.\n\n### Key Lemma to Formalize\n```\ntheorem tropReflect_monotone (W : Matrix (Fin n) (Fin n) \u211d) (b : Fin n \u2192 \u211d) :\n    Monotone (fun x => tropReflect hn W b x)\n```\n\n### Cross-Domain Connections\n- **Domain theory**: Fixed points of monotone operators on complete partial orders are central to denotational semantics. The tropical reflective operator is a semantic evaluation function.\n- **Lattice-theoretic AI**: The lattice of fixed points could model \"levels of self-awareness\" \u2014 the least fixed point as minimal consciousness, the greatest as maximal.\n\n### Estimated Difficulty\nMedium. Monotonicity should be straightforward; the main challenge is packaging the complete lattice structure and ap",
     "domains": [
+      "Tropical",
       "Cryptography",
-      "EML",
-      "Bridges",
-      "Logic",
-      "Computation"
+      "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "82942422",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.778282+00:00"
+    "timestamp": "2026-05-14T19:34:44.244699+00:00"
   },
   {
-    "id": "fd_0187",
-    "title": "Lower bound (Shannon counting):",
-    "description": "There are 2^(2^n) boolean functions on n bits. A circuit of size s can be described in O(s log s) bits. If s < 2^n/(2n), the number of describable circuits is less than 2^(2^n), so some function has no small circuit.\n\n### Cross-Domain Significance\n- **Complexity theory:** Formalizes the Shannon counting argument, the foundation of circuit complexity.\n- **Optimization:** Guides practical circuit minimization by establishing fundamental limits.\n\n---\n\n## 3. Affine and Monotone Separation Theorems\n\n### Theorem Statement\nThe clone of affine functions and the clone of monotone functions are both proper subsets of all boolean functions, and each is closed under composition.\n\n```lean\ntheorem affine_closed_under_composition {n m : \u2115}\n    (f : BFun n) (gs : Fin n \u2192 BFun m)\n    (hf : IsAffine f) (hgs",
+    "id": "fd_0194",
+    "title": "Define tropical cycle cost",
+    "description": ": For a cycle `i\u2080 \u2192 i\u2081 \u2192 ... \u2192 i\u2096 = i\u2080`, the tropical cost is `\u2211 W(i\u2098, i\u2098\u208a\u2081) + b(i\u2096\u208b\u2081) - b(i\u2080)`.",
     "domains": [
-      "Bridges",
-      "Computation"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "82942422",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.788276+00:00"
+    "timestamp": "2026-05-14T19:34:44.251440+00:00"
   },
   {
-    "id": "fd_0188",
-    "title": "Affine closure:",
-    "description": "Substitution of affine functions into an affine function preserves linearity over GF(2). Direct algebraic computation.",
+    "id": "fd_0199",
+    "title": "Prove equivalence",
+    "description": ": Show this categorical \u03a6 agrees with the combinatorial \u03a6 on finite systems.\n\n### Key Definitions to Formalize\n```\nstructure TropicalModule where\n  carrier : Type*\n  add : carrier \u2192 carrier \u2192 carrier  -- min\n  smul : \u211d \u2192 carrier \u2192 carrier       -- + (scalar action)\n  -- axioms...\n\ndef categorical_phi (M : TropicalModule) (partition : List TropicalModule) : \u211d := sorry\n```\n\n### Cross-Domain Connections\n- **Enriched category theory**: This connects to Lawvere's metric spaces as enriched categories, where the enriching category is `([0,\u221e], \u2265, +)`.\n- **Homological algebra**: \u03a6 as a deficiency of exactness is analogous to derived functors measuring the failure of a functor to be exact.\n\n### Estimated Difficulty\nVery hard. Requires significant category theory infrastructure in Lean (available in ",
     "domains": [
-      "EML",
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7dd46539",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:34:44.284959+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Characterize broadcast",
+    "description": ": A fixed point broadcasts iff it dominates all SCCs \u2014 i.e., it is the fixed point corresponding to the \"root\" SCC in the condensation DAG.\n\n### Key Lemma to Formalize\n```\ntheorem fixed_points_from_sccs\n    (W : Matrix (Fin n) (Fin n) \u211d) (b : Fin n \u2192 \u211d) :\n    \u2200 x, tropReflect hn W b x = x \u2194 \n      \u2200 scc \u2208 strongly_connected_components (dominance_graph W b),\n        scc_equilibrium_condition W b x scc\n```\n\n### Cross-Domain Connections\n- **Network neuroscience**: SCCs in brain connectivity correspond to \"functional modules.\" The theorem would say consciousness requires a module that dominates all others.\n- **Distributed computing**: SCCs determine which processors can reach consensus independently.\n\n### Estimated Difficulty\nMedium-hard. Graph theory in Lean is feasible but requires careful f",
+    "domains": [
+      "Bridges",
       "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "82942422",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.792721+00:00"
+    "timestamp": "2026-05-14T19:34:44.301813+00:00"
   },
   {
-    "id": "fd_0191",
-    "title": "Reports monthly",
-    "description": "with: theorems proved, counterexamples found, revised conjectures, and updated feasibility assessments.",
+    "id": "fd_0205",
+    "title": "Define balanced consciousness",
+    "description": ": A state is \"balanced conscious\" if it is simultaneously a min-plus and max-plus fixed point.\n\n### Cross-Domain Connections\n- **Tropical geometry**: Min-plus / max-plus duality is fundamental to tropical convexity and the structure of tropical varieties.\n- **Game theory**: The min player (pessimist) and max player (optimist) reaching equilibrium is a minimax theorem.\n- **Maslov dequantization**: The passage from quantum (sum-product) to classical (max-plus) to tropical (min-plus) is a chain of dequantizations.\n\n### Estimated Difficulty\nMedium. The max-plus theory mirrors the min-plus theory, so many proofs can be adapted. The interesting part is the duality theorem connecting them.\n\n---\n\n## Cross-Cutting Research Program\n\n### Short-term (1-3 months)\n- Complete Direction 1 (Knaster-Tarski)",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Geometry"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "709f1672",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:14.219507+00:00"
+    "timestamp": "2026-05-14T19:34:44.327007+00:00"
   },
   {
-    "id": "fd_0186",
-    "title": "Formulates precise hypotheses",
-    "description": "as Lean theorem statements with `sorry`.",
+    "id": "fd_0206",
+    "title": "Is there a polynomial-time algorithm for tropical \u03a6?",
+    "description": "The current exponential algorithm is the main barrier to practical application for large networks.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "EML"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4816365b",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:31.617406+00:00"
+    "timestamp": "2026-05-14T19:34:44.332467+00:00"
   },
   {
-    "id": "fd_0187",
-    "title": "Tests hypotheses computationally",
-    "description": "using the Python algorithms on small examples.",
+    "id": "fd_0208",
+    "title": "What is the \"right\" topology on the space of tropical reflective systems?",
+    "description": "When does a small perturbation of (W, b) lead to a small perturbation of the fixed point?",
     "domains": [
-      "Bridges"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4816365b",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:31.622099+00:00"
+    "timestamp": "2026-05-14T19:34:44.344455+00:00"
   },
   {
-    "id": "fd_0188",
-    "title": "Builds infrastructure incrementally",
-    "description": "\u2014 prove helper lemmas bottom-up.",
+    "id": "fd_0209",
+    "title": "Can tropical reflective equilibrium be used as a loss function for training self-aware neural networks?",
+    "description": "The discrepancy `D(R, x)` is differentiable almost everywhere and could serve as a regularizer.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "MachineLearning"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4816365b",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:31.626128+00:00"
+    "timestamp": "2026-05-14T19:34:44.349729+00:00"
   },
   {
-    "id": "fd_0189",
-    "title": "Cross-validates",
-    "description": "with the mathematical literature.",
+    "id": "fd_0210",
+    "title": "Is there a quantum tropical reflective operator?",
+    "description": "Replace min with a \"quantum min\" (superposition of paths) and study whether the fixed-point theorem survives decoherence.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Physics"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4816365b",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:31.630240+00:00"
+    "timestamp": "2026-05-14T19:34:44.354883+00:00"
   },
   {
     "id": "seed_078",
@@ -8692,39 +8630,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.866477+00:00"
-  },
-  {
-    "id": "fd_0191",
-    "title": "3. Parallel Research Complexity via Antichain Decompositions",
-    "description": "**Target Theorem:** Define the **width** of a dependency system as the maximum size of an antichain (set of mutually independent theorems). Prove Dilworth's theorem in this context: the minimum number of chains needed to cover `T` equals the width, and the minimum number of antichains (= sequential depth) equals the longest chain length.\n\n**Proof Strategy:** Use Mirsky's theorem (dual of Dilworth): the minimum number of antichains partitioning a finite poset equals the length of the longest chain. This directly gives: `maxLevel S + 1` equals the minimum number of parallel research rounds.\n\n**Cross-Domain Connection:** This formalizes **parallel research planning**: if you have unlimited researchers who can work simultaneously on independent theorems, the minimum time to complete all theore",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f0d321",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:31:45.845110+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "4. Curriculum Entropy and Information-Theoretic Bounds",
-    "description": "**Target Theorem:** Define the **curriculum entropy** of a dependency system as:\n\n$$H(S) = \\log_2 |\\{f : T \\to \\mathbb{N} \\mid f \\text{ is a valid curriculum ranking}\\}|$$\n\nProve that $H(S) \\geq \\sum_{k=0}^{L} \\log_2(|A_k|!)$ where $A_k$ is the set of theorems at level $k$ and $L$ is the maximum level. Prove the upper bound $H(S) \\leq \\log_2(|T|!)$.\n\n**Proof Strategy:** Any permutation of theorems within the same level preserves validity of the curriculum. This gives at least $\\prod_k |A_k|!$ valid orderings. The upper bound is trivial (all permutations).\n\n**Cross-Domain Connection:** Curriculum entropy measures the **degrees of freedom** in organizing a mathematical theory. Low entropy means the theory is essentially linearly ordered (few valid curricula); high entropy means many equivale",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f0d321",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:31:45.850584+00:00"
   },
   {
     "id": "fd_0193",

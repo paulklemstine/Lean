@@ -589,22 +589,6 @@
     "timestamp": "2026-05-14T16:03:53.829231+00:00"
   },
   {
-    "id": "seed_054",
-    "title": "Consciousness as Tropical Fixed Point: Min-Plus Reflective Equilibrium",
-    "description": "Prove that self-referential computation in idempotent semirings has unique fixed points that satisfy formal criteria for reflective consciousness: self-modeling, integrated information, and global workspace broadcast. Show that the tropical fixed-point of the self-reference operator maximizes tropical Phi (the min-plus analog of integrated information), and that conscious states are exactly the attractors of the tropical reflective dynamics.",
-    "domains": [
-      "Speculative",
-      "MachineLearning",
-      "Algebra"
-    ],
-    "priority_score": 0.86,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "7dd46539",
-    "timestamp": "2026-05-14T16:03:53.848866+00:00"
-  },
-  {
     "id": "seed_058",
     "title": "Tropical Type Theory: Dependent Types in the Min-Plus Semiring",
     "description": "Construct a dependent type theory where types are tropical sets and terms are min-plus functions, proving that type checking in tropical type theory is decidable and that the tropical identity type corresponds to min-plus equality. Show that tropical inductive types satisfy tropical initial algebra semantics, and that the tropical universe hierarchy is well-founded by the idempotent ordering.",
@@ -1252,20 +1236,6 @@
     "timestamp": "2026-05-14T16:16:22.746644+00:00"
   },
   {
-    "id": "fd_0094",
-    "title": "Residuation attack",
-    "description": ": The residual A\\B (largest X with A⊗X ≤ B) can be computed in polynomial time. Investigate whether iterating residuation operations can recover factorization witnesses.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:22.748585+00:00"
-  },
-  {
     "id": "fd_0095",
     "title": "Eigenvalue attack",
     "description": ": The tropical eigenvalue λ of G satisfies G^n[i,i] = n·λ for all i (Cuninghame-Green theorem). If λ can be computed efficiently, it constrains the exponent a.",
@@ -1622,20 +1592,6 @@
     "timestamp": "2026-05-14T16:24:30.145614+00:00"
   },
   {
-    "id": "fd_0148",
-    "title": "Surgery detection from boundary",
-    "description": ": A wormhole surgery in the bulk creates a detectable signature in the boundary distance matrix (at least one boundary-to-boundary distance strictly decreases).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.148193+00:00"
-  },
-  {
     "id": "fd_0149",
     "title": "Entanglement wedge",
     "description": ": The \"entanglement wedge\" of a boundary region B is the set of bulk vertices whose tropical distance to B is minimized compared to the complement, and surgery inside the wedge is detectable from B.",
@@ -1779,20 +1735,6 @@
     "source_exp_id": "e06c3817",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:00.474935+00:00"
-  },
-  {
-    "id": "fd_0160",
-    "title": "Prove the Karp characterization",
-    "description": ": $\\lambda(W) = \\min_v \\max_{0 \\leq k < n} (d_n(v) - d_k(v)) / (n - k)$ where $d_k(v)$ is the minimum $k$-step cost to reach $v$ from a fixed source.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:33:00.478482+00:00"
   },
   {
     "id": "fd_0161",
@@ -2023,55 +1965,6 @@
     "timestamp": "2026-05-14T18:35:19.816031+00:00"
   },
   {
-    "id": "fd_0185",
-    "title": "Complexity Team",
-    "description": ": Directions 5, 7 — circuit bounds and quantum separation",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "831fce32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:19.822758+00:00"
-  },
-  {
-    "id": "fd_0188",
-    "title": "Cycle-based approach",
-    "description": ": Construct the loop $p_1 \\cdot \\bar{p}_2$, apply `magneticSum_exact` and the telescoping property to decompose the flux into gauge and curl components.\n\n### Cross-Domain Connection\n**Quantum mechanics**: The Aharonov–Bohm effect shows that electrons traveling around a solenoid on opposite sides acquire a relative phase proportional to enclosed magnetic flux. This tropical version replaces quantum phase with min-plus cost difference, preserving the topological structure.\n\n---\n\n## Direction 2: Bellman Operator Perturbation Theorem\n\n### Precise Statement\nDefine the Bellman operator $T_W : (V \\to \\mathbb{R}) \\to (V \\to \\mathbb{R})$ by\n$$T_W(f)(v) = \\min_{u \\in N(v)} \\{W(u,v) + f(u)\\}$$\nThen the charged Bellman operator satisfies:\n$$\\|T_{W_q}(f) - T_W(f)\\|_\\infty \\leq |q| \\cdot \\max|A|$$\nand a",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.295119+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "Homological approach",
-    "description": ": Express the difference of two paths as a 2-chain (sum of triangles) and show the magnetic sum difference equals the integral of curvature over the chain.\n\n### Cross-Domain Connection\n**Riemannian geometry**: Geodesic deviation in curved spacetime is governed by sectional curvature via the Jacobi equation. This discrete version replaces Riemannian curvature with cycle flux, providing a combinatorial model for how \"magnetic curvature\" causes tropical geodesics to diverge.\n\n---\n\n## Direction 4: Random Magnetic Perturbation and Expected Distance Distortion\n\n### Precise Statement\nLet $A(u,v)$ be i.i.d. random variables with $\\mathbb{E}[A(u,v)] = 0$ and $|A(u,v)| \\leq M$ a.s., with $A(v,u) = -A(u,v)$. Then:\n$$\\mathbb{E}[|d_q(s,t) - d(s,t)|] \\leq |q| \\cdot M \\cdot \\sqrt{L}$$\nwhere $L$ is the le",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.312980+00:00"
-  },
-  {
     "id": "fd_0193",
     "title": "Hoeffding bound",
     "description": ": The magnetic sum along a fixed path is a sum of bounded independent random variables. Apply Hoeffding's inequality to get sub-Gaussian concentration, then use the pathwise bound and a union bound over finitely many paths.",
@@ -2103,76 +1996,6 @@
     "timestamp": "2026-05-14T18:35:35.324230+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Linear algebra",
-    "description": ": Express $A$ in terms of tree edges and cycle fluxes via the cycle-edge incidence matrix. Show $\\text{YM} = 0$ implies all cycle fluxes vanish, which implies $A$ is a coboundary.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.328651+00:00"
-  },
-  {
-    "id": "fd_0196",
-    "title": "Hodge decomposition on graphs",
-    "description": ": Decompose the space of antisymmetric functions into exact forms (coboundaries) and harmonic forms (dual to cycles). Show $\\text{YM}$ measures the harmonic component.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "497bcb15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:35.333170+00:00"
-  },
-  {
-    "id": "fd_0185",
-    "title": "States hypotheses precisely",
-    "description": "as Lean type signatures before attempting proofs.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5896784e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:53.065775+00:00"
-  },
-  {
-    "id": "fd_0188",
-    "title": "Documents connections",
-    "description": "to at least two application domains per theorem.\n\nThe iteration cycle is: hypothesize → formalize statement → test computationally → decompose → prove → verify → document → iterate.\n\n---\n\n## Priority Ranking",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5896784e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:53.080555+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "Direction 5",
-    "description": "(Tropical TQFT) — most visionary, longest timeline.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5896784e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:35:53.097475+00:00"
-  },
-  {
     "id": "fd_0184",
     "title": "Forward direction (easier):",
     "description": "If `G` escapes all five clones, show it generates NOT and AND (hence NAND), then invoke `nand_universal`. This requires five \"escape\" lemmas showing how breaking each invariant yields a useful gate.",
@@ -2187,122 +2010,143 @@
     "timestamp": "2026-05-14T18:40:55.772040+00:00"
   },
   {
-    "id": "fd_0185",
-    "title": "Backward direction:",
-    "description": "Show each maximal clone is closed under composition, projections, and substitution. If `G ⊆ C` for some clone `C`, then `Clone(G) ⊆ C ⊊ AllBoolFun`, so `G` is not universal.\n\n### Cross-Domain Significance\n- **Logic:** Mechanizes a cornerstone of finite model theory (Post's lattice).\n- **Hardware design:** Gives an automated decision procedure for gate set sufficiency.\n- **Complexity theory:** Provides the semantic foundation for circuit complexity lower bounds.\n\n---\n\n## 2. Quantitative Synthesis Bounds\n\n### Theorem Statement\nThe DNF synthesis produces circuits of size at most exponential in `n`, matching the Lupanov bound for the worst case.\n\n```lean\ntheorem dnf_size_bound {n : ℕ} (f : BFun n) :\n    ∃ c : Circuit n, (∀ σ, Circuit.eval c σ = f σ) ∧\n      Circuit.size c ≤ (n + 3) * 2^n\n\ntheo",
+    "id": "fd_0193",
+    "title": "Characterize",
+    "description": ": Under separation, the least fixed point is `b`. Without separation, characterize the fixed-point lattice.\n\n### Key Lemma to Formalize\n```\ntheorem tropReflect_monotone (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ) :\n    Monotone (fun x => tropReflect hn W b x)\n```\n\n### Cross-Domain Connections\n- **Domain theory**: Fixed points of monotone operators on complete partial orders are central to denotational semantics. The tropical reflective operator is a semantic evaluation function.\n- **Lattice-theoretic AI**: The lattice of fixed points could model \"levels of self-awareness\" — the least fixed point as minimal consciousness, the greatest as maximal.\n\n### Estimated Difficulty\nMedium. Monotonicity should be straightforward; the main challenge is packaging the complete lattice structure and ap",
     "domains": [
+      "Tropical",
       "Cryptography",
-      "EML",
-      "Bridges",
-      "Logic",
-      "Computation"
+      "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "82942422",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.778282+00:00"
+    "timestamp": "2026-05-14T19:34:44.244699+00:00"
   },
   {
-    "id": "fd_0187",
-    "title": "Lower bound (Shannon counting):",
-    "description": "There are 2^(2^n) boolean functions on n bits. A circuit of size s can be described in O(s log s) bits. If s < 2^n/(2n), the number of describable circuits is less than 2^(2^n), so some function has no small circuit.\n\n### Cross-Domain Significance\n- **Complexity theory:** Formalizes the Shannon counting argument, the foundation of circuit complexity.\n- **Optimization:** Guides practical circuit minimization by establishing fundamental limits.\n\n---\n\n## 3. Affine and Monotone Separation Theorems\n\n### Theorem Statement\nThe clone of affine functions and the clone of monotone functions are both proper subsets of all boolean functions, and each is closed under composition.\n\n```lean\ntheorem affine_closed_under_composition {n m : ℕ}\n    (f : BFun n) (gs : Fin n → BFun m)\n    (hf : IsAffine f) (hgs",
+    "id": "fd_0194",
+    "title": "Define tropical cycle cost",
+    "description": ": For a cycle `i₀ → i₁ → ... → iₖ = i₀`, the tropical cost is `∑ W(iₘ, iₘ₊₁) + b(iₖ₋₁) - b(i₀)`.",
     "domains": [
-      "Bridges",
-      "Computation"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "82942422",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.788276+00:00"
+    "timestamp": "2026-05-14T19:34:44.251440+00:00"
   },
   {
-    "id": "fd_0188",
-    "title": "Affine closure:",
-    "description": "Substitution of affine functions into an affine function preserves linearity over GF(2). Direct algebraic computation.",
+    "id": "fd_0199",
+    "title": "Prove equivalence",
+    "description": ": Show this categorical Φ agrees with the combinatorial Φ on finite systems.\n\n### Key Definitions to Formalize\n```\nstructure TropicalModule where\n  carrier : Type*\n  add : carrier → carrier → carrier  -- min\n  smul : ℝ → carrier → carrier       -- + (scalar action)\n  -- axioms...\n\ndef categorical_phi (M : TropicalModule) (partition : List TropicalModule) : ℝ := sorry\n```\n\n### Cross-Domain Connections\n- **Enriched category theory**: This connects to Lawvere's metric spaces as enriched categories, where the enriching category is `([0,∞], ≥, +)`.\n- **Homological algebra**: Φ as a deficiency of exactness is analogous to derived functors measuring the failure of a functor to be exact.\n\n### Estimated Difficulty\nVery hard. Requires significant category theory infrastructure in Lean (available in ",
     "domains": [
-      "EML",
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7dd46539",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T19:34:44.284959+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Characterize broadcast",
+    "description": ": A fixed point broadcasts iff it dominates all SCCs — i.e., it is the fixed point corresponding to the \"root\" SCC in the condensation DAG.\n\n### Key Lemma to Formalize\n```\ntheorem fixed_points_from_sccs\n    (W : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ) :\n    ∀ x, tropReflect hn W b x = x ↔ \n      ∀ scc ∈ strongly_connected_components (dominance_graph W b),\n        scc_equilibrium_condition W b x scc\n```\n\n### Cross-Domain Connections\n- **Network neuroscience**: SCCs in brain connectivity correspond to \"functional modules.\" The theorem would say consciousness requires a module that dominates all others.\n- **Distributed computing**: SCCs determine which processors can reach consensus independently.\n\n### Estimated Difficulty\nMedium-hard. Graph theory in Lean is feasible but requires careful f",
+    "domains": [
+      "Bridges",
       "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "82942422",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:40:55.792721+00:00"
+    "timestamp": "2026-05-14T19:34:44.301813+00:00"
   },
   {
-    "id": "fd_0191",
-    "title": "Reports monthly",
-    "description": "with: theorems proved, counterexamples found, revised conjectures, and updated feasibility assessments.",
+    "id": "fd_0205",
+    "title": "Define balanced consciousness",
+    "description": ": A state is \"balanced conscious\" if it is simultaneously a min-plus and max-plus fixed point.\n\n### Cross-Domain Connections\n- **Tropical geometry**: Min-plus / max-plus duality is fundamental to tropical convexity and the structure of tropical varieties.\n- **Game theory**: The min player (pessimist) and max player (optimist) reaching equilibrium is a minimax theorem.\n- **Maslov dequantization**: The passage from quantum (sum-product) to classical (max-plus) to tropical (min-plus) is a chain of dequantizations.\n\n### Estimated Difficulty\nMedium. The max-plus theory mirrors the min-plus theory, so many proofs can be adapted. The interesting part is the duality theorem connecting them.\n\n---\n\n## Cross-Cutting Research Program\n\n### Short-term (1-3 months)\n- Complete Direction 1 (Knaster-Tarski)",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Geometry"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "709f1672",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:14.219507+00:00"
+    "timestamp": "2026-05-14T19:34:44.327007+00:00"
   },
   {
-    "id": "fd_0186",
-    "title": "Formulates precise hypotheses",
-    "description": "as Lean theorem statements with `sorry`.",
+    "id": "fd_0206",
+    "title": "Is there a polynomial-time algorithm for tropical Φ?",
+    "description": "The current exponential algorithm is the main barrier to practical application for large networks.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "EML"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4816365b",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:31.617406+00:00"
+    "timestamp": "2026-05-14T19:34:44.332467+00:00"
   },
   {
-    "id": "fd_0187",
-    "title": "Tests hypotheses computationally",
-    "description": "using the Python algorithms on small examples.",
+    "id": "fd_0208",
+    "title": "What is the \"right\" topology on the space of tropical reflective systems?",
+    "description": "When does a small perturbation of (W, b) lead to a small perturbation of the fixed point?",
     "domains": [
-      "Bridges"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4816365b",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:31.622099+00:00"
+    "timestamp": "2026-05-14T19:34:44.344455+00:00"
   },
   {
-    "id": "fd_0188",
-    "title": "Builds infrastructure incrementally",
-    "description": "— prove helper lemmas bottom-up.",
+    "id": "fd_0209",
+    "title": "Can tropical reflective equilibrium be used as a loss function for training self-aware neural networks?",
+    "description": "The discrepancy `D(R, x)` is differentiable almost everywhere and could serve as a regularizer.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "MachineLearning"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4816365b",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:31.626128+00:00"
+    "timestamp": "2026-05-14T19:34:44.349729+00:00"
   },
   {
-    "id": "fd_0189",
-    "title": "Cross-validates",
-    "description": "with the mathematical literature.",
+    "id": "fd_0210",
+    "title": "Is there a quantum tropical reflective operator?",
+    "description": "Replace min with a \"quantum min\" (superposition of paths) and study whether the fixed-point theorem survives decoherence.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Physics"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4816365b",
+    "source_exp_id": "7dd46539",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:31.630240+00:00"
+    "timestamp": "2026-05-14T19:34:44.354883+00:00"
   },
   {
     "id": "seed_078",
@@ -2683,39 +2527,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.866477+00:00"
-  },
-  {
-    "id": "fd_0191",
-    "title": "3. Parallel Research Complexity via Antichain Decompositions",
-    "description": "**Target Theorem:** Define the **width** of a dependency system as the maximum size of an antichain (set of mutually independent theorems). Prove Dilworth's theorem in this context: the minimum number of chains needed to cover `T` equals the width, and the minimum number of antichains (= sequential depth) equals the longest chain length.\n\n**Proof Strategy:** Use Mirsky's theorem (dual of Dilworth): the minimum number of antichains partitioning a finite poset equals the length of the longest chain. This directly gives: `maxLevel S + 1` equals the minimum number of parallel research rounds.\n\n**Cross-Domain Connection:** This formalizes **parallel research planning**: if you have unlimited researchers who can work simultaneously on independent theorems, the minimum time to complete all theore",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f0d321",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:31:45.845110+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "4. Curriculum Entropy and Information-Theoretic Bounds",
-    "description": "**Target Theorem:** Define the **curriculum entropy** of a dependency system as:\n\n$$H(S) = \\log_2 |\\{f : T \\to \\mathbb{N} \\mid f \\text{ is a valid curriculum ranking}\\}|$$\n\nProve that $H(S) \\geq \\sum_{k=0}^{L} \\log_2(|A_k|!)$ where $A_k$ is the set of theorems at level $k$ and $L$ is the maximum level. Prove the upper bound $H(S) \\leq \\log_2(|T|!)$.\n\n**Proof Strategy:** Any permutation of theorems within the same level preserves validity of the curriculum. This gives at least $\\prod_k |A_k|!$ valid orderings. The upper bound is trivial (all permutations).\n\n**Cross-Domain Connection:** Curriculum entropy measures the **degrees of freedom** in organizing a mathematical theory. Low entropy means the theory is essentially linearly ordered (few valid curricula); high entropy means many equivale",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f0d321",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:31:45.850584+00:00"
   },
   {
     "id": "fd_0193",
