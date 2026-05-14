@@ -1,680 +1,666 @@
 #!/usr/bin/env python3
 """
-Applications of Tropical Self-Replication Theory
+Applications of Tropical Alien Algebra
 
-Demonstrates real-world applications of the theorems:
-1. Robust Distributed Consensus (CRDTs as tropical replicators)
-2. Abstract Interpretation Convergence Bounds
-3. Tropical Shortest-Path Stability
-4. Artificial Chemistry Simulation
+Real-world applications demonstrating the practical value of the theorems:
+1. Distributed consensus via max-tropical spreading
+2. Image processing: morphological erosion/dilation
+3. Shortest-path computation via min-plus dynamics
+4. Fault-tolerant computing with mutation bounds
 """
 
 import numpy as np
-from typing import List, Tuple, Dict
-from dataclasses import dataclass
+from typing import List, Tuple
 
 
-# ============================================================
-# Application 1: Conflict-Free Replicated Data Types (CRDTs)
-# ============================================================
+# ──────────────────────────────────────────────────────
+# Application 1: Distributed Consensus
+# ──────────────────────────────────────────────────────
 
-class GCounterCRDT:
+def distributed_max_consensus(
+    initial_values: np.ndarray,
+    adjacency: np.ndarray,
+    max_rounds: int = 100
+) -> Tuple[np.ndarray, int]:
     """
-    G-Counter: a grow-only counter CRDT.
-
-    Each node maintains a vector of counts. The merge operation
-    takes the componentwise maximum — a tropical (max-plus) operation.
-
-    The merge is idempotent, commutative, and associative,
-    making it a tropical replicator.
+    Distributed max-consensus on a network.
+    
+    Each node updates its value to the max of its own value and
+    all neighbors' values. This is a max-tropical CA on a graph.
+    
+    By the emergence theorem, this always converges to the global
+    maximum in at most diameter(graph) rounds.
+    
+    Args:
+        initial_values: Value at each node.
+        adjacency: Binary adjacency matrix (including self-loops).
+        max_rounds: Safety bound.
+    
+    Returns:
+        (final_values, num_rounds).
     """
-
-    def __init__(self, num_nodes: int):
-        self.num_nodes = num_nodes
-        self.counts = np.zeros(num_nodes, dtype=int)
-
-    def increment(self, node_id: int):
-        """Node increments its own counter."""
-        self.counts[node_id] += 1
-
-    def merge(self, other: 'GCounterCRDT') -> 'GCounterCRDT':
-        """Merge with another replica (tropical max operation)."""
-        result = GCounterCRDT(self.num_nodes)
-        result.counts = np.maximum(self.counts, other.counts)
-        return result
-
-    def value(self) -> int:
-        """Total count across all nodes."""
-        return int(self.counts.sum())
-
-    def __repr__(self):
-        return f"GCounter({self.counts}, total={self.value()})"
+    N = len(initial_values)
+    x = initial_values.copy()
+    
+    for round_num in range(max_rounds):
+        x_new = x.copy()
+        for i in range(N):
+            neighbors = np.where(adjacency[i] > 0)[0]
+            x_new[i] = max(x[j] for j in neighbors)
+        
+        if np.array_equal(x_new, x):
+            return x, round_num
+        x = x_new
+    
+    return x, max_rounds
 
 
-def demo_crdt_tropical_replication():
-    """
-    Demonstrate that CRDT merge is a tropical replicator.
-
-    The merge operation is:
-    - Idempotent: merge(x, x) = x
-    - Monotone: if x ≤ y componentwise, merge(x, z) ≤ merge(y, z)
-    - Commutative: merge(x, y) = merge(y, x)
-
-    This is exactly the attractor projection theorem in action:
-    the "fixed points" of the merge are the synchronized states.
-    """
+def demo_consensus():
+    """Demo: distributed consensus on a ring network."""
     print("=" * 60)
-    print("APPLICATION 1: CRDTs as Tropical Replicators")
+    print("APPLICATION 1: Distributed Max-Consensus")
     print("=" * 60)
-
-    # Create 3 replicas
-    r1 = GCounterCRDT(3)
-    r2 = GCounterCRDT(3)
-    r3 = GCounterCRDT(3)
-
-    # Each node increments independently
-    r1.increment(0); r1.increment(0); r1.increment(0)
-    r2.increment(1); r2.increment(1)
-    r3.increment(2)
-
-    print(f"\n  Replica 1: {r1}")
-    print(f"  Replica 2: {r2}")
-    print(f"  Replica 3: {r3}")
-
-    # Merge in different orders — result is the same (commutativity + associativity)
-    m12 = r1.merge(r2)
-    m123_a = m12.merge(r3)
-
-    m23 = r2.merge(r3)
-    m123_b = r1.merge(m23)
-
-    print(f"\n  Merge(r1, r2, r3) = {m123_a}")
-    print(f"  Merge(r1, Merge(r2, r3)) = {m123_b}")
-    print(f"  Order-independent: {np.array_equal(m123_a.counts, m123_b.counts)}")
-
-    # Verify idempotency of merge
-    m_self = m123_a.merge(m123_a)
-    print(f"\n  Merge(result, result) = {m_self}")
-    print(f"  Idempotent: {np.array_equal(m123_a.counts, m_self.counts)}")
-    print(f"\n  ✓ CRDT merge is a tropical replicator — synchronized state is a fixed point")
-    print()
+    
+    N = 8
+    # Ring adjacency (each node connected to self and two neighbors)
+    adj = np.zeros((N, N), dtype=int)
+    for i in range(N):
+        adj[i, i] = 1
+        adj[i, (i + 1) % N] = 1
+        adj[i, (i - 1) % N] = 1
+    
+    values = np.array([3, 7, 1, 9, 2, 5, 4, 8])
+    print(f"\n  Network: ring of {N} nodes")
+    print(f"  Initial values: {values}")
+    print(f"  Expected consensus: {np.max(values)} (global max)")
+    
+    final, rounds = distributed_max_consensus(values, adj)
+    print(f"  Final values: {final}")
+    print(f"  Rounds to consensus: {rounds}")
+    print(f"  Theoretical bound: diameter = {N // 2} = {N // 2}")
+    
+    # Test fault tolerance (mutation stability)
+    print(f"\n  --- Fault Tolerance Test ---")
+    for eps in [1, 3]:
+        noise = np.random.randint(-eps, eps + 1, size=N)
+        perturbed = np.clip(values + noise, 0, None)
+        final_orig, _ = distributed_max_consensus(values, adj)
+        final_pert, _ = distributed_max_consensus(perturbed, adj)
+        dist = np.max(np.abs(final_orig.astype(int) - final_pert.astype(int)))
+        print(f"  ε={eps}: |consensus_orig - consensus_pert| = {dist}")
 
 
-# ============================================================
-# Application 2: Abstract Interpretation Convergence
-# ============================================================
+# ──────────────────────────────────────────────────────
+# Application 2: Mathematical Morphology
+# ──────────────────────────────────────────────────────
 
-def demo_abstract_interpretation():
+def morphological_erosion(image: np.ndarray, iterations: int = 1) -> np.ndarray:
     """
-    Demonstrate convergence of abstract interpretation using
-    the bounded emergence theorem.
-
-    Model: interval abstraction of a simple loop
-      x = 0; while (x < 10) { x = x + 1; }
-
-    The abstract domain is intervals [a, b] ⊆ {0, ..., 15}.
-    The transfer function is monotone and inflationary.
+    Morphological erosion using min-tropical CA.
+    
+    This is the min-tropical CA applied to a 2D grid (image).
+    Each pixel takes the minimum of itself and its 4-neighbors.
+    
+    Properties (from our theorems):
+    - Monotone: darker input → darker output
+    - Anti-inflationary: erosion only darkens
+    - Converges to uniform min in bounded steps
+    
+    Args:
+        image: 2D grayscale image (values in [0, 255]).
+        iterations: Number of erosion steps.
+    
+    Returns:
+        Eroded image.
     """
+    result = image.copy()
+    for _ in range(iterations):
+        result = np.minimum.reduce([
+            result,
+            np.roll(result, 1, axis=0),
+            np.roll(result, -1, axis=0),
+            np.roll(result, 1, axis=1),
+            np.roll(result, -1, axis=1)
+        ])
+    return result
+
+
+def morphological_dilation(image: np.ndarray, iterations: int = 1) -> np.ndarray:
+    """
+    Morphological dilation using max-tropical CA.
+    
+    Properties (from our theorems):
+    - Monotone: brighter input → brighter output
+    - Inflationary: dilation only brightens
+    - Converges to uniform max in bounded steps
+    
+    Args:
+        image: 2D grayscale image.
+        iterations: Number of dilation steps.
+    
+    Returns:
+        Dilated image.
+    """
+    result = image.copy()
+    for _ in range(iterations):
+        result = np.maximum.reduce([
+            result,
+            np.roll(result, 1, axis=0),
+            np.roll(result, -1, axis=0),
+            np.roll(result, 1, axis=1),
+            np.roll(result, -1, axis=1)
+        ])
+    return result
+
+
+def demo_morphology():
+    """Demo: mathematical morphology as tropical CA."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Mathematical Morphology (Image Processing)")
     print("=" * 60)
-    print("APPLICATION 2: Abstract Interpretation Convergence")
-    print("=" * 60)
-
-    # Abstract state: (lower_bound, upper_bound) for variable x
-    # Domain: {0, ..., 15} × {0, ..., 15} with lower ≤ upper
-
-    def transfer(interval: Tuple[int, int]) -> Tuple[int, int]:
-        """
-        Transfer function for the loop body + widening.
-        Models: if x < 10, then x := x + 1
-        Uses widening to ensure convergence.
-        """
-        lo, hi = interval
-        # Loop body: x + 1
-        new_lo = min(lo + 1, 10)  # lower bound can only increase (up to 10)
-        new_hi = min(hi + 1, 15)  # upper bound can increase (bounded by 15)
-        # Join with loop entry
-        result_lo = min(lo, new_lo)
-        result_hi = max(hi, new_hi)
-        return (result_lo, result_hi)
-
-    # Start from x = 0 (interval [0, 0])
-    state = (0, 0)
-    print(f"\n  Initial abstract state: [{state[0]}, {state[1]}]")
-
-    for step in range(20):
-        new_state = transfer(state)
-        print(f"  Step {step + 1}: [{new_state[0]}, {new_state[1]}]")
-        if new_state == state:
-            print(f"\n  ✓ Abstract interpretation converged in {step + 1} steps")
-            print(f"  Fixed point: x ∈ [{state[0]}, {state[1]}]")
+    
+    # Create a simple test image: bright square on dark background
+    img = np.zeros((20, 20), dtype=int)
+    img[5:15, 5:15] = 200
+    img[8:12, 8:12] = 255
+    
+    print(f"\n  Image size: {img.shape}")
+    print(f"  Original range: [{img.min()}, {img.max()}]")
+    
+    # Apply erosion
+    eroded = morphological_erosion(img, iterations=2)
+    print(f"  After 2 erosions: [{eroded.min()}, {eroded.max()}]")
+    print(f"  Bright region shrunk (erosion removes boundaries)")
+    
+    # Apply dilation
+    dilated = morphological_dilation(img, iterations=2)
+    print(f"  After 2 dilations: [{dilated.min()}, {dilated.max()}]")
+    print(f"  Bright region expanded (dilation fills boundaries)")
+    
+    # Verify monotonicity
+    img2 = img + 10  # brighter version
+    print(f"\n  Monotonicity check:")
+    print(f"    img ≤ img+10: {np.all(img <= img2)}")
+    print(f"    erode(img) ≤ erode(img+10): {np.all(morphological_erosion(img) <= morphological_erosion(img2))}")
+    print(f"    dilate(img) ≤ dilate(img+10): {np.all(morphological_dilation(img) <= morphological_dilation(img2))}")
+    
+    # Convergence
+    print(f"\n  Convergence test (erosion):")
+    x = img.copy()
+    for step in range(30):
+        x_new = morphological_erosion(x)
+        if np.array_equal(x_new, x):
+            print(f"    Converged at step {step}: all pixels = {x.min()}")
             break
-        state = new_state
-    print()
+        x = x_new
 
 
-# ============================================================
-# Application 3: Tropical Shortest-Path Stability
-# ============================================================
+# ──────────────────────────────────────────────────────
+# Application 3: Shortest-Path Computation
+# ──────────────────────────────────────────────────────
 
-def demo_shortest_path_stability():
+def tropical_shortest_path(
+    dist_matrix: np.ndarray,
+    max_iterations: int = 100
+) -> Tuple[np.ndarray, int]:
     """
-    Demonstrate that shortest-path computation (tropical matrix power)
-    is stable under edge weight perturbations.
-
-    The min-plus matrix multiplication is a tropical operation,
-    and the all-pairs shortest path is its fixed point.
+    Compute all-pairs shortest paths using min-plus (tropical) 
+    matrix iteration.
+    
+    This is the Bellman-Ford/Floyd-Warshall algorithm viewed as
+    convergence of a monotone (decreasing) tropical dynamical system.
+    
+    By the emergence theorem on the dual order, this converges in
+    at most N steps for N nodes.
+    
+    Args:
+        dist_matrix: N×N distance matrix (use large values for no edge).
+    
+    Returns:
+        (shortest_paths, iterations).
     """
+    N = dist_matrix.shape[0]
+    D = dist_matrix.copy()
+    INF = 10**9
+    
+    for iteration in range(max_iterations):
+        D_new = D.copy()
+        for i in range(N):
+            for j in range(N):
+                for k in range(N):
+                    D_new[i, j] = min(D_new[i, j], D[i, k] + D[k, j])
+        
+        if np.array_equal(D_new, D):
+            return D, iteration
+        D = D_new
+    
+    return D, max_iterations
+
+
+def demo_shortest_path():
+    """Demo: shortest paths as tropical dynamics."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Shortest Paths via Tropical Dynamics")
     print("=" * 60)
-    print("APPLICATION 3: Shortest-Path Mutation Stability")
+    
+    INF = 10**9
+    # Simple graph: 5 nodes
+    N = 5
+    D = np.full((N, N), INF)
+    np.fill_diagonal(D, 0)
+    
+    edges = [(0, 1, 3), (1, 2, 2), (2, 3, 4), (3, 4, 1),
+             (0, 3, 10), (1, 4, 8), (0, 2, 7)]
+    for u, v, w in edges:
+        D[u, v] = w
+        D[v, u] = w
+    
+    print(f"\n  Graph: {N} nodes, {len(edges)} edges")
+    for u, v, w in edges:
+        print(f"    {u} -- {v} (weight {w})")
+    
+    result, iters = tropical_shortest_path(D)
+    print(f"\n  Shortest path matrix (converged in {iters} iterations):")
+    for i in range(N):
+        row = [str(result[i, j]) if result[i, j] < INF else "∞" for j in range(N)]
+        print(f"    {row}")
+    
+    print(f"\n  Shortest 0→4: {result[0, 4]} (via 0→1→2→3→4 = 3+2+4+1 = 10)")
+
+
+# ──────────────────────────────────────────────────────
+# Application 4: Fault-Tolerant Tropical Computing
+# ──────────────────────────────────────────────────────
+
+def demo_fault_tolerance():
+    """Demo: fault-tolerant computing via mutation bounds."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Fault-Tolerant Tropical Computing")
     print("=" * 60)
-
-    INF = 999
-
-    # Adjacency matrix (min-plus: 0 on diagonal, edge weights, INF for no edge)
-    W = np.array([
-        [0,   3,   INF, 7],
-        [INF, 0,   2,   INF],
-        [INF, INF, 0,   1],
-        [INF, INF, INF, 0]
-    ])
-
-    def tropical_mat_mul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
-        """Min-plus matrix multiplication."""
-        n = A.shape[0]
-        C = np.full((n, n), INF)
-        for i in range(n):
-            for j in range(n):
-                for k in range(n):
-                    C[i, j] = min(C[i, j], A[i, k] + B[k, j])
-        return C
-
-    # Compute shortest paths by repeated squaring
-    D = W.copy()
-    for _ in range(3):  # log2(4) iterations suffice
-        D = tropical_mat_mul(D, D)
-
-    print(f"\n  Original graph weights:")
-    print(f"  {W}")
-    print(f"\n  Shortest path distances:")
-    print(f"  {D}")
-
-    # Perturb one edge weight by ε = 1
-    eps = 1
-    W_mut = W.copy()
-    W_mut[0, 1] = W[0, 1] + eps  # increase edge 0→1 by 1
-
-    D_mut = W_mut.copy()
-    for _ in range(3):
-        D_mut = tropical_mat_mul(D_mut, D_mut)
-
-    print(f"\n  Perturbed graph (edge 0→1 increased by {eps}):")
-    print(f"  {W_mut}")
-    print(f"\n  Perturbed shortest paths:")
-    print(f"  {D_mut}")
-
-    max_change = np.max(np.abs(D.astype(int) - D_mut.astype(int)))
-    print(f"\n  Maximum change in shortest paths: {max_change}")
-    print(f"  Perturbation size: {eps}")
-    print(f"  Mutation amplified: {'No ✓' if max_change <= eps else 'Yes ✗'}")
-    print()
-
-
-# ============================================================
-# Application 4: Artificial Chemistry Simulation
-# ============================================================
-
-@dataclass
-class TropicalOrganism:
-    """A tropical organism: a fixed point of a replication rule."""
-    state: np.ndarray
-    rule_name: str
-    stability_radius: float
-
-    def __repr__(self):
-        return f"Organism({self.state}, rule={self.rule_name}, stability_ε={self.stability_radius})"
-
-
-def demo_artificial_chemistry():
-    """
-    Simulate a simple tropical artificial chemistry.
-
-    "Molecules" are vectors in ℕ^4.
-    "Reactions" are tropical replicator rules.
-    "Organisms" are the fixed points of these rules.
-    """
-    print("=" * 60)
-    print("APPLICATION 4: Tropical Artificial Chemistry")
-    print("=" * 60)
-
-    dim = 4
-
-    # Define three "reaction rules" (tropical replicators)
-    rules = {
-        "clamp[2,8]": lambda x: np.clip(x, 2, 8),
-        "floor_avg": lambda x: np.full_like(x, int(np.min(x))),  # min-projection
-        "threshold": lambda x: np.where(x >= 5, x, 5),  # inflate to ≥ 5
-    }
-
-    print(f"\n  State space: ℕ^{dim}")
-    print(f"  Number of reaction rules: {len(rules)}")
-
-    # Simulate "primordial soup": random initial states evolving under random rules
-    np.random.seed(42)
-    organisms_found = []
-
-    print(f"\n  Primordial soup simulation (20 random seeds):")
-    for trial in range(20):
-        seed = np.random.randint(0, 15, size=dim)
-        rule_name = list(rules.keys())[trial % len(rules)]
-        F = rules[rule_name]
-
-        # Iterate to fixed point
-        x = seed.copy()
-        for step in range(100):
-            x_next = F(x)
-            if np.array_equal(x_next, x):
-                break
-            x = x_next
-
-        # Verify it's a fixed point
-        is_fp = np.array_equal(F(x), x)
-
-        # Compute mutation stability radius
-        stability = float('inf')
-        for _ in range(100):
-            delta = np.random.randint(-3, 4, size=dim)
-            y = np.maximum(x + delta, 0)
-            d_in = np.max(np.abs(x.astype(int) - y.astype(int)))
-            d_out = np.max(np.abs(F(x).astype(int) - F(y).astype(int)))
-            if d_in > 0:
-                stability = min(stability, d_out / d_in)
-
-        org = TropicalOrganism(x, rule_name, round(stability, 2))
-        organisms_found.append(org)
-
-        if trial < 8:
-            print(f"    Seed {seed} → {org}")
-
-    print(f"    ... ({len(organisms_found)} organisms total)")
-
-    # Count unique organisms
-    unique_states = set(tuple(o.state) for o in organisms_found)
-    print(f"\n  Unique organisms: {len(unique_states)}")
-    print(f"  All fixed points: {all(np.array_equal(rules[o.rule_name](o.state), o.state) for o in organisms_found)}")
-    print(f"  All mutation-stable: {all(o.stability_radius <= 1.0 for o in organisms_found)}")
-    print()
+    
+    N = 10
+    
+    # Tropical "circuit": composition of min/max operations
+    # Simulates a robust computation that tolerates input noise
+    def tropical_circuit(x: np.ndarray) -> np.ndarray:
+        """A tropical circuit: robust sorting-like operation."""
+        # Layer 1: local min-max
+        y = np.zeros_like(x)
+        for i in range(N):
+            left = x[(i - 1) % N]
+            right = x[(i + 1) % N]
+            y[i] = max(min(x[i], left), min(x[i], right))
+        # Layer 2: clamp
+        return np.clip(y, 5, 95)
+    
+    # Test fault tolerance
+    print(f"\n  Tropical circuit on {N} cells")
+    print(f"  Testing fault tolerance (mutation non-amplification):")
+    
+    base_input = np.random.randint(0, 100, size=N)
+    base_output = tropical_circuit(base_input)
+    
+    print(f"\n  Base input:  {base_input}")
+    print(f"  Base output: {base_output}")
+    
+    for eps in [1, 2, 5, 10]:
+        max_output_error = 0
+        for _ in range(1000):
+            noise = np.random.randint(-eps, eps + 1, size=N)
+            noisy_input = np.clip(base_input + noise, 0, None)
+            
+            input_dist = np.max(np.abs(base_input.astype(int) - noisy_input.astype(int)))
+            if input_dist > eps:
+                continue
+            
+            noisy_output = tropical_circuit(noisy_input)
+            output_dist = np.max(np.abs(base_output.astype(int) - noisy_output.astype(int)))
+            max_output_error = max(max_output_error, output_dist)
+        
+        amplification = max_output_error / eps if eps > 0 else 0
+        print(f"  ε={eps:2d}: max output error = {max_output_error:3d}, "
+              f"amplification = {amplification:.2f}x")
 
 
 if __name__ == "__main__":
-    demo_crdt_tropical_replication()
-    demo_abstract_interpretation()
-    demo_shortest_path_stability()
-    demo_artificial_chemistry()
-    print("All applications demonstrated successfully! ✓")
-
-
-#!/usr/bin/env python3
-"""Build PACKAGE.json from all deliverables."""
-
-import json
-import os
-
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-# Read all content
-article = read_file('/workspace/request-project/ARTICLE.md')
-research_paper = read_file('/workspace/request-project/RESEARCH_PAPER.md')
-future_directions = read_file('/workspace/request-project/FUTURE_DIRECTIONS.md')
-lean_proofs = read_file('/workspace/request-project/Speculative/AlienAlgebra/Core.lean')
-demo_code = read_file('/workspace/request-project/demo.py')
-algorithms_code = read_file('/workspace/request-project/algorithms.py')
-applications_code = read_file('/workspace/request-project/applications.py')
-viz_code = read_file('/workspace/request-project/visualizations.py')
-
-# Read visualization data
-with open('/workspace/request-project/viz_data.json', 'r') as f:
-    viz_data = json.load(f)
-
-package = {
-    "title": "Alien Algebra: Non-Archimedean Life Forms in Idempotent Semirings",
-    "domain": "Tropical Geometry / Dynamical Systems / Artificial Chemistry",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Tropical Self-Replication Demos",
-            "code": demo_code
-        },
-        {
-            "name": "Real-World Applications",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "FindAttractor",
-            "pseudocode": "Input: Monotone inflationary map F, initial state x\nOutput: Fixed point F^k(x)\n\nstate <- x\nfor step = 1 to n*m + 1:\n    new_state <- F(state)\n    if new_state = state:\n        return state\n    state <- new_state\nreturn state",
-            "code": algorithms_code
-        },
-        {
-            "name": "TropicalMinCA",
-            "pseudocode": "Input: Initial state x on ring of N cells\nOutput: Sequence of states until stabilization\n\nfor each step:\n    for each cell i:\n        new[i] = min(x[i], x[(i+1) % N], x[(i-1) % N])\n    if new = x: break\n    x <- new\nreturn states",
-            "code": "# See algorithms.py TropicalMinCA class"
-        }
-    ],
-    "visualizations": [
-        {
-            "name": "Tropical CA Convergence Heatmap",
-            "data": viz_data["tropical_ca"]
-        },
-        {
-            "name": "Emergence Convergence Curves",
-            "data": viz_data["emergence"]
-        },
-        {
-            "name": "Mutation Stability Analysis",
-            "data": viz_data["mutation"]
-        },
-        {
-            "name": "Attractor Landscape Diagram",
-            "data": viz_data["attractors"]
-        }
-    ],
-    "lean_proofs": lean_proofs
-}
-
-with open('/workspace/request-project/PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print(f"PACKAGE.json created ({os.path.getsize('/workspace/request-project/PACKAGE.json')} bytes)")
+    np.random.seed(42)
+    demo_consensus()
+    demo_morphology()
+    demo_shortest_path()
+    demo_fault_tolerance()
+    print("\n" + "=" * 60)
+    print("All application demos completed!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Demonstration of Tropical Self-Replication Theorems
+Tropical Alien Algebra: Demos and Numerical Experiments
 
-Concrete numerical examples illustrating:
-1. Attractor Projection Theorem (idempotent image = fixed points)
-2. Bounded Emergence (monotone inflationary maps stabilize)
-3. Mutation Nonamplification (Lipschitz stability)
-4. Tropical Cellular Automaton convergence
-5. Composition of commuting idempotent maps
+Demonstrates the main theorems with concrete numerical examples:
+- Theorem A: Image = Fixed Points for idempotent functions
+- Theorem B: Convergence of monotone inflationary dynamics
+- Theorem C: Mutation non-amplification
+- Theorem D: Tropical cellular automata on 1D tori
 """
 
 import numpy as np
-from typing import Callable, List, Tuple, Optional
+from typing import Callable
 
+# ──────────────────────────────────────────────────────
+# Demo 1: Idempotent function — Image = Fixed Points
+# ──────────────────────────────────────────────────────
 
-def demo_attractor_projection():
-    """
-    Demonstrate: image of an idempotent function = its fixed-point set.
-
-    We construct an idempotent F on {0,1,2}^2 and verify:
-    - range(F) == {x : F(x) = x}
-    """
+def demo_idempotent_image():
+    """Demonstrate that the image of an idempotent function equals its fixed points."""
     print("=" * 60)
-    print("DEMO 1: Attractor Projection Theorem")
+    print("DEMO 1: Idempotent Function — Image = Fixed Points")
     print("=" * 60)
-
-    # Define an idempotent function on {0,1,2}^2
-    # F(x,y) = (min(x,y), min(x,y)) -- projects onto diagonal
-    def F(state: Tuple[int, int]) -> Tuple[int, int]:
-        return (min(state), min(state))
-
-    # Enumerate all states
-    states = [(x, y) for x in range(3) for y in range(3)]
-
-    # Verify idempotency
-    print("\nVerifying idempotency F(F(x)) = F(x):")
-    for s in states:
-        assert F(F(s)) == F(s), f"Failed for {s}"
-    print("  ✓ F is idempotent on all 9 states")
-
-    # Compute image
-    image = set(F(s) for s in states)
-    print(f"\nImage of F: {sorted(image)}")
-
+    
+    # Define an idempotent function on {0,...,9}^3
+    # F(x) = coordinatewise min with [5, 3, 7] then max with [2, 1, 4]
+    # This is a "clamping" operation, which is idempotent
+    def F(x: np.ndarray) -> np.ndarray:
+        return np.clip(x, [2, 1, 4], [5, 3, 7])
+    
+    # Verify idempotence: F(F(x)) == F(x) for random inputs
+    print("\nVerifying idempotence on 1000 random inputs...")
+    all_idempotent = True
+    for _ in range(1000):
+        x = np.random.randint(0, 10, size=3)
+        if not np.array_equal(F(F(x)), F(x)):
+            all_idempotent = False
+            break
+    print(f"  Idempotence verified: {all_idempotent}")
+    
+    # Compute the image by exhaustive enumeration
+    image = set()
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                x = np.array([a, b, c])
+                y = F(x)
+                image.add(tuple(y))
+    
     # Compute fixed points
-    fixed = set(s for s in states if F(s) == s)
-    print(f"Fixed points: {sorted(fixed)}")
+    fixed_points = set()
+    for a in range(10):
+        for b in range(10):
+            for c in range(10):
+                x = np.array([a, b, c])
+                if np.array_equal(F(x), x):
+                    fixed_points.add(tuple(x))
+    
+    print(f"\n  |Image| = {len(image)}")
+    print(f"  |Fixed Points| = {len(fixed_points)}")
+    print(f"  Image == Fixed Points: {image == fixed_points}")
+    print(f"\n  Sample fixed points: {list(fixed_points)[:5]}")
+    print(f"  These are vectors with coords in [2,5]×[1,3]×[4,7]")
+    print(f"  Expected: 4 × 3 × 4 = {4*3*4} elements")
 
-    # Verify equality
-    assert image == fixed
-    print("\n  ✓ Image = Fixed points (Attractor Projection Theorem verified)")
-    print()
 
+# ──────────────────────────────────────────────────────
+# Demo 2: Monotone inflationary convergence
+# ──────────────────────────────────────────────────────
 
-def demo_bounded_emergence():
-    """
-    Demonstrate: monotone inflationary F on Fin(n) -> Fin(m+1)
-    stabilizes in at most n*m + 1 steps.
-    """
+def demo_convergence():
+    """Demonstrate that monotone inflationary maps converge uniformly."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Monotone Inflationary Convergence")
     print("=" * 60)
-    print("DEMO 2: Bounded Emergence Theorem")
-    print("=" * 60)
-
-    n, m = 4, 5  # 4-dimensional, values in {0,...,5}
-    bound = n * m + 1
-    print(f"\nState space: {{0,...,{m}}}^{n}")
-    print(f"Theoretical bound: {bound} steps")
-
-    # Monotone inflationary map: increment each coordinate by 1 (capped at m)
+    
+    N = 8  # dimension
+    M = 5  # max value
+    
+    # Define F on {0,...,M}^N: F(x)_i = min(x_i + 1, M)
+    # This is monotone and inflationary
     def F(x: np.ndarray) -> np.ndarray:
-        return np.minimum(x + 1, m)
-
-    # Run from various seeds
-    np.random.seed(42)
-    max_steps_seen = 0
-
-    for trial in range(10):
-        x = np.random.randint(0, m + 1, size=n)
-        seed = x.copy()
+        return np.minimum(x + 1, M)
+    
+    print(f"\n  State space: {{0,...,{M}}}^{N}")
+    print(f"  F(x)_i = min(x_i + 1, {M})")
+    print(f"  Theoretical max convergence steps: {N * M}")
+    
+    # Test convergence from several initial states
+    results = []
+    for trial in range(5):
+        x0 = np.random.randint(0, M + 1, size=N)
+        x = x0.copy()
         steps = 0
-        for k in range(bound + 1):
-            x_next = F(x)
-            if np.array_equal(x_next, x):
-                steps = k
-                break
-            x = x_next
-        else:
-            steps = bound + 1
-
-        max_steps_seen = max(max_steps_seen, steps)
-        print(f"  Seed {seed} → fixed point {x} in {steps} steps")
-
-    print(f"\n  Max steps observed: {max_steps_seen} (bound: {bound})")
-    print(f"  ✓ All orbits stabilized within the bound")
-    print()
+        while not np.array_equal(F(x), x):
+            x = F(x)
+            steps += 1
+        results.append((x0, x, steps))
+    
+    print(f"\n  {'Initial':30s} {'Fixed Point':30s} {'Steps':>5s}")
+    print("  " + "-" * 67)
+    for x0, xf, s in results:
+        print(f"  {str(x0):30s} {str(xf):30s} {s:5d}")
+    
+    print(f"\n  All converge to [{M}]*{N} in at most {M} steps (= max value)")
+    print(f"  Uniform bound confirmed: max steps = {max(s for _, _, s in results)}")
 
 
-def demo_mutation_stability():
-    """
-    Demonstrate: Lipschitz idempotent maps preserve mutation bounds.
-    """
+# ──────────────────────────────────────────────────────
+# Demo 3: Mutation non-amplification
+# ──────────────────────────────────────────────────────
+
+def demo_mutation():
+    """Demonstrate that Lipschitz-1 idempotent maps don't amplify mutations."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Mutation Non-Amplification")
     print("=" * 60)
-    print("DEMO 3: Mutation Nonamplification")
-    print("=" * 60)
-
-    n = 5  # dimension
-
-    # Idempotent Lipschitz map: coordinate-wise clamp to [1, 8]
+    
+    N = 10
+    
+    # Idempotent, Lipschitz-1 function: coordinatewise clamp
+    lo = np.array([2, 0, 3, 1, 4, 2, 0, 3, 1, 5])
+    hi = np.array([8, 6, 9, 7, 8, 6, 4, 7, 5, 9])
+    
     def F(x: np.ndarray) -> np.ndarray:
-        return np.clip(x, 1, 8)
-
-    # Verify idempotency
-    for _ in range(100):
-        x = np.random.randint(0, 15, size=n)
-        assert np.array_equal(F(F(x)), F(x))
-
-    print(f"\n  ✓ F is idempotent (verified on 100 random inputs)")
-
-    # Test mutation nonamplification
-    print("\n  Testing mutation stability:")
-    for eps in [1, 2, 3, 5]:
-        violations = 0
+        return np.clip(x, lo, hi)
+    
+    print(f"\n  F = coordinatewise clamp to [{lo}, {hi}]")
+    print(f"  F is idempotent (clamp is idempotent)")
+    print(f"  F is Lipschitz-1 (clamp contracts distances)")
+    
+    for eps in [1, 3, 5, 10]:
+        print(f"\n  Testing ε = {eps}:")
+        max_output_dist = 0
         for _ in range(1000):
-            x = np.random.randint(0, 15, size=n)
-            y = x + np.random.randint(-eps, eps + 1, size=n)
-            y = np.maximum(y, 0)  # keep non-negative
+            x = np.random.randint(0, 20, size=N)
+            noise = np.random.randint(-eps, eps + 1, size=N)
+            y = np.clip(x + noise, 0, None)  # ensure non-negative
+            
+            # Ensure input distance ≤ eps
+            input_dist = np.max(np.abs(x.astype(int) - y.astype(int)))
+            if input_dist > eps:
+                continue
+            
+            output_dist = np.max(np.abs(F(x).astype(int) - F(y).astype(int)))
+            max_output_dist = max(max_output_dist, output_dist)
+        
+        print(f"    Max d∞(F(x), F(y)) over 1000 trials: {max_output_dist}")
+        print(f"    Bound ε = {eps}: {'✓ satisfied' if max_output_dist <= eps else '✗ violated'}")
+        
+        # Verify fixed-point property
+        x_sample = np.random.randint(0, 20, size=N)
+        fx = F(x_sample)
+        print(f"    F(F(x)) == F(x): {np.array_equal(F(fx), fx)}")
 
-            d_input = np.max(np.abs(x.astype(int) - y.astype(int)))
-            d_output = np.max(np.abs(F(x).astype(int) - F(y).astype(int)))
 
-            if d_output > d_input:
-                violations += 1
-
-        print(f"    ε={eps}: {violations}/1000 violations "
-              f"({'✓ stable' if violations == 0 else '✗ unstable'})")
-
-    print()
-
+# ──────────────────────────────────────────────────────
+# Demo 4: Tropical Cellular Automata
+# ──────────────────────────────────────────────────────
 
 def demo_tropical_ca():
-    """
-    Demonstrate: Tropical min-CA convergence on a ring.
-    """
+    """Demonstrate tropical CA convergence on a 1D torus."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Tropical Cellular Automata on 1D Torus")
     print("=" * 60)
-    print("DEMO 4: Tropical Cellular Automaton")
-    print("=" * 60)
-
-    def trop_ca_step(x: np.ndarray) -> np.ndarray:
-        """One step of the tropical min-CA on a ring."""
-        N = len(x)
-        result = np.zeros_like(x)
-        for i in range(N):
-            result[i] = min(x[i], x[(i + 1) % N], x[(i - 1) % N])
-        return result
-
-    # Example: ring of 10 cells
-    N = 10
-    np.random.seed(123)
+    
+    N = 12
+    
+    def min_ca(x: np.ndarray) -> np.ndarray:
+        """Min-tropical CA: each cell takes min of self and neighbors."""
+        return np.minimum(x, np.minimum(np.roll(x, 1), np.roll(x, -1)))
+    
+    def max_ca(x: np.ndarray) -> np.ndarray:
+        """Max-tropical CA: each cell takes max of self and neighbors."""
+        return np.maximum(x, np.maximum(np.roll(x, 1), np.roll(x, -1)))
+    
+    # Min CA demo
+    print(f"\n  --- Min-Tropical CA (N={N}) ---")
     x0 = np.random.randint(0, 50, size=N)
-    print(f"\n  Ring size: {N}")
-    print(f"  Initial state: {x0}")
-    print(f"  Global minimum: {x0.min()}")
-
+    print(f"  Initial: {x0}")
     x = x0.copy()
-    for step in range(N + 2):
-        x_next = trop_ca_step(x)
-        print(f"  Step {step + 1}: {x_next}")
-        if np.array_equal(x_next, x):
-            print(f"\n  ✓ Stabilized at step {step + 1}!")
-            print(f"  Fixed point: all cells = {x[0]} (global minimum)")
+    for step in range(N):
+        x_new = min_ca(x)
+        if np.array_equal(x_new, x):
+            print(f"  Converged at step {step}!")
             break
-        x = x_next
+        x = x_new
+        print(f"  Step {step+1}: {x}")
+    print(f"  Fixed point: all cells = {np.min(x0)} (global minimum)")
+    
+    # Max CA demo
+    print(f"\n  --- Max-Tropical CA (N={N}) ---")
+    x0 = np.random.randint(0, 50, size=N)
+    print(f"  Initial: {x0}")
+    x = x0.copy()
+    for step in range(N):
+        x_new = max_ca(x)
+        if np.array_equal(x_new, x):
+            print(f"  Converged at step {step}!")
+            break
+        x = x_new
+        print(f"  Step {step+1}: {x}")
+    print(f"  Fixed point: all cells = {np.max(x0)} (global maximum)")
+    
+    # Verify inflationarity of max CA
+    print(f"\n  --- Inflationarity Check (Max CA) ---")
+    x = np.random.randint(0, 100, size=N)
+    y = max_ca(x)
+    print(f"  x = {x}")
+    print(f"  max_ca(x) = {y}")
+    print(f"  x ≤ max_ca(x): {np.all(x <= y)}")
+    
+    # Verify monotonicity
+    print(f"\n  --- Monotonicity Check ---")
+    x = np.random.randint(0, 50, size=N)
+    y = x + np.random.randint(0, 10, size=N)  # y ≥ x
+    print(f"  x ≤ y: {np.all(x <= y)}")
+    print(f"  min_ca(x) ≤ min_ca(y): {np.all(min_ca(x) <= min_ca(y))}")
+    print(f"  max_ca(x) ≤ max_ca(y): {np.all(max_ca(x) <= max_ca(y))}")
 
-    # Statistics over many trials
-    print(f"\n  Convergence statistics over 100 random initial conditions:")
-    convergence_times = []
-    for _ in range(100):
-        x = np.random.randint(0, 100, size=N)
-        for step in range(N + 2):
-            x_next = trop_ca_step(x)
-            if np.array_equal(x_next, x):
-                convergence_times.append(step + 1)
-                break
-            x = x_next
 
-    print(f"    Mean convergence time: {np.mean(convergence_times):.1f}")
-    print(f"    Max convergence time: {max(convergence_times)}")
-    print(f"    Min convergence time: {min(convergence_times)}")
-    print()
-
+# ──────────────────────────────────────────────────────
+# Demo 5: Composition of commuting idempotent maps
+# ──────────────────────────────────────────────────────
 
 def demo_composition():
-    """
-    Demonstrate: composition of commuting idempotent maps is idempotent.
-    """
+    """Demonstrate that commuting idempotent functions compose to idempotent."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Composition of Commuting Idempotent Maps")
     print("=" * 60)
-    print("DEMO 5: Modular Composition of Replicators")
-    print("=" * 60)
-
-    n = 4
-
-    # F: clamp to [2, ∞)
+    
+    N = 5
+    
+    # F = clamp to [2, 8] coordinatewise
+    # G = clamp to [0, 6] coordinatewise
+    # Both are idempotent. They commute because clamp operations
+    # on the same coordinates commute when their ranges overlap.
+    
     def F(x: np.ndarray) -> np.ndarray:
-        return np.maximum(x, 2)
-
-    # G: clamp to (-∞, 7]
+        return np.clip(x, 2, 8)
+    
     def G(x: np.ndarray) -> np.ndarray:
-        return np.minimum(x, 7)
-
-    # F∘G: clamp to [2, 7]
+        return np.clip(x, 0, 6)
+    
     def FG(x: np.ndarray) -> np.ndarray:
         return F(G(x))
-
-    # Verify individual idempotency
-    for _ in range(100):
-        x = np.random.randint(0, 15, size=n)
-        assert np.array_equal(F(F(x)), F(x)), "F not idempotent"
-        assert np.array_equal(G(G(x)), G(x)), "G not idempotent"
-
+    
     # Verify commutativity
+    print("\n  Checking commutativity F(G(x)) == G(F(x))...")
     commutes = True
-    for _ in range(100):
-        x = np.random.randint(0, 15, size=n)
+    for _ in range(1000):
+        x = np.random.randint(0, 15, size=N)
         if not np.array_equal(F(G(x)), G(F(x))):
             commutes = False
             break
-
-    print(f"\n  F: clamp below at 2 (idempotent: ✓)")
-    print(f"  G: clamp above at 7 (idempotent: ✓)")
-    print(f"  F and G commute: {'✓' if commutes else '✗'}")
-
-    # Verify composition is idempotent
-    comp_idempotent = True
-    for _ in range(100):
-        x = np.random.randint(0, 15, size=n)
+    print(f"  Commutes: {commutes}")
+    
+    # Verify idempotence of F, G
+    print("  Checking idempotence of F, G...")
+    f_idem = all(np.array_equal(F(F(np.random.randint(0,15,N))), 
+                                 F(np.random.randint(0,15,N))) 
+                 or True for _ in range(100))
+    # More careful check
+    f_idem = True
+    g_idem = True
+    fg_idem = True
+    for _ in range(1000):
+        x = np.random.randint(0, 15, size=N)
+        if not np.array_equal(F(F(x)), F(x)):
+            f_idem = False
+        if not np.array_equal(G(G(x)), G(x)):
+            g_idem = False
         if not np.array_equal(FG(FG(x)), FG(x)):
-            comp_idempotent = False
-            break
-
-    print(f"  F∘G is idempotent: {'✓' if comp_idempotent else '✗'}")
-
-    # Show example
-    x = np.array([0, 3, 9, 5])
-    print(f"\n  Example: x = {x}")
-    print(f"    G(x) = min(x, 7) = {G(x)}")
-    print(f"    F(G(x)) = max(G(x), 2) = {FG(x)}")
-    print(f"    F(G(F(G(x)))) = {FG(FG(x))}")
-    print(f"    F∘G idempotent: {np.array_equal(FG(FG(x)), FG(x))}")
-    print()
+            fg_idem = False
+    
+    print(f"  F idempotent: {f_idem}")
+    print(f"  G idempotent: {g_idem}")
+    print(f"  F∘G idempotent: {fg_idem}")
+    
+    # Show the composed fixed points
+    composed_fps = []
+    for val in range(15):
+        x = np.full(N, val)
+        y = FG(x)
+        if np.array_equal(FG(y), y):
+            composed_fps.append((val, tuple(y)))
+    
+    print(f"\n  Composed F∘G fixed points (constant inputs):")
+    for v, fp in composed_fps[:8]:
+        print(f"    F(G({v},...,{v})) = {fp}")
+    print(f"  Range of F∘G: [2, 6] (intersection of [2,8] and [0,6])")
 
 
 if __name__ == "__main__":
-    demo_attractor_projection()
-    demo_bounded_emergence()
-    demo_mutation_stability()
+    np.random.seed(42)
+    demo_idempotent_image()
+    demo_convergence()
+    demo_mutation()
     demo_tropical_ca()
     demo_composition()
-    print("All demonstrations completed successfully! ✓")
+    print("\n" + "=" * 60)
+    print("All demos completed successfully!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Tropical Self-Replication Theory
+Visualizations for Tropical Alien Algebra
 
-Generates publication-quality figures:
-1. Tropical CA convergence heatmap
-2. Attractor landscape diagram
-3. Mutation stability scatter plot
-4. Emergence convergence curves
+Generates publication-quality figures showing:
+1. Tropical CA convergence dynamics
+2. Attractor landscape
+3. Mutation stability diagram
+4. 2D tropical CA evolution
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 import base64
-from io import BytesIO
+import io
 
 
 def fig_to_base64(fig) -> str:
     """Convert matplotlib figure to base64 data URI."""
-    buf = BytesIO()
+    buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
     b64 = base64.b64encode(buf.read()).decode('utf-8')
@@ -682,263 +668,256 @@ def fig_to_base64(fig) -> str:
     return f"data:image/png;base64,{b64}"
 
 
-def viz_tropical_ca_convergence():
-    """Generate heatmap of tropical CA convergence."""
+def visualize_ca_convergence():
+    """Visualize tropical CA convergence on a 1D torus."""
     N = 20
     np.random.seed(42)
     x0 = np.random.randint(0, 100, size=N)
-
-    # Simulate
-    states = [x0.copy()]
-    x = x0.copy()
-    for step in range(N + 2):
-        x_next = np.zeros_like(x)
-        for i in range(N):
-            x_next[i] = min(x[i], x[(i+1) % N], x[(i-1) % N])
-        states.append(x_next.copy())
-        if np.array_equal(x_next, x):
-            break
-        x = x_next
-
-    # Plot heatmap
-    fig, ax = plt.subplots(figsize=(12, 6))
-    data = np.array(states)
-    im = ax.imshow(data, aspect='auto', cmap='viridis', interpolation='nearest')
-    ax.set_xlabel('Cell Index', fontsize=14)
-    ax.set_ylabel('Time Step', fontsize=14)
-    ax.set_title('Tropical Min-CA: Convergence to Global Minimum', fontsize=16)
-    plt.colorbar(im, ax=ax, label='Cell Value')
-
-    # Add annotation
-    ax.annotate(f'Fixed point: all cells = {x[0]}',
-                xy=(N//2, len(states)-1), fontsize=11,
-                ha='center', va='bottom',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
-
-    fig.savefig('/workspace/request-project/viz_tropical_ca.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def viz_emergence_curves():
-    """Plot convergence curves for the bounded emergence theorem."""
+    
+    # Max CA trajectory
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Weight vs step for multiple seeds
-    ax = axes[0]
-    N = 15
-    np.random.seed(123)
-
-    for trial in range(8):
-        x = np.random.randint(0, 80, size=N)
-        weights = [x.sum()]
-        for step in range(N + 2):
-            x_next = np.zeros_like(x)
-            for i in range(N):
-                x_next[i] = min(x[i], x[(i+1) % N], x[(i-1) % N])
-            weights.append(x_next.sum())
-            if np.array_equal(x_next, x):
-                weights.extend([weights[-1]] * (N + 2 - step - 1))
+    
+    for ax_idx, (ca_name, ca_fn) in enumerate([
+        ("Min-Tropical CA", lambda x: np.minimum(x, np.minimum(np.roll(x, 1), np.roll(x, -1)))),
+        ("Max-Tropical CA", lambda x: np.maximum(x, np.maximum(np.roll(x, 1), np.roll(x, -1))))
+    ]):
+        x = x0.copy()
+        trajectory = [x.copy()]
+        for _ in range(15):
+            x = ca_fn(x)
+            trajectory.append(x.copy())
+            if np.array_equal(trajectory[-1], trajectory[-2]):
                 break
-            x = x_next
-
-        ax.plot(weights[:N+3], alpha=0.7, linewidth=2, label=f'Seed {trial+1}')
-
-    ax.set_xlabel('Time Step', fontsize=13)
-    ax.set_ylabel('Total Weight Σᵢ x(i)', fontsize=13)
-    ax.set_title('Deflationary Convergence\n(Total Weight Decreases)', fontsize=14)
-    ax.legend(fontsize=9, loc='upper right')
-    ax.grid(True, alpha=0.3)
-
-    # Right: Convergence time vs ring size
-    ax = axes[1]
-    ring_sizes = [5, 10, 15, 20, 30, 50, 75, 100]
-    mean_times = []
-    max_times = []
-
-    for N in ring_sizes:
-        times = []
-        for _ in range(50):
-            x = np.random.randint(0, 100, size=N)
-            for step in range(N + 2):
-                x_next = np.zeros_like(x)
-                for i in range(N):
-                    x_next[i] = min(x[i], x[(i+1) % N], x[(i-1) % N])
-                if np.array_equal(x_next, x):
-                    times.append(step + 1)
-                    break
-                x = x_next
-        mean_times.append(np.mean(times))
-        max_times.append(max(times))
-
-    ax.plot(ring_sizes, mean_times, 'o-', color='steelblue', linewidth=2,
-            markersize=8, label='Mean convergence time')
-    ax.plot(ring_sizes, max_times, 's--', color='firebrick', linewidth=2,
-            markersize=8, label='Max convergence time')
-    ax.plot(ring_sizes, [N/2 for N in ring_sizes], ':', color='gray',
-            linewidth=2, label='N/2 (diameter bound)')
-
-    ax.set_xlabel('Ring Size N', fontsize=13)
-    ax.set_ylabel('Convergence Time (steps)', fontsize=13)
-    ax.set_title('Convergence Time Scales\nLinearly with Ring Size', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-
+        
+        traj = np.array(trajectory)
+        ax = axes[ax_idx]
+        im = ax.imshow(traj, aspect='auto', cmap='viridis', interpolation='nearest')
+        ax.set_xlabel('Cell Index', fontsize=12)
+        ax.set_ylabel('Time Step', fontsize=12)
+        ax.set_title(ca_name, fontsize=14, fontweight='bold')
+        plt.colorbar(im, ax=ax, label='Cell Value')
+    
+    fig.suptitle('Tropical CA Convergence: Every Orbit Reaches a Fixed Point',
+                 fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_emergence.png', dpi=150, bbox_inches='tight')
+    
+    fig.savefig('/workspace/request-project/fig_ca_convergence.png', dpi=150, bbox_inches='tight')
     b64 = fig_to_base64(fig)
     return b64
 
 
-def viz_mutation_stability():
-    """Scatter plot showing mutation nonamplification."""
+def visualize_attractor_landscape():
+    """Visualize the attractor structure of a tropical replicator."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    dim = 5
-    np.random.seed(42)
-
-    # Left: Lipschitz map (clamp) — stable
+    
+    # 2D state space visualization
+    # F(x, y) = (clamp(x, 2, 8), clamp(y, 1, 7)) — idempotent
     ax = axes[0]
-    F_stable = lambda x: np.clip(x, 2, 8)
-
-    d_inputs, d_outputs = [], []
+    
+    # Draw arrows from states to their images
+    for x in range(11):
+        for y in range(11):
+            fx = np.clip(x, 2, 8)
+            fy = np.clip(y, 1, 7)
+            if x != fx or y != fy:
+                ax.annotate('', xy=(fx, fy), xytext=(x, y),
+                           arrowprops=dict(arrowstyle='->', color='lightblue',
+                                         alpha=0.4, lw=0.8))
+    
+    # Highlight fixed points
+    fps_x, fps_y = [], []
+    for x in range(11):
+        for y in range(11):
+            fx = np.clip(x, 2, 8)
+            fy = np.clip(y, 1, 7)
+            if x == fx and y == fy:
+                fps_x.append(x)
+                fps_y.append(y)
+    
+    ax.scatter(fps_x, fps_y, c='red', s=80, zorder=5, label='Fixed Points (Organisms)')
+    
+    # Highlight non-fixed points
+    nfp_x, nfp_y = [], []
+    for x in range(11):
+        for y in range(11):
+            if x not in range(2, 9) or y not in range(1, 8):
+                nfp_x.append(x)
+                nfp_y.append(y)
+    ax.scatter(nfp_x, nfp_y, c='lightgray', s=30, zorder=4, label='Transient States')
+    
+    ax.set_xlabel('x₁', fontsize=12)
+    ax.set_ylabel('x₂', fontsize=12)
+    ax.set_title('Attractor Landscape\n(Image = Fixed Points)', fontsize=14, fontweight='bold')
+    ax.legend(loc='upper left', fontsize=10)
+    ax.set_xlim(-0.5, 10.5)
+    ax.set_ylim(-0.5, 10.5)
+    ax.grid(True, alpha=0.2)
+    
+    # Convergence time histogram
+    ax2 = axes[1]
+    np.random.seed(42)
+    N = 15
+    convergence_times = []
     for _ in range(500):
-        x = np.random.randint(0, 15, size=dim)
-        y = x + np.random.randint(-5, 6, size=dim)
-        y = np.maximum(y, 0)
-        d_in = np.max(np.abs(x.astype(int) - y.astype(int)))
-        d_out = np.max(np.abs(F_stable(x).astype(int) - F_stable(y).astype(int)))
-        d_inputs.append(d_in)
-        d_outputs.append(d_out)
+        x = np.random.randint(0, 50, size=N)
+        steps = 0
+        for s in range(100):
+            x_new = np.maximum(x, np.maximum(np.roll(x, 1), np.roll(x, -1)))
+            if np.array_equal(x_new, x):
+                steps = s
+                break
+            x = x_new
+        convergence_times.append(steps)
+    
+    ax2.hist(convergence_times, bins=range(max(convergence_times) + 2),
+             color='steelblue', edgecolor='navy', alpha=0.8)
+    ax2.axvline(np.mean(convergence_times), color='red', linestyle='--',
+                label=f'Mean = {np.mean(convergence_times):.1f}')
+    ax2.set_xlabel('Steps to Convergence', fontsize=12)
+    ax2.set_ylabel('Frequency', fontsize=12)
+    ax2.set_title(f'Convergence Time Distribution\n(Max CA, N={N})', 
+                  fontsize=14, fontweight='bold')
+    ax2.legend(fontsize=11)
+    
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/fig_attractor_landscape.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
-    ax.scatter(d_inputs, d_outputs, alpha=0.4, s=20, color='steelblue')
-    max_d = max(max(d_inputs), max(d_outputs)) + 1
-    ax.plot([0, max_d], [0, max_d], 'r--', linewidth=2, label='y = x (no amplification)')
-    ax.set_xlabel('Input Distance d∞(x, y)', fontsize=13)
-    ax.set_ylabel('Output Distance d∞(F(x), F(y))', fontsize=13)
-    ax.set_title('Lipschitz Map (Clamp)\nMutation Stable ✓', fontsize=14)
+
+def visualize_mutation_stability():
+    """Visualize mutation non-amplification."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    N = 20
+    np.random.seed(42)
+    
+    # Plot 1: Input vs output distance for Lipschitz-1 map
+    ax = axes[0]
+    
+    def F(x):
+        return np.clip(x, 5, 45)
+    
+    input_dists = []
+    output_dists = []
+    
+    for _ in range(2000):
+        x = np.random.randint(0, 50, size=N)
+        eps = np.random.randint(0, 20)
+        noise = np.random.randint(-eps, eps + 1, size=N)
+        y = np.clip(x + noise, 0, None)
+        
+        d_in = np.max(np.abs(x.astype(int) - y.astype(int)))
+        d_out = np.max(np.abs(F(x).astype(int) - F(y).astype(int)))
+        
+        input_dists.append(d_in)
+        output_dists.append(d_out)
+    
+    ax.scatter(input_dists, output_dists, alpha=0.3, s=10, c='steelblue')
+    max_d = max(max(input_dists), max(output_dists))
+    ax.plot([0, max_d], [0, max_d], 'r--', lw=2, label='d_out = d_in (Lipschitz-1)')
+    ax.set_xlabel('Input Distance d∞(x, y)', fontsize=12)
+    ax.set_ylabel('Output Distance d∞(F(x), F(y))', fontsize=12)
+    ax.set_title('Mutation Non-Amplification\n(All points below the line)', 
+                 fontsize=14, fontweight='bold')
     ax.legend(fontsize=11)
     ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-
-    # Right: Non-Lipschitz map (squaring) — unstable
-    ax = axes[1]
-    F_unstable = lambda x: x ** 2
-
-    d_inputs, d_outputs = [], []
-    for _ in range(500):
-        x = np.random.randint(0, 8, size=dim)
-        y = x + np.random.randint(-2, 3, size=dim)
-        y = np.maximum(y, 0)
-        d_in = np.max(np.abs(x.astype(int) - y.astype(int)))
-        d_out = np.max(np.abs(F_unstable(x).astype(int) - F_unstable(y).astype(int)))
-        d_inputs.append(d_in)
-        d_outputs.append(d_out)
-
-    ax.scatter(d_inputs, d_outputs, alpha=0.4, s=20, color='firebrick')
-    max_d = max(max(d_inputs), max(d_outputs)) + 1
-    ax.plot([0, max_d], [0, max_d], 'r--', linewidth=2, label='y = x (no amplification)')
-    ax.set_xlabel('Input Distance d∞(x, y)', fontsize=13)
-    ax.set_ylabel('Output Distance d∞(F(x), F(y))', fontsize=13)
-    ax.set_title('Non-Lipschitz Map (Squaring)\nMutation Unstable ✗', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-
+    
+    # Plot 2: Mutation spread over CA iterations
+    ax2 = axes[1]
+    
+    x0 = np.random.randint(10, 40, size=30)
+    epsilons = [1, 3, 5, 10]
+    
+    for eps in epsilons:
+        noise = np.random.randint(-eps, eps + 1, size=30)
+        y0 = np.clip(x0 + noise, 0, None)
+        
+        x, y = x0.copy(), y0.copy()
+        distances = [np.max(np.abs(x.astype(int) - y.astype(int)))]
+        
+        for _ in range(20):
+            x = np.maximum(x, np.maximum(np.roll(x, 1), np.roll(x, -1)))
+            y = np.maximum(y, np.maximum(np.roll(y, 1), np.roll(y, -1)))
+            distances.append(np.max(np.abs(x.astype(int) - y.astype(int))))
+        
+        ax2.plot(distances, label=f'ε = {eps}', linewidth=2)
+    
+    ax2.set_xlabel('CA Step', fontsize=12)
+    ax2.set_ylabel('Sup-norm Distance', fontsize=12)
+    ax2.set_title('Mutation Distance During CA Evolution\n(Never exceeds initial ε)',
+                  fontsize=14, fontweight='bold')
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+    
     plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_mutation.png', dpi=150, bbox_inches='tight')
+    fig.savefig('/workspace/request-project/fig_mutation_stability.png', dpi=150, bbox_inches='tight')
     b64 = fig_to_base64(fig)
     return b64
 
 
-def viz_attractor_landscape():
-    """Visualize the attractor landscape of idempotent maps."""
-    from itertools import product as iterproduct
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Distribution of fixed-point counts for n=4
-    ax = axes[0]
-
-    for n in [3, 4, 5]:
-        fp_counts = {}
-        for mask in range(1, 2**n):
-            S = [i for i in range(n) if mask & (1 << i)]
-            k = len(S)
-            non_S = [i for i in range(n) if i not in S]
-            num_maps = len(S) ** len(non_S) if non_S else 1
-            fp_counts[k] = fp_counts.get(k, 0) + num_maps
-
-        ks = sorted(fp_counts.keys())
-        vals = [fp_counts[k] for k in ks]
-        total = sum(vals)
-        probs = [v / total for v in vals]
-        offset = (n - 4) * 0.2
-        ax.bar([k + offset for k in ks], probs, width=0.2, alpha=0.7,
-               label=f'n={n}')
-
-    ax.set_xlabel('Number of Fixed Points', fontsize=13)
-    ax.set_ylabel('Fraction of Idempotent Maps', fontsize=13)
-    ax.set_title('Attractor Landscape Distribution', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3, axis='y')
-
-    # Right: Orbit diagram for a specific inflationary map on {0,...,9}
-    ax = axes[1]
-
-    m = 9
-    F = lambda x: min(x + 2, m)  # inflationary: x -> min(x+2, 9)
-
-    for x0 in range(m + 1):
-        orbit = [x0]
-        x = x0
-        for _ in range(10):
-            x = F(x)
-            orbit.append(x)
-            if orbit[-1] == orbit[-2]:
-                break
-
-        ax.plot(range(len(orbit)), orbit, 'o-', markersize=6, alpha=0.7)
-        ax.annotate(f'{x0}', xy=(0, x0), fontsize=8, ha='right',
-                    va='center', color='gray')
-
-    ax.set_xlabel('Iteration Step', fontsize=13)
-    ax.set_ylabel('State Value', fontsize=13)
-    ax.set_title(f'Orbits of F(x) = min(x+2, {m})\nAll Seeds → Fixed Point {m}', fontsize=14)
-    ax.axhline(y=m, color='red', linestyle='--', alpha=0.5, label=f'Fixed point = {m}')
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-
+def visualize_2d_ca():
+    """Visualize 2D tropical CA evolution."""
+    fig, axes = plt.subplots(2, 4, figsize=(16, 8))
+    
+    np.random.seed(42)
+    grid = np.random.randint(0, 100, size=(30, 30))
+    
+    # Max CA evolution
+    x = grid.copy()
+    steps = [0, 2, 5, 14]
+    step_idx = 0
+    
+    for s in range(15):
+        if s in steps:
+            ax = axes[0, step_idx]
+            im = ax.imshow(x, cmap='inferno', vmin=0, vmax=100)
+            ax.set_title(f'Max CA, t={s}', fontsize=12, fontweight='bold')
+            ax.axis('off')
+            step_idx += 1
+        x = np.maximum.reduce([
+            x, np.roll(x, 1, axis=0), np.roll(x, -1, axis=0),
+            np.roll(x, 1, axis=1), np.roll(x, -1, axis=1)
+        ])
+    
+    # Min CA evolution
+    x = grid.copy()
+    step_idx = 0
+    
+    for s in range(15):
+        if s in steps:
+            ax = axes[1, step_idx]
+            im = ax.imshow(x, cmap='inferno', vmin=0, vmax=100)
+            ax.set_title(f'Min CA, t={s}', fontsize=12, fontweight='bold')
+            ax.axis('off')
+            step_idx += 1
+        x = np.minimum.reduce([
+            x, np.roll(x, 1, axis=0), np.roll(x, -1, axis=0),
+            np.roll(x, 1, axis=1), np.roll(x, -1, axis=1)
+        ])
+    
+    fig.suptitle('2D Tropical Cellular Automata: Convergence to Fixed Points',
+                 fontsize=16, fontweight='bold')
     plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_attractors.png', dpi=150, bbox_inches='tight')
+    
+    fig.savefig('/workspace/request-project/fig_2d_ca.png', dpi=150, bbox_inches='tight')
     b64 = fig_to_base64(fig)
     return b64
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-
-    b64_ca = viz_tropical_ca_convergence()
-    print(f"  ✓ Tropical CA convergence heatmap ({len(b64_ca)} chars)")
-
-    b64_emergence = viz_emergence_curves()
-    print(f"  ✓ Emergence convergence curves ({len(b64_emergence)} chars)")
-
-    b64_mutation = viz_mutation_stability()
-    print(f"  ✓ Mutation stability scatter plot ({len(b64_mutation)} chars)")
-
-    b64_attractors = viz_attractor_landscape()
-    print(f"  ✓ Attractor landscape diagram ({len(b64_attractors)} chars)")
-
-    print("\nAll visualizations saved!")
-
-    # Save base64 data for PACKAGE.json
-    import json
-    viz_data = {
-        "tropical_ca": b64_ca,
-        "emergence": b64_emergence,
-        "mutation": b64_mutation,
-        "attractors": b64_attractors
-    }
-    with open('/workspace/request-project/viz_data.json', 'w') as f:
-        json.dump(viz_data, f)
-    print("Base64 data saved to viz_data.json")
+    
+    b64_1 = visualize_ca_convergence()
+    print(f"  CA convergence: saved to fig_ca_convergence.png ({len(b64_1)} chars)")
+    
+    b64_2 = visualize_attractor_landscape()
+    print(f"  Attractor landscape: saved to fig_attractor_landscape.png ({len(b64_2)} chars)")
+    
+    b64_3 = visualize_mutation_stability()
+    print(f"  Mutation stability: saved to fig_mutation_stability.png ({len(b64_3)} chars)")
+    
+    b64_4 = visualize_2d_ca()
+    print(f"  2D CA: saved to fig_2d_ca.png ({len(b64_4)} chars)")
+    
+    print("\nAll visualizations generated!")
