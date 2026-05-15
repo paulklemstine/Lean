@@ -765,10 +765,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc175531",
     "timestamp": "2026-05-15T01:18:10.018444+00:00"
   },
   {
@@ -987,22 +987,6 @@
     "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:04:10.051646+00:00"
-  },
-  {
-    "id": "fd_0226",
-    "title": "Formal statement",
-    "description": ": For perturbation within radius r, no binary classifier changes, so zero bits flip, which is below d_min/2.\n\n### Formalization Target\n```lean\ntheorem ecoc_closure_multiclass_robust\n    {X : Type*} [PseudoMetricSpace X] {K : ℕ} {m : ℕ}\n    (code : Fin K → Fin m → Bool)\n    (classifiers : Fin m → X → Bool)\n    (r : ℝ) (hr : 0 < r)\n    (hrobust : ∀ j, IsClosureClassifier (classifiers j) r)\n    (hd_min : ECOC_minDist code ≥ 3) :\n    ∀ x z, dist z x < r → ecocDecode code classifiers z = ecocDecode code classifiers x\n```\n\n### Impact\nThis extends certified robustness from binary to multi-class settings with explicit combinatorial guarantees.\n\n### Cross-Domain Connections\n- **Coding theory**: BCH codes, Reed-Solomon codes, minimum distance bounds\n- **Multi-class learning**: One-vs-all, output cod",
-    "domains": [
-      "EML",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56b13d4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:37.806854+00:00"
   },
   {
     "id": "fd_0227",
@@ -1342,6 +1326,48 @@
     "source_exp_id": "62ac6dd0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:05:41.543224+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Immediate",
+    "description": "(builds on current code): Tropical XOR lemma via collision probability",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6405e4c4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:10:47.240990+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Short-term",
+    "description": "(requires new definitions): Tropical seeded extractor construction",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6405e4c4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:10:47.250044+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Long-term",
+    "description": "(requires hardness assumptions): Tropical PRG and parallel repetition",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6405e4c4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:10:47.268750+00:00"
   },
   {
     "id": "seed_079",
@@ -1828,26 +1854,6 @@
     "timestamp": "2026-05-15T09:07:29.306274+00:00"
   },
   {
-    "id": "fd_0203",
-    "title": "3. Hardness Amplification for Tropical Semigroup Actions",
-    "description": "**Hypothesis:** If a single tropical matrix power `G^t` has min-entropy k against an adversary, then the concatenation of m independent instances has min-entropy m·k, enabling hardness amplification.\n\n**Proof Strategy:**\n- Use the product distribution min-entropy additivity theorem (`tropical_subadditivity_minEntropy` from the existing codebase).\n- Formalize independent sampling of tropical powers from independent generators.\n- Show that the joint collision probability is the product of individual collision probabilities.\n- Apply the LHL to the concatenated source, achieving exponentially small extraction error.\n\n**Cross-Domain Connections:**\n- Hardness amplification ↔ direct product theorems in complexity theory\n- Tropical semigroup products ↔ parallel composition of cryptographic primiti",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "97644adb",
-    "consumed_by_exp_id": "6405e4c4",
-    "timestamp": "2026-05-15T09:07:29.315833+00:00"
-  },
-  {
     "id": "fd_0204",
     "title": "4. Certified Parameter Selection for Negligible Advantage",
     "description": "**Hypothesis:** Our `tropical_orbit_security_threshold` theorem can be instantiated with concrete NIST security levels to produce certified parameter tables for tropical cryptographic schemes.\n\n**Proof Strategy:**\n- For NIST Level 1 (128-bit security): require `T+1 ≥ |β| · 2^{256}`, which with `|β| = 2^{128}` means `T ≥ 2^{384} - 1`.\n- For tropical matrices over 64-bit integers with dimension n, the orbit size grows as `O(n² · max_entry)`, so we need `n² · max_entry ≥ 2^{384}`.\n- Formalize these concrete instantiations as Lean `#eval` computations and theorems.\n- Verify that the resulting parameter sizes are practical (comparable to lattice-based schemes).\n\n**Cross-Domain Connections:**\n- NIST post-quantum standards ↔ tropical orbit combinatorics\n- Concrete security analysis ↔ formal verif",
@@ -2001,24 +2007,6 @@
     "timestamp": "2026-05-15T11:04:08.962272+00:00"
   },
   {
-    "id": "fd_0226",
-    "title": "5. Tropical Characteristic Data from Cycle Structure",
-    "description": "**Theorem Statement:**\nIf the catalog's `tropical_eigenvalue_determines_char` establishes that a tropical spectral value determines a tropical character χ, then:\n```\n∀ W, ∀ χ determined by tropicalEigenvalue W,\n  χ is determined by the minimum cycle mean structure of W\n```\n\n**Why It Matters:**\nThis would show that purely combinatorial data (cycles and their means) determines arithmetic/tropical characters. It connects graph optimization to the tropical Langlands program, suggesting that representation-theoretic invariants can be computed from shortest-path data.\n\n**Proof Strategy:**\n1. Inspect `tropical_eigenvalue_determines_char` to extract the precise relationship between eigenvalue and character.\n2. Substitute `tropicalEigenvalue = min cycle mean` (our attainment theorem).\n3. Show the r",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "245e45a9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:00:56.530659+00:00"
-  },
-  {
     "id": "fd_0225",
     "title": "1. Tropical Löb Theorem",
     "description": "**Goal:** Formalize a tropical provability modality induced by closure/fixed-point semantics and prove a Löb-style theorem.\n\n**Background:** In classical modal logic, Löb's theorem states: if a proof system proves \"if □P then P,\" then it already proves P. The classical proof uses the diagonal lemma to construct a sentence L asserting \"if □L then L,\" then exploits the Hilbert-Bernays derivability conditions.\n\n**Tropical Formulation:**\n\nDefine a tropical provability modality □ as a closure operator `c` on `Fin n → WithTop ℝ` satisfying:\n- Extensivity: `x ≤ c x` (soundness — provable bounds are at least as strong as actual)\n- Monotonicity: `x ≤ y → c x ≤ c y`\n- Idempotency: `c (c x) = c x`\n\n**Conjecture (Tropical Löb):**\n```\ntheorem tropical_loeb\n  {n : ℕ} [NeZero n]\n  (c : (Fin n → WithTop ℝ",
@@ -2034,24 +2022,6 @@
     "source_exp_id": "ef0cc9c1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:05:25.817101+00:00"
-  },
-  {
-    "id": "fd_0226",
-    "title": "2. Bellman–Gödel Barrier for Verification",
-    "description": "**Goal:** Show that tropical fixed points arising from shortest-path/Bellman operators admit self-referential specifications that cannot be both internally certified and complete.\n\n**Background:** The Bellman operator `T` in dynamic programming is defined by `T(v)(s) = min_a [c(s,a) + γ · v(s')]`. It is a contraction mapping on value functions, and its unique fixed point is the optimal value function. Crucially, `T` is monotone and, in the undiscounted case with finite state spaces, idempotent on the set of solutions.\n\n**Conjecture (Bellman–Gödel Barrier):**\n```\ntheorem bellman_godel_barrier\n  {S A : Type*} [Fintype S] [Fintype A]\n  (T : (S → WithTop ℝ) → (S → WithTop ℝ))\n  (hmono : Monotone T) (hidem : ∀ v, T (T v) = T v)\n  (Certifiable : (S → WithTop ℝ) → S → Prop)\n  (hdiag : ∃ s, ∀ v, T",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "EML",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ef0cc9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:25.827621+00:00"
   },
   {
     "id": "fd_0227",
