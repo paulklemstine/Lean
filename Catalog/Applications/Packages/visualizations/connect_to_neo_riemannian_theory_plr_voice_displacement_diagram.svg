@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="280" viewBox="0 0 700 280" style="background:#1a1a2e">
+<defs><style>
+  .dtitle { font: bold 16px sans-serif; fill: #e0e0e0; }
+  .dlabel { font: 10px sans-serif; fill: #888; }
+  .dnote { font: bold 11px sans-serif; fill: #e0e0e0; }
+  .darrow { font: bold 13px sans-serif; fill: #f8d568; }
+  .dinfo { font: 12px sans-serif; fill: #c0c0c0; }
+</style>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+  <polygon points="0 0, 10 3.5, 0 7" fill="#ff6b6b"/>
+</marker>
+</defs>
+<text x="350" y="24" text-anchor="middle" class="dtitle">PLR Voice Displacement on C Major {C, E, G}</text>
+<text x="120" y="50" text-anchor="middle" class="dinfo">P: Parallel</text>
+<text x="120" y="66" text-anchor="middle" class="dlabel">C → Cm</text>
+<circle cx="120" cy="155" r="70" fill="none" stroke="#333" stroke-width="1"/>
+<circle cx="120.0" cy="85.0" r="8" fill="#555" stroke="#888" stroke-width="1.5"/>
+<text x="120.0" y="89.0" text-anchor="middle" class="dnote" fill="#aaa">C</text>
+<circle cx="180.62177826491072" cy="190.0" r="8" fill="#ff6b6b" opacity="0.3"/>
+<circle cx="190.0" cy="155.0" r="8" fill="#ff6b6b"/>
+<line x1="182.69233062573088" y1="182.27259338968744" x2="187.4118095489748" y2="164.6592582628907" stroke="#ff6b6b" stroke-width="2" marker-end="url(#arrowhead)"/>
+<text x="180.62177826491072" y="194.0" text-anchor="middle" class="dnote" fill="#ff6b6b" opacity="0.5">E</text>
+<text x="190.0" y="159.0" text-anchor="middle" class="dnote" fill="#fff">E♭</text>
+<circle cx="85.00000000000001" cy="215.62177826491072" r="8" fill="#555" stroke="#888" stroke-width="1.5"/>
+<text x="85.00000000000001" y="219.62177826491072" text-anchor="middle" class="dnote" fill="#aaa">G</text>
+<text x="120" y="255" text-anchor="middle" class="dinfo" fill="#ff6b6b">E→E♭ (1 semitone)</text>
+<text x="330" y="50" text-anchor="middle" class="dinfo">L: Leading-tone</text>
+<text x="330" y="66" text-anchor="middle" class="dlabel">C → Em</text>
+<circle cx="330" cy="155" r="70" fill="none" stroke="#333" stroke-width="1"/>
+<circle cx="330.0" cy="85.0" r="8" fill="#4ecdc4" opacity="0.3"/>
+<circle cx="295.0" cy="94.37822173508931" r="8" fill="#4ecdc4"/>
+<line x1="322.2725933896875" y1="87.07055236082017" x2="304.65925826289066" y2="91.7900312840641" stroke="#4ecdc4" stroke-width="2" marker-end="url(#arrowhead)"/>
+<text x="330.0" y="89.0" text-anchor="middle" class="dnote" fill="#4ecdc4" opacity="0.5">C</text>
+<text x="295.0" y="98.37822173508931" text-anchor="middle" class="dnote" fill="#fff">B</text>
+<circle cx="390.6217782649107" cy="190.0" r="8" fill="#555" stroke="#888" stroke-width="1.5"/>
+<text x="390.6217782649107" y="194.0" text-anchor="middle" class="dnote" fill="#aaa">E</text>
+<circle cx="295.0" cy="215.62177826491072" r="8" fill="#555" stroke="#888" stroke-width="1.5"/>
+<text x="295.0" y="219.62177826491072" text-anchor="middle" class="dnote" fill="#aaa">G</text>
+<text x="330" y="255" text-anchor="middle" class="dinfo" fill="#4ecdc4">C→B (1 semitone)</text>
+<text x="540" y="50" text-anchor="middle" class="dinfo">R: Relative</text>
+<text x="540" y="66" text-anchor="middle" class="dlabel">C → Am</text>
+<circle cx="540" cy="155" r="70" fill="none" stroke="#333" stroke-width="1"/>
+<circle cx="540.0" cy="85.0" r="8" fill="#555" stroke="#888" stroke-width="1.5"/>
+<text x="540.0" y="89.0" text-anchor="middle" class="dnote" fill="#aaa">C</text>
+<circle cx="600.6217782649107" cy="190.0" r="8" fill="#555" stroke="#888" stroke-width="1.5"/>
+<text x="600.6217782649107" y="194.0" text-anchor="middle" class="dnote" fill="#aaa">E</text>
+<circle cx="505.0" cy="215.62177826491072" r="8" fill="#95e66b" opacity="0.3"/>
+<circle cx="470.0" cy="155.0" r="8" fill="#95e66b"/>
+<line x1="501.0" y1="208.69357503463522" x2="475.0" y2="163.6602540378444" stroke="#95e66b" stroke-width="2" marker-end="url(#arrowhead)"/>
+<text x="505.0" y="219.62177826491072" text-anchor="middle" class="dnote" fill="#95e66b" opacity="0.5">G</text>
+<text x="470.0" y="159.0" text-anchor="middle" class="dnote" fill="#fff">A</text>
+<text x="540" y="255" text-anchor="middle" class="dinfo" fill="#95e66b">G→A (2 semitones)</text>
+</svg>
