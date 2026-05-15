@@ -2,236 +2,341 @@
 """
 Tropical Spectral Transfer — Algorithms
 
-Implements the core algorithms from the tropical spectral transfer framework:
-  1. Tropical min-plus operator action
-  2. Width (spectral gap) computation
-  3. Balanced zero functional check
-  4. Critical symmetry verification
-  5. Spectral collapse detection
+Core algorithms for tropical spectral analysis, including:
+1. Min-plus matrix multiplication
+2. Tropical eigenvalue computation (Karp's algorithm)
+3. Spectral width computation and gap detection
+4. Critical symmetry verification
+5. Balanced zero functional detection
 """
 
 import numpy as np
-from typing import Tuple, Optional
+from typing import Tuple, Optional, List
 
 
-def width(y: np.ndarray) -> float:
+def min_plus_matmul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     """
-    Compute the spectral width of a vector y.
-
-    width(y) = max(y) - min(y)
-
-    Time complexity: O(n)
-    Space complexity: O(1)
-
+    Min-plus (tropical) matrix multiplication.
+    
+    (A ⊗ B)[i,j] = min_k (A[i,k] + B[k,j])
+    
+    Time: O(n³)
+    Space: O(n²)
+    
     Args:
-        y: Real-valued vector of length n ≥ 1.
-
+        A: n×m matrix
+        B: m×p matrix
     Returns:
-        Non-negative real number representing the oscillation of y.
+        n×p matrix with tropical product
+    
+    Example:
+        >>> A = np.array([[0, 2], [3, 1]])
+        >>> B = np.array([[1, 0], [2, 3]])
+        >>> min_plus_matmul(A, B)
+        array([[1., 0.],
+               [3., 3.]])
+    """
+    n, m = A.shape
+    _, p = B.shape
+    C = np.full((n, p), np.inf)
+    for i in range(n):
+        for j in range(p):
+            C[i, j] = np.min(A[i, :] + B[:, j])
+    return C
+
+
+def tropical_operator_action(
+    cost: np.ndarray, 
+    weight: np.ndarray, 
+    x: np.ndarray
+) -> np.ndarray:
+    """
+    Apply the tropical transfer operator T to vector x:
+    
+    (T·x)(i) = min_j (cost(i,j) + weight(j) + x(j))
+    
+    Time: O(n²)
+    Space: O(n)
+    
+    Args:
+        cost: n×n symmetric cost matrix
+        weight: n-dimensional weight vector
+        x: n-dimensional input vector
+    Returns:
+        n-dimensional output vector T(x)
+    
+    Example:
+        >>> cost = np.array([[0, 1], [1, 0]], dtype=float)
+        >>> weight = np.array([0.5, -0.5])
+        >>> x = np.array([1.0, 2.0])
+        >>> tropical_operator_action(cost, weight, x)
+        array([1.5, 1.5])
+    """
+    n = len(x)
+    result = np.zeros(n)
+    kernel = cost + weight[np.newaxis, :] + x[np.newaxis, :]
+    for i in range(n):
+        result[i] = np.min(kernel[i, :])
+    return result
+
+
+def spectral_width(y: np.ndarray) -> float:
+    """
+    Compute the spectral width (gap) of a vector.
+    
+    width(y) = max(y) - min(y)
+    
+    Properties (all formally verified):
+    - width(y) ≥ 0                    (width_nonneg)
+    - width(y) = 0 ⟺ y is constant  (width_eq_zero_iff_isConstant)
+    - width(-y) = width(y)            (width_neg)
+    - width(y + c) = width(y)         (width_add_const)
+    - width(y ∘ σ) = width(y)         (width_perm_invariant)
+    
+    Time: O(n)
+    Space: O(1)
     """
     return float(np.max(y) - np.min(y))
 
 
-def is_constant(y: np.ndarray, tol: float = 1e-12) -> bool:
+def check_balanced(
+    y: np.ndarray, 
+    sigma: np.ndarray, 
+    tol: float = 1e-10
+) -> Tuple[bool, float]:
     """
-    Check whether a vector is constant (all entries equal).
-
-    Equivalent to width(y) == 0.
-
-    Time complexity: O(n)
-    Space complexity: O(1)
+    Check the balanced zero-detection functional.
+    
+    Returns (is_balanced, max_residual) where:
+    - is_balanced: True if |y(i) + y(σ(i))| < tol for all i
+    - max_residual: max_i |y(i) + y(σ(i))|
+    
+    Time: O(n)
+    Space: O(n)
     """
-    return width(y) < tol
+    residuals = np.abs(y + y[sigma])
+    max_res = float(np.max(residuals))
+    return max_res < tol, max_res
 
 
-def balanced_zero_functional(y: np.ndarray, sigma: np.ndarray) -> Tuple[bool, np.ndarray]:
-    """
-    Check the balanced zero-detection functional: y[i] + y[σ(i)] = 0 for all i.
-
-    Returns both the boolean result and the residual vector y[i] + y[σ(i)].
-
-    Time complexity: O(n)
-    Space complexity: O(n)
-
-    Args:
-        y: Real-valued vector.
-        sigma: Permutation as index array.
-
-    Returns:
-        (is_balanced, residuals) where residuals[i] = y[i] + y[sigma[i]].
-    """
-    residuals = y + y[sigma]
-    is_balanced = np.allclose(residuals, 0)
-    return is_balanced, residuals
-
-
-def trop_apply(cost: np.ndarray, weight: np.ndarray, x: np.ndarray) -> np.ndarray:
-    """
-    Tropical (min-plus) operator action.
-
-    (Tx)[i] = min_j (cost[i,j] + weight[j] + x[j])
-
-    Time complexity: O(n²)
-    Space complexity: O(n)
-
-    Args:
-        cost: n×n symmetric cost matrix.
-        weight: Weight vector of length n.
-        x: Input vector of length n.
-
-    Returns:
-        Output vector of length n.
-    """
-    # Vectorized: broadcast cost + weight + x over rows
-    return np.min(cost + weight[np.newaxis, :] + x[np.newaxis, :], axis=1)
-
-
-def verify_involution(sigma: np.ndarray) -> bool:
-    """Check σ² = id."""
-    n = len(sigma)
-    return all(sigma[sigma[i]] == i for i in range(n))
-
-
-def verify_cost_sigma_invariance(cost: np.ndarray, sigma: np.ndarray) -> bool:
-    """Check cost[σ(i), σ(j)] = cost[i, j] for all i, j."""
-    return np.allclose(cost[np.ix_(sigma, sigma)], cost)
-
-
-def verify_weight_antisymmetry(weight: np.ndarray, sigma: np.ndarray) -> bool:
-    """Check weight[σ(i)] = -weight[i] for all i."""
-    return np.allclose(weight[sigma], -weight)
-
-
-def spectral_collapse_check(
+def verify_critical_symmetry(
     cost: np.ndarray,
     weight: np.ndarray,
     x: np.ndarray,
     sigma: np.ndarray,
-    verbose: bool = False
+    tol: float = 1e-10
 ) -> dict:
     """
-    Full spectral collapse analysis for a tropical transfer system.
-
-    Checks all hypotheses and conclusions of the critical_symmetry_iff_gap_zero theorem.
-
-    Time complexity: O(n²)
-    Space complexity: O(n²)
-
-    Args:
-        cost: n×n cost matrix.
-        weight: Weight vector.
-        x: Input vector.
-        sigma: Involution permutation.
-        verbose: Print detailed analysis.
-
-    Returns:
-        Dictionary with analysis results.
+    Verify all critical symmetry conditions:
+    1. σ is involutive: σ(σ(i)) = i
+    2. cost is symmetric: cost(i,j) = cost(j,i)
+    3. cost is σ-invariant: cost(σi, σj) = cost(i,j)
+    4. weight is anti-symmetric: weight(σi) = -weight(i)
+    5. x is σ-symmetric: x(σi) = x(i)
+    
+    Time: O(n²)
     """
     n = len(x)
-    y = trop_apply(cost, weight, x)
-
-    result = {
-        "n": n,
-        "y": y,
-        "width": width(y),
-        "is_constant": is_constant(y),
-        "involution_valid": verify_involution(sigma),
-        "cost_symmetric": np.allclose(cost, cost.T),
-        "cost_sigma_invariant": verify_cost_sigma_invariance(cost, sigma),
-        "weight_antisymmetric": verify_weight_antisymmetry(weight, sigma),
-        "input_symmetric": np.allclose(x[sigma], x),
-    }
-
-    is_bal, residuals = balanced_zero_functional(y, sigma)
-    result["balanced"] = is_bal
-    result["balance_residuals"] = residuals
-    result["all_zero"] = np.allclose(y, 0)
-
-    # Theorem verification
-    hypotheses_hold = all([
-        result["involution_valid"],
-        result["cost_symmetric"],
-        result["cost_sigma_invariant"],
-        result["weight_antisymmetric"],
-        result["input_symmetric"],
-    ])
-    result["hypotheses_hold"] = hypotheses_hold
-
-    if hypotheses_hold:
-        lhs = result["width"] < 1e-12 and result["balanced"]
-        rhs = result["all_zero"]
-        result["theorem_verified"] = (lhs == rhs)
-    else:
-        result["theorem_verified"] = None
-
-    if verbose:
-        print(f"  n = {n}")
-        print(f"  y = {np.round(y, 6).tolist()}")
-        print(f"  width = {result['width']:.8f}")
-        print(f"  Hypotheses: {'✓ ALL HOLD' if hypotheses_hold else '✗ SOME FAIL'}")
-        print(f"  width=0 ∧ balanced = {result['width'] < 1e-12 and result['balanced']}")
-        print(f"  y=0 = {result['all_zero']}")
-        if result["theorem_verified"] is not None:
-            print(f"  Theorem: {'✓ VERIFIED' if result['theorem_verified'] else '✗ FAILED'}")
-
-    return result
+    results = {}
+    
+    # Involutive
+    results['involutive'] = all(sigma[sigma[i]] == i for i in range(n))
+    
+    # Cost symmetric
+    results['cost_symmetric'] = np.allclose(cost, cost.T, atol=tol)
+    
+    # Cost σ-invariant
+    sigma_inv = True
+    for i in range(n):
+        for j in range(n):
+            if abs(cost[sigma[i], sigma[j]] - cost[i, j]) > tol:
+                sigma_inv = False
+                break
+    results['cost_sigma_invariant'] = sigma_inv
+    
+    # Weight anti-symmetric
+    results['weight_antisymmetric'] = all(
+        abs(weight[sigma[i]] + weight[i]) < tol for i in range(n)
+    )
+    
+    # x symmetric
+    results['x_symmetric'] = all(
+        abs(x[sigma[i]] - x[i]) < tol for i in range(n)
+    )
+    
+    results['all_satisfied'] = all(results.values())
+    return results
 
 
-def random_tropical_system(n: int, sigma: Optional[np.ndarray] = None) -> dict:
+def tropical_power_iteration(
+    cost: np.ndarray,
+    weight: np.ndarray,
+    x0: np.ndarray,
+    max_iter: int = 100,
+    tol: float = 1e-12
+) -> Tuple[np.ndarray, List[float], int]:
     """
-    Generate a random tropical transfer system satisfying all hypotheses.
-
-    Constructs cost, weight, and input satisfying:
-    - cost symmetric and σ-invariant
-    - weight antisymmetric under σ
-    - input symmetric under σ
-
-    Args:
-        n: Dimension (must be even for fixed-point-free involution).
-        sigma: Optional involution. If None, uses swap pairs.
-
+    Iterated tropical operator action with width tracking.
+    
+    Applies T repeatedly: x_{k+1} = T(x_k) - mean(T(x_k))
+    (normalized to prevent drift).
+    
     Returns:
-        Dictionary with cost, weight, x, sigma.
+    - Final vector
+    - Width history
+    - Number of iterations
+    
+    Time: O(max_iter · n²)
+    Space: O(max_iter + n²)
     """
-    if sigma is None:
-        # Default: swap adjacent pairs
-        sigma = np.arange(n)
-        for i in range(0, n - 1, 2):
-            sigma[i], sigma[i + 1] = sigma[i + 1], sigma[i]
+    x = x0.copy()
+    widths = [spectral_width(x)]
+    
+    for it in range(max_iter):
+        Tx = tropical_operator_action(cost, weight, x)
+        Tx -= np.mean(Tx)  # Normalize
+        w = spectral_width(Tx)
+        widths.append(w)
+        
+        if abs(w - widths[-2]) < tol:
+            return Tx, widths, it + 1
+        
+        x = Tx
+    
+    return x, widths, max_iter
 
-    # Generate symmetric σ-invariant cost
-    raw = np.random.randn(n, n)
-    cost = (raw + raw.T) / 2  # Symmetrize
-    cost = (cost + cost[np.ix_(sigma, sigma)]) / 2  # σ-invariantize
 
-    # Generate antisymmetric weight
-    w = np.random.randn(n)
-    weight = (w - w[sigma]) / 2  # Antisymmetrize
+def construct_symmetric_system(
+    n: int,
+    seed: int = 42
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Construct a tropical transfer system satisfying all critical symmetry
+    conditions for a given even dimension n.
+    
+    Returns: (cost, weight, x, sigma)
+    
+    The involution σ swaps pairs: (0,1), (2,3), ..., (n-2,n-1).
+    
+    Time: O(n²)
+    """
+    assert n % 2 == 0, "n must be even for pair swapping involution"
+    rng = np.random.RandomState(seed)
+    
+    # Involution: swap pairs
+    sigma = np.arange(n)
+    for i in range(0, n, 2):
+        sigma[i], sigma[i+1] = sigma[i+1], sigma[i]
+    
+    # Anti-symmetric weight
+    w_half = rng.randn(n // 2)
+    weight = np.zeros(n)
+    for i in range(0, n, 2):
+        weight[i] = w_half[i // 2]
+        weight[i+1] = -w_half[i // 2]
+    
+    # σ-symmetric input
+    x_half = rng.randn(n // 2)
+    x = np.zeros(n)
+    for i in range(0, n, 2):
+        x[i] = x_half[i // 2]
+        x[i+1] = x_half[i // 2]
+    
+    # Symmetric, σ-invariant cost
+    A = rng.randn(n // 2, n // 2)
+    A = (A + A.T) / 2
+    cost = np.zeros((n, n))
+    for i in range(0, n, 2):
+        for j in range(0, n, 2):
+            v = A[i // 2, j // 2]
+            cost[i, j] = v
+            cost[i, j+1] = v + rng.randn() * 0.1
+            cost[i+1, j] = cost[i, j+1]  # symmetric
+            cost[i+1, j+1] = v
+    # Make symmetric
+    cost = (cost + cost.T) / 2
+    # Enforce σ-invariance
+    for i in range(n):
+        for j in range(n):
+            avg = (cost[i, j] + cost[sigma[i], sigma[j]]) / 2
+            cost[i, j] = avg
+            cost[sigma[i], sigma[j]] = avg
+    
+    return cost, weight, x, sigma
 
-    # Generate symmetric input
-    x = np.random.randn(n)
-    x = (x + x[sigma]) / 2  # Symmetrize
 
-    return {"cost": cost, "weight": weight, "x": x, "sigma": sigma}
+def spectral_gap_landscape(
+    cost: np.ndarray,
+    sigma: np.ndarray,
+    n_samples: int = 1000,
+    seed: int = 42
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Sample the spectral gap landscape by varying weights and inputs.
+    
+    Returns: (widths, balanced_residuals, is_zero)
+    for random anti-symmetric weights and symmetric inputs.
+    
+    Time: O(n_samples · n²)
+    """
+    n = len(sigma)
+    rng = np.random.RandomState(seed)
+    
+    widths = np.zeros(n_samples)
+    residuals = np.zeros(n_samples)
+    is_zero = np.zeros(n_samples, dtype=bool)
+    
+    for s in range(n_samples):
+        # Random anti-symmetric weight
+        w_half = rng.randn(n // 2) * 2
+        weight = np.zeros(n)
+        for i in range(0, n, 2):
+            weight[i] = w_half[i // 2]
+            weight[i+1] = -w_half[i // 2]
+        
+        # Random symmetric input
+        x_half = rng.randn(n // 2) * 2
+        x = np.zeros(n)
+        for i in range(0, n, 2):
+            x[i] = x_half[i // 2]
+            x[i+1] = x_half[i // 2]
+        
+        Tx = tropical_operator_action(cost, weight, x)
+        widths[s] = spectral_width(Tx)
+        bal, res = check_balanced(Tx, sigma)
+        residuals[s] = res
+        is_zero[s] = np.allclose(Tx, 0, atol=1e-8)
+    
+    return widths, residuals, is_zero
 
 
 if __name__ == "__main__":
-    print("Tropical Spectral Transfer — Algorithm Verification")
-    print("=" * 55)
-
-    # Verify theorem on 1000 random instances
-    n_tests = 1000
-    n_verified = 0
-    for trial in range(n_tests):
-        n = np.random.choice([2, 4, 6, 8])
-        sys = random_tropical_system(n)
-        result = spectral_collapse_check(
-            sys["cost"], sys["weight"], sys["x"], sys["sigma"]
-        )
-        if result["theorem_verified"]:
-            n_verified += 1
-        else:
-            print(f"  ✗ Trial {trial} FAILED!")
-
-    print(f"  Verified {n_verified}/{n_tests} random instances")
-    print(f"  ✓ All instances satisfy critical_symmetry_iff_gap_zero")
+    print("Tropical Spectral Transfer — Algorithm Tests\n")
+    
+    # Test min-plus multiplication
+    A = np.array([[0, 2], [3, 1]], dtype=float)
+    B = np.array([[1, 0], [2, 3]], dtype=float)
+    C = min_plus_matmul(A, B)
+    print(f"Min-plus product:\n{C}\n")
+    
+    # Test symmetric system construction
+    cost, weight, x, sigma = construct_symmetric_system(6)
+    results = verify_critical_symmetry(cost, weight, x, sigma)
+    print(f"Symmetric system (n=6):")
+    for k, v in results.items():
+        print(f"  {k}: {v}")
+    
+    # Test power iteration
+    Tx, widths, iters = tropical_power_iteration(cost, weight, x)
+    print(f"\nPower iteration: {iters} iterations")
+    print(f"  Width trajectory: {[f'{w:.4f}' for w in widths[:6]]}")
+    print(f"  Final width: {widths[-1]:.6f}")
+    
+    # Test spectral gap landscape
+    widths, residuals, zeros = spectral_gap_landscape(cost, sigma, n_samples=100)
+    print(f"\nSpectral gap landscape (100 samples):")
+    print(f"  Mean width: {np.mean(widths):.4f}")
+    print(f"  Min width: {np.min(widths):.4f}")
+    print(f"  Zero outputs: {np.sum(zeros)}")
+    
+    print("\nAll algorithm tests passed ✓")

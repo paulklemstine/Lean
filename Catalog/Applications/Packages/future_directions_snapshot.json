@@ -418,10 +418,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "169f3d7c",
     "timestamp": "2026-05-14T16:24:30.129036+00:00"
   },
   {
@@ -987,21 +987,6 @@
     "timestamp": "2026-05-15T19:51:40.844705+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Direction 1",
-    "description": "(general semirings) — Foundational, enables directions 4",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "89af9dca",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T19:54:33.155151+00:00"
-  },
-  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1319,21 +1304,6 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Summary: Research Roadmap",
-    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a015a16c",
-    "consumed_by_exp_id": "12cfcc70",
-    "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
     "id": "fd_0193",
@@ -1900,5 +1870,63 @@
     "source_exp_id": "1cdf4e96",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T20:09:21.826814+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Precise Target",
+    "description": "Define `InvSystem.finCoprod` with injection morphisms `ι_i : X i ⟶ finCoprod X` satisfying the dual universal property: for any cocone `(f_i : X i ⟶ Y)`, there exists a unique `[f₁, ..., fₙ] : finCoprod X ⟶ Y`.\n\nProve the dual transfer theorem:\n```\nΦ(finCoprod X) ≥ min_i Φ(X_i)\n```\nfor superadditive invariants (Φ(X + Y) ≥ Φ(X) + Φ(Y) on coproducts).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "12cfcc70",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:16:56.370470+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Key Lemmas to Formalize",
+    "description": "- `berggren_key_security_from_minEntropy` (existing catalog) as an instance of the additive transfer.\n- `key_derivation_security_bound` (existing catalog) as a product composition of extraction steps.\n- New: `hybrid_composition_bound` as a direct instantiation of `subadditive_finProd_bound`.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "12cfcc70",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:16:56.412963+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Implementation Roadmap",
+    "description": "| Priority | Direction | Dependencies | Estimated Effort |\n|----------|-----------|-------------|------------------|\n| 1 | Coproducts (Direction 1) | Core.lean only | 2-3 weeks |\n| 2 | Security Reductions (Direction 5) | Core.lean + Catalog crypto | 3-4 weeks |\n| 3 | Černý Bounds (Direction 4) | Core.lean + ProductAutomaton.lean | 4-6 weeks |\n| 4 | Entropy-Pressure (Direction 3) | Core.lean + TropicalMinPlusOWF.lean | 6-8 weeks |\n| 5 | Traced Monoidal (Direction 2) | All above | 8-12 weeks |",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "12cfcc70",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:16:56.424317+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Key Principle",
+    "description": "Every direction above instantiates the same pattern: **define a domain-specific invariant, verify it is subadditive (or superadditive, or additive) on binary products, and apply the meta-theorem to get the finite-product bound for free.** This is the compositional calculus in action — one theorem schema, many applications.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "12cfcc70",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:16:56.432677+00:00"
   }
 ]
