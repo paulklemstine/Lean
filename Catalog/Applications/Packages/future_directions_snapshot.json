@@ -96,22 +96,6 @@
     "timestamp": "2026-05-14T16:03:53.833462+00:00"
   },
   {
-    "id": "seed_061",
-    "title": "Emergent Computation in Pythagorean Orbit Lattices",
-    "description": "Prove that the Berggren groupoid orbit lattice on SL(3,Z) supports universal computation via a constructed cellular automaton, establishing Pythagorean triples as a computational substrate. Show that the orbit structure of primitive triples encodes Turing-complete transition rules, and that the lattice's geometric properties guarantee computational universality with polynomial overhead.",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.9,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "a6ee9322",
-    "timestamp": "2026-05-14T16:03:53.855963+00:00"
-  },
-  {
     "id": "seed_012",
     "title": "Tropical RSA: Min-Plus Public Key Cryptosystem with Provable Security",
     "description": "Construct a public-key cryptosystem based on the hardness of tropical matrix factorization, proving that recovering the private key from the public key reduces to the tropical shortest-path problem which is NP-hard in the min-plus semiring. Show that the min-plus analog of RSA has semantic security under a tropical decisional Diffie-Hellman assumption.",
@@ -185,10 +169,10 @@
       "Tropical"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ea2e820",
     "timestamp": "2026-05-14T16:03:53.850725+00:00"
   },
   {
@@ -1073,20 +1057,6 @@
     "timestamp": "2026-05-15T16:47:43.694536+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "Express each derivative",
-    "description": "as a tropical linear combination of basis derivatives.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.713176+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Prove minimality",
     "description": "by showing any formula must reference at least the basis derivatives.\n\n### Cross-Domain Connections\n\n- **Compiler optimization**: Minimal formula representations correspond to optimally simplified cost expressions in program analysis.\n- **Data compression**: Representing a cost function by its minimal formula is a form of algebraic compression.\n\n---\n\n## Direction 3: Separation Between Tropical Formulas and Tropical Circuits\n\n### Precise Theorem Statement\n\n**Conjecture (Formula-Circuit Separation).** There exists a family of tropically recognizable series `{S_n}` over alphabet `{0,1}` such that:\n- Each `S_n` is computable by a tropical circuit (DAG of min and + gates) of polynomial size\n- Any equivalent tropical formula requires exponential size\n\n### Why It Is Breakthrough-Level\n\nThis would",
@@ -1943,20 +1913,6 @@
     "timestamp": "2026-05-15T15:29:13.582275+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "Key Technical Challenge",
-    "description": "The relationship between syntactic compression and conceptual distance is non-trivial. Need to formalize what \"compression relative to a corpus\" means — possibly via Kolmogorov-style conditional complexity.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9f168b29",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:04:54.662760+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Theorem Corpus as Metric Space",
     "description": "All five directions share the perspective of viewing a theorem corpus as a finite metric space. This opens connections to:\n- **Persistent homology**: compute topological features of the novelty landscape\n- **Optimal transport**: measure the \"distance\" between two corpora\n- **Geometric group theory**: study symmetries of the novelty geometry",
@@ -1986,5 +1942,67 @@
     "source_exp_id": "9f168b29",
     "consumed_by_exp_id": "9093673a",
     "timestamp": "2026-05-15T16:04:54.716000+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Phase 1 (Immediate, 1-3 months)",
+    "description": "- Formalize Direction 1 for Markov triples (simplest non-Pythagorean case)\n- Implement the orbit hash function (Direction 3) and benchmark collision resistance\n- Compute spectral data for Berggren subtrees through depth 8 (Direction 4)",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a6ee9322",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:02:08.116396+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Phase 2 (Medium-term, 3-6 months)",
+    "description": "- Complete the parallel computation embedding (Direction 2)\n- Prove the Kolmogorov complexity bounds (Direction 5)\n- Submit paper on arithmetic universality classification",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a6ee9322",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:02:08.129446+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Phase 3 (Long-term, 6-12 months)",
+    "description": "- Generalize to quadratic form orbits (Direction 6)\n- Investigate cryptographic hardness (Direction 3)\n- Develop the spectral theory of arithmetic CAs (Direction 4)\n\n---",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a6ee9322",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:02:08.139954+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Team Structure",
+    "description": "- **Proof Engineering**: formalization in Lean 4, extending the existing verified codebase\n- **Computational Experiments**: Python/Julia implementations for empirical validation\n- **Theory Development**: cross-domain collaboration between number theorists, computer scientists, and dynamicists\n- **Applications**: cryptography group for hardness analysis, complexity group for classification\n\nEach direction is designed to be independently pursuable while contributing to the unified vision of *arithmetic automata on algebraic orbits* as a new field at the intersection of number theory, dynamical systems, and theoretical computer science.",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a6ee9322",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:02:08.150961+00:00"
   }
 ]
