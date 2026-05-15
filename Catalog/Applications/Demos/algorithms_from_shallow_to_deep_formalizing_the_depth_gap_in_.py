@@ -1,254 +1,353 @@
+#!/usr/bin/env python3
 """
-Algorithms for Conceptual Depth Gap Theory.
+Depth Gap Framework: Algorithms
 
-Implements the core algorithms from the research paper:
-- BFS-based depth gap computation
-- Derivative classification
-- Chain graph construction
-- Library enrichment analysis
+Implements the core algorithms from the depth gap theory with
+full complexity analysis and executable examples.
 """
 
-from __future__ import annotations
-from collections import deque
+from dataclasses import dataclass
 from typing import Optional
+import heapq
+from collections import defaultdict
 
 
-class DerivationGraph:
-    """A finite derivation graph with labeled nodes and directed edges.
+@dataclass(frozen=True)
+class TheoremProfile:
+    """Theorem profile with 5 structural features.
 
-    Represents the conceptual transformation graph where nodes are
-    theorem presentations and edges are elementary conceptual leaps.
-
-    Attributes:
-        n: Number of nodes.
-        adj: Adjacency list representation.
+    Time complexity for creation: O(1)
+    Space complexity: O(1)
     """
-
-    def __init__(self, n: int) -> None:
-        """Initialize a derivation graph with n nodes (labeled 0..n-1)."""
-        self.n = n
-        self.adj: list[list[int]] = [[] for _ in range(n)]
-
-    def add_edge(self, u: int, v: int) -> None:
-        """Add a directed edge u -> v (a single conceptual leap)."""
-        if v not in self.adj[u]:
-            self.adj[u].append(v)
-
-    def edge_count(self) -> int:
-        """Return the total number of edges."""
-        return sum(len(neighbors) for neighbors in self.adj)
-
-    def compute_depth_gap(self, known: set[int], target: int) -> Optional[int]:
-        """Compute the depth gap from the known set to the target.
-
-        Uses multi-source BFS from all known nodes simultaneously.
-
-        Args:
-            known: Set of known theorem indices (the library K).
-            target: Index of the target theorem.
-
-        Returns:
-            The shortest path length from any node in known to target,
-            or None if the target is unreachable.
-
-        Time complexity: O(|V| + |E|)
-        Space complexity: O(|V|)
-        """
-        if target in known:
-            return 0
-
-        visited = set()
-        queue: deque[tuple[int, int]] = deque()
-
-        for k in known:
-            queue.append((k, 0))
-            visited.add(k)
-
-        while queue:
-            v, d = queue.popleft()
-            for w in self.adj[v]:
-                if w == target:
-                    return d + 1
-                if w not in visited:
-                    visited.add(w)
-                    queue.append((w, d + 1))
-
-        return None  # Unreachable
-
-    def compute_all_depth_gaps(self, known: set[int]) -> list[Optional[int]]:
-        """Compute depth gaps from known set to all nodes.
-
-        Uses multi-source BFS.
-
-        Args:
-            known: Set of known theorem indices.
-
-        Returns:
-            List where result[i] is the depth gap to node i,
-            or None if unreachable.
-        """
-        dist: list[Optional[int]] = [None] * self.n
-        queue: deque[tuple[int, int]] = deque()
-
-        for k in known:
-            dist[k] = 0
-            queue.append((k, 0))
-
-        while queue:
-            v, d = queue.popleft()
-            for w in self.adj[v]:
-                if dist[w] is None:
-                    dist[w] = d + 1
-                    queue.append((w, d + 1))
-
-        return dist
-
-    def is_derivative(self, known: set[int], threshold: int, target: int) -> bool:
-        """Check if target is derivative at the given threshold.
-
-        A target is derivative if its depth gap is at most threshold.
-
-        Args:
-            known: Set of known theorem indices.
-            threshold: Maximum allowed depth.
-            target: Index of the target theorem.
-
-        Returns:
-            True if depth gap ≤ threshold, False otherwise.
-        """
-        gap = self.compute_depth_gap(known, target)
-        return gap is not None and gap <= threshold
-
-    def classify_all(self, known: set[int], threshold: int) -> dict[str, list[int]]:
-        """Classify all nodes as derivative, novel, or unreachable.
-
-        Args:
-            known: Set of known theorem indices.
-            threshold: Derivative threshold τ.
-
-        Returns:
-            Dictionary with keys 'derivative', 'novel', 'unreachable',
-            each mapping to a list of node indices.
-        """
-        gaps = self.compute_all_depth_gaps(known)
-        result: dict[str, list[int]] = {
-            'derivative': [],
-            'novel': [],
-            'unreachable': []
-        }
-
-        for i, gap in enumerate(gaps):
-            if gap is None:
-                result['unreachable'].append(i)
-            elif gap <= threshold:
-                result['derivative'].append(i)
-            else:
-                result['novel'].append(i)
-
-        return result
+    defs_introduced: int
+    type_changes: int
+    perspective_shifts: int
+    proof_size: int
+    compression_score: int
 
 
-def make_chain_graph(n: int) -> DerivationGraph:
-    """Create a chain graph: 0 -> 1 -> 2 -> ... -> n-1.
+# ── Algorithm 1: Depth Gap Computation ──────────────────────────────
 
-    This is the canonical example demonstrating exact depth gaps.
+def compute_depth_gap(corpus: list[TheoremProfile], target: TheoremProfile) -> int:
+    """Compute the depth gap from corpus to target.
+
+    Algorithm: Linear scan over corpus computing L1 distance on
+    conceptual coordinates, return minimum.
+
+    Time complexity: O(|K|) where |K| is corpus size
+    Space complexity: O(1) additional space
 
     Args:
-        n: Number of nodes.
+        corpus: Nonempty list of known theorem profiles
+        target: Target theorem profile
 
     Returns:
-        A chain derivation graph.
+        The minimum leap cost from any corpus element to target
+
+    Example:
+        >>> corpus = [TheoremProfile(0,0,0,10,5), TheoremProfile(1,0,0,20,15)]
+        >>> compute_depth_gap(corpus, TheoremProfile(3,2,1,50,40))
+        5
     """
-    g = DerivationGraph(n)
-    for i in range(n - 1):
-        g.add_edge(i, i + 1)
-    return g
+    if not corpus:
+        raise ValueError("Corpus must be nonempty")
+
+    min_cost = float('inf')
+    for s in corpus:
+        cost = (abs(s.defs_introduced - target.defs_introduced) +
+                abs(s.type_changes - target.type_changes) +
+                abs(s.perspective_shifts - target.perspective_shifts))
+        min_cost = min(min_cost, cost)
+    return min_cost
 
 
-def make_binary_tree(depth: int) -> DerivationGraph:
-    """Create a complete binary tree of given depth.
+# ── Algorithm 2: Nearest Neighbor with Certificate ──────────────────
 
-    Nodes are numbered by BFS order: root=0, children of i are 2i+1, 2i+2.
+def nearest_neighbor_certificate(
+    corpus: list[TheoremProfile],
+    target: TheoremProfile
+) -> tuple[TheoremProfile, int, dict]:
+    """Find nearest corpus element with a full certificate.
+
+    Returns the nearest neighbor, the depth gap, and a certificate
+    containing per-dimension distances for interpretability.
+
+    Time complexity: O(|K|)
+    Space complexity: O(1)
 
     Args:
-        depth: Depth of the tree (root has depth 0).
+        corpus: Nonempty list of known theorem profiles
+        target: Target theorem profile
 
     Returns:
-        A binary tree derivation graph.
+        Tuple of (nearest_profile, depth_gap, certificate_dict)
+
+    Example:
+        >>> corpus = [TheoremProfile(0,0,0,10,5)]
+        >>> nn, gap, cert = nearest_neighbor_certificate(corpus, TheoremProfile(3,2,1,50,40))
+        >>> gap
+        6
     """
-    n = 2 ** (depth + 1) - 1
-    g = DerivationGraph(n)
-    for i in range(n):
-        left = 2 * i + 1
-        right = 2 * i + 2
-        if left < n:
-            g.add_edge(i, left)
-        if right < n:
-            g.add_edge(i, right)
-    return g
+    if not corpus:
+        raise ValueError("Corpus must be nonempty")
+
+    best = None
+    best_cost = float('inf')
+    best_cert = {}
+
+    for s in corpus:
+        dd = abs(s.defs_introduced - target.defs_introduced)
+        dt = abs(s.type_changes - target.type_changes)
+        dp = abs(s.perspective_shifts - target.perspective_shifts)
+        cost = dd + dt + dp
+        if cost < best_cost:
+            best = s
+            best_cost = cost
+            best_cert = {
+                'defs_distance': dd,
+                'types_distance': dt,
+                'perspective_distance': dp,
+                'total': cost,
+                'dominant_dimension': max(
+                    [('defs', dd), ('types', dt), ('perspective', dp)],
+                    key=lambda x: x[1]
+                )[0]
+            }
+
+    return best, best_cost, best_cert
 
 
-def make_random_graph(n: int, p: float, seed: int = 42) -> DerivationGraph:
-    """Create a random Erdős–Rényi directed graph G(n, p).
+# ── Algorithm 3: Derivative Classification ──────────────────────────
+
+def classify_derivative(
+    corpus: list[TheoremProfile],
+    target: TheoremProfile,
+    threshold: int
+) -> dict:
+    """Classify whether a target is derivative with full analysis.
+
+    Time complexity: O(|K|)
+    Space complexity: O(1)
 
     Args:
-        n: Number of nodes.
-        p: Edge probability.
-        seed: Random seed for reproducibility.
+        corpus: Nonempty list of known theorem profiles
+        target: Target theorem profile
+        threshold: Derivativeness threshold τ
 
     Returns:
-        A random derivation graph.
+        Classification result with certificate
     """
-    import random
-    rng = random.Random(seed)
-    g = DerivationGraph(n)
-    for i in range(n):
-        for j in range(n):
-            if i != j and rng.random() < p:
-                g.add_edge(i, j)
-    return g
+    nn, gap, cert = nearest_neighbor_certificate(corpus, target)
+    is_deriv = gap <= threshold
+
+    return {
+        'is_derivative': is_deriv,
+        'depth_gap': gap,
+        'threshold': threshold,
+        'margin': threshold - gap if is_deriv else gap - threshold,
+        'nearest_neighbor': nn,
+        'certificate': cert,
+        'classification': 'DERIVATIVE' if is_deriv else 'NOVEL'
+    }
 
 
-def library_enrichment_experiment(
-    graph: DerivationGraph,
-    initial_known: set[int],
-    additions: list[int],
-    target: int
-) -> list[tuple[int, Optional[int]]]:
-    """Track depth gap as the known library grows.
+# ── Algorithm 4: Batch Novelty Scoring ──────────────────────────────
+
+def batch_novelty_score(
+    corpus: list[TheoremProfile],
+    candidates: list[TheoremProfile],
+    threshold: int
+) -> list[dict]:
+    """Score a batch of candidates for novelty relative to corpus.
+
+    Time complexity: O(|K| × |candidates|)
+    Space complexity: O(|candidates|)
 
     Args:
-        graph: The derivation graph.
-        initial_known: Initial known set.
-        additions: Nodes to add one by one.
-        target: Target node.
+        corpus: Known theorem corpus
+        candidates: List of candidate theorem profiles to score
+        threshold: Derivativeness threshold
 
     Returns:
-        List of (library_size, depth_gap) pairs.
+        List of scoring results, sorted by depth gap (most novel first)
     """
-    known = set(initial_known)
-    results = [(len(known), graph.compute_depth_gap(known, target))]
+    results = []
+    for i, cand in enumerate(candidates):
+        result = classify_derivative(corpus, cand, threshold)
+        result['index'] = i
+        results.append(result)
 
-    for node in additions:
-        known.add(node)
-        gap = graph.compute_depth_gap(known, target)
-        results.append((len(known), gap))
-
+    results.sort(key=lambda r: -r['depth_gap'])
     return results
 
 
-if __name__ == "__main__":
-    # Quick demo
-    print("=== Chain Graph Demo ===")
-    chain = make_chain_graph(11)
-    known = {0}
-    for t in range(11):
-        gap = chain.compute_depth_gap(known, t)
-        deriv = chain.is_derivative(known, 3, t)
-        print(f"  Target {t:2d}: depth_gap={gap}, derivative(τ=3)={deriv}")
+# ── Algorithm 5: Typed Leap Path Finder ─────────────────────────────
 
-    print("\n=== Library Enrichment Demo ===")
-    chain = make_chain_graph(11)
-    results = library_enrichment_experiment(chain, {0}, [3, 5, 7, 9], 10)
-    for size, gap in results:
-        print(f"  |K|={size}: depthGap(target=10) = {gap}")
+def find_typed_leap_path(
+    source: TheoremProfile,
+    target: TheoremProfile
+) -> list[tuple[str, TheoremProfile, TheoremProfile]]:
+    """Find an optimal typed leap path from source to target.
+
+    Constructs a sequence of single-coordinate unit leaps that realizes
+    the leap cost exactly. Each leap changes exactly one of the three
+    conceptual coordinates by exactly 1.
+
+    Time complexity: O(leap_cost(source, target))
+    Space complexity: O(leap_cost(source, target))
+
+    Args:
+        source: Starting profile
+        target: Ending profile
+
+    Returns:
+        List of (leap_kind, from_profile, to_profile) tuples
+    """
+    path = []
+    current = source
+
+    # Process each dimension in sequence
+    dimensions = [
+        ('introDef', 'defs_introduced'),
+        ('typeChange', 'type_changes'),
+        ('perspectiveShift', 'perspective_shifts'),
+    ]
+
+    for kind, attr in dimensions:
+        while getattr(current, attr) != getattr(target, attr):
+            delta = 1 if getattr(current, attr) < getattr(target, attr) else -1
+            new_vals = {
+                'defs_introduced': current.defs_introduced,
+                'type_changes': current.type_changes,
+                'perspective_shifts': current.perspective_shifts,
+                'proof_size': current.proof_size,
+                'compression_score': current.compression_score,
+            }
+            new_vals[attr] += delta
+            next_profile = TheoremProfile(**new_vals)
+            path.append((kind, current, next_profile))
+            current = next_profile
+
+    return path
+
+
+# ── Algorithm 6: Corpus Coverage Analysis ───────────────────────────
+
+def corpus_coverage_analysis(
+    corpus: list[TheoremProfile],
+    max_coord: int = 10,
+    thresholds: list[int] = None
+) -> dict:
+    """Analyze how well a corpus covers the profile space.
+
+    Computes coverage statistics: what fraction of the grid [0..max_coord]³
+    is derivative at various thresholds.
+
+    Time complexity: O(|K| × max_coord³)
+    Space complexity: O(max_coord³)
+
+    Args:
+        corpus: Known theorem corpus
+        max_coord: Maximum coordinate value for grid
+        thresholds: List of threshold values to evaluate
+
+    Returns:
+        Coverage statistics dictionary
+    """
+    if thresholds is None:
+        thresholds = [1, 2, 3, 5, 10]
+
+    total = (max_coord + 1) ** 3
+    gap_distribution = defaultdict(int)
+
+    # Compute all depth gaps
+    import itertools
+    for d, t, p in itertools.product(range(max_coord + 1), repeat=3):
+        target = TheoremProfile(d, t, p, 0, 0)
+        gap = compute_depth_gap(corpus, target)
+        gap_distribution[gap] += 1
+
+    # Coverage at each threshold
+    coverage = {}
+    for tau in thresholds:
+        derivative_count = sum(
+            count for gap, count in gap_distribution.items() if gap <= tau
+        )
+        coverage[tau] = derivative_count / total
+
+    max_gap = max(gap_distribution.keys())
+    mean_gap = sum(g * c for g, c in gap_distribution.items()) / total
+
+    return {
+        'total_profiles': total,
+        'corpus_size': len(corpus),
+        'max_gap': max_gap,
+        'mean_gap': round(mean_gap, 2),
+        'coverage_by_threshold': coverage,
+        'gap_distribution': dict(sorted(gap_distribution.items())),
+    }
+
+
+# ── Example Usage ───────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    print("=" * 60)
+    print("Algorithm Demonstrations")
+    print("=" * 60)
+
+    corpus = [
+        TheoremProfile(0, 0, 0, 10, 5),
+        TheoremProfile(2, 1, 0, 25, 20),
+        TheoremProfile(0, 0, 2, 15, 10),
+    ]
+
+    target = TheoremProfile(4, 3, 1, 60, 45)
+
+    # Algorithm 1
+    print("\n--- Algorithm 1: Depth Gap ---")
+    gap = compute_depth_gap(corpus, target)
+    print(f"  Depth gap: {gap}")
+
+    # Algorithm 2
+    print("\n--- Algorithm 2: Nearest Neighbor Certificate ---")
+    nn, gap, cert = nearest_neighbor_certificate(corpus, target)
+    print(f"  Nearest: ({nn.defs_introduced},{nn.type_changes},{nn.perspective_shifts})")
+    print(f"  Gap: {gap}")
+    print(f"  Certificate: {cert}")
+
+    # Algorithm 3
+    print("\n--- Algorithm 3: Classification ---")
+    for tau in [3, 5, 8]:
+        result = classify_derivative(corpus, target, tau)
+        print(f"  τ={tau}: {result['classification']} (margin={result['margin']})")
+
+    # Algorithm 4
+    print("\n--- Algorithm 4: Batch Scoring ---")
+    candidates = [
+        TheoremProfile(0, 0, 0, 12, 6),
+        TheoremProfile(1, 1, 1, 20, 15),
+        TheoremProfile(5, 5, 5, 100, 80),
+        TheoremProfile(3, 2, 1, 40, 30),
+    ]
+    scores = batch_novelty_score(corpus, candidates, threshold=5)
+    for s in scores:
+        t = candidates[s['index']]
+        print(f"  ({t.defs_introduced},{t.type_changes},{t.perspective_shifts}): "
+              f"gap={s['depth_gap']} → {s['classification']}")
+
+    # Algorithm 5
+    print("\n--- Algorithm 5: Typed Leap Path ---")
+    source = TheoremProfile(0, 0, 0, 10, 5)
+    dest = TheoremProfile(2, 1, 1, 30, 22)
+    path = find_typed_leap_path(source, dest)
+    for kind, src, tgt in path:
+        print(f"  {kind:<20} ({src.defs_introduced},{src.type_changes},{src.perspective_shifts}) → "
+              f"({tgt.defs_introduced},{tgt.type_changes},{tgt.perspective_shifts})")
+
+    # Algorithm 6
+    print("\n--- Algorithm 6: Coverage Analysis ---")
+    analysis = corpus_coverage_analysis(corpus, max_coord=8, thresholds=[1, 3, 5, 8])
+    print(f"  Mean gap: {analysis['mean_gap']}")
+    print(f"  Max gap: {analysis['max_gap']}")
+    for tau, cov in analysis['coverage_by_threshold'].items():
+        print(f"  Coverage at τ={tau}: {cov:.1%}")

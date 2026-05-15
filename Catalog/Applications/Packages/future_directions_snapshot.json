@@ -974,20 +974,6 @@
     "timestamp": "2026-05-15T15:26:49.752165+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Group representation on state spaces",
-    "description": ": `ρ : G →* (State n ≃ₗ[ℝ] State n)`.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.763873+00:00"
-  },
-  {
     "id": "fd_0233",
     "title": "Concrete group actions",
     "description": ": permutation matrices, rotation matrices, etc.\n\n### Proof Strategy\n\nStart with the finite group case (permutations), which is already proven. The Schur classification for the symmetric group representation on `Fin n → ℝ` follows from Schur's lemma plus the fact that the standard permutation representation decomposes into the trivial and standard irreducibles. Use Mathlib's representation theory infrastructure.\n\n### Cross-Domain Connections\n\n- **Geometric deep learning**: The Bronstein et al. (2021) program of geometric deep learning is exactly the study of equivariant architectures. Our framework provides formal foundations.\n- **Physics**: Gauge equivariance is the foundation of lattice gauge theory neural networks.\n\n---\n\n## Direction 4: Architecture Rewriting Systems and Normal Forms\n\n##",
@@ -1125,20 +1111,6 @@
     "timestamp": "2026-05-15T16:01:39.461970+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Computational proof",
-    "description": "Use `native_decide` or `decide` to verify all $28^2 = 784$ pairwise costs and extract the maximum. This requires defining the corpus as a concrete `Finset`.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de9a421e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:01:39.473688+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Structural bound",
     "description": "Prove an upper bound on the diameter using the maximum pitch range and number of voices, then find a tight example computationally.\n\n### Cross-Domain Connection\n\nThis connects to graph theory (diameter of weighted graphs), network analysis (navigability of harmonic spaces), and computational music theory (complexity of modulation).\n\n---\n\n## Direction 5: Tropical Harmonic Semiring\n\n### Exact Theorem Statement\n\nDefine a tropical semiring structure on chord progressions where:\n- Addition = minimum cost path selection\n- Multiplication = path concatenation (cost addition)\n\nProve that this satisfies the tropical semiring axioms.\n\n### Formalization Target\n\n```lean\nstructure TropicalProgression (n : ℕ) where\n  source : ChordN n\n  target : ChordN n\n  cost : ℕ\n\ndef tropAdd (p q : TropicalProgression",
@@ -1156,21 +1128,6 @@
     "timestamp": "2026-05-15T16:01:39.486214+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Direct algebraic verification",
-    "description": "The tropical semiring axioms for $(\\min, +)$ are straightforward once the objects are defined correctly.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de9a421e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:01:39.495360+00:00"
-  },
-  {
     "id": "fd_0233",
     "title": "Embed into existing tropical algebra",
     "description": "Mathlib has `Tropical` type with min-plus structure. Define a homomorphism from progression costs into `Tropical ℕ`.",
@@ -1184,6 +1141,34 @@
     "source_exp_id": "de9a421e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T16:01:39.505662+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Week 1:",
+    "description": "Formalize definitions and state the main theorem in Lean 4.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8bc5f37e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:04:30.136959+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Week 3:",
+    "description": "Complete the proof and write documentation.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8bc5f37e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:04:30.157625+00:00"
   },
   {
     "id": "seed_079",
@@ -1282,20 +1267,6 @@
     "source_exp_id": "ea1c2257",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:39.952876+00:00"
-  },
-  {
-    "id": "fd_0125",
-    "title": "Vision",
-    "description": "Extend the two-voice framework to four-part SATB (soprano, alto, tenor, bass) chorale writing, where vertical constraints become hyperedge penalties on 4-tuples and voice-leading costs form a layered tropical hypergraph.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "8bc5f37e",
-    "timestamp": "2026-05-14T16:24:05.734533+00:00"
   },
   {
     "id": "fd_0126",
@@ -1865,20 +1836,6 @@
     "source_exp_id": "cc175531",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:04:33.002619+00:00"
-  },
-  {
-    "id": "fd_0230",
-    "title": "Phase 1 (Near-term): Directions 2 and 5",
-    "description": "- State complexity bounds are the most accessible extension\n- Temporal formulas have immediate practical applications\n- Both build directly on existing infrastructure",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc175531",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:33.035656+00:00"
   },
   {
     "id": "fd_0215",

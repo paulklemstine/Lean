@@ -1,689 +1,719 @@
+#!/usr/bin/env python3
 """
-Applications of Conceptual Depth Gap Theory.
+Depth Gap Framework: Applications
 
-Demonstrates real-world applications:
-1. Mathematical knowledge graph analysis
-2. Novelty-filtered theorem generation
-3. Knowledge evolution tracking
-4. Proof difficulty estimation
+Shows real-world applications of the depth gap theory to
+automated theorem proving evaluation, curriculum design,
+and corpus geometry.
 """
 
-from __future__ import annotations
+from dataclasses import dataclass
 import random
-from algorithms import DerivationGraph
+import itertools
 
 
-def build_math_knowledge_graph() -> tuple[DerivationGraph, dict[int, str], dict[str, int]]:
-    """Build a toy mathematical knowledge graph.
+@dataclass(frozen=True)
+class TheoremProfile:
+    defs_introduced: int
+    type_changes: int
+    perspective_shifts: int
+    proof_size: int
+    compression_score: int
 
-    Models a small fragment of number theory / algebra
-    with conceptual leaps between theorems.
 
-    Returns:
-        (graph, id_to_name, name_to_id) triple.
-    """
-    theorems = [
-        "Peano Axioms",           # 0
-        "Addition Commutativity",  # 1
-        "Multiplication",         # 2
-        "Divisibility",           # 3
-        "Prime Definition",       # 4
-        "GCD",                    # 5
-        "Euclidean Algorithm",    # 6
-        "Unique Factorization",   # 7
-        "Infinitely Many Primes", # 8
-        "Modular Arithmetic",     # 9
-        "Fermat Little Theorem",  # 10
-        "Euler Totient",          # 11
-        "RSA Correctness",        # 12
-        "Quadratic Reciprocity",  # 13
-        "Dirichlet Theorem",      # 14
-        "Prime Number Theorem",   # 15
+def leap_cost(a, b):
+    return (abs(a.defs_introduced - b.defs_introduced) +
+            abs(a.type_changes - b.type_changes) +
+            abs(a.perspective_shifts - b.perspective_shifts))
+
+
+def depth_gap(corpus, target):
+    return min(leap_cost(s, target) for s in corpus)
+
+
+# ── Application 1: ATP Benchmark Evaluator ──────────────────────────
+
+def app_benchmark_evaluator():
+    """Evaluate an automated theorem prover's output for genuine novelty."""
+    print("=" * 60)
+    print("APPLICATION 1: ATP Benchmark Evaluator")
+    print("=" * 60)
+
+    # Simulate a "training corpus" — theorems the prover was trained on
+    training_corpus = [
+        TheoremProfile(0, 0, 0, 5, 3),    # basic identity
+        TheoremProfile(1, 0, 0, 10, 7),   # simple definition use
+        TheoremProfile(0, 1, 0, 8, 5),    # type coercion
+        TheoremProfile(1, 1, 0, 15, 10),  # definition + type change
+        TheoremProfile(0, 0, 1, 12, 8),   # perspective shift
+        TheoremProfile(2, 0, 0, 20, 14),  # two definitions
+        TheoremProfile(0, 2, 0, 18, 12),  # two type changes
+        TheoremProfile(1, 0, 1, 16, 11),  # def + perspective
     ]
 
-    g = DerivationGraph(len(theorems))
-    id_to_name = {i: name for i, name in enumerate(theorems)}
-    name_to_id = {name: i for i, name in enumerate(theorems)}
-
-    # Define conceptual leaps
-    edges = [
-        (0, 1),   # Peano -> Addition
-        (0, 2),   # Peano -> Multiplication
-        (2, 3),   # Multiplication -> Divisibility
-        (3, 4),   # Divisibility -> Prime
-        (3, 5),   # Divisibility -> GCD
-        (5, 6),   # GCD -> Euclidean Algorithm
-        (4, 7),   # Prime -> Unique Factorization
-        (5, 7),   # GCD -> Unique Factorization
-        (4, 8),   # Prime -> Infinitely Many Primes
-        (3, 9),   # Divisibility -> Modular Arithmetic
-        (9, 10),  # Modular Arithmetic -> Fermat Little
-        (4, 10),  # Prime -> Fermat Little
-        (10, 11), # Fermat Little -> Euler Totient
-        (11, 12), # Euler Totient -> RSA
-        (9, 13),  # Modular Arithmetic -> Quadratic Reciprocity
-        (4, 13),  # Prime -> Quadratic Reciprocity
-        (8, 14),  # Infinitely Many Primes -> Dirichlet
-        (13, 14), # Quadratic Reciprocity -> Dirichlet
-        (8, 15),  # Infinitely Many Primes -> PNT
+    # Simulate prover outputs
+    prover_outputs = [
+        ("Trivial rewrite",        TheoremProfile(0, 0, 0, 6, 4)),
+        ("Minor generalization",   TheoremProfile(1, 1, 0, 14, 9)),
+        ("New perspective on old",  TheoremProfile(0, 0, 2, 20, 15)),
+        ("Genuine new theorem",    TheoremProfile(3, 2, 2, 45, 35)),
+        ("Deep connection",        TheoremProfile(4, 3, 3, 80, 60)),
+        ("Breakthrough result",    TheoremProfile(5, 5, 5, 120, 90)),
     ]
 
-    for u, v in edges:
-        g.add_edge(u, v)
+    threshold = 3
 
-    return g, id_to_name, name_to_id
+    print(f"\n  Training corpus size: {len(training_corpus)}")
+    print(f"  Novelty threshold τ: {threshold}")
+    print(f"\n  {'Output':<25} {'Gap':>5} {'Status':>12} {'Verdict':>15}")
+    print("  " + "-" * 60)
 
+    novel_count = 0
+    for label, output in prover_outputs:
+        gap = depth_gap(training_corpus, output)
+        is_novel = gap > threshold
+        if is_novel:
+            novel_count += 1
+        status = "NOVEL ✓" if is_novel else "derivative"
+        verdict = f"gap={gap}" + (" ← genuine!" if is_novel else "")
+        print(f"  {label:<25} {gap:>5} {status:>12} {verdict:>15}")
 
-def application_knowledge_analysis():
-    """Analyze the mathematical knowledge graph."""
-    print("=" * 65)
-    print("APPLICATION 1: Mathematical Knowledge Graph Analysis")
-    print("=" * 65)
-    print()
-
-    g, id_to_name, name_to_id = build_math_knowledge_graph()
-
-    # Compute depth gaps from Peano Axioms
-    known = {0}  # Start from axioms
-    gaps = g.compute_all_depth_gaps(known)
-
-    print("Depth gaps from Peano Axioms:")
-    print(f"{'Theorem':<30} {'Depth Gap':>10}")
-    print("-" * 42)
-
-    sorted_theorems = sorted(range(g.n), key=lambda i: gaps[i] if gaps[i] is not None else 999)
-    for i in sorted_theorems:
-        gap_str = str(gaps[i]) if gaps[i] is not None else "∞"
-        print(f"{id_to_name[i]:<30} {gap_str:>10}")
-
-    print()
-
-    # Classification at different thresholds
-    for tau in [2, 3, 4]:
-        classification = g.classify_all(known, tau)
-        novel_names = [id_to_name[i] for i in classification['novel']]
-        print(f"τ = {tau}: Novel theorems = {novel_names}")
-
-    print()
+    novelty_rate = novel_count / len(prover_outputs) * 100
+    print(f"\n  Novelty rate: {novel_count}/{len(prover_outputs)} = {novelty_rate:.0f}%")
+    print(f"  Assessment: {'Strong prover' if novelty_rate > 50 else 'Derivative prover'}")
 
 
-def application_novelty_filter():
-    """Simulate a novelty-filtered theorem generation system."""
-    print("=" * 65)
-    print("APPLICATION 2: Novelty-Filtered Theorem Generation")
-    print("=" * 65)
-    print()
+# ── Application 2: Curriculum Design ────────────────────────────────
 
-    g, id_to_name, _ = build_math_knowledge_graph()
+def app_curriculum_design():
+    """Design a learning curriculum by targeting specific depth gaps."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Curriculum Design for Theorem Search")
+    print("=" * 60)
 
-    # Simulate a library that knows basic arithmetic
-    known = {0, 1, 2, 3}  # Peano, Addition, Multiplication, Divisibility
-    tau = 2  # Derivative threshold
+    # Start with basic known theorems
+    known = [TheoremProfile(0, 0, 0, 5, 3)]
 
-    print(f"Known library: {[id_to_name[k] for k in sorted(known)]}")
-    print(f"Derivative threshold: τ = {tau}")
-    print()
-
-    # "Generate" candidate theorems (all remaining nodes)
-    candidates = [i for i in range(g.n) if i not in known]
-
-    print("Generated candidates and their classifications:")
-    print(f"{'Candidate':<30} {'Depth Gap':>10} {'Status':>12}")
-    print("-" * 54)
-
-    for c in candidates:
-        gap = g.compute_depth_gap(known, c)
-        status = "DERIVATIVE" if gap is not None and gap <= tau else "NOVEL" if gap is not None else "UNREACHABLE"
-        gap_str = str(gap) if gap is not None else "∞"
-        print(f"{id_to_name[c]:<30} {gap_str:>10} {status:>12}")
-
-    print()
-    print("The novelty filter keeps only NOVEL results,")
-    print("automatically discarding routine derivations.")
-    print()
-
-
-def application_knowledge_evolution():
-    """Track how depth gaps evolve as knowledge grows."""
-    print("=" * 65)
-    print("APPLICATION 3: Knowledge Evolution Tracking")
-    print("=" * 65)
-    print()
-
-    g, id_to_name, _ = build_math_knowledge_graph()
-
-    # Simulate historical development of number theory
-    development_order = [
-        0,   # Peano Axioms (foundational)
-        1,   # Addition
-        2,   # Multiplication
-        3,   # Divisibility
-        4,   # Primes
-        5,   # GCD
-        8,   # Infinitely many primes (Euclid)
-        9,   # Modular arithmetic
-        7,   # Unique factorization
-        6,   # Euclidean algorithm
-        10,  # Fermat's little theorem
-        13,  # Quadratic reciprocity (Gauss)
-        11,  # Euler totient
-        14,  # Dirichlet's theorem
-        15,  # Prime number theorem
-        12,  # RSA
+    # Define target milestones at increasing depth
+    milestones = [
+        TheoremProfile(1, 0, 0, 10, 7),    # First new definition
+        TheoremProfile(1, 1, 0, 15, 10),    # First type change
+        TheoremProfile(2, 1, 0, 20, 14),    # Second definition
+        TheoremProfile(2, 1, 1, 25, 18),    # First perspective shift
+        TheoremProfile(3, 2, 1, 35, 25),    # Complex theorem
+        TheoremProfile(4, 3, 2, 50, 38),    # Deep result
     ]
 
-    target = 15  # Track depth gap to PNT
+    print("\n  Curriculum progression:")
+    print(f"  {'Step':>6} {'Target':>15} {'Gap Before':>12} {'Gap After':>11}")
+    print("  " + "-" * 48)
 
-    print(f"Tracking depth gap to '{id_to_name[target]}'")
-    print(f"as mathematical knowledge develops over time:")
-    print()
-    print(f"{'Step':>5} {'Added Theorem':<30} {'Depth Gap to PNT':>17}")
-    print("-" * 55)
+    for i, milestone in enumerate(milestones):
+        gap_before = depth_gap(known, milestone)
+        known.append(milestone)
+        # After adding, this milestone has gap 0; check next if exists
+        if i + 1 < len(milestones):
+            gap_after = depth_gap(known, milestones[i + 1])
+        else:
+            gap_after = 0
+        coords = f"({milestone.defs_introduced},{milestone.type_changes},{milestone.perspective_shifts})"
+        print(f"  {i+1:>6} {coords:>15} {gap_before:>12} {gap_after:>11}")
 
-    known = set()
-    for step, thm_id in enumerate(development_order):
-        known.add(thm_id)
-        gap = g.compute_depth_gap(known, target)
-        gap_str = str(gap) if gap is not None else "∞"
-        marker = " ← discovered!" if thm_id == target else ""
-        print(f"{step:>5} {id_to_name[thm_id]:<30} {gap_str:>17}{marker}")
-
-    print()
-    print("The depth gap monotonically decreases as knowledge grows,")
-    print("confirming the antitone property.")
-    print()
+    print("\n  Key insight: Each milestone reduces the gap to the next target.")
+    print("  Curriculum ordering ensures no gap exceeds 3 at any step.")
 
 
-def application_difficulty_estimation():
-    """Estimate proof difficulty using depth gap."""
-    print("=" * 65)
-    print("APPLICATION 4: Proof Difficulty Estimation")
-    print("=" * 65)
-    print()
+# ── Application 3: Corpus Geometry Analysis ─────────────────────────
 
-    g, id_to_name, _ = build_math_knowledge_graph()
-    known = {0}  # Just axioms
+def app_corpus_geometry():
+    """Analyze the geometric structure of a theorem corpus."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Corpus Geometry — Novelty Shells")
+    print("=" * 60)
 
-    gaps = g.compute_all_depth_gaps(known)
+    corpus = [
+        TheoremProfile(0, 0, 0, 5, 3),
+        TheoremProfile(2, 0, 0, 15, 10),
+        TheoremProfile(0, 2, 0, 12, 8),
+        TheoremProfile(1, 1, 1, 18, 13),
+    ]
 
-    categories = {
-        "Elementary (gap ≤ 2)": [],
-        "Intermediate (gap 3-4)": [],
-        "Advanced (gap ≥ 5)": [],
-        "Unreachable": [],
+    # Compute novelty shells: profiles at each depth level
+    max_coord = 7
+    shells = {}
+    for d, t, p in itertools.product(range(max_coord + 1), repeat=3):
+        target = TheoremProfile(d, t, p, 0, 0)
+        gap = depth_gap(corpus, target)
+        if gap not in shells:
+            shells[gap] = 0
+        shells[gap] += 1
+
+    total = (max_coord + 1) ** 3
+    print(f"\n  Corpus: {len(corpus)} profiles")
+    print(f"  Grid: [0..{max_coord}]³ = {total} profiles")
+    print(f"\n  {'Shell':>6} {'Size':>8} {'Fraction':>10}  {'Description':<30}")
+    print("  " + "-" * 60)
+
+    descriptions = {
+        0: "Known (in corpus)",
+        1: "Trivial extensions",
+        2: "Minor variations",
+        3: "Moderate novelty",
     }
 
-    for i in range(g.n):
-        gap = gaps[i]
-        if gap is None:
-            categories["Unreachable"].append(id_to_name[i])
-        elif gap <= 2:
-            categories["Elementary (gap ≤ 2)"].append(id_to_name[i])
-        elif gap <= 4:
-            categories["Intermediate (gap 3-4)"].append(id_to_name[i])
-        else:
-            categories["Advanced (gap ≥ 5)"].append(id_to_name[i])
+    cumulative = 0
+    for gap in sorted(shells.keys()):
+        count = shells[gap]
+        cumulative += count
+        frac = count / total
+        desc = descriptions.get(gap, f"Depth {gap} frontier" if gap < 6 else "Deep novelty")
+        print(f"  {gap:>6} {count:>8} {frac:>10.1%}  {desc:<30}")
 
-    for cat, theorems in categories.items():
-        print(f"{cat}:")
-        for t in theorems:
-            print(f"  • {t}")
-        print()
-
-    print("This classification provides a principled difficulty")
-    print("metric based on conceptual distance from foundations.")
-    print()
+    # Covering radius
+    covering_radius = max(shells.keys())
+    print(f"\n  Covering radius: {covering_radius}")
+    print(f"  Median depth: ~{sorted(shells.keys())[len(shells) // 2]}")
 
 
-if __name__ == "__main__":
-    application_knowledge_analysis()
-    application_novelty_filter()
-    application_knowledge_evolution()
-    application_difficulty_estimation()
+# ── Application 4: Machine Learning Model Comparison ────────────────
 
-
-"""
-Demonstration of Conceptual Depth Gap Theory.
-
-Concrete numerical examples illustrating the main theorems:
-1. Chain graph depth gaps (exact computation)
-2. Separation theorem (arbitrarily large gaps exist)
-3. Library enrichment (monotonicity)
-4. Derivative classification
-5. Compression threshold
-"""
-
-from algorithms import (
-    DerivationGraph,
-    make_chain_graph,
-    make_binary_tree,
-    make_random_graph,
-    library_enrichment_experiment,
-)
-
-
-def demo_chain_graph():
-    """Demonstrate exact depth gaps in chain graphs."""
+def app_ml_comparison():
+    """Compare two ML theorem generators by novelty profile."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: ML Theorem Generator Comparison")
     print("=" * 60)
-    print("DEMO 1: Chain Graph — Exact Depth Gaps")
-    print("=" * 60)
-    print()
-    print("Chain graph: 0 → 1 → 2 → ... → 10")
-    print("Known set K = {0}")
-    print()
 
-    chain = make_chain_graph(11)
-    known = {0}
-
-    print(f"{'Target':>8} {'Depth Gap':>10} {'Derivative(τ=3)':>16} {'Derivative(τ=5)':>16}")
-    print("-" * 52)
-    for t in range(11):
-        gap = chain.compute_depth_gap(known, t)
-        d3 = chain.is_derivative(known, 3, t)
-        d5 = chain.is_derivative(known, 5, t)
-        print(f"{t:>8} {gap:>10} {str(d3):>16} {str(d5):>16}")
-
-    print()
-    print("Key insight: depth gap equals the node index, matching")
-    print("the formal theorem chainEdge_reachIn_iff.")
-    print()
-
-
-def demo_separation_theorem():
-    """Demonstrate that arbitrarily large depth gaps exist."""
-    print("=" * 60)
-    print("DEMO 2: Separation Theorem — Arbitrarily Large Gaps")
-    print("=" * 60)
-    print()
-    print("For each threshold τ, we construct a graph where some")
-    print("node has depth gap = τ + 1, proving it is NOT derivative.")
-    print()
-
-    print(f"{'Threshold τ':>12} {'Graph Size':>11} {'Max Depth Gap':>14} {'Non-derivative?':>16}")
-    print("-" * 55)
-
-    for tau in range(10):
-        n = tau + 2  # Need at least τ+2 nodes
-        chain = make_chain_graph(n)
-        known = {0}
-        target = n - 1
-        gap = chain.compute_depth_gap(known, target)
-        is_deriv = chain.is_derivative(known, tau, target)
-        print(f"{tau:>12} {n:>11} {gap:>14} {str(not is_deriv):>16}")
-
-    print()
-    print("This demonstrates exists_deep_target: for every τ,")
-    print("there exists a graph with a non-derivative target.")
-    print()
-
-
-def demo_library_enrichment():
-    """Demonstrate monotonicity under library enrichment."""
-    print("=" * 60)
-    print("DEMO 3: Library Enrichment — Monotonicity")
-    print("=" * 60)
-    print()
-    print("Chain graph: 0 → 1 → ... → 10, target = 10")
-    print("Progressively adding nodes to the known set.")
-    print()
-
-    chain = make_chain_graph(11)
-    results = library_enrichment_experiment(
-        chain, {0}, [3, 5, 7, 9], 10
-    )
-
-    print(f"{'|K|':>5} {'Depth Gap':>10} {'Change':>8}")
-    print("-" * 25)
-    prev_gap = None
-    for size, gap in results:
-        change = ""
-        if prev_gap is not None and gap is not None and prev_gap is not None:
-            diff = gap - prev_gap
-            change = f"{diff:+d}" if diff != 0 else "0"
-        print(f"{size:>5} {gap:>10} {change:>8}")
-        prev_gap = gap
-
-    print()
-    print("Depth gap is monotonically non-increasing,")
-    print("confirming depthGap_antitone_known.")
-    print()
-
-
-def demo_classification():
-    """Demonstrate derivative classification."""
-    print("=" * 60)
-    print("DEMO 4: Derivative Classification")
-    print("=" * 60)
-    print()
-
-    # Build a more interesting graph
-    g = DerivationGraph(8)
-    edges = [
-        (0, 1), (0, 2), (1, 3), (1, 4),
-        (2, 5), (3, 6), (4, 6), (5, 7),
+    training_data = [
+        TheoremProfile(0, 0, 0, 5, 3),
+        TheoremProfile(1, 0, 0, 10, 7),
+        TheoremProfile(0, 1, 0, 8, 5),
+        TheoremProfile(1, 1, 0, 12, 8),
     ]
-    for u, v in edges:
-        g.add_edge(u, v)
 
-    known = {0}
-    print("Graph: 8 nodes with edges representing conceptual leaps")
-    print(f"Edges: {edges}")
-    print(f"Known: {known}")
-    print()
+    random.seed(42)
 
-    for tau in [1, 2, 3]:
-        classification = g.classify_all(known, tau)
-        print(f"Threshold τ = {tau}:")
-        print(f"  Derivative:   {classification['derivative']}")
-        print(f"  Novel:        {classification['novel']}")
-        print(f"  Unreachable:  {classification['unreachable']}")
-        print()
+    # Model A: conservative, stays close to training data
+    model_a_outputs = [
+        TheoremProfile(
+            d + random.randint(0, 1),
+            t + random.randint(0, 1),
+            p + random.randint(0, 1),
+            ps + random.randint(0, 5),
+            cs + random.randint(0, 3)
+        )
+        for d, t, p, ps, cs in [(s.defs_introduced, s.type_changes,
+                                   s.perspective_shifts, s.proof_size,
+                                   s.compression_score) for s in training_data]
+        for _ in range(3)
+    ]
 
+    # Model B: exploratory, ventures further
+    model_b_outputs = [
+        TheoremProfile(
+            random.randint(0, 5),
+            random.randint(0, 5),
+            random.randint(0, 5),
+            random.randint(10, 100),
+            random.randint(5, 80)
+        )
+        for _ in range(12)
+    ]
 
-def demo_compression_threshold():
-    """Demonstrate the compression threshold theorem."""
-    print("=" * 60)
-    print("DEMO 5: Compression Threshold")
-    print("=" * 60)
-    print()
-    print("The compression threshold τ = |K| guarantees that all")
-    print("compressible targets are derivative at threshold τ.")
-    print()
+    threshold = 3
 
-    chain = make_chain_graph(20)
+    def analyze_model(name, outputs):
+        gaps = [depth_gap(training_data, o) for o in outputs]
+        novel_count = sum(1 for g in gaps if g > threshold)
+        avg_gap = sum(gaps) / len(gaps)
+        max_gap = max(gaps)
+        return {
+            'name': name,
+            'count': len(outputs),
+            'novel': novel_count,
+            'novelty_rate': novel_count / len(outputs),
+            'avg_gap': avg_gap,
+            'max_gap': max_gap,
+            'gaps': gaps,
+        }
 
-    for k_size in [3, 5, 8, 12]:
-        known = set(range(k_size))
-        tau = k_size  # compression threshold
-        gaps = chain.compute_all_depth_gaps(known)
+    results_a = analyze_model("Model A (Conservative)", model_a_outputs)
+    results_b = analyze_model("Model B (Exploratory)", model_b_outputs)
 
-        compressible = [i for i, g in enumerate(gaps)
-                       if g is not None and g <= k_size]
-        derivative = [i for i, g in enumerate(gaps)
-                     if g is not None and g <= tau]
-
-        # Verify compressible ⊆ derivative
-        assert all(c in derivative for c in compressible)
-
-        print(f"|K| = {k_size}: τ = {tau}")
-        print(f"  Compressible nodes: {len(compressible)}")
-        print(f"  Derivative nodes:   {len(derivative)}")
-        print(f"  Compressible ⊆ Derivative: ✓")
-        print()
-
-
-def demo_binary_tree():
-    """Demonstrate depth gaps in tree-structured knowledge."""
-    print("=" * 60)
-    print("DEMO 6: Binary Tree — Hierarchical Knowledge")
-    print("=" * 60)
-    print()
-    print("Complete binary trees model hierarchical mathematical")
-    print("knowledge where each branch is a specialization.")
-    print()
-
-    for depth in [3, 4, 5, 6]:
-        tree = make_binary_tree(depth)
-        known = {0}  # root = foundational axioms
-        gaps = tree.compute_all_depth_gaps(known)
-
-        reachable = [g for g in gaps if g is not None]
-        max_gap = max(reachable)
-        avg_gap = sum(reachable) / len(reachable)
-        n = tree.n
-
-        print(f"Depth {depth}: {n} nodes, max_gap={max_gap}, avg_gap={avg_gap:.2f}")
-
-    print()
-
-
-def demo_random_graph():
-    """Demonstrate depth gaps in random graphs."""
-    print("=" * 60)
-    print("DEMO 7: Random Graphs — Erdős–Rényi Model")
-    print("=" * 60)
-    print()
-
-    print(f"{'n':>5} {'p':>6} {'Avg Gap':>8} {'Max Gap':>8} {'Unreach%':>9}")
-    print("-" * 38)
-
-    for n, p in [(50, 0.05), (50, 0.10), (50, 0.20),
-                 (100, 0.03), (100, 0.05), (100, 0.10)]:
-        g = make_random_graph(n, p)
-        known = {0}
-        gaps = g.compute_all_depth_gaps(known)
-
-        reachable = [g for g in gaps if g is not None]
-        unreachable_pct = (n - len(reachable)) / n * 100
-
-        if reachable:
-            avg_gap = sum(reachable) / len(reachable)
-            max_gap = max(reachable)
+    print(f"\n  Training corpus: {len(training_data)} theorems")
+    print(f"  Threshold τ: {threshold}")
+    print(f"\n  {'Metric':<25} {'Model A':>15} {'Model B':>15}")
+    print("  " + "-" * 55)
+    for key, label in [('count', 'Outputs'),
+                        ('novel', 'Novel outputs'),
+                        ('novelty_rate', 'Novelty rate'),
+                        ('avg_gap', 'Average gap'),
+                        ('max_gap', 'Maximum gap')]:
+        va = results_a[key]
+        vb = results_b[key]
+        if isinstance(va, float):
+            print(f"  {label:<25} {va:>15.2f} {vb:>15.2f}")
         else:
-            avg_gap = float('inf')
-            max_gap = float('inf')
+            print(f"  {label:<25} {va:>15} {vb:>15}")
 
-        print(f"{n:>5} {p:>6.2f} {avg_gap:>8.1f} {max_gap:>8} {unreachable_pct:>8.1f}%")
-
-    print()
-    print("Denser graphs have smaller depth gaps (more shortcuts).")
-    print()
+    winner = "Model B" if results_b['novelty_rate'] > results_a['novelty_rate'] else "Model A"
+    print(f"\n  More creative generator: {winner}")
 
 
 if __name__ == "__main__":
-    demo_chain_graph()
-    demo_separation_theorem()
-    demo_library_enrichment()
-    demo_classification()
-    demo_compression_threshold()
-    demo_binary_tree()
-    demo_random_graph()
+    app_benchmark_evaluator()
+    app_curriculum_design()
+    app_corpus_geometry()
+    app_ml_comparison()
+    print("\n" + "=" * 60)
+    print("All applications demonstrated!")
+    print("=" * 60)
 
 
+#!/usr/bin/env python3
 """
-Visualizations for Conceptual Depth Gap Theory.
+Depth Gap Framework: Concrete Demonstrations
 
-Generates publication-quality figures illustrating the main results.
+Demonstrates the core theorems of proof-theoretic novelty geometry
+with numerical examples on theorem profiles.
 """
 
-from __future__ import annotations
+import itertools
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class TheoremProfile:
+    """A theorem profile with 5 structural features."""
+    defs_introduced: int
+    type_changes: int
+    perspective_shifts: int
+    proof_size: int
+    compression_score: int
+
+    def conceptual_coords(self):
+        return (self.defs_introduced, self.type_changes, self.perspective_shifts)
+
+
+def leap_cost(a: TheoremProfile, b: TheoremProfile) -> int:
+    """L1 distance on the three conceptual dimensions."""
+    return (abs(a.defs_introduced - b.defs_introduced) +
+            abs(a.type_changes - b.type_changes) +
+            abs(a.perspective_shifts - b.perspective_shifts))
+
+
+def depth_gap(corpus: list[TheoremProfile], target: TheoremProfile) -> int:
+    """Minimum leap cost from any corpus element to target."""
+    if not corpus:
+        raise ValueError("Corpus must be nonempty")
+    return min(leap_cost(s, target) for s in corpus)
+
+
+def is_derivative(corpus: list[TheoremProfile], target: TheoremProfile, tau: int) -> bool:
+    """True if target is derivative from corpus at threshold tau."""
+    return any(leap_cost(s, target) <= tau for s in corpus)
+
+
+def nearest_neighbor(corpus: list[TheoremProfile], target: TheoremProfile) -> TheoremProfile:
+    """Find the corpus element attaining the depth gap (Theorem A)."""
+    return min(corpus, key=lambda s: leap_cost(s, target))
+
+
+# ── Demo 1: Core Framework ──────────────────────────────────────────
+
+def demo_core():
+    print("=" * 60)
+    print("DEMO 1: Core Depth Gap Framework")
+    print("=" * 60)
+
+    corpus = [
+        TheoremProfile(0, 0, 0, 10, 5),   # basic theorem
+        TheoremProfile(1, 0, 0, 20, 15),   # one new definition
+        TheoremProfile(0, 1, 0, 15, 10),   # one type change
+    ]
+
+    targets = [
+        ("Trivial reformulation", TheoremProfile(0, 0, 0, 12, 6)),
+        ("Minor extension",       TheoremProfile(0, 0, 1, 18, 12)),
+        ("Moderate novelty",      TheoremProfile(2, 1, 1, 40, 30)),
+        ("High novelty",          TheoremProfile(5, 5, 5, 100, 80)),
+        ("Extreme novelty",       TheoremProfile(10, 10, 10, 200, 150)),
+    ]
+
+    print("\nCorpus:")
+    for i, s in enumerate(corpus):
+        print(f"  S{i}: coords=({s.defs_introduced},{s.type_changes},{s.perspective_shifts})")
+
+    print("\nTarget Analysis:")
+    print(f"  {'Label':<25} {'Coords':>12} {'DepthGap':>10} {'Nearest':>10} {'Deriv@3':>8} {'Deriv@5':>8}")
+    print("  " + "-" * 75)
+    for label, t in targets:
+        gap = depth_gap(corpus, t)
+        nn = nearest_neighbor(corpus, t)
+        d3 = is_derivative(corpus, t, 3)
+        d5 = is_derivative(corpus, t, 5)
+        coords = f"({t.defs_introduced},{t.type_changes},{t.perspective_shifts})"
+        nn_coords = f"({nn.defs_introduced},{nn.type_changes},{nn.perspective_shifts})"
+        print(f"  {label:<25} {coords:>12} {gap:>10} {nn_coords:>10} {str(d3):>8} {str(d5):>8}")
+
+    # Verify Theorem B: derivative iff depth_gap <= tau
+    print("\n  Theorem B verification: DerivativeFrom(K, T, τ) ↔ depthGap(K, T) ≤ τ")
+    for label, t in targets:
+        gap = depth_gap(corpus, t)
+        for tau in range(20):
+            assert is_derivative(corpus, t, tau) == (gap <= tau), \
+                f"Theorem B failed for {label}, tau={tau}"
+    print("  ✓ Verified for all targets and thresholds 0..19")
+
+
+# ── Demo 2: Separation Theorem ──────────────────────────────────────
+
+def demo_separation():
+    print("\n" + "=" * 60)
+    print("DEMO 2: Separation Theorem (Threshold Boundary)")
+    print("=" * 60)
+
+    corpus = [TheoremProfile(0, 0, 0, 10, 5)]
+    target = TheoremProfile(3, 2, 1, 50, 40)
+    gap = depth_gap(corpus, target)
+
+    print(f"\n  Target coords: ({target.defs_introduced},{target.type_changes},{target.perspective_shifts})")
+    print(f"  Depth gap: {gap}")
+    print(f"\n  Threshold sweep:")
+    for tau in range(gap + 3):
+        deriv = is_derivative(corpus, target, tau)
+        marker = "← threshold" if tau == gap else ""
+        status = "DERIVATIVE" if deriv else "NOVEL"
+        print(f"    τ = {tau:2d}: {status:12s} {marker}")
+
+
+# ── Demo 3: Monotonicity ────────────────────────────────────────────
+
+def demo_monotonicity():
+    print("\n" + "=" * 60)
+    print("DEMO 3: Monotonicity Under Corpus Enrichment")
+    print("=" * 60)
+
+    target = TheoremProfile(4, 3, 2, 60, 50)
+
+    corpus_stages = [
+        [TheoremProfile(0, 0, 0, 10, 5)],
+        [TheoremProfile(0, 0, 0, 10, 5), TheoremProfile(2, 1, 0, 25, 20)],
+        [TheoremProfile(0, 0, 0, 10, 5), TheoremProfile(2, 1, 0, 25, 20),
+         TheoremProfile(3, 2, 1, 40, 35)],
+        [TheoremProfile(0, 0, 0, 10, 5), TheoremProfile(2, 1, 0, 25, 20),
+         TheoremProfile(3, 2, 1, 40, 35), TheoremProfile(4, 3, 2, 60, 50)],
+    ]
+
+    print(f"\n  Target: ({target.defs_introduced},{target.type_changes},{target.perspective_shifts})")
+    print(f"\n  {'Stage':>8} {'|K|':>4} {'DepthGap':>10} {'Trend':>8}")
+    print("  " + "-" * 35)
+    prev_gap = None
+    for i, corpus in enumerate(corpus_stages):
+        gap = depth_gap(corpus, target)
+        trend = "" if prev_gap is None else ("↓" if gap < prev_gap else "=" if gap == prev_gap else "↑(!)")
+        print(f"  {i+1:>8} {len(corpus):>4} {gap:>10} {trend:>8}")
+        if prev_gap is not None:
+            assert gap <= prev_gap, "Monotonicity violated!"
+        prev_gap = gap
+    print("  ✓ Depth gap is monotonically non-increasing")
+
+
+# ── Demo 4: Typed Conceptual Leaps ──────────────────────────────────
+
+def demo_typed_leaps():
+    print("\n" + "=" * 60)
+    print("DEMO 4: Typed Conceptual Leaps")
+    print("=" * 60)
+
+    # Define a path from (0,0,0) to (2,1,1) via typed single-coordinate leaps
+    path = [
+        ("introDef",          TheoremProfile(0, 0, 0, 10, 5), TheoremProfile(1, 0, 0, 15, 10)),
+        ("introDef",          TheoremProfile(1, 0, 0, 15, 10), TheoremProfile(2, 0, 0, 20, 15)),
+        ("typeChange",        TheoremProfile(2, 0, 0, 20, 15), TheoremProfile(2, 1, 0, 25, 18)),
+        ("perspectiveShift",  TheoremProfile(2, 1, 0, 25, 18), TheoremProfile(2, 1, 1, 30, 22)),
+    ]
+
+    start = path[0][1]
+    end = path[-1][2]
+    direct_cost = leap_cost(start, end)
+
+    print(f"\n  Start: ({start.defs_introduced},{start.type_changes},{start.perspective_shifts})")
+    print(f"  End:   ({end.defs_introduced},{end.type_changes},{end.perspective_shifts})")
+    print(f"  Direct leap cost: {direct_cost}")
+    print(f"  Path length: {len(path)} leaps")
+    print(f"\n  Path:")
+    for i, (kind, src, tgt) in enumerate(path):
+        cost = leap_cost(src, tgt)
+        print(f"    Leap {i+1}: {kind:<20} cost={cost}  "
+              f"({src.defs_introduced},{src.type_changes},{src.perspective_shifts}) → "
+              f"({tgt.defs_introduced},{tgt.type_changes},{tgt.perspective_shifts})")
+
+    print(f"\n  ✓ leap_cost(start, end) = {direct_cost} ≤ path_length = {len(path)}")
+    assert direct_cost <= len(path)
+
+
+# ── Demo 5: Novelty Spectrum ────────────────────────────────────────
+
+def demo_spectrum():
+    print("\n" + "=" * 60)
+    print("DEMO 5: Novelty Spectrum of a Corpus")
+    print("=" * 60)
+
+    corpus = [
+        TheoremProfile(0, 0, 0, 10, 5),
+        TheoremProfile(1, 0, 0, 20, 15),
+        TheoremProfile(0, 1, 0, 15, 10),
+        TheoremProfile(1, 1, 0, 25, 20),
+    ]
+
+    # Sample a grid of targets and compute depth gaps
+    max_coord = 6
+    gap_histogram = {}
+    for d, t, p in itertools.product(range(max_coord + 1), repeat=3):
+        target = TheoremProfile(d, t, p, 0, 0)
+        gap = depth_gap(corpus, target)
+        gap_histogram[gap] = gap_histogram.get(gap, 0) + 1
+
+    print(f"\n  Corpus size: {len(corpus)}")
+    print(f"  Grid: [0..{max_coord}]³ = {(max_coord + 1)**3} profiles")
+    print(f"\n  {'DepthGap':>10} {'Count':>8} {'Fraction':>10}  Bar")
+    print("  " + "-" * 50)
+    total = sum(gap_histogram.values())
+    for gap in sorted(gap_histogram.keys()):
+        count = gap_histogram[gap]
+        frac = count / total
+        bar = "█" * int(frac * 40)
+        print(f"  {gap:>10} {count:>8} {frac:>10.1%}  {bar}")
+
+
+if __name__ == "__main__":
+    demo_core()
+    demo_separation()
+    demo_monotonicity()
+    demo_typed_leaps()
+    demo_spectrum()
+    print("\n" + "=" * 60)
+    print("All demos completed successfully!")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""
+Depth Gap Framework: Visualizations
+
+Creates publication-quality figures illustrating the depth gap theory.
+"""
+
+import itertools
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-from algorithms import (
-    make_chain_graph,
-    make_binary_tree,
-    make_random_graph,
-    library_enrichment_experiment,
-    DerivationGraph,
-)
+from matplotlib.colors import LinearSegmentedColormap
 
 
-def fig_chain_depth_gaps():
-    """Visualize depth gaps in a chain graph."""
-    fig, ax = plt.subplots(figsize=(10, 4))
+class TheoremProfile:
+    def __init__(self, d, t, p, ps=0, cs=0):
+        self.defs_introduced = d
+        self.type_changes = t
+        self.perspective_shifts = p
+        self.proof_size = ps
+        self.compression_score = cs
 
-    n = 11
-    chain = make_chain_graph(n)
-    known = {0}
-    gaps = chain.compute_all_depth_gaps(known)
 
-    colors = []
-    tau = 3
-    for g in gaps:
-        if g is None:
-            colors.append('#cccccc')
-        elif g == 0:
-            colors.append('#2ecc71')  # known
-        elif g <= tau:
-            colors.append('#3498db')  # derivative
-        else:
-            colors.append('#e74c3c')  # novel
+def leap_cost(a, b):
+    return (abs(a.defs_introduced - b.defs_introduced) +
+            abs(a.type_changes - b.type_changes) +
+            abs(a.perspective_shifts - b.perspective_shifts))
 
-    # Draw nodes
-    y = 0.5
-    for i in range(n):
-        circle = plt.Circle((i, y), 0.3, color=colors[i], ec='black', lw=2, zorder=3)
-        ax.add_patch(circle)
-        ax.text(i, y, str(i), ha='center', va='center', fontsize=12, fontweight='bold', zorder=4)
-        ax.text(i, y - 0.5, f'd={gaps[i]}', ha='center', va='center', fontsize=9, color='#555')
 
-    # Draw edges
-    for i in range(n - 1):
-        ax.annotate('', xy=(i + 0.7, y), xytext=(i + 0.3, y),
-                    arrowprops=dict(arrowstyle='->', lw=1.5, color='#777'))
+def depth_gap(corpus, target):
+    return min(leap_cost(s, target) for s in corpus)
 
-    # Legend
-    known_patch = mpatches.Patch(color='#2ecc71', label='Known (K)')
-    deriv_patch = mpatches.Patch(color='#3498db', label=f'Derivative (gap ≤ τ={tau})')
-    novel_patch = mpatches.Patch(color='#e74c3c', label=f'Novel (gap > τ={tau})')
-    ax.legend(handles=[known_patch, deriv_patch, novel_patch], loc='upper right', fontsize=10)
 
-    ax.set_xlim(-0.5, n - 0.3)
-    ax.set_ylim(-0.2, 1.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('Chain Graph: Depth Gaps and Derivative Classification', fontsize=14, fontweight='bold')
+# ── Figure 1: Depth Gap Heatmap (2D slice) ──────────────────────────
 
+def fig_heatmap():
+    corpus = [
+        TheoremProfile(0, 0, 0),
+        TheoremProfile(3, 0, 0),
+        TheoremProfile(0, 3, 0),
+        TheoremProfile(2, 2, 0),
+    ]
+
+    N = 12
+    gaps = np.zeros((N, N))
+    for i in range(N):
+        for j in range(N):
+            target = TheoremProfile(i, j, 0)
+            gaps[j, i] = depth_gap(corpus, target)
+
+    fig, ax = plt.subplots(figsize=(8, 7))
+    cmap = LinearSegmentedColormap.from_list('novelty',
+        ['#2ecc71', '#f1c40f', '#e74c3c', '#8e44ad'], N=20)
+    im = ax.imshow(gaps, origin='lower', cmap=cmap, interpolation='nearest',
+                   extent=[-0.5, N-0.5, -0.5, N-0.5])
+    cbar = plt.colorbar(im, ax=ax, label='Depth Gap (Conceptual Distance)')
+
+    # Mark corpus points
+    for s in corpus:
+        ax.plot(s.defs_introduced, s.type_changes, 'w*', markersize=15,
+                markeredgecolor='black', markeredgewidth=1.5)
+
+    # Draw threshold contour
+    ax.contour(np.arange(N), np.arange(N), gaps, levels=[3],
+               colors='white', linewidths=2, linestyles='--')
+
+    ax.set_xlabel('Definitions Introduced', fontsize=13)
+    ax.set_ylabel('Type Changes', fontsize=13)
+    ax.set_title('Novelty Landscape: Depth Gap from Known Corpus\n'
+                 '(★ = corpus elements, dashed = derivative threshold τ=3)',
+                 fontsize=13)
     plt.tight_layout()
-    plt.savefig('fig_chain_depth_gaps.png', dpi=150, bbox_inches='tight')
+    plt.savefig('fig_depth_gap_heatmap.png', dpi=150)
     plt.close()
-    print("Saved fig_chain_depth_gaps.png")
+    print("  Saved fig_depth_gap_heatmap.png")
 
 
-def fig_separation_theorem():
-    """Visualize the separation theorem across thresholds."""
-    fig, ax = plt.subplots(figsize=(8, 5))
+# ── Figure 2: Separation Theorem ────────────────────────────────────
 
-    thresholds = list(range(15))
-    max_gaps = [tau + 1 for tau in thresholds]
+def fig_separation():
+    corpus = [TheoremProfile(0, 0, 0)]
 
-    ax.bar(thresholds, max_gaps, color='#e74c3c', alpha=0.8, edgecolor='#c0392b', label='Max achievable depth gap')
-    ax.plot(thresholds, [tau for tau in thresholds], 'b--', lw=2, label='Threshold τ')
+    taus = list(range(15))
+    targets = [
+        ("Close (1,0,0)", TheoremProfile(1, 0, 0)),
+        ("Medium (3,2,0)", TheoremProfile(3, 2, 0)),
+        ("Far (5,4,3)", TheoremProfile(5, 4, 3)),
+    ]
 
-    ax.set_xlabel('Threshold τ', fontsize=12)
-    ax.set_ylabel('Depth Gap', fontsize=12)
-    ax.set_title('Separation Theorem: Gaps Exceed Any Threshold', fontsize=14, fontweight='bold')
+    fig, ax = plt.subplots(figsize=(9, 5))
+    colors = ['#2ecc71', '#3498db', '#e74c3c']
+
+    for (label, target), color in zip(targets, colors):
+        gap = depth_gap(corpus, target)
+        deriv = [1 if any(leap_cost(s, target) <= tau for s in corpus) else 0
+                 for tau in taus]
+        ax.step(taus, deriv, where='mid', linewidth=2.5, color=color, label=f'{label} (gap={gap})')
+        ax.axvline(x=gap, color=color, linestyle=':', alpha=0.5)
+
+    ax.fill_between(taus, 0, 1, alpha=0.08, color='gray')
+    ax.set_xlabel('Threshold τ', fontsize=13)
+    ax.set_ylabel('Derivative? (1=Yes, 0=No)', fontsize=13)
+    ax.set_title('Separation Theorem: Sharp Phase Transition at Depth Gap',
+                 fontsize=13)
     ax.legend(fontsize=11)
-    ax.grid(axis='y', alpha=0.3)
-
+    ax.set_ylim(-0.1, 1.2)
+    ax.set_yticks([0, 1])
+    ax.set_yticklabels(['Novel', 'Derivative'])
     plt.tight_layout()
-    plt.savefig('fig_separation_theorem.png', dpi=150, bbox_inches='tight')
+    plt.savefig('fig_separation.png', dpi=150)
     plt.close()
-    print("Saved fig_separation_theorem.png")
+    print("  Saved fig_separation.png")
 
 
-def fig_library_enrichment():
-    """Visualize monotonicity under library enrichment."""
+# ── Figure 3: Monotonicity Under Corpus Growth ──────────────────────
+
+def fig_monotonicity():
+    target = TheoremProfile(6, 5, 4)
+    additions = [
+        TheoremProfile(0, 0, 0),
+        TheoremProfile(2, 1, 0),
+        TheoremProfile(3, 2, 1),
+        TheoremProfile(4, 3, 2),
+        TheoremProfile(5, 4, 3),
+        TheoremProfile(6, 5, 4),
+    ]
+
+    corpus = []
+    gaps = []
+    for a in additions:
+        corpus.append(a)
+        gaps.append(depth_gap(corpus, target))
+
     fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(range(1, len(gaps)+1), gaps, 'o-', color='#2c3e50', markersize=10,
+            linewidth=2.5, markerfacecolor='#e74c3c', markeredgecolor='#2c3e50')
 
-    chain = make_chain_graph(21)
-    results = library_enrichment_experiment(chain, {0}, [4, 8, 12, 16, 19], 20)
+    for i, (g, a) in enumerate(zip(gaps, additions)):
+        ax.annotate(f'({a.defs_introduced},{a.type_changes},{a.perspective_shifts})',
+                    (i+1, g), textcoords="offset points", xytext=(10, 5),
+                    fontsize=9, color='#7f8c8d')
 
-    sizes = [r[0] for r in results]
-    gaps = [r[1] for r in results]
+    ax.set_xlabel('Corpus Size |K|', fontsize=13)
+    ax.set_ylabel('Depth Gap', fontsize=13)
+    ax.set_title('Monotonicity: Depth Gap Decreases as Corpus Grows\n'
+                 f'Target: ({target.defs_introduced},{target.type_changes},{target.perspective_shifts})',
+                 fontsize=13)
+    ax.set_xticks(range(1, len(gaps)+1))
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('fig_monotonicity.png', dpi=150)
+    plt.close()
+    print("  Saved fig_monotonicity.png")
 
-    ax.plot(sizes, gaps, 'o-', color='#2980b9', markersize=10, lw=2, label='depthGap(target=20)')
-    ax.fill_between(sizes, gaps, alpha=0.2, color='#2980b9')
 
-    ax.set_xlabel('Library Size |K|', fontsize=12)
-    ax.set_ylabel('Depth Gap', fontsize=12)
-    ax.set_title('Library Enrichment: Depth Gap Monotonically Decreases', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.grid(alpha=0.3)
+# ── Figure 4: Novelty Spectrum Distribution ─────────────────────────
+
+def fig_spectrum():
+    corpus = [
+        TheoremProfile(0, 0, 0),
+        TheoremProfile(2, 0, 0),
+        TheoremProfile(0, 2, 0),
+        TheoremProfile(1, 1, 1),
+    ]
+
+    max_coord = 8
+    all_gaps = []
+    for d, t, p in itertools.product(range(max_coord + 1), repeat=3):
+        target = TheoremProfile(d, t, p)
+        all_gaps.append(depth_gap(corpus, target))
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Histogram
+    max_gap = max(all_gaps)
+    bins = np.arange(-0.5, max_gap + 1.5)
+    ax1.hist(all_gaps, bins=bins, color='#3498db', edgecolor='#2c3e50',
+             alpha=0.8, rwidth=0.85)
+    ax1.axvline(x=3, color='#e74c3c', linestyle='--', linewidth=2,
+                label='τ=3 threshold')
+    ax1.set_xlabel('Depth Gap', fontsize=13)
+    ax1.set_ylabel('Count', fontsize=13)
+    ax1.set_title('Novelty Spectrum: Distribution of Depth Gaps', fontsize=13)
+    ax1.legend(fontsize=11)
+
+    # Cumulative
+    sorted_gaps = np.sort(all_gaps)
+    cdf = np.arange(1, len(sorted_gaps) + 1) / len(sorted_gaps)
+    ax2.step(sorted_gaps, cdf, where='post', color='#2c3e50', linewidth=2.5)
+    ax2.axhline(y=0.5, color='gray', linestyle=':', alpha=0.5)
+    ax2.axvline(x=3, color='#e74c3c', linestyle='--', linewidth=2,
+                label='τ=3 threshold')
+
+    # Shade derivative region
+    ax2.fill_between([0, 3], 0, 1, alpha=0.1, color='#2ecc71')
+    ax2.fill_between([3, max_gap], 0, 1, alpha=0.1, color='#e74c3c')
+    ax2.text(1.5, 0.85, 'Derivative\nRegion', ha='center', fontsize=11,
+             color='#27ae60')
+    ax2.text(max_gap * 0.6, 0.85, 'Novel\nRegion', ha='center', fontsize=11,
+             color='#c0392b')
+
+    ax2.set_xlabel('Depth Gap', fontsize=13)
+    ax2.set_ylabel('Cumulative Fraction', fontsize=13)
+    ax2.set_title('Cumulative Distribution of Novelty', fontsize=13)
+    ax2.legend(fontsize=11)
 
     plt.tight_layout()
-    plt.savefig('fig_library_enrichment.png', dpi=150, bbox_inches='tight')
+    plt.savefig('fig_spectrum.png', dpi=150)
     plt.close()
-    print("Saved fig_library_enrichment.png")
-
-
-def fig_random_graph_heatmap():
-    """Heatmap of average depth gaps across (n, p) parameter space."""
-    fig, ax = plt.subplots(figsize=(8, 6))
-
-    ns = [20, 30, 50, 75, 100]
-    ps = [0.02, 0.05, 0.08, 0.10, 0.15, 0.20, 0.30]
-
-    data = np.zeros((len(ns), len(ps)))
-
-    for i, n in enumerate(ns):
-        for j, p in enumerate(ps):
-            g = make_random_graph(n, p, seed=42)
-            gaps = g.compute_all_depth_gaps({0})
-            reachable = [gap for gap in gaps if gap is not None]
-            data[i, j] = np.mean(reachable) if reachable else float('nan')
-
-    im = ax.imshow(data, aspect='auto', cmap='YlOrRd', interpolation='nearest')
-    ax.set_xticks(range(len(ps)))
-    ax.set_xticklabels([f'{p:.2f}' for p in ps])
-    ax.set_yticks(range(len(ns)))
-    ax.set_yticklabels([str(n) for n in ns])
-    ax.set_xlabel('Edge Probability p', fontsize=12)
-    ax.set_ylabel('Number of Nodes n', fontsize=12)
-    ax.set_title('Average Depth Gap in Random Graphs G(n, p)', fontsize=14, fontweight='bold')
-
-    # Add text annotations
-    for i in range(len(ns)):
-        for j in range(len(ps)):
-            val = data[i, j]
-            if not np.isnan(val):
-                color = 'white' if val > 3 else 'black'
-                ax.text(j, i, f'{val:.1f}', ha='center', va='center', color=color, fontsize=10)
-
-    plt.colorbar(im, ax=ax, label='Average Depth Gap')
-    plt.tight_layout()
-    plt.savefig('fig_random_heatmap.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved fig_random_heatmap.png")
-
-
-def fig_depth_distribution():
-    """Distribution of depth gaps in various graph types."""
-    fig, axes = plt.subplots(1, 3, figsize=(14, 4))
-
-    # Chain graph
-    chain = make_chain_graph(20)
-    gaps_chain = chain.compute_all_depth_gaps({0})
-    axes[0].bar(range(20), gaps_chain, color='#3498db', alpha=0.8)
-    axes[0].set_title('Chain Graph (n=20)', fontsize=12, fontweight='bold')
-    axes[0].set_xlabel('Node')
-    axes[0].set_ylabel('Depth Gap')
-
-    # Binary tree
-    tree = make_binary_tree(4)
-    gaps_tree = tree.compute_all_depth_gaps({0})
-    reachable_tree = [g for g in gaps_tree if g is not None]
-    axes[1].hist(reachable_tree, bins=range(max(reachable_tree) + 2),
-                 color='#2ecc71', alpha=0.8, edgecolor='#27ae60', align='left')
-    axes[1].set_title('Binary Tree (depth=4)', fontsize=12, fontweight='bold')
-    axes[1].set_xlabel('Depth Gap')
-    axes[1].set_ylabel('Count')
-
-    # Random graph
-    rg = make_random_graph(100, 0.05, seed=42)
-    gaps_rg = rg.compute_all_depth_gaps({0})
-    reachable_rg = [g for g in gaps_rg if g is not None]
-    if reachable_rg:
-        axes[2].hist(reachable_rg, bins=range(max(reachable_rg) + 2),
-                     color='#e74c3c', alpha=0.8, edgecolor='#c0392b', align='left')
-    axes[2].set_title('Random Graph G(100, 0.05)', fontsize=12, fontweight='bold')
-    axes[2].set_xlabel('Depth Gap')
-    axes[2].set_ylabel('Count')
-
-    plt.suptitle('Depth Gap Distributions Across Graph Types', fontsize=14, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('fig_depth_distribution.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved fig_depth_distribution.png")
+    print("  Saved fig_spectrum.png")
 
 
 if __name__ == "__main__":
-    fig_chain_depth_gaps()
-    fig_separation_theorem()
-    fig_library_enrichment()
-    fig_random_graph_heatmap()
-    fig_depth_distribution()
-    print("\nAll visualizations generated successfully.")
+    print("Generating visualizations...")
+    fig_heatmap()
+    fig_separation()
+    fig_monotonicity()
+    fig_spectrum()
+    print("All visualizations generated!")
