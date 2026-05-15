@@ -972,10 +972,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57002e63",
     "timestamp": "2026-05-14T16:24:30.105861+00:00"
   },
   {
@@ -1388,21 +1388,6 @@
     "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
-    "id": "fd_0199",
-    "title": "Tropical Furstenberg theory",
-    "description": ": Develop a tropical analogue of the multiplicative ergodic theorem. The key insight is that min-plus matrix products correspond to shortest paths in time-varying networks.",
-    "domains": [
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.208103+00:00"
-  },
-  {
     "id": "fd_0187",
     "title": "Generalized inductive hypothesis",
     "description": ": Prove that for every formula φ with free variables, the function `(annotated_word) ↦ φ.evalWith(decode(annotated_word))` is tropically recognizable over the extended alphabet.",
@@ -1462,23 +1447,6 @@
     "source_exp_id": "fafc44be",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:10.085978+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Leverage Courcelle's theorem",
-    "description": ": Connect to the classical result that MSO-definable properties of bounded-treewidth graphs are decidable in linear time.\n\n### Expected Impact\n- Quantitative Courcelle theorem: optimization over bounded-treewidth structures\n- Certified XML/JSON query optimization\n- Tropical parsing: minimum-cost parse trees\n\n### Cross-Domain Connections\n- **Natural language processing**: Weighted tree grammars and parsing\n- **Compiler optimization**: Minimum-cost code generation\n- **Graph algorithms**: Optimization on bounded-treewidth graphs\n\n---\n\n## Direction 4: Decidable Fragments and Complexity Bounds\n\n### Hypothesis\nRestricted fragments of weighted MSO (e.g., first-order tropical logic, bounded quantifier alternation, unambiguous formulas) correspond to natural subclasses of min-plus automata with bet",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.101596+00:00"
   },
   {
     "id": "fd_0190",
@@ -1571,24 +1539,6 @@
     "timestamp": "2026-05-15T01:46:31.402687+00:00"
   },
   {
-    "id": "fd_0199",
-    "title": "Kleene star surgery formula",
-    "description": ": The new distance matrix after surgery can be expressed as a rank-2 correction to the old Kleene star.\n\n### Proof Strategy\n- Functoriality follows from monotonicity of `tropicalDistance` under composition of surgeries.\n- The rank characterization uses the structure of the distance update: only paths through the new bridge are affected.\n- The Kleene star formula uses the Woodbury-style identity for min-plus matrix inverses.\n\n### Cross-Domain Connections\n- **Tropical algebraic geometry**: The Kleene star is the tropical analog of the resolvent operator.\n- **Category theory in TDA**: Persistence diagrams as functors from filtrations to barcodes share structural similarities.\n\n---\n\n## Direction 5: Tropical Holography via Boundary Distance Reconstruction\n\n### Motivation\nThe holographic princip",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dc69d6dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:46:31.410670+00:00"
-  },
-  {
     "id": "fd_0196",
     "title": "Direction 2",
     "description": "(Orthogonal group embedding) — Foundational for the theory, connects to established mathematics.",
@@ -1616,34 +1566,6 @@
     "source_exp_id": "1b970ad9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Direction 1",
-    "description": "(Expander Hashing) provides the cryptographic *construction*.",
-    "domains": [
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92286879",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:34:27.099275+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Direction 4",
-    "description": "(Average-Case Hardness) provides the *reduction* to computational assumptions.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92286879",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:34:27.111296+00:00"
   },
   {
     "id": "seed_078",
@@ -1708,21 +1630,6 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.845232+00:00"
-  },
-  {
-    "id": "fd_0112",
-    "title": "Overview",
-    "description": "The formal framework of `ResearchTheory` and `TheoryHom` established in this project provides a certified foundation for cross-domain mathematical synthesis. Below are five concrete, breakthrough-level research directions that build on this work. Each direction is specified with precise hypotheses, proof strategies, and cross-domain connections.\n\n---",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "825001af",
-    "timestamp": "2026-05-14T16:17:39.935956+00:00"
   },
   {
     "id": "fd_0113",
@@ -2006,38 +1913,6 @@
     "timestamp": "2026-05-15T00:07:21.661696+00:00"
   },
   {
-    "id": "fd_0199",
-    "title": "3. Hamilton–Jacobi / Fluid Duality",
-    "description": "**Goal.** Prove that the tropical diffusion barriers correspond exactly to\nLax–Oleinik semigroup contraction on weighted graphs, establishing a formal\nduality between viscosity solutions and fluid regularity.\n\n**Hypothesis.** The tropical diffusion operator `T_K` is the one-step\nLax–Oleinik operator for a discrete Hamilton–Jacobi equation\n`u_{n+1}(i) = inf_j (u_n(j) + K(i,j))`. The barrier theorem then states\nthat solutions of this HJ equation cannot develop shocks (discontinuities\nin gradient) beyond the initial oscillation.\n\n**Proof Strategy.**\n- Define the discrete Hamilton–Jacobi equation on weighted graphs.\n- Show that `T_K^n` computes shortest-path distances in the `K`-weighted graph.\n- Prove that the Lax–Oleinik semigroup is a contraction in the sup norm\n  (already implied by our os",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "181d8ba6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:07:21.678568+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Lean Type Signature",
-    "description": "```lean\ntheorem tropicalEigencone_charge_reversal\n    {n : ℕ} (W A : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) (q λ : ℝ)\n    (hW : W.IsSymm) (v : Fin (n+1) → ℝ)\n    (hv : ∀ i, Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩\n      (fun j => chargedWeight W A q i j + v j) = λ + v i) :\n    ∀ i, Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩\n      (fun j => chargedWeight W A (-q) j i + v i) = λ + v i\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be18c0b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:25:49.787601+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Phase 3 (Long-term): Directions 1 and 5",
     "description": "Require new definitions and significant infrastructure (multidimensional tropical geometry, graph theory).",
@@ -2051,37 +1926,6 @@
     "source_exp_id": "13b8af12",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:31:05.382198+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Team Coordination",
-    "description": "- **Thread A (Theorem Proving)**: Focus on formalizing Directions 3-4 as immediate extensions of the current theorems. Target: 5-10 new lemmas per direction.\n- **Thread B (Counterexample Search)**: For each proposed lemma, generate counterexamples with random parameters before attempting formalization. Use `#eval` and `lean_run_code` extensively.\n- **Thread C (Geometric Interpretation)**: Develop visualizations of 2D tropical phase diagrams (Direction 1). Create interactive plots showing how phase boundaries move with parameters.\n- **Thread D (Catalog Integration)**: Connect new theorems to existing catalog infrastructure (`tropical_plus_distributes_over_min`, `fixed_point_error`, `two_vertex_weight`). Ensure all cross-references are documented.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "13b8af12",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:31:05.395436+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Team Structure",
-    "description": "- **Formal methods team**: Maintains and extends the machine-verified theorem library.\n- **Geometry team**: Develops the Riemannian and cohomological infrastructure.\n- **ML applications team**: Implements algorithms, runs experiments on real networks.\n- **Theory team**: Pursues the information-geometric and spectral directions.\n\nEach direction should produce:\n1. A precise theorem statement (with dependencies clearly listed).\n2. A proof sketch with identified lemma targets.\n3. Machine-verified formalization.\n4. Computational experiments demonstrating the result on synthetic or real networks.",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e4cd60b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:53:06.620725+00:00"
   },
   {
     "id": "fd_0197",
@@ -2118,23 +1962,6 @@
     "timestamp": "2026-05-15T01:18:24.786465+00:00"
   },
   {
-    "id": "fd_0199",
-    "title": "5. Tropical Entropy and Information-Loss Bounds for Civilization-Scale Energy Ne",
-    "description": "**Hypothesis**: There exists a \"tropical entropy\" functional on network flow distributions that bounds the information loss in energy routing, analogous to Shannon entropy bounding communication channel capacity. The Kardashev bound is then a consequence of a tropical channel coding theorem.\n\n**Proof Strategy**:\n- Define tropical entropy as `H_trop(x) = -min_i(x_i)` or the tropical analogue of the partition function.\n- Show that tropical entropy is subadditive under network composition (series/parallel combination of subnetworks).\n- Prove a \"tropical data processing inequality\": routing through intermediate nodes cannot increase tropical entropy.\n- Derive the Kardashev bound as a corollary: `K(P_opt) ≤ K(L · η)` follows from the entropy bound because `C_trop ≤ 1`.\n\n**Cross-Domain Impact**:",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c26006e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:24.843463+00:00"
-  },
-  {
     "id": "fd_0198",
     "title": "1. Charged Value Iteration Equivalence (Convergence)",
     "description": "**Statement.** If `Φ₀` is an initial value field and the sequence `Φₖ₊₁ = maxwellBellmanOp W A q Φₖ` converges pointwise, then the limit equals the limit of `Φₖ₊₁ = bellmanOp (chargedWeight W A q) Φₖ` with the same initial condition.\n\n**Lean type signature:**\n```lean\ntheorem charged_value_iteration_limit {n : ℕ}\n    (W A : Matrix (Fin n) (Fin n) ℝ) (q : ℝ)\n    (Φ₀ : Fin n → ℝ)\n    (hconv : ∀ i, Filter.Tendsto (fun k => ((maxwellBellmanOp W A q)^[k] Φ₀) i)\n      Filter.atTop (nhds (Φ_limit i))) :\n    ∀ i, Filter.Tendsto (fun k => ((bellmanOp (chargedWeight W A q))^[k] Φ₀) i)\n      Filter.atTop (nhds (Φ_limit i))\n```\n\n**Proof strategy.** This is an immediate corollary of `iterate_maxwellBellmanOp_eq`, which shows all iterates are literally equal. The limits are therefore identical by uniquen",
@@ -2150,22 +1977,6 @@
     "source_exp_id": "c6fcabd0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:25:37.078676+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "2. Monotonicity of the Bellman Operator in Charge",
-    "description": "**Statement.** If `A(i,j) ≥ 0` for all `i, j` and `q₁ ≤ q₂`, then `bellmanOp (chargedWeight W A q₁) Φ i ≤ bellmanOp (chargedWeight W A q₂) Φ i` for all `i`.\n\n**Lean type signature:**\n```lean\ntheorem bellmanOp_charged_mono {n : ℕ} [NeZero n]\n    (W A : Matrix (Fin n) (Fin n) ℝ) (hA : ∀ i j, 0 ≤ A i j)\n    {q₁ q₂ : ℝ} (hq : q₁ ≤ q₂) (Φ : Fin n → ℝ) (i : Fin n) :\n    bellmanOp (chargedWeight W A q₁) Φ i ≤ bellmanOp (chargedWeight W A q₂) Φ i\n```\n\n**Proof strategy.** Use `ciSup_le_ciSup` with the bounding argument that for each `j`, `chargedWeight W A q₁ i j + Φ j ≤ chargedWeight W A q₂ i j + Φ j` via `chargedWeight_mono_charge` and `add_le_add_right`. Requires `BddAbove` which holds for finite types.\n\n**Cross-domain significance.**\n- *Response theory*: Establishes that increasing the coupling",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c6fcabd0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:25:37.087666+00:00"
   },
   {
     "id": "fd_0192",
@@ -2248,23 +2059,6 @@
     "timestamp": "2026-05-15T02:17:18.117534+00:00"
   },
   {
-    "id": "fd_0199",
-    "title": "4. Certified Resource Analysis for Functional Programs via Min-Plus DP",
-    "description": "**Hypothesis:** Automatic resource analysis (AARA) systems—which assign potential-annotated types to functional programs—can be soundly grounded in the tropical amortized framework, giving machine-checked certificates for heap/stack/time bounds.\n\n**Proof Strategy:**\n- Define a simple functional language (λ-calculus with lists) with resource semantics.\n- Formalize potential-annotated types as tropical type assignments.\n- Prove that well-typed programs satisfy amortized resource bounds (soundness of AARA).\n- Show that type inference reduces to tropical constraint solving (the connection to Direction 1).\n- Implement a verified resource analyzer that outputs Lean-checked certificates.\n\n**Cross-Domain Connections:**\n- Automatic amortized resource analysis (Hofmann–Jost, Hoffmann et al.)\n- Refin",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4ff18da",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:17:18.128174+00:00"
-  },
-  {
     "id": "fd_0198",
     "title": "Direction 1: Weighted Conceptual Depth and Novelty Costs",
     "description": "**Goal**: Generalize uniform-depth to weighted depth, where each node carries a \"conceptual novelty\" weight `w : V → ℕ`. The weighted depth of a path is the sum of weights along it, and the weighted critical path bounds weighted discovery complexity.\n\n**Target theorem**:\n```\ntheorem weightedDepth_le_of_discoverable\n  (G : DepGraph V) (w : V → ℕ)\n  (S : Finset V) (hS : ∀ v ∈ S, G.isSource v) :\n  ∀ {n v}, v ∈ weightedDiscovered G w S n → weightedDepth G w v ≤ n\n```\n\n**Why it matters**: Uniform depth treats a routine lemma and a paradigm-shifting insight equally. Weighted depth would distinguish:\n- Long-but-routine dependency chains (low total weight)\n- Short-but-revolutionary conceptual jumps (high total weight)\n\nThis enables quantitative measurement of \"conceptual breakthroughs\" versus \"inc",
@@ -2280,37 +2074,6 @@
     "source_exp_id": "5cbb3f6f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:32:03.193613+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Direction 2: Categorical/Functorial Transfer of Dependency Depth",
-    "description": "**Goal**: Define a morphism between dependency graphs (a functor between the corresponding partial orders) and prove that depth is preserved or bounded under structure-preserving maps.\n\n**Target theorem**:\n```\ntheorem depth_le_of_graph_morphism\n  (G₁ : DepGraph V₁) (G₂ : DepGraph V₂)\n  (f : V₁ → V₂) (hf : ∀ u v, u ∈ G₁.pred v → f u ∈ G₂.pred (f v)) :\n  ∀ v, G₁.depth v ≤ G₂.depth (f v)\n```\n\n**Why it matters**: This would enable *transfer theorems* — proving that if theory A embeds into theory B preserving dependency structure, then the conceptual depth of results in A is a lower bound for their images in B. This could formalize why certain mathematical translations (e.g., algebraization of topology) cannot simplify the conceptual landscape.\n\n**Proof strategy**: Induction on `G₁.wf`. The mor",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cbb3f6f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:32:03.203678+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Direction 3: Empirical Critical Path Extraction from Mathlib",
-    "description": "**Goal**: Build a meta-programming tool that extracts the dependency graph of declarations in a Mathlib module and computes critical paths.\n\n**Concrete deliverable**:\n- A Lean 4 metaprogram that, given a declaration name, traverses `Expr.getUsedConstants` to build `depOf : Name → Finset Name`.\n- Computation of `depth` and `criticalPathLength` for selected Mathlib subgraphs.\n- Identification of \"bottleneck theorems\" — declarations that lie on every long path.\n\n**Target analysis**:\n- Compare critical path lengths across Mathlib domains (algebra, analysis, topology, combinatorics).\n- Identify the \"deepest\" theorems in each domain.\n- Measure how much of the total dependency depth is concentrated in a small number of bottleneck lemmas.\n\n**Why it matters**: This converts the abstract theory into",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cbb3f6f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:32:03.212698+00:00"
   },
   {
     "id": "fd_0201",
@@ -2374,5 +2137,91 @@
     "source_exp_id": "5cbb3f6f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:32:03.250598+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "1. Category of Research Theories with Formal Laws",
+    "description": "**Goal**: Elevate the `ResearchTheory`/`TheoryHom` framework into a fully certified category.\n\n**Concrete steps**:\n- Define `ResearchCategory` bundling identity, composition, and proofs of associativity and unit laws.\n- Prove that `TheoryHom.comp_assoc`, `TheoryHom.id_comp`, and `TheoryHom.comp_id` (already established) constitute a strict category.\n- Define *isomorphisms* of research theories: morphisms with two-sided inverses.\n- Prove that isomorphic theories have identical lower-bound spectra.\n- Investigate whether `TheoryDominates` forms a partial order modulo isomorphism.\n\n**Cross-domain connections**: Category-theoretic structure enables automated reasoning about which domains can borrow results from which others, establishing a formal \"knowledge graph\" of mathematical disciplines.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "825001af",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:01:17.457827+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "2. Adjoint Theorem Transport and Galois Connections",
+    "description": "**Goal**: Identify theory morphism pairs that form Galois connections (adjunctions), enabling bidirectional transfer.\n\n**Concrete steps**:\n- Define `TheoryAdjunction` as a pair of morphisms φ : T → U and ψ : U → T satisfying the adjunction inequality: `U.Inv (φ.toFun x) ≤ n ↔ T.Inv x ≤ ψ.toFun_inv_bound n` (or a suitable reformulation).\n- Prove that adjoint pairs enable *reflection* of upper bounds (not just preservation of lower bounds).\n- Instantiate with existing catalog bridges: does the height-to-cell bridge admit a right adjoint?\n- Connect to Galois insertions in Mathlib's order theory for lattice-valued invariants.\n\n**Cross-domain connections**: Adjunctions formalize the intuition that some domain translations are \"lossless\" — a robustness guarantee in learning theory might be *exac",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "825001af",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:01:17.469403+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "3. Automated Bridge Search and Compositional Proof Engines",
+    "description": "**Goal**: Formalize a graph of theories and morphisms, then prove correctness of algorithms that compose bridges to transfer theorems automatically.\n\n**Concrete steps**:\n- Define `TheoryGraph` as a finite directed graph where nodes are `ResearchTheory` instances and edges are `TheoryHom`s.\n- Implement a path-finding algorithm that, given source and target theories, finds a composable chain of morphisms.\n- Prove that any path in the graph yields a valid `CertifiedTransfer` via iterated composition.\n- Extend to weighted graphs where edge weights represent \"information loss\" (gap between source and target invariants).\n- Prove that shortest-path composition minimizes total information loss.\n\n**Cross-domain connections**: This would create the first formal \"theorem search engine\" — given a resu",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "825001af",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:01:17.480731+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "4. Invariant Compression and Minimality Under Transport",
+    "description": "**Goal**: Show that minimality notions (Nerode minimization, spectral rank compression, sheaf coarsening) are preserved or reflected by selected morphisms.\n\n**Concrete steps**:\n- Define `Minimal` objects: elements x such that no y with strictly smaller invariant maps to the same image under all morphisms.\n- Prove that surjective theory morphisms reflect minimality: if φ(x) is minimal in U, then x is minimal in T (under appropriate conditions).\n- Connect to the existing `HasBoundedDepth` / `no_morphism_from_gap` theorems to show that gap theorems obstruct compression below certain thresholds.\n- Instantiate with Myhill-Nerode minimization: show that the minimum-state automaton is preserved by morphisms respecting language equivalence.\n\n**Cross-domain connections**: Compression invariants uni",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "825001af",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:01:17.491678+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "5. Cross-Domain Robustness Logic",
+    "description": "**Goal**: Create a modal logic of \"certified under transport\" that connects robustness in learning, observability in quantum systems, and stability in topology.\n\n**Concrete steps**:\n- Define a `RobustProperty` as a predicate that is preserved by all morphisms in a specified class (e.g., all ε-perturbation morphisms).\n- Prove closure properties: intersection, union, and existential quantification over robust properties.\n- Show that `HasDepthAtLeast T n` is robust for all morphism classes (since all `TheoryHom`s are depth-monotone by definition).\n- Define domain-specific robustness notions (Lipschitz stability, spectral gaps, quantum error thresholds) as instances of the general framework.\n- Prove that compositional transfer preserves robustness: if P is robust in T₁ and φ preserves P ⇒ Q, t",
+    "domains": [
+      "Physics",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "825001af",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:01:17.502987+00:00"
   }
 ]

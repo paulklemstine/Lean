@@ -1,422 +1,594 @@
 #!/usr/bin/env python3
 """
-Applications of Adversarial Stress Testing
+Applications of Certified Refutation Layers
 
-Demonstrates the framework in three concrete domains:
-1. Polynomial identity testing over finite fields
-2. Machine learning model selection via adversarial validation
-3. Cryptographic predicate screening
+Demonstrates real-world applications of the stress-testing framework:
+1. Number theory conjecture triage
+2. Combinatorial identity verification
+3. Graph property testing
+4. Automated conjecture pipeline simulation
 """
 
+from typing import Callable, Set, Dict, List, Optional, Tuple
+from itertools import combinations
 import random
-from typing import List, Dict, Tuple
-from algorithms import HypothesisClass, greedy_test_selection
+import math
+
+random.seed(42)
 
 
-# ============================================================================
-# APPLICATION 1: Polynomial Identity Testing Over Finite Fields
-# ============================================================================
+# ============================================================
+# APPLICATION 1: Number Theory Conjecture Triage
+# ============================================================
 
-def polynomial_identity_testing():
+def number_theory_triage():
     """
-    Test whether candidate polynomial identities hold over GF(p).
-    
-    Each "hypothesis" is a polynomial identity (e.g., p(x) = 0 for all x).
-    We stress-test by evaluating at random/adversarial points.
+    Stress-test number theory conjectures over bounded domains.
+    Demonstrates how finite testing eliminates false conjectures
+    before expensive proof attempts.
     """
-    print("=" * 70)
-    print("APPLICATION 1: Polynomial Identity Testing over GF(31)")
-    print("=" * 70)
-    
-    p = 31  # prime, so GF(31) is a field
-    universe = list(range(p))
-    
-    # Create polynomial hypotheses: "f(x) = 0 for all x in GF(p)"
-    # Some are true identities, some are not
-    polynomials = []
-    labels = []
-    
-    # True identity: 0 = 0
-    polynomials.append(lambda x, p=p: 0)
-    labels.append("0 (true identity)")
-    
-    # True identity: x^p - x = 0 (Fermat's little theorem)
-    polynomials.append(lambda x, p=p: (pow(x, p, p) - x) % p)
-    labels.append("x^p - x (Fermat, true)")
-    
-    # False: x^2 - 1 = 0 (only true for x = ±1)
-    polynomials.append(lambda x, p=p: (x * x - 1) % p)
-    labels.append("x² - 1 (false, roots at ±1)")
-    
-    # False: x^3 = 0 (only true at 0)
-    polynomials.append(lambda x, p=p: pow(x, 3, p))
-    labels.append("x³ (false, root at 0)")
-    
-    # False: x^2 - x = 0 (roots at 0 and 1)
-    polynomials.append(lambda x, p=p: (x * x - x) % p)
-    labels.append("x² - x (false, roots at 0,1)")
-    
-    # Almost-identity: a high-degree polynomial with many roots
-    # x(x-1)(x-2)...(x-15) mod p — has 16 roots out of 31
-    polynomials.append(lambda x, p=p: eval_product_poly(x, 16, p))
-    labels.append("x(x-1)...(x-15) (false, 16 roots)")
-    
-    truth_tables = [
-        {a: (poly(a) == 0) for a in universe}
-        for poly in polynomials
-    ]
-    
-    hc = HypothesisClass(universe, truth_tables)
-    
-    print(f"\nField: GF({p})")
-    print(f"Hypotheses: {len(polynomials)} polynomial identity claims")
-    print(f"False hypotheses: {hc.n_false}")
-    
-    # Greedy adversarial selection
-    for budget in [1, 2, 3, 5, 10]:
-        test = greedy_test_selection(hc, budget)
-        result = hc.stress_test(test)
-        print(f"\n  Budget {budget}: test points = {test}")
-        print(f"    False positives remaining: {result.false_positive_count}/{hc.n_false}")
-        for i, (label, tt) in enumerate(zip(labels, truth_tables)):
-            if hc.is_false(i):
-                status = "KILLED ✗" if not hc.survives(i, test) else "SURVIVES ✓ (false positive!)"
-                print(f"    {label}: {status}")
+    print("=" * 60)
+    print("APPLICATION 1: Number Theory Conjecture Triage")
+    print("=" * 60)
+    print()
 
+    domain = set(range(2, 100))
 
-def eval_product_poly(x: int, n_roots: int, p: int) -> int:
-    """Evaluate x(x-1)(x-2)...(x-(n_roots-1)) mod p."""
-    result = 1
-    for k in range(n_roots):
-        result = (result * ((x - k) % p)) % p
-    return result
+    def is_prime(n: int) -> bool:
+        if n < 2: return False
+        for d in range(2, int(n**0.5) + 1):
+            if n % d == 0: return False
+        return True
 
-
-# ============================================================================
-# APPLICATION 2: ML Model Selection via Adversarial Validation
-# ============================================================================
-
-def ml_adversarial_validation():
-    """
-    Use stress testing to screen candidate ML models.
-    
-    Each "hypothesis" is a model's prediction function. The universe
-    is a validation dataset. Stress testing selects the hardest
-    validation examples to distinguish good models from bad ones.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: ML Model Screening via Adversarial Validation")
-    print("=" * 70)
-    
-    random.seed(42)
-    n_examples = 50
-    n_models = 20
-    universe = list(range(n_examples))
-    
-    # Generate "ground truth" labels
-    true_labels = [random.choice([0, 1]) for _ in range(n_examples)]
-    
-    # Generate model predictions with varying accuracy
-    models = []
-    accuracies = []
-    for m in range(n_models):
-        noise_rate = random.uniform(0.0, 0.5)
-        predictions = [
-            true_labels[i] if random.random() > noise_rate else 1 - true_labels[i]
-            for i in range(n_examples)
-        ]
-        models.append(predictions)
-        acc = sum(p == t for p, t in zip(predictions, true_labels)) / n_examples
-        accuracies.append(acc)
-    
-    # Hypothesis: "model m predicts correctly on example a"
-    truth_tables = [
-        {a: (models[m][a] == true_labels[a]) for a in universe}
-        for m in range(n_models)
-    ]
-    
-    hc = HypothesisClass(universe, truth_tables)
-    
-    print(f"\nDataset size: {n_examples}")
-    print(f"Candidate models: {n_models}")
-    print(f"Models with <100% accuracy (= 'false' hypotheses): {hc.n_false}")
-    
-    # Compare greedy adversarial selection vs random
-    print(f"\n{'Budget':>8}  {'Greedy FP':>10}  {'Random FP':>10}")
-    print("-" * 32)
-    for budget in [1, 2, 5, 10, 20, 30, 50]:
-        greedy_T = greedy_test_selection(hc, budget)
-        random_T = random.sample(universe, min(budget, len(universe)))
-        
-        greedy_fp = hc.false_positive_count(greedy_T)
-        random_fp = hc.false_positive_count(random_T)
-        print(f"{budget:>8}  {greedy_fp:>10}  {random_fp:>10}")
-
-
-# ============================================================================
-# APPLICATION 3: Cryptographic Predicate Screening
-# ============================================================================
-
-def crypto_predicate_screening():
-    """
-    Screen candidate Boolean functions for cryptographic properties.
-    
-    Each hypothesis claims a Boolean function f: {0,1}^n → {0,1} is
-    balanced (equal number of 0s and 1s in its truth table). We
-    stress-test by evaluating on adversarial inputs.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Cryptographic Predicate Screening (Balance Test)")
-    print("=" * 70)
-    
-    n = 6  # input bits
-    N = 2 ** n  # universe size = 64
-    universe = list(range(N))
-    
-    random.seed(99)
-    n_functions = 40
-    
-    functions = []
-    labels = []
-    for f_idx in range(n_functions):
-        if f_idx < 10:
-            # Truly balanced functions
-            table = [0] * (N // 2) + [1] * (N // 2)
-            random.shuffle(table)
-            labels.append(f"f{f_idx} (balanced)")
-        elif f_idx < 25:
-            # Slightly imbalanced
-            n_ones = N // 2 + random.randint(1, 5)
-            table = [0] * (N - n_ones) + [1] * n_ones
-            random.shuffle(table)
-            labels.append(f"f{f_idx} (imbalanced, {n_ones}/{N} ones)")
-        else:
-            # Very imbalanced
-            n_ones = random.randint(1, N // 4)
-            table = [0] * (N - n_ones) + [1] * n_ones
-            random.shuffle(table)
-            labels.append(f"f{f_idx} (very imbalanced, {n_ones}/{N} ones)")
-    
-        functions.append(table)
-    
-    # Hypothesis: "f(x) = 1" — we test balance by checking if the function
-    # agrees with a balanced reference on selected points
-    # Simpler: hypothesis h_f says "f is balanced" ≡ for each test point pair (x, x'),
-    # the function has appropriate distribution
-    # Even simpler: use majority-vote style testing
-    # For this demo, hypothesis = "f(x) = 1 for all x in test set"
-    # This is a simplified stress test for detecting constant-0 or sparse functions
-    
-    truth_tables = [
-        {a: bool(functions[f_idx][a]) for a in universe}
-        for f_idx in range(n_functions)
-    ]
-    
-    hc = HypothesisClass(universe, truth_tables)
-    
-    print(f"\nInput bits: {n}")
-    print(f"Universe size: {N}")
-    print(f"Candidate functions: {n_functions}")
-    print(f"Functions with some zero output ('false' hypotheses): {hc.n_false}")
-    
-    greedy_T = greedy_test_selection(hc, 10)
-    result = hc.stress_test(greedy_T)
-    
-    print(f"\nGreedy adversarial test (budget=10):")
-    print(f"  Test points: {greedy_T}")
-    print(f"  False positives remaining: {result.false_positive_count}/{hc.n_false}")
-    print(f"  Elimination rate: {result.elimination_rate:.1%}")
-
-
-# ============================================================================
-# Main
-# ============================================================================
-
-if __name__ == "__main__":
-    polynomial_identity_testing()
-    ml_adversarial_validation()
-    crypto_predicate_screening()
-    
-    print("\n" + "=" * 70)
-    print("All applications demonstrate the core theorems:")
-    print("  • Soundness: detected counterexamples certify falsity")
-    print("  • Monotonicity: more tests → fewer false positives")
-    print("  • Greedy selection outperforms random selection")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Aether Quality Control: Demonstrating Finite Counterexample Stress Testing
-
-This demo illustrates the key theorems from the formal framework:
-1. Soundness: Finding a counterexample certifies falsity
-2. Monotonicity: Larger test sets never increase false positives
-3. Kill monotonicity: Larger test sets kill more hypotheses
-"""
-
-import random
-import itertools
-from typing import Callable
-
-# ---------------------------------------------------------------------------
-# Core Definitions (mirroring the formal Lean definitions)
-# ---------------------------------------------------------------------------
-
-def survives(hypothesis: Callable, test_set: list) -> bool:
-    """A hypothesis survives a test set if it passes all tests."""
-    return all(hypothesis(a) for a in test_set)
-
-def is_false(hypothesis: Callable, universe: list) -> bool:
-    """A hypothesis is false if some element of the universe refutes it."""
-    return any(not hypothesis(a) for a in universe)
-
-def false_positive_count(hypotheses: list, universe: list, test_set: list) -> int:
-    """Count hypotheses that are false but survive the test set."""
-    return sum(
-        1 for h in hypotheses
-        if is_false(h, universe) and survives(h, test_set)
-    )
-
-def killed_by(hypotheses: list, test_set: list) -> set:
-    """Return indices of hypotheses killed (refuted) by the test set."""
-    return {
-        i for i, h in enumerate(hypotheses)
-        if any(not h(a) for a in test_set)
+    # A family of number-theoretic conjectures (some true, some false)
+    conjectures = {
+        "All primes > 2 are odd":
+            lambda n: not is_prime(n) or n == 2 or n % 2 == 1,
+        "n² + n + 41 is always prime (Euler)":
+            lambda n: is_prime(n*n + n + 41),
+        "Every even n > 2 is sum of two primes (Goldbach, bounded)":
+            lambda n: n % 2 != 0 or n <= 2 or any(
+                is_prime(k) and is_prime(n - k) for k in range(2, n)),
+        "2^n - 1 is prime whenever n is prime":
+            lambda n: not is_prime(n) or is_prime(2**n - 1),
+        "n! + 1 is never divisible by n+2":
+            lambda n: (math.factorial(n) + 1) % (n + 2) != 0,
+        "Sum of digits of n² < 50":
+            lambda n: sum(int(d) for d in str(n*n)) < 50,
+        "All primes are of form 6k±1 (except 2,3)":
+            lambda n: not is_prime(n) or n <= 3 or n % 6 == 1 or n % 6 == 5,
+        "n² mod 4 ∈ {0, 1}":
+            lambda n: (n*n) % 4 in {0, 1},
     }
 
-# ---------------------------------------------------------------------------
-# Example: Parity Conjectures over Fin(10)
-# ---------------------------------------------------------------------------
+    test_sets = [
+        ("Small", set(range(2, 10))),
+        ("Medium", set(range(2, 30))),
+        ("Large", set(range(2, 50))),
+        ("Full", domain),
+    ]
 
-def make_parity_hypothesis(i: int) -> Callable:
-    """Hypothesis i: '(i + a) % 2 == 0' for all a."""
-    return lambda a: (i + a) % 2 == 0
+    for conj_name, pred in conjectures.items():
+        print(f"  Conjecture: {conj_name}")
+        for test_name, T in test_sets:
+            cex = [x for x in T if not pred(x)]
+            if cex:
+                print(f"    [{test_name:6s}] REFUTED at x = {cex[0]}")
+                break
+        else:
+            cex_full = [x for x in domain if not pred(x)]
+            if cex_full:
+                print(f"    [Full  ] REFUTED at x = {cex_full[0]} (needed full search)")
+            else:
+                print(f"    [Full  ] SURVIVES → candidate for proof")
+        print()
 
-print("=" * 70)
-print("DEMO 1: Parity Conjectures over {0,...,9}")
-print("=" * 70)
 
-universe = list(range(10))
-hypotheses = [make_parity_hypothesis(i) for i in range(10)]
+# ============================================================
+# APPLICATION 2: Combinatorial Identity Verification
+# ============================================================
 
-# Even-indexed hypotheses claim (even + a) % 2 == 0, which is true only for even a
-# So they are false on odd a. Odd-indexed ones are false on even a.
-# All hypotheses are false on the full universe (they fail on some element).
+def combinatorial_verification():
+    """
+    Verify combinatorial identities by stress-testing on small values.
+    """
+    print("=" * 60)
+    print("APPLICATION 2: Combinatorial Identity Stress Testing")
+    print("=" * 60)
+    print()
 
-small_test = [0, 1]
-large_test = [0, 1, 2, 3]
-full_test  = list(range(10))
+    def binom(n, k):
+        if k < 0 or k > n: return 0
+        return math.comb(n, k)
 
-fp_small = false_positive_count(hypotheses, universe, small_test)
-fp_large = false_positive_count(hypotheses, universe, large_test)
-fp_full  = false_positive_count(hypotheses, universe, full_test)
+    # Conjectures about binomial coefficients
+    identities = {
+        "Vandermonde: C(m+n,r) = Σ C(m,k)C(n,r-k)":
+            lambda args: (lambda m, n, r: binom(m+n, r) ==
+                sum(binom(m, k) * binom(n, r-k) for k in range(r+1)))(*args),
+        "Hockey stick: Σ_{i=0}^{r} C(n+i,i) = C(n+r+1,r)":
+            lambda args: (lambda n, r, _: sum(binom(n+i, i) for i in range(r+1)) ==
+                binom(n+r+1, r))(*args),
+        "FALSE: C(n,k) = C(n,k+1) always":
+            lambda args: (lambda n, k, _: binom(n, k) == binom(n, k+1))(*args),
+        "Symmetry: C(n,k) = C(n,n-k)":
+            lambda args: (lambda n, k, _: binom(n, k) == binom(n, n-k))(*args),
+    }
 
-print(f"\nUniverse: {universe}")
-print(f"Number of hypotheses: {len(hypotheses)}")
-print(f"\nTest set {{0,1}}:       false positives = {fp_small}")
-print(f"Test set {{0,1,2,3}}:   false positives = {fp_large}")
-print(f"Test set {{0,...,9}}:    false positives = {fp_full}")
-print(f"\nMonotonicity verified: {fp_full} ≤ {fp_large} ≤ {fp_small}  →  {fp_full <= fp_large <= fp_small}")
+    # Domain: triples (m, n, r) with 0 ≤ m,n,r ≤ 8
+    domain = {(m, n, r) for m in range(9) for n in range(9) for r in range(9)}
+    test_set = {(m, n, r) for m in range(5) for n in range(5) for r in range(5)}
 
-# ---------------------------------------------------------------------------
-# DEMO 2: Monotone Decrease Under Sequential Test Enlargement
-# ---------------------------------------------------------------------------
+    for name, pred in identities.items():
+        cex_test = [x for x in test_set if not pred(x)]
+        cex_full = [x for x in domain if not pred(x)]
+        if cex_test:
+            print(f"  {name}")
+            print(f"    REFUTED by small test at {cex_test[0]}")
+        elif cex_full:
+            print(f"  {name}")
+            print(f"    Passed small test but REFUTED at {cex_full[0]}")
+        else:
+            print(f"  {name}")
+            print(f"    SURVIVES all {len(domain)} tests → candidate for proof")
+        print()
 
-print("\n" + "=" * 70)
-print("DEMO 2: Monotone False-Positive Decrease (Step-by-Step)")
-print("=" * 70)
 
-# Random hypothesis class: 50 random Boolean functions on {0,...,19}
-random.seed(42)
-N = 20
-universe = list(range(N))
-num_hyp = 50
-hyp_tables = [
-    {a: random.choice([True, False]) for a in universe}
-    for _ in range(num_hyp)
-]
-hypotheses = [lambda a, t=t: t[a] for t in hyp_tables]
+# ============================================================
+# APPLICATION 3: Graph Property Testing
+# ============================================================
 
-print(f"\nUniverse size: {N}")
-print(f"Hypothesis class size: {num_hyp}")
-print(f"False hypotheses: {sum(1 for h in hypotheses if is_false(h, universe))}")
-print()
+def graph_property_testing():
+    """
+    Test conjectures about small graphs using exhaustive search.
+    """
+    print("=" * 60)
+    print("APPLICATION 3: Graph Property Testing")
+    print("=" * 60)
+    print()
 
-# Incrementally add test points and track false positives
-test_set = []
-fp_trace = []
-for k in range(N + 1):
-    fp = false_positive_count(hypotheses, universe, test_set)
-    fp_trace.append(fp)
-    if k < N:
-        test_set.append(k)
+    # Represent graphs on n=4 vertices as adjacency sets
+    n = 4
+    vertices = set(range(n))
+    all_edges = [(i, j) for i in range(n) for j in range(i+1, n)]
 
-print(f"{'|T|':>4}  {'False Positives':>16}")
-print("-" * 24)
-for k, fp in enumerate(fp_trace):
-    bar = "█" * fp
-    print(f"{k:>4}  {fp:>16}  {bar}")
+    # Enumerate all graphs (2^6 = 64 for n=4)
+    all_graphs = []
+    for r in range(len(all_edges) + 1):
+        for edges in combinations(all_edges, r):
+            all_graphs.append(frozenset(edges))
 
-# Verify monotonicity
-is_monotone = all(fp_trace[i] >= fp_trace[i + 1] for i in range(len(fp_trace) - 1))
-print(f"\nMonotonicity holds: {is_monotone}")
+    print(f"Domain: all graphs on {n} vertices ({len(all_graphs)} graphs)")
 
-# ---------------------------------------------------------------------------
-# DEMO 3: Kill Set Monotonicity
-# ---------------------------------------------------------------------------
+    def degree(graph, v):
+        return sum(1 for e in graph if v in e)
 
-print("\n" + "=" * 70)
-print("DEMO 3: Kill Set Monotonicity")
-print("=" * 70)
+    def is_connected(graph):
+        if not graph:
+            return n <= 1
+        adj = {v: set() for v in vertices}
+        for (u, v) in graph:
+            adj[u].add(v)
+            adj[v].add(u)
+        visited = set()
+        stack = [0]
+        while stack:
+            v = stack.pop()
+            if v in visited: continue
+            visited.add(v)
+            stack.extend(adj[v] - visited)
+        return len(visited) == n
 
-test_sets = [list(range(k)) for k in range(N + 1)]
-kill_sizes = [len(killed_by(hypotheses, T)) for T in test_sets]
+    def num_edges(graph):
+        return len(graph)
 
-print(f"\n{'|T|':>4}  {'Killed':>8}  {'Surviving False':>16}")
-print("-" * 34)
-for k in range(N + 1):
-    killed = kill_sizes[k]
-    fp = fp_trace[k]
-    print(f"{k:>4}  {killed:>8}  {fp:>16}")
+    # Conjectures
+    conjectures = {
+        "Connected graph has ≥ n-1 edges":
+            lambda g: not is_connected(g) or num_edges(g) >= n - 1,
+        "Sum of degrees = 2|E|":
+            lambda g: sum(degree(g, v) for v in vertices) == 2 * num_edges(g),
+        "Max degree < n":
+            lambda g: all(degree(g, v) < n for v in vertices),
+        "FALSE: Connected iff ≥ n edges":
+            lambda g: is_connected(g) == (num_edges(g) >= n),
+    }
 
-# Verify kill monotonicity
-kill_monotone = all(kill_sizes[i] <= kill_sizes[i + 1] for i in range(len(kill_sizes) - 1))
-print(f"\nKill monotonicity holds: {kill_monotone}")
+    # Test with graphs having ≤ 3 edges first
+    small_graphs = [g for g in all_graphs if len(g) <= 3]
+    print(f"Small test set: graphs with ≤ 3 edges ({len(small_graphs)} graphs)")
+    print()
 
-# ---------------------------------------------------------------------------
-# DEMO 4: Soundness — Finding a Counterexample
-# ---------------------------------------------------------------------------
+    for name, pred in conjectures.items():
+        cex_small = [g for g in small_graphs if not pred(g)]
+        cex_all = [g for g in all_graphs if not pred(g)]
 
-print("\n" + "=" * 70)
-print("DEMO 4: Soundness — Counterexample Detection")
-print("=" * 70)
+        if cex_small:
+            print(f"  {name}")
+            print(f"    REFUTED by small graph: edges = {set(cex_small[0])}")
+        elif cex_all:
+            print(f"  {name}")
+            print(f"    Passed small test, REFUTED by: edges = {set(cex_all[0])}")
+        else:
+            print(f"  {name}")
+            print(f"    SURVIVES all {len(all_graphs)} graphs → candidate for proof")
+        print()
 
-# A specific hypothesis that fails on element 7
-bad_hyp = lambda a: a != 7
-print(f"\nHypothesis: 'a ≠ 7' for all a in universe")
-print(f"Universe: {{0,...,{N-1}}}")
 
-for test_size in [1, 3, 5, 8, 10]:
-    test = list(range(test_size))
-    detected = not survives(bad_hyp, test)
-    counterexample = next((a for a in test if not bad_hyp(a)), None)
-    status = f"DETECTED (counterexample: {counterexample})" if detected else "Not yet detected"
-    print(f"  Test set {{0,...,{test_size-1}}}: {status}")
+# ============================================================
+# APPLICATION 4: Automated Pipeline Simulation
+# ============================================================
 
-print("\n✓ All demonstrations complete. Every theorem from the formal framework")
-print("  is illustrated with concrete numerical examples.")
+def pipeline_simulation():
+    """
+    Simulate a full conjecture discovery pipeline with stress testing.
+    Compare naive vs. stress-test-first approaches.
+    """
+    print("=" * 60)
+    print("APPLICATION 4: Pipeline Simulation (1000 conjectures)")
+    print("=" * 60)
+    print()
+
+    domain = set(range(50))
+    n_conjectures = 1000
+
+    # Generate random conjectures with varying "truth rates"
+    conjectures = {}
+    ground_truth = {}  # True if conjecture is universally true
+    for i in range(n_conjectures):
+        # ~30% of conjectures are true, 70% are false
+        if random.random() < 0.3:
+            conjectures[i] = lambda x: True
+            ground_truth[i] = True
+        else:
+            # Random bad set of size 1-10
+            bad = set(random.sample(range(50), random.randint(1, 10)))
+            conjectures[i] = lambda x, b=bad: x not in b
+            ground_truth[i] = False
+
+    n_true = sum(1 for v in ground_truth.values() if v)
+    n_false = n_conjectures - n_true
+    print(f"Generated {n_conjectures} conjectures: {n_true} true, {n_false} false")
+
+    # Simulate pipeline costs
+    COST_TEST = 0.01  # Cost per (conjecture, test point) evaluation
+    COST_PROOF = 10.0  # Cost per proof attempt
+    COST_PROOF_SUCCESS = 5.0  # Additional cost for successful proof
+
+    print(f"\nCost model: test={COST_TEST}/eval, proof_attempt={COST_PROOF}, proof_success={COST_PROOF_SUCCESS}")
+
+    # Naive pipeline
+    naive_total = n_conjectures * COST_PROOF + n_true * COST_PROOF_SUCCESS
+    print(f"\nNaive pipeline:")
+    print(f"  Proof attempts: {n_conjectures}")
+    print(f"  Successful proofs: {n_true}")
+    print(f"  Wasted attempts (on false conjectures): {n_false}")
+    print(f"  Total cost: {naive_total:.0f}")
+
+    # Stress-test pipeline with greedy test design
+    print(f"\nStress-test pipeline:")
+    for budget in [5, 10, 20, 30, 50]:
+        # Pick test points (greedy: most-refuting first)
+        point_kills = {}
+        for x in domain:
+            kills = sum(1 for i, pred in conjectures.items()
+                       if not pred(x) and not ground_truth[i])
+            point_kills[x] = kills
+
+        T = set(sorted(point_kills, key=point_kills.get, reverse=True)[:budget])
+
+        # Compute survivors
+        survivors = []
+        false_positives = 0
+        for i, pred in conjectures.items():
+            if all(pred(x) for x in T):
+                survivors.append(i)
+                if not ground_truth[i]:
+                    false_positives += 1
+
+        test_cost = n_conjectures * len(T) * COST_TEST
+        proof_cost = len(survivors) * COST_PROOF + n_true * COST_PROOF_SUCCESS
+        total = test_cost + proof_cost
+        savings_pct = 100 * (naive_total - total) / naive_total
+
+        print(f"  |T|={budget:2d}: survivors={len(survivors):4d} "
+              f"(FP={false_positives:3d}), "
+              f"cost={total:7.0f}, "
+              f"savings={savings_pct:+5.1f}%")
+
+
+# ============================================================
+# Run all applications
+# ============================================================
+
+if __name__ == "__main__":
+    number_theory_triage()
+    print()
+    combinatorial_verification()
+    print()
+    graph_property_testing()
+    print()
+    pipeline_simulation()
+
+    print()
+    print("=" * 60)
+    print("All applications completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Aether Quality Control
+Aether Stress Testing: Demonstrations of Certified Refutation Theory
+
+This module demonstrates the core theorems of the certified refutation layer
+with concrete numerical examples over finite domains.
+
+Examples include:
+1. Complete test set exactness (Theorem 1)
+2. Maximal scored counterexample extraction (Theorem 2)
+3. False-positive count monotonicity (Theorem 3)
+4. Bounded counterexample detection (Theorem 4)
+"""
+
+from typing import Callable, Optional
+from itertools import combinations
+
+
+def survives_test(T: set, P: Callable, domain: set) -> bool:
+    """Check if predicate P survives stress test T."""
+    return all(P(x) for x in T)
+
+
+def has_counterexample(P: Callable, domain: set) -> bool:
+    """Check if P has any counterexample in domain."""
+    return any(not P(x) for x in domain)
+
+
+def counterexample_set(P: Callable, domain: set) -> set:
+    """Return the set of all counterexamples to P in domain."""
+    return {x for x in domain if not P(x)}
+
+
+def false_positive_count(Q: dict, T: set, domain: set) -> int:
+    """
+    Count false positives: conjectures that are false but pass all tests in T.
+
+    Q: dict mapping conjecture index -> predicate function
+    T: test set
+    domain: full domain
+    """
+    count = 0
+    for idx, pred in Q.items():
+        is_false = any(not pred(x) for x in domain)
+        passes_test = all(pred(x) for x in T)
+        if is_false and passes_test:
+            count += 1
+    return count
+
+
+def find_max_scored_counterexample(
+    P: Callable, score: Callable, domain: set
+) -> Optional[tuple]:
+    """Find the counterexample with maximum score, or None if P holds everywhere."""
+    cex = counterexample_set(P, domain)
+    if not cex:
+        return None
+    best = max(cex, key=score)
+    return (best, score(best))
+
+
+# ============================================================
+# DEMO 1: Complete Test Set Exactness
+# ============================================================
+print("=" * 70)
+print("DEMO 1: Complete Test Set Exactness (Theorem 1)")
+print("=" * 70)
+print()
+
+domain = set(range(20))
+
+# Conjecture: "all numbers less than 20 are less than 15"
+P1 = lambda x: x < 15
+counterexamples_P1 = counterexample_set(P1, domain)
+print(f"Conjecture P1: 'x < 15' for x in {{0,...,19}}")
+print(f"Counterexamples: {sorted(counterexamples_P1)}")
+
+# Incomplete test set: {0, 1, 2, 3, 4}
+T_incomplete = {0, 1, 2, 3, 4}
+print(f"\nIncomplete test set T = {sorted(T_incomplete)}")
+print(f"  Survives test: {survives_test(T_incomplete, P1, domain)}")
+print(f"  But conjecture is FALSE (counterexamples exist outside T)")
+
+# Complete test set: contains all counterexamples
+T_complete = counterexamples_P1 | {0, 1, 2}
+print(f"\nComplete test set T = {sorted(T_complete)}")
+print(f"  Survives test: {survives_test(T_complete, P1, domain)}")
+print(f"  Conjecture is correctly identified as FALSE")
+
+# True conjecture
+P2 = lambda x: x < 100
+T_any = {5, 10, 15}
+print(f"\nConjecture P2: 'x < 100' for x in {{0,...,19}}")
+print(f"  Test set T = {sorted(T_any)}")
+print(f"  Any test set is complete (no counterexamples exist)")
+print(f"  Survives test: {survives_test(T_any, P2, domain)}")
+print(f"  Conjecture is TRUE: {not has_counterexample(P2, domain)}")
+
+# ============================================================
+# DEMO 2: Maximal Scored Counterexample
+# ============================================================
+print()
+print("=" * 70)
+print("DEMO 2: Maximal Scored Counterexample (Theorem 2)")
+print("=" * 70)
+print()
+
+domain_fin10 = set(range(10))
+
+# Conjecture: "x is even"
+P_even = lambda x: x % 2 == 0
+score_fn = lambda x: x * x  # score = x^2 (harder = larger)
+
+cex = counterexample_set(P_even, domain_fin10)
+print(f"Conjecture: 'x is even' for x in {{0,...,9}}")
+print(f"Counterexamples: {sorted(cex)}")
+print(f"Score function: score(x) = x²")
+
+result = find_max_scored_counterexample(P_even, score_fn, domain_fin10)
+print(f"\nMaximal scored counterexample: x = {result[0]}, score = {result[1]}")
+print(f"All counterexample scores: {[(x, score_fn(x)) for x in sorted(cex)]}")
+print(f"Verified: {result[0]} has the highest score among all counterexamples")
+
+# ============================================================
+# DEMO 3: False-Positive Count Monotonicity
+# ============================================================
+print()
+print("=" * 70)
+print("DEMO 3: False-Positive Count Monotonicity (Theorem 3)")
+print("=" * 70)
+print()
+
+domain_small = set(range(8))
+
+# Family of 10 conjectures: Q_i(x) = (x + i) % 3 != 0
+conjectures = {}
+for i in range(10):
+    conjectures[i] = lambda x, i=i: (x + i) % 3 != 0
+
+print(f"Domain: {{0,...,7}}")
+print(f"Conjecture family: Q_i(x) = '(x + i) mod 3 ≠ 0' for i = 0..9")
+print()
+
+# Progressively larger test sets
+test_sets = [
+    set(),
+    {0},
+    {0, 1},
+    {0, 1, 2},
+    {0, 1, 2, 3},
+    {0, 1, 2, 3, 4},
+    {0, 1, 2, 3, 4, 5},
+    {0, 1, 2, 3, 4, 5, 6},
+    {0, 1, 2, 3, 4, 5, 6, 7},
+]
+
+fp_counts = []
+for T in test_sets:
+    fp = false_positive_count(conjectures, T, domain_small)
+    fp_counts.append(fp)
+    print(f"  |T| = {len(T):2d}, T = {str(sorted(T)):<30s} → FP count = {fp}")
+
+print()
+print("Monotonicity verified:", all(fp_counts[i] >= fp_counts[i+1] for i in range(len(fp_counts)-1)))
+
+# Show strict drop
+for i in range(len(fp_counts) - 1):
+    if fp_counts[i] > fp_counts[i+1]:
+        print(f"  Strict drop at |T| = {len(test_sets[i])} → {len(test_sets[i+1])}: "
+              f"FP {fp_counts[i]} → {fp_counts[i+1]}")
+
+# ============================================================
+# DEMO 4: Bounded Counterexample Detection
+# ============================================================
+print()
+print("=" * 70)
+print("DEMO 4: Bounded Counterexample Detection (Theorem 4)")
+print("=" * 70)
+print()
+
+# Conjecture: "all primes less than 50 are odd"
+def is_prime(n):
+    if n < 2:
+        return False
+    for d in range(2, int(n**0.5) + 1):
+        if n % d == 0:
+            return False
+    return True
+
+domain_50 = set(range(50))
+P_prime_odd = lambda x: not is_prime(x) or x % 2 != 0
+complexity_fn = lambda x: x  # complexity = value itself
+
+print("Conjecture: 'all primes are odd' over {0,...,49}")
+cex_prime = counterexample_set(P_prime_odd, domain_50)
+print(f"Counterexamples: {sorted(cex_prime)}")
+
+for B in [1, 2, 3, 5, 10]:
+    T_bounded = {x for x in domain_50 if complexity_fn(x) <= B}
+    bounded_cex = {x for x in cex_prime if complexity_fn(x) <= B}
+    detected = any(not P_prime_odd(x) for x in T_bounded)
+    print(f"  B = {B:2d}: T covers complexity ≤ {B}, "
+          f"bounded counterexamples = {sorted(bounded_cex)}, "
+          f"detected = {detected}")
+
+# ============================================================
+# DEMO 5: Pipeline Cost Comparison
+# ============================================================
+print()
+print("=" * 70)
+print("DEMO 5: Pipeline Cost Comparison")
+print("=" * 70)
+print()
+
+import random
+random.seed(42)
+
+n_conjectures = 100
+domain_size = 20
+domain_pipe = set(range(domain_size))
+
+# Generate random conjectures (some true, some false)
+def make_random_conjecture():
+    """Make a random conjecture: 'x not in S' for random subset S."""
+    bad_set = set(random.sample(range(domain_size), random.randint(0, 5)))
+    return lambda x, bs=bad_set: x not in bs, len(bad_set) > 0
+
+conj_list = [make_random_conjecture() for _ in range(n_conjectures)]
+predicates = {i: c[0] for i, c in enumerate(conj_list)}
+is_false = {i: c[1] for i, c in enumerate(conj_list)}
+
+n_false = sum(1 for v in is_false.values() if v)
+print(f"Generated {n_conjectures} random conjectures")
+print(f"  True: {n_conjectures - n_false}, False: {n_false}")
+
+cost_test_per_point = 1
+cost_proof_attempt = 50
+
+# Naive pipeline: attempt proof on all
+naive_cost = n_conjectures * cost_proof_attempt
+print(f"\nNaive pipeline (prove all): cost = {n_conjectures} × {cost_proof_attempt} = {naive_cost}")
+
+# Stress-test pipeline with increasing test set sizes
+for test_size in [1, 3, 5, 10, 15, 20]:
+    T = set(random.sample(range(domain_size), min(test_size, domain_size)))
+    fp = false_positive_count(predicates, T, domain_pipe)
+    survivors = sum(1 for i in range(n_conjectures) if all(predicates[i](x) for x in T))
+    test_cost = n_conjectures * test_size * cost_test_per_point
+    proof_cost = survivors * cost_proof_attempt
+    total_cost = test_cost + proof_cost
+    savings = naive_cost - total_cost
+    print(f"  |T| = {test_size:2d}: test cost = {test_cost:5d}, "
+          f"survivors = {survivors:3d} (FP = {fp:2d}), "
+          f"proof cost = {proof_cost:5d}, "
+          f"total = {total_cost:5d}, savings = {savings:+5d}")
+
+
+if __name__ == "__main__":
+    print()
+    print("=" * 70)
+    print("All demonstrations completed successfully.")
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""
+Visualizations for Certified Refutation Layer Theory
 
 Generates publication-quality figures demonstrating:
-1. False-positive monotone decrease
-2. Greedy vs random test selection comparison
-3. Kill set growth
-4. Pipeline stage analysis
+1. False-positive count monotonicity
+2. Pipeline cost comparison
+3. Greedy test design effectiveness
+4. Counterexample score distributions
 """
 
 import matplotlib
@@ -426,208 +598,305 @@ import numpy as np
 import random
 import base64
 import io
-from algorithms import HypothesisClass, greedy_test_selection, random_test_selection
+
+random.seed(42)
+np.random.seed(42)
+
+# Style
+plt.rcParams.update({
+    'font.size': 12,
+    'axes.titlesize': 14,
+    'axes.labelsize': 12,
+    'figure.dpi': 150,
+    'figure.facecolor': 'white',
+})
 
 
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
+def fig_to_base64(fig):
+    """Convert matplotlib figure to base64 string."""
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
+    fig.savefig(buf, format='png', bbox_inches='tight', dpi=150)
     buf.seek(0)
-    encoded = base64.b64encode(buf.read()).decode('ascii')
-    plt.close(fig)
-    return f"data:image/png;base64,{encoded}"
+    return base64.b64encode(buf.read()).decode('utf-8')
 
 
-def create_hypothesis_class(n_universe=30, n_hypotheses=100, seed=42):
-    """Create a random hypothesis class for visualization."""
-    rng = random.Random(seed)
-    universe = list(range(n_universe))
-    truth_tables = [
-        {a: rng.random() > 0.3 for a in universe}
-        for _ in range(n_hypotheses)
-    ]
-    return HypothesisClass(universe, truth_tables)
+# ============================================================
+# FIGURE 1: False-Positive Count Monotonicity
+# ============================================================
 
+def plot_fp_monotonicity():
+    domain = set(range(20))
 
-def plot_monotone_decrease():
-    """Figure 1: False-positive count as test set grows."""
-    hc = create_hypothesis_class()
-    
+    conjectures = {}
+    for i in range(30):
+        bad = set(random.sample(range(20), random.randint(0, 5)))
+        conjectures[i] = lambda x, b=bad: x not in b
+
+    test_sizes = list(range(21))
     fp_counts = []
-    for k in range(hc.n_universe + 1):
-        test = list(range(k))
-        fp_counts.append(hc.false_positive_count(test))
-    
-    fig, ax = plt.subplots(figsize=(10, 6))
-    x = list(range(hc.n_universe + 1))
-    
-    ax.fill_between(x, fp_counts, alpha=0.3, color='#2196F3')
-    ax.plot(x, fp_counts, 'o-', color='#1565C0', linewidth=2, markersize=6)
-    
-    ax.set_xlabel('Test Set Size |T|', fontsize=14)
-    ax.set_ylabel('False Positive Count', fontsize=14)
-    ax.set_title('Monotone Decrease of False Positives\n(Theorem: falsePositiveCount_antitone)', fontsize=16)
-    ax.grid(True, alpha=0.3)
-    ax.set_xlim(0, hc.n_universe)
-    ax.set_ylim(bottom=0)
-    
-    # Annotate
-    ax.annotate('Every additional test point\ncan only reduce false positives',
-                xy=(10, fp_counts[10]), xytext=(15, fp_counts[5] + 5),
-                arrowprops=dict(arrowstyle='->', color='#D32F2F'),
-                fontsize=12, color='#D32F2F')
-    
-    fig.savefig('fig_monotone_decrease.png', dpi=150, bbox_inches='tight', facecolor='white')
-    return fig_to_base64(fig)
 
+    # Build test sets incrementally using greedy approach
+    T = set()
+    remaining = set(domain)
+
+    for size in test_sizes:
+        fp = 0
+        for idx, pred in conjectures.items():
+            is_false = any(not pred(x) for x in domain)
+            passes = all(pred(x) for x in T)
+            if is_false and passes:
+                fp += 1
+        fp_counts.append(fp)
+        if remaining:
+            # Add the most-refuting point
+            best = max(remaining, key=lambda x: sum(1 for pred in conjectures.values() if not pred(x)))
+            T.add(best)
+            remaining.discard(best)
+
+    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+    ax.plot(test_sizes, fp_counts, 'b-o', markersize=6, linewidth=2, label='False Positives')
+    ax.fill_between(test_sizes, fp_counts, alpha=0.15, color='blue')
+    ax.set_xlabel('Test Set Size |T|')
+    ax.set_ylabel('False-Positive Count FP(T)')
+    ax.set_title('Theorem 3: False-Positive Count is Antitone in Test Set Size')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 20)
+    ax.set_ylim(bottom=0)
+
+    # Annotate strict drops
+    for i in range(len(fp_counts) - 1):
+        if fp_counts[i] > fp_counts[i+1]:
+            ax.annotate(f'−{fp_counts[i]-fp_counts[i+1]}',
+                       xy=(i+1, fp_counts[i+1]),
+                       xytext=(i+1.5, fp_counts[i+1] + 1),
+                       fontsize=8, color='red',
+                       arrowprops=dict(arrowstyle='->', color='red', lw=0.5))
+
+    fig.savefig('/workspace/request-project/fig_fp_monotonicity.png', bbox_inches='tight', dpi=150)
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
+
+
+# ============================================================
+# FIGURE 2: Pipeline Cost Comparison
+# ============================================================
+
+def plot_pipeline_cost():
+    domain = set(range(50))
+    n_conj = 200
+
+    conjectures = {}
+    ground_truth = {}
+    for i in range(n_conj):
+        if random.random() < 0.3:
+            conjectures[i] = lambda x: True
+            ground_truth[i] = True
+        else:
+            bad = set(random.sample(range(50), random.randint(1, 8)))
+            conjectures[i] = lambda x, b=bad: x not in b
+            ground_truth[i] = False
+
+    COST_TEST = 0.5
+    COST_PROOF = 50.0
+
+    test_sizes = list(range(0, 51, 1))
+    total_costs = []
+    test_costs_list = []
+    proof_costs_list = []
+    naive_cost = n_conj * COST_PROOF
+
+    for ts in test_sizes:
+        if ts == 0:
+            T = set()
+        else:
+            # Greedy selection
+            point_kills = {x: sum(1 for i, pred in conjectures.items() if not pred(x)) for x in domain}
+            T = set(sorted(point_kills, key=point_kills.get, reverse=True)[:ts])
+
+        survivors = sum(1 for i, pred in conjectures.items() if all(pred(x) for x in T))
+        tc = n_conj * ts * COST_TEST
+        pc = survivors * COST_PROOF
+        total_costs.append(tc + pc)
+        test_costs_list.append(tc)
+        proof_costs_list.append(pc)
+
+    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+    ax.plot(test_sizes, total_costs, 'b-', linewidth=2, label='Total Cost (test + proof)')
+    ax.plot(test_sizes, test_costs_list, 'g--', linewidth=1.5, label='Test Cost')
+    ax.plot(test_sizes, proof_costs_list, 'r--', linewidth=1.5, label='Proof Cost')
+    ax.axhline(y=naive_cost, color='gray', linestyle=':', linewidth=1.5, label=f'Naive Cost ({naive_cost:.0f})')
+
+    opt_idx = np.argmin(total_costs)
+    ax.plot(test_sizes[opt_idx], total_costs[opt_idx], 'k*', markersize=15)
+    ax.annotate(f'Optimal: |T|={test_sizes[opt_idx]}\nCost={total_costs[opt_idx]:.0f}',
+               xy=(test_sizes[opt_idx], total_costs[opt_idx]),
+               xytext=(test_sizes[opt_idx]+5, total_costs[opt_idx]+500),
+               fontsize=10,
+               arrowprops=dict(arrowstyle='->', color='black'))
+
+    ax.set_xlabel('Test Set Size |T|')
+    ax.set_ylabel('Cost')
+    ax.set_title('Pipeline Cost: Stress Testing vs. Naive Proof-All')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    fig.savefig('/workspace/request-project/fig_pipeline_cost.png', bbox_inches='tight', dpi=150)
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
+
+
+# ============================================================
+# FIGURE 3: Counterexample Score Distribution
+# ============================================================
+
+def plot_score_distribution():
+    domain = set(range(100))
+
+    # Conjecture: "x is not a perfect square"
+    P = lambda x: int(x**0.5)**2 != x
+    score = lambda x: x  # higher value = harder
+
+    cex = sorted([x for x in domain if not P(x)])
+    non_cex = sorted([x for x in domain if P(x)])
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+    # Left: score distribution
+    ax1.bar([score(x) for x in cex], [1]*len(cex), color='red', alpha=0.7, label='Counterexamples')
+    ax1.set_xlabel('Score (= value)')
+    ax1.set_ylabel('Count')
+    ax1.set_title('Counterexample Score Distribution')
+    ax1.legend()
+    ax1.set_xlim(-1, 100)
+
+    # Highlight max-scored counterexample
+    max_cex = max(cex, key=score)
+    ax1.annotate(f'Max: x={max_cex}\nscore={score(max_cex)}',
+                xy=(score(max_cex), 1),
+                xytext=(score(max_cex)-20, 1.3),
+                fontsize=10, color='darkred',
+                arrowprops=dict(arrowstyle='->', color='darkred'))
+
+    # Right: cumulative refutation
+    bounded_cex_counts = []
+    for B in range(101):
+        bounded_cex_counts.append(len([x for x in cex if score(x) <= B]))
+
+    ax2.plot(range(101), bounded_cex_counts, 'r-', linewidth=2)
+    ax2.fill_between(range(101), bounded_cex_counts, alpha=0.15, color='red')
+    ax2.set_xlabel('Complexity Bound B')
+    ax2.set_ylabel('Counterexamples Found (complexity ≤ B)')
+    ax2.set_title('Theorem 4: Bounded Detection Coverage')
+    ax2.grid(True, alpha=0.3)
+
+    # Mark where first counterexample is found
+    first_B = next(B for B in range(101) if bounded_cex_counts[B] > 0)
+    ax2.axvline(x=first_B, color='green', linestyle='--', alpha=0.7)
+    ax2.annotate(f'First detection\nat B={first_B}',
+                xy=(first_B, 0.5),
+                xytext=(first_B+15, 2),
+                fontsize=10, color='green',
+                arrowprops=dict(arrowstyle='->', color='green'))
+
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/fig_score_distribution.png', bbox_inches='tight', dpi=150)
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
+
+
+# ============================================================
+# FIGURE 4: Greedy vs Random Test Design
+# ============================================================
 
 def plot_greedy_vs_random():
-    """Figure 2: Greedy vs random test selection comparison."""
-    hc = create_hypothesis_class(n_universe=30, n_hypotheses=200, seed=42)
-    
-    budgets = list(range(1, hc.n_universe + 1))
-    greedy_fps = []
-    random_fps_mean = []
-    random_fps_std = []
-    
-    for budget in budgets:
-        # Greedy
-        greedy_T = greedy_test_selection(hc, budget)
-        greedy_fps.append(hc.false_positive_count(greedy_T))
-        
-        # Random (average over 20 trials)
-        rfps = []
-        for trial in range(20):
-            random_T = random_test_selection(hc, budget, seed=trial * 100)
-            rfps.append(hc.false_positive_count(random_T))
-        random_fps_mean.append(np.mean(rfps))
-        random_fps_std.append(np.std(rfps))
-    
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    ax.fill_between(budgets, 
-                     [m - s for m, s in zip(random_fps_mean, random_fps_std)],
-                     [m + s for m, s in zip(random_fps_mean, random_fps_std)],
-                     alpha=0.2, color='#FF9800')
-    ax.plot(budgets, random_fps_mean, 's-', color='#E65100', linewidth=2, 
-            markersize=4, label='Random (mean ± std)')
-    ax.plot(budgets, greedy_fps, 'o-', color='#1565C0', linewidth=2,
-            markersize=4, label='Greedy (adversarial)')
-    
-    ax.set_xlabel('Test Budget k', fontsize=14)
-    ax.set_ylabel('False Positive Count', fontsize=14)
-    ax.set_title('Adversarial (Greedy) vs Random Test Selection', fontsize=16)
-    ax.legend(fontsize=12)
+    domain = set(range(30))
+    n_conj = 50
+
+    conjectures = {}
+    for i in range(n_conj):
+        bad = set(random.sample(range(30), random.randint(0, 6)))
+        conjectures[i] = lambda x, b=bad: x not in b
+
+    n_false = sum(1 for pred in conjectures.values() if any(not pred(x) for x in domain))
+
+    def compute_fp(T):
+        return sum(1 for pred in conjectures.values()
+                  if any(not pred(x) for x in domain) and all(pred(x) for x in T))
+
+    # Greedy test design
+    greedy_fps = [compute_fp(set())]
+    T_greedy = set()
+    remaining = set(domain)
+    for step in range(len(domain)):
+        best = max(remaining, key=lambda x: sum(1 for pred in conjectures.values() if not pred(x)))
+        T_greedy.add(best)
+        remaining.discard(best)
+        greedy_fps.append(compute_fp(T_greedy))
+
+    # Random test design (average over 20 trials)
+    n_trials = 20
+    random_fps_all = []
+    for trial in range(n_trials):
+        perm = list(domain)
+        random.shuffle(perm)
+        T_rand = set()
+        trial_fps = [compute_fp(set())]
+        for x in perm:
+            T_rand.add(x)
+            trial_fps.append(compute_fp(T_rand))
+        random_fps_all.append(trial_fps)
+
+    random_fps_mean = np.mean(random_fps_all, axis=0)
+    random_fps_std = np.std(random_fps_all, axis=0)
+
+    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+    sizes = list(range(len(domain) + 1))
+
+    ax.fill_between(sizes,
+                    random_fps_mean - random_fps_std,
+                    random_fps_mean + random_fps_std,
+                    alpha=0.15, color='orange')
+    ax.plot(sizes, random_fps_mean, 'orange', linewidth=2, linestyle='--', label='Random (mean ± std)')
+    ax.plot(sizes, greedy_fps, 'b-o', markersize=4, linewidth=2, label='Greedy (optimal)')
+
+    ax.set_xlabel('Test Set Size |T|')
+    ax.set_ylabel('False-Positive Count')
+    ax.set_title('Greedy vs. Random Test Design')
+    ax.legend()
     ax.grid(True, alpha=0.3)
-    ax.set_xlim(1, hc.n_universe)
+    ax.set_xlim(0, 30)
     ax.set_ylim(bottom=0)
-    
-    fig.savefig('fig_greedy_vs_random.png', dpi=150, bbox_inches='tight', facecolor='white')
-    return fig_to_base64(fig)
 
-
-def plot_kill_growth():
-    """Figure 3: Kill set growth under sequential testing."""
-    hc = create_hypothesis_class()
-    
-    kill_counts = []
-    for k in range(hc.n_universe + 1):
-        test = list(range(k))
-        killed = len(hc.killed_by(test))
-        kill_counts.append(killed)
-    
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    x = list(range(hc.n_universe + 1))
-    
-    # Left: Kill count
-    ax1.fill_between(x, kill_counts, alpha=0.3, color='#4CAF50')
-    ax1.plot(x, kill_counts, 'o-', color='#2E7D32', linewidth=2, markersize=6)
-    ax1.set_xlabel('Test Set Size |T|', fontsize=14)
-    ax1.set_ylabel('Killed Hypotheses', fontsize=14)
-    ax1.set_title('Kill Set Growth\n(Theorem: killedBy_mono)', fontsize=14)
-    ax1.grid(True, alpha=0.3)
-    ax1.axhline(y=hc.n_false, color='#D32F2F', linestyle='--', label=f'Total false = {hc.n_false}')
-    ax1.legend(fontsize=11)
-    
-    # Right: Dual view — false positives and killed
-    fp_counts = [hc.false_positive_count(list(range(k))) for k in range(hc.n_universe + 1)]
-    
-    ax2.bar(x, kill_counts, alpha=0.6, color='#4CAF50', label='Killed')
-    ax2.bar(x, fp_counts, alpha=0.6, color='#F44336', label='False Positives')
-    ax2.set_xlabel('Test Set Size |T|', fontsize=14)
-    ax2.set_ylabel('Count', fontsize=14)
-    ax2.set_title('Killed vs Surviving False Hypotheses', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3, axis='y')
-    
-    fig.tight_layout()
-    fig.savefig('fig_kill_growth.png', dpi=150, bbox_inches='tight', facecolor='white')
-    return fig_to_base64(fig)
-
-
-def plot_pipeline():
-    """Figure 4: Multi-stage pipeline analysis."""
-    hc = create_hypothesis_class(n_universe=40, n_hypotheses=150, seed=77)
-    
-    # Define 4 pipeline stages
-    stage_size = 5
-    stages = [list(range(i * stage_size, (i + 1) * stage_size)) for i in range(8)]
-    
-    cumulative_fps = []
-    cumulative_killed = []
-    cumulative_test = []
-    
-    for i in range(len(stages)):
-        cumulative_test.extend(stages[i])
-        cumulative_fps.append(hc.false_positive_count(cumulative_test))
-        cumulative_killed.append(len(hc.killed_by(cumulative_test)))
-    
-    fig, ax = plt.subplots(figsize=(10, 6))
-    stage_labels = [f'Stage {i+1}\n(+{stage_size} pts)' for i in range(len(stages))]
-    x = range(len(stages))
-    
-    ax.bar(x, cumulative_fps, color='#F44336', alpha=0.7, label='False Positives')
-    ax.plot(x, cumulative_fps, 'o-', color='#B71C1C', linewidth=2, markersize=8)
-    
-    ax.set_xticks(list(x))
-    ax.set_xticklabels(stage_labels, fontsize=10)
-    ax.set_ylabel('False Positive Count', fontsize=14)
-    ax.set_title('Pipeline Composition: Sequential Stress-Test Stages\nEach stage adds 5 test points', fontsize=16)
-    ax.grid(True, alpha=0.3, axis='y')
-    
-    for i, fp in enumerate(cumulative_fps):
-        ax.annotate(str(fp), (i, fp + 1), ha='center', fontsize=12, fontweight='bold')
-    
-    fig.savefig('fig_pipeline.png', dpi=150, bbox_inches='tight', facecolor='white')
-    return fig_to_base64(fig)
+    fig.savefig('/workspace/request-project/fig_greedy_vs_random.png', bbox_inches='tight', dpi=150)
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-    
-    b64_1 = plot_monotone_decrease()
-    print(f"  ✓ fig_monotone_decrease.png ({len(b64_1)} chars base64)")
-    
-    b64_2 = plot_greedy_vs_random()
-    print(f"  ✓ fig_greedy_vs_random.png ({len(b64_2)} chars base64)")
-    
-    b64_3 = plot_kill_growth()
-    print(f"  ✓ fig_kill_growth.png ({len(b64_3)} chars base64)")
-    
-    b64_4 = plot_pipeline()
-    print(f"  ✓ fig_pipeline.png ({len(b64_4)} chars base64)")
-    
-    print("\nAll visualizations saved to PNG files.")
-    
-    # Save base64 data for JSON package
+    b64_1 = plot_fp_monotonicity()
+    print(f"  fig_fp_monotonicity.png generated ({len(b64_1)} chars base64)")
+    b64_2 = plot_pipeline_cost()
+    print(f"  fig_pipeline_cost.png generated ({len(b64_2)} chars base64)")
+    b64_3 = plot_score_distribution()
+    print(f"  fig_score_distribution.png generated ({len(b64_3)} chars base64)")
+    b64_4 = plot_greedy_vs_random()
+    print(f"  fig_greedy_vs_random.png generated ({len(b64_4)} chars base64)")
+    print("All visualizations generated successfully.")
+
+    # Save base64 strings for PACKAGE.json
     import json
     viz_data = {
-        "monotone_decrease": b64_1,
-        "greedy_vs_random": b64_2,
-        "kill_growth": b64_3,
-        "pipeline": b64_4
+        "fp_monotonicity": f"data:image/png;base64,{b64_1}",
+        "pipeline_cost": f"data:image/png;base64,{b64_2}",
+        "score_distribution": f"data:image/png;base64,{b64_3}",
+        "greedy_vs_random": f"data:image/png;base64,{b64_4}",
     }
-    with open("viz_data.json", "w") as f:
+    with open('/workspace/request-project/viz_data.json', 'w') as f:
         json.dump(viz_data, f)
-    print("Base64 data saved to viz_data.json")
+    print("Saved base64 data to viz_data.json")
