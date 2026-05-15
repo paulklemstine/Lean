@@ -747,20 +747,6 @@
     "timestamp": "2026-05-14T16:16:22.746644+00:00"
   },
   {
-    "id": "fd_0095",
-    "title": "Eigenvalue attack",
-    "description": ": The tropical eigenvalue λ of G satisfies G^n[i,i] = n·λ for all i (Cuninghame-Green theorem). If λ can be computed efficiently, it constrains the exponent a.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "2fbec27e",
-    "timestamp": "2026-05-14T16:16:22.750444+00:00"
-  },
-  {
     "id": "fd_0096",
     "title": "Defend via parameter selection",
     "description": ": Use the attack analysis to establish minimum parameter requirements (dimension, entry bound, tropical rank) for security.",
@@ -1277,38 +1263,6 @@
     "timestamp": "2026-05-15T03:12:37.111041+00:00"
   },
   {
-    "id": "fd_0217",
-    "title": "Connect to neo-Riemannian theory",
-    "description": ": show that PLR transformations (parallel, leading-tone, relative) between major and minor triads are near-geodesic.\n\n### Proof Strategy\n- Use the sorted representation: geodesics in the sorted chamber are simply line segments.\n- The projection to the quotient may create \"folds\" at singular strata.\n- Enumerate geodesic-length progressions between common chord types computationally.\n\n### Cross-Domain Impact\n- **Algorithmic composition**: generate smooth voice leadings automatically.\n- **Music information retrieval**: measure harmonic distance in audio analysis.\n- **Path planning in robotics**: analogous to shortest paths in configuration spaces with symmetry.\n\n---\n\n## Direction 4: Tropical and Polyhedral Structure\n\n### Vision\nConnect the sorted-chamber model to tropical geometry and polyhed",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d9c105e5",
-    "consumed_by_exp_id": "c58d2658",
-    "timestamp": "2026-05-15T05:04:31.233035+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Connect to tropical semirings",
-    "description": ": the voice-leading cost is a min-plus optimization, naturally expressed in the tropical semiring $(\\mathbb{Z} \\cup \\{\\infty\\}, \\min, +)$.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d9c105e5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:04:31.253870+00:00"
-  },
-  {
     "id": "fd_0222",
     "title": "Define the extended group action",
     "description": ": $S_n \\ltimes \\mathbb{Z}$ acts on $\\mathbb{Z}^n$ by $(\\sigma, t) \\cdot x = (x_{\\sigma(1)} + t, \\ldots, x_{\\sigma(n)} + t)$.",
@@ -1365,59 +1319,6 @@
     "source_exp_id": "ad86a7ea",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:04:45.556538+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "Kernel evaluation",
-    "description": ": Use `native_decide` or `decide` to evaluate `beqNorm` at compile time.\n\n### Concrete Syntax Target\n```lean\nexample (x y z : ℤ) :\n    x + max y z = max (x + y) (x + z) := by\n  tropical_nf\n```\n\n### Cross-Domain Connections\n- **Metaprogramming**: extends Lean's tactic framework for non-ring-like algebraic structures\n- **SMT integration**: could serve as a theory solver for tropical constraints\n- **Certified computation**: proof by reflection = computation as proof\n\n### Estimated Difficulty\nMedium. The mathematical content is already established; the main challenge is tactic engineering in Lean 4's metaprogramming framework.\n\n---\n\n## Direction 3: Newton Polytope Formalization and Tropical Geometry\n\n### Goal\nConnect normalized tropical polynomial supports to Mathlib's convex geometry library,",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.596022+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "Tropical hypersurface structure",
-    "description": ": The non-smoothness locus of a tropical polynomial (where the max is achieved by ≥ 2 monomials) is the (n-1)-skeleton of the normal fan of the Newton polytope.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.609785+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Kapranov's theorem",
-    "description": "(restricted form): The tropical variety of a polynomial captures the valuations of its algebraic roots.\n\n### Proof Strategy\n- Use the normal form representation to define Newton polytopes as `Finset.convexHull` of exponent vectors\n- Prove that `mulNF` corresponds to Minkowski sum via the existing `eval_mulNF` theorem\n- Connect to `Mathlib.Analysis.Convex.Hull` and `Mathlib.Geometry.Combinatorics`\n\n### Cross-Domain Connections\n- **Algebraic geometry**: tropical geometry as a combinatorial shadow of algebraic geometry\n- **Optimization**: Newton polytopes govern the complexity of polynomial optimization\n- **Combinatorics**: face lattices of polytopes from tropical polynomial structure\n\n### Estimated Difficulty\nHigh. Requires substantial interface work between tropical algebra and Mathlib's co",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.617295+00:00"
   },
   {
     "id": "fd_0222",
@@ -1626,20 +1527,6 @@
     "source_exp_id": "faba857f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:05:30.506986+00:00"
-  },
-  {
-    "id": "fd_0215",
-    "title": "Comparison theorems",
-    "description": "(tropical vs. classical vs. nonarchimedean)",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "faba857f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:30.514308+00:00"
   },
   {
     "id": "seed_078",
@@ -2119,123 +2006,6 @@
     "timestamp": "2026-05-15T06:05:26.795033+00:00"
   },
   {
-    "id": "fd_0215",
-    "title": "Team Organization",
-    "description": "- **Theory team**: Directions 1 and 5 (variational formulas, asymptotics)\n- **Applications team**: Directions 2 and 4 (output maps, spectral structure)\n- **Foundations team**: Direction 3 (tropical information theory)\n\nEach team should validate conjectures computationally before attempting formalization, using the numerical infrastructure provided in `demo.py` and `algorithms.py`.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a021a156",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:26.839414+00:00"
-  },
-  {
-    "id": "fd_0215",
-    "title": "Direction 1: Full Tropical Spectral Chronology Protection",
-    "description": "**Goal:** Formalize the minimum cycle mean in Lean and prove the equivalence:\n\n> A tropical affine system is chronology-protected if and only if the minimum cycle mean of its weight matrix is strictly positive.\n\n**Hypothesis:** For A ∈ ℝⁿˣⁿ with λ*(A) > 0, the tropical affine iteration F^k(x₀) converges to the unique fixed point for any x₀, and the convergence rate is determined by λ*(A).\n\n**Strategy:**\n1. Define `DirectedCycle` as a nonempty list of vertices forming a cycle in the weight graph.\n2. Define `cycleMean A c = (Σ_{edges in c} A_{ij}) / |c|`.\n3. Prove: if all cycle means > 0, then some power Aᵏ has all entries ≥ ε > 0, making the tropical iteration eventually contractive.\n4. Bridge to the existing `tropical_chronology_protection_existence` via the domination condition.\n\n**Cross-",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a25a82de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:01:52.984956+00:00"
-  },
-  {
-    "id": "fd_0216",
-    "title": "Direction 2: Tropical CTC — Meta-Oracle Bridge",
-    "description": "**Goal:** Prove a common fixed-point theorem that simultaneously instantiates to:\n- Tropical CTC consistency (this work)\n- Meta-oracle convergence (`meta_oracle_has_unique_fixed_point` in the catalog)\n- Semantic fixed points in recursive program semantics\n\n**Hypothesis:** There exists an abstract class `ContractiveIdempotentSystem` with the signature:\n\n```lean\nclass ContractiveIdempotentSystem (α : Type*) [MetricSpace α] [Nonempty α] where\n  evolve : α → α\n  contraction_factor : ℝ\n  hq_lt_one : contraction_factor < 1\n  hq_nonneg : 0 ≤ contraction_factor\n  h_contr : ∀ x y, dist (evolve x) (evolve y) ≤ contraction_factor * dist x y\n```\n\nsuch that:\n- `MetaOracleSystem` is an instance.\n- Discounted tropical affine maps are instances.\n- The unique fixed-point theorem follows from the class axio",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a25a82de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:01:52.994323+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "Direction 3: Entropy Bounds for Consistent Histories",
-    "description": "**Goal:** Derive entropy inequalities for consistent tropical CTC solutions using the thermodynamic closure framework (`fixed_point_entropy_upper_bound` in the catalog).\n\n**Hypothesis:** If a tropical CTC system (A, b) has consistent solution x*, and if we equip the state space with an entropy functional S, then:\n\n  S(x*) ≤ S_max(A, b)\n\nwhere S_max is computable from the system parameters. This gives an information-theoretic bound on how much \"information\" a self-consistent time-travel history can carry.\n\n**Strategy:**\n1. Define entropy on tropical state spaces as the log of the number of \"active\" constraints (coordinates where the bias b is binding).\n2. Prove that consistent solutions maximize entropy subject to the tropical affine constraint (an analogue of the maximum entropy principle)",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "EML",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a25a82de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:01:53.003453+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "Direction 4: Stochastic Tropical CTCs and Idempotent Markov Kernels",
-    "description": "**Goal:** Extend the theory from deterministic min-plus maps to stochastic/idempotent Markov kernels.\n\n**Hypothesis:** Replace the tropical semiring (ℝ, min, +) with the *idempotent probability monad* (Maslov dequantization). A stochastic CTC assigns not a single cost to each history, but a *tropical probability distribution* (idempotent measure) over histories. The fixed-point theory extends: idempotent Markov operators on finite spaces have fixed distributions.\n\n**Strategy:**\n1. Define tropical probability distributions as functions X → ℝ ∪ {+∞} with finite tropical integral.\n2. Define tropical Markov kernels as linear operators on tropical distributions.\n3. Prove a tropical analogue of the ergodic theorem: contractive tropical Markov chains converge to a unique stationary distribution.\n",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a25a82de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:01:53.012752+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "Direction 5: Certified Algorithms for Causal Graph Consistency",
-    "description": "**Goal:** Develop verified algorithms with complexity certificates for:\n1. Detecting whether a weighted causal graph admits a paradox-free (self-consistent) assignment.\n2. Computing the unique consistent assignment when it exists.\n3. Certifying chronology protection via cycle-mean computation.\n\n**Hypothesis:** All three problems reduce to tropical fixed-point computation and can be solved in polynomial time (O(n³) for cycle mean, O(n² log(1/ε)) for fixed-point iteration with contraction rate λ).\n\n**Strategy:**\n1. Implement Karp's algorithm for minimum cycle mean in Lean with a correctness proof.\n2. Implement the tropical fixed-point iteration with a convergence proof (geometric rate λᵏ).\n3. Package as a verified decision procedure: given (A, b, λ), output either a consistent solution or a ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a25a82de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:01:53.021884+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Summary",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Spectral chronology protection | Medium-high | High | Graph cycle infrastructure |\n| 2. Meta-oracle bridge | Low-medium | Medium | Typeclass design |\n| 3. Entropy bounds | Medium | High | Thermodynamic lattice instantiation |\n| 4. Stochastic tropical CTCs | High | Very high | Tropical measure theory |\n| 5. Certified algorithms | Medium | High | Lean algorithm verification |\n\nEach direction is self-contained and can be pursued independently. Directions 1 and 5 are the most immediately executable. Direction 4 is the most ambitious and would constitute a significant contribution to both tropical mathematics and quantum information theory.",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a25a82de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:01:53.030552+00:00"
-  },
-  {
     "id": "fd_0212",
     "title": "Specific Target",
     "description": "Formalize and prove:\n```\nλ(W) = inf { λ ∈ ℝ | ∃ x : Fin n → ℝ, ∀ i, max_j (W_{ij} + x_j) ≤ λ + x_i }\n```\nThis says λ(W) is the smallest \"tropical eigenvalue\" for which a tropical subeigenvector exists.",
@@ -2248,64 +2018,5 @@
     "source_exp_id": "5a2d93ee",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:04:49.514713+00:00"
-  },
-  {
-    "id": "fd_0215",
-    "title": "Feasibility: Exploratory",
-    "description": "This is the most speculative direction but potentially the most impactful. Initial formalization of definitions is straightforward; the deep theorems would require novel mathematical insights.\n\n---",
-    "domains": [
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a2d93ee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:04:49.562719+00:00"
-  },
-  {
-    "id": "fd_0216",
-    "title": "Prioritization and Dependencies",
-    "description": "```\nDirection 1 (Collatz-Wielandt)     ← Most natural next step, builds directly on current work\n    ↓\nDirection 2 (Perron-Frobenius)     ← Requires Direction 1's subeigenvector theory\n    ↓\nDirection 3 (Mean-Payoff Games)    ← Can start independently, benefits from Direction 2\n    ↓\nDirection 4 (BP Lower Bounds)      ← Requires Directions 1-2 for spectral tools\n    ↓\nDirection 5 (Tropical Entropy)     ← Exploratory, can proceed in parallel\n```",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a2d93ee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:04:49.572794+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "Recommended Team Structure",
-    "description": "- **Team A** (Algebra): Directions 1 and 2 — tropical spectral theory core\n- **Team B** (Complexity): Direction 4 — computational lower bounds\n- **Team C** (Applications): Directions 3 and 5 — games, entropy, verification\n- **Integration**: Regular sync between teams to ensure compatible formalizations",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a2d93ee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:04:49.582340+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "Timeline Estimate",
-    "description": "- Direction 1: 2-4 weeks for full formalization\n- Direction 2: 4-8 weeks (depends on SCC infrastructure)\n- Direction 3: 3-6 weeks (single-player case fast, two-player harder)\n- Direction 4: 6-12 weeks (requires new formalization patterns)\n- Direction 5: Ongoing exploration, initial results in 4-8 weeks",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a2d93ee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:04:49.592015+00:00"
   }
 ]
