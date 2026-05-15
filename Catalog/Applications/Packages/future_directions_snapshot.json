@@ -271,22 +271,6 @@
     "timestamp": "2026-05-14T16:03:53.825917+00:00"
   },
   {
-    "id": "seed_031",
-    "title": "Temporal Stone Duality: Recovering Temporal Logic from Idempotent Semiring Fixpoints",
-    "description": "Prove that the Stone dual of an idempotent semiring's fixpoint lattice recovers precisely the temporal logic specifying that semiring's behavioral equivalence, establishing a categorical duality between algebraic semantics and temporal specification. Show that LTL model checking reduces to computing the greatest fixpoint in the corresponding idempotent semiring, and prove decidability for the finite semiring case.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Bridges"
-    ],
-    "priority_score": 0.86,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "9d761629",
-    "timestamp": "2026-05-14T16:03:53.829231+00:00"
-  },
-  {
     "id": "seed_058",
     "title": "Tropical Type Theory: Dependent Types in the Min-Plus Semiring",
     "description": "Construct a dependent type theory where types are tropical sets and terms are min-plus functions, proving that type checking in tropical type theory is decidable and that the tropical identity type corresponds to min-plus equality. Show that tropical inductive types satisfy tropical initial algebra semantics, and that the tropical universe hierarchy is well-founded by the idempotent ordering.",
@@ -833,21 +817,6 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Tropical",
-    "description": ": Define `tropicalVLCost` using min-plus algebra and prove equivalence with `vlCostN`.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d9c105e5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:04:31.335951+00:00"
-  },
-  {
     "id": "fd_0207",
     "title": "Tropical-classical correspondence:",
     "description": "Each direction involves a passage from smooth/classical objects to their tropical (combinatorial, piecewise-linear) shadows, with the key property that feasibility/existence questions survive the tropicalization.",
@@ -907,20 +876,6 @@
     "source_exp_id": "c58d2658",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:03:37.253200+00:00"
-  },
-  {
-    "id": "fd_0230",
-    "title": "Logic gate identification",
-    "description": ": Identify collision outcomes that correspond to Boolean operations. A collision producing a glider iff both inputs are present is an AND gate. A collision producing a glider iff at least one input is present is an OR gate.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:09.945738+00:00"
   },
   {
     "id": "fd_0236",
@@ -1003,37 +958,6 @@
     "timestamp": "2026-05-15T12:04:37.815985+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Decidability",
-    "description": ": For finite closure networks on finite domains, show that specification checking is decidable (by reduction to finite fixed-point computation).\n\n### Formalization Target\n```lean\ntheorem closure_network_spec_decidable\n    {α : Type*} [Fintype α] [DecidableEq α]\n    (N : α → α) (hN : IsIdempotent N)\n    (S : Set α) [DecidablePred (· ∈ S)] :\n    Decidable (∀ x, N x ∈ S)\n```\n\n### Impact\nThis would connect closure-network verification to the well-developed theory of abstract interpretation and program analysis, potentially enabling automatic certification of trained closure networks.\n\n### Cross-Domain Connections\n- **Domain theory**: Scott continuity, Smyth powerdomain\n- **Abstract interpretation**: Galois connections, widening operators\n- **Model checking**: Temporal logic, CTL*, μ-calculus\n-",
-    "domains": [
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56b13d4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:37.844816+00:00"
-  },
-  {
-    "id": "fd_0232",
-    "title": "Architecture",
-    "description": "has a precise algebraic characterization equivalent to standard networks (Direction 2);",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56b13d4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:37.863500+00:00"
-  },
-  {
     "id": "fd_0204",
     "title": "Spectral gap → expansion",
     "description": ": proving the orbit graph is an expander, giving strong mixing properties for random walks.",
@@ -1094,20 +1018,6 @@
     "source_exp_id": "49977498",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:05:00.983714+00:00"
-  },
-  {
-    "id": "fd_0208",
-    "title": "Direction 1",
-    "description": "(higher dimensions) — essential for practical relevance",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "49977498",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:05:00.993647+00:00"
   },
   {
     "id": "fd_0210",
@@ -1264,10 +1174,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9cabdd3c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d5cf911",
     "timestamp": "2026-05-15T13:05:09.705505+00:00"
   },
   {
@@ -1368,6 +1278,76 @@
     "source_exp_id": "6405e4c4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:10:47.268750+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Mathematical Lead:",
+    "description": "Develops the informal proofs and identifies key lemmas",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9d761629",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:48:12.152896+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Formalization Lead:",
+    "description": "Translates proofs into machine-verified form",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9d761629",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:48:12.163074+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Integration Lead:",
+    "description": "Connects results to existing theory and applications\n\nThe five directions are largely independent and can be pursued in parallel, with occasional synchronization at the interfaces (e.g., Direction 3 depends on Direction 1 for infinite-state extensions).\n\n---\n\n## Priority Ordering",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9d761629",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:48:12.184795+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Direction 3 (Tropical):",
+    "description": "Highest impact, moderate difficulty, strong application potential",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9d761629",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:48:12.193812+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Direction 4 (Coalgebraic):",
+    "description": "Deep theoretical significance, connects to automata theory",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9d761629",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:48:12.220249+00:00"
   },
   {
     "id": "seed_079",
@@ -1921,23 +1901,6 @@
     "timestamp": "2026-05-15T09:07:29.350382+00:00"
   },
   {
-    "id": "fd_0208",
-    "title": "Direction 1: Four-Part Chorale Writing via Layered Tropical Hypergraphs",
-    "description": "**Hypothesis**: Four-part SATB chorale writing can be modeled as optimization over a tropical hypergraph where hyperedges encode simultaneity constraints (four-note chords), pairwise edges encode voice-leading constraints (six voice pairs), and node weights encode tessitura/range constraints.\n\n**Proof Strategy**:\n1. Define a 4-melody tuple (S, A, T, B) over Fin(n+1) → ℤ.\n2. Extend the cost functional to include: (a) vertical tetrad consonance penalties, (b) all six pairwise parallel-motion penalties, (c) voice-crossing penalties, (d) spacing constraints.\n3. Prove a higher-dimensional zero-cost equivalence: SATB legality ↔ hypergraph cost = 0.\n4. Show the DP factorizes over the layered hypergraph: the state space becomes (Fin P)⁴ at each time step, with a Bellman recursion of complexity O(n",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:19:36.820111+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Direction 3: Categorical Composition Operators on Tropical Style Spaces",
     "description": "**Hypothesis**: Musical transformations (transposition, inversion, retrograde, augmentation) form a category where morphisms are tropical-cost-preserving maps, and style classes are isomorphism classes under this category.\n\n**Proof Strategy**:\n1. Define the category **TropCP** whose objects are (cantus, melody) pairs equipped with their cost vectors (vertical, melodic, parallel) and whose morphisms are pitch-space maps that preserve or bound cost change.\n2. Prove that transposition by k semitones is an isomorphism in **TropCP** (cost is transposition-invariant by definition).\n3. Prove that inversion is a cost-preserving morphism when consonance is symmetric (which it is by the |k| symmetry).\n4. Define a functor from **TropCP** to the category of weighted graphs, sending each voice-leading ",
@@ -2057,43 +2020,5 @@
     "source_exp_id": "ef0cc9c1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:05:25.851145+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "5. Undecidability Thresholds in Min-Plus Proof Search",
-    "description": "**Goal:** Move from finite-state incompleteness schemas to explicit undecidability results for richer min-plus arithmetic fragments.\n\n**Background:** Our current results show that finite tropical proof systems with diagonal expressivity are incomplete. The natural question is: at what point does tropical arithmetic become undecidable? The theory of min-plus (tropical) arithmetic is known to be decidable for certain fragments (e.g., tropical polynomial identity testing), but the boundary is not well understood.\n\n**Conjecture (Tropical Arithmetic Undecidability Threshold):**\n```\n-- There exists a fragment of tropical arithmetic that is undecidable\ntheorem tropical_arithmetic_undecidability\n  -- Sentences are tropical polynomial equations and inequalities\n  (TropSentence : Type)\n  (TropSemant",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ef0cc9c1",
-    "consumed_by_exp_id": "06519137",
-    "timestamp": "2026-05-15T13:05:25.864975+00:00"
-  },
-  {
-    "id": "fd_0230",
-    "title": "Research Program Summary",
-    "description": "These five directions form a coherent research program in **tropical metamathematics**:\n\n| Direction | Core Technique | Connects To |\n|-----------|---------------|-------------|\n| Tropical Löb | Closure modality + fixed point | AI alignment, game theory |\n| Bellman–Gödel | DP operators + self-reference | Reinforcement learning, verification |\n| Diagonal MDL | Compression + fixed points | Information theory, Kolmogorov complexity |\n| Categorical | Lawvere + enriched categories | Topos theory, linear logic |\n| Undecidability | Turing reduction + tropical encoding | Computability theory, optimization |\n\nThe unifying theme: **incompleteness phenomena are native to idempotent/tropical mathematics**, not merely imported from classical arithmetic. This suggests that any sufficiently rich tropical",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ef0cc9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:25.877619+00:00"
   }
 ]
