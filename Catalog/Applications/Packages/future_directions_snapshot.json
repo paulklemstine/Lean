@@ -559,22 +559,6 @@
     "timestamp": "2026-05-14T16:03:53.811195+00:00"
   },
   {
-    "id": "seed_048",
-    "title": "Musical Counterpoint as Tropical Voice-Leading Optimization",
-    "description": "Prove that the rules of species counterpoint in music theory are tropical constraint satisfaction problems, where the min-plus cost function penalizes forbidden intervals and voice-leading distance. Show that Palestrina-style counterpoint is the tropical optimum of the voice-leading semiring, and that Bach chorales occupy tropical saddle points that maximize harmonic variety under contrapuntal constraints.",
-    "domains": [
-      "Bridges",
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.77,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "7b109bab",
-    "timestamp": "2026-05-14T16:03:53.843446+00:00"
-  },
-  {
     "id": "seed_043",
     "title": "Tropical Rainfall: Nash Equilibria as Min-Plus Fixed Points",
     "description": "Prove that tropical semiring fixed points correspond to Nash equilibria in zero-sum games on idempotent payoff matrices, and show that the tropical value iteration converges in at most n steps for n-player games. Construct a tropical min-max theorem analogous to von Neumann's, proving that every finite tropical game has a unique idempotent equilibrium.",
@@ -1823,10 +1807,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5592f3fa",
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
@@ -2113,5 +2097,93 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.350382+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "Direction 1: Four-Part Chorale Writing via Layered Tropical Hypergraphs",
+    "description": "**Hypothesis**: Four-part SATB chorale writing can be modeled as optimization over a tropical hypergraph where hyperedges encode simultaneity constraints (four-note chords), pairwise edges encode voice-leading constraints (six voice pairs), and node weights encode tessitura/range constraints.\n\n**Proof Strategy**:\n1. Define a 4-melody tuple (S, A, T, B) over Fin(n+1) → ℤ.\n2. Extend the cost functional to include: (a) vertical tetrad consonance penalties, (b) all six pairwise parallel-motion penalties, (c) voice-crossing penalties, (d) spacing constraints.\n3. Prove a higher-dimensional zero-cost equivalence: SATB legality ↔ hypergraph cost = 0.\n4. Show the DP factorizes over the layered hypergraph: the state space becomes (Fin P)⁴ at each time step, with a Bellman recursion of complexity O(n",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:19:36.820111+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "Direction 2: Tropical Rate-Distortion Theory for Harmonic Variety",
+    "description": "**Hypothesis**: There exists a tropical analogue of Shannon's rate-distortion theorem where: distortion = contrapuntal penalty (tropical metric), rate = harmonic variety (support-size entropy), and the rate-distortion function R(D) describes the maximum achievable variety at each penalty level.\n\n**Proof Strategy**:\n1. Define tropical entropy as H_trop(v) = |support(interval map)|, a combinatorial (non-probabilistic) measure.\n2. Define the rate-distortion function: R(D) = max{harmonicVariety(u, v) : totalCost(u, v) ≤ D} over all v in the pitch space.\n3. Prove R(D) is a non-decreasing, concave, step function (by finiteness of the pitch space).\n4. Establish a tropical data-processing inequality: for any pitch transformation T, harmonicVariety(u, T∘v) ≤ harmonicVariety(u, v). This means post-p",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:19:36.829854+00:00"
+  },
+  {
+    "id": "fd_0210",
+    "title": "Direction 3: Categorical Composition Operators on Tropical Style Spaces",
+    "description": "**Hypothesis**: Musical transformations (transposition, inversion, retrograde, augmentation) form a category where morphisms are tropical-cost-preserving maps, and style classes are isomorphism classes under this category.\n\n**Proof Strategy**:\n1. Define the category **TropCP** whose objects are (cantus, melody) pairs equipped with their cost vectors (vertical, melodic, parallel) and whose morphisms are pitch-space maps that preserve or bound cost change.\n2. Prove that transposition by k semitones is an isomorphism in **TropCP** (cost is transposition-invariant by definition).\n3. Prove that inversion is a cost-preserving morphism when consonance is symmetric (which it is by the |k| symmetry).\n4. Define a functor from **TropCP** to the category of weighted graphs, sending each voice-leading ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:19:36.838185+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
+    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:19:36.848982+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Direction 5: Mod-12 Pitch-Class Counterpoint and Interval-Class Geometry",
+    "description": "**Hypothesis**: Working modulo 12 (pitch classes rather than absolute pitches) changes the optimization landscape qualitatively: the tropical cost becomes periodic, the DP lattice becomes a torus, and new symmetries enable faster algorithms and richer Pareto structure.\n\n**Proof Strategy**:\n1. Redefine Melody(n) = Fin(n+1) → ZMod 12.\n2. Redefine consonance on ZMod 12 (interval classes: {0,3,4,5,7,8,9} are consonant, where 5 = P4 is now included as an inversion of P5).\n3. Prove the zero-cost equivalence carries over to the mod-12 setting with the modified consonance table.\n4. Show that the DP state space reduces from P to 12, giving O(n · 144) = O(n) complexity.\n5. Prove that the mod-12 Pareto frontier has a different structure from the absolute-pitch version: with only 12 possible intervals",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:19:36.858900+00:00"
   }
 ]
