@@ -1636,37 +1636,6 @@
     "timestamp": "2026-05-14T21:34:38.217919+00:00"
   },
   {
-    "id": "fd_0193",
-    "title": "Strategy:",
-    "description": "1. Define the dragon IFS: f₁(z) = (1+i)z/2, f₂(z) = 1 − (1−i)z̄/2 (or the real 2×2 matrix equivalents)\n2. Formalize the attractor as the unique compact fixed point of the Hutchinson operator\n3. Prove the twindragon tiling theorem: the dragon and its 180°-rotation tile the plane with overlap of measure zero\n4. Conclude positive Lebesgue measure, hence Hausdorff dimension 2",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "067dd911",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:34:30.736921+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "Polynomial ring approach",
-    "description": ": Work in `(ℤ/qℤ)[X]/(X^n+1)` where circulant multiplication becomes polynomial multiplication. The kernel lattice is an ideal lattice, and Minkowski-type bounds from algebraic number theory give tighter norm estimates.\n\n### Cross-Domain Significance\n- **Post-quantum cryptography**: Ring-SIS is the hardness assumption behind CRYSTALS-Dilithium (NIST standard). Formal bounds on short vector existence directly bound the security level.\n- **Algebraic number theory**: Connects ideal lattices in cyclotomic fields to combinatorial counting.\n\n---\n\n## 2. Weighted Norm / Anisotropic Box Version\n\n### Goal\nReplace the uniform box `|x_i| ≤ B` by coordinate-dependent bounds `|x_i| ≤ B_i`. This models attacks where different coordinates have different search ranges (e.g., partial key recovery, side-chan",
-    "domains": [
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.238191+00:00"
-  },
-  {
     "id": "fd_0194",
     "title": "Direct generalization",
     "description": ": The proof of `bounded_box_collision_yields_short_kernel_vector` works almost verbatim — replace the uniform `Icc (-B) B` by `Icc (-B i) (B i)` in the product finset. The cardinality becomes `∏ i, (2 * B i + 1)` instead of `(2B+1)^n`.",
@@ -1758,20 +1727,6 @@
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
   },
   {
-    "id": "fd_0185",
-    "title": "Uniqueness (projective)",
-    "description": ": Prove that if A ⊗ v = μ + v and A ⊗ w = μ + w, then v - w is constant. This follows from the strong connectivity of the critical graph.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.114673+00:00"
-  },
-  {
     "id": "fd_0186",
     "title": "Formalization",
     "description": ": Define irreducibility for Fin n → Fin n → ℝ matrices. Formalize Karp's algorithm and prove its correctness. State and prove the tropical Perron-Frobenius theorem.\n\n### Cross-Domain Connections\n- **Network science**: Eigenvector centrality in tropical networks\n- **Markov chains**: Tropical analogue of stationary distributions\n- **Control theory**: Tropical observability and controllability\n\n### Estimated Difficulty\nHard. Requires substantial graph theory infrastructure (strongly connected components, cycle enumeration, critical graph construction). Approximately 2000-3000 lines of formalized code.\n\n### Key References\n- Butkovič (2010), *Max-linear Systems*, Chapters 3-5\n- Gaubert & Gunawardena (2004), *The Perron-Frobenius theorem for homogeneous, monotone functions*\n\n---\n\n## Direction 2:",
@@ -1785,20 +1740,6 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.122342+00:00"
-  },
-  {
-    "id": "fd_0187",
-    "title": "Game formulation",
-    "description": ": Define a two-player game on the 2-node digraph where players alternately select edges. The payoff is the long-run average edge weight.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.128722+00:00"
   },
   {
     "id": "fd_0190",
@@ -1818,34 +1759,6 @@
     "timestamp": "2026-05-14T23:59:16.148110+00:00"
   },
   {
-    "id": "fd_0192",
-    "title": "Eigenvector discontinuity",
-    "description": ": Show that the eigenvector (as a function of parameters) can be discontinuous at bifurcation points. Construct explicit examples.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.159698+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "Classification",
-    "description": ": For 2×2 systems, enumerate all bifurcation types:\n   - a = d (prey/predator symmetry breaking)\n   - a = (b+c)/2 (self-loop vs. 2-cycle transition)\n   - d = (b+c)/2 (analogous)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.165115+00:00"
-  },
-  {
     "id": "fd_0194",
     "title": "Ecological interpretation",
     "description": ": Map each bifurcation type to a known ecological phenomenon (trophic cascade, competitive exclusion, mutualism breakdown).\n\n### Cross-Domain Connections\n- **Tropical geometry**: Tropical bifurcations correspond to non-smooth points of tropical hypersurfaces\n- **Catastrophe theory**: Tropical analogues of fold, cusp, swallowtail catastrophes\n- **Climate science**: Abrupt climate transitions as tropical bifurcations in Earth system models\n- **Economics**: Market regime shifts (bull/bear transitions)\n\n### Estimated Difficulty\nMedium. The 2×2 case is tractable by direct computation. The n×n generalization requires tropical convexity theory.\n\n---\n\n## Direction 4: Certified Resilience Bounds Under Parameter Perturbation\n\n### Goal\nProve quantitative bounds on how much the tropical eigenvalue and",
@@ -1861,20 +1774,6 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.172840+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Upper bound",
-    "description": ": Since μ(A) = min over cycles of (mean weight), and each mean weight changes by at most ε under entrywise perturbation, μ changes by at most ε.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.180281+00:00"
   },
   {
     "id": "fd_0197",
@@ -2276,38 +2175,6 @@
     "timestamp": "2026-05-14T19:35:01.991565+00:00"
   },
   {
-    "id": "fd_0187",
-    "title": "Proof Strategies",
-    "description": "1. Define tropical rank of the rule adjacency matrix M as the minimum dimension of a tropical factorization M = A ⊗ B.\n2. Show that if the tropical rank is r, then the Kleene star M* requires at least r iterations to stabilize.\n3. Connect to circuit complexity: viewing inference rules as gates, proof depth is circuit depth. Tropical rank bounds translate to depth-width tradeoffs.",
-    "domains": [
-      "Tropical",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5ff854ab",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T20:33:57.945591+00:00"
-  },
-  {
-    "id": "fd_0185",
-    "title": "Direction 1: Knaster–Tarski Balanced Consciousness Theorem",
-    "description": "**Goal.** Generalize the scalar theory to complete lattices.\n\n**Conjecture.** Let $(L, \\leq)$ be a complete lattice and let $F, G : L \\to L$ be monotone maps. Then:\n\n1. $\\mathrm{Fix}(F) \\cap \\mathrm{Fix}(G)$ is nonempty whenever there exists $x \\in L$ with $F(x) \\leq x$ and $x \\leq G(x)$.\n2. If $F$ and $G$ commute (i.e., $F \\circ G = G \\circ F$), then $\\mathrm{Fix}(F) \\cap \\mathrm{Fix}(G)$ is a complete sublattice of $L$.\n3. Uniqueness of the common fixed point is equivalent to $F = G$ on the range of the other.\n\n**Proof strategy.** Apply the Knaster–Tarski theorem separately to $F$ and $G$ to obtain $\\mathrm{Fix}(F)$ and $\\mathrm{Fix}(G)$ as complete lattices. The commuting condition ensures that $F$ restricts to a monotone endomorphism of $\\mathrm{Fix}(G)$ and vice versa, allowing a seco",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "918eb128",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:35:00.969113+00:00"
-  },
-  {
     "id": "fd_0186",
     "title": "Direction 2: Tropical Minimax Theorem in Higher Dimensions",
     "description": "**Goal.** Extend the interval characterization to $\\mathbb{R}^n$.\n\n**Conjecture.** For vectors $l, u \\in \\mathbb{R}^n$, the set of balanced states\n$$\\{x \\in \\mathbb{R}^n : \\forall i,\\; \\max(l_i, x_i) = x_i \\;\\wedge\\; \\min(u_i, x_i) = x_i\\}$$\nequals the box $[l, u] = \\prod_{i=1}^n [l_i, u_i]$. Uniqueness holds iff $l = u$ (componentwise).\n\nFor non-axis-aligned constraints — tropical halfspaces of the form $\\max(a_j + x_j : j) = x_i$ — the balanced set becomes a **tropical polytope**, and uniqueness corresponds to the polytope being a single point.\n\n**Proof strategy.** The componentwise case follows directly from the scalar theorem applied coordinate-by-coordinate (use `Pi.le_def` and `funext`). The tropical polytope case requires developing the theory of tropical halfspaces as sets of the f",
@@ -2321,22 +2188,6 @@
     "source_exp_id": "918eb128",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:35:00.976272+00:00"
-  },
-  {
-    "id": "fd_0187",
-    "title": "Direction 3: Dynamic Balanced Consciousness (Fixed-Point Iteration)",
-    "description": "**Goal.** Study convergence of alternating min-plus / max-plus iteration to balanced states.\n\n**Conjecture.** Define the alternating iteration:\n$$x_{n+1} = \\begin{cases} \\min(u, x_n) & \\text{if } n \\text{ even} \\\\ \\max(l, x_n) & \\text{if } n \\text{ odd} \\end{cases}$$\n\nThen:\n1. If $l \\leq u$, the sequence converges to a balanced state in at most 2 steps.\n2. If $l > u$, the sequence oscillates between $l$ and $u$ (no balanced state exists).\n3. For tropical matrix operators $F(x) = A \\otimes_{\\min} x$ and $G(x) = B \\otimes_{\\max} x$, convergence to a balanced state (when it exists) occurs in at most $n$ steps, where $n$ is the dimension.\n\n**Proof strategy.** The scalar case is elementary: $\\min(u, \\max(l, x)) = \\mathrm{clamp}(x, l, u)$, which is idempotent. The matrix case uses the theory of ",
-    "domains": [
-      "Tropical",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "918eb128",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:35:00.982044+00:00"
   },
   {
     "id": "fd_0194",
@@ -2355,22 +2206,6 @@
     "source_exp_id": "51f002b7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T22:34:47.493626+00:00"
-  },
-  {
-    "id": "fd_0201",
-    "title": "Implementation Priorities",
-    "description": "| Direction | Difficulty | Impact | Dependencies | Recommended Order |\n|-----------|-----------|--------|-------------|-------------------|\n| 1. Category of Proof Architectures | Medium | Very High | Current work | 1st |\n| 3. ATP Search Strategies | Medium | High | Direction 1 | 2nd |\n| 2. Graph Minor Obstruction Theory | High | Very High | Mathlib graph theory | 3rd |\n| 4. Elliptic Curve Bridge | Very High | Very High | Mathlib EC theory | 4th |\n| 5. Renormalization Formalization | Very High | Revolutionary | Directions 1, 3 | 5th |",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5fa1c5eb",
-    "consumed_by_exp_id": "102555eb",
-    "timestamp": "2026-05-14T23:34:31.245648+00:00"
   },
   {
     "id": "fd_0190",
@@ -2536,5 +2371,92 @@
     "source_exp_id": "be18c0b2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:25:49.905162+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Direction 1: Functorial Complexity Monotonicity",
+    "description": "**Hypothesis**: Morphisms between proof architectures (graph homomorphisms preserving edges) induce monotone maps on complexity invariants. Specifically, if `φ : A → B` is a digraph morphism, then the walk count of `A` at length `n` is bounded above by the walk count of `B` at length `n`.\n\n**Proof Strategy**:\n- Define a category `ProofArch` whose objects are finite digraphs `(V, E)` and whose morphisms are edge-preserving maps.\n- Show that a morphism `φ : (V₁, E₁) → (V₂, E₂)` induces an injection on walk spaces when `φ` is injective, or a surjection when `φ` is surjective.\n- Prove that the walk-count functional `W_n : ProofArch → ℕ` is a functor to the poset category `(ℕ, ≤)`.\n\n**Cross-Domain Connections**:\n- This connects to *Ramsey theory*: minor-monotone graph invariants are central to ",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "102555eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:30:49.232606+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Direction 2: Entropy Rates of Infinite Proof Systems via Finite Truncations",
+    "description": "**Hypothesis**: For a countably infinite proof architecture (e.g., the full proof search tree of a formal system), the *topological entropy* — defined as the limit of `(1/n) · log(W_n)` — exists and characterizes the asymptotic growth rate of proof strategies.\n\n**Proof Strategy**:\n- Define truncated walk counts `W_n(E)` as in our current framework.\n- Show that `log W_n` is subadditive: `log W_{m+n} ≤ log W_m + log W_n` (by concatenation of walks).\n- Apply Fekete's lemma to conclude the limit `lim (1/n) log W_n` exists.\n- Relate this limit to the spectral radius of the adjacency matrix via the Perron-Frobenius theorem.\n\n**Cross-Domain Connections**:\n- Connects to *symbolic dynamics* and *topological entropy* in ergodic theory.\n- The spectral radius connection links proof complexity to linea",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "102555eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:30:49.241321+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Direction 3: Graph Minor Obstructions for Unavoidable Proof Explosion",
+    "description": "**Hypothesis**: Certain graph minors act as *obstructions* to low proof complexity. Specifically, if a proof architecture contains a complete bipartite minor `K_{2,n}`, then the walk count at length `ℓ` is at least `n^{ℓ/2}`.\n\n**Proof Strategy**:\n- Define graph minors for directed graphs via edge contraction and vertex deletion.\n- Show that `K_{2,n}` as a minor forces branching degree ≥ `n` at some vertex (or a subdivision thereof).\n- Use our branching lower bound theorem iteratively to obtain exponential walk-count lower bounds.\n- Prove that the set of \"low-complexity\" proof architectures is closed under minors.\n\n**Cross-Domain Connections**:\n- Robertson-Seymour well-quasi-ordering: the class of graphs excluding a fixed minor is well-quasi-ordered.\n- This could yield *finite characterizat",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "102555eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:30:49.251502+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Direction 4: Renormalization Operators on Proof Architectures",
+    "description": "**Hypothesis**: There exists a natural \"coarse-graining\" operation on proof architectures — collapsing strongly connected components into single nodes — that preserves asymptotic complexity while reducing architecture size. This is a *renormalization group* for proof search.\n\n**Proof Strategy**:\n- Define the *condensation* of a digraph: the DAG obtained by collapsing strongly connected components.\n- Prove that the condensation preserves topological entropy (Direction 2).\n- Show that iterating condensation + vertex merging produces a sequence of architectures converging to a \"fixed point\" — the minimal architecture with the same asymptotic complexity.\n- Formalize this as a functor `R : ProofArch → ProofArch` with `R ∘ R = R` (idempotent).\n\n**Cross-Domain Connections**:\n- *Renormalization gr",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "102555eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:30:49.261795+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Direction 5: Cryptographic Extraction from Proof-Search Branching Invariants",
+    "description": "**Hypothesis**: The branching structure of a proof architecture can serve as a *one-way function candidate*: given a proof architecture with high branching entropy, the problem of finding a specific walk (proof) from source to target is computationally hard, while verifying a given walk is easy.\n\n**Proof Strategy**:\n- Define a \"proof-search problem\" as: given `(V, E, s, t, n)`, find a walk of length `n` from `s` to `t`.\n- Show that the number of candidate walks grows exponentially (our upper bound) but the number of valid walks may be sparse.\n- Formalize a combinatorial one-way property: the ratio of valid walks to all candidate walks decreases exponentially with branching obstruction count.\n- Connect to hash function constructions via expander-graph proof architectures.\n\n**Cross-Domain Co",
+    "domains": [
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "102555eb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:30:49.271363+00:00"
   }
 ]
