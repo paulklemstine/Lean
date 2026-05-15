@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.865300+00:00"
   },
   {
-    "id": "seed_073",
-    "title": "From Shallow to Deep: Formalizing the Depth Gap in Automated Mathematics",
-    "description": "Prove that there exists a formal depth gap between trivial rephrasings of known results and genuinely new mathematics, and construct a Lean 4 formalization that computes this gap. Show that the depth gap is characterized by the minimum number of conceptual leaps (definition introductions, type changes, perspective shifts) required to connect the new result to the nearest known result. Prove that Aether outputs below a depth threshold are provably derivative, and establish that the depth gap is computable from proof terms.",
-    "domains": [
-      "Meta",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.96,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "9f168b29",
-    "timestamp": "2026-05-14T16:03:53.871263+00:00"
-  },
-  {
     "id": "seed_001",
     "title": "P vs NP: Tropical Semiring Barrier",
     "description": "Prove that tropical semiring morphisms cannot polynomially simulate Boolean circuit satisfiability, establishing a structural barrier via min-plus idempotent completions that separates P from NP. Construct a family of Boolean formulas whose tropical evaluation requires super-polynomial min-plus circuit size, and prove that the idempotent closure of the tropical semiring yields a natural complexity class incomparable with P.",
@@ -838,37 +822,6 @@
     "timestamp": "2026-05-15T13:04:44.664357+00:00"
   },
   {
-    "id": "fd_0229",
-    "title": "Quantum-classical verification gaps:",
-    "description": "Formalize the relationship between classical random verification (Freivalds) and quantum verification (BQP vs. MA) to understand the computational power of different verification paradigms.",
-    "domains": [
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a861b2f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:03:35.889619+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Connect to the tropical eigenpair theorem",
-    "description": ": Our existing `tropical_eigenpair_from_diagonal` result may provide structural lemmas about fixed points of tropical linear maps.\n\n### Applications\n- **Verification of timed automata**: Timed automata use min-plus matrices for clock semantics. Our decidability result guarantees that reachability in the linear fragment is decidable.\n- **Control theory**: Min-plus linear systems model discrete-event systems (manufacturing, traffic). Decidability of reachability enables certified controller synthesis.\n- **Weighted automata**: Weighted finite automata over the tropical semiring compute min-plus rational functions. Our threshold predicts which properties of weighted automata are decidable.\n\n### Estimated Impact\nHigh. Would connect tropical computability to automata theory and control theory, w",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "06519137",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:07:33.300413+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Formalize stochastic DPI",
     "description": "(Direction 1): This is the natural next step and has a clear proof strategy.",
@@ -955,23 +908,6 @@
     "source_exp_id": "6558c42b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:26:49.696815+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Finset.prod monotonicity",
-    "description": "— already proven in our framework.\n\n### Proof Strategy\n\nThe key challenge is that Mathlib's operator norm for matrices requires `NormedAddCommGroup` and `NormedSpace` instances on `EuclideanSpace ℝ (Fin n)`. Use `EuclideanSpace.equiv` to go between `Fin n → ℝ` and `EuclideanSpace`, then leverage Mathlib's `Matrix.norm_mulVec_le` or similar.\n\n### Cross-Domain Connections\n\n- **Robustness certification**: Certified Lipschitz bounds directly yield adversarial robustness certificates via `‖f(x) - f(x')‖ ≤ L · ‖x - x'‖`.\n- **Generalization theory**: Spectral complexity bounds (Bartlett et al. 2017) use layer-wise operator norms. Our compositional framework would give a clean categorical derivation.\n\n---\n\n## Direction 3: Equivariance Under Continuous Symmetry Groups\n\n### Target Theorem\n\n```\ntheor",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.752165+00:00"
   },
   {
     "id": "fd_0233",
@@ -1095,39 +1031,6 @@
     "timestamp": "2026-05-15T16:01:39.438414+00:00"
   },
   {
-    "id": "fd_0229",
-    "title": "Prove via the assignment problem",
-    "description": "Show that the cost matrix $C_{ij} = |x_{\\text{sort}(i)} - y_{\\text{sort}(j)}|$ satisfies the Monge property $C_{ij} + C_{kl} \\leq C_{il} + C_{kj}$ for $i < k, j < l$, which implies identity optimality.\n\n### Cross-Domain Connection\n\nThis is a certified algorithm in the sense of CompCert or seL4: a program with a machine-checked correctness proof. It connects to verified software engineering and the theory of proof-carrying code.\n\n---\n\n## Direction 4: Finite Harmonic Graph Diameter\n\n### Exact Theorem Statement\n\nFor the corpus of all seventh chords in one key (7 roots × 4 types = 28 chords), compute the exact diameter of the weighted chord graph and prove it formally.\n\n### Formalization Target\n\n```lean\ndef seventhChordCorpus : Finset (ChordN 4) := ...\n\ntheorem seventh_chord_diameter :\n    ∀ x",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de9a421e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:01:39.461970+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Structural bound",
-    "description": "Prove an upper bound on the diameter using the maximum pitch range and number of voices, then find a tight example computationally.\n\n### Cross-Domain Connection\n\nThis connects to graph theory (diameter of weighted graphs), network analysis (navigability of harmonic spaces), and computational music theory (complexity of modulation).\n\n---\n\n## Direction 5: Tropical Harmonic Semiring\n\n### Exact Theorem Statement\n\nDefine a tropical semiring structure on chord progressions where:\n- Addition = minimum cost path selection\n- Multiplication = path concatenation (cost addition)\n\nProve that this satisfies the tropical semiring axioms.\n\n### Formalization Target\n\n```lean\nstructure TropicalProgression (n : ℕ) where\n  source : ChordN n\n  target : ChordN n\n  cost : ℕ\n\ndef tropAdd (p q : TropicalProgression",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de9a421e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:01:39.486214+00:00"
-  },
-  {
     "id": "fd_0233",
     "title": "Embed into existing tropical algebra",
     "description": "Mathlib has `Tropical` type with min-plus structure. Define a homomorphism from progression costs into `Tropical ℕ`.",
@@ -1141,34 +1044,6 @@
     "source_exp_id": "de9a421e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T16:01:39.505662+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Week 1:",
-    "description": "Formalize definitions and state the main theorem in Lean 4.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8bc5f37e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:04:30.136959+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Week 3:",
-    "description": "Complete the proof and write documentation.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8bc5f37e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:04:30.157625+00:00"
   },
   {
     "id": "seed_079",
@@ -1662,20 +1537,6 @@
     "timestamp": "2026-05-15T09:07:29.342835+00:00"
   },
   {
-    "id": "fd_0229",
-    "title": "Summary: The Temperature Axis",
-    "description": "These five directions together establish **temperature as a formal mathematical axis** connecting:\n\n| Zero temperature ($\\beta = \\infty$) | Finite temperature ($\\beta > 0$) |\n|---|---|\n| Tropical max | Log-sum-exp |\n| Shortest/longest paths | Free energy |\n| Tropical eigenvalues | Perron eigenvalues |\n| Hard optimization | Regularized optimization |\n| Deterministic control | Risk-sensitive control |\n\nThe breakthrough of the current work — proving explicit, sharp, compositional error bounds — makes this axis rigorous and computationally useful for the first time in formalized mathematics.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7566736e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:03:59.224575+00:00"
-  },
-  {
     "id": "fd_0219",
     "title": "1. Closedness and Topological Properties of Tropical Hypersurfaces",
     "description": "**Status**: ✅ Completed in this cycle (`isClosed_tropHypersurface`).\n\n**Next theorem targets**:\n\n```lean\n/-- The complement of a tropical hypersurface is open and dense\n    when the polynomial has at least two distinct monomials. -/\ntheorem isOpen_compl_tropHypersurface {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) :\n    IsOpen (TropHypersurface p hp)ᶜ\n\n/-- The tropical hypersurface has empty interior when the polynomial\n    has at least two monomials with distinct exponent vectors. -/\ntheorem interior_tropHypersurface_eq_empty {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty)\n    (hdist : ∃ m₁ ∈ p, ∃ m₂ ∈ p, m₁.exp ≠ m₂.exp) :\n    interior (TropHypersurface p hp) = ∅\n```\n\n**Proof strategy**: The complement is open directly from closedness. For empty interior, use t",
@@ -1727,21 +1588,6 @@
     "source_exp_id": "7d5cf911",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T14:21:34.138758+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Implementation Roadmap",
-    "description": "| Priority | Direction | Estimated Effort | Dependencies |\n|----------|-----------|-----------------|--------------|\n| 1 | Large-prime defect (Dir. 1) | 1-2 weeks | Current theorems |\n| 2 | Relation graph (Dir. 2) | 2-3 weeks | `minPlusMatMul_assoc` |\n| 3 | Belief propagation (Dir. 4) | 3-4 weeks | Dir. 1, factor graph formalization |\n| 4 | Dickman function (Dir. 3) | 4-8 weeks | Analysis formalization in Mathlib |\n| 5 | NFS extension (Dir. 5) | 6-12 weeks | Number field machinery in Mathlib |\n\nEach direction builds on the core theorems established in this work: the score defect characterization of smoothness, min-plus matrix associativity, and the idempotent boundary theorem.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e03a2df6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:02:24.572333+00:00"
   },
   {
     "id": "fd_0218",
@@ -1822,20 +1668,6 @@
     "source_exp_id": "cc175531",
     "consumed_by_exp_id": "6acfb91e",
     "timestamp": "2026-05-15T15:04:32.949550+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Precise Statements",
-    "description": "```\n-- Upper bound (already implicit in the construction)\ntheorem state_bound_upper (φ : TropFormula α) :\n    ∃ A : TropAut α, (∀ w, A.eval w = φ.eval w) ∧\n      Fintype.card A.S ≤ stateUpperBound φ\n\n-- Lower bound (requires communication complexity)\ntheorem state_bound_lower :\n    ∃ (family : ℕ → TropFormula (Fin 2)),\n      ∀ (A : ℕ → TropAut (Fin 2)),\n        (∀ n w, (A n).eval w = (family n).eval w) →\n        ∃ c > 0, ∀ n, Fintype.card (A n).S ≥ 2 ^ (c * n)\n```",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc175531",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:33.002619+00:00"
   },
   {
     "id": "fd_0215",
@@ -2019,5 +1851,65 @@
     "source_exp_id": "c133a545",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:29:13.582275+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Hypothesis",
+    "description": "There exists a quantitative relationship between proof compression score and conceptual depth gap: highly compressible theorems (relative to a corpus) are necessarily derivative, but the converse fails. Specifically, for profiles with `compressionScore ≤ C · proofSize`, the depth gap is bounded by a function of `C` and the corpus geometry.",
+    "domains": [
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9f168b29",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:04:54.650878+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Key Technical Challenge",
+    "description": "The relationship between syntactic compression and conceptual distance is non-trivial. Need to formalize what \"compression relative to a corpus\" means — possibly via Kolmogorov-style conditional complexity.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9f168b29",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:04:54.662760+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Theorem Corpus as Metric Space",
+    "description": "All five directions share the perspective of viewing a theorem corpus as a finite metric space. This opens connections to:\n- **Persistent homology**: compute topological features of the novelty landscape\n- **Optimal transport**: measure the \"distance\" between two corpora\n- **Geometric group theory**: study symmetries of the novelty geometry",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9f168b29",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:04:54.696726+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Theoretical Foundations",
+    "description": "Directions 2 and 3 deepen the mathematical theory:\n- Compression duality connects novelty to information content\n- Ultrametric geometry reveals hierarchical structure\n- Together they suggest a \"spectral theory of novelty\" where eigenvalues of the distance matrix capture fundamental scales of conceptual variation.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9f168b29",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:04:54.716000+00:00"
   }
 ]
