@@ -121,10 +121,10 @@
       "Speculative"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6ee9322",
     "timestamp": "2026-05-14T16:03:53.855963+00:00"
   },
   {
@@ -824,23 +824,6 @@
     "timestamp": "2026-05-15T13:04:21.848289+00:00"
   },
   {
-    "id": "fd_0216",
-    "title": "Relationship to rate-distortion",
-    "description": ": I_trop characterizes the gap between independent and joint variety, and controls the rate-distortion function via Fano-type inequalities.\n\n### Proof Strategy\n- Non-negativity follows from the set-theoretic identity |A| + |B| - |A × B projected to A ∪ B| ≥ 0, which needs care in formalization.\n- The data-processing inequality uses harmonicVariety_comp_le on the v-component.\n- Connection to R(D) requires bounding the variety loss of optimal codes.\n\n### Cross-Domain Impact\nA fully formal tropical mutual information with data-processing would be the combinatorial analogue of Shannon's foundational construction. It would apply to: DNA codon correlation analysis, musical voice-leading coherence, and deterministic secret sharing.\n\n---\n\n## Direction 3: Multi-Voice Contrapuntal Rate Region\n\n### H",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "50208fa8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:04:44.638325+00:00"
-  },
-  {
     "id": "fd_0219",
     "title": "Orbit structure",
     "description": ": The rate-distortion function factors through the orbit space of the symmetry group action on the space of melodic lines.",
@@ -1082,6 +1065,127 @@
     "timestamp": "2026-05-15T15:26:49.885694+00:00"
   },
   {
+    "id": "fd_0224",
+    "title": "Induction on the number of inversions",
+    "description": "Define the inversion count of a permutation. Show that any transposition that uncrosses an inversion does not increase cost (using the uncrossing lemma). Since the identity has zero inversions, it is optimal among all permutations.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "de9a421e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:01:39.408905+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Bubble sort argument",
+    "description": "Show that applying adjacent transpositions to reduce inversions in $\\sigma$ produces a sequence of permutations with non-increasing cost. Since bubble sort terminates at the identity, the identity is optimal.\n\n### Cross-Domain Connection\n\nThis is a formal verification of the one-dimensional optimal transport theorem (Monge property). It connects directly to the theory of Monge matrices in combinatorial optimization and the rearrangement inequality in analysis.\n\n---\n\n## Direction 2: Quotient Geometry of Chord Classes\n\n### Exact Theorem Statement\n\nDefine the equivalence relation $x \\sim y$ iff $\\text{vlCostN}(x, y) = 0$ (i.e., $x$ and $y$ are rearrangements). The induced function on the quotient $\\text{vlCostQ} : (\\text{ChordN}\\, n / {\\sim}) \\times (\\text{ChordN}\\, n / {\\sim}) \\to \\mathbb{N}",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "de9a421e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:01:39.418538+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Use the zero-cost characterization",
+    "description": "`vlCostN_eq_zero_iff` gives the exact condition for equivalence. The metric separation property follows from the definition.\n\n### Cross-Domain Connection\n\nThe quotient is the multiset of pitches—an unordered chord. This connects to the theory of orbifolds in Tymoczko's geometric music theory, where chord classes are points in $\\mathbb{R}^n / S_n$.\n\n---\n\n## Direction 3: Certified Optimal Matching Algorithm\n\n### Exact Theorem Statement\n\nDefine a computable function `sortedVLCost` that sorts both input chords and computes the identity matching cost. Prove it equals `vlCostN`.\n\n### Formalization Target\n\n```lean\ndef sortedVLCost {n : ℕ} (x y : ChordN n) : ℕ :=\n  let xs := (List.ofFn x).mergeSort (· ≤ ·)\n  let ys := (List.ofFn y).mergeSort (· ≤ ·)\n  (List.zipWith (fun a b => Int.natAbs (a - b)) ",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "de9a421e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:01:39.438414+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Prove via the assignment problem",
+    "description": "Show that the cost matrix $C_{ij} = |x_{\\text{sort}(i)} - y_{\\text{sort}(j)}|$ satisfies the Monge property $C_{ij} + C_{kl} \\leq C_{il} + C_{kj}$ for $i < k, j < l$, which implies identity optimality.\n\n### Cross-Domain Connection\n\nThis is a certified algorithm in the sense of CompCert or seL4: a program with a machine-checked correctness proof. It connects to verified software engineering and the theory of proof-carrying code.\n\n---\n\n## Direction 4: Finite Harmonic Graph Diameter\n\n### Exact Theorem Statement\n\nFor the corpus of all seventh chords in one key (7 roots × 4 types = 28 chords), compute the exact diameter of the weighted chord graph and prove it formally.\n\n### Formalization Target\n\n```lean\ndef seventhChordCorpus : Finset (ChordN 4) := ...\n\ntheorem seventh_chord_diameter :\n    ∀ x",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "de9a421e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:01:39.461970+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Computational proof",
+    "description": "Use `native_decide` or `decide` to verify all $28^2 = 784$ pairwise costs and extract the maximum. This requires defining the corpus as a concrete `Finset`.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "de9a421e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:01:39.473688+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Structural bound",
+    "description": "Prove an upper bound on the diameter using the maximum pitch range and number of voices, then find a tight example computationally.\n\n### Cross-Domain Connection\n\nThis connects to graph theory (diameter of weighted graphs), network analysis (navigability of harmonic spaces), and computational music theory (complexity of modulation).\n\n---\n\n## Direction 5: Tropical Harmonic Semiring\n\n### Exact Theorem Statement\n\nDefine a tropical semiring structure on chord progressions where:\n- Addition = minimum cost path selection\n- Multiplication = path concatenation (cost addition)\n\nProve that this satisfies the tropical semiring axioms.\n\n### Formalization Target\n\n```lean\nstructure TropicalProgression (n : ℕ) where\n  source : ChordN n\n  target : ChordN n\n  cost : ℕ\n\ndef tropAdd (p q : TropicalProgression",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "de9a421e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:01:39.486214+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Direct algebraic verification",
+    "description": "The tropical semiring axioms for $(\\min, +)$ are straightforward once the objects are defined correctly.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "de9a421e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:01:39.495360+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Embed into existing tropical algebra",
+    "description": "Mathlib has `Tropical` type with min-plus structure. Define a homomorphism from progression costs into `Tropical ℕ`.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "de9a421e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:01:39.505662+00:00"
+  },
+  {
     "id": "seed_079",
     "title": "Tropical Language Evolution: Min-Plus Phylogenetics and Glottochronology",
     "description": "Prove that language divergence follows a tropical diffusion process on the min-plus metric space of lexical items, and that the tropical distance between languages is an optimal phylogenetic distance. Show that glottochronological dating is recovered as tropical distance estimation, and that the tropical phylogenetic tree is the unique min-plus Steiner tree of the language family.",
@@ -1223,25 +1327,6 @@
     "source_exp_id": "f37e592e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
-  },
-  {
-    "id": "fd_0179",
-    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
-    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "de9a421e",
-    "timestamp": "2026-05-14T17:33:19.336802+00:00"
   },
   {
     "id": "fd_0179",
@@ -1813,20 +1898,6 @@
     "timestamp": "2026-05-15T15:13:29.120657+00:00"
   },
   {
-    "id": "fd_0216",
-    "title": "2. Weighted Prime Energy Inequalities",
-    "description": "**Goal:** Define soft prime costs with meaningful weight functions and prove subadditivity, monotonicity, and comparison theorems that mirror sieve majorants.\n\n**Concrete steps:**\n- Define `logPrimeCost (n : ℕ) : WithTop ℝ := if Nat.Prime n then log n else ⊤` and prove that convolution of log-costs captures weighted additive representations.\n- Define `sieveMajorant (n : ℕ) : ℝ≥0` using truncated von Mangoldt or Selberg sieve weights.\n- Prove: if `s ≤ tropPredCost Nat.Prime` pointwise and `minplusConv s s n < ⊤`, then the soft convolution gives a finite upper bound on the \"tropical energy\" of decomposing n.\n- Establish a transfer theorem: sieve upper bounds on prime-counting imply finite bounds on soft tropical convolution.\n\n**Hypothesis:** Soft tropical energies form a graded family interp",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fb3d214",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:13:29.132220+00:00"
-  },
-  {
     "id": "fd_0217",
     "title": "3. Verified Bounded Goldbach Engine in Lean",
     "description": "**Goal:** Implement a certified finite search showing zero tropical cost for all even numbers up to a substantial bound (e.g., 10⁶).\n\n**Concrete steps:**\n- Define a `Decidable` instance for `∃ a b, a + b = n ∧ Nat.Prime a ∧ Nat.Prime b` restricted to `a ∈ Finset.range (n+1)`.\n- Prove that the finite search is equivalent to the infinite infimum: `minplusConv (tropPredCost Nat.Prime) (tropPredCost Nat.Prime) n = 0 ↔ (Finset.range (n+1)).∃ a, Nat.Prime a ∧ Nat.Prime (n - a)`.\n- Use `native_decide` to verify Goldbach up to large bounds.\n- Package as `goldbach_verified_to_bound : ∀ n, 4 ≤ n → n ≤ B → Even n → minplusConv (tropPredCost Nat.Prime) (tropPredCost Nat.Prime) n = 0`.\n- Combine with `goldbach_from_finite_check_and_cover` to maximize the range of the hybrid theorem.\n\n**Hypothesis:** Th",
@@ -1889,20 +1960,6 @@
     "source_exp_id": "0e91ddc3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:20:42.798281+00:00"
-  },
-  {
-    "id": "fd_0216",
-    "title": "1. Tropical Channel Capacity",
-    "description": "**Goal:** Define a finite capacity-like invariant as the supremum of TMI over admissible encodings, and prove a first upper bound.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c133a545",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:29:13.506145+00:00"
   },
   {
     "id": "fd_0217",
