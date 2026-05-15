@@ -1331,6 +1331,78 @@
     "timestamp": "2026-05-15T13:04:44.664357+00:00"
   },
   {
+    "id": "fd_0220",
+    "title": "Immediate (builds directly on current work):",
+    "description": "Fiberwise minimization (#3), as it extends the data processing inequality to an equality",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cabdd3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:09.669456+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "High impact (new theory):",
+    "description": "Tropical mutual information (#1), opening information-theoretic applications",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cabdd3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:09.679343+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Deep mathematics (connects to existing Mathlib):",
+    "description": "Idempotent measures (#4), connecting to measure theory and probability",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cabdd3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:09.688621+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Applications (broadest impact):",
+    "description": "Bellman operators (#5), connecting to control theory and ML",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cabdd3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:09.697174+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Geometric (long-term):",
+    "description": "Tropical varieties (#2), requiring significant tropical geometry infrastructure",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cabdd3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:09.705505+00:00"
+  },
+  {
     "id": "seed_079",
     "title": "Tropical Language Evolution: Min-Plus Phylogenetics and Glottochronology",
     "description": "Prove that language divergence follows a tropical diffusion process on the min-plus metric space of lexical items, and that the tropical distance between languages is an optimal phylogenetic distance. Show that glottochronological dating is recovered as tropical distance estimation, and that the tropical phylogenetic tree is the unique min-plus Steiner tree of the language family.",

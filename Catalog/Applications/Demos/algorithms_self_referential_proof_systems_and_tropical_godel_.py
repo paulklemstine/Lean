@@ -1,19 +1,18 @@
+#!/usr/bin/env python3
 """
-Tropical Incompleteness — Algorithms
+Tropical Metamathematics: Algorithms
 
-Implements the core algorithms from the research paper:
-1. Tropical fixed-point iteration (Knaster-Tarski descent)
-2. Tropical Gödel sentence construction
-3. Incompleteness gap computation
-4. Tropical closure operator construction
+Implements the core algorithms from the tropical metamathematics research,
+including tropical fixed-point computation, closure operator iteration,
+diagonal sentence detection, and incompleteness verification.
 """
 
 import numpy as np
-from typing import Callable, Tuple, List, Optional, Dict
+from typing import Callable, Optional, Tuple, List, Dict
 from dataclasses import dataclass
 
-# Type alias
-CostProfile = np.ndarray
+INF = float('inf')
+TropicalState = np.ndarray
 
 
 @dataclass
@@ -22,346 +21,339 @@ class TropicalProofSystem:
     A tropical proof system on n sentences.
     
     Attributes:
-        n: dimension (number of "sentences" / coordinates)
-        provable: the provability closure operator P : ℕⁿ → ℕⁿ
-        name: descriptive name
-    
-    Properties (not checked at construction, assumed by theorems):
-        - Monotone: f ≤ g implies P(f) ≤ P(g)
-        - Idempotent: P(P(f)) = P(f)
-        - Extensive: f ≤ P(f)
+        n: Number of sentences
+        evaluator: Monotone idempotent map Φ: R^n → R^n
+        name: Human-readable name
     """
     n: int
-    provable: Callable[[CostProfile], CostProfile]
+    evaluator: Callable[[TropicalState], TropicalState]
     name: str = "unnamed"
     
-    def is_monotone(self, samples: int = 100, max_val: int = 20) -> bool:
-        """Check monotonicity on random samples."""
-        for _ in range(samples):
-            f = np.random.randint(0, max_val, self.n)
-            g = f + np.random.randint(0, 5, self.n)
-            Pf, Pg = self.provable(f), self.provable(g)
-            if not np.all(Pf <= Pg):
+    def is_fixed_point(self, x: TropicalState, tol: float = 1e-10) -> bool:
+        """Check if x is a fixed point of the evaluator."""
+        return np.allclose(self.evaluator(x), x, atol=tol)
+    
+    def find_fixed_point(self, x0: Optional[TropicalState] = None, 
+                         max_iter: int = 1000) -> TropicalState:
+        """
+        Find a fixed point by iterating the evaluator.
+        
+        For idempotent operators, Φ(x) is already a fixed point for any x.
+        For non-idempotent monotone operators, we iterate until convergence.
+        
+        Args:
+            x0: Starting point (default: zero vector)
+            max_iter: Maximum iterations
+            
+        Returns:
+            Fixed point x such that Φ(x) = x
+        """
+        if x0 is None:
+            x0 = np.zeros(self.n)
+        
+        x = x0.copy()
+        for _ in range(max_iter):
+            x_new = self.evaluator(x)
+            if np.allclose(x_new, x):
+                return x_new
+            x = x_new
+        
+        return x
+    
+    def verify_idempotency(self, num_samples: int = 100) -> bool:
+        """Verify idempotency on random samples."""
+        for _ in range(num_samples):
+            x = np.random.uniform(0, 10, self.n)
+            fx = self.evaluator(x)
+            ffx = self.evaluator(fx)
+            if not np.allclose(fx, ffx):
                 return False
         return True
     
-    def is_idempotent(self, samples: int = 100, max_val: int = 20) -> bool:
-        """Check idempotency on random samples."""
-        for _ in range(samples):
-            f = np.random.randint(0, max_val, self.n)
-            Pf = self.provable(f)
-            PPf = self.provable(Pf)
-            if not np.array_equal(Pf, PPf):
+    def verify_monotonicity(self, num_samples: int = 100) -> bool:
+        """Verify monotonicity on random sample pairs."""
+        for _ in range(num_samples):
+            x = np.random.uniform(0, 10, self.n)
+            y = x + np.random.uniform(0, 5, self.n)  # y ≥ x
+            fx = self.evaluator(x)
+            fy = self.evaluator(y)
+            if not np.all(fx <= fy + 1e-10):
                 return False
         return True
-    
-    def is_extensive(self, samples: int = 100, max_val: int = 20) -> bool:
-        """Check extensiveness on random samples."""
-        for _ in range(samples):
-            f = np.random.randint(0, max_val, self.n)
-            Pf = self.provable(f)
-            if not np.all(f <= Pf):
-                return False
-        return True
-    
-    def is_complete(self, samples: int = 1000, max_val: int = 20) -> bool:
-        """Check if P = id on random samples (necessary condition for completeness)."""
-        for _ in range(samples):
-            f = np.random.randint(0, max_val, self.n)
-            if not np.array_equal(self.provable(f), f):
-                return False
-        return True
-    
-    def validate(self, samples: int = 100) -> Dict[str, bool]:
-        """Validate all closure operator properties."""
-        return {
-            "monotone": self.is_monotone(samples),
-            "idempotent": self.is_idempotent(samples),
-            "extensive": self.is_extensive(samples),
-            "complete (on samples)": self.is_complete(samples),
-        }
 
 
-def knaster_tarski_descent(
-    T: Callable[[CostProfile], CostProfile],
-    B: CostProfile,
-    max_iter: int = 10000
-) -> Tuple[CostProfile, List[CostProfile]]:
+def find_tropical_fixed_point_idempotent(
+    phi: Callable[[TropicalState], TropicalState],
+    n: int,
+    x0: Optional[TropicalState] = None
+) -> TropicalState:
     """
-    Algorithm 1: Knaster-Tarski Fixed-Point by Descent
+    Algorithm 1: Fixed-Point Computation for Idempotent Operators
     
-    Find the greatest fixed point of T below B by iterating T from B.
+    For an idempotent operator Φ (where Φ(Φ(x)) = Φ(x)), the image of any
+    point is a fixed point. This is O(n) — a single application of Φ.
     
-    Preconditions:
-        - T is monotone
-        - T(f) ≤ B for all f ≤ B (bounded)
-    
-    Postcondition:
-        - Returns f* with T(f*) = f*
-    
-    Complexity: O(n * max_val * cost_of_T) where max_val = max(B)
+    Complexity: O(T_Φ) where T_Φ is the cost of one Φ evaluation.
     
     Args:
-        T: monotone operator
-        B: upper bound
-        max_iter: iteration limit
-    
+        phi: Idempotent operator
+        n: Dimension
+        x0: Starting point (default: zero vector)
+        
     Returns:
-        (fixed_point, trajectory) where trajectory records each iterate
+        Fixed point x with Φ(x) = x
     """
-    trajectory = [B.copy()]
-    x = B.copy()
+    if x0 is None:
+        x0 = np.zeros(n)
+    return phi(x0)
+
+
+def find_tropical_fixed_point_monotone(
+    phi: Callable[[TropicalState], TropicalState],
+    n: int,
+    upper_bound: Optional[TropicalState] = None,
+    max_iter: int = 10000
+) -> Tuple[TropicalState, int]:
+    """
+    Algorithm 2: Fixed-Point Computation for Monotone Bounded Operators
     
-    for _ in range(max_iter):
-        x_new = T(x)
-        trajectory.append(x_new.copy())
-        if np.array_equal(x_new, x):
-            return x, trajectory
+    Uses Kleene iteration: start from the upper bound and iterate downward.
+    Convergence is guaranteed for bounded monotone operators on finite lattices.
+    
+    Complexity: O(B · T_Φ) where B is the max bound value (for integer-valued
+    operators) and T_Φ is the evaluation cost.
+    
+    Args:
+        phi: Monotone operator
+        n: Dimension
+        upper_bound: Componentwise upper bound
+        max_iter: Maximum iterations
+        
+    Returns:
+        (fixed_point, num_iterations)
+    """
+    if upper_bound is None:
+        upper_bound = np.full(n, 100.0)
+    
+    x = upper_bound.copy()
+    for i in range(max_iter):
+        x_new = phi(x)
+        if np.allclose(x_new, x):
+            return x_new, i + 1
         x = x_new
     
-    return x, trajectory
+    return x, max_iter
 
 
-def construct_godel_sentence(
+def check_diagonal_incompleteness(
     system: TropicalProofSystem,
-    max_val: int = 50,
-    num_trials: int = 1000
-) -> Optional[Tuple[CostProfile, int, int]]:
+    diag_index: int,
+    provability_threshold: float = 0.0
+) -> Dict[str, object]:
     """
-    Algorithm 2: Tropical Gödel Sentence Construction
+    Algorithm 3: Diagonal Incompleteness Check
     
-    Given a tropical proof system S, find a fixed point g and coordinate i
-    such that g(i) < P(DiagBump_i(g))(i).
+    Given a tropical proof system and a diagonal index, determines whether
+    the system is sound, complete, or neither at that coordinate.
     
-    Strategy (from Theorem B proof):
-        1. Search for f, i with P(f)(i) < P(DiagBump_i(f))(i)
-        2. Set g = P(f) (guaranteed fixed point by idempotency)
-        3. If f ≤ P(f) (extensiveness), the gap transfers to g
+    The diagonal sentence at index i has truth defined as:
+        Truth(x, i) ↔ ¬ Provable(x, i)
+    where Provable(x, i) ↔ (x[i] ≤ threshold).
     
+    Complexity: O(T_Φ) — one fixed-point computation plus constant work.
+    
+    Args:
+        system: Tropical proof system
+        diag_index: Index of the diagonal (Gödel) sentence
+        provability_threshold: Score at or below which a sentence is "provable"
+        
     Returns:
-        (g, i, gap) where g is the Gödel sentence, i is the witnessing
-        coordinate, and gap = P(DiagBump_i(g))(i) - g(i)
-        Returns None if no Gödel sentence found in the trials.
+        Dictionary with analysis results
     """
-    P = system.provable
-    n = system.n
+    # Find a fixed point
+    fp = system.find_fixed_point()
     
-    for _ in range(num_trials):
-        f = np.random.randint(0, max_val, n)
-        Pf = P(f)
-        
-        for i in range(n):
-            f_bumped = f.copy()
-            f_bumped[i] += 1
-            Pf_bumped = P(f_bumped)
-            
-            if Pf[i] < Pf_bumped[i]:
-                # Found diagonal sensitivity! Construct Gödel sentence.
-                g = Pf  # Fixed point by idempotency
-                
-                # Verify g is a fixed point
-                Pg = P(g)
-                if not np.array_equal(Pg, g):
-                    continue  # System might not be perfectly idempotent numerically
-                
-                # Check if the gap transfers
-                g_bumped = g.copy()
-                g_bumped[i] += 1
-                Pg_bumped = P(g_bumped)
-                
-                if g[i] < Pg_bumped[i]:
-                    gap = int(Pg_bumped[i] - g[i])
-                    return g, i, gap
+    # Check provability at the diagonal coordinate
+    provable = fp[diag_index] <= provability_threshold
     
-    return None
-
-
-def compute_incompleteness_gap(
-    system: TropicalProofSystem,
-    max_val: int = 20,
-    num_samples: int = 1000
-) -> Dict:
-    """
-    Algorithm 3: Incompleteness Gap Analysis
+    # Diagonal truth: true iff not provable
+    true_at_diag = not provable
     
-    Measure the incompleteness of a tropical proof system by sampling
-    valuations and computing the gap P(f) - f.
+    # Soundness: Provable → True (can only fail if provable and not true)
+    sound = not provable or true_at_diag
     
-    Returns a dictionary with:
-        - total_gap_mean: average total gap sum(P(f) - f)
-        - total_gap_max: maximum total gap
-        - coord_gaps: per-coordinate gap statistics
-        - incomplete_fraction: fraction of samples where P(f) ≠ f
-        - witness: a specific (f, i) witnessing incompleteness (if any)
-    """
-    P = system.provable
-    n = system.n
-    
-    total_gaps = []
-    coord_gaps = [[] for _ in range(n)]
-    witness = None
-    incomplete_count = 0
-    
-    for _ in range(num_samples):
-        f = np.random.randint(0, max_val, n)
-        Pf = P(f)
-        gap = Pf - f
-        
-        total_gaps.append(np.sum(gap))
-        for i in range(n):
-            coord_gaps[i].append(gap[i])
-        
-        if not np.array_equal(Pf, f):
-            incomplete_count += 1
-            if witness is None:
-                # Find the coordinate with the largest gap
-                i_max = int(np.argmax(gap))
-                witness = (f.copy(), i_max, int(gap[i_max]))
+    # Completeness: True → Provable (can only fail if true and not provable)
+    complete = not true_at_diag or provable
     
     return {
-        "total_gap_mean": float(np.mean(total_gaps)),
-        "total_gap_max": int(max(total_gaps)),
-        "coord_gap_means": [float(np.mean(g)) for g in coord_gaps],
-        "incomplete_fraction": incomplete_count / num_samples,
-        "witness": witness,
+        'fixed_point': fp,
+        'diag_index': diag_index,
+        'fp_value_at_diag': fp[diag_index],
+        'provable': provable,
+        'true': true_at_diag,
+        'sound': sound,
+        'complete': complete,
+        'both_sound_and_complete': sound and complete,
+        'status': 'UNSOUND' if not sound else ('INCOMPLETE' if not complete else 'IMPOSSIBLE')
     }
 
 
-def build_closure_from_graph(
-    adj_matrix: np.ndarray,
-    source: int = 0
-) -> TropicalProofSystem:
+def closure_operator_analysis(
+    closure: Callable[[TropicalState], TropicalState],
+    n: int
+) -> Dict[str, object]:
     """
-    Algorithm 4: Build a Tropical Proof System from a Graph
+    Algorithm 4: Closure Operator Self-Reference Analysis
     
-    Given an adjacency matrix of a weighted directed graph, construct
-    the tropical proof system corresponding to one step of Bellman-Ford
-    shortest-path relaxation.
+    Analyzes a closure operator for:
+    1. Extensivity (x ≤ c(x))
+    2. Monotonicity
+    3. Idempotency
+    4. Fixed-point structure
+    5. Self-referential coordinates
     
-    The provability operator T(d)(v) = min(d(v), min_u(d(u) + W[u][v]))
-    models "what distances are provable in one more step of relaxation."
+    Complexity: O(S · T_c) where S is the number of verification samples.
+    
+    Args:
+        closure: The closure operator c: R^n → R^n
+        n: Dimension
+        
+    Returns:
+        Analysis results
     """
-    n = adj_matrix.shape[0]
-    INF = int(1e9)
+    results: Dict[str, object] = {}
+    num_samples = 100
     
-    def relaxation_step(d: CostProfile) -> CostProfile:
-        d_new = d.copy()
-        for v in range(n):
-            for u in range(n):
-                if adj_matrix[u][v] < INF:
-                    d_new[v] = min(d_new[v], d[u] + adj_matrix[u][v])
-        return d_new
+    # Check extensivity
+    extensive = True
+    for _ in range(num_samples):
+        x = np.random.uniform(-5, 10, n)
+        cx = closure(x)
+        if not np.all(x <= cx + 1e-10):
+            extensive = False
+            break
+    results['extensive'] = extensive
     
-    # Build the full closure (iterate to convergence)
-    def full_closure(d: CostProfile) -> CostProfile:
-        prev = d.copy()
-        for _ in range(n):
-            curr = relaxation_step(prev)
-            if np.array_equal(curr, prev):
-                break
-            prev = curr
-        return prev
+    # Check monotonicity
+    monotone = True
+    for _ in range(num_samples):
+        x = np.random.uniform(0, 10, n)
+        y = x + np.random.uniform(0, 5, n)
+        if not np.all(closure(x) <= closure(y) + 1e-10):
+            monotone = False
+            break
+    results['monotone'] = monotone
     
-    return TropicalProofSystem(
-        n=n,
-        provable=full_closure,
-        name=f"Bellman-Ford closure ({n} vertices)"
-    )
+    # Check idempotency
+    idempotent = True
+    for _ in range(num_samples):
+        x = np.random.uniform(0, 10, n)
+        cx = closure(x)
+        ccx = closure(cx)
+        if not np.allclose(cx, ccx):
+            idempotent = False
+            break
+    results['idempotent'] = idempotent
+    
+    # Find fixed points
+    fp_from_zero = closure(np.zeros(n))
+    fp_from_large = closure(np.full(n, 100.0))
+    results['fixed_point_from_zero'] = fp_from_zero
+    results['fixed_point_from_large'] = fp_from_large
+    results['unique_fixed_point_image'] = np.allclose(fp_from_zero, fp_from_large)
+    
+    # Self-referential coordinates: where fp[i] == c(fp)[i]
+    # (always true at fixed points, but we verify)
+    cfp = closure(fp_from_zero)
+    self_ref_coords = [i for i in range(n) if np.isclose(fp_from_zero[i], cfp[i])]
+    results['self_referential_coordinates'] = self_ref_coords
+    results['is_closure_operator'] = extensive and monotone and idempotent
+    
+    return results
 
 
-def tropical_fixed_point_lattice(
-    T: Callable[[CostProfile], CostProfile],
-    n: int,
-    max_val: int = 10
-) -> List[CostProfile]:
+def tropical_bellman_iteration(
+    transition_costs: np.ndarray,
+    terminal_costs: TropicalState,
+    max_iter: int = 100
+) -> Tuple[TropicalState, int]:
     """
-    Algorithm 5: Enumerate Fixed Points
+    Algorithm 5: Tropical Bellman Iteration
     
-    For small n and max_val, enumerate all fixed points of T
-    by brute-force search.
+    Computes the optimal cost-to-go via min-plus matrix iteration.
+    This is the canonical example of a tropical fixed-point computation
+    that arises in dynamic programming / shortest paths.
     
-    Complexity: O(max_val^n * cost_of_T)
-    Only practical for n ≤ 4 and max_val ≤ 10.
+    The Bellman operator is: T(v)[i] = min_j (c[i,j] + v[j])
+    
+    Complexity: O(n² · K) where K is the number of iterations to convergence.
+    
+    Args:
+        transition_costs: n×n matrix of transition costs
+        terminal_costs: n-vector of terminal costs
+        max_iter: Maximum iterations
+        
+    Returns:
+        (optimal_value, num_iterations)
     """
-    fixed_points = []
+    n = len(terminal_costs)
+    v = terminal_costs.copy()
     
-    def enumerate(prefix, depth):
-        if depth == n:
-            f = np.array(prefix, dtype=int)
-            if np.array_equal(T(f), f):
-                fixed_points.append(f.copy())
-            return
-        for v in range(max_val + 1):
-            enumerate(prefix + [v], depth + 1)
+    for k in range(max_iter):
+        v_new = np.array([
+            min(transition_costs[i, j] + v[j] for j in range(n))
+            for i in range(n)
+        ])
+        
+        if np.allclose(v_new, v):
+            return v_new, k + 1
+        v = v_new
     
-    enumerate([], 0)
-    return fixed_points
+    return v, max_iter
 
 
-# =============================================================================
-# Example usage
-# =============================================================================
-
+# Example usage and testing
 if __name__ == "__main__":
-    print("Tropical Incompleteness — Algorithm Demonstrations")
+    print("Tropical Metamathematics: Algorithm Demonstrations")
     print("=" * 60)
     
-    # Build example systems
-    n = 4
+    # Create a sample proof system
+    n = 5
+    ceiling = np.array([2.0, 1.0, 3.0, 0.5, 2.0])
     
-    # System 1: Max-clamp closure
-    threshold = np.array([2, 3, 1, 4])
-    sys1 = TropicalProofSystem(
+    system = TropicalProofSystem(
         n=n,
-        provable=lambda f: np.maximum(f, threshold),
-        name="Max-clamp (threshold=[2,3,1,4])"
+        evaluator=lambda x: np.minimum(x, ceiling),
+        name="Ceiling System"
     )
     
-    # System 2: Identity (complete system)
-    sys2 = TropicalProofSystem(
-        n=n,
-        provable=lambda f: f.copy(),
-        name="Identity (complete)"
-    )
+    print(f"\n--- Algorithm 1: Idempotent Fixed Point ---")
+    fp = find_tropical_fixed_point_idempotent(system.evaluator, n)
+    print(f"Fixed point: {fp}")
+    print(f"Verified: {system.is_fixed_point(fp)}")
     
-    print(f"\n--- System: {sys1.name} ---")
-    props = sys1.validate()
-    for k, v in props.items():
-        print(f"  {k}: {v}")
+    print(f"\n--- Algorithm 3: Diagonal Incompleteness Check ---")
+    for diag_idx in range(n):
+        result = check_diagonal_incompleteness(system, diag_idx)
+        print(f"  Index {diag_idx}: value={result['fp_value_at_diag']:.1f}, "
+              f"provable={result['provable']}, status={result['status']}")
     
-    gap_info = compute_incompleteness_gap(sys1)
-    print(f"  Incompleteness fraction: {gap_info['incomplete_fraction']:.0%}")
-    print(f"  Average total gap: {gap_info['total_gap_mean']:.2f}")
-    if gap_info['witness']:
-        f, i, g = gap_info['witness']
-        print(f"  Witness: f={f}, coord={i}, gap={g}")
+    print(f"\n--- Algorithm 4: Closure Operator Analysis ---")
+    floor_vals = np.array([1.0, 0.0, 0.5, 0.0, 1.0])
+    closure = lambda x: np.maximum(x, floor_vals)
+    analysis = closure_operator_analysis(closure, n)
+    print(f"  Is closure operator: {analysis['is_closure_operator']}")
+    print(f"  Fixed point: {analysis['fixed_point_from_zero']}")
+    print(f"  Self-ref coordinates: {analysis['self_referential_coordinates']}")
     
-    godel = construct_godel_sentence(sys1)
-    if godel:
-        g, i, gap = godel
-        print(f"  Gödel sentence: g={g}, coord={i}, gap={gap}")
-    
-    print(f"\n--- System: {sys2.name} ---")
-    props = sys2.validate()
-    for k, v in props.items():
-        print(f"  {k}: {v}")
-    
-    # Enumerate fixed points for small system
-    print(f"\n--- Fixed point enumeration (n=2, max_val=3) ---")
-    small_T = lambda f: np.maximum(f, np.array([1, 2]))
-    fps = tropical_fixed_point_lattice(small_T, n=2, max_val=3)
-    print(f"  Found {len(fps)} fixed points:")
-    for fp in fps:
-        print(f"    {fp}")
-    
-    print(f"\n--- Graph-based system ---")
-    INF = int(1e9)
-    adj = np.full((4, 4), INF)
-    adj[0][1] = 2; adj[0][2] = 5; adj[1][2] = 1; adj[1][3] = 4; adj[2][3] = 1
-    graph_sys = build_closure_from_graph(adj, source=0)
-    
-    d0 = np.array([0, INF, INF, INF])
-    d_closed = graph_sys.provable(d0)
-    print(f"  Initial distances: {d0}")
-    print(f"  After closure: {d_closed}")
-    print(f"  (Shortest paths from vertex 0)")
+    print(f"\n--- Algorithm 5: Tropical Bellman Iteration ---")
+    costs = np.array([
+        [0, 1, 3, INF],
+        [INF, 0, 1, 2],
+        [2, INF, 0, 1],
+        [1, 3, INF, 0],
+    ], dtype=float)
+    terminal = np.array([0.0, 0.0, 0.0, 0.0])
+    optimal, iters = tropical_bellman_iteration(costs, terminal)
+    print(f"  Optimal costs: {optimal}")
+    print(f"  Converged in {iters} iterations")

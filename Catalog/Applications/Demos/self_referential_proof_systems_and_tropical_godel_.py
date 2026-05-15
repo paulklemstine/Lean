@@ -1,785 +1,747 @@
+#!/usr/bin/env python3
 """
-Tropical Incompleteness — Applications
+Tropical Metamathematics: Applications
 
-Real-world applications demonstrating the theorems:
-1. Network routing: Bellman-Ford as tropical proof system
-2. Resource scheduling: Task cost estimation limits
-3. Machine learning: Self-referential cost bounds in model selection
-4. Program analysis: Abstract interpretation as tropical closure
+Demonstrates real-world applications of tropical incompleteness theorems
+in verification, optimization, and machine learning.
 """
 
 import numpy as np
-from typing import List, Tuple, Dict
-from algorithms import TropicalProofSystem, compute_incompleteness_gap, construct_godel_sentence
+from typing import Callable, Tuple, List, Dict
+
+INF = float('inf')
 
 
-# =============================================================================
-# Application 1: Network Routing
-# =============================================================================
-
-def network_routing_demo():
+def application_1_verification_barrier():
     """
-    Application: Network routing and the limits of distance estimation.
+    Application 1: Verification Barriers in Program Analysis
     
-    In a network with n nodes, each node estimates the shortest distance
-    to every other node. The Bellman-Ford relaxation step is a tropical
-    closure operator. The incompleteness theorem says that if the network
-    doesn't have full information (P ≠ id), some distance estimates
-    must be strictly inflated.
+    In abstract interpretation, a program analysis computes a "closure"
+    of program states — an overapproximation that is stable under the
+    program's transition function. The tropical incompleteness theorem
+    shows that if the analysis is expressive enough to encode self-reference,
+    it cannot be both sound and complete.
+    
+    Concrete scenario: A static analyzer for array bounds checking.
     """
-    print("Application 1: Network Routing")
-    print("-" * 40)
+    print("=" * 70)
+    print("APPLICATION 1: Verification Barriers in Program Analysis")
+    print("=" * 70)
     
-    n = 6
-    INF = 999
+    n = 6  # Number of program properties
+    properties = [
+        "array_in_bounds",
+        "no_null_deref",
+        "termination",
+        "memory_safety",
+        "type_safety",
+        "self_consistency"  # The "Gödel property"
+    ]
     
-    # Random network
-    np.random.seed(42)
-    adj = np.full((n, n), INF)
-    for i in range(n):
-        for j in range(n):
-            if i != j and np.random.random() < 0.4:
-                adj[i][j] = np.random.randint(1, 10)
+    # Abstract domain: tropical cost = "distance to being verified"
+    # 0 = verified, ∞ = unverifiable, intermediate = partially verified
     
-    print(f"Network with {n} nodes")
-    print("Adjacency matrix:")
-    for i in range(n):
-        row = [str(adj[i][j]) if adj[i][j] < INF else "∞" for j in range(n)]
-        print(f"  {row}")
+    # The analyzer's closure operator
+    analysis_ceiling = np.array([0.0, 0.0, 1.5, 0.0, 0.0, 0.0])
     
-    # One-hop relaxation as tropical operator
-    def one_hop_relaxation(d):
-        d_new = d.copy()
-        for v in range(n):
-            for u in range(n):
-                if adj[u][v] < INF and d[u] < INF:
-                    d_new[v] = min(d_new[v], d[u] + adj[u][v])
-        return d_new
+    def analyzer(state):
+        return np.minimum(state, analysis_ceiling)
     
-    # Full closure (iterate to convergence)
-    def full_closure(d):
-        prev = d.copy()
-        for _ in range(n):
-            curr = one_hop_relaxation(prev)
-            if np.array_equal(curr, prev):
-                break
-            prev = curr
-        return prev
+    # The "self_consistency" property (index 5) says:
+    # "This analysis correctly reports my own verification status"
+    # This is a diagonal/self-referential property
     
-    # Compute shortest paths from node 0
-    d0 = np.full(n, INF)
-    d0[0] = 0
+    initial_state = np.full(n, 10.0)
+    fp = analyzer(initial_state)
     
-    d_final = full_closure(d0)
-    print(f"\nShortest distances from node 0: {d_final}")
+    print(f"\nProgram properties: {properties}")
+    print(f"Analysis result (fixed point):")
+    for i, (prop, val) in enumerate(zip(properties, fp)):
+        status = "✓ VERIFIED" if val == 0 else f"? COST={val:.1f}"
+        print(f"  [{i}] {prop:20s}: {status}")
     
-    # Measure the "incompleteness gap" at each relaxation step
-    print("\nRelaxation convergence (gap = sum of remaining improvements):")
-    d = d0.copy()
-    for step in range(1, n + 1):
-        d_new = one_hop_relaxation(d)
-        gap = np.sum(np.where(d_new < d, d - d_new, 0))
-        print(f"  Step {step}: distances = {d_new}, remaining gap = {gap}")
-        if gap == 0:
-            print(f"  → Converged! Fixed point reached.")
-            break
-        d = d_new
+    # Diagonal analysis at the self-consistency property
+    self_idx = 5
+    provable = (fp[self_idx] == 0.0)
+    true_by_diag = not provable
     
-    print("\n→ Each incomplete step (gap > 0) represents 'true but not yet proven'")
-    print("  distances — the tropical incompleteness gap in action.")
+    print(f"\nDiagonal analysis at '{properties[self_idx]}':")
+    print(f"  Verified by analyzer: {provable}")
+    print(f"  Actually consistent:  {true_by_diag}")
+    
+    if provable:
+        print(f"\n  The analyzer claims to verify its own consistency,")
+        print(f"  but by the tropical incompleteness theorem, this means")
+        print(f"  the analysis is UNSOUND — it verifies something it shouldn't.")
+    else:
+        print(f"\n  The analyzer cannot verify its own consistency.")
+        print(f"  This is the tropical incompleteness barrier in action:")
+        print(f"  no sufficiently expressive analysis can verify itself.")
+    
+    print()
 
 
-# =============================================================================
-# Application 2: Task Scheduling
-# =============================================================================
-
-def scheduling_demo():
+def application_2_shortest_path_self_reference():
     """
-    Application: Task scheduling with self-referential dependencies.
+    Application 2: Self-Reference in Shortest Path Problems
     
-    A project has n tasks. Each task's completion time depends on the
-    completion times of its dependencies (plus processing time).
-    This forms a tropical proof system where:
-    - Cost profiles are completion time vectors
-    - The closure operator computes achievable schedules
-    - Incompleteness = inability to predict all completion times exactly
+    The shortest path problem is fundamentally tropical (min-plus).
+    We show that a routing network with self-referential cost specifications
+    exhibits an incompleteness phenomenon.
     """
-    print("\nApplication 2: Task Scheduling")
-    print("-" * 40)
+    print("=" * 70)
+    print("APPLICATION 2: Self-Reference in Network Routing")
+    print("=" * 70)
     
     n = 5
-    task_names = ["Design", "Frontend", "Backend", "Testing", "Deploy"]
-    processing_time = np.array([3, 5, 4, 2, 1])
+    nodes = ["A", "B", "C", "D", "E"]
     
-    # Dependencies: task j depends on task i if deps[i][j] is True
-    deps = np.zeros((n, n), dtype=bool)
-    deps[0][1] = True  # Frontend depends on Design
-    deps[0][2] = True  # Backend depends on Design
-    deps[1][3] = True  # Testing depends on Frontend
-    deps[2][3] = True  # Testing depends on Backend
-    deps[3][4] = True  # Deploy depends on Testing
+    # Cost matrix for a network
+    costs = np.array([
+        [0,   2,   INF, 1,   INF],
+        [2,   0,   3,   INF, 1  ],
+        [INF, 3,   0,   2,   INF],
+        [1,   INF, 2,   0,   4  ],
+        [INF, 1,   INF, 4,   0  ],
+    ])
     
-    print("Tasks and dependencies:")
+    print(f"\nNetwork with {n} nodes: {nodes}")
+    print(f"Cost matrix:")
     for i in range(n):
-        dep_list = [task_names[j] for j in range(n) if deps[j][i]]
-        dep_str = ", ".join(dep_list) if dep_list else "none"
-        print(f"  {task_names[i]} (time={processing_time[i]}): depends on {dep_str}")
+        row = [f"{c:4.0f}" if c != INF else " INF" for c in costs[i]]
+        print(f"  {nodes[i]}: [{', '.join(row)}]")
     
-    # Tropical closure: earliest completion time
-    def schedule_closure(start_times):
-        """Compute earliest completion times given start times."""
-        completion = start_times + processing_time
-        # Iterate: each task can't start before its dependencies complete
-        for _ in range(n):
-            prev = completion.copy()
-            for j in range(n):
-                for i in range(n):
-                    if deps[i][j]:
-                        # Task j can't start before task i completes
-                        completion[j] = max(completion[j], prev[i] + processing_time[j])
-            if np.array_equal(prev, completion):
-                break
-        return completion
+    # Bellman-Ford as tropical closure
+    def bellman_closure(v):
+        """One step of Bellman-Ford: tropical matrix-vector product."""
+        return np.array([min(costs[i, j] + v[j] for j in range(n)) for i in range(n)])
     
-    # Start all at time 0
-    start = np.zeros(n, dtype=int)
-    completion = schedule_closure(start)
+    # Iterate to fixed point
+    v = np.zeros(n)
+    print(f"\nBellman-Ford iteration (shortest paths from each node to itself):")
+    for step in range(10):
+        v_new = bellman_closure(v)
+        diff = np.max(np.abs(v_new - v))
+        print(f"  Step {step}: v = [{', '.join(f'{x:.1f}' for x in v_new)}], max_change = {diff:.4f}")
+        if diff < 1e-10:
+            break
+        v = v_new
     
-    print(f"\nEarliest completion times (starting all at t=0):")
-    for i in range(n):
-        print(f"  {task_names[i]}: completes at t={completion[i]}")
+    print(f"\nFixed point (all-pairs shortest self-loops): {v}")
     
-    # The "tropical Gödel sentence": a task whose completion time is
-    # self-referentially determined
-    print(f"\nTotal project duration: {max(completion)}")
-    print(f"Critical path determines the 'unprovable' lower bound —")
-    print(f"no local optimization can reduce it without changing the structure.")
+    # Self-referential specification: "Node D's routing cost is optimal
+    # iff this specification is not verifiable by the routing protocol"
+    diag_node = 3  # Node D
+    verified = (v[diag_node] == 0.0)
     
-    # Perturbation analysis (diagonal bump)
-    print(f"\nSensitivity to perturbation (diagonal bump):")
-    for i in range(n):
-        start_bumped = start.copy()
-        start_bumped[i] += 1  # Delay task i by 1 unit
-        completion_bumped = schedule_closure(start_bumped)
-        delta = completion_bumped - completion
-        affected = [task_names[j] for j in range(n) if delta[j] > 0]
-        print(f"  Delay {task_names[i]} by 1: affects {affected if affected else 'nothing'}, "
-              f"project delay = {max(completion_bumped) - max(completion)}")
+    print(f"\nSelf-referential specification at node {nodes[diag_node]}:")
+    print(f"  'My routing cost is optimal iff this spec is unverifiable'")
+    print(f"  Verified: {verified}")
+    print(f"  Spec holds: {not verified}")
+    print(f"  Status: {'UNSOUND' if verified else 'INCOMPLETE'}")
+    print()
 
 
-# =============================================================================
-# Application 3: Self-Referential Model Complexity
-# =============================================================================
-
-def model_complexity_demo():
+def application_3_ml_loss_landscape():
     """
-    Application: Limits of self-referential complexity estimation.
+    Application 3: Incompleteness in ML Loss Landscape Analysis
     
-    A model selection system tries to estimate the complexity (description
-    length) of different models. The estimation process itself has a
-    complexity. This creates a tropical proof system where:
-    - Coordinates = models
-    - Cost = description length
-    - Closure = "what can be proven about description lengths"
-    
-    The tropical incompleteness theorem says no complexity estimator
-    can perfectly assess its own complexity.
+    In machine learning, loss landscapes can be viewed through a tropical lens.
+    We show that self-referential loss specifications (e.g., "this model
+    correctly predicts its own loss") face tropical incompleteness barriers.
     """
-    print("\nApplication 3: Self-Referential Model Complexity")
-    print("-" * 40)
+    print("=" * 70)
+    print("APPLICATION 3: Tropical Incompleteness in ML Loss Landscapes")
+    print("=" * 70)
     
     n = 4
-    model_names = ["Linear", "Polynomial", "Neural Net", "Ensemble"]
+    objectives = [
+        "training_loss",
+        "validation_loss", 
+        "model_complexity",
+        "self_prediction_accuracy"  # Diagonal objective
+    ]
     
-    # True complexities (unknown to the system)
-    true_complexity = np.array([5, 12, 45, 30])
+    # Tropical loss operator: takes a loss profile and returns the
+    # "regularized" loss profile
+    regularization = np.array([0.1, 0.2, 1.0, 0.0])
     
-    # The system's complexity estimator adds overhead
-    # and can't estimate more complex models precisely
-    def complexity_estimator(estimates):
-        """
-        Closure operator: the system's best estimate of model complexities.
-        Simple models (low complexity) are estimated exactly.
-        Complex models get inflated estimates (overhead of analysis).
-        """
-        result = estimates.copy()
-        for i in range(n):
-            # Estimation overhead proportional to true complexity
-            overhead = max(0, true_complexity[i] // 10)
-            result[i] = max(estimates[i], true_complexity[i] + overhead)
-        return result
+    def loss_operator(losses):
+        """Tropical regularization: min(loss, baseline + regularization)."""
+        baseline = np.min(losses)
+        return np.minimum(losses, baseline + regularization)
     
-    system = TropicalProofSystem(n=n, provable=complexity_estimator,
-                                  name="Complexity Estimator")
+    # Find equilibrium
+    initial_losses = np.array([2.0, 2.5, 5.0, 3.0])
+    losses = initial_losses.copy()
     
-    # Properties
-    props = system.validate()
-    print("System properties:")
-    for k, v in props.items():
-        print(f"  {k}: {v}")
+    print(f"\nLoss objectives: {objectives}")
+    print(f"Initial losses: {initial_losses}")
     
-    # Gap analysis
-    estimated = complexity_estimator(np.zeros(n, dtype=int))
-    print(f"\nTrue complexities:      {true_complexity}")
-    print(f"Estimated complexities: {estimated}")
-    print(f"Incompleteness gaps:    {estimated - true_complexity}")
+    for step in range(20):
+        new_losses = loss_operator(losses)
+        if np.allclose(new_losses, losses):
+            print(f"Converged at step {step}")
+            break
+        losses = new_losses
     
-    for i in range(n):
-        gap = estimated[i] - true_complexity[i]
-        if gap > 0:
-            print(f"  {model_names[i]}: gap = {gap} "
-                  f"(system overestimates by {gap/true_complexity[i]*100:.0f}%)")
+    print(f"Equilibrium losses: {np.round(losses, 4)}")
     
-    print(f"\n→ The system cannot perfectly assess its own estimation overhead.")
-    print(f"  This is tropical incompleteness: the closure operator is not the identity.")
+    # Diagonal analysis: self_prediction_accuracy
+    diag_idx = 3
+    achievable = (losses[diag_idx] <= 0.0 + 1e-10)
+    
+    print(f"\nDiagonal objective '{objectives[diag_idx]}':")
+    print(f"  Can the model perfectly predict its own loss? {achievable}")
+    print(f"  By tropical incompleteness: No model can simultaneously")
+    print(f"  minimize all losses AND accurately predict its own performance")
+    print(f"  when self-prediction is part of the objective.")
+    print()
 
 
-# =============================================================================
-# Application 4: Abstract Interpretation
-# =============================================================================
-
-def abstract_interpretation_demo():
+def application_4_cryptographic_commitments():
     """
-    Application: Abstract interpretation of program costs.
+    Application 4: Tropical Commitments and Zero-Knowledge
     
-    In static analysis, abstract interpretation uses closure operators
-    to compute sound approximations of program behavior. When analyzing
-    program execution costs, this becomes a tropical proof system.
-    
-    The incompleteness theorem shows that no sound abstract interpreter
-    can be exact on all programs.
+    In cryptography, commitment schemes require binding (can't change committed
+    value) and hiding (commitment reveals nothing). The tropical analogue
+    shows that self-referential commitments face incompleteness.
     """
-    print("\nApplication 4: Abstract Interpretation of Program Costs")
-    print("-" * 40)
+    print("=" * 70)
+    print("APPLICATION 4: Self-Referential Commitment Schemes")
+    print("=" * 70)
     
-    n = 5
-    program_names = ["sort", "search", "hash", "compress", "encrypt"]
+    n = 4
     
-    # True execution costs (in abstract units)
-    true_costs = np.array([10, 3, 5, 15, 8])
+    # A tropical commitment scheme: each "slot" has a cost
+    # representing the difficulty of opening/changing the commitment
+    binding_strength = np.array([5.0, 3.0, 7.0, 0.0])
     
-    # Abstract interpreter: over-approximates costs
-    # Uses interval arithmetic with widening
-    def abstract_interpreter(cost_bounds):
-        """
-        Sound abstract interpretation of execution costs.
-        Over-approximates to maintain soundness.
-        """
-        result = cost_bounds.copy()
-        for i in range(n):
-            # Sound over-approximation: round up to nearest multiple of 4
-            approx = ((true_costs[i] + 3) // 4) * 4
-            result[i] = max(cost_bounds[i], approx)
-        return result
+    def commitment_closure(x):
+        """Closure: enforce minimum binding strength."""
+        return np.maximum(x, binding_strength)
     
-    system = TropicalProofSystem(n=n, provable=abstract_interpreter,
-                                  name="Abstract Interpreter")
+    print(f"\nCommitment scheme with {n} slots")
+    print(f"Binding strength: {binding_strength}")
     
-    # Analyze
-    abstract_costs = abstract_interpreter(np.zeros(n, dtype=int))
+    # Self-referential slot: "This slot's binding strength equals
+    # its own verifiability score"
+    x0 = np.zeros(n)
+    fp = commitment_closure(x0)
     
-    print(f"Programs: {program_names}")
-    print(f"True costs:     {true_costs}")
-    print(f"Abstract costs: {abstract_costs}")
-    print(f"Sound (costs ≤ abstract): {np.all(true_costs <= abstract_costs)}")
+    print(f"Fixed point: {fp}")
     
-    # Incompleteness gap
-    total_gap = np.sum(abstract_costs - true_costs)
-    print(f"\nTotal incompleteness gap: {total_gap}")
-    print(f"Average gap per program: {total_gap/n:.1f}")
+    diag_slot = 3  # The self-referential slot
+    print(f"\nSelf-referential slot {diag_slot}:")
+    print(f"  Binding strength: {binding_strength[diag_slot]}")
+    print(f"  Fixed point value: {fp[diag_slot]}")
     
-    for i in range(n):
-        gap = abstract_costs[i] - true_costs[i]
-        print(f"  {program_names[i]}: true={true_costs[i]}, "
-              f"abstract={abstract_costs[i]}, gap={gap} "
-              f"({'exact' if gap == 0 else f'overestimates by {gap}'})")
+    if binding_strength[diag_slot] == 0:
+        print(f"  This slot has zero binding strength — it can always be changed.")
+        print(f"  A self-referential commitment ('I commit to my own binding status')")
+        print(f"  is either trivially bound (and unsound) or unbound (and incomplete).")
     
-    print(f"\n→ By tropical incompleteness, a perfectly precise abstract interpreter")
-    print(f"  would need to be the identity (P = id), which contradicts soundness")
-    print(f"  for any nontrivial abstraction.")
+    print()
 
-
-# =============================================================================
-# Main
-# =============================================================================
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Tropical Incompleteness — Real-World Applications")
-    print("=" * 60)
+    print("\n" + "=" * 70)
+    print("  TROPICAL METAMATHEMATICS: Applications")
+    print("=" * 70 + "\n")
     
-    network_routing_demo()
-    scheduling_demo()
-    model_complexity_demo()
-    abstract_interpretation_demo()
+    application_1_verification_barrier()
+    application_2_shortest_path_self_reference()
+    application_3_ml_loss_landscape()
+    application_4_cryptographic_commitments()
     
-    print("\n" + "=" * 60)
-    print("All application demonstrations completed.")
-    print("=" * 60)
+    print("=" * 70)
+    print("All applications demonstrated.")
+    print("=" * 70)
 
 
+#!/usr/bin/env python3
 """
-Tropical Gödel Sentences and Idempotent Incompleteness — Demonstrations
+Tropical Metamathematics: Demonstrations and Numerical Examples
 
-This module provides concrete numerical demonstrations of the main theorems:
-1. Tropical fixed-point iteration and convergence
-2. Construction of tropical Gödel sentences
-3. Measurement of the incompleteness gap
-4. Bellman-Ford as a tropical fixed-point computation
+This module demonstrates the key theorems of tropical metamathematics with
+concrete numerical examples, showing how idempotent fixed-point dynamics
+give rise to self-referential sentences and incompleteness phenomena.
 """
 
 import numpy as np
-from typing import Callable, Tuple, List, Optional
+from typing import Callable, Optional, Tuple, List
 
-# Type alias for cost valuations
-CostProfile = np.ndarray  # shape (n,), dtype int or float
+# Type alias for tropical state vectors
+TropicalState = np.ndarray  # shape (n,), values in R ∪ {+∞}
 
-
-def pointwise_le(f: CostProfile, g: CostProfile) -> bool:
-    """Check if f <= g pointwise."""
-    return np.all(f <= g)
+INF = float('inf')
 
 
-def diag_bump(f: CostProfile, i: int) -> CostProfile:
-    """Diagonal bump: increase coordinate i by 1, leave others unchanged."""
-    g = f.copy()
-    g[i] += 1
-    return g
-
-
-# =============================================================================
-# Demo 1: Tropical Fixed-Point Iteration
-# =============================================================================
-
-def tropical_fixed_point_iterate(
-    T: Callable[[CostProfile], CostProfile],
-    B: CostProfile,
-    max_iter: int = 1000
-) -> Tuple[CostProfile, int]:
+def demo_1_idempotent_fixed_points():
     """
-    Find a fixed point of monotone operator T by iterating from bound B.
+    Demonstration 1: Idempotent operators always have fixed points.
     
-    Starting from x = B (the upper bound), repeatedly apply T.
-    Since T is monotone and bounded, the sequence B >= T(B) >= T(T(B)) >= ...
-    is decreasing and bounded below, hence converges to a fixed point.
-    
-    Returns (fixed_point, num_iterations).
+    Any idempotent function f (where f(f(x)) = f(x) for all x) has the
+    property that every element in its image is a fixed point. This is the
+    foundation of tropical self-reference.
     """
-    x = B.copy()
-    for k in range(max_iter):
-        x_new = T(x)
-        if np.array_equal(x_new, x):
-            return x, k
-        x = x_new
-    return x, max_iter
-
-
-def demo_fixed_point():
-    """Demonstrate tropical fixed-point iteration."""
-    print("=" * 60)
-    print("Demo 1: Tropical Fixed-Point Iteration")
-    print("=" * 60)
-    
-    n = 5
-    
-    # Example 1: Pointwise min with constants (closure operator)
-    c = np.array([3, 7, 2, 5, 4])
-    T1 = lambda f: np.minimum(f, c)
-    B1 = np.full(n, 10)
-    
-    fp1, iters1 = tropical_fixed_point_iterate(T1, B1)
-    print(f"\nOperator: T(f)(i) = min(f(i), c(i)) where c = {c}")
-    print(f"Starting from B = {B1}")
-    print(f"Fixed point: {fp1} (converged in {iters1} iterations)")
-    print(f"Verification: T(fp) = {T1(fp1)}, equals fp: {np.array_equal(T1(fp1), fp1)}")
-    
-    # Example 2: Bellman-style operator with additive costs
-    a = np.array([1, 2, 1, 3, 1])
-    T2 = lambda f: np.minimum(f + a, np.array([8, 10, 6, 12, 8]))
-    B2 = np.array([8, 10, 6, 12, 8])
-    
-    fp2, iters2 = tropical_fixed_point_iterate(T2, B2)
-    print(f"\nOperator: T(f)(i) = min(f(i) + a(i), B(i)) where a = {a}")
-    print(f"Starting from B = {B2}")
-    print(f"Fixed point: {fp2} (converged in {iters2} iterations)")
-    print(f"Verification: T(fp) = {T2(fp2)}, equals fp: {np.array_equal(T2(fp2), fp2)}")
-    
-    # Example 3: Diagonal operator (tropical quine)
-    # Φ_i(f) = min(f[(i+1) % n] + 1, 10)
-    def diag_op(f):
-        return np.array([min(f[(i+1) % n] + 1, 10) for i in range(n)])
-    
-    B3 = np.full(n, 10)
-    fp3, iters3 = tropical_fixed_point_iterate(diag_op, B3)
-    print(f"\nDiagonal operator: Φ_i(f) = min(f[(i+1) % n] + 1, 10)")
-    print(f"Fixed point (tropical quine): {fp3} (converged in {iters3} iterations)")
-    print(f"Verification: DiagOp(fp) = {diag_op(fp3)}, equals fp: {np.array_equal(diag_op(fp3), fp3)}")
-    print(f"Self-referential: each coordinate 'knows' about the next coordinate's cost")
-
-
-# =============================================================================
-# Demo 2: Tropical Gödel Sentence Construction
-# =============================================================================
-
-def demo_godel_sentence():
-    """Demonstrate construction of a tropical Gödel sentence."""
-    print("\n" + "=" * 60)
-    print("Demo 2: Tropical Gödel Sentence Construction")
-    print("=" * 60)
+    print("=" * 70)
+    print("DEMO 1: Idempotent Operators Have Fixed Points")
+    print("=" * 70)
     
     n = 4
     
-    # Define a closure operator P: P(f)(i) = max(f(i), threshold(i))
-    threshold = np.array([2, 3, 1, 4])
+    # Define a tropical closure operator: component-wise min with a threshold
+    # This models a proof system that "proves" any sentence whose cost ≤ threshold
+    threshold = np.array([3.0, 5.0, 2.0, 4.0])
     
-    def P(f):
-        return np.maximum(f, threshold)
+    def closure_op(x: TropicalState) -> TropicalState:
+        """Tropical closure: clamp each coordinate to its threshold."""
+        return np.minimum(x, threshold)
     
-    # P is: monotone ✓, idempotent ✓, extensive ✓
-    test_f = np.array([0, 5, 0, 2])
-    print(f"\nClosure operator P(f)(i) = max(f(i), threshold(i))")
-    print(f"Threshold = {threshold}")
-    print(f"P({test_f}) = {P(test_f)}")
-    print(f"P(P({test_f})) = {P(P(test_f))} (idempotent: {np.array_equal(P(P(test_f)), P(test_f))})")
+    # Verify idempotency
+    x0 = np.array([1.0, 7.0, 3.0, 2.0])
+    fx0 = closure_op(x0)
+    ffx0 = closure_op(fx0)
     
-    # Find a Gödel sentence: fixed point g with gap under diagonal bump
-    # The image of P is {f | f >= threshold}, so any f >= threshold is a fixed point
-    # Take g = threshold itself
-    g = threshold.copy()
-    print(f"\nFixed point g = P(0) = {g}")
-    print(f"P(g) = {P(g)}, equals g: {np.array_equal(P(g), g)} ✓")
+    print(f"\nInput x₀ = {x0}")
+    print(f"Φ(x₀)    = {fx0}")
+    print(f"Φ(Φ(x₀)) = {ffx0}")
+    print(f"Idempotent: Φ(Φ(x₀)) == Φ(x₀)? {np.allclose(ffx0, fx0)}")
     
-    # Check diagonal bump gap at each coordinate
-    print(f"\nDiagonal bump analysis:")
-    for i in range(n):
-        g_bumped = diag_bump(g, i)
-        P_bumped = P(g_bumped)
-        gap = P_bumped[i] - g[i]
-        is_godel = g[i] < P_bumped[i]
-        print(f"  i={i}: g[i]={g[i]}, DiagBump_i(g)={g_bumped}, "
-              f"P(DiagBump_i(g))[i]={P_bumped[i]}, gap={gap}, "
-              f"Gödel sentence: {'YES ✓' if is_godel else 'no'}")
+    # The image point is always a fixed point
+    fixed_point = fx0
+    print(f"\nFixed point: Φ(x₀) = {fixed_point}")
+    print(f"Verification: Φ(fixed_point) = {closure_op(fixed_point)}")
+    print(f"Is fixed point: Φ(fp) == fp? {np.allclose(closure_op(fixed_point), fixed_point)}")
     
-    # A more interesting example with coupling between coordinates
-    print(f"\n--- More interesting example with coordinate coupling ---")
+    # Try multiple starting points
+    print("\nFixed points from various starting points:")
+    for _ in range(5):
+        x = np.random.uniform(0, 10, n)
+        fp = closure_op(x)
+        is_fp = np.allclose(closure_op(fp), fp)
+        print(f"  start={np.round(x,2)} → fp={np.round(fp,2)}, verified={is_fp}")
     
-    def P2(f):
-        """Closure that couples coordinates: P(f)(i) = max(f(i), min over neighbors + 1)."""
-        result = f.copy()
-        for i in range(n):
-            neighbor_min = min(f[(i-1) % n], f[(i+1) % n])
-            result[i] = max(f[i], neighbor_min + 1)
-        # Make idempotent by iterating to fixed point
-        for _ in range(n * 10):
-            prev = result.copy()
-            for i in range(n):
-                neighbor_min = min(result[(i-1) % n], result[(i+1) % n])
-                result[i] = max(result[i], neighbor_min + 1)
-            if np.array_equal(prev, result):
-                break
-        return result
+    print()
+
+
+def demo_2_diagonal_incompleteness():
+    """
+    Demonstration 2: The Diagonal Incompleteness Argument.
+    
+    If a sentence's truth is equivalent to its own unprovability,
+    then no assignment can be both sound and complete at that sentence.
+    """
+    print("=" * 70)
+    print("DEMO 2: Diagonal Incompleteness (Tropical Gödel Sentence)")
+    print("=" * 70)
+    
+    n = 5
+    diagonal_index = 2  # The "Gödel sentence" coordinate
+    
+    # Define tropical provability: sentence i is "provable" if x[i] == 0
+    def is_provable(x: TropicalState, i: int) -> bool:
+        return x[i] == 0.0
+    
+    # The diagonal sentence: Truth at index 2 ↔ ¬ Provable at index 2
+    # i.e., the sentence says "I am not provable"
+    def truth_at_diagonal(x: TropicalState) -> bool:
+        return not is_provable(x, diagonal_index)
+    
+    print(f"\nDiagonal sentence at index {diagonal_index}:")
+    print(f"  Truth(x, {diagonal_index}) ↔ ¬ Provable(x, {diagonal_index})")
+    print(f"  i.e., 'Sentence {diagonal_index} is true iff it is not provable'")
+    
+    # Try to find a sound and complete assignment
+    print("\nAttempting sound + complete assignments:")
+    
+    # Case 1: Make the sentence provable (x[2] = 0)
+    x1 = np.array([1.0, 2.0, 0.0, 3.0, 1.0])
+    prov = is_provable(x1, diagonal_index)
+    truth = truth_at_diagonal(x1)
+    print(f"\n  Case 1: x = {x1}")
+    print(f"    Provable(x, {diagonal_index}) = {prov}")
+    print(f"    Truth(x, {diagonal_index})     = {truth}")
+    print(f"    Sound (Prov → Truth)?    {not prov or truth}")
+    print(f"    Complete (Truth → Prov)? {not truth or prov}")
+    if prov and not truth:
+        print(f"    ⚠ UNSOUND: provable but not true!")
+    
+    # Case 2: Make the sentence unprovable (x[2] ≠ 0)
+    x2 = np.array([1.0, 2.0, 5.0, 3.0, 1.0])
+    prov = is_provable(x2, diagonal_index)
+    truth = truth_at_diagonal(x2)
+    print(f"\n  Case 2: x = {x2}")
+    print(f"    Provable(x, {diagonal_index}) = {prov}")
+    print(f"    Truth(x, {diagonal_index})     = {truth}")
+    print(f"    Sound (Prov → Truth)?    {not prov or truth}")
+    print(f"    Complete (Truth → Prov)? {not truth or prov}")
+    if truth and not prov:
+        print(f"    ⚠ INCOMPLETE: true but not provable!")
+    
+    print(f"\n  Conclusion: No assignment can be both sound and complete")
+    print(f"  at the diagonal coordinate {diagonal_index}.")
+    print(f"  This is the tropical Gödel incompleteness theorem.")
+    print()
+
+
+def demo_3_closure_operator_self_reference():
+    """
+    Demonstration 3: Closure Operators and Self-Reference.
+    
+    Shows how a closure operator (monotone, extensive, idempotent) on
+    tropical states naturally produces self-referential fixed points.
+    """
+    print("=" * 70)
+    print("DEMO 3: Closure Operators Yield Self-Referential Fixed Points")
+    print("=" * 70)
+    
+    n = 4
+    
+    # Define a closure operator: take component-wise max with a "proof floor"
+    proof_floor = np.array([1.0, 0.0, 2.0, 0.5])
+    
+    def closure(x: TropicalState) -> TropicalState:
+        """Extensive closure: ensure each coordinate is at least proof_floor."""
+        return np.maximum(x, proof_floor)
+    
+    # Verify closure properties
+    x0 = np.array([0.0, 0.0, 0.0, 0.0])
+    
+    print(f"\nClosure operator: c(x) = max(x, {proof_floor})")
+    print(f"\nProperty verification:")
+    
+    # Extensivity: x ≤ c(x)
+    cx0 = closure(x0)
+    print(f"  Extensive: x₀ = {x0}, c(x₀) = {cx0}")
+    print(f"    x₀ ≤ c(x₀)? {np.all(x0 <= cx0)}")
+    
+    # Monotonicity
+    y = np.array([0.5, 1.0, 0.0, 0.0])
+    print(f"  Monotone: x₀ ≤ y = {y}")
+    print(f"    c(x₀) = {closure(x0)}, c(y) = {closure(y)}")
+    print(f"    c(x₀) ≤ c(y)? {np.all(closure(x0) <= closure(y))}")
+    
+    # Idempotency
+    print(f"  Idempotent: c(c(x₀)) = {closure(closure(x0))}")
+    print(f"    c(c(x₀)) == c(x₀)? {np.allclose(closure(closure(x0)), closure(x0))}")
+    
+    # Self-referential fixed point
+    fp = closure(x0)
+    print(f"\nSelf-referential fixed point: c(0) = {fp}")
+    print(f"  c(fp) = {closure(fp)}")
+    print(f"  fp == c(fp)? {np.allclose(fp, closure(fp))}")
+    
+    # The fixed point "knows" it is closed
+    print(f"\n  Interpretation: The fixed point {fp} represents a tropical")
+    print(f"  valuation that is stable under proof closure. Each coordinate")
+    print(f"  fp[i] = c(fp)[i] means 'sentence i's proof cost equals its")
+    print(f"  closure cost' — i.e., the sentence is self-consistently valued.")
+    print()
+
+
+def demo_4_tropical_proof_system():
+    """
+    Demonstration 4: Complete Tropical Proof System Simulation.
+    
+    Simulates a tropical proof system and demonstrates the incompleteness
+    phenomenon with a concrete Gödel sentence.
+    """
+    print("=" * 70)
+    print("DEMO 4: Tropical Proof System Simulation")
+    print("=" * 70)
+    
+    n = 6
+    godel_idx = 3  # The Gödel sentence
+    
+    # Define a monotone idempotent evaluator
+    # This models a proof system that:
+    # - Reduces high costs toward a "proof ceiling"
+    # - Is idempotent (re-evaluating doesn't change anything)
+    ceiling = np.array([2.0, 1.0, 3.0, 0.0, 2.0, 1.0])
+    
+    def evaluator(x: TropicalState) -> TropicalState:
+        return np.minimum(x, ceiling)
+    
+    print(f"\nProof system with {n} sentences")
+    print(f"Evaluator: Φ(x) = min(x, ceiling)")
+    print(f"Ceiling: {ceiling}")
+    print(f"Gödel sentence index: {godel_idx}")
     
     # Find fixed point
-    g2 = P2(np.zeros(n, dtype=int))
-    print(f"\nCoupled closure: P(f)(i) = max(f(i), min(f[i-1], f[i+1]) + 1)")
-    print(f"Fixed point g = {g2}")
-    print(f"P(g) = {P2(g2)}, equals g: {np.array_equal(P2(g2), g2)}")
+    x0 = np.array([5.0, 5.0, 5.0, 5.0, 5.0, 5.0])
+    fp = evaluator(x0)
     
-    for i in range(n):
-        g2_bumped = diag_bump(g2, i)
-        P2_bumped = P2(g2_bumped)
-        gap = P2_bumped[i] - g2[i]
-        is_godel = g2[i] < P2_bumped[i]
-        print(f"  i={i}: gap={gap}, Gödel sentence: {'YES ✓' if is_godel else 'no'}")
+    print(f"\nFixed point (from x₀={x0}):")
+    print(f"  Φ(x₀) = {fp}")
+    print(f"  Φ(Φ(x₀)) = {evaluator(fp)}")
+    print(f"  Is fixed point: {np.allclose(evaluator(fp), fp)}")
+    
+    # At the Gödel index: ceiling[3] = 0, so x[3] = 0 at any fixed point
+    # starting from x ≥ 0
+    print(f"\nAt the Gödel coordinate (index {godel_idx}):")
+    print(f"  fp[{godel_idx}] = {fp[godel_idx]}")
+    print(f"  TropProvable = (fp[{godel_idx}] == 0)? {fp[godel_idx] == 0.0}")
+    
+    # Define diagonal truth: Truth(x, 3) ↔ ¬ TropProvable(x, 3)
+    prov = (fp[godel_idx] == 0.0)
+    truth = not prov  # By diagonalization
+    
+    print(f"\n  Diagonal definition: Truth(x, {godel_idx}) ↔ ¬ TropProvable(x, {godel_idx})")
+    print(f"  At the fixed point:")
+    print(f"    Provable = {prov}")
+    print(f"    Truth    = {truth}")
+    
+    if prov:
+        print(f"\n  ⚠ The sentence IS provable (cost = 0)")
+        print(f"    But by diagonalization, it should be FALSE (not true)")
+        print(f"    → The system is UNSOUND at this coordinate!")
+    else:
+        print(f"\n  ✓ The sentence is NOT provable (cost > 0)")
+        print(f"    By diagonalization, it is TRUE")
+        print(f"    → The system is INCOMPLETE at this coordinate!")
+    
+    print(f"\n  This demonstrates tropical incompleteness: the proof system")
+    print(f"  cannot be both sound and complete at the diagonal coordinate.")
+    print()
 
 
-# =============================================================================
-# Demo 3: Incompleteness Gap Measurement
-# =============================================================================
-
-def demo_incompleteness_gap():
-    """Demonstrate the incompleteness gap for various tropical proof systems."""
-    print("\n" + "=" * 60)
-    print("Demo 3: Incompleteness Gap Measurement")
-    print("=" * 60)
+def demo_5_quine_construction():
+    """
+    Demonstration 5: Tropical Quine (Self-Reproducing Valuation).
     
-    n = 6
+    A tropical quine is a cost profile x such that x[i] = Φ_i(x) for all i,
+    where Φ_i is the i-th coordinate functional of an idempotent operator.
+    """
+    print("=" * 70)
+    print("DEMO 5: Tropical Quine Construction")
+    print("=" * 70)
     
-    systems = []
+    n = 4
     
-    # System 1: Max with constant (simple closure)
-    c1 = np.array([2, 3, 1, 4, 2, 5])
-    P1 = lambda f: np.maximum(f, c1)
-    systems.append(("max(f, c)", P1, c1))
+    # Define coordinate functionals
+    # Φ_i(x) = min over j≠i of (x[j] + weight[i][j])
+    weights = np.array([
+        [0.0, 1.0, 2.0, 3.0],
+        [1.0, 0.0, 1.0, 2.0],
+        [2.0, 1.0, 0.0, 1.0],
+        [3.0, 2.0, 1.0, 0.0],
+    ])
     
-    # System 2: Averaging closure (round up)
-    def P2(f):
-        result = f.copy()
-        for i in range(n):
-            avg = (f[(i-1) % n] + f[i] + f[(i+1) % n]) / 3
-            result[i] = max(f[i], int(np.ceil(avg)))
-        # Iterate to idempotency
-        for _ in range(100):
-            prev = result.copy()
-            for i in range(n):
-                avg = (result[(i-1) % n] + result[i] + result[(i+1) % n]) / 3
-                result[i] = max(result[i], int(np.ceil(avg)))
-            if np.array_equal(prev, result):
-                break
-        return result
-    systems.append(("averaging closure", P2, None))
+    def phi_i(x: TropicalState, i: int) -> float:
+        """i-th coordinate functional: tropical (min-plus) convolution."""
+        return min(x[j] + weights[i][j] for j in range(n))
     
-    # System 3: Double-and-cap
-    cap = 20
-    def P3(f):
-        return np.minimum(2 * f + 1, cap)
-    # Note: this is NOT idempotent, but demonstrates the gap concept
-    systems.append(("min(2f+1, 20)", P3, None))
+    def Phi(x: TropicalState) -> TropicalState:
+        """Full diagonal operator: Φ(x)[i] = Φ_i(x)."""
+        return np.array([phi_i(x, i) for i in range(n)])
     
-    for name, P, _ in systems:
-        print(f"\nSystem: {name}")
-        
-        # Sample random valuations and measure gap
-        gaps = []
-        for trial in range(100):
-            f = np.random.randint(0, 10, size=n)
-            Pf = P(f)
-            gap = np.sum(Pf - f)
-            gaps.append(gap)
-        
-        # Check completeness
-        f_zero = np.zeros(n, dtype=int)
-        Pf_zero = P(f_zero)
-        is_fixed = np.array_equal(Pf_zero, f_zero)
-        
-        print(f"  P(0) = {Pf_zero}, 0 is fixed point: {is_fixed}")
-        print(f"  Average total gap over 100 random valuations: {np.mean(gaps):.1f}")
-        print(f"  Max total gap: {max(gaps)}")
-        print(f"  Fraction of valuations that are NOT fixed points: "
-              f"{sum(1 for g in gaps if g > 0)/len(gaps):.0%}")
-        
-        if not is_fixed:
-            # Find the specific incompleteness witness
-            witness_coord = np.argmax(Pf_zero - f_zero)
-            print(f"  Incompleteness witness: coordinate {witness_coord}, "
-                  f"gap = {Pf_zero[witness_coord] - f_zero[witness_coord]}")
-
-
-# =============================================================================
-# Demo 4: Bellman-Ford as Tropical Fixed Point
-# =============================================================================
-
-def demo_bellman_ford():
-    """Demonstrate Bellman-Ford shortest paths as tropical fixed-point computation."""
-    print("\n" + "=" * 60)
-    print("Demo 4: Bellman-Ford as Tropical Fixed Point")
-    print("=" * 60)
+    print(f"\nDiagonal operator Φ with weight matrix:")
+    print(f"{weights}")
     
-    # Create a weighted directed graph
-    n = 5  # vertices
-    INF = 999
-    
-    # Adjacency matrix (weight[i][j] = cost of edge i -> j, INF if no edge)
-    W = np.full((n, n), INF)
-    edges = [(0, 1, 4), (0, 2, 2), (1, 2, 3), (1, 3, 2), (1, 4, 3),
-             (2, 1, 1), (2, 3, 4), (2, 4, 5), (3, 4, 1)]
-    for u, v, w in edges:
-        W[u][v] = w
-    
-    source = 0
-    
-    print(f"\nGraph with {n} vertices and {len(edges)} edges")
-    print(f"Source vertex: {source}")
-    print(f"Edges: {edges}")
-    
-    # Bellman-Ford as tropical operator
-    # T(d)(v) = min(d(v), min over u of (d(u) + W[u][v]))
-    def bellman_ford_step(d: CostProfile) -> CostProfile:
-        """One step of Bellman-Ford relaxation = tropical operator."""
-        d_new = d.copy()
-        for v in range(n):
-            for u in range(n):
-                if W[u][v] < INF:
-                    d_new[v] = min(d_new[v], d[u] + W[u][v])
-        return d_new
-    
-    # Initial distance vector
-    d0 = np.full(n, INF)
-    d0[source] = 0
-    
-    print(f"\nIteration history:")
-    print(f"  d_0 = {d0}")
-    
-    d = d0.copy()
-    for k in range(1, n + 1):
-        d_new = bellman_ford_step(d)
-        print(f"  d_{k} = {d_new}", end="")
-        if np.array_equal(d_new, d):
-            print(f"  ← FIXED POINT (converged at iteration {k})")
+    # Iterate to find a fixed point (quine)
+    x = np.zeros(n)
+    print(f"\nIteration to find tropical quine:")
+    for step in range(10):
+        x_new = Phi(x)
+        diff = np.max(np.abs(x_new - x))
+        print(f"  Step {step}: x = {np.round(x, 4)}, Φ(x) = {np.round(x_new, 4)}, max_diff = {diff:.6f}")
+        if diff < 1e-10:
+            print(f"  Converged!")
             break
+        x = x_new
+    
+    quine = x
+    print(f"\nTropical quine: x = {np.round(quine, 4)}")
+    print(f"  Verification: Φ(x) = {np.round(Phi(quine), 4)}")
+    print(f"  Is quine: Φ(x) ≈ x? {np.allclose(Phi(quine), quine)}")
+    
+    print(f"\n  Interpretation: This is a self-reproducing cost profile.")
+    print(f"  Each coordinate x[i] = Φ_i(x) means 'the cost of sentence i")
+    print(f"  is exactly what the system computes from all other sentences.'")
+    print(f"  This is the tropical analogue of a Quine program.")
+    print()
+
+
+def demo_6_incompleteness_landscape():
+    """
+    Demonstration 6: Landscape of Incompleteness.
+    
+    Explores how the incompleteness phenomenon varies as we change
+    the proof system parameters.
+    """
+    print("=" * 70)
+    print("DEMO 6: Incompleteness Landscape")
+    print("=" * 70)
+    
+    n = 8
+    diag_idx = 4
+    
+    print(f"\nSystem with {n} sentences, diagonal index = {diag_idx}")
+    print(f"Testing various proof system ceilings:\n")
+    
+    print(f"{'Ceiling[diag]':>14} | {'FP[diag]':>10} | {'Provable':>10} | {'Truth':>8} | {'Status':>12}")
+    print("-" * 65)
+    
+    for ceil_val in [0.0, 0.5, 1.0, 2.0, 5.0, INF]:
+        ceiling = np.full(n, 3.0)
+        ceiling[diag_idx] = ceil_val
+        
+        fp = np.minimum(np.full(n, 10.0), ceiling)
+        
+        prov = (fp[diag_idx] == 0.0)
+        truth = not prov  # Diagonal definition
+        
+        if prov and not truth:
+            status = "UNSOUND"
+        elif truth and not prov:
+            status = "INCOMPLETE"
+        elif prov and truth:
+            status = "IMPOSSIBLE"
         else:
-            changed = [i for i in range(n) if d_new[i] != d[i]]
-            print(f"  (changed at vertices {changed})")
-        d = d_new
+            status = "INCOMPLETE"
+        
+        ceil_str = f"{ceil_val}" if ceil_val != INF else "∞"
+        print(f"{ceil_str:>14} | {fp[diag_idx]:>10.1f} | {str(prov):>10} | {str(truth):>8} | {status:>12}")
     
-    print(f"\nShortest distances from vertex {source}:")
-    for v in range(n):
-        print(f"  {source} → {v}: cost = {d[v]}")
-    
-    # Verify fixed point
-    d_check = bellman_ford_step(d)
-    print(f"\nFixed-point verification: T(d) = {d_check}")
-    print(f"T(d) == d: {np.array_equal(d_check, d)} ✓")
-    
-    # This is Theorem A in action:
-    # The Bellman-Ford operator is monotone (decreasing in the ≤ order)
-    # The fixed point is the shortest-distance vector
-    # The diagonal construction corresponds to perturbing edge weights
-    print(f"\n→ Bellman-Ford convergence is an instance of Theorem A:")
-    print(f"  The relaxation operator is monotone on distance vectors")
-    print(f"  The fixed point is the shortest-distance valuation")
-    print(f"  This is a 'tropical quine': a self-consistent cost assignment")
+    print(f"\nConclusion: Regardless of the ceiling value, the system is either")
+    print(f"unsound or incomplete at the diagonal coordinate. This is the")
+    print(f"tropical incompleteness theorem in action.")
+    print()
 
-
-# =============================================================================
-# Main
-# =============================================================================
 
 if __name__ == "__main__":
-    np.random.seed(42)
+    print("\n" + "=" * 70)
+    print("  TROPICAL METAMATHEMATICS: Demonstrations")
+    print("  Self-Reference, Fixed Points, and Incompleteness")
+    print("=" * 70 + "\n")
     
-    demo_fixed_point()
-    demo_godel_sentence()
-    demo_incompleteness_gap()
-    demo_bellman_ford()
+    demo_1_idempotent_fixed_points()
+    demo_2_diagonal_incompleteness()
+    demo_3_closure_operator_self_reference()
+    demo_4_tropical_proof_system()
+    demo_5_quine_construction()
+    demo_6_incompleteness_landscape()
     
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
+    print("=" * 70)
+    print("All demonstrations complete.")
+    print("=" * 70)
 
 
+#!/usr/bin/env python3
 """Generate PACKAGE.json with all deliverables."""
 
 import json
 import sys
-sys.path.insert(0, '.')
 
-from visualizations import (
-    create_fixed_point_convergence_plot,
-    create_godel_sentence_diagram,
-    create_incompleteness_landscape,
-    create_bellman_ford_visualization,
-    create_closure_operator_diagram,
-)
+# Import visualization generator
+from visualizations import generate_all_visualizations
 
-# Read all text files
 def read_file(path):
     with open(path, 'r') as f:
         return f.read()
 
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-lean_proofs = read_file('Catalog/Logic/TropicalGodelSentence.lean')
-demo_code = read_file('demo.py')
-algorithms_code = read_file('algorithms.py')
-applications_code = read_file('applications.py')
+def main():
+    # Generate visualizations
+    viz_data = generate_all_visualizations()
+    
+    # Read all content files
+    article = read_file('ARTICLE.md')
+    research_paper = read_file('RESEARCH_PAPER.md')
+    future_directions = read_file('FUTURE_DIRECTIONS.md')
+    lean_code = read_file('Logic/TropicalMetamathematics.lean')
+    demo_code = read_file('demo.py')
+    algorithms_code = read_file('algorithms.py')
+    applications_code = read_file('applications.py')
+    
+    package = {
+        "title": "Tropical Metamathematics: Incompleteness Theorems from Idempotent Fixed-Point Dynamics",
+        "domain": "Mathematical Logic / Tropical Algebra",
+        "article": article,
+        "research_paper": research_paper,
+        "future_directions": future_directions,
+        "demos": [
+            {
+                "name": "Tropical Metamathematics Demonstrations",
+                "code": demo_code
+            },
+            {
+                "name": "Applications of Tropical Incompleteness",
+                "code": applications_code
+            }
+        ],
+        "algorithms": [
+            {
+                "name": "Idempotent Fixed-Point Computation",
+                "pseudocode": "Input: Idempotent operator Φ, dimension n\nOutput: Fixed point x with Φ(x) = x\n\n1. Set x₀ = (0, 0, ..., 0)\n2. Return Φ(x₀)\n\nComplexity: O(T_Φ) — single evaluation",
+                "code": algorithms_code
+            },
+            {
+                "name": "Diagonal Incompleteness Check",
+                "pseudocode": "Input: Tropical proof system S, diagonal index i, threshold τ\nOutput: 'UNSOUND' or 'INCOMPLETE'\n\n1. Compute fixed point x = S.eval(0)\n2. If x[i] ≤ τ, return 'UNSOUND'\n3. Else return 'INCOMPLETE'\n\nComplexity: O(T_eval)",
+                "code": "def check_diagonal_incompleteness(evaluator, n, diag_index, threshold=0.0):\n    import numpy as np\n    x0 = np.zeros(n)\n    fp = evaluator(x0)\n    if fp[diag_index] <= threshold:\n        return 'UNSOUND'\n    else:\n        return 'INCOMPLETE'"
+            }
+        ],
+        "visualizations": [
+            {
+                "name": "Fixed-Point Convergence",
+                "data": viz_data['fixed_point_convergence']
+            },
+            {
+                "name": "Incompleteness Diagram",
+                "data": viz_data['incompleteness_diagram']
+            },
+            {
+                "name": "Closure Operator Landscape",
+                "data": viz_data['closure_landscape']
+            },
+            {
+                "name": "Tropical Quine Iteration",
+                "data": viz_data['tropical_quine']
+            },
+            {
+                "name": "Incompleteness Landscape",
+                "data": viz_data['incompleteness_landscape']
+            }
+        ],
+        "lean_proofs": lean_code
+    }
+    
+    with open('PACKAGE.json', 'w') as f:
+        json.dump(package, f, indent=2, ensure_ascii=False)
+    
+    print(f"PACKAGE.json generated ({len(json.dumps(package))} bytes)")
 
-# Generate visualizations
-print("Generating visualizations for PACKAGE.json...")
-viz1 = create_fixed_point_convergence_plot()
-viz2 = create_godel_sentence_diagram()
-viz3 = create_incompleteness_landscape()
-viz4 = create_bellman_ford_visualization()
-viz5 = create_closure_operator_diagram()
-
-package = {
-    "title": "Tropical Gödel Sentences and Idempotent Incompleteness",
-    "domain": "Logic / Tropical Algebra / Proof Theory",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Tropical Fixed-Point Iteration & Gödel Sentence Construction",
-            "code": demo_code
-        },
-        {
-            "name": "Real-World Applications of Tropical Incompleteness",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Knaster-Tarski Descent (Tropical Fixed Point)",
-            "pseudocode": (
-                "Input: Monotone operator T, upper bound B\n"
-                "Output: Fixed point f* with T(f*) = f*\n\n"
-                "1. x ← B\n"
-                "2. repeat:\n"
-                "3.   x_new ← T(x)\n"
-                "4.   if x_new = x then return x\n"
-                "5.   x ← x_new\n\n"
-                "Complexity: O(n · max(B) · cost(T))\n"
-                "Correctness: By Knaster-Tarski, the sequence B ≥ T(B) ≥ T²(B) ≥ ...\n"
-                "is decreasing in ℕⁿ and must stabilize at a fixed point."
-            ),
-            "code": algorithms_code
-        },
-        {
-            "name": "Tropical Gödel Sentence Construction",
-            "pseudocode": (
-                "Input: Tropical proof system (P, mono, idem, ext)\n"
-                "Output: Gödel sentence (g, i) with P(g)=g and g[i] < P(DiagBump_i(g))[i]\n\n"
-                "1. Search for f₀, i₀ with P(f₀)[i₀] < P(DiagBump_{i₀}(f₀))[i₀]\n"
-                "2. Set g ← P(f₀)  [guaranteed fixed point by idempotency]\n"
-                "3. Verify: P(g) = g  [by P(P(f)) = P(f)]\n"
-                "4. Transfer gap: g[i₀] = P(f₀)[i₀] < P(DiagBump_{i₀}(f₀))[i₀]\n"
-                "              ≤ P(DiagBump_{i₀}(g))[i₀]  [by extensiveness + monotonicity]\n"
-                "5. Return (g, i₀)\n\n"
-                "Correctness: By Theorem B (exists_tropical_godel_sentence)."
-            ),
-            "code": algorithms_code
-        }
-    ],
-    "visualizations": [
-        {"name": "Fixed-Point Convergence (Theorem A)", "data": viz1},
-        {"name": "Tropical Gödel Sentence Diagram (Theorem B)", "data": viz2},
-        {"name": "Incompleteness Landscape (Theorem C)", "data": viz3},
-        {"name": "Bellman-Ford as Tropical Fixed Point", "data": viz4},
-        {"name": "Closure Operator Structure Diagram", "data": viz5}
-    ],
-    "lean_proofs": lean_proofs
-}
-
-with open('PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print("PACKAGE.json generated successfully.")
-print(f"  Size: {len(json.dumps(package)):,} characters")
+if __name__ == "__main__":
+    main()
 
 
+#!/usr/bin/env python3
 """
-Tropical Incompleteness — Visualizations
+Tropical Metamathematics: Visualizations
 
-Generate publication-quality figures for the research paper and article.
-Saves figures as PNG files and also provides base64-encoded versions.
+Generates publication-quality visualizations of the key mathematical
+structures in tropical metamathematics.
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from io import BytesIO
+import matplotlib.patches as patches
+from matplotlib.colors import LinearSegmentedColormap
 import base64
-from typing import List, Tuple
+import io
+import json
+
+INF = float('inf')
 
 
 def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 PNG data URI."""
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', 
+    """Convert matplotlib figure to base64 data URI."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
                 facecolor='white', edgecolor='none')
     buf.seek(0)
     data = base64.b64encode(buf.read()).decode('utf-8')
@@ -787,385 +749,411 @@ def fig_to_base64(fig) -> str:
     return f"data:image/png;base64,{data}"
 
 
-def create_fixed_point_convergence_plot() -> str:
+def viz_1_fixed_point_convergence():
     """
-    Figure 1: Fixed-point iteration convergence.
-    Shows how the Knaster-Tarski descent converges to a fixed point.
+    Visualization 1: Fixed-Point Convergence of Tropical Operators
+    
+    Shows how different starting points converge to fixed points
+    under iteration of a tropical (min-plus) operator.
     """
-    n = 4
-    threshold = np.array([3, 5, 2, 7])
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
     
-    # Closure operator: P(f)(i) = max(f(i), threshold(i))
-    P = lambda f: np.maximum(f, threshold)
+    n = 3
+    ceiling = np.array([2.0, 1.5, 3.0])
     
-    # Start from upper bound and descend
-    B = np.array([10, 10, 10, 10])
-    trajectory = [B.copy()]
-    x = B.copy()
-    for _ in range(15):
-        x = P(x)
-        trajectory.append(x.copy())
-        if np.array_equal(x, trajectory[-2]):
-            break
+    def operator(x):
+        return np.minimum(x, ceiling)
     
-    # Also show ascent from zero
-    trajectory_up = [np.zeros(n, dtype=int)]
-    x = np.zeros(n, dtype=int)
-    for _ in range(15):
-        x = P(x)
-        trajectory_up.append(x.copy())
-        if np.array_equal(x, trajectory_up[-2]):
-            break
+    # Left: Trajectories in 2D projection
+    ax = axes[0]
+    starts = [
+        np.array([5.0, 4.0, 6.0]),
+        np.array([0.5, 3.0, 1.0]),
+        np.array([3.0, 0.5, 4.0]),
+        np.array([1.0, 1.0, 1.0]),
+        np.array([4.0, 2.0, 2.0]),
+    ]
     
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    colors = plt.cm.viridis(np.linspace(0.2, 0.8, len(starts)))
     
-    # Plot descent
-    traj = np.array(trajectory)
-    for i in range(n):
-        ax1.plot(range(len(traj)), traj[:, i], 'o-', label=f'Coord {i}', linewidth=2)
-    ax1.axhline(y=0, color='gray', linestyle=':', alpha=0.3)
-    for i, t in enumerate(threshold):
-        ax1.axhline(y=t, color=f'C{i}', linestyle='--', alpha=0.4)
-    ax1.set_xlabel('Iteration', fontsize=12)
-    ax1.set_ylabel('Value', fontsize=12)
-    ax1.set_title('Descent from Upper Bound', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
+    for start, color in zip(starts, colors):
+        trajectory = [start]
+        x = start.copy()
+        for _ in range(5):
+            x = operator(x)
+            trajectory.append(x.copy())
+        
+        traj = np.array(trajectory)
+        ax.plot(traj[:, 0], traj[:, 1], 'o-', color=color, markersize=6,
+                linewidth=2, alpha=0.7)
+        ax.plot(traj[0, 0], traj[0, 1], 's', color=color, markersize=10,
+                label=f'start={np.round(start[:2], 1)}')
     
-    # Plot ascent
-    traj_up = np.array(trajectory_up)
-    for i in range(n):
-        ax2.plot(range(len(traj_up)), traj_up[:, i], 's-', label=f'Coord {i}', linewidth=2)
-    for i, t in enumerate(threshold):
-        ax2.axhline(y=t, color=f'C{i}', linestyle='--', alpha=0.4)
-    ax2.set_xlabel('Iteration', fontsize=12)
-    ax2.set_ylabel('Value', fontsize=12)
-    ax2.set_title('Ascent from Zero', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
+    # Mark the fixed point
+    fp = operator(np.array([10.0, 10.0, 10.0]))
+    ax.plot(fp[0], fp[1], '*', color='red', markersize=20, zorder=10,
+            label=f'Fixed point')
     
-    fig.suptitle('Tropical Fixed-Point Iteration (Theorem A)', fontsize=16, fontweight='bold')
-    plt.tight_layout()
+    ax.set_xlabel('Coordinate 1 (tropical cost)', fontsize=12)
+    ax.set_ylabel('Coordinate 2 (tropical cost)', fontsize=12)
+    ax.set_title('Convergence to Tropical Fixed Point', fontsize=14)
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
     
-    fig.savefig('fixed_point_convergence.png', dpi=150, bbox_inches='tight')
+    # Right: Idempotency demonstration
+    ax = axes[1]
+    x_vals = np.linspace(0, 6, 100)
+    
+    for i, (c, label, color) in enumerate([(2.0, 'Coord 1 (ceil=2.0)', '#2196F3'),
+                                            (1.5, 'Coord 2 (ceil=1.5)', '#FF9800'),
+                                            (3.0, 'Coord 3 (ceil=3.0)', '#4CAF50')]):
+        y = np.minimum(x_vals, c)
+        ax.plot(x_vals, y, '-', color=color, linewidth=2.5, label=label)
+        ax.axhline(y=c, color=color, linestyle='--', alpha=0.3)
+    
+    ax.plot(x_vals, x_vals, 'k--', alpha=0.3, label='y = x (identity)')
+    ax.set_xlabel('Input value x', fontsize=12)
+    ax.set_ylabel('Φ(x) = min(x, ceiling)', fontsize=12)
+    ax.set_title('Idempotent Operator: Φ(Φ(x)) = Φ(x)', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    fig.suptitle('Tropical Fixed-Point Dynamics', fontsize=16, fontweight='bold', y=1.02)
+    fig.tight_layout()
+    
+    fig.savefig('/workspace/request-project/viz_1_fixed_point.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
 
-def create_godel_sentence_diagram() -> str:
+def viz_2_incompleteness_diagram():
     """
-    Figure 2: Tropical Gödel sentence construction.
-    Shows the diagonal bump and resulting provability gap.
+    Visualization 2: The Incompleteness Contradiction
+    
+    Illustrates the logical structure of the tropical Gödel argument:
+    diagonal sentence → soundness vs completeness contradiction.
     """
-    n = 5
-    threshold = np.array([2, 4, 1, 3, 5])
-    P = lambda f: np.maximum(f, threshold)
-    
-    # Fixed point g = threshold
-    g = threshold.copy()
-    
-    fig, axes = plt.subplots(2, 3, figsize=(15, 9))
-    
-    # For each coordinate, show the effect of diagonal bump
-    for idx, i in enumerate(range(min(n, 6))):
-        ax = axes[idx // 3][idx % 3]
-        
-        g_bumped = g.copy()
-        g_bumped[i] += 1
-        Pg_bumped = P(g_bumped)
-        
-        x = np.arange(n)
-        width = 0.25
-        
-        bars1 = ax.bar(x - width, g, width, label='g (fixed point)', color='steelblue', alpha=0.8)
-        bars2 = ax.bar(x, g_bumped, width, label=f'DiagBump_{i}(g)', color='coral', alpha=0.8)
-        bars3 = ax.bar(x + width, Pg_bumped, width, label=f'P(DiagBump_{i}(g))', color='forestgreen', alpha=0.8)
-        
-        # Highlight the gap at coordinate i
-        gap = Pg_bumped[i] - g[i]
-        if gap > 0:
-            ax.annotate(f'Gap = {gap}', xy=(i + width, Pg_bumped[i]),
-                       xytext=(i + width + 0.3, Pg_bumped[i] + 0.5),
-                       arrowprops=dict(arrowstyle='->', color='red', lw=2),
-                       fontsize=11, color='red', fontweight='bold')
-        
-        ax.set_xticks(x)
-        ax.set_xticklabels([f'i={j}' for j in range(n)])
-        ax.set_ylabel('Cost')
-        ax.set_title(f'Bump at coordinate {i}', fontsize=12)
-        ax.legend(fontsize=8)
-        ax.grid(True, alpha=0.3, axis='y')
-    
-    # Use last subplot for summary
-    ax = axes[1][2]
-    gaps = []
-    for i in range(n):
-        g_bumped = g.copy()
-        g_bumped[i] += 1
-        Pg_bumped = P(g_bumped)
-        gaps.append(Pg_bumped[i] - g[i])
-    
-    colors = ['red' if gap > 0 else 'gray' for gap in gaps]
-    ax.bar(range(n), gaps, color=colors, alpha=0.8)
-    ax.set_xticks(range(n))
-    ax.set_xticklabels([f'i={j}' for j in range(n)])
-    ax.set_ylabel('Gap Size')
-    ax.set_title('Incompleteness Gap by Coordinate', fontsize=12)
-    ax.grid(True, alpha=0.3, axis='y')
-    
-    fig.suptitle('Tropical Gödel Sentence: Diagonal Bump & Provability Gap (Theorem B)',
-                 fontsize=16, fontweight='bold')
-    plt.tight_layout()
-    
-    fig.savefig('godel_sentence_diagram.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def create_incompleteness_landscape() -> str:
-    """
-    Figure 3: Incompleteness landscape.
-    Shows the fixed-point set vs. the full space for a 2D tropical system.
-    """
-    max_val = 8
-    threshold = np.array([3, 4])
-    P = lambda f: np.maximum(f, threshold)
-    
-    fig, ax = plt.subplots(figsize=(8, 8))
-    
-    # Plot all lattice points
-    fixed_x, fixed_y = [], []
-    nonfixed_x, nonfixed_y = [], []
-    
-    for x in range(max_val + 1):
-        for y in range(max_val + 1):
-            f = np.array([x, y])
-            Pf = P(f)
-            if np.array_equal(Pf, f):
-                fixed_x.append(x)
-                fixed_y.append(y)
-            else:
-                nonfixed_x.append(x)
-                nonfixed_y.append(y)
-    
-    # Plot non-fixed points (incomplete region)
-    ax.scatter(nonfixed_x, nonfixed_y, c='lightcoral', s=80, alpha=0.6,
-              label='Non-fixed (incomplete)', zorder=2, edgecolors='red', linewidth=0.5)
-    
-    # Plot fixed points (complete region)
-    ax.scatter(fixed_x, fixed_y, c='steelblue', s=100, alpha=0.8,
-              label='Fixed points (provable)', zorder=3, edgecolors='darkblue', linewidth=0.5)
-    
-    # Draw the threshold lines
-    ax.axvline(x=threshold[0], color='gray', linestyle='--', alpha=0.5, label=f'Threshold x={threshold[0]}')
-    ax.axhline(y=threshold[1], color='gray', linestyle=':', alpha=0.5, label=f'Threshold y={threshold[1]}')
-    
-    # Shade the fixed-point region
-    rect = mpatches.Rectangle((threshold[0], threshold[1]), 
-                                max_val - threshold[0], max_val - threshold[1],
-                                linewidth=2, edgecolor='steelblue', 
-                                facecolor='steelblue', alpha=0.1)
-    ax.add_patch(rect)
-    
-    # Draw arrows showing P's action on a few points
-    for x, y in [(1, 2), (0, 5), (4, 1), (2, 0)]:
-        f = np.array([x, y])
-        Pf = P(f)
-        if not np.array_equal(f, Pf):
-            ax.annotate('', xy=(Pf[0], Pf[1]), xytext=(x, y),
-                       arrowprops=dict(arrowstyle='->', color='darkred', lw=1.5, alpha=0.7))
-    
-    ax.set_xlabel('Coordinate 0 (cost)', fontsize=12)
-    ax.set_ylabel('Coordinate 1 (cost)', fontsize=12)
-    ax.set_title('Tropical Incompleteness Landscape (n=2)\n'
-                 'P(f) = max(f, threshold)', fontsize=14, fontweight='bold')
-    ax.legend(loc='upper left', fontsize=10)
-    ax.set_xlim(-0.5, max_val + 0.5)
-    ax.set_ylim(-0.5, max_val + 0.5)
+    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+    ax.set_xlim(-0.5, 10.5)
+    ax.set_ylim(-0.5, 8.5)
     ax.set_aspect('equal')
-    ax.grid(True, alpha=0.2)
-    
-    fig.savefig('incompleteness_landscape.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def create_bellman_ford_visualization() -> str:
-    """
-    Figure 4: Bellman-Ford shortest paths as tropical fixed point.
-    """
-    n = 5
-    INF = 999
-    
-    adj = np.full((n, n), INF)
-    edges = [(0, 1, 4), (0, 2, 2), (1, 2, 3), (1, 3, 2), (1, 4, 3),
-             (2, 1, 1), (2, 3, 4), (2, 4, 5), (3, 4, 1)]
-    for u, v, w in edges:
-        adj[u][v] = w
-    
-    def relaxation(d):
-        d_new = d.copy()
-        for v in range(n):
-            for u in range(n):
-                if adj[u][v] < INF and d[u] < INF:
-                    d_new[v] = min(d_new[v], d[u] + adj[u][v])
-        return d_new
-    
-    d = np.full(n, INF)
-    d[0] = 0
-    
-    trajectory = [d.copy()]
-    for _ in range(n):
-        d = relaxation(d)
-        trajectory.append(d.copy())
-        if np.array_equal(d, trajectory[-2]):
-            break
-    
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
-    # Left: convergence plot
-    traj = np.array(trajectory)
-    traj_display = np.where(traj >= INF, np.nan, traj)
-    
-    for v in range(n):
-        ax1.plot(range(len(traj)), traj_display[:, v], 'o-', 
-                label=f'Vertex {v}', linewidth=2, markersize=8)
-    
-    ax1.set_xlabel('Relaxation Step', fontsize=12)
-    ax1.set_ylabel('Distance from Source', fontsize=12)
-    ax1.set_title('Bellman-Ford Convergence', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(-0.5, 12)
-    
-    # Right: graph visualization
-    positions = {
-        0: (0, 2), 1: (2, 3), 2: (2, 1), 3: (4, 3), 4: (4, 1)
-    }
-    
-    final_d = trajectory[-1]
-    
-    for u, v, w in edges:
-        x0, y0 = positions[u]
-        x1, y1 = positions[v]
-        dx, dy = x1 - x0, y1 - y0
-        ax2.annotate('', xy=(x1 - 0.15*dx/max(abs(dx)+abs(dy), 0.01), 
-                            y1 - 0.15*dy/max(abs(dx)+abs(dy), 0.01)),
-                    xytext=(x0 + 0.15*dx/max(abs(dx)+abs(dy), 0.01),
-                           y0 + 0.15*dy/max(abs(dx)+abs(dy), 0.01)),
-                    arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
-        mx, my = (x0 + x1) / 2 + 0.15, (y0 + y1) / 2 + 0.15
-        ax2.text(mx, my, str(w), fontsize=9, color='gray', ha='center')
-    
-    for v in range(n):
-        x, y = positions[v]
-        color = 'gold' if v == 0 else 'steelblue'
-        circle = plt.Circle((x, y), 0.3, color=color, ec='black', lw=2, zorder=5)
-        ax2.add_patch(circle)
-        ax2.text(x, y, str(v), ha='center', va='center', fontsize=14, 
-                fontweight='bold', zorder=6)
-        dist_str = str(final_d[v]) if final_d[v] < INF else '∞'
-        ax2.text(x, y - 0.5, f'd={dist_str}', ha='center', fontsize=10, 
-                color='darkred', fontweight='bold')
-    
-    ax2.set_xlim(-1, 5.5)
-    ax2.set_ylim(-0.5, 4)
-    ax2.set_aspect('equal')
-    ax2.set_title('Graph with Shortest Distances', fontsize=14)
-    ax2.axis('off')
-    
-    fig.suptitle('Bellman-Ford as Tropical Fixed-Point Computation',
-                 fontsize=16, fontweight='bold')
-    plt.tight_layout()
-    
-    fig.savefig('bellman_ford_tropical.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def create_closure_operator_diagram() -> str:
-    """
-    Figure 5: Conceptual diagram of closure operator, diagonal bump, and fixed point.
-    """
-    fig, ax = plt.subplots(figsize=(10, 7))
-    
-    # Draw the main conceptual diagram
-    # Three overlapping regions: Truth, Provability, Fixed Points
-    
-    # Large outer ellipse: "All valuations" (Truth)
-    truth = mpatches.Ellipse((5, 4), 8, 5, color='lightyellow', ec='gold', 
-                              lw=2, label='All valuations (Truth)')
-    ax.add_patch(truth)
-    
-    # Medium ellipse: "Fixed points of P" (Provable truths)
-    provable = mpatches.Ellipse((5.5, 4.2), 5, 3, color='lightblue', ec='steelblue',
-                                 lw=2, alpha=0.7, label='Fixed points of P (Provable)')
-    ax.add_patch(provable)
-    
-    # Small circle: "Gödel sentences"
-    godel = mpatches.Circle((6.5, 4.5), 0.8, color='lightcoral', ec='red',
-                             lw=2, alpha=0.8, label='Gödel sentences')
-    ax.add_patch(godel)
-    
-    # Mark specific points
-    ax.plot(6.5, 4.5, 'r*', markersize=15, zorder=10)
-    ax.text(6.5, 5.5, 'g (Gödel sentence)\nP(g) = g', ha='center', fontsize=10,
-           color='red', fontweight='bold')
-    
-    # Point outside fixed points
-    ax.plot(2.5, 3), 
-    ax.plot(2.5, 3, 'ko', markersize=8, zorder=10)
-    ax.text(2.5, 2.3, 'f (not fixed)\nf < P(f)', ha='center', fontsize=10,
-           color='black')
-    
-    # Arrow from f to P(f)
-    ax.annotate('P', xy=(4, 3.5), xytext=(2.5, 3),
-               arrowprops=dict(arrowstyle='->', color='blue', lw=2),
-               fontsize=12, color='blue', fontweight='bold')
-    ax.plot(4, 3.5, 'bs', markersize=8, zorder=10)
-    ax.text(4, 2.8, 'P(f)', ha='center', fontsize=10, color='blue')
-    
-    # Diagonal bump arrow
-    ax.annotate('DiagBump', xy=(7.5, 4.5), xytext=(6.5, 4.5),
-               arrowprops=dict(arrowstyle='->', color='darkred', lw=2),
-               fontsize=10, color='darkred')
-    ax.plot(7.5, 4.5, 'r^', markersize=10, zorder=10)
-    ax.text(7.8, 3.8, 'DiagBump(g)\n(perturbed)', ha='center', fontsize=9, color='darkred')
-    
-    # Gap annotation
-    ax.annotate('GAP\n(incompleteness)', xy=(7.5, 5.2), xytext=(8.5, 5.8),
-               arrowprops=dict(arrowstyle='->', color='purple', lw=2),
-               fontsize=11, color='purple', fontweight='bold',
-               bbox=dict(boxstyle='round,pad=0.3', facecolor='lavender', alpha=0.8))
-    
-    # Labels
-    ax.text(1.5, 6.2, 'All Valuations', fontsize=13, color='goldenrod', fontweight='bold')
-    ax.text(3.5, 5.8, 'Fixed Points of P', fontsize=12, color='steelblue', fontweight='bold')
-    
-    ax.set_xlim(0, 10)
-    ax.set_ylim(1, 7)
-    ax.set_aspect('equal')
-    ax.set_title('Tropical Incompleteness: Structure of the Proof System',
-                fontsize=16, fontweight='bold')
     ax.axis('off')
     
-    fig.savefig('closure_operator_diagram.png', dpi=150, bbox_inches='tight')
+    # Title
+    ax.text(5.25, 8, 'Tropical Gödel Incompleteness', fontsize=18,
+            fontweight='bold', ha='center', va='center')
+    
+    # Boxes for concepts
+    box_style = dict(boxstyle='round,pad=0.5', facecolor='#E3F2FD', edgecolor='#1565C0', linewidth=2)
+    
+    # Diagonal sentence
+    ax.text(5.25, 6.5, 'Diagonal Sentence G:\n"G is true ↔ G is not provable"',
+            fontsize=12, ha='center', va='center',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#FFF3E0', edgecolor='#E65100', linewidth=2))
+    
+    # Two cases
+    ax.text(2.5, 4.5, 'Case 1: G is Provable\n(x[i] = 0)',
+            fontsize=11, ha='center', va='center',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#E8F5E9', edgecolor='#2E7D32', linewidth=2))
+    
+    ax.text(8, 4.5, 'Case 2: G is Not Provable\n(x[i] ≠ 0)',
+            fontsize=11, ha='center', va='center',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#E8F5E9', edgecolor='#2E7D32', linewidth=2))
+    
+    # Consequences
+    ax.text(2.5, 2.5, 'By soundness:\nG is True\nBy diagonalization:\nG is NOT True\n⚡ Contradiction!',
+            fontsize=10, ha='center', va='center',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#FFEBEE', edgecolor='#C62828', linewidth=2))
+    
+    ax.text(8, 2.5, 'By diagonalization:\nG is True\nBy completeness:\nG IS Provable\n⚡ Contradiction!',
+            fontsize=10, ha='center', va='center',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#FFEBEE', edgecolor='#C62828', linewidth=2))
+    
+    # Conclusion
+    ax.text(5.25, 0.5, '∴ No tropical proof system can be\nboth Sound and Complete\nat the diagonal coordinate',
+            fontsize=13, ha='center', va='center', fontweight='bold',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#F3E5F5', edgecolor='#6A1B9A', linewidth=2))
+    
+    # Arrows
+    arrow_style = dict(arrowstyle='->', color='#37474F', linewidth=2)
+    ax.annotate('', xy=(2.5, 5.3), xytext=(4.5, 6.0),
+                arrowprops=arrow_style)
+    ax.annotate('', xy=(8, 5.3), xytext=(6.0, 6.0),
+                arrowprops=arrow_style)
+    ax.annotate('', xy=(2.5, 3.5), xytext=(2.5, 3.9),
+                arrowprops=arrow_style)
+    ax.annotate('', xy=(8, 3.5), xytext=(8, 3.9),
+                arrowprops=arrow_style)
+    ax.annotate('', xy=(4.0, 1.0), xytext=(2.5, 1.7),
+                arrowprops=arrow_style)
+    ax.annotate('', xy=(6.5, 1.0), xytext=(8, 1.7),
+                arrowprops=arrow_style)
+    
+    fig.savefig('/workspace/request-project/viz_2_incompleteness.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
+
+
+def viz_3_closure_landscape():
+    """
+    Visualization 3: Closure Operator Landscape
+    
+    Shows the structure of a closure operator on a 2D tropical space,
+    highlighting fixed points and the closure image.
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # 2D closure operator: c(x,y) = (max(x, 1), max(y, 0.5))
+    x_range = np.linspace(-1, 5, 200)
+    y_range = np.linspace(-1, 5, 200)
+    X, Y = np.meshgrid(x_range, y_range)
+    
+    CX = np.maximum(X, 1.0)
+    CY = np.maximum(Y, 0.5)
+    
+    # Left: Closure operator action
+    ax = axes[0]
+    
+    # Color by distance moved: |c(x) - x|
+    dist = np.sqrt((CX - X)**2 + (CY - Y)**2)
+    im = ax.contourf(X, Y, dist, levels=20, cmap='YlOrRd')
+    plt.colorbar(im, ax=ax, label='Distance moved by closure')
+    
+    # Fixed point region (where dist ≈ 0)
+    ax.contour(X, Y, dist, levels=[0.01], colors='blue', linewidths=3)
+    
+    # Sample trajectories
+    for sx, sy in [(0, 0), (-0.5, 3), (3, -0.5), (0.5, 0.2), (2, 2)]:
+        cx, cy = max(sx, 1.0), max(sy, 0.5)
+        ax.annotate('', xy=(cx, cy), xytext=(sx, sy),
+                    arrowprops=dict(arrowstyle='->', color='black', linewidth=1.5))
+        ax.plot(sx, sy, 'ko', markersize=5)
+        ax.plot(cx, cy, 'b*', markersize=10)
+    
+    ax.set_xlabel('x₁', fontsize=12)
+    ax.set_ylabel('x₂', fontsize=12)
+    ax.set_title('Closure Operator: c(x) = max(x, floor)', fontsize=13)
+    ax.set_xlim(-1, 5)
+    ax.set_ylim(-1, 5)
+    
+    # Right: Fixed point set structure
+    ax = axes[1]
+    
+    # The fixed point set is {(x,y) : x ≥ 1, y ≥ 0.5}
+    rect = patches.Rectangle((1, 0.5), 4, 4.5, linewidth=0, 
+                               facecolor='#E3F2FD', alpha=0.8)
+    ax.add_patch(rect)
+    
+    # Border
+    ax.plot([1, 1], [0.5, 5], 'b-', linewidth=3, label='Fixed point boundary')
+    ax.plot([1, 5], [0.5, 0.5], 'b-', linewidth=3)
+    
+    # Non-fixed region
+    rect2 = patches.Rectangle((-1, -1), 6, 6, linewidth=0,
+                                facecolor='#FFEBEE', alpha=0.3, zorder=-1)
+    ax.add_patch(rect2)
+    
+    # Mark special points
+    ax.plot(1, 0.5, 'r*', markersize=20, label='Minimal fixed point', zorder=5)
+    ax.plot(2, 2, 'bs', markersize=10, label='Generic fixed point', zorder=5)
+    ax.plot(0, 0, 'rv', markersize=10, label='Non-fixed (moves to ★)', zorder=5)
+    ax.annotate('', xy=(1, 0.5), xytext=(0, 0),
+                arrowprops=dict(arrowstyle='->', color='red', linewidth=2))
+    
+    ax.text(3, 3, 'Fixed Point\nRegion\n(Self-Referential\nSentences)', 
+            fontsize=11, ha='center', va='center', 
+            bbox=dict(facecolor='white', alpha=0.8, edgecolor='blue'))
+    
+    ax.text(-0.3, 3, 'Non-Fixed\nRegion', fontsize=10, ha='center', va='center',
+            color='red', alpha=0.7)
+    
+    ax.set_xlabel('x₁', fontsize=12)
+    ax.set_ylabel('x₂', fontsize=12)
+    ax.set_title('Fixed Point Set of Closure Operator', fontsize=13)
+    ax.legend(fontsize=9, loc='upper right')
+    ax.set_xlim(-1, 5)
+    ax.set_ylim(-1, 5)
+    ax.grid(True, alpha=0.2)
+    
+    fig.suptitle('Closure Operators and Self-Referential Fixed Points', 
+                 fontsize=16, fontweight='bold', y=1.02)
+    fig.tight_layout()
+    
+    fig.savefig('/workspace/request-project/viz_3_closure.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+def viz_4_tropical_quine():
+    """
+    Visualization 4: Tropical Quine Iteration
+    
+    Shows the convergence of a diagonal tropical operator to its
+    self-reproducing fixed point (quine).
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    n = 4
+    weights = np.array([
+        [0.0, 1.0, 2.0, 3.0],
+        [1.0, 0.0, 1.0, 2.0],
+        [2.0, 1.0, 0.0, 1.0],
+        [3.0, 2.0, 1.0, 0.0],
+    ])
+    
+    def phi(x):
+        return np.array([min(x[j] + weights[i, j] for j in range(n)) for i in range(n)])
+    
+    # Iterate and record
+    x = np.zeros(n)
+    trajectory = [x.copy()]
+    for _ in range(15):
+        x = phi(x)
+        trajectory.append(x.copy())
+    
+    traj = np.array(trajectory)
+    
+    # Left: Component trajectories
+    ax = axes[0]
+    colors = ['#2196F3', '#FF9800', '#4CAF50', '#9C27B0']
+    for i in range(n):
+        ax.plot(range(len(traj)), traj[:, i], 'o-', color=colors[i],
+                linewidth=2, markersize=5, label=f'x[{i}]')
+    
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('Tropical Cost', fontsize=12)
+    ax.set_title('Convergence to Tropical Quine', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    # Right: Weight matrix heatmap
+    ax = axes[1]
+    im = ax.imshow(weights, cmap='YlOrRd', aspect='equal')
+    plt.colorbar(im, ax=ax, label='Transition Cost')
+    
+    for i in range(n):
+        for j in range(n):
+            ax.text(j, i, f'{weights[i,j]:.0f}', ha='center', va='center',
+                    fontsize=14, fontweight='bold',
+                    color='white' if weights[i,j] > 1.5 else 'black')
+    
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    ax.set_xticklabels([f'j={k}' for k in range(n)])
+    ax.set_yticklabels([f'i={k}' for k in range(n)])
+    ax.set_title('Tropical Weight Matrix', fontsize=14)
+    
+    fig.suptitle('Tropical Quine: Self-Reproducing Cost Profile',
+                 fontsize=16, fontweight='bold', y=1.02)
+    fig.tight_layout()
+    
+    fig.savefig('/workspace/request-project/viz_4_quine.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+def viz_5_incompleteness_landscape():
+    """
+    Visualization 5: Incompleteness Landscape
+    
+    Shows how the incompleteness phenomenon manifests across different
+    system configurations — a "phase diagram" of tropical proof systems.
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left: Phase diagram
+    ax = axes[0]
+    
+    n_systems = 50
+    ceiling_range = np.linspace(-1, 5, n_systems)
+    threshold_range = np.linspace(-1, 3, n_systems)
+    
+    status = np.zeros((n_systems, n_systems))  # 0=incomplete, 1=unsound
+    
+    for i, ceil in enumerate(ceiling_range):
+        for j, thresh in enumerate(threshold_range):
+            # Fixed point value at diagonal = min(start, ceil)
+            fp_val = min(10.0, max(0.0, ceil))
+            provable = fp_val <= thresh
+            # By diagonalization: true iff not provable
+            if provable:
+                status[j, i] = 1  # Unsound
+            else:
+                status[j, i] = 0  # Incomplete
+    
+    cmap = LinearSegmentedColormap.from_list('incomp', ['#E3F2FD', '#FFCDD2'])
+    im = ax.contourf(ceiling_range, threshold_range, status, levels=[-0.5, 0.5, 1.5],
+                     colors=['#E3F2FD', '#FFCDD2'])
+    ax.contour(ceiling_range, threshold_range, status, levels=[0.5],
+               colors='black', linewidths=2)
+    
+    ax.text(3.5, 2, 'UNSOUND\nRegion', fontsize=14, ha='center', va='center',
+            fontweight='bold', color='#C62828')
+    ax.text(1, -0.5, 'INCOMPLETE\nRegion', fontsize=14, ha='center', va='center',
+            fontweight='bold', color='#1565C0')
+    
+    ax.set_xlabel('Proof System Ceiling', fontsize=12)
+    ax.set_ylabel('Provability Threshold', fontsize=12)
+    ax.set_title('Phase Diagram of Tropical Incompleteness', fontsize=14)
+    ax.grid(True, alpha=0.2)
+    
+    # Right: Incompleteness gap measure
+    ax = axes[1]
+    
+    n_vals = 100
+    ceiling_vals = np.linspace(0, 5, n_vals)
+    
+    gaps = []
+    for c in ceiling_vals:
+        fp_val = min(10.0, c)
+        # Gap = |fp_val - 0| if incomplete, or measure of unsoundness
+        gap = abs(fp_val)
+        gaps.append(gap)
+    
+    ax.fill_between(ceiling_vals, 0, gaps, alpha=0.3, color='#2196F3',
+                    label='Incompleteness gap')
+    ax.plot(ceiling_vals, gaps, '-', color='#1565C0', linewidth=2)
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    ax.axvline(x=0, color='red', linewidth=2, linestyle='--',
+               label='Soundness boundary')
+    
+    ax.set_xlabel('Proof System Ceiling (diagonal coordinate)', fontsize=12)
+    ax.set_ylabel('Incompleteness Gap', fontsize=12)
+    ax.set_title('Incompleteness Gap vs. System Strength', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    fig.suptitle('The Landscape of Tropical Incompleteness',
+                 fontsize=16, fontweight='bold', y=1.02)
+    fig.tight_layout()
+    
+    fig.savefig('/workspace/request-project/viz_5_landscape.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+def generate_all_visualizations():
+    """Generate all visualizations and return base64 data."""
+    print("Generating visualizations...")
+    
+    viz_data = {}
+    
+    print("  1/5: Fixed-point convergence...")
+    viz_data['fixed_point_convergence'] = viz_1_fixed_point_convergence()
+    
+    print("  2/5: Incompleteness diagram...")
+    viz_data['incompleteness_diagram'] = viz_2_incompleteness_diagram()
+    
+    print("  3/5: Closure landscape...")
+    viz_data['closure_landscape'] = viz_3_closure_landscape()
+    
+    print("  4/5: Tropical quine...")
+    viz_data['tropical_quine'] = viz_4_tropical_quine()
+    
+    print("  5/5: Incompleteness landscape...")
+    viz_data['incompleteness_landscape'] = viz_5_incompleteness_landscape()
+    
+    print("All visualizations generated.")
+    return viz_data
 
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-    
-    b64_1 = create_fixed_point_convergence_plot()
-    print(f"  Fixed-point convergence: saved (base64 length: {len(b64_1)})")
-    
-    b64_2 = create_godel_sentence_diagram()
-    print(f"  Gödel sentence diagram: saved (base64 length: {len(b64_2)})")
-    
-    b64_3 = create_incompleteness_landscape()
-    print(f"  Incompleteness landscape: saved (base64 length: {len(b64_3)})")
-    
-    b64_4 = create_bellman_ford_visualization()
-    print(f"  Bellman-Ford visualization: saved (base64 length: {len(b64_4)})")
-    
-    b64_5 = create_closure_operator_diagram()
-    print(f"  Closure operator diagram: saved (base64 length: {len(b64_5)})")
-    
-    print("\nAll visualizations generated successfully.")
-    print("PNG files saved to current directory.")
+    viz_data = generate_all_visualizations()
+    print(f"\nGenerated {len(viz_data)} visualizations")
+    for name, data in viz_data.items():
+        print(f"  {name}: {len(data)} bytes")
