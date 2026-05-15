@@ -909,22 +909,6 @@
     "timestamp": "2026-05-14T16:03:53.841808+00:00"
   },
   {
-    "id": "seed_049",
-    "title": "Tropical Ecosystem Dynamics: Predator-Prey as Min-Plus Lotka-Volterra",
-    "description": "Reformulate the Lotka-Volterra equations as a tropical dynamical system where species interactions are min-plus operations, and prove that ecological equilibria are tropical fixed points. Show that the tropical predator-prey cycle has a canonical period determined by the tropical eigenvalue, and that ecosystem stability corresponds to the tropical spectral radius being less than 1.",
-    "domains": [
-      "Bridges",
-      "Tropical",
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "9743e28c",
-    "timestamp": "2026-05-14T16:03:53.844242+00:00"
-  },
-  {
     "id": "fd_0080",
     "title": "Reduce from Shortest Path with Forbidden Pairs",
     "description": ": This problem (known to be NP-hard) asks: given a graph and pairs of vertices that cannot both appear on a path, find a shortest path avoiding all forbidden pairs. Encode the forbidden-pair constraints as tropical matrix factorization constraints.",
@@ -1761,22 +1745,6 @@
     "timestamp": "2026-05-14T23:49:05.141334+00:00"
   },
   {
-    "id": "fd_0200",
-    "title": "Decision procedure:",
-    "description": "For fixed small n (e.g., n = 4), use `native_decide` to verify the algorithm on all inputs up to some bound, then prove correctness abstractly for general inputs.\n\n### Cross-Domain Connection\n\nThis connects to **certified algorithmics**: producing not just algorithms but machine-checked proofs of their correctness and complexity bounds. The O(n log n) sorting algorithm replaces the O(n!) brute force, and the correctness proof is a formal certificate. This is directly relevant to verified software for music production and algorithmic composition.\n\n---\n\n## Direction 4: Finite Harmonic Graph Diameter Theorem\n\n### Theorem Target\n\n```lean\n-- Define a finite corpus of chord types (e.g., all major/minor triads + seventh chords in Fin 4 → ZMod 12)\ndef chordCorpus : Finset (Fin 4 → ZMod 12) := sorr",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "00fcfe9a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:49:05.154934+00:00"
-  },
-  {
     "id": "fd_0201",
     "title": "Computational verification:",
     "description": "For small corpora (50-200 chords), compute all-pairs shortest paths by Floyd-Warshall, verify the diameter computationally, and certify the result via `native_decide` or explicit witness construction.",
@@ -1805,20 +1773,6 @@
     "source_exp_id": "00fcfe9a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:49:05.168031+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Direct concatenation:",
-    "description": "The concatenated path p₁ ++ p₂.tail has cost equal to progressionCost(p₁) + progressionCost(p₂) minus the zero-cost self-transition at the join point. This gives a direct proof of subadditivity.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "00fcfe9a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:49:05.175195+00:00"
   },
   {
     "id": "fd_0204",
@@ -1851,6 +1805,240 @@
     "source_exp_id": "00fcfe9a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:49:05.202405+00:00"
+  },
+  {
+    "id": "fd_0184",
+    "title": "Existence",
+    "description": ": Use Karp's algorithm to compute μ. Construct the \"critical graph\" (subgraph of edges lying on minimum-mean cycles). Show that the tropical CSR (Cyclicity-Saturation-Reduction) decomposition yields an eigenvector.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.109057+00:00"
+  },
+  {
+    "id": "fd_0185",
+    "title": "Uniqueness (projective)",
+    "description": ": Prove that if A ⊗ v = μ + v and A ⊗ w = μ + w, then v - w is constant. This follows from the strong connectivity of the critical graph.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.114673+00:00"
+  },
+  {
+    "id": "fd_0186",
+    "title": "Formalization",
+    "description": ": Define irreducibility for Fin n → Fin n → ℝ matrices. Formalize Karp's algorithm and prove its correctness. State and prove the tropical Perron-Frobenius theorem.\n\n### Cross-Domain Connections\n- **Network science**: Eigenvector centrality in tropical networks\n- **Markov chains**: Tropical analogue of stationary distributions\n- **Control theory**: Tropical observability and controllability\n\n### Estimated Difficulty\nHard. Requires substantial graph theory infrastructure (strongly connected components, cycle enumeration, critical graph construction). Approximately 2000-3000 lines of formalized code.\n\n### Key References\n- Butkovič (2010), *Max-linear Systems*, Chapters 3-5\n- Gaubert & Gunawardena (2004), *The Perron-Frobenius theorem for homogeneous, monotone functions*\n\n---\n\n## Direction 2:",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.122342+00:00"
+  },
+  {
+    "id": "fd_0187",
+    "title": "Game formulation",
+    "description": ": Define a two-player game on the 2-node digraph where players alternately select edges. The payoff is the long-run average edge weight.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.128722+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Strategy = eigenvector",
+    "description": ": Prove that optimal positional strategies correspond to choices that realize the eigenvector equation.\n\n### Cross-Domain Connections\n- **Theoretical computer science**: Mean-payoff games are in NP ∩ coNP (unknown if in P)\n- **Verification**: Model checking of reactive systems\n- **Economics**: Repeated games with discounting → tropical limit\n- **Ecology**: Species as strategic agents; evolutionary game theory meets tropical algebra\n\n### Estimated Difficulty\nMedium-Hard. The game-theoretic formalization is conceptually clean but requires defining game trees, strategies, and payoffs formally.\n\n### Key References\n- Ehrenfeucht & Mycielski (1979), *Positional strategies for mean payoff games*\n- Zwick & Paterson (1996), *The complexity of mean payoff games on graphs*\n\n---\n\n## Direction 3: Tropi",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.148110+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Eigenvector discontinuity",
+    "description": ": Show that the eigenvector (as a function of parameters) can be discontinuous at bifurcation points. Construct explicit examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.159698+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Classification",
+    "description": ": For 2×2 systems, enumerate all bifurcation types:\n   - a = d (prey/predator symmetry breaking)\n   - a = (b+c)/2 (self-loop vs. 2-cycle transition)\n   - d = (b+c)/2 (analogous)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.165115+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Ecological interpretation",
+    "description": ": Map each bifurcation type to a known ecological phenomenon (trophic cascade, competitive exclusion, mutualism breakdown).\n\n### Cross-Domain Connections\n- **Tropical geometry**: Tropical bifurcations correspond to non-smooth points of tropical hypersurfaces\n- **Catastrophe theory**: Tropical analogues of fold, cusp, swallowtail catastrophes\n- **Climate science**: Abrupt climate transitions as tropical bifurcations in Earth system models\n- **Economics**: Market regime shifts (bull/bear transitions)\n\n### Estimated Difficulty\nMedium. The 2×2 case is tractable by direct computation. The n×n generalization requires tropical convexity theory.\n\n---\n\n## Direction 4: Certified Resilience Bounds Under Parameter Perturbation\n\n### Goal\nProve quantitative bounds on how much the tropical eigenvalue and",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.172840+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Upper bound",
+    "description": ": Since μ(A) = min over cycles of (mean weight), and each mean weight changes by at most ε under entrywise perturbation, μ changes by at most ε.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.180281+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Subadditivity",
+    "description": ": The min-plus product norm (maximum entry) satisfies subadditivity, enabling application of Kingman's subadditive ergodic theorem.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.200775+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Tropical Furstenberg theory",
+    "description": ": Develop a tropical analogue of the multiplicative ergodic theorem. The key insight is that min-plus matrix products correspond to shortest paths in time-varying networks.",
+    "domains": [
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.208103+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Concentration",
+    "description": ": Prove concentration inequalities for the tropical Lyapunov exponent.\n\n### Cross-Domain Connections\n- **Random matrix theory**: Tropical random matrices (extreme value statistics replace Gaussian universality)\n- **Disordered systems**: Tropical Lyapunov exponents ↔ free energy in random media\n- **Population genetics**: Randomly fluctuating fitness landscapes\n- **Reliability engineering**: System failure under random component degradation\n\n### Estimated Difficulty\nVery Hard. Requires formalizing probability theory on tropical matrix spaces and the subadditive ergodic theorem. This is a multi-year research program.\n\n### Key References\n- Baccelli & Mairesse (1998), *Ergodic theory of stochastic Petri networks*\n- Merlet (2010), *Limit theorems for products of random matrices in the max-plus a",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.221426+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Certified computation",
+    "description": ": All results should be machine-verified, maintaining the standard set by the initial formalization.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.228185+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Applications",
+    "description": ": Each theoretical advance should come with computational implementations and real-world case studies.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.241670+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Interdisciplinarity",
+    "description": ": Maintain bridges to control theory, game theory, network science, and statistical physics at every stage.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-14T23:59:16.247769+00:00"
   },
   {
     "id": "seed_078",
@@ -2113,10 +2301,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4cd60b9",
     "timestamp": "2026-05-14T18:36:13.855472+00:00"
   },
   {
@@ -2305,20 +2493,5 @@
     "source_exp_id": "ad615ded",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:34:54.003639+00:00"
-  },
-  {
-    "id": "fd_0191",
-    "title": "Algorithmic Certification",
-    "description": "All five directions share a common goal: producing *machine-checkable certificates* for mixing properties. The tropical framework is uniquely suited to this because:\n- Tropical invariants are finitely computable\n- The inequalities involve only real arithmetic\n- The proofs are constructive and amenable to formal verification",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad615ded",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:34:54.012190+00:00"
   }
 ]

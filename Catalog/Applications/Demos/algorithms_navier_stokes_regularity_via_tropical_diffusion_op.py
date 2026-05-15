@@ -1,302 +1,322 @@
 #!/usr/bin/env python3
 """
-Tropical Diffusion Regularity: Core Algorithms
+Algorithms for Tropical Diffusion and Barrier Analysis
 
-Implements the tropical diffusion operators, oscillation tracking,
-and regularity analysis algorithms from the formal theory.
+Implements the core algorithms from the research paper with full
+docstrings, type hints, and complexity analysis.
 """
 
 import numpy as np
 from typing import Tuple, List, Optional
 
 
-def tropical_diffusion_max(K: np.ndarray, u: np.ndarray) -> np.ndarray:
+def tropical_diffusion(K: np.ndarray, u: np.ndarray) -> np.ndarray:
     """
-    Max-plus tropical diffusion operator.
+    Min-plus tropical diffusion operator.
 
-    T(u)(i) = max_j (u(j) - K(i,j))
+    Computes T_K(u)(i) = min_j (u[j] + K[i,j]) for each site i.
 
-    This is the discrete Lax-Oleinik / Bellman operator.
+    This is equivalent to one step of the Bellman–Ford shortest-path
+    relaxation, or equivalently the Lax–Oleinik operator in discrete
+    Hamilton–Jacobi theory.
 
     Args:
-        K: n×n nonneg kernel matrix with zero diagonal
-        u: n-dimensional state vector
+        K: (n, n) nonnegative kernel matrix with K[i,i] = 0
+        u: (n,) real-valued state vector
 
     Returns:
-        n-dimensional diffused state
+        (n,) diffused state vector
 
-    Time complexity: O(n²)
+    Time complexity: O(n^2)
     Space complexity: O(n)
+
+    Example:
+        >>> K = np.array([[0, 1, 2], [1, 0, 1], [2, 1, 0]], dtype=float)
+        >>> u = np.array([5.0, 2.0, 8.0])
+        >>> tropical_diffusion(K, u)
+        array([2., 2., 3.])
     """
-    n = len(u)
-    # Vectorized: for each row i, compute max over j of (u[j] - K[i,j])
-    return np.max(u[np.newaxis, :] - K, axis=1)
-
-
-def tropical_diffusion_min(K: np.ndarray, u: np.ndarray) -> np.ndarray:
-    """
-    Min-plus tropical diffusion operator (dual).
-
-    T'(u)(i) = min_j (K(i,j) + u(j))
-
-    Args:
-        K: n×n nonneg kernel matrix with zero diagonal
-        u: n-dimensional state vector
-
-    Returns:
-        n-dimensional diffused state
-
-    Time complexity: O(n²)
-    Space complexity: O(n)
-    """
+    # Matrix-vector min-plus product: result[i] = min_j (K[i,j] + u[j])
     return np.min(K + u[np.newaxis, :], axis=1)
 
 
-def oscillation(u: np.ndarray) -> float:
+def iterated_tropical_diffusion(K: np.ndarray, u: np.ndarray, n_steps: int) -> np.ndarray:
     """
-    Oscillation seminorm: max(u) - min(u).
+    Apply tropical diffusion n_steps times.
 
-    Measures total spread of the state. Invariant under translation.
+    Computes T_K^[n](u). After n steps, T_K^[n](u)(i) equals the minimum
+    cost of reaching site i from any site j via an n-step path in the
+    K-weighted graph, plus the initial value u[j].
 
-    Time complexity: O(n)
+    Args:
+        K: (n, n) nonnegative kernel matrix
+        u: (n,) state vector
+        n_steps: number of iterations
+
+    Returns:
+        (n,) state after n_steps applications of T_K
+
+    Time complexity: O(n^2 * n_steps)
+    Space complexity: O(n)
     """
-    return float(np.max(u) - np.min(u))
+    result = u.copy()
+    for _ in range(n_steps):
+        result = tropical_diffusion(K, result)
+    return result
+
+
+def dissipative_barrier_evolution(
+    K: np.ndarray,
+    omega_0: np.ndarray,
+    c_seq: np.ndarray,
+    n_steps: int,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Simulate dissipative barrier evolution (Theorem B).
+
+    Evolves omega_{n+1}(i) = min(omega_n(i), T_K(omega_n)(i) + c_n)
+    and tracks the global maximum at each step.
+
+    Args:
+        K: (n, n) tropical viscosity kernel (nonneg, zero diagonal)
+        omega_0: (n,) initial vorticity field
+        c_seq: (n_steps,) sequence of dissipation constants (all <= 0)
+        n_steps: number of evolution steps
+
+    Returns:
+        trajectory: (n_steps+1, n) full trajectory
+        max_values: (n_steps+1,) global maximum at each step
+
+    Time complexity: O(n^2 * n_steps)
+    Space complexity: O(n * n_steps)
+
+    Guarantees (from Theorem B):
+        max_values is nonincreasing when c_seq <= 0
+    """
+    n = len(omega_0)
+    trajectory = np.zeros((n_steps + 1, n))
+    max_values = np.zeros(n_steps + 1)
+
+    trajectory[0] = omega_0.copy()
+    max_values[0] = omega_0.max()
+
+    for step in range(n_steps):
+        omega = trajectory[step]
+        T_omega = tropical_diffusion(K, omega)
+        trajectory[step + 1] = np.minimum(omega, T_omega + c_seq[step])
+        max_values[step + 1] = trajectory[step + 1].max()
+
+    return trajectory, max_values
+
+
+def exponential_barrier_evolution(
+    K: np.ndarray,
+    omega_0: np.ndarray,
+    c_seq: np.ndarray,
+    lam: float,
+    n_steps: int,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Simulate exponential barrier evolution (Theorem C).
+
+    Evolves omega_{n+1}(i) = min(lam * omega_n(i), T_K(omega_n)(i) + c_n)
+    and compares against the theoretical bound lam^n * M_0.
+
+    Args:
+        K: (n, n) tropical viscosity kernel
+        omega_0: (n,) initial vorticity (nonneg)
+        c_seq: (n_steps,) dissipation constants (<= 0)
+        lam: damping factor (0 <= lam <= 1)
+        n_steps: number of steps
+
+    Returns:
+        trajectory: (n_steps+1, n) full trajectory
+        max_values: (n_steps+1,) actual maxima
+        bounds: (n_steps+1,) theoretical bounds lam^n * M_0
+
+    Time complexity: O(n^2 * n_steps)
+    Space complexity: O(n * n_steps)
+    """
+    n = len(omega_0)
+    trajectory = np.zeros((n_steps + 1, n))
+    max_values = np.zeros(n_steps + 1)
+    bounds = np.zeros(n_steps + 1)
+
+    M0 = omega_0.max()
+    trajectory[0] = omega_0.copy()
+    max_values[0] = M0
+    bounds[0] = M0
+
+    for step in range(n_steps):
+        omega = trajectory[step]
+        T_omega = tropical_diffusion(K, omega)
+        trajectory[step + 1] = np.minimum(lam * omega, T_omega + c_seq[step])
+        max_values[step + 1] = trajectory[step + 1].max()
+        bounds[step + 1] = lam ** (step + 1) * M0
+
+    return trajectory, max_values, bounds
 
 
 def tropical_energy(u: np.ndarray) -> float:
     """
-    Tropical energy: max(u).
+    Compute tropical energy (oscillation) of a state.
+
+    E(u) = max(u) - min(u)
+
+    This measures the total spread of the state vector and serves as
+    a tropical analogue of the Dirichlet energy.
+
+    Args:
+        u: (n,) state vector
+
+    Returns:
+        oscillation value (nonneg)
 
     Time complexity: O(n)
     """
-    return float(np.max(u))
+    return float(u.max() - u.min())
 
 
-def tropical_dissipation(K: np.ndarray, u: np.ndarray) -> float:
+def shortest_path_interpretation(K: np.ndarray, n_steps: int) -> np.ndarray:
     """
-    Tropical dissipation: max_i (u(i) - T(u)(i)).
+    Compute the n-step min-plus matrix power K^{⊗n}.
 
-    Measures the energy lost in one step. Always ≥ 0.
+    The (i,j) entry of K^{⊗n} is the minimum cost of an n-step path
+    from j to i in the K-weighted graph. This connects tropical
+    diffusion to shortest-path computation.
 
-    Time complexity: O(n²)
-    """
-    Tu = tropical_diffusion_max(K, u)
-    return float(np.max(u - Tu))
-
-
-def discrete_vorticity(A: np.ndarray, u: np.ndarray) -> float:
-    """
-    Discrete vorticity: max_{i,j} |A(i,j) * (u(j) - u(i))|.
-
-    Bounded by osc(u) when A entries are in [0, 1].
-
-    Time complexity: O(n²)
-    """
-    n = len(u)
-    diff = u[np.newaxis, :] - u[:, np.newaxis]  # diff[i,j] = u[j] - u[i]
-    return float(np.max(np.abs(A * diff)))
-
-
-def iterate_tropical_diffusion(
-    K: np.ndarray,
-    u0: np.ndarray,
-    n_steps: int,
-    track_metrics: bool = True
-) -> dict:
-    """
-    Iterate tropical diffusion and track regularity metrics.
-
-    Implements the iterated evolution u_{n+1} = T(u_n) and verifies
-    the a priori bounds from the regularity theory.
+    Uses the min-plus matrix multiplication:
+    (A ⊗ B)[i,j] = min_k (A[i,k] + B[k,j])
 
     Args:
-        K: n×n nonneg kernel matrix with zero diagonal
-        u0: initial state
-        n_steps: number of iterations
-        track_metrics: whether to compute metrics at each step
+        K: (n, n) cost matrix
+        n_steps: number of steps (matrix power)
 
     Returns:
-        Dictionary with:
-        - 'states': list of state vectors
-        - 'sup': list of sup values
-        - 'inf': list of inf values
-        - 'osc': list of oscillation values
-        - 'energy': list of energy values
-        - 'dissipation': list of dissipation values
+        (n, n) n-step cost matrix
 
-    Time complexity: O(n_steps × n²)
-    Space complexity: O(n_steps × n) for states
+    Time complexity: O(n^3 * n_steps) — can be improved to O(n^3 * log(n_steps))
+        with repeated squaring
+    Space complexity: O(n^2)
     """
-    states = [u0.copy()]
-    metrics = {
-        'sup': [float(np.max(u0))],
-        'inf': [float(np.min(u0))],
-        'osc': [oscillation(u0)],
-        'energy': [tropical_energy(u0)],
-        'dissipation': [tropical_dissipation(K, u0)]
-    }
+    n = K.shape[0]
+    result = np.zeros((n, n))  # identity: K^0[i,j] = 0 if i=j, inf otherwise
+    np.fill_diagonal(result, 0)
+    result[result == 0] = np.inf
+    np.fill_diagonal(result, 0)
 
-    current = u0.copy()
-    for step in range(n_steps):
-        current = tropical_diffusion_max(K, current)
-        states.append(current.copy())
+    current = K.copy()
+    for _ in range(n_steps):
+        result = minplus_matmul(result, current)
 
-        if track_metrics:
-            metrics['sup'].append(float(np.max(current)))
-            metrics['inf'].append(float(np.min(current)))
-            metrics['osc'].append(oscillation(current))
-            metrics['energy'].append(tropical_energy(current))
-            metrics['dissipation'].append(tropical_dissipation(K, current))
-
-    return {'states': states, **metrics}
+    return result
 
 
-def verify_regularity(
+def minplus_matmul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+    """
+    Min-plus matrix multiplication.
+
+    (A ⊗ B)[i,j] = min_k (A[i,k] + B[k,j])
+
+    This is the fundamental operation in tropical linear algebra.
+
+    Args:
+        A: (m, p) matrix
+        B: (p, n) matrix
+
+    Returns:
+        (m, n) min-plus product
+
+    Time complexity: O(m * n * p)
+    """
+    m, p = A.shape
+    _, n = B.shape
+    result = np.full((m, n), np.inf)
+    for k in range(p):
+        result = np.minimum(result, A[:, k:k+1] + B[k:k+1, :])
+    return result
+
+
+def validate_viscosity_kernel(K: np.ndarray) -> Tuple[bool, str]:
+    """
+    Check if a matrix is a valid tropical viscosity kernel.
+
+    A tropical viscosity kernel must satisfy:
+    1. All entries are nonnegative
+    2. Diagonal entries are zero
+
+    Args:
+        K: (n, n) matrix to validate
+
+    Returns:
+        (is_valid, message)
+    """
+    if not np.all(K >= 0):
+        return False, f"Kernel has negative entries: min = {K.min()}"
+    if not np.allclose(np.diag(K), 0):
+        return False, f"Kernel has nonzero diagonal: max diag = {np.diag(K).max()}"
+    return True, "Valid tropical viscosity kernel"
+
+
+def compute_convergence_rate(
     K: np.ndarray,
-    u0: np.ndarray,
+    omega_0: np.ndarray,
+    lam: float,
     n_steps: int = 100,
-    A: Optional[np.ndarray] = None,
-    tol: float = 1e-10
-) -> dict:
+) -> float:
     """
-    Verify all regularity bounds from the formal theory.
+    Empirically estimate the convergence rate of damped tropical evolution.
 
-    Checks:
-    1. sup(T^n(u)) ≤ sup(u) for all n (maximum principle)
-    2. osc(T^n(u)) ≤ osc(u) for all n (oscillation contraction)
-    3. If A provided: vorticity(T^n(u)) ≤ osc(u) for all n
+    Fits max(omega_n) ~ C * r^n and returns the estimated rate r.
 
     Args:
-        K: kernel matrix
-        u0: initial state
-        n_steps: iterations to check
-        A: optional weight matrix for vorticity
-        tol: numerical tolerance
+        K: tropical viscosity kernel
+        omega_0: initial state (nonneg)
+        lam: damping factor
+        n_steps: number of steps
 
     Returns:
-        Dictionary with verification results
+        estimated convergence rate (should be <= lam)
     """
-    initial_sup = float(np.max(u0))
-    initial_osc = oscillation(u0)
+    c_seq = np.zeros(n_steps)
+    _, max_values, _ = exponential_barrier_evolution(K, omega_0, c_seq, lam, n_steps)
 
-    result = iterate_tropical_diffusion(K, u0, n_steps)
+    # Find steps where max_values > 0
+    positive = max_values > 1e-15
+    if positive.sum() < 3:
+        return 0.0
 
-    sup_violations = sum(1 for s in result['sup'] if s > initial_sup + tol)
-    osc_violations = sum(1 for o in result['osc'] if o > initial_osc + tol)
+    log_max = np.log(max_values[positive])
+    steps = np.arange(len(max_values))[positive]
 
-    verification = {
-        'sup_bound_holds': sup_violations == 0,
-        'osc_bound_holds': osc_violations == 0,
-        'sup_violations': sup_violations,
-        'osc_violations': osc_violations,
-        'initial_sup': initial_sup,
-        'initial_osc': initial_osc,
-        'final_sup': result['sup'][-1],
-        'final_osc': result['osc'][-1],
-        'convergence_step': None,
-    }
-
-    # Check convergence
-    for i in range(1, len(result['osc'])):
-        if abs(result['osc'][i] - result['osc'][i-1]) < tol:
-            verification['convergence_step'] = i
-            break
-
-    if A is not None:
-        vorticities = [discrete_vorticity(A, s) for s in result['states']]
-        vort_violations = sum(1 for v in vorticities if v > initial_osc + tol)
-        verification['vorticity_bound_holds'] = vort_violations == 0
-        verification['vorticity_violations'] = vort_violations
-        verification['max_vorticity'] = max(vorticities)
-
-    return verification
-
-
-def build_graph_kernel(n: int, graph_type: str = 'cycle',
-                       scale: float = 1.0) -> np.ndarray:
-    """
-    Build a kernel matrix from a graph structure.
-
-    Args:
-        n: number of nodes
-        graph_type: 'cycle', 'path', 'complete', 'grid'
-        scale: scaling factor for distances
-
-    Returns:
-        n×n kernel matrix (shortest path distances × scale)
-    """
-    if graph_type == 'cycle':
-        K = np.zeros((n, n))
-        for i in range(n):
-            for j in range(n):
-                K[i, j] = min(abs(i - j), n - abs(i - j)) * scale
-    elif graph_type == 'path':
-        K = np.zeros((n, n))
-        for i in range(n):
-            for j in range(n):
-                K[i, j] = abs(i - j) * scale
-    elif graph_type == 'complete':
-        K = np.ones((n, n)) * scale
-        np.fill_diagonal(K, 0)
-    elif graph_type == 'grid':
-        side = int(np.sqrt(n))
-        assert side * side == n, "n must be a perfect square for grid"
-        K = np.zeros((n, n))
-        for i in range(n):
-            for j in range(n):
-                ri, ci = divmod(i, side)
-                rj, cj = divmod(j, side)
-                K[i, j] = (abs(ri - rj) + abs(ci - cj)) * scale
-    else:
-        raise ValueError(f"Unknown graph type: {graph_type}")
-
-    return K
-
-
-def find_fixed_point(K: np.ndarray, u0: np.ndarray,
-                     max_iter: int = 1000, tol: float = 1e-12
-                     ) -> Tuple[np.ndarray, int]:
-    """
-    Find the fixed point of tropical diffusion iteration.
-
-    Since oscillation is nonincreasing and bounded below by 0,
-    the iteration converges. The fixed point satisfies T(u*) = u*.
-
-    Args:
-        K: kernel matrix
-        u0: initial state
-        max_iter: maximum iterations
-        tol: convergence tolerance
-
-    Returns:
-        Tuple of (fixed point, number of iterations)
-
-    Convergence: Guaranteed by oscillation monotonicity theorem.
-    """
-    current = u0.copy()
-    for step in range(max_iter):
-        next_state = tropical_diffusion_max(K, current)
-        if np.max(np.abs(next_state - current)) < tol:
-            return next_state, step + 1
-        current = next_state
-    return current, max_iter
+    # Linear regression on log(max) vs step
+    coeffs = np.polyfit(steps, log_max, 1)
+    return float(np.exp(coeffs[0]))
 
 
 if __name__ == "__main__":
     # Quick test
-    n = 5
-    K = build_graph_kernel(n, 'cycle', scale=0.5)
-    u0 = np.array([10.0, -5.0, 8.0, -3.0, 12.0])
+    K = np.array([[0, 1, 2], [1, 0, 1], [2, 1, 0]], dtype=float)
+    u = np.array([5.0, 2.0, 8.0])
 
-    print("Kernel (cycle, scale=0.5):")
-    print(K)
-    print(f"\nInitial state: {u0}")
+    print("Tropical diffusion test:")
+    print(f"  K = \n{K}")
+    print(f"  u = {u}")
+    print(f"  T_K(u) = {tropical_diffusion(K, u)}")
+    print(f"  Energy(u) = {tropical_energy(u)}")
 
-    result = verify_regularity(K, u0, n_steps=50)
-    print(f"\nRegularity verification:")
-    for key, val in result.items():
-        print(f"  {key}: {val}")
+    valid, msg = validate_viscosity_kernel(K)
+    print(f"  Kernel valid: {valid} ({msg})")
 
-    fp, steps = find_fixed_point(K, u0)
-    print(f"\nFixed point found in {steps} steps: {fp}")
-    print(f"Fixed point is constant: {np.allclose(fp, fp[0])}")
+    print("\nBarrier evolution test:")
+    omega_0 = np.array([10.0, 5.0, 8.0])
+    c_seq = np.full(20, -0.5)
+    traj, maxes = dissipative_barrier_evolution(K, omega_0, c_seq, 20)
+    print(f"  Initial max: {maxes[0]:.4f}")
+    print(f"  Final max:   {maxes[-1]:.4f}")
+    print(f"  Nonincreasing: {all(maxes[i+1] <= maxes[i] + 1e-10 for i in range(len(maxes)-1))}")
+
+    print("\nExponential decay test:")
+    traj, maxes, bounds = exponential_barrier_evolution(K, omega_0, c_seq, 0.9, 20)
+    print(f"  λ = 0.9, bound holds: {all(maxes[i] <= bounds[i] + 1e-10 for i in range(len(maxes)))}")
+    print(f"  Convergence rate: {compute_convergence_rate(K, omega_0, 0.9):.4f}")

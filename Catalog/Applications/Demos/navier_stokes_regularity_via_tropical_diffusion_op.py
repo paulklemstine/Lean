@@ -1,476 +1,566 @@
 #!/usr/bin/env python3
 """
-Tropical Diffusion Regularity: Applications
+Applications of Tropical Barrier Theory
 
-Real-world applications of the tropical diffusion regularity theory
-to network resilience, image processing, optimal transport, and
-fluid dynamics simulation.
+Demonstrates real-world applications of the tropical diffusion barrier
+framework to:
+1. Network flow stability analysis
+2. Consensus dynamics on graphs
+3. Discrete vorticity control for fluid simulation
+4. Neural network activation bounding
 """
 
 import numpy as np
-from algorithms import (
-    tropical_diffusion_max, oscillation, tropical_energy,
-    iterate_tropical_diffusion, build_graph_kernel, find_fixed_point,
-    discrete_vorticity
-)
+from typing import Tuple
 
 
-# ============================================================
-# Application 1: Network Resilience Analysis
-# ============================================================
+def tropical_diffusion(K: np.ndarray, u: np.ndarray) -> np.ndarray:
+    """Min-plus tropical diffusion: T_K(u)(i) = min_j (u[j] + K[i,j])."""
+    return np.min(K + u[np.newaxis, :], axis=1)
 
-def network_resilience_demo():
+
+# ─────────────────────────────────────────────────────────────────────
+# Application 1: Network Flow Stability
+# ─────────────────────────────────────────────────────────────────────
+
+def network_stability_analysis(
+    adjacency: np.ndarray,
+    initial_load: np.ndarray,
+    dissipation: float = -0.1,
+    n_steps: int = 50,
+) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Model information propagation on a network.
+    Analyze stability of load distribution on a network.
 
-    In distributed systems, tropical diffusion models worst-case
-    (max-plus) or best-case (min-plus) signal propagation. The
-    regularity theorem guarantees that signal oscillation cannot
-    amplify — the network is inherently stable.
+    Models a network where each node has a load value, and load
+    redistributes via tropical diffusion (shortest-path routing).
+    The barrier theorem guarantees peak load never increases.
+
+    Args:
+        adjacency: (n, n) adjacency matrix (0/1 or weighted)
+        initial_load: (n,) initial load at each node
+        dissipation: per-step dissipation (< 0 for energy loss)
+        n_steps: simulation steps
+
+    Returns:
+        trajectory: (n_steps+1, n) load trajectory
+        peak_loads: (n_steps+1,) peak load at each step
     """
-    print("=" * 60)
-    print("APPLICATION 1: Network Resilience Analysis")
-    print("=" * 60)
+    n = len(initial_load)
+    # Convert adjacency to tropical viscosity kernel
+    K = np.where(adjacency > 0, adjacency, np.inf)
+    np.fill_diagonal(K, 0)
+    # Use graph shortest paths as kernel
+    # Floyd-Warshall for all-pairs shortest paths
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if K[i, k] + K[k, j] < K[i, j]:
+                    K[i, j] = K[i, k] + K[k, j]
 
-    # Build a small social/sensor network
-    n = 8
-    # Adjacency with latencies (nonneg, zero diagonal)
-    K = np.array([
-        [0, 1, 3, 0, 0, 0, 0, 2],
-        [1, 0, 1, 2, 0, 0, 0, 0],
-        [3, 1, 0, 1, 3, 0, 0, 0],
-        [0, 2, 1, 0, 1, 2, 0, 0],
-        [0, 0, 3, 1, 0, 1, 3, 0],
-        [0, 0, 0, 2, 1, 0, 1, 2],
-        [0, 0, 0, 0, 3, 1, 0, 1],
-        [2, 0, 0, 0, 0, 2, 1, 0],
-    ], dtype=float)
-    # Replace 0s off-diagonal with large value (no direct connection)
-    for i in range(n):
-        for j in range(n):
-            if i != j and K[i, j] == 0:
-                K[i, j] = 10.0  # high latency = weak connection
+    trajectory = np.zeros((n_steps + 1, n))
+    peak_loads = np.zeros(n_steps + 1)
+    trajectory[0] = initial_load.copy()
+    peak_loads[0] = initial_load.max()
 
-    # Initial sensor readings (heterogeneous)
-    u0 = np.array([25.0, 18.0, 32.0, 15.0, 28.0, 10.0, 35.0, 20.0])
+    for step in range(n_steps):
+        omega = trajectory[step]
+        T_omega = tropical_diffusion(K, omega)
+        trajectory[step + 1] = np.minimum(omega, T_omega + dissipation)
+        peak_loads[step + 1] = trajectory[step + 1].max()
 
-    print(f"\nSensor readings: {u0}")
-    print(f"Initial oscillation (spread): {oscillation(u0):.2f}")
-
-    result = iterate_tropical_diffusion(K, u0, 30)
-
-    print(f"\nAfter 30 rounds of tropical consensus:")
-    print(f"  Final oscillation: {result['osc'][-1]:.4f}")
-    print(f"  Oscillation never exceeded initial: {all(o <= result['osc'][0] + 1e-10 for o in result['osc'])}")
-    print(f"  => Network is provably stable under tropical propagation")
-
-    fp, steps = find_fixed_point(K, u0)
-    print(f"  Consensus reached in {steps} steps")
-    print(f"  Consensus value: {fp[0]:.4f} (spread: {oscillation(fp):.6f})")
+    return trajectory, peak_loads
 
 
-# ============================================================
-# Application 2: Morphological Image Processing
-# ============================================================
+# ─────────────────────────────────────────────────────────────────────
+# Application 2: Consensus Dynamics
+# ─────────────────────────────────────────────────────────────────────
 
-def morphological_processing_demo():
+def tropical_consensus(
+    K: np.ndarray,
+    opinions: np.ndarray,
+    n_steps: int = 100,
+) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Tropical diffusion as morphological dilation/erosion.
+    Tropical consensus protocol on a weighted graph.
 
-    In image processing, the max-plus operator T(u)(i) = max_j(u(j) - K(i,j))
-    is exactly a grayscale dilation with structuring element -K.
-    The regularity theorems guarantee contrast cannot increase
-    under repeated dilation — a key property for stable filters.
+    Each agent updates their opinion to the minimum of neighboring
+    opinions plus communication cost. The oscillation contraction
+    theorem guarantees convergence to consensus.
+
+    Args:
+        K: (n, n) communication cost kernel
+        opinions: (n,) initial opinions
+        n_steps: number of rounds
+
+    Returns:
+        trajectory: (n_steps+1, n) opinion trajectory
+        oscillations: (n_steps+1,) oscillation at each step
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Morphological Image Processing")
-    print("=" * 60)
+    n = len(opinions)
+    trajectory = np.zeros((n_steps + 1, n))
+    oscillations = np.zeros(n_steps + 1)
 
-    # 1D "image" (grayscale profile)
-    n = 20
-    x = np.linspace(0, 2 * np.pi, n)
-    image = 100 * np.sin(x) + 50 * np.sin(3 * x) + np.random.RandomState(42).randn(n) * 10
+    trajectory[0] = opinions.copy()
+    oscillations[0] = opinions.max() - opinions.min()
 
-    # Structuring element: parabolic (models Gaussian-like smoothing)
+    for step in range(n_steps):
+        trajectory[step + 1] = tropical_diffusion(K, trajectory[step])
+        oscillations[step + 1] = (trajectory[step + 1].max() -
+                                   trajectory[step + 1].min())
+
+    return trajectory, oscillations
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Application 3: Discrete Vorticity Control
+# ─────────────────────────────────────────────────────────────────────
+
+def vorticity_simulation(
+    grid_size: int = 8,
+    viscosity: float = 0.5,
+    dissipation: float = -0.05,
+    n_steps: int = 100,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Simulate discrete vorticity evolution with tropical viscosity barrier.
+
+    Models a 2D grid where vorticity evolves under tropical diffusion
+    with a distance-based kernel. The barrier theorem certifies that
+    the maximum vorticity is nonincreasing.
+
+    Args:
+        grid_size: size of the grid (grid_size x grid_size)
+        viscosity: scale factor for the distance kernel
+        dissipation: per-step dissipation
+        n_steps: simulation steps
+
+    Returns:
+        trajectory: (n_steps+1, grid_size^2) vorticity trajectory
+        max_vorticity: (n_steps+1,) maximum vorticity
+        theoretical_bound: (n_steps+1,) theoretical barrier bound
+    """
+    n = grid_size * grid_size
+
+    # Build distance kernel on 2D grid
+    coords = np.array([(i, j) for i in range(grid_size)
+                       for j in range(grid_size)])
     K = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
-            K[i, j] = 0.5 * (i - j) ** 2 / n
+            dist = abs(coords[i][0] - coords[j][0]) + abs(coords[i][1] - coords[j][1])
+            K[i, j] = viscosity * dist
 
-    print(f"\nImage profile (1D, {n} pixels)")
-    print(f"Initial contrast (oscillation): {oscillation(image):.2f}")
+    # Initial vorticity: localized vortex
+    omega_0 = np.zeros(n)
+    center = grid_size // 2
+    for i in range(n):
+        r = abs(coords[i][0] - center) + abs(coords[i][1] - center)
+        omega_0[i] = max(0, 10.0 - 2.0 * r)
 
-    result = iterate_tropical_diffusion(K, image, 10)
+    trajectory = np.zeros((n_steps + 1, n))
+    max_vorticity = np.zeros(n_steps + 1)
+    M0 = omega_0.max()
 
-    print(f"\nContrast after morphological dilation iterations:")
-    for step in [0, 1, 2, 5, 10]:
-        print(f"  Step {step:2d}: contrast = {result['osc'][step]:.4f}")
+    trajectory[0] = omega_0.copy()
+    max_vorticity[0] = M0
 
-    print(f"\n=> Contrast monotonically decreasing: "
-          f"{all(result['osc'][i] >= result['osc'][i+1] - 1e-10 for i in range(len(result['osc'])-1))}")
-    print("=> Tropical regularity guarantees stable image filtering")
+    for step in range(n_steps):
+        omega = trajectory[step]
+        T_omega = tropical_diffusion(K, omega)
+        trajectory[step + 1] = np.minimum(omega, T_omega + dissipation)
+        max_vorticity[step + 1] = trajectory[step + 1].max()
+
+    theoretical_bound = np.full(n_steps + 1, M0)  # constant barrier
+
+    return trajectory, max_vorticity, theoretical_bound
 
 
-# ============================================================
-# Application 3: Optimal Control / Dynamic Programming
-# ============================================================
+# ─────────────────────────────────────────────────────────────────────
+# Application 4: Neural Network Activation Bounding
+# ─────────────────────────────────────────────────────────────────────
 
-def optimal_control_demo():
+def tropical_neural_bound(
+    weight_matrices: list,
+    input_bound: float,
+) -> float:
     """
-    Tropical diffusion as Bellman iteration in optimal control.
+    Compute certified activation bound for a tropical neural network.
 
-    The operator T(u)(i) = max_j(u(j) - K(i,j)) is the Bellman
-    operator for a shortest-path / optimal control problem where
-    K(i,j) is the transition cost. The regularity theorem says
-    the value function cannot develop arbitrarily large gradients.
+    A tropical (min-plus) neural network layer computes
+    h_{l+1}(i) = min_j (W_l(i,j) + h_l(j))
+
+    If all weight matrices have nonneg entries and zero diagonal,
+    the barrier theorem guarantees max(h_l) <= max(h_0) for all layers.
+
+    Args:
+        weight_matrices: list of (n, n) weight matrices
+        input_bound: maximum absolute value of input activations
+
+    Returns:
+        certified upper bound on activations at any layer
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Optimal Control (Bellman Iteration)")
+    bound = input_bound
+    for W in weight_matrices:
+        # Verify tropical viscosity kernel property
+        assert np.all(W >= 0), "Weight matrix must be nonnegative"
+        assert np.allclose(np.diag(W), 0), "Weight matrix must have zero diagonal"
+        # By the barrier theorem, max does not increase
+        # bound remains unchanged
+
+    return bound
+
+
+def demo_network_stability():
+    """Demonstrate network flow stability analysis."""
+    print("=" * 60)
+    print("APPLICATION 1: Network Flow Stability")
     print("=" * 60)
 
+    # Small network: ring with shortcuts
     n = 6
-    # Transition costs (asymmetric)
-    K = np.array([
-        [0, 2, 5, 8, 10, 3],
-        [3, 0, 2, 5, 8, 7],
-        [6, 3, 0, 2, 5, 9],
-        [9, 6, 3, 0, 2, 4],
-        [4, 9, 6, 3, 0, 2],
-        [2, 4, 9, 6, 3, 0],
-    ], dtype=float)
+    adj = np.zeros((n, n))
+    for i in range(n):
+        adj[i, (i + 1) % n] = 1
+        adj[(i + 1) % n, i] = 1
+    adj[0, 3] = 1  # shortcut
+    adj[3, 0] = 1
 
-    # Terminal rewards
-    rewards = np.array([10.0, -5.0, 20.0, 0.0, 15.0, -10.0])
+    load = np.array([10.0, 2.0, 5.0, 15.0, 3.0, 8.0])
+    print(f"\nInitial load: {load}")
+    print(f"Peak load: {load.max()}")
 
-    print(f"\nTerminal rewards: {rewards}")
-    print(f"Reward spread (oscillation): {oscillation(rewards):.2f}")
-
-    # Bellman iteration = tropical diffusion
-    result = iterate_tropical_diffusion(K, rewards, 20)
-
-    print(f"\nValue function evolution:")
-    for step in [0, 1, 2, 5, 10, 20]:
-        state = result['states'][step]
-        print(f"  Step {step:2d}: V = [{', '.join(f'{v:.2f}' for v in state)}]")
-        print(f"           osc = {oscillation(state):.4f}")
-
-    print(f"\n=> Value function gradient bounded by initial reward spread")
-    print(f"=> Bellman iteration is provably non-amplifying")
+    traj, peaks = network_stability_analysis(adj, load, dissipation=-0.2, n_steps=30)
+    print(f"\nAfter 30 steps:")
+    print(f"  Final load: {np.round(traj[-1], 2)}")
+    print(f"  Peak load: {peaks[-1]:.4f}")
+    print(f"  Peak nonincreasing: {all(peaks[i+1] <= peaks[i] + 1e-10 for i in range(len(peaks)-1))}")
 
 
-# ============================================================
-# Application 4: Discrete Fluid Simulation
-# ============================================================
-
-def fluid_simulation_demo():
-    """
-    Tropical diffusion as a discrete fluid velocity regularizer.
-
-    Model a 1D velocity field on a discrete grid. Apply tropical
-    diffusion as a regularization step. The vorticity bound theorem
-    guarantees that velocity gradients cannot blow up.
-    """
+def demo_consensus():
+    """Demonstrate tropical consensus dynamics."""
     print("\n" + "=" * 60)
-    print("APPLICATION 4: Discrete Fluid Velocity Regularization")
+    print("APPLICATION 2: Tropical Consensus")
     print("=" * 60)
 
-    n = 16
-    # Grid-based kernel (1D lattice distances)
-    K = build_graph_kernel(n, 'path', scale=0.3)
+    n = 5
+    K = np.array([
+        [0, 0.5, 1, 1.5, 2],
+        [0.5, 0, 0.5, 1, 1.5],
+        [1, 0.5, 0, 0.5, 1],
+        [1.5, 1, 0.5, 0, 0.5],
+        [2, 1.5, 1, 0.5, 0],
+    ])
 
-    # Initial velocity field with sharp gradients (potential singularity)
-    x = np.linspace(0, 1, n)
-    velocity = np.zeros(n)
-    velocity[n//4:3*n//4] = 10.0  # sharp step function
-    velocity += np.random.RandomState(123).randn(n) * 0.5
+    opinions = np.array([10.0, 2.0, 7.0, 15.0, 4.0])
+    print(f"\nInitial opinions: {opinions}")
+    print(f"Initial oscillation: {opinions.max() - opinions.min():.2f}")
 
-    # Weight matrix for vorticity
-    A = np.ones((n, n)) * 0.8
+    traj, oscs = tropical_consensus(K, opinions, n_steps=20)
+    print(f"\nAfter 20 rounds:")
+    print(f"  Final opinions: {np.round(traj[-1], 4)}")
+    print(f"  Final oscillation: {oscs[-1]:.6f}")
+    print(f"  Oscillation nonincreasing: "
+          f"{all(oscs[i+1] <= oscs[i] + 1e-10 for i in range(len(oscs)-1))}")
 
-    print(f"\nGrid size: {n}")
-    print(f"Initial velocity oscillation: {oscillation(velocity):.4f}")
-    print(f"Initial vorticity: {discrete_vorticity(A, velocity):.4f}")
 
-    result = iterate_tropical_diffusion(K, velocity, 30)
+def demo_vorticity():
+    """Demonstrate discrete vorticity control."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Discrete Vorticity Control")
+    print("=" * 60)
 
-    print(f"\n{'Step':>4} | {'osc':>8} | {'vorticity':>10} | {'sup':>8}")
-    print("-" * 45)
-    for step in [0, 1, 2, 3, 5, 10, 20, 30]:
-        s = result['states'][step]
-        v = discrete_vorticity(A, s)
-        print(f"{step:4d} | {oscillation(s):8.4f} | {v:10.4f} | {np.max(s):8.4f}")
-
-    initial_osc = oscillation(velocity)
-    all_bounded = all(
-        discrete_vorticity(A, result['states'][i]) <= initial_osc + 1e-10
-        for i in range(len(result['states']))
+    traj, maxv, bound = vorticity_simulation(
+        grid_size=6, viscosity=0.3, dissipation=-0.1, n_steps=50
     )
-    print(f"\n=> All vorticities bounded by initial oscillation ({initial_osc:.4f}): {all_bounded}")
-    print("=> Tropical regularity prevents gradient blowup in discrete fluid model")
+
+    print(f"\n6x6 grid, viscosity=0.3, dissipation=-0.1")
+    print(f"Initial max vorticity: {maxv[0]:.4f}")
+    print(f"Final max vorticity:   {maxv[-1]:.4f}")
+    print(f"Barrier bound:         {bound[-1]:.4f}")
+    print(f"Bound holds at all steps: "
+          f"{all(maxv[i] <= bound[i] + 1e-10 for i in range(len(maxv)))}")
+    print(f"Max nonincreasing: "
+          f"{all(maxv[i+1] <= maxv[i] + 1e-10 for i in range(len(maxv)-1))}")
+
+
+def demo_neural():
+    """Demonstrate neural network activation bounding."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Neural Network Activation Bounding")
+    print("=" * 60)
+
+    n = 4
+    layers = 5
+    weights = []
+    for _ in range(layers):
+        W = np.random.rand(n, n) * 2
+        np.fill_diagonal(W, 0)
+        weights.append(W)
+
+    input_bound = 10.0
+    cert_bound = tropical_neural_bound(weights, input_bound)
+    print(f"\n{layers}-layer tropical network, {n} neurons per layer")
+    print(f"Input bound: {input_bound}")
+    print(f"Certified activation bound: {cert_bound}")
+
+    # Verify empirically
+    np.random.seed(0)
+    max_activation = 0
+    for trial in range(1000):
+        h = np.random.uniform(0, input_bound, n)
+        for W in weights:
+            h = tropical_diffusion(W, h)
+        max_activation = max(max_activation, h.max())
+
+    print(f"Empirical max activation (1000 trials): {max_activation:.4f}")
+    print(f"Bound holds: {max_activation <= cert_bound + 1e-10}")
 
 
 if __name__ == "__main__":
-    network_resilience_demo()
-    morphological_processing_demo()
-    optimal_control_demo()
-    fluid_simulation_demo()
-
+    demo_network_stability()
+    demo_consensus()
+    demo_vorticity()
+    demo_neural()
     print("\n" + "=" * 60)
-    print("All applications demonstrated successfully.")
+    print("All application demos completed successfully.")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Tropical Diffusion Regularity: Demonstrations
+Tropical Diffusion and Barrier Theorem Demonstrations
 
-Demonstrates the key theorems of tropical diffusion regularity theory
-with concrete numerical examples on finite grids.
+Concrete numerical examples demonstrating:
+1. Tropical (min-plus) diffusion on finite state spaces
+2. The tropical maximum principle
+3. Dissipative barrier evolution (Theorem B)
+4. Exponential decay under linear damping (Theorem C)
+5. Oscillation contraction
 """
 
 import numpy as np
 
-def trop_diff_max(K, u):
-    """Max-plus tropical diffusion: T(u)(i) = max_j (u(j) - K(i,j))"""
+
+def tropical_diffusion(K: np.ndarray, u: np.ndarray) -> np.ndarray:
+    """
+    Min-plus tropical diffusion operator.
+    T_K(u)(i) = min_j (u[j] + K[i,j])
+
+    Args:
+        K: (n, n) nonnegative kernel matrix
+        u: (n,) state vector
+
+    Returns:
+        (n,) diffused state
+    """
     n = len(u)
     result = np.zeros(n)
     for i in range(n):
-        result[i] = max(u[j] - K[i, j] for j in range(n))
+        result[i] = min(u[j] + K[i, j] for j in range(n))
     return result
 
-def trop_diff_min(K, u):
-    """Min-plus tropical diffusion: T(u)(i) = min_j (K(i,j) + u(j))"""
-    n = len(u)
-    result = np.zeros(n)
-    for i in range(n):
-        result[i] = min(K[i, j] + u[j] for j in range(n))
-    return result
 
-def osc(u):
-    """Oscillation seminorm: max(u) - min(u)"""
-    return np.max(u) - np.min(u)
+def dissipative_update(K: np.ndarray, c: float, u: np.ndarray) -> np.ndarray:
+    """
+    Dissipative barrier update.
+    Phi(u)(i) = min(u[i], T_K(u)(i) + c)
 
-def trop_energy(u):
-    """Tropical energy: max(u)"""
-    return np.max(u)
+    Args:
+        K: (n, n) nonnegative kernel matrix
+        c: dissipation constant (should be <= 0)
+        u: (n,) state vector
 
-def trop_dissipation(K, u):
-    """Tropical dissipation: max_i (u(i) - T(u)(i))"""
-    Tu = trop_diff_max(K, u)
-    return np.max(u - Tu)
+    Returns:
+        (n,) updated state
+    """
+    Tu = tropical_diffusion(K, u)
+    return np.minimum(u, Tu + c)
 
-def discrete_vorticity(A, u):
-    """Discrete vorticity: max_{i,j} |A(i,j) * (u(j) - u(i))|"""
-    n = len(u)
-    return max(abs(A[i, j] * (u[j] - u[i]))
-               for i in range(n) for j in range(n))
 
-def iterate_trop(K, u, n_steps):
-    """Iterate tropical diffusion n_steps times, returning all states."""
-    states = [u.copy()]
-    current = u.copy()
-    for _ in range(n_steps):
-        current = trop_diff_max(K, current)
-        states.append(current.copy())
-    return states
+def damped_update(K: np.ndarray, c: float, lam: float, u: np.ndarray) -> np.ndarray:
+    """
+    Damped barrier update with linear contraction.
+    Phi(u)(i) = min(lam * u[i], T_K(u)(i) + c)
+
+    Args:
+        K: (n, n) nonnegative kernel matrix
+        c: dissipation constant (should be <= 0)
+        lam: damping factor (0 <= lam <= 1)
+        u: (n,) state vector
+
+    Returns:
+        (n,) updated state
+    """
+    Tu = tropical_diffusion(K, u)
+    return np.minimum(lam * u, Tu + c)
 
 
 def demo_maximum_principle():
-    """Demonstrate Theorem 1: Tropical Maximum Principle"""
+    """Demonstrate the tropical maximum principle (Theorem A)."""
     print("=" * 60)
     print("DEMO 1: Tropical Maximum Principle")
     print("=" * 60)
 
-    n = 5
-    # Graph distance kernel (nonneg, zero diagonal)
+    # Define a 4-site system with a tropical viscosity kernel
     K = np.array([
-        [0, 1, 2, 3, 2],
-        [1, 0, 1, 2, 3],
-        [2, 1, 0, 1, 2],
-        [3, 2, 1, 0, 1],
-        [2, 3, 2, 1, 0]
+        [0.0, 1.0, 2.0, 3.0],
+        [1.0, 0.0, 1.0, 2.0],
+        [2.0, 1.0, 0.0, 1.0],
+        [3.0, 2.0, 1.0, 0.0],
+    ])
+    print(f"\nKernel K (graph distance matrix):\n{K}")
+    assert np.all(K >= 0), "K must be nonneg"
+    assert np.all(np.diag(K) == 0), "K must have zero diagonal"
+
+    u = np.array([5.0, 2.0, 8.0, 3.0])
+    print(f"\nInitial state u = {u}")
+    print(f"  min(u) = {u.min():.2f}")
+    print(f"  max(u) = {u.max():.2f}")
+
+    Tu = tropical_diffusion(K, u)
+    print(f"\nDiffused state T_K(u) = {Tu}")
+    print(f"  min(T_K(u)) = {Tu.min():.2f}")
+    print(f"  max(T_K(u)) = {Tu.max():.2f}")
+
+    print(f"\n  min(u) <= min(T_K(u))? {u.min() <= Tu.min() + 1e-10}  "
+          f"({u.min():.2f} <= {Tu.min():.2f})")
+    print(f"  min(T_K(u)) = min(u)?  {abs(Tu.min() - u.min()) < 1e-10}  "
+          f"(preserved exactly)")
+    print(f"  max(T_K(u)) <= max(u)? {Tu.max() <= u.max() + 1e-10}  "
+          f"({Tu.max():.2f} <= {u.max():.2f})")
+    print(f"  Oscillation: {u.max() - u.min():.2f} -> {Tu.max() - Tu.min():.2f}")
+
+
+def demo_barrier_nonincreasing():
+    """Demonstrate the dissipative barrier theorem (Theorem B)."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Dissipative Barrier (Theorem B)")
+    print("=" * 60)
+
+    n_sites = 5
+    # Random tropical viscosity kernel
+    np.random.seed(42)
+    K = np.random.rand(n_sites, n_sites) * 3
+    K = (K + K.T) / 2  # symmetrize
+    np.fill_diagonal(K, 0)  # zero diagonal
+
+    omega = np.array([10.0, 7.0, 15.0, 3.0, 12.0])
+    c = -0.5  # dissipation constant
+
+    print(f"\nInitial vorticity: {omega}")
+    print(f"Dissipation constant c = {c}")
+    print(f"\n{'Step':>4}  {'max(ω)':>8}  {'min(ω)':>8}  {'osc(ω)':>8}")
+    print(f"{'─' * 4}  {'─' * 8}  {'─' * 8}  {'─' * 8}")
+
+    maxes = [omega.max()]
+    for step in range(20):
+        osc = omega.max() - omega.min()
+        print(f"{step:4d}  {omega.max():8.4f}  {omega.min():8.4f}  {osc:8.4f}")
+        omega = dissipative_update(K, c, omega)
+        maxes.append(omega.max())
+
+    print(f"\nmax(ω) nonincreasing? {all(maxes[i+1] <= maxes[i] + 1e-10 for i in range(len(maxes)-1))}")
+
+
+def demo_exponential_decay():
+    """Demonstrate exponential decay (Theorem C)."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Exponential Decay (Theorem C)")
+    print("=" * 60)
+
+    n_sites = 4
+    K = np.array([
+        [0, 1, 2, 3],
+        [1, 0, 1, 2],
+        [2, 1, 0, 1],
+        [3, 2, 1, 0],
     ], dtype=float)
 
-    u = np.array([3.0, -1.0, 7.0, 2.0, -3.0])
+    lam = 0.9
+    c = -0.1
+    omega = np.array([10.0, 8.0, 12.0, 6.0])
+    M0 = omega.max()
 
-    Tu = trop_diff_max(K, u)
-    Tu_min = trop_diff_min(K, u)
+    print(f"\nDamping factor λ = {lam}")
+    print(f"Dissipation c = {c}")
+    print(f"Initial max M_0 = {M0}")
+    print(f"\n{'Step':>4}  {'max(ω)':>10}  {'λ^n·M_0':>10}  {'Bound holds':>12}")
+    print(f"{'─' * 4}  {'─' * 10}  {'─' * 10}  {'─' * 12}")
 
-    print(f"\nInitial state u = {u}")
-    print(f"Kernel K (graph distances on 5-cycle):")
-    print(K)
-    print(f"\nMax-plus diffusion T(u)  = {Tu}")
-    print(f"Min-plus diffusion T'(u) = {Tu_min}")
-    print(f"\nsup(u) = {np.max(u):.4f},  sup(T(u)) = {np.max(Tu):.4f}")
-    print(f"  => sup(T(u)) ≤ sup(u)? {np.max(Tu) <= np.max(u) + 1e-10}")
-    print(f"\ninf(u) = {np.min(u):.4f},  inf(T'(u)) = {np.min(Tu_min):.4f}")
-    print(f"  => inf(u) ≤ inf(T'(u))? {np.min(u) <= np.min(Tu_min) + 1e-10}")
+    for n in range(25):
+        bound = lam ** n * M0
+        actual = omega.max()
+        holds = actual <= bound + 1e-10
+        print(f"{n:4d}  {actual:10.6f}  {bound:10.6f}  {'✓' if holds else '✗':>12}")
+        omega = damped_update(K, c, lam, omega)
+
+    print(f"\nAfter 24 steps: max(ω) = {omega.max():.6f}")
+    print(f"Theoretical bound λ^24·M_0 = {lam**24 * M0:.6f}")
 
 
 def demo_oscillation_contraction():
-    """Demonstrate Theorem 2: Oscillation Contraction"""
+    """Demonstrate oscillation (energy) contraction."""
     print("\n" + "=" * 60)
-    print("DEMO 2: Oscillation Contraction")
+    print("DEMO 4: Oscillation Contraction")
     print("=" * 60)
 
-    n = 6
-    K = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            K[i, j] = min(abs(i - j), n - abs(i - j)) * 0.5  # scaled cycle distance
+    n_sites = 6
+    K = np.zeros((n_sites, n_sites))
+    for i in range(n_sites):
+        for j in range(n_sites):
+            K[i, j] = abs(i - j) * 0.5  # linear distance kernel
+    np.fill_diagonal(K, 0)
 
-    u = np.array([10.0, -5.0, 8.0, -3.0, 12.0, -7.0])
+    omega = np.array([20.0, 2.0, 15.0, 1.0, 18.0, 5.0])
+    c = -0.3
 
-    print(f"\nInitial state u = {u}")
-    print(f"Kernel: scaled cycle distances (factor 0.5)")
+    print(f"\nInitial state: {omega}")
+    print(f"Initial oscillation: {omega.max() - omega.min():.4f}")
+    print(f"\n{'Step':>4}  {'osc(ω)':>10}  {'max(ω)':>10}  {'min(ω)':>10}")
+    print(f"{'─' * 4}  {'─' * 10}  {'─' * 10}  {'─' * 10}")
 
-    states = iterate_trop(K, u, 20)
-    print(f"\n{'Step':>4} | {'sup':>8} | {'inf':>8} | {'osc':>8} | {'energy':>8}")
-    print("-" * 50)
-    for step, s in enumerate(states):
-        print(f"{step:4d} | {np.max(s):8.4f} | {np.min(s):8.4f} | {osc(s):8.4f} | {trop_energy(s):8.4f}")
-        if step >= 15:
-            break
+    for step in range(30):
+        osc = omega.max() - omega.min()
+        print(f"{step:4d}  {osc:10.4f}  {omega.max():10.4f}  {omega.min():10.4f}")
+        omega = dissipative_update(K, c, omega)
 
-    print("\n=> Oscillation is monotonically nonincreasing ✓")
+    print(f"\nFinal state: {np.round(omega, 4)}")
+    print(f"Final oscillation: {omega.max() - omega.min():.6f}")
 
 
-def demo_nonexpansiveness():
-    """Demonstrate sup-norm nonexpansiveness"""
+def demo_monotonicity():
+    """Demonstrate monotonicity of tropical diffusion."""
     print("\n" + "=" * 60)
-    print("DEMO 3: Sup-Norm Nonexpansiveness")
+    print("DEMO 5: Monotonicity of Tropical Diffusion")
     print("=" * 60)
 
-    n = 4
     K = np.array([
-        [0, 2, 3, 1],
-        [2, 0, 1, 3],
-        [3, 1, 0, 2],
-        [1, 3, 2, 0]
+        [0, 1, 2],
+        [1, 0, 1],
+        [2, 1, 0],
     ], dtype=float)
 
-    u = np.array([5.0, -2.0, 3.0, 1.0])
-    v = np.array([4.0, -1.0, 2.5, 1.5])
-
-    Tu = trop_diff_max(K, u)
-    Tv = trop_diff_max(K, v)
-
-    sup_diff_uv = np.max(np.abs(u - v))
-    sup_diff_TuTv = np.max(np.abs(Tu - Tv))
+    u = np.array([3.0, 1.0, 5.0])
+    v = np.array([4.0, 2.0, 6.0])
 
     print(f"\nu = {u}")
     print(f"v = {v}")
-    print(f"T(u) = {Tu}")
-    print(f"T(v) = {Tv}")
-    print(f"\n||u - v||_∞ = {sup_diff_uv:.4f}")
-    print(f"||T(u) - T(v)||_∞ = {sup_diff_TuTv:.4f}")
-    print(f"=> ||T(u)-T(v)||_∞ ≤ ||u-v||_∞? {sup_diff_TuTv <= sup_diff_uv + 1e-10}")
+    print(f"u <= v pointwise? {np.all(u <= v)}")
 
-
-def demo_iterated_bounds():
-    """Demonstrate Theorem 3: Iterated bounds"""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Iterated Tropical Evolution Bounds")
-    print("=" * 60)
-
-    n = 8
-    np.random.seed(42)
-    K = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                K[i, j] = np.random.uniform(0.1, 2.0)
-
-    u = np.random.uniform(-10, 10, n)
-    initial_sup = np.max(u)
-    initial_osc = osc(u)
-
-    print(f"\nGrid size: {n}")
-    print(f"Initial sup = {initial_sup:.4f}")
-    print(f"Initial osc = {initial_osc:.4f}")
-
-    states = iterate_trop(K, u, 50)
-    violations_sup = 0
-    violations_osc = 0
-    for step, s in enumerate(states):
-        if np.max(s) > initial_sup + 1e-10:
-            violations_sup += 1
-        if osc(s) > initial_osc + 1e-10:
-            violations_osc += 1
-
-    print(f"\nAfter 50 iterations:")
-    print(f"  Sup bound violations: {violations_sup}")
-    print(f"  Osc bound violations: {violations_osc}")
-    print(f"  Final sup = {np.max(states[-1]):.4f} (≤ {initial_sup:.4f})")
-    print(f"  Final osc = {osc(states[-1]):.4f} (≤ {initial_osc:.4f})")
-
-
-def demo_vorticity_control():
-    """Demonstrate Theorem 4: Vorticity Control"""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Discrete Vorticity Control")
-    print("=" * 60)
-
-    n = 5
-    K = np.array([
-        [0, 1, 2, 3, 2],
-        [1, 0, 1, 2, 3],
-        [2, 1, 0, 1, 2],
-        [3, 2, 1, 0, 1],
-        [2, 3, 2, 1, 0]
-    ], dtype=float)
-
-    A = np.ones((n, n)) * 0.5  # weight matrix ≤ 1
-
-    u = np.array([10.0, -5.0, 8.0, -3.0, 12.0])
-    initial_osc = osc(u)
-
-    print(f"\nInitial state u = {u}")
-    print(f"Initial osc = {initial_osc:.4f}")
-
-    states = iterate_trop(K, u, 20)
-    print(f"\n{'Step':>4} | {'osc':>8} | {'vorticity':>10} | {'vort ≤ osc(u₀)?':>16}")
-    print("-" * 50)
-    for step, s in enumerate(states):
-        v = discrete_vorticity(A, s)
-        bounded = "✓" if v <= initial_osc + 1e-10 else "✗"
-        print(f"{step:4d} | {osc(s):8.4f} | {v:10.4f} | {bounded:>16}")
-        if step >= 10:
-            break
-
-
-def demo_dissipation():
-    """Demonstrate dissipation properties"""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Tropical Dissipation")
-    print("=" * 60)
-
-    n = 5
-    K = np.array([
-        [0, 0.5, 1.0, 1.5, 1.0],
-        [0.5, 0, 0.5, 1.0, 1.5],
-        [1.0, 0.5, 0, 0.5, 1.0],
-        [1.5, 1.0, 0.5, 0, 0.5],
-        [1.0, 1.5, 1.0, 0.5, 0]
-    ], dtype=float)
-
-    u = np.array([5.0, -2.0, 8.0, 1.0, -4.0])
-
-    states = iterate_trop(K, u, 15)
-    print(f"\n{'Step':>4} | {'dissipation':>12} | {'energy':>8} | {'osc':>8}")
-    print("-" * 50)
-    for step, s in enumerate(states):
-        d = trop_dissipation(K, s)
-        print(f"{step:4d} | {d:12.6f} | {trop_energy(s):8.4f} | {osc(s):8.4f}")
+    Tu = tropical_diffusion(K, u)
+    Tv = tropical_diffusion(K, v)
+    print(f"\nT_K(u) = {Tu}")
+    print(f"T_K(v) = {Tv}")
+    print(f"T_K(u) <= T_K(v) pointwise? {np.all(Tu <= Tv + 1e-10)}")
 
 
 if __name__ == "__main__":
     demo_maximum_principle()
+    demo_barrier_nonincreasing()
+    demo_exponential_decay()
     demo_oscillation_contraction()
-    demo_nonexpansiveness()
-    demo_iterated_bounds()
-    demo_vorticity_control()
-    demo_dissipation()
+    demo_monotonicity()
     print("\n" + "=" * 60)
     print("All demonstrations completed successfully.")
     print("=" * 60)
@@ -478,9 +568,13 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Tropical Diffusion Regularity: Visualizations
+Visualizations for Tropical Barrier Theory
 
-Generates publication-quality figures illustrating the key theorems.
+Generates publication-quality figures demonstrating:
+1. Barrier nonincreasing (Theorem B)
+2. Exponential decay (Theorem C)
+3. Oscillation contraction
+4. Vorticity field evolution
 """
 
 import numpy as np
@@ -489,282 +583,281 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 import base64
-import io
-import json
+from io import BytesIO
 
 
-def tropical_diffusion_max(K, u):
-    return np.max(u[np.newaxis, :] - K, axis=1)
-
-def oscillation(u):
-    return float(np.max(u) - np.min(u))
-
-def discrete_vorticity(A, u):
-    n = len(u)
-    diff = u[np.newaxis, :] - u[:, np.newaxis]
-    return float(np.max(np.abs(A * diff)))
+def tropical_diffusion(K, u):
+    return np.min(K + u[np.newaxis, :], axis=1)
 
 
-def fig_to_base64(fig, dpi=150):
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=dpi, bbox_inches='tight')
+def save_fig_base64(fig) -> str:
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode('utf-8')
+    return "data:image/png;base64," + base64.b64encode(buf.read()).decode()
 
 
-def plot_oscillation_evolution():
-    """Plot oscillation decay under iteration for different kernels."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    n = 10
-    u0 = np.array([10, -5, 8, -3, 12, -7, 6, -2, 9, -4], dtype=float)
-    n_steps = 30
-
-    configs = [
-        ('Cycle (scale=0.3)', 0.3),
-        ('Cycle (scale=1.0)', 1.0),
-        ('Cycle (scale=3.0)', 3.0),
-    ]
-
-    for ax, (title, scale) in zip(axes, configs):
-        K = np.zeros((n, n))
-        for i in range(n):
-            for j in range(n):
-                K[i, j] = min(abs(i - j), n - abs(i - j)) * scale
-
-        oscs = [oscillation(u0)]
-        sups = [np.max(u0)]
-        infs = [np.min(u0)]
-        current = u0.copy()
-        for _ in range(n_steps):
-            current = tropical_diffusion_max(K, current)
-            oscs.append(oscillation(current))
-            sups.append(np.max(current))
-            infs.append(np.min(current))
-
-        steps = range(n_steps + 1)
-        ax.fill_between(steps, infs, sups, alpha=0.3, color='steelblue', label='[inf, sup] envelope')
-        ax.plot(steps, oscs, 'r-o', markersize=3, linewidth=2, label='Oscillation')
-        ax.axhline(y=oscillation(u0), color='gray', linestyle='--', alpha=0.5, label='Initial osc')
-        ax.set_xlabel('Iteration')
-        ax.set_ylabel('Value')
-        ax.set_title(title)
-        ax.legend(fontsize=8)
-        ax.grid(True, alpha=0.3)
-
-    fig.suptitle('Oscillation Contraction Under Tropical Diffusion', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    return fig
-
-
-def plot_state_evolution():
-    """Plot the state vector evolution as a heatmap."""
+def plot_barrier_theorem():
+    """Plot Theorem B: fmax nonincreasing under barrier evolution."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    n = 12
-    n_steps = 25
+    n_sites = 6
+    K = np.zeros((n_sites, n_sites))
+    for i in range(n_sites):
+        for j in range(n_sites):
+            K[i, j] = abs(i - j) * 0.8
+    np.fill_diagonal(K, 0)
 
-    K_small = np.zeros((n, n))
-    K_large = np.zeros((n, n))
+    # Multiple initial conditions
+    np.random.seed(42)
+    colors = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']
+    n_steps = 40
+
+    for idx, scale in enumerate([1.0, 1.5, 0.7, 2.0]):
+        omega = np.random.rand(n_sites) * 10 * scale + 2
+        maxes = [omega.max()]
+        mins = [omega.min()]
+        for step in range(n_steps):
+            T = tropical_diffusion(K, omega)
+            omega = np.minimum(omega, T - 0.3)
+            maxes.append(omega.max())
+            mins.append(omega.min())
+
+        axes[0].plot(maxes, color=colors[idx], linewidth=2,
+                     label=f'Trial {idx+1}', alpha=0.8)
+
+    axes[0].set_xlabel('Time Step', fontsize=12)
+    axes[0].set_ylabel('Global Maximum', fontsize=12)
+    axes[0].set_title('Theorem B: Max Nonincreasing Under Barrier Evolution',
+                      fontsize=13, fontweight='bold')
+    axes[0].legend(fontsize=10)
+    axes[0].grid(True, alpha=0.3)
+
+    # Single trajectory with min and max
+    omega = np.array([15.0, 3.0, 10.0, 7.0, 12.0, 5.0])
+    maxes, mins, oscs = [omega.max()], [omega.min()], [omega.max() - omega.min()]
+    for step in range(n_steps):
+        T = tropical_diffusion(K, omega)
+        omega = np.minimum(omega, T - 0.2)
+        maxes.append(omega.max())
+        mins.append(omega.min())
+        oscs.append(omega.max() - omega.min())
+
+    steps = range(len(maxes))
+    axes[1].fill_between(steps, mins, maxes, alpha=0.3, color='#2196F3')
+    axes[1].plot(maxes, 'b-', linewidth=2, label='max(ω)')
+    axes[1].plot(mins, 'r-', linewidth=2, label='min(ω)')
+    axes[1].plot(oscs, 'g--', linewidth=2, label='oscillation')
+    axes[1].set_xlabel('Time Step', fontsize=12)
+    axes[1].set_ylabel('Value', fontsize=12)
+    axes[1].set_title('Range Contraction Under Dissipative Update', fontsize=13,
+                      fontweight='bold')
+    axes[1].legend(fontsize=10)
+    axes[1].grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    fig.savefig('fig_barrier_theorem.png', dpi=150, bbox_inches='tight')
+    b64 = save_fig_base64(fig)
+    plt.close()
+    return b64
+
+
+def plot_exponential_decay():
+    """Plot Theorem C: exponential decay with damping."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    K = np.array([
+        [0, 1, 2, 3],
+        [1, 0, 1, 2],
+        [2, 1, 0, 1],
+        [3, 2, 1, 0],
+    ], dtype=float)
+
+    n_steps = 50
+    lambdas = [0.99, 0.95, 0.9, 0.8, 0.7]
+    colors = ['#F44336', '#FF9800', '#FFC107', '#4CAF50', '#2196F3']
+
+    for lam, color in zip(lambdas, colors):
+        omega = np.array([12.0, 8.0, 15.0, 6.0])
+        M0 = omega.max()
+        maxes = [M0]
+        bounds = [M0]
+
+        for step in range(n_steps):
+            T = tropical_diffusion(K, omega)
+            omega = np.minimum(lam * omega, T)
+            maxes.append(omega.max())
+            bounds.append(lam ** (step + 1) * M0)
+
+        axes[0].semilogy(maxes, color=color, linewidth=2, label=f'λ={lam}')
+        axes[0].semilogy(bounds, '--', color=color, linewidth=1, alpha=0.5)
+
+    axes[0].set_xlabel('Time Step', fontsize=12)
+    axes[0].set_ylabel('max(ω) [log scale]', fontsize=12)
+    axes[0].set_title('Theorem C: Exponential Decay for Various λ',
+                      fontsize=13, fontweight='bold')
+    axes[0].legend(fontsize=10)
+    axes[0].grid(True, alpha=0.3, which='both')
+
+    # Convergence rate comparison
+    lam = 0.9
+    omega = np.array([12.0, 8.0, 15.0, 6.0])
+    M0 = omega.max()
+    maxes = [M0]
+    bounds = [M0]
+
+    for step in range(n_steps):
+        T = tropical_diffusion(K, omega)
+        omega = np.minimum(lam * omega, T)
+        maxes.append(omega.max())
+        bounds.append(lam ** (step + 1) * M0)
+
+    ratios = np.array(maxes[1:]) / np.array(maxes[:-1])
+    ratios = np.where(np.array(maxes[:-1]) > 1e-15, ratios, lam)
+
+    axes[1].plot(ratios, 'b-', linewidth=2, label='Actual ratio M_{n+1}/M_n')
+    axes[1].axhline(y=lam, color='r', linestyle='--', linewidth=2,
+                    label=f'λ = {lam}')
+    axes[1].set_xlabel('Time Step', fontsize=12)
+    axes[1].set_ylabel('Ratio', fontsize=12)
+    axes[1].set_title('Step-by-Step Contraction Ratio (λ=0.9)',
+                      fontsize=13, fontweight='bold')
+    axes[1].legend(fontsize=10)
+    axes[1].grid(True, alpha=0.3)
+    axes[1].set_ylim(0, 1.1)
+
+    plt.tight_layout()
+    fig.savefig('fig_exponential_decay.png', dpi=150, bbox_inches='tight')
+    b64 = save_fig_base64(fig)
+    plt.close()
+    return b64
+
+
+def plot_vorticity_evolution():
+    """Plot vorticity field evolution on a 2D grid."""
+    grid_size = 10
+    n = grid_size * grid_size
+
+    coords = np.array([(i, j) for i in range(grid_size) for j in range(grid_size)])
+    K = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
-            d = min(abs(i - j), n - abs(i - j))
-            K_small[i, j] = d * 0.2
-            K_large[i, j] = d * 1.5
+            K[i, j] = 0.5 * (abs(coords[i][0] - coords[j][0]) +
+                              abs(coords[i][1] - coords[j][1]))
+    np.fill_diagonal(K, 0)
 
-    u0 = np.zeros(n)
-    u0[n // 4] = 10
-    u0[3 * n // 4] = -8
+    # Initial vortex
+    center = grid_size // 2
+    omega = np.zeros(n)
+    for i in range(n):
+        r = np.sqrt((coords[i][0] - center)**2 + (coords[i][1] - center)**2)
+        omega[i] = max(0, 10.0 * np.exp(-r))
 
-    for ax, K, title in [(axes[0], K_small, 'Weak Diffusion (scale=0.2)'),
-                          (axes[1], K_large, 'Strong Diffusion (scale=1.5)')]:
-        states = [u0.copy()]
-        current = u0.copy()
-        for _ in range(n_steps):
-            current = tropical_diffusion_max(K, current)
-            states.append(current.copy())
-        mat = np.array(states)
-        im = ax.imshow(mat.T, aspect='auto', cmap='RdBu_r',
-                       vmin=-10, vmax=10, origin='lower')
-        ax.set_xlabel('Iteration')
-        ax.set_ylabel('Site index')
-        ax.set_title(title)
-        plt.colorbar(im, ax=ax, shrink=0.8)
+    fig, axes = plt.subplots(2, 4, figsize=(16, 8))
+    steps_to_show = [0, 5, 15, 40]
 
-    fig.suptitle('Tropical Diffusion State Evolution', fontsize=14, fontweight='bold')
+    current = omega.copy()
+    step = 0
+    for idx, target_step in enumerate(steps_to_show):
+        while step < target_step:
+            T = tropical_diffusion(K, current)
+            current = np.minimum(current, T - 0.1)
+            current = np.maximum(current, 0)
+            step += 1
+
+        field = current.reshape(grid_size, grid_size)
+        im = axes[0, idx].imshow(field, cmap='hot', vmin=0, vmax=10,
+                                  interpolation='bilinear')
+        axes[0, idx].set_title(f'Step {target_step}', fontsize=12, fontweight='bold')
+        axes[0, idx].axis('off')
+
+        axes[1, idx].bar(range(n), current, color='steelblue', alpha=0.7, width=1.0)
+        axes[1, idx].set_ylim(0, 12)
+        axes[1, idx].set_xlabel('Site', fontsize=10)
+        axes[1, idx].set_ylabel('ω', fontsize=10)
+        axes[1, idx].set_title(f'max={current.max():.2f}', fontsize=10)
+
+    fig.suptitle('Vorticity Evolution Under Tropical Diffusion Barrier',
+                 fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
-    return fig
+    fig.savefig('fig_vorticity_evolution.png', dpi=150, bbox_inches='tight')
+    b64 = save_fig_base64(fig)
+    plt.close()
+    return b64
 
 
-def plot_vorticity_bound():
-    """Plot vorticity vs oscillation bounds."""
-    fig, ax = plt.subplots(figsize=(10, 6))
+def plot_comparison_principle():
+    """Plot the tropical maximum principle."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
     n = 8
     K = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
-            K[i, j] = min(abs(i - j), n - abs(i - j)) * 0.5
-
-    A = np.ones((n, n)) * 0.7
-    u0 = np.array([10.0, -5.0, 8.0, -3.0, 12.0, -7.0, 6.0, -2.0])
-    n_steps = 30
-
-    oscs = [oscillation(u0)]
-    vorts = [discrete_vorticity(A, u0)]
-    current = u0.copy()
-    for _ in range(n_steps):
-        current = tropical_diffusion_max(K, current)
-        oscs.append(oscillation(current))
-        vorts.append(discrete_vorticity(A, current))
-
-    steps = range(n_steps + 1)
-    ax.plot(steps, oscs, 'b-o', markersize=4, linewidth=2, label='Oscillation', zorder=3)
-    ax.plot(steps, vorts, 'r-s', markersize=4, linewidth=2, label='Discrete Vorticity', zorder=3)
-    ax.axhline(y=oscillation(u0), color='blue', linestyle='--', alpha=0.4, label='Initial oscillation bound')
-    ax.fill_between(steps, 0, oscillation(u0), alpha=0.1, color='blue')
-    ax.set_xlabel('Iteration', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Vorticity Control by Oscillation Bound', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(bottom=0)
-
-    plt.tight_layout()
-    return fig
-
-
-def plot_maximum_principle():
-    """Visualize the maximum principle: sup/inf envelope."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    n = 6
-    K = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            K[i, j] = abs(i - j) * 0.8
-
-    u0 = np.array([5.0, -3.0, 8.0, -1.0, 10.0, -5.0])
-    n_steps = 20
-
-    sups, infs = [np.max(u0)], [np.min(u0)]
-    current = u0.copy()
-    all_states = [u0.copy()]
-    for _ in range(n_steps):
-        current = tropical_diffusion_max(K, current)
-        sups.append(np.max(current))
-        infs.append(np.min(current))
-        all_states.append(current.copy())
-
-    steps = range(n_steps + 1)
-    ax.fill_between(steps, infs, sups, alpha=0.2, color='green', label='[inf, sup] range')
-    ax.plot(steps, sups, 'g-^', markersize=5, linewidth=2, label='sup(T^n u)')
-    ax.plot(steps, infs, 'g-v', markersize=5, linewidth=2, label='inf(T^n u)')
-    ax.axhline(y=np.max(u0), color='red', linestyle='--', alpha=0.7, label='Initial sup')
-    ax.axhline(y=np.min(u0), color='blue', linestyle='--', alpha=0.7, label='Initial inf')
-
-    # Plot individual site trajectories
-    for site in range(n):
-        trajectory = [all_states[s][site] for s in range(n_steps + 1)]
-        ax.plot(steps, trajectory, '-', alpha=0.3, color='gray', linewidth=0.8)
-
-    ax.set_xlabel('Iteration', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Tropical Maximum Principle: No New Extrema', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=9, loc='center right')
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    return fig
-
-
-def plot_nonexpansiveness():
-    """Visualize sup-norm nonexpansiveness."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    n = 6
-    K = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
             K[i, j] = abs(i - j) * 0.5
+    np.fill_diagonal(K, 0)
 
-    np.random.seed(42)
-    n_pairs = 50
-    n_steps = 20
+    u = np.array([8, 3, 10, 2, 7, 5, 9, 4], dtype=float)
+    Tu = tropical_diffusion(K, u)
 
-    # Track contraction ratios
-    for ax, step_label, step_val in [(axes[0], 'After 1 step', 1), (axes[1], 'After 10 steps', 10)]:
-        dists_before = []
-        dists_after = []
-        for _ in range(n_pairs):
-            u = np.random.randn(n) * 5
-            v = np.random.randn(n) * 5
-            d_before = np.max(np.abs(u - v))
+    x = np.arange(n)
+    width = 0.35
 
-            for _ in range(step_val):
-                u = tropical_diffusion_max(K, u)
-                v = tropical_diffusion_max(K, v)
-            d_after = np.max(np.abs(u - v))
+    axes[0].bar(x - width/2, u, width, label='u', color='#2196F3', alpha=0.8)
+    axes[0].bar(x + width/2, Tu, width, label='T_K(u)', color='#FF5722', alpha=0.8)
+    axes[0].axhline(y=u.min(), color='blue', linestyle='--', alpha=0.5,
+                    label=f'min(u) = {u.min():.0f}')
+    axes[0].axhline(y=u.max(), color='red', linestyle='--', alpha=0.5,
+                    label=f'max(u) = {u.max():.0f}')
+    axes[0].set_xlabel('Site i', fontsize=12)
+    axes[0].set_ylabel('Value', fontsize=12)
+    axes[0].set_title('Maximum Principle: T_K preserves range',
+                      fontsize=13, fontweight='bold')
+    axes[0].legend(fontsize=9)
+    axes[0].grid(True, alpha=0.3)
 
-            dists_before.append(d_before)
-            dists_after.append(d_after)
+    # Multiple iterations
+    n_iter = 15
+    maxes = [u.max()]
+    mins = [u.min()]
+    oscs = [u.max() - u.min()]
+    current = u.copy()
+    for _ in range(n_iter):
+        current = tropical_diffusion(K, current)
+        maxes.append(current.max())
+        mins.append(current.min())
+        oscs.append(current.max() - current.min())
 
-        ax.scatter(dists_before, dists_after, alpha=0.6, s=30, c='steelblue')
-        max_val = max(max(dists_before), max(dists_after))
-        ax.plot([0, max_val], [0, max_val], 'r--', linewidth=2, label='y = x (1-Lipschitz bound)')
-        ax.set_xlabel('||u - v||∞ (before)', fontsize=11)
-        ax.set_ylabel('||T^n(u) - T^n(v)||∞ (after)', fontsize=11)
-        ax.set_title(step_label, fontsize=12)
-        ax.legend(fontsize=9)
-        ax.grid(True, alpha=0.3)
-        ax.set_aspect('equal')
-        ax.set_xlim(0, max_val * 1.1)
-        ax.set_ylim(0, max_val * 1.1)
+    axes[1].plot(maxes, 'r-o', markersize=4, linewidth=2, label='max')
+    axes[1].plot(mins, 'b-o', markersize=4, linewidth=2, label='min')
+    axes[1].fill_between(range(len(maxes)), mins, maxes, alpha=0.15, color='purple')
+    axes[1].set_xlabel('Iteration', fontsize=12)
+    axes[1].set_ylabel('Value', fontsize=12)
+    axes[1].set_title('Iterated Diffusion: Range Contracts',
+                      fontsize=13, fontweight='bold')
+    axes[1].legend(fontsize=10)
+    axes[1].grid(True, alpha=0.3)
 
-    fig.suptitle('Sup-Norm Nonexpansiveness of Tropical Diffusion', fontsize=14, fontweight='bold')
     plt.tight_layout()
-    return fig
-
-
-def generate_all_visualizations():
-    """Generate all visualizations and return as base64 dict."""
-    print("Generating visualizations...")
-
-    viz = {}
-
-    fig = plot_oscillation_evolution()
-    viz['oscillation_contraction'] = fig_to_base64(fig)
-    fig.savefig('/workspace/request-project/fig_oscillation_contraction.png', dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    print("  ✓ Oscillation contraction")
-
-    fig = plot_state_evolution()
-    viz['state_evolution'] = fig_to_base64(fig)
-    fig.savefig('/workspace/request-project/fig_state_evolution.png', dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    print("  ✓ State evolution")
-
-    fig = plot_vorticity_bound()
-    viz['vorticity_bound'] = fig_to_base64(fig)
-    fig.savefig('/workspace/request-project/fig_vorticity_bound.png', dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    print("  ✓ Vorticity bound")
-
-    fig = plot_maximum_principle()
-    viz['maximum_principle'] = fig_to_base64(fig)
-    fig.savefig('/workspace/request-project/fig_maximum_principle.png', dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    print("  ✓ Maximum principle")
-
-    fig = plot_nonexpansiveness()
-    viz['nonexpansiveness'] = fig_to_base64(fig)
-    fig.savefig('/workspace/request-project/fig_nonexpansiveness.png', dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    print("  ✓ Nonexpansiveness")
-
-    return viz
+    fig.savefig('fig_comparison_principle.png', dpi=150, bbox_inches='tight')
+    b64 = save_fig_base64(fig)
+    plt.close()
+    return b64
 
 
 if __name__ == "__main__":
-    viz = generate_all_visualizations()
-    print(f"\nGenerated {len(viz)} visualizations.")
+    print("Generating visualizations...")
+
+    b64_barrier = plot_barrier_theorem()
+    print(f"  fig_barrier_theorem.png generated ({len(b64_barrier)} chars)")
+
+    b64_decay = plot_exponential_decay()
+    print(f"  fig_exponential_decay.png generated ({len(b64_decay)} chars)")
+
+    b64_vorticity = plot_vorticity_evolution()
+    print(f"  fig_vorticity_evolution.png generated ({len(b64_vorticity)} chars)")
+
+    b64_comparison = plot_comparison_principle()
+    print(f"  fig_comparison_principle.png generated ({len(b64_comparison)} chars)")
+
+    print("\nAll visualizations generated successfully.")
