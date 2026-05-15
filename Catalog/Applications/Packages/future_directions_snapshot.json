@@ -817,20 +817,6 @@
     "timestamp": "2026-05-14T16:24:30.145614+00:00"
   },
   {
-    "id": "fd_0149",
-    "title": "Entanglement wedge",
-    "description": ": The \"entanglement wedge\" of a boundary region B is the set of bulk vertices whose tropical distance to B is minimized compared to the complement, and surgery inside the wedge is detectable from B.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "9ab661ec",
-    "timestamp": "2026-05-14T16:24:30.150755+00:00"
-  },
-  {
     "id": "fd_0153",
     "title": "Incremental updates",
     "description": ": When a new theorem is added, only recompute levels along the affected dependency chain.\n\n### Cross-Domain Connections\n- Software engineering: build systems, dependency resolution (npm, cargo)\n- Formal methods: certified compilation, proof-carrying code\n- Education technology: adaptive learning systems, prerequisite graphs\n- Knowledge management: ontology design, skill trees in games\n\n---\n\n## Implementation Priority",
@@ -997,7 +983,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "3c1c085d",
+    "consumed_by_exp_id": "fc1f2333",
     "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
@@ -1241,25 +1227,6 @@
     "timestamp": "2026-05-15T09:04:09.847352+00:00"
   },
   {
-    "id": "fd_0223",
-    "title": "Composition theorem",
-    "description": ": Given a Boolean circuit of depth d and size s, construct a torus configuration of size O(s) × O(d) that computes the circuit in O(d) steps.\n\n**Key Lemma Needed**: `separation_independence` — if `Support(c₁) ∩ Ball(Support(c₂), 2) = ∅`, then the evolution of `c₁ ∪ c₂` restricted to `Ball(Support(c₁), 1)` equals the evolution of `c₁` alone.\n\n**Cross-Domain Impact**: Would place tropical CA in the same universality class as classical Conway's Life, but with an algebraically cleaner substrate (all operations are min-plus).\n\n---\n\n## Direction 2: Asymptotic Entropy on Growing Tori\n\n**Status**: Exponential lower bound on still life count (16 = 2⁴) established on 20×20 torus.\n\n**Hypothesis**: The topological entropy of the tropical Life shift map is positive:\n$$h_{top} = \\lim_{m,n \\to \\infty} \\f",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:09.881708+00:00"
-  },
-  {
     "id": "fd_0227",
     "title": "Connection to statistical mechanics",
     "description": ": Interpret the still life count as a partition function and the entropy as a free energy, linking tropical CA to lattice statistical mechanics.\n\n**Key Formalization**: Define `stillLifeEntropy (m n : ℕ) := Real.log (Finset.card {c : Config m n | IsStillLife c}) / (m * n)` and prove it converges as m, n → ∞.\n\n**Cross-Domain Impact**: Connects tropical CA to ergodic theory, symbolic dynamics, and statistical mechanics. Positive entropy would mean the system has intrinsic unpredictability.\n\n---\n\n## Direction 3: Tropical Collision Logic and Glider Interactions\n\n**Status**: One glider family certified (5-cell, period 4, displacement (1,1)).\n\n**Hypothesis**: Collisions between tropical gliders produce computationally useful outputs — specifically, glider-glider collisions can function as logic ",
@@ -1417,34 +1384,6 @@
     "timestamp": "2026-05-15T09:04:10.051646+00:00"
   },
   {
-    "id": "fd_0213",
-    "title": "Week 1:",
-    "description": "Formalize definitions and state theorems with `sorry`. Verify the skeleton compiles.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8505111b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:38:42.896744+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Week 2:",
-    "description": "Prove the key lemmas using the decomposition strategy. Test with `#eval` on small examples.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8505111b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:38:42.904060+00:00"
-  },
-  {
     "id": "fd_0215",
     "title": "Week 3:",
     "description": "Complete all proofs and verify with `#print axioms`. Clean up and document.",
@@ -1459,18 +1398,111 @@
     "timestamp": "2026-05-15T09:38:42.912645+00:00"
   },
   {
-    "id": "fd_0216",
-    "title": "Week 4:",
-    "description": "Write applications, connect to existing Mathlib infrastructure, and prepare for upstreaming.",
+    "id": "fd_0217",
+    "title": "Triangle inequality approach:",
+    "description": "Use $d(v, b) \\geq d(v, \\sigma) + d(\\sigma, b)$ for some $\\sigma$ on the path, combined with $d(\\sigma, b) \\geq d_{B^c}(\\sigma) \\geq d_B(\\sigma)$ by the shielding hypothesis.",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8505111b",
+    "source_exp_id": "9ab661ec",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:38:42.921093+00:00"
+    "timestamp": "2026-05-15T10:01:34.422728+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "Induction on path length:",
+    "description": "Prove by induction that barriers propagate: if the first barrier vertex $\\sigma$ satisfies $d_{B^c}(\\sigma) \\leq d_B(\\sigma)$, then every vertex before $\\sigma$ on any path inherits the inequality.\n\n### Cross-Domain Significance\n\n- **Network security:** Separators model firewalls; the theorem certifies that data behind a firewall is invisible from certain probes.\n- **Causal inference:** In DAGs, separators correspond to d-separation; this tropical version gives a metric-aware separation criterion.\n- **Graph partitioning:** Barrier theorems provide quality guarantees for graph cuts.\n\n---\n\n## Direction 2: Tropical Ryu-Takayanagi Formula\n\n### Statement\n\nDefine a notion of **wedge boundary area** as the total weight of edges crossing from $\\mathrm{Wedge}(B)$ to $\\mathrm{bulk} \\setminus \\mathrm",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9ab661ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:01:34.433557+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "Injection argument:",
+    "description": "Map each wedge vertex with a unique witness to its witness in $B$; injectivity gives the cardinality bound.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9ab661ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:01:34.446146+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Tropical linear algebra:",
+    "description": "Express the observation map as a tropical matrix and bound its tropical rank.\n\n### Cross-Domain Significance\n\n- **Physics:** Direct analogue of the Ryu-Takayanagi entropy bound.\n- **Information theory:** Connects channel capacity to geometric boundary area.\n- **Complexity theory:** Graph cuts and communication complexity bounds.\n\n---\n\n## Direction 3: Dynamic Wedge Evolution Under Edge Weight Perturbation\n\n### Statement\n\nWhen edge weights change continuously (modeling network degradation or improvement), track how the wedge evolves. Prove that wedge membership changes occur only when the gap $\\delta_v$ crosses zero, and characterize the \"phase transitions\" of the wedge.\n\n### Exact Theorem Target\n\n```lean\ntheorem wedge_transition_at_zero_gap\n    {V : Type*} [DecidableEq V]\n    {bulk boundary",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9ab661ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:01:34.457401+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Piecewise-linear structure:",
+    "description": "If distances are piecewise linear in $t$, the gap function is also piecewise linear and zero-crossings are computable.\n\n### Cross-Domain Significance\n\n- **Network monitoring:** Predicting when a monitoring station loses coverage.\n- **Dynamical systems:** Phase transitions in optimization landscapes.\n- **Robustness engineering:** Worst-case analysis for network degradation.\n\n---\n\n## Direction 4: Multi-Subset Wedge Intersection and Covering Theorems\n\n### Statement\n\nGiven multiple boundary subsets $B_1, \\ldots, B_k$, prove structural theorems about wedge intersections $\\bigcap_i \\mathrm{Wedge}(B_i)$, unions $\\bigcup_i \\mathrm{Wedge}(B_i)$, and covering properties.\n\n### Exact Theorem Targets\n\n```lean\n-- Wedge of B ∪ B' contains wedge of B intersected with appropriate condition\ntheorem wedge_un",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9ab661ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:01:34.481631+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Voronoi duality:",
+    "description": "Each bulk vertex is nearest to at least one boundary vertex, which determines a singleton wedge containing it.\n\n### Cross-Domain Significance\n\n- **Distributed systems:** Multi-party monitoring and fault coverage guarantees.\n- **Quantum information:** Subregion duality and complementary recovery.\n- **Combinatorial optimization:** Covering and packing on metric spaces.\n\n---\n\n## Direction 5: Algorithmic Certification of Reconstruction Guarantees\n\n### Statement\n\nProduce a **verified algorithm** (certified in Lean) that, given a graph and boundary subset $B$, outputs:\n1. The wedge $\\mathrm{Wedge}(B)$\n2. A stability certificate (gap values for each wedge vertex)\n3. A reconstruction certificate (unique argmin witnesses, or a report of degeneracies)\n\n### Exact Theorem Target\n\n```lean\n-- A decision",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9ab661ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:01:34.501202+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Reflection:",
+    "description": "Reduce to decidable finite comparisons over `ℚ` or `Float`.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9ab661ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:01:34.512426+00:00"
   },
   {
     "id": "seed_078",
