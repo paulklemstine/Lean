@@ -152,27 +152,11 @@
       "Computation"
     ],
     "priority_score": 0.94,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:03:53.873971+00:00"
-  },
-  {
-    "id": "seed_060",
-    "title": "Holographic Proof Renormalization: Ultrametric Compression of Formal Derivations",
-    "description": "Develop an ultrametric theory of proof compression where the p-adic valuation of a derivation measures its local complexity, and prove that renormalization group flow on proof spaces converges to fixed points representing minimal proofs. Show that the tropical ultrametric distance between two proofs bounds their semantic distance, and that holographic renormalization yields a decidable approximation to theoremhood.",
-    "domains": [
-      "Speculative",
-      "Logic",
-      "Physics"
-    ],
-    "priority_score": 0.93,
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "e0e92b1c",
-    "timestamp": "2026-05-14T16:03:53.854964+00:00"
+    "consumed_by_exp_id": "465c3121",
+    "timestamp": "2026-05-14T16:03:53.873971+00:00"
   },
   {
     "id": "seed_035",
@@ -535,10 +519,10 @@
       "Tropical"
     ],
     "priority_score": 0.85,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1368feba",
     "timestamp": "2026-05-14T16:03:53.859237+00:00"
   },
   {
@@ -1451,23 +1435,6 @@
     "timestamp": "2026-05-14T23:59:16.208103+00:00"
   },
   {
-    "id": "fd_0208",
-    "title": "Ongoing",
-    "description": ": Run computational experiments validating theoretical predictions.\n\n### Success Metrics\n- Number of sorry-free formally verified theorems.\n- Tightness of generalization bounds on benchmark datasets.\n- Novel connections discovered between tropical geometry and machine learning.\n- Papers submitted to top venues (ICML, NeurIPS, JMLR, Annals of Mathematics).\n\n---\n\n## Priority Ordering",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79f73184",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:15:28.680284+00:00"
-  },
-  {
     "id": "fd_0187",
     "title": "Generalized inductive hypothesis",
     "description": ": Prove that for every formula φ with free variables, the function `(annotated_word) ↦ φ.evalWith(decode(annotated_word))` is tropically recognizable over the extended alphabet.",
@@ -1544,71 +1511,6 @@
     "source_exp_id": "fafc44be",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:10.101596+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Model checking complexity",
-    "description": ": Prove that evaluating a fixed weighted MSO formula on a given word can be done in polynomial time (data complexity), and characterize combined complexity.\n\n### Expected Impact\n- Practical model-checking algorithms for quantitative specifications\n- Understanding of which optimization problems are \"easy\" from a logical perspective\n- Connections to circuit complexity and algebraic automata theory\n\n### Cross-Domain Connections\n- **Descriptive complexity theory**: Quantitative Fagin theorem\n- **Parameterized complexity**: Fixed-parameter tractability of tropical optimization\n- **Algebraic automata theory**: Tropical syntactic semirings\n\n---\n\n## Direction 5: Tropical Geometry of MSO-Definable Cost Functions\n\n### Hypothesis\nWeighted MSO-definable cost functions on words of fixed length form tro",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.127701+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Tropical polyhedral decomposition",
-    "description": ": Show that MSO-definable cost functions are piecewise-linear (in the tropical sense) with finitely many pieces.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.140642+00:00"
-  },
-  {
-    "id": "fd_0206",
-    "title": "Geometric complexity measures",
-    "description": ": Relate the number of tropical polytope facets to the number of automaton states and formula size.",
-    "domains": [
-      "Tropical",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.147073+00:00"
-  },
-  {
-    "id": "fd_0207",
-    "title": "Newton polytope connections",
-    "description": ": Connect the \"tropical hypersurface\" of a cost function (the set where the minimum is achieved by multiple terms) to automaton ambiguity.",
-    "domains": [
-      "Tropical",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.154476+00:00"
   },
   {
     "id": "fd_0190",
@@ -1735,18 +1637,18 @@
     "timestamp": "2026-05-15T01:46:31.410670+00:00"
   },
   {
-    "id": "fd_0200",
-    "title": "Boundary determines bulk distances on trees",
-    "description": ": If the graph is a tree, `D_∂` uniquely determines all pairwise distances and hence the tree structure (up to Steiner points).",
+    "id": "fd_0209",
+    "title": "Document",
+    "description": "with both formal doc-strings and an updated research paper section",
     "domains": [
-      "Bridges"
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "dc69d6dd",
+    "source_exp_id": "e0e92b1c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:46:31.417958+00:00"
+    "timestamp": "2026-05-15T02:18:16.873789+00:00"
   },
   {
     "id": "seed_078",
@@ -2271,22 +2173,6 @@
     "timestamp": "2026-05-15T01:25:37.087666+00:00"
   },
   {
-    "id": "fd_0203",
-    "title": "Summary",
-    "description": "| # | Direction | Difficulty | Impact |\n|---|-----------|-----------|--------|\n| 1 | Value iteration convergence | Easy (corollary) | High — validates iterative solvers |\n| 2 | Monotonicity in charge | Medium | High — tropical response theory |\n| 3 | Eigenvalue reduction | Medium | High — spectral theory bridge |\n| 4 | Argmax/policy transfer | Easy–Medium | Very high — practical policy extraction |\n| 5 | Graph shortest-path | Medium | Very high — algorithmic applications |\n\nEach direction is independently pursuable and builds on the core `maxwellBellmanOp_eq_bellmanOp_charged` theorem as its foundation. Together, they constitute the beginning of a formal tropical gauge theory of Bellman dynamics.",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c6fcabd0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:25:37.124235+00:00"
-  },
-  {
     "id": "fd_0192",
     "title": "Specific Goals",
     "description": "1. Define a formal parity axiom: a tropical sieve functional `S` satisfies the parity barrier if `S(n) = S(n')` whenever n and n' differ only in the parity of their number of prime factors (within the sieve range).\n2. Prove that the tropical sieve score `trop(n; P, c)` satisfies this axiom for any symmetric cost function c.\n3. Show that breaking the parity barrier in the tropical framework requires costs that depend on the global factorization of n, not merely on local residues — formalizing why local sieve methods (tropical or classical) cannot detect prime parity.",
@@ -2415,22 +2301,5 @@
     "source_exp_id": "f4ff18da",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:17:18.128174+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "5. Tropical Convexity of Feasible Amortized Analyses",
-    "description": "**Hypothesis:** The set of all feasible amortized charge sequences for a given cost sequence forms a tropical convex set, and this geometric structure enables efficient enumeration and optimization over feasible analyses.\n\n**Proof Strategy:**\n- Define tropical convex sets and tropical polytopes (min-plus analogs of convex hulls and polyhedra).\n- Prove that the feasibility condition (∀ prefix sums, ∑c ≤ ∑a) defines a tropical half-space intersection.\n- Show that extreme points of this tropical polytope correspond to \"tight\" potential functions (where some prefix constraint is binding).\n- Prove that the tropical convolution composition theorem preserves tropical convexity (the monoid structure on tropical polytopes under ⊗).\n- Connect to the theory of tropical linear spaces and valuated matr",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4ff18da",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:17:18.136453+00:00"
   }
 ]
