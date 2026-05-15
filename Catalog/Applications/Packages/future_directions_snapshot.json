@@ -631,10 +631,10 @@
       "Bridges"
     ],
     "priority_score": 0.78,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09712312",
     "timestamp": "2026-05-14T16:03:53.840973+00:00"
   },
   {
@@ -1126,20 +1126,6 @@
     "source_exp_id": "e06c3817",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:00.498533+00:00"
-  },
-  {
-    "id": "fd_0168",
-    "title": "Prove the rectangle bound",
-    "description": ": If the communication matrix has minimum cycle cost $g$ (viewing Alice's states as rows and Bob's as columns), then any protocol has cost $\\geq g \\cdot \\lfloor R/n \\rfloor$ where $R$ is the number of rounds and $n$ is the number of distinct messages.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "f5102ff5",
-    "timestamp": "2026-05-14T17:33:00.506013+00:00"
   },
   {
     "id": "fd_0169",
@@ -2264,5 +2250,52 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "ad86a7ea",
     "timestamp": "2026-05-15T04:35:31.685272+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Theorem Statement",
+    "description": "```\ntheorem randomized_cycle_systolic_bound\n    {a b R n g : ℕ}\n    (hn : 0 < n)\n    (W : Matrix (Fin a) (Fin b) ℕ)\n    (hg : IsMinCycleCost W g)\n    (P : RandomizedProtocol a b n R)\n    (hcycle : ∀ ω, BlockProducesCycles W (P.realize ω)) :\n    g * (R / n) ≤ 𝔼[P.totalCost]\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f5102ff5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:13:00.288210+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "Cross-Domain Significance",
+    "description": "- **Probabilistic combinatorics**: Connects cycle-systolic bounds to probabilistic method lower bounds.\n- **Information theory**: Relates to Shannon's noisy channel coding theorem — randomization cannot reduce geometric cycle costs.\n- **Quantum computing**: Paves the way for quantum extensions via density-matrix-valued protocols.\n\n---",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f5102ff5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:13:00.295322+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Research Program Summary",
+    "description": "These five directions form a coherent research program:\n\n```\n                    Tropical Spectral (Dir 2)\n                           ↑\n                           |\nRandomized (Dir 1) ← Cycle-Systolic Core → Hankel Bridge (Dir 3)\n                           |\n                           ↓\n           Multi-Party (Dir 4)    Transfer-Lyapunov (Dir 5)\n```\n\n**Central thesis**: The cycle systole is the universal geometric invariant controlling communication cost across deterministic, randomized, tropical, multi-party, and transfer-semantic settings. Each direction validates this thesis in a new domain while opening connections to established mathematical theories.\n\n**Priority ordering**: Direction 1 (randomized) is the most immediately achievable, requiring only measure-theoretic integration. Dire",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f5102ff5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:13:00.318476+00:00"
   }
 ]
