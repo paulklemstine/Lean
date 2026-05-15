@@ -169,10 +169,10 @@
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed052318",
     "timestamp": "2026-05-14T16:03:53.832656+00:00"
   },
   {
@@ -708,10 +708,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6b0a3f6b",
     "timestamp": "2026-05-14T16:16:22.740801+00:00"
   },
   {
@@ -862,10 +862,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b210045",
     "timestamp": "2026-05-14T16:24:30.136424+00:00"
   },
   {
@@ -1053,21 +1053,6 @@
     "timestamp": "2026-05-14T17:33:00.512633+00:00"
   },
   {
-    "id": "fd_0171",
-    "title": "Define the comparison framework",
-    "description": ": Given a stochastic matrix $P$ and a weight matrix $W$ on the same graph, define the spectral gap $\\gamma(P)$ and tropical cycle gap $g(W)$.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "5906278a",
-    "timestamp": "2026-05-14T17:33:00.515491+00:00"
-  },
-  {
     "id": "fd_0183",
     "title": "Build",
     "description": "the required infrastructure (critical graph definitions, semigroup orbit sets, DES trajectories) as Lean definitions with `sorry`-ed properties.",
@@ -1242,10 +1227,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94b46897",
     "timestamp": "2026-05-15T03:03:37.375693+00:00"
   },
   {
@@ -1527,6 +1512,94 @@
     "source_exp_id": "faba857f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:05:30.506986+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Spectral mixing bound",
+    "description": ": For symmetric row-stochastic `P` with spectral gap `γ`, standard spectral theory gives `(P^m)_{ij} ≤ 1/(n+1) + (1-γ)^m`.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5906278a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:06:07.999806+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Apply our framework",
+    "description": ": Feed the entrywise bound into `triangleCycleGap_logWeight_lower_bound` applied to `P^m`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5906278a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:06:08.007527+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Asymptotic analysis",
+    "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5906278a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:06:08.019179+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Probabilistic input",
+    "description": ": A stochastic matrix `P` with mixing/spectral/conductance properties.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5906278a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:06:08.028020+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Logarithmic bridge",
+    "description": ": The transform `W = -log P` converts to tropical geometry.",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5906278a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:06:08.035548+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Tropical output",
+    "description": ": A cycle-mean or path-weight inequality in the tropical domain.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5906278a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:06:08.042682+00:00"
   },
   {
     "id": "seed_078",
@@ -1985,10 +2058,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "00930c08",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c509ddc",
     "timestamp": "2026-05-15T06:00:57.286100+00:00"
   },
   {
