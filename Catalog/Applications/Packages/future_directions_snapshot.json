@@ -542,22 +542,6 @@
     "timestamp": "2026-05-14T16:03:53.849787+00:00"
   },
   {
-    "id": "seed_065",
-    "title": "Neural Tangent Kernel in the Tropical Limit",
-    "description": "Prove that the neural tangent kernel of an infinitely wide network converges to a tropical kernel in the min-plus limit, and that training dynamics in the tropical NTK regime are governed by tropical gradient flow on a polyhedral loss surface. Show that the tropical NTK is constant along tropical flat directions, yielding a precise characterization of feature learning vs. lazy training.",
-    "domains": [
-      "MachineLearning",
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.83,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "35c9f8a7",
-    "timestamp": "2026-05-14T16:03:53.860376+00:00"
-  },
-  {
     "id": "seed_019",
     "title": "Semantic Compression via Tropical Information Geometry",
     "description": "Prove that semantic compression—preserving meaning rather than bits—has a natural formulation as min-plus projection onto a tropical submanifold of the information geometry. Show that the tropical Fisher information metric bounds semantic distortion, and that the idempotent projection yields optimal semantic codes that compress by extracting the tropical skeleton of the source distribution.",
@@ -1599,20 +1583,6 @@
     "timestamp": "2026-05-15T04:34:34.447014+00:00"
   },
   {
-    "id": "fd_0205",
-    "title": "Certified argmin",
-    "description": "→ computational extraction of witnesses",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "eb845453",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:34.453781+00:00"
-  },
-  {
     "id": "fd_0206",
     "title": "Bellman equation",
     "description": "→ dynamic programming for proof/crypto search",
@@ -1626,6 +1596,34 @@
     "source_exp_id": "eb845453",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:34:34.460917+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Direction 2",
+    "description": "(Wall-crossing invariants) — High impact, moderate difficulty. The cell word construction is concrete and the kernel sequence theorem follows from existing cellwise constancy results.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "35c9f8a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:52.712040+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "Direction 4",
+    "description": "(Sheaf cohomology) — Most ambitious and visionary. Requires formalization of sheaves on polyhedral complexes, which is heavy infrastructure but would open an entirely new research program.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "35c9f8a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:52.722485+00:00"
   },
   {
     "id": "seed_078",
