@@ -1507,23 +1507,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0211",
-    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
-    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "b2af3cbf",
-    "timestamp": "2026-05-15T09:19:36.848982+00:00"
-  },
-  {
     "id": "fd_0219",
     "title": "1. Closedness and Topological Properties of Tropical Hypersurfaces",
     "description": "**Status**: ✅ Completed in this cycle (`isClosed_tropHypersurface`).\n\n**Next theorem targets**:\n\n```lean\n/-- The complement of a tropical hypersurface is open and dense\n    when the polynomial has at least two distinct monomials. -/\ntheorem isOpen_compl_tropHypersurface {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) :\n    IsOpen (TropHypersurface p hp)ᶜ\n\n/-- The tropical hypersurface has empty interior when the polynomial\n    has at least two monomials with distinct exponent vectors. -/\ntheorem interior_tropHypersurface_eq_empty {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty)\n    (hdist : ∃ m₁ ∈ p, ∃ m₂ ∈ p, m₁.exp ≠ m₂.exp) :\n    interior (TropHypersurface p hp) = ∅\n```\n\n**Proof strategy**: The complement is open directly from closedness. For empty interior, use t",
@@ -1757,7 +1740,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9f168b29",
-    "consumed_by_exp_id": "9093673a",
+    "consumed_by_exp_id": "5b91f76e",
     "timestamp": "2026-05-15T16:04:54.716000+00:00"
   },
   {
@@ -1864,5 +1847,50 @@
     "source_exp_id": "60e1cc58",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T17:30:43.053960+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Why It Would Be a Breakthrough",
+    "description": "This would show that the tropical eigenvalue and its geometric certificate (the critical graph) are stable under sufficiently mild surgery away from the critical region. This is the tropical analogue of eigenvalue stability under perturbations orthogonal to the eigenspace.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b2af3cbf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:46:29.371247+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Cross-Domain Impact",
+    "description": "- **Infrastructure planning:** Optimal highway/railway expansion with guaranteed throughput improvement.\n- **Manufacturing:** Minimum-cost equipment upgrades with certified cycle time reduction.\n- **Telecommunications:** Optimal link capacity allocation with worst-case latency guarantees.\n\n---",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b2af3cbf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:46:29.403753+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Research Program Summary",
+    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|--------------|\n| 1. Tropical interlacing | Medium-Hard | High | Current work |\n| 2. Critical graph invariance | Medium | High | Current work |\n| 3. Sherman-Morrison | Hard | Very High | Direction 2 |\n| 4. Sensitivity certificates | Medium | High | Current work |\n| 5. Control synthesis | Hard | Very High | Directions 1, 4 |\n\nThe recommended order is: 2 → 4 → 1 → 3 → 5. Direction 2 (critical graph invariance) provides the conceptual foundation, Direction 4 (certificates) provides the algorithmic framework, and the remaining directions build on these.\n\n---",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b2af3cbf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:46:29.417925+00:00"
   }
 ]
