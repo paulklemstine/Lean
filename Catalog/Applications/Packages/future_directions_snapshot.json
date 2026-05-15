@@ -527,22 +527,6 @@
     "timestamp": "2026-05-14T16:03:53.820235+00:00"
   },
   {
-    "id": "seed_047",
-    "title": "Conway's Game of Life on Tropical Semirings: Emergent Complexity from Min-Plus",
-    "description": "Prove that Conway's Game of Life rules reformulated in the min-plus semiring produce emergent complexity with provable lower bounds on pattern diversity. Show that tropical gliders exist, that tropical still lifes correspond to fixed points of the min-plus update rule, and that the tropical Game of Life is Turing complete via a constructive embedding of Boolean circuits into tropical cellular automata.",
-    "domains": [
-      "Computation",
-      "Tropical",
-      "Speculative"
-    ],
-    "priority_score": 0.8,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "590e43ac",
-    "timestamp": "2026-05-14T16:03:53.842628+00:00"
-  },
-  {
     "id": "seed_051",
     "title": "Alien Mathematics: What Theorems Would Non-Carbon Life Prove?",
     "description": "Construct a formal framework for alien mathematics by varying the underlying semiring from classical arithmetic to tropical, idempotent, and p-adic algebras. Prove that each semiring choice yields a distinct provability landscape, and that the theorems of idempotent alien civilizations are precisely the tropical shadow theorems of classical results. Show that the intersection of all semiring-provable statements is exactly the combinatorial core of mathematics.",
@@ -1186,35 +1170,6 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "Direction 1",
-    "description": "(Tropical Hahn–Banach): Most natural next step. Directly extends the current theorem by weakening the hypothesis. High impact, moderate difficulty.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "18915f0b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:12:37.111041+00:00"
-  },
-  {
-    "id": "fd_0226",
-    "title": "Direction 4",
-    "description": "(tropical structure) — most speculative, but could yield surprising connections.\n\n---\n\n## Immediate Next Steps\n\nFor each direction, the first concrete task is:",
-    "domains": [
-      "Tropical",
-      "Speculative"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d9c105e5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:04:31.307136+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Tropical",
     "description": ": Define `tropicalVLCost` using min-plus algebra and prove equivalence with `vlCostN`.",
@@ -1230,52 +1185,6 @@
     "timestamp": "2026-05-15T05:04:31.335951+00:00"
   },
   {
-    "id": "fd_0212",
-    "title": "Domination pruning",
-    "description": ": Define a pruning operation that removes geometrically dominated monomials (those whose affine form is everywhere ≤ the max of the remaining). Prove that pruning is idempotent and that the pruned support is unique.",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.556538+00:00"
-  },
-  {
-    "id": "fd_0226",
-    "title": "Tropical Gröbner basis",
-    "description": ": a generating set G such that tropical division by G terminates with remainder 0 iff p ∈ ideal(G).\n\n### Proof Strategy\n- Formalize tropical division using the normal form representation\n- Prove termination via a well-founded order on monomial supports\n- Prove the Buchberger criterion: S-polynomials reduce to 0\n\n### Cross-Domain Connections\n- **Computational algebra**: extends classical Gröbner basis theory to tropical setting\n- **Algebraic geometry**: tropical varieties as computational objects\n- **Combinatorial optimization**: tropical ideal membership has applications in linear programming duality\n\n### Estimated Difficulty\nVery High. This is a substantial research project. An intermediate target: formalize tropical division for univariate polynomials.\n\n---\n\n## Priority Ordering",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.662969+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "Certificate propagation tactic",
-    "description": ": A tactic that, given a proof of `∃ x, n ≤ T₁.Inv x` at the source, automatically constructs `∃ y, n ≤ T₄.Inv y` at the target by composing through the registered pipeline.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "069b9159",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:28:23.501083+00:00"
-  },
-  {
     "id": "fd_0207",
     "title": "Tropical-classical correspondence:",
     "description": "Each direction involves a passage from smooth/classical objects to their tropical (combinatorial, piecewise-linear) shadows, with the key property that feasibility/existence questions survive the tropicalization.",
@@ -1289,21 +1198,6 @@
     "source_exp_id": "09712312",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:05:09.477655+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "Tropical Jacobians",
-    "description": "(from tropical curves to abelian varieties)",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "faba857f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:30.491204+00:00"
   },
   {
     "id": "fd_0198",
@@ -1335,20 +1229,6 @@
     "timestamp": "2026-05-15T07:06:08.019179+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "Probabilistic input",
-    "description": ": A stochastic matrix `P` with mixing/spectral/conductance properties.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:06:08.028020+00:00"
-  },
-  {
     "id": "fd_0202",
     "title": "Logarithmic bridge",
     "description": ": The transform `W = -log P` converts to tropical geometry.",
@@ -1364,20 +1244,6 @@
     "source_exp_id": "5906278a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:06:08.035548+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Tropical output",
-    "description": ": A cycle-mean or path-weight inequality in the tropical domain.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:06:08.042682+00:00"
   },
   {
     "id": "fd_0207",
@@ -1409,238 +1275,194 @@
     "timestamp": "2026-05-15T08:03:37.270398+00:00"
   },
   {
-    "id": "fd_0212",
-    "title": "Show that line segments in the sorted chamber are geodesics",
-    "description": "by verifying the geodesic equation or using comparison geometry.",
+    "id": "fd_0219",
+    "title": "Wire gadget",
+    "description": ": Design a signal propagation pattern — a cell configuration where a \"1\" at an input position propagates to an output position after a fixed delay T. Candidate: a chain of blinkers acting as a delay line, or a glider-based signal.",
     "domains": [
-      "Geometry"
+      "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c58d2658",
+    "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.295302+00:00"
+    "timestamp": "2026-05-15T09:04:09.847352+00:00"
   },
   {
-    "id": "fd_0215",
-    "title": "Define the tropical fan",
-    "description": ": use the min-plus algebra structure of sorted coordinates to define a tropical variety. The Tonnetz vertices correspond to lattice points in this fan.",
+    "id": "fd_0223",
+    "title": "Composition theorem",
+    "description": ": Given a Boolean circuit of depth d and size s, construct a torus configuration of size O(s) × O(d) that computes the circuit in O(d) steps.\n\n**Key Lemma Needed**: `separation_independence` — if `Support(c₁) ∩ Ball(Support(c₂), 2) = ∅`, then the evolution of `c₁ ∪ c₂` restricted to `Ball(Support(c₁), 1)` equals the evolution of `c₁` alone.\n\n**Cross-Domain Impact**: Would place tropical CA in the same universality class as classical Conway's Life, but with an algebraically cleaner substrate (all operations are min-plus).\n\n---\n\n## Direction 2: Asymptotic Entropy on Growing Tori\n\n**Status**: Exponential lower bound on still life count (16 = 2⁴) established on 20×20 torus.\n\n**Hypothesis**: The topological entropy of the tropical Life shift map is positive:\n$$h_{top} = \\lim_{m,n \\to \\infty} \\f",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "590e43ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:04:09.881708+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Connection to statistical mechanics",
+    "description": ": Interpret the still life count as a partition function and the entropy as a free energy, linking tropical CA to lattice statistical mechanics.\n\n**Key Formalization**: Define `stillLifeEntropy (m n : ℕ) := Real.log (Finset.card {c : Config m n | IsStillLife c}) / (m * n)` and prove it converges as m, n → ∞.\n\n**Cross-Domain Impact**: Connects tropical CA to ergodic theory, symbolic dynamics, and statistical mechanics. Positive entropy would mean the system has intrinsic unpredictability.\n\n---\n\n## Direction 3: Tropical Collision Logic and Glider Interactions\n\n**Status**: One glider family certified (5-cell, period 4, displacement (1,1)).\n\n**Hypothesis**: Collisions between tropical gliders produce computationally useful outputs — specifically, glider-glider collisions can function as logic ",
     "domains": [
       "Tropical",
       "Cryptography",
-      "Algebra"
+      "Bridges",
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c58d2658",
+    "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.319713+00:00"
+    "timestamp": "2026-05-15T09:04:09.918976+00:00"
   },
   {
-    "id": "fd_0216",
-    "title": "Prove isometric embedding",
-    "description": ": show that the shortest-path metric on the 1-skeleton of the tropical complex restricts to the voice-leading distance on PLR-adjacent vertices.",
+    "id": "fd_0229",
+    "title": "Collision catalog",
+    "description": ": For each pair of glider types, simulate collisions at various relative positions and phases. Record outputs: (a) both gliders survive, (b) one survives, (c) both annihilate, (d) new glider produced, (e) still life produced.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "590e43ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:04:09.937000+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Logic gate identification",
+    "description": ": Identify collision outcomes that correspond to Boolean operations. A collision producing a glider iff both inputs are present is an AND gate. A collision producing a glider iff at least one input is present is an OR gate.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "590e43ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:04:09.945738+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Universality proof",
+    "description": ": Combine gates to prove that glider-based collision logic is computationally universal.\n\n**Key Challenge**: Glider interactions on finite tori may differ from those on infinite grids due to wrapping. Use sufficiently large tori to isolate collision effects.\n\n**Cross-Domain Impact**: Would establish tropical CA as a collision-based computing medium, parallel to Adamatzky's work on reaction-diffusion computation and Rendell's Turing machine in Conway's Life.\n\n---\n\n## Direction 4: Periodic Orbit Classification via Tropical Fixed-Point Varieties\n\n**Status**: Fixed-point theory for still lifes established. Period-2 oscillator (blinker) certified.\n\n**Hypothesis**: The set of period-p configurations on an m×n torus forms a tropical algebraic variety — a piecewise-linear set defined by min-plus e",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "590e43ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:04:09.964149+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Period-p fixed point equation",
+    "description": ": A configuration c has period p iff `(tropicalLifeStep)^[p] c = c`. Unfold this into a system of min-plus equations in the cell values.",
     "domains": [
       "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c58d2658",
+    "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.326995+00:00"
+    "timestamp": "2026-05-15T09:04:09.972272+00:00"
   },
   {
-    "id": "fd_0217",
-    "title": "Connect to the tropical Grassmannian",
-    "description": ": the space of 3-note chords in ℤ₁₂ may relate to the tropical Grassmannian Gr(3, 12) studied in algebraic combinatorics.\n\n### Key Challenge\nDefining the right tropical complex requires choosing the correct polyhedral decomposition. The natural candidates are the secondary polytope of ℤ₁₂³ and the Weyl chamber decomposition.\n\n### Cross-Domain Connection\n- Tropical algebraic geometry (Maclagan & Sturmfels 2015)\n- Polyhedral combinatorics and fiber polytopes\n- Persistent homology of musical chord spaces\n\n### Deliverables\n- Definition of the tropical chord complex\n- Proof that PLR edges are 1-cells\n- Computation of the full face lattice\n\n---\n\n## Direction 4: PLR Dynamics and Coxeter Group Actions\n\n### Hypothesis\nThe PLR group, viewed as a subgroup of the symmetry group of the Tonnetz, has a n",
+    "id": "fd_0234",
+    "title": "Tropical variety structure",
+    "description": ": Show that the solution set is a polyhedral complex — a finite union of convex polyhedra defined by linear inequalities.",
     "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c58d2658",
+    "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.336202+00:00"
+    "timestamp": "2026-05-15T09:04:09.980189+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "Prove convergence of clustering",
-    "description": ": using the triangle inequality, prove that k-medoids clustering with chordDist converges and produces a valid partition.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.409024+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "Lower bound:",
-    "description": "`τ log(∑ exp(xᵢ/τ)) ≥ max xᵢ` (since the sum includes the maximizing term).\n3. Squeeze as τ → 0⁺.\n\n**Key Lemmas Needed:**\n- `lse_le_max_add_log_card`: τ * log Z ≤ max x + τ * log n\n- `max_le_lse`: max x ≤ τ * log Z\n- `Filter.Tendsto` statement for the limit\n\n**Cross-Domain Impact:**\n- Formalizes the dequantization map from probability to tropical geometry\n- Connects entropy-regularized optimization to combinatorial optimization\n- Enables formal study of simulated annealing convergence\n\n**Estimated Difficulty:** Medium. The analysis is elementary; the main challenge is managing Lean's filter/topology API for the limit statement.\n\n---\n\n## 2. Finite KL Divergence Theory\n\n**Theorem Targets:**\n- `kl_divergence_nonneg`: KL(p ∥ q) ≥ 0 for probability vectors p, q with q strictly positive\n- `kl_di",
+    "id": "fd_0236",
+    "title": "Bifurcation analysis",
+    "description": ": Study how the periodic orbit structure changes as the torus size varies. Identify critical sizes where new periodic orbits appear or disappear.\n\n**Key Formalization**: Define `PeriodicVariety (m n p : ℕ) := {c : Config m n | (tropicalLifeStep)^[p] c = c}` and prove structural theorems about its geometry.\n\n**Cross-Domain Impact**: Bridges tropical geometry, dynamical systems, and combinatorics. Could lead to tropical analogues of hyperbolic dynamics and Smale's horseshoe.\n\n---\n\n## Direction 5: Dual-Rail Encoding and Full Turing Completeness\n\n**Status**: NOT gate verified via single-rail. AND, OR, XOR verified.\n\n**Hypothesis**: Using dual-rail encoding (each bit represented by two signals: one for \"true\" and one for \"false\"), the tropical Life automaton achieves full Turing completeness wi",
     "domains": [
       "Tropical",
       "Bridges",
+      "Algebra",
+      "Computation",
       "Geometry"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "9c509ddc",
+    "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:00.995579+00:00"
+    "timestamp": "2026-05-15T09:04:09.998632+00:00"
   },
   {
-    "id": "fd_0215",
-    "title": "Finite optimization:",
-    "description": "A `FiniteOpt.lean` module proving existence of optima for continuous functions on compact sets (the simplex), without requiring full Mathlib topology.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9c509ddc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:01.019175+00:00"
-  },
-  {
-    "id": "fd_0216",
-    "title": "Log-exp algebra:",
-    "description": "A collection of simplification lemmas for expressions involving `log`, `exp`, sums, and products, with automatic positivity side-condition discharge.\n\n---\n\n## Research Team Directive\n\nEach direction should be pursued by a team that:",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9c509ddc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:01.027408+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "States precise theorem targets",
-    "description": "in Lean before beginning proofs",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9c509ddc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:01.034330+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Proof decomposition",
-    "description": ": Break into 3–8 helper lemmas.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6b0a3f6b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:57.280381+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "States precise conjectures",
-    "description": "as Lean theorem signatures with `sorry`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ed052318",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:05:18.353273+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Validates computationally",
-    "description": "using Python/NumPy before attempting formal proofs.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ed052318",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:05:18.359885+00:00"
-  },
-  {
-    "id": "fd_0215",
-    "title": "Decomposes aggressively",
-    "description": "— each direction should generate 5-15 independent helper lemmas.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ed052318",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:05:18.367209+00:00"
-  },
-  {
-    "id": "fd_0216",
-    "title": "Cross-references",
-    "description": "with existing Mathlib infrastructure using `lean_local_search`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ed052318",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:05:18.375029+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "Documents",
-    "description": "with detailed module docstrings connecting the formalism to the physics/geometry.",
+    "id": "fd_0240",
+    "title": "Dual-rail wire with restoration",
+    "description": ": Design a circuit that maintains the dual-rail invariant through signal propagation, restoring any degraded signals.",
     "domains": [
       "Algebra",
-      "Geometry"
+      "Computation"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ed052318",
+    "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:05:18.382207+00:00"
+    "timestamp": "2026-05-15T09:04:10.033149+00:00"
   },
   {
-    "id": "fd_0218",
-    "title": "Iterates",
-    "description": "— each proved lemma should suggest new conjectures and extensions.",
+    "id": "fd_0241",
+    "title": "Turing machine simulation",
+    "description": ": Encode a Turing machine's tape as a sequence of dual-rail cells, the head position as a localized active pattern, and the transition function as a circuit applied at each step.",
     "domains": [
-      "Bridges"
+      "Algebra",
+      "Computation"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ed052318",
+    "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:05:18.390894+00:00"
+    "timestamp": "2026-05-15T09:04:10.041587+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Formal verification",
+    "description": ": State and prove `tropical_life_turing_complete` — that for any Turing machine M, there exists an initial configuration and readout function such that the tropical Life automaton simulates M.\n\n**Key Challenge**: Signal restoration in the dual-rail encoding. Each gate must produce clean dual-rail outputs that can serve as inputs to subsequent gates without degradation.\n\n**Cross-Domain Impact**: Would definitively place tropical CA within the landscape of universal computational media, alongside cellular automata (Rule 110), tag systems, and lambda calculus.\n\n---\n\n## Direction 6: MDL-Based Complexity Classification of Tropical Orbits\n\n**Status**: `still_life_has_bounded_orbit_description` proved. Exponential still life diversity established.\n\n**Hypothesis**: The Minimum Description Length (",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "590e43ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:04:10.051646+00:00"
   },
   {
     "id": "seed_078",
@@ -1996,37 +1818,6 @@
     "timestamp": "2026-05-15T02:17:18.110605+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "Direction 4: Lower Bounds Under Branching-Factor Constraints",
-    "description": "**Goal**: Prove that if exploration is additionally constrained by a branching factor (each round discovers at most `b` new nodes), then discovery requires at least `⌈|V|/b⌉` rounds regardless of dependency structure.\n\n**Target theorem**:\n```\ntheorem rounds_ge_card_div_branching\n  (G : DepGraph V) (S : Finset V) (b : ℕ) (hb : 0 < b)\n  (bounded_discovery : ∀ n, (bounded_discovered G S b (n+1) \\ bounded_discovered G S b n).card ≤ b) :\n  ∀ v, v ∈ bounded_discovered G S b n → n ≥ (Fintype.card V - S.card) / b\n```\n\n**Why it matters**: Real research programs have finite bandwidth — a team can only absorb a bounded number of new concepts per unit time. This theorem shows that bandwidth limitations compound with dependency depth to create even stronger lower bounds on discovery time.\n\n**Proof stra",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cbb3f6f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:32:03.221140+00:00"
-  },
-  {
-    "id": "fd_0201",
-    "title": "1. Category of Research Theories with Formal Laws",
-    "description": "**Goal**: Elevate the `ResearchTheory`/`TheoryHom` framework into a fully certified category.\n\n**Concrete steps**:\n- Define `ResearchCategory` bundling identity, composition, and proofs of associativity and unit laws.\n- Prove that `TheoryHom.comp_assoc`, `TheoryHom.id_comp`, and `TheoryHom.comp_id` (already established) constitute a strict category.\n- Define *isomorphisms* of research theories: morphisms with two-sided inverses.\n- Prove that isomorphic theories have identical lower-bound spectra.\n- Investigate whether `TheoryDominates` forms a partial order modulo isomorphism.\n\n**Cross-domain connections**: Category-theoretic structure enables automated reasoning about which domains can borrow results from which others, establishing a formal \"knowledge graph\" of mathematical disciplines.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "825001af",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:01:17.457827+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Statement",
     "description": "For a finite field `𝔽` with `|𝔽| = q`, and matrices `A : Matrix (Fin m) (Fin n) 𝔽`, `B : Matrix (Fin n) (Fin p) 𝔽`, `K : Matrix (Fin m) (Fin p) 𝔽`:\n\n```\ntheorem freivalds_soundness\n    {q m n p : ℕ} [Field (ZMod q)] [Fintype (ZMod q)]\n    (A : Matrix (Fin m) (Fin n) (ZMod q))\n    (B : Matrix (Fin n) (Fin p) (ZMod q))\n    (K : Matrix (Fin m) (Fin p) (ZMod q))\n    (hne : K ≠ A * B)\n    (r : Fin p → ZMod q) :\n    -- The probability over uniformly random r that K * r = (A * B) * r\n    -- is at most 1/q.\n```",
@@ -2075,52 +1866,6 @@
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "2. Certified Decision Procedure for Semantic Equality on Finite Fragments",
-    "description": "**Precise statement:** For expressions over finitely many variables `{0, ..., n-1}`, define a function `tropDecide : TropExpr → TropExpr → Bool` that returns `true` iff the two expressions are semantically equivalent. Prove:\n\n```\n∀ e₁ e₂, tropDecide e₁ e₂ = true ↔ ∀ σ, eval σ e₁ = eval σ e₂\n```\n\n**Proof strategy:** On a finite variable set, the semantics of min-plus expressions defines piecewise-linear functions. Two such functions are equal iff they agree on a finite test set (vertices of a sufficiently refined polyhedral decomposition). Alternatively, use the normal form: if the canonical normal form captures all identities, then `tropDecide e₁ e₂ := (normalize e₁ == normalize e₂)`.\n\n**Cross-domain payoff:** This is a verified solver for tropical polynomial identity—a fundamental problem",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a40fd94",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:35:31.644214+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "Lean Target",
-    "description": "```lean\ntheorem lse_variational_formula\n    {n : ℕ} (hn : 0 < n) (τ : ℝ) (hτ : 0 < τ) (x : Fin n → ℝ) :\n    τ * Real.log (∑ i : Fin n, Real.exp (x i / τ)) =\n    ⨆ (p : Fin n → ℝ) (hp : (∀ i, 0 ≤ p i) ∧ ∑ i, p i = 1),\n      ∑ i, p i * x i + τ * (- ∑ i, if p i = 0 then 0 else p i * Real.log (p i))\n```",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a021a156",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:26.795033+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "Specific Target",
-    "description": "Formalize and prove:\n```\nλ(W) = inf { λ ∈ ℝ | ∃ x : Fin n → ℝ, ∀ i, max_j (W_{ij} + x_j) ≤ λ + x_i }\n```\nThis says λ(W) is the smallest \"tropical eigenvalue\" for which a tropical subeigenvector exists.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a2d93ee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:04:49.514713+00:00"
-  },
-  {
     "id": "fd_0204",
     "title": "Theorem Target",
     "description": "```\ntheorem pressure_product_bound\n    {S₁ S₂ : InvObj ℝ}\n    (P₁ : ℝ) (P₂ : ℝ)\n    (hP₁ : ∀ x, S₁.Inv x ≤ P₁)\n    (hP₂ : ∀ x, S₂.Inv x ≤ P₂) :\n    ∀ p, (prodObj S₁ S₂).Inv p ≤ max P₁ P₂\n```\n\nAdditionally, for systems with asymptotic pressure rates (as in `finiteDepthSpectralRate_tends_to_pressure_with_O_inv_n`), formalize:\n\n```\ntheorem product_spectral_rate_bound (n : ℕ) (hn : 0 < n)\n    (rate₁ rate₂ : ℕ → ℝ) (P₁ P₂ : ℝ)\n    (h₁ : ∀ n, |rate₁ n - P₁| ≤ C₁ / n)\n    (h₂ : ∀ n, |rate₂ n - P₂| ≤ C₂ / n) :\n    ∃ C, ∀ n, |max (rate₁ n) (rate₂ n) - max P₁ P₂| ≤ C / n\n```",
@@ -2148,109 +1893,5 @@
     "source_exp_id": "a015a16c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:01:09.762727+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "1. Quantitative Stabilization Hierarchy with Strict Separations",
-    "description": "**Goal:** Construct explicit function families with *exact* stabilization depth $k$ for each $k \\in \\{1, 2, 3, \\ldots\\}$, proving strict separations between stabilization levels.\n\n**Key Theorem Target:**\n```lean\ntheorem exact_stabilization_depth_k (k : ℕ) (hk : 1 ≤ k) :\n    ∃ f : (Fin (k + 1) → Bool) → (Fin (k + 1) → Bool),\n      StabilizesIn f k ∧ ¬ StabilizesIn f (k - 1) := by ...\n```\n\n**Construction:** For depth $k$, define a \"shift register\" function on $\\text{Fin}(k+1) \\to \\text{Bool}$ that shifts entries by one position:\n$$f(\\sigma)(i) = \\begin{cases} \\sigma(i+1) & \\text{if } i < k \\\\ \\sigma(0) & \\text{if } i = k \\end{cases}$$\nThis function stabilizes at depth $k$ (when the register becomes uniform) but not at depth $k-1$.\n\n**Impact:** Provides a complete classification of Boolean or",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94b46897",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:22.029937+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "1. Rank-One Tropical Woodbury Theorem",
-    "description": "**Statement.** Let `A` be a weighted adjacency matrix over `ENNReal`, with APSP closure `S`. Let `p, q : Fin n → ENNReal` define a rank-one tropical perturbation:\n\n```\nA'(i,j) = min( A(i,j),  p(i) + q(j) )\n```\n\nThen the new APSP closure is:\n\n```\nS'(i,j) = min( S(i,j),  (⨅ₖ S(i,k) + p(k)) + (⨅ₖ q(k) + S(k,j)) )\n```\n\n**Strategy.** The single-edge theorem is the special case where `p` and `q` are indicator functions. The general proof follows the same four-condition structure:\n1. *Adjacency bound*: by construction.\n2. *Diagonal*: trivial from `S(i,i) = 0`.\n3. *Triangle inequality*: use the same `min_le_min_add_min` technique; the key new ingredient is `iInf_le_iInf` for the tropical matrix-vector products.\n4. *Minimality*: by the same argument—any closure for `A'` is also a closure for `A`, s",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b210045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:41.425911+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "2. Vertex Surgery / Tropical Schur Complement",
-    "description": "**Statement.** Consider an `(n+1)`-vertex graph with adjacency matrix partitioned as:\n\n```\n        ┌       ┐\n  B  =  │ A   p │\n        │ qᵀ  0 │\n        └       ┘\n```\n\nwhere `A` is the `n×n` submatrix, `p : Fin n → ENNReal` are edge weights from the new vertex to existing ones, and `q` from existing to new. Then the `n×n` block of the APSP closure of `B` satisfies:\n\n```\nS_B(i,j) = min( S_A(i,j),  (S_A · p)(i) + (q · S_A)(j) )\n```\n\nwhere `(S_A · p)(i) = ⨅ₖ S_A(i,k) + p(k)` is the tropical matrix-vector product.\n\n**Strategy.** Reduce to the rank-one update theorem by showing that the `n×n` block of the closure of `B` equals the closure of `rankOneUpdate A p q`. This requires formalizing the block structure of tropical matrix closure.\n\n**Impact.** Enables certified incremental graph algorithm",
-    "domains": [
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b210045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:41.435010+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "3. Order-Independence of Disjoint Edge Surgeries",
-    "description": "**Statement.** Let edges `(u₁, v₁, w₁)` and `(u₂, v₂, w₂)` be \"independent\" in the sense that neither creates a shortcut through the other's endpoints. Formally, if:\n\n```\nS(v₁, u₂) + w₂ + S(v₂, u₁) + w₁ ≥ 0    (automatic in ENNReal)\n```\n\nthen the closure after both insertions is independent of insertion order:\n\n```\nAPSP(edgeUpdate (edgeUpdate A u₁ v₁ w₁) u₂ v₂ w₂)\n  = APSP(edgeUpdate (edgeUpdate A u₂ v₂ w₂) u₁ v₁ w₁)\n```\n\n**Strategy.** Apply the single-edge formula twice in each order and show equality. In `ENNReal`, this becomes a min-of-mins identity that should follow from associativity, commutativity, and the triangle inequality of `S`.\n\n**Impact.** Enables parallelization of edge insertions in certified dynamic graph algorithms—multiple independent updates can be applied in any order.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b210045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:41.444559+00:00"
-  },
-  {
-    "id": "fd_0215",
-    "title": "4. Boolean Transitive Closure as Tropical Specialization",
-    "description": "**Statement.** Encode boolean reachability in `ENNReal` via `0 = reachable, ⊤ = unreachable`. Then the APSP closure specializes to transitive closure, and the edge update theorem yields:\n\n```\nTC(R ∪ {(u,v)})(i,j) = TC(R)(i,j) ∨ (TC(R)(i,u) ∧ TC(R)(v,j))\n```\n\n**Strategy.** Define a coercion `Bool → ENNReal` with `true ↦ 0, false ↦ ⊤`, show it preserves the closure structure, and derive the boolean formula as a corollary of `kleene_star_single_edge_update`.\n\n**Impact.** Connects the weighted theory to classical graph reachability and automata theory. The boolean specialization is the standard formula for incremental transitive closure maintenance.\n\n---",
-    "domains": [
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b210045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:41.453407+00:00"
-  },
-  {
-    "id": "fd_0216",
-    "title": "5. Certified Dynamic APSP Algorithm with O(n²) Updates",
-    "description": "**Statement.** Extract from `kleene_star_single_edge_update` an executable algorithm:\n\n```python\ndef update_apsp(S, u, v, w):\n    for i in range(n):\n        for j in range(n):\n            S[i][j] = min(S[i][j], S[i][u] + w + S[v][j])\n    return S\n```\n\nProve that this algorithm correctly computes the new APSP closure in `O(n²)` time, compared to `O(n³)` for full recomputation.\n\n**Strategy.**\n1. Define the algorithm as a `Fin n × Fin n → ENNReal` function in Lean.\n2. Show equivalence with the mathematical formula `fun i j ↦ min (S i j) (S i u + w + S v j)`.\n3. Derive correctness from `kleene_star_single_edge_update`.\n4. Use `@[csimp]` for kernel-verified efficient implementation.\n\n**Impact.** Produces a formally verified dynamic APSP update routine that could be extracted to executable code—",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b210045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:41.466110+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "7. Multi-Edge Batch Surgery via Iterated Updates",
-    "description": "**Statement.** Given a batch of `m` edge insertions `{(uₖ, vₖ, wₖ)}`, the APSP closure after all insertions can be computed by iterating the single-edge formula:\n\n```\nS⁽⁰⁾ = S,   S⁽ᵏ⁺¹⁾(i,j) = min( S⁽ᵏ⁾(i,j),  S⁽ᵏ⁾(i,uₖ) + wₖ + S⁽ᵏ⁾(vₖ,j) )\n```\n\nwith total cost `O(mn²)` instead of `O(n³)` when `m ≪ n`.\n\n**Strategy.** Induction on `m`, using `kleene_star_single_edge_update` at each step with the intermediate closure as the base.\n\n**Impact.** Extends the single-edge result to sparse batch updates, the most common scenario in dynamic graph algorithms.\n\n---",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b210045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:41.477629+00:00"
   }
 ]
