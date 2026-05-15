@@ -1949,5 +1949,118 @@
     "source_exp_id": "e03a2df6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:02:24.572333+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "Direction 1: Extend to ACI (Associativity, Commutativity, Idempotence)",
+    "description": "**Goal:** Upgrade the normalizer to quotient by the idempotence law `min(a, a) = a`.\n\n**Key insight:** The current `flattenMin` produces a *list* of children. To handle idempotence, replace the internal representation with a *set* (or sorted list with deduplication). The multiset-based approach used here naturally extends: replace `Multiset` with `Finset` for the min operation.\n\n**Proof strategy:**\n1. Define `flattenMinSet : TropExpr → Finset TropExpr` that deduplicates.\n2. Prove that `Finset.sort` on equal finsets gives equal lists.\n3. Extend `ACEquiv` with `| tmin_idem (e : TropExpr) : ACEquiv (.tmin e e) e`.\n4. Prove completeness for the extended congruence.\n\n**Challenges:**\n- Idempotence only applies to `min`, not `+`. The normalizer must treat the two operations asymmetrically.\n- Need",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cccfadf1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:11.675811+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "Direction 2: Integrate Distributivity via Knuth–Bendix Completion",
+    "description": "**Goal:** Extend the normalizer to handle the distributive law `a + min(b, c) = min(a + b, a + c)`.\n\n**Key insight:** The current AC normalizer deliberately stops at the AC fragment. Distributivity introduces cross-operator interactions that require a fundamentally different normal form: tropical polynomials as sets of monomials (as in the existing `TropicalNF` module).\n\n**Proof strategy:**\n1. Define oriented rewrite rules: `add a (tmin b c) → tmin (add a b) (add a c)`.\n2. Show termination using a suitable measure (e.g., number of `add`-over-`tmin` patterns).\n3. Show confluence by verifying all critical pairs are joinable.\n4. Alternatively, bypass rewriting by directly normalizing to monomial support form.\n\n**Challenges:**\n- The distributive law is not terminating under naive orientation. ",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cccfadf1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:11.687262+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "Direction 3: Build a Reflection Tactic for Tropical Goals",
+    "description": "**Goal:** Use `normalize_ca` as the computational kernel of a proof-producing tactic that automatically closes tropical AC goals.\n\n**Key insight:** The completeness theorem `normalize_ca_complete` already provides the core logic: to prove `ACEquiv e₁ e₂`, compute `normalize_ca e₁` and `normalize_ca e₂` and check equality. The soundness theorem then certifies the result.\n\n**Implementation plan:**\n1. Make `normalize_ca` computable by replacing the `WellOrderingRel`-based `LinearOrder` with a concrete decidable comparison on `TropExpr`.\n2. Write a Lean 4 macro/tactic that:\n   a. Reifies a tropical expression goal into `TropExpr` syntax.\n   b. Calls `normalize_ca` on both sides.\n   c. Uses `native_decide` or `decide` to check syntactic equality.\n   d. Applies `eval_normalize_ca` to close the g",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cccfadf1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:11.698153+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Direction 4: Certified Tropical Polynomial Normal Form",
+    "description": "**Goal:** Define a canonical representation for tropical polynomials (expressions modulo AC + distributivity) and prove it complete.\n\n**Key insight:** A tropical polynomial in `n` variables is a finite pointwise minimum of affine forms `c + w₁x₁ + ... + wₙxₙ`. The normal form is a `Finset` of `(ℝ × (Fin n → ℕ))` pairs. This is the Newton polytope representation.\n\n**Proof strategy:**\n1. Define `TropPolyNF` as `Finset (ℝ × (ℕ → ℕ))` (or `Fin n → ℕ`).\n2. Define normalization by expanding distributivity fully, then collecting monomials.\n3. Prove soundness: evaluation of the normal form equals evaluation of the original.\n4. Prove completeness: two expressions with the same evaluation for all σ have the same monomial support.\n\n**Challenges:**\n- Completeness requires proving that the tropical sem",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cccfadf1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:11.709801+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Direction 5: Connect to Shortest-Path and Optimization Algorithms",
+    "description": "**Goal:** Use canonical tropical expressions to certify shortest-path computations and min-plus dynamic programs.\n\n**Key insight:** Tropical matrix multiplication computes shortest paths. An expression `min(a + b, c + d, ...)` over path weights can be represented as a `TropExpr`. The canonical form eliminates redundant subexpressions, enabling certified common-subexpression elimination (CSE) in optimization pipelines.\n\n**Proof strategy:**\n1. Define tropical matrix multiplication in terms of `TropExpr` composition.\n2. Show that normalization of the resulting expression corresponds to shortest-path computation.\n3. Prove that CSE via normalization preserves the optimal value.\n4. Connect to the Bellman-Ford or Floyd-Warshall algorithms as special cases.\n\n**Challenges:**\n- Tropical matrices ove",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cccfadf1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:11.719919+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Universal Algebra Perspective",
+    "description": "The AC normalization theorem is an instance of the word problem for the free algebra over two commutative-associative operations. Generalizing this framework to arbitrary equational theories would yield a generic certified normalization toolkit.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cccfadf1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:11.729983+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Boolean Logic Analogy",
+    "description": "Via the correspondence `min ↔ ∧` (tropical min corresponds to logical conjunction), AC normalization of `tmin` is analogous to clause canonicalization in SAT preprocessing. Extending this analogy could connect tropical algebra to certified SAT/SMT preprocessing.",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cccfadf1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:11.741098+00:00"
   }
 ]
