@@ -401,10 +401,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1185fa15",
     "timestamp": "2026-05-14T16:24:30.143125+00:00"
   },
   {
@@ -1078,6 +1078,20 @@
     "timestamp": "2026-05-15T22:12:11.220894+00:00"
   },
   {
+    "id": "fd_0238",
+    "title": "Direction 2",
+    "description": "(tropical coding regions) — novel mathematical connection; leverages existing tropical catalog.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52442f6a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:35:47.036763+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1727,24 +1741,6 @@
     "source_exp_id": "60e1cc58",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T17:30:43.026710+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Direction 4: Tropical Expander Families and Explicit Cycle-Gap Lower Bounds",
-    "description": "**Target Theorem.** *For the family of Ramanujan graphs G_n on n vertices (e.g., Lubotzky-Phillips-Sarnak graphs), the tropical cycle gap of the log-weight matrix satisfies τ(G_n) ≥ c · log(n) / n for an explicit constant c > 0.*\n\n**Why it matters.** Our spectral-tropical bridge shows that positive spectral gap implies positive tropical cycle gap, but the quantitative relationship is not yet explicit for concrete graph families. Proving explicit tropical cycle-gap lower bounds for Ramanujan graphs would create the first \"tropical expander\" family — graphs with certified tropical separation properties. This opens a new avenue in combinatorics: tropical expansion as a graph property complementary to classical expansion.\n\n**Proof strategy.**\n1. Start from the known spectral gap of Ramanujan g",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "60e1cc58",
-    "consumed_by_exp_id": "52442f6a",
-    "timestamp": "2026-05-15T17:30:43.039868+00:00"
   },
   {
     "id": "fd_0223",
