@@ -1,409 +1,302 @@
 #!/usr/bin/env python3
 """
-Tropical Origami Algorithms
+Tropical Origami: Algorithms
 
-Implementations of algorithms for tropical crease pattern analysis,
-feasibility checking, stress equilibrium computation, and fold optimization.
+This module implements the core computational algorithms for tropical origami mechanics:
+1. Tropical validity checker
+2. Tropical energy optimizer (gradient-free min-plus descent)
+3. Miura fold finder
+4. Tropical stress equilibrium checker
+5. Row-shift canonical form computation
 """
 
 import numpy as np
-from typing import List, Tuple, Optional, Set
-from dataclasses import dataclass
+from typing import Optional, Tuple, List
 
 
-@dataclass
-class TropicalFeasibilityResult:
-    """Result of a tropical feasibility check."""
-    feasible: bool
-    x: Optional[np.ndarray]
-    row_minimizers: Optional[List[Tuple[int, int]]]
-    message: str
+class TropicalCreasePattern:
+    """Represents a tropical origami crease pattern.
 
-
-@dataclass
-class StressEquilibriumResult:
-    """Result of a stress equilibrium search."""
-    exists: bool
-    sigma: Optional[np.ndarray]
-    column_minimizers: Optional[List[Tuple[int, int]]]
-    message: str
-
-
-# ─────────────────────────────────────────────────────────────
-# Algorithm 1: Tropical Feasibility Checker
-# ─────────────────────────────────────────────────────────────
-
-def check_tropical_feasibility(
-    A: np.ndarray, b: np.ndarray, x: np.ndarray, tol: float = 1e-10
-) -> TropicalFeasibilityResult:
+    The crease pattern is encoded by a real matrix C of shape (m, n),
+    where m = number of constraints (vertices) and n = number of creases.
     """
-    Check if x is tropically feasible for the crease pattern (A, b).
-    
-    A state x is tropically feasible if for every row i of A,
-    the minimum of {A[i,j] + x[j] - b[i] : j} is attained at
-    least twice (at distinct indices j1 ≠ j2).
-    
-    Time complexity: O(m × n)
-    Space complexity: O(n)
-    
-    Parameters
-    ----------
-    A : np.ndarray, shape (m, n)
-        Crease pattern incidence matrix.
-    b : np.ndarray, shape (m,)
-        Threshold vector.
-    x : np.ndarray, shape (n,)
-        Candidate fold state.
-    tol : float
-        Numerical tolerance for equality.
-    
-    Returns
-    -------
-    TropicalFeasibilityResult
-        Contains feasibility status and witnessing minimizer pairs.
-    """
-    m, n = A.shape
-    row_minimizers = []
-    
-    for i in range(m):
-        vals = A[i, :] + x - b[i]
+
+    def __init__(self, C: np.ndarray):
+        """Initialize with crease matrix C of shape (m, n)."""
+        self.C = np.array(C, dtype=float)
+        self.m, self.n = self.C.shape
+
+    def row_values(self, w: np.ndarray, i: int) -> np.ndarray:
+        """Compute C[i,:] + w for row i."""
+        return self.C[i, :] + w
+
+    def row_min(self, w: np.ndarray, i: int) -> float:
+        """Minimum of C[i,j] + w[j] over j."""
+        return np.min(self.row_values(w, i))
+
+    def row_gap(self, w: np.ndarray, i: int) -> float:
+        """Gap between 2nd smallest and smallest value in row i."""
+        vals = np.sort(self.row_values(w, i))
+        return vals[1] - vals[0] if len(vals) > 1 else 0.0
+
+    def row_balanced(self, w: np.ndarray, i: int) -> Tuple[bool, List[int]]:
+        """Check if row i is balanced at weight w.
+
+        Returns:
+            (is_balanced, list_of_minimizer_indices)
+        """
+        vals = self.row_values(w, i)
         min_val = np.min(vals)
-        indices = np.where(np.abs(vals - min_val) < tol)[0]
-        
-        if len(indices) < 2:
-            return TropicalFeasibilityResult(
-                feasible=False, x=x, row_minimizers=None,
-                message=f"Row {i}: minimum attained only at j={indices[0]}"
-            )
-        row_minimizers.append((int(indices[0]), int(indices[1])))
-    
-    return TropicalFeasibilityResult(
-        feasible=True, x=x, row_minimizers=row_minimizers,
-        message="All rows have minimum attained at least twice"
-    )
+        minimizers = list(np.where(np.isclose(vals, min_val, atol=1e-12))[0])
+        return len(minimizers) >= 2, minimizers
 
+    def is_valid(self, w: np.ndarray) -> bool:
+        """Check if w is a tropically valid fold state.
 
-# ─────────────────────────────────────────────────────────────
-# Algorithm 2: Tropical Stress Equilibrium Finder
-# ─────────────────────────────────────────────────────────────
+        Time complexity: O(m * n)
+        """
+        return all(self.row_balanced(w, i)[0] for i in range(self.m))
 
-def find_stress_equilibrium(
-    A: np.ndarray, max_iter: int = 1000, tol: float = 1e-10
-) -> StressEquilibriumResult:
-    """
-    Attempt to find a tropical stress equilibrium for matrix A.
-    
-    Uses a tropical iterative balancing procedure: adjust sigma[i]
-    to equalize column minima across rows.
-    
-    Time complexity: O(max_iter × m × n)
-    Space complexity: O(m)
-    
-    Parameters
-    ----------
-    A : np.ndarray, shape (m, n)
-        Crease pattern matrix.
-    max_iter : int
-        Maximum iterations.
-    tol : float
-        Convergence tolerance.
-    
-    Returns
-    -------
-    StressEquilibriumResult
-    """
-    m, n = A.shape
-    sigma = np.zeros(m)
-    
-    for iteration in range(max_iter):
-        # Check current state
-        all_balanced = True
-        for j in range(n):
-            vals = sigma + A[:, j]
+    def tropical_energy(self, w: np.ndarray) -> float:
+        """Compute tropical energy at weight w.
+
+        Energy = sum of row gaps. Energy >= 0, and Energy = 0 iff w is valid.
+
+        Time complexity: O(m * n log n)
+        """
+        return sum(self.row_gap(w, i) for i in range(self.m))
+
+    def stress_equilibrium(self, sigma: np.ndarray) -> bool:
+        """Check tropical stress equilibrium for transpose.
+
+        For each column j, checks if min_i(C[i,j] + sigma[i]) is attained >= 2 times.
+
+        Time complexity: O(m * n)
+        """
+        for j in range(self.n):
+            vals = self.C[:, j] + sigma
             min_val = np.min(vals)
-            indices = np.where(np.abs(vals - min_val) < tol)[0]
-            if len(indices) < 2:
-                all_balanced = False
-                # Adjust: for the unique minimizer i*, increase sigma[i*]
-                # and decrease all others slightly
-                i_star = indices[0]
-                gap = np.partition(vals, 1)[1] - min_val  # gap to second smallest
-                sigma[i_star] += gap / 2
-                break
-        
-        if all_balanced:
-            # Verify and collect minimizers
-            col_minimizers = []
-            for j in range(n):
-                vals = sigma + A[:, j]
-                min_val = np.min(vals)
-                indices = np.where(np.abs(vals - min_val) < tol)[0]
-                col_minimizers.append((int(indices[0]), int(indices[1])))
-            
-            return StressEquilibriumResult(
-                exists=True, sigma=sigma, column_minimizers=col_minimizers,
-                message=f"Converged in {iteration+1} iterations"
-            )
-    
-    return StressEquilibriumResult(
-        exists=False, sigma=None, column_minimizers=None,
-        message=f"Failed to converge in {max_iter} iterations"
-    )
+            count = np.sum(np.isclose(vals, min_val, atol=1e-12))
+            if count < 2:
+                return False
+        return True
 
+    def find_valid_fold(self, max_iter: int = 1000, lr: float = 0.1,
+                        tol: float = 1e-10) -> Tuple[Optional[np.ndarray], float]:
+        """Find a tropically valid fold state using min-plus descent.
 
-# ─────────────────────────────────────────────────────────────
-# Algorithm 3: Tropical Feasible Point Finder
-# ─────────────────────────────────────────────────────────────
+        Algorithm:
+        1. Start with w = 0
+        2. For each unbalanced row, identify the unique minimizer
+        3. Increase w at that minimizer to match the second-smallest value
+        4. Repeat until all rows are balanced or max_iter reached
 
-def find_feasible_point(
-    A: np.ndarray, b: np.ndarray, max_iter: int = 1000, tol: float = 1e-10
-) -> TropicalFeasibilityResult:
-    """
-    Find a tropically feasible point for crease pattern (A, b).
-    
-    Uses iterative projection: for each unsatisfied row, adjust x
-    to equalize the two smallest values in that row's evaluation.
-    
-    Time complexity: O(max_iter × m × n)
-    Space complexity: O(n)
-    
-    Parameters
-    ----------
-    A : np.ndarray, shape (m, n)
-        Crease pattern matrix.
-    b : np.ndarray, shape (m,)
-        Threshold vector.
-    max_iter : int
-        Maximum iterations.
-    tol : float
-        Tolerance.
-    
-    Returns
-    -------
-    TropicalFeasibilityResult
-    """
-    m, n = A.shape
-    x = np.zeros(n)
-    
-    for iteration in range(max_iter):
-        all_satisfied = True
-        for i in range(m):
-            vals = A[i, :] + x - b[i]
+        Args:
+            max_iter: Maximum number of iterations
+            lr: Learning rate for gradient steps (unused in exact mode)
+            tol: Tolerance for convergence
+
+        Returns:
+            (w_optimal, energy) where w_optimal is None if no valid fold found
+
+        Time complexity: O(max_iter * m * n)
+        """
+        w = np.zeros(self.n)
+
+        for iteration in range(max_iter):
+            energy = self.tropical_energy(w)
+            if energy < tol:
+                return w, energy
+
+            # Find the most unbalanced row
+            worst_row = -1
+            worst_gap = 0.0
+            for i in range(self.m):
+                gap = self.row_gap(w, i)
+                if gap > worst_gap:
+                    worst_gap = gap
+                    worst_row = i
+
+            if worst_row < 0:
+                return w, energy
+
+            # Find the unique minimizer and second minimizer
+            vals = self.row_values(w, worst_row)
             sorted_indices = np.argsort(vals)
             j_min = sorted_indices[0]
-            j_second = sorted_indices[1]
-            
-            gap = vals[j_second] - vals[j_min]
-            if gap > tol:
-                all_satisfied = False
-                # Increase x[j_min] by gap/2 to bring min closer to second
-                x[j_min] += gap / 2
-        
-        if all_satisfied:
-            result = check_tropical_feasibility(A, b, x, tol)
-            result.message = f"Found feasible point in {iteration+1} iterations"
-            return result
-    
-    return TropicalFeasibilityResult(
-        feasible=False, x=x, row_minimizers=None,
-        message=f"Failed to find feasible point in {max_iter} iterations"
-    )
+            second_val = vals[sorted_indices[1]]
+
+            # Adjust: increase w[j_min] so that row becomes balanced
+            adjustment = second_val - vals[j_min]
+            w[j_min] += adjustment
+
+        return w if self.is_valid(w) else None, self.tropical_energy(w)
+
+    def canonical_form(self) -> np.ndarray:
+        """Compute the row-shift canonical form of C.
+
+        Subtracts C[i, 0] from each row, making the first column all zeros.
+        Row-shift equivalent matrices have the same canonical form.
+
+        Returns:
+            Canonical matrix D with D[i, 0] = 0 for all i.
+
+        Time complexity: O(m * n)
+        """
+        return self.C - self.C[:, 0:1]
+
+    def is_miura(self) -> bool:
+        """Check if C is a Miura (Monge equality) matrix.
+
+        Tests: C[i1,j1] + C[i2,j2] = C[i1,j2] + C[i2,j1]
+        for all i1 < i2, j1 < j2.
+
+        Time complexity: O(m^2 * n^2)
+        """
+        for i1 in range(self.m):
+            for i2 in range(i1+1, self.m):
+                for j1 in range(self.n):
+                    for j2 in range(j1+1, self.n):
+                        lhs = self.C[i1,j1] + self.C[i2,j2]
+                        rhs = self.C[i1,j2] + self.C[i2,j1]
+                        if not np.isclose(lhs, rhs, atol=1e-12):
+                            return False
+        return True
+
+    def miura_decomposition(self) -> Optional[Tuple[np.ndarray, np.ndarray]]:
+        """If C is a Miura matrix, decompose as C[i,j] = f[i] + g[j].
+
+        Returns:
+            (f, g) such that C[i,j] ≈ f[i] + g[j], or None if not Miura.
+
+        Time complexity: O(m * n)
+        """
+        if not self.is_miura():
+            return None
+        # f[i] = C[i, 0], g[j] = C[0, j] - C[0, 0]
+        f = self.C[:, 0].copy()
+        g = self.C[0, :] - self.C[0, 0]
+        return f, g
 
 
-# ─────────────────────────────────────────────────────────────
-# Algorithm 4: Rigid Basis Enumeration
-# ─────────────────────────────────────────────────────────────
+class TropicalEnergyOptimizer:
+    """Optimizer for tropical energy using various strategies."""
 
-def find_rigid_bases(
-    A: np.ndarray, tol: float = 1e-10
-) -> List[Set[int]]:
-    """
-    Find all support-minimal tropical feasible supports (rigid bases).
-    
-    A rigid basis is a minimal subset B of crease indices such that
-    there exists a feasible x with support contained in B.
-    
-    Uses exhaustive search over subsets (practical for small n).
-    
-    Time complexity: O(2^n × m × n)
-    Space complexity: O(2^n)
-    
-    Parameters
-    ----------
-    A : np.ndarray, shape (m, n)
-        Crease pattern matrix.
-    tol : float
-        Tolerance.
-    
-    Returns
-    -------
-    List of sets of crease indices forming rigid bases.
-    """
-    m, n = A.shape
-    b = np.zeros(m)
-    
-    feasible_supports = []
-    
-    # Try all subsets of columns
-    for mask in range(1, 2**n):
-        support = set()
-        for j in range(n):
-            if mask & (1 << j):
-                support.add(j)
-        
-        # Try to find feasible x with support in this subset
-        # x[j] = 0 for j not in support
-        # Use the feasible point finder on the restricted problem
-        x = np.zeros(n)
-        found = False
-        
-        # Simple heuristic: try x with support only on `support`
-        for _ in range(100):
-            all_sat = True
-            for i in range(m):
-                vals = A[i, :] + x - b[i]
-                sorted_indices = np.argsort(vals)
-                j_min = sorted_indices[0]
-                j_second = sorted_indices[1]
-                
-                gap = vals[j_second] - vals[j_min]
-                if gap > tol:
-                    all_sat = False
-                    if j_min in support:
-                        x[j_min] += gap / 2
-                    else:
-                        # Can't adjust outside support
-                        break
-            
-            if all_sat:
-                # Check all non-support entries are 0
-                if np.all(np.abs(x[list(set(range(n)) - support)]) < tol):
-                    found = True
+    @staticmethod
+    def soft_energy(C: np.ndarray, w: np.ndarray, beta: float) -> float:
+        """Compute the softened (dequantized) energy.
+
+        E_β(C, w) = sum_i [-1/β · log(sum_j exp(-β(C[i,j] + w[j]))) - min_j(C[i,j] + w[j])]
+
+        This converges to the tropical energy as β → ∞.
+
+        Args:
+            C: Crease matrix (m × n)
+            w: Weight vector (n,)
+            beta: Inverse temperature parameter
+
+        Returns:
+            Softened energy value
+        """
+        m = C.shape[0]
+        total = 0.0
+        for i in range(m):
+            vals = C[i, :] + w
+            min_val = np.min(vals)
+            # Numerically stable log-sum-exp
+            shifted = -beta * (vals - min_val)
+            lse = min_val - (1.0/beta) * np.log(np.sum(np.exp(shifted)))
+            total += (-lse - min_val)
+        return total
+
+    @staticmethod
+    def gradient_descent(C: np.ndarray, beta: float = 10.0,
+                         lr: float = 0.01, max_iter: int = 5000,
+                         tol: float = 1e-8) -> Tuple[np.ndarray, List[float]]:
+        """Minimize softened energy using gradient descent.
+
+        Uses automatic differentiation via finite differences.
+
+        Args:
+            C: Crease matrix
+            beta: Inverse temperature
+            lr: Learning rate
+            max_iter: Maximum iterations
+            tol: Convergence tolerance
+
+        Returns:
+            (optimal_w, energy_history)
+        """
+        n = C.shape[1]
+        w = np.zeros(n)
+        history = []
+        eps = 1e-7
+
+        for _ in range(max_iter):
+            e = TropicalEnergyOptimizer.soft_energy(C, w, beta)
+            history.append(e)
+
+            if e < tol:
                 break
-        
-        if found:
-            feasible_supports.append(support)
-    
-    # Filter to minimal supports
-    minimal = []
-    for s in sorted(feasible_supports, key=len):
-        if not any(t < s for t in minimal):
-            minimal.append(s)
-    
-    return minimal
+
+            # Finite difference gradient
+            grad = np.zeros(n)
+            for j in range(n):
+                w_plus = w.copy()
+                w_plus[j] += eps
+                grad[j] = (TropicalEnergyOptimizer.soft_energy(C, w_plus, beta) - e) / eps
+
+            w -= lr * grad
+
+        return w, history
 
 
-# ─────────────────────────────────────────────────────────────
-# Algorithm 5: Fold Energy Optimizer
-# ─────────────────────────────────────────────────────────────
-
-def optimize_fold_energy(
-    A: np.ndarray, w: np.ndarray, max_iter: int = 10000,
-    lr: float = 0.01, tol: float = 1e-8
-) -> Tuple[np.ndarray, float, bool]:
-    """
-    Find the tropically feasible state minimizing fold energy.
-    
-    Fold energy: E(x) = max_j(w_j + x_j) - min_j(w_j + x_j)
-    
-    Uses projected subgradient descent with tropical feasibility projection.
-    
-    Parameters
-    ----------
-    A : np.ndarray, shape (m, n)
-        Crease pattern matrix.
-    w : np.ndarray, shape (n,)
-        Weight vector.
-    max_iter : int
-        Maximum iterations.
-    lr : float
-        Learning rate.
-    tol : float
-        Convergence tolerance.
-    
-    Returns
-    -------
-    (x_opt, energy_opt, converged)
-    """
-    m, n = A.shape
-    b = np.zeros(m)
-    x = np.zeros(n)
-    
-    best_x = x.copy()
-    best_energy = float('inf')
-    
-    for iteration in range(max_iter):
-        # Subgradient of fold energy
-        wx = w + x
-        j_max = np.argmax(wx)
-        j_min = np.argmin(wx)
-        
-        grad = np.zeros(n)
-        grad[j_max] = 1.0
-        grad[j_min] = -1.0
-        
-        # Gradient step
-        x = x - lr * grad
-        
-        # Project to feasibility (iterative projection)
-        for _ in range(10):
-            for i in range(m):
-                vals = A[i, :] + x - b[i]
-                sorted_idx = np.argsort(vals)
-                gap = vals[sorted_idx[1]] - vals[sorted_idx[0]]
-                if gap > tol:
-                    x[sorted_idx[0]] += gap / 2
-        
-        # Track best feasible solution
-        result = check_tropical_feasibility(A, b, x, tol * 100)
-        if result.feasible:
-            energy = float(np.max(w + x) - np.min(w + x))
-            if energy < best_energy:
-                best_energy = energy
-                best_x = x.copy()
-        
-        if best_energy < tol:
-            break
-    
-    return best_x, best_energy, best_energy < tol
-
-
-# ─────────────────────────────────────────────────────────────
-# Demo / Test
-# ─────────────────────────────────────────────────────────────
-
+# ============================================================================
+# Example usage
+# ============================================================================
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Tropical Origami Algorithms — Test Suite")
-    print("=" * 60)
-    
-    # Test feasibility checker
-    A = np.array([[1.0, 1.0, 2.0], [2.0, 1.0, 1.0]])
-    b = np.zeros(2)
-    x = np.array([0.0, 0.0, 0.0])
-    
-    result = check_tropical_feasibility(A, b, x)
-    print(f"\n1. Feasibility check: {result.message}")
-    print(f"   Feasible: {result.feasible}, minimizers: {result.row_minimizers}")
-    
-    # Test feasible point finder
-    result2 = find_feasible_point(A, b)
-    print(f"\n2. Feasible point finder: {result2.message}")
-    print(f"   x = {result2.x}")
-    
-    # Test stress equilibrium
-    A2 = np.array([[0.0, 1.0], [1.0, 0.0]])
-    stress_result = find_stress_equilibrium(A2)
-    print(f"\n3. Stress equilibrium: {stress_result.message}")
-    print(f"   σ = {stress_result.sigma}")
-    
-    # Test energy optimizer
-    A3 = np.array([[1.0, 1.0], [1.0, 1.0]])
-    w = np.array([1.0, 1.0])
-    x_opt, e_opt, conv = optimize_fold_energy(A3, w)
-    print(f"\n4. Energy optimization: energy = {e_opt:.6f}, converged = {conv}")
-    print(f"   x_opt = {x_opt}")
-    
-    print("\n" + "=" * 60)
-    print("All algorithm tests passed.")
-    print("=" * 60)
+    print("Tropical Origami Algorithms — Examples\n")
+
+    # Example 1: Finding valid folds
+    C = np.array([
+        [0.0, 1.0, 3.0],
+        [2.0, 0.0, 1.0]
+    ])
+    pattern = TropicalCreasePattern(C)
+    print(f"Crease pattern ({pattern.m}×{pattern.n}):\n{C}\n")
+
+    w_opt, energy = pattern.find_valid_fold()
+    print(f"Found fold: w = {w_opt}")
+    print(f"Energy: {energy:.6f}")
+    print(f"Valid: {pattern.is_valid(w_opt)}")
+    # Stress equilibrium is on C^T, so sigma has dimension m (rows of C)
+    # For non-square matrices, sigma = w doesn't directly apply as w has dim n
+    # We verify stress on C^T which needs sigma of dim n = 3
+    print(f"Stress equilibrium (C^T, \u03c3=w): {TropicalCreasePattern(C.T).stress_equilibrium(w_opt)}")
+    print()
+
+    # Example 2: Miura matrix
+    f = np.array([1.0, 3.0, 2.0])
+    g = np.array([0.0, 1.0, -1.0, 2.0])
+    M = f[:, np.newaxis] + g[np.newaxis, :]
+    miura = TropicalCreasePattern(M)
+    print(f"Miura matrix ({miura.m}×{miura.n}):\n{M}")
+    print(f"Is Miura: {miura.is_miura()}")
+    decomp = miura.miura_decomposition()
+    if decomp:
+        f_dec, g_dec = decomp
+        print(f"Decomposition: f={f_dec}, g={g_dec}")
+    w_can = -g
+    print(f"Canonical fold w=-g: {w_can}")
+    print(f"Energy at canonical fold: {miura.tropical_energy(w_can):.6f}")
+    print()
+
+    # Example 3: Canonical form
+    print("Row-shift canonical forms:")
+    print(f"Original:\n{C}")
+    print(f"Canonical:\n{pattern.canonical_form()}")
+    D = C + np.array([[5], [-3]])
+    pattern2 = TropicalCreasePattern(D)
+    print(f"Row-shifted D:\n{D}")
+    print(f"Canonical:\n{pattern2.canonical_form()}")
+    print(f"Same canonical form: {np.allclose(pattern.canonical_form(), pattern2.canonical_form())}")

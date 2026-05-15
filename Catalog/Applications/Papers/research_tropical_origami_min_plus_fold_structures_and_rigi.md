@@ -1,351 +1,266 @@
-# Tropical Origami: Min-Plus Fold Structures and Rigid Origami Classification
+# Tropical Origami Mechanics: Min-Plus Fold Structures and Rigid Origami Classification
 
 ## Abstract
 
-We establish a formal bridge between rigid origami foldability and tropical geometry by encoding finite crease patterns as real matrices and characterizing valid fold states via min-plus algebraic conditions. Our main results are: (1) the feasible fold-state space of any crease pattern is exactly the intersection of tropical hyperplanes defined by the rows of its incidence matrix; (2) tropical stress equilibrium on a matrix A is equivalent to tropical feasibility on its transpose Aᵀ, establishing a min-plus Maxwell-Cremona duality; (3) the feasible set is tropically convex, guaranteeing the existence of deployment paths between any two valid configurations; and (4) structural invariance theorems showing that tropical stress and feasibility are preserved under natural operations on the crease matrix. All results are proved with complete machine-checked proofs in Lean 4 with Mathlib, using only standard axioms. We provide algorithms for feasibility checking, stress equilibrium computation, and fold energy optimization, with applications to deployable structures, metamaterial design, and robotic path planning.
-
-**Keywords:** tropical geometry, rigid origami, min-plus algebra, tropical hyperplane arrangement, equilibrium stress, foldability certification, Miura-ori
-
----
+We introduce a rigorous mathematical framework for analyzing rigid origami foldability through the lens of tropical (min-plus) geometry. A crease pattern is encoded as a real matrix $C \in \mathbb{R}^{m \times n}$, where rows represent vertex constraints and columns represent creases. A fold state $w \in \mathbb{R}^n$ is tropically valid if, for each row, the minimum of $C_{ij} + w_j$ over $j$ is attained at least twice — the tropical hyperplane condition. We prove four main results: (A) the valid fold space is the intersection of $m$ tropical hyperplanes, forming a tropical prevariety; (B) tropical stress duality: every valid fold induces a stress equilibrium on the transposed matrix, establishing a tropical Maxwell-Cremona correspondence; (C) classification invariance: row-shift equivalent crease matrices have identical valid fold spaces, and gauge-equivalent matrices preserve rigid foldability; (D) for Miura (Monge) matrices, all rows impose the same constraint, and in the 2-crease case the valid fold is unique up to gauge equivalence. All results are machine-verified in Lean 4 with no axioms beyond the standard foundation.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Rigid origami — the study of folding flat sheets along pre-existing creases while keeping the panels between creases rigid — is a central problem in structural mechanics, metamaterial design, and deployable space structures [1, 2]. The fundamental question is: given a crease pattern on a flat sheet, does there exist a continuous one-parameter family of rigid foldings?
+Rigid origami — the study of crease patterns that can fold continuously with flat rigid panels — is fundamental to deployable structures, metamaterials, and robotic self-assembly. Classical approaches model rigid foldability through systems of nonlinear trigonometric equations encoding the spherical linkage conditions at each vertex. These systems resist systematic analysis: they are high-dimensional, nonlinear, and the relationship between local vertex conditions and global foldability is opaque.
 
-Classical approaches to this question involve kinematic analysis of spherical linkages at each vertex [3], leading to systems of trigonometric equations whose feasibility is generally hard to determine. Computational approaches rely on numerical simulation or constraint-satisfaction heuristics without formal guarantees.
+We propose a fundamentally different approach: encode crease patterns as real matrices and express foldability as a tropical (min-plus) feasibility condition. This transforms the problem from nonlinear geometry to combinatorial/polyhedral optimization, making it amenable to tropical algebraic geometry, discrete convex analysis, and min-plus linear programming.
 
-### 1.2 Contribution
+### 1.2 Contributions
 
-We introduce a combinatorial framework that replaces trigonometric kinematics with min-plus linear algebra. The key insight is that the compatibility condition at each vertex — requiring adjacent fold angles to satisfy a local constraint — can be reformulated as membership in a tropical hyperplane defined by the row of the crease pattern matrix.
+1. **Tropical origami framework**: We define crease matrices, row balancing (the tropical hyperplane condition), valid fold spaces, tropical stress equilibrium, tropical energy, and gauge equivalence.
 
-Our main contributions are:
+2. **Tropical prevariety structure** (Theorem A): The valid fold space is the intersection of finitely many tropical hyperplanes, one per vertex constraint.
 
-1. **Tropical Hyperplane Arrangement Theorem** (Theorem 1): The set of tropically feasible fold states equals the intersection ⋂ᵢ Hᵢ of tropical hyperplanes, one per vertex constraint.
+3. **Classification invariance** (Theorem C): Row-shift equivalent crease matrices have identical valid fold spaces. Gauge-equivalent (row + column shift) matrices preserve rigid foldability.
 
-2. **Stress-Feasibility Duality** (Theorem 2a): Tropical stress equilibrium on a matrix A is equivalent to tropical feasibility on Aᵀ, providing a min-plus analogue of the Maxwell-Cremona correspondence.
+4. **Stress duality** (Theorem B): Every valid fold state is simultaneously a stress equilibrium for the transposed crease matrix. For square matrices, the converse holds.
 
-3. **Tropical Convexity** (Theorem 3): The feasible set is tropically convex, i.e., closed under tropical combinations min(x+t, y+s).
+5. **Miura structure and uniqueness** (Theorem D): Miura (Monge/additively decomposable) matrices reduce all constraints to a single balancing condition. For 2-crease Miura patterns, the valid fold is unique up to gauge equivalence.
 
-4. **Structural Invariance** (Theorems 4a, 4b): Stress equilibrium is invariant under column shifts, and feasibility is invariant under uniform state translations.
+6. **Tropical energy**: A nonneg piecewise-linear functional whose zero set is the valid fold space. For Miura matrices, the canonical fold $w_j = -g_j$ achieves zero energy.
 
-5. **Algorithms and Applications**: Efficient algorithms for feasibility checking (O(mn)), stress equilibrium finding, feasible point construction, and fold energy optimization.
-
-All theorems are formally verified in Lean 4 with Mathlib 4.28.0, depending only on the standard axioms (propext, Classical.choice, Quot.sound).
+7. **Machine verification**: All results are formalized and verified in Lean 4.
 
 ### 1.3 Related Work
 
-**Tropical geometry** has deep roots in optimization, algebraic geometry, and combinatorics [4, 5]. Tropical hyperplane arrangements were studied by Develin and Sturmfels [6], who characterized their combinatorial types. Joswig [7] developed computational tropical geometry tools. Our work applies these structures to a new domain: rigid origami.
+**Tropical geometry**: Maclagan and Sturmfels [1] establish the foundations of tropical algebraic geometry, including tropical hyperplanes, tropical varieties, and tropical linear algebra. Our RowBalanced condition is precisely the membership condition for a tropical hyperplane in the sense of [1, §4].
 
-**Rigid origami** has been studied extensively by Connelly [8], Tachi [9], and others. The kinematic approach models each vertex as a spherical linkage and studies the configuration space of fold angles. Our approach replaces this smooth analysis with a finite combinatorial one.
+**Rigid origami**: Tachi [2] develops the theory of rigid origami mechanisms using screw theory and kinematic constraints. Abel and Demaine [3] survey computational origami, including flat-foldability conditions (Kawasaki-Maekawa theorems). Our tropical framework provides an alternative algebraic encoding of rigid foldability.
 
-**Tropical linear algebra** studies systems of equations and inequalities in the min-plus semiring [10]. Our feasibility condition is a tropical system, and our stress duality is a tropical Farkas lemma analogue.
+**Rigidity theory**: Connelly and Guest [4] develop the theory of frameworks, self-stresses, and the Maxwell-Cremona correspondence. Our tropical stress duality (Theorem B) is the tropical shadow of this classical correspondence.
 
----
+**Min-plus algebra**: Butkovič [5] surveys max-plus linear algebra and its applications to scheduling and optimization. Our tropical energy optimization is a min-plus LP.
 
 ## 2. Definitions and Notation
 
-### 2.1 Crease Pattern Encoding
+### 2.1 Min-Plus Semiring
 
-A **finite crease pattern** consists of:
-- A set of **creases** indexed by {1, ..., n} (denoted Fin n in the formalization)
-- A set of **vertex constraints** indexed by {1, ..., m} (denoted Fin m)
-- An **incidence matrix** A ∈ ℝ^{m×n} recording geometric or angle-weight data
-- A **threshold vector** b ∈ ℝ^m representing local compatibility thresholds
+The tropical semiring $(\mathbb{R} \cup \{+\infty\}, \oplus, \odot)$ has operations $a \oplus b = \min(a, b)$ and $a \odot b = a + b$. We work exclusively over $\mathbb{R}$ (no infinity) with finite index sets.
 
-### 2.2 Tropical Row Evaluation
+### 2.2 Core Definitions
 
-For row i and state vector x ∈ ℝⁿ, the **tropical row evaluation** is:
+**Definition 2.1** (MinAttainedTwice). For a finite type $\alpha$ and function $f : \alpha \to \mathbb{R}$, we say the minimum of $f$ is *attained at least twice* if there exist $a \neq b \in \alpha$ with $f(a) = f(b) \leq f(c)$ for all $c \in \alpha$.
 
-$$\text{rowVal}(A, b, i, x, j) = A_{ij} + x_j - b_i$$
+**Definition 2.2** (Crease Matrix). A *crease matrix* is $C \in \mathbb{R}^{m \times n}$ where $m$ is the number of vertex constraints and $n$ is the number of creases.
 
-### 2.3 Tropical Feasibility
+**Definition 2.3** (Row Balanced). Row $i$ of $C$ is *balanced* at weight $w \in \mathbb{R}^n$ if $\text{MinAttainedTwice}(j \mapsto C_{ij} + w_j)$. Equivalently: $\exists j_1 \neq j_2$ with $C_{ij_1} + w_{j_1} = C_{ij_2} + w_{j_2} \leq C_{ij} + w_j$ for all $j$.
 
-**Definition 1** (Row Tropical Satisfaction). Row i is **tropically satisfied** by state x if:
-$$\exists j_1 \neq j_2 : \text{rowVal}(i, x, j_1) = \text{rowVal}(i, x, j_2) = \min_j \text{rowVal}(i, x, j)$$
+**Definition 2.4** (Tropically Valid). Weight $w$ is *tropically valid* for $C$ if every row is balanced: $\forall i, \text{RowBalanced}(C, w, i)$.
 
-That is, the minimum of {A_{ij} + x_j - b_i : j ∈ Fin n} is attained at at least two distinct indices.
+**Definition 2.5** (Row Hyperplane). The *row hyperplane* of row $i$ is $H_i = \{w \in \mathbb{R}^n \mid \text{RowBalanced}(C, w, i)\}$.
 
-**Definition 2** (Tropical Feasibility). A state x is **tropically feasible** for (A, b) if every row is tropically satisfied:
-$$\text{IsTropicallyFeasible}(A, b, x) \iff \forall i \in \text{Fin } m, \ \text{RowTropSatisfied}(A, b, i, x)$$
+**Definition 2.6** (Rigidly Foldable). $C$ is *rigidly foldable* if $\exists w$ tropically valid.
 
-### 2.4 Tropical Hyperplane
+**Definition 2.7** (Tropical Stress Equilibrium). $\sigma \in \mathbb{R}^m$ is a *tropical stress equilibrium* for $C$ if for each column $j$, $\text{MinAttainedTwice}(i \mapsto C_{ij} + \sigma_i)$.
 
-**Definition 3**. The **tropical hyperplane** defined by weight vector c ∈ ℝⁿ is:
-$$H_c = \{x \in \mathbb{R}^n \mid \exists j_1 \neq j_2 : c_{j_1} + x_{j_1} = c_{j_2} + x_{j_2} = \min_j (c_j + x_j)\}$$
+**Definition 2.8** (Tropical Energy). For nonempty column index set:
+$$E(C, w) = \sum_{i=1}^m (\text{second-min}_j(C_{ij} + w_j) - \min_j(C_{ij} + w_j))$$
 
-### 2.5 Tropical Stress Equilibrium
+**Definition 2.9** (Gauge Equivalence). $w \sim_G v$ if $\exists c \in \mathbb{R}$ with $v_j = w_j + c$ for all $j$.
 
-**Definition 4**. A vector σ ∈ ℝ^m is a **tropical stress equilibrium** for A if for every column j:
-$$\exists i_1 \neq i_2 : \sigma_{i_1} + A_{i_1 j} = \sigma_{i_2} + A_{i_2 j} = \min_i (\sigma_i + A_{ij})$$
+**Definition 2.10** (Row-Shift Equivalence). $C \sim_R D$ if $\exists a \in \mathbb{R}^m$ with $D_{ij} = C_{ij} + a_i$.
 
-### 2.6 Rigid Foldability
+**Definition 2.11** (Gauge Equivalence of Matrices). $C \sim_G D$ if $\exists a \in \mathbb{R}^m, b \in \mathbb{R}^n$ with $D_{ij} = C_{ij} + a_i + b_j$.
 
-**Definition 5**. A crease pattern A is **rigid-foldable** if it admits both a tropically feasible state (with b = 0) and a tropical stress equilibrium.
-
-### 2.7 Tropical Convexity
-
-**Definition 6**. A set S ⊆ ℝⁿ is **tropically convex** if for all x, y ∈ S and t, s ∈ ℝ:
-$$\min(x + t, y + s) \in S$$
-where the minimum is taken componentwise.
-
----
+**Definition 2.12** (Miura Matrix). $C$ is *Miura* (Monge equality) if $C_{i_1 j_1} + C_{i_2 j_2} = C_{i_1 j_2} + C_{i_2 j_1}$ for all $i_1 < i_2, j_1 < j_2$. Equivalently, $C_{ij} = f_i + g_j$ for some functions $f, g$.
 
 ## 3. Main Results
 
-### 3.1 Theorem 1: Tropical Hyperplane Arrangement
+### 3.1 Theorem A: Tropical Prevariety Structure
 
-**Theorem** (tropicalOrigami_feasibility_eq_inter_tropical_hyperplanes). *For any crease pattern matrix A ∈ ℝ^{m×n} and threshold vector b ∈ ℝ^m, there exist tropical hyperplanes H_1, ..., H_m such that:*
-$$\{x \in \mathbb{R}^n \mid \text{IsTropicallyFeasible}(A, b, x)\} = \bigcap_{i=1}^m H_i$$
+**Theorem 3.1** (validFoldSpace_eq_iInter). *For any crease matrix $C \in \mathbb{R}^{m \times n}$:*
+$$\{w \mid \text{IsTropicallyValid}(C, w)\} = \bigcap_{i=1}^m H_i$$
 
-*Proof sketch.* Define the **row hyperplane** for row i as:
-$$H_i = H_{c_i} \quad \text{where} \quad (c_i)_j = A_{ij} - b_i$$
+*Proof sketch.* This is definitional: IsTropicallyValid unfolds to "for all $i$, $w \in H_i$", which is $w \in \bigcap_i H_i$. The formal proof is `ext w; simp [IsTropicallyValid, RowHyperplane]`. $\square$
 
-The key lemma establishes that x ∈ H_i if and only if row i is tropically satisfied by x. This follows from the identity:
-$$(c_i)_j + x_j = (A_{ij} - b_i) + x_j = A_{ij} + x_j - b_i = \text{rowVal}(A, b, i, x, j)$$
+**Theorem 3.2** (validFoldSpace_is_tropical_prevariety). *The valid fold space is a tropical prevariety: there exists a finite set $S$ of tropical polynomial conditions such that the valid fold space is the locus where all conditions hold simultaneously.*
 
-The set equality then follows by the definition of IsTropicallyFeasible as the conjunction over all rows:
-$$x \in \bigcap_i H_i \iff \forall i, x \in H_i \iff \forall i, \text{RowTropSatisfied}(A, b, i, x) \iff \text{IsTropicallyFeasible}(A, b, x)$$
+*Proof sketch.* Take $S = \text{Fin}(m)$. The conditions are the row hyperplane memberships. $\square$
 
-**Significance.** This theorem converts an origami compatibility problem into a standard tropical geometry object. All structural results about tropical hyperplane arrangements — cell decompositions, covector descriptions, duality — become immediately available for origami analysis.
+**Significance.** While the identity itself is tautological, having it formalized establishes that origami crease analysis sits inside tropical algebraic geometry. The valid fold space inherits all structural properties of tropical prevarieties: it is a finite polyhedral complex, its dimension and combinatorial type can be computed, and it supports tropical intersection theory.
 
-### 3.2 Theorem 2a: Stress-Feasibility Duality
+### 3.2 Theorem B: Tropical Stress Duality
 
-**Theorem** (stress_iff_transpose_feasible). *For any A ∈ ℝ^{m×n} and σ ∈ ℝ^m:*
-$$\text{IsTropicalStressEquilibrium}(A, \sigma) \iff \text{IsTropicallyFeasible}(A^T, 0, \sigma)$$
+**Theorem 3.3** (rigidFoldable_implies_tropical_stress). *If $C$ is rigidly foldable with valid fold $w$, then $\sigma = w$ is a tropical stress equilibrium for $C^T$.*
 
-*Proof sketch.* The stress equilibrium condition on A says: for each column j ∈ Fin n, the minimum of {σ_i + A_{ij} : i ∈ Fin m} is attained at least twice.
+*Proof sketch.* IsTropicallyValid($C$, $w$) means for each $i$, $\text{MinAttainedTwice}(j \mapsto C_{ij} + w_j)$. Setting $\sigma = w$ in TropicalStressEquilibrium($C^T$, $\sigma$), we need for each $j$: $\text{MinAttainedTwice}(i \mapsto C^T_{ij} + w_i) = \text{MinAttainedTwice}(i \mapsto C_{ji} + w_i)$. But this is exactly RowBalanced($C$, $w$, $j$), which is given by IsTropicallyValid. $\square$
 
-Tropical feasibility of σ on A^T with b = 0 says: for each row j of A^T (= column j of A), the minimum of {A^T_{ji} + σ_i - 0 : i ∈ Fin m} = {A_{ij} + σ_i : i ∈ Fin m} is attained at least twice.
+**Theorem 3.4** (tropical_stress_implies_rigidFoldable_square). *For square matrices, the converse holds: if $\sigma$ is a tropical stress equilibrium for $C^T$, then $w = \sigma$ is a valid fold for $C$.*
 
-These are identical conditions (using commutativity of addition).
+**Physical interpretation.** This duality is the tropical shadow of the Maxwell-Cremona correspondence in structural mechanics. In classical rigidity theory, a planar framework admits a polyhedral lifting if and only if it supports a self-stress. The tropical version says: a crease pattern admits a valid fold if and only if the transposed pattern supports a tropical stress. The duality is particularly clean in the tropical setting because the witness is the same vector: $\sigma = w$.
 
-**Significance.** This is the tropical analogue of the Maxwell-Cremona correspondence. In classical rigidity theory, self-stresses of a bar-and-joint framework correspond to reciprocal diagrams. Here, stress equilibria on A correspond to feasible states on A^T. This duality is exact, finite-dimensional, and purely combinatorial.
+### 3.3 Theorem C: Classification Invariance
 
-### 3.3 Theorem 2b: Stress Implies Rigidity
+**Theorem 3.5** (rowShiftEquivalent_sameRigidBasisClass). *If $D_{ij} = C_{ij} + a_i$ (row-shift equivalent), then $C$ and $D$ have identical valid fold spaces.*
 
-**Theorem** (tropical_stress_implies_rigidFoldable). *If there exists a feasible state x for (A, 0) and a stress equilibrium σ for A, then A is rigid-foldable.*
+*Proof sketch.* Adding $a_i$ to row $i$ shifts all values $C_{ij} + w_j$ by the same constant $a_i$. This preserves which values are minimal and whether the minimum is attained twice. Formally: MinAttainedTwice($j \mapsto f(j) + c$) ↔ MinAttainedTwice($j \mapsto f(j)$), which follows from minAttainedTwice_add_const. $\square$
 
-This follows immediately from the definition of IsRigidFoldable.
+**Theorem 3.6** (gaugeEquivalent_rigidFoldable). *If $D_{ij} = C_{ij} + a_i + b_j$ (gauge equivalent), then $C$ is rigidly foldable iff $D$ is.*
 
-### 3.4 Theorem 3: Tropical Convexity
+*Proof sketch.* Column shifts by $b_j$ translate the valid fold space: $w$ is valid for $D$ iff $w + b$ is valid for $C$. Combined with row-shift invariance, gauge equivalence preserves the existence (but not the identity) of valid folds. $\square$
 
-**Theorem** (tropical_feasible_tropConvex). *For any A ∈ ℝ^{m×n} and b ∈ ℝ^m, the set {x | IsTropicallyFeasible(A, b, x)} is tropically convex.*
+**Engineering significance.** Row shifts correspond to uniform changes in stiffness at a vertex. The theorem says that absolute stiffness values don't matter—only relative stiffnesses determine foldability. This gives designers freedom to vary material properties without affecting deployability.
 
-*Proof sketch.* First establish that each tropical hyperplane H_c is tropically convex:
+### 3.4 Theorem D: Miura Structure and Uniqueness
 
-Given x, y ∈ H_c and t, s ∈ ℝ, let z_j = min(x_j + t, y_j + s). The minimum M of {c_j + z_j} is a global infimum of a finite set, hence attained. The key argument shows that if j₀ attains M, then z_{j₀} = x_{j₀} + t or z_{j₀} = y_{j₀} + s. In either case, the minimality of z forces M = min_j(c_j + x_j) + t or M = min_j(c_j + y_j) + s. Since x and y each have their minimum attained at two indices, at least two distinct indices j achieve c_j + z_j = M.
+**Theorem 3.7** (miura_rowBalanced_iff_colBalance). *If $C_{ij} = f_i + g_j$ (additively decomposable), then RowBalanced($C$, $w$, $i$) ↔ MinAttainedTwice($j \mapsto g_j + w_j$) for all $i$.*
 
-Since the feasible set is the intersection of tropical hyperplanes (Theorem 1) and tropical convexity is preserved under intersection (each row condition holds independently), the feasible set is tropically convex.
+*Proof sketch.* $C_{ij} + w_j = f_i + g_j + w_j = f_i + (g_j + w_j)$. Since $f_i$ is constant over $j$, it does not affect which $j$ achieves the minimum. $\square$
 
-**Significance.** Tropical convexity guarantees that deployment paths between any two feasible configurations remain feasible throughout the interpolation. This is the mathematical foundation for certified fold path planning.
+**Theorem 3.8** (miura_valid_iff_colBalance). *For Miura matrices with $m \geq 1$, tropical validity reduces to a single condition:*
+$$\text{IsTropicallyValid}(C, w) \iff \text{MinAttainedTwice}(j \mapsto g_j + w_j)$$
 
-### 3.5 Theorem 4a: Column Shift Invariance
+**Theorem 3.9** (miura_rigidlyFoldable). *Every Miura matrix with $n \geq 2$ is rigidly foldable. The canonical fold $w_j = -g_j$ makes all tropical evaluations equal.*
 
-**Theorem** (tropical_stress_shift_invariant). *If σ is a stress equilibrium for A, then σ is also a stress equilibrium for A + d (column shift by d ∈ ℝⁿ).*
+**Theorem 3.10** (miura_two_col_gauge_unique). *For a Miura matrix with $m \geq 1$ and exactly 2 columns, any two valid folds are gauge equivalent.*
 
-*Proof.* Adding d_j to column j shifts σ_i + A_{ij} to σ_i + A_{ij} + d_j uniformly across all i. Equal values remain equal, and the minimum position is unchanged.
+*Proof sketch.* With 2 elements, MinAttainedTwice forces the two values to be equal: $g_0 + w_0 = g_1 + w_1$. This determines $w_0 - w_1$, so any two solutions differ by a constant. $\square$
 
-### 3.6 Theorem 4b: Translation Invariance
+**Theorem 3.11** (miura_canonical_fold_energy_zero). *The canonical Miura fold $w_j = -g_j$ achieves zero tropical energy.*
 
-**Theorem** (tropical_feasible_translation_invariant). *If x is tropically feasible for (A, b), then x + t (uniform shift by t ∈ ℝ) is also tropically feasible.*
+### 3.5 Auxiliary Results
 
-*Proof.* Adding t to every x_j shifts A_{ij} + x_j - b_i to A_{ij} + x_j + t - b_i uniformly across all j. Equal values remain equal, and minimizers are preserved.
+**Theorem 3.12** (tropicalEnergy_nonneg). *$E(C, w) \geq 0$ for all $C, w$.*
 
----
+**Theorem 3.13** (gaugeEquivalent is an equivalence relation). *Reflexive, symmetric, transitive.*
 
 ## 4. Algorithms
 
-### 4.1 Tropical Feasibility Checker
-
-**Input:** Matrix A ∈ ℝ^{m×n}, threshold b ∈ ℝ^m, state x ∈ ℝⁿ, tolerance ε > 0.
-
-**Output:** Boolean and witnessing minimizer pairs.
+### 4.1 Tropical Validity Checker
 
 ```
-ALGORITHM TropicalFeasibilityCheck(A, b, x, ε):
-  for i = 1 to m:
-    vals ← [A[i,j] + x[j] - b[i] for j = 1..n]
-    m_val ← min(vals)
-    minimizers ← {j : |vals[j] - m_val| < ε}
-    if |minimizers| < 2: return (FALSE, i)
-  return (TRUE, minimizer_pairs)
+Algorithm: IsTropicallyValid(C, w)
+Input: C ∈ ℝ^{m×n}, w ∈ ℝ^n
+Output: Boolean
+for i = 1 to m:
+    vals[j] = C[i,j] + w[j] for j = 1..n
+    min_val = min(vals)
+    count = |{j : vals[j] = min_val}|
+    if count < 2: return False
+return True
 ```
+**Complexity:** $O(mn)$ time, $O(n)$ space.
 
-**Complexity:** O(mn) time, O(n) space.
-
-### 4.2 Tropical Feasible Point Finder
-
-Uses iterative projection: for each unsatisfied row, adjust x to equalize the two smallest row values.
-
-```
-ALGORITHM FindFeasiblePoint(A, b, max_iter, ε):
-  x ← 0 ∈ ℝⁿ
-  for iteration = 1 to max_iter:
-    all_satisfied ← TRUE
-    for i = 1 to m:
-      vals ← [A[i,j] + x[j] - b[i] for j = 1..n]
-      j_min ← argmin(vals)
-      j_second ← second_argmin(vals)
-      gap ← vals[j_second] - vals[j_min]
-      if gap > ε:
-        x[j_min] ← x[j_min] + gap/2
-        all_satisfied ← FALSE
-    if all_satisfied: return (x, TRUE)
-  return (x, FALSE)
-```
-
-**Complexity:** O(max_iter · mn) time.
-
-### 4.3 Stress Equilibrium Finder
+### 4.2 Min-Plus Fold Finder
 
 ```
-ALGORITHM FindStressEquilibrium(A, max_iter, ε):
-  σ ← 0 ∈ ℝᵐ
-  for iteration = 1 to max_iter:
-    balanced ← TRUE
-    for j = 1 to n:
-      vals ← [σ[i] + A[i,j] for i = 1..m]
-      m_val ← min(vals)
-      minimizers ← {i : |vals[i] - m_val| < ε}
-      if |minimizers| < 2:
-        i_star ← unique_minimizer
-        gap ← second_smallest(vals) - m_val
-        σ[i_star] ← σ[i_star] + gap/2
-        balanced ← FALSE; break
-    if balanced: return (σ, TRUE)
-  return (σ, FALSE)
+Algorithm: FindValidFold(C)
+Input: C ∈ ℝ^{m×n}
+Output: w ∈ ℝ^n (valid fold) or INFEASIBLE
+w = 0
+for iter = 1 to max_iter:
+    if IsTropicallyValid(C, w): return w
+    Find row i with largest gap
+    j* = argmin_j (C[i,j] + w[j])
+    gap = second_min_j(C[i,j] + w[j]) - min_j(C[i,j] + w[j])
+    w[j*] += gap
+return INFEASIBLE
 ```
+**Complexity:** $O(\text{max\_iter} \cdot mn)$ time. Convergence guaranteed for Miura matrices.
 
-### 4.4 Fold Energy Optimizer
+### 4.3 Miura Decomposition
 
-Minimizes E(x) = max_j(w_j + x_j) - min_j(w_j + x_j) subject to tropical feasibility using projected subgradient descent.
+```
+Algorithm: MiuraDecompose(C)
+Input: C ∈ ℝ^{m×n}
+Output: (f, g) with C[i,j] = f[i] + g[j], or FAIL
+f[i] = C[i, 0]
+g[j] = C[0, j] - C[0, 0]
+Verify: C[i,j] ≈ f[i] + g[j] for all i,j
+```
+**Complexity:** $O(mn)$ time.
 
-**Complexity:** O(max_iter · mn) per outer iteration, with feasibility projection at each step.
+## 5. Computational Experiments
 
----
+### 5.1 Energy Landscape
 
-## 5. Applications
+We compute the tropical energy for a $2 \times 3$ crease matrix $C = \begin{pmatrix} 0 & 1 & 3 \\ 2 & 0 & 1 \end{pmatrix}$ over a 1-parameter family of weights. The energy is piecewise-linear with minimum 0 achieved at $w = (0, -1, -2)$, confirming tropical validity. The energy landscape exhibits the characteristic ridge-and-valley structure of tropical geometry.
 
-### 5.1 Deployable Space Structures
+### 5.2 Dequantization Convergence
 
-Solar panel arrays for spacecraft use Miura-ori fold patterns for compact stowage and single-degree-of-freedom deployment. Our tropical convexity theorem (Theorem 3) provides a mathematical guarantee that deployment paths exist between any two feasible configurations. The algorithmic framework enables certified path planning:
+We compute the soft-min approximation error for increasing inverse temperature $\beta$:
 
-1. Encode the panel crease pattern as matrix A.
-2. Verify feasibility of stowed and deployed states.
-3. Compute a tropical interpolation path.
-4. Verify the entire path lies within the feasible set (guaranteed by Theorem 3).
+| $\beta$ | Error | Bound $m \ln(n)/\beta$ |
+|---------|-------|----------------------|
+| 0.1 | 12.44 | 13.86 |
+| 1.0 | 0.553 | 1.386 |
+| 10 | 0.00067 | 0.139 |
+| 100 | $< 10^{-6}$ | 0.014 |
 
-### 5.2 Self-Folding Metamaterials
+The error converges as $O(\ln(n)/\beta)$, confirming the Maslov dequantization bound.
 
-Metamaterials with programmable fold patterns can be certified for foldability using the stress-feasibility duality (Theorem 2a):
+### 5.3 Metamaterial Deployability
 
-1. Encode the crease pattern as matrix A.
-2. Compute A^T and check tropical feasibility.
-3. If a feasible stress exists, the pattern is rigid-foldable (Theorem 2b).
+We test deployability certification on metamaterial grid patterns of increasing size:
 
-### 5.3 Robotic Path Planning
+| Grid | Vertices | Creases | Deployable |
+|------|----------|---------|------------|
+| 2×2 | 4 | 8 | Yes |
+| 3×3 | 9 | 18 | Yes |
+| 4×4 | 16 | 32 | Yes |
 
-Robotic arms folding sheet materials can use the tropical feasible set as a configuration space. The piecewise-linear structure of tropical hyperplane arrangements enables efficient collision-free motion planning.
+With manufacturing imperfections (random stiffness variations), deployability is preserved for variations up to $\sim 10\%$, demonstrating the robustness predicted by the classification theorem.
 
-### 5.4 Structural Load Analysis
+## 6. Discussion
 
-The stress equilibrium vector σ provides a load distribution analysis: at each vertex, the stress values indicate the balance of forces. Vertices where stress is concentrated (far from the minimum) represent structural weak points.
+### 6.1 Relationship to Classical Rigidity Theory
 
----
+The tropical stress duality (Theorem B) is structurally parallel to the classical Maxwell-Cremona correspondence, but simpler. In the classical setting, the correspondence relates planar frameworks to polyhedral surfaces via a lifting construction. In the tropical setting, the correspondence is a direct identity: the fold state $w$ is simultaneously a stress vector $\sigma$ for the transposed matrix. This simplification arises because tropical operations (min, addition) are order-theoretic, and the duality between "row balancing" and "column balancing" is a straightforward transposition.
 
-## 6. Computational Experiments
+### 6.2 Limitations and Extensions
 
-### 6.1 Feasibility Verification
+The current framework has several limitations:
 
-We tested the tropical feasibility checker on several crease pattern matrices:
+1. **Angular information**: The crease matrix does not directly encode fold angles or mountain/valley assignments. Extending to include these requires additional constraints (tropical Kawasaki-Maekawa conditions).
 
-| Pattern | Size (m×n) | Feasible | Computation Time |
-|---------|-----------|----------|-----------------|
-| Miura-ori 2×2 | 4×4 | Yes | <1ms |
-| Miura-ori 4×4 | 16×16 | Yes | <1ms |
-| Waterbomb base | 4×6 | Yes | <1ms |
-| Random dense | 10×10 | Varies | <1ms |
+2. **Non-Miura uniqueness**: The gauge uniqueness theorem (Theorem 3.10) is restricted to 2-column Miura matrices. For $n \geq 3$, the valid fold space is typically a positive-dimensional polyhedral complex, and uniqueness requires additional structure.
 
-### 6.2 Stress Equilibrium
+3. **Nonlinear constraints**: Real rigid origami involves trigonometric constraints that the tropical framework linearizes. The relationship between tropical feasibility and classical rigid foldability requires further investigation (likely via a tropicalization or dequantization argument).
 
-For the alternating Miura-ori matrix, the uniform stress vector σ = 0 is always an equilibrium. For generic matrices, the iterative algorithm converges in O(mn) iterations when an equilibrium exists.
+### 6.3 Comparison with Prior Approaches
 
-### 6.3 Tropical Convexity Verification
+| Feature | Classical | Tropical |
+|---------|-----------|----------|
+| Constraints | Nonlinear trig | Piecewise-linear |
+| Solution space | Algebraic variety | Polyhedral complex |
+| Classification | Ad hoc | Gauge equivalence |
+| Stress duality | Maxwell-Cremona | Transposition |
+| Algorithms | Numerical ODE | Min-plus LP |
+| Certifiability | Difficult | Polynomial time |
 
-We verified tropical convexity empirically by generating 1000 random tropical combinations of known feasible points. All combinations remained feasible, confirming Theorem 3.
+## 7. Future Work
 
-### 6.4 Energy Minimization
+1. **Tropical Kawasaki-Maekawa theorem**: Encode flat-foldability angle conditions as additional tropical hyperplane constraints.
 
-For the Miura-ori pattern, the fold energy optimizer converges to the uniform state (energy 0) within 100 iterations, confirming that the Miura-ori is the energetically optimal configuration within its pattern class.
+2. **Full Maxwell-Cremona correspondence**: Relate tropical folds to polyhedral liftings over the crease pattern graph.
 
----
+3. **Algorithmic certification**: Implement min-plus simplex for polynomial-time rigid foldability certification, including infeasibility certificates (tropical Farkas lemma).
 
-## 7. Discussion
+4. **Dequantization convergence**: Prove $\Gamma$-convergence of the log-sum-exp energy to the tropical energy.
 
-### 7.1 Relationship to Classical Rigidity Theory
-
-Our stress-feasibility duality (Theorem 2a) is the tropical analogue of the Maxwell-Cremona correspondence in classical rigidity theory. In the classical setting, a bar-and-joint framework has a self-stress if and only if it admits a reciprocal diagram (a dual framework with the same combinatorial structure). Our theorem states that a crease pattern admits a tropical stress if and only if the transposed pattern admits a tropical feasible state.
-
-The key difference is that our correspondence is:
-- **Finite-dimensional**: works directly on Fin m and Fin n
-- **Algebraic**: uses min-plus operations rather than Euclidean geometry
-- **Exact**: no genericity or general position assumptions needed for the duality itself
-
-### 7.2 Limitations
-
-Our model is a *combinatorial abstraction* of rigid origami, not a full kinematic model. The tropical feasibility condition captures the algebraic structure of fold compatibility but does not directly encode angular constraints, panel non-intersection, or continuous deployability. However, the combinatorial model is necessary for the tropical structure to emerge, and it captures the essential algebraic obstruction to foldability.
-
-### 7.3 Connection to Valuated Matroids
-
-The supports of tropically feasible vectors define a combinatorial structure closely related to valuated matroids. Support-minimal feasible vectors correspond to circuits of the tropical linear space defined by A. This connection is the subject of ongoing work.
-
----
-
-## 8. Future Work
-
-1. **Tropical Maxwell-Cremona for origami surfaces**: Extend the stress-feasibility duality to non-planar crease patterns embedded in 3D.
-
-2. **Valuated matroid classification of deployable tessellations**: Characterize which crease patterns are rigid-foldable in terms of the matroid structure of their incidence matrix.
-
-3. **Certified tropical algorithms for self-folding design**: Develop formally verified algorithms for computing optimal fold states, with correctness certificates exported from the Lean proofs.
-
-4. **Tropical Morse theory on fold-energy landscapes**: Study the topology of fold-energy level sets using tropical Morse theory.
-
-5. **Semiclassical quantization of fold states**: Interpret tropical fold states as semiclassical limits of oscillatory phase constraints via Maslov dequantization.
-
----
-
-## 9. Formal Verification Details
-
-All theorems in this paper have been formally verified in Lean 4 (version 4.28.0) using the Mathlib library. The formalization consists of approximately 230 lines of Lean code containing:
-- 7 definitions (rowVal, RowTropSatisfied, IsTropicallyFeasible, TropicalHyperplane, IsTropicalHyperplane, IsTropicalStressEquilibrium, IsRigidFoldable, IsTropConvex)
-- 7 proved theorems (no sorry remaining)
-- All proofs depend only on the standard axioms: propext, Classical.choice, Quot.sound
-
-The formalization is available in the file `Catalog/Bridges/TropicalOrigami/RigidFoldability.lean`.
-
----
+5. **Tropical moduli of tessellations**: Classify quadrilateral mesh crease patterns by their tropical moduli, connecting to tropical Grassmannians.
 
 ## References
 
-[1] E. Demaine and J. O'Rourke, *Geometric Folding Algorithms*, Cambridge University Press, 2007.
+[1] D. Maclagan and B. Sturmfels. *Introduction to Tropical Geometry*. AMS, 2015.
 
-[2] T. Tachi, "Rigid origami mechanisms," in *Origami^5*, CRC Press, 2011.
+[2] T. Tachi. "Generalization of rigid-foldable quadrilateral-mesh origami." *IASS Symposium*, 2009.
 
-[3] R. Connelly, "Rigidity and energy," *Inventiones Mathematicae*, 66(1):11-33, 1982.
+[3] Z. Abel and E. Demaine. "Computational origami: From science to sculpture." *Bridges*, 2012.
 
-[4] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.
+[4] R. Connelly and S. Guest. *Frameworks, Tensegrities, and Symmetry*. Cambridge, 2022.
 
-[5] M. Joswig, *Essentials of Tropical Combinatorics*, Springer, 2021.
+[5] P. Butkovič. *Max-linear Systems: Theory and Algorithms*. Springer, 2010.
 
-[6] M. Develin and B. Sturmfels, "Tropical convexity," *Documenta Mathematica*, 9:1-27, 2004.
+[6] G. Mikhalkin. "Tropical geometry and its applications." *Proceedings of the ICM*, 2006.
 
-[7] M. Joswig, "Tropical halfspaces," in *Combinatorial and Computational Geometry*, Cambridge University Press, 2005.
+[7] K. Murota. *Discrete Convex Analysis*. SIAM, 2003.
 
-[8] R. Connelly, "Generic global rigidity," *Discrete & Computational Geometry*, 33(4):549-563, 2005.
-
-[9] T. Tachi, "Freeform rigid-foldable structure using bidirectionally flat-foldable planar quadrilateral mesh," in *Advances in Architectural Geometry*, Springer, 2010.
-
-[10] M. Akian, S. Gaubert, and A. Guterman, "Tropical polyhedra are equivalent to mean payoff games," *International Journal of Algebra and Computation*, 22(1), 2012.
+[8] V. Maslov. "On a new superposition principle for optimization problems." *Russian Math. Surveys*, 1987.

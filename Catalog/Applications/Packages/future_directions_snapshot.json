@@ -1047,24 +1047,6 @@
     "timestamp": "2026-05-14T17:33:00.481527+00:00"
   },
   {
-    "id": "fd_0162",
-    "title": "Connect to the cycle-gap theorem",
-    "description": ": Show that $g \\geq n \\cdot \\lambda(W)$ and derive tighter lower bounds using the eigenvalue.\n\n### Proof Strategy\n- Build on the existing `tropPow` and `tropMul` definitions.\n- Formalize strongly connected components and per-SCC eigenvalues.\n- Use the existing pigeonhole machinery for cycle decomposition.\n\n### Cross-domain Impact\n- Weighted automata theory (quantitative model checking)\n- Network optimization (critical cycle identification)\n- Tropical algebraic geometry (valuations and Newton polytopes)\n\n---\n\n## Direction 2: Width-Depth Tropical Tradeoffs for Branching Programs\n\n### Goal\nExtend the cycle-gap framework from paths (linear programs) to branching programs (DAG-structured computation), proving width-depth tradeoffs.\n\n### Background\nBranching programs are a model of computation w",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "5a2d93ee",
-    "timestamp": "2026-05-14T17:33:00.485104+00:00"
-  },
-  {
     "id": "fd_0166",
     "title": "Apply to specific problems",
     "description": ": Show that certain functions (e.g., element distinctness, graph connectivity) require super-linear tropical cost in bounded-width branching programs.\n\n### Proof Strategy\n- Generalize the layered system framework from `Obstruction.lean`.\n- Use the block cost lemma within each layer.\n- Combine with the existing `layered_no_shortcut` theorem.\n\n### Cross-domain Impact\n- Circuit complexity (lower bounds for restricted circuits)\n- Streaming algorithms (space-bounded computation)\n- VLSI design (area-time tradeoffs)\n\n---\n\n## Direction 3: Tropical Communication Complexity via Min-Plus Protocol Cost\n\n### Goal\nDefine communication complexity over the min-plus semiring and prove direct-sum lower bounds using the cycle-gap framework.\n\n### Background\nIn classical communication complexity, Alice and Bob",
@@ -1311,22 +1293,6 @@
     "timestamp": "2026-05-15T03:12:37.111041+00:00"
   },
   {
-    "id": "fd_0213",
-    "title": "Prove the CDF characterization",
-    "description": ": $W_1(\\mu, \\nu) = \\sum_k |F_\\mu(k) - F_\\nu(k)|$ where $F$ is the cumulative distribution function.\n\n### Proof Strategy\n- Use Mathlib's `MeasureTheory.Measure` for the measure-theoretic formulation.\n- The CDF characterization can be proved by Abel summation / summation by parts.\n- The duality theorem for finite atomic measures is elementary and can be proved by linear programming duality.\n\n### Cross-Domain Impact\n- **Machine learning**: earth mover's distance for distributional comparison.\n- **Statistics**: quantile-based tests, Wasserstein barycenters.\n- **Economics**: optimal allocation and matching theory.\n\n---\n\n## Direction 3: Geodesics and Parsimonious Voice-Leading Paths\n\n### Vision\nClassify the geodesics (shortest paths) in the quotient metric on chord space. In music theory, these ",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d9c105e5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:04:31.203929+00:00"
-  },
-  {
     "id": "fd_0217",
     "title": "Connect to neo-Riemannian theory",
     "description": ": show that PLR transformations (parallel, leading-tone, relative) between major and minor triads are near-geodesic.\n\n### Proof Strategy\n- Use the sorted representation: geodesics in the sorted chamber are simply line segments.\n- The projection to the quotient may create \"folds\" at singular strata.\n- Enumerate geodesic-length progressions between common chord types computationally.\n\n### Cross-Domain Impact\n- **Algorithmic composition**: generate smooth voice leadings automatically.\n- **Music information retrieval**: measure harmonic distance in audio analysis.\n- **Path planning in robotics**: analogous to shortest paths in configuration spaces with symmetry.\n\n---\n\n## Direction 4: Tropical and Polyhedral Structure\n\n### Vision\nConnect the sorted-chamber model to tropical geometry and polyhed",
@@ -1415,23 +1381,6 @@
     "source_exp_id": "ad86a7ea",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:04:45.556538+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "Canonical form",
-    "description": ": Show that pruned normal forms are canonical: equal functions ↔ equal pruned supports.\n\n### Required Mathlib Infrastructure\n- Convex hull computation for finite sets in ℝⁿ\n- Support function theory (partially available)\n- Hyperplane separation theorem (available for convex sets)\n\n### Cross-Domain Connections\n- **Convex geometry**: pruned supports correspond to vertices of upper envelopes\n- **Tropical geometry**: pruned supports are dual to regular subdivisions of Newton polytopes\n- **Optimization**: minimal support = minimal certificate family\n\n### Estimated Difficulty\nHigh. The separation lemma requires careful handling of ℝⁿ geometry. Possible intermediate target: prove completeness for n=1 (one variable) first, where separation reduces to comparing slopes and intercepts.\n\n---\n\n## Direc",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.565034+00:00"
   },
   {
     "id": "fd_0217",
@@ -1565,20 +1514,6 @@
     "timestamp": "2026-05-15T06:05:09.039853+00:00"
   },
   {
-    "id": "fd_0207",
-    "title": "Formalize",
-    "description": "each direction in Lean 4 with complete proofs",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:09.046645+00:00"
-  },
-  {
     "id": "fd_0211",
     "title": "Pipeline registration DSL",
     "description": ": A Lean macro for declaring pipeline stages as theory morphisms with auto-generated monotonicity obligations.",
@@ -1605,34 +1540,6 @@
     "source_exp_id": "069b9159",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:28:23.501083+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "Reflexive verification",
-    "description": ": A decision procedure that checks whether a given function is a valid theory morphism by testing monotonicity on concrete inputs (a sound but incomplete check for infinite carriers, complete for finite ones).\n\n### Target Artifacts\n\n```lean\n/-- Register a compilation pass as a theory morphism. -/\nmacro \"register_pass\" name:ident source:ident target:ident fun_body:term : command\n\n/-- Automatically transport a certificate through a registered pipeline. -/\nmacro \"transport_certificate\" cert:term \"through\" pipeline:ident : tactic\n\n/-- Decision procedure for monotonicity on finite carriers. -/\ndef checkMonotonicity [DecidableEq α] [Fintype α] [LE β] [DecidableRel (· ≤ · : β → β → Prop)]\n    (T : GeneralTheory β) (U : GeneralTheory β)\n    (f : T.Carrier → U.Carrier) : Bool\n```\n\n### Impact\n\nThis ",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "069b9159",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:28:23.509285+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Direction 2",
-    "description": "(Lattice-valued): Highest practical value. Real-valued invariants unlock most catalog theorem instantiations.",
-    "domains": [
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "069b9159",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:28:23.517399+00:00"
   },
   {
     "id": "seed_078",
@@ -2082,23 +1989,6 @@
     "timestamp": "2026-05-15T05:13:00.295322+00:00"
   },
   {
-    "id": "fd_0207",
-    "title": "Research Program Summary",
-    "description": "These five directions form a coherent research program:\n\n```\n                    Tropical Spectral (Dir 2)\n                           ↑\n                           |\nRandomized (Dir 1) ← Cycle-Systolic Core → Hankel Bridge (Dir 3)\n                           |\n                           ↓\n           Multi-Party (Dir 4)    Transfer-Lyapunov (Dir 5)\n```\n\n**Central thesis**: The cycle systole is the universal geometric invariant controlling communication cost across deterministic, randomized, tropical, multi-party, and transfer-semantic settings. Each direction validates this thesis in a new domain while opening connections to established mathematical theories.\n\n**Priority ordering**: Direction 1 (randomized) is the most immediately achievable, requiring only measure-theoretic integration. Dire",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f5102ff5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:13:00.318476+00:00"
-  },
-  {
     "id": "fd_0212",
     "title": "Direction 2: Tropical Regulators via Tropical Determinant Theory",
     "description": "**Target Construction**: Formalize competing definitions of tropical determinant (tropical permanent, Speyer's tropical determinant, and the signed tropical determinant) and prove comparison theorems relating the resulting regulator invariants.\n\n**Key Questions**:\n- When do the tropical permanent and tropical determinant agree?\n- Under what conditions is the regulator invariant under different notions of tropical basis change?\n- Can one define a \"tropical height pairing\" whose tropical determinant gives the regulator?\n\n**Target statement (Lean)**:\n```lean\ntheorem tropical_regulator_comparison\n    (n : ℕ) (R : Matrix (Fin n) (Fin n) ℝ)\n    (hR : TropicalRegulatorMatrix R)\n    (hgeneric : GenericMatrix R) :\n    tropicalPermanent R = tropicalSignedDeterminant R\n```\n\n**Why it matters**: The cl",
@@ -2115,21 +2005,6 @@
     "timestamp": "2026-05-15T06:00:57.286100+00:00"
   },
   {
-    "id": "fd_0213",
-    "title": "Direction 3: Tropical Tate–Shafarevich Obstructions",
-    "description": "**Target Construction**: Define a tropical Shafarevich group as an obstruction to lifting tropical generators to a full tropical BSD equality, and show it controls the gap between the inequality and equality versions of tropical BSD.\n\n**Concept**: In classical BSD, the Tate–Shafarevich group Ш measures the failure of the local-global principle. In the tropical setting, define:\n- Local tropical rank: rank computed from restrictions to individual coordinates\n- Global tropical rank: rank of the full family\n- Tropical Ш: a finite abelian group whose order equals the discrepancy\n\n**Target statement (Lean)**:\n```lean\ntheorem tropical_Sha_controls_gap\n    (gens : Fin m → Fin k → ℝ)\n    (a w : ℕ → ℝ) (support : Finset ℕ) (hs : support.Nonempty)\n    (hineq : tropicalRank gens ≤ tropicalOrderAtOne a",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "00930c08",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:00:57.301464+00:00"
-  },
-  {
     "id": "fd_0212",
     "title": "Lean Target",
     "description": "```lean\ntheorem lse_variational_formula\n    {n : ℕ} (hn : 0 < n) (τ : ℝ) (hτ : 0 < τ) (x : Fin n → ℝ) :\n    τ * Real.log (∑ i : Fin n, Real.exp (x i / τ)) =\n    ⨆ (p : Fin n → ℝ) (hp : (∀ i, 0 ≤ p i) ∧ ∑ i, p i = 1),\n      ∑ i, p i * x i + τ * (- ∑ i, if p i = 0 then 0 else p i * Real.log (p i))\n```",
@@ -2142,34 +2017,6 @@
     "source_exp_id": "a021a156",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:05:26.795033+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "Proof Route",
-    "description": "1. Show the Gibbs distribution $p_i^* = e^{x_i/\\tau}/Z$ achieves the supremum (Lagrange multipliers on the simplex constraint).\n2. Verify by direct substitution that the value equals $\\tau \\log Z$.\n3. Show concavity of the objective in $p$ (sum of linear and concave entropy terms).",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a021a156",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:26.802209+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Why Breakthrough",
-    "description": "This extends scalar pruning certificates to vector-valued outputs, directly applicable to transformer attention where each head produces a value vector. Combined with the free-energy pruning bound, it gives end-to-end output perturbation guarantees.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a021a156",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:26.812776+00:00"
   },
   {
     "id": "fd_0215",
@@ -2287,5 +2134,78 @@
     "source_exp_id": "a25a82de",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:01:53.030552+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Specific Target",
+    "description": "Formalize and prove:\n```\nλ(W) = inf { λ ∈ ℝ | ∃ x : Fin n → ℝ, ∀ i, max_j (W_{ij} + x_j) ≤ λ + x_i }\n```\nThis says λ(W) is the smallest \"tropical eigenvalue\" for which a tropical subeigenvector exists.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5a2d93ee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:04:49.514713+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Feasibility: Exploratory",
+    "description": "This is the most speculative direction but potentially the most impactful. Initial formalization of definitions is straightforward; the deep theorems would require novel mathematical insights.\n\n---",
+    "domains": [
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5a2d93ee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:04:49.562719+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "Prioritization and Dependencies",
+    "description": "```\nDirection 1 (Collatz-Wielandt)     ← Most natural next step, builds directly on current work\n    ↓\nDirection 2 (Perron-Frobenius)     ← Requires Direction 1's subeigenvector theory\n    ↓\nDirection 3 (Mean-Payoff Games)    ← Can start independently, benefits from Direction 2\n    ↓\nDirection 4 (BP Lower Bounds)      ← Requires Directions 1-2 for spectral tools\n    ↓\nDirection 5 (Tropical Entropy)     ← Exploratory, can proceed in parallel\n```",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5a2d93ee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:04:49.572794+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "Recommended Team Structure",
+    "description": "- **Team A** (Algebra): Directions 1 and 2 — tropical spectral theory core\n- **Team B** (Complexity): Direction 4 — computational lower bounds\n- **Team C** (Applications): Directions 3 and 5 — games, entropy, verification\n- **Integration**: Regular sync between teams to ensure compatible formalizations",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5a2d93ee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:04:49.582340+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "Timeline Estimate",
+    "description": "- Direction 1: 2-4 weeks for full formalization\n- Direction 2: 4-8 weeks (depends on SCC infrastructure)\n- Direction 3: 3-6 weeks (single-player case fast, two-player harder)\n- Direction 4: 6-12 weeks (requires new formalization patterns)\n- Direction 5: Ongoing exploration, initial results in 4-8 weeks",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5a2d93ee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:04:49.592015+00:00"
   }
 ]
