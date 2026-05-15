@@ -1,21 +1,5 @@
 [
   {
-    "id": "seed_072",
-    "title": "Aether Evolution: Self-Modifying Research Strategies via Reflective Type Theory",
-    "description": "Prove that a research system can be formalized as a dependent type where the type of the next research cycle depends on the outcomes of previous cycles. Construct a reflective type theory where the system's own research strategy is a first-class citizen that can be analyzed, improved, and verified. Show that this reflective architecture enables Aether to prove theorems about its own proof strategies, identify systematic weaknesses, and self-correct toward higher-quality output. Formalize the metatheorem that reflective self-improvement converges.",
-    "domains": [
-      "Meta",
-      "Logic",
-      "Algebra"
-    ],
-    "priority_score": 0.99,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "0700908f",
-    "timestamp": "2026-05-14T16:03:53.869875+00:00"
-  },
-  {
     "id": "seed_071",
     "title": "Research Package Quality via Certified Mathematical Significance Metrics",
     "description": "Define and formalize a mathematical significance metric that goes beyond correctness to measure the depth, novelty, and impact of a research result. Prove that the significance metric is a monotone function on the lattice of mathematical knowledge, and that results exceeding a significance threshold are guaranteed to advance the field. Show that this metric can be computed from the Lean 4 proof term structure alone, enabling fully automated quality gates that reject shallow work and elevate master-class contributions.",
@@ -25,10 +9,10 @@
       "EML"
     ],
     "priority_score": 0.97,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7529282b",
     "timestamp": "2026-05-14T16:03:53.868250+00:00"
   },
   {
@@ -232,10 +216,10 @@
       "Computation"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49977498",
     "timestamp": "2026-05-14T16:03:53.818546+00:00"
   },
   {
@@ -296,10 +280,10 @@
       "Algebra"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56b13d4c",
     "timestamp": "2026-05-14T16:03:53.822921+00:00"
   },
   {
@@ -1249,43 +1233,6 @@
     "source_exp_id": "b751b05a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T11:01:19.706479+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "Composition",
-    "description": "= sequential connection via wire delays.\n5. Show the category is **symmetric monoidal closed**, with internal hom given by \"gadgets that transform one signal bundle into another.\"\n6. Prove a **faithful functor** from the category of Boolean circuits into the collision gadget category, making universality a categorical statement.\n\n### Impact\nThis would provide a compositional semantics for collision computing, connecting to the broader program of categorical quantum mechanics, string diagrams, and process theories. It would enable reasoning about circuits at a higher level of abstraction.\n\n---\n\n## 4. Tropical Zeta Functions for Periodic Orbit Counting\n\n### Theorem Target\n```\ntheorem tropical_zeta_rationality :\n    ∀ (F : MinPlusCA m n),\n      ∃ (P Q : Polynomial ℤ),\n        tropicalZeta F =",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b751b05a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:01:19.744922+00:00"
-  },
-  {
-    "id": "fd_0226",
-    "title": "Connect to tropical geometry:",
-    "description": "The number of lattice points in the periodic prevariety `V_p` should be computable via Ehrhart theory if the prevariety is a rational polyhedron.\n4. Prove rationality or establish counterexamples for specific CA rules.\n5. Study the **tropical dynamical degree** = growth rate of `|Per_p(F)|^{1/p}` and its relationship to topological entropy.\n\n### Impact\nDynamical zeta functions are central objects in ergodic theory and number theory. A tropical version would connect CA dynamics to algebraic geometry in a quantitative way, with implications for understanding the complexity of long-term behavior.\n\n---\n\n## 5. Intrinsic Simulation of Tag Systems and Reversible Lattice Gases\n\n### Theorem Target\n```\ntheorem tropical_ca_simulates_cyclic_tag :\n    ∀ (T : CyclicTagSystem),\n      ∃ (m n : ℕ) (enc : T",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b751b05a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:01:19.756422+00:00"
   },
   {
     "id": "fd_0227",
