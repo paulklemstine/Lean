@@ -1,34 +1,115 @@
 #!/usr/bin/env python3
 """
-Tropical Voice-Leading Optimization — Algorithms
+Tropical Counterpoint: Algorithms
 
 Implements the core algorithms from the tropical music theory framework:
-1. Tropical shortest-path voice-leading search (Bellman-style DP)
+1. Tropical shortest-path DP for optimal voice leading
 2. Pareto frontier computation for multi-objective optimization
-3. Weighted penalty optimizer with scale separation
-4. Harmonic variety analyzer
-
-All algorithms have documented time/space complexity.
+3. Bach score minimization via scalarized objectives
 """
 
-import numpy as np
-from typing import List, Tuple, Dict, Set, Optional
-from itertools import product
+from typing import List, Tuple, Set, Dict, Optional
 from dataclasses import dataclass
+import heapq
 
-# ─────────────────────────────────────────────────────────────────
-# Data Structures
-# ─────────────────────────────────────────────────────────────────
+# ─── Musical Constants ───────────────────────────────────────────────
+
+PERFECT_CONSONANCES = frozenset({0, 7, 12})
+IMPERFECT_CONSONANCES = frozenset({3, 4, 8, 9})
+CONSONANCES = PERFECT_CONSONANCES | IMPERFECT_CONSONANCES
+
+# ─── Cost Functions ──────────────────────────────────────────────────
+
+def forbidden_vertical_penalty(k: int) -> float:
+    """Vertical interval penalty: 1 if dissonant, 0 if consonant."""
+    return 0.0 if abs(k) in CONSONANCES else 1.0
+
+def melodic_leap_penalty(x: int, y: int) -> float:
+    """Melodic leap penalty: max(0, |y-x| - 2)."""
+    return max(0.0, abs(y - x) - 2)
+
+def parallel_perfect_penalty(iv_curr: int, iv_next: int) -> float:
+    """Parallel perfect consonance penalty."""
+    return 1.0 if abs(iv_curr) in PERFECT_CONSONANCES and abs(iv_next) in PERFECT_CONSONANCES else 0.0
+
+# ─── Algorithm 1: Tropical DP for Optimal Voice Leading ─────────────
 
 @dataclass
-class VoiceLeadingResult:
-    """Result of a voice-leading optimization."""
-    melody: List[int]
-    cost: float
-    intervals: List[int]
-    steps: List[int]
-    is_legal: bool
-    harmonic_variety: int
+class DPResult:
+    """Result of tropical dynamic programming."""
+    optimal_melody: List[int]
+    optimal_cost: float
+    dp_table: List[Dict[int, float]]
+    parent: List[Dict[int, int]]
+
+def tropical_dp_voice_leading(
+    cantus: List[int],
+    pitch_range: range,
+    weights: Tuple[float, float, float] = (1.0, 1.0, 1.0)
+) -> DPResult:
+    """
+    Find the optimal counterpoint melody via tropical (min-plus) DP.
+
+    Uses the Bellman recursion:
+      dp[k+1][x] = min_y (transition_cost(y,x) + dp[k][y])
+
+    This is the min-plus semiring generalization of shortest paths
+    in a layered DAG, where each layer represents a time step and
+    each node represents a pitch.
+
+    Args:
+        cantus: The cantus firmus (fixed lower voice).
+        pitch_range: Range of allowed pitches for the upper voice.
+        weights: (A, B, C) penalty weights for vertical, melodic, parallel.
+
+    Returns:
+        DPResult with optimal melody, cost, and full DP table.
+
+    Time complexity: O(n * P^2) where n = len(cantus), P = len(pitch_range).
+    Space complexity: O(n * P).
+    """
+    A, B, C = weights
+    n = len(cantus)
+
+    dp = [{} for _ in range(n)]
+    parent = [{} for _ in range(n)]
+
+    # Base case: cost at position 0
+    for x in pitch_range:
+        dp[0][x] = A * forbidden_vertical_penalty(x - cantus[0])
+
+    # Bellman recursion
+    for k in range(1, n):
+        for x in pitch_range:
+            best_cost = float('inf')
+            best_prev = None
+            for y in pitch_range:
+                # Transition cost (tropical edge weight)
+                vert = A * forbidden_vertical_penalty(x - cantus[k])
+                mel = B * melodic_leap_penalty(y, x)
+                par = C * parallel_perfect_penalty(y - cantus[k-1], x - cantus[k])
+                cost = vert + mel + par + dp[k-1][y]
+                if cost < best_cost:
+                    best_cost = cost
+                    best_prev = y
+            dp[k][x] = best_cost
+            parent[k][x] = best_prev
+
+    # Backtrack
+    opt_pitch = min(pitch_range, key=lambda x: dp[n-1][x])
+    melody = [0] * n
+    melody[n-1] = opt_pitch
+    for k in range(n-2, -1, -1):
+        melody[k] = parent[k+1][melody[k+1]]
+
+    return DPResult(
+        optimal_melody=melody,
+        optimal_cost=dp[n-1][opt_pitch],
+        dp_table=dp,
+        parent=parent
+    )
+
+# ─── Algorithm 2: Pareto Frontier Computation ───────────────────────
 
 @dataclass
 class ParetoPoint:
@@ -38,180 +119,48 @@ class ParetoPoint:
     variety: int
     is_legal: bool
 
-# ─────────────────────────────────────────────────────────────────
-# Interval Classification
-# ─────────────────────────────────────────────────────────────────
-
-PERFECT_CONSONANCES: Set[int] = {0, 7, 12}
-IMPERFECT_CONSONANCES: Set[int] = {3, 4, 8, 9}
-ALL_CONSONANCES: Set[int] = PERFECT_CONSONANCES | IMPERFECT_CONSONANCES
-
-def is_perfect(k: int) -> bool:
-    """Check if interval k (in semitones) is a perfect consonance."""
-    return abs(k) in PERFECT_CONSONANCES
-
-def is_consonant(k: int) -> bool:
-    """Check if interval k is consonant (perfect or imperfect)."""
-    return abs(k) in ALL_CONSONANCES
-
-# ─────────────────────────────────────────────────────────────────
-# Cost Functions
-# ─────────────────────────────────────────────────────────────────
-
-def forbidden_penalty(k: int) -> float:
-    """Penalty for dissonant vertical interval. O(1)."""
-    return 0.0 if is_consonant(k) else 1.0
-
-def leap_penalty(x: int, y: int) -> float:
-    """Penalty for melodic leap > 2 semitones. O(1)."""
-    return max(0.0, abs(y - x) - 2.0)
-
-def parallel_penalty(u: List[int], v: List[int], i: int) -> float:
-    """Penalty for parallel perfect motion at position i. O(1)."""
-    if is_perfect(v[i] - u[i]) and is_perfect(v[i+1] - u[i+1]):
-        return 1.0
-    return 0.0
-
-def total_cost(u: List[int], v: List[int]) -> float:
-    """
-    Total contrapuntal cost.
-
-    Time: O(n) where n = len(u)
-    Space: O(1)
-    """
-    n = len(u)
-    cost = sum(forbidden_penalty(v[i] - u[i]) for i in range(n))
-    cost += sum(leap_penalty(v[i], v[i+1]) for i in range(n-1))
-    cost += sum(parallel_penalty(u, v, i) for i in range(n-1))
-    return cost
-
-# ─────────────────────────────────────────────────────────────────
-# Algorithm 1: Tropical Shortest-Path Voice-Leading Search
-# ─────────────────────────────────────────────────────────────────
-
-def tropical_voice_leading_dp(
-    cantus: List[int],
-    pitch_range: Tuple[int, int] = (-2, 16),
-    include_parallel_penalty: bool = False
-) -> VoiceLeadingResult:
-    """
-    Find the optimal counterpoint voice over a cantus firmus using
-    tropical (min-plus) dynamic programming.
-
-    This implements the certified Bellman recursion from Theorem 3:
-        dp[k+1][x] = min_y { transition(y, x) + dp[k][y] }
-
-    where transition cost = vertical penalty + melodic leap penalty.
-
-    Time:  O(n * P^2) where n = melody length, P = pitch alphabet size
-    Space: O(n * P) for the DP table and backtracking
-
-    Args:
-        cantus: The cantus firmus (fixed lower voice)
-        pitch_range: (min_pitch, max_pitch) for the upper voice
-        include_parallel_penalty: Whether to include parallel-fifths penalty
-            (makes the problem non-decomposable into pure DP, but still works
-            as a heuristic; formally certified only without this flag)
-
-    Returns:
-        VoiceLeadingResult with optimal melody and metadata
-    """
-    n = len(cantus)
-    lo, hi = pitch_range
-    pitches = list(range(lo, hi + 1))
-    P = len(pitches)
-
-    # DP tables: dp[k][x_index] = (cost, predecessor_index)
-    INF = float('inf')
-    dp_cost = [[INF] * P for _ in range(n)]
-    dp_prev = [[-1] * P for _ in range(n)]
-
-    # Base case: k = 0
-    for xi, x in enumerate(pitches):
-        dp_cost[0][xi] = forbidden_penalty(x - cantus[0])
-
-    # Bellman recursion: k = 1, ..., n-1
-    for k in range(1, n):
-        for xi, x in enumerate(pitches):
-            vert_cost = forbidden_penalty(x - cantus[k])
-            for yi, y in enumerate(pitches):
-                trans = vert_cost + leap_penalty(y, x)
-                if include_parallel_penalty:
-                    if is_perfect(y - cantus[k-1]) and is_perfect(x - cantus[k]):
-                        trans += 1.0
-                candidate = trans + dp_cost[k-1][yi]
-                if candidate < dp_cost[k][xi]:
-                    dp_cost[k][xi] = candidate
-                    dp_prev[k][xi] = yi
-
-    # Backtrack to find optimal melody
-    best_xi = min(range(P), key=lambda xi: dp_cost[n-1][xi])
-    melody = [0] * n
-    xi = best_xi
-    for k in range(n-1, -1, -1):
-        melody[k] = pitches[xi]
-        xi = dp_prev[k][xi]
-
-    opt_cost = dp_cost[n-1][best_xi]
-    intervals = [melody[i] - cantus[i] for i in range(n)]
-    steps = [abs(melody[i+1] - melody[i]) for i in range(n-1)]
-    legal = all(is_consonant(k) for k in intervals) and \
-            all(s <= 2 for s in steps) and \
-            not any(is_perfect(intervals[i]) and is_perfect(intervals[i+1])
-                    for i in range(n-1))
-
-    return VoiceLeadingResult(
-        melody=melody, cost=opt_cost, intervals=intervals,
-        steps=steps, is_legal=legal,
-        harmonic_variety=len(set(intervals))
-    )
-
-# ─────────────────────────────────────────────────────────────────
-# Algorithm 2: Pareto Frontier Computation
-# ─────────────────────────────────────────────────────────────────
-
 def compute_pareto_frontier(
     cantus: List[int],
     candidates: List[List[int]]
 ) -> List[ParetoPoint]:
     """
-    Compute the Pareto frontier for the bi-objective problem:
-        minimize: contrapuntal cost
-        maximize: harmonic variety
+    Compute the Pareto frontier of melodies with respect to
+    (minimize cost, maximize variety).
 
-    A point is Pareto-optimal if no other point has both lower cost
-    and higher variety.
-
-    Time:  O(m^2) where m = |candidates| (naive; could be O(m log m) with sorting)
-    Space: O(m)
+    Uses the standard dominance-checking algorithm.
 
     Args:
-        cantus: The cantus firmus
-        candidates: List of candidate melodies
+        cantus: The cantus firmus.
+        candidates: List of candidate melodies.
 
     Returns:
-        List of ParetoPoint on the frontier, sorted by cost
+        List of Pareto-optimal points, sorted by cost.
+
+    Time complexity: O(m^2) where m = len(candidates).
     """
     n = len(cantus)
+    points = []
+    for m in candidates:
+        c = sum(forbidden_vertical_penalty(m[i] - cantus[i]) for i in range(n))
+        c += sum(melodic_leap_penalty(m[i], m[i+1]) for i in range(n-1))
+        ivs = [m[i] - cantus[i] for i in range(n)]
+        c += sum(parallel_perfect_penalty(ivs[i], ivs[i+1]) for i in range(n-1))
+        v = len(set(ivs))
+        legal = all(abs(ivs[i]) in CONSONANCES for i in range(n))
+        legal = legal and all(
+            not (abs(ivs[i]) in PERFECT_CONSONANCES and abs(ivs[i+1]) in PERFECT_CONSONANCES)
+            for i in range(n-1)
+        )
+        legal = legal and all(abs(m[i+1]-m[i]) <= 2 for i in range(n-1))
+        points.append(ParetoPoint(m, c, v, legal))
 
-    # Evaluate all candidates
-    evaluated = []
-    for v in candidates:
-        c = total_cost(cantus, v)
-        h = len(set(v[i] - cantus[i] for i in range(n)))
-        legal = all(is_consonant(v[i] - cantus[i]) for i in range(n)) and \
-                all(abs(v[i+1] - v[i]) <= 2 for i in range(n-1)) and \
-                not any(is_perfect(v[i] - cantus[i]) and is_perfect(v[i+1] - cantus[i+1])
-                        for i in range(n-1))
-        evaluated.append(ParetoPoint(melody=v, cost=c, variety=h, is_legal=legal))
-
-    # Filter Pareto-optimal points
+    # Filter dominated points
     pareto = []
-    for p in evaluated:
+    for p in points:
         dominated = any(
-            q.cost <= p.cost and q.variety >= p.variety and
+            (q.cost <= p.cost and q.variety >= p.variety) and
             (q.cost < p.cost or q.variety > p.variety)
-            for q in evaluated
+            for q in points
         )
         if not dominated:
             pareto.append(p)
@@ -219,201 +168,119 @@ def compute_pareto_frontier(
     pareto.sort(key=lambda p: (p.cost, -p.variety))
     return pareto
 
-# ─────────────────────────────────────────────────────────────────
-# Algorithm 3: Scale-Separated Penalty Optimizer
-# ─────────────────────────────────────────────────────────────────
+# ─── Algorithm 3: Bach Score Optimizer ───────────────────────────────
 
-def find_minimizer_with_guarantees(
+def bach_score_dp(
     cantus: List[int],
-    candidates: List[List[int]],
-    A: float = 100.0, B: float = 1.0, C: float = 100.0,
-    M: int = 4
-) -> Tuple[VoiceLeadingResult, bool, str]:
+    pitch_range: range,
+    lam: float,
+    weights: Tuple[float, float, float] = (1.0, 1.0, 1.0)
+) -> Tuple[List[int], float]:
     """
-    Find the weighted-cost minimizer and check if penalty separation
-    guarantees legality (Theorem 2).
+    Find melody minimizing the Bach score: totalCost - λ·variety.
 
-    The theorem states: if A > (n-1)*B*M and C > (n-1)*B*M, then
-    any minimizer must satisfy vertical consonance and no-parallel-perfects
-    (VPLegal), provided a legal candidate exists.
+    This combines DP for cost minimization with variety tracking.
+    Since variety is a global property (depends on the full set of
+    intervals used), we use a two-pass approach:
+    1. DP to find near-optimal melodies.
+    2. Greedy diversification to maximize variety.
 
-    Time:  O(m * n) where m = |candidates|, n = melody length
-    Space: O(m)
+    For exact optimization, we enumerate all DP-optimal paths
+    and select the one with maximum variety.
 
     Args:
-        cantus: Cantus firmus
-        candidates: Candidate melodies (all with steps ≤ M)
-        A, B, C: Penalty weights
-        M: Step bound for candidates
+        cantus: The cantus firmus.
+        pitch_range: Allowed pitch range.
+        lam: Variety reward parameter.
+        weights: Cost weights (A, B, C).
 
     Returns:
-        (result, guarantee_holds, explanation)
+        (optimal_melody, bach_score).
     """
+    A, B, C = weights
     n = len(cantus)
-    threshold = (n - 1) * B * M
 
-    # Find minimizer
-    best_cost = float('inf')
-    best_melody = candidates[0]
-    for v in candidates:
-        c = weighted_cost_fn(A, B, C, cantus, v)
-        if c < best_cost:
-            best_cost = c
-            best_melody = v
+    # Phase 1: Find all near-optimal melodies via DP with bounded suboptimality
+    result = tropical_dp_voice_leading(cantus, pitch_range, weights)
+    opt_cost = result.optimal_cost
 
-    intervals = [best_melody[i] - cantus[i] for i in range(n)]
-    steps = [abs(best_melody[i+1] - best_melody[i]) for i in range(n-1)]
-    legal = all(is_consonant(k) for k in intervals) and \
-            all(s <= 2 for s in steps) and \
-            not any(is_perfect(intervals[i]) and is_perfect(intervals[i+1])
-                    for i in range(n-1))
+    # Phase 2: Enumerate good melodies within cost budget
+    threshold = opt_cost + lam * n  # Allow cost slack up to λ·n
+    good_melodies = []
 
-    # Check if legal candidate exists
-    has_legal = any(
-        all(is_consonant(v[i] - cantus[i]) for i in range(n)) and
-        not any(is_perfect(v[i] - cantus[i]) and is_perfect(v[i+1] - cantus[i+1])
-                for i in range(n-1))
-        for v in candidates
-    )
-
-    guarantee = A > threshold and C > threshold and has_legal
-    explanation = (
-        f"Threshold = (n-1)*B*M = {threshold:.1f}. "
-        f"A={A:.1f}{'>' if A > threshold else '≤'}{threshold:.1f}, "
-        f"C={C:.1f}{'>' if C > threshold else '≤'}{threshold:.1f}. "
-        f"Legal candidate exists: {has_legal}. "
-        f"Guarantee holds: {guarantee}."
-    )
-
-    result = VoiceLeadingResult(
-        melody=best_melody, cost=best_cost, intervals=intervals,
-        steps=steps, is_legal=legal,
-        harmonic_variety=len(set(intervals))
-    )
-
-    return result, guarantee, explanation
-
-def weighted_cost_fn(A: float, B: float, C: float,
-                     u: List[int], v: List[int]) -> float:
-    """Weighted total cost function."""
-    n = len(u)
-    vert = sum(forbidden_penalty(v[i] - u[i]) for i in range(n))
-    melodic = sum(leap_penalty(v[i], v[i+1]) for i in range(n-1))
-    par = sum(parallel_penalty(u, v, i) for i in range(n-1))
-    return A * vert + B * melodic + C * par
-
-# ─────────────────────────────────────────────────────────────────
-# Algorithm 4: Harmonic Variety Analyzer
-# ─────────────────────────────────────────────────────────────────
-
-def analyze_harmonic_landscape(
-    cantus: List[int],
-    pitch_range: Tuple[int, int] = (0, 12),
-    max_step: int = 4
-) -> Dict:
-    """
-    Analyze the distribution of (cost, variety) pairs across all
-    candidate melodies, identifying the strict-style and Bach-style
-    regions of the optimization landscape.
-
-    Time:  O(P^n * n) where P = pitch range, n = melody length
-    Space: O(P^n)
-
-    Args:
-        cantus: Cantus firmus
-        pitch_range: Range of allowed pitches
-        max_step: Maximum allowed step size
-
-    Returns:
-        Dictionary with landscape statistics
-    """
-    n = len(cantus)
-    lo, hi = pitch_range
-
-    # Generate candidates with bounded steps
-    candidates = []
-    def generate(pos, prev):
-        if pos == n:
-            candidates.append(list(prev))
+    def enumerate_paths(k: int, path: List[int], cost_so_far: float):
+        if k == n:
+            if cost_so_far <= threshold:
+                good_melodies.append((list(path), cost_so_far))
             return
-        for p in range(max(lo, prev[-1] - max_step) if prev else lo,
-                       min(hi, prev[-1] + max_step) + 1 if prev else hi + 1):
-            prev.append(p)
-            generate(pos + 1, prev)
-            prev.pop()
+        for x in pitch_range:
+            if k == 0:
+                added = A * forbidden_vertical_penalty(x - cantus[0])
+            else:
+                y = path[-1]
+                added = (A * forbidden_vertical_penalty(x - cantus[k]) +
+                         B * melodic_leap_penalty(y, x) +
+                         C * parallel_perfect_penalty(y - cantus[k-1], x - cantus[k]))
 
-    generate(0, [])
+            # Prune if cost already exceeds threshold
+            if cost_so_far + added > threshold:
+                continue
 
-    # Classify
-    results = {
-        'total_candidates': len(candidates),
-        'legal_count': 0,
-        'cost_variety_pairs': [],
-        'min_cost': float('inf'),
-        'max_variety': 0,
-        'legal_min_cost': float('inf'),
-        'pareto_size': 0
-    }
+            # Optimistic bound on remaining cost
+            remaining_lower = 0  # Could be refined with DP backward pass
+            if cost_so_far + added + remaining_lower <= threshold:
+                path.append(x)
+                enumerate_paths(k + 1, path, cost_so_far + added)
+                path.pop()
 
-    for v in candidates:
-        c = total_cost(cantus, v)
-        h = len(set(v[i] - cantus[i] for i in range(n)))
-        legal = all(is_consonant(v[i] - cantus[i]) for i in range(n)) and \
-                all(abs(v[i+1] - v[i]) <= 2 for i in range(n-1)) and \
-                not any(is_perfect(v[i] - cantus[i]) and is_perfect(v[i+1] - cantus[i+1])
-                        for i in range(n-1))
-        results['cost_variety_pairs'].append((c, h, legal))
-        results['min_cost'] = min(results['min_cost'], c)
-        results['max_variety'] = max(results['max_variety'], h)
-        if legal:
-            results['legal_count'] += 1
-            results['legal_min_cost'] = min(results['legal_min_cost'], c)
+    # For large pitch ranges, limit enumeration
+    if len(pitch_range) <= 15 and n <= 6:
+        enumerate_paths(0, [], 0.0)
+    else:
+        # Fallback: sample around DP optimum
+        melody = result.optimal_melody
+        good_melodies.append((melody, opt_cost))
+        import random
+        random.seed(42)
+        for _ in range(10000):
+            m = list(melody)
+            pos = random.randint(0, n-1)
+            m[pos] += random.choice([-2, -1, 0, 1, 2])
+            if m[pos] in pitch_range:
+                c = 0.0
+                for i in range(n):
+                    c += A * forbidden_vertical_penalty(m[i] - cantus[i])
+                for i in range(n-1):
+                    c += B * melodic_leap_penalty(m[i], m[i+1])
+                    c += C * parallel_perfect_penalty(m[i]-cantus[i], m[i+1]-cantus[i+1])
+                if c <= threshold:
+                    good_melodies.append((m, c))
 
-    return results
+    # Phase 3: Select melody with best Bach score
+    if not good_melodies:
+        return result.optimal_melody, opt_cost
 
+    def bach_score(m, c):
+        v = len(set(m[i] - cantus[i] for i in range(n)))
+        return c - lam * v
 
-# ─────────────────────────────────────────────────────────────────
-# Main: Run all algorithms
-# ─────────────────────────────────────────────────────────────────
+    best_melody, best_cost = min(good_melodies, key=lambda mc: bach_score(*mc))
+    return best_melody, bach_score(best_melody, best_cost)
+
+# ─── Demo ────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("TROPICAL VOICE-LEADING ALGORITHMS")
-    print("=" * 60)
+    cantus = [60, 62, 64, 65, 67]
 
-    # Algorithm 1: DP voice-leading search
-    print("\n--- Algorithm 1: Tropical DP Voice-Leading ---")
-    cantus = [0, 2, 4, 5, 7, 5, 4, 2, 0]
-    result = tropical_voice_leading_dp(cantus, pitch_range=(0, 16))
-    print(f"Cantus:    {cantus}")
-    print(f"Optimal:   {result.melody}")
-    print(f"Intervals: {result.intervals}")
-    print(f"Steps:     {result.steps}")
-    print(f"Cost:      {result.cost:.2f}")
-    print(f"Legal:     {result.is_legal}")
-    print(f"Variety:   {result.harmonic_variety}")
+    print("=== Tropical DP Voice Leading ===")
+    result = tropical_dp_voice_leading(cantus, range(55, 80))
+    print(f"Cantus:  {cantus}")
+    print(f"Optimal: {result.optimal_melody}")
+    print(f"Cost:    {result.optimal_cost}")
+    print(f"Variety: {len(set(result.optimal_melody[i]-cantus[i] for i in range(5)))}")
 
-    # Algorithm 2: Pareto frontier
-    print("\n--- Algorithm 2: Pareto Frontier ---")
-    cantus3 = [0, 2, 4]
-    cands = []
-    for v0 in range(-2, 14):
-        for v1 in range(v0 - 4, v0 + 5):
-            for v2 in range(v1 - 4, v1 + 5):
-                cands.append([v0, v1, v2])
-    frontier = compute_pareto_frontier(cantus3, cands)
-    print(f"Total candidates: {len(cands)}")
-    print(f"Pareto-optimal: {len(frontier)}")
-    for p in frontier[:5]:
-        print(f"  Cost={p.cost:.1f}, Variety={p.variety}, Legal={p.is_legal}, Melody={p.melody}")
-
-    # Algorithm 3: Guaranteed optimizer
-    print("\n--- Algorithm 3: Scale-Separated Optimizer ---")
-    result, guarantee, explanation = find_minimizer_with_guarantees(
-        cantus3, cands, A=100, B=1, C=100, M=4
-    )
-    print(f"Minimizer: {result.melody}, Cost={result.cost:.1f}")
-    print(f"Legal: {result.is_legal}")
-    print(f"Guarantee: {explanation}")
-
-    print("\n✓ All algorithms executed successfully")
+    print("\n=== Bach Score Optimization ===")
+    for lam in [0.0, 1.0, 2.0, 5.0]:
+        melody, score = bach_score_dp(cantus, range(55, 80), lam)
+        v = len(set(melody[i]-cantus[i] for i in range(5)))
+        print(f"λ={lam:.1f}: melody={melody}, score={score:.1f}, variety={v}")

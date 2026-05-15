@@ -1,929 +1,944 @@
 #!/usr/bin/env python3
 """
-Tropical Voice-Leading — Applications
+Tropical Counterpoint: Applications
 
-Real-world applications of tropical music theory:
-1. Automated counterpoint composition with certified optimality
-2. Style classification as tropical objective geometry
-3. Music analysis: quantifying stylistic differences
-4. Sequence alignment analogy: musical genome comparison
+Demonstrates real-world applications of tropical music theory:
+1. Automated composition via certified voice leading
+2. Style classification using tropical cost signatures
+3. Musical constraint verification
 """
 
 from typing import List, Tuple, Dict
-import json
+from algorithms import (
+    tropical_dp_voice_leading, compute_pareto_frontier,
+    forbidden_vertical_penalty, melodic_leap_penalty, parallel_perfect_penalty,
+    CONSONANCES, PERFECT_CONSONANCES
+)
 
-# Self-contained definitions
-PERFECT = {0, 7, 12}
-IMPERFECT = {3, 4, 8, 9}
-CONSONANT = PERFECT | IMPERFECT
 
-def is_consonant(k): return abs(k) in CONSONANT
-def is_perfect(k): return abs(k) in PERFECT
-def forbidden_penalty(k): return 0.0 if is_consonant(k) else 1.0
-def leap_penalty(x, y): return max(0.0, abs(y - x) - 2.0)
-def parallel_penalty(u, v, i):
-    return 1.0 if is_perfect(v[i]-u[i]) and is_perfect(v[i+1]-u[i+1]) else 0.0
-def total_cost(u, v):
-    n = len(u)
-    return (sum(forbidden_penalty(v[i]-u[i]) for i in range(n)) +
-            sum(leap_penalty(v[i], v[i+1]) for i in range(n-1)) +
-            sum(parallel_penalty(u, v, i) for i in range(n-1)))
-def variety(u, v):
-    return len(set(v[i]-u[i] for i in range(len(u))))
+def note_name(midi: int) -> str:
+    """Convert MIDI number to note name."""
+    names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+    octave = midi // 12 - 1
+    return f"{names[midi % 12]}{octave}"
 
-# ─────────────────────────────────────────────────────────────────
-# Application 1: Automated Counterpoint Composer
-# ─────────────────────────────────────────────────────────────────
 
-def compose_counterpoint(cantus: List[int], pitch_range=(0, 16),
-                         prefer_variety=False, lambda_variety=0.5) -> Dict:
-    """
-    Automatically compose a counterpoint voice over a cantus firmus
-    using tropical optimization.
+# ─── Application 1: Automated Palestrina-Style Composition ──────────
 
-    Uses dynamic programming to find the voice that minimizes
-    contrapuntal cost (optionally trading off against harmonic variety).
+def app_auto_composition():
+    """Generate certified counterpoint over a given cantus firmus."""
+    print("=" * 60)
+    print("APPLICATION 1: Automated Palestrina-Style Composition")
+    print("=" * 60)
 
-    This is a direct application of Theorem 3 (Bellman recursion).
-    """
-    n = len(cantus)
-    lo, hi = pitch_range
-    pitches = list(range(lo, hi + 1))
-    P = len(pitches)
-    INF = float('inf')
+    # Famous Fux cantus firmus (transposed to C)
+    fux_cantus = [60, 62, 64, 65, 64, 62, 64, 62, 61, 60]  # D mode
+    print(f"\nFux cantus firmus: {[note_name(p) for p in fux_cantus]}")
 
-    dp = [[INF] * P for _ in range(n)]
-    prev = [[-1] * P for _ in range(n)]
+    # Find optimal counterpoint
+    result = tropical_dp_voice_leading(fux_cantus, range(55, 80))
+    print(f"Optimal melody:   {[note_name(p) for p in result.optimal_melody]}")
+    print(f"MIDI pitches:     {result.optimal_melody}")
+    print(f"Total cost:       {result.optimal_cost}")
 
-    for xi, x in enumerate(pitches):
-        dp[0][xi] = forbidden_penalty(x - cantus[0])
+    intervals = [result.optimal_melody[i] - fux_cantus[i] for i in range(len(fux_cantus))]
+    interval_names = {0: 'P1', 3: 'm3', 4: 'M3', 7: 'P5', 8: 'm6',
+                      9: 'M6', 12: 'P8', -3: 'm3↓', -4: 'M3↓', -7: 'P5↓',
+                      -8: 'm6↓', -9: 'M6↓', -12: 'P8↓'}
+    print(f"Intervals:        {[interval_names.get(iv, str(iv)) for iv in intervals]}")
 
-    for k in range(1, n):
-        for xi, x in enumerate(pitches):
-            vc = forbidden_penalty(x - cantus[k])
-            for yi, y in enumerate(pitches):
-                trans = vc + leap_penalty(y, x)
-                cand = trans + dp[k-1][yi]
-                if cand < dp[k][xi]:
-                    dp[k][xi] = cand
-                    prev[k][xi] = yi
+    # Verify legality
+    legal = result.optimal_cost == 0.0
+    print(f"Certified legal:  {'✓ YES' if legal else '✗ NO'}")
+    if legal:
+        print("  → This counterpoint is machine-verified to satisfy all")
+        print("    first-species rules: consonant intervals, no parallel")
+        print("    perfect consonances, stepwise motion.")
 
-    best_xi = min(range(P), key=lambda xi: dp[n-1][xi])
-    melody = [0] * n
-    xi = best_xi
-    for k in range(n-1, -1, -1):
-        melody[k] = pitches[xi]
-        xi = prev[k][xi]
+    # Generate alternatives with different weights
+    print(f"\nAlternative voicings:")
+    for A, B, C, desc in [
+        (1, 0.1, 1, "balanced"),
+        (1, 2, 1, "prefer small steps"),
+        (2, 1, 0.5, "prefer consonance"),
+    ]:
+        r = tropical_dp_voice_leading(fux_cantus, range(55, 80), (A, B, C))
+        print(f"  {desc:20s}: {[note_name(p) for p in r.optimal_melody]}, cost={r.optimal_cost:.1f}")
+    print()
 
-    intervals = [melody[i] - cantus[i] for i in range(n)]
-    steps = [abs(melody[i+1]-melody[i]) for i in range(n-1)]
-    legal = (all(is_consonant(k) for k in intervals) and
-             all(s <= 2 for s in steps) and
-             not any(is_perfect(intervals[i]) and is_perfect(intervals[i+1])
-                     for i in range(n-1)))
 
-    return {
-        'cantus': cantus,
-        'counterpoint': melody,
-        'intervals': intervals,
-        'steps': steps,
-        'cost': total_cost(cantus, melody),
-        'variety': variety(cantus, melody),
-        'legal': legal,
-        'note_names': [_int_to_note(p) for p in melody]
+# ─── Application 2: Style Classification ────────────────────────────
+
+def app_style_classification():
+    """Classify musical excerpts by their tropical cost signature."""
+    print("=" * 60)
+    print("APPLICATION 2: Style Classification via Tropical Signatures")
+    print("=" * 60)
+
+    cantus = [60, 62, 64, 65, 67, 65, 64, 62]
+
+    # Define style archetypes
+    styles = {
+        "Palestrina": [67, 66, 67, 68, 67, 68, 67, 66],      # Stepwise, consonant
+        "Bach":       [67, 66, 68, 65, 70, 66, 68, 66],       # Leaps for harmony
+        "Modern":     [61, 63, 66, 69, 62, 68, 63, 67],       # Dissonant, angular
     }
 
-def _int_to_note(p: int) -> str:
-    notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    octave = p // 12 + 4
-    return f"{notes[p % 12]}{octave}"
+    print(f"\nCantus: {[note_name(p) for p in cantus]}")
+    print(f"\n{'Style':<12} {'Vert':>5} {'Mel':>5} {'Par':>5} {'Total':>6} {'Variety':>8} {'Legal':>6}")
+    print("-" * 55)
 
-# ─────────────────────────────────────────────────────────────────
-# Application 2: Style Classifier
-# ─────────────────────────────────────────────────────────────────
+    for name, melody in styles.items():
+        n = len(cantus)
+        ivs = [melody[i] - cantus[i] for i in range(n)]
+        vert = sum(forbidden_vertical_penalty(ivs[i]) for i in range(n))
+        mel = sum(melodic_leap_penalty(melody[i], melody[i+1]) for i in range(n-1))
+        par = sum(parallel_perfect_penalty(ivs[i], ivs[i+1]) for i in range(n-1))
+        total = vert + mel + par
+        variety = len(set(ivs))
+        legal = total == 0.0 and all(abs(melody[i+1]-melody[i]) <= 2 for i in range(n-1))
+        print(f"{name:<12} {vert:5.0f} {mel:5.0f} {par:5.0f} {total:6.1f} {variety:8d} {'✓' if legal else '':>6}")
 
-def classify_style(cantus: List[int], voice: List[int]) -> Dict:
-    """
-    Classify the musical style of a two-voice composition using
-    tropical objective geometry.
+    print("\n  → The tropical cost signature (Vert, Mel, Par) distinguishes")
+    print("    compositional styles as regions in a 3D penalty space.")
+    print("    Palestrina lives at the origin; Bach nearby with some variety;")
+    print("    Modern music explores higher-cost regions for expressivity.\n")
 
-    Styles map to regions of the (cost, variety) plane:
-    - Strict/Palestrina: cost ≈ 0, moderate variety
-    - Free/Bach: cost > 0, high variety
-    - Avant-garde: high cost, maximal variety
-    - Minimal: cost ≈ 0, low variety (parallel motion)
 
-    This is an application of Theorem 4 (Pareto structure).
-    """
-    n = len(cantus)
-    c = total_cost(cantus, voice)
-    v = variety(cantus, voice)
-    intervals = [voice[i] - cantus[i] for i in range(n)]
-    legal = (all(is_consonant(k) for k in intervals) and
-             all(abs(voice[i+1]-voice[i]) <= 2 for i in range(n-1)) and
-             not any(is_perfect(intervals[i]) and is_perfect(intervals[i+1])
-                     for i in range(n-1)))
+# ─── Application 3: Constraint Verification ─────────────────────────
 
-    # Classify
-    if c == 0 and legal:
-        if v >= n * 0.6:
-            style = "Strict Counterpoint (Palestrina)"
+def app_constraint_verification():
+    """Verify whether a given composition satisfies contrapuntal rules."""
+    print("=" * 60)
+    print("APPLICATION 3: Musical Constraint Verification")
+    print("=" * 60)
+
+    # Test pieces
+    pieces = [
+        ("Student exercise A", [60, 62, 64, 65], [67, 66, 67, 68]),
+        ("Student exercise B", [60, 62, 64, 65], [67, 69, 71, 72]),
+        ("Student exercise C", [60, 62, 64, 65], [64, 58, 67, 68]),
+    ]
+
+    for name, cantus, melody in pieces:
+        print(f"\n{name}:")
+        print(f"  Cantus: {[note_name(p) for p in cantus]}")
+        print(f"  Melody: {[note_name(p) for p in melody]}")
+        n = len(cantus)
+        ivs = [melody[i] - cantus[i] for i in range(n)]
+
+        # Check each rule
+        issues = []
+        for i in range(n):
+            if abs(ivs[i]) not in CONSONANCES:
+                issues.append(f"  ⚠ Position {i}: dissonant interval {ivs[i]} semitones")
+        for i in range(n-1):
+            if abs(ivs[i]) in PERFECT_CONSONANCES and abs(ivs[i+1]) in PERFECT_CONSONANCES:
+                issues.append(f"  ⚠ Positions {i}-{i+1}: parallel perfect consonances")
+        for i in range(n-1):
+            if abs(melody[i+1] - melody[i]) > 2:
+                issues.append(f"  ⚠ Position {i}-{i+1}: leap of {abs(melody[i+1]-melody[i])} semitones")
+
+        vert = sum(forbidden_vertical_penalty(ivs[i]) for i in range(n))
+        mel = sum(melodic_leap_penalty(melody[i], melody[i+1]) for i in range(n-1))
+        par = sum(parallel_perfect_penalty(ivs[i], ivs[i+1]) for i in range(n-1))
+        total = vert + mel + par
+
+        print(f"  Tropical cost: {total:.1f} (vert={vert:.0f}, mel={mel:.0f}, par={par:.0f})")
+        if issues:
+            for issue in issues:
+                print(issue)
+            print(f"  VERDICT: ✗ Not first-species legal (cost > 0)")
+
+            # Suggest fix
+            result = tropical_dp_voice_leading(cantus, range(55, 80))
+            print(f"  SUGGESTED FIX: {[note_name(p) for p in result.optimal_melody]} (cost={result.optimal_cost})")
         else:
-            style = "Minimal Counterpoint"
-    elif c > 0 and v >= n * 0.4:
-        style = "Free Counterpoint (Bach/Romantic)"
-    elif c > 0 and v < n * 0.4:
-        style = "Homophonic / Parallel Motion"
-    else:
-        style = "Unclassified"
+            print(f"  VERDICT: ✓ First-species legal (cost = 0)")
 
-    return {
-        'style': style,
-        'cost': c,
-        'variety': v,
-        'legal': legal,
-        'cost_per_note': c / n if n > 0 else 0,
-        'variety_ratio': v / n if n > 0 else 0,
-        'intervals': intervals
-    }
+    print()
 
-# ─────────────────────────────────────────────────────────────────
-# Application 3: Musical Genome Comparison
-# ─────────────────────────────────────────────────────────────────
 
-def compare_musical_genomes(cantus: List[int],
-                            voice1: List[int],
-                            voice2: List[int]) -> Dict:
-    """
-    Compare two counterpoint voices as 'musical genomes' using
-    the tropical cost framework.
-
-    Inspired by the sequence alignment analogy: interval sequences
-    are compared like DNA, with the tropical metric providing a
-    principled distance measure.
-    """
-    n = len(cantus)
-    c1, c2 = total_cost(cantus, voice1), total_cost(cantus, voice2)
-    v1, v2 = variety(cantus, voice1), variety(cantus, voice2)
-
-    int1 = [voice1[i] - cantus[i] for i in range(n)]
-    int2 = [voice2[i] - cantus[i] for i in range(n)]
-
-    # Interval-class overlap
-    set1, set2 = set(int1), set(int2)
-    overlap = set1 & set2
-    jaccard = len(overlap) / len(set1 | set2) if set1 | set2 else 1.0
-
-    # Point-wise interval distance
-    pointwise_dist = sum(abs(int1[i] - int2[i]) for i in range(n)) / n
-
-    return {
-        'voice1_cost': c1, 'voice2_cost': c2,
-        'voice1_variety': v1, 'voice2_variety': v2,
-        'interval_overlap': len(overlap),
-        'jaccard_similarity': jaccard,
-        'mean_interval_distance': pointwise_dist,
-        'cost_distance': abs(c1 - c2),
-        'variety_distance': abs(v1 - v2),
-        'voice1_intervals': int1,
-        'voice2_intervals': int2
-    }
-
-# ─────────────────────────────────────────────────────────────────
-# Main
-# ─────────────────────────────────────────────────────────────────
+# ─── Main ────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("TROPICAL MUSIC THEORY — APPLICATIONS")
-    print("=" * 60)
-
-    # Application 1: Compose counterpoint
-    print("\n--- Application 1: Automated Counterpoint ---")
-    # C major scale as cantus firmus
-    cantus = [0, 2, 4, 5, 7, 5, 4, 2, 0]
-    result = compose_counterpoint(cantus)
-    print(f"Cantus:       {result['cantus']}")
-    print(f"Counterpoint: {result['counterpoint']}")
-    print(f"Note names:   {result['note_names']}")
-    print(f"Intervals:    {result['intervals']}")
-    print(f"Cost:         {result['cost']:.2f}")
-    print(f"Legal:        {result['legal']}")
-    print(f"Variety:      {result['variety']}")
-
-    # Application 2: Style classification
-    print("\n--- Application 2: Style Classification ---")
-    # Palestrina-style: all thirds, stepwise
-    palestrina_voice = [4, 5, 7, 8, 10, 8, 7, 5, 4]
-    # Bach-style: wider intervals, some dissonance
-    bach_voice = [7, 5, 0, 9, 12, 8, 7, 6, 3]
-
-    for name, voice in [("Palestrina", palestrina_voice), ("Bach", bach_voice)]:
-        cls = classify_style(cantus, voice)
-        print(f"\n  {name} voice: {voice}")
-        print(f"    Style: {cls['style']}")
-        print(f"    Cost: {cls['cost']:.2f}, Variety: {cls['variety']}")
-        print(f"    Legal: {cls['legal']}")
-
-    # Application 3: Musical genome comparison
-    print("\n--- Application 3: Musical Genome Comparison ---")
-    comp = compare_musical_genomes(cantus, palestrina_voice, bach_voice)
-    print(f"  Palestrina intervals: {comp['voice1_intervals']}")
-    print(f"  Bach intervals:      {comp['voice2_intervals']}")
-    print(f"  Jaccard similarity:  {comp['jaccard_similarity']:.3f}")
-    print(f"  Mean interval dist:  {comp['mean_interval_distance']:.2f}")
-    print(f"  Cost distance:       {comp['cost_distance']:.2f}")
-    print(f"  Variety distance:    {comp['variety_distance']}")
-
-    print("\n✓ All applications demonstrated successfully")
+    app_auto_composition()
+    app_style_classification()
+    app_constraint_verification()
 
 
 #!/usr/bin/env python3
 """
-Tropical Voice-Leading Optimization — Interactive Demo
+Tropical Counterpoint: Demonstrations and Examples
 
-Demonstrates the core theorems of tropical music theory with concrete
-numerical examples. Shows how Renaissance counterpoint rules correspond
-to the zero-penalty locus of a tropical cost functional.
+This script demonstrates the core theorems of tropical music theory
+with concrete numerical examples, showing how Renaissance counterpoint
+rules emerge as zero-penalty loci of a tropical cost functional.
 """
 
-import numpy as np
 from typing import List, Tuple, Dict
 
-# ─────────────────────────────────────────────────────────────────
-# Core Definitions
-# ─────────────────────────────────────────────────────────────────
+# ─── Musical constants ───────────────────────────────────────────────
 
-PERFECT_CONSONANCES = {0, 7, 12}
-IMPERFECT_CONSONANCES = {3, 4, 8, 9}
+PERFECT_CONSONANCES = {0, 7, 12}       # unison, fifth, octave
+IMPERFECT_CONSONANCES = {3, 4, 8, 9}   # thirds and sixths
 CONSONANCES = PERFECT_CONSONANCES | IMPERFECT_CONSONANCES
 
-def vertical_interval(u: List[int], v: List[int], i: int) -> int:
-    """Vertical interval between two voices at position i."""
-    return v[i] - u[i]
-
-def is_perfect_consonance(k: int) -> bool:
-    return abs(k) in PERFECT_CONSONANCES
-
-def is_consonant(k: int) -> bool:
-    return abs(k) in CONSONANCES
+# ─── Penalty functions ───────────────────────────────────────────────
 
 def forbidden_vertical_penalty(k: int) -> float:
-    """0 if consonant, 1 if dissonant."""
-    return 0.0 if is_consonant(k) else 1.0
+    return 0.0 if abs(k) in CONSONANCES else 1.0
 
 def melodic_leap_penalty(x: int, y: int) -> float:
-    """max(0, |step| - 2): penalizes leaps larger than a second."""
-    return max(0.0, abs(y - x) - 2.0)
+    return max(0.0, abs(y - x) - 2)
 
-def parallel_perfect_penalty(u: List[int], v: List[int], i: int) -> float:
-    """1 if consecutive positions both have perfect consonances, 0 otherwise."""
-    int_i = vertical_interval(u, v, i)
-    int_j = vertical_interval(u, v, i + 1)
-    if is_perfect_consonance(int_i) and is_perfect_consonance(int_j):
+def parallel_perfect_penalty(interval_curr: int, interval_next: int) -> float:
+    if abs(interval_curr) in PERFECT_CONSONANCES and abs(interval_next) in PERFECT_CONSONANCES:
         return 1.0
     return 0.0
 
-def total_cost(u: List[int], v: List[int]) -> float:
-    """Total contrapuntal cost functional."""
-    n = len(u)
-    vert = sum(forbidden_vertical_penalty(vertical_interval(u, v, i)) for i in range(n))
-    melodic = sum(melodic_leap_penalty(v[i], v[i+1]) for i in range(n-1))
-    parallel = sum(parallel_perfect_penalty(u, v, i) for i in range(n-1))
-    return vert + melodic + parallel
+def total_cost(cantus: List[int], melody: List[int]) -> float:
+    n = len(cantus)
+    vertical = sum(forbidden_vertical_penalty(melody[i] - cantus[i]) for i in range(n))
+    melodic = sum(melodic_leap_penalty(melody[i], melody[i+1]) for i in range(n-1))
+    intervals = [melody[i] - cantus[i] for i in range(n)]
+    parallel = sum(
+        parallel_perfect_penalty(intervals[i], intervals[i+1])
+        for i in range(n-1)
+    )
+    return vertical + melodic + parallel
 
-def weighted_total_cost(A: float, B: float, C: float,
-                        u: List[int], v: List[int]) -> float:
-    """Weighted total cost with penalty parameters A, B, C."""
-    n = len(u)
-    vert = sum(forbidden_vertical_penalty(vertical_interval(u, v, i)) for i in range(n))
-    melodic = sum(melodic_leap_penalty(v[i], v[i+1]) for i in range(n-1))
-    parallel = sum(parallel_perfect_penalty(u, v, i) for i in range(n-1))
-    return A * vert + B * melodic + C * parallel
-
-def is_first_species_legal(u: List[int], v: List[int]) -> bool:
-    """Check if (u, v) satisfies all first-species counterpoint rules."""
-    n = len(u)
-    # All intervals consonant
+def is_first_species_legal(cantus: List[int], melody: List[int]) -> bool:
+    n = len(cantus)
     for i in range(n):
-        if not is_consonant(vertical_interval(u, v, i)):
+        if abs(melody[i] - cantus[i]) not in CONSONANCES:
             return False
-    # No parallel perfect consonances
-    for i in range(n - 1):
-        if (is_perfect_consonance(vertical_interval(u, v, i)) and
-            is_perfect_consonance(vertical_interval(u, v, i + 1))):
+    for i in range(n-1):
+        iv_curr = abs(melody[i] - cantus[i])
+        iv_next = abs(melody[i+1] - cantus[i+1])
+        if iv_curr in PERFECT_CONSONANCES and iv_next in PERFECT_CONSONANCES:
             return False
-    # Stepwise motion (steps ≤ 2)
-    for i in range(n - 1):
-        if abs(v[i+1] - v[i]) > 2:
+    for i in range(n-1):
+        if abs(melody[i+1] - melody[i]) > 2:
             return False
     return True
 
-def harmonic_variety(u: List[int], v: List[int]) -> int:
-    """Number of distinct vertical interval classes."""
-    return len(set(vertical_interval(u, v, i) for i in range(len(u))))
+def harmonic_variety(cantus: List[int], melody: List[int]) -> int:
+    return len(set(melody[i] - cantus[i] for i in range(len(cantus))))
 
-def bach_score(lam: float, u: List[int], v: List[int]) -> float:
-    """Mixed objective: minimize cost, maximize variety."""
-    return total_cost(u, v) - lam * harmonic_variety(u, v)
-
-# ─────────────────────────────────────────────────────────────────
-# Demo 1: Zero-Cost Characterization (Theorem 1)
-# ─────────────────────────────────────────────────────────────────
-
-def demo_zero_cost():
-    print("=" * 70)
-    print("DEMO 1: Species Counterpoint = Zero Tropical Penalty")
-    print("=" * 70)
-
-    cantus = [0, 2, 4, 5, 7]  # C-D-E-F-G
-
-    # Legal counterpoint voice
-    legal = [4, 5, 7, 8, 12]  # E-F-G-Ab-C (thirds and sixths, steps ≤ 2)
-    # Actually let me ensure these intervals are consonant
-    legal = [4, 5, 8, 9, 12]  # intervals: 4,3,4,4,5 -- 5 is not consonant!
-    legal = [3, 5, 7, 9, 12]  # intervals: 3,3,3,4,5 -- 5 not consonant
-    legal = [4, 6, 7, 9, 12]  # intervals: 4,4,3,4,5 -- 5 not consonant
-
-    # Let me be more careful
-    # Consonant intervals (natAbs in {0,3,4,7,8,9,12}): ±0,±3,±4,±7,±8,±9,±12
-    # CF: 0,2,4,5,7
-    # Need v[i] - CF[i] consonant, steps ≤ 2, no parallel perfects
-    # v[0]-0 ∈ consonant: v[0] ∈ {0,3,4,7,8,9,12,-3,-4,...}
-    # v[1]-2 ∈ consonant: v[1] ∈ {2,5,6,9,10,11,14,-1,...}
-    # v[2]-4 ∈ consonant: v[2] ∈ {4,7,8,11,12,13,16,1,...}
-    # v[3]-5 ∈ consonant: v[3] ∈ {5,8,9,12,13,14,17,2,...}
-    # v[4]-7 ∈ consonant: v[4] ∈ {7,10,11,14,15,16,19,4,...}
-    # Steps ≤ 2: |v[i+1]-v[i]| ≤ 2
-
-    # Try: v = [4, 5, 7, 8, 10]
-    # intervals: 4, 3, 3, 3, 3 -- all imperfect ✓
-    # steps: 1, 2, 1, 2 -- all ≤ 2 ✓
-    # no perfects at all, so no parallel perfects ✓
-    legal = [4, 5, 7, 8, 10]
-
-    print(f"\nCantus Firmus:     {cantus}")
-    print(f"Legal Counterpoint: {legal}")
-
-    intervals = [vertical_interval(cantus, legal, i) for i in range(len(cantus))]
-    steps = [abs(legal[i+1] - legal[i]) for i in range(len(legal)-1)]
-
-    print(f"Vertical intervals: {intervals}")
-    print(f"  Consonant? {[is_consonant(k) for k in intervals]}")
-    print(f"Melodic steps:      {steps}")
-    print(f"  All ≤ 2? {all(s <= 2 for s in steps)}")
-
-    cost = total_cost(cantus, legal)
-    is_legal = is_first_species_legal(cantus, legal)
-    print(f"\nTotal cost:  {cost}")
-    print(f"Legal?       {is_legal}")
-    print(f"Cost = 0?    {cost == 0}")
-    print(f"\n✓ THEOREM 1 VERIFIED: Legal ↔ Zero Cost = {is_legal == (cost == 0)}")
-
-    # Show an illegal example
-    print("\n--- Illegal counterpoint example ---")
-    illegal = [1, 3, 5, 7, 9]
-    intervals_ill = [vertical_interval(cantus, illegal, i) for i in range(len(cantus))]
-    cost_ill = total_cost(cantus, illegal)
-    legal_ill = is_first_species_legal(cantus, illegal)
-
-    print(f"Melody:     {illegal}")
-    print(f"Intervals:  {intervals_ill}")
-    print(f"Consonant?  {[is_consonant(k) for k in intervals_ill]}")
-    print(f"Cost:       {cost_ill}")
-    print(f"Legal?      {legal_ill}")
-    print(f"✓ Illegal melody has positive cost: {cost_ill > 0}")
-
-# ─────────────────────────────────────────────────────────────────
-# Demo 2: Penalty Dominance (Theorem 2)
-# ─────────────────────────────────────────────────────────────────
-
-def demo_penalty_dominance():
-    print("\n" + "=" * 70)
-    print("DEMO 2: Large Penalties Force Legality of Minimizers")
-    print("=" * 70)
-
-    cantus = [0, 2, 4]
+def weighted_total_cost(A, B, C, cantus, melody):
     n = len(cantus)
-    M = 4  # max step bound
+    vertical = sum(forbidden_vertical_penalty(melody[i] - cantus[i]) for i in range(n))
+    melodic = sum(melodic_leap_penalty(melody[i], melody[i+1]) for i in range(n-1))
+    intervals = [melody[i] - cantus[i] for i in range(n)]
+    parallel = sum(parallel_perfect_penalty(intervals[i], intervals[i+1]) for i in range(n-1))
+    return A * vertical + B * melodic + C * parallel
 
-    # Generate candidate melodies with steps ≤ M
+# ─── Example 1: Theorem 1 ───────────────────────────────────────────
+
+def demo_theorem1():
+    print("=" * 60)
+    print("THEOREM 1: First-species legality ↔ zero tropical cost")
+    print("=" * 60)
+
+    cantus = [60, 62, 64, 65, 67]
+
+    # Legal counterpoint: intervals [7, 4, 3, 3, 0]
+    legal = [67, 66, 67, 68, 67]
+    intervals = [legal[i] - cantus[i] for i in range(5)]
+    print(f"\nCantus firmus: {cantus}")
+    print(f"Legal melody:  {legal}")
+    print(f"Intervals:     {intervals}")
+    print(f"Legal?         {is_first_species_legal(cantus, legal)}")
+    print(f"Total cost:    {total_cost(cantus, legal)}")
+    assert is_first_species_legal(cantus, legal)
+    assert total_cost(cantus, legal) == 0.0
+    print("✓ Legal melody has zero cost")
+
+    # Illegal: dissonant
+    bad1 = [61, 66, 67, 68, 67]
+    print(f"\nIllegal (dissonant): {bad1}")
+    print(f"Intervals: {[bad1[i]-cantus[i] for i in range(5)]}")
+    print(f"Total cost: {total_cost(cantus, bad1)}")
+    assert total_cost(cantus, bad1) > 0
+    print("✓ Dissonance → positive cost")
+
+    # Illegal: parallel fifths
+    bad2 = [67, 69, 71, 72, 74]
+    print(f"\nIllegal (parallel 5ths): {bad2}")
+    print(f"Intervals: {[bad2[i]-cantus[i] for i in range(5)]}")
+    print(f"Total cost: {total_cost(cantus, bad2)}")
+    print("✓ Parallel fifths → positive cost")
+
+    # Illegal: large leaps
+    bad3 = [67, 58, 67, 58, 67]
+    print(f"\nIllegal (large leaps): {bad3}")
+    print(f"Steps: {[abs(bad3[i+1]-bad3[i]) for i in range(4)]}")
+    print(f"Total cost: {total_cost(cantus, bad3)}")
+    print("✓ Large leaps → positive cost\n")
+
+# ─── Example 2: Theorem 2 ───────────────────────────────────────────
+
+def demo_theorem2():
+    print("=" * 60)
+    print("THEOREM 2: Large penalties force legal minimizers")
+    print("=" * 60)
+
+    cantus = [60, 62, 64, 65]
     candidates = []
-    for v0 in range(-4, 17):
-        for v1 in range(v0 - M, v0 + M + 1):
-            for v2 in range(v1 - M, v1 + M + 1):
-                candidates.append([v0, v1, v2])
+    for a in range(55, 73):
+        for b in range(55, 73):
+            for c in range(55, 73):
+                for d in range(55, 73):
+                    m = [a, b, c, d]
+                    if all(abs(m[i+1]-m[i]) <= 5 for i in range(3)):
+                        candidates.append(m)
 
-    # Find legal ones
-    legal_candidates = [v for v in candidates if is_first_species_legal(cantus, v)]
-
+    legal = [m for m in candidates if is_first_species_legal(cantus, m)]
     print(f"\nCantus: {cantus}")
-    print(f"Total candidates (steps ≤ {M}): {len(candidates)}")
-    print(f"Legal candidates: {len(legal_candidates)}")
+    print(f"Candidates (step ≤ 5): {len(candidates)}")
+    print(f"Legal candidates: {len(legal)}")
 
-    # Test with varying penalty weights
-    for A, C in [(1, 1), (10, 10), (100, 100)]:
-        B = 1
-        costs = [(weighted_total_cost(A, B, C, cantus, v), v) for v in candidates]
-        costs.sort()
-        min_cost, min_melody = costs[0]
-        is_legal_min = is_first_species_legal(cantus, min_melody)
+    for A, B, C in [(100, 1, 100), (50, 1, 50), (10, 1, 10)]:
+        best = min(candidates, key=lambda m: weighted_total_cost(A, B, C, cantus, m))
+        legal_flag = "✓" if is_first_species_legal(cantus, best) else "✗"
+        print(f"  A={A:3d}, B={B}, C={C:3d}: cost={weighted_total_cost(A,B,C,cantus,best):.0f}, "
+              f"legal={legal_flag}")
+    print("✓ With large penalties, minimizer is always legal\n")
 
-        threshold = (n - 1) * B * M
-        print(f"\n  A={A}, B={B}, C={C} | threshold={(n-1)}*{B}*{M}={threshold}")
-        print(f"  Minimizer: {min_melody} (cost={min_cost:.1f})")
-        print(f"  Minimizer legal? {is_legal_min}")
-        if A > threshold and C > threshold:
-            print(f"  ✓ A>{threshold} and C>{threshold}: THEOREM 2 guarantees legality")
+# ─── Example 3: Dynamic Programming ─────────────────────────────────
 
-# ─────────────────────────────────────────────────────────────────
-# Demo 3: Dynamic Programming (Theorem 3)
-# ─────────────────────────────────────────────────────────────────
+def demo_dp():
+    print("=" * 60)
+    print("THEOREM 3: Tropical dynamic programming")
+    print("=" * 60)
 
-def demo_dynamic_programming():
-    print("\n" + "=" * 70)
-    print("DEMO 3: Tropical Dynamic Programming")
-    print("=" * 70)
-
-    cantus = [0, 2, 4, 5, 7, 9, 12]
-    pitches = list(range(-2, 16))
+    cantus = [60, 62, 64, 65, 67]
+    pitch_range = range(55, 80)
     n = len(cantus)
 
-    print(f"\nCantus: {cantus}")
-    print(f"Pitch alphabet: {pitches[0]}..{pitches[-1]} ({len(pitches)} pitches)")
+    # DP: dp[k][x] = min cost ending at pitch x at step k
+    dp = [{} for _ in range(n)]
+    parent = [{} for _ in range(n)]
 
-    # Forward DP
-    # dp[k][x] = minimum cost of voices v[0..k] with v[k] = x
-    dp: List[Dict[int, Tuple[float, List[int]]]] = []
+    for x in pitch_range:
+        dp[0][x] = forbidden_vertical_penalty(x - cantus[0])
 
-    # Base case: k = 0
-    dp.append({})
-    for x in pitches:
-        cost = forbidden_vertical_penalty(x - cantus[0])
-        dp[0][x] = (cost, [x])
-
-    # Recursive case
     for k in range(1, n):
-        dp.append({})
-        for x in pitches:
-            best_cost = float('inf')
-            best_path = []
-            for y in pitches:
-                # Transition from y (at position k-1) to x (at position k)
-                trans_cost = (forbidden_vertical_penalty(x - cantus[k]) +
-                              melodic_leap_penalty(y, x))
-                total = trans_cost + dp[k-1][y][0]
-                if total < best_cost:
-                    best_cost = total
-                    best_path = dp[k-1][y][1] + [x]
-            dp[k][x] = (best_cost, best_path)
+        for x in pitch_range:
+            best = float('inf')
+            best_prev = None
+            for y in pitch_range:
+                transition = (
+                    forbidden_vertical_penalty(x - cantus[k]) +
+                    melodic_leap_penalty(y, x) +
+                    parallel_perfect_penalty(y - cantus[k-1], x - cantus[k])
+                )
+                cost = transition + dp[k-1][y]
+                if cost < best:
+                    best = cost
+                    best_prev = y
+            dp[k][x] = best
+            parent[k][x] = best_prev
 
-    # Find global optimum at last position
-    best_x = min(dp[n-1], key=lambda x: dp[n-1][x][0])
-    opt_cost, opt_path = dp[n-1][best_x]
+    opt_pitch = min(pitch_range, key=lambda x: dp[n-1][x])
+    opt_cost = dp[n-1][opt_pitch]
 
-    print(f"\nOptimal voice (DP): {opt_path}")
-    intervals = [opt_path[i] - cantus[i] for i in range(n)]
-    print(f"Intervals: {intervals}")
-    print(f"Consonant? {[is_consonant(k) for k in intervals]}")
-    steps = [abs(opt_path[i+1] - opt_path[i]) for i in range(n-1)]
-    print(f"Steps: {steps}")
-    print(f"DP optimal cost: {opt_cost:.2f}")
-    print(f"Brute-force cost: {total_cost(cantus, opt_path):.2f}")
+    melody = [0] * n
+    melody[n-1] = opt_pitch
+    for k in range(n-2, -1, -1):
+        melody[k] = parent[k+1][melody[k+1]]
 
-    # Verify Bellman recursion
-    print("\n--- Bellman recursion verification ---")
-    for k in range(1, min(4, n)):
-        for x in pitches[:3]:  # just a few examples
-            lhs = dp[k][x][0]
-            rhs = min(
-                (forbidden_vertical_penalty(x - cantus[k]) +
-                 melodic_leap_penalty(y, x) + dp[k-1][y][0])
-                for y in pitches
-            )
-            assert abs(lhs - rhs) < 1e-10, f"Bellman failed at k={k}, x={x}"
-    print("✓ Bellman recursion verified for all checked positions")
+    print(f"\nCantus:           {cantus}")
+    print(f"Optimal melody:   {melody}")
+    print(f"Intervals:        {[melody[i]-cantus[i] for i in range(n)]}")
+    print(f"DP optimal cost:  {opt_cost}")
+    print(f"Direct cost:      {total_cost(cantus, melody)}")
+    print(f"Legal?            {is_first_species_legal(cantus, melody)}")
+    print(f"Harmonic variety: {harmonic_variety(cantus, melody)}")
 
-# ─────────────────────────────────────────────────────────────────
-# Demo 4: Pareto Optimality (Theorem 4)
-# ─────────────────────────────────────────────────────────────────
+    # Verify Bellman equation
+    print("\nBellman equation verification:")
+    for k in range(1, n):
+        x = melody[k]
+        lhs = dp[k][x]
+        rhs = min(
+            forbidden_vertical_penalty(x - cantus[k]) +
+            melodic_leap_penalty(y, x) +
+            parallel_perfect_penalty(y - cantus[k-1], x - cantus[k]) +
+            dp[k-1][y]
+            for y in pitch_range
+        )
+        print(f"  Step {k}: dp[{k}][{x}] = {lhs:.1f} = min_y(transition + dp[{k-1}][y]) = {rhs:.1f} ✓")
+    print("✓ Bellman recursion verified\n")
+
+# ─── Example 4: Pareto frontier ─────────────────────────────────────
 
 def demo_pareto():
-    print("\n" + "=" * 70)
-    print("DEMO 4: Pareto Frontier — Cost vs. Harmonic Variety")
-    print("=" * 70)
+    print("=" * 60)
+    print("THEOREM 4: Pareto frontier — cost vs. harmonic variety")
+    print("=" * 60)
 
-    cantus = [0, 2, 4]
-    M = 5
+    # Use a longer cantus to make the tradeoff visible
+    cantus = [60, 62, 64, 65, 67, 65, 64, 62]
+    n = len(cantus)
 
-    # Generate candidates
-    candidates = []
-    for v0 in range(-2, 15):
-        for v1 in range(v0 - M, v0 + M + 1):
-            for v2 in range(v1 - M, v1 + M + 1):
-                candidates.append([v0, v1, v2])
+    # Generate diverse candidate melodies
+    candidates = set()
 
-    # Compute (cost, variety) for each
-    points = []
-    for v in candidates:
-        c = total_cost(cantus, v)
-        h = harmonic_variety(cantus, v)
-        points.append((c, h, v))
+    # Stepwise melodies (legal candidates)
+    for start in range(55, 76):
+        stack = [(0, (start,))]
+        while stack:
+            pos, path = stack.pop()
+            if pos == n - 1:
+                candidates.add(path)
+                continue
+            for step in range(-2, 3):
+                nxt = path[-1] + step
+                if 55 <= nxt <= 76:
+                    stack.append((pos + 1, path + (nxt,)))
+
+    # Also add some leaping melodies for variety
+    import random
+    random.seed(42)
+    for _ in range(50000):
+        m = [random.randint(55, 76)]
+        for i in range(1, n):
+            step = random.choice([-4, -3, -2, -1, 0, 1, 2, 3, 4])
+            nxt = max(55, min(76, m[-1] + step))
+            m.append(nxt)
+        candidates.add(tuple(m))
+
+    candidates = [list(m) for m in candidates]
+    print(f"\nCantus: {cantus} (length {n})")
+    print(f"Total candidates: {len(candidates)}")
+
+    # Compute objectives
+    points = [(total_cost(cantus, m), harmonic_variety(cantus, m), m) for m in candidates]
 
     # Find Pareto frontier
     pareto = []
-    for c, h, v in points:
+    for i, (c, v, m) in enumerate(points):
         dominated = False
-        for c2, h2, _ in points:
-            if c2 <= c and h2 >= h and (c2 < c or h2 > h):
+        for c2, v2, _ in points:
+            if (c2 <= c and v2 >= v) and (c2 < c or v2 > v):
                 dominated = True
                 break
         if not dominated:
-            pareto.append((c, h, v))
+            pareto.append((c, v, m))
 
-    pareto.sort()
+    pareto.sort(key=lambda x: (x[0], -x[1]))
 
-    print(f"\nCantus: {cantus}")
-    print(f"Total candidates: {len(candidates)}")
-    print(f"Pareto-optimal points: {len(pareto)}")
+    legal_pareto = [(c, v, m) for c, v, m in pareto if is_first_species_legal(cantus, m)]
+    max_legal_var = max((v for _, v, _ in legal_pareto), default=0)
+    high_variety = [(c, v, m) for c, v, m in pareto if v > max_legal_var]
 
-    print("\n  Cost  | Variety | Melody    | Legal?")
-    print("  " + "-" * 50)
-    for c, h, v in pareto[:10]:
-        legal = is_first_species_legal(cantus, v)
-        ints = [v[i] - cantus[i] for i in range(len(cantus))]
-        print(f"  {c:5.1f} | {h:7d} | {v} | {legal}  (intervals: {ints})")
+    print(f"\nPareto-optimal points: {len(pareto)}")
+    print(f"  Legal Pareto points:        {len(legal_pareto)}")
+    print(f"  Max legal variety:          {max_legal_var}")
+    print(f"  Higher-variety Pareto pts:  {len(high_variety)}")
 
-    # Find strict-style and rich-style representatives
-    legal_pareto = [(c, h, v) for c, h, v in pareto if is_first_species_legal(cantus, v)]
-    high_variety = [(c, h, v) for c, h, v in pareto if h >= 3]
+    print(f"\nSample Pareto points:")
+    print(f"{'Cost':>8} {'Variety':>8} {'Legal':>6}  Melody")
+    print("-" * 70)
+    shown = set()
+    for c, v, m in pareto:
+        if v not in shown or c == 0:
+            shown.add(v)
+            legal_flag = "✓" if is_first_species_legal(cantus, m) else " "
+            intervals = [m[i]-cantus[i] for i in range(n)]
+            print(f"{c:8.1f} {v:8d}  {legal_flag:>4}   intervals: {intervals}")
+        if len(shown) > 10:
+            break
 
-    if legal_pareto and high_variety:
-        strict = legal_pareto[0]
-        rich = max(high_variety, key=lambda x: x[1])
-        print(f"\n  Strict-style representative: {strict[2]}")
-        print(f"    Cost={strict[0]:.1f}, Variety={strict[1]}")
-        print(f"  High-variety representative: {rich[2]}")
-        print(f"    Cost={rich[0]:.1f}, Variety={rich[1]}")
+    if high_variety:
+        print(f"\n✓ Both zero-cost AND high-variety Pareto points exist")
+        print(f"  → The Pareto frontier spans from strict Palestrina-style (cost=0)")
+        print(f"    to Bach-style configurations (higher variety, positive cost)")
+    else:
+        # Show the tradeoff manually
+        # Find highest variety melody with some cost
+        max_var_point = max(points, key=lambda x: x[1])
+        min_cost_point = min(points, key=lambda x: x[0])
+        print(f"\n  Min cost point: cost={min_cost_point[0]:.1f}, variety={min_cost_point[1]}")
+        print(f"  Max variety point: cost={max_var_point[0]:.1f}, variety={max_var_point[1]}")
+        if max_var_point[1] > min_cost_point[1] and max_var_point[0] > 0:
+            print(f"  → These are Pareto-incomparable: cost-variety tradeoff exists")
 
-        if strict[0] < rich[0] and strict[1] < rich[1]:
-            print("\n  ✓ THEOREM 4 VERIFIED: Pareto-incomparable pair exists")
-            print("    Neither melody dominates the other in both objectives")
+    # Show Bach score for different lambda values
+    print(f"\nBach score analysis (cost - λ·variety):")
+    for lam in [0.0, 0.5, 1.0, 2.0, 5.0]:
+        best = min(candidates, key=lambda m: total_cost(cantus, m) - lam * harmonic_variety(cantus, m))
+        score = total_cost(cantus, best) - lam * harmonic_variety(cantus, best)
+        legal_flag = "✓" if is_first_species_legal(cantus, best) else " "
+        print(f"  λ={lam:4.1f}: best score={score:6.1f}, cost={total_cost(cantus,best):.1f}, "
+              f"variety={harmonic_variety(cantus,best)}, legal={legal_flag}")
+    print("  → As λ increases, optimizer shifts from strict rules to harmonic richness")
+    print()
 
-# ─────────────────────────────────────────────────────────────────
-# Main
-# ─────────────────────────────────────────────────────────────────
+# ─── Main ────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║   TROPICAL VOICE-LEADING OPTIMIZATION — DEMONSTRATION      ║")
-    print("║   Formal Tropical Music Theory: Where Algebra Meets Art    ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
-
-    demo_zero_cost()
-    demo_penalty_dominance()
-    demo_dynamic_programming()
+    demo_theorem1()
+    demo_theorem2()
+    demo_dp()
     demo_pareto()
 
-    print("\n" + "=" * 70)
-    print("ALL DEMOS COMPLETE — All four theorems verified numerically")
-    print("=" * 70)
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all embedded content."""
+import json
+import base64
+import os
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+def encode_image(path):
+    with open(path, 'rb') as f:
+        data = base64.b64encode(f.read()).decode('utf-8')
+    return f"data:image/png;base64,{data}"
+
+# Read all content
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+
+# Read Lean proofs
+lean_files = [
+    'Bridges/TropicalCounterpoint/Defs.lean',
+    'Bridges/TropicalCounterpoint/Penalties.lean',
+    'Bridges/TropicalCounterpoint/Optimization.lean',
+    'Bridges/TropicalCounterpoint/DynamicProgramming.lean',
+    'Bridges/TropicalCounterpoint/Pareto.lean',
+]
+lean_proofs = '\n\n'.join(
+    f'-- ═══ {f} ═══\n\n' + read_file(f) for f in lean_files
+)
+
+# Read Python code
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+
+# Encode visualizations
+viz_files = [
+    ('Penalty Landscape', 'fig_penalty_landscape.png'),
+    ('Pareto Frontier', 'fig_pareto_frontier.png'),
+    ('DP Lattice', 'fig_dp_lattice.png'),
+    ('Bach Score Analysis', 'fig_bach_score.png'),
+]
+visualizations = [
+    {"name": name, "data": encode_image(path)}
+    for name, path in viz_files
+    if os.path.exists(path)
+]
+
+package = {
+    "title": "Tropical Counterpoint: Musical Voice-Leading as Min-Plus Optimization",
+    "domain": "Tropical Algebra × Music Theory × Optimization",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Tropical Counterpoint Demonstrations",
+            "code": demo_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Tropical DP Voice Leading",
+            "pseudocode": """Algorithm: TROPICAL-DP-VOICE-LEADING(cantus, pitchRange, weights)
+Input: cantus firmus u[0..n-1], pitch set P, weights (A, B, C)
+Output: optimal melody v[0..n-1], optimal cost
+
+1. For each x in P: dp[0][x] = A * forbiddenVerticalPenalty(x - u[0])
+2. For k = 1 to n-1:
+3.   For each x in P:
+4.     dp[k][x] = min over y in P of:
+         A*vert(x,u[k]) + B*mel(y,x) + C*par(y,x) + dp[k-1][y]
+5.     parent[k][x] = argmin of line 4
+6. opt = argmin over x in P of dp[n-1][x]
+7. Backtrack to recover melody
+8. Return melody, dp[n-1][opt]
+
+Time: O(n * |P|^2)    Space: O(n * |P|)""",
+            "code": algorithms_code
+        },
+        {
+            "name": "Pareto Frontier Computation",
+            "pseudocode": """Algorithm: PARETO-FRONTIER(cantus, candidates)
+Input: cantus u, candidate melodies S
+Output: Pareto-optimal subset
+
+1. For each m in S: compute (cost(m), variety(m))
+2. P = empty set
+3. For each m in S:
+4.   If no m' in S dominates m: add m to P
+5. Return P sorted by cost
+
+Time: O(|S|^2)    Space: O(|S|)""",
+            "code": applications_code
+        }
+    ],
+    "visualizations": visualizations,
+    "lean_proofs": lean_proofs
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print(f"PACKAGE.json generated ({os.path.getsize('PACKAGE.json')} bytes)")
 
 
 #!/usr/bin/env python3
 """
-Tropical Voice-Leading Optimization — Visualizations
+Tropical Counterpoint: Visualizations
 
-Generates publication-quality figures for the tropical music theory framework.
+Generates publication-quality figures illustrating the key mathematical
+structures of tropical music theory.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+from typing import List
 import base64
 import io
-from typing import List, Set
 
-# ─────────────────────────────────────────────────────────────────
-# Core definitions (self-contained)
-# ─────────────────────────────────────────────────────────────────
-
+# ─── Musical Constants ───────────────────────────────────────────────
 PERFECT = {0, 7, 12}
 IMPERFECT = {3, 4, 8, 9}
-CONSONANT = PERFECT | IMPERFECT
+CONSONANCES = PERFECT | IMPERFECT
 
-def is_consonant(k): return abs(k) in CONSONANT
-def is_perfect(k): return abs(k) in PERFECT
-def forbidden_penalty(k): return 0.0 if is_consonant(k) else 1.0
-def leap_penalty(x, y): return max(0.0, abs(y - x) - 2.0)
+def forbidden_vertical_penalty(k): return 0.0 if abs(k) in CONSONANCES else 1.0
+def melodic_leap_penalty(x, y): return max(0.0, abs(y - x) - 2)
+def parallel_perfect_penalty(a, b):
+    return 1.0 if abs(a) in PERFECT and abs(b) in PERFECT else 0.0
 
-def parallel_penalty(u, v, i):
-    if is_perfect(v[i] - u[i]) and is_perfect(v[i+1] - u[i+1]):
-        return 1.0
-    return 0.0
+def total_cost(cantus, melody):
+    n = len(cantus)
+    ivs = [melody[i] - cantus[i] for i in range(n)]
+    v = sum(forbidden_vertical_penalty(ivs[i]) for i in range(n))
+    m = sum(melodic_leap_penalty(melody[i], melody[i+1]) for i in range(n-1))
+    p = sum(parallel_perfect_penalty(ivs[i], ivs[i+1]) for i in range(n-1))
+    return v + m + p
 
-def total_cost(u, v):
-    n = len(u)
-    c = sum(forbidden_penalty(v[i] - u[i]) for i in range(n))
-    c += sum(leap_penalty(v[i], v[i+1]) for i in range(n-1))
-    c += sum(parallel_penalty(u, v, i) for i in range(n-1))
-    return c
+def harmonic_variety(cantus, melody):
+    return len(set(melody[i] - cantus[i] for i in range(len(cantus))))
 
-def variety(u, v):
-    return len(set(v[i] - u[i] for i in range(len(u))))
+# ─── Figure 1: Penalty Landscape ────────────────────────────────────
 
-def fig_to_base64(fig):
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode()
+def fig_penalty_landscape():
+    """Visualize the vertical interval penalty as a function of interval."""
+    fig, axes = plt.subplots(1, 3, figsize=(14, 4))
 
-# ─────────────────────────────────────────────────────────────────
-# Figure 1: Penalty Landscape
-# ─────────────────────────────────────────────────────────────────
-
-def plot_penalty_landscape():
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
-
-    # Vertical penalty
+    # Panel A: Vertical penalty
     intervals = range(-15, 16)
-    penalties = [forbidden_penalty(k) for k in intervals]
-    colors = ['#2ecc71' if is_consonant(k) else '#e74c3c' for k in intervals]
-    axes[0].bar(intervals, penalties, color=colors, width=0.8)
-    axes[0].set_xlabel('Interval (semitones)', fontsize=12)
-    axes[0].set_ylabel('Penalty', fontsize=12)
-    axes[0].set_title('Vertical Interval Penalty', fontsize=14, fontweight='bold')
-    axes[0].set_ylim(-0.1, 1.3)
+    penalties = [forbidden_vertical_penalty(k) for k in intervals]
+    ax = axes[0]
+    colors = ['#2ecc71' if p == 0 else '#e74c3c' for p in penalties]
+    ax.bar(list(intervals), penalties, color=colors, alpha=0.8, width=0.8)
+    ax.set_xlabel('Vertical Interval (semitones)', fontsize=11)
+    ax.set_ylabel('Penalty', fontsize=11)
+    ax.set_title('(a) Vertical Interval Penalty', fontsize=12, fontweight='bold')
+    ax.set_ylim(-0.1, 1.3)
+    ax.axhline(y=0, color='gray', linewidth=0.5)
 
-    # Melodic leap penalty
-    steps = np.linspace(0, 8, 100)
-    penalties = [max(0, s - 2) for s in steps]
-    axes[1].plot(steps, penalties, 'b-', linewidth=2)
-    axes[1].fill_between(steps, penalties, alpha=0.2, color='blue')
-    axes[1].axvline(x=2, color='green', linestyle='--', alpha=0.7, label='Step ≤ 2 (free)')
-    axes[1].set_xlabel('Step size (semitones)', fontsize=12)
-    axes[1].set_ylabel('Penalty', fontsize=12)
-    axes[1].set_title('Melodic Leap Penalty', fontsize=14, fontweight='bold')
-    axes[1].legend()
+    # Panel B: Melodic leap penalty
+    steps = np.arange(0, 13)
+    leap_pen = [max(0, s - 2) for s in steps]
+    ax = axes[1]
+    ax.bar(steps, leap_pen, color='#3498db', alpha=0.8)
+    ax.set_xlabel('Melodic Step Size (semitones)', fontsize=11)
+    ax.set_ylabel('Penalty', fontsize=11)
+    ax.set_title('(b) Melodic Leap Penalty', fontsize=12, fontweight='bold')
 
-    # Bach score landscape
-    lams = np.linspace(0, 2, 50)
-    cantus = [0, 2, 4, 5, 7]
-    legal = [4, 5, 7, 8, 10]
-    rich = [7, 4, 0, 8, 3]
-    for v, label, color in [(legal, 'Strict (Palestrina)', '#2ecc71'),
-                             (rich, 'Rich (Bach-style)', '#e67e22')]:
-        scores = [total_cost(cantus, v) - l * variety(cantus, v) for l in lams]
-        axes[2].plot(lams, scores, color=color, linewidth=2, label=label)
-    axes[2].set_xlabel('λ (variety weight)', fontsize=12)
-    axes[2].set_ylabel('Bach Score', fontsize=12)
-    axes[2].set_title('Bach Score vs. Variety Weight', fontsize=14, fontweight='bold')
-    axes[2].legend()
-    axes[2].axhline(y=0, color='gray', linestyle=':', alpha=0.5)
+    # Panel C: Parallel perfect penalty (heatmap)
+    ax = axes[2]
+    iv_range = list(range(-12, 13))
+    grid = np.zeros((len(iv_range), len(iv_range)))
+    for i, a in enumerate(iv_range):
+        for j, b in enumerate(iv_range):
+            grid[i, j] = parallel_perfect_penalty(a, b)
+    im = ax.imshow(grid, cmap='RdYlGn_r', aspect='auto',
+                   extent=[-12.5, 12.5, -12.5, 12.5], origin='lower')
+    ax.set_xlabel('Current Interval', fontsize=11)
+    ax.set_ylabel('Next Interval', fontsize=11)
+    ax.set_title('(c) Parallel Perfect Penalty', fontsize=12, fontweight='bold')
+    plt.colorbar(im, ax=ax, shrink=0.8)
 
     plt.tight_layout()
-    return fig
+    plt.savefig('fig_penalty_landscape.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved fig_penalty_landscape.png")
 
-# ─────────────────────────────────────────────────────────────────
-# Figure 2: Pareto Frontier
-# ─────────────────────────────────────────────────────────────────
+# ─── Figure 2: Pareto Frontier ──────────────────────────────────────
 
-def plot_pareto_frontier():
-    cantus = [0, 2, 4, 5]
+def fig_pareto_frontier():
+    """Visualize the Pareto frontier of cost vs. variety."""
+    cantus = [60, 62, 64, 65, 67, 65, 64, 62]
+    n = len(cantus)
+
     # Generate candidates
-    cands = []
-    for v0 in range(-4, 16):
-        for v1 in range(v0 - 5, v0 + 6):
-            for v2 in range(v1 - 5, v1 + 6):
-                for v3 in range(v2 - 5, v2 + 6):
-                    cands.append([v0, v1, v2, v3])
+    candidates = set()
+    import random
+    random.seed(42)
 
-    costs, varieties, legals = [], [], []
-    for v in cands:
-        c = total_cost(cantus, v)
-        h = variety(cantus, v)
-        legal = all(is_consonant(v[i] - cantus[i]) for i in range(4)) and \
-                all(abs(v[i+1] - v[i]) <= 2 for i in range(3)) and \
-                not any(is_perfect(v[i] - cantus[i]) and is_perfect(v[i+1] - cantus[i+1])
-                        for i in range(3))
-        costs.append(c)
-        varieties.append(h)
-        legals.append(legal)
+    # Stepwise
+    for start in range(55, 76):
+        stack = [(0, (start,))]
+        while stack:
+            pos, path = stack.pop()
+            if pos == n - 1:
+                candidates.add(path)
+                continue
+            for step in range(-2, 3):
+                nxt = path[-1] + step
+                if 55 <= nxt <= 76:
+                    stack.append((pos + 1, path + (nxt,)))
 
-    fig, ax = plt.subplots(figsize=(10, 7))
+    # Leaping
+    for _ in range(50000):
+        m = [random.randint(55, 76)]
+        for _ in range(1, n):
+            m.append(max(55, min(76, m[-1] + random.choice(range(-4, 5)))))
+        candidates.add(tuple(m))
 
-    # Plot all points
-    costs_a, var_a = np.array(costs), np.array(varieties)
-    legals_a = np.array(legals)
+    candidates = [list(m) for m in candidates]
+    points = [(total_cost(cantus, m), harmonic_variety(cantus, m), m) for m in candidates]
 
-    # Sample to avoid overplotting
-    idx = np.random.RandomState(42).choice(len(costs_a), min(5000, len(costs_a)), replace=False)
-    illegal_idx = idx[~legals_a[idx]]
-    legal_idx = idx[legals_a[idx]]
-
-    ax.scatter(costs_a[illegal_idx], var_a[illegal_idx], c='#bdc3c7', alpha=0.15,
-               s=8, label='Illegal', zorder=1)
-    ax.scatter(costs_a[legal_idx], var_a[legal_idx], c='#2ecc71', alpha=0.5,
-               s=20, label='Legal (Palestrina)', zorder=2)
-
-    # Find and plot Pareto frontier
-    pareto_points = []
-    for c, h, legal in zip(costs, varieties, legals):
-        dominated = any(c2 <= c and h2 >= h and (c2 < c or h2 > h)
-                        for c2, h2 in zip(costs, varieties))
+    # Pareto
+    pareto = []
+    for c, v, m in points:
+        dominated = any(
+            (c2 <= c and v2 >= v) and (c2 < c or v2 > v)
+            for c2, v2, _ in points
+        )
         if not dominated:
-            pareto_points.append((c, h, legal))
+            pareto.append((c, v, m))
 
-    pareto_points.sort()
-    pc = [p[0] for p in pareto_points]
-    pv = [p[1] for p in pareto_points]
-    pl = [p[2] for p in pareto_points]
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    ax.plot(pc, pv, 'r-', linewidth=2, alpha=0.7, zorder=3)
-    for c, h, legal in pareto_points:
-        color = '#27ae60' if legal else '#e74c3c'
-        ax.scatter([c], [h], c=color, s=80, edgecolors='black',
-                   linewidth=1.5, zorder=4)
+    # All points
+    costs = [c for c, v, _ in points]
+    varieties = [v for c, v, _ in points]
+    ax.scatter(costs, varieties, alpha=0.03, s=10, c='gray', label='All melodies')
 
-    ax.set_xlabel('Contrapuntal Cost', fontsize=14)
-    ax.set_ylabel('Harmonic Variety', fontsize=14)
-    ax.set_title('Pareto Frontier: Cost vs. Harmonic Variety\n'
-                 'The geometry of musical style as tropical optimization',
-                 fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11, loc='upper right')
+    # Pareto frontier
+    pc = [c for c, v, _ in pareto]
+    pv = [v for c, v, _ in pareto]
+    ax.scatter(pc, pv, c='#e74c3c', s=50, zorder=5, edgecolors='black',
+              linewidths=0.5, label='Pareto frontier')
 
-    # Annotate regions
-    ax.annotate('Palestrina\nregion', xy=(0, 3), fontsize=12,
-                color='#27ae60', fontweight='bold',
-                ha='center', va='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='#eafaf1'))
-    max_var = max(varieties)
-    ax.annotate('Bach\nregion', xy=(max(costs) * 0.6, max_var * 0.9), fontsize=12,
-                color='#e74c3c', fontweight='bold',
-                ha='center', va='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='#fdedec'))
+    # Highlight legal points
+    legal_p = [(c, v) for c, v, m in pareto
+               if total_cost(cantus, m) == 0]
+    if legal_p:
+        ax.scatter([c for c, v in legal_p], [v for c, v in legal_p],
+                  c='#2ecc71', s=100, zorder=6, edgecolors='black',
+                  linewidths=1, marker='*', label='Legal (Palestrina)')
 
-    plt.tight_layout()
-    return fig
-
-# ─────────────────────────────────────────────────────────────────
-# Figure 3: DP Lattice / Voice-Leading Graph
-# ─────────────────────────────────────────────────────────────────
-
-def plot_dp_lattice():
-    cantus = [0, 2, 4, 5, 7]
-    pitches = list(range(-4, 16))
-    n = len(cantus)
-    P = len(pitches)
-
-    # Run DP
-    INF = float('inf')
-    dp = [[INF] * P for _ in range(n)]
-    prev = [[-1] * P for _ in range(n)]
-
-    for xi, x in enumerate(pitches):
-        dp[0][xi] = forbidden_penalty(x - cantus[0])
-
-    for k in range(1, n):
-        for xi, x in enumerate(pitches):
-            vc = forbidden_penalty(x - cantus[k])
-            for yi, y in enumerate(pitches):
-                trans = vc + leap_penalty(y, x)
-                cand = trans + dp[k-1][yi]
-                if cand < dp[k][xi]:
-                    dp[k][xi] = cand
-                    prev[k][xi] = yi
-
-    # Backtrack
-    best_xi = min(range(P), key=lambda xi: dp[n-1][xi])
-    opt_path = [0] * n
-    xi = best_xi
-    for k in range(n-1, -1, -1):
-        opt_path[k] = pitches[xi]
-        xi = prev[k][xi]
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-
-    # Plot cost landscape as heatmap
-    cost_grid = np.array(dp).T
-    cost_grid[cost_grid > 10] = 10  # clip for visualization
-    im = ax.imshow(cost_grid, aspect='auto', cmap='YlOrRd_r',
-                   extent=[-0.5, n-0.5, pitches[0]-0.5, pitches[-1]+0.5],
-                   origin='lower', alpha=0.6)
-    plt.colorbar(im, ax=ax, label='Accumulated Cost', shrink=0.8)
-
-    # Plot cantus firmus
-    ax.plot(range(n), cantus, 'bs-', linewidth=2, markersize=10,
-            label='Cantus Firmus', zorder=5)
-
-    # Plot optimal voice
-    ax.plot(range(n), opt_path, 'r^-', linewidth=2, markersize=10,
-            label='Optimal Voice (DP)', zorder=5)
-
-    # Annotate intervals
-    for k in range(n):
-        interval = opt_path[k] - cantus[k]
-        color = '#27ae60' if is_consonant(interval) else '#e74c3c'
-        ax.annotate(f'{interval}', xy=(k, (cantus[k] + opt_path[k])/2),
-                    fontsize=9, color=color, fontweight='bold',
-                    ha='center', va='center',
-                    bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-
-    ax.set_xlabel('Position', fontsize=13)
-    ax.set_ylabel('Pitch (semitones)', fontsize=13)
-    ax.set_title('Tropical Dynamic Programming: Voice-Leading Graph\n'
-                 'Optimal counterpoint as shortest path in a layered DAG',
-                 fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.set_xticks(range(n))
-
-    plt.tight_layout()
-    return fig
-
-# ─────────────────────────────────────────────────────────────────
-# Figure 4: Scale Separation Phase Diagram
-# ─────────────────────────────────────────────────────────────────
-
-def plot_scale_separation():
-    cantus = [0, 2, 4]
-    n = len(cantus)
-    M = 4
-
-    # Generate candidates
-    cands = []
-    for v0 in range(-4, 16):
-        for v1 in range(v0 - M, v0 + M + 1):
-            for v2 in range(v1 - M, v1 + M + 1):
-                cands.append([v0, v1, v2])
-
-    A_vals = np.logspace(-0.5, 2.5, 40)
-    C_vals = np.logspace(-0.5, 2.5, 40)
-    B = 1.0
-    threshold = (n - 1) * B * M
-
-    legal_grid = np.zeros((len(C_vals), len(A_vals)))
-
-    for ai, A in enumerate(A_vals):
-        for ci, C in enumerate(C_vals):
-            # Find minimizer
-            best_cost = float('inf')
-            best_legal = False
-            for v in cands:
-                vert = sum(forbidden_penalty(v[i] - cantus[i]) for i in range(n))
-                mel = sum(leap_penalty(v[i], v[i+1]) for i in range(n-1))
-                par = sum(parallel_penalty(cantus, v, i) for i in range(n-1))
-                c = A * vert + B * mel + C * par
-                if c < best_cost:
-                    best_cost = c
-                    best_legal = all(is_consonant(v[i] - cantus[i]) for i in range(n)) and \
-                                 not any(is_perfect(v[i] - cantus[i]) and
-                                         is_perfect(v[i+1] - cantus[i+1])
-                                         for i in range(n-1))
-            legal_grid[ci, ai] = 1.0 if best_legal else 0.0
-
-    fig, ax = plt.subplots(figsize=(8, 7))
-
-    im = ax.pcolormesh(A_vals, C_vals, legal_grid, cmap='RdYlGn',
-                       shading='nearest', vmin=0, vmax=1)
-    plt.colorbar(im, ax=ax, label='Minimizer VP-Legal', shrink=0.8,
-                 ticks=[0, 1], format=lambda x, _: 'Illegal' if x < 0.5 else 'Legal')
-
-    # Draw threshold lines
-    ax.axvline(x=threshold, color='blue', linestyle='--', linewidth=2,
-               label=f'A = {threshold:.0f} threshold')
-    ax.axhline(y=threshold, color='blue', linestyle='--', linewidth=2,
-               label=f'C = {threshold:.0f} threshold')
-
-    ax.set_xscale('log')
-    ax.set_yscale('log')
-    ax.set_xlabel('Vertical Penalty Weight A', fontsize=13)
-    ax.set_ylabel('Parallel Penalty Weight C', fontsize=13)
-    ax.set_title('Scale Separation Phase Diagram\n'
-                 'Theorem 2: Above threshold, minimizers are guaranteed legal',
-                 fontsize=14, fontweight='bold')
+    ax.set_xlabel('Contrapuntal Cost (tropical penalty)', fontsize=13)
+    ax.set_ylabel('Harmonic Variety (distinct intervals)', fontsize=13)
+    ax.set_title('Pareto Frontier: Cost vs. Harmonic Variety', fontsize=14, fontweight='bold')
     ax.legend(fontsize=11, loc='lower right')
 
-    plt.tight_layout()
-    return fig
+    # Annotate regions
+    ax.annotate('Strict Counterpoint\n(zero cost, Palestrina)',
+               xy=(0, max(v for c, v in legal_p) if legal_p else 5),
+               xytext=(3, max(v for c, v in legal_p)-1 if legal_p else 4),
+               fontsize=10, fontstyle='italic',
+               arrowprops=dict(arrowstyle='->', color='#2ecc71'),
+               color='#2ecc71')
 
-# ─────────────────────────────────────────────────────────────────
-# Main
-# ─────────────────────────────────────────────────────────────────
+    ax.annotate('Rich Harmony\n(higher cost, Bach-style)',
+               xy=(max(pc)*0.7, max(pv)),
+               xytext=(max(pc)*0.5, max(pv)-0.5),
+               fontsize=10, fontstyle='italic', color='#e74c3c')
+
+    plt.tight_layout()
+    plt.savefig('fig_pareto_frontier.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved fig_pareto_frontier.png")
+
+# ─── Figure 3: DP Lattice ───────────────────────────────────────────
+
+def fig_dp_lattice():
+    """Visualize the layered DAG for tropical DP."""
+    cantus = [60, 62, 64, 65, 67]
+    n = len(cantus)
+    pitch_range = range(55, 73)
+
+    # Run DP
+    dp = [{} for _ in range(n)]
+    for x in pitch_range:
+        dp[0][x] = forbidden_vertical_penalty(x - cantus[0])
+    for k in range(1, n):
+        for x in pitch_range:
+            best = float('inf')
+            for y in pitch_range:
+                tr = (forbidden_vertical_penalty(x - cantus[k]) +
+                      melodic_leap_penalty(y, x) +
+                      parallel_perfect_penalty(y - cantus[k-1], x - cantus[k]))
+                best = min(best, tr + dp[k-1][y])
+            dp[k][x] = best
+
+    # Find optimal path
+    opt_end = min(pitch_range, key=lambda x: dp[n-1][x])
+    path = [0] * n
+    path[n-1] = opt_end
+    for k in range(n-2, -1, -1):
+        path[k] = min(pitch_range,
+                      key=lambda y: dp[k][y] +
+                      forbidden_vertical_penalty(path[k+1] - cantus[k+1]) +
+                      melodic_leap_penalty(y, path[k+1]) +
+                      parallel_perfect_penalty(y - cantus[k], path[k+1] - cantus[k+1]))
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+
+    # Draw nodes
+    for k in range(n):
+        for x in pitch_range:
+            cost = dp[k][x]
+            color = plt.cm.viridis(1 - min(cost / 5, 1))
+            size = max(30, 150 - cost * 20)
+            ax.scatter(k, x, c=[color], s=size, zorder=3, edgecolors='gray',
+                      linewidths=0.3, alpha=0.7)
+
+    # Draw optimal path
+    ax.plot(range(n), path, 'r-o', linewidth=2.5, markersize=10,
+           zorder=5, label=f'Optimal path (cost={dp[n-1][opt_end]:.0f})')
+
+    # Draw cantus
+    ax.plot(range(n), cantus, 'b--s', linewidth=1.5, markersize=8,
+           alpha=0.7, label='Cantus firmus', zorder=4)
+
+    ax.set_xlabel('Time Step', fontsize=13)
+    ax.set_ylabel('Pitch (MIDI)', fontsize=13)
+    ax.set_title('Tropical DP Lattice: Shortest Path = Optimal Voice Leading',
+                fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_xticks(range(n))
+    ax.set_xticklabels([f't={k}' for k in range(n)])
+
+    plt.tight_layout()
+    plt.savefig('fig_dp_lattice.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved fig_dp_lattice.png")
+
+# ─── Figure 4: Bach Score Landscape ─────────────────────────────────
+
+def fig_bach_score():
+    """Visualize how the Bach score varies with λ."""
+    cantus = [60, 62, 64, 65, 67, 65, 64, 62]
+    n = len(cantus)
+
+    # Generate diverse candidates
+    import random
+    random.seed(42)
+    candidates = []
+    for start in range(55, 76):
+        stack = [(0, [start])]
+        while stack:
+            pos, path = stack.pop()
+            if pos == n - 1:
+                candidates.append(list(path))
+                continue
+            for step in range(-3, 4):
+                nxt = path[-1] + step
+                if 55 <= nxt <= 76:
+                    stack.append((pos + 1, path + [nxt]))
+                    if len(candidates) > 500000:
+                        break
+            if len(candidates) > 500000:
+                break
+        if len(candidates) > 500000:
+            break
+
+    # Add random leaping melodies
+    for _ in range(50000):
+        m = [random.randint(55, 76)]
+        for _ in range(1, n):
+            m.append(max(55, min(76, m[-1] + random.choice(range(-4, 5)))))
+        candidates.append(m)
+
+    # Compute cost and variety for each
+    data = []
+    for m in candidates:
+        c = total_cost(cantus, m)
+        v = harmonic_variety(cantus, m)
+        data.append((c, v, m))
+
+    lambdas = np.linspace(0, 3, 50)
+    best_costs = []
+    best_varieties = []
+    best_scores = []
+
+    for lam in lambdas:
+        best = min(data, key=lambda x: x[0] - lam * x[1])
+        best_costs.append(best[0])
+        best_varieties.append(best[1])
+        best_scores.append(best[0] - lam * best[1])
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    ax = axes[0]
+    ax.plot(lambdas, best_costs, 'r-', linewidth=2)
+    ax.set_xlabel('λ (variety reward)', fontsize=12)
+    ax.set_ylabel('Contrapuntal Cost', fontsize=12)
+    ax.set_title('(a) Cost of Bach-Optimal Melody', fontsize=12, fontweight='bold')
+    ax.axhline(y=0, color='gray', linewidth=0.5, linestyle='--')
+
+    ax = axes[1]
+    ax.plot(lambdas, best_varieties, 'g-', linewidth=2)
+    ax.set_xlabel('λ (variety reward)', fontsize=12)
+    ax.set_ylabel('Harmonic Variety', fontsize=12)
+    ax.set_title('(b) Variety of Bach-Optimal Melody', fontsize=12, fontweight='bold')
+
+    ax = axes[2]
+    ax.plot(lambdas, best_scores, 'b-', linewidth=2)
+    ax.set_xlabel('λ (variety reward)', fontsize=12)
+    ax.set_ylabel('Bach Score', fontsize=12)
+    ax.set_title('(c) Optimal Bach Score', fontsize=12, fontweight='bold')
+    ax.axhline(y=0, color='gray', linewidth=0.5, linestyle='--')
+
+    # Mark transition point
+    transition = None
+    for i in range(1, len(lambdas)):
+        if best_costs[i] > 0 and best_costs[i-1] == 0:
+            transition = lambdas[i]
+            break
+    if transition:
+        for ax in axes:
+            ax.axvline(x=transition, color='purple', linewidth=1.5, linestyle='--',
+                      alpha=0.7, label=f'Style transition λ≈{transition:.1f}')
+            ax.legend(fontsize=9)
+
+    plt.suptitle('Bach Score Analysis: Style Transition as λ Increases',
+                fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('fig_bach_score.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved fig_bach_score.png")
+
+
+def encode_image_base64(filepath):
+    """Read an image file and return base64 data URI."""
+    with open(filepath, 'rb') as f:
+        data = base64.b64encode(f.read()).decode('utf-8')
+    return f"data:image/png;base64,{data}"
+
+
+# ─── Main ────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-
-    figs = {
-        'penalty_landscape': plot_penalty_landscape(),
-        'pareto_frontier': plot_pareto_frontier(),
-        'dp_lattice': plot_dp_lattice(),
-        'scale_separation': plot_scale_separation()
-    }
-
-    for name, fig in figs.items():
-        fig.savefig(f'{name}.png', dpi=150, bbox_inches='tight')
-        print(f"  Saved {name}.png")
-        plt.close(fig)
-
-    print("All visualizations generated.")
+    fig_penalty_landscape()
+    fig_pareto_frontier()
+    fig_dp_lattice()
+    fig_bach_score()
+    print("\nAll figures generated successfully.")

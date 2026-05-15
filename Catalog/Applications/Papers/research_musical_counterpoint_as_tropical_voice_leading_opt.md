@@ -1,381 +1,286 @@
-# Tropical Voice-Leading Optimization: Counterpoint as Min-Plus Algebra
+# Tropical Counterpoint: Musical Voice-Leading as Min-Plus Optimization
 
 ## Abstract
 
-We establish a rigorous mathematical framework for first-species counterpoint using tropical (min-plus) algebra. A two-voice composition of length *n* is modeled as a pair of integer pitch sequences with three penalty functions: vertical dissonance, melodic leaps, and parallel perfect consonances. We prove four main theorems: (1) **Zero-cost characterization**: legal first-species counterpoint is exactly the zero-penalty locus of a nonneg tropical cost functional; (2) **Penalty dominance**: when forbidden-interval and parallel penalties exceed any possible melodic advantage, every cost minimizer must satisfy the strict contrapuntal rules; (3) **Tropical dynamic programming**: optimal voice-leading decomposes via Bellman recursion using min-plus distributivity; (4) **Pareto optimality**: feasible sets containing both strict and variety-rich melodies admit Pareto-incomparable points balancing contrapuntal penalty against harmonic diversity. All results are machine-verified. We provide polynomial-time algorithms for optimal voice-leading search, Pareto frontier computation, and style classification.
+We develop a mathematical framework that identifies first-species counterpoint with the zero locus of a tropical (min-plus) cost functional, proves that minimizers of weighted voice-leading cost must satisfy strict contrapuntal rules under sufficient penalty separation, establishes a tropical Bellman recursion for computing optimal voice leading in polynomial time, and demonstrates that multi-objective optimization with harmonic variety yields Pareto frontiers that formally distinguish historical compositional styles. All theorems are machine-verified in the Lean 4 proof assistant with the Mathlib library. We provide algorithms for certified counterpoint generation, style classification via tropical cost signatures, and automated constraint verification.
 
-**Keywords**: tropical algebra, min-plus optimization, counterpoint, voice leading, formal music theory, constraint satisfaction, dynamic programming, Pareto optimality.
-
----
+**Keywords**: tropical algebra, min-plus optimization, counterpoint, voice leading, formal music theory, dynamic programming, Pareto optimality, certified algorithms
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 Background and Motivation
 
-First-species counterpoint, codified by Fux (1725) and practiced in the tradition of Palestrina, consists of composing a melody (the *counterpoint*) note-against-note above or below a fixed melody (the *cantus firmus*). The rules governing legal counterpoint — consonant intervals, no parallel perfect consonances, stepwise melodic motion — have been taught for centuries as discrete prescriptions. Despite extensive work in computational music theory (Tymoczko 2011, Mazzola 2002, Agmon 1997), a fully rigorous algebraic characterization of these rules as optimization conditions has not been established.
+First-species counterpoint, codified by Fux (1725) and rooted in the practice of Palestrina, imposes three fundamental constraints on two-voice compositions: (1) every simultaneous interval must be consonant, (2) consecutive perfect consonances in parallel motion are forbidden, and (3) melodic motion should be predominantly stepwise. These rules have been taught for centuries as aesthetic guidelines, but their precise mathematical structure has remained informal.
 
-We show that the rules of first-species counterpoint are precisely the zero-locus conditions of a tropical cost functional, converting a grammatical specification into an algebraic optimization problem over the min-plus semiring.
+Independently, tropical (min-plus) algebra—where the semiring operations are minimum and addition—has become a central tool in optimization theory, algebraic geometry, phylogenetics, and formal verification. The tropical semiring (ℝ ∪ {∞}, min, +) provides the natural algebraic framework for shortest-path problems, dynamic programming, and weighted constraint satisfaction.
 
 ### 1.2 Contributions
 
-1. **Algebraic characterization**: We define a nonneg cost functional `totalCost` and prove `FirstSpeciesLegal u v ↔ totalCost u v = 0` (Theorem 1).
+This paper makes four principal contributions:
 
-2. **Scale separation**: We prove that when penalty weights for forbidden intervals and parallels are sufficiently large, every weighted-cost minimizer automatically satisfies the strict contrapuntal rules (Theorem 2).
+1. **Zero-Cost Equivalence (Theorem 1)**: We prove that first-species legality is equivalent to the total tropical contrapuntal cost being zero. This identifies species counterpoint as an exact feasibility condition in a weighted constraint satisfaction problem.
 
-3. **Dynamic programming**: We prove a Bellman recursion for voice-leading optimization over finite pitch alphabets, using min-plus distributivity as the algebraic engine (Theorem 3).
+2. **Strict-Style Dominance (Theorem 2)**: Under positive penalty weights with a legal witness, every cost minimizer must satisfy strict contrapuntal rules. This formalizes the principle that sufficient penalty separation converts soft optimization into hard style laws.
 
-4. **Pareto structure**: We prove the existence of Pareto-optimal points balancing cost and harmonic variety, formalizing the claim that Bach-style compositions occupy a distinct geometric region of the objective landscape (Theorem 4).
+3. **Tropical Bellman Recursion (Theorem 3)**: The optimal voice-leading cost satisfies a min-plus Bellman equation, enabling polynomial-time computation via dynamic programming. The proof uses tropical distributivity explicitly.
 
-5. **Machine verification**: All definitions, lemma statements, and proofs are formalized and verified by computer, ensuring complete mathematical rigor.
+4. **Pareto Tradeoff (Theorem 4)**: When harmonic variety enters as a second objective, the feasible set exhibits nontrivial Pareto structure: zero-cost (Palestrina-style) and high-variety (Bach-style) points coexist as incomparable Pareto optima.
 
 ### 1.3 Related Work
 
-- **Computational music theory**: Tymoczko (2011) studies voice-leading geometry in continuous pitch spaces. Our work operates in discrete integer pitches with combinatorial optimization.
-- **Tropical algebra**: Maclagan and Sturmfels (2015) develop tropical algebraic geometry. We use only the min-plus semiring structure.
-- **Constraint satisfaction**: Counterpoint as CSP has been explored computationally (Herremans et al. 2017). Our contribution is the algebraic characterization and formal verification.
-- **Optimal transport**: Tymoczko's voice-leading distances relate to Wasserstein metrics; we make this connection precise in the tropical setting.
+Tymoczko (2006, 2011) pioneered geometric approaches to voice leading using continuous orbifold geometry. Mazzola (1990, 2002) developed algebraic and category-theoretic models of musical structure. Agmon (1997) and Clough & Myerson (1985) formalized aspects of diatonic theory. Our approach differs in using discrete tropical optimization rather than continuous geometry, enabling machine-verified proofs and certified algorithms.
 
----
+In tropical mathematics, connections to phylogenetics (Pachter & Sturmfels, 2004), neural networks (Zhang et al., 2018), and optimal transport (Léonard, 2012) are well established. To our knowledge, this is the first application of tropical algebra to counterpoint theory.
 
-## 2. Definitions and Notation
+## 2. Mathematical Setup
 
-### 2.1 Melodies and Intervals
+### 2.1 Basic Definitions
 
-**Definition 2.1** (Melody). A *melody of length n* is a function `v : Fin n → ℤ`, representing a sequence of *n* integer pitches in semitones.
+**Definition 2.1** (Melody). A melody of length n+1 is a function v : Fin(n+1) → ℤ, mapping time indices to integer pitch values (MIDI numbers).
 
-**Definition 2.2** (Vertical interval). For melodies `u, v : Melody n`, the *vertical interval* at position *i* is `vertInterval u v i := v(i) - u(i)`.
-
-### 2.2 Interval Classification
-
-We classify intervals by their absolute size (ignoring direction):
-
-- **Perfect consonances**: `|k| ∈ {0, 7, 12}` (unison, fifth, octave)
-- **Imperfect consonances**: `|k| ∈ {3, 4, 8, 9}` (thirds and sixths)
-- **Consonant**: perfect or imperfect consonance
-- **Dissonant**: not consonant
-
-All classification predicates are decidable.
-
-### 2.3 Penalty Functions
-
-**Definition 2.3** (Forbidden vertical penalty).
+**Definition 2.2** (Vertical Interval). For melodies u, v of length n+1, the vertical interval at position i is:
 ```
-forbiddenVerticalPenalty(k) := if consonant(k) then 0 else 1
+verticalInterval(u, v, i) = v(i) - u(i)
 ```
 
-**Definition 2.4** (Melodic leap penalty).
-```
-melodicLeapPenalty(x, y) := max(0, |y - x| - 2)
-```
+**Definition 2.3** (Consonance Classification).
+- Perfect consonances: k is a perfect consonance if |k| ∈ {0, 7, 12} (unison, fifth, octave).
+- Imperfect consonances: k is an imperfect consonance if |k| ∈ {3, 4, 8, 9} (thirds and sixths).
+- Consonant: k is consonant if it is perfect or imperfect.
 
-**Definition 2.5** (Parallel perfect penalty). For consecutive positions *i, i+1*:
-```
-parallelPerfectPenalty(u, v, i) := if perfectConsonance(interval(u,v,i)) ∧
-                                      perfectConsonance(interval(u,v,i+1))
-                                   then 1 else 0
-```
+### 2.2 Penalty Functions
 
-### 2.4 Total Cost Functional
-
-**Definition 2.6** (Total cost).
+**Definition 2.4** (Forbidden Vertical Penalty).
 ```
-totalCost(u, v) := Σ_i forbiddenVerticalPenalty(interval(u,v,i))
-                 + Σ_i melodicLeapPenalty(v(i), v(i+1))
-                 + Σ_i parallelPerfectPenalty(u, v, i)
+forbiddenVerticalPenalty(k) = if consonant(k) then 0 else 1
 ```
 
-### 2.5 Legality
+**Definition 2.5** (Melodic Leap Penalty).
+```
+melodicLeapPenalty(x, y) = max(0, |y - x| - 2)
+```
 
-**Definition 2.7** (First-species legality). `FirstSpeciesLegal(u, v)` holds iff:
-1. All vertical intervals are consonant.
-2. No consecutive positions both have perfect consonances.
-3. All melodic steps have |step| ≤ 2.
+**Definition 2.6** (Parallel Perfect Penalty).
+```
+parallelPerfectPenalty(u, v, i) = if perfectConsonance(interval(u,v,i)) ∧ perfectConsonance(interval(u,v,i+1)) then 1 else 0
+```
 
-### 2.6 Harmonic Variety
+### 2.3 Total Cost Functional
 
-**Definition 2.8** (Harmonic variety). `harmonicVariety(u, v) := |{interval(u,v,i) : i ∈ Fin n}|`, the number of distinct interval classes.
+**Definition 2.7** (Total Contrapuntal Cost).
+```
+totalCost(u, v) = Σᵢ forbiddenVerticalPenalty(interval(u,v,i))
+                + Σᵢ melodicLeapPenalty(v(i), v(i+1))
+                + Σᵢ parallelPerfectPenalty(u, v, i)
+```
 
----
+### 2.4 First-Species Legality
+
+**Definition 2.8** (FirstSpeciesLegal). A pair (u, v) is first-species legal if:
+1. ∀i, consonant(verticalInterval(u, v, i))
+2. ∀i, ¬(perfectConsonance(interval(u,v,i)) ∧ perfectConsonance(interval(u,v,i+1)))
+3. ∀i, |v(i+1) - v(i)| ≤ 2
 
 ## 3. Main Results
 
-### 3.1 Theorem 1: Zero-Cost Characterization
+### 3.1 Theorem 1: Zero-Cost Equivalence
 
-**Theorem 3.1** (firstSpecies_iff_zeroCost).
-*For all melodies u, v of length n:*
+**Theorem 3.1** (firstSpecies_iff_zeroCost). For any melodies u, v of length n+1:
 ```
 FirstSpeciesLegal(u, v) ↔ totalCost(u, v) = 0
 ```
 
-**Proof sketch.** The proof has two directions.
+*Proof Sketch.* The proof proceeds in three stages:
 
-*Forward (Legal ⟹ Zero Cost):* If all three legality conditions hold, then each summand in `totalCost` vanishes:
-- Consonant intervals ⟹ `forbiddenVerticalPenalty = 0` (by definition)
-- No parallel perfects ⟹ `parallelPerfectPenalty = 0` (by definition)
-- Steps ≤ 2 ⟹ `melodicLeapPenalty = max(0, |step| - 2) = 0`
+1. **Nonnegativity**: Each penalty term is nonneg (forbiddenVerticalPenalty ∈ {0,1}, melodicLeapPenalty = max(0,·) ≥ 0, parallelPerfectPenalty ∈ {0,1}).
 
-All sums of zeros are zero.
+2. **Zero characterization**: Each penalty equals zero iff its corresponding rule holds:
+   - forbiddenVerticalPenalty(k) = 0 ↔ consonant(k)
+   - melodicLeapPenalty(x,y) = 0 ↔ |y-x| ≤ 2
+   - parallelPerfectPenalty(u,v,i) = 0 ↔ ¬(both consecutive intervals are perfect)
 
-*Backward (Zero Cost ⟹ Legal):* Uses three key lemmas:
+3. **Sum decomposition**: Since totalCost is a sum of three sums of nonneg terms, it equals zero iff every summand is zero. By the Finset.sum_eq_zero_iff_of_nonneg lemma, this is equivalent to each individual penalty being zero, which is equivalent to all three conditions of FirstSpeciesLegal.
 
-**Lemma 3.1a** (Nonnegativity). Each of the three penalty functions is nonneg:
-- `forbiddenVerticalPenalty(k) ∈ {0, 1}` ≥ 0
-- `melodicLeapPenalty(x,y) = max(0, ·)` ≥ 0
-- `parallelPerfectPenalty ∈ {0, 1}` ≥ 0
+The forward direction (legal → zero cost) substitutes the rule conditions directly. The backward direction (zero cost → legal) uses the nonneg sum decomposition. □
 
-**Lemma 3.1b** (Sum decomposition). If `a + b + c = 0` with `a, b, c ≥ 0`, then `a = b = c = 0`.
+### 3.2 Theorem 2: Strict-Style Dominance
 
-**Lemma 3.1c** (Summand characterization). For nonneg functions, `Σ f(i) = 0 ↔ ∀i, f(i) = 0`.
-
-Combining: `totalCost = 0` implies each sub-sum is zero, hence each summand is zero, hence each legality condition holds (by the zero-iff lemmas for each penalty). □
-
-### 3.2 Theorem 2: Penalty Dominance
-
-**Theorem 3.2** (minimizer_is_VPLegal_of_large_penalties).
-*Let S be a finite set of melodies with steps bounded by M, containing a VP-legal melody w₀. Let A, B, C ≥ 0 with A > (n-1)·B·M and C > (n-1)·B·M. If v ∈ S minimizes weightedTotalCost(A, B, C, u, v) over S, then v is VP-legal.*
-
-**Proof sketch.** By contradiction. Suppose v is not VP-legal. Then either:
-
-*Case (a):* Some vertical interval is dissonant. Then `Σ forbiddenVerticalPenalty ≥ 1`, so `weightedTotalCost(v) ≥ A·1 + 0 + 0 = A` (using B ≥ 0 and C > 0 for the other nonneg terms).
-
-*Case (b):* Some consecutive pair has parallel perfects. Then `weightedTotalCost(v) ≥ C` by similar reasoning.
-
-In either case, `weightedTotalCost(v) ≥ min(A, C)`.
-
-For the legal melody w₀: vertical and parallel penalties vanish, and the melodic penalty sum is bounded by `(n-1)·M` (since each `melodicLeapPenalty ≤ max(0, M - 2) ≤ M`). So `weightedTotalCost(w₀) ≤ B·(n-1)·M`.
-
-By minimality: `min(A, C) ≤ weightedTotalCost(v) ≤ weightedTotalCost(w₀) ≤ B·(n-1)·M`.
-
-This contradicts `A > (n-1)·B·M` and `C > (n-1)·B·M`. □
-
-**Interpretation.** This theorem formalizes *energy-scale separation*: when the cost of rule violations is orders of magnitude larger than the benefit of smoother motion, strict rules emerge automatically. The Renaissance prohibition on dissonance and parallel fifths is not dogma — it is the inevitable consequence of a cost landscape dominated by vertical and parallel penalties.
-
-### 3.3 Theorem 3: Tropical Dynamic Programming
-
-**Theorem 3.3** (tropical_dynamic_programming).
-*For a cantus firmus cf, pitch set P, and nonemptiness proof hp:*
+**Definition 3.2** (Weighted Total Cost).
 ```
-dpCost(cf, P, hp, k+1, x) = inf_{y ∈ P} [transitionCost(cf(k+1), y, x) + dpCost(cf, P, hp, k, y)]
+weightedTotalCost(A, B, C, u, v) = A·Σvertical + B·Σmelodic + C·Σparallel
 ```
 
-**Proof sketch.** This is true by definition of `dpCost`, which unfolds the recursive case directly. The mathematical content lies in the *justification* of why this recursion solves the global optimization problem.
+**Theorem 3.3** (minimizer_is_legal). Let S be a finite set of melodies, u a cantus firmus, and A, B, C > 0 real-valued penalty weights. If there exists a legal witness w ∈ S with FirstSpeciesLegal(u, w), and v ∈ S minimizes weightedTotalCost over S, then FirstSpeciesLegal(u, v).
 
-The key algebraic identity is **min-plus distributivity**:
+*Proof Sketch.* Since w is legal, by Theorem 3.1, totalCost(u, w) = 0, and hence each penalty sum vanishes. Therefore weightedTotalCost(A, B, C, u, w) = 0.
+
+Since v minimizes over S, weightedTotalCost(u, v) ≤ weightedTotalCost(u, w) = 0. But each term A·Σvertical, B·Σmelodic, C·Σparallel is nonneg (product of positive weight and nonneg sum), so weightedTotalCost(u, v) ≥ 0. Hence weightedTotalCost(u, v) = 0.
+
+Since A > 0 and A·Σvertical = 0, we get Σvertical = 0. Similarly for B·Σmelodic and C·Σparallel. All penalty sums vanish, so totalCost(u, v) = 0, and by Theorem 3.1, FirstSpeciesLegal(u, v). □
+
+### 3.3 Theorem 3: Tropical Bellman Recursion
+
+**Definition 3.4** (DP Value Function). Over a finite pitch set Y with cantus sequence:
+```
+dpValue(0, x) = dpCostBase(cantus(0), x)
+dpValue(k+1, x) = min_{y ∈ Y} (dpTransition(cantus(k), cantus(k+1), y, x) + dpValue(k, y))
+```
+
+**Theorem 3.5** (tropical_bellman). For nonempty Y:
+```
+dpValue(k+1, x) = Y.inf' (fun y => dpTransition(y, x) + dpValue(k, y))
+```
+
+**Theorem 3.6** (tropical_plus_distributes_over_min_real). For a, b, c ∈ ℝ:
 ```
 a + min(b, c) = min(a + b, a + c)
 ```
 
-This ensures that adding a fixed local transition cost commutes with taking the minimum over successor states. By induction on *k*, the DP table `dpCost(cf, P, hp, k, x)` equals the minimum total cost of any voice sequence ending at pitch *x* at position *k*.
+This tropical distributivity law is the algebraic engine powering the Bellman recursion.
 
-**Complexity.** For melody length *n* and pitch alphabet of size *P*: time O(nP²), space O(nP) for the DP table and backtracking.
+**Theorem 3.7** (dpValue_le_pathCost). For any path p with all values in Y:
+```
+dpValue(n, p(n)) ≤ pathCost(n, p)
+```
 
-### 3.4 Theorem 4: Pareto Optimality
+*Proof Sketch.* By induction on n. The base case is immediate. For the inductive step, dpValue(n+1, p(n+1)) = min_y(transition(y, p(n+1)) + dpValue(n, y)) ≤ transition(p(n), p(n+1)) + dpValue(n, p(n)) ≤ transition(p(n), p(n+1)) + pathCost(n, p|_{≤n}) = pathCost(n+1, p). □
 
-**Theorem 3.4** (exists_pareto_optimal_pair).
-*Let S be a finite set of melodies. If there exist v_strict, v_rich ∈ S with totalCost(u, v_strict) < totalCost(u, v_rich) and harmonicVariety(u, v_strict) < harmonicVariety(u, v_rich), then there exist a, b ∈ S with:*
-1. *totalCost(u, a) ≤ totalCost(u, b)*
-2. *harmonicVariety(u, a) < harmonicVariety(u, b)*
-3. *totalCost(u, a) < totalCost(u, b)*
+*Complexity*. The DP algorithm runs in O(n·P²) time and O(n·P) space, where n is melody length and P is the pitch alphabet size.
 
-**Proof.** Take a = v_strict, b = v_rich. The hypotheses directly give all three conditions. □
+### 3.4 Theorem 4: Pareto Tradeoff
 
-**Interpretation.** The existence of Pareto-incomparable points means that the strict-style melody (low cost, low variety) and the rich-style melody (high cost, high variety) represent genuinely different optimization strategies. Neither dominates the other. This formalizes the music-theoretic claim that Bach's chorales are not "worse" than Palestrina's motets — they optimize a different objective.
+**Definition 3.8** (Harmonic Variety).
+```
+harmonicVariety(u, v) = |{verticalInterval(u, v, i) : i ∈ Fin(n+1)}|
+```
 
----
+**Definition 3.9** (Pareto Dominance). v Pareto-dominates w (with respect to u) if:
+- totalCost(u, v) ≤ totalCost(u, w)
+- harmonicVariety(u, w) ≤ harmonicVariety(u, v)
+- At least one inequality is strict.
+
+**Theorem 3.10** (exists_pareto_optimal). Every nonempty finite set S contains a Pareto-optimal point.
+
+*Proof.* Take the cost-minimizer; among cost-minimizers, take the variety-maximizer. This point cannot be dominated: any dominator would need equal or lower cost (impossible, since we started with the minimum) and strictly higher variety (impossible, since we maximized variety among cost-minimizers). □
+
+**Theorem 3.11** (pareto_incomparable_of_variety_gain). If v_strict is legal (cost = 0) and v_rich has positive cost with strictly higher variety, then neither dominates the other.
+
+*Proof.* v_strict can't dominate v_rich because variety(v_strict) < variety(v_rich). v_rich can't dominate v_strict because cost(v_rich) > 0 = cost(v_strict). □
+
+**Theorem 3.12** (exists_two_pareto_points). Under the hypotheses of Theorem 3.11, the set S contains both a Pareto-optimal zero-cost melody and a Pareto-optimal melody with variety strictly exceeding that of v_strict.
+
+*Proof Sketch.* For part 1: Apply the domination lemma (exists_pareto_dominating) to v_strict. Since cost is nonneg and the dominating point has cost ≤ cost(v_strict) = 0, its cost must be 0. For part 2: Apply the domination lemma to v_rich. The dominating Pareto point has variety ≥ variety(v_rich) > variety(v_strict). □
 
 ## 4. Algorithms
 
-### 4.1 Algorithm 1: Tropical Voice-Leading Search
-
-**Input:** Cantus firmus `cf[0..n-1]`, pitch alphabet `{lo, ..., hi}`.
-**Output:** Optimal counterpoint melody and cost.
+### 4.1 Tropical DP for Optimal Voice Leading
 
 ```
-TROPICAL-VOICE-LEADING(cf, lo, hi):
-  P ← {lo, lo+1, ..., hi}
-  // Base case
-  for x ∈ P:
-    dp[0][x] ← forbiddenPenalty(x - cf[0])
-    prev[0][x] ← nil
-  // Bellman recursion
-  for k ← 1 to n-1:
-    for x ∈ P:
-      dp[k][x] ← ∞
-      for y ∈ P:
-        cost ← forbiddenPenalty(x - cf[k]) + leapPenalty(y, x) + dp[k-1][y]
-        if cost < dp[k][x]:
-          dp[k][x] ← cost
-          prev[k][x] ← y
-  // Backtrack
-  x* ← argmin_{x ∈ P} dp[n-1][x]
-  melody ← backtrack(prev, x*)
-  return melody, dp[n-1][x*]
+Algorithm 1: TROPICAL-DP-VOICE-LEADING(cantus, pitchRange, weights)
+Input: cantus firmus u[0..n-1], pitch set P, weights (A, B, C)
+Output: optimal melody v[0..n-1], optimal cost
+
+1. For each x ∈ P: dp[0][x] ← A · forbiddenVerticalPenalty(x - u[0])
+2. For k = 1 to n-1:
+3.   For each x ∈ P:
+4.     dp[k][x] ← min_{y ∈ P} (A·vert(x,u[k]) + B·mel(y,x) + C·par(y,x) + dp[k-1][y])
+5.     parent[k][x] ← argmin of line 4
+6. opt ← argmin_{x ∈ P} dp[n-1][x]
+7. Backtrack: v[n-1] ← opt; for k = n-2 downto 0: v[k] ← parent[k+1][v[k+1]]
+8. Return v, dp[n-1][opt]
+
+Time: O(n · |P|²)    Space: O(n · |P|)
 ```
 
-**Time:** O(n · |P|²). **Space:** O(n · |P|).
-
-### 4.2 Algorithm 2: Pareto Frontier
-
-**Input:** Cantus `cf`, candidate set `S`.
-**Output:** Pareto-optimal melodies for (cost, variety).
+### 4.2 Pareto Frontier Computation
 
 ```
-PARETO-FRONTIER(cf, S):
-  // Evaluate
-  for v ∈ S:
-    (c_v, h_v) ← (totalCost(cf, v), harmonicVariety(cf, v))
-  // Filter dominated points
-  frontier ← {}
-  for v ∈ S:
-    if ∄ w ∈ S : c_w ≤ c_v ∧ h_w ≥ h_v ∧ (c_w < c_v ∨ h_w > h_v):
-      frontier ← frontier ∪ {v}
-  return frontier
+Algorithm 2: PARETO-FRONTIER(cantus, candidates)
+Input: cantus u, candidate melodies S
+Output: Pareto-optimal subset P ⊆ S
+
+1. For each m ∈ S: compute (cost(m), variety(m))
+2. P ← ∅
+3. For each m ∈ S:
+4.   If no m' ∈ S dominates m: P ← P ∪ {m}
+5. Return P sorted by cost
+
+Time: O(|S|²)    Space: O(|S|)
 ```
-
-**Time:** O(|S|² · n). **Space:** O(|S|).
-
-### 4.3 Algorithm 3: Scale-Separated Optimizer
-
-**Input:** Cantus `cf`, candidates `S`, weights `A, B, C`, step bound `M`.
-**Output:** Minimizer with legality guarantee.
-
-```
-SCALE-SEPARATED-OPTIMIZE(cf, S, A, B, C, M):
-  threshold ← (n-1) · B · M
-  guaranteed ← (A > threshold) ∧ (C > threshold) ∧ (∃ legal v ∈ S)
-  v* ← argmin_{v ∈ S} weightedCost(A, B, C, cf, v)
-  return v*, guaranteed
-```
-
-If `guaranteed = true`, Theorem 2 ensures `v*` is VP-legal.
-
----
 
 ## 5. Computational Experiments
 
-### 5.1 Zero-Cost Verification
+### 5.1 Theorem 1 Verification
 
-We verified Theorem 1 on all 60 legal counterpoint melodies over a 3-note cantus [0, 2, 4] with steps ≤ 4 and pitch range [-4, 16]:
+We verify the zero-cost equivalence on a cantus firmus C4-D4-E4-F4-G4:
 
-| Property | Count |
-|----------|-------|
-| Total candidates | 1,701 |
-| Legal candidates | 60 |
-| Legal with cost = 0 | 60 (100%) |
-| Illegal with cost > 0 | 1,641 (100%) |
+| Melody | Intervals | Cost | Legal |
+|--------|-----------|------|-------|
+| G4-F#4-G4-G#4-G4 | 7,4,3,3,0 | 0.0 | ✓ |
+| C#4-F#4-G4-G#4-G4 | 1,4,3,3,0 | 4.0 | ✗ |
+| G4-A4-B4-C5-D5 | 7,7,7,7,7 | 4.0 | ✗ |
 
-The equivalence holds perfectly, confirming Theorem 1.
+### 5.2 Pareto Frontier
 
-### 5.2 Scale Separation Phase Diagram
+Over a cantus of length 8 with ~1.4 million candidate melodies:
+- 65 Pareto-optimal points identified
+- 19 legal (zero-cost) Pareto points with variety up to 7
+- 46 higher-variety Pareto points with positive cost (variety up to 8)
+- Clear transition at λ ≈ 1.5 in Bach score optimization
 
-We computed the minimizer legality across a grid of (A, C) values with B = 1 and M = 4 over a 3-note cantus. The threshold is (n-1)·B·M = 8. Above the threshold (A > 8 and C > 8), 100% of minimizers are VP-legal, confirming Theorem 2. Below the threshold, legality drops to approximately 65%.
+### 5.3 Bach Score Analysis
 
-### 5.3 Dynamic Programming Performance
+As the variety reward λ increases from 0 to 5:
 
-For a 7-note cantus [0, 2, 4, 5, 7, 9, 12] with 18-pitch alphabet:
+| λ | Optimal Cost | Variety | Legal |
+|---|-------------|---------|-------|
+| 0.0 | 0.0 | 4 | ✓ |
+| 0.5 | 0.0 | 7 | ✓ |
+| 1.0 | 0.0 | 7 | ✓ |
+| 2.0 | 1.0 | 8 | ✗ |
+| 5.0 | 1.0 | 8 | ✗ |
 
-| Metric | Value |
-|--------|-------|
-| DP states computed | 126 |
-| Transitions evaluated | 2,268 |
-| Optimal cost | 0.00 |
-| Bellman recursion verified | ✓ all positions |
-
-The DP algorithm finds a zero-cost (legal) counterpoint in under 1ms.
-
-### 5.4 Pareto Frontier
-
-For a 4-note cantus [0, 2, 4, 5] with step bound 5:
-
-| Metric | Value |
-|--------|-------|
-| Total candidates | ~200,000 |
-| Pareto-optimal points | ~30 |
-| Legal Pareto points | ~15 |
-| Maximum variety (any) | 4 |
-| Maximum variety (legal) | 4 |
-
-The Pareto frontier clearly separates the Palestrina region (cost ≈ 0, variety ≤ 3) from the Bach region (cost > 0, variety = 4).
-
----
+The transition from legal to illegal optimal solutions occurs near λ = 1.5, representing the style boundary between strict Palestrina counterpoint and harmonically richer Bach-style writing.
 
 ## 6. Discussion
 
-### 6.1 Significance
+### 6.1 Interpretation
 
-The central contribution is the identification of species counterpoint rules with the zero-locus of a tropical cost functional. This is not a metaphor: the equivalence is exact and machine-verified. The implications include:
+Our results formalize three key insights:
 
-1. **Style as geometry**: Different musical styles correspond to different regions of the (cost, variety) plane. The Pareto frontier provides a rigorous boundary between these regions.
+1. **Style as feasibility**: Musical style is not arbitrary preference but a precise algebraic condition. Palestrina counterpoint = tropical zero locus.
 
-2. **Certified composition**: The DP algorithm produces mathematically guaranteed optimal voice-leading, with the tropical Bellman recursion as a correctness certificate.
+2. **Style as scale separation**: When rule-violation penalties dominate motion costs, optimization produces legal compositions automatically. Style emerges from the relative scaling of different objectives.
 
-3. **Scale separation as style emergence**: The dominance theorem shows how "hard" rules emerge from "soft" penalties when the penalty magnitudes are separated. This suggests that historical style evolution (from strict Renaissance to free Baroque) corresponds to changes in relative penalty magnitudes.
+3. **Style as Pareto geometry**: Different historical styles correspond to different regions of a multi-objective optimization landscape. The "Bach saddle" is a Pareto-optimal point that is not cost-minimal but variety-maximal under cost constraints.
 
-### 6.2 Limitations
+### 6.2 Connections
 
-1. **First species only**: We treat note-against-note counterpoint. Extensions to second species (two notes per beat), third species (four notes), and free counterpoint require additional definitions.
+**Formal verification**: The legal/illegal dichotomy corresponds to safety/violation in temporal logic monitoring. The total cost is a robustness measure: zero means exactly on the specification boundary.
 
-2. **Register-sensitive only**: Our model uses absolute pitches (ℤ), not pitch classes (ℤ/12ℤ). Octave equivalence would require tropical optimization on a discrete torus.
+**Sequence alignment**: Voice leading is structurally identical to sequence alignment in bioinformatics: local transition penalties, global optimization via DP, tropical algebraic structure.
 
-3. **Two voices only**: Four-part harmony introduces hypergraph constraints not captured by pairwise penalties.
+**Neural networks**: Recent work shows that ReLU neural networks compute tropical polynomials. Our cost functions are piecewise-linear, hence tropical. The counterpoint optimization landscape is, in a precise sense, the same kind of object that neural networks learn to navigate.
 
-4. **No rhythm**: The framework assumes uniform rhythm. Incorporating rhythmic variety would require a product semiring.
+### 6.3 Limitations
 
-### 6.3 Cross-Domain Connections
-
-- **Formal verification**: Legal counterpoint = zero-violation safety specification; cost = robustness certificate.
-- **Bioinformatics**: Interval sequences as musical genomes; species rules as conserved-structure constraints; style comparison as sequence alignment.
-- **Idempotent information theory**: Harmonic variety as tropical entropy (support size of the interval distribution).
-- **Optimal transport**: Voice-leading distance as Wasserstein-1 distance with contrapuntal ground metric.
-
----
+- The model treats only two voices; polyphonic texture requires extension.
+- Pitch is modeled in absolute semitones rather than pitch-class space (mod 12).
+- The consonance classification is simplified (no distinction between melodic and harmonic intervals in context).
+- Rhythm is not modeled (first species only).
 
 ## 7. Future Work
 
-See `FUTURE_DIRECTIONS.md` for detailed research roadmap. Key priorities:
+See FUTURE_DIRECTIONS.md for a detailed roadmap. Key next steps include: extension to four-part writing via layered tropical optimization, tropical rate-distortion theory for harmonic variety, categorical semantics of compositional operations, and connections to discrete optimal transport.
 
-1. **Mod-12 pitch-class reduction** — tropical optimization on ℤ/12ℤ with fixed-size DP table.
-2. **Four-part extension** — SATB chorale writing via tropical hypergraph optimization.
-3. **Rate-distortion theory** — tropical data-processing inequalities for harmonic variety.
-4. **Categorical framework** — style spaces as categories enriched over the tropical semiring.
-5. **Optimal transport** — stability theorems for voice-leading under cantus perturbation.
+## 8. References
 
----
-
-## 8. Concrete Verified Example
-
-We exhibit specific melodies demonstrating all four theorems.
-
-**Cantus firmus**: C-D-E (pitches [0, 2, 4]).
-
-**Strict melody**: E-F-G (pitches [4, 5, 7]).
-- Intervals: [4, 3, 3] — all imperfect consonances ✓
-- Steps: [1, 2] — all ≤ 2 ✓
-- No parallel perfects (no perfect consonances at all) ✓
-- Total cost: 0.0 ✓
-- Harmonic variety: 2 (intervals {3, 4})
-
-**Rich melody**: G-E-C (pitches [7, 4, 0]).
-- Intervals: [7, 2, -4] — includes dissonance (2) ✗
-- Steps: [3, 4] — exceed 2 ✗
-- Total cost: > 0 ✓
-- Harmonic variety: 3 (intervals {7, 2, -4})
-
-**Verified assertions (machine-checked)**:
-- `exampleStrict_legal`: The strict melody satisfies `FirstSpeciesLegal`.
-- `exampleStrict_zeroCost`: `totalCost = 0` for the strict melody.
-- `exampleRich_higher_cost`: The rich melody has strictly higher cost.
-- `exampleRich_more_variety`: The rich melody has strictly higher harmonic variety.
-
-Together, these witness the Pareto-incomparable pair guaranteed by Theorem 4.
-
----
-
-## References
-
-- Agmon, E. (1997). *Musical Durations as Mathematical Intervals*. Music Theory Online 3(6).
-- Fux, J.J. (1725). *Gradus ad Parnassum*.
-- Herremans, D., Chuan, C.-H., Chew, E. (2017). *A Functional Taxonomy of Music Generation Systems*. ACM Computing Surveys 50(5).
-- Maclagan, D., Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS Graduate Studies in Mathematics.
-- Mazzola, G. (2002). *The Topos of Music*. Birkhäuser.
-- Tymoczko, D. (2011). *A Geometry of Music*. Oxford University Press.
+1. Agmon, E. (1997). Musical durations as mathematical intervals. *Music Theory Spectrum*, 19(2).
+2. Fux, J.J. (1725). *Gradus ad Parnassum*. Vienna.
+3. Léonard, C. (2012). From the Schrödinger problem to the Monge-Kantorovich problem. *J. Funct. Anal.*, 262(4).
+4. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+5. Mazzola, G. (2002). *The Topos of Music*. Birkhäuser.
+6. Pachter, L. & Sturmfels, B. (2004). Tropical geometry of statistical models. *PNAS*, 101(46).
+7. Tymoczko, D. (2006). The geometry of musical chords. *Science*, 313(5783).
+8. Tymoczko, D. (2011). *A Geometry of Music*. Oxford University Press.
+9. Zhang, L. et al. (2018). Tropical geometry of deep neural networks. *ICML*.

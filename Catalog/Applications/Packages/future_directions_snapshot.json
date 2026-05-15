@@ -668,24 +668,6 @@
     "timestamp": "2026-05-14T16:16:22.739213+00:00"
   },
   {
-    "id": "fd_0092",
-    "title": "Apply the existing `post_quantum_key_security_from_minEntropy`",
-    "description": "to convert the entropy lower bound into a semantic security statement.\n\n### Key Lemmas Needed\n- `tropical_collision_probability_bound`: Upper bound on Pr[G^a = G^b] for random a ≠ b.\n- `tropical_rank_growth`: tropRank(tropPow G m) is non-decreasing in m.\n- `tropical_orbit_size_lower_bound`: |{tropPow G m : 0 ≤ m ≤ T}| ≥ f(n, B, T).\n- `tropical_min_entropy_lower_bound`: The main entropy bound.\n- `tropical_hashed_key_security`: Applying LHL to derive a key with negligible statistical distance to uniform.\n\n### Candidate Lean Files\n- `Cryptography/TropicalEntropy.lean`\n- `Cryptography/TropicalRankTheory.lean`\n\n### Cross-Domain Connections\n- **Information Theory → Cryptography**: Min-entropy bounds provide quantitative security guarantees.\n- **Tropical Geometry → Entropy**: The geometry of trop",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "97644adb",
-    "timestamp": "2026-05-14T16:16:22.744769+00:00"
-  },
-  {
     "id": "fd_0093",
     "title": "Low-rank attack",
     "description": ": If G has tropical rank r < n, then G can be written as a tropical product of an n×r and an r×n matrix. This decomposition reveals structural information about G^a, potentially allowing recovery of a.",
@@ -1033,6 +1015,20 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.148110+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "3c1c085d",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
     "id": "fd_0187",
@@ -1994,5 +1990,128 @@
     "source_exp_id": "cb03e742",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:04:35.033437+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "1. Tropical Chosen-Plaintext Security from Extractor Robustness",
+    "description": "**Hypothesis:** The leftover hash lemma, when instantiated with a tropical orbit source, yields not only semantic security for key derivation but also chosen-plaintext (CPA) security for symmetric encryption schemes keyed by the extracted output.\n\n**Proof Strategy:**\n- Formalize the standard hybrid argument reducing CPA security to key indistinguishability.\n- Show that our `tropExtractorAdv` bound transfers to the CPA advantage via a triangle inequality on statistical distance.\n- The key lemma: if the key is ε-close to uniform, any CPA adversary making q queries has advantage at most q·ε.\n\n**Cross-Domain Connections:**\n- Game-based cryptographic definitions (CPA, CCA) ↔ statistical distance bounds\n- Tropical semigroup actions as key-agreement protocols\n\n**Deliverables:** A Lean 4 theorem `",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97644adb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:07:29.294580+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "2. Tropical Mutual Information and Data-Processing Inequalities",
+    "description": "**Hypothesis:** The data-processing inequality for min-entropy (already formalized in `TropicalEntropy/Theorems.lean`) can be extended to a tropical mutual information quantity, yielding tighter bounds on information leakage in tropical key exchange protocols.\n\n**Proof Strategy:**\n- Define tropical mutual information as `I_trop(X;Y) = H_∞(X) - H_∞(X|Y)` using conditional min-entropy.\n- Prove the chain rule: `H_∞(X,Y) ≥ H_∞(X|Y) + H_∞(Y)`.\n- Show that any deterministic post-processing of the tropical orbit cannot increase mutual information with the secret matrix.\n\n**Cross-Domain Connections:**\n- Information-theoretic security ↔ tropical entropy algebra\n- Conditional min-entropy ↔ quantum side-information bounds (connection to quantum key distribution)\n\n**Deliverables:** Formalized `tropMut",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97644adb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:07:29.306274+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "3. Hardness Amplification for Tropical Semigroup Actions",
+    "description": "**Hypothesis:** If a single tropical matrix power `G^t` has min-entropy k against an adversary, then the concatenation of m independent instances has min-entropy m·k, enabling hardness amplification.\n\n**Proof Strategy:**\n- Use the product distribution min-entropy additivity theorem (`tropical_subadditivity_minEntropy` from the existing codebase).\n- Formalize independent sampling of tropical powers from independent generators.\n- Show that the joint collision probability is the product of individual collision probabilities.\n- Apply the LHL to the concatenated source, achieving exponentially small extraction error.\n\n**Cross-Domain Connections:**\n- Hardness amplification ↔ direct product theorems in complexity theory\n- Tropical semigroup products ↔ parallel composition of cryptographic primiti",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97644adb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:07:29.315833+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "4. Certified Parameter Selection for Negligible Advantage",
+    "description": "**Hypothesis:** Our `tropical_orbit_security_threshold` theorem can be instantiated with concrete NIST security levels to produce certified parameter tables for tropical cryptographic schemes.\n\n**Proof Strategy:**\n- For NIST Level 1 (128-bit security): require `T+1 ≥ |β| · 2^{256}`, which with `|β| = 2^{128}` means `T ≥ 2^{384} - 1`.\n- For tropical matrices over 64-bit integers with dimension n, the orbit size grows as `O(n² · max_entry)`, so we need `n² · max_entry ≥ 2^{384}`.\n- Formalize these concrete instantiations as Lean `#eval` computations and theorems.\n- Verify that the resulting parameter sizes are practical (comparable to lattice-based schemes).\n\n**Cross-Domain Connections:**\n- NIST post-quantum standards ↔ tropical orbit combinatorics\n- Concrete security analysis ↔ formal verif",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97644adb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:07:29.325582+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "5. Tropical Pseudorandom Generators from Orbit Expansion",
+    "description": "**Hypothesis:** If the tropical orbit `{G^0, ..., G^T}` has sufficient expansion (each power is distinct), then the sequence of hash values `h(G^0), h(G^1), ..., h(G^T)` forms a pseudorandom generator, stretching a short seed (the matrix G) into a long pseudorandom string.\n\n**Proof Strategy:**\n- Define a tropical PRG as a function mapping a short seed (matrix entries) to a long output (sequence of hashed powers).\n- Use a hybrid argument: the i-th output is indistinguishable from uniform given the previous outputs, by the LHL applied to the conditional distribution.\n- The key challenge is bounding the conditional min-entropy of G^i given G^0, ..., G^{i-1}, which requires structural results about tropical matrix powers (e.g., that knowing early powers doesn't determine late ones).\n- Connect ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97644adb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:07:29.334666+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "Quantum Resistance Analysis",
+    "description": "Analyze the quantum query complexity of inverting tropical matrix powers. Unlike discrete logarithm (broken by Shor's algorithm), tropical exponentiation is not a group operation, so quantum period-finding does not directly apply. Formalize a lower bound on quantum query complexity using the collision lower bound and the polynomial method.",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97644adb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:07:29.342835+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Compositional Security Framework",
+    "description": "Extend the semantic security theorem to a compositional framework (Universal Composability style) where tropical key derivation can be securely composed with arbitrary protocols. This requires formalizing ideal functionalities and simulation-based security in Lean 4.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97644adb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:07:29.350382+00:00"
   }
 ]
