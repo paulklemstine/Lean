@@ -982,6 +982,48 @@
     "timestamp": "2026-05-15T20:42:44.454171+00:00"
   },
   {
+    "id": "fd_0223",
+    "title": "Formulate",
+    "description": "the precise mathematical statement in Lean 4 (theorem with `sorry`).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "238a8453",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T21:00:44.680014+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Validate",
+    "description": "with computational experiments in Python (counterexample search, performance benchmarks).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "238a8453",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T21:00:44.689090+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Decompose",
+    "description": "into helper lemmas (5–15 per direction).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "238a8453",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T21:00:44.698219+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1644,10 +1686,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "60e1cc58",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52442f6a",
     "timestamp": "2026-05-15T17:30:43.039868+00:00"
   },
   {
