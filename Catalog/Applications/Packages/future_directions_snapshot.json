@@ -1637,6 +1637,64 @@
     "timestamp": "2026-05-15T03:12:37.117669+00:00"
   },
   {
+    "id": "fd_0203",
+    "title": "Conjecture 4.2",
+    "description": "The sequence of hypotenuses along any root-to-leaf path in the B-branch satisfies the Pell-like recurrence c_{n+2} = 6c_{n+1} − c_n.\n\n**Conjecture 4.3.** For any two Berggren points p₁, p₂ from the same depth-d mesh, the denominator of d_trop(p₁, p₂) in lowest terms divides c₁ · c₂, and equality holds generically.\n\n### Proof Strategy\n1. Use the matrix representation B₁, B₂, B₃ ∈ GL(3, ℤ) to track determinantal relations.\n2. Exploit the Lorentz form preservation B^T Q B = Q to constrain GCD structure.\n3. Apply p-adic valuation arguments to prove coprimality of hypotenuses.\n\n### Lean 4 Target\n```lean\ntheorem berggren_hyp_coprime (path₁ path₂ : List BerggrenStep)\n    (hne : path₁ ≠ path₂) :\n    let t₁ := applyPath path₁\n    let t₂ := applyPath path₂\n    Int.gcd t₁.2.2 t₂.2.2 = 1 := by sorry\n`",
+    "domains": [
+      "Physics",
+      "Pythagorean",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a96a94a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:18:29.497812+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Formulate",
+    "description": "precise mathematical conjectures with Lean type signatures.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a96a94a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:18:29.506242+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Validate",
+    "description": "computationally with Python experiments (up to depth 6–8).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a96a94a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:18:29.514166+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "Iterate",
+    "description": "— update conjectures based on computational evidence and proof attempts.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a96a94a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:18:29.540171+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -1829,6 +1887,25 @@
   },
   {
     "id": "fd_0179",
+    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
+    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "63da6f3f",
+    "timestamp": "2026-05-14T17:33:19.336802+00:00"
+  },
+  {
+    "id": "fd_0179",
     "title": "1. Activation-Region Nerve as a Simplicial Complex",
     "description": "**Objective**: Formalize the nerve of the activation region decomposition of a ReLU network as a finite simplicial complex, and identify certified robustness with exactness of a margin cosheaf on this nerve.\n\n**Approach**: A ReLU network with $n$ layers and widths $w_1, \\ldots, w_n$ partitions $\\mathbb{R}^d$ into at most $\\prod_i \\binom{w_i}{k}$ polyhedral activation regions, each determined by a sign pattern. The nerve of this cover — where simplices correspond to nonempty intersections of activation regions — encodes the combinatorial topology of the classifier. Define a cosheaf $\\mathcal{M}$ on this nerve assigning to each simplex the minimum margin over its closure, and prove that exactness of the cosheaf complex $\\mathcal{M}_0 \\to \\mathcal{M}_1 \\to \\cdots$ in degree 1 is equivalent to",
     "domains": [
@@ -1997,24 +2074,6 @@
     "source_exp_id": "c26006e9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:24.730051+00:00"
-  },
-  {
-    "id": "fd_0198",
-    "title": "4. Berggren-Generated Exact Arithmetic Shell Meshes",
-    "description": "**Hypothesis**: The Berggren tree of primitive Pythagorean triples can be used to generate integer-coordinate points on spherical shells that approximate a uniform distribution with exact rational arithmetic, enabling error-free computation of tropical distances.\n\n**Proof Strategy**:\n- The Berggren matrices `A, B, C` generate all primitive Pythagorean triples `(a, b, c)` with `a² + b² = c²` from the root triple `(3, 4, 5)`.\n- Points `(a/c, b/c)` on the unit circle lift to rational points on spheres.\n- Define a \"Berggren mesh\" as the set of rational sphere points generated by depth-`d` Berggren tree traversal.\n- Prove that Berggren meshes have exact symmetry properties (the tree has 3-fold branching with specific rotational symmetries).\n- Show that tropical distances on Berggren meshes can ",
-    "domains": [
-      "Tropical",
-      "Pythagorean",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c26006e9",
-    "consumed_by_exp_id": "4a96a94a",
-    "timestamp": "2026-05-15T01:18:24.786465+00:00"
   },
   {
     "id": "fd_0198",
