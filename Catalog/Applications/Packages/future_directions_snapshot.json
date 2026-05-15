@@ -2131,5 +2131,49 @@
     "source_exp_id": "a65f7038",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T10:14:43.316503+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Exact Theorem Statement",
+    "description": "```lean\ntheorem sumcheck_soundness\n    {F : Type*} [Field F] [Fintype F] [DecidableEq F]\n    {n : ℕ}\n    (p : MvPolynomial (Fin n) F)\n    (d : ℕ) (hdeg : p.totalDegree ≤ d)\n    (claimed_sum : F)\n    (hneq : (∑ x : Fin n → ({0, 1} : Finset F), MvPolynomial.eval (fun i => (x i : F)) p) ≠ claimed_sum) :\n    -- Probability that a cheating prover fools an honest verifier\n    -- is at most n·d / |F| per round\n    True -- placeholder for the probability bound\n```",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5592f3fa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:04:08.962272+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Why It Matters",
+    "description": "The sum-check protocol is the workhorse of interactive proof systems, from IP = PSPACE to modern SNARKs. Formalizing its soundness would create the first machine-verified foundation for algebraic proof systems. Our `freivalds_soundness_bound` already establishes the one-round, degree-1 special case; extending to multilinear polynomials over the Boolean hypercube is the natural next step.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5592f3fa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:04:08.973021+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "Required Mathlib Infrastructure",
+    "description": "- `MvPolynomial` evaluation and degree bounds\n- Schwartz-Zippel lemma for multivariate polynomials (may need to be built)\n- Counting arguments over finite fields (partially established by our `card_submodule_eq_pow_finrank`)",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5592f3fa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:04:08.982218+00:00"
   }
 ]
