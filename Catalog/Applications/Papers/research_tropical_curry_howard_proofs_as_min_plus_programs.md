@@ -1,362 +1,331 @@
-# Tropical Curry–Howard: Proofs as Min-Plus Programs
+# Tropical Curry–Howard: Canonical Normalization of Min-Plus Proofs
 
 ## Abstract
 
-We introduce a **tropical proof calculus** — a syntactic rewrite system on proof terms whose semantics is the min-plus (tropical) semiring — and prove its fundamental metatheoretic properties. Propositions carry costs (natural numbers), proofs are syntax trees with sequential composition (`cut`), parallel composition (`plus`), and nondeterministic choice (`min`), and cut elimination corresponds to distributing sequential composition over choice. We establish:
+We formalize a tropical proof calculus in which proof normalization is literally min-plus optimization. The calculus features four term constructors — atoms (weighted axioms), cuts (sequential composition), min (nondeterministic choice), and plus (parallel accumulation) — equipped with a reduction system combining distributive laws, idempotent collapse, and atomic evaluation. We establish six main theorems, all machine-verified: (1) soundness — every reduction step preserves tropical cost; (2) strong normalization — every reduction sequence terminates, via a polynomial interpretation; (3) normal form characterization — every normal form is an atom; (4) canonical normalization — every term reduces to `atom(cost(p))`, the unique canonical representative; (5) global confluence — all reduction paths converge; (6) uniqueness — the normalizer is a complete invariant of reduction equivalence. The framework establishes a rigorous Curry–Howard correspondence between proof normalization and shortest-path computation in idempotent semirings.
 
-1. **Soundness**: Every reduction step preserves tropical evaluation (cost).
-2. **Strong normalization**: The rewrite system terminates, via a polynomial interpretation mapping cut to multiplication and min to addition.
-3. **Normal form existence**: Every term reduces to a normal form.
-4. **Semantic optimality**: All normal forms of a given term have the same tropical cost.
-
-All results have been machine-verified in Lean 4 with Mathlib, using no axioms beyond `propext`, `Classical.choice`, and `Quot.sound`. The formalization provides a certified nucleus for **tropical proof theory**, connecting the Curry–Howard correspondence to shortest-path algorithms, dynamic programming, and tropical geometry.
-
-**Keywords:** tropical logic, Curry–Howard correspondence, min-plus semantics, cut elimination, strong normalization, idempotent semiring, proof optimization, certified rewriting.
-
----
+**Keywords**: tropical logic, Curry–Howard correspondence, min-plus algebra, idempotent semiring, cut elimination, confluence, strong normalization, canonical forms, shortest-path semantics, certified optimization
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 Background and Motivation
 
-The Curry–Howard correspondence establishes a deep connection between mathematical proofs and computer programs: propositions are types, proofs are terms, and proof normalization is computation. This correspondence has driven the development of type theory, proof assistants, and programming language design for over fifty years.
+The Curry–Howard correspondence [Curry 1934, Howard 1969] identifies mathematical proofs with typed programs and logical propositions with types. Under this correspondence, proof normalization (cut elimination in sequent calculus) corresponds to program evaluation (β-reduction in λ-calculus). This deep structural identity has been the foundation of modern type theory and proof assistants.
 
-Separately, the **tropical semiring** (ℕ, min, +) — where addition is replaced by minimum and multiplication by addition — has emerged as a fundamental structure in combinatorial optimization, algebraic geometry, and theoretical computer science. The Floyd–Warshall and Bellman–Ford shortest-path algorithms, the Viterbi algorithm, and many dynamic programming procedures all operate algebraically over tropical semirings.
+Separately, tropical mathematics [Maclagan–Sturmfels 2015, Litvinov 2007] replaces the classical arithmetic operations (×, +) with (min, +), creating an *idempotent semiring* — a structure where "addition" (min) satisfies x ⊕ x = x. This degenerate-looking arithmetic turns out to be the native language of optimization: shortest paths, dynamic programming, optimal control, and combinatorial optimization all admit natural formulations in tropical algebra.
 
-This paper bridges these two lines of work. We construct a proof calculus whose semantics is the tropical semiring, making the Curry–Howard correspondence interact with idempotent semiring semantics. In this calculus:
+The central contribution of this work is to bridge these two worlds formally: we construct a proof calculus whose normalization dynamics are governed by tropical algebra, and prove that normalization computes the unique optimal-cost proof representative.
 
-- **Proofs are min-plus programs**: syntax trees with cost-annotated leaves.
-- **Cut elimination is optimization**: distributing sequential composition over nondeterministic choice.
-- **Normalization computes least cost**: the normal form of a proof term has the same cost as the original, and all normal forms share this cost.
-- **Idempotence drives sharing**: the identity min(x, x) = x causes duplicate proof branches to collapse.
+### 1.2 Contributions
 
-### 1.2 Related Work
+1. **A formal tropical proof calculus** (Section 3) with explicit cost semantics, reduction rules capturing distributivity, idempotent collapse, and atomic evaluation, and a congruence closure enabling reduction in arbitrary contexts.
 
-**Proof theory and rewriting.** Cut elimination was introduced by Gentzen [1935] for sequent calculi and has been extensively studied in the context of linear logic (Girard, 1987), the lambda calculus, and term rewriting systems. Strong normalization proofs via polynomial interpretations are a standard technique in termination analysis (Lankford, 1979; Zantema, 2003).
+2. **Soundness** (Section 4): Every reduction step preserves the tropical cost, establishing that normalization is a semantics-preserving transformation.
 
-**Tropical mathematics.** The tropical semiring has been studied in algebraic geometry (Mikhalkin, 2006; Maclagan & Sturmfels, 2015), optimization (Butkovič, 2010), and automata theory (Simon, 1988). The connection between tropical algebra and shortest paths is classical (Gondran & Minoux, 1984).
+3. **Strong normalization** (Section 5): Termination of all reduction sequences, proved via a polynomial interpretation mapping cut/plus to multiplication and min to addition+1.
 
-**Weighted logic and semiring semantics.** Droste & Gastin (2007) developed weighted logics over semirings. Green et al. (2007) introduced semiring provenance for databases. Our work differs in providing a syntactic rewrite system with certified normalization, rather than a denotational semantics.
+4. **Normal form characterization** (Section 6): Every normal form is an atom — a fully evaluated cost value. This is the key structural theorem showing the computation rules are complete.
 
-**Resource-sensitive type theory.** Quantitative type theory (Atkey, 2018; McBride, 2016) assigns resource usage to types. Our tropical proof terms can be viewed as a specialized fragment where the resource algebra is the min-plus semiring.
+5. **Canonical normalization and confluence** (Section 7): Every term reduces to `atom(cost(p))`, the unique canonical normal form. Global confluence follows as a corollary.
 
-### 1.3 Contributions
+6. **Uniqueness, canonicality, and optimality** (Section 8): The normalizer is a complete invariant of reduction equivalence, and the canonical form has optimal cost among all convertible terms.
 
-1. A concrete inductive syntax of tropical proof terms (`TropTerm`) with tropical evaluation semantics.
-2. A one-step reduction relation (`Step`) capturing idempotence and distributivity, with full congruence closure.
-3. A polynomial interpretation (`interp`) that strictly decreases under every reduction step, yielding strong normalization.
-4. Machine-verified proofs of soundness, termination, normal form existence, and semantic optimality in Lean 4 with Mathlib.
-5. An analysis of confluence, identifying the critical pair that prevents syntactic uniqueness without AC rules for `min`.
+All results are machine-verified in Lean 4 with Mathlib, totaling approximately 500 lines of formally checked code with zero uses of `sorry`.
 
----
+### 1.3 Related Work
 
-## 2. Definitions and Notation
+**Proof normalization**: Cut elimination for classical and intuitionistic logic [Gentzen 1935, Prawitz 1965] establishes that proofs can be simplified to cut-free form. Our work adds a *cost semantics* to this process and shows the simplified form is unique and optimal.
 
-### 2.1 Syntax
+**Weighted/quantitative type systems**: Quantitative type theory [Atkey 2018, McBride 2016] and bounded linear logic [Girard et al. 1992] track resource usage in types. Our approach is orthogonal: we add cost semantics to the proof term layer rather than the type layer.
 
-**Definition 2.1** (Tropical Proof Terms). The set `TropTerm` is defined inductively:
+**Tropical mathematics**: Maclagan and Sturmfels [2015] provide a comprehensive treatment of tropical geometry. Litvinov [2007] develops idempotent analysis. Our work applies tropical algebraic structure to proof theory, a connection not previously formalized.
 
-```
-t, u, s ::= atom(n)     -- axiom with cost n ∈ ℕ
-           | cut(t, s)   -- sequential composition
-           | plus(t, s)  -- parallel composition
-           | min(t, s)   -- nondeterministic choice
-```
+**Rewriting theory**: Termination via polynomial interpretations [Lankford 1979, Hofbauer–Lautemann 1989] and Newman's lemma for confluence [Newman 1942] are standard tools. We instantiate these in the tropical setting and exploit the semantic characterization for a direct confluence proof.
 
-We use `DecidableEq` on `TropTerm` (derived by structural equality).
+## 2. Notation and Preliminaries
 
-### 2.2 Semantics
+### 2.1 The Min-Plus Semiring
 
-**Definition 2.2** (Tropical Evaluation). The evaluation function `eval : TropTerm → ℕ` is:
+The **min-plus semiring** (ℕ, min, +, ∞, 0) satisfies:
+- (ℕ, min, ∞) is a commutative idempotent monoid: min(a, a) = a.
+- (ℕ, +, 0) is a commutative monoid.
+- Distributivity: a + min(b, c) = min(a + b, a + c).
+- Absorption: a + ∞ = ∞.
 
-```
-eval(atom(n))   = n
-eval(cut(t, s)) = eval(t) + eval(s)
-eval(plus(t, s))= eval(t) + eval(s)
-eval(min(t, s)) = min(eval(t), eval(s))
-```
+The idempotence of min is the algebraic property that drives canonical normalization.
 
-This maps proof terms into the tropical semiring (ℕ, min, +), where `min` is the semiring addition and `+` is the semiring multiplication.
+### 2.2 Reflexive-Transitive Closure
 
-### 2.3 Reduction Relation
+For a relation R on a set A, we write R* for the reflexive-transitive closure (ReflTransGen R in Mathlib). We write a →* b to mean R*(a, b).
 
-**Definition 2.3** (One-Step Reduction). The relation `Step : TropTerm → TropTerm → Prop` is the compatible closure of three base rules:
+## 3. The Tropical Proof Calculus
 
-| Rule | Name | Redex → Contractum |
-|------|------|---------------------|
-| (I) | min_idem | min(t, t) → t |
-| (D_L) | cut_min_left | cut(min(t, u), s) → min(cut(t, s), cut(u, s)) |
-| (D_R) | cut_min_right | cut(s, min(t, u)) → min(cut(s, t), cut(s, u)) |
+### 3.1 Syntax
 
-**Congruence rules**: For each binary constructor `f ∈ {cut, plus, min}`:
-- If `Step(t, t')` then `Step(f(t, s), f(t', s))` (left congruence)
-- If `Step(s, s')` then `Step(f(t, s), f(t, s'))` (right congruence)
-
-**Definition 2.4** (Normal Form). A term `t` is in normal form, written `Normal(t)`, if there is no `u` with `Step(t, u)`.
-
-### 2.4 Polynomial Interpretation
-
-**Definition 2.5** (Polynomial Interpretation). The function `interp : TropTerm → ℕ` is:
+**Definition 3.1** (Tropical Proof Terms). The set TropProof is generated by:
 
 ```
-interp(atom(_))   = 2
-interp(cut(t, s)) = interp(t) · interp(s)
-interp(plus(t, s))= interp(t) + interp(s)
-interp(min(t, s)) = interp(t) + interp(s) + 1
+p, q ::= atom(n)    -- atomic proof of cost n ∈ ℕ
+       | cut(p, q)   -- sequential composition (cut rule)
+       | tmin(p, q)  -- nondeterministic choice (minimum)
+       | tplus(p, q) -- parallel accumulation (addition)
 ```
 
-The key property is that `cut` maps to multiplication (which is expansive) while `min` maps to addition + 1 (which is contractive relative to multiplication). This gap drives the termination argument.
+### 3.2 Cost Semantics
 
----
-
-## 3. Main Results
-
-### 3.1 Soundness of Tropical Cut Elimination
-
-**Theorem 3.1** (Step Preserves Evaluation).
-*For all t, u : TropTerm, if Step(t, u) then eval(t) = eval(u).*
-
-*Proof sketch.* By induction on the derivation of `Step(t, u)`.
-
-- **Case (I)**: eval(min(t, t)) = min(eval(t), eval(t)) = eval(t), by idempotence of min on ℕ.
-- **Case (D_L)**: eval(cut(min(t, u), s)) = min(eval(t), eval(u)) + eval(s). By the distributive law of addition over min in ℕ: a + min(b, c) = min(a + b, a + c). Hence this equals min(eval(t) + eval(s), eval(u) + eval(s)) = eval(min(cut(t, s), cut(u, s))).
-- **Case (D_R)**: Symmetric argument using min(b, c) + a = min(b + a, c + a).
-- **Congruence cases**: The inductive hypothesis gives eval equality on the subterm; eval is a congruence for each constructor.  ∎
-
-**Corollary 3.2** (Reflexive-Transitive Closure).
-*If Step*(t, u) (reflexive-transitive closure), then eval(t) = eval(u).*
-
-### 3.2 Termination
-
-**Lemma 3.3** (Interpretation Lower Bound).
-*For all t : TropTerm, interp(t) ≥ 2.*
-
-*Proof.* By structural induction. atom: interp = 2. cut: interp(t) · interp(s) ≥ 2 · 2 = 4. plus: interp(t) + interp(s) ≥ 4. min: interp(t) + interp(s) + 1 ≥ 5.  ∎
-
-**Theorem 3.4** (Step Decreases Interpretation).
-*For all t, u : TropTerm, if Step(t, u) then interp(u) < interp(t).*
-
-*Proof sketch.* By induction on `Step(t, u)`.
-
-- **Case (I)**: interp(min(t, t)) = 2 · interp(t) + 1 > interp(t), since interp(t) ≥ 2.
-- **Case (D_L)**: interp(cut(min(t, u), s)) = (interp(t) + interp(u) + 1) · interp(s). The RHS is interp(t) · interp(s) + interp(u) · interp(s) + 1. The difference is interp(s) - 1 ≥ 1 since interp(s) ≥ 2.
-- **Case (D_R)**: Symmetric, with difference interp(s) - 1.
-- **Congruence under cut**: interp(cut(t', s)) = interp(t') · interp(s) < interp(t) · interp(s) = interp(cut(t, s)), by the IH interp(t') < interp(t) and interp(s) > 0.
-- **Congruence under plus/min**: interp(f(t', s)) = interp(t') + interp(s) [+1] < interp(t) + interp(s) [+1] = interp(f(t, s)), by the IH.  ∎
-
-### 3.3 Strong Normalization
-
-**Theorem 3.5** (Strong Normalization).
-*Define Reduces(a, b) ≡ Step(b, a). Then Reduces is well-founded: every term t satisfies Acc(Reduces, t).*
-
-*Proof.* By strong induction on interp(t) ∈ ℕ. Given t, for any u with Reduces(u, t) (i.e., Step(t, u)), Theorem 3.4 gives interp(u) < interp(t). By the inductive hypothesis (since interp(u) < interp(t)), Acc(Reduces, u). By the constructor of Acc, Acc(Reduces, t).  ∎
-
-**Corollary 3.6**. WellFounded(Reduces).
-
-### 3.4 Normal Form Existence
-
-**Theorem 3.7** (Normal Form Existence).
-*For every t : TropTerm, there exists u with Step*(t, u) and Normal(u).*
-
-*Proof.* By well-founded induction on Reduces (using Theorem 3.5). If t is normal, take u = t. Otherwise, there exists v with Step(t, v). By the inductive hypothesis applied to v (which is accessible since Reduces(v, t)), there exists u with Step*(v, u) and Normal(u). By prepending Step(t, v), we get Step*(t, u).  ∎
-
-### 3.5 Semantic Optimality
-
-**Theorem 3.8** (Semantic Uniqueness of Normal Forms).
-*If Step*(t, u) and Normal(u) and Step*(t, v) and Normal(v), then eval(u) = eval(v).*
-
-*Proof.* By Corollary 3.2: eval(u) = eval(t) and eval(v) = eval(t). Hence eval(u) = eval(v).  ∎
-
-This theorem establishes that normalization computes a **unique optimal cost**, even though the normal form may not be syntactically unique.
-
-### 3.6 Confluence Analysis
-
-The rewrite system is **not confluent** (in the strong sense) without additional rules for associativity and commutativity of `min`. The critical pair arises from `cut(min(a, b), min(c, d))`:
-
-- **Path 1** (D_L first): → min(cut(a, min(c,d)), cut(b, min(c,d))) → ... → min(min(cut(a,c), cut(a,d)), min(cut(b,c), cut(b,d)))
-- **Path 2** (D_R first): → min(cut(min(a,b), c), cut(min(a,b), d)) → ... → min(min(cut(a,c), cut(b,c)), min(cut(a,d), cut(b,d)))
-
-The final terms are semantically equal (both evaluate to min(a+c, a+d, b+c, b+d)) but syntactically different: the min-branches are grouped differently. Joining these requires associativity and commutativity of `min`.
-
-**Remark.** Semantic uniqueness (Theorem 3.8) suffices for the core application: normalization computes a unique optimal cost. Full syntactic uniqueness requires extending the rewrite system with oriented AC rules for `min`, which is a standard but technically involved extension (see Future Directions).
-
----
-
-## 4. Algorithms
-
-### 4.1 Tropical Evaluation
+**Definition 3.2** (Tropical Cost). The cost function evaluates in the min-plus semiring:
 
 ```
-EVAL(t):
-    if t = atom(n): return n
-    if t = cut(l, r): return EVAL(l) + EVAL(r)
-    if t = plus(l, r): return EVAL(l) + EVAL(r)
-    if t = min(l, r): return min(EVAL(l), EVAL(r))
+cost(atom(n))    = n
+cost(cut(p, q))  = cost(p) + cost(q)
+cost(tmin(p, q)) = min(cost(p), cost(q))
+cost(tplus(p, q))= cost(p) + cost(q)
 ```
 
-**Complexity:** O(n) time, O(d) space (where n = |t|, d = depth).
+### 3.3 Reduction System
 
-### 4.2 Polynomial Interpretation
+**Definition 3.3** (One-Step Reduction, TropStep). The relation p → q is generated by:
+
+**Distributive rules** (cut/plus distribute over min):
+- cut(tmin(p,q), r) → tmin(cut(p,r), cut(q,r))
+- cut(p, tmin(q,r)) → tmin(cut(p,q), cut(p,r))
+- tplus(tmin(p,q), r) → tmin(tplus(p,r), tplus(q,r))
+- tplus(p, tmin(q,r)) → tmin(tplus(p,q), tplus(p,r))
+
+**Idempotent collapse**:
+- tmin(p, p) → p
+
+**Computation rules** (evaluate atoms):
+- cut(atom(a), atom(b)) → atom(a + b)
+- tplus(atom(a), atom(b)) → atom(a + b)
+- tmin(atom(a), atom(b)) → atom(min(a, b))
+
+**Congruence closure**: If p → q then:
+- cut(p, r) → cut(q, r), cut(r, p) → cut(r, q)
+- tmin(p, r) → tmin(q, r), tmin(r, p) → tmin(r, q)
+- tplus(p, r) → tplus(q, r), tplus(r, p) → tplus(r, q)
+
+**Definition 3.4** (Normal Form). A term p is in **normal form** if ¬∃q, p → q.
+
+**Definition 3.5** (Canonical Normalizer). normalize(p) = atom(cost(p)).
+
+### 3.4 Design Rationale
+
+The computation rules (cut_atoms, tplus_atoms, tmin_atoms) are crucial for achieving unique canonical normal forms. Without them, normal forms would include compound expressions like cut(atom(2), atom(3)), and uniqueness would require associativity and commutativity rules (which break termination). The computation rules force all compound expressions to eventually evaluate to single atoms, yielding a simple and elegant normal form theory.
+
+## 4. Soundness
+
+**Theorem 4.1** (Step Preserves Cost). If p → q, then cost(q) = cost(p).
+
+*Proof sketch*: By case analysis on the reduction rule.
+- Distributive rules: Use the min-plus distributive law, e.g., cost(p) + min(cost(q), cost(r)) = min(cost(p) + cost(q), cost(p) + cost(r)).
+- Idempotent collapse: Use min(a, a) = a.
+- Computation rules: Direct computation.
+- Congruence rules: By induction hypothesis. □
+
+**Corollary 4.2** (RTC Preserves Cost). If p →* q, then cost(q) = cost(p).
+
+## 5. Strong Normalization
+
+### 5.1 Polynomial Interpretation
+
+**Definition 5.1**. The interpretation function maps terms to natural numbers:
 
 ```
-INTERP(t):
-    if t = atom(_): return 2
-    if t = cut(l, r): return INTERP(l) * INTERP(r)
-    if t = plus(l, r): return INTERP(l) + INTERP(r)
-    if t = min(l, r): return INTERP(l) + INTERP(r) + 1
+interp(atom(_))    = 2
+interp(cut(p, q))  = interp(p) × interp(q)
+interp(tmin(p, q)) = interp(p) + interp(q) + 1
+interp(tplus(p, q))= interp(p) × interp(q)
 ```
 
-**Complexity:** O(n) time, O(d) space.
+**Lemma 5.2**. For all p, interp(p) ≥ 2.
 
-### 4.3 Leftmost-Outermost Reduction
+*Proof*: By structural induction. Atoms have interp 2. For cut/tplus, interp(p)·interp(q) ≥ 2·2 = 4 ≥ 2. For tmin, interp(p)+interp(q)+1 ≥ 2+2+1 = 5 ≥ 2. □
+
+**Theorem 5.3** (Strict Decrease). If p → q, then interp(q) < interp(p).
+
+*Proof sketch*: By case analysis.
+- **cut_tmin_left**: interp(tmin(cut(p,r), cut(q,r))) = ip·ir + iq·ir + 1 < (ip + iq + 1)·ir = interp(cut(tmin(p,q), r)), since 1 < ir (as ir ≥ 2).
+- **min_idem**: interp(p) < interp(p) + interp(p) + 1 = interp(tmin(p,p)), since interp(p) ≥ 2.
+- **cut_atoms**: interp(atom(a+b)) = 2 < 4 = 2·2 = interp(cut(atom(a), atom(b))).
+- **Congruence rules**: Monotonicity of multiplication and addition with positive arguments. □
+
+**Theorem 5.4** (Strong Normalization). The relation λa b. (b → a) is well-founded.
+
+*Proof*: The function interp provides an embedding into (ℕ, <), which is well-founded. □
+
+### 5.2 Complexity Analysis
+
+The polynomial interpretation provides an upper bound on the length of any reduction sequence from p: at most interp(p) steps. Since interp involves iterated multiplication, this bound is exponential in the syntactic depth of the term. Whether tighter bounds exist is an open question related to proof complexity.
+
+## 6. Normal Form Characterization
+
+**Theorem 6.1** (Normal Forms Are Atoms). If Normal(p), then p = atom(n) for some n.
+
+*Proof*: By structural induction on p.
+- **atom(n)**: Already an atom.
+- **cut(p, q)**: If Normal(cut(p,q)), then Normal(p) and Normal(q) (by contraposition with congruence rules). By IH, p = atom(a) and q = atom(b). But then cut_atoms applies, contradicting normality.
+- **tmin(p, q)**: Similarly, p = atom(a) and q = atom(b) by IH. Then tmin_atoms applies, contradiction.
+- **tplus(p, q)**: Similarly. □
+
+**Corollary 6.2** (No Idempotent Min-Pairs). If Normal(p), then p ≠ tmin(q, q) for any q.
+
+## 7. Canonical Normalization and Confluence
+
+**Theorem 7.1** (Reduces to Normalize). For all p, p →* normalize(p) = atom(cost(p)).
+
+*Proof*: By structural induction on p.
+- **atom(n)**: normalize(atom(n)) = atom(n). Zero steps.
+- **cut(p, q)**: By IH, p →* atom(cost(p)) and q →* atom(cost(q)). By congruence lifting, cut(p,q) →* cut(atom(cost(p)), atom(cost(q))). By cut_atoms, → atom(cost(p) + cost(q)) = atom(cost(cut(p,q))).
+- **tmin(p, q)**: Similarly, via tmin_atoms.
+- **tplus(p, q)**: Similarly, via tplus_atoms. □
+
+**Theorem 7.2** (Global Confluence). For all p, q, r with p →* q and p →* r, there exists s with q →* s and r →* s.
+
+*Proof*: By Theorem 7.1, q →* atom(cost(q)) and r →* atom(cost(r)). By Corollary 4.2, cost(q) = cost(p) = cost(r). Hence both reduce to the same atom. Take s = atom(cost(p)). □
+
+**Remark**: This proof of confluence is non-standard. Rather than using Newman's lemma (local confluence + termination ⟹ confluence), we exploit the semantic characterization directly. Every term has a unique normal form determined entirely by its cost, so all reduction paths must converge. The strong normalization theorem is still essential — it guarantees that the reduction process terminates — but confluence is an independent consequence of the semantic invariant.
+
+## 8. Uniqueness, Canonicality, and Optimality
+
+**Definition 8.1** (Convertibility). Terms p and q are *convertible*, written Convertible(p, q), if ∃s, p →* s ∧ q →* s.
+
+**Theorem 8.1** (Normal Form Fixpoint). If Normal(p) and p →* q, then p = q.
+
+*Proof*: By induction on the reflexive-transitive closure. If zero steps, p = q. If p → r →* q for some r, this contradicts Normal(p). □
+
+**Theorem 8.2** (Normal Form Uniqueness). If Normal(p), Normal(q), and p →* q, then p = q.
+
+**Theorem 8.3** (Completeness). If p →* q, then normalize(p) = normalize(q).
+
+*Proof*: normalize(p) = atom(cost(p)) = atom(cost(q)) = normalize(q), by Corollary 4.2. □
+
+**Theorem 8.4** (Canonicality). If Convertible(p, q) and Normal(q), then normalize(p) = q.
+
+*Proof*: From convertibility, ∃s with p →* s and q →* s. By Theorem 8.1, q = s. So p →* q. By cost preservation, cost(p) = cost(q). By Theorem 6.1, q = atom(n) for some n. Then cost(q) = n, so normalize(p) = atom(cost(p)) = atom(n) = q. □
+
+**Theorem 8.5** (Optimality). For all p, q with Convertible(p, q), cost(normalize(p)) ≤ cost(q).
+
+*Proof*: By cost preservation through the common reduct, cost(p) = cost(q). Hence cost(normalize(p)) = cost(p) = cost(q). □
+
+### The Flagship Theorem
+
+**Theorem 8.6** (Tropical Curry–Howard Canonical Normalization). For every tropical proof term p:
+1. p →* normalize(p) [reachability]
+2. Normal(normalize(p)) [normality]
+3. cost(normalize(p)) = cost(p) [cost preservation]
+4. For all q with p →* q and Normal(q), normalize(p) = q [uniqueness]
+
+## 9. Algorithms
+
+### 9.1 The Normalization Algorithm
 
 ```
-STEP(t):
-    if t = min(l, r) and l = r: return l
-    if t = cut(min(a,b), s): return min(cut(a,s), cut(b,s))
-    if t = cut(s, min(a,b)): return min(cut(s,a), cut(s,b))
-    if t ≠ atom:
-        l' = STEP(t.left)
-        if l' ≠ None: return t with left = l'
-        r' = STEP(t.right)
-        if r' ≠ None: return t with right = r'
-    return None
+function NORMALIZE(p):
+    match p with
+    | atom(n)     → return atom(n)
+    | cut(p, q)   → return atom(COST(p) + COST(q))
+    | tmin(p, q)  → return atom(min(COST(p), COST(q)))
+    | tplus(p, q) → return atom(COST(p) + COST(q))
+
+function COST(p):
+    match p with
+    | atom(n)     → return n
+    | cut(p, q)   → return COST(p) + COST(q)
+    | tmin(p, q)  → return min(COST(p), COST(q))
+    | tplus(p, q) → return COST(p) + COST(q)
 ```
 
-**Complexity:** O(n) per step.
+**Time complexity**: O(|p|) where |p| is the number of nodes in the term tree.
+**Space complexity**: O(depth(p)) for the recursion stack.
 
-### 4.4 Full Normalization
+### 9.2 Step-by-Step Reduction
+
+An alternative implementation applies reduction rules one at a time until a normal form is reached. By strong normalization, this always terminates. By confluence, it always produces the same result regardless of the reduction strategy chosen.
 
 ```
-NORMALIZE(t):
-    while STEP(t) ≠ None:
-        t = STEP(t)
-    return t
+function REDUCE_STEP(p):
+    match p with
+    | cut(tmin(a, b), r)        → return tmin(cut(a, r), cut(b, r))
+    | cut(p, tmin(q, r))        → return tmin(cut(p, q), cut(p, r))
+    | tmin(p, p) where p == p   → return p   // idempotent collapse
+    | cut(atom(a), atom(b))     → return atom(a + b)
+    | tmin(atom(a), atom(b))    → return atom(min(a, b))
+    | tplus(atom(a), atom(b))   → return atom(a + b)
+    // ... congruence: try reducing subterms
+    | _ → return None  // already normal
+
+function NORMALIZE_BY_REDUCTION(p):
+    while REDUCE_STEP(p) is not None:
+        p ← REDUCE_STEP(p)
+    return p
 ```
 
-**Termination:** Guaranteed by Theorem 3.4 (each step decreases interp(t) ∈ ℕ).
+**Time complexity**: O(interp(p)), which is at most exponential in depth(p).
 
-**Worst-case complexity:** O(interp(t)) steps, each O(n) time. Since interp can be exponential in term size (due to multiplication in the cut case), the worst case is exponential. For terms with bounded cut-nesting depth, normalization is polynomial.
+## 10. Applications
 
----
+### 10.1 Certified Shortest-Path Computation
 
-## 5. Applications
+A weighted directed graph G = (V, E, w) with source s and sink t can be encoded as a tropical proof term:
 
-### 5.1 Shortest Paths
-
-A weighted directed graph G = (V, E, w) can be encoded as a tropical proof term:
-- Each edge (u, v) with weight w becomes `atom(w)`.
-- Sequential edges become `cut` (costs add).
-- Alternative paths become `min` (costs take minimum).
-
-Normalizing the proof term computes the shortest path cost. This is the tropical Curry–Howard interpretation of the Bellman–Ford algorithm.
-
-### 5.2 Task Scheduling
-
-A pipeline of tasks with alternative implementations at each stage can be modeled as `cut(min(impl1, impl2, ...), min(impl1', impl2', ...))`. Normalization distributes the stages and finds the optimal schedule.
-
-### 5.3 Proof Compression
-
-Duplicate proof branches (arising from lemma reuse) are represented as `min(P, P)`. Idempotent collapse reduces this to `P`, achieving proof sharing. For proofs with k levels of duplication, compression achieves a 2^k : 1 ratio.
-
----
-
-## 6. Computational Experiments
-
-We implemented the algorithms in Python and ran experiments on synthetic proof terms.
-
-| Term | Size | Cost | Interp | Steps | Normal Size |
-|------|------|------|--------|-------|-------------|
-| cut(min(a(1),a(3)), min(a(2),a(4))) | 7 | 3 | 25 | 3 | 15 |
-| min(min(a(7),a(7)), min(a(7),a(7))) | 7 | 7 | 11 | 2 | 1 |
-| cut(min(cut(min(a(1),a(2)),a(3)),a(2)), min(a(1),a(3))) | 11 | 3 | 65 | 7 | 31 |
-
-Key observations:
-- Cost is always preserved (Theorem 3.1).
-- Interpretation strictly decreases at each step (Theorem 3.4).
-- Normal form size can exceed input size (distribution duplicates subterms).
-- Idempotent collapse can dramatically reduce size (7 → 1 in the second example).
-
----
-
-## 7. Discussion
-
-### 7.1 Strengths
-
-The tropical Curry–Howard correspondence provides:
-- A **unified framework** connecting proof theory, tropical algebra, and combinatorial optimization.
-- **Machine-verified** foundational results, providing the highest level of certainty.
-- **Executable algorithms** extracted from the formal development.
-- A **clean separation** of syntax (proof terms), semantics (tropical evaluation), and metatheory (normalization).
-
-### 7.2 Limitations
-
-- **Confluence gap**: Without AC rules for `min`, normal forms are not syntactically unique. This is a known issue in rewriting theory and has standard solutions (ordered rewriting, canonical representatives).
-- **Exponential blowup**: Distribution can exponentially increase term size, mirroring the behavior of classical cut elimination. This is inherent to the problem and cannot be avoided in general.
-- **Limited expressiveness**: The current calculus has no variables, abstraction, or higher-order features. It is a first-order term rewriting system, not a full programming language.
-
-### 7.3 Open Questions
-
-1. Does the extended system with oriented AC rules for `min` have a polynomial-time normalization procedure for bounded-depth terms?
-2. Is there a linear-time algorithm for computing the eval of the normal form without constructing it?
-3. Can the polynomial interpretation be extended to handle a typed tropical lambda calculus?
-4. What is the precise relationship between tropical proof normal forms and Newton polytopes of tropical polynomials?
-
----
-
-## 8. Future Work
-
-See `FUTURE_DIRECTIONS.md` for detailed next steps. The most promising directions are:
-
-1. **Typed tropical lambda calculus** with cost-aware β-reduction.
-2. **Confluence via canonical forms** using sorted, deduplicated min-lists.
-3. **Completeness against DAG path algebras**, establishing the formal bridge to shortest-path computation.
-4. **Tropical linear logic**, connecting to resource-sensitive type systems.
-5. **Certified proof search algorithms** with complexity bounds.
-
----
-
-## 9. References
-
-- Atkey, R. (2018). Syntax and semantics of quantitative type theory. *LICS*.
-- Butkovič, P. (2010). *Max-linear Systems: Theory and Algorithms*. Springer.
-- Curry, H. B. (1934). Functionality in combinatory logic. *Proc. Nat. Acad. Sci.*, 20(11), 584–590.
-- Droste, M., & Gastin, P. (2007). Weighted automata and weighted logics. *TCS*, 380(1-2), 69–86.
-- Gentzen, G. (1935). Untersuchungen über das logische Schließen. *Math. Zeitschrift*, 39, 176–210, 405–431.
-- Girard, J.-Y. (1987). Linear logic. *TCS*, 50(1), 1–101.
-- Gondran, M., & Minoux, M. (1984). *Graphs and Algorithms*. Wiley.
-- Green, T. J., et al. (2007). Provenance semirings. *PODS*.
-- Howard, W. A. (1980). The formulae-as-types notion of construction. In *To H. B. Curry: Essays on Combinatory Logic*.
-- Lankford, D. S. (1979). On proving term rewriting systems are Noetherian. Technical report.
-- Maclagan, D., & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-- Mikhalkin, G. (2006). Tropical geometry and its applications. *ICM Proceedings*.
-- Simon, I. (1988). Recognizable sets with multiplicities in the tropical semiring. *MFCS*.
-- Zantema, H. (2003). Termination. In *Term Rewriting Systems*, Cambridge UP.
-
----
-
-## Appendix: Lean 4 Formalization
-
-The complete formalization is in `Logic/TropicalCurryHoward.lean`. Key declarations:
-
-```lean
--- Syntax
-inductive TropTerm where
-  | atom | cut | plus | min
-
--- Semantics
-def eval : TropTerm → Nat
-
--- Reduction
-inductive Step : TropTerm → TropTerm → Prop
-
--- Main theorems
-theorem step_preserves_eval : Step t u → eval t = eval u
-theorem step_decreases_interp : Step t u → interp u < interp t
-theorem acc_step : ∀ t, Acc Reduces t
-theorem strongly_normalizing : WellFounded Reduces
-theorem normal_form_exists : ∀ t, ∃ u, Step* t u ∧ Normal u
-theorem normal_forms_eval_eq : Step* t u → Normal u → Step* t v → Normal v → eval u = eval v
+```
+encodePaths(G, s, t) = tmin over all paths P from s to t of
+    (tplus(atom(w(e₁)), tplus(atom(w(e₂)), ... atom(w(eₖ)))))
 ```
 
-All proofs compile with zero `sorry` and depend only on standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+By the canonical normalization theorem, normalize(encodePaths(G, s, t)) = atom(shortestPathCost(G, s, t)). This provides a certified shortest-path algorithm: the normalization process is proven correct by construction.
+
+### 10.2 Dynamic Programming Verification
+
+Any dynamic programming recurrence of the form `dp[i] = min(dp[j] + cost(j, i))` can be expressed as tropical proof normalization. The optimal substructure property is exactly the distributive law, and the elimination of dominated subproblems is exactly idempotent collapse.
+
+### 10.3 Resource-Aware Program Verification
+
+In a resource-aware programming language, function calls carry costs. A program's execution trace is a tropical proof term, and normalization computes the optimal execution cost. This connects to amortized complexity analysis and bounded linear type systems.
+
+## 11. Discussion
+
+### 11.1 The Role of Computation Rules
+
+The addition of computation rules (cut_atoms, tplus_atoms, tmin_atoms) is a deliberate design choice that significantly simplifies the normal form theory. Without them, normal forms would include non-atomic terms like cut(atom(2), atom(3)), and proving uniqueness would require handling associativity and commutativity of min — which introduces non-terminating rewrite rules.
+
+The computation rules resolve this by ensuring that every compound term eventually evaluates to a single atom. This is analogous to the distinction between weak head normal forms and full normal forms in λ-calculus: our computation rules force full evaluation, yielding a simpler uniqueness theorem.
+
+### 11.2 Confluence via Semantics vs. Newman's Lemma
+
+Our proof of confluence is unusual in the rewriting theory literature. Rather than establishing local confluence and applying Newman's lemma, we prove confluence directly from the semantic invariant: every term reduces to atom(cost(p)), and cost is preserved by reduction. This yields a shorter and more illuminating proof, but it is specific to systems where the normal form is uniquely determined by a semantic invariant.
+
+For extensions of the calculus where normal forms carry more structure (e.g., typed terms with subformula property), Newman's lemma approach may be necessary. The strong normalization theorem we establish provides the termination ingredient for such future applications.
+
+### 11.3 Limitations
+
+1. **Cost equality, not strict decrease**: In our system, every reduction step preserves cost exactly. There is no notion of "cost improvement" through normalization — the cost is an invariant, not an objective to minimize. The optimization interpretation arises from the fact that min selects the cheapest among alternatives, not that reduction makes things cheaper.
+
+2. **Untyped calculus**: The current system is untyped — there are no propositions, only proof terms with costs. A full Curry–Howard correspondence requires a type system where propositions carry tropical structure.
+
+3. **Finite costs only**: We work over ℕ. Extension to ℝ≥0∞ would enable unreachable-proof semantics and connections to tropical analytic geometry.
+
+## 12. Future Work
+
+See FUTURE_DIRECTIONS.md for detailed technical roadmap. Key directions include:
+1. Extension to ℝ≥0∞ cost semantics for unreachable proofs.
+2. Typed sequent calculus with tropical cut elimination.
+3. Graph-theoretic representation theorem (proofs ↔ DAGs).
+4. Tropical proof complexity invariants.
+5. Connection to Viterbi decoding and weighted automata.
+
+## References
+
+- Atkey, R. (2018). Syntax and semantics of quantitative type theory. LICS 2018.
+- Curry, H.B. (1934). Functionality in combinatory logic. Proc. Nat. Acad. Sci. USA, 20(11), 584–590.
+- Gentzen, G. (1935). Untersuchungen über das logische Schließen. Mathematische Zeitschrift, 39, 176–210, 405–431.
+- Girard, J.-Y., Scedrov, A., Scott, P.J. (1992). Bounded linear logic. Theoretical Computer Science, 97(1), 1–66.
+- Hofbauer, D., Lautemann, C. (1989). Termination proofs and the length of derivations. LNCS 355, 167–177.
+- Howard, W.A. (1969/1980). The formulae-as-types notion of construction. In: To H.B. Curry: Essays on Combinatory Logic, Lambda Calculus and Formalism, Academic Press.
+- Lankford, D.S. (1979). On proving term rewriting systems are Noetherian. Technical Report, Louisiana Tech University.
+- Litvinov, G.L. (2007). Maslov dequantization, idempotent and tropical mathematics. Journal of Mathematical Sciences, 140(3), 349–386.
+- Maclagan, D., Sturmfels, B. (2015). Introduction to Tropical Geometry. Graduate Studies in Mathematics, vol. 161, AMS.
+- McBride, C. (2016). I got plenty o' nuttin'. In: A List of Successes That Can Change the World, LNCS 9600.
+- Newman, M.H.A. (1942). On theories with a combinatorial definition of "equivalence." Annals of Mathematics, 43(2), 223–243.
+- Prawitz, D. (1965). Natural Deduction: A Proof-Theoretical Study. Almqvist & Wiksell.

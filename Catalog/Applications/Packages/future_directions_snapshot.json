@@ -1191,7 +1191,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "56f3642c",
+    "consumed_by_exp_id": "03df72f3",
     "timestamp": "2026-05-14T18:36:13.855472+00:00"
   },
   {
@@ -1730,21 +1730,6 @@
   },
   {
     "id": "fd_0232",
-    "title": "Theoretical Foundations",
-    "description": "Directions 2 and 3 deepen the mathematical theory:\n- Compression duality connects novelty to information content\n- Ultrametric geometry reveals hierarchical structure\n- Together they suggest a \"spectral theory of novelty\" where eigenvalues of the distance matrix capture fundamental scales of conceptual variation.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9f168b29",
-    "consumed_by_exp_id": "5b91f76e",
-    "timestamp": "2026-05-15T16:04:54.716000+00:00"
-  },
-  {
-    "id": "fd_0232",
     "title": "Phase 3 (Long-term, 6-12 months)",
     "description": "- Generalize to quadratic form orbits (Direction 6)\n- Investigate cryptographic hardness (Direction 3)\n- Develop the spectral theory of arithmetic CAs (Direction 4)\n\n---",
     "domains": [
@@ -1892,5 +1877,33 @@
     "source_exp_id": "b2af3cbf",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T18:46:29.417925+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Theorem Statement",
+    "description": "Every symmetry of tropical factorization decomposes into a gauge shift and a permutation of intermediate indices. That is, if $(A', B')$ is another factorization of the same product $M = \\text{tropMul}\\ A\\ B$, then under genericity assumptions, there exists a permutation $\\sigma \\in S_k$ and a shift vector $c \\in \\mathbb{R}^k$ such that $A'_{i,t} = A_{i,\\sigma(t)} + c_{\\sigma(t)}$ and $B'_{t,j} = B_{\\sigma(t),j} - c_{\\sigma(t)}$.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5b91f76e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T19:28:49.805655+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Lean Type Signature",
+    "description": "```lean\ntheorem gauge_permutation_classification\n    {n m k : ℕ} [NeZero k]\n    (A A' : Matrix (Fin n) (Fin k) ℝ) (B B' : Matrix (Fin k) (Fin m) ℝ)\n    (hM : tropMul A B = tropMul A' B')\n    (hgeneric : GenericFactorization A B) :\n    ∃ (σ : Equiv.Perm (Fin k)) (c : Fin k → ℝ),\n      A' = fun i t => A i (σ t) + c (σ t) ∧\n      B' = fun t j => B (σ t) j - c (σ t) := by sorry\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5b91f76e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T19:28:49.817683+00:00"
   }
 ]

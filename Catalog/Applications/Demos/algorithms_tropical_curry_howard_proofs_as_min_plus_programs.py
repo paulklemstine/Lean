@@ -1,300 +1,372 @@
 #!/usr/bin/env python3
 """
-Tropical Curry-Howard: Algorithms
+Tropical Curry–Howard: Algorithms
 
-Implements the core algorithms of tropical proof theory:
-1. Tropical term evaluation (min-plus semiring)
-2. Polynomial interpretation (termination measure)
-3. Normalizer (certified reduction engine)
-4. Confluence analysis (critical pair detection)
-5. Complexity analysis of normalization
-
-All algorithms have been formally verified in Lean 4 (see Logic/TropicalCurryHoward.lean).
+Implements the core algorithms from the research paper:
+1. Cost evaluation (O(n) time)
+2. Canonical normalization (O(n) time)
+3. Step-by-step reduction with termination tracking
+4. Polynomial interpretation for termination bound
+5. Graph-to-tropical-proof encoding
+6. Shortest-path via tropical normalization
 """
 
+from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional, List, Tuple, Set, Dict
-from enum import Enum
+from typing import Optional, List, Tuple, Dict, Set
+import heapq
 
 
-# ============================================================
-# Data Structures
-# ============================================================
-
-class NodeType(Enum):
-    ATOM = "atom"
-    CUT = "cut"
-    PLUS = "plus"
-    MIN = "min"
+# ═══════════════════════════════════════════════════════════════════════
+# Core Data Structures
+# ═══════════════════════════════════════════════════════════════════════
 
 @dataclass(frozen=True)
-class TropTerm:
-    """Tropical proof term."""
-    node_type: NodeType
-    value: Optional[int] = None  # for atoms
-    left: Optional['TropTerm'] = None
-    right: Optional['TropTerm'] = None
+class TropProof:
+    """Base class for tropical proof terms."""
+    pass
 
-    def __repr__(self):
-        if self.node_type == NodeType.ATOM:
-            return f"a({self.value})"
-        return f"{self.node_type.value}({self.left}, {self.right})"
+@dataclass(frozen=True)
+class Atom(TropProof):
+    n: int
+    def __repr__(self): return f"atom({self.n})"
 
-def atom(n: int) -> TropTerm:
-    return TropTerm(NodeType.ATOM, value=n)
+@dataclass(frozen=True)
+class Cut(TropProof):
+    left: TropProof
+    right: TropProof
+    def __repr__(self): return f"cut({self.left}, {self.right})"
 
-def cut(l: TropTerm, r: TropTerm) -> TropTerm:
-    return TropTerm(NodeType.CUT, left=l, right=r)
+@dataclass(frozen=True)
+class TMin(TropProof):
+    left: TropProof
+    right: TropProof
+    def __repr__(self): return f"tmin({self.left}, {self.right})"
 
-def plus(l: TropTerm, r: TropTerm) -> TropTerm:
-    return TropTerm(NodeType.PLUS, left=l, right=r)
+@dataclass(frozen=True)
+class TPlus(TropProof):
+    left: TropProof
+    right: TropProof
+    def __repr__(self): return f"tplus({self.left}, {self.right})"
 
-def tmin(l: TropTerm, r: TropTerm) -> TropTerm:
-    return TropTerm(NodeType.MIN, left=l, right=r)
 
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 1: Cost Evaluation
+# Time: O(|p|), Space: O(depth(p))
+# ═══════════════════════════════════════════════════════════════════════
 
-# ============================================================
-# Algorithm 1: Tropical Evaluation
-# ============================================================
-# Time: O(n) where n = term size
-# Space: O(d) where d = tree depth (stack)
-
-def evaluate(t: TropTerm) -> int:
+def cost(p: TropProof) -> int:
     """
-    Evaluate a tropical proof term in the min-plus semiring.
+    Evaluate the tropical cost of a proof term.
 
-    Pseudocode:
-        EVAL(atom(n)) = n
-        EVAL(cut(t, s)) = EVAL(t) + EVAL(s)
-        EVAL(plus(t, s)) = EVAL(t) + EVAL(s)
-        EVAL(min(t, s)) = min(EVAL(t), EVAL(s))
+    Semantics (min-plus semiring):
+        cost(atom(n))    = n
+        cost(cut(p, q))  = cost(p) + cost(q)
+        cost(tmin(p, q)) = min(cost(p), cost(q))
+        cost(tplus(p, q))= cost(p) + cost(q)
 
-    Complexity: O(n) time, O(depth) stack space.
+    Time complexity: O(|p|) where |p| = number of nodes
+    Space complexity: O(depth(p)) for recursion stack
+
+    >>> cost(Atom(5))
+    5
+    >>> cost(Cut(Atom(3), Atom(4)))
+    7
+    >>> cost(TMin(Atom(2), Atom(7)))
+    2
     """
-    if t.node_type == NodeType.ATOM:
-        return t.value
-    l = evaluate(t.left)
-    r = evaluate(t.right)
-    if t.node_type in (NodeType.CUT, NodeType.PLUS):
-        return l + r
-    return min(l, r)  # MIN
+    if isinstance(p, Atom): return p.n
+    if isinstance(p, Cut): return cost(p.left) + cost(p.right)
+    if isinstance(p, TMin): return min(cost(p.left), cost(p.right))
+    if isinstance(p, TPlus): return cost(p.left) + cost(p.right)
+    raise TypeError(f"Unknown term type: {type(p)}")
 
 
-# ============================================================
-# Algorithm 2: Polynomial Interpretation
-# ============================================================
-# Time: O(n)
-# Space: O(d)
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 2: Canonical Normalization
+# Time: O(|p|), Space: O(depth(p))
+# ═══════════════════════════════════════════════════════════════════════
 
-def polynomial_interp(t: TropTerm) -> int:
+def normalize(p: TropProof) -> Atom:
     """
-    Compute the polynomial interpretation (termination measure).
+    Canonical normalizer: evaluates cost and wraps as atom.
 
-    Pseudocode:
-        INTERP(atom(_)) = 2
-        INTERP(cut(t, s)) = INTERP(t) * INTERP(s)
-        INTERP(plus(t, s)) = INTERP(t) + INTERP(s)
-        INTERP(min(t, s)) = INTERP(t) + INTERP(s) + 1
+    Correctness guarantees (all formally proved):
+        1. p →* normalize(p)         [reachability]
+        2. Normal(normalize(p))      [is a normal form]
+        3. cost(normalize(p)) = cost(p)  [cost preservation]
+        4. Unique normal form        [canonicality]
 
-    Property: INTERP(t) ≥ 2 for all t.
-    Property: Step(t, u) implies INTERP(u) < INTERP(t).
+    Time complexity: O(|p|)
+    Space complexity: O(depth(p))
+
+    >>> normalize(Cut(TMin(Atom(1), Atom(5)), Atom(3)))
+    atom(4)
     """
-    if t.node_type == NodeType.ATOM:
-        return 2
-    l = polynomial_interp(t.left)
-    r = polynomial_interp(t.right)
-    if t.node_type == NodeType.CUT:
-        return l * r
-    elif t.node_type == NodeType.PLUS:
-        return l + r
-    else:  # MIN
-        return l + r + 1
+    return Atom(cost(p))
 
 
-# ============================================================
-# Algorithm 3: One-Step Reduction
-# ============================================================
-# Time: O(n) worst case (traverses to find leftmost redex)
-# Space: O(d) stack
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 3: Polynomial Interpretation (Termination Measure)
+# ═══════════════════════════════════════════════════════════════════════
 
-def reduce_step(t: TropTerm) -> Optional[TropTerm]:
+def interp(p: TropProof) -> int:
     """
-    Apply the leftmost-outermost reduction step.
+    Polynomial interpretation for proving termination.
 
-    Pseudocode:
-        STEP(min(t, t)) = t                    -- idempotence
-        STEP(cut(min(t,u), s)) = min(cut(t,s), cut(u,s))  -- left dist.
-        STEP(cut(s, min(t,u))) = min(cut(s,t), cut(s,u))  -- right dist.
-        STEP(f(t, s)) = f(STEP(t), s) or f(t, STEP(s))    -- congruence
+    Maps:
+        atom(_)    → 2
+        cut(p, q)  → interp(p) × interp(q)
+        tmin(p, q) → interp(p) + interp(q) + 1
+        tplus(p, q)→ interp(p) × interp(q)
 
-    Returns None if t is in normal form.
+    Invariant: interp(p) ≥ 2 for all p.
+    Key property: If p → q, then interp(q) < interp(p).
+
+    >>> interp(Atom(42))
+    2
+    >>> interp(Cut(Atom(1), Atom(2)))
+    4
     """
-    # Base rules
-    if t.node_type == NodeType.MIN and t.left == t.right:
-        return t.left
+    if isinstance(p, Atom): return 2
+    if isinstance(p, Cut): return interp(p.left) * interp(p.right)
+    if isinstance(p, TMin): return interp(p.left) + interp(p.right) + 1
+    if isinstance(p, TPlus): return interp(p.left) * interp(p.right)
+    raise TypeError(f"Unknown term type: {type(p)}")
 
-    if t.node_type == NodeType.CUT:
-        if t.left.node_type == NodeType.MIN:
-            return tmin(cut(t.left.left, t.right), cut(t.left.right, t.right))
-        if t.right.node_type == NodeType.MIN:
-            return tmin(cut(t.left, t.right.left), cut(t.left, t.right.right))
+
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 4: Step-by-Step Reduction
+# ═══════════════════════════════════════════════════════════════════════
+
+def try_reduce(p: TropProof) -> Optional[TropProof]:
+    """
+    Try to apply one reduction step. Returns None if p is normal.
+
+    Reduction rules (in priority order):
+        1. Distributive: cut/tplus distribute over tmin
+        2. Idempotent: tmin(p, p) → p
+        3. Computation: binary ops on atoms evaluate
+        4. Congruence: reduce inside subterms
+
+    Returns:
+        The reduced term, or None if already in normal form.
+    """
+    # Distributive rules
+    if isinstance(p, Cut) and isinstance(p.left, TMin):
+        return TMin(Cut(p.left.left, p.right), Cut(p.left.right, p.right))
+    if isinstance(p, Cut) and isinstance(p.right, TMin):
+        return TMin(Cut(p.left, p.right.left), Cut(p.left, p.right.right))
+    if isinstance(p, TPlus) and isinstance(p.left, TMin):
+        return TMin(TPlus(p.left.left, p.right), TPlus(p.left.right, p.right))
+    if isinstance(p, TPlus) and isinstance(p.right, TMin):
+        return TMin(TPlus(p.left, p.right.left), TPlus(p.left, p.right.right))
+
+    # Idempotent collapse
+    if isinstance(p, TMin) and p.left == p.right:
+        return p.left
+
+    # Computation rules
+    if isinstance(p, Cut) and isinstance(p.left, Atom) and isinstance(p.right, Atom):
+        return Atom(p.left.n + p.right.n)
+    if isinstance(p, TPlus) and isinstance(p.left, Atom) and isinstance(p.right, Atom):
+        return Atom(p.left.n + p.right.n)
+    if isinstance(p, TMin) and isinstance(p.left, Atom) and isinstance(p.right, Atom):
+        return Atom(min(p.left.n, p.right.n))
 
     # Congruence: try subterms
-    if t.node_type != NodeType.ATOM:
-        sl = reduce_step(t.left)
-        if sl is not None:
-            return TropTerm(t.node_type, left=sl, right=t.right)
-        sr = reduce_step(t.right)
-        if sr is not None:
-            return TropTerm(t.node_type, left=t.left, right=sr)
+    if isinstance(p, (Cut, TMin, TPlus)):
+        r = try_reduce(p.left)
+        if r is not None:
+            return type(p)(r, p.right)
+        r = try_reduce(p.right)
+        if r is not None:
+            return type(p)(p.left, r)
 
     return None
 
 
-# ============================================================
-# Algorithm 4: Full Normalization
-# ============================================================
-# Time: O(interp(t)) worst case (each step decreases interp by ≥ 1)
-# Space: O(n * interp(t)) for storing the term at each step
-
-def normalize(t: TropTerm) -> Tuple[TropTerm, int]:
+def reduce_fully(p: TropProof) -> Tuple[Atom, List[TropProof]]:
     """
-    Normalize a term by exhaustive reduction.
+    Reduce a term to normal form, recording the full trace.
 
-    Pseudocode:
-        NORMALIZE(t):
-            steps = 0
-            while STEP(t) is not None:
-                t = STEP(t)
-                steps += 1
-            return (t, steps)
+    Returns:
+        (normal_form, trace) where trace[0] = p and trace[-1] = normal_form.
 
-    Termination: Guaranteed by polynomial interpretation.
-        Each step decreases INTERP(t), which is a natural number ≥ 2.
-    Soundness: EVAL(result) = EVAL(input).
+    Guaranteed to terminate by strong normalization.
+    Guaranteed to produce atom(cost(p)) by confluence.
+
+    >>> nf, trace = reduce_fully(Cut(TMin(Atom(1), Atom(3)), Atom(2)))
+    >>> nf
+    atom(3)
+    >>> len(trace) >= 2
+    True
     """
-    steps = 0
-    current = t
+    trace = [p]
     while True:
-        next_t = reduce_step(current)
-        if next_t is None:
-            break
-        current = next_t
-        steps += 1
-    return current, steps
+        q = try_reduce(p)
+        if q is None:
+            assert isinstance(p, Atom), f"Normal form should be atom, got {p}"
+            return p, trace
+        p = q
+        trace.append(p)
 
 
-# ============================================================
-# Algorithm 5: Normal Form Detection
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 5: Graph → Tropical Proof Encoding
+# ═══════════════════════════════════════════════════════════════════════
 
-def is_normal(t: TropTerm) -> bool:
-    """Check if a term is in normal form (no reduction applies)."""
-    return reduce_step(t) is None
-
-
-def count_redexes(t: TropTerm) -> Dict[str, int]:
-    """Count the number of each type of redex in a term."""
-    counts = {"min_idem": 0, "cut_min_left": 0, "cut_min_right": 0}
-
-    if t.node_type == NodeType.MIN and t.left == t.right:
-        counts["min_idem"] += 1
-    if t.node_type == NodeType.CUT:
-        if t.left.node_type == NodeType.MIN:
-            counts["cut_min_left"] += 1
-        if t.right.node_type == NodeType.MIN:
-            counts["cut_min_right"] += 1
-
-    if t.node_type != NodeType.ATOM:
-        for key, val in count_redexes(t.left).items():
-            counts[key] += val
-        for key, val in count_redexes(t.right).items():
-            counts[key] += val
-
-    return counts
-
-
-# ============================================================
-# Algorithm 6: Critical Pair Analysis
-# ============================================================
-
-def analyze_critical_pair():
+def encode_graph_paths(
+    adj: Dict[str, List[Tuple[str, int]]],
+    source: str,
+    target: str,
+    max_depth: int = 20
+) -> Optional[TropProof]:
     """
-    Analyze the critical pair for confluence.
+    Encode all source-to-target paths in a weighted graph as a tropical proof term.
 
-    The critical pair arises from: cut(min(a,b), min(c,d))
-    - Left-first: cut_min_left then cut_min_right on each branch
-    - Right-first: cut_min_right then cut_min_left on each branch
+    Args:
+        adj: Adjacency list {node: [(neighbor, weight), ...]}
+        source: Start node
+        target: End node
+        max_depth: Maximum path length to prevent infinite loops in cyclic graphs
 
-    These produce different trees that are semantically equivalent
-    but not syntactically identical without AC rules for min.
+    Returns:
+        A TropProof term where:
+        - Each path is a chain of Cut(Atom(w1), Cut(Atom(w2), ...))
+        - Multiple paths are combined with TMin
+        - normalize(result) = atom(shortest_path_cost)
+
+    >>> adj = {'A': [('B', 2), ('C', 4)], 'B': [('C', 1)], 'C': []}
+    >>> term = encode_graph_paths(adj, 'A', 'C')
+    >>> cost(term)
+    3
     """
-    a, b, c, d = atom(1), atom(2), atom(3), atom(4)
-    t = cut(tmin(a, b), tmin(c, d))
+    def find_all_paths(current: str, visited: Set[str], depth: int) -> Optional[TropProof]:
+        if current == target:
+            return Atom(0)  # Zero cost to reach target from target
+        if depth <= 0 or current in visited:
+            return None
 
-    # Path 1: Apply cut_min_left first
-    p1_step1 = tmin(cut(a, tmin(c, d)), cut(b, tmin(c, d)))
-    p1_step2 = tmin(tmin(cut(a, c), cut(a, d)), cut(b, tmin(c, d)))
-    p1_step3 = tmin(tmin(cut(a, c), cut(a, d)), tmin(cut(b, c), cut(b, d)))
+        visited_new = visited | {current}
+        paths: List[TropProof] = []
 
-    # Path 2: Apply cut_min_right first
-    p2_step1 = tmin(cut(tmin(a, b), c), cut(tmin(a, b), d))
-    p2_step2 = tmin(tmin(cut(a, c), cut(b, c)), cut(tmin(a, b), d))
-    p2_step3 = tmin(tmin(cut(a, c), cut(b, c)), tmin(cut(a, d), cut(b, d)))
+        for neighbor, weight in adj.get(current, []):
+            sub = find_all_paths(neighbor, visited_new, depth - 1)
+            if sub is not None:
+                paths.append(Cut(Atom(weight), sub))
 
-    return {
-        "original": t,
-        "path1_final": p1_step3,
-        "path2_final": p2_step3,
-        "syntactically_equal": p1_step3 == p2_step3,
-        "semantically_equal": evaluate(p1_step3) == evaluate(p2_step3),
-        "original_cost": evaluate(t),
-        "path1_cost": evaluate(p1_step3),
-        "path2_cost": evaluate(p2_step3),
-    }
+        if not paths:
+            return None
+        result = paths[0]
+        for p in paths[1:]:
+            result = TMin(result, p)
+        return result
 
-
-# ============================================================
-# Algorithm 7: Complexity Statistics
-# ============================================================
-
-def term_size(t: TropTerm) -> int:
-    """Count nodes in a term."""
-    if t.node_type == NodeType.ATOM:
-        return 1
-    return 1 + term_size(t.left) + term_size(t.right)
+    return find_all_paths(source, set(), max_depth)
 
 
-def normalization_stats(t: TropTerm) -> Dict:
-    """Compute statistics about the normalization process."""
-    nf, steps = normalize(t)
-    return {
-        "input_size": term_size(t),
-        "input_cost": evaluate(t),
-        "input_interp": polynomial_interp(t),
-        "output_size": term_size(nf),
-        "output_cost": evaluate(nf),
-        "output_interp": polynomial_interp(nf),
-        "reduction_steps": steps,
-        "is_normal": is_normal(nf),
-        "cost_preserved": evaluate(t) == evaluate(nf),
-        "interp_decreased": polynomial_interp(nf) < polynomial_interp(t) if steps > 0 else True,
-    }
+def shortest_path_dijkstra(
+    adj: Dict[str, List[Tuple[str, int]]],
+    source: str,
+    target: str
+) -> Optional[int]:
+    """
+    Classical Dijkstra's shortest path for comparison.
 
+    >>> adj = {'A': [('B', 2), ('C', 4)], 'B': [('C', 1)], 'C': []}
+    >>> shortest_path_dijkstra(adj, 'A', 'C')
+    3
+    """
+    dist: Dict[str, int] = {source: 0}
+    pq = [(0, source)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if u == target:
+            return d
+        if d > dist.get(u, float('inf')):
+            continue
+        for v, w in adj.get(u, []):
+            nd = d + w
+            if nd < dist.get(v, float('inf')):
+                dist[v] = nd
+                heapq.heappush(pq, (nd, v))
+    return None
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 6: Term Statistics
+# ═══════════════════════════════════════════════════════════════════════
+
+def term_size(p: TropProof) -> int:
+    """Count total nodes in the term tree."""
+    if isinstance(p, Atom): return 1
+    if isinstance(p, (Cut, TMin, TPlus)):
+        return 1 + term_size(p.left) + term_size(p.right)
+    return 0
+
+def term_depth(p: TropProof) -> int:
+    """Maximum nesting depth."""
+    if isinstance(p, Atom): return 0
+    if isinstance(p, (Cut, TMin, TPlus)):
+        return 1 + max(term_depth(p.left), term_depth(p.right))
+    return 0
+
+def min_depth(p: TropProof) -> int:
+    """Count maximum nesting of TMin nodes."""
+    if isinstance(p, Atom): return 0
+    if isinstance(p, TMin):
+        return 1 + max(min_depth(p.left), min_depth(p.right))
+    if isinstance(p, (Cut, TPlus)):
+        return max(min_depth(p.left), min_depth(p.right))
+    return 0
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Example Usage
+# ═══════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print("Tropical Curry-Howard: Algorithm Demonstrations")
-    print("=" * 50)
+    print("=== Algorithm Demonstrations ===\n")
 
-    # Test basic algorithms
-    t = cut(tmin(atom(1), atom(3)), tmin(atom(2), atom(4)))
-    stats = normalization_stats(t)
-    print(f"\nInput: {t}")
-    for k, v in stats.items():
-        print(f"  {k}: {v}")
+    # Example 1: Basic normalization
+    term = Cut(TMin(Atom(1), Atom(5)), TMin(Atom(2), Atom(3)))
+    nf, trace = reduce_fully(term)
+    print(f"Term: {term}")
+    print(f"Normal form: {nf}")
+    print(f"Reduction steps: {len(trace) - 1}")
+    print(f"Interp decrease: {interp(trace[0])} → {interp(trace[-1])}")
+    print()
 
-    # Critical pair analysis
-    print(f"\nCritical Pair Analysis:")
-    cp = analyze_critical_pair()
-    for k, v in cp.items():
-        print(f"  {k}: {v}")
+    # Example 2: Shortest path
+    graph = {
+        'S': [('A', 1), ('B', 4)],
+        'A': [('B', 2), ('T', 6)],
+        'B': [('T', 3)],
+        'T': []
+    }
+    print(f"Graph: S→A(1), S→B(4), A→B(2), A→T(6), B→T(3)")
+    term = encode_graph_paths(graph, 'S', 'T')
+    if term:
+        print(f"Tropical encoding: {term}")
+        nf = normalize(term)
+        dij = shortest_path_dijkstra(graph, 'S', 'T')
+        print(f"Tropical normalization: {nf} (cost = {cost(nf)})")
+        print(f"Dijkstra result: {dij}")
+        print(f"Match: {'✓' if cost(nf) == dij else '✗'}")
+    print()
+
+    # Example 3: Term statistics
+    big_term = Cut(
+        TMin(Cut(Atom(1), Atom(2)), TPlus(Atom(3), Atom(1))),
+        TMin(Atom(5), Cut(Atom(2), Atom(1)))
+    )
+    print(f"Term: {big_term}")
+    print(f"  Size: {term_size(big_term)}")
+    print(f"  Depth: {term_depth(big_term)}")
+    print(f"  Min-depth: {min_depth(big_term)}")
+    print(f"  Cost: {cost(big_term)}")
+    print(f"  Interp: {interp(big_term)}")
+    nf, trace = reduce_fully(big_term)
+    print(f"  Reduction steps to normal form: {len(trace) - 1}")
+    print(f"  Normal form: {nf}")
