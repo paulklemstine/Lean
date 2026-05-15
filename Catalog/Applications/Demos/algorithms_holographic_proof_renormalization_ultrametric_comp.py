@@ -1,136 +1,72 @@
 #!/usr/bin/env python3
 """
-Algorithms for Holographic Proof Renormalization
+Holographic Proof Renormalization — Core Algorithms
 
-Implements the core algorithms from the research paper with
-full docstrings, type hints, and complexity analysis.
+Implements the algorithmic content of the renormalization framework:
+1. Proof renormalization with convergence tracking
+2. Semantic codebook search for approximate theoremhood
+3. Ultrametric-based proof clustering
+4. p-adic complexity analysis
 """
 
-from dataclasses import dataclass
-from typing import List, Set, FrozenSet, Optional, Tuple, Callable, Iterator
-import itertools
-from math import gcd
+from dataclasses import dataclass, field
+from typing import List, Tuple, Set, FrozenSet, Optional, Dict, Iterator
+import math
 
 
-# ============================================================
+# ═══════════════════════════════════════════════════════════════
 # Core Data Structures
-# ============================================================
+# ═══════════════════════════════════════════════════════════════
 
 @dataclass(frozen=True)
 class ProofSketch:
     """
-    A proof sketch: a finite sequence of rule-cost steps targeting a goal.
+    A proof sketch: a finite sequence of rule-costs and a goal identifier.
 
-    Attributes:
-        steps: Tuple of non-negative integers representing step costs
-        goal_id: Identifier for the proof target
-
-    This is the fundamental combinatorial object in the theory.
-    Proof sketches live in a discrete space equipped with:
-    - A complexity functional (sum of steps)
-    - A semantic signature (set of distinct step types)
-    - An ultrametric distance
+    This is the fundamental object of non-Archimedean proof theory.
+    Each step represents a rule application with associated cost.
     """
-    steps: tuple
-    goal_id: int
+    steps: Tuple[int, ...]
+    goal_id: int = 0
 
-    @property
     def complexity(self) -> int:
-        """Sum of all step costs. O(n) where n = len(steps)."""
+        """Total complexity: sum of all step costs."""
         return sum(self.steps)
 
-    @property
-    def semantic_signature(self) -> frozenset:
-        """Set of distinct step types used. O(n)."""
+    def semantic_signature(self) -> FrozenSet[int]:
+        """The set of distinct rule-costs used."""
         return frozenset(self.steps)
 
-    @property
     def length(self) -> int:
         """Number of steps."""
         return len(self.steps)
 
 
-# ============================================================
-# Algorithm 1: Ultrametric Proof Distance
-# ============================================================
-
-def ultrametric_distance(P: ProofSketch, Q: ProofSketch) -> int:
-    """
-    Compute the ultrametric proof distance.
-
-    d(P, Q) = 0 if P = Q, else 1 + max(complexity(P), complexity(Q))
-
-    This satisfies the strong (ultrametric) triangle inequality:
-        d(P, R) ≤ max(d(P, Q), d(Q, R))
-
-    Time complexity: O(n + m) where n, m are lengths of P, Q
-    Space complexity: O(1)
-
-    Args:
-        P: First proof sketch
-        Q: Second proof sketch
-
-    Returns:
-        Non-negative integer distance
-
-    >>> P = ProofSketch((1,2,3), 0)
-    >>> Q = ProofSketch((4,5), 0)
-    >>> ultrametric_distance(P, P)
-    0
-    >>> ultrametric_distance(P, Q)
-    10
-    """
-    if P == Q:
-        return 0
-    return 1 + max(P.complexity, Q.complexity)
+@dataclass
+class RenormOrbit:
+    """Records the orbit of a proof sketch under renormalization."""
+    initial: ProofSketch
+    iterates: List[ProofSketch] = field(default_factory=list)
+    fixed_point_index: Optional[int] = None
+    complexities: List[int] = field(default_factory=list)
 
 
-def semantic_distance(P: ProofSketch, Q: ProofSketch) -> int:
-    """
-    Compute the semantic distance (symmetric difference of signatures).
-
-    Time complexity: O(n + m)
-    Space complexity: O(n + m)
-
-    >>> P = ProofSketch((1,2,3), 0)
-    >>> Q = ProofSketch((2,3,4), 0)
-    >>> semantic_distance(P, Q)
-    2
-    """
-    sig_p = P.semantic_signature
-    sig_q = Q.semantic_signature
-    return len(sig_p - sig_q) + len(sig_q - sig_p)
-
-
-# ============================================================
-# Algorithm 2: Renormalization Step (Deduplication)
-# ============================================================
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 1: Proof Renormalization with Convergence Tracking
+# ═══════════════════════════════════════════════════════════════
 
 def renorm_step(P: ProofSketch) -> ProofSketch:
     """
-    Apply one step of proof renormalization via deduplication.
+    Renormalization step: deduplicate proof steps.
 
-    Removes duplicate steps while preserving order of first occurrences.
-    This is a concrete instance of a complexity-reducing, semantics-preserving
-    renormalization operator.
-
-    Properties (proved formally):
-    - Complexity non-increasing: complexity(renorm(P)) ≤ complexity(P)
-    - Semantics preserving: signature(renorm(P)) = signature(P)
-    - Idempotent: renorm(renorm(P)) = renorm(P)
-
-    Time complexity: O(n)
+    Time complexity: O(n) where n = len(P.steps)
     Space complexity: O(n)
 
-    Args:
-        P: Input proof sketch
-
-    Returns:
-        Deduplicated proof sketch
-
-    >>> P = ProofSketch((3,1,4,1,5,9,2,6,5,3,5), 0)
-    >>> renorm_step(P)
-    ProofSketch(steps=(3, 1, 4, 5, 9, 2, 6), goal_id=0)
+    This is a concrete instance of an RG operator that:
+    - Never increases complexity (monotonicity)
+    - Strictly decreases complexity off fixed points (strict descent)
+    - Preserves semantic signature exactly (semantic stability)
+    - Is idempotent (reaches fixed point in one step)
     """
     seen: set = set()
     deduped: list = []
@@ -141,317 +77,296 @@ def renorm_step(P: ProofSketch) -> ProofSketch:
     return ProofSketch(steps=tuple(deduped), goal_id=P.goal_id)
 
 
-# ============================================================
-# Algorithm 3: Iterated Renormalization to Fixed Point
-# ============================================================
-
-def renormalize_to_fixed_point(
-    P: ProofSketch,
-    renorm: Callable[[ProofSketch], ProofSketch] = renorm_step,
-    max_iter: Optional[int] = None
-) -> Tuple[ProofSketch, int, List[ProofSketch]]:
+def compute_orbit(F, P: ProofSketch, max_steps: Optional[int] = None) -> RenormOrbit:
     """
-    Iterate a renormalization operator until a fixed point is reached.
+    Compute the full renormalization orbit of P under F.
 
-    By the Convergence Theorem (renorm_eventually_fixed_of_strict_descent),
-    if renorm strictly decreases complexity at non-fixed points, this
-    terminates in at most complexity(P) steps.
+    By the convergence theorem, this terminates in at most
+    complexity(P) steps for any strict-descent operator F.
 
-    Time complexity: O(C * T) where C = complexity(P), T = cost per step
-    Space complexity: O(C * n) for storing the orbit
+    Time complexity: O(C(P) * T_F) where T_F is cost of one F application
+    Space complexity: O(C(P) * S_P) where S_P is size of one proof sketch
 
     Args:
-        P: Starting proof sketch
-        renorm: Renormalization operator (default: deduplication)
-        max_iter: Safety bound on iterations (default: complexity + 1)
+        F: Renormalization operator
+        P: Initial proof sketch
+        max_steps: Override for maximum iterations (default: complexity(P))
 
     Returns:
-        (fixed_point, num_iterations, orbit)
-
-    >>> P = ProofSketch((3,1,4,1,5,9,2,6,5,3,5), 0)
-    >>> fp, n, orbit = renormalize_to_fixed_point(P)
-    >>> fp.steps
-    (3, 1, 4, 5, 9, 2, 6)
-    >>> n
-    1
+        RenormOrbit with full trajectory and fixed point index
     """
-    if max_iter is None:
-        max_iter = P.complexity + 1
-
-    orbit = [P]
+    bound = max_steps if max_steps is not None else P.complexity()
+    orbit = RenormOrbit(initial=P)
     current = P
-    for i in range(max_iter):
-        next_p = renorm(current)
+
+    for i in range(bound + 1):
+        orbit.iterates.append(current)
+        orbit.complexities.append(current.complexity())
+        next_p = F(current)
         if next_p == current:
-            return current, i, orbit
+            orbit.fixed_point_index = i
+            break
         current = next_p
-        orbit.append(current)
 
-    raise RuntimeError(f"Did not converge in {max_iter} iterations")
+    return orbit
 
 
-# ============================================================
-# Algorithm 4: Bounded Codebook Generation
-# ============================================================
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 2: Semantic Codebook Search
+# ═══════════════════════════════════════════════════════════════
 
 def generate_bounded_codebook(
+    max_step_value: int,
     max_length: int,
-    max_value: int,
     goal_id: int = 0
-) -> List[ProofSketch]:
+) -> Iterator[ProofSketch]:
     """
-    Generate all proof sketches with bounded length and step values.
+    Generate all proof sketches in the bounded codebook.
 
-    The codebook has size (max_value + 1)^0 + ... + (max_value + 1)^max_length
-    = ((max_value + 1)^(max_length + 1) - 1) / max_value.
+    Yields all proof sketches with:
+    - Steps drawn from {0, 1, ..., max_step_value - 1}
+    - Length at most max_length
+    - Fixed goal_id
 
-    Time complexity: O(V^L) where V = max_value + 1, L = max_length
-    Space complexity: O(V^L * L)
+    Total codebook size: sum_{k=0}^{max_length} max_step_value^k
 
-    Args:
-        max_length: Maximum number of steps
-        max_value: Maximum value per step
-        goal_id: Goal identifier for all generated sketches
-
-    Returns:
-        List of all bounded proof sketches
-
-    >>> len(generate_bounded_codebook(2, 1, 0))
-    7
+    Time complexity: O(codebook_size)
+    Space complexity: O(max_length) per sketch (generator)
     """
-    codebook = []
+    from itertools import product as iterproduct
+
     for length in range(max_length + 1):
-        for steps in itertools.product(range(max_value + 1), repeat=length):
-            codebook.append(ProofSketch(steps=steps, goal_id=goal_id))
-    return codebook
+        if length == 0:
+            yield ProofSketch(steps=(), goal_id=goal_id)
+        else:
+            for steps in iterproduct(range(max_step_value), repeat=length):
+                yield ProofSketch(steps=steps, goal_id=goal_id)
 
 
-# ============================================================
-# Algorithm 5: Decidable Approximate Theoremhood Search
-# ============================================================
-
-def search_approx_theorem(
-    epsilon: int,
+def search_approximate_proofs(
     target: FrozenSet[int],
-    codebook: List[ProofSketch]
-) -> Optional[ProofSketch]:
+    epsilon: int,
+    max_step_value: int,
+    max_length: int,
+    goal_id: int = 0,
+    max_results: int = 100
+) -> List[Tuple[ProofSketch, int]]:
     """
-    Search for an ε-approximate proof in a finite codebook.
+    Search for ε-approximate proofs in the bounded codebook.
 
-    A proof P is ε-approximate if:
-        |signature(P) \\ target| + |target \\ signature(P)| ≤ ε
+    An approximate proof P satisfies:
+        |sig(P) \\ target| + |target \\ sig(P)| ≤ ε
 
-    By the Decidability Theorem (decidable_bounded_approx_theoremhood),
-    this search always terminates with a definite answer.
+    This is the decidable bounded approximate theoremhood algorithm.
 
-    Time complexity: O(|codebook| * (max_sig_size + |target|))
-    Space complexity: O(max_sig_size + |target|)
-
-    Args:
-        epsilon: Approximation tolerance
-        target: Target semantic signature
-        codebook: Finite set of candidate proofs
+    Time complexity: O(codebook_size * |target|)
+    Space complexity: O(max_results * max_length)
 
     Returns:
-        A matching proof sketch, or None if no ε-approximate proof exists
-
-    >>> target = frozenset({1, 3, 5})
-    >>> codebook = generate_bounded_codebook(3, 5)
-    >>> result = search_approx_theorem(0, target, codebook)
-    >>> result is not None
-    True
+        List of (proof, symmetric_difference) pairs, sorted by complexity
     """
-    for P in codebook:
-        sig = P.semantic_signature
-        dist = len(sig - target) + len(target - sig)
-        if dist <= epsilon:
-            return P
-    return None
+    results = []
+    for P in generate_bounded_codebook(max_step_value, max_length, goal_id):
+        sig = P.semantic_signature()
+        sym_diff = len(sig - target) + len(target - sig)
+        if sym_diff <= epsilon:
+            results.append((P, sym_diff))
+            if len(results) >= max_results * 10:  # Collect extras for sorting
+                break
+
+    results.sort(key=lambda x: (x[1], x[0].complexity()))
+    return results[:max_results]
 
 
-def search_all_approx_theorems(
-    epsilon: int,
-    target: FrozenSet[int],
-    codebook: List[ProofSketch]
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 3: Ultrametric Proof Clustering
+# ═══════════════════════════════════════════════════════════════
+
+def proof_distance(P: ProofSketch, Q: ProofSketch) -> int:
+    """Ultrametric-style distance based on complexity difference."""
+    return abs(P.complexity() - Q.complexity())
+
+
+def semantic_distance(P: ProofSketch, Q: ProofSketch) -> int:
+    """Symmetric difference of semantic signatures."""
+    sig_p = P.semantic_signature()
+    sig_q = Q.semantic_signature()
+    return len(sig_p - sig_q) + len(sig_q - sig_p)
+
+
+def cluster_by_signature(proofs: List[ProofSketch]) -> Dict[FrozenSet[int], List[ProofSketch]]:
+    """
+    Cluster proofs by semantic signature (exact semantic equivalence).
+
+    Two proofs in the same cluster are semantically equivalent under
+    the eraseDups renormalization — they normalize to proofs with
+    the same set of rule-costs.
+
+    Time complexity: O(n * max_length) where n = len(proofs)
+    Space complexity: O(n * max_length)
+    """
+    clusters: Dict[FrozenSet[int], List[ProofSketch]] = {}
+    for P in proofs:
+        sig = P.semantic_signature()
+        if sig not in clusters:
+            clusters[sig] = []
+        clusters[sig].append(P)
+    return clusters
+
+
+def find_canonical_representatives(
+    proofs: List[ProofSketch]
 ) -> List[ProofSketch]:
     """
-    Find ALL ε-approximate proofs in a finite codebook.
+    Find canonical (minimal complexity) representatives for each
+    semantic equivalence class.
 
-    Returns them sorted by complexity (ascending).
+    This implements the variational principle: the fixed point
+    of renormalization is the minimal-complexity representative.
 
-    >>> target = frozenset({1, 2})
-    >>> cb = generate_bounded_codebook(2, 3)
-    >>> results = search_all_approx_theorems(0, target, cb)
-    >>> all(r.semantic_signature == target for r in results)
-    True
+    Time complexity: O(n * max_length)
+    Space complexity: O(n)
     """
-    matches = []
-    for P in codebook:
-        sig = P.semantic_signature
-        dist = len(sig - target) + len(target - sig)
-        if dist <= epsilon:
-            matches.append(P)
-    matches.sort(key=lambda P: P.complexity)
-    return matches
+    clusters = cluster_by_signature(proofs)
+    representatives = []
+    for sig, cluster in clusters.items():
+        # The canonical representative has minimal complexity
+        canonical = min(cluster, key=lambda P: P.complexity())
+        representatives.append(canonical)
+    return sorted(representatives, key=lambda P: P.complexity())
 
 
-# ============================================================
-# Algorithm 6: Renormalized Codebook (Canonical Representatives)
-# ============================================================
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 4: p-adic Complexity Analysis
+# ═══════════════════════════════════════════════════════════════
 
-def canonical_codebook(
-    codebook: List[ProofSketch],
-    renorm: Callable[[ProofSketch], ProofSketch] = renorm_step
-) -> List[ProofSketch]:
+def padic_valuation(n: int, p: int) -> int:
     """
-    Compute the canonical (renormalized) codebook.
-
-    Maps each proof to its fixed point under renormalization,
-    then deduplicates. This is the "holographic compression" of
-    the original codebook.
-
-    By renorm_preserves_approx_theoremhood, the canonical codebook
-    decides the same approximate theoremhood questions.
-
-    Time complexity: O(|codebook| * C * T) where C = max complexity, T = step cost
-    Space complexity: O(|codebook|)
-
-    Args:
-        codebook: Original codebook
-        renorm: Renormalization operator
-
-    Returns:
-        Deduplicated list of canonical representatives
-    """
-    canonical = set()
-    for P in codebook:
-        fp, _, _ = renormalize_to_fixed_point(P, renorm)
-        canonical.add(fp)
-    result = sorted(canonical, key=lambda P: (P.complexity, P.steps))
-    return result
-
-
-# ============================================================
-# Algorithm 7: p-adic Complexity
-# ============================================================
-
-def padic_valuation(p: int, n: int) -> int:
-    """
-    Compute the p-adic valuation v_p(n).
-
-    v_p(0) is defined as infinity (returned as -1 here).
-    v_p(n) = largest k such that p^k divides n.
-
-    Time complexity: O(log_p(n))
-    Space complexity: O(1)
-
-    Args:
-        p: Prime number
-        n: Non-negative integer
-
-    Returns:
-        p-adic valuation (or -1 for n=0)
-
-    >>> padic_valuation(2, 8)
-    3
-    >>> padic_valuation(3, 9)
-    2
-    >>> padic_valuation(5, 7)
-    0
+    Compute the p-adic valuation of n.
+    Returns the largest k such that p^k divides n.
+    For n = 0, returns infinity (represented as -1).
     """
     if n == 0:
-        return -1  # infinity
-    v = 0
+        return -1  # Convention for infinity
+    if p < 2:
+        raise ValueError(f"p must be prime, got {p}")
+    val = 0
     while n % p == 0:
-        v += 1
+        val += 1
         n //= p
-    return v
+    return val
 
 
 def padic_complexity(p: int, P: ProofSketch) -> int:
     """
     p-adic complexity: v_p(complexity(P) + 1).
 
-    This is a valuation-theoretic complexity measure that captures
-    the p-adic "depth" of a proof's complexity.
-
-    >>> P = ProofSketch((1, 2, 4), 0)  # complexity = 7, v_2(8) = 3
-    >>> padic_complexity(2, P)
-    3
+    Measures how "p-adically smooth" the proof complexity is.
+    Higher p-adic complexity means the proof complexity + 1 is
+    highly divisible by p.
     """
-    return padic_valuation(p, P.complexity + 1)
+    return padic_valuation(P.complexity() + 1, p)
 
 
-# ============================================================
-# Algorithm 8: Compression Ratio Analysis
-# ============================================================
-
-def compression_analysis(
-    codebook: List[ProofSketch],
-    universe: Optional[Set[int]] = None
-) -> dict:
+def padic_distance(p: int, P: ProofSketch, Q: ProofSketch) -> float:
     """
-    Analyze the compression achieved by renormalization.
+    p-adic distance between proofs: p^{-v_p(|c(P) - c(Q)|)}.
 
-    Computes statistics on codebook size, signature diversity,
-    and compression ratios before and after renormalization.
-
-    Args:
-        codebook: List of proof sketches
-        universe: Optional universe of step values
-
-    Returns:
-        Dictionary with compression statistics
+    Returns 0 if complexities are equal.
     """
-    # Before renormalization
-    signatures_before = {P.semantic_signature for P in codebook}
-    total_complexity_before = sum(P.complexity for P in codebook)
+    diff = abs(P.complexity() - Q.complexity())
+    if diff == 0:
+        return 0.0
+    val = padic_valuation(diff, p)
+    return p ** (-val)
 
-    # After renormalization
-    canonical = canonical_codebook(codebook)
-    signatures_after = {P.semantic_signature for P in canonical}
-    total_complexity_after = sum(P.complexity for P in canonical)
 
-    # Universe bound
-    if universe is None:
-        universe = set()
-        for P in codebook:
-            universe.update(P.steps)
-    n = len(universe)
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 5: Rate-Distortion Analysis
+# ═══════════════════════════════════════════════════════════════
 
-    return {
-        "codebook_size_before": len(codebook),
-        "codebook_size_after": len(canonical),
-        "compression_ratio": len(codebook) / max(1, len(canonical)),
-        "signatures_before": len(signatures_before),
-        "signatures_after": len(signatures_after),
-        "universe_size": n,
-        "theoretical_bound": 2 ** n,
-        "bound_satisfied": len(signatures_after) <= 2 ** n,
-        "total_complexity_before": total_complexity_before,
-        "total_complexity_after": total_complexity_after,
-        "complexity_reduction": 1 - total_complexity_after / max(1, total_complexity_before),
-    }
+def rate_distortion_curve(
+    proofs: List[ProofSketch],
+    target: FrozenSet[int],
+    max_rate: int
+) -> List[Tuple[int, int]]:
+    """
+    Compute the rate-distortion curve for proof compression.
 
+    Rate = complexity (code length analog)
+    Distortion = semantic distance to target
+
+    Returns pairs (rate, min_distortion) showing the tradeoff
+    between proof complexity and semantic accuracy.
+
+    Time complexity: O(n * log(n))
+    """
+    # Compute (complexity, distortion) for each proof
+    points = []
+    for P in proofs:
+        sig = P.semantic_signature()
+        dist = len(sig - target) + len(target - sig)
+        points.append((P.complexity(), dist))
+
+    # For each rate budget, find minimum achievable distortion
+    curve = []
+    for rate in range(max_rate + 1):
+        feasible = [d for c, d in points if c <= rate]
+        min_dist = min(feasible) if feasible else len(target)
+        curve.append((rate, min_dist))
+
+    return curve
+
+
+# ═══════════════════════════════════════════════════════════════
+# Example Usage
+# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    # Quick self-test
-    P = ProofSketch((3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5), 0)
-    print(f"Original: {P}, complexity={P.complexity}")
+    print("Holographic Proof Renormalization — Algorithm Suite")
+    print("=" * 60)
 
-    fp, n, orbit = renormalize_to_fixed_point(P)
-    print(f"Fixed point: {fp}, complexity={fp.complexity}, iterations={n}")
+    # Example 1: Orbit computation
+    P = ProofSketch(steps=(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5), goal_id=0)
+    orbit = compute_orbit(renorm_step, P)
+    print(f"\nOrbit of {P}:")
+    for i, (iterate, c) in enumerate(zip(orbit.iterates, orbit.complexities)):
+        print(f"  F^[{i}]: complexity={c}, steps={list(iterate.steps)}")
+    print(f"  Fixed point at index: {orbit.fixed_point_index}")
 
-    # Codebook test
-    cb = generate_bounded_codebook(3, 3)
-    print(f"Codebook size (length≤3, val≤3): {len(cb)}")
-
+    # Example 2: Codebook search
     target = frozenset({1, 2, 3})
-    result = search_approx_theorem(0, target, cb)
-    print(f"Exact match for {{{', '.join(map(str, sorted(target)))}}}: {result}")
+    results = search_approximate_proofs(target, epsilon=1, max_step_value=5, max_length=4)
+    print(f"\nApproximate proofs for target {sorted(target)}, ε=1:")
+    for P, sd in results[:5]:
+        print(f"  {P} (sym_diff={sd}, complexity={P.complexity()})")
 
-    # Compression analysis
-    stats = compression_analysis(cb)
-    print(f"\nCompression analysis:")
-    for k, v in stats.items():
-        print(f"  {k}: {v}")
+    # Example 3: Clustering
+    proofs = [
+        ProofSketch((1, 2, 3), 0),
+        ProofSketch((3, 2, 1), 0),
+        ProofSketch((1, 2, 3, 1), 0),
+        ProofSketch((4, 5), 0),
+        ProofSketch((5, 4, 5), 0),
+    ]
+    clusters = cluster_by_signature(proofs)
+    print(f"\nSemantic clusters:")
+    for sig, cluster in clusters.items():
+        print(f"  Signature {sorted(sig)}: {[list(p.steps) for p in cluster]}")
+
+    reps = find_canonical_representatives(proofs)
+    print(f"  Canonical representatives: {[list(r.steps) for r in reps]}")
+
+    # Example 4: p-adic analysis
+    print(f"\np-adic complexity (p=2):")
+    for P in proofs:
+        pc = padic_complexity(2, P)
+        print(f"  {list(P.steps)}: complexity={P.complexity()}, v_2({P.complexity()+1})={pc}")
+
+    # Example 5: Rate-distortion
+    all_proofs = list(generate_bounded_codebook(4, 3, 0))
+    curve = rate_distortion_curve(all_proofs[:500], frozenset({1, 2, 3}), 10)
+    print(f"\nRate-distortion curve for target {{1,2,3}}:")
+    for rate, dist in curve:
+        bar = "█" * (10 - dist) + "░" * dist
+        print(f"  Rate {rate:2d}: min_distortion={dist}  {bar}")
