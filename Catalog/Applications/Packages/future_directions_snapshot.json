@@ -899,22 +899,6 @@
     "timestamp": "2026-05-14T16:17:21.765666+00:00"
   },
   {
-    "id": "fd_0110",
-    "title": "Documents cross-domain connections",
-    "description": "explicitly, maintaining the bridge between proof theory, algebra, and applications.",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b8bbbc75",
-    "consumed_by_exp_id": "eb845453",
-    "timestamp": "2026-05-14T16:17:21.772264+00:00"
-  },
-  {
     "id": "fd_0137",
     "title": "Horizon stability",
     "description": ": Small perturbations of edge weights produce small changes in the horizon location (Lipschitz stability).\n\n### Proof Strategy\nLeverage Mathlib's existing graph theory for max-flow min-cut. The tropical entropy bound should follow from counting arguments and the min-cut structure.\n\n### Cross-Domain Connections\n- Bekenstein–Hawking entropy in black hole thermodynamics\n- Network reliability and fault tolerance\n- Information-theoretic security (wiretap channels)\n- Ryu–Takayanagi formula in holographic entanglement entropy\n\n---\n\n## Direction 3: Tropical Einstein–Maxwell Systems on Weighted Graphs\n\n### Hypothesis\nExtend the tropical Einstein equation to include a \"gauge field\" (a second weight matrix `A : Matrix (Fin n) (Fin n) ℝ` representing electromagnetic potential). The coupled system has ",
@@ -1571,6 +1555,77 @@
     "source_exp_id": "c65fa1b5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:33:54.034482+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Matrix multiplication",
+    "description": "→ algebraic infrastructure for multi-step costs",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb845453",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:34.434564+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Subadditivity",
+    "description": "→ composition law for enriched categories",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb845453",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:34.441092+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Tropical rank",
+    "description": "→ entropy-free information measure",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb845453",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:34.447014+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Certified argmin",
+    "description": "→ computational extraction of witnesses",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb845453",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:34.453781+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "Bellman equation",
+    "description": "→ dynamic programming for proof/crypto search",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb845453",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:34.460917+00:00"
   },
   {
     "id": "seed_078",

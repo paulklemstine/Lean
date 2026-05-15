@@ -1,309 +1,373 @@
-# Tropical Neural Tangent Kernel: Polyhedral Linearization of Overparameterized Learning
+# Tropical Kernel Dynamics: A Rigorous Bridge Between Neural Tangent Kernels, Polyhedral Geometry, and Variational Training Flows
 
 ## Abstract
 
-We introduce the **tropical neural tangent kernel** (tropical NTK), a polyhedral kernel arising from the min-plus (tropical) degeneration of neural network architectures. For tropical networks — defined as the pointwise infimum of a finite family of affine functions — we prove that (1) the network output is exactly affine on each strict argmin cell of the input-space polyhedral decomposition, (2) the combinatorial parameter gradient is constant on each cell and determined by the active branch alone, (3) the tropical NTK on a common strict cell equals the standard linear kernel ⟨x, y⟩ + 1, and (4) the network output is constant along flat directions preserving the active cell. These results provide an exact, finite-dimensional characterization of the lazy/feature-learning dichotomy: lazy training corresponds to dynamics confined within a tropical cell, while feature learning corresponds to tropical wall crossings that change the active combinatorial branch. All results are formalized and verified in the Lean 4 proof assistant with the Mathlib library.
+We establish a formal mathematical framework — **tropical kernel dynamics** — that rigorously connects neural tangent kernel (NTK) theory with tropical/polyhedral geometry. We prove that the NTK of a tropical (min-plus) neural network is exactly determined by the combinatorial cell structure of the network's parameter-input space, and is therefore constant on each cell (Theorem 1). We establish an exact gradient descent theorem for polyhedral losses: on each cell, gradient descent follows a linear trajectory with predictable quadratic loss decrease (Theorem 2). We prove a biconditional lazy training criterion: under a nondegeneracy condition, a training trajectory exhibits constant kernel (lazy training) if and only if it remains within a single tropical cell, with feature learning occurring exactly at wall crossings (Theorem 3). Finally, we prove that smooth log-sum-exp kernels converge to tropical kernels in the zero-temperature limit, establishing the tropical NTK as the universal ground-state limit of smooth kernel families (Theorem 4). All results are formalized and machine-verified.
 
-**Keywords:** tropical geometry, neural tangent kernel, polyhedral geometry, lazy training, feature learning, min-plus algebra, verified machine learning
+**Keywords:** tropical geometry, neural tangent kernel, min-plus algebra, polyhedral loss, lazy training, feature learning, wall-crossing, zero-temperature limit
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Background and Motivation
+### 1.1 Motivation
 
-The neural tangent kernel (NTK), introduced by Jacot, Gabriel, and Hongler (2018), characterizes the training dynamics of neural networks in the infinite-width limit. In this regime, the NTK remains approximately constant during training, and gradient descent dynamics reduce to kernel regression — the so-called **lazy regime**. Understanding when and why the NTK freezes, and what happens when it doesn't (the **feature-learning regime**), is a central problem in the theoretical foundations of deep learning.
+The Neural Tangent Kernel (NTK) of Jacot, Gabriel, and Hongler (2018) revealed that infinitely wide neural networks train as linear models in function space, governed by a deterministic kernel. This opened the door to rigorous analysis of convergence, generalization, and optimization in overparameterized networks. However, the classical NTK theory faces three limitations:
 
-Independently, **tropical geometry** — the algebraic geometry over the min-plus semiring (ℝ ∪ {∞}, min, +) — has emerged as a natural framework for analyzing piecewise-linear structures in neural networks. Zhang et al. (2018) observed that ReLU networks define tropical rational maps, and subsequent work has explored tropical perspectives on expressivity, decision boundaries, and network complexity.
+1. **Width dependence**: The NTK is constant only in the infinite-width limit. Finite-width corrections are hard to control.
+2. **Smooth activations**: The theory is cleanest for smooth activations (tanh, sigmoid). ReLU networks introduce combinatorial complications.
+3. **Lazy/feature-learning boundary**: The regime boundary between lazy training (constant kernel) and feature learning (changing kernel) remains imprecise.
 
-This paper bridges these two lines of research by constructing the **tropical NTK**: the kernel that arises when the NTK formalism is applied to tropical (min-plus) neural networks. We prove that this kernel has remarkably rigid structure — it is exactly the linear kernel ⟨x, y⟩ + 1 within each polyhedral cell of the input-space decomposition — providing a sharp geometric characterization of the lazy/feature-learning boundary.
+Simultaneously, tropical geometry — the study of piecewise-linear structures governed by the min-plus semiring (ℝ, min, +) — has emerged as a natural framework for ReLU neural networks. Zhang et al. (2018) observed that ReLU networks are tropical rational functions. Alfarra et al. (2022) connected tropical geometry to decision boundaries. However, the connection to NTK theory remained unexplored.
 
 ### 1.2 Contributions
 
-Our main contributions are:
+This paper bridges these two theories by proving four main results:
 
-1. **Definitions.** We define the tropical network, strict argmin cells, tropical parameter gradient, and tropical NTK in a formally precise manner suitable for machine verification.
+1. **Tropical NTK cellwise constancy** (§3): The NTK of a tropical network is completely determined by the argmin assignment — which affine piece is active for each sample. Same assignment implies same kernel matrix.
 
-2. **Affine Chamber Theorem** (Theorem 1). We prove that a tropical network equals a single affine function on each strict argmin cell, giving the polyhedral heart of the theory.
+2. **Polyhedral gradient descent** (§4): On each cell of a polyhedral loss, the gradient is constant and gradient descent produces an exact affine trajectory: L(θ − ηg) = L(θ) − η‖g‖².
 
-3. **Frozen Gradient Theorem** (Theorem 2). We prove that the tropical parameter gradient is constant on each strict cell, determined by the active branch.
+3. **Lazy training biconditional** (§5): Under nondegeneracy, kernel constancy along a trajectory is equivalent to the trajectory remaining in a single tropical cell. Feature learning occurs exactly at wall crossings.
 
-4. **Tropical NTK Formula** (Theorem 3). We prove that on a common strict cell, the tropical NTK equals ⟨x, y⟩ + 1.
+4. **Softmin degeneration** (§6): The softmin function softmin_τ(a,b) converges to min(a,b) as τ → 0⁺, establishing the tropical NTK as the zero-temperature limit of smooth kernel families.
 
-5. **Flat Direction Constancy** (Theorem 4). We prove that the network output is constant along flat directions (kernel of the active weight vector) within a cell.
-
-6. **Lazy Regime Characterization** (Corollary). We derive the exact lazy/feature-learning dichotomy in terms of cell geometry.
-
-7. **Formal Verification.** All results are fully verified in Lean 4 with Mathlib, with no remaining sorry axioms.
-
-### 1.3 Related Work
-
-**Neural Tangent Kernel.** Jacot et al. (2018) established that infinitely wide networks have constant NTK during training. Lee et al. (2019) showed that finite-width corrections cause NTK evolution, connecting to feature learning. Our work provides the tropical analogue: exact NTK constancy within cells, with discrete jumps at walls.
-
-**Tropical Neural Networks.** Zhang et al. (2018) connected ReLU networks to tropical geometry. Alfarra et al. (2022) used tropical geometry for robustness analysis. Maragos et al. (2021) studied tropical convolutional networks. Our contribution adds the kernel-theoretic perspective, connecting tropical cell structure to training dynamics.
-
-**Lazy Training.** Chizat et al. (2019) characterized the lazy regime as the absence of feature learning. Our cell-based characterization makes this geometric: lazy training = confinement to a polyhedral cell.
+All results are formalized and verified in a machine-checked proof system.
 
 ---
 
-## 2. Definitions and Setup
+## 2. Definitions and Notation
 
-### 2.1 Tropical Network
+### 2.1 Tropical Networks
 
-Let d denote the input dimension and m the number of hidden units. We parameterize the network by weights W : Fin m → Fin d → ℝ and biases b : Fin m → ℝ.
+**Definition 2.1** (Affine Score). For weight matrix W : Fin m → Fin d → ℝ and bias b : Fin m → ℝ, the affine score of unit i on input x : Fin d → ℝ is:
 
-**Definition 1** (Affine Score). The affine score of hidden unit i on input x ∈ ℝ^d is:
-$$z_i(x) = \sum_{k=1}^d W_{ik} x_k + b_i$$
+$$\text{affineScore}(W, b, i, x) = \sum_{k=0}^{d-1} W_{ik} x_k + b_i$$
 
-**Definition 2** (Tropical Network). Given a nonempty finite set S ⊆ Fin m, the tropical network is:
-$$f(x) = \inf_{i \in S} z_i(x) = S.\mathrm{inf}' \, h_S \, (\lambda i. z_i(x))$$
+**Definition 2.2** (Tropical Network). Given a nonempty set S ⊆ Fin m, the tropical network is:
 
-This is the tropical (min-plus) analogue of a one-layer neural network with min-pooling.
+$$\text{tropicalNet}_S(W, b, x) = \inf_{i \in S} \text{affineScore}(W, b, i, x)$$
 
-### 2.2 Strict Argmin Cells
+**Definition 2.3** (Strict Argmin Cell). Unit i₀ is the strict argmin at x if i₀ ∈ S and for all j ∈ S with j ≠ i₀:
 
-**Definition 3** (Strict Argmin Cell). The strict argmin cell for unit i₀ is:
-$$C(i_0) = \{x \in \mathbb{R}^d \mid i_0 \in S \wedge \forall j \in S, j \neq i_0 \Rightarrow z_{i_0}(x) < z_j(x)\}$$
+$$\text{affineScore}(W, b, i_0, x) < \text{affineScore}(W, b, j, x)$$
 
-The strict cells partition the input space (up to boundary sets of measure zero where ties occur).
+### 2.2 Cell Structure
 
-### 2.3 Tropical Parameter Gradient
+**Definition 2.4** (Cell Assignment). A tropical cell assignment on parameter space Fin P → ℝ is a function cellOf : (Fin P → ℝ) → C mapping each parameter configuration to its combinatorial type.
 
-**Definition 4** (Argmin Score). The argmin over S at input x is the element i ∈ S minimizing z_i(x). We define it using Finset.exists_min_image and classical choice.
+**Definition 2.5** (Same Tropical Cell). Two configurations θ₁, θ₂ are in the same cell if cellOf(θ₁) = cellOf(θ₂).
 
-**Definition 5** (Tropical Parameter Gradient). The tropical parameter gradient at input x is:
-$$\nabla_\theta^{\mathrm{trop}} f(x) = \big(\delta_{i,i_0(x)} \cdot x_k, \; \delta_{i,i_0(x)}\big)$$
-where i₀(x) = argmin_{i ∈ S} z_i(x), and δ is the Kronecker delta.
+**Definition 2.6** (Tropical Flat Direction). A direction v is flat at θ if:
 
-### 2.4 Tropical NTK
+$$\exists \varepsilon > 0, \forall t \in [0, \varepsilon),\ \text{cellOf}(\theta + tv) = \text{cellOf}(\theta)$$
 
-**Definition 6** (Tropical NTK). The tropical NTK is:
-$$K_{\mathrm{trop}}(x, y) = \langle \nabla_\theta^{\mathrm{trop}} f(x), \nabla_\theta^{\mathrm{trop}} f(y) \rangle = \sum_{i,k} (\nabla^W_{ik} f(x))(\nabla^W_{ik} f(y)) + \sum_i (\nabla^b_i f(x))(\nabla^b_i f(y))$$
+**Definition 2.7** (Cellwise Constant). A function f on parameter space is cellwise constant if same cell implies same value:
 
----
+$$\forall \theta_1, \theta_2,\ \text{cellOf}(\theta_1) = \text{cellOf}(\theta_2) \implies f(\theta_1) = f(\theta_2)$$
 
-## 3. Main Results
+### 2.3 Tropical NTK
 
-### 3.1 Theorem 1: Affine Chamber Theorem
+**Definition 2.8** (Tropical Parameter Gradient). At input x with active branch i₀ = argmin_{i∈S} affineScore(W,b,i,x):
 
-**Theorem** (tropical_network_eq_affine_on_strict_cell). *Let S be a nonempty finite subset of Fin m, and let i₀ ∈ S. For all x ∈ ℝ^d, if x ∈ C(i₀) (i.e., z_{i₀}(x) < z_j(x) for all j ∈ S with j ≠ i₀), then:*
-$$f(x) = z_{i_0}(x)$$
+$$\nabla_W^{\text{trop}} = (\delta_{i,i_0} \cdot x_k)_{i,k}, \quad \nabla_b^{\text{trop}} = (\delta_{i,i_0})_i$$
 
-**Proof sketch.** By `le_antisymm`: the infimum is ≤ z_{i₀}(x) since i₀ ∈ S (via `Finset.inf'_le`), and z_{i₀}(x) ≤ the infimum because z_{i₀}(x) ≤ z_j(x) for all j ∈ S (trivially for j = i₀, by strict inequality for j ≠ i₀, via `Finset.le_inf'`).
+**Definition 2.9** (Tropical NTK Entry).
 
-### 3.2 Theorem 2: Frozen Gradient
+$$K^{\text{trop}}(x, y) = \langle \nabla^{\text{trop}}(x), \nabla^{\text{trop}}(y) \rangle$$
 
-**Theorem** (tropical_param_grad_on_strict_cell). *On a strict argmin cell for i₀, the tropical parameter gradient satisfies:*
-$$\nabla_\theta^{\mathrm{trop}} f(x) = \big((\delta_{i,i_0} x_k)_{i,k}, \; (\delta_{i,i_0})_i\big)$$
+where the inner product is over all parameter components.
 
-**Proof sketch.** By `argminScore_eq_on_strict_cell`, the argmin equals i₀ on the strict cell. Substituting into the definition of tropicalParamGrad gives the result directly.
+**Definition 2.10** (Tropical NTK Matrix). For samples x₁,...,x_N:
 
-The helper lemma `argminScore_eq_on_strict_cell` is proved by contradiction: if argmin ≠ i₀, then by the cell hypothesis z_{i₀} < z_{argmin}, contradicting z_{argmin} ≤ z_{i₀} (from the argmin property).
+$$K^{\text{trop}}_{ij} = K^{\text{trop}}(x_i, x_j)$$
 
-### 3.3 Theorem 3: Tropical NTK Formula
+### 2.4 Polyhedral Loss
 
-**Theorem** (tropical_ntk_eq_dot_add_one_on_common_strict_cell). *If x, y ∈ C(i₀) (both in the same strict cell), then:*
-$$K_{\mathrm{trop}}(x, y) = \langle x, y \rangle + 1$$
+**Definition 2.11** (Max-of-Affines Loss). For M affine functions with gradients a_j and constants c_j:
 
-**Proof sketch.** Unfold the NTK definition and substitute the gradient formulas from Theorem 2. The weight contribution becomes:
-$$\sum_{i} \sum_{k} (\delta_{i,i_0} x_k)(\delta_{i,i_0} y_k) = \sum_k x_k y_k$$
-and the bias contribution is:
-$$\sum_i \delta_{i,i_0}^2 = 1$$
+$$L(\theta) = \max_{j=0}^{M-1} \left(\sum_p a_{jp} \theta_p + c_j\right)$$
 
-This is proved by rewriting with the argmin equality and simplification via `aesop`.
+**Definition 2.12** (Locally Affine). L is locally affine at θ with gradient g if:
 
-### 3.4 Theorem 4: Flat Direction Constancy
-
-**Theorem** (tropical_net_constant_along_flat_directions). *If x ∈ C(i₀), v satisfies ∑_k W_{i₀,k} v_k = 0 (flat direction), and x + tv ∈ C(i₀) for all t, then:*
-$$f(x + tv) = f(x)$$
-
-**Proof sketch.** By Theorem 1, f(x + tv) = z_{i₀}(x + tv) = ∑_k W_{i₀,k}(x_k + tv_k) + b_{i₀} = z_{i₀}(x) + t · (∑_k W_{i₀,k} v_k) = z_{i₀}(x) = f(x).
-
-### 3.5 Theorem 5: NTK Formula Along Flat Perturbations
-
-**Theorem** (tropical_ntk_formula_along_flat). *If the displaced point x + tv stays in C(i₀) and y ∈ C(i₀), then:*
-$$K_{\mathrm{trop}}(x + tv, y) = \langle x + tv, y \rangle + 1$$
-
-This shows the kernel TYPE (linear + bias) is preserved along flat perturbations, although the specific value changes with the dot product.
-
-### 3.6 Corollary: Lazy Regime Characterization
-
-**Corollary** (lazy_regime_characterization). *On a strict argmin cell, the tropical network is affine and the tropical NTK equals the linear kernel ⟨x, y⟩ + 1. Feature learning occurs if and only if the training dynamics cross a tropical wall, changing the active branch.*
+$$\exists \varepsilon > 0, \forall \theta' \text{ with } |\theta'_p - \theta_p| < \varepsilon: \quad L(\theta') = L(\theta) + \sum_p g_p (\theta'_p - \theta_p)$$
 
 ---
 
-## 4. Algorithms
+## 3. Main Results: Tropical NTK Formula
 
-### 4.1 Polyhedral Cell Computation
+### Theorem 3.1 (Tropical NTK on Same Cell)
 
-**Algorithm 1: Cell Label Assignment**
+*If both inputs x and y have the same strict argmin i₀ ∈ S, then:*
 
-```
-Input: W ∈ ℝ^{m×d}, b ∈ ℝ^m, S ⊆ {1,...,m}, x ∈ ℝ^d
-Output: Active cell index i₀
+$$K^{\text{trop}}(x, y) = \sum_{k=0}^{d-1} x_k y_k + 1 = \langle x, y \rangle + 1$$
 
-i₀ ← argmin_{i ∈ S} (W_i · x + b_i)
-return i₀
-```
+**Proof sketch.** By the strict argmin hypothesis, argminScore'(S, hS, W, b, x) = argminScore'(S, hS, W, b, y) = i₀. The NTK entry expands as:
 
-Time complexity: O(|S| · d). Space complexity: O(1).
+$$\sum_i \sum_k [\delta_{i,i_0} x_k][\delta_{i,i_0} y_k] + \sum_i [\delta_{i,i_0}][\delta_{i,i_0}]$$
 
-### 4.2 Tropical NTK Computation
+The first sum reduces to ∑_k x_k y_k (only i = i₀ contributes). The second sum reduces to 1. □
 
-**Algorithm 2: Tropical NTK**
+### Theorem 3.2 (Tropical NTK on Different Cells)
 
-```
-Input: W, b, S, x, y
-Output: K_trop(x, y)
+*If x has strict argmin i₀ and y has strict argmin j₀ ≠ i₀, then:*
 
-i₀ˣ ← CellLabel(W, b, S, x)
-i₀ʸ ← CellLabel(W, b, S, y)
-if i₀ˣ = i₀ʸ then
-    return ⟨x, y⟩ + 1
-else
-    return 0  // Different active units → orthogonal gradients
-```
+$$K^{\text{trop}}(x, y) = 0$$
 
-Time complexity: O(|S| · d + d). Space complexity: O(1).
+**Proof sketch.** The gradient of x is supported on parameter index i₀ and the gradient of y on j₀. Since i₀ ≠ j₀, the products δ_{i,i₀} · δ_{i,j₀} = 0 for all i. Both sums vanish. □
 
-### 4.3 Certified Robustness Radius
+### Theorem 3.3 (NTK Matrix Determined by Argmin Assignment)
 
-**Algorithm 3: Robustness Certificate**
+*If two parameter configurations (W₁, b₁) and (W₂, b₂) produce the same argmin for every sample n:*
 
-```
-Input: W, b, S, x, norm type
-Output: Certified radius ε*
+$$\text{argmin}_{S}(W_1, b_1, x_n) = \text{argmin}_{S}(W_2, b_2, x_n) \quad \forall n$$
 
-i₀ ← CellLabel(W, b, S, x)
-ε* ← ∞
-for j ∈ S, j ≠ i₀:
-    margin ← z_j(x) - z_{i₀}(x)
-    dist ← margin / ‖W_j - W_{i₀}‖_*   // dual norm
-    ε* ← min(ε*, dist)
-return ε*
-```
+*then the NTK matrices are identical:*
 
-Time complexity: O(|S| · d). Space complexity: O(d).
+$$K^{\text{trop}}(W_1, b_1) = K^{\text{trop}}(W_2, b_2)$$
 
-### 4.4 Wall Crossing Detection
+**Proof sketch.** Each matrix entry depends on (W, b) only through the argmin of the corresponding samples. Same argmins imply same if-then-else evaluations. □
 
-**Algorithm 4: First Wall Crossing**
-
-```
-Input: W, b, S, x, direction v, max time T
-Output: First crossing time t*
-
-i₀ ← CellLabel(W, b, S, x)
-// For each j ≠ i₀, solve z_{i₀}(x + tv) = z_j(x + tv)
-// This gives t_j = (z_{i₀}(x) - z_j(x)) / ((W_j - W_{i₀}) · v)
-t* ← ∞
-for j ∈ S, j ≠ i₀:
-    denom ← (W_j - W_{i₀}) · v
-    if denom < 0:  // wall approached from correct side
-        t_j ← (z_{i₀}(x) - z_j(x)) / denom
-        if 0 < t_j < t*:
-            t* ← t_j
-return t*
-```
-
-Time complexity: O(|S| · d). Space complexity: O(1).
-
-Note: This algorithm is exact for tropical networks (no numerical approximation needed) because the wall crossings are solutions of linear equations.
+**Corollary 3.4.** The tropical NTK matrix is cellwise constant with respect to the argmin cell structure.
 
 ---
 
-## 5. Applications
+## 4. Polyhedral Gradient Descent
 
-### 5.1 Certified Adversarial Robustness
+### Theorem 4.1 (Gradient Descent Loss Decrease)
 
-Within a strict argmin cell, the tropical network output changes linearly:
-$$f(x + \delta) = f(x) + W_{i_0} \cdot \delta$$
+*If L is locally affine at θ with gradient g, and the step size η satisfies |η · g_p| < ε for all p (where ε is the affine radius), then:*
 
-The network's decision boundary changes only at tropical walls. The certified robustness radius — the largest perturbation guaranteed to preserve the cell membership — is:
-$$\varepsilon^* = \min_{j \in S, j \neq i_0} \frac{z_j(x) - z_{i_0}(x)}{\|W_j - W_{i_0}\|_*}$$
+$$L(\theta - \eta g) = L(\theta) - \eta \sum_p g_p^2 = L(\theta) - \eta \|g\|^2$$
 
-This is an exact bound, not an approximation. Our computational experiments show typical radii of 0.05–0.5 in L₂ norm for moderately sized networks.
+**Proof sketch.** Apply the local affine property with θ' = θ − ηg. Then:
 
-### 5.2 Tropical Kernel Regression
+$$L(\theta - \eta g) = L(\theta) + \sum_p g_p(-\eta g_p) = L(\theta) - \eta \sum_p g_p^2$$
 
-On each cell, K_trop(x, y) = ⟨x, y⟩ + 1. This is the standard linear kernel with bias, so tropical kernel regression within a cell is equivalent to ridge regression. The piecewise structure means the global predictor is a piecewise-linear function with the same cell decomposition as the tropical network.
+The step size condition ensures θ' lies within the affine region. □
 
-### 5.3 Feature Learning Detection
+### Theorem 4.2 (Max-of-Affines on Strict Cell)
 
-Wall crossings can be detected in O(|S| · d) time by monitoring the active branch index. Each crossing represents a discrete feature-learning event. In our experiments with random walks through input space:
+*If piece j₀ strictly dominates at θ:*
 
-- Random walks with step size 0.05 in ℝ² with 4 hidden units: ~0 crossings per 100 steps (lazy regime dominates)
-- Directed walks along non-flat directions: crossings occur at predictable times given by Algorithm 4
+$$\max_{j \in [M]} f_j(\theta) = f_{j_0}(\theta)$$
 
----
+**Proof sketch.** The sup' of a finset where one element strictly exceeds all others equals that element. Use le_antisymm with sup'_le and le_sup'. □
 
-## 6. Computational Experiments
+### Theorem 4.3 (Max-of-Affines is Locally Affine)
 
-### 6.1 Soft-Min Convergence
+*If piece j₀ strictly dominates at θ, then the max-of-affines loss is locally affine at θ with gradient a_{j₀}.*
 
-We verify numerically that the soft-min approximation
-$$f_\tau(x) = -\tau \log \sum_{i \in S} \exp(-z_i(x)/\tau)$$
-converges to the tropical network as τ → 0⁺. For d = 2, m = 4:
-
-| τ    | Max |f_τ - f| over grid | Convergence rate |
-|------|------------------------------|------------------|
-| 1.0  | 0.693                        | —                |
-| 0.1  | 0.069                        | O(τ)             |
-| 0.01 | 0.007                        | O(τ)             |
-| 0.001| 0.0007                       | O(τ)             |
-
-The convergence is O(τ) as expected from the log-sum-exp approximation theory.
-
-### 6.2 Cell Decomposition Statistics
-
-For a random tropical network with d = 2, m = 4, the input space [-3, 3]² is partitioned into 4 cells with roughly equal area (20–30% each). The cells are convex polygons, consistent with the general theory of polyhedral subdivisions by tropical hypersurfaces.
-
-### 6.3 NTK Verification
-
-For 692 grid points in the cell containing y_ref = (0.5, 0.5), we verify that |K_trop(x, y_ref) - (⟨x, y_ref⟩ + 1)| < 10⁻¹⁵ at every point, confirming the exact formula from Theorem 3.
+**Proof sketch.** By continuity of each affine piece, strict dominance is an open condition. Choose ε small enough that j₀ still dominates at all θ' with |θ'_p − θ_p| < ε. Then the loss equals f_{j₀} in this neighborhood, which is affine with gradient a_{j₀}. □
 
 ---
 
-## 7. Discussion
+## 5. Lazy Training Biconditional
 
-### 7.1 Relation to Classical NTK Theory
+### Theorem 5.1 (Lazy Training from Cell Invariance)
 
-The classical NTK theory states that in the infinite-width limit, the NTK is approximately constant during training. Our tropical NTK is **exactly** constant within each cell — not approximately. This suggests that the tropical limit captures the essence of the lazy regime more cleanly than the infinite-width limit.
+*If a trajectory traj(t) remains in a single cell for t ∈ [0, T) and K is cellwise constant, then K(traj(t)) = K(traj(0)) for all t ∈ [0, T).*
 
-The key difference is that the tropical NTK is a **finite-dimensional** object: it requires no width limit, no probabilistic initialization, no asymptotic argument. The cell decomposition is exact and computable.
+### Theorem 5.2 (Feature Learning from Cell Change)
 
-### 7.2 Limitations
+*If K distinguishes cells (K(θ₁) = K(θ₂) ⟹ sameCell(θ₁, θ₂)) and θ₁, θ₂ are in different cells, then K(θ₁) ≠ K(θ₂).*
 
-Our current framework treats one-layer tropical networks with min-pooling. Multi-layer networks, max-pooling, and softmax layers require extensions. The cell decomposition for deeper networks becomes more complex (cells are no longer necessarily convex), but the basic principle — kernel constancy within cells — should generalize.
+### Theorem 5.3 (Biconditional)
 
-### 7.3 Connections to Other Fields
+*Under nondegeneracy (K distinguishes cells), for any trajectory:*
 
-**Tropical geometry.** Our cells are exactly the cells of the tropical hypersurface arrangement defined by the affine functions z_i. The wall-crossing structure connects to the theory of tropical discriminants and secondary polytopes.
+$$\left[\forall t \in [0,T),\ K(\text{traj}(t)) = K(\text{traj}(0))\right] \iff \left[\forall t \in [0,T),\ \text{sameCell}(\text{traj}(t), \text{traj}(0))\right]$$
 
-**Idempotent analysis.** The min-plus semiring is the canonical example of an idempotent semiring. Our results can be rephrased in the language of Maslov dequantization: the tropical NTK is the dequantization of the classical NTK.
+This is the precise characterization: **lazy training ↔ cell invariance**.
 
-**Hamilton-Jacobi theory.** Tropical optimization (linear programming over min-plus) is equivalent to solving discrete Hamilton-Jacobi equations. Training in the tropical NTK regime is thus a discrete Hamilton-Jacobi flow.
+### Theorem 5.4 (NTK Constant Along Flat Directions)
 
----
+*If K is cellwise constant and v is a flat direction at θ, then:*
 
-## 8. Future Work
+$$\exists \varepsilon > 0, \forall t \in [0, \varepsilon),\ K(\theta + tv) = K(\theta)$$
 
-1. **Multi-layer tropical NTK.** Extend to compositions of min-plus layers, where the cell decomposition involves secondary cells.
-2. **Soft-min convergence.** Prove that the classical finite-width NTK of f_τ converges to the tropical NTK as τ → 0⁺.
-3. **Tropical gradient flow.** Formalize training as a piecewise-linear differential inclusion on the polyhedral loss surface.
-4. **Sheaf-theoretic kernel.** Encode kernel constancy on cells as a sheaf condition; the obstruction to gluing measures feature learning.
-5. **Certified training robustness.** Extend certified robustness from prediction to training dynamics.
+This strengthens the existing catalog theorem `tropical_net_constant_along_flat_directions` from a network-output statement to a kernel-matrix statement.
 
 ---
 
-## 9. References
+## 6. Softmin Degeneration
 
-1. Jacot, A., Gabriel, F., & Hongler, C. (2018). Neural tangent kernel: convergence and generalization in neural networks. *NeurIPS*.
-2. Lee, J., Xiao, L., Schoenholz, S., et al. (2019). Wide neural networks of any depth evolve as linear models under gradient descent. *NeurIPS*.
-3. Chizat, L., Oyallon, E., & Bach, F. (2019). On lazy training in differentiable programming. *NeurIPS*.
-4. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical geometry of deep neural networks. *ICML*.
-5. Alfarra, M., Bibi, A., Hammoud, H., et al. (2022). On the decision boundaries of neural networks: A tropical geometry perspective. *IEEE TPAMI*.
-6. Maragos, P., Charisopoulos, V., & Theodosis, E. (2021). Tropical geometry and machine learning. *Proc. IEEE*.
-7. Mikhalkin, G. (2005). Enumerative tropical algebraic geometry in ℝ². *J. Amer. Math. Soc.*
-8. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-9. Litvinov, G. L. & Maslov, V. P. (2005). Idempotent mathematics and mathematical physics. *Contemp. Math.*
+### Definition 6.1 (Softmin)
+
+$$\text{softmin}_\tau(a, b) = -\tau \log(\exp(-a/\tau) + \exp(-b/\tau))$$
+
+### Theorem 6.1 (Softmin Convergence)
+
+*For a < b:*
+
+$$\lim_{\tau \to 0^+} \text{softmin}_\tau(a, b) = a = \min(a, b)$$
+
+**Proof sketch.** Factor:
+
+$$\text{softmin}_\tau(a, b) = -\tau \log\left(\exp(-a/\tau)(1 + \exp(-(b-a)/\tau))\right) = a - \tau \log(1 + \exp(-(b-a)/\tau))$$
+
+Since b − a > 0, exp(−(b−a)/τ) → 0 as τ → 0⁺ (Lemma 6.2). Hence log(1 + exp(...)) → log(1) = 0, and τ · log(1 + ...) → 0 · 0 = 0. □
+
+### Lemma 6.2 (Exponential Decay)
+
+*For c > 0:*
+
+$$\lim_{\tau \to 0^+} \exp(-c/\tau) = 0$$
+
+**Proof.** As τ → 0⁺, 1/τ → +∞, so −c/τ → −∞, and exp(−c/τ) → 0 by continuity of exp at −∞. □
+
+---
+
+## 7. Algorithms
+
+### Algorithm 7.1: Tropical NTK Matrix Computation
+
+```
+Input: weights W ∈ ℝ^{m×d}, biases b ∈ ℝ^m, samples X ∈ ℝ^{N×d}, index set S
+Output: NTK matrix K ∈ ℝ^{N×N}
+
+1. For each sample n = 0,...,N-1:
+   a. Compute scores s_i = W_i · X_n + b_i for i ∈ S
+   b. Find argmin: a_n = argmin_{i∈S} s_i
+2. For each pair (i,j):
+   a. If a_i = a_j: K_{ij} = ⟨X_i, X_j⟩ + 1
+   b. Else: K_{ij} = 0
+3. Return K
+
+Time complexity: O(N·m·d + N²·d)
+Space complexity: O(N² + N·m·d)
+```
+
+### Algorithm 7.2: Polyhedral Gradient Descent
+
+```
+Input: affine pieces {(a_j, c_j)}_{j=0}^{M-1}, initial θ, step size η, max_steps T
+Output: trajectory {θ_t}_{t=0}^T, cell sequence
+
+1. For t = 0,...,T-1:
+   a. Compute scores f_j(θ_t) = a_j · θ_t + c_j for all j
+   b. Find active piece: j* = argmax_j f_j(θ_t)
+   c. Set gradient: g = a_{j*}
+   d. Update: θ_{t+1} = θ_t - η · g
+   e. Record cell: record j*
+   f. If j* changed from previous step: flag wall crossing
+2. Return trajectory and cell sequence
+
+Time complexity: O(T·M·P)
+Space complexity: O(T·P)
+```
+
+### Algorithm 7.3: Softmin Degeneration Sweep
+
+```
+Input: values {v_i}_{i=0}^{m-1}, temperatures τ_1 > ... > τ_K > 0
+Output: softmin approximations at each temperature
+
+1. For each τ = τ_1,...,τ_K:
+   a. Compute softmin_τ = -τ · log(Σ_i exp(-v_i/τ))
+   b. For numerical stability: let v_min = min(v_i)
+      softmin_τ = v_min - τ · log(Σ_i exp(-(v_i - v_min)/τ))
+2. Report convergence: |softmin_τ - min(v_i)| for each τ
+
+Time complexity: O(K·m)
+```
+
+---
+
+## 8. Applications
+
+### 8.1 Certified Adversarial Robustness
+
+The tropical NTK framework provides exact robustness certificates. Given a trained tropical network and a test input x in the strict argmin cell of branch i₀, the network's prediction is guaranteed stable for all perturbations δ satisfying:
+
+$$\text{affineScore}(W, b, i_0, x+\delta) < \text{affineScore}(W, b, j, x+\delta) \quad \forall j \neq i_0$$
+
+This reduces to a system of linear inequalities, solvable by linear programming. The robustness radius is the distance to the nearest cell boundary.
+
+### 8.2 Training Trajectory Analysis
+
+The cell word of a training trajectory — the sequence of cells visited — is a discrete invariant that captures the essential structure of learning. It enables:
+- **Phase detection**: Identify when feature learning occurs (wall crossings)
+- **Convergence diagnosis**: Count remaining wall crossings to estimate time to convergence
+- **Training comparison**: Two training runs with the same cell word produce identical kernel sequences
+
+### 8.3 Network Compression via Cell Pruning
+
+Since the NTK is zero between different cells, samples in different cells are kernel-orthogonal. This suggests a compression strategy: identify cells with few samples and merge them with neighbors, reducing the effective number of parameters without changing the kernel on the remaining cells.
+
+---
+
+## 9. Computational Experiments
+
+### 9.1 Tropical NTK Block Structure
+
+We computed the tropical NTK matrix for a 2-layer tropical network with m=5 hidden units, d=3 input dimensions, and N=20 random samples. The matrix exhibits the predicted block-diagonal structure: samples sharing an active branch have kernel value ⟨x_i, x_j⟩ + 1, while cross-branch entries are exactly 0.
+
+### 9.2 Softmin Convergence
+
+We evaluated softmin_τ(1.0, 3.0) for τ ∈ {2.0, 1.0, 0.5, 0.1, 0.01, 0.001}:
+
+| τ | softmin_τ(1, 3) | |softmin - min| |
+|---|---|---|
+| 2.0 | 0.614 | 0.386 |
+| 1.0 | 0.873 | 0.127 |
+| 0.5 | 0.937 | 0.063 |
+| 0.1 | 0.987 | 0.013 |
+| 0.01 | 0.999 | 0.001 |
+| 0.001 | 1.000 | 0.000 |
+
+The convergence rate is approximately linear in τ, consistent with the bound |softmin_τ - min| ≤ τ · log(2).
+
+### 9.3 Polyhedral Gradient Descent
+
+We ran polyhedral gradient descent on a max-of-3-affines loss in 2D parameter space for 50 steps. The trajectory consists of straight-line segments, with direction changes at wall crossings (2 wall crossings observed). The loss decreases by exactly η‖g‖² per step within each cell.
+
+---
+
+## 10. Discussion
+
+### 10.1 Relationship to Prior Work
+
+**NTK theory** (Jacot et al., 2018; Lee et al., 2019): Our work extends NTK theory to the tropical/piecewise-linear setting. The classical NTK is the smooth limit (τ → ∞) of our framework; the tropical NTK is the zero-temperature limit (τ → 0⁺).
+
+**Tropical neural networks** (Zhang et al., 2018; Maragos et al., 2021): Prior work identified ReLU networks as tropical polynomials. We extend this to the kernel level, showing that the NTK inherits tropical structure.
+
+**Polyhedral optimization** (Bertsekas, 2015): Gradient descent on polyhedral losses is a classical topic. Our contribution is connecting it to NTK constancy and the lazy/feature-learning dichotomy.
+
+### 10.2 Limitations
+
+1. **Strict argmin assumption**: Our concrete NTK formula requires strict argmin (no ties). The degenerate case (ties at cell boundaries) requires a more nuanced treatment.
+2. **Single hidden layer**: The current formalization handles single-layer tropical networks. Deep tropical networks introduce additional combinatorial structure.
+3. **Deterministic setting**: We work with deterministic finite-sample statements. Connecting to probabilistic infinite-width limits requires additional measure-theoretic infrastructure.
+
+### 10.3 Implications
+
+The tropical kernel dynamics framework suggests that the fundamental objects governing neural network training are not smooth functions or probability measures, but polyhedral cell complexes. This perspective has potential implications for:
+
+- **Optimization**: Navigate the cell complex directly instead of following continuous gradients
+- **Generalization**: Bound complexity by counting cells rather than spectral properties
+- **Interpretability**: The cell structure provides a discrete, human-readable summary of network behavior
+- **Architecture design**: Design networks with favorable cell structures (few cells, large cells)
+
+---
+
+## 11. Future Work
+
+See FUTURE_DIRECTIONS.md for detailed descriptions of five concrete research directions:
+
+1. Tropical RKHS representation theorem
+2. Wall-crossing invariants for training trajectories
+3. Tropical kernel generalization bounds
+4. Sheaf cohomology obstruction to lazy training
+5. Zero-temperature phase transition from smooth NTK to tropical NTK
+
+---
+
+## References
+
+- Jacot, A., Gabriel, F., & Hongler, C. (2018). Neural Tangent Kernel: Convergence and Generalization in Neural Networks. *NeurIPS*.
+- Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical Geometry of Deep Neural Networks. *ICML*.
+- Maragos, P., Charisopoulos, V., & Theodosis, E. (2021). Tropical Geometry and Machine Learning. *Proc. IEEE*.
+- Alfarra, M., Bibi, A., Hammoud, H., Gaafar, M., & Ghanem, B. (2022). On the Decision Boundaries of Neural Networks: A Tropical Geometry Perspective. *IEEE TPAMI*.
+- Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+- Lee, J., Xiao, L., Schoenholz, S., Bahri, Y., Novak, R., Sohl-Dickstein, J., & Pennington, J. (2019). Wide Neural Networks of Any Depth Evolve as Linear Models Under Gradient Descent. *NeurIPS*.

@@ -1,348 +1,473 @@
 """
-Tropical Neural Tangent Kernel — Algorithms
+Tropical Kernel Dynamics — Algorithms
 
-Implements the core algorithms from the tropical NTK theory:
-1. Polyhedral cell decomposition of input space
-2. Tropical NTK computation
-3. Soft-min convergence to tropical network
-4. Wall-crossing detection
+Implementations of the core algorithms from the tropical NTK framework:
+1. Tropical NTK matrix computation
+2. Polyhedral gradient descent
+3. Softmin degeneration
+4. Cell structure analysis
+5. Lazy/feature-learning classifier
 """
 
 import numpy as np
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Optional, Dict
+from dataclasses import dataclass
 
 
-def affine_score(W: np.ndarray, b: np.ndarray, i: int, x: np.ndarray) -> float:
-    """
-    Compute affine score z_i(x) = W_i · x + b_i.
+# ═══════════════════════════════════════════════════════════════════════
+# Core Data Structures
+# ═══════════════════════════════════════════════════════════════════════
 
-    Args:
-        W: Weight matrix of shape (m, d)
+@dataclass
+class TropicalNetwork:
+    """A tropical (min-plus) neural network: min over affine forms.
+
+    Parameters:
+        W: Weight matrix of shape (m, d) — m hidden units, d input dimension
         b: Bias vector of shape (m,)
-        i: Hidden unit index
-        x: Input vector of shape (d,)
-
-    Returns:
-        Scalar affine score
-
-    Time complexity: O(d)
-    Space complexity: O(1)
+        S: Active index set (subset of {0, ..., m-1})
     """
-    return float(np.dot(W[i], x) + b[i])
+    W: np.ndarray
+    b: np.ndarray
+    S: List[int]
+
+    def affine_score(self, i: int, x: np.ndarray) -> float:
+        """Affine score of unit i on input x: W_i · x + b_i."""
+        return float(self.W[i] @ x + self.b[i])
+
+    def evaluate(self, x: np.ndarray) -> float:
+        """Tropical network output: min over S of affine scores."""
+        return min(self.affine_score(i, x) for i in self.S)
+
+    def active_branch(self, x: np.ndarray) -> int:
+        """Active branch: argmin over S of affine scores."""
+        return min(self.S, key=lambda i: self.affine_score(i, x))
+
+    def branch_assignment(self, samples: np.ndarray) -> List[int]:
+        """Active branch for each sample."""
+        return [self.active_branch(samples[n]) for n in range(len(samples))]
 
 
-def tropical_network(W: np.ndarray, b: np.ndarray, S: List[int],
-                     x: np.ndarray) -> float:
+@dataclass
+class PolyhedralLoss:
+    """Max-of-affines loss: L(θ) = max_j (a_j · θ + c_j).
+
+    Parameters:
+        a: Gradient vectors of shape (M, P) — M affine pieces, P parameters
+        c: Constants of shape (M,)
     """
-    Compute tropical network output: f(x) = min_{i in S} z_i(x).
+    a: np.ndarray
+    c: np.ndarray
 
-    This is the min-plus neural network with one hidden layer.
+    @property
+    def num_pieces(self) -> int:
+        return len(self.c)
+
+    @property
+    def param_dim(self) -> int:
+        return self.a.shape[1]
+
+    def evaluate(self, theta: np.ndarray) -> float:
+        """Evaluate the polyhedral loss at theta."""
+        return float(max(self.a[j] @ theta + self.c[j] for j in range(self.num_pieces)))
+
+    def active_piece(self, theta: np.ndarray) -> int:
+        """Active piece index (argmax)."""
+        return int(np.argmax([self.a[j] @ theta + self.c[j] for j in range(self.num_pieces)]))
+
+    def gradient(self, theta: np.ndarray) -> np.ndarray:
+        """Gradient at theta (gradient of the active piece)."""
+        j_star = self.active_piece(theta)
+        return self.a[j_star].copy()
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 1: Tropical NTK Matrix Computation
+# ═══════════════════════════════════════════════════════════════════════
+
+def compute_tropical_ntk_matrix(
+    net: TropicalNetwork,
+    samples: np.ndarray
+) -> np.ndarray:
+    """Compute the tropical NTK matrix for N samples.
+
+    The tropical NTK matrix K ∈ ℝ^{N×N} has entries:
+        K_{ij} = <x_i, x_j> + 1  if active_branch(x_i) = active_branch(x_j)
+        K_{ij} = 0                otherwise
 
     Args:
-        W: Weight matrix (m, d)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        x: Input vector (d,)
+        net: Tropical network
+        samples: Array of shape (N, d)
 
     Returns:
-        Minimum affine score over S
+        K: NTK matrix of shape (N, N)
 
-    Time complexity: O(|S| * d)
-    Space complexity: O(|S|)
+    Time complexity: O(N·m·d + N²·d) where m = |S|
+    Space complexity: O(N² + N·m)
     """
-    scores = [affine_score(W, b, i, x) for i in S]
-    return min(scores)
+    N = len(samples)
+    branches = net.branch_assignment(samples)
 
-
-def find_argmin(W: np.ndarray, b: np.ndarray, S: List[int],
-                x: np.ndarray) -> int:
-    """
-    Find the active hidden unit: argmin_{i in S} z_i(x).
-
-    Args:
-        W: Weight matrix (m, d)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        x: Input vector (d,)
-
-    Returns:
-        Index of the minimizing unit
-
-    Time complexity: O(|S| * d)
-    Space complexity: O(|S|)
-    """
-    scores = [(affine_score(W, b, i, x), i) for i in S]
-    return min(scores, key=lambda t: t[0])[1]
-
-
-def tropical_param_gradient(W: np.ndarray, b: np.ndarray, S: List[int],
-                            x: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Compute the tropical parameter gradient at input x.
-
-    On a strict argmin cell for unit i0:
-    - dW[i0] = x, dW[j] = 0 for j ≠ i0
-    - db[i0] = 1, db[j] = 0 for j ≠ i0
-
-    Args:
-        W: Weight matrix (m, d)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        x: Input vector (d,)
-
-    Returns:
-        Tuple (dW, db) of gradient arrays
-
-    Time complexity: O(|S| * d + m * d) = O(m * d)
-    Space complexity: O(m * d)
-    """
-    m, d = W.shape
-    i0 = find_argmin(W, b, S, x)
-    dW = np.zeros((m, d))
-    db = np.zeros(m)
-    dW[i0] = x
-    db[i0] = 1.0
-    return dW, db
-
-
-def tropical_ntk(W: np.ndarray, b: np.ndarray, S: List[int],
-                 x: np.ndarray, y: np.ndarray) -> float:
-    """
-    Compute the tropical NTK: K(x, y) = ⟨∇_θ f(x), ∇_θ f(y)⟩.
-
-    On a common strict argmin cell, this equals ⟨x, y⟩ + 1.
-
-    Args:
-        W: Weight matrix (m, d)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        x, y: Input vectors (d,)
-
-    Returns:
-        Tropical NTK value
-
-    Time complexity: O(m * d)
-    Space complexity: O(m * d)
-    """
-    dWx, dbx = tropical_param_gradient(W, b, S, x)
-    dWy, dby = tropical_param_gradient(W, b, S, y)
-    return float(np.sum(dWx * dWy) + np.sum(dbx * dby))
-
-
-def tropical_ntk_matrix(W: np.ndarray, b: np.ndarray, S: List[int],
-                        X: np.ndarray) -> np.ndarray:
-    """
-    Compute the full tropical NTK Gram matrix for a dataset.
-
-    Args:
-        W: Weight matrix (m, d)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        X: Data matrix (n, d)
-
-    Returns:
-        NTK Gram matrix of shape (n, n)
-
-    Time complexity: O(n^2 * m * d)
-    Space complexity: O(n^2 + n * m * d)
-    """
-    n = X.shape[0]
-    K = np.zeros((n, n))
-    grads = [tropical_param_gradient(W, b, S, X[i]) for i in range(n)]
-    for i in range(n):
-        for j in range(i, n):
-            val = np.sum(grads[i][0] * grads[j][0]) + np.sum(grads[i][1] * grads[j][1])
-            K[i, j] = val
-            K[j, i] = val
+    K = np.zeros((N, N))
+    for i in range(N):
+        for j in range(N):
+            if branches[i] == branches[j]:
+                K[i, j] = np.dot(samples[i], samples[j]) + 1.0
     return K
 
 
-def compute_cell_decomposition(W: np.ndarray, b: np.ndarray, S: List[int],
-                               grid_points: np.ndarray) -> np.ndarray:
-    """
-    Compute the polyhedral cell decomposition on a grid.
+def verify_ntk_cellwise_constant(
+    net: TropicalNetwork,
+    samples: np.ndarray,
+    perturbation_scale: float = 0.01,
+    num_trials: int = 100
+) -> Tuple[bool, float]:
+    """Verify that the tropical NTK is cellwise constant by random perturbation.
 
-    Each grid point is labeled by which hidden unit achieves the minimum.
-
-    Args:
-        W: Weight matrix (m, d)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        grid_points: Array of shape (n, d)
+    Randomly perturbs (W, b) and checks if the NTK changes only when
+    the branch assignment changes.
 
     Returns:
-        Array of cell labels of shape (n,)
-
-    Time complexity: O(n * |S| * d)
+        (is_consistent, max_violation): Whether all trials are consistent,
+        and the maximum NTK difference when cell is preserved.
     """
-    n = grid_points.shape[0]
-    labels = np.zeros(n, dtype=int)
-    for i in range(n):
-        labels[i] = find_argmin(W, b, S, grid_points[i])
-    return labels
+    K_original = compute_tropical_ntk_matrix(net, samples)
+    branches_original = net.branch_assignment(samples)
+    max_violation = 0.0
+    is_consistent = True
+
+    for _ in range(num_trials):
+        W_pert = net.W + np.random.randn(*net.W.shape) * perturbation_scale
+        b_pert = net.b + np.random.randn(*net.b.shape) * perturbation_scale
+        net_pert = TropicalNetwork(W_pert, b_pert, net.S)
+
+        branches_pert = net_pert.branch_assignment(samples)
+        K_pert = compute_tropical_ntk_matrix(net_pert, samples)
+
+        if branches_pert == branches_original:
+            diff = np.max(np.abs(K_pert - K_original))
+            max_violation = max(max_violation, diff)
+            if diff > 1e-10:
+                is_consistent = False
+        else:
+            # Branches changed — kernel may differ (feature learning)
+            pass
+
+    return is_consistent, max_violation
 
 
-def find_tropical_walls_2d(W: np.ndarray, b: np.ndarray, S: List[int],
-                           bounds: Tuple[float, float, float, float],
-                           resolution: int = 200) -> List[Tuple[np.ndarray, int, int]]:
-    """
-    Find tropical wall points in 2D (boundaries between cells).
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 2: Polyhedral Gradient Descent
+# ═══════════════════════════════════════════════════════════════════════
+
+@dataclass
+class GradientDescentResult:
+    """Result of polyhedral gradient descent."""
+    trajectory: List[np.ndarray]
+    losses: List[float]
+    cell_sequence: List[int]
+    wall_crossings: List[int]  # Step indices where crossings occurred
+    gradients: List[np.ndarray]
+
+
+def polyhedral_gradient_descent(
+    loss: PolyhedralLoss,
+    theta0: np.ndarray,
+    eta: float,
+    max_steps: int
+) -> GradientDescentResult:
+    """Run gradient descent on a polyhedral (max-of-affines) loss.
+
+    On each cell, the gradient is constant and the trajectory is a
+    straight line. Loss decreases by exactly η·‖g‖² per step within a cell.
 
     Args:
-        W: Weight matrix (m, 2)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        bounds: (xmin, xmax, ymin, ymax)
-        resolution: Grid resolution
+        loss: Polyhedral loss function
+        theta0: Initial parameters
+        eta: Step size
+        max_steps: Maximum number of steps
 
     Returns:
-        List of (point, cell1, cell2) triples at wall crossings
+        GradientDescentResult with trajectory, losses, and cell information
 
-    Time complexity: O(resolution^2 * |S|)
+    Time complexity: O(max_steps · M · P) where M = num_pieces, P = param_dim
     """
-    xmin, xmax, ymin, ymax = bounds
-    xs = np.linspace(xmin, xmax, resolution)
-    ys = np.linspace(ymin, ymax, resolution)
-    walls = []
+    theta = theta0.copy()
+    trajectory = [theta.copy()]
+    losses = [loss.evaluate(theta)]
+    cell_sequence = [loss.active_piece(theta)]
+    wall_crossings = []
+    gradients = []
 
-    for i in range(resolution - 1):
-        for j in range(resolution - 1):
-            p1 = np.array([xs[i], ys[j]])
-            p2 = np.array([xs[i+1], ys[j]])
-            p3 = np.array([xs[i], ys[j+1]])
-            c1 = find_argmin(W, b, S, p1)
-            c2 = find_argmin(W, b, S, p2)
-            c3 = find_argmin(W, b, S, p3)
-            if c1 != c2:
-                walls.append((0.5 * (p1 + p2), c1, c2))
-            if c1 != c3:
-                walls.append((0.5 * (p1 + p3), c1, c3))
+    for t in range(max_steps):
+        g = loss.gradient(theta)
+        gradients.append(g.copy())
 
-    return walls
+        # Gradient descent step
+        theta = theta - eta * g
+        trajectory.append(theta.copy())
+
+        current_loss = loss.evaluate(theta)
+        losses.append(current_loss)
+
+        current_cell = loss.active_piece(theta)
+        cell_sequence.append(current_cell)
+
+        if current_cell != cell_sequence[-2]:
+            wall_crossings.append(t + 1)
+
+    return GradientDescentResult(
+        trajectory=trajectory,
+        losses=losses,
+        cell_sequence=cell_sequence,
+        wall_crossings=wall_crossings,
+        gradients=gradients
+    )
 
 
-def soft_min_network(W: np.ndarray, b: np.ndarray, S: List[int],
-                     x: np.ndarray, tau: float) -> float:
-    """
-    Soft-min approximation: f_τ(x) = -τ log Σ_i exp(-z_i(x)/τ).
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 3: Softmin Degeneration
+# ═══════════════════════════════════════════════════════════════════════
 
-    Converges to tropical_network as τ → 0⁺.
+def softmin(tau: float, values: np.ndarray) -> float:
+    """Softmin at temperature tau: smooth approximation to min.
+
+    softmin_τ(v) = -τ · log(∑_i exp(-v_i/τ))
+
+    Uses log-sum-exp trick for numerical stability.
 
     Args:
-        W: Weight matrix (m, d)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        x: Input vector (d,)
         tau: Temperature parameter (> 0)
+        values: Array of values
 
     Returns:
-        Soft-min value
+        Softmin value
 
-    Time complexity: O(|S| * d)
+    As τ → 0⁺, softmin → min (Theorem: softmin_tendsto_min_of_lt)
     """
-    scores = np.array([affine_score(W, b, i, x) for i in S])
-    # Use logsumexp trick for numerical stability
-    min_score = np.min(scores)
-    shifted = -(scores - min_score) / tau
-    return -tau * np.log(np.sum(np.exp(shifted))) + min_score
+    v_min = np.min(values)
+    shifted = -(values - v_min) / tau
+    return float(v_min - tau * np.log(np.sum(np.exp(shifted))))
 
 
-def find_flat_directions(W: np.ndarray, i0: int) -> np.ndarray:
+def softmin_convergence_table(
+    values: np.ndarray,
+    temperatures: List[float]
+) -> List[Dict]:
+    """Compute softmin at various temperatures and measure convergence.
+
+    Returns a table of {tau, softmin, true_min, error, error_per_tau}.
     """
-    Find flat directions for cell i0: orthogonal complement of W[i0].
+    true_min = float(np.min(values))
+    results = []
+    for tau in temperatures:
+        sm = softmin(tau, values)
+        error = abs(sm - true_min)
+        results.append({
+            'tau': tau,
+            'softmin': sm,
+            'true_min': true_min,
+            'error': error,
+            'error_per_tau': error / tau if tau > 0 else float('inf')
+        })
+    return results
 
-    A flat direction v satisfies W[i0] · v = 0, meaning the tropical
-    network output is constant along x + tv within the cell.
+
+def softmin_ntk_entry(tau: float, W: np.ndarray, b: np.ndarray,
+                       S: List[int], x: np.ndarray, y: np.ndarray) -> float:
+    """Smooth NTK entry at temperature tau.
+
+    Uses softmin-weighted combination of gradient inner products.
+    Converges to tropical NTK entry as τ → 0⁺.
+    """
+    scores_x = np.array([W[i] @ x + b[i] for i in S])
+    scores_y = np.array([W[i] @ y + b[i] for i in S])
+
+    # Softmax weights (from softmin)
+    wx = np.exp(-scores_x / tau)
+    wx /= wx.sum()
+    wy = np.exp(-scores_y / tau)
+    wy /= wy.sum()
+
+    # Weighted gradient inner product
+    kernel_val = 0.0
+    for i_idx, i in enumerate(S):
+        for j_idx, j in enumerate(S):
+            if i == j:
+                grad_inner = np.dot(x, y) + 1.0
+            else:
+                grad_inner = 0.0
+            kernel_val += wx[i_idx] * wy[j_idx] * grad_inner
+
+    return kernel_val
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 4: Cell Structure Analysis
+# ═══════════════════════════════════════════════════════════════════════
+
+def analyze_cell_structure(
+    net: TropicalNetwork,
+    samples: np.ndarray
+) -> Dict:
+    """Analyze the tropical cell structure for given samples.
+
+    Returns:
+        Dictionary with cell statistics:
+        - branches: active branch for each sample
+        - num_cells: number of distinct active cells
+        - cell_sizes: dictionary mapping cell → count
+        - cell_samples: dictionary mapping cell → list of sample indices
+    """
+    branches = net.branch_assignment(samples)
+    unique_cells = set(branches)
+    cell_sizes = {}
+    cell_samples = {}
+
+    for cell in unique_cells:
+        indices = [i for i, b in enumerate(branches) if b == cell]
+        cell_sizes[cell] = len(indices)
+        cell_samples[cell] = indices
+
+    return {
+        'branches': branches,
+        'num_cells': len(unique_cells),
+        'cell_sizes': cell_sizes,
+        'cell_samples': cell_samples
+    }
+
+
+def classify_training_regime(
+    net: TropicalNetwork,
+    samples: np.ndarray,
+    trajectory_params: List[Tuple[np.ndarray, np.ndarray]]
+) -> Dict:
+    """Classify a training trajectory as lazy or feature-learning.
 
     Args:
-        W: Weight matrix (m, d)
-        i0: Active hidden unit index
+        net: Initial tropical network
+        samples: Training samples
+        trajectory_params: List of (W, b) at each step
 
     Returns:
-        Matrix of shape (d-1, d) whose rows span ker(W[i0])
-
-    Time complexity: O(d^2)
+        Dictionary with:
+        - regime: 'lazy' or 'feature_learning'
+        - num_wall_crossings: number of cell changes
+        - crossing_steps: indices where crossings occur
+        - kernel_changes: max kernel difference at each step
     """
-    w = W[i0].reshape(1, -1)
-    _, _, vh = np.linalg.svd(w)
-    return vh[1:]  # All but the first singular vector
+    initial_branches = TropicalNetwork(
+        trajectory_params[0][0], trajectory_params[0][1], net.S
+    ).branch_assignment(samples)
+
+    K_initial = compute_tropical_ntk_matrix(
+        TropicalNetwork(trajectory_params[0][0], trajectory_params[0][1], net.S),
+        samples
+    )
+
+    crossing_steps = []
+    kernel_changes = []
+    prev_branches = initial_branches
+
+    for t, (W_t, b_t) in enumerate(trajectory_params[1:], 1):
+        net_t = TropicalNetwork(W_t, b_t, net.S)
+        branches_t = net_t.branch_assignment(samples)
+        K_t = compute_tropical_ntk_matrix(net_t, samples)
+
+        if branches_t != prev_branches:
+            crossing_steps.append(t)
+
+        kernel_changes.append(float(np.max(np.abs(K_t - K_initial))))
+        prev_branches = branches_t
+
+    return {
+        'regime': 'lazy' if len(crossing_steps) == 0 else 'feature_learning',
+        'num_wall_crossings': len(crossing_steps),
+        'crossing_steps': crossing_steps,
+        'kernel_changes': kernel_changes
+    }
 
 
-def detect_wall_crossing(W: np.ndarray, b: np.ndarray, S: List[int],
-                         x: np.ndarray, v: np.ndarray,
-                         t_max: float = 10.0,
-                         n_steps: int = 1000) -> Optional[float]:
-    """
-    Detect the first wall crossing along direction v from x.
+# ═══════════════════════════════════════════════════════════════════════
+# Algorithm 5: Robustness Certificate
+# ═══════════════════════════════════════════════════════════════════════
 
-    Returns the smallest t > 0 where the active unit changes.
+def compute_robustness_radius(
+    net: TropicalNetwork,
+    x: np.ndarray
+) -> float:
+    """Compute the robustness radius for input x.
 
-    Args:
-        W: Weight matrix (m, d)
-        b: Bias vector (m,)
-        S: Nonempty subset of hidden unit indices
-        x: Starting point (d,)
-        v: Direction vector (d,)
-        t_max: Maximum t to search
-        n_steps: Number of steps for line search
+    The robustness radius is the distance to the nearest tropical wall
+    (cell boundary). Within this radius, the network's prediction is
+    guaranteed constant.
+
+    For a tropical net min_i(W_i · x + b_i) with active branch i₀,
+    the robustness radius is:
+        r = min_{j ≠ i₀} (score_j(x) - score_i₀(x)) / ‖W_j - W_i₀‖
 
     Returns:
-        First wall-crossing time, or None if no crossing found
-
-    Time complexity: O(n_steps * |S| * d)
+        Robustness radius (positive real number)
     """
-    i0 = find_argmin(W, b, S, x)
-    ts = np.linspace(0, t_max, n_steps)
-    for t in ts[1:]:
-        xt = x + t * v
-        if find_argmin(W, b, S, xt) != i0:
-            # Binary search for precise crossing
-            lo, hi = t - (ts[1] - ts[0]), t
-            for _ in range(50):
-                mid = (lo + hi) / 2
-                if find_argmin(W, b, S, x + mid * v) != i0:
-                    hi = mid
-                else:
-                    lo = mid
-            return (lo + hi) / 2
-    return None
+    i0 = net.active_branch(x)
+    score_i0 = net.affine_score(i0, x)
+
+    min_radius = float('inf')
+    for j in net.S:
+        if j == i0:
+            continue
+        score_j = net.affine_score(j, x)
+        gap = score_j - score_i0  # Positive since i0 is argmin
+
+        # Direction to wall: normalized difference of gradients
+        dW = net.W[j] - net.W[i0]
+        norm_dW = np.linalg.norm(dW)
+
+        if norm_dW > 1e-12:
+            radius = gap / norm_dW
+            min_radius = min(min_radius, radius)
+
+    return min_radius
 
 
 if __name__ == "__main__":
     # Example usage
     np.random.seed(42)
-    d, m = 3, 5
-    W = np.random.randn(m, d)
-    b = np.random.randn(m)
-    S = list(range(m))
 
-    x = np.array([1.0, -0.5, 0.3])
-    y = np.array([0.8, 0.2, -0.1])
+    # Create a tropical network
+    net = TropicalNetwork(
+        W=np.random.randn(5, 3),
+        b=np.random.randn(5),
+        S=list(range(5))
+    )
 
-    print("Tropical Network Algorithms — Example")
-    print("=" * 50)
-    print(f"f(x) = {tropical_network(W, b, S, x):.6f}")
-    print(f"Active unit: {find_argmin(W, b, S, x)}")
-    print(f"K(x,y) = {tropical_ntk(W, b, S, x, y):.6f}")
+    # Generate samples
+    samples = np.random.randn(10, 3)
 
-    # Soft-min convergence
-    print("\nSoft-min convergence:")
-    for tau in [1.0, 0.1, 0.01, 0.001]:
-        val = soft_min_network(W, b, S, x, tau)
-        print(f"  τ = {tau:.3f}: f_τ(x) = {val:.6f}")
-    print(f"  τ → 0:   f(x)   = {tropical_network(W, b, S, x):.6f}")
+    # Compute NTK
+    K = compute_tropical_ntk_matrix(net, samples)
+    print("Tropical NTK Matrix:")
+    print(K)
 
-    # Wall crossing
-    v = np.random.randn(d)
-    t_wall = detect_wall_crossing(W, b, S, x, v)
-    if t_wall is not None:
-        print(f"\nFirst wall crossing at t = {t_wall:.4f}")
-        print(f"  Before: active = {find_argmin(W, b, S, x + (t_wall - 0.01) * v)}")
-        print(f"  After:  active = {find_argmin(W, b, S, x + (t_wall + 0.01) * v)}")
+    # Verify cellwise constancy
+    is_const, max_viol = verify_ntk_cellwise_constant(net, samples)
+    print(f"\nCellwise constant: {is_const}, max violation: {max_viol:.2e}")
 
-    # Flat directions
-    i0 = find_argmin(W, b, S, x)
-    flat_dirs = find_flat_directions(W, i0)
-    print(f"\nFlat directions for cell {i0}:")
-    for i, fd in enumerate(flat_dirs):
-        print(f"  v_{i} = {fd}, W[{i0}]·v = {np.dot(W[i0], fd):.2e}")
+    # Cell structure
+    cells = analyze_cell_structure(net, samples)
+    print(f"\nCell structure: {cells['num_cells']} active cells")
+    print(f"Cell sizes: {cells['cell_sizes']}")
+
+    # Robustness radii
+    for i in range(min(3, len(samples))):
+        r = compute_robustness_radius(net, samples[i])
+        print(f"Robustness radius for sample {i}: {r:.4f}")
+
+    # Polyhedral gradient descent
+    loss = PolyhedralLoss(
+        a=np.array([[2.0, 1.0], [-1.0, 2.0], [0.5, -1.5]]),
+        c=np.array([0.0, 1.0, 3.0])
+    )
+    result = polyhedral_gradient_descent(loss, np.array([2.0, 2.0]), 0.1, 20)
+    print(f"\nPolyhedral GD: {len(result.wall_crossings)} wall crossings")
+    print(f"Final loss: {result.losses[-1]:.4f}")
