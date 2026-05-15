@@ -297,10 +297,10 @@
       "Cryptography"
     ],
     "priority_score": 0.81,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "5d50bd1e",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.820235+00:00"
   },
   {
@@ -567,24 +567,6 @@
     "timestamp": "2026-05-14T17:33:00.498533+00:00"
   },
   {
-    "id": "fd_0170",
-    "title": "Formalize the connection",
-    "description": ": Show that tropical communication complexity lower bounds imply branching program lower bounds via standard simulation.\n\n### Proof Strategy\n- Define protocols as trees with tropical edge costs.\n- Apply the cycle-gap bound to the protocol state trajectory.\n- Use the product structure for direct-sum arguments.\n\n### Cross-domain Impact\n- Distributed computing (message complexity lower bounds)\n- Database theory (query complexity)\n- Information theory (rate-distortion theory over semirings)\n\n---\n\n## Direction 4: Bridge Theorem Between Spectral Gaps and Tropical Cycle Gaps\n\n### Goal\nProve a formal bridge theorem connecting the spectral gap of a transition matrix (in the classical linear-algebraic sense) to the tropical cycle gap of the associated weighted graph.\n\n### Background\nThe spectral gap",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "60e1cc58",
-    "timestamp": "2026-05-14T17:33:00.512633+00:00"
-  },
-  {
     "id": "fd_0184",
     "title": "Existence",
     "description": ": Use Karp's algorithm to compute μ. Construct the \"critical graph\" (subgraph of edges lying on minimum-mean cycles). Show that the tropical CSR (Cyclicity-Saturation-Reduction) decomposition yields an eigenvector.",
@@ -597,6 +579,20 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "89af9dca",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
     "id": "fd_0197",
@@ -1215,6 +1211,21 @@
     "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
+    "id": "fd_0181",
+    "title": "3. Extension from $L_\\infty$ to $L_2$ Robustness via Sheaves of Quadratic Forms",
+    "description": "**Objective**: Extend the cohomological certification framework from $L_\\infty$ perturbation balls to $L_2$ (Euclidean) perturbation balls by replacing real-valued margin sections with sections valued in positive-definite quadratic forms.\n\n**Approach**: On each activation region $U_i$, the network is affine: $f(x) = W_i x + b_i$. The local $L_2$-robustness radius at $x \\in U_i$ is $\\|W_i^{-1}\\| \\cdot (\\text{margin at } x)$, which depends on the local Hessian structure. Define a sheaf $\\mathcal{Q}$ assigning to $U_i$ the quadratic form $Q_i(v) = v^T W_i^T W_i \\, v$ (the local metric tensor). The overlap compatibility condition becomes: on $U_i \\cap U_j$, $Q_i$ and $Q_j$ must be comparable (within a multiplicative factor).\n\n**Key hypotheses**:\n- The $L_2$ certified radius is controlled by th",
+    "domains": [
+      "EML",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "56f3642c",
+    "timestamp": "2026-05-14T18:36:13.855472+00:00"
+  },
+  {
     "id": "fd_0179",
     "title": "Phase 1 (Immediate, 1-2 weeks)",
     "description": "- **Team A:** Four-voice generalization (Direction 1). Extend all definitions, re-run proofs, compute database.\n- **Team B:** Computational exploration. Enumerate all triad/seventh-chord transitions, visualize cost landscapes, identify patterns.",
@@ -1545,6 +1556,23 @@
     "timestamp": "2026-05-15T09:07:29.342835+00:00"
   },
   {
+    "id": "fd_0211",
+    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
+    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "b2af3cbf",
+    "timestamp": "2026-05-15T09:19:36.848982+00:00"
+  },
+  {
     "id": "fd_0219",
     "title": "1. Closedness and Topological Properties of Tropical Hypersurfaces",
     "description": "**Status**: ✅ Completed in this cycle (`isClosed_tropHypersurface`).\n\n**Next theorem targets**:\n\n```lean\n/-- The complement of a tropical hypersurface is open and dense\n    when the polynomial has at least two distinct monomials. -/\ntheorem isOpen_compl_tropHypersurface {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) :\n    IsOpen (TropHypersurface p hp)ᶜ\n\n/-- The tropical hypersurface has empty interior when the polynomial\n    has at least two monomials with distinct exponent vectors. -/\ntheorem interior_tropHypersurface_eq_empty {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty)\n    (hdist : ∃ m₁ ∈ p, ∃ m₂ ∈ p, m₁.exp ≠ m₂.exp) :\n    interior (TropHypersurface p hp) = ∅\n```\n\n**Proof strategy**: The complement is open directly from closedness. For empty interior, use t",
@@ -1809,5 +1837,95 @@
     "source_exp_id": "a6ee9322",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T17:02:08.139954+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "Direction 1: Randomized Protocol Tropical Transfer Theorem",
+    "description": "**Target Theorem.** *For every Boolean function f, if every **randomized** communication protocol computing f with error ≤ 1/3 has expected tropical cost at least L, and every randomized branching program for f induces such a protocol with overhead at most C, then every such randomized branching program has expected size at least L/C.*\n\n**Why it matters.** Our current transfer theorem handles deterministic protocols. Extending to randomized protocols would capture the full power of communication complexity, since randomized communication lower bounds are strictly harder to prove and yield stronger consequences. The tropical cost of a randomized protocol is a random variable; the key technical challenge is showing that *expected* tropical cost lower bounds transfer to *expected* branching p",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "60e1cc58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:43.000569+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Direction 2: Nondeterministic Branching Program Lower Bounds via Tropical Certif",
+    "description": "**Target Theorem.** *If f has tropical certificate complexity at least L (every tropical certificate for f has cost ≥ L), then every nondeterministic branching program for f has size at least 2^{L/C}.*\n\n**Why it matters.** Nondeterministic branching programs are a model of nondeterministic space, and lower bounds for them imply space lower bounds. Tropical certificates generalize classical certificates by assigning min-plus costs to input queries. This direction connects the tropical semiring to the central open problem of proving super-polynomial nondeterministic space lower bounds.\n\n**Proof strategy.**\n1. Define tropical certificate complexity as the minimum tropical cost of any certificate (a set of input positions whose values determine f, weighted by query costs).\n2. Show that every n",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "60e1cc58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:43.013515+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Direction 3: Tropical Data Processing Inequality",
+    "description": "**Target Theorem.** *For any Markov chain X → Y → Z with transition matrices P₁, P₂, the tropical mutual information satisfies I_trop(X; Z) ≤ min(I_trop(X; Y), I_trop(Y; Z)), where I_trop is defined via the log-weight transform of transition probabilities.*\n\n**Why it matters.** The classical data processing inequality (DPI) is the foundation of information theory — it says that no processing of data can increase the information it contains. A tropical DPI would establish the same principle in the min-plus world, with \"tropical mutual information\" measuring the minimum-cost communication needed to transmit information about X through a channel. This would be the first rigorous tropical information inequality, creating a bridge between information theory and tropical optimization.\n\n**Proof s",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "60e1cc58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:43.026710+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Direction 4: Tropical Expander Families and Explicit Cycle-Gap Lower Bounds",
+    "description": "**Target Theorem.** *For the family of Ramanujan graphs G_n on n vertices (e.g., Lubotzky-Phillips-Sarnak graphs), the tropical cycle gap of the log-weight matrix satisfies τ(G_n) ≥ c · log(n) / n for an explicit constant c > 0.*\n\n**Why it matters.** Our spectral-tropical bridge shows that positive spectral gap implies positive tropical cycle gap, but the quantitative relationship is not yet explicit for concrete graph families. Proving explicit tropical cycle-gap lower bounds for Ramanujan graphs would create the first \"tropical expander\" family — graphs with certified tropical separation properties. This opens a new avenue in combinatorics: tropical expansion as a graph property complementary to classical expansion.\n\n**Proof strategy.**\n1. Start from the known spectral gap of Ramanujan g",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "60e1cc58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:43.039868+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Direction 5: Communication-to-Circuit Lower Bound Transport Principle",
+    "description": "**Target Theorem.** *For every Boolean function f : {0,1}^n × {0,1}^n → {0,1}, if the deterministic tropical communication complexity of f is at least L, then every Boolean circuit computing f has size at least L / (C · log n), where C is a universal simulation constant.*\n\n**Why it matters.** This would be the most impactful direction: a formal connection between communication complexity and circuit complexity. The tropical cost serves as an intermediate \"hardness currency\" that translates between communication protocols and circuits. While unconditional super-polynomial circuit lower bounds remain a central open problem in complexity theory, this framework could provide new tools by reducing circuit lower bounds to tropical communication lower bounds, which may be more tractable.\n\n**Proof",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "60e1cc58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:43.053960+00:00"
   }
 ]
