@@ -1167,10 +1167,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8505111b",
     "timestamp": "2026-05-14T17:33:00.481527+00:00"
   },
   {
@@ -1609,6 +1609,34 @@
     "timestamp": "2026-05-15T03:03:37.388621+00:00"
   },
   {
+    "id": "fd_0201",
+    "title": "Direction 1",
+    "description": "(Tropical Hahn–Banach): Most natural next step. Directly extends the current theorem by weakening the hypothesis. High impact, moderate difficulty.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "18915f0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:12:37.111041+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Direction 4",
+    "description": "(Residuated Duality): Provides the theoretical dual to the separation theorem. Creates infrastructure for impossibility results. Medium difficulty.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "18915f0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:12:37.117669+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -1753,20 +1781,6 @@
     "source_exp_id": "ea1c2257",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:39.952876+00:00"
-  },
-  {
-    "id": "fd_0119",
-    "title": "Team Directive",
-    "description": "Each direction should be pursued by a team that:\n1. Formalizes the core definitions and 2-3 key lemmas within the first sprint.\n2. Validates the approach with a concrete catalog example before scaling.\n3. Cross-references with other directions to identify shared infrastructure.\n4. Documents both successes and failures — a proven *impossibility* (e.g., \"no adjunction exists between X and Y\") is as valuable as a positive construction.\n\nThe long-term goal is a **library of research compilers**: certified transformations that create new mathematics by composing proven cross-domain bridges.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "18915f0b",
-    "timestamp": "2026-05-14T16:17:39.958244+00:00"
   },
   {
     "id": "fd_0125",
