@@ -446,22 +446,6 @@
     "timestamp": "2026-05-14T16:03:53.852712+00:00"
   },
   {
-    "id": "seed_040",
-    "title": "Dark Energy as Tropical Vacuum Pressure: Min-Plus Cosmological Constant",
-    "description": "Prove that the observed dark energy density corresponds to the tropical vacuum expectation value of the cosmological constant in min-plus quantum field theory. Show that the 120-order-of-magnitude discrepancy between the predicted and observed values is resolved by the idempotent property: in tropical QFT, vacuum energy is min-dominated by the shortest Feynman diagram, yielding the correct order of magnitude.",
-    "domains": [
-      "Physics",
-      "Tropical",
-      "Speculative"
-    ],
-    "priority_score": 0.85,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "1719df3c",
-    "timestamp": "2026-05-14T16:03:53.836541+00:00"
-  },
-  {
     "id": "seed_034",
     "title": "Quantum Speedup via Tropical Dequantization",
     "description": "Prove that the dequantization of quantum algorithms—replacing quantum amplitude with tropical weights—preserves the speedup structure while eliminating quantum hardware requirements. Show that tropical dequantized algorithms achieve the same asymptotic complexity as their quantum counterparts for search and sampling problems, and that the min-plus interference pattern captures the essential quantum parallelism.",
@@ -1616,6 +1600,48 @@
     "timestamp": "2026-05-15T05:04:31.335951+00:00"
   },
   {
+    "id": "fd_0202",
+    "title": "Upper bound:",
+    "description": "For any $\\epsilon > 0$ and large enough $\\beta$, the sum is dominated by the minimizer: $e^{-\\beta S_{\\min}} \\leq \\sum e^{-\\beta S_i} \\leq |s| \\cdot e^{-\\beta S_{\\min}}$.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1719df3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:07:02.963673+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Squeeze:",
+    "description": "$S_{\\min} \\leq -\\frac{1}{\\beta}\\log\\sum e^{-\\beta S_i} \\leq S_{\\min} + \\frac{\\log|s|}{\\beta}$.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1719df3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:07:02.970860+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Limit:",
+    "description": "As $\\beta \\to \\infty$, the error term $\\frac{\\log|s|}{\\beta} \\to 0$.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1719df3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:07:02.978185+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -1723,10 +1749,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "069b9159",
     "timestamp": "2026-05-14T16:17:39.945939+00:00"
   },
   {
