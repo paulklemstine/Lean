@@ -160,22 +160,6 @@
     "timestamp": "2026-05-14T16:03:53.833462+00:00"
   },
   {
-    "id": "seed_036",
-    "title": "String Theory T-Duality as Tropical Duality: Min-Plus Mirror Symmetry",
-    "description": "Prove that T-duality in string theory is precisely tropical duality in the min-plus semiring: compactification on a circle of radius R is dual to compactification on a circle of tropical radius 1/R. Show that mirror symmetry between Calabi-Yau manifolds is the tropical Legendre transform of their potential functions, and that the conifold transition is a tropical corner locus.",
-    "domains": [
-      "Physics",
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.9,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "ed052318",
-    "timestamp": "2026-05-14T16:03:53.832656+00:00"
-  },
-  {
     "id": "seed_061",
     "title": "Emergent Computation in Pythagorean Orbit Lattices",
     "description": "Prove that the Berggren groupoid orbit lattice on SL(3,Z) supports universal computation via a constructed cellular automaton, establishing Pythagorean triples as a computational substrate. Show that the orbit structure of primitive triples encodes Turing-complete transition rules, and that the lattice's geometric properties guarantee computational universality with polynomial overhead.",
@@ -504,10 +488,10 @@
       "Computation"
     ],
     "priority_score": 0.82,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14a8bd15",
     "timestamp": "2026-05-14T16:03:53.821655+00:00"
   },
   {
@@ -552,10 +536,10 @@
       "Speculative"
     ],
     "priority_score": 0.8,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "590e43ac",
     "timestamp": "2026-05-14T16:03:53.842628+00:00"
   },
   {
@@ -890,10 +874,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ab661ec",
     "timestamp": "2026-05-14T16:24:30.150755+00:00"
   },
   {
@@ -965,10 +949,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "245e45a9",
     "timestamp": "2026-05-14T17:33:00.474935+00:00"
   },
   {
@@ -1065,6 +1049,20 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.148110+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "cb03e742",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
     "id": "fd_0187",
@@ -1560,6 +1558,91 @@
     "timestamp": "2026-05-15T08:04:57.280381+00:00"
   },
   {
+    "id": "fd_0213",
+    "title": "States precise conjectures",
+    "description": "as Lean theorem signatures with `sorry`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ed052318",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:05:18.353273+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Validates computationally",
+    "description": "using Python/NumPy before attempting formal proofs.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ed052318",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:05:18.359885+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Decomposes aggressively",
+    "description": "— each direction should generate 5-15 independent helper lemmas.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ed052318",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:05:18.367209+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "Cross-references",
+    "description": "with existing Mathlib infrastructure using `lean_local_search`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ed052318",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:05:18.375029+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "Documents",
+    "description": "with detailed module docstrings connecting the formalism to the physics/geometry.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ed052318",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:05:18.382207+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "Iterates",
+    "description": "— each proved lemma should suggest new conjectures and extensions.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ed052318",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:05:18.390894+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -1717,6 +1800,25 @@
     "source_exp_id": "f37e592e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
+  },
+  {
+    "id": "fd_0179",
+    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
+    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "33bff7e2",
+    "timestamp": "2026-05-14T17:33:19.336802+00:00"
   },
   {
     "id": "fd_0179",

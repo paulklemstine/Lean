@@ -1,542 +1,769 @@
-#!/usr/bin/env python3
 """
-Tropical Game of Life — Applications
+Applications of Tropical Life Theory
 
-Demonstrates real-world applications of tropical cellular automata:
-1. Signal routing on a chip layout (shortest-path transport)
-2. Distributed consensus via tropical dynamics
-3. Pattern-based error detection codes
+Demonstrates real-world applications and connections of tropical
+cellular automata to other fields.
 """
 
 import numpy as np
 from typing import List, Tuple, Dict
-
-
-def tropical_threshold(s: int, lo: int, hi: int) -> int:
-    """Tropical threshold function."""
-    return min(1, max(0, s + 1 - lo)) * min(1, max(0, hi + 1 - s))
-
-
-def tropical_life_step(config: np.ndarray) -> np.ndarray:
-    """One step of tropical Life on a torus."""
-    m, n = config.shape
-    s = np.zeros_like(config)
-    for di in [-1, 0, 1]:
-        for dj in [-1, 0, 1]:
-            if di == 0 and dj == 0:
-                continue
-            s += np.roll(np.roll(config, -di, axis=0), -dj, axis=1)
-    alive = np.minimum(1, config)
-    survive = np.minimum(1, np.maximum(0, s + 1 - 2)) * np.minimum(1, np.maximum(0, 3 + 1 - s))
-    birth = np.minimum(1, np.maximum(0, s + 1 - 3)) * np.minimum(1, np.maximum(0, 3 + 1 - s))
-    return alive * survive + (1 - alive) * birth
+from demo import (tropical_threshold, tropical_life_step, is_still_life,
+                  neighbor_sum, shift_config)
 
 
 # ============================================================
-# Application 1: Signal Routing via Gliders
+# Application 1: Tropical Threshold as a Neural Activation
 # ============================================================
 
-def signal_routing_demo():
-    """Demonstrate signal routing using glider propagation.
+def tropical_relu_comparison():
+    """Compare tropical threshold with ReLU activation.
     
-    A glider carries a 1-bit signal from a source to a destination
-    on the torus. The arrival time is predictable from the period
-    and displacement, enabling synchronized communication.
+    The tropical threshold function min(1, max(0, x)) is equivalent to
+    the clipped ReLU (hardtanh) activation used in neural networks.
+    This connection shows that tropical Life's update rule is essentially
+    a spatially-distributed neural network with clipped activations.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 1: Signal Routing via Tropical Gliders")
+    print("Application 1: Tropical Threshold ≈ Neural Activation")
     print("=" * 60)
     
-    # Create a 20×20 torus
-    m, n = 20, 20
+    print("\nComparison of activation functions for s ∈ {0,...,8}:")
+    print(f"{'s':>3} {'ReLU':>6} {'ClipReLU':>9} {'TropThresh(s,2,3)':>18}")
+    print("-" * 40)
     
-    # Place a glider at position (2, 2)
-    config = np.zeros((m, n), dtype=int)
-    glider_cells = [(2, 3), (3, 4), (4, 2), (4, 3), (4, 4)]
-    for i, j in glider_cells:
-        config[i, j] = 1
+    for s in range(9):
+        relu = max(0, s - 2)
+        clip_relu = min(1, max(0, s - 2))
+        trop = tropical_threshold(s, 2, 3)
+        print(f"{s:>3} {relu:>6} {clip_relu:>9} {trop:>18}")
     
-    print(f"\n  Grid: {m}×{n} torus")
-    print(f"  Source: glider at rows 2-4, cols 2-4")
-    print(f"  Glider period: 4 steps, displacement: (1, 1)")
+    print("\nKey insight: the tropical Life update rule at each cell is")
+    print("equivalent to a 2-layer neural network with clipped ReLU")
+    print("activations, applied to the Moore neighborhood sum.")
+
+
+# ============================================================
+# Application 2: Error-Correcting Stable Memory
+# ============================================================
+
+def stable_memory_demo():
+    """Demonstrate still lifes as error-correcting memory cells.
     
-    # Track glider position (center of mass)
-    positions = []
-    current = config.copy()
+    A 2×2 block still life is a stable attractor: any small perturbation
+    either returns to the block or dissolves. This makes blocks natural
+    building blocks for robust memory in noisy environments.
+    """
+    print("\n\nApplication 2: Still Lifes as Stable Memory")
+    print("=" * 60)
     
-    for step in range(41):
-        alive = np.argwhere(current == 1)
-        if len(alive) > 0:
-            # Compute center of mass with periodic wrapping
-            com_i = np.mean(alive[:, 0])
-            com_j = np.mean(alive[:, 1])
-            positions.append((step, round(com_i, 1), round(com_j, 1), len(alive)))
+    # Baseline: 2×2 block
+    block = np.zeros((8, 8), dtype=int)
+    block[3:5, 3:5] = 1
+    print(f"\nBaseline block (8×8): still life = {is_still_life(block)}")
+    
+    # Perturbation 1: add one cell adjacent to block
+    perturbed1 = block.copy()
+    perturbed1[2, 3] = 1
+    print(f"\nPerturbed (add cell at (2,3)):")
+    result = perturbed1.copy()
+    for step in range(5):
+        result = tropical_life_step(result)
+    converged = is_still_life(result)
+    print(f"  After 5 steps, is still life: {converged}")
+    print(f"  Returned to original block: {np.array_equal(result, block)}")
+    
+    # Perturbation 2: remove one cell from block
+    perturbed2 = block.copy()
+    perturbed2[3, 3] = 0
+    print(f"\nPerturbed (remove cell (3,3)):")
+    result = perturbed2.copy()
+    for step in range(5):
+        result = tropical_life_step(result)
+    print(f"  After 5 steps, alive cells: {result.sum()}")
+    
+    # Perturbation 3: random noise near block
+    print("\nNoise robustness test (100 random perturbations):")
+    survived = 0
+    for _ in range(100):
+        noisy = block.copy()
+        # Flip a random cell within distance 2 of the block
+        di, dj = np.random.randint(-2, 3, size=2)
+        ci, cj = 3 + di, 3 + dj
+        if 0 <= ci < 8 and 0 <= cj < 8:
+            noisy[ci, cj] = 1 - noisy[ci, cj]
+        
+        result = noisy.copy()
+        for _ in range(10):
+            result = tropical_life_step(result)
+        
+        if is_still_life(result):
+            survived += 1
+    
+    print(f"  Converged to a still life: {survived}/100")
+
+
+# ============================================================
+# Application 3: Signal Processing with Blinkers
+# ============================================================
+
+def blinker_clock_demo():
+    """Demonstrate blinkers as clock signals for synchronous circuits.
+    
+    Blinkers oscillate with period 2, providing a natural clock signal.
+    By reading the blinker state (horizontal vs vertical), downstream
+    gates can be synchronized.
+    """
+    print("\n\nApplication 3: Blinker as Clock Signal")
+    print("=" * 60)
+    
+    grid = np.zeros((8, 8), dtype=int)
+    grid[3, 2:5] = 1  # Horizontal blinker
+    
+    print("\nBlinker state over 10 clock cycles:")
+    current = grid.copy()
+    for t in range(10):
+        # Read clock state from center cell's row neighbors
+        center_val = current[3, 3]
+        left_val = current[3, 2]
+        top_val = current[2, 3]
+        orientation = "H" if left_val == 1 else "V"
+        print(f"  t={t:2d}: orientation={orientation}, "
+              f"center={center_val}, "
+              f"phase={'even' if t % 2 == 0 else 'odd'}")
         current = tropical_life_step(current)
-    
-    print(f"\n  Signal propagation trace:")
-    print(f"  {'Step':>6} {'Row':>6} {'Col':>6} {'Cells':>6}")
-    print(f"  {'-'*30}")
-    for step, row, col, cells in positions[::4]:
-        print(f"  {step:>6} {row:>6} {col:>6} {cells:>6}")
-    
-    # Calculate effective signal speed
-    if len(positions) >= 2:
-        t0, r0, c0, _ = positions[0]
-        t1, r1, c1, _ = positions[-1]
-        dt = t1 - t0
-        if dt > 0:
-            speed = np.sqrt((r1 - r0)**2 + (c1 - c0)**2) / dt
-            print(f"\n  Effective signal speed: {speed:.3f} cells/step")
-            print(f"  Arrival time at distance d: ~{1/speed:.1f} × d steps")
 
 
 # ============================================================
-# Application 2: Distributed Consensus
+# Application 4: Shortest Path via Tropical Dynamics
 # ============================================================
 
-def distributed_consensus_demo():
-    """Demonstrate distributed consensus using tropical fixed points.
+def tropical_shortest_path_connection():
+    """Demonstrate connection between tropical Life and shortest paths.
     
-    Still lifes represent stable consensus states. Starting from random
-    initial conditions, the tropical dynamics converge to fixed points
-    or small cycles, demonstrating self-organization.
+    The tropical threshold function uses min (tropical addition) and +
+    (tropical multiplication), which are the same operations used in
+    shortest-path algorithms. This connection suggests that tropical
+    Life can be viewed as a distributed shortest-path computation.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Distributed Consensus via Tropical Dynamics")
+    print("\n\nApplication 4: Connection to Shortest Paths")
     print("=" * 60)
     
-    np.random.seed(42)
-    m, n = 10, 10
+    print("\nTropical semiring operations:")
+    print("  a ⊕ b = min(a, b)  [tropical addition]")
+    print("  a ⊗ b = a + b      [tropical multiplication]")
     
-    # Random initial configuration
-    config = np.random.randint(0, 2, (m, n))
-    initial_alive = config.sum()
+    # Example: shortest path in a 4-node graph
+    INF = 999
+    # Distance matrix
+    D = np.array([
+        [0, 2, INF, 7],
+        [2, 0, 3, INF],
+        [INF, 3, 0, 1],
+        [7, INF, 1, 0]
+    ])
     
-    print(f"\n  Grid: {m}×{n} torus")
-    print(f"  Initial alive cells: {initial_alive} / {m*n}")
+    print(f"\nDistance matrix D:")
+    print(D)
     
-    # Evolve and track convergence
-    current = config.copy()
-    history = [tuple(current.flatten())]
+    # Tropical matrix multiplication: (A ⊗ B)_ij = min_k(A_ik + B_kj)
+    def trop_mat_mul(A, B):
+        n = A.shape[0]
+        C = np.full((n, n), INF)
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    C[i, j] = min(C[i, j], A[i, k] + B[k, j])
+        return C
     
-    for step in range(1, 101):
-        current = tropical_life_step(current)
-        state = tuple(current.flatten())
-        
-        if state in history:
-            cycle_start = history.index(state)
-            cycle_length = step - cycle_start
-            print(f"\n  Convergence detected at step {step}")
-            print(f"  Cycle length: {cycle_length}")
-            print(f"  Transient length: {cycle_start}")
-            
-            if cycle_length == 1:
-                print(f"  → Fixed point (consensus reached)")
-            else:
-                print(f"  → Periodic orbit (oscillating consensus)")
-            
-            print(f"  Final alive cells: {current.sum()} / {m*n}")
-            break
-        
-        history.append(state)
-    else:
-        print(f"  No convergence in 100 steps")
+    # Shortest paths = tropical matrix power
+    D2 = trop_mat_mul(D, D)
+    D4 = trop_mat_mul(D2, D2)
     
-    # Analyze multiple random starts
-    print(f"\n  Statistical analysis (100 random starts):")
-    fixed_count = 0
-    cycle_counts: Dict[int, int] = {}
+    print(f"\nD² (2-hop shortest paths):")
+    print(D2)
+    print(f"\nD⁴ (all-pairs shortest paths):")
+    print(D4)
     
-    for trial in range(100):
-        np.random.seed(trial)
-        c = np.random.randint(0, 2, (m, n))
-        hist = [tuple(c.flatten())]
-        
-        for step in range(1, 200):
-            c = tropical_life_step(c)
-            state = tuple(c.flatten())
-            if state in hist:
-                cl = step - hist.index(state)
-                cycle_counts[cl] = cycle_counts.get(cl, 0) + 1
-                if cl == 1:
-                    fixed_count += 1
-                break
-            hist.append(state)
-    
-    print(f"    Converged to fixed point: {fixed_count}/100")
-    for cl in sorted(cycle_counts.keys()):
-        print(f"    Cycle length {cl}: {cycle_counts[cl]}/100")
+    print("\nThe tropical Life automaton uses the same algebraic operations")
+    print("(min, +) but applied spatially on a grid, creating a distributed")
+    print("computation medium that inherits tropical algebra's structure.")
 
 
 # ============================================================
-# Application 3: Error Detection via Pattern Stability
+# Application 5: Pattern Complexity Measurement
 # ============================================================
 
-def error_detection_demo():
-    """Demonstrate error detection using still-life stability.
+def pattern_complexity():
+    """Measure and compare complexity of different tropical Life patterns.
     
-    A still life encodes a valid state. Perturbations (errors) break
-    the fixed-point property, which can be detected by running one
-    step and checking for change.
+    Uses orbit diversity as a complexity measure: patterns with higher
+    orbit diversity exhibit more complex dynamics.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Error Detection via Tropical Fixed Points")
+    print("\n\nApplication 5: Pattern Complexity Hierarchy")
     print("=" * 60)
     
-    m, n = 8, 8
+    patterns = {}
     
-    # Create a still life (2×2 block)
-    valid_state = np.zeros((m, n), dtype=int)
-    valid_state[0:2, 0:2] = 1
+    # Empty grid
+    patterns["empty"] = np.zeros((10, 10), dtype=int)
     
-    print(f"\n  Valid state (2×2 block on {m}×{n} torus):")
-    print(f"    Is fixed point: {np.array_equal(valid_state, tropical_life_step(valid_state))}")
+    # Single cell (dies immediately)
+    p = np.zeros((10, 10), dtype=int)
+    p[5, 5] = 1
+    patterns["single cell"] = p
     
-    # Introduce single-bit errors and check detection
-    print(f"\n  Single-bit error detection:")
-    detected = 0
-    total = 0
+    # 2×2 block (still life)
+    p = np.zeros((10, 10), dtype=int)
+    p[4:6, 4:6] = 1
+    patterns["2x2 block"] = p
     
-    for i in range(m):
-        for j in range(n):
-            corrupted = valid_state.copy()
-            corrupted[i, j] = 1 - corrupted[i, j]  # Flip one bit
-            
-            is_fixed = np.array_equal(corrupted, tropical_life_step(corrupted))
-            total += 1
-            
-            if not is_fixed:
-                detected += 1
+    # Blinker (period 2)
+    p = np.zeros((10, 10), dtype=int)
+    p[5, 4:7] = 1
+    patterns["blinker"] = p
     
-    print(f"    Errors detected: {detected}/{total}")
-    print(f"    Detection rate: {detected/total*100:.1f}%")
+    # Glider
+    p = np.zeros((10, 10), dtype=int)
+    for i, j in [(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)]:
+        p[i, j] = 1
+    patterns["glider"] = p
     
-    # Multi-bit errors
-    print(f"\n  Multi-bit error detection (1000 random 2-bit errors):")
-    np.random.seed(123)
-    detected_2bit = 0
+    # R-pentomino (chaotic)
+    p = np.zeros((10, 10), dtype=int)
+    p[4, 5] = 1; p[4, 6] = 1
+    p[5, 4] = 1; p[5, 5] = 1
+    p[6, 5] = 1
+    patterns["R-pentomino"] = p
     
-    for _ in range(1000):
-        corrupted = valid_state.copy()
-        positions = np.random.choice(m * n, 2, replace=False)
-        for pos in positions:
-            ii, jj = pos // n, pos % n
-            corrupted[ii, jj] = 1 - corrupted[ii, jj]
+    T = 20
+    print(f"\nOrbit diversity (T={T} steps) for various patterns:")
+    print(f"{'Pattern':<15} {'Alive':>6} {'Diversity':>10} {'Category':<15}")
+    print("-" * 50)
+    
+    for name, grid in patterns.items():
+        current = grid.copy()
+        seen = set()
+        for t in range(T + 1):
+            seen.add(current.tobytes())
+            current = tropical_life_step(current)
         
-        if not np.array_equal(corrupted, tropical_life_step(corrupted)):
-            detected_2bit += 1
-    
-    print(f"    Detected: {detected_2bit}/1000 ({detected_2bit/10:.1f}%)")
+        diversity = len(seen)
+        alive = int(grid.sum())
+        
+        if diversity == 1:
+            category = "fixed point"
+        elif diversity <= 3:
+            category = "periodic"
+        elif diversity <= T:
+            category = "eventually periodic"
+        else:
+            category = "complex"
+        
+        print(f"{name:<15} {alive:>6} {diversity:>10} {category:<15}")
 
-
-# ============================================================
-# Application 4: Tropical Shortest-Path Connection
-# ============================================================
-
-def shortest_path_connection_demo():
-    """Demonstrate the connection between tropical Life and shortest paths.
-    
-    The tropical threshold function is built from min (tropical addition),
-    which is the fundamental operation for shortest-path computation.
-    We show how the Life rule can be interpreted as a local optimization.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Tropical Shortest-Path Interpretation")
-    print("=" * 60)
-    
-    print("""
-  In tropical algebra:
-    - Addition (⊕) = min
-    - Multiplication (⊗) = +
-  
-  The tropical threshold function:
-    tropicalThreshold(s, lo, hi) = min(1, s+1-lo) × min(1, hi+1-s)
-  
-  can be decomposed as a tropical polynomial:
-    = min(1, s ⊗ 1 ⊕ (1-lo)) ⊗ min(1, (hi+1) ⊕ (-s))
-  
-  This means the Life rule is a tropical algebraic expression,
-  and the dynamics are iterations of tropical polynomial maps.
-  """)
-    
-    # Demonstrate tropical matrix connection
-    print("  Tropical semiring verification:")
-    test_cases = [
-        (3, 5, "min(3,5) = 3 (tropical add)"),
-        (3, 5, "3+5 = 8 (tropical mult)"),
-    ]
-    
-    # Verify distributivity
-    for a, b, c in [(2, 5, 3), (1, 4, 2), (0, 7, 1)]:
-        lhs = min(a, b) + c
-        rhs = min(a + c, b + c)
-        status = "✓" if lhs == rhs else "✗"
-        print(f"    min({a},{b})+{c} = {lhs} = min({a+c},{b+c}) = {rhs} {status}")
-    
-    # Show how neighbor sum relates to tropical product
-    print(f"\n  Neighbor sum as tropical product (in log domain):")
-    print(f"    If we write c(x) = exp(-v(x)) in tropical coordinates,")
-    print(f"    then neighborSum = Σ exp(-v(neighbor_i))")
-    print(f"    ≈ exp(-min_i v(neighbor_i))  (tropical approximation)")
-    print(f"    So the neighbor sum approximates a tropical sum (min).")
-
-
-# ============================================================
-# Main
-# ============================================================
 
 if __name__ == "__main__":
-    print("Tropical Game of Life — Applications")
-    print("=" * 60)
-    
-    signal_routing_demo()
-    distributed_consensus_demo()
-    error_detection_demo()
-    shortest_path_connection_demo()
-    
-    print("\n" + "=" * 60)
-    print("All applications demonstrated successfully.")
-    print("=" * 60)
+    tropical_relu_comparison()
+    stable_memory_demo()
+    blinker_clock_demo()
+    tropical_shortest_path_connection()
+    pattern_complexity()
 
 
-#!/usr/bin/env python3
 """
-Tropical Game of Life — Interactive Demo
+Tropical Life: Demonstrations of Emergent Computation in Min-Plus Cellular Automata
 
-Demonstrates the core theorems with concrete numerical examples:
-1. The 2×2 block as a still life (fixed point)
-2. The 5-cell glider with period-4 translation
-3. Orbit diversity growth over time
+This module provides working demonstrations of the key theorems proven in the
+formal Lean 4 development:
+1. Still life fixed points (2×2 blocks)
+2. Glider dynamics (period-4 mobile pattern)
+3. Boolean gate gadgets (AND, OR, NOT, XOR)
+4. Exponential still life diversity
+5. Blinker oscillation (period-2)
 """
 
 import numpy as np
-from typing import Tuple, List, Set
+from typing import Tuple, List, Optional
 
 
 def tropical_threshold(s: int, lo: int, hi: int) -> int:
-    """Tropical threshold function: returns 1 if lo <= s <= hi, else 0.
+    """Tropical threshold function: returns 1 iff lo <= s <= hi.
     
-    Uses min and truncating subtraction (max(0, ...)) to implement
-    interval membership without Boolean branching.
-    
-    >>> tropical_threshold(3, 2, 3)
-    1
-    >>> tropical_threshold(4, 2, 3)
-    0
-    >>> tropical_threshold(1, 2, 3)
-    0
+    Uses only min, addition, multiplication, and truncating subtraction.
+    This is the core tropical primitive that bridges algebra and Boolean logic.
     """
     return min(1, max(0, s + 1 - lo)) * min(1, max(0, hi + 1 - s))
 
 
-def neighbor_sum(config: np.ndarray, i: int, j: int) -> int:
-    """Sum of Moore neighborhood values on a torus."""
-    m, n = config.shape
+def neighbor_sum(grid: np.ndarray, i: int, j: int) -> int:
+    """Sum of Moore neighborhood values with toroidal wrapping."""
+    m, n = grid.shape
     total = 0
     for di in [-1, 0, 1]:
         for dj in [-1, 0, 1]:
             if di == 0 and dj == 0:
                 continue
-            total += config[(i + di) % m, (j + dj) % n]
+            total += grid[(i + di) % m, (j + dj) % n]
     return total
 
 
-def tropical_local_rule(config: np.ndarray, i: int, j: int) -> int:
-    """Tropical local update rule for cell (i, j).
+def tropical_local_rule(grid: np.ndarray, i: int, j: int) -> int:
+    """Tropical Life local update rule.
     
-    Uses tropical threshold to encode birth/survival:
-    - Birth: dead cell with exactly 3 alive neighbors
-    - Survival: alive cell with 2 or 3 alive neighbors
+    Alive cell survives iff 2 <= neighbors <= 3.
+    Dead cell is born iff neighbors == 3.
+    Implemented entirely with tropical primitives.
     """
-    s = neighbor_sum(config, i, j)
-    alive = min(1, config[i, j])
-    survive = tropical_threshold(s, 2, 3)
-    birth = tropical_threshold(s, 3, 3)
-    return alive * survive + (1 - alive) * birth
+    s = neighbor_sum(grid, i, j)
+    alive = min(1, grid[i, j])
+    return (alive * tropical_threshold(s, 2, 3) + 
+            (1 - alive) * tropical_threshold(s, 3, 3))
 
 
-def tropical_life_step(config: np.ndarray) -> np.ndarray:
+def tropical_life_step(grid: np.ndarray) -> np.ndarray:
     """Apply one step of the tropical Life automaton."""
-    m, n = config.shape
-    new_config = np.zeros_like(config)
+    m, n = grid.shape
+    new_grid = np.zeros_like(grid)
     for i in range(m):
         for j in range(n):
-            new_config[i, j] = tropical_local_rule(config, i, j)
-    return new_config
+            new_grid[i, j] = tropical_local_rule(grid, i, j)
+    return new_grid
 
 
-def config_to_tuple(config: np.ndarray) -> tuple:
-    """Convert configuration to hashable tuple for set operations."""
-    return tuple(config.flatten())
+def is_still_life(grid: np.ndarray) -> bool:
+    """Check if a configuration is a fixed point of the step operator."""
+    return np.array_equal(tropical_life_step(grid), grid)
 
 
-def orbit_diversity(config: np.ndarray, T: int) -> int:
-    """Count distinct configurations in {step^t(c) : 0 <= t <= T}."""
-    seen: Set[tuple] = set()
-    current = config.copy()
-    for t in range(T + 1):
-        seen.add(config_to_tuple(current))
-        if t < T:
-            current = tropical_life_step(current)
-    return len(seen)
-
-
-def print_config(config: np.ndarray, label: str = ""):
-    """Pretty-print a configuration."""
-    if label:
-        print(f"\n{label}:")
-    m, n = config.shape
-    for i in range(m):
-        row = ""
-        for j in range(n):
-            row += "■ " if config[i, j] == 1 else "· "
-        print(f"  {row}")
+def shift_config(grid: np.ndarray, dx: int, dy: int) -> np.ndarray:
+    """Shift a configuration by (dx, dy) on the torus."""
+    return np.roll(np.roll(grid, dx, axis=0), dy, axis=1)
 
 
 # ============================================================
-# Demo 1: Tropical Threshold Function
+# Demo 1: Still Life Verification
 # ============================================================
-print("=" * 60)
-print("DEMO 1: Tropical Threshold Function")
-print("=" * 60)
-print()
-print("tropicalThreshold(s, lo, hi) = min(1, s+1-lo) * min(1, hi+1-s)")
-print()
-print("Testing threshold [2, 3] (survival condition):")
-for s in range(9):
-    val = tropical_threshold(s, 2, 3)
-    marker = " ← active" if val == 1 else ""
-    print(f"  s={s}: tropicalThreshold({s}, 2, 3) = {val}{marker}")
 
-print()
-print("Testing threshold [3, 3] (birth condition):")
-for s in range(9):
-    val = tropical_threshold(s, 3, 3)
-    marker = " ← active" if val == 1 else ""
-    print(f"  s={s}: tropicalThreshold({s}, 3, 3) = {val}{marker}")
+def demo_still_lifes():
+    """Demonstrate that 2×2 blocks are still lifes."""
+    print("=" * 60)
+    print("DEMO 1: Still Life Fixed Points")
+    print("=" * 60)
+    
+    # 2×2 block on 6×6 torus
+    grid = np.zeros((6, 6), dtype=int)
+    grid[0:2, 0:2] = 1
+    
+    print("\nBlock configuration (6×6 torus):")
+    print(grid)
+    print(f"\nIs still life: {is_still_life(grid)}")
+    
+    # Block at different position on 8×8 torus
+    grid8 = np.zeros((8, 8), dtype=int)
+    grid8[2:4, 3:5] = 1
+    
+    print(f"\nBlock at (2,3) on 8×8 torus - Is still life: {is_still_life(grid8)}")
+    
+    # 3×3 block is NOT a still life
+    grid3x3 = np.zeros((8, 8), dtype=int)
+    grid3x3[2:5, 2:5] = 1
+    
+    print(f"3×3 block on 8×8 torus - Is still life: {is_still_life(grid3x3)}")
+    print("  (Center cell has 8 neighbors, exceeding survival threshold)")
 
-# ============================================================
-# Demo 2: Block Still Life
-# ============================================================
-print()
-print("=" * 60)
-print("DEMO 2: Block Still Life (Fixed Point)")
-print("=" * 60)
-
-# Create block on 6×6 torus
-block = np.zeros((6, 6), dtype=int)
-block[0, 0] = block[0, 1] = block[1, 0] = block[1, 1] = 1
-
-print_config(block, "Block configuration (6×6 torus)")
-
-# Apply one step
-block_next = tropical_life_step(block)
-print_config(block_next, "After 1 tropical step")
-
-is_fixed = np.array_equal(block, block_next)
-print(f"\n  Fixed point? {is_fixed}")
-print(f"  Nonconstant? {block.min() != block.max()}")
-
-# Show neighbor counts for block cells
-print("\n  Neighbor analysis:")
-for i in range(6):
-    for j in range(6):
-        s = neighbor_sum(block, i, j)
-        alive = block[i, j]
-        result = tropical_local_rule(block, i, j)
-        if i < 3 and j < 3:  # Near the block
-            status = "alive" if alive else "dead"
-            rule = "survives" if alive and result else ("born" if result else "stays dead")
-            print(f"    ({i},{j}): {status}, neighbors={s}, → {rule}")
 
 # ============================================================
-# Demo 3: Glider Evolution
+# Demo 2: Glider Dynamics
 # ============================================================
-print()
-print("=" * 60)
-print("DEMO 3: Glider (Period-4, Displacement (1,1))")
-print("=" * 60)
 
-# Create glider on 10×10 torus
-glider = np.zeros((10, 10), dtype=int)
-glider_cells = [(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
-for i, j in glider_cells:
-    glider[i, j] = 1
+def demo_glider():
+    """Demonstrate the glider pattern and its period-4 translation."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Glider - Mobile Pattern")
+    print("=" * 60)
+    
+    # Glider on 10×10 torus
+    grid = np.zeros((10, 10), dtype=int)
+    glider_cells = [(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+    for i, j in glider_cells:
+        grid[i, j] = 1
+    
+    print("\nInitial glider configuration:")
+    print(grid[:5, :5])
+    
+    current = grid.copy()
+    for step in range(5):
+        current = tropical_life_step(current)
+        print(f"\nAfter step {step + 1}:")
+        print(current[:5, :5])
+    
+    # Verify period-4 shift
+    evolved = grid.copy()
+    for _ in range(4):
+        evolved = tropical_life_step(evolved)
+    
+    shifted = shift_config(grid, 1, 1)
+    match = np.array_equal(evolved, shifted)
+    print(f"\nAfter 4 steps equals shift(1,1) of original: {match}")
+    print(f"Is still life: {is_still_life(grid)}")
 
-print_config(glider, "Step 0: Initial glider")
-
-current = glider.copy()
-for step in range(1, 5):
-    current = tropical_life_step(current)
-    alive_cells = list(zip(*np.where(current == 1)))
-    print_config(current, f"Step {step}: alive cells = {alive_cells}")
-
-# Verify period-4 shift
-shifted_glider = np.zeros((10, 10), dtype=int)
-for i, j in glider_cells:
-    shifted_glider[(i + 1) % 10, (j + 1) % 10] = 1
-
-matches_shift = np.array_equal(current, shifted_glider)
-print(f"\n  Step 4 = shift(1,1) of Step 0? {matches_shift}")
-print(f"  Is still life? {np.array_equal(glider, tropical_life_step(glider))}")
-
-# ============================================================
-# Demo 4: Orbit Diversity
-# ============================================================
-print()
-print("=" * 60)
-print("DEMO 4: Orbit Diversity")
-print("=" * 60)
-
-print("\n  Block (still life) orbit diversity:")
-for T in range(8):
-    div = orbit_diversity(block, T)
-    print(f"    T={T}: diversity = {div}")
-
-print("\n  Glider orbit diversity:")
-for T in range(21):
-    div = orbit_diversity(glider, T)
-    exceeds = " ← T < diversity" if T < div else ""
-    print(f"    T={T}: diversity = {div}{exceeds}")
 
 # ============================================================
-# Demo 5: Tropical Algebraic Properties
+# Demo 3: Boolean Gate Gadgets
 # ============================================================
-print()
-print("=" * 60)
-print("DEMO 5: Tropical Algebraic Properties")
-print("=" * 60)
 
-print("\n  Min associativity (tropical addition):")
-for a, b, c in [(1, 3, 2), (5, 2, 7), (0, 0, 1)]:
-    lhs = min(min(a, b), c)
-    rhs = min(a, min(b, c))
-    print(f"    min(min({a},{b}),{c}) = {lhs} = min({a},min({b},{c})) = {rhs} ✓")
+def demo_gates():
+    """Demonstrate AND, OR, NOT, and XOR gate gadgets."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Boolean Gate Gadgets")
+    print("=" * 60)
+    
+    output_cell = (5, 5)
+    
+    # AND gate
+    print("\n--- AND Gate ---")
+    print("Frame: 1 cell at (4,4). Inputs: a at (4,5), b at (5,4).")
+    print("Output cell (5,5): born iff neighbor count = 3 iff a ∧ b.")
+    print()
+    for a in [False, True]:
+        for b in [False, True]:
+            grid = np.zeros((10, 10), dtype=int)
+            grid[4, 4] = 1  # frame
+            if a: grid[4, 5] = 1
+            if b: grid[5, 4] = 1
+            result = tropical_life_step(grid)
+            print(f"  AND({int(a)}, {int(b)}) = {result[output_cell]}")
+    
+    # OR gate
+    print("\n--- OR Gate ---")
+    print("Frame: 1 cell at (4,4). Output (5,5) starts alive.")
+    print("Survival iff count >= 2 iff a ∨ b.")
+    print()
+    for a in [False, True]:
+        for b in [False, True]:
+            grid = np.zeros((10, 10), dtype=int)
+            grid[5, 5] = 1  # output alive
+            grid[4, 4] = 1  # frame
+            if a: grid[4, 5] = 1
+            if b: grid[5, 4] = 1
+            result = tropical_life_step(grid)
+            print(f"  OR({int(a)}, {int(b)}) = {result[output_cell]}")
+    
+    # NOT gate
+    print("\n--- NOT Gate ---")
+    print("Frame: 3 cells at (4,4), (4,5), (4,6).")
+    print("Born iff count = 3 iff ¬a.")
+    print()
+    for a in [False, True]:
+        grid = np.zeros((10, 10), dtype=int)
+        grid[4, 4] = 1
+        grid[4, 5] = 1
+        grid[4, 6] = 1
+        if a: grid[5, 4] = 1
+        result = tropical_life_step(grid)
+        print(f"  NOT({int(a)}) = {result[output_cell]}")
+    
+    # XOR gate
+    print("\n--- XOR Gate ---")
+    print("Frame: 2 cells at (4,4), (4,6).")
+    print("Born iff count = 3 iff a ⊕ b.")
+    print()
+    for a in [False, True]:
+        for b in [False, True]:
+            grid = np.zeros((10, 10), dtype=int)
+            grid[4, 4] = 1
+            grid[4, 6] = 1
+            if a: grid[4, 5] = 1
+            if b: grid[5, 4] = 1
+            result = tropical_life_step(grid)
+            print(f"  XOR({int(a)}, {int(b)}) = {result[output_cell]}")
 
-print("\n  Tropical distributivity (min(a,b) + c = min(a+c, b+c)):")
-for a, b, c in [(3, 5, 2), (1, 4, 3), (0, 7, 1)]:
-    lhs = min(a, b) + c
-    rhs = min(a + c, b + c)
-    print(f"    min({a},{b})+{c} = {lhs} = min({a+c},{b+c}) = {rhs} ✓")
 
-print("\n  Threshold shift invariance:")
-for s, lo, hi, k in [(3, 2, 3, 5), (0, 0, 1, 10), (5, 3, 7, 3)]:
-    t1 = tropical_threshold(s, lo, hi)
-    t2 = tropical_threshold(s + k, lo + k, hi + k)
-    print(f"    threshold({s},{lo},{hi}) = {t1} = threshold({s+k},{lo+k},{hi+k}) = {t2} ✓")
+# ============================================================
+# Demo 4: Exponential Still Life Diversity
+# ============================================================
 
-print()
-print("=" * 60)
-print("All demos completed successfully.")
-print("=" * 60)
+def demo_diversity():
+    """Demonstrate exponential growth of still life count."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Exponential Still Life Diversity")
+    print("=" * 60)
+    
+    # Four independent blocks on 20×20 torus
+    block_positions = [(0, 0), (0, 5), (5, 0), (5, 5)]
+    
+    count = 0
+    for mask in range(16):
+        grid = np.zeros((20, 20), dtype=int)
+        for bit, (bi, bj) in enumerate(block_positions):
+            if mask & (1 << bit):
+                grid[bi:bi+2, bj:bj+2] = 1
+        if is_still_life(grid):
+            count += 1
+    
+    print(f"\nBlocks at positions: {block_positions}")
+    print(f"Total subsets tested: 16")
+    print(f"Still lifes found: {count}")
+    print(f"All 2^4 = 16 subsets are still lifes: {count == 16}")
+    
+    # Scaling analysis
+    print("\n--- Scaling with grid size ---")
+    for grid_size in [8, 12, 16, 20, 24]:
+        spacing = 4
+        k = grid_size // spacing
+        max_blocks = k * k
+        max_still_lifes = 2 ** max_blocks
+        print(f"  Grid {grid_size}×{grid_size}: up to {max_blocks} blocks → "
+              f"up to 2^{max_blocks} = {max_still_lifes} still lifes")
 
 
-#!/usr/bin/env python3
+# ============================================================
+# Demo 5: Blinker Oscillation
+# ============================================================
+
+def demo_blinker():
+    """Demonstrate period-2 blinker oscillation."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Blinker Oscillation (Period 2)")
+    print("=" * 60)
+    
+    grid = np.zeros((8, 8), dtype=int)
+    grid[3, 2:5] = 1  # Horizontal blinker
+    
+    print("\nStep 0 (horizontal):")
+    print(grid[2:5, 1:6])
+    
+    step1 = tropical_life_step(grid)
+    print("\nStep 1 (vertical):")
+    print(step1[2:5, 1:6])
+    
+    step2 = tropical_life_step(step1)
+    print("\nStep 2 (horizontal again):")
+    print(step2[2:5, 1:6])
+    
+    print(f"\nPeriod-2 verified: {np.array_equal(grid, step2)}")
+    print(f"Is still life: {is_still_life(grid)}")
+
+
+# ============================================================
+# Demo 6: Tropical Threshold Function
+# ============================================================
+
+def demo_threshold():
+    """Demonstrate the tropical threshold function."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Tropical Threshold Function")
+    print("=" * 60)
+    
+    print("\ntropicalThreshold(s, 2, 3) for s = 0..8:")
+    for s in range(9):
+        val = tropical_threshold(s, 2, 3)
+        bar = "█" * val
+        print(f"  s={s}: {val}  {bar}  {'← survival range' if val == 1 else ''}")
+    
+    print("\ntropicalThreshold(s, 3, 3) for s = 0..8:")
+    for s in range(9):
+        val = tropical_threshold(s, 3, 3)
+        bar = "█" * val
+        print(f"  s={s}: {val}  {bar}  {'← birth threshold' if val == 1 else ''}")
+
+
+if __name__ == "__main__":
+    demo_threshold()
+    demo_still_lifes()
+    demo_glider()
+    demo_gates()
+    demo_diversity()
+    demo_blinker()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
+
+
+"""Generate PACKAGE.json with all embedded content."""
+
+import json
+import base64
+import os
+
+# Read markdown files
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+# Read Python files
+def read_code(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+# Read Lean files
+lean_files = [
+    'Computation/TropicalLife/Basic.lean',
+    'Computation/TropicalLife/StillLife.lean',
+    'Computation/TropicalLife/Glider.lean',
+    'Computation/TropicalLife/Algebra.lean',
+    'Computation/TropicalLife/RectStillLife.lean',
+    'Computation/TropicalLife/Circuits.lean',
+    'Computation/TropicalLife/Diversity.lean',
+]
+
+lean_code = ""
+for lf in lean_files:
+    path = os.path.join(os.path.dirname(__file__), lf)
+    if os.path.exists(path):
+        lean_code += f"-- ═══════════════════════════════════════════════════\n"
+        lean_code += f"-- File: {lf}\n"
+        lean_code += f"-- ═══════════════════════════════════════════════════\n\n"
+        with open(path, 'r') as f:
+            lean_code += f.read()
+        lean_code += "\n\n"
+
+# Read image files as base64
+def img_to_base64(path):
+    with open(path, 'rb') as f:
+        data = base64.b64encode(f.read()).decode('utf-8')
+    return f"data:image/png;base64,{data}"
+
+# Generate visualizations if not already present
+viz_files = [
+    'glider_evolution.png',
+    'gate_gadgets.png', 
+    'still_life_diversity.png',
+    'tropical_threshold.png',
+    'orbit_diversity.png',
+    'gate_truth_tables.png',
+]
+
+missing = [f for f in viz_files if not os.path.exists(f)]
+if missing:
+    print("Generating missing visualizations...")
+    import visualizations
+    visualizations.fig_glider_evolution()
+    visualizations.fig_gate_gadgets()
+    visualizations.fig_still_life_diversity()
+    visualizations.fig_tropical_threshold()
+    visualizations.fig_orbit_diversity()
+    visualizations.fig_gate_truth_tables()
+
+# Build demo code (self-contained)
+demo_code = read_code('demo.py')
+algorithms_code = read_code('algorithms.py')
+
+# The demo needs to be self-contained, so we include the core functions inline
+demo_standalone = '''"""
+Tropical Life: Self-contained demonstration of emergent computation
+in min-plus cellular automata.
 """
-Tropical Game of Life — Visualizations
+import numpy as np
 
-Generates publication-quality figures for the research paper.
-Saves as PNG files and returns base64 data URIs for the JSON package.
+def tropical_threshold(s, lo, hi):
+    """Tropical threshold: returns 1 iff lo <= s <= hi."""
+    return min(1, max(0, s + 1 - lo)) * min(1, max(0, hi + 1 - s))
+
+def tropical_life_step(grid):
+    """Apply one step of the tropical Life automaton."""
+    m, n = grid.shape
+    new_grid = np.zeros_like(grid)
+    for i in range(m):
+        for j in range(n):
+            s = 0
+            for di in [-1, 0, 1]:
+                for dj in [-1, 0, 1]:
+                    if di == 0 and dj == 0:
+                        continue
+                    s += grid[(i + di) % m, (j + dj) % n]
+            alive = min(1, grid[i, j])
+            new_grid[i, j] = (alive * tropical_threshold(s, 2, 3) +
+                              (1 - alive) * tropical_threshold(s, 3, 3))
+    return new_grid
+
+def is_still_life(grid):
+    return np.array_equal(tropical_life_step(grid), grid)
+
+# === Still Life Demo ===
+print("=== Still Life: 2x2 Block ===")
+grid = np.zeros((6, 6), dtype=int)
+grid[0:2, 0:2] = 1
+print(f"Is still life: {is_still_life(grid)}")
+
+# === Glider Demo ===
+print("\\n=== Glider: Period-4 Mobile Pattern ===")
+grid = np.zeros((10, 10), dtype=int)
+for i, j in [(0,1),(1,2),(2,0),(2,1),(2,2)]:
+    grid[i, j] = 1
+current = grid.copy()
+for step in range(5):
+    current = tropical_life_step(current)
+    print(f"Step {step+1}: alive cells = {current.sum()}")
+
+shifted = np.roll(np.roll(grid, 1, axis=0), 1, axis=1)
+print(f"After 4 steps == shift(1,1): {np.array_equal(current_prev := tropical_life_step(tropical_life_step(tropical_life_step(tropical_life_step(grid)))), shifted)}")
+
+# === AND Gate Demo ===
+print("\\n=== AND Gate ===")
+for a in [0, 1]:
+    for b in [0, 1]:
+        g = np.zeros((10, 10), dtype=int)
+        g[4,4] = 1  # frame
+        if a: g[4,5] = 1
+        if b: g[5,4] = 1
+        result = tropical_life_step(g)
+        print(f"AND({a},{b}) = {result[5,5]}")
+
+# === Exponential Diversity ===
+print("\\n=== Exponential Still Life Diversity ===")
+count = 0
+for mask in range(16):
+    g = np.zeros((20, 20), dtype=int)
+    for bit, (bi, bj) in enumerate([(0,0),(0,5),(5,0),(5,5)]):
+        if mask & (1 << bit):
+            g[bi:bi+2, bj:bj+2] = 1
+    if is_still_life(g):
+        count += 1
+print(f"All 16 subsets are still lifes: {count == 16}")
+'''
+
+# Build package
+package = {
+    "title": "Tropical Life: Emergent Computation in Min-Plus Cellular Automata",
+    "domain": "Computation / Tropical Algebra / Cellular Automata",
+    "article": read_file('ARTICLE.md'),
+    "research_paper": read_file('RESEARCH_PAPER.md'),
+    "future_directions": read_file('FUTURE_DIRECTIONS.md'),
+    "demos": [
+        {
+            "name": "Tropical Life Demo",
+            "code": demo_standalone,
+        },
+    ],
+    "algorithms": [
+        {
+            "name": "Tropical Life Step",
+            "pseudocode": "Input: grid G of size m×n\nOutput: next-state grid G'\n\nfor each cell (i,j):\n  s ← sum of G[neighbors of (i,j)] with toroidal wrapping\n  alive ← min(1, G[i,j])\n  G'[i,j] ← alive × tropThresh(s, 2, 3) + (1-alive) × tropThresh(s, 3, 3)\n\nwhere tropThresh(s, lo, hi) = min(1, s+1-lo) × min(1, hi+1-s)",
+            "code": algorithms_code,
+        },
+    ],
+    "visualizations": [
+        {"name": "Glider Evolution (Period-4 Translation)", "data": img_to_base64('glider_evolution.png')},
+        {"name": "Boolean Gate Gadgets (AND, OR, NOT, XOR)", "data": img_to_base64('gate_gadgets.png')},
+        {"name": "Exponential Still Life Diversity (16 = 2⁴ Configurations)", "data": img_to_base64('still_life_diversity.png')},
+        {"name": "Tropical Threshold Functions", "data": img_to_base64('tropical_threshold.png')},
+        {"name": "Orbit Diversity Comparison", "data": img_to_base64('orbit_diversity.png')},
+        {"name": "Gate Truth Tables", "data": img_to_base64('gate_truth_tables.png')},
+    ],
+    "lean_proofs": lean_code,
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print(f"PACKAGE.json generated ({os.path.getsize('PACKAGE.json')} bytes)")
+
+
+"""
+Visualizations for Tropical Life Cellular Automata
+
+Generates publication-quality figures showing key mathematical structures.
 """
 
 import numpy as np
@@ -547,106 +774,15 @@ import matplotlib.patches as mpatches
 from matplotlib.colors import ListedColormap
 import base64
 import io
-from typing import List, Tuple
 
 
-def tropical_threshold(s: int, lo: int, hi: int) -> int:
+def tropical_threshold(s, lo, hi):
     return min(1, max(0, s + 1 - lo)) * min(1, max(0, hi + 1 - s))
 
 
-def tropical_life_step(config: np.ndarray) -> np.ndarray:
-    m, n = config.shape
-    s = np.zeros_like(config)
-    for di in [-1, 0, 1]:
-        for dj in [-1, 0, 1]:
-            if di == 0 and dj == 0:
-                continue
-            s += np.roll(np.roll(config, -di, axis=0), -dj, axis=1)
-    alive = np.minimum(1, config)
-    survive = np.minimum(1, np.maximum(0, s + 1 - 2)) * np.minimum(1, np.maximum(0, 3 + 1 - s))
-    birth = np.minimum(1, np.maximum(0, s + 1 - 3)) * np.minimum(1, np.maximum(0, 3 + 1 - s))
-    return alive * survive + (1 - alive) * birth
-
-
-def fig_to_base64(fig) -> str:
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
-    buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode('utf-8')
-
-
-def plot_config(ax, config, title="", show_grid=True):
-    cmap = ListedColormap(['#f0f0f0', '#2c3e50'])
-    ax.imshow(config, cmap=cmap, interpolation='nearest', aspect='equal')
-    if show_grid:
-        m, n = config.shape
-        for i in range(m + 1):
-            ax.axhline(i - 0.5, color='#bdc3c7', linewidth=0.5)
-        for j in range(n + 1):
-            ax.axvline(j - 0.5, color='#bdc3c7', linewidth=0.5)
-    ax.set_title(title, fontsize=11, fontweight='bold')
-    ax.set_xticks([])
-    ax.set_yticks([])
-
-
-# ============================================================
-# Figure 1: Glider Evolution
-# ============================================================
-
-def create_glider_evolution():
-    """5-panel figure showing glider at steps 0-4."""
-    fig, axes = plt.subplots(1, 5, figsize=(14, 3))
-    fig.suptitle('Tropical Glider Evolution (10×10 Torus)', fontsize=14, fontweight='bold', y=1.02)
-    
-    glider = np.zeros((10, 10), dtype=int)
-    for i, j in [(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)]:
-        glider[i, j] = 1
-    
-    current = glider.copy()
-    for step in range(5):
-        # Show only the 5×5 region of interest
-        view = np.zeros((6, 6), dtype=int)
-        for i in range(6):
-            for j in range(6):
-                view[i, j] = current[i % 10, j % 10]
-        
-        plot_config(axes[step], view, f"Step {step}")
-        
-        # Mark alive cells
-        alive = np.argwhere(view == 1)
-        for a in alive:
-            axes[step].plot(a[1], a[0], 'o', color='#e74c3c', markersize=8, 
-                          markeredgecolor='white', markeredgewidth=1)
-        
-        if step < 4:
-            current = tropical_life_step(current)
-    
-    plt.tight_layout()
-    return fig
-
-
-# ============================================================
-# Figure 2: Block Still Life
-# ============================================================
-
-def create_block_still_life():
-    """Figure showing block pattern with neighbor analysis."""
-    fig, axes = plt.subplots(1, 3, figsize=(12, 4))
-    fig.suptitle('Block Still Life Analysis (6×6 Torus)', fontsize=14, fontweight='bold')
-    
-    block = np.zeros((6, 6), dtype=int)
-    block[0:2, 0:2] = 1
-    
-    # Panel 1: Configuration
-    plot_config(axes[0], block, "Configuration")
-    for i in range(2):
-        for j in range(2):
-            axes[0].plot(j, i, 's', color='#27ae60', markersize=20, 
-                        markeredgecolor='white', markeredgewidth=2)
-    
-    # Panel 2: Neighbor counts
-    m, n = 6, 6
-    neighbor_counts = np.zeros((m, n), dtype=int)
+def tropical_life_step(grid):
+    m, n = grid.shape
+    new_grid = np.zeros_like(grid)
     for i in range(m):
         for j in range(n):
             s = 0
@@ -654,197 +790,386 @@ def create_block_still_life():
                 for dj in [-1, 0, 1]:
                     if di == 0 and dj == 0:
                         continue
-                    s += block[(i + di) % m, (j + dj) % n]
-            neighbor_counts[i, j] = s
+                    s += grid[(i + di) % m, (j + dj) % n]
+            alive = min(1, grid[i, j])
+            new_grid[i, j] = (alive * tropical_threshold(s, 2, 3) +
+                              (1 - alive) * tropical_threshold(s, 3, 3))
+    return new_grid
+
+
+def save_fig_to_base64(fig):
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', 
+                facecolor='white', edgecolor='none')
+    buf.seek(0)
+    return base64.b64encode(buf.read()).decode('utf-8')
+
+
+# ============================================================
+# Figure 1: Glider Evolution
+# ============================================================
+
+def fig_glider_evolution():
+    """Visualize the 5-step evolution of the tropical glider."""
+    grid = np.zeros((10, 10), dtype=int)
+    for i, j in [(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)]:
+        grid[i, j] = 1
     
-    im = axes[1].imshow(neighbor_counts, cmap='YlOrRd', interpolation='nearest', 
-                        aspect='equal', vmin=0, vmax=4)
-    for i in range(m):
-        for j in range(n):
-            axes[1].text(j, i, str(neighbor_counts[i, j]), ha='center', va='center',
-                        fontsize=12, fontweight='bold', color='black')
-    axes[1].set_title("Neighbor Counts", fontsize=11, fontweight='bold')
-    axes[1].set_xticks([])
-    axes[1].set_yticks([])
-    plt.colorbar(im, ax=axes[1], shrink=0.8)
+    fig, axes = plt.subplots(1, 5, figsize=(15, 3.5))
+    cmap = ListedColormap(['#f0f0f0', '#2196F3'])
     
-    # Panel 3: Tropical threshold values
-    threshold_map = np.zeros((m, n), dtype=float)
-    for i in range(m):
-        for j in range(n):
-            s = neighbor_counts[i, j]
-            alive = block[i, j]
-            if alive:
-                threshold_map[i, j] = tropical_threshold(s, 2, 3)
-            else:
-                threshold_map[i, j] = tropical_threshold(s, 3, 3) * 0.5
+    current = grid.copy()
+    for idx, ax in enumerate(axes):
+        ax.imshow(current[:6, :6], cmap=cmap, vmin=0, vmax=1, aspect='equal')
+        ax.set_title(f'Step {idx}', fontsize=12, fontweight='bold')
+        ax.set_xticks(range(6))
+        ax.set_yticks(range(6))
+        ax.grid(True, color='gray', linewidth=0.5, alpha=0.3)
+        ax.tick_params(labelsize=8)
+        
+        # Mark alive cells
+        for i in range(6):
+            for j in range(6):
+                if current[i, j] == 1:
+                    ax.add_patch(plt.Rectangle((j-0.4, i-0.4), 0.8, 0.8,
+                                               fill=True, facecolor='#1565C0',
+                                               edgecolor='#0D47A1', linewidth=1.5))
+        
+        current = tropical_life_step(current)
     
-    cmap3 = ListedColormap(['#ecf0f1', '#f39c12', '#27ae60'])
-    axes[2].imshow(threshold_map, cmap='RdYlGn', interpolation='nearest', 
-                   aspect='equal', vmin=0, vmax=1)
-    for i in range(m):
-        for j in range(n):
-            s = neighbor_counts[i, j]
-            alive = block[i, j]
-            label = f"{'S' if alive else 'B'}:{s}"
-            color = '#27ae60' if threshold_map[i, j] > 0.5 else '#c0392b'
-            axes[2].text(j, i, label, ha='center', va='center', fontsize=9,
-                        fontweight='bold', color=color)
-    axes[2].set_title("Tropical Threshold\n(S=survive, B=birth)", fontsize=11, fontweight='bold')
-    axes[2].set_xticks([])
-    axes[2].set_yticks([])
-    
+    fig.suptitle('Tropical Life Glider: Period-4 Translation', 
+                 fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
-    return fig
-
-
-# ============================================================
-# Figure 3: Orbit Diversity Comparison
-# ============================================================
-
-def create_orbit_diversity():
-    """Plot orbit diversity over time for different patterns."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
     
-    # Block (still life)
-    block = np.zeros((10, 10), dtype=int)
-    block[0:2, 0:2] = 1
+    b64 = save_fig_to_base64(fig)
+    fig.savefig('glider_evolution.png', dpi=150, bbox_inches='tight',
+                facecolor='white')
+    plt.close()
+    return b64
+
+
+# ============================================================
+# Figure 2: Gate Gadgets
+# ============================================================
+
+def fig_gate_gadgets():
+    """Visualize the AND, OR, NOT, and XOR gate gadgets."""
+    fig, axes = plt.subplots(2, 4, figsize=(16, 8))
+    cmap = ListedColormap(['#f5f5f5', '#4CAF50'])
+    
+    gates = {
+        'AND': {
+            'frame': [(4,4)],
+            'inputs': [(4,5), (5,4)],
+            'output': (5,5),
+            'out_init': 0,
+        },
+        'OR': {
+            'frame': [(4,4)],
+            'inputs': [(4,5), (5,4)],
+            'output': (5,5),
+            'out_init': 1,
+        },
+        'NOT': {
+            'frame': [(4,4), (4,5), (4,6)],
+            'inputs': [(5,4)],
+            'output': (5,5),
+            'out_init': 0,
+        },
+        'XOR': {
+            'frame': [(4,4), (4,6)],
+            'inputs': [(4,5), (5,4)],
+            'output': (5,5),
+            'out_init': 0,
+        },
+    }
+    
+    for col, (name, spec) in enumerate(gates.items()):
+        # Input configuration (all inputs = 1)
+        grid = np.zeros((10, 10), dtype=int)
+        for fi, fj in spec['frame']:
+            grid[fi, fj] = 1
+        oi, oj = spec['output']
+        grid[oi, oj] = spec['out_init']
+        for ii, ij in spec['inputs']:
+            grid[ii, ij] = 1
+        
+        # Show input
+        ax = axes[0, col]
+        view = grid[3:7, 3:8]
+        ax.imshow(view, cmap=cmap, vmin=0, vmax=1, aspect='equal')
+        ax.set_title(f'{name} Gate\n(inputs ON)', fontsize=11, fontweight='bold')
+        
+        # Annotate cells
+        for i in range(view.shape[0]):
+            for j in range(view.shape[1]):
+                gi, gj = i + 3, j + 3
+                if (gi, gj) in spec['frame']:
+                    ax.text(j, i, 'F', ha='center', va='center', fontsize=9, 
+                           color='white', fontweight='bold')
+                elif (gi, gj) in spec['inputs']:
+                    ax.text(j, i, 'IN', ha='center', va='center', fontsize=8,
+                           color='white', fontweight='bold')
+                elif (gi, gj) == spec['output']:
+                    ax.text(j, i, 'OUT', ha='center', va='center', fontsize=8,
+                           color='darkgreen' if view[i,j] else 'gray', fontweight='bold')
+        
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.grid(True, color='gray', linewidth=0.5, alpha=0.3)
+        
+        # Show output
+        result = tropical_life_step(grid)
+        view_out = result[3:7, 3:8]
+        ax = axes[1, col]
+        ax.imshow(view_out, cmap=cmap, vmin=0, vmax=1, aspect='equal')
+        
+        out_val = result[oi, oj]
+        ax.set_title(f'After step\nOutput = {out_val}', fontsize=11)
+        
+        for i in range(view_out.shape[0]):
+            for j in range(view_out.shape[1]):
+                gi, gj = i + 3, j + 3
+                if (gi, gj) == spec['output']:
+                    color = 'white' if view_out[i,j] else 'gray'
+                    ax.text(j, i, str(int(view_out[i,j])), ha='center', va='center',
+                           fontsize=14, color=color, fontweight='bold')
+        
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.grid(True, color='gray', linewidth=0.5, alpha=0.3)
+    
+    fig.suptitle('Tropical Life Boolean Gate Gadgets', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    
+    b64 = save_fig_to_base64(fig)
+    fig.savefig('gate_gadgets.png', dpi=150, bbox_inches='tight', facecolor='white')
+    plt.close()
+    return b64
+
+
+# ============================================================
+# Figure 3: Still Life Diversity
+# ============================================================
+
+def fig_still_life_diversity():
+    """Visualize the exponential family of still lifes from independent blocks."""
+    fig, axes = plt.subplots(2, 8, figsize=(16, 4.5))
+    cmap = ListedColormap(['#fafafa', '#FF5722'])
+    
+    block_positions = [(0, 0), (0, 5), (5, 0), (5, 5)]
+    
+    for mask in range(16):
+        row = mask // 8
+        col = mask % 8
+        ax = axes[row, col]
+        
+        grid = np.zeros((9, 9), dtype=int)
+        label_parts = []
+        for bit, (bi, bj) in enumerate(block_positions):
+            if mask & (1 << bit):
+                grid[bi:bi+2, bj:bj+2] = 1
+                label_parts.append(str(bit))
+        
+        ax.imshow(grid, cmap=cmap, vmin=0, vmax=1, aspect='equal')
+        label = '{' + ','.join(label_parts) + '}' if label_parts else '∅'
+        ax.set_title(label, fontsize=8)
+        ax.set_xticks([])
+        ax.set_yticks([])
+    
+    fig.suptitle('All 16 = 2⁴ Still Lifes from 4 Independent Blocks',
+                 fontsize=13, fontweight='bold')
+    plt.tight_layout()
+    
+    b64 = save_fig_to_base64(fig)
+    fig.savefig('still_life_diversity.png', dpi=150, bbox_inches='tight',
+                facecolor='white')
+    plt.close()
+    return b64
+
+
+# ============================================================
+# Figure 4: Tropical Threshold Function
+# ============================================================
+
+def fig_tropical_threshold():
+    """Visualize the tropical threshold function."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4.5))
+    
+    s_vals = np.arange(0, 9)
+    
+    # Survival threshold
+    surv = [tropical_threshold(s, 2, 3) for s in s_vals]
+    ax1.bar(s_vals, surv, color=['#E0E0E0' if v == 0 else '#2196F3' for v in surv],
+            edgecolor='#1565C0', linewidth=1.5)
+    ax1.set_xlabel('Neighbor count s', fontsize=12)
+    ax1.set_ylabel('tropThresh(s, 2, 3)', fontsize=12)
+    ax1.set_title('Survival Threshold\n(alive cell survives)', fontsize=12, fontweight='bold')
+    ax1.set_xticks(s_vals)
+    ax1.set_ylim(-0.1, 1.3)
+    ax1.axhline(y=0.5, color='gray', linestyle='--', alpha=0.3)
+    
+    # Birth threshold
+    birth = [tropical_threshold(s, 3, 3) for s in s_vals]
+    ax2.bar(s_vals, birth, color=['#E0E0E0' if v == 0 else '#4CAF50' for v in birth],
+            edgecolor='#2E7D32', linewidth=1.5)
+    ax2.set_xlabel('Neighbor count s', fontsize=12)
+    ax2.set_ylabel('tropThresh(s, 3, 3)', fontsize=12)
+    ax2.set_title('Birth Threshold\n(dead cell born)', fontsize=12, fontweight='bold')
+    ax2.set_xticks(s_vals)
+    ax2.set_ylim(-0.1, 1.3)
+    ax2.axhline(y=0.5, color='gray', linestyle='--', alpha=0.3)
+    
+    fig.suptitle('Tropical Threshold Functions in the Life Rule',
+                 fontsize=13, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    
+    b64 = save_fig_to_base64(fig)
+    fig.savefig('tropical_threshold.png', dpi=150, bbox_inches='tight',
+                facecolor='white')
+    plt.close()
+    return b64
+
+
+# ============================================================
+# Figure 5: Orbit Diversity Comparison
+# ============================================================
+
+def fig_orbit_diversity():
+    """Compare orbit diversity of different pattern types."""
+    fig, ax = plt.subplots(figsize=(10, 5))
+    
+    patterns = {}
+    
+    # Still life (block)
+    p = np.zeros((10, 10), dtype=int)
+    p[4:6, 4:6] = 1
+    patterns['2×2 Block\n(still life)'] = p
+    
+    # Blinker
+    p = np.zeros((10, 10), dtype=int)
+    p[5, 4:7] = 1
+    patterns['Blinker\n(period 2)'] = p
     
     # Glider
-    glider = np.zeros((10, 10), dtype=int)
+    p = np.zeros((10, 10), dtype=int)
     for i, j in [(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)]:
-        glider[i, j] = 1
+        p[i, j] = 1
+    patterns['Glider\n(period 4)'] = p
     
-    # Random
-    np.random.seed(42)
-    random_config = np.random.randint(0, 2, (10, 10))
-    
-    # Blinker (period-2 oscillator)
-    blinker = np.zeros((10, 10), dtype=int)
-    blinker[1, 0] = blinker[1, 1] = blinker[1, 2] = 1
-    
-    configs = [
-        (block, "Block (still life)", '#27ae60', 's'),
-        (blinker, "Blinker (oscillator)", '#f39c12', '^'),
-        (glider, "Glider", '#e74c3c', 'o'),
-        (random_config, "Random initial", '#3498db', 'D'),
-    ]
+    # R-pentomino
+    p = np.zeros((10, 10), dtype=int)
+    p[4, 5] = 1; p[4, 6] = 1
+    p[5, 4] = 1; p[5, 5] = 1
+    p[6, 5] = 1
+    patterns['R-pentomino\n(complex)'] = p
     
     T_max = 25
+    colors = ['#2196F3', '#FF9800', '#4CAF50', '#E91E63']
     
-    for config, label, color, marker in configs:
+    for idx, (name, grid) in enumerate(patterns.items()):
         diversities = []
-        current = config.copy()
+        current = grid.copy()
         seen = set()
-        
         for t in range(T_max + 1):
-            seen.add(tuple(current.flatten()))
+            seen.add(current.tobytes())
             diversities.append(len(seen))
-            if t < T_max:
-                s = np.zeros_like(current)
-                for di in [-1, 0, 1]:
-                    for dj in [-1, 0, 1]:
-                        if di == 0 and dj == 0:
-                            continue
-                        s += np.roll(np.roll(current, -di, axis=0), -dj, axis=1)
-                alive = np.minimum(1, current)
-                survive = np.minimum(1, np.maximum(0, s + 1 - 2)) * np.minimum(1, np.maximum(0, 3 + 1 - s))
-                birth = np.minimum(1, np.maximum(0, s + 1 - 3)) * np.minimum(1, np.maximum(0, 3 + 1 - s))
-                current = alive * survive + (1 - alive) * birth
+            current = tropical_life_step(current)
         
-        ax.plot(range(T_max + 1), diversities, '-' + marker, color=color, label=label,
-                markersize=5, linewidth=2)
+        ax.plot(range(T_max + 1), diversities, 'o-', label=name,
+                color=colors[idx], linewidth=2, markersize=4)
     
-    # Reference line
-    ax.plot(range(T_max + 1), range(1, T_max + 2), '--', color='gray', alpha=0.5, 
-            label='y = T + 1 (maximum)')
-    
-    ax.set_xlabel('Time Steps (T)', fontsize=12)
-    ax.set_ylabel('Orbit Diversity', fontsize=12)
-    ax.set_title('Orbit Diversity Growth: Tropical Life Patterns', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Time steps T', fontsize=12)
+    ax.set_ylabel('Orbit diversity |{step^t(c) : 0 ≤ t ≤ T}|', fontsize=12)
+    ax.set_title('Orbit Diversity Growth by Pattern Type', fontsize=13, fontweight='bold')
     ax.legend(fontsize=10, loc='upper left')
     ax.grid(True, alpha=0.3)
     ax.set_xlim(-0.5, T_max + 0.5)
     
     plt.tight_layout()
-    return fig
+    b64 = save_fig_to_base64(fig)
+    fig.savefig('orbit_diversity.png', dpi=150, bbox_inches='tight', facecolor='white')
+    plt.close()
+    return b64
 
 
 # ============================================================
-# Figure 4: Tropical Threshold Landscape
+# Figure 6: Gate Truth Tables
 # ============================================================
 
-def create_threshold_landscape():
-    """Visualize the tropical threshold function as a surface."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+def fig_gate_truth_tables():
+    """Visualize truth tables for all four gates."""
+    fig, axes = plt.subplots(1, 4, figsize=(14, 3.5))
     
-    # Panel 1: threshold(s, 2, 3) - survival
-    s_vals = np.arange(0, 9)
-    survive_vals = [tropical_threshold(s, 2, 3) for s in s_vals]
-    birth_vals = [tropical_threshold(s, 3, 3) for s in s_vals]
+    gate_data = {
+        'AND': [[0,0,0], [0,1,0], [1,0,0], [1,1,1]],
+        'OR':  [[0,0,0], [0,1,1], [1,0,1], [1,1,1]],
+        'NOT': [[0,None,1], [1,None,0]],
+        'XOR': [[0,0,0], [0,1,1], [1,0,1], [1,1,0]],
+    }
     
-    x = np.arange(len(s_vals))
-    width = 0.35
+    colors_map = {0: '#FFCDD2', 1: '#C8E6C9'}
     
-    bars1 = axes[0].bar(x - width/2, survive_vals, width, label='Survival [2,3]', 
-                        color='#27ae60', edgecolor='white')
-    bars2 = axes[0].bar(x + width/2, birth_vals, width, label='Birth [3,3]', 
-                        color='#3498db', edgecolor='white')
+    for idx, (name, data) in enumerate(gate_data.items()):
+        ax = axes[idx]
+        ax.set_xlim(-0.5, 2.5)
+        ax.set_ylim(-0.5, len(data) - 0.5)
+        ax.set_aspect('equal')
+        
+        if name == 'NOT':
+            headers = ['a', '', 'out']
+        else:
+            headers = ['a', 'b', 'out']
+        
+        for col, h in enumerate(headers):
+            ax.text(col, len(data) + 0.1, h, ha='center', va='bottom',
+                   fontsize=11, fontweight='bold')
+        
+        for row, vals in enumerate(data):
+            y = len(data) - 1 - row
+            for col, v in enumerate(vals):
+                if v is None:
+                    ax.text(col, y, '–', ha='center', va='center', fontsize=12)
+                else:
+                    color = colors_map[v]
+                    ax.add_patch(plt.Rectangle((col-0.4, y-0.4), 0.8, 0.8,
+                                               facecolor=color, edgecolor='gray'))
+                    ax.text(col, y, str(v), ha='center', va='center',
+                           fontsize=12, fontweight='bold')
+        
+        ax.set_title(name, fontsize=13, fontweight='bold', pad=15)
+        ax.axis('off')
     
-    axes[0].set_xlabel('Neighbor Sum (s)', fontsize=12)
-    axes[0].set_ylabel('Threshold Value', fontsize=12)
-    axes[0].set_title('Tropical Threshold Functions', fontsize=13, fontweight='bold')
-    axes[0].set_xticks(x)
-    axes[0].set_xticklabels(s_vals)
-    axes[0].legend(fontsize=10)
-    axes[0].set_ylim(0, 1.3)
-    axes[0].grid(True, axis='y', alpha=0.3)
-    
-    # Panel 2: Full local rule output
-    s_vals_fine = np.arange(0, 9)
-    alive_result = [min(1, 1) * tropical_threshold(s, 2, 3) for s in s_vals_fine]
-    dead_result = [min(1, 0) * tropical_threshold(s, 2, 3) + 1 * tropical_threshold(s, 3, 3) 
-                   for s in s_vals_fine]
-    
-    axes[1].plot(s_vals_fine, alive_result, 'o-', color='#e74c3c', linewidth=2, 
-                markersize=8, label='Alive cell output')
-    axes[1].plot(s_vals_fine, dead_result, 's-', color='#3498db', linewidth=2, 
-                markersize=8, label='Dead cell output')
-    
-    axes[1].set_xlabel('Neighbor Sum (s)', fontsize=12)
-    axes[1].set_ylabel('New Cell Value', fontsize=12)
-    axes[1].set_title('Tropical Local Rule Output', fontsize=13, fontweight='bold')
-    axes[1].legend(fontsize=10)
-    axes[1].set_ylim(-0.1, 1.3)
-    axes[1].grid(True, alpha=0.3)
-    axes[1].set_xticks(s_vals_fine)
-    
+    fig.suptitle('Boolean Gate Truth Tables (Verified by Tropical Life)',
+                 fontsize=13, fontweight='bold', y=0.02)
     plt.tight_layout()
-    return fig
+    
+    b64 = save_fig_to_base64(fig)
+    fig.savefig('gate_truth_tables.png', dpi=150, bbox_inches='tight',
+                facecolor='white')
+    plt.close()
+    return b64
 
-
-# ============================================================
-# Generate All Figures
-# ============================================================
 
 if __name__ == "__main__":
     print("Generating visualizations...")
     
-    fig1 = create_glider_evolution()
-    fig1.savefig('glider_evolution.png', dpi=150, bbox_inches='tight', facecolor='white')
-    print("  Saved glider_evolution.png")
+    b64_glider = fig_glider_evolution()
+    print(f"  glider_evolution.png ({len(b64_glider)} bytes base64)")
     
-    fig2 = create_block_still_life()
-    fig2.savefig('block_still_life.png', dpi=150, bbox_inches='tight', facecolor='white')
-    print("  Saved block_still_life.png")
+    b64_gates = fig_gate_gadgets()
+    print(f"  gate_gadgets.png ({len(b64_gates)} bytes base64)")
     
-    fig3 = create_orbit_diversity()
-    fig3.savefig('orbit_diversity.png', dpi=150, bbox_inches='tight', facecolor='white')
-    print("  Saved orbit_diversity.png")
+    b64_diversity = fig_still_life_diversity()
+    print(f"  still_life_diversity.png ({len(b64_diversity)} bytes base64)")
     
-    fig4 = create_threshold_landscape()
-    fig4.savefig('threshold_landscape.png', dpi=150, bbox_inches='tight', facecolor='white')
-    print("  Saved threshold_landscape.png")
+    b64_threshold = fig_tropical_threshold()
+    print(f"  tropical_threshold.png ({len(b64_threshold)} bytes base64)")
     
-    plt.close('all')
-    print("All visualizations generated successfully.")
+    b64_orbit = fig_orbit_diversity()
+    print(f"  orbit_diversity.png ({len(b64_orbit)} bytes base64)")
+    
+    b64_truth = fig_gate_truth_tables()
+    print(f"  gate_truth_tables.png ({len(b64_truth)} bytes base64)")
+    
+    print("\nAll visualizations generated successfully.")
