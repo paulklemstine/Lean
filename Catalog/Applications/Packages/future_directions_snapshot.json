@@ -1484,20 +1484,6 @@
     "timestamp": "2026-05-15T03:12:37.111041+00:00"
   },
   {
-    "id": "fd_0208",
-    "title": "Iterate",
-    "description": "— update conjectures based on computational evidence and proof attempts.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a96a94a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:18:29.540171+00:00"
-  },
-  {
     "id": "fd_0207",
     "title": "Directions 3 and 5",
     "description": "are more speculative but would open entirely new research areas.",
@@ -1555,20 +1541,6 @@
     "timestamp": "2026-05-15T04:34:34.434564+00:00"
   },
   {
-    "id": "fd_0203",
-    "title": "Subadditivity",
-    "description": "→ composition law for enriched categories",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "eb845453",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:34.441092+00:00"
-  },
-  {
     "id": "fd_0204",
     "title": "Tropical rank",
     "description": "→ entropy-free information measure",
@@ -1612,18 +1584,18 @@
     "timestamp": "2026-05-15T04:34:52.712040+00:00"
   },
   {
-    "id": "fd_0208",
-    "title": "Direction 4",
-    "description": "(Sheaf cohomology) — Most ambitious and visionary. Requires formalization of sheaves on polyhedral complexes, which is heavy infrastructure but would open an entirely new research program.",
+    "id": "fd_0211",
+    "title": "Iterates on proof strategy",
+    "description": "(at least 3 attempts with different approaches before escalating).",
     "domains": [
-      "Bridges"
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "35c9f8a7",
+    "source_exp_id": "63da6f3f",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:52.722485+00:00"
+    "timestamp": "2026-05-15T04:35:14.110673+00:00"
   },
   {
     "id": "seed_078",
@@ -1815,25 +1787,6 @@
     "source_exp_id": "f37e592e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
-  },
-  {
-    "id": "fd_0179",
-    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
-    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "63da6f3f",
-    "timestamp": "2026-05-14T17:33:19.336802+00:00"
   },
   {
     "id": "fd_0179",
@@ -2217,113 +2170,6 @@
     "source_exp_id": "1368feba",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:31:22.943644+00:00"
-  },
-  {
-    "id": "fd_0208",
-    "title": "3. Tropical Explicit Formula for Hypotenuse Prime Counting",
-    "description": "**Goal**: Replace classical zeros of L-functions with breakpoints/corners of a min-plus generating function, and prove a counting formula for hypotenuse primes.\n\n**Hypothesis**: The piecewise-linear structure of the tropical Berggren zeta (defined via min/max operations on tree levels) has \"tropical zeros\" — breakpoints where the slope changes — that encode the distribution of hypotenuse primes, analogous to how zeros of ζ(s) encode prime distribution in the classical explicit formula.\n\n**Proof Strategy**:\n- Define the tropical Berggren zeta as TropZ(t) = min_{(a,b,c) ∈ P, c ≤ N} (t·c - max(a,b)).\n- Identify the breakpoints of TropZ(t) as a function of t, and show they correspond to hypotenuse values where new primitive triples appear.\n- Prove that the number of breakpoints up to N equals ",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Pythagorean",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1368feba",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:31:22.952916+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "4. Entropy of Primitive Triple Generation",
-    "description": "**Goal**: Prove asymptotic growth rates for Berggren tree levels and compute the topological entropy of the Berggren dynamical system.\n\n**Hypothesis**: The Berggren tree has topological entropy h = log 3 (since each node has exactly 3 children), but the measure-theoretic entropy with respect to the natural measure (weighting by c^{-2}) is strictly less than log 3 and equals the entropy of the prime distribution in hypotenuse lengths.\n\n**Proof Strategy**:\n- Use `berggren_hypotenuse_growth` to bound the hypotenuse at level k: c_k ≥ 5 · (3/2)^k (approximate).\n- Count the number of Berggren nodes at level k: exactly 3^k.\n- Define the natural measure μ_s on the tree boundary (the \"Berggren shift space\") via the Dirichlet series weights.\n- Compute the measure-theoretic entropy h_μ(σ) of the shif",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1368feba",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:31:22.962310+00:00"
-  },
-  {
-    "id": "fd_0210",
-    "title": "5. Generalized Tropical Zeta Machines on Quadratic Form Trees",
-    "description": "**Goal**: Generalize from x² + y² = z² to other ternary quadratic form trees and define corresponding tropical zeta machines.\n\n**Hypothesis**: For any positive-definite binary quadratic form Q(x,y) = ax² + bxy + cy², there exists an analogous \"Berggren-type\" tree structure parametrizing primitive representations, and the tropical zeta machine detects the split primes of the associated quadratic field ℚ(√(b²-4ac)).\n\n**Proof Strategy**:\n- Classify binary quadratic forms by discriminant and connect to ideal class groups.\n- For each class, define the analogue of Berggren matrices preserving Q(x,y) - z² = 0.\n- Prove the tropical weight nonnegativity (generalized `berggren_tropical_weight_nonneg`) for each form.\n- Show the prime support theorem generalizes: p is in the support iff p splits or ra",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Pythagorean",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1368feba",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:31:22.971820+00:00"
-  },
-  {
-    "id": "fd_0208",
-    "title": "1. Zero-Weight Cycle Characterization of Chronology Failure",
-    "description": "**Hypothesis:** For nonnegative weighted digraphs, two vertices `u` and `v` satisfy `d(u,v) = 0 ∧ d(v,u) = 0` if and only if there exists a zero-weight directed cycle passing through both.\n\n**Strategy:** Prove the forward direction by extracting zero-weight paths from the definition of tropical distance (as a min over path weights), concatenating them, and showing the resulting closed walk decomposes into simple cycles. Prove the reverse by showing any vertex on a zero-weight cycle has zero distance to and from every other vertex on the cycle (since sub-paths of a zero-weight path in a nonneg graph must themselves have zero weight).\n\n**Cross-domain connections:** This is the combinatorial analogue of the statement that chronology failure in Lorentzian geometry is equivalent to the existenc",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "57002e63",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:11.194650+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "2. Tropical Alexandrov Intervals and Lattice Structure",
-    "description": "**Hypothesis:** Under the chronological partial order, the \"causal interval\" `[u, v] = {w : d(u,w) = 0 ∧ d(w,v) = 0}` is a finite distributive lattice when the graph is acyclic with nonneg weights.\n\n**Strategy:** Show these intervals are sublattices of the power set of paths from `u` to `v`, ordered by the chronological relation. Use Birkhoff's representation theorem for finite distributive lattices. The meet and join operations correspond to tropical (min-plus) and max-plus operations on distance vectors, connecting to the two tropical semirings.\n\n**Cross-domain connections:** Alexandrov intervals are fundamental in causal set theory (where they encode the \"volume\" of spacetime). A lattice structure would enable lattice-theoretic methods (Möbius inversion, zeta polynomials) for counting c",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "57002e63",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:11.202584+00:00"
-  },
-  {
-    "id": "fd_0210",
-    "title": "3. Tropical Event Horizons as Min-Cut Separators",
-    "description": "**Hypothesis:** Define a \"tropical horizon\" as a minimum-weight vertex or edge cut separating two regions of the chronological order. Prove that these horizons are monotone with respect to the partial order and that their weight provides a lower bound on the minimal delay between causally separated regions.\n\n**Strategy:** Use max-flow/min-cut duality in the tropical setting. Relate the min-cut weight to the tropical distance between the two sides. Show that the horizon separates the vertex set into \"past\" and \"future\" components that respect the chronological order.\n\n**Cross-domain connections:** This is a discrete analogue of black hole horizons in general relativity, where the horizon is defined as the boundary of the causal past of future null infinity. In network security, it models fi",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "57002e63",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:11.211138+00:00"
   },
   {
     "id": "fd_0211",
