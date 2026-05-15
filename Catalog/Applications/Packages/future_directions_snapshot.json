@@ -144,21 +144,6 @@
     "timestamp": "2026-05-14T16:03:53.817937+00:00"
   },
   {
-    "id": "seed_008",
-    "title": "Goldbach via Tropical Additive Combinatorics",
-    "description": "Prove that every even number greater than 2 is the sum of two primes by reformulating Goldbach's conjecture as a tropical additive identity: the min-plus convolution of the prime indicator function with itself achieves its minimum at every even integer. Show that the tropical Goldbach function is bounded, and that the tropical Schnirelmann density of primes is 1/2 in the min-plus sense.",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "priority_score": 0.88,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "3fb3d214",
-    "timestamp": "2026-05-14T16:03:53.813170+00:00"
-  },
-  {
     "id": "seed_016",
     "title": "Kolmogorov Complexity Closure and Idempotent Compression Duality",
     "description": "Prove that the idempotent closure of a semiring yields optimal lossless compression ratios, and establish a duality between Kolmogorov complexity and closure operators that gives computable upper bounds on minimal description length. Show that the tropical semiring's idempotent property induces a canonical compression scheme whose fixed points are exactly the Kolmogorov-random strings.",
@@ -532,10 +517,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "80ffadc6",
     "timestamp": "2026-05-14T16:24:30.116622+00:00"
   },
   {
@@ -1915,5 +1900,84 @@
     "source_exp_id": "cc175531",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:04:33.055604+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "1. Tropical Ternary Goldbach Formalization",
+    "description": "**Goal:** Formalize a support-level tropical theorem for threefold min-plus convolution and connect it to Vinogradov's theorem on odd-number decomposition.\n\n**Concrete steps:**\n- Define `minplusConv3 f g h n := ⨅ (a b c : ℕ) (_ : a + b + c = n), f a + g b + h c`.\n- Prove `minplusConv3_tropPredCost_eq_zero_iff`: the threefold convolution of `tropPredCost A` vanishes at n iff n lies in A + A + A.\n- State Vinogradov's theorem as a hypothesis and derive its tropical reformulation: every sufficiently large odd number has zero tropical ternary prime cost.\n- Implement a verified finite search certifying ternary Goldbach for small odd numbers.\n\n**Hypothesis:** The tropical threefold convolution framework will expose compositional structure (e.g., factoring threefold convolution through twofold plu",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fb3d214",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:13:29.120657+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "2. Weighted Prime Energy Inequalities",
+    "description": "**Goal:** Define soft prime costs with meaningful weight functions and prove subadditivity, monotonicity, and comparison theorems that mirror sieve majorants.\n\n**Concrete steps:**\n- Define `logPrimeCost (n : ℕ) : WithTop ℝ := if Nat.Prime n then log n else ⊤` and prove that convolution of log-costs captures weighted additive representations.\n- Define `sieveMajorant (n : ℕ) : ℝ≥0` using truncated von Mangoldt or Selberg sieve weights.\n- Prove: if `s ≤ tropPredCost Nat.Prime` pointwise and `minplusConv s s n < ⊤`, then the soft convolution gives a finite upper bound on the \"tropical energy\" of decomposing n.\n- Establish a transfer theorem: sieve upper bounds on prime-counting imply finite bounds on soft tropical convolution.\n\n**Hypothesis:** Soft tropical energies form a graded family interp",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fb3d214",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:13:29.132220+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "3. Verified Bounded Goldbach Engine in Lean",
+    "description": "**Goal:** Implement a certified finite search showing zero tropical cost for all even numbers up to a substantial bound (e.g., 10⁶).\n\n**Concrete steps:**\n- Define a `Decidable` instance for `∃ a b, a + b = n ∧ Nat.Prime a ∧ Nat.Prime b` restricted to `a ∈ Finset.range (n+1)`.\n- Prove that the finite search is equivalent to the infinite infimum: `minplusConv (tropPredCost Nat.Prime) (tropPredCost Nat.Prime) n = 0 ↔ (Finset.range (n+1)).∃ a, Nat.Prime a ∧ Nat.Prime (n - a)`.\n- Use `native_decide` to verify Goldbach up to large bounds.\n- Package as `goldbach_verified_to_bound : ∀ n, 4 ≤ n → n ≤ B → Even n → minplusConv (tropPredCost Nat.Prime) (tropPredCost Nat.Prime) n = 0`.\n- Combine with `goldbach_from_finite_check_and_cover` to maximize the range of the hybrid theorem.\n\n**Hypothesis:** Th",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fb3d214",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:13:29.142682+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "4. Tropical Sumset Growth Theorem (Basis Order Theory)",
+    "description": "**Goal:** Prove that repeated tropical self-convolution of positive-density support functions eventually vanishes on all sufficiently large integers, formalizing a tropical analogue of Schnirelmann's basis theorem.\n\n**Concrete steps:**\n- Define tropical lower covering density: `σ_trop(A) := inf_{n ≥ 1} |{a ∈ A : a ≤ n}| / n`.\n- Prove: if `σ_trop(A) > 0` and `1 ∈ A`, then repeated k-fold tropical convolution `tropPredCost A ⋆ₖ` eventually vanishes on all n ≥ N(k).\n- Formalize the tropical analogue of Schnirelmann's theorem: if `σ_trop(A) ≥ 1/2`, then the twofold convolution already covers all sufficiently large integers.\n- Prove monotonicity of tropical support under convolution: `supp(f ⋆ g) ⊇ supp(f) + supp(g)`.\n\n**Hypothesis:** The tropical formulation of basis order theory will yield sh",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fb3d214",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:13:29.153412+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "5. Semiring Transfer Interface for Analytic Estimates",
+    "description": "**Goal:** Design a formal interface allowing external analytic number theory estimates (prime number theorem, Goldbach-type density results, Chen's theorem) to be imported as hypotheses yielding tropical vanishing conclusions.\n\n**Concrete steps:**\n- Define a `TropicalAnalyticInput` structure: a bundled collection of hypotheses about prime distribution that suffice to derive tropical vanishing on specified domains.\n- Prove: PNT + Bertrand's postulate → the set of primes has positive tropical covering density → (by the basis theorem) tropical self-convolution eventually vanishes.\n- Prove: Chen's theorem (every sufficiently large even number is the sum of a prime and a product of at most two primes) → a relaxed tropical vanishing statement for a modified cost function.\n- Create a modular arch",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fb3d214",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:13:29.163744+00:00"
   }
 ]
