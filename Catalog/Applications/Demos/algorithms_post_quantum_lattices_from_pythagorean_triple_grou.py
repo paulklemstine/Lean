@@ -1,319 +1,350 @@
 #!/usr/bin/env python3
 """
-Algorithms for Berggren Pythagorean Lattice Cryptography
+Berggren Post-Quantum Lattices: Core Algorithms
 
-Implements the core algorithms described in the research:
-1. Berggren orbit enumeration and word evaluation
-2. Lattice basis construction from orbit vectors
-3. Toy key exchange protocol
-4. SVP reduction encoding
+Implements the algorithms described in the research paper:
+- Berggren tree traversal and orbit generation
+- Lattice basis construction from orbit vectors
+- Security parameter estimation
+- Norm growth analysis
 """
 
 import numpy as np
-from typing import List, Tuple, Optional, Set
+from math import gcd, log2, sqrt
+from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
-import hashlib
-import secrets
-import itertools
+from itertools import product
+
 
 # ============================================================
-# Algorithm 1: Berggren Word Evaluation
+# Algorithm 1: Berggren Matrix Definitions
 # ============================================================
 
-# Generator matrices
+# Berggren generators (integral orthogonal matrices for Q = diag(1,1,-1))
 BERGGREN_A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]], dtype=np.int64)
-BERGGREN_B = np.array([[1,  2, 2], [2,  1, 2], [2,  2, 3]], dtype=np.int64)
+BERGGREN_B = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]], dtype=np.int64)
 BERGGREN_C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]], dtype=np.int64)
 
-GENERATORS = {'A': BERGGREN_A, 'B': BERGGREN_B, 'C': BERGGREN_C}
+BERGGREN_GENERATORS = [BERGGREN_A, BERGGREN_B, BERGGREN_C]
 ROOT_TRIPLE = np.array([3, 4, 5], dtype=np.int64)
 
 
-def eval_berggren_word(word: str) -> np.ndarray:
+# ============================================================
+# Algorithm 2: Berggren Word Evaluation
+# ============================================================
+
+def evaluate_word(word: List[int], seed: np.ndarray = ROOT_TRIPLE) -> np.ndarray:
     """
-    Evaluate a Berggren word on the root triple (3,4,5).
-
+    Evaluate a Berggren word on a seed vector.
+    
     Args:
-        word: String of characters 'A', 'B', 'C' representing generator sequence.
-              Empty string returns root triple.
-
+        word: List of generator indices (0=A, 1=B, 2=C)
+        seed: Starting vector (default: (3,4,5))
+    
     Returns:
-        The resulting primitive Pythagorean triple as numpy array.
-
-    Complexity: O(|word|) matrix-vector multiplications, each O(1) for 3×3 matrices.
-
+        Result of applying the generator sequence to seed.
+    
+    Time complexity: O(|word|) matrix-vector multiplications.
+    Space complexity: O(1) beyond input.
+    
     Example:
-        >>> eval_berggren_word("")
-        array([3, 4, 5])
-        >>> eval_berggren_word("A")
+        >>> evaluate_word([0])  # Apply A to (3,4,5)
         array([ 5, 12, 13])
-        >>> eval_berggren_word("AB")
+        >>> evaluate_word([0, 1])  # Apply A then B
         array([39, 80, 89])
     """
-    v = ROOT_TRIPLE.copy()
-    # Apply generators right-to-left (word "AB" means A(B·root))
-    for c in reversed(word):
-        v = GENERATORS[c] @ v
+    v = seed.copy()
+    for idx in reversed(word):
+        v = BERGGREN_GENERATORS[idx] @ v
     return v
 
 
-def enumerate_orbit(max_depth: int) -> List[Tuple[str, np.ndarray]]:
+def word_matrix(word: List[int]) -> np.ndarray:
     """
-    Enumerate all Berggren orbit vectors up to a given depth.
-
+    Compute the matrix product corresponding to a Berggren word.
+    
     Args:
-        max_depth: Maximum word length.
-
+        word: List of generator indices
+    
     Returns:
-        List of (word, triple) pairs.
-
-    Complexity: O(3^d) total, where d = max_depth.
+        Product matrix M_w = G_{w[0]} · G_{w[1]} · ... · G_{w[n-1]}
+    
+    Time complexity: O(|word|) matrix multiplications.
     """
-    results = [("", ROOT_TRIPLE)]
-    current = [("", ROOT_TRIPLE)]
+    M = np.eye(3, dtype=np.int64)
+    for idx in word:
+        M = BERGGREN_GENERATORS[idx] @ M
+    return M
 
-    for _ in range(max_depth):
+
+# ============================================================
+# Algorithm 3: Berggren Tree BFS Generation
+# ============================================================
+
+@dataclass
+class OrbitVector:
+    """A vector in the Berggren orbit with its generating word."""
+    vector: np.ndarray
+    word: List[int]
+    depth: int
+    
+    @property
+    def hypotenuse(self) -> int:
+        return int(self.vector[2])
+    
+    @property
+    def squared_norm(self) -> int:
+        return int(sum(x**2 for x in self.vector))
+    
+    def is_pythagorean(self) -> bool:
+        a, b, c = int(self.vector[0]), int(self.vector[1]), int(self.vector[2])
+        return a**2 + b**2 == c**2
+    
+    def is_primitive(self) -> bool:
+        a, b, c = int(self.vector[0]), int(self.vector[1]), int(self.vector[2])
+        return self.is_pythagorean() and a > 0 and b > 0 and c > 0 and gcd(a, b) == 1
+
+
+def generate_orbit(max_depth: int) -> List[OrbitVector]:
+    """
+    Generate all Berggren orbit vectors up to a given depth using BFS.
+    
+    Args:
+        max_depth: Maximum word length
+    
+    Returns:
+        List of OrbitVector objects, sorted by depth then word.
+    
+    Time complexity: O(3^max_depth) orbit evaluations.
+    Space complexity: O(3^max_depth) stored vectors.
+    
+    Example:
+        >>> orbit = generate_orbit(2)
+        >>> len(orbit)  # 1 + 3 + 9 = 13
+        13
+    """
+    result = [OrbitVector(ROOT_TRIPLE.copy(), [], 0)]
+    current = [(ROOT_TRIPLE.copy(), [])]
+    
+    for depth in range(1, max_depth + 1):
         next_level = []
-        for word, v in current:
-            for name, M in GENERATORS.items():
-                new_word = name + word  # Prepend for left-multiplication
-                new_v = M @ v
-                results.append((new_word, new_v))
-                next_level.append((new_word, new_v))
+        for v, word in current:
+            for idx in range(3):
+                w = BERGGREN_GENERATORS[idx] @ v
+                new_word = [idx] + word
+                result.append(OrbitVector(w, new_word, depth))
+                next_level.append((w, new_word))
         current = next_level
-
-    return results
+    
+    return result
 
 
 # ============================================================
-# Algorithm 2: Lattice Basis Construction
+# Algorithm 4: Lattice Basis Construction
+# ============================================================
+
+def orbit_lattice_basis(vectors: List[np.ndarray]) -> Tuple[np.ndarray, int]:
+    """
+    Construct a lattice basis from orbit vectors using HNF.
+    
+    Args:
+        vectors: List of integer vectors (as columns)
+    
+    Returns:
+        Tuple of (basis matrix, determinant)
+    
+    Time complexity: O(n³) for n vectors in ℤ³.
+    """
+    if len(vectors) == 0:
+        return np.zeros((3, 0), dtype=np.int64), 0
+    
+    M = np.column_stack(vectors).astype(np.int64)
+    if M.shape[1] >= 3:
+        # Take first 3 linearly independent vectors
+        det = int(round(np.linalg.det(M[:, :3].astype(float))))
+        return M[:, :3], det
+    return M, 0
+
+
+def compute_lattice_index(depth: int) -> int:
+    """
+    Compute the index of the depth-d orbit lattice in ℤ³.
+    
+    For depth 1, the three orbit vectors form a matrix with det = -240,
+    so the lattice has index 240 in ℤ³.
+    
+    Args:
+        depth: Berggren tree depth
+    
+    Returns:
+        Index (absolute value of determinant)
+    """
+    orbit = generate_orbit(depth)
+    vectors = [ov.vector for ov in orbit if ov.depth > 0]
+    if len(vectors) < 3:
+        return 0
+    _, det = orbit_lattice_basis(vectors[:3])
+    return abs(det)
+
+
+# ============================================================
+# Algorithm 5: Security Parameter Estimation
 # ============================================================
 
 @dataclass
-class BerggrenLattice:
-    """A lattice generated by Berggren orbit vectors."""
-    depth: int
-    basis_vectors: List[np.ndarray]
-    basis_words: List[str]
-
-    @property
-    def dimension(self) -> int:
-        return 3  # Ambient dimension is always 3
-
-    @property
-    def rank(self) -> int:
-        """Rank of the lattice (at most 3 for ℤ³ sublattice)."""
-        if not self.basis_vectors:
-            return 0
-        mat = np.array(self.basis_vectors, dtype=np.float64)
-        return int(np.linalg.matrix_rank(mat))
-
-    def contains(self, v: np.ndarray) -> bool:
-        """Check if v is in the ℤ-span (approximate for large integers)."""
-        if not self.basis_vectors:
-            return np.all(v == 0)
-        mat = np.array(self.basis_vectors, dtype=np.float64).T
-        try:
-            coeffs = np.linalg.lstsq(mat, v.astype(np.float64), rcond=None)[0]
-            return np.allclose(coeffs, np.round(coeffs))
-        except np.linalg.LinAlgError:
-            return False
+class SecurityParameters:
+    """Post-quantum security parameters for Berggren-based schemes."""
+    word_length: int
+    search_space: int
+    classical_security_bits: float
+    quantum_security_bits: float
+    key_bits: int
+    
+    def __str__(self):
+        return (f"SecurityParameters(m={self.word_length}, "
+                f"classical={self.classical_security_bits:.1f}b, "
+                f"quantum={self.quantum_security_bits:.1f}b, "
+                f"key={self.key_bits}b)")
 
 
-def construct_berggren_lattice(depth: int) -> BerggrenLattice:
+def estimate_security(word_length: int, key_bits: int = 256) -> SecurityParameters:
     """
-    Construct the lattice spanned by Berggren orbit vectors at given depth.
-
+    Estimate post-quantum security parameters for a Berggren key exchange.
+    
+    The secret is a Berggren word of length m. The search space has 3^m
+    elements. Grover's algorithm provides a quadratic speedup, requiring
+    Ω(3^(m/2)) quantum queries.
+    
     Args:
-        depth: Maximum word length for orbit generation.
-
+        word_length: Length m of the secret Berggren word
+        key_bits: Desired key length in bits
+    
     Returns:
-        BerggrenLattice with basis vectors and metadata.
-
-    Complexity: O(3^depth) for enumeration, O(n³) for rank computation.
+        SecurityParameters object with classical and quantum security estimates.
+    
+    Example:
+        >>> params = estimate_security(256)
+        >>> params.quantum_security_bits > 128
+        True
     """
-    orbit = enumerate_orbit(depth)
-    vectors = [v for _, v in orbit]
-    words = [w for w, _ in orbit]
-    return BerggrenLattice(depth=depth, basis_vectors=vectors, basis_words=words)
+    entropy = word_length * log2(3)
+    classical = entropy
+    quantum = entropy / 2  # Grover halving
+    
+    return SecurityParameters(
+        word_length=word_length,
+        search_space=3**min(word_length, 100),  # Cap for display
+        classical_security_bits=classical,
+        quantum_security_bits=quantum,
+        key_bits=min(key_bits, int(entropy))
+    )
 
 
 # ============================================================
-# Algorithm 3: Toy Key Exchange Protocol
+# Algorithm 6: Norm Growth Analysis
 # ============================================================
 
-@dataclass
-class KeyExchangeParams:
-    """Parameters for the Berggren toy key exchange."""
-    depth: int
-    key_length_bits: int
-
-    @property
-    def search_space_size(self) -> int:
-        """Number of possible secret words."""
-        return sum(3**k for k in range(self.depth + 1))
-
-    @property
-    def security_bits_classical(self) -> float:
-        """Classical security in bits (brute force)."""
-        import math
-        return math.log2(self.search_space_size)
-
-    @property
-    def security_bits_quantum(self) -> float:
-        """Post-quantum security in bits (Grover halving)."""
-        return self.security_bits_classical / 2
-
-
-def key_exchange_setup(params: KeyExchangeParams) -> dict:
+def analyze_norm_growth(path: List[int], max_steps: int = 20) -> Dict:
     """
-    Set up a Berggren key exchange instance.
-
-    Protocol:
-    1. Alice picks a random Berggren word w_A of length ≤ depth.
-    2. Bob picks a random Berggren word w_B of length ≤ depth.
-    3. Alice publishes triple_A = eval(w_A, root).
-    4. Bob publishes triple_B = eval(w_B, root).
-    5. Shared secret = Hash(eval(w_A ++ w_B, root)).
-
+    Analyze the norm growth along a specific Berggren path.
+    
     Args:
-        params: Key exchange parameters.
-
+        path: Repeating generator pattern (e.g., [0] for A^n)
+        max_steps: Number of iterations
+    
     Returns:
-        Dictionary with setup information.
+        Dictionary with norm growth data.
     """
-    # Generate random word of random length ≤ depth
-    length = secrets.randbelow(params.depth) + 1
-    word = ''.join(secrets.choice('ABC') for _ in range(length))
-
-    triple = eval_berggren_word(word)
-    secret_hash = hashlib.sha256(triple.tobytes()).hexdigest()
-
-    return {
-        'word': word,
-        'public_triple': triple,
-        'secret_hash': secret_hash[:params.key_length_bits // 4],
+    v = ROOT_TRIPLE.copy()
+    data = {
+        'hypotenuses': [int(v[2])],
+        'squared_norms': [int(sum(x**2 for x in v))],
+        'growth_ratios': [],
+        'steps': [0]
     }
-
-
-def demonstrate_key_exchange():
-    """Demonstrate the toy key exchange protocol."""
-    params = KeyExchangeParams(depth=10, key_length_bits=128)
-
-    print("Berggren Key Exchange Protocol")
-    print("=" * 50)
-    print(f"Depth: {params.depth}")
-    print(f"Search space: {params.search_space_size:,} words")
-    print(f"Classical security: {params.security_bits_classical:.1f} bits")
-    print(f"Quantum security: {params.security_bits_quantum:.1f} bits")
-    print()
-
-    alice = key_exchange_setup(params)
-    bob = key_exchange_setup(params)
-
-    print(f"Alice's word: {alice['word']} (length {len(alice['word'])})")
-    print(f"Alice's public triple: {alice['public_triple']}")
-    print()
-    print(f"Bob's word: {bob['word']} (length {len(bob['word'])})")
-    print(f"Bob's public triple: {bob['public_triple']}")
-    print()
-
-    # Shared computation (in real protocol, both compute the same value)
-    combined_word = alice['word'] + bob['word']
-    shared_triple = eval_berggren_word(combined_word)
-    shared_key = hashlib.sha256(shared_triple.tobytes()).hexdigest()[:32]
-    print(f"Combined word: {combined_word}")
-    print(f"Shared triple: {shared_triple}")
-    print(f"Shared key: {shared_key}")
-    print()
-
-    # Verify the shared triple is still primitive Pythagorean
-    a, b, c = shared_triple
-    print(f"Verification: {a}² + {b}² = {a**2} + {b**2} = {a**2 + b**2}")
-    print(f"              {c}² = {c**2}")
-    print(f"              Pythagorean: {a**2 + b**2 == c**2}")
-
-    from math import gcd
-    g = gcd(int(a), gcd(int(b), int(c)))
-    print(f"              Primitive (gcd=1): {g == 1}")
+    
+    for step in range(1, max_steps + 1):
+        idx = path[(step - 1) % len(path)]
+        v = BERGGREN_GENERATORS[idx] @ v
+        hyp = int(v[2])
+        sqn = int(sum(x**2 for x in v))
+        
+        data['hypotenuses'].append(hyp)
+        data['squared_norms'].append(sqn)
+        data['steps'].append(step)
+        
+        if data['hypotenuses'][-2] > 0:
+            data['growth_ratios'].append(hyp / data['hypotenuses'][-2])
+    
+    return data
 
 
 # ============================================================
-# Algorithm 4: SVP Encoding
+# Algorithm 7: Lorentz Form Verification
 # ============================================================
 
-def encode_orbit_as_lattice_vector(word: str, embedding_dim: int = 6) -> np.ndarray:
+def verify_lorentz_preservation(M: np.ndarray) -> bool:
     """
-    Encode a Berggren orbit vector as a higher-dimensional lattice vector
-    for SVP-style search.
-
-    The encoding maps (a, b, c) to (a, b, c, a²+b²-c², weight_coeffs...)
-    where the quadratic form constraint is built into the lattice.
-
+    Verify that M preserves the Lorentz form: M^T Q M = Q
+    where Q = diag(1, 1, -1).
+    
     Args:
-        word: Berggren word.
-        embedding_dim: Dimension of the encoding space.
-
+        M: 3×3 integer matrix
+    
     Returns:
-        Encoded vector in ℤ^embedding_dim.
+        True if M is in O(2,1; ℤ)
     """
-    triple = eval_berggren_word(word)
-    a, b, c = triple
-
-    # Encode: first 3 coords are the triple, rest encode constraints
-    encoded = np.zeros(embedding_dim, dtype=np.int64)
-    encoded[0] = a
-    encoded[1] = b
-    encoded[2] = c
-    encoded[3] = a**2 + b**2 - c**2  # Should be 0 (Pythagorean)
-    if embedding_dim > 4:
-        encoded[4] = len(word)  # Depth information
-    if embedding_dim > 5:
-        encoded[5] = int(np.sum(triple**2))  # Squared norm
-
-    return encoded
+    Q = np.diag([1, 1, -1]).astype(np.int64)
+    result = M.T @ Q @ M
+    return np.array_equal(result, Q)
 
 
 # ============================================================
-# Main execution
+# Main: Run all algorithms
 # ============================================================
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("Algorithm 1: Berggren Word Evaluation")
-    print("=" * 70)
-    print()
-
-    test_words = ["", "A", "B", "C", "AB", "BA", "ABC", "CBA"]
-    for w in test_words:
-        v = eval_berggren_word(w)
-        a, b, c = v
-        print(f"  eval('{w}') = ({a}, {b}, {c})  "
-              f"[{a}² + {b}² = {a**2+b**2}, {c}² = {c**2}]")
-
-    print()
-    print("=" * 70)
-    print("Algorithm 2: Lattice Construction")
-    print("=" * 70)
-    print()
-
-    for d in range(4):
-        lat = construct_berggren_lattice(d)
-        print(f"  Depth {d}: {len(lat.basis_vectors)} vectors, rank = {lat.rank}")
-
-    print()
-    print("=" * 70)
-    print("Algorithm 3: Key Exchange")
-    print("=" * 70)
-    print()
-    demonstrate_key_exchange()
-
-    print()
-    print("=" * 70)
-    print("Algorithm 4: SVP Encoding")
-    print("=" * 70)
-    print()
-
-    for w in ["A", "B", "C", "AB"]:
-        enc = encode_orbit_as_lattice_vector(w)
-        print(f"  encode('{w}') = {enc}")
+    print("Berggren Post-Quantum Lattices: Algorithm Demonstrations")
+    print("=" * 60)
+    
+    # Word evaluation
+    print("\n--- Word Evaluation ---")
+    for word in [[], [0], [1], [2], [0, 1], [0, 0, 0]]:
+        v = evaluate_word(word)
+        name = ''.join('ABC'[i] for i in word) or 'ε'
+        print(f"  w={name:6s}  →  v = {tuple(int(x) for x in v):>20s}  "
+              f"Pyth={int(v[0])**2 + int(v[1])**2 == int(v[2])**2}")
+    
+    # Orbit generation
+    print("\n--- Orbit Generation (depth 2) ---")
+    orbit = generate_orbit(2)
+    for ov in orbit:
+        name = ''.join('ABC'[i] for i in ov.word) or 'root'
+        print(f"  {name:6s}  {tuple(int(x) for x in ov.vector):>20s}  "
+              f"hyp={ov.hypotenuse:>4d}  prim={ov.is_primitive()}")
+    
+    # Lattice construction
+    print("\n--- Lattice Basis (depth 1) ---")
+    depth1 = [ov.vector for ov in orbit if ov.depth == 1]
+    basis, det = orbit_lattice_basis(depth1)
+    print(f"  Basis matrix:\n{basis}")
+    print(f"  Determinant: {det}")
+    print(f"  Index in ℤ³: {abs(det)}")
+    
+    # Security parameters
+    print("\n--- Security Parameters ---")
+    for m in [64, 128, 256, 512]:
+        params = estimate_security(m)
+        print(f"  {params}")
+    
+    # Lorentz verification
+    print("\n--- Lorentz Form Preservation ---")
+    for name, M in [('A', BERGGREN_A), ('B', BERGGREN_B), ('C', BERGGREN_C)]:
+        print(f"  Generator {name}: M^T Q M = Q ? {verify_lorentz_preservation(M)}")
+    
+    # Norm growth
+    print("\n--- Norm Growth (B-path) ---")
+    data = analyze_norm_growth([1], 10)
+    for i in range(len(data['hypotenuses'])):
+        ratio = f"{data['growth_ratios'][i-1]:.4f}" if i > 0 else "  —   "
+        print(f"  step {i:>2d}: hyp={data['hypotenuses'][i]:>12d}  ratio={ratio}")

@@ -239,22 +239,6 @@
     "timestamp": "2026-05-14T16:03:53.818879+00:00"
   },
   {
-    "id": "seed_022",
-    "title": "Closure-Operator Networks: Universal Approximation via Idempotent Semimodules",
-    "description": "Prove that any continuous function on a compact domain can be approximated arbitrarily well by a finite composition of closure operators on idempotent semimodules, establishing a new universal approximation theorem. Show that closure-operator networks achieve the same approximation order as ReLU networks while being provably robust to adversarial perturbations within the semimodule's closure radius.",
-    "domains": [
-      "MachineLearning",
-      "EML",
-      "Algebra"
-    ],
-    "priority_score": 0.87,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "56b13d4c",
-    "timestamp": "2026-05-14T16:03:53.822921+00:00"
-  },
-  {
     "id": "seed_056",
     "title": "Tropical Curry-Howard: Proofs as Min-Plus Programs",
     "description": "Establish a Curry-Howard correspondence for tropical logic where proofs are min-plus programs and propositions are tropical types. Prove that cut elimination corresponds to tropical normalization, and that the idempotent property of min-plus yields a canonical proof normalization strategy that is strongly normalizing and confluent.",
@@ -1038,150 +1022,109 @@
     "timestamp": "2026-05-15T09:04:10.051646+00:00"
   },
   {
-    "id": "fd_0218",
-    "title": "Induction on path length:",
-    "description": "Prove by induction that barriers propagate: if the first barrier vertex $\\sigma$ satisfies $d_{B^c}(\\sigma) \\leq d_B(\\sigma)$, then every vertex before $\\sigma$ on any path inherits the inequality.\n\n### Cross-Domain Significance\n\n- **Network security:** Separators model firewalls; the theorem certifies that data behind a firewall is invisible from certain probes.\n- **Causal inference:** In DAGs, separators correspond to d-separation; this tropical version gives a metric-aware separation criterion.\n- **Graph partitioning:** Barrier theorems provide quality guarantees for graph cuts.\n\n---\n\n## Direction 2: Tropical Ryu-Takayanagi Formula\n\n### Statement\n\nDefine a notion of **wedge boundary area** as the total weight of edges crossing from $\\mathrm{Wedge}(B)$ to $\\mathrm{bulk} \\setminus \\mathrm",
+    "id": "fd_0222",
+    "title": "Sparse functions",
+    "description": ": Show that functions depending on at most s of n variables can be approximated by closure networks of size O((1/ε)^s) regardless of n.\n\n### Formalization Target\n```lean\ntheorem closure_barron_approx\n    {n : ℕ} (K : Set (Fin n → ℝ)) (hK : IsCompact K)\n    (f : (Fin n → ℝ) → ℝ) (hf : BarronNorm f ≤ B) :\n    ∀ m : ℕ, ∃ N, IsFiniteClosureNetworkOfSize N m ∧\n      ∀ x ∈ K, |N x - f x| ≤ C * B / Real.sqrt m\n```\n\n### Impact\nThis would make closure networks practically competitive with deep learning on high-dimensional problems, not just theoretically universal.\n\n### Cross-Domain Connections\n- **Approximation theory**: Barron spaces, variation spaces\n- **High-dimensional probability**: Random features, Johnson-Lindenstrauss\n- **Compressed sensing**: Sparse recovery, restricted isometry\n\n---\n\n## ",
     "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9ab661ec",
-    "consumed_by_exp_id": "9cabdd3c",
-    "timestamp": "2026-05-15T10:01:34.433557+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "Certify",
-    "description": "the winning pattern in the formal framework by instantiating `BinaryGateGadget`.\n4. Extend to specific rules beyond von Neumann: Moore neighborhood, asymmetric rules, higher-dimensional tori.\n\n### Impact\nThis would convert our abstract universality theorem into a concrete, runnable universal computer. It would be the first rigorously verified collision-based universal CA in the tropical setting.\n\n### Cross-domain connections\n- **Experimental mathematics:** GPU-accelerated search over collision patterns\n- **Symmetry exploitation:** Rule symmetries reduce the search space\n- **Machine learning:** Train a classifier to predict which collision patterns realize which gates\n\n---\n\n## 2. Tropical Circuit Complexity Theory\n\n### Theorem Target\n```\ntheorem tropical_circuit_depth_lower_bound :\n    ∀ (f",
-    "domains": [
-      "Tropical",
+      "EML",
       "Bridges",
-      "MachineLearning",
-      "Computation"
+      "MachineLearning"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b751b05a",
+    "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:01:19.706479+00:00"
+    "timestamp": "2026-05-15T12:04:37.768787+00:00"
   },
   {
-    "id": "fd_0220",
-    "title": "Tropical semiring typeclass hierarchy",
-    "description": ": Formalize `TropicalSemiring`, `CompleteTropicalSemiring`, and their instances for `ℝ`, `ℝ≥0∞`, `WithTop ℝ`, `Tropical α`.",
+    "id": "fd_0223",
+    "title": "Binary base classifiers",
+    "description": ": Build K binary closure-network classifiers, each with certified radius r and margin γ.",
     "domains": [
-      "Tropical",
-      "Algebra"
+      "EML"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "56f66752",
+    "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:09:57.070429+00:00"
+    "timestamp": "2026-05-15T12:04:37.778076+00:00"
   },
   {
-    "id": "fd_0221",
-    "title": "Weighted automata over general semirings",
-    "description": ": Generalize WTA from `ℝ` to arbitrary semirings, recovering boolean, probabilistic, and tropical automata as instances.",
+    "id": "fd_0226",
+    "title": "Formal statement",
+    "description": ": For perturbation within radius r, no binary classifier changes, so zero bits flip, which is below d_min/2.\n\n### Formalization Target\n```lean\ntheorem ecoc_closure_multiclass_robust\n    {X : Type*} [PseudoMetricSpace X] {K : ℕ} {m : ℕ}\n    (code : Fin K → Fin m → Bool)\n    (classifiers : Fin m → X → Bool)\n    (r : ℝ) (hr : 0 < r)\n    (hrobust : ∀ j, IsClosureClassifier (classifiers j) r)\n    (hd_min : ECOC_minDist code ≥ 3) :\n    ∀ x z, dist z x < r → ecocDecode code classifiers z = ecocDecode code classifiers x\n```\n\n### Impact\nThis extends certified robustness from binary to multi-class settings with explicit combinatorial guarantees.\n\n### Cross-Domain Connections\n- **Coding theory**: BCH codes, Reed-Solomon codes, minimum distance bounds\n- **Multi-class learning**: One-vs-all, output cod",
     "domains": [
-      "Tropical",
-      "Algebra"
+      "EML",
+      "Bridges",
+      "MachineLearning"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "56f66752",
+    "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:09:57.080170+00:00"
+    "timestamp": "2026-05-15T12:04:37.806854+00:00"
   },
   {
-    "id": "fd_0217",
-    "title": "Month 3-6",
-    "description": ": Implement Direction 4 (algorithmic extraction) and benchmark on MNIST/CIFAR networks.",
+    "id": "fd_0227",
+    "title": "Domain semantics",
+    "description": ": Define the denotation of a closure-network layer as a Scott-continuous closure operator on a domain of signals.",
     "domains": [
-      "Bridges"
+      "EML"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "5c0e9794",
+    "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:38.641779+00:00"
+    "timestamp": "2026-05-15T12:04:37.815985+00:00"
   },
   {
-    "id": "fd_0218",
-    "title": "Month 6-12",
-    "description": ": Complete Direction 2 (persistent nerves) and Direction 3 (tropical duality).",
+    "id": "fd_0228",
+    "title": "Specification as fixed points",
+    "description": ": Show that a specification \"N(x) ∈ S for all x ∈ K\" is equivalent to K ⊆ N⁻¹(S), which for closure networks reduces to checking fixed-point inclusion.",
     "domains": [
-      "Tropical"
+      "EML"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "5c0e9794",
+    "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:38.650264+00:00"
+    "timestamp": "2026-05-15T12:04:37.825030+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "Hypothesize",
-    "description": ": State the main conjecture formally in Lean with `sorry`.",
+    "id": "fd_0230",
+    "title": "Decidability",
+    "description": ": For finite closure networks on finite domains, show that specification checking is decidable (by reduction to finite fixed-point computation).\n\n### Formalization Target\n```lean\ntheorem closure_network_spec_decidable\n    {α : Type*} [Fintype α] [DecidableEq α]\n    (N : α → α) (hN : IsIdempotent N)\n    (S : Set α) [DecidablePred (· ∈ S)] :\n    Decidable (∀ x, N x ∈ S)\n```\n\n### Impact\nThis would connect closure-network verification to the well-developed theory of abstract interpretation and program analysis, potentially enabling automatic certification of trained closure networks.\n\n### Cross-Domain Connections\n- **Domain theory**: Scott continuity, Smyth powerdomain\n- **Abstract interpretation**: Galois connections, widening operators\n- **Model checking**: Temporal logic, CTL*, μ-calculus\n-",
     "domains": [
-      "Bridges"
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7529282b",
+    "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:20.962278+00:00"
+    "timestamp": "2026-05-15T12:04:37.844816+00:00"
   },
   {
-    "id": "fd_0220",
-    "title": "Decompose",
-    "description": ": Break into 3–8 helper lemmas.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7529282b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:20.975505+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "Validate",
-    "description": ": Test with `#eval` on concrete examples.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7529282b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:20.984853+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Publish",
-    "description": ": Write up as a standalone module with documentation.",
+    "id": "fd_0232",
+    "title": "Architecture",
+    "description": "has a precise algebraic characterization equivalent to standard networks (Direction 2);",
     "domains": [
       "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7529282b",
+    "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:21.016723+00:00"
+    "timestamp": "2026-05-15T12:04:37.863500+00:00"
   },
   {
     "id": "seed_079",
@@ -1859,42 +1802,6 @@
     "timestamp": "2026-05-15T10:14:43.271111+00:00"
   },
   {
-    "id": "fd_0217",
-    "title": "3. Tropical Detailed Balance and Reversible Radiation Channels",
-    "description": "**Hypothesis**: There exists a notion of tropical detailed balance for radiation channels `K : α → β → ℝ` that characterizes reversibility, and reversible channels preserve tropical entropy exactly.\n\n**Precise program**:\n- Define tropical detailed balance: `E(a) + K(a,b) = E'(b) + K^rev(b,a)` for some reverse kernel and output energy.\n- Prove that under tropical detailed balance, `tropicalPartition E = tropicalPartition E'` (entropy conservation).\n- Show that the composition of two balanced channels is balanced (closure under composition).\n- Characterize the extremal structure: in a balanced channel, the minimizing path is reversible.\n- Connect to the information paradox: if Hawking radiation satisfies tropical detailed balance, information is preserved in the extremal cost landscape.\n\n**K",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a65f7038",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:14:43.294148+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "4. Tropical Entropy from Compact Energy Landscapes via `sInf`",
-    "description": "**Hypothesis**: All finite-type results generalize to compact topological spaces with lower semicontinuous energy functions, using `sInf` in place of `Finset.inf'`.\n\n**Precise program**:\n- Define `tropicalPartitionCompact (X : Type*) [TopologicalSpace X] [CompactSpace X] (E : X → ℝ) (hE : LowerSemicontinuous E) : ℝ := sInf (Set.range E)`.\n- Prove the infimum is achieved (by compactness + lower semicontinuity).\n- Generalize all finite-type theorems: translation invariance, duplication invariance, data-processing inequality.\n- Define tropical channels on compact spaces and prove the data-processing inequality using the extreme value theorem.\n- Connect to tropical geometry: the energy landscape on a tropical variety is lower semicontinuous, so the framework applies.\n\n**Key lemma targets**:\n``",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a65f7038",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:14:43.304332+00:00"
-  },
-  {
     "id": "fd_0214",
     "title": "Exact Theorem Statement",
     "description": "```lean\ntheorem sumcheck_soundness\n    {F : Type*} [Field F] [Fintype F] [DecidableEq F]\n    {n : ℕ}\n    (p : MvPolynomial (Fin n) F)\n    (d : ℕ) (hdeg : p.totalDegree ≤ d)\n    (claimed_sum : F)\n    (hneq : (∑ x : Fin n → ({0, 1} : Finset F), MvPolynomial.eval (fun i => (x i : F)) p) ≠ claimed_sum) :\n    -- Probability that a cheating prover fools an honest verifier\n    -- is at most n·d / |F| per round\n    True -- placeholder for the probability bound\n```",
@@ -1925,86 +1832,6 @@
     "timestamp": "2026-05-15T11:04:08.973021+00:00"
   },
   {
-    "id": "fd_0217",
-    "title": "1. Multivariate Schwartz–Zippel over Finite Grids",
-    "description": "**Hypothesis**: The full Schwartz–Zippel lemma for multivariate polynomials can be proved by induction on the number of variables, reducing each step to the univariate root bound.\n\n**Statement**: Let $p \\in F[x_1, \\ldots, x_n]$ be a nonzero polynomial of total degree $d$ over a finite field $F$, and let $S \\subseteq F$ be a finite evaluation set. Then\n$$\\Pr_{a \\in S^n}[p(a) = 0] \\le \\frac{d}{|S|}.$$\n\n**Proof Strategy**:\n1. View $p$ as a univariate polynomial in $x_n$ with coefficients in $F[x_1, \\ldots, x_{n-1}]$.\n2. The leading coefficient (as a polynomial in $x_1, \\ldots, x_{n-1}$) is nonzero and of degree $\\le d - \\deg_{x_n}(p)$.\n3. Apply the inductive hypothesis to the leading coefficient, then apply the univariate root bound to the specialization.\n4. Combine via a union bound.\n\n**Form",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ebeb33e3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:04:31.766943+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "2. Formal Reed–Solomon Minimum Distance and Decoding",
-    "description": "**Hypothesis**: The Reed–Solomon code $\\text{RS}[F, k]$ (evaluations of degree-$< k$ polynomials over all of $F$) has minimum distance $|F| - k + 1$, achieving the Singleton bound.\n\n**Statement**: For distinct codewords $c_1, c_2 \\in \\text{RS}[F, k]$, the Hamming distance satisfies $d_H(c_1, c_2) \\ge |F| - k + 1$.\n\n**Proof Strategy**: The difference $c_1 - c_2$ is the evaluation of a nonzero polynomial of degree $< k$, which has at most $k - 1$ roots by our root bound theorem.\n\n**Formalization Approach**:\n- Define `ReedSolomonCode (F : Type*) [Field F] [Fintype F] (k : ℕ) : Set (F → F)` as the image of the evaluation map restricted to polynomials of degree $< k$.\n- Prove the distance theorem using `card_roots_le_natDegree_filter`.\n- State the Singleton bound and show RS achieves it (MDS co",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ebeb33e3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:04:31.778244+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "4. Iterated Freivalds and Amplified Matrix Verification",
-    "description": "**Hypothesis**: Repeating Freivalds' test $t$ times independently reduces the error probability to $|F|^{-t}$.\n\n**Statement**: If $A \\cdot B \\neq C$ and we sample $r_1, \\ldots, r_t$ independently, then\n$$\\Pr[\\forall i,\\, (AB)r_i = C r_i] \\le |F|^{-t}.$$\n\n**Proof Strategy**: Each test is independent, so the probability of all tests passing is at most $(1/|F|)^t$. Formally, this requires:\n1. Defining the product probability space $(k \\to F)^t$.\n2. Showing that the events $\\{r_i : (AB)r_i = Cr_i\\}$ are independent.\n3. Applying the product bound from `freivalds_error_prob`.\n\n**Formalization Approach**: Use `Fintype.card` counting over the product type. Each \"bad\" vector independently has fraction $\\le 1/|F|$ of the space, so the product of bad sets has fraction $\\le 1/|F|^t$.\n\n**Applications**",
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ebeb33e3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:04:31.798130+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "5. Low-Degree Testing for Affine Lines (Foundations for FRI)",
-    "description": "**Hypothesis**: A function $f : F \\to F$ that agrees with a degree-$d$ polynomial on a large fraction of evaluation points must be close to a unique low-degree polynomial. The proximity testing version: if $f$ passes the \"test on random affine line\" with high probability, then $f$ is close to a polynomial of degree $\\le d$.\n\n**Statement** (basic version): If $|\\{a \\in S : f(a) = p(a)\\}| > d$ for some polynomial $p$ of degree $\\le d$, then $p$ is the unique polynomial of degree $\\le d$ achieving this agreement.\n\n**Proof Strategy**: If two distinct polynomials $p, q$ of degree $\\le d$ both agreed with $f$ on more than $d$ points, then $p - q$ would have degree $\\le d$ and more than $d$ roots, contradicting the root bound (our `polynomial_identity_from_agreement`).\n\n**Formalization Approach**",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ebeb33e3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:04:31.808425+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "3. Mean-Payoff Game Value = Tropical Eigenvalue",
-    "description": "**Theorem Statement:**\nFor a one-player (Min) deterministic mean-payoff game with transition matrix W:\n```\ngame_value W = tropicalEigenvalue W\n```\nFor two-player games, the value equals the saddle point of tropical eigenvalues over strategies.\n\n**Why It Matters:**\nMean-payoff games are central to verification, automata theory, and algorithmic game theory. The connection to tropical eigenvalues provides structural insight and algorithmic tools. Formalizing this in Lean would create a bridge between game theory and tropical algebra.\n\n**Proof Strategy:**\n- One-player case: the optimal strategy induces a policy graph. The long-run average cost equals the minimum cycle mean in this graph, which is the tropical eigenvalue.\n- Two-player case: use strategy iteration. Each fixed strategy pair yield",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "245e45a9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:00:56.503800+00:00"
-  },
-  {
     "id": "fd_0226",
     "title": "5. Tropical Characteristic Data from Cycle Structure",
     "description": "**Theorem Statement:**\nIf the catalog's `tropical_eigenvalue_determines_char` establishes that a tropical spectral value determines a tropical character χ, then:\n```\n∀ W, ∀ χ determined by tropicalEigenvalue W,\n  χ is determined by the minimum cycle mean structure of W\n```\n\n**Why It Matters:**\nThis would show that purely combinatorial data (cycles and their means) determines arithmetic/tropical characters. It connects graph optimization to the tropical Langlands program, suggesting that representation-theoretic invariants can be computed from shortest-path data.\n\n**Proof Strategy:**\n1. Inspect `tropical_eigenvalue_determines_char` to extract the precise relationship between eigenvalue and character.\n2. Substitute `tropicalEigenvalue = min cycle mean` (our attainment theorem).\n3. Show the r",
@@ -2021,58 +1848,5 @@
     "source_exp_id": "245e45a9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:00:56.530659+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "1. Tropical Causal Cones and Alexandrov Topology on Finite Idempotent Spacetimes",
-    "description": "**Hypothesis**: On a finite weighted directed graph with min-plus distance, the \"causal future\" of a point x (the set of points reachable with finite tropical cost) defines an Alexandrov topology whose open sets are exactly the down-sets of the causal partial order.\n\n**Proof Strategy**: Define causal precedence x ≤ y iff the min-plus distance d(x,y) < ∞. Show this is a partial order (using the triangle inequality from tropical matrix multiplication). Then prove the Alexandrov topology (generated by causal diamonds) coincides with the order topology. The key lemma is that tropical convolution preserves causal reachability.\n\n**Cross-Domain Connections**: Causal set theory (Sorkin program), domain theory (Scott topology on information orders), directed algebraic topology.\n\n**Lean Formalizatio",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d45cf758",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:58.388894+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "2. Tropical Ricci Flow as Iterated Inf-Convolution Smoothing",
-    "description": "**Hypothesis**: Repeated application of the tropical Einstein step to edge weights (not vertex values) defines a \"tropical Ricci flow\" that monotonically decreases curvature concentration. Formally, if we define tropical curvature at a vertex as the difference between outgoing and incoming min-plus costs, then the iterated tropical transfer smooths this curvature.\n\n**Proof Strategy**: Define tropical sectional curvature as `κ(x) = max_y K(x,y) - min_y K(x,y)`. Show that one step of tropical matrix self-convolution `K' = tropMatMul K K` satisfies `max_x κ'(x) ≤ max_x κ(x)`. This is a contraction estimate in the sup-norm of curvature. Use the nonexpansiveness theorem (tropicalEinsteinStep is nonexpansive) as a model.\n\n**Cross-Domain Connections**: Ollivier-Ricci curvature on graphs, optimal ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d45cf758",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:58.400236+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "5. Quantum-to-Tropical Semiclassical Comparison Theorem",
-    "description": "**Hypothesis**: For a finite quantum system with Hamiltonian H on ℂ^n, the tropical limit ℏ → 0 of the path integral kernel K(x,y;t) = ⟨x|e^{-iHt/ℏ}|y⟩ converges (in a Maslov dequantization sense) to the tropical propagator tropicalEvolution. Formally, -ℏ log |K_ℏ(x,y;t)| → tropicalEvolution W t δ_y (x) as ℏ → 0, where W is the classical action matrix.\n\n**Proof Strategy**: For finite-dimensional matrices, use the explicit formula for matrix exponentials and the Laplace method for sums (finite analogue of the stationary phase approximation). The key estimate is that for a sum S = Σ_j exp(f_j/ℏ), we have -ℏ log S → max_j f_j as ℏ → 0. This is the Maslov dequantization theorem. Apply it entry-by-entry to the transfer matrix.\n\n**Cross-Domain Connections**: Maslov dequantization, WKB approximat",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "EML",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d45cf758",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:58.434664+00:00"
   }
 ]
