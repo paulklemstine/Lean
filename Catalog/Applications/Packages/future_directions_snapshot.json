@@ -1588,10 +1588,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a40fd94",
     "timestamp": "2026-05-15T03:03:37.382470+00:00"
   },
   {
@@ -1667,20 +1667,6 @@
     "timestamp": "2026-05-15T03:18:29.506242+00:00"
   },
   {
-    "id": "fd_0205",
-    "title": "Validate",
-    "description": "computationally with Python experiments (up to depth 6–8).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a96a94a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:18:29.514166+00:00"
-  },
-  {
     "id": "fd_0208",
     "title": "Iterate",
     "description": "— update conjectures based on computational evidence and proof attempts.",
@@ -1693,6 +1679,20 @@
     "source_exp_id": "4a96a94a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:18:29.540171+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Directions 3 and 5",
+    "description": "are more speculative but would open entirely new research areas.",
+    "domains": [
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a0c6f9fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:24:26.577448+00:00"
   },
   {
     "id": "seed_078",
@@ -2318,25 +2318,6 @@
     "source_exp_id": "825001af",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:01:17.491678+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "5. Cross-Domain Robustness Logic",
-    "description": "**Goal**: Create a modal logic of \"certified under transport\" that connects robustness in learning, observability in quantum systems, and stability in topology.\n\n**Concrete steps**:\n- Define a `RobustProperty` as a predicate that is preserved by all morphisms in a specified class (e.g., all ε-perturbation morphisms).\n- Prove closure properties: intersection, union, and existential quantification over robust properties.\n- Show that `HasDepthAtLeast T n` is robust for all morphism classes (since all `TheoryHom`s are depth-monotone by definition).\n- Define domain-specific robustness notions (Lipschitz stability, spectral gaps, quantum error thresholds) as instances of the general framework.\n- Prove that compositional transfer preserves robustness: if P is robust in T₁ and φ preserves P ⇒ Q, t",
-    "domains": [
-      "Physics",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "825001af",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:01:17.502987+00:00"
   },
   {
     "id": "fd_0197",
