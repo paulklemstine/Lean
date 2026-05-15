@@ -240,22 +240,6 @@
     "timestamp": "2026-05-14T16:03:53.819185+00:00"
   },
   {
-    "id": "seed_025",
-    "title": "Category-Theoretic Composition of Neural Architectures",
-    "description": "Formalize neural network architectures as morphisms in a monoidal category where objects are tensor shapes and composition is layer stacking. Prove that ResNet skip connections correspond to categorical products, that attention is a natural transformation, and that architecture search is optimization in a functor category. Show this yields compositional generalization bounds.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.86,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "6558c42b",
-    "timestamp": "2026-05-14T16:03:53.825917+00:00"
-  },
-  {
     "id": "seed_058",
     "title": "Tropical Type Theory: Dependent Types in the Min-Plus Semiring",
     "description": "Construct a dependent type theory where types are tropical sets and terms are min-plus functions, proving that type checking in tropical type theory is decidable and that the tropical identity type corresponds to min-plus equality. Show that tropical inductive types satisfy tropical initial algebra semantics, and that the tropical universe hierarchy is well-founded by the idempotent ordering.",
@@ -769,26 +753,11 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "564eb5bd",
     "timestamp": "2026-05-15T09:04:09.998632+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Dual-rail wire with restoration",
-    "description": ": Design a circuit that maintains the dual-rail invariant through signal propagation, restoring any degraded signals.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:10.033149+00:00"
   },
   {
     "id": "fd_0241",
@@ -804,24 +773,6 @@
     "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:04:10.041587+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Formal verification",
-    "description": ": State and prove `tropical_life_turing_complete` — that for any Turing machine M, there exists an initial configuration and readout function such that the tropical Life automaton simulates M.\n\n**Key Challenge**: Signal restoration in the dual-rail encoding. Each gate must produce clean dual-rail outputs that can serve as inputs to subsequent gates without degradation.\n\n**Cross-Domain Impact**: Would definitively place tropical CA within the landscape of universal computational media, alongside cellular automata (Rule 110), tag systems, and lambda calculus.\n\n---\n\n## Direction 6: MDL-Based Complexity Classification of Tropical Orbits\n\n**Status**: `still_life_has_bounded_orbit_description` proved. Exponential still life diversity established.\n\n**Hypothesis**: The Minimum Description Length (",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:10.051646+00:00"
   },
   {
     "id": "fd_0205",
@@ -871,21 +822,6 @@
     "source_exp_id": "3c1c085d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:04:21.848289+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "Gauge-theoretic structure",
-    "description": ": The invariance under `A ↦ A + c` is the simplest gauge symmetry. Extensions to non-abelian gauge groups (matrix-valued potentials) and local gauge transformations would connect to tropical analogues of Yang-Mills theory.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3c1c085d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:04:21.855624+00:00"
   },
   {
     "id": "fd_0216",
@@ -950,21 +886,6 @@
     "timestamp": "2026-05-15T14:07:33.300413+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Transfer theorems",
-    "description": ": Any undecidability, incompleteness, or complexity result for arithmetic transfers to tropical-with-mul.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "06519137",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:07:33.333832+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Formalize stochastic DPI",
     "description": "(Direction 1): This is the natural next step and has a clear proof strategy.",
@@ -992,20 +913,6 @@
     "source_exp_id": "a2e39b14",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "Extend multi-party chain",
-    "description": "(Direction 4): Inductive formalization of the composition theorem.\n\n### Medium-Term Goals",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a2e39b14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:51.210505+00:00"
   },
   {
     "id": "fd_0213",
@@ -1036,6 +943,143 @@
     "source_exp_id": "a2e39b14",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:04:51.227861+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Curry/uncurry isomorphism",
+    "description": "and proof of adjunction `(- ⊗ m) ⊣ (m ⟶ -)`.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.685191+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Coherence conditions",
+    "description": "— associativity, unit, and triangle axioms for the monoidal structure.\n\n### Proof Strategy\n\nStart with the explicit function-space model where internal hom is literally `State n → (State m → State k) ≅ State n → Arch m k`. The adjunction follows from currying of functions, which is already in Mathlib. The challenge is bookkeeping the `Fin` indexing through the product/hom correspondence.\n\n### Cross-Domain Connections\n\n- **Programming language semantics**: Monoidal closed categories are the categorical semantics of typed lambda calculus. This direction would establish a Curry-Howard-style correspondence between architecture types and computational guarantees.\n- **Hypernetworks**: The internal hom formalizes networks that produce networks, connecting to dynamic architecture generation and me",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.696815+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Finset.prod monotonicity",
+    "description": "— already proven in our framework.\n\n### Proof Strategy\n\nThe key challenge is that Mathlib's operator norm for matrices requires `NormedAddCommGroup` and `NormedSpace` instances on `EuclideanSpace ℝ (Fin n)`. Use `EuclideanSpace.equiv` to go between `Fin n → ℝ` and `EuclideanSpace`, then leverage Mathlib's `Matrix.norm_mulVec_le` or similar.\n\n### Cross-Domain Connections\n\n- **Robustness certification**: Certified Lipschitz bounds directly yield adversarial robustness certificates via `‖f(x) - f(x')‖ ≤ L · ‖x - x'‖`.\n- **Generalization theory**: Spectral complexity bounds (Bartlett et al. 2017) use layer-wise operator norms. Our compositional framework would give a clean categorical derivation.\n\n---\n\n## Direction 3: Equivariance Under Continuous Symmetry Groups\n\n### Target Theorem\n\n```\ntheor",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.752165+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Group representation on state spaces",
+    "description": ": `ρ : G →* (State n ≃ₗ[ℝ] State n)`.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.763873+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Concrete group actions",
+    "description": ": permutation matrices, rotation matrices, etc.\n\n### Proof Strategy\n\nStart with the finite group case (permutations), which is already proven. The Schur classification for the symmetric group representation on `Fin n → ℝ` follows from Schur's lemma plus the fact that the standard permutation representation decomposes into the trivial and standard irreducibles. Use Mathlib's representation theory infrastructure.\n\n### Cross-Domain Connections\n\n- **Geometric deep learning**: The Bronstein et al. (2021) program of geometric deep learning is exactly the study of equivariant architectures. Our framework provides formal foundations.\n- **Physics**: Gauge equivariance is the foundation of lattice gauge theory neural networks.\n\n---\n\n## Direction 4: Architecture Rewriting Systems and Normal Forms\n\n##",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.798968+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Termination measure",
+    "description": ": complexity or term size strictly decreasing under each rule.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.833199+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Confluence",
+    "description": ": Newman's lemma (local confluence + termination ⟹ confluence) or direct proof.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.842604+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Denotational semantics",
+    "description": ": interpretation `⟦t⟧ : Arch n m` mapping terms to functions, and proof that rewriting preserves semantics.\n\n### Proof Strategy\n\nDefine a well-founded order on architecture terms (e.g., lexicographic on depth and size). Prove each rewrite rule decreases this order (termination). Prove local confluence by checking all critical pairs. Apply Newman's lemma.\n\n### Cross-Domain Connections\n\n- **Term rewriting theory**: The architecture rewriting system is a concrete instance of abstract rewriting, connecting to Knuth-Bendix completion and word problem decidability.\n- **Compiler optimization**: Architecture simplification is analogous to compiler optimization passes. A verified rewriting system is a verified architecture compiler.\n\n---\n\n## Direction 5: Neural ODE Connection via Residual Limits\n\n#",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.854243+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Euler method convergence",
+    "description": ": Mathlib may have basic ODE theory; otherwise, prove convergence of Euler's method for Lipschitz vector fields.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6558c42b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:26:49.885694+00:00"
   },
   {
     "id": "seed_079",
@@ -1562,26 +1606,6 @@
     "timestamp": "2026-05-15T09:07:29.342835+00:00"
   },
   {
-    "id": "fd_0212",
-    "title": "Direction 5: Mod-12 Pitch-Class Counterpoint and Interval-Class Geometry",
-    "description": "**Hypothesis**: Working modulo 12 (pitch classes rather than absolute pitches) changes the optimization landscape qualitatively: the tropical cost becomes periodic, the DP lattice becomes a torus, and new symmetries enable faster algorithms and richer Pareto structure.\n\n**Proof Strategy**:\n1. Redefine Melody(n) = Fin(n+1) → ZMod 12.\n2. Redefine consonance on ZMod 12 (interval classes: {0,3,4,5,7,8,9} are consonant, where 5 = P4 is now included as an inversion of P5).\n3. Prove the zero-cost equivalence carries over to the mod-12 setting with the modified consonance table.\n4. Show that the DP state space reduces from P to 12, giving O(n · 144) = O(n) complexity.\n5. Prove that the mod-12 Pareto frontier has a different structure from the absolute-pitch version: with only 12 possible intervals",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:19:36.858900+00:00"
-  },
-  {
     "id": "fd_0229",
     "title": "Summary: The Temperature Axis",
     "description": "These five directions together establish **temperature as a formal mathematical axis** connecting:\n\n| Zero temperature ($\\beta = \\infty$) | Finite temperature ($\\beta > 0$) |\n|---|---|\n| Tropical max | Log-sum-exp |\n| Shortest/longest paths | Free energy |\n| Tropical eigenvalues | Perron eigenvalues |\n| Hard optimization | Regularized optimization |\n| Deterministic control | Risk-sensitive control |\n\nThe breakthrough of the current work — proving explicit, sharp, compositional error bounds — makes this axis rigorous and computationally useful for the first time in formalized mathematics.",
@@ -1631,41 +1655,6 @@
     "timestamp": "2026-05-15T14:21:34.104744+00:00"
   },
   {
-    "id": "fd_0221",
-    "title": "3. Newton Polytope Bridge",
-    "description": "**Theorem statement**:\n\n```lean\n/-- The Newton polytope of a tropical polynomial is the convex hull\n    of its exponent vectors (cast to ℝ). -/\ndef NewtonPolytope {n : ℕ} (p : Finset (TropMonomial n)) : Set (Fin n → ℝ) :=\n  convexHull ℝ (p.image (fun m => (fun i => (m.exp i : ℝ))) : Set (Fin n → ℝ))\n\n/-- The tropical polynomial evaluation is the Legendre-Fenchel transform\n    of the indicator of the lifted Newton polytope. Specifically,\n    tropPolyEval p hp x = sup_{α ∈ exponents(p)} (c_α + ⟨α, x⟩). -/\ntheorem tropPolyEval_eq_support_function {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) (x : Fin n → ℝ) :\n    tropPolyEval p hp x = p.sup' hp (fun m => m.coeff + ∑ i, (m.exp i : ℝ) * x i)\n```\n\n**Proof strategy**: This is essentially by definition, connecting the tropical polyno",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d5cf911",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:21:34.116795+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "4. Tropical Line in Dimension 2: The Standard Tripod",
-    "description": "**Theorem statement**:\n\n```lean\n/-- A standard tropical line in ℝ² is defined by three monomials:\n    the constant term c₀, the x-term c₁ + x, and the y-term c₂ + y. -/\ndef standardTropLine (c₀ c₁ c₂ : ℝ) : Finset (TropMonomial 2) :=\n  {⟨c₀, ![0, 0]⟩, ⟨c₁, ![1, 0]⟩, ⟨c₂, ![0, 1]⟩}\n\n/-- The tropical line has exactly three rays emanating from a single vertex.\n    When c₀ = c₁ = c₂ = 0, the vertex is the origin and the three rays\n    point in directions (-1,0), (0,-1), and (1,1). -/\ntheorem tropLine_vertex {x y : ℝ} :\n    IsTropRoot (standardTropLine 0 0 0) ⟨by decide⟩ ![x, y] ↔\n    (x ≤ 0 ∧ y ≤ 0 ∧ x = y) ∨\n    (x ≤ 0 ∧ y ≤ x) ∨\n    (y ≤ 0 ∧ x ≤ y)\n```\n\n**Proof strategy**: Direct computation. The three monomials evaluate to `0`, `x`, and `y` respectively. The tropical root condition requires",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d5cf911",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:21:34.128191+00:00"
-  },
-  {
     "id": "fd_0223",
     "title": "5. Optimization Bridge: Nondifferentiability Locus",
     "description": "**Theorem statement**:\n\n```lean\n/-- A max-affine function is a tropical polynomial where exponents\n    are interpreted as slope vectors. -/\ndef MaxAffineFunc (n k : ℕ) := Fin k → (Fin n → ℝ) × ℝ  -- (slope, intercept) pairs\n\n/-- The active set at a point: indices whose affine piece achieves the max. -/\ndef activeSet {n k : ℕ} (f : MaxAffineFunc n k) (x : Fin n → ℝ) : Finset (Fin k) :=\n  Finset.univ.filter (fun j => ∀ j', innerProduct (f j).1 x + (f j).2 ≤\n                                      innerProduct (f j').1 x + (f j').2 →\n                                      innerProduct (f j).1 x + (f j).2 =\n                                      innerProduct (f j').1 x + (f j').2)\n\n/-- The nondifferentiability locus of a max-affine function equals\n    the tropical hypersurface of the corresponding",
@@ -1682,21 +1671,6 @@
     "source_exp_id": "7d5cf911",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T14:21:34.138758+00:00"
-  },
-  {
-    "id": "fd_0228",
-    "title": "Cross-Domain Connection",
-    "description": "This directly connects to **turbo codes, LDPC codes, and polar codes**. If sieving is decoding, then perhaps decoding techniques can be adapted for factoring — and conversely, cryptanalytic insights might improve decoder design.\n\n---",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e03a2df6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:02:24.555432+00:00"
   },
   {
     "id": "fd_0229",
@@ -1763,37 +1737,6 @@
     "timestamp": "2026-05-15T15:04:11.709801+00:00"
   },
   {
-    "id": "fd_0221",
-    "title": "Direction 5: Connect to Shortest-Path and Optimization Algorithms",
-    "description": "**Goal:** Use canonical tropical expressions to certify shortest-path computations and min-plus dynamic programs.\n\n**Key insight:** Tropical matrix multiplication computes shortest paths. An expression `min(a + b, c + d, ...)` over path weights can be represented as a `TropExpr`. The canonical form eliminates redundant subexpressions, enabling certified common-subexpression elimination (CSE) in optimization pipelines.\n\n**Proof strategy:**\n1. Define tropical matrix multiplication in terms of `TropExpr` composition.\n2. Show that normalization of the resulting expression corresponds to shortest-path computation.\n3. Prove that CSE via normalization preserves the optimal value.\n4. Connect to the Bellman-Ford or Floyd-Warshall algorithms as special cases.\n\n**Challenges:**\n- Tropical matrices ove",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cccfadf1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:11.719919+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Universal Algebra Perspective",
-    "description": "The AC normalization theorem is an instance of the word problem for the free algebra over two commutative-associative operations. Generalizing this framework to arbitrary equational theories would yield a generic certified normalization toolkit.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cccfadf1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:11.729983+00:00"
-  },
-  {
     "id": "fd_0223",
     "title": "Boolean Logic Analogy",
     "description": "Via the correspondence `min ↔ ∧` (tropical min corresponds to logical conjunction), AC normalization of `tmin` is analogous to clause canonicalization in SAT preprocessing. Extending this analogy could connect tropical algebra to certified SAT/SMT preprocessing.",
@@ -1825,38 +1768,6 @@
     "timestamp": "2026-05-15T15:04:32.949550+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "Precise Statement",
-    "description": "```\ntheorem tropical_BET_converse :\n    ∀ (f : List (AnnotatedSymbol σ Var) → ℝ≥0∞),\n      TropRecognizable f →\n      ∃ φ : ExtendedTropFormula (AnnotatedSymbol σ Var),\n        ∀ w, φ.eval w = f w\n```\nwhere `ExtendedTropFormula` includes weighted position quantifiers.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc175531",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:32.962402+00:00"
-  },
-  {
-    "id": "fd_0228",
-    "title": "Cross-Domain Significance",
-    "description": "- **Descriptive complexity**: establishes the tropical analogue of the most fundamental theorem in the field\n- **Verification**: guarantees that any property computable by a finite-state tropical monitor is logically expressible\n- **Information theory**: characterizes the class of compressible tropical cost functions\n\n---",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc175531",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:32.991155+00:00"
-  },
-  {
     "id": "fd_0229",
     "title": "Precise Statements",
     "description": "```\n-- Upper bound (already implicit in the construction)\ntheorem state_bound_upper (φ : TropFormula α) :\n    ∃ A : TropAut α, (∀ w, A.eval w = φ.eval w) ∧\n      Fintype.card A.S ≤ stateUpperBound φ\n\n-- Lower bound (requires communication complexity)\ntheorem state_bound_lower :\n    ∃ (family : ℕ → TropFormula (Fin 2)),\n      ∀ (A : ℕ → TropAut (Fin 2)),\n        (∀ n w, (A n).eval w = (family n).eval w) →\n        ∃ c > 0, ∀ n, Fintype.card (A n).S ≥ 2 ^ (c * n)\n```",
@@ -1883,23 +1794,6 @@
     "source_exp_id": "cc175531",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:04:33.035656+00:00"
-  },
-  {
-    "id": "fd_0232",
-    "title": "Phase 3 (Long-term): Direction 4",
-    "description": "- Tropical information theory is the most speculative but potentially most impactful\n- Requires synthesis of automata theory, information theory, and tropical algebra\n- Could open new connections to machine learning and data compression\n\n---",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc175531",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:33.055604+00:00"
   },
   {
     "id": "fd_0215",
