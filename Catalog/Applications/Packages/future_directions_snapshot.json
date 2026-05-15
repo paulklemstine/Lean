@@ -853,22 +853,6 @@
     "timestamp": "2026-05-14T16:24:30.133880+00:00"
   },
   {
-    "id": "fd_0144",
-    "title": "Kleene star update",
-    "description": ": The tropical closure (all-pairs shortest paths) of the surgered graph equals a specific algebraic expression involving the original closure and the surgery parameters.",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "2b210045",
-    "timestamp": "2026-05-14T16:24:30.136424+00:00"
-  },
-  {
     "id": "fd_0145",
     "title": "Idempotent convergence",
     "description": ": The sequence of tropical matrix powers `W, W², W³, ...` stabilizes at `W^(n-1)` for n-vertex graphs (Kleene star finiteness).\n\n### Proof Strategy\nUse the connection between tropical matrix multiplication and min-plus path composition. The rank-1 update formula is the tropical analogue of the Sherman–Morrison formula.\n\n### Cross-Domain Connections\n- Tropical linear algebra and the Kleene star\n- Dynamic graph algorithms (incremental shortest paths)\n- Operadic composition in higher algebra\n- Transfer matrix methods in statistical physics\n\n---\n\n## Direction 5: Tropical Holography via Boundary Distance Reconstruction\n\n### Hypothesis\nA weighted graph's internal structure can be reconstructed (up to isomorphism) from the boundary-to-boundary tropical distance matrix. This is a discrete analogue",
@@ -2175,5 +2159,95 @@
     "source_exp_id": "94b46897",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:04:22.089082+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "1. Rank-One Tropical Woodbury Theorem",
+    "description": "**Statement.** Let `A` be a weighted adjacency matrix over `ENNReal`, with APSP closure `S`. Let `p, q : Fin n → ENNReal` define a rank-one tropical perturbation:\n\n```\nA'(i,j) = min( A(i,j),  p(i) + q(j) )\n```\n\nThen the new APSP closure is:\n\n```\nS'(i,j) = min( S(i,j),  (⨅ₖ S(i,k) + p(k)) + (⨅ₖ q(k) + S(k,j)) )\n```\n\n**Strategy.** The single-edge theorem is the special case where `p` and `q` are indicator functions. The general proof follows the same four-condition structure:\n1. *Adjacency bound*: by construction.\n2. *Diagonal*: trivial from `S(i,i) = 0`.\n3. *Triangle inequality*: use the same `min_le_min_add_min` technique; the key new ingredient is `iInf_le_iInf` for the tropical matrix-vector products.\n4. *Minimality*: by the same argument—any closure for `A'` is also a closure for `A`, s",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b210045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:41.425911+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "2. Vertex Surgery / Tropical Schur Complement",
+    "description": "**Statement.** Consider an `(n+1)`-vertex graph with adjacency matrix partitioned as:\n\n```\n        ┌       ┐\n  B  =  │ A   p │\n        │ qᵀ  0 │\n        └       ┘\n```\n\nwhere `A` is the `n×n` submatrix, `p : Fin n → ENNReal` are edge weights from the new vertex to existing ones, and `q` from existing to new. Then the `n×n` block of the APSP closure of `B` satisfies:\n\n```\nS_B(i,j) = min( S_A(i,j),  (S_A · p)(i) + (q · S_A)(j) )\n```\n\nwhere `(S_A · p)(i) = ⨅ₖ S_A(i,k) + p(k)` is the tropical matrix-vector product.\n\n**Strategy.** Reduce to the rank-one update theorem by showing that the `n×n` block of the closure of `B` equals the closure of `rankOneUpdate A p q`. This requires formalizing the block structure of tropical matrix closure.\n\n**Impact.** Enables certified incremental graph algorithm",
+    "domains": [
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b210045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:41.435010+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "3. Order-Independence of Disjoint Edge Surgeries",
+    "description": "**Statement.** Let edges `(u₁, v₁, w₁)` and `(u₂, v₂, w₂)` be \"independent\" in the sense that neither creates a shortcut through the other's endpoints. Formally, if:\n\n```\nS(v₁, u₂) + w₂ + S(v₂, u₁) + w₁ ≥ 0    (automatic in ENNReal)\n```\n\nthen the closure after both insertions is independent of insertion order:\n\n```\nAPSP(edgeUpdate (edgeUpdate A u₁ v₁ w₁) u₂ v₂ w₂)\n  = APSP(edgeUpdate (edgeUpdate A u₂ v₂ w₂) u₁ v₁ w₁)\n```\n\n**Strategy.** Apply the single-edge formula twice in each order and show equality. In `ENNReal`, this becomes a min-of-mins identity that should follow from associativity, commutativity, and the triangle inequality of `S`.\n\n**Impact.** Enables parallelization of edge insertions in certified dynamic graph algorithms—multiple independent updates can be applied in any order.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b210045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:41.444559+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "4. Boolean Transitive Closure as Tropical Specialization",
+    "description": "**Statement.** Encode boolean reachability in `ENNReal` via `0 = reachable, ⊤ = unreachable`. Then the APSP closure specializes to transitive closure, and the edge update theorem yields:\n\n```\nTC(R ∪ {(u,v)})(i,j) = TC(R)(i,j) ∨ (TC(R)(i,u) ∧ TC(R)(v,j))\n```\n\n**Strategy.** Define a coercion `Bool → ENNReal` with `true ↦ 0, false ↦ ⊤`, show it preserves the closure structure, and derive the boolean formula as a corollary of `kleene_star_single_edge_update`.\n\n**Impact.** Connects the weighted theory to classical graph reachability and automata theory. The boolean specialization is the standard formula for incremental transitive closure maintenance.\n\n---",
+    "domains": [
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b210045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:41.453407+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "5. Certified Dynamic APSP Algorithm with O(n²) Updates",
+    "description": "**Statement.** Extract from `kleene_star_single_edge_update` an executable algorithm:\n\n```python\ndef update_apsp(S, u, v, w):\n    for i in range(n):\n        for j in range(n):\n            S[i][j] = min(S[i][j], S[i][u] + w + S[v][j])\n    return S\n```\n\nProve that this algorithm correctly computes the new APSP closure in `O(n²)` time, compared to `O(n³)` for full recomputation.\n\n**Strategy.**\n1. Define the algorithm as a `Fin n × Fin n → ENNReal` function in Lean.\n2. Show equivalence with the mathematical formula `fun i j ↦ min (S i j) (S i u + w + S v j)`.\n3. Derive correctness from `kleene_star_single_edge_update`.\n4. Use `@[csimp]` for kernel-verified efficient implementation.\n\n**Impact.** Produces a formally verified dynamic APSP update routine that could be extracted to executable code—",
+    "domains": [
+      "EML",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b210045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:41.466110+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "7. Multi-Edge Batch Surgery via Iterated Updates",
+    "description": "**Statement.** Given a batch of `m` edge insertions `{(uₖ, vₖ, wₖ)}`, the APSP closure after all insertions can be computed by iterating the single-edge formula:\n\n```\nS⁽⁰⁾ = S,   S⁽ᵏ⁺¹⁾(i,j) = min( S⁽ᵏ⁾(i,j),  S⁽ᵏ⁾(i,uₖ) + wₖ + S⁽ᵏ⁾(vₖ,j) )\n```\n\nwith total cost `O(mn²)` instead of `O(n³)` when `m ≪ n`.\n\n**Strategy.** Induction on `m`, using `kleene_star_single_edge_update` at each step with the intermediate closure as the base.\n\n**Impact.** Extends the single-edge result to sparse batch updates, the most common scenario in dynamic graph algorithms.\n\n---",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b210045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:41.477629+00:00"
   }
 ]
