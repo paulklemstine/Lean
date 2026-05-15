@@ -312,10 +312,10 @@
       "Speculative"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a65f7038",
     "timestamp": "2026-05-14T16:03:53.835621+00:00"
   },
   {
@@ -906,20 +906,6 @@
     "timestamp": "2026-05-14T17:33:00.474935+00:00"
   },
   {
-    "id": "fd_0161",
-    "title": "Prove the Collatz–Wielandt bound",
-    "description": ": $\\lambda(W) = \\max \\{ \\lambda : \\exists x, W \\otimes x \\leq x + \\lambda \\mathbf{1} \\}$ where $\\otimes$ is tropical multiplication.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "8505111b",
-    "timestamp": "2026-05-14T17:33:00.481527+00:00"
-  },
-  {
     "id": "fd_0166",
     "title": "Apply to specific problems",
     "description": ": Show that certain functions (e.g., element distinctness, graph connectivity) require super-linear tropical cost in bounded-width branching programs.\n\n### Proof Strategy\n- Generalize the layered system framework from `Obstruction.lean`.\n- Use the block cost lemma within each layer.\n- Combine with the existing `layered_no_shortcut` theorem.\n\n### Cross-domain Impact\n- Circuit complexity (lower bounds for restricted circuits)\n- Streaming algorithms (space-bounded computation)\n- VLSI design (area-time tradeoffs)\n\n---\n\n## Direction 3: Tropical Communication Complexity via Min-Plus Protocol Cost\n\n### Goal\nDefine communication complexity over the min-plus semiring and prove direct-sum lower bounds using the cycle-gap framework.\n\n### Background\nIn classical communication complexity, Alice and Bob",
@@ -1429,6 +1415,62 @@
     "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:04:10.051646+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Week 1:",
+    "description": "Formalize definitions and state theorems with `sorry`. Verify the skeleton compiles.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8505111b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:38:42.896744+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Week 2:",
+    "description": "Prove the key lemmas using the decomposition strategy. Test with `#eval` on small examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8505111b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:38:42.904060+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Week 3:",
+    "description": "Complete all proofs and verify with `#print axioms`. Clean up and document.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8505111b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:38:42.912645+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "Week 4:",
+    "description": "Write applications, connect to existing Mathlib infrastructure, and prepare for upstreaming.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8505111b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T09:38:42.921093+00:00"
   },
   {
     "id": "seed_078",
