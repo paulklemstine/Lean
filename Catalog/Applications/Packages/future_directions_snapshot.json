@@ -96,22 +96,6 @@
     "timestamp": "2026-05-14T16:03:53.810906+00:00"
   },
   {
-    "id": "seed_035",
-    "title": "Quantum Gravity as Tropical Geometry: Min-Plus Spacetime at Planck Scale",
-    "description": "Prove that at the Planck scale, spacetime geometry becomes tropical: the metric reduces to a min-plus distance function, and quantum superposition corresponds to the idempotent property of tropical addition. Show that the tropical Einstein equations yield a well-posed initial value problem, and that the tropical Schwarzschild solution has a horizon at the tropical fixed point of the radial coordinate.",
-    "domains": [
-      "Physics",
-      "Tropical",
-      "Speculative"
-    ],
-    "priority_score": 0.92,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "d45cf758",
-    "timestamp": "2026-05-14T16:03:53.831765+00:00"
-  },
-  {
     "id": "seed_044",
     "title": "Quantum Pythagorean Teleportation: Berggren Orbits as Clifford Circuits",
     "description": "Prove that Berggren groupoid orbits on SL(3,Z) encode quantum teleportation circuits via a categorical equivalence between Pythagorean lattices and stabilizer subgroups of the Clifford group. Show that primitive triple matrices form universal quantum gates under tropical composition, and that the Berggren tree structure yields an optimal teleportation protocol.",
@@ -1148,20 +1132,6 @@
     "timestamp": "2026-05-15T11:09:57.089636+00:00"
   },
   {
-    "id": "fd_0216",
-    "title": "Month 1-3",
-    "description": ": Formalize Direction 1 (multi-class) and Direction 5 (obstruction cycles) in Lean 4.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c0e9794",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:38.633699+00:00"
-  },
-  {
     "id": "fd_0217",
     "title": "Month 3-6",
     "description": ": Implement Direction 4 (algorithmic extraction) and benchmark on MNIST/CIFAR networks.",
@@ -1188,20 +1158,6 @@
     "source_exp_id": "5c0e9794",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:03:38.650264+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "Month 12-18",
-    "description": ": Write and submit papers; open-source the certification toolkit.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c0e9794",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:38.659155+00:00"
   },
   {
     "id": "seed_079",
@@ -1879,22 +1835,6 @@
     "timestamp": "2026-05-15T10:14:43.271111+00:00"
   },
   {
-    "id": "fd_0216",
-    "title": "2. Tropical Free Energy as Zero-Temperature Limit",
-    "description": "**Hypothesis**: The tropical partition function `min_i E(i)` is the `β → ∞` limit of `-(1/β) log Σ_i exp(-β E(i))`, and convergence is monotone with explicit error bounds.\n\n**Precise program**:\n- Define the classical free energy `F(β) = -(1/β) log Σ_i exp(-β E(i))`.\n- Prove `lim_{β→∞} F(β) = min_i E(i) = tropicalPartition E`.\n- Establish the rate: `|F(β) - min E| ≤ (log |ι|) / β`.\n- Show monotonicity: `F(β)` is nondecreasing in `β`.\n- Generalize: prove the \"Maslov dequantization\" principle — replacing `(log, +, ×)` with `(id, min, +)` recovers tropical algebra as a limiting structure.\n\n**Key lemma targets**:\n```\ntheorem classical_free_energy_tendsto_tropical ...\ntheorem free_energy_error_bound ...\ntheorem maslov_dequantization_partition ...\n```\n\n**Cross-domain impact**: This is the rigorou",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a65f7038",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:14:43.281936+00:00"
-  },
-  {
     "id": "fd_0217",
     "title": "3. Tropical Detailed Balance and Reversible Radiation Channels",
     "description": "**Hypothesis**: There exists a notion of tropical detailed balance for radiation channels `K : α → β → ℝ` that characterizes reversibility, and reversible channels preserve tropical entropy exactly.\n\n**Precise program**:\n- Define tropical detailed balance: `E(a) + K(a,b) = E'(b) + K^rev(b,a)` for some reverse kernel and output energy.\n- Prove that under tropical detailed balance, `tropicalPartition E = tropicalPartition E'` (entropy conservation).\n- Show that the composition of two balanced channels is balanced (closure under composition).\n- Characterize the extremal structure: in a balanced channel, the minimizing path is reversible.\n- Connect to the information paradox: if Hawking radiation satisfies tropical detailed balance, information is preserved in the extremal cost landscape.\n\n**K",
@@ -1931,24 +1871,6 @@
     "timestamp": "2026-05-15T10:14:43.304332+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "5. Tropical Spectral Theory and Horizon Eigenvalues",
-    "description": "**Hypothesis**: The tropical channel kernel `K : α → β → ℝ` has a well-defined tropical spectral theory when `α = β`, and the tropical eigenvalue governs the long-time behavior of iterated radiation.\n\n**Precise program**:\n- Define the tropical matrix power: `K^n(a,b) = min over paths of length n from a to b`.\n- Define the tropical eigenvalue: `λ_trop = lim_{n→∞} (1/n) min_a K^n(a,a)`.\n- Prove existence (via subadditivity / Fekete's lemma in the tropical setting).\n- Prove that `λ_trop` equals the minimum mean cycle weight (tropical Perron-Frobenius theorem).\n- Apply to iterated radiation: after `n` rounds of Hawking emission, the extremal cost grows as `n · λ_trop + o(n)`.\n- Connect to the horizon: `λ_trop` is the \"tropical surface gravity\" — the characteristic rate of extremal cost accumul",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a65f7038",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:14:43.316503+00:00"
-  },
-  {
     "id": "fd_0214",
     "title": "Exact Theorem Statement",
     "description": "```lean\ntheorem sumcheck_soundness\n    {F : Type*} [Field F] [Fintype F] [DecidableEq F]\n    {n : ℕ}\n    (p : MvPolynomial (Fin n) F)\n    (d : ℕ) (hdeg : p.totalDegree ≤ d)\n    (claimed_sum : F)\n    (hneq : (∑ x : Fin n → ({0, 1} : Finset F), MvPolynomial.eval (fun i => (x i : F)) p) ≠ claimed_sum) :\n    -- Probability that a cheating prover fools an honest verifier\n    -- is at most n·d / |F| per round\n    True -- placeholder for the probability bound\n```",
@@ -1977,20 +1899,6 @@
     "source_exp_id": "5592f3fa",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T11:04:08.973021+00:00"
-  },
-  {
-    "id": "fd_0216",
-    "title": "Required Mathlib Infrastructure",
-    "description": "- `MvPolynomial` evaluation and degree bounds\n- Schwartz-Zippel lemma for multivariate polynomials (may need to be built)\n- Counting arguments over finite fields (partially established by our `card_submodule_eq_pow_finrank`)",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5592f3fa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:04:08.982218+00:00"
   },
   {
     "id": "fd_0217",
@@ -2023,25 +1931,6 @@
     "source_exp_id": "ebeb33e3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T11:04:31.778244+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "3. Sumcheck Protocol Algebraic Core",
-    "description": "**Hypothesis**: The sumcheck protocol's soundness reduces to repeated application of the univariate root bound.\n\n**Statement**: In each round of the sumcheck protocol, the verifier checks that a claimed univariate polynomial is consistent with a partial sum. A cheating prover must produce a polynomial that agrees with the honest one on a random point, which fails with probability $\\le d/|F|$ per round.\n\n**Proof Strategy**:\n1. Formalize the sumcheck claim: $\\sum_{x \\in \\{0,1\\}^n} p(x) = v$.\n2. In round $i$, the prover sends a univariate polynomial $g_i$ of degree $\\le d_i$.\n3. The verifier checks $g_i(0) + g_i(1) = v_i$ and evaluates $g_i(r_i)$ at a random $r_i$.\n4. If the prover cheats, $g_i$ disagrees with the honest polynomial, so by our root bound, the verifier catches the cheat with pr",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ebeb33e3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:04:31.788380+00:00"
   },
   {
     "id": "fd_0220",
@@ -2160,5 +2049,93 @@
     "source_exp_id": "245e45a9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:00:56.530659+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "1. Tropical Causal Cones and Alexandrov Topology on Finite Idempotent Spacetimes",
+    "description": "**Hypothesis**: On a finite weighted directed graph with min-plus distance, the \"causal future\" of a point x (the set of points reachable with finite tropical cost) defines an Alexandrov topology whose open sets are exactly the down-sets of the causal partial order.\n\n**Proof Strategy**: Define causal precedence x ≤ y iff the min-plus distance d(x,y) < ∞. Show this is a partial order (using the triangle inequality from tropical matrix multiplication). Then prove the Alexandrov topology (generated by causal diamonds) coincides with the order topology. The key lemma is that tropical convolution preserves causal reachability.\n\n**Cross-Domain Connections**: Causal set theory (Sorkin program), domain theory (Scott topology on information orders), directed algebraic topology.\n\n**Lean Formalizatio",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d45cf758",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:03:58.388894+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "2. Tropical Ricci Flow as Iterated Inf-Convolution Smoothing",
+    "description": "**Hypothesis**: Repeated application of the tropical Einstein step to edge weights (not vertex values) defines a \"tropical Ricci flow\" that monotonically decreases curvature concentration. Formally, if we define tropical curvature at a vertex as the difference between outgoing and incoming min-plus costs, then the iterated tropical transfer smooths this curvature.\n\n**Proof Strategy**: Define tropical sectional curvature as `κ(x) = max_y K(x,y) - min_y K(x,y)`. Show that one step of tropical matrix self-convolution `K' = tropMatMul K K` satisfies `max_x κ'(x) ≤ max_x κ(x)`. This is a contraction estimate in the sup-norm of curvature. Use the nonexpansiveness theorem (tropicalEinsteinStep is nonexpansive) as a model.\n\n**Cross-Domain Connections**: Ollivier-Ricci curvature on graphs, optimal ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d45cf758",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:03:58.400236+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "3. Idempotent Black Hole Entropy via Counting Tropical Geodesics",
+    "description": "**Hypothesis**: The number of distinct tropical geodesics (min-cost paths) from the boundary to the horizon in a finite tropical spacetime provides a combinatorial entropy that scales like the horizon \"area\" (the number of horizon-adjacent vertices).\n\n**Proof Strategy**: On a layered graph with n shells and k angular vertices per shell, define the horizon as the fixed-point shell of radialUpdate. Count the number of distinct min-cost paths from the outermost shell to the horizon. Show this count equals k^(n_horizon) where n_horizon is the number of horizon vertices, giving S = n_horizon · log k, analogous to Bekenstein-Hawking entropy S = A/(4G).\n\n**Cross-Domain Connections**: Bekenstein-Hawking entropy, loop quantum gravity state counting, tropical enumerative geometry, polymer models of ",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d45cf758",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:03:58.411318+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "4. Tropical Einstein Constraint Equations as Min-Plus Feasibility",
+    "description": "**Hypothesis**: The initial data for the tropical Einstein evolution (a function u₀ : α → ℝ satisfying certain min-plus inequalities) can be characterized as solutions to a tropical linear programming problem. The constraint surface is a tropical polyhedron, and the moduli space of valid initial data is a tropical convex set.\n\n**Proof Strategy**: Define tropical constraint equations as inequalities of the form `tropicalEinsteinStep K u₀ ≤ u₀` (sub-solution condition) or `tropicalEinsteinStep K u₀ = u₀` (fixed-point condition). Show the set of sub-solutions is closed under tropical (min) superposition and under addition of nonneg constants. This makes it a tropical convex cone. Use the tropicalEvolution_nonincreasing theorem to show that sub-solutions generate convergent evolutions.\n\n**Cros",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d45cf758",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:03:58.422216+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "5. Quantum-to-Tropical Semiclassical Comparison Theorem",
+    "description": "**Hypothesis**: For a finite quantum system with Hamiltonian H on ℂ^n, the tropical limit ℏ → 0 of the path integral kernel K(x,y;t) = ⟨x|e^{-iHt/ℏ}|y⟩ converges (in a Maslov dequantization sense) to the tropical propagator tropicalEvolution. Formally, -ℏ log |K_ℏ(x,y;t)| → tropicalEvolution W t δ_y (x) as ℏ → 0, where W is the classical action matrix.\n\n**Proof Strategy**: For finite-dimensional matrices, use the explicit formula for matrix exponentials and the Laplace method for sums (finite analogue of the stationary phase approximation). The key estimate is that for a sum S = Σ_j exp(f_j/ℏ), we have -ℏ log S → max_j f_j as ℏ → 0. This is the Maslov dequantization theorem. Apply it entry-by-entry to the transfer matrix.\n\n**Cross-Domain Connections**: Maslov dequantization, WKB approximat",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "EML",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d45cf758",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:03:58.434664+00:00"
   }
 ]

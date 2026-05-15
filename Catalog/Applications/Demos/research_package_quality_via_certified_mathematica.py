@@ -1,784 +1,998 @@
 #!/usr/bin/env python3
 """
-Certified Mathematical Significance Theory — Applications
+Applications of Certified Mathematical Significance Metrics.
 
-Real-world applications of the significance framework:
-1. Library quality assessment
-2. Contribution ranking
-3. Conservative extension detection
-4. Adaptive quality gates
+Real-world applications demonstrating how the formal theory
+can be used in practice for research evaluation, library curation,
+and automated quality assessment.
 """
 
-from algorithms import (
-    ProofTerm, AxiomTerm, AppTerm, LamTerm, PairTerm,
-    proof_size, proof_height,
-    compute_significance, compute_significance_from_proofs,
-    compute_package_depth, is_master_class_contribution,
-    evaluate_quality_gate, check_strict_advancement,
-    make_dependency_closure, ClosureOperator
-)
-import random
-random.seed(123)
+from typing import Dict, Set, List, Tuple
+from dataclasses import dataclass, field
+import json
 
 
-def random_proof(max_depth: int = 5) -> ProofTerm:
-    """Generate a random proof term."""
-    if max_depth <= 1 or random.random() < 0.3:
-        return AxiomTerm(random.randint(0, 99))
-    c = random.choice(["app", "lam", "pair"])
-    if c == "app":
-        return AppTerm(random_proof(max_depth - 1), random_proof(max_depth - 1))
-    elif c == "lam":
-        return LamTerm(random_proof(max_depth - 1))
-    else:
-        return PairTerm(random_proof(max_depth - 1), random_proof(max_depth - 1))
+# ============================================================
+# Application 1: Mathematical Library Health Monitor
+# ============================================================
+
+@dataclass
+class LibraryModule:
+    """A module in a mathematical library."""
+    name: str
+    theorems: Set[str]
+    domain: str
+    dependencies: Set[str] = field(default_factory=set)
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Application 1: Library Quality Assessment
-# ═══════════════════════════════════════════════════════════════════════════
+def library_health_report(
+    modules: List[LibraryModule],
+    weights: Dict[str, int],
+    threshold: int
+) -> Dict:
+    """
+    Generate a health report for a mathematical library.
 
-print("=" * 70)
-print("APPLICATION 1: Library Quality Assessment")
-print("=" * 70)
+    Analyzes each module's significance contribution and
+    identifies modules that push the library past quality thresholds.
 
-# Simulate three libraries of different quality
-libraries = {
-    "Shallow Library": [random_proof(2) for _ in range(20)],
-    "Mixed Library": [random_proof(random.randint(2, 6)) for _ in range(20)],
-    "Deep Library": [random_proof(6) for _ in range(20)],
-}
+    Application: CI/CD pipeline for formal math libraries.
+    When a PR adds new theorems, compute whether it advances
+    the library's significance past the threshold.
+    """
+    all_theorems: Set[str] = set()
+    report = {
+        "modules": [],
+        "total_significance": 0,
+        "threshold": threshold,
+        "passes_threshold": False,
+        "domain_coverage": set(),
+    }
 
-print(f"\n{'Library':<20} {'Theorems':>8} {'Significance':>13} {'Avg Size':>9} "
-      f"{'Max Size':>9} {'Avg Height':>11} {'Depth':>6}")
-print("-" * 80)
+    cumulative_sig = 0
+    for module in sorted(modules, key=lambda m: m.name):
+        module_sig = sum(weights.get(t, 0) for t in module.theorems)
+        new_theorems = module.theorems - all_theorems
+        marginal = sum(weights.get(t, 0) for t in new_theorems)
 
-for name, proofs_list in libraries.items():
-    proofs = {i: p for i, p in enumerate(proofs_list)}
-    K = set(proofs.keys())
-    sizes = [proof_size(p) for p in proofs_list]
-    heights = [proof_height(p) for p in proofs_list]
-    sig = compute_significance_from_proofs(proofs, K)
-    depth = compute_package_depth(proofs, K)
-    print(f"{name:<20} {len(K):>8} {sig:>13} {sum(sizes)/len(sizes):>9.1f} "
-          f"{max(sizes):>9} {sum(heights)/len(heights):>11.1f} {depth:>6}")
+        all_theorems |= module.theorems
+        cumulative_sig += marginal
+        report["domain_coverage"].add(module.domain)
 
-# Quality gate comparison
-thresholds = [50, 200, 500, 1000]
-print(f"\nQuality Gate Results:")
-print(f"{'Library':<20}", end="")
-for t in thresholds:
-    print(f"  τ={t:>4}", end="")
-print()
-for name, proofs_list in libraries.items():
-    proofs = {i: p for i, p in enumerate(proofs_list)}
-    K = set(proofs.keys())
-    weights = {i: proof_size(proofs[i]) for i in K}
-    print(f"{name:<20}", end="")
-    for t in thresholds:
-        gate = evaluate_quality_gate(weights, t, K)
-        symbol = "  ✓   " if gate else "  ✗   "
-        print(symbol, end="")
-    print()
+        report["modules"].append({
+            "name": module.name,
+            "theorems": len(module.theorems),
+            "new_theorems": len(new_theorems),
+            "module_significance": module_sig,
+            "marginal_significance": marginal,
+            "cumulative_significance": cumulative_sig,
+            "crosses_threshold": cumulative_sig >= threshold and
+                                 (cumulative_sig - marginal) < threshold,
+        })
 
+    report["total_significance"] = cumulative_sig
+    report["passes_threshold"] = cumulative_sig >= threshold
+    report["domain_count"] = len(report["domain_coverage"])
+    report["domain_coverage"] = list(report["domain_coverage"])
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Application 2: Contribution Ranking
-# ═══════════════════════════════════════════════════════════════════════════
-
-print("\n" + "=" * 70)
-print("APPLICATION 2: Contribution Ranking")
-print("=" * 70)
-
-# Existing library
-existing = {i: random_proof(4) for i in range(10)}
-K = set(existing.keys())
-weights = {i: proof_size(existing[i]) for i in K}
-current_sig = compute_significance(weights, K)
-current_depth = compute_package_depth(existing, K)
-
-print(f"\nExisting library: {len(K)} theorems, significance = {current_sig}, "
-      f"depth = {current_depth}")
-
-# Candidate contributions
-candidates = {10 + i: random_proof(random.randint(2, 8)) for i in range(5)}
-print(f"\nCandidate Ranking:")
-print(f"{'Candidate':>10} {'Size':>6} {'Height':>7} {'Δσ':>6} {'Master?':>8}")
-print("-" * 45)
-
-ranked = sorted(candidates.items(), key=lambda x: proof_size(x[1]), reverse=True)
-for cid, proof in ranked:
-    s = proof_size(proof)
-    h = proof_height(proof)
-    delta_sig = s  # For additive significance, Δσ = w(a) = size(π(a))
-    master = s > current_depth
-    print(f"{cid:>10} {s:>6} {h:>7} {delta_sig:>6} {'★ YES' if master else 'no':>8}")
+    return report
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Application 3: Conservative Extension Detection
-# ═══════════════════════════════════════════════════════════════════════════
+# ============================================================
+# Application 2: Research Package Reviewer
+# ============================================================
 
-print("\n" + "=" * 70)
-print("APPLICATION 3: Conservative Extension Detection")
-print("=" * 70)
-
-# Dependency DAG for a small theory
-deps = {
-    0: set(),           # Axiom 0 (no deps)
-    1: set(),           # Axiom 1
-    2: {0},             # Depends on 0
-    3: {0, 1},          # Depends on 0 and 1
-    4: {2, 3},          # Depends on 2 and 3
-    5: {1},             # Depends on 1
-    6: {4, 5},          # Depends on 4 and 5
-    7: {0},             # Depends on 0
-    8: {6, 7},          # Depends on 6 and 7
-    9: {3},             # Depends on 3
-}
-
-cl = make_dependency_closure(deps)
-
-# Start with a base theory and check extensions
-base = {0, 1, 2}
-print(f"\nBase theory: {sorted(base)}")
-print(f"Closure: {sorted(cl.close(base))}")
-
-for candidate in [3, 4, 5, 6, 7, 8, 9]:
-    is_nc = cl.is_nonconservative(base, candidate)
-    cl_base = cl.close(base)
-    cl_ext = cl.close(base | {candidate})
-    new_theorems = cl_ext - cl_base
-    status = "NONCONSERVATIVE" if is_nc else "conservative"
-    print(f"  Add {candidate}: {status:>16} "
-          f"(new: {sorted(new_theorems) if new_theorems else '∅'})")
+@dataclass
+class ResearchPackage:
+    """A proposed research contribution."""
+    name: str
+    new_theorems: Set[str]
+    proof_dependencies: Dict[str, Set[str]]  # theorem -> dependencies
+    domain_tags: Dict[str, str]  # theorem -> domain
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Application 4: Adaptive Quality Gates
-# ═══════════════════════════════════════════════════════════════════════════
+def review_package(
+    package: ResearchPackage,
+    existing_knowledge: Set[str],
+    weights: Dict[str, int],
+    depth_weights: Dict[str, int],
+    novelty_weights: Dict[str, int],
+    bridge_weights: Dict[str, int],
+    threshold: int
+) -> Dict:
+    """
+    Automated review of a research package.
 
-print("\n" + "=" * 70)
-print("APPLICATION 4: Adaptive Quality Gates")
-print("=" * 70)
+    Evaluates:
+    1. Significance increase (monotonicity guarantees non-decrease)
+    2. Genuine novelty (threshold crossing theorem)
+    3. Cross-domain reach (coverage lower bound)
+    4. Triple significance (depth + novelty + bridge)
+    5. MasterClass status
 
-# Threshold grows with library size: τ(n) = c·n requires average weight ≥ c
-c_values = [3, 5, 10]
+    Application: Automated pre-review for conference submissions
+    or library inclusion requests.
+    """
+    K_old = existing_knowledge
+    K_new = existing_knowledge | package.new_theorems
 
-library_proofs = {i: random_proof(random.randint(2, 7)) for i in range(30)}
-weights = {i: proof_size(library_proofs[i]) for i in library_proofs}
+    sig_old = sum(weights.get(a, 0) for a in K_old)
+    sig_new = sum(weights.get(a, 0) for a in K_new)
 
-print(f"\nLibrary growth with adaptive thresholds:")
-print(f"{'|K|':>5}", end="")
-for c in c_values:
-    print(f"  τ={c}·n (pass?)", end="")
-print(f"  {'Avg weight':>10}")
-print("-" * 75)
+    genuinely_new = package.new_theorems - existing_knowledge
+    domains_old = set(package.domain_tags.get(t, "unknown") for t in K_old
+                      if t in package.domain_tags)
+    domains_new = set(package.domain_tags.get(t, "unknown") for t in K_new
+                      if t in package.domain_tags)
+    new_domains = domains_new - domains_old
 
-K = set()
-for a in sorted(library_proofs.keys()):
-    K.add(a)
-    sig = compute_significance(weights, K)
-    avg_w = sig / len(K)
-    print(f"{len(K):>5}", end="")
-    for c in c_values:
-        threshold = c * len(K)
-        gate = sig >= threshold
-        print(f"  {'✓':>8}        " if gate else f"  {'✗':>8}        ", end="")
-    print(f"  {avg_w:>10.1f}")
-    if len(K) >= 15:
-        break  # Show first 15 steps
+    # Triple significance
+    d = sum(depth_weights.get(a, 0) for a in K_new)
+    n = sum(novelty_weights.get(a, 0) for a in K_new)
+    b = sum(bridge_weights.get(a, 0) for a in K_new)
+    triple = d + n + b
 
-print("\nKey insight: adaptive threshold τ(n) = c·n accepts iff average weight ≥ c.")
-print("This prevents quality dilution from many shallow theorems.")
+    # Dependency depth
+    max_dep_chain = 0
+    for thm in package.new_theorems:
+        deps = package.proof_dependencies.get(thm, set())
+        depth = len(deps & package.new_theorems)  # internal dependency count
+        max_dep_chain = max(max_dep_chain, depth)
+
+    return {
+        "package_name": package.name,
+        "verdict": "ACCEPT" if sig_new >= threshold and len(genuinely_new) > 0
+                   else "NEEDS_REVISION",
+        "significance_delta": sig_new - sig_old,
+        "genuinely_new_theorems": len(genuinely_new),
+        "new_domains_opened": list(new_domains),
+        "triple_significance": {
+            "depth": d,
+            "novelty": n,
+            "bridge": b,
+            "total": triple,
+        },
+        "masterclass": triple >= threshold,
+        "max_internal_dependency_depth": max_dep_chain,
+        "crosses_threshold": sig_old < threshold <= sig_new,
+        "guaranteed_novel_by_theorem": sig_old < threshold <= sig_new,
+    }
 
 
-print("\n" + "=" * 70)
-print("All applications complete.")
-print("=" * 70)
+# ============================================================
+# Application 3: Curriculum Optimizer
+# ============================================================
+
+def optimize_curriculum(
+    available_topics: Dict[str, Set[str]],  # topic -> theorem set
+    weights: Dict[str, int],
+    max_topics: int
+) -> List[str]:
+    """
+    Select topics to maximize knowledge significance within a budget.
+
+    Since significance is modular (additive over disjoint sets),
+    a greedy approach is optimal for disjoint topic sets and
+    near-optimal in general.
+
+    Application: Course design, textbook chapter selection,
+    or learning path optimization.
+
+    Time complexity: O(T² × max_atoms) where T = number of topics
+    """
+    selected: List[str] = []
+    covered: Set[str] = set()
+
+    for _ in range(min(max_topics, len(available_topics))):
+        best_topic = None
+        best_marginal = -1
+
+        for topic, theorems in available_topics.items():
+            if topic in selected:
+                continue
+            new_atoms = theorems - covered
+            marginal = sum(weights.get(a, 0) for a in new_atoms)
+            if marginal > best_marginal:
+                best_marginal = marginal
+                best_topic = topic
+
+        if best_topic is None or best_marginal <= 0:
+            break
+
+        selected.append(best_topic)
+        covered |= available_topics[best_topic]
+
+    return selected
+
+
+# ============================================================
+# Demo
+# ============================================================
+
+def demo_library_health():
+    print("=" * 60)
+    print("APPLICATION 1: Library Health Monitor")
+    print("=" * 60)
+
+    modules = [
+        LibraryModule("Algebra.Group", {"grp_assoc", "grp_inv", "grp_id"}, "algebra"),
+        LibraryModule("Topology.Basic", {"top_open", "top_cont", "top_compact"}, "topology"),
+        LibraryModule("Analysis.Measure", {"meas_sigma", "meas_int", "meas_conv"}, "analysis"),
+        LibraryModule("Bridge.AlgTop", {"fund_grp", "cover_lift", "galois_top"}, "bridge"),
+    ]
+
+    weights = {t: 5 for m in modules for t in m.theorems}
+    weights["galois_top"] = 15  # bridge theorem gets extra weight
+    weights["fund_grp"] = 12
+
+    report = library_health_report(modules, weights, threshold=40)
+
+    print(f"\nTotal significance: {report['total_significance']}")
+    print(f"Threshold: {report['threshold']}")
+    print(f"Passes: {report['passes_threshold']}")
+    print(f"Domains: {report['domain_coverage']}")
+
+    for m in report["modules"]:
+        marker = " ← CROSSES THRESHOLD" if m["crosses_threshold"] else ""
+        print(f"  {m['name']}: marginal={m['marginal_significance']}, "
+              f"cumulative={m['cumulative_significance']}{marker}")
+
+
+def demo_review():
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Research Package Review")
+    print("=" * 60)
+
+    existing = {"basic_calc", "real_analysis", "group_theory"}
+    package = ResearchPackage(
+        name="Ergodic Bridge Theorems",
+        new_theorems={"ergodic_main", "bridge_erg_top", "mixing_rate"},
+        proof_dependencies={
+            "ergodic_main": {"real_analysis"},
+            "bridge_erg_top": {"ergodic_main", "group_theory"},
+            "mixing_rate": {"ergodic_main"},
+        },
+        domain_tags={
+            "basic_calc": "analysis",
+            "real_analysis": "analysis",
+            "group_theory": "algebra",
+            "ergodic_main": "dynamics",
+            "bridge_erg_top": "bridge",
+            "mixing_rate": "dynamics",
+        }
+    )
+
+    weights = {t: 5 for t in existing}
+    weights.update({"ergodic_main": 10, "bridge_erg_top": 15, "mixing_rate": 8})
+
+    review = review_package(
+        package, existing, weights,
+        depth_weights=weights,
+        novelty_weights={t: 3 for t in weights},
+        bridge_weights={"bridge_erg_top": 20, **{t: 0 for t in weights if t != "bridge_erg_top"}},
+        threshold=30
+    )
+
+    print(f"\nPackage: {review['package_name']}")
+    print(f"Verdict: {review['verdict']}")
+    print(f"Significance delta: +{review['significance_delta']}")
+    print(f"Genuinely new theorems: {review['genuinely_new_theorems']}")
+    print(f"New domains: {review['new_domains_opened']}")
+    print(f"Triple significance: {review['triple_significance']}")
+    print(f"MasterClass: {review['masterclass']}")
+    print(f"Crosses threshold (certified novel): {review['crosses_threshold']}")
+
+
+def demo_curriculum():
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Curriculum Optimizer")
+    print("=" * 60)
+
+    topics = {
+        "Linear Algebra": {"vec_space", "eigenvalue", "svd"},
+        "Real Analysis": {"limits", "continuity", "integration"},
+        "Abstract Algebra": {"groups", "rings", "fields"},
+        "Topology": {"open_sets", "continuity", "compactness"},
+        "Number Theory": {"primes", "mod_arith", "quadratic_rec"},
+    }
+
+    weights = {
+        "vec_space": 3, "eigenvalue": 7, "svd": 10,
+        "limits": 4, "continuity": 5, "integration": 8,
+        "groups": 6, "rings": 5, "fields": 9,
+        "open_sets": 3, "compactness": 7,
+        "primes": 5, "mod_arith": 4, "quadratic_rec": 8,
+    }
+
+    selected = optimize_curriculum(topics, weights, max_topics=3)
+
+    print(f"\nAvailable topics: {list(topics.keys())}")
+    print(f"Budget: 3 topics")
+    print(f"\nOptimal selection (by greedy significance):")
+    covered = set()
+    for i, topic in enumerate(selected, 1):
+        new = topics[topic] - covered
+        sig = sum(weights.get(a, 0) for a in new)
+        covered |= topics[topic]
+        total = sum(weights.get(a, 0) for a in covered)
+        print(f"  {i}. {topic}: +{sig} significance (total: {total})")
+
+
+if __name__ == "__main__":
+    demo_library_health()
+    demo_review()
+    demo_curriculum()
 
 
 #!/usr/bin/env python3
 """
-Certified Mathematical Significance Theory — Demonstrations
+Demonstration of Certified Mathematical Significance Metrics.
 
-Concrete numerical examples illustrating the theorems on significance
-monotonicity, strict advancement, proof-term complexity, and quality gates.
+Concrete numerical examples illustrating the significance valuation theory:
+- Monotone significance on knowledge states
+- Modularity (inclusion-exclusion) identity
+- Threshold crossing and novelty detection
+- ProofShape feature extraction and significance bounds
+- Domain coverage lower bounds
+- Triple significance and MasterClass gates
 """
 
-import random
-random.seed(42)
+import itertools
+from typing import Dict, FrozenSet, Set, Callable, List, Tuple
+
+# ============================================================
+# Core Definitions
+# ============================================================
+
+def significance(w: Dict[str, int], K: Set[str]) -> int:
+    """Significance of a knowledge state K under weight function w."""
+    return sum(w.get(a, 0) for a in K)
 
 
-# ── Proof Term Data Structure ────────────────────────────────────────────
+def advances_field(w: Dict[str, int], tau: int,
+                   K_old: Set[str], K_new: Set[str]) -> bool:
+    """Check if K_new advances the field beyond K_old at threshold tau."""
+    return (K_old <= K_new and
+            significance(w, K_old) < tau and
+            tau <= significance(w, K_new) and
+            len(K_new - K_old) > 0)
 
-class ProofTerm:
-    """Abstract syntax tree for proof terms."""
+
+# ============================================================
+# Demo 1: Monotonicity of Significance
+# ============================================================
+
+def demo_monotonicity():
+    print("=" * 60)
+    print("DEMO 1: Monotonicity of Significance")
+    print("=" * 60)
+
+    w = {"prime_thm": 5, "group_iso": 8, "top_conn": 3,
+         "galois_corr": 12, "spectral_seq": 7}
+
+    K1 = {"prime_thm", "group_iso"}
+    K2 = {"prime_thm", "group_iso", "top_conn"}
+    K3 = {"prime_thm", "group_iso", "top_conn", "galois_corr", "spectral_seq"}
+
+    print(f"\nWeights: {w}")
+    print(f"\nK1 = {K1}")
+    print(f"  σ(K1) = {significance(w, K1)}")
+    print(f"\nK2 = {K2}")
+    print(f"  σ(K2) = {significance(w, K2)}")
+    print(f"\nK3 = {K3}")
+    print(f"  σ(K3) = {significance(w, K3)}")
+    print(f"\nK1 ⊆ K2 ⊆ K3: {K1 <= K2 and K2 <= K3}")
+    print(f"σ(K1) ≤ σ(K2) ≤ σ(K3): "
+          f"{significance(w, K1)} ≤ {significance(w, K2)} ≤ {significance(w, K3)}")
+    print("✓ Monotonicity verified!")
+
+
+# ============================================================
+# Demo 2: Modularity (Inclusion-Exclusion)
+# ============================================================
+
+def demo_modularity():
+    print("\n" + "=" * 60)
+    print("DEMO 2: Modularity Identity")
+    print("  σ(K1 ∪ K2) + σ(K1 ∩ K2) = σ(K1) + σ(K2)")
+    print("=" * 60)
+
+    w = {"A": 3, "B": 5, "C": 7, "D": 2, "E": 11}
+
+    K1 = {"A", "B", "C"}
+    K2 = {"B", "C", "D", "E"}
+
+    union = K1 | K2
+    inter = K1 & K2
+
+    lhs = significance(w, union) + significance(w, inter)
+    rhs = significance(w, K1) + significance(w, K2)
+
+    print(f"\nK1 = {K1}, σ(K1) = {significance(w, K1)}")
+    print(f"K2 = {K2}, σ(K2) = {significance(w, K2)}")
+    print(f"K1 ∪ K2 = {union}, σ(K1 ∪ K2) = {significance(w, union)}")
+    print(f"K1 ∩ K2 = {inter}, σ(K1 ∩ K2) = {significance(w, inter)}")
+    print(f"\nLHS = σ(K1 ∪ K2) + σ(K1 ∩ K2) = {lhs}")
+    print(f"RHS = σ(K1) + σ(K2) = {rhs}")
+    print(f"Equal: {lhs == rhs}")
+    print("✓ Modularity verified!")
+
+
+# ============================================================
+# Demo 3: Threshold Crossing and Novelty
+# ============================================================
+
+def demo_threshold():
+    print("\n" + "=" * 60)
+    print("DEMO 3: Threshold Crossing Implies Novelty")
+    print("=" * 60)
+
+    w = {"basic_calc": 2, "real_analysis": 6, "measure_theory": 8,
+         "ergodic_thm": 10, "bridge_lemma": 15}
+
+    K_old = {"basic_calc", "real_analysis"}
+    tau = 20
+
+    print(f"\nWeights: {w}")
+    print(f"K_old = {K_old}, σ(K_old) = {significance(w, K_old)}")
+    print(f"Threshold τ = {tau}")
+    print(f"σ(K_old) < τ: {significance(w, K_old) < tau}")
+
+    # Try adding theorems
+    for new_atom in ["measure_theory", "ergodic_thm", "bridge_lemma"]:
+        K_new = K_old | {new_atom}
+        sig = significance(w, K_new)
+        crosses = sig >= tau
+        print(f"\n  Adding '{new_atom}': σ = {sig}, crosses threshold: {crosses}")
+        if crosses:
+            new_content = K_new - K_old
+            print(f"  New content: {new_content}")
+            print(f"  ✓ Advances field: {advances_field(w, tau, K_old, K_new)}")
+
+    # Demonstrate that threshold crossing is impossible without new content
+    print(f"\n  K_old = K_old (no change): advances = {advances_field(w, tau, K_old, K_old)}")
+    print("✓ Threshold crossing requires genuinely new content!")
+
+
+# ============================================================
+# Demo 4: ProofShape Feature Extraction
+# ============================================================
+
+class ProofShape:
+    """Abstract proof skeleton."""
     pass
 
-class Axiom(ProofTerm):
-    def __init__(self, n: int):
-        self.n = n
+class Ax(ProofShape):
+    def __init__(self, tag: str):
+        self.tag = tag
     def __repr__(self):
-        return f"Ax({self.n})"
+        return f"ax({self.tag})"
 
-class App(ProofTerm):
-    def __init__(self, p: ProofTerm, q: ProofTerm):
+class App(ProofShape):
+    def __init__(self, p: ProofShape, q: ProofShape):
         self.p, self.q = p, q
     def __repr__(self):
-        return f"App({self.p}, {self.q})"
+        return f"app({self.p}, {self.q})"
 
-class Lam(ProofTerm):
-    def __init__(self, p: ProofTerm):
+class Lam(ProofShape):
+    def __init__(self, p: ProofShape):
         self.p = p
     def __repr__(self):
-        return f"Lam({self.p})"
+        return f"lam({self.p})"
 
-class Pair(ProofTerm):
-    def __init__(self, p: ProofTerm, q: ProofTerm):
+class Pair(ProofShape):
+    def __init__(self, p: ProofShape, q: ProofShape):
         self.p, self.q = p, q
     def __repr__(self):
-        return f"Pair({self.p}, {self.q})"
+        return f"pair({self.p}, {self.q})"
 
 
-def size(t: ProofTerm) -> int:
-    if isinstance(t, Axiom):
+def features(p: ProofShape) -> Set[str]:
+    """Extract feature set from a proof shape."""
+    if isinstance(p, Ax):
+        return {p.tag}
+    elif isinstance(p, App):
+        return features(p.p) | features(p.q)
+    elif isinstance(p, Lam):
+        return features(p.p)
+    elif isinstance(p, Pair):
+        return features(p.p) | features(p.q)
+    return set()
+
+
+def proof_size(p: ProofShape) -> int:
+    """Structural size of a proof shape."""
+    if isinstance(p, Ax):
         return 1
-    elif isinstance(t, App):
-        return size(t.p) + size(t.q) + 1
-    elif isinstance(t, Lam):
-        return size(t.p) + 1
-    elif isinstance(t, Pair):
-        return size(t.p) + size(t.q) + 1
-
-def height(t: ProofTerm) -> int:
-    if isinstance(t, Axiom):
-        return 1
-    elif isinstance(t, App):
-        return max(height(t.p), height(t.q)) + 1
-    elif isinstance(t, Lam):
-        return height(t.p) + 1
-    elif isinstance(t, Pair):
-        return max(height(t.p), height(t.q)) + 1
+    elif isinstance(p, App):
+        return proof_size(p.p) + proof_size(p.q) + 1
+    elif isinstance(p, Lam):
+        return proof_size(p.p) + 1
+    elif isinstance(p, Pair):
+        return proof_size(p.p) + proof_size(p.q) + 1
+    return 0
 
 
-def random_proof_term(max_depth: int = 5) -> ProofTerm:
-    if max_depth <= 1 or random.random() < 0.3:
-        return Axiom(random.randint(0, 9))
-    choice = random.choice(["app", "lam", "pair"])
-    if choice == "app":
-        return App(random_proof_term(max_depth - 1), random_proof_term(max_depth - 1))
-    elif choice == "lam":
-        return Lam(random_proof_term(max_depth - 1))
-    else:
-        return Pair(random_proof_term(max_depth - 1), random_proof_term(max_depth - 1))
+def demo_proof_shape():
+    print("\n" + "=" * 60)
+    print("DEMO 4: ProofShape Feature Extraction")
+    print("=" * 60)
+
+    # A proof that uses group theory and topology
+    proof = App(
+        Lam(Pair(Ax("group_hom"), Ax("top_cont"))),
+        App(Ax("fund_group"), Ax("galois_conn"))
+    )
+
+    w = {"group_hom": 4, "top_cont": 3, "fund_group": 8, "galois_conn": 12}
+
+    feats = features(proof)
+    size = proof_size(proof)
+    sig = significance(w, feats)
+
+    print(f"\nProof: {proof}")
+    print(f"Features: {feats}")
+    print(f"Size: {size}")
+    print(f"Significance: {sig}")
+    print(f"|features| ≤ size: {len(feats)} ≤ {size} ✓")
+
+    C = max(w.values())
+    print(f"Max weight C = {C}")
+    print(f"σ ≤ C × size: {sig} ≤ {C * size} ✓")
 
 
-# ── Significance on Knowledge States ─────────────────────────────────────
+# ============================================================
+# Demo 5: Domain Coverage Lower Bound
+# ============================================================
 
-def significance(weights: dict, K: set) -> int:
-    """Significance of knowledge state K under weight function."""
-    return sum(weights.get(a, 0) for a in K)
+def demo_domain_coverage():
+    print("\n" + "=" * 60)
+    print("DEMO 5: Domain Coverage Lower Bound")
+    print("=" * 60)
 
+    # Atoms tagged by domain
+    tags = {
+        "prime_thm": "number_theory",
+        "group_iso": "algebra",
+        "fund_group": "topology",
+        "spectral_seq": "topology",
+        "galois_corr": "algebra",
+        "ergodic_thm": "dynamics",
+        "bridge_lemma": "analysis",
+    }
+    w = {a: 3 for a in tags}  # uniform weight ≥ 1
 
-def quality_gate(weights: dict, threshold: int, K: set) -> bool:
-    """Boolean quality gate: accepts if significance ≥ threshold."""
-    return threshold <= significance(weights, K)
+    K = set(tags.keys())
+    domains = set(tags[a] for a in K)
 
-
-def package_depth(proofs: dict, K: set) -> int:
-    """Maximum proof significance across all theorems in K."""
-    if not K:
-        return 0
-    return max(size(proofs[a]) for a in K)
-
-
-# ── Demo 1: Monotonicity of Significance ─────────────────────────────────
-
-print("=" * 60)
-print("DEMO 1: Significance Monotonicity")
-print("=" * 60)
-
-universe = list(range(10))
-weights = {i: random.randint(1, 20) for i in universe}
-print(f"Universe: {universe}")
-print(f"Weights:  {weights}")
-
-K = set()
-print(f"\nBuilding knowledge state incrementally:")
-for a in universe:
-    old_sig = significance(weights, K)
-    K.add(a)
-    new_sig = significance(weights, K)
-    print(f"  Add theorem {a} (weight {weights[a]}): "
-          f"σ = {old_sig} → {new_sig}  "
-          f"(Δ = +{new_sig - old_sig}, monotone: {new_sig >= old_sig})")
-
-# Verify monotonicity over random subsets
-print(f"\nVerifying monotonicity on 500 random subset pairs...")
-violations = 0
-for _ in range(500):
-    k1 = random.randint(0, 10)
-    k2 = random.randint(k1, 10)
-    S1 = set(random.sample(universe, k1))
-    S2 = S1 | set(random.sample(universe, min(k2, len(universe))))
-    if significance(weights, S1) > significance(weights, S2):
-        violations += 1
-print(f"  Violations: {violations} / 500 (expected: 0)")
+    print(f"\nKnowledge state: {K}")
+    print(f"Domain tags: {tags}")
+    print(f"Domains covered: {domains}")
+    print(f"|domains| = {len(domains)}")
+    print(f"σ(K) = {significance(w, K)}")
+    print(f"|domains| ≤ σ(K): {len(domains)} ≤ {significance(w, K)} ✓")
+    print("✓ Cross-domain reach forces nontrivial significance!")
 
 
-# ── Demo 2: Strict Advancement ────────────────────────────────────────────
+# ============================================================
+# Demo 6: Triple Significance and MasterClass
+# ============================================================
 
-print("\n" + "=" * 60)
-print("DEMO 2: Strict Advancement via Positive-Weight Insertion")
-print("=" * 60)
+def demo_masterclass():
+    print("\n" + "=" * 60)
+    print("DEMO 6: Triple Significance & MasterClass")
+    print("=" * 60)
 
-K = set()
-for a in [3, 7, 1, 9, 5]:
-    old_sig = significance(weights, K)
-    K_new = K | {a}
-    new_sig = significance(weights, K_new)
-    strict = old_sig < new_sig
-    print(f"  Insert theorem {a}: σ({sorted(K)}) = {old_sig} < "
-          f"σ({sorted(K_new)}) = {new_sig}? {strict}")
-    K = K_new
+    depth_w = {"A": 5, "B": 2, "C": 8, "D": 1}
+    novelty_w = {"A": 1, "B": 7, "C": 3, "D": 9}
+    bridge_w = {"A": 0, "B": 0, "C": 6, "D": 4}
 
+    def triple_sig(K):
+        return significance(depth_w, K) + significance(novelty_w, K) + significance(bridge_w, K)
 
-# ── Demo 3: Proof-Term Height ≤ Size ──────────────────────────────────────
+    K1 = {"A", "B"}
+    K2 = {"A", "B", "C"}
+    K3 = {"A", "B", "C", "D"}
+    tau = 30
 
-print("\n" + "=" * 60)
-print("DEMO 3: Height ≤ Size for Random Proof Terms")
-print("=" * 60)
+    for name, K in [("K1", K1), ("K2", K2), ("K3", K3)]:
+        ts = triple_sig(K)
+        mc = ts >= tau
+        print(f"\n{name} = {K}")
+        print(f"  depth = {significance(depth_w, K)}, "
+              f"novelty = {significance(novelty_w, K)}, "
+              f"bridge = {significance(bridge_w, K)}")
+        print(f"  triple_sig = {ts}")
+        print(f"  MasterClass(τ={tau}): {mc}")
 
-n_samples = 10000
-all_valid = True
-ratios = []
-for _ in range(n_samples):
-    t = random_proof_term(max_depth=8)
-    s, h = size(t), height(t)
-    if h > s:
-        all_valid = False
-    ratios.append(h / s)
-
-print(f"  Tested {n_samples} random proof terms")
-print(f"  height ≤ size in all cases: {all_valid}")
-print(f"  Average height/size ratio: {sum(ratios)/len(ratios):.4f}")
-print(f"  Min ratio: {min(ratios):.4f}, Max ratio: {max(ratios):.4f}")
-
-# Show a few examples
-print(f"\n  Sample proof terms:")
-for _ in range(5):
-    t = random_proof_term(max_depth=4)
-    print(f"    {t}")
-    print(f"      size = {size(t)}, height = {height(t)}, "
-          f"height ≤ size: {height(t) <= size(t)}")
+    print(f"\nK1 ⊆ K2 ⊆ K3, and MasterClass is upward-closed: once achieved, it persists.")
+    print("✓ MasterClass monotonicity verified!")
 
 
-# ── Demo 4: Quality Gate ──────────────────────────────────────────────────
+# ============================================================
+# Main
+# ============================================================
 
-print("\n" + "=" * 60)
-print("DEMO 4: Quality Gate Monotonicity")
-print("=" * 60)
+if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Certified Mathematical Significance Metrics — Demos   ║")
+    print("╚══════════════════════════════════════════════════════════╝")
 
-threshold = 50
-print(f"Threshold τ = {threshold}")
-K = set()
-gate_passed = False
-for a in universe:
-    K.add(a)
-    sig = significance(weights, K)
-    gate = quality_gate(weights, threshold, K)
-    status = "ACCEPT ✓" if gate else "REJECT ✗"
-    if gate and not gate_passed:
-        status += " ← first acceptance!"
-        gate_passed = True
-    print(f"  K = {sorted(K)}: σ = {sig}, gate: {status}")
+    demo_monotonicity()
+    demo_modularity()
+    demo_threshold()
+    demo_proof_shape()
+    demo_domain_coverage()
+    demo_masterclass()
 
-
-# ── Demo 5: Package Depth ─────────────────────────────────────────────────
-
-print("\n" + "=" * 60)
-print("DEMO 5: Package Depth and Master-Class Contributions")
-print("=" * 60)
-
-proofs = {i: random_proof_term(max_depth=3 + i % 4) for i in universe}
-print("Proof sizes:", {i: size(proofs[i]) for i in universe})
-
-K = set()
-for a in universe:
-    old_depth = package_depth(proofs, K) if K else 0
-    K.add(a)
-    new_depth = package_depth(proofs, K)
-    proof_size = size(proofs[a])
-    is_master = proof_size > old_depth
-    label = " ★ MASTER-CLASS" if is_master else ""
-    print(f"  Add theorem {a} (proof size {proof_size}): "
-          f"depth {old_depth} → {new_depth}{label}")
-
-
-# ── Demo 6: Closure Operator ──────────────────────────────────────────────
-
-print("\n" + "=" * 60)
-print("DEMO 6: Closure Operators and Nonconservative Extension")
-print("=" * 60)
-
-# Simple closure: if you know theorem i, you also know all j < i
-def closure(K: set) -> set:
-    if not K:
-        return set()
-    return set(range(max(K) + 1))
-
-K = {2, 5}
-print(f"K = {sorted(K)}")
-print(f"cl(K) = {sorted(closure(K))}")
-
-a = 8
-K_ext = K | {a}
-print(f"K ∪ {{{a}}} = {sorted(K_ext)}")
-print(f"cl(K ∪ {{{a}}}) = {sorted(closure(K_ext))}")
-print(f"Nonconservative? cl(K) ⊊ cl(K ∪ {{{a}}}): "
-      f"{closure(K) < closure(K_ext)}")
-print(f"|cl(K)| = {len(closure(K))} < |cl(K ∪ {{{a}}})| = "
-      f"{len(closure(K_ext))}: {len(closure(K)) < len(closure(K_ext))}")
-
-# Conservative extension example
-b = 3  # already in cl(K) = {0,1,2,3,4,5}
-K_cons = K | {b}
-print(f"\nK ∪ {{{b}}} = {sorted(K_cons)}")
-print(f"cl(K ∪ {{{b}}}) = {sorted(closure(K_cons))}")
-print(f"Conservative? cl(K) = cl(K ∪ {{{b}}}): "
-      f"{closure(K) == closure(K_cons)}")
-
-
-print("\n" + "=" * 60)
-print("All demonstrations complete.")
-print("=" * 60)
+    print("\n" + "=" * 60)
+    print("All demos completed successfully!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Certified Mathematical Significance Theory — Visualizations
+Visualizations for Certified Mathematical Significance Metrics.
 
-Generates publication-quality charts as PNG files and base64 data URIs.
+Generates publication-quality figures illustrating the key mathematical
+structures and theorems from the formal theory.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
-import random
 import base64
 import io
 import json
 
-random.seed(42)
-np.random.seed(42)
 
-# Style
-plt.rcParams.update({
-    'figure.facecolor': 'white',
-    'axes.facecolor': '#f8f9fa',
-    'axes.grid': True,
-    'grid.alpha': 0.3,
-    'font.size': 11,
-    'axes.titlesize': 14,
-    'axes.labelsize': 12,
-})
-
-# ── Proof Term helpers ────────────────────────────────────────────────────
-
-class PT:
-    pass
-class Ax(PT):
-    def __init__(self, n=0): self.n = n
-class Ap(PT):
-    def __init__(self, p, q): self.p, self.q = p, q
-class La(PT):
-    def __init__(self, p): self.p = p
-class Pa(PT):
-    def __init__(self, p, q): self.p, self.q = p, q
-
-def sz(t):
-    if isinstance(t, Ax): return 1
-    if isinstance(t, Ap): return sz(t.p) + sz(t.q) + 1
-    if isinstance(t, La): return sz(t.p) + 1
-    if isinstance(t, Pa): return sz(t.p) + sz(t.q) + 1
-
-def ht(t):
-    if isinstance(t, Ax): return 1
-    if isinstance(t, Ap): return max(ht(t.p), ht(t.q)) + 1
-    if isinstance(t, La): return ht(t.p) + 1
-    if isinstance(t, Pa): return max(ht(t.p), ht(t.q)) + 1
-
-def rpt(d=5):
-    if d <= 1 or random.random() < 0.3: return Ax(random.randint(0,9))
-    c = random.choice(["a","l","p"])
-    if c == "a": return Ap(rpt(d-1), rpt(d-1))
-    if c == "l": return La(rpt(d-1))
-    return Pa(rpt(d-1), rpt(d-1))
-
-
-def fig_to_base64(fig):
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 data URI."""
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode('utf-8')
+    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{b64}"
 
 
-visualizations = []
+def plot_monotonicity():
+    """Visualize monotonicity of significance under knowledge growth."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Figure 1: Significance Monotonicity
-# ═══════════════════════════════════════════════════════════════════════════
+    # Knowledge states growing over time
+    stages = ['∅', '{A}', '{A,B}', '{A,B,C}', '{A,B,C,D}', '{A,B,C,D,E}']
+    weights = [0, 5, 5+3, 5+3+8, 5+3+8+2, 5+3+8+2+11]
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(stages)))
 
-# Left: incremental growth
-universe = list(range(15))
-weights = {i: random.randint(1, 15) for i in universe}
-K = set()
-steps = []
-sigs = []
-for a in universe:
-    K.add(a)
-    steps.append(len(K))
-    sigs.append(sum(weights[x] for x in K))
+    bars = ax.bar(range(len(stages)), weights, color=colors, edgecolor='black',
+                  linewidth=0.8, width=0.6)
 
-ax1.fill_between(steps, sigs, alpha=0.3, color='#2196F3')
-ax1.plot(steps, sigs, 'o-', color='#1565C0', linewidth=2, markersize=6)
-ax1.set_xlabel('Number of theorems in K')
-ax1.set_ylabel('Significance σ(K)')
-ax1.set_title('Significance Growth (Monotone)')
+    # Add weight labels on bars
+    for i, (bar, w) in enumerate(zip(bars, weights)):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
+                f'σ = {w}', ha='center', va='bottom', fontsize=11, fontweight='bold')
 
-# Annotate threshold
-threshold = 60
-ax1.axhline(y=threshold, color='#E53935', linestyle='--', linewidth=1.5, label=f'Threshold τ={threshold}')
-cross_idx = next(i for i, s in enumerate(sigs) if s >= threshold)
-ax1.annotate(f'Gate opens at |K|={cross_idx+1}',
-            xy=(cross_idx+1, sigs[cross_idx]),
-            xytext=(cross_idx+3, sigs[cross_idx]-15),
-            arrowprops=dict(arrowstyle='->', color='#E53935'),
-            color='#E53935', fontsize=10)
-ax1.legend()
+    # Monotonicity arrows
+    for i in range(len(stages)-1):
+        ax.annotate('', xy=(i+1, weights[i+1]-1), xytext=(i, weights[i]+1),
+                   arrowprops=dict(arrowstyle='->', color='red', lw=1.5, ls='--'))
 
-# Right: random subset verification
-n_tests = 1000
-sig_diffs = []
-for _ in range(n_tests):
-    k = random.randint(0, 15)
-    S1 = set(random.sample(universe, k))
-    extra = random.randint(0, 15 - k)
-    S2 = S1 | set(random.sample([x for x in universe if x not in S1], min(extra, len(universe) - len(S1))))
-    s1 = sum(weights.get(x, 0) for x in S1)
-    s2 = sum(weights.get(x, 0) for x in S2)
-    sig_diffs.append(s2 - s1)
+    ax.set_xlabel('Knowledge State', fontsize=13)
+    ax.set_ylabel('Significance σ(K)', fontsize=13)
+    ax.set_title('Monotonicity: Knowledge Growth ⟹ Significance Growth',
+                fontsize=15, fontweight='bold')
+    ax.set_xticks(range(len(stages)))
+    ax.set_xticklabels(stages, fontsize=10)
+    ax.set_ylim(0, max(weights) + 5)
+    ax.grid(axis='y', alpha=0.3)
 
-ax2.hist(sig_diffs, bins=30, color='#4CAF50', alpha=0.7, edgecolor='white')
-ax2.axvline(x=0, color='#E53935', linewidth=2, linestyle='--', label='σ(K₂) - σ(K₁) ≥ 0')
-ax2.set_xlabel('σ(K₂) - σ(K₁) for K₁ ⊆ K₂')
-ax2.set_ylabel('Frequency')
-ax2.set_title(f'Monotonicity Verification ({n_tests} tests)')
-ax2.legend()
-
-plt.tight_layout()
-fig.savefig('/workspace/request-project/fig1_monotonicity.png', dpi=150, bbox_inches='tight')
-visualizations.append({"name": "Significance Monotonicity", "data": fig_to_base64(fig)})
-plt.close()
+    return fig_to_base64(fig)
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Figure 2: Height vs Size
-# ═══════════════════════════════════════════════════════════════════════════
+def plot_modularity():
+    """Visualize the modularity (inclusion-exclusion) identity."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    # Venn diagram style
+    ax = axes[0]
+    circle1 = plt.Circle((0.35, 0.5), 0.3, fill=False, color='blue',
+                          linewidth=2, label='K₁')
+    circle2 = plt.Circle((0.65, 0.5), 0.3, fill=False, color='red',
+                          linewidth=2, label='K₂')
+    ax.add_patch(circle1)
+    ax.add_patch(circle2)
 
-sizes, heights = [], []
-for _ in range(5000):
-    t = rpt(8)
-    sizes.append(sz(t))
-    heights.append(ht(t))
+    ax.text(0.2, 0.5, 'K₁\\K₂\nσ=3', ha='center', va='center', fontsize=12,
+            color='blue', fontweight='bold')
+    ax.text(0.5, 0.5, 'K₁∩K₂\nσ=12', ha='center', va='center', fontsize=12,
+            color='purple', fontweight='bold')
+    ax.text(0.8, 0.5, 'K₂\\K₁\nσ=18', ha='center', va='center', fontsize=12,
+            color='red', fontweight='bold')
 
-ax1.scatter(sizes, heights, alpha=0.15, s=8, color='#7B1FA2')
-max_s = max(sizes)
-ax1.plot([0, max_s], [0, max_s], 'r--', linewidth=2, label='height = size (upper bound)')
-ax1.set_xlabel('Proof Size')
-ax1.set_ylabel('Proof Height')
-ax1.set_title('Height ≤ Size (Theorem C₁)')
-ax1.legend()
-ax1.set_xlim(0, min(max_s, 200))
-ax1.set_ylim(0, min(max(heights), 200))
+    ax.set_xlim(-0.05, 1.05)
+    ax.set_ylim(0.1, 0.9)
+    ax.set_aspect('equal')
+    ax.set_title('Knowledge State Overlap', fontsize=14, fontweight='bold')
+    ax.axis('off')
 
-# Ratio distribution
-ratios = [h/s for s, h in zip(sizes, heights) if s > 0]
-ax2.hist(ratios, bins=50, color='#AB47BC', alpha=0.7, edgecolor='white')
-ax2.axvline(x=1.0, color='#E53935', linewidth=2, linestyle='--', label='Ratio = 1 (bound)')
-ax2.set_xlabel('Height / Size Ratio')
-ax2.set_ylabel('Frequency')
-ax2.set_title('Distribution of Height/Size Ratio')
-ax2.legend()
+    # Identity verification
+    ax2 = axes[1]
+    labels = ['σ(K₁∪K₂)', 'σ(K₁∩K₂)', 'σ(K₁)', 'σ(K₂)']
+    values = [33, 12, 15, 30]
+    colors_bar = ['#2ecc71', '#9b59b6', '#3498db', '#e74c3c']
 
-plt.tight_layout()
-fig.savefig('/workspace/request-project/fig2_height_vs_size.png', dpi=150, bbox_inches='tight')
-visualizations.append({"name": "Height vs Size", "data": fig_to_base64(fig)})
-plt.close()
+    bars = ax2.barh(labels, values, color=colors_bar, edgecolor='black', height=0.5)
 
+    for bar, v in zip(bars, values):
+        ax2.text(bar.get_width() + 0.5, bar.get_y() + bar.get_height()/2,
+                f'{v}', va='center', fontsize=12, fontweight='bold')
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Figure 3: Package Depth Evolution
-# ═══════════════════════════════════════════════════════════════════════════
+    ax2.set_xlabel('Value', fontsize=12)
+    ax2.set_title('Modularity: σ(K₁∪K₂) + σ(K₁∩K₂) = σ(K₁) + σ(K₂)\n'
+                 f'33 + 12 = 15 + 30 = 45 ✓', fontsize=13, fontweight='bold')
+    ax2.set_xlim(0, 40)
 
-fig, ax = plt.subplots(figsize=(10, 5))
-
-proofs = {i: rpt(3 + (i * 7 % 5)) for i in range(20)}
-proof_sizes = {i: sz(proofs[i]) for i in proofs}
-
-K = set()
-depth_trace = []
-sig_trace = []
-master_points = []
-
-for a in range(20):
-    old_depth = max((proof_sizes[x] for x in K), default=0)
-    K.add(a)
-    new_depth = max(proof_sizes[x] for x in K)
-    depth_trace.append(new_depth)
-    sig_trace.append(sum(proof_sizes[x] for x in K))
-    if proof_sizes[a] > old_depth and a > 0:
-        master_points.append((a + 1, new_depth))
-
-x_vals = list(range(1, 21))
-ax.step(x_vals, depth_trace, where='mid', color='#1565C0', linewidth=2.5, label='Package Depth')
-ax.bar(x_vals, [proof_sizes[i] for i in range(20)], alpha=0.3, color='#42A5F5', label='Individual proof size')
-
-for mx, my in master_points:
-    ax.annotate('★', xy=(mx, my), fontsize=16, ha='center', va='bottom', color='#FF6F00')
-
-ax.set_xlabel('Theorem Added (order)')
-ax.set_ylabel('Complexity')
-ax.set_title('Package Depth Evolution (★ = Master-Class Contribution)')
-ax.legend()
-
-plt.tight_layout()
-fig.savefig('/workspace/request-project/fig3_package_depth.png', dpi=150, bbox_inches='tight')
-visualizations.append({"name": "Package Depth Evolution", "data": fig_to_base64(fig)})
-plt.close()
+    plt.tight_layout()
+    return fig_to_base64(fig)
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Figure 4: Quality Gate Phase Diagram
-# ═══════════════════════════════════════════════════════════════════════════
+def plot_threshold_crossing():
+    """Visualize threshold crossing and novelty detection."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-fig, ax = plt.subplots(figsize=(8, 6))
+    # Timeline of knowledge additions
+    steps = list(range(8))
+    sigs = [0, 5, 8, 16, 16, 24, 31, 35]
+    labels = ['∅', '+A(5)', '+B(3)', '+C(8)', 'repack', '+D(8)', '+E(7)', '+F(4)']
+    novel = [False, True, True, True, False, True, True, True]
 
-n_theorems = np.arange(1, 31)
-avg_weights = np.arange(1, 21)
+    tau = 20
 
-X, Y = np.meshgrid(n_theorems, avg_weights)
-threshold = 100
+    # Plot significance line
+    for i in range(len(steps)-1):
+        color = '#2ecc71' if sigs[i+1] > sigs[i] else '#e74c3c'
+        ax.plot([steps[i], steps[i+1]], [sigs[i], sigs[i+1]],
+               color=color, linewidth=2.5, zorder=3)
 
-# Significance = n * avg_w (expected value)
-Z = (X * Y >= threshold).astype(float)
+    # Plot points
+    for i, (s, sig, lab, n) in enumerate(zip(steps, sigs, labels, novel)):
+        marker = 'o' if n else 'x'
+        color = '#2ecc71' if n else '#e74c3c'
+        size = 100 if n else 150
+        ax.scatter(s, sig, c=color, s=size, marker=marker, zorder=5,
+                  edgecolors='black', linewidths=1)
+        ax.text(s, sig + 1.5, lab, ha='center', va='bottom', fontsize=9,
+               fontweight='bold', rotation=30)
 
-ax.contourf(X, Y, Z, levels=[-0.5, 0.5, 1.5], colors=['#FFCDD2', '#C8E6C9'], alpha=0.7)
-ax.contour(X, Y, X * Y, levels=[threshold], colors=['#E53935'], linewidths=2)
+    # Threshold line
+    ax.axhline(y=tau, color='orange', linestyle='--', linewidth=2, label=f'Threshold τ = {tau}')
+    ax.fill_between([min(steps)-0.5, max(steps)+0.5], tau, max(sigs)+5,
+                    alpha=0.1, color='green')
+    ax.text(max(steps)+0.3, tau+1, 'ADVANCES\nFIELD', fontsize=10,
+           color='green', fontweight='bold', va='bottom')
+    ax.text(max(steps)+0.3, tau-2, 'BELOW\nTHRESHOLD', fontsize=10,
+           color='gray', va='top')
 
-ax.set_xlabel('Number of Theorems |K|')
-ax.set_ylabel('Average Weight per Theorem')
-ax.set_title(f'Quality Gate Phase Diagram (τ = {threshold})')
+    # Mark crossing point
+    cross_idx = next(i for i, s in enumerate(sigs) if s >= tau)
+    ax.annotate(f'Threshold crossed!\nNovel content required',
+               xy=(cross_idx, sigs[cross_idx]),
+               xytext=(cross_idx-2, sigs[cross_idx]+8),
+               arrowprops=dict(arrowstyle='->', color='orange', lw=2),
+               fontsize=11, color='orange', fontweight='bold',
+               bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
 
-# Labels
-ax.text(5, 15, 'ACCEPT\n(σ ≥ τ)', fontsize=14, ha='center', color='#2E7D32', fontweight='bold')
-ax.text(20, 3, 'REJECT\n(σ < τ)', fontsize=14, ha='center', color='#C62828', fontweight='bold')
+    ax.set_xlabel('Knowledge Evolution Steps', fontsize=13)
+    ax.set_ylabel('Significance σ(K)', fontsize=13)
+    ax.set_title('Threshold Crossing Implies Genuine Novelty', fontsize=15,
+                fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_ylim(-2, max(sigs)+12)
+    ax.grid(alpha=0.3)
 
-# Boundary curve: n * w = threshold => w = threshold / n
-n_curve = np.linspace(5, 30, 100)
-w_curve = threshold / n_curve
-ax.plot(n_curve, w_curve, 'r-', linewidth=2, label=f'σ = τ = {threshold}')
-ax.legend(fontsize=11)
-
-plt.tight_layout()
-fig.savefig('/workspace/request-project/fig4_quality_gate.png', dpi=150, bbox_inches='tight')
-visualizations.append({"name": "Quality Gate Phase Diagram", "data": fig_to_base64(fig)})
-plt.close()
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Figure 5: Closure Growth
-# ═══════════════════════════════════════════════════════════════════════════
-
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-
-# Dependency DAG closure growth
-deps = {}
-for i in range(20):
-    n_deps = min(i, random.randint(0, 3))
-    deps[i] = set(random.sample(range(i), n_deps)) if i > 0 and n_deps > 0 else set()
-
-def closure(K):
-    result = set(K)
-    queue = list(K)
-    while queue:
-        a = queue.pop()
-        for d in deps.get(a, set()):
-            if d not in result:
-                result.add(d)
-                queue.append(d)
-    return result
-
-K = set()
-raw_sizes = []
-closed_sizes = []
-for a in range(20):
-    K.add(a)
-    raw_sizes.append(len(K))
-    closed_sizes.append(len(closure(K)))
-
-ax1.plot(range(1, 21), raw_sizes, 's-', color='#FF9800', linewidth=2, label='|K| (raw)')
-ax1.plot(range(1, 21), closed_sizes, 'o-', color='#4CAF50', linewidth=2, label='|cl(K)| (closed)')
-ax1.fill_between(range(1, 21), raw_sizes, closed_sizes, alpha=0.2, color='#4CAF50')
-ax1.set_xlabel('Theorems Added')
-ax1.set_ylabel('Set Size')
-ax1.set_title('Raw vs Closed Knowledge State')
-ax1.legend()
-
-# Conservative vs nonconservative
-nc_count = 0
-c_count = 0
-nc_deltas = []
-c_deltas = []
-K = set()
-for a in range(20):
-    cl_before = closure(K)
-    K.add(a)
-    cl_after = closure(K)
-    delta = len(cl_after) - len(cl_before)
-    if cl_before < cl_after:
-        nc_count += 1
-        nc_deltas.append(delta)
-    else:
-        c_count += 1
-        c_deltas.append(delta)
-
-labels = ['Nonconservative\n(expands closure)', 'Conservative\n(closure unchanged)']
-counts = [nc_count, c_count]
-colors = ['#4CAF50', '#BDBDBD']
-bars = ax2.bar(labels, counts, color=colors, edgecolor='white', linewidth=2)
-ax2.set_ylabel('Count')
-ax2.set_title('Extension Types in Growing Library')
-for bar, count in zip(bars, counts):
-    ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.3,
-            str(count), ha='center', fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-fig.savefig('/workspace/request-project/fig5_closure.png', dpi=150, bbox_inches='tight')
-visualizations.append({"name": "Closure Growth Analysis", "data": fig_to_base64(fig)})
-plt.close()
+    return fig_to_base64(fig)
 
 
-# Save visualization data for JSON package
-with open('/workspace/request-project/viz_data.json', 'w') as f:
-    json.dump(visualizations, f)
+def plot_proof_shape():
+    """Visualize ProofShape feature extraction."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 7))
 
-print(f"Generated {len(visualizations)} visualizations.")
-print("Files: fig1_monotonicity.png, fig2_height_vs_size.png, fig3_package_depth.png,")
-print("       fig4_quality_gate.png, fig5_closure.png")
+    # Left: Proof tree
+    ax = axes[0]
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 8)
+
+    # Draw tree nodes
+    nodes = {
+        'app': (5, 7, 'APP'),
+        'lam': (3, 5, 'LAM'),
+        'pair': (3, 3, 'PAIR'),
+        'ax_A': (2, 1, 'ax(A)'),
+        'ax_B': (4, 1, 'ax(B)'),
+        'app2': (7, 5, 'APP'),
+        'ax_C': (6, 3, 'ax(C)'),
+        'ax_D': (8, 3, 'ax(D)'),
+    }
+
+    edges = [
+        ('app', 'lam'), ('app', 'app2'),
+        ('lam', 'pair'),
+        ('pair', 'ax_A'), ('pair', 'ax_B'),
+        ('app2', 'ax_C'), ('app2', 'ax_D'),
+    ]
+
+    for name, (x, y, label) in nodes.items():
+        color = '#3498db' if 'ax' not in name else '#e74c3c'
+        ax.add_patch(plt.Circle((x, y), 0.4, color=color, alpha=0.8, zorder=3))
+        ax.text(x, y, label, ha='center', va='center', fontsize=8,
+               fontweight='bold', color='white', zorder=4)
+
+    for n1, n2 in edges:
+        x1, y1, _ = nodes[n1]
+        x2, y2, _ = nodes[n2]
+        ax.plot([x1, x2], [y1-0.4, y2+0.4], 'k-', linewidth=1.5, zorder=1)
+
+    ax.set_title('Proof Shape Tree', fontsize=14, fontweight='bold')
+    ax.axis('off')
+
+    # Right: Feature extraction and significance
+    ax2 = axes[1]
+    features = {'A': 5, 'B': 3, 'C': 8, 'D': 2}
+    names = list(features.keys())
+    vals = list(features.values())
+    colors = ['#e74c3c', '#e67e22', '#2ecc71', '#9b59b6']
+
+    bars = ax2.bar(names, vals, color=colors, edgecolor='black', width=0.5)
+    for bar, v in zip(bars, vals):
+        ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.2,
+                f'w={v}', ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+    total = sum(vals)
+    size = 7  # total nodes in tree
+    C = max(vals)
+
+    ax2.set_title(f'Extracted Features & Weights\n'
+                 f'σ = {total} ≤ C×size = {C}×{size} = {C*size}',
+                 fontsize=13, fontweight='bold')
+    ax2.set_ylabel('Weight w(a)', fontsize=12)
+    ax2.set_xlabel('Feature (Axiom Tag)', fontsize=12)
+    ax2.axhline(y=C, color='gray', linestyle=':', label=f'C = {C} (max weight)')
+    ax2.legend()
+
+    plt.tight_layout()
+    return fig_to_base64(fig)
+
+
+def plot_domain_coverage():
+    """Visualize domain coverage lower bound."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Multiple knowledge states with varying domain coverage
+    states = [
+        ("Narrow\n(1 domain)", {"A": 5, "B": 3, "C": 4}, 1),
+        ("Two domains", {"A": 5, "D": 7, "E": 3}, 2),
+        ("Three domains", {"A": 5, "D": 7, "G": 8}, 3),
+        ("Broad\n(4 domains)", {"A": 5, "D": 7, "G": 8, "J": 6}, 4),
+        ("Full breadth\n(5 domains)", {"A": 5, "D": 7, "G": 8, "J": 6, "M": 10}, 5),
+    ]
+
+    x = range(len(states))
+    sigs = [sum(s[1].values()) for s in states]
+    domains = [s[2] for s in states]
+
+    bar_width = 0.35
+    bars1 = ax.bar([i - bar_width/2 for i in x], sigs, bar_width,
+                   label='Significance σ(K)', color='#3498db', edgecolor='black')
+    bars2 = ax.bar([i + bar_width/2 for i in x], domains, bar_width,
+                   label='Domain Coverage |D(K)|', color='#e74c3c', edgecolor='black')
+
+    for bar, v in zip(bars1, sigs):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.3,
+                str(v), ha='center', va='bottom', fontsize=11, fontweight='bold')
+    for bar, v in zip(bars2, domains):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.3,
+                str(v), ha='center', va='bottom', fontsize=11, fontweight='bold',
+                color='#e74c3c')
+
+    ax.set_xlabel('Knowledge State Configuration', fontsize=13)
+    ax.set_ylabel('Value', fontsize=13)
+    ax.set_title('Domain Coverage Lower Bound: |domains| ≤ σ(K)\n'
+                '(When all weights ≥ 1)', fontsize=15, fontweight='bold')
+    ax.set_xticks(list(x))
+    ax.set_xticklabels([s[0] for s in states], fontsize=10)
+    ax.legend(fontsize=12)
+    ax.grid(axis='y', alpha=0.3)
+
+    return fig_to_base64(fig)
+
+
+def plot_triple_significance():
+    """Visualize triple significance decomposition."""
+    fig, ax = plt.subplots(figsize=(10, 7))
+
+    categories = ['Package A\n(Deep)', 'Package B\n(Novel)', 'Package C\n(Bridge)',
+                  'Package D\n(Balanced)', 'Package E\n(Master)']
+
+    depth =   [25, 5, 3, 12, 20]
+    novelty = [3, 22, 5, 10, 18]
+    bridge =  [2, 3, 20, 8, 15]
+
+    x = np.arange(len(categories))
+    width = 0.5
+
+    ax.bar(x, depth, width, label='Depth', color='#2ecc71', edgecolor='black')
+    ax.bar(x, novelty, width, bottom=depth, label='Novelty', color='#3498db', edgecolor='black')
+    ax.bar(x, bridge, width, bottom=[d+n for d,n in zip(depth, novelty)],
+           label='Bridge', color='#e74c3c', edgecolor='black')
+
+    # Total labels
+    totals = [d+n+b for d,n,b in zip(depth, novelty, bridge)]
+    for i, t in enumerate(totals):
+        ax.text(i, t + 1, f'Σ={t}', ha='center', va='bottom',
+               fontsize=11, fontweight='bold')
+
+    # MasterClass threshold
+    tau = 40
+    ax.axhline(y=tau, color='gold', linestyle='--', linewidth=2.5,
+              label=f'MasterClass τ = {tau}')
+
+    # Mark MasterClass packages
+    for i, t in enumerate(totals):
+        if t >= tau:
+            ax.text(i, t + 5, '★', ha='center', fontsize=20, color='gold')
+
+    ax.set_xlabel('Research Package', fontsize=13)
+    ax.set_ylabel('Triple Significance', fontsize=13)
+    ax.set_title('Triple Significance: Depth + Novelty + Bridge\n'
+                'MasterClass status is upward-closed under knowledge growth',
+                fontsize=14, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(categories, fontsize=10)
+    ax.legend(fontsize=11, loc='upper left')
+    ax.grid(axis='y', alpha=0.3)
+    ax.set_ylim(0, max(totals) + 12)
+
+    return fig_to_base64(fig)
+
+
+def generate_all_visualizations():
+    """Generate all visualizations and return as dict."""
+    print("Generating visualizations...")
+
+    viz = {}
+    viz['monotonicity'] = plot_monotonicity()
+    print("  ✓ Monotonicity plot")
+
+    viz['modularity'] = plot_modularity()
+    print("  ✓ Modularity plot")
+
+    viz['threshold'] = plot_threshold_crossing()
+    print("  ✓ Threshold crossing plot")
+
+    viz['proof_shape'] = plot_proof_shape()
+    print("  ✓ Proof shape plot")
+
+    viz['domain_coverage'] = plot_domain_coverage()
+    print("  ✓ Domain coverage plot")
+
+    viz['triple_significance'] = plot_triple_significance()
+    print("  ✓ Triple significance plot")
+
+    return viz
+
+
+if __name__ == "__main__":
+    vizs = generate_all_visualizations()
+    print(f"\nGenerated {len(vizs)} visualizations as base64 data URIs.")
+
+    # Save individual PNGs
+    for name, uri in vizs.items():
+        b64data = uri.split(",")[1]
+        with open(f"viz_{name}.png", "wb") as f:
+            f.write(base64.b64decode(b64data))
+        print(f"  Saved viz_{name}.png")

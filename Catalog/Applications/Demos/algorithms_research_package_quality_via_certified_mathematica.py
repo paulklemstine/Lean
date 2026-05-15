@@ -1,379 +1,337 @@
 #!/usr/bin/env python3
 """
-Certified Mathematical Significance Theory — Algorithms
+Algorithms for Certified Mathematical Significance Metrics.
 
-Complete implementations of the algorithms from the research paper,
-with docstrings, type hints, and example usage.
+Implements the core algorithms from the research paper with full
+type hints, docstrings, and complexity analysis.
 """
 
-from __future__ import annotations
+from typing import Dict, Set, FrozenSet, List, Tuple, Optional, Callable
 from dataclasses import dataclass
-from typing import Callable, Optional
-import random
+from enum import Enum
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# 1. Proof Term Algebra
-# ═══════════════════════════════════════════════════════════════════════════
+# ============================================================
+# Algorithm 1: Significance Valuation
+# ============================================================
 
-@dataclass
-class ProofTerm:
-    """Base class for proof terms in the abstract proof object language."""
-    pass
-
-@dataclass
-class AxiomTerm(ProofTerm):
-    """Axiom invocation: a leaf node referencing axiom number n."""
-    n: int
-
-@dataclass
-class AppTerm(ProofTerm):
-    """Application: applying proof p to proof q (modus ponens)."""
-    p: ProofTerm
-    q: ProofTerm
-
-@dataclass
-class LamTerm(ProofTerm):
-    """Abstraction: generalizing over a hypothesis to produce proof p."""
-    p: ProofTerm
-
-@dataclass
-class PairTerm(ProofTerm):
-    """Pairing: combining proofs p and q into a conjunction."""
-    p: ProofTerm
-    q: ProofTerm
-
-
-def proof_size(t: ProofTerm) -> int:
+def compute_significance(w: Dict[str, int], K: Set[str]) -> int:
     """
-    Compute the structural size of a proof term.
+    Compute significance of knowledge state K under weight function w.
 
-    Size counts all constructor nodes in the proof tree.
-    Time complexity: O(size(t))
-    Space complexity: O(height(t)) due to recursion stack
-
-    >>> proof_size(AxiomTerm(0))
-    1
-    >>> proof_size(AppTerm(AxiomTerm(0), AxiomTerm(1)))
-    3
-    >>> proof_size(LamTerm(AxiomTerm(0)))
-    2
-    """
-    if isinstance(t, AxiomTerm):
-        return 1
-    elif isinstance(t, AppTerm):
-        return proof_size(t.p) + proof_size(t.q) + 1
-    elif isinstance(t, LamTerm):
-        return proof_size(t.p) + 1
-    elif isinstance(t, PairTerm):
-        return proof_size(t.p) + proof_size(t.q) + 1
-    raise TypeError(f"Unknown proof term type: {type(t)}")
-
-
-def proof_height(t: ProofTerm) -> int:
-    """
-    Compute the height (depth) of a proof term.
-
-    Height measures the longest root-to-leaf path.
-    Invariant: height(t) <= size(t) for all t (Theorem C₁).
-
-    >>> proof_height(AxiomTerm(0))
-    1
-    >>> proof_height(AppTerm(AxiomTerm(0), AxiomTerm(1)))
-    2
-    """
-    if isinstance(t, AxiomTerm):
-        return 1
-    elif isinstance(t, AppTerm):
-        return max(proof_height(t.p), proof_height(t.q)) + 1
-    elif isinstance(t, LamTerm):
-        return proof_height(t.p) + 1
-    elif isinstance(t, PairTerm):
-        return max(proof_height(t.p), proof_height(t.q)) + 1
-    raise TypeError(f"Unknown proof term type: {type(t)}")
-
-
-def is_subterm(p: ProofTerm, q: ProofTerm) -> bool:
-    """
-    Check if p is a subterm of q.
-
-    >>> is_subterm(AxiomTerm(0), AppTerm(AxiomTerm(0), AxiomTerm(1)))
-    True
-    >>> is_subterm(AxiomTerm(2), AppTerm(AxiomTerm(0), AxiomTerm(1)))
-    False
-    """
-    if p == q:
-        return True
-    if isinstance(q, AppTerm):
-        return is_subterm(p, q.p) or is_subterm(p, q.q)
-    elif isinstance(q, LamTerm):
-        return is_subterm(p, q.p)
-    elif isinstance(q, PairTerm):
-        return is_subterm(p, q.p) or is_subterm(p, q.q)
-    return False
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# 2. Significance Computation
-# ═══════════════════════════════════════════════════════════════════════════
-
-def compute_significance(
-    weights: dict[int, int],
-    K: set[int]
-) -> int:
-    """
-    Compute the significance of a knowledge state K.
-
-    σ(K) = Σ_{a ∈ K} w(a)
-
+    Algorithm: Sum weights of all atoms in K.
     Time complexity: O(|K|)
     Space complexity: O(1)
 
-    >>> compute_significance({0: 5, 1: 3, 2: 8}, {0, 2})
-    13
+    Args:
+        w: Weight function mapping atom names to non-negative integers
+        K: Knowledge state (finite set of atom identifiers)
+
+    Returns:
+        Total significance score
+
+    >>> compute_significance({"A": 3, "B": 5}, {"A", "B"})
+    8
+    >>> compute_significance({"A": 3, "B": 5}, {"A"})
+    3
     """
-    return sum(weights.get(a, 0) for a in K)
+    return sum(w.get(a, 0) for a in K)
 
 
-def compute_significance_from_proofs(
-    proofs: dict[int, ProofTerm],
-    K: set[int]
-) -> int:
+# ============================================================
+# Algorithm 2: Threshold-Based Quality Gate
+# ============================================================
+
+@dataclass
+class QualityGateResult:
+    """Result of a quality gate evaluation."""
+    passes: bool
+    significance_old: int
+    significance_new: int
+    threshold: int
+    new_atoms: Set[str]
+    advances_field: bool
+
+
+def quality_gate(
+    w: Dict[str, int],
+    tau: int,
+    K_old: Set[str],
+    K_new: Set[str]
+) -> QualityGateResult:
     """
-    Compute significance using proof-term sizes as weights.
+    Evaluate whether a knowledge transition passes the quality gate.
 
-    σ_π(K) = Σ_{a ∈ K} size(π(a))
+    The gate checks:
+    1. K_old ⊆ K_new (no knowledge loss)
+    2. σ(K_old) < τ (old state below threshold)
+    3. τ ≤ σ(K_new) (new state meets threshold)
+    4. ∃ a ∈ K_new, a ∉ K_old (genuine novelty)
 
-    >>> proofs = {0: AxiomTerm(0), 1: AppTerm(AxiomTerm(0), AxiomTerm(1))}
-    >>> compute_significance_from_proofs(proofs, {0, 1})
-    4
+    Time complexity: O(|K_new|)
+    Space complexity: O(|K_new - K_old|)
+
+    Args:
+        w: Weight function
+        tau: Significance threshold
+        K_old: Previous knowledge state
+        K_new: Proposed new knowledge state
+
+    Returns:
+        QualityGateResult with detailed evaluation
     """
-    return sum(proof_size(proofs[a]) for a in K if a in proofs)
+    sig_old = compute_significance(w, K_old)
+    sig_new = compute_significance(w, K_new)
+    new_atoms = K_new - K_old
+
+    is_superset = K_old <= K_new
+    below_before = sig_old < tau
+    meets_after = tau <= sig_new
+    has_novelty = len(new_atoms) > 0
+
+    advances = is_superset and below_before and meets_after and has_novelty
+
+    return QualityGateResult(
+        passes=meets_after and is_superset,
+        significance_old=sig_old,
+        significance_new=sig_new,
+        threshold=tau,
+        new_atoms=new_atoms,
+        advances_field=advances
+    )
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# 3. Quality Gate
-# ═══════════════════════════════════════════════════════════════════════════
+# ============================================================
+# Algorithm 3: ProofShape Feature Extraction
+# ============================================================
 
-def evaluate_quality_gate(
-    weights: dict[int, int],
-    threshold: int,
-    K: set[int]
-) -> bool:
+class NodeType(Enum):
+    AX = "axiom"
+    APP = "application"
+    LAM = "lambda"
+    PAIR = "pair"
+
+
+@dataclass
+class ProofNode:
+    """A node in a proof shape tree."""
+    node_type: NodeType
+    tag: Optional[str] = None  # Only for AX nodes
+    children: Tuple = ()
+
+    @staticmethod
+    def ax(tag: str) -> 'ProofNode':
+        return ProofNode(NodeType.AX, tag=tag)
+
+    @staticmethod
+    def app(p: 'ProofNode', q: 'ProofNode') -> 'ProofNode':
+        return ProofNode(NodeType.APP, children=(p, q))
+
+    @staticmethod
+    def lam(p: 'ProofNode') -> 'ProofNode':
+        return ProofNode(NodeType.LAM, children=(p,))
+
+    @staticmethod
+    def pair(p: 'ProofNode', q: 'ProofNode') -> 'ProofNode':
+        return ProofNode(NodeType.PAIR, children=(p, q))
+
+
+def extract_features(p: ProofNode) -> Set[str]:
     """
-    Evaluate the Boolean quality gate.
+    Extract the set of atomic features from a proof shape.
 
-    Returns True iff threshold ≤ σ(K).
-    Monotone: if gate(K₁) = True and K₁ ⊆ K₂, then gate(K₂) = True.
+    Recursively collects all axiom tags referenced in the proof tree.
+
+    Time complexity: O(|p|) where |p| is the number of nodes
+    Space complexity: O(depth(p)) for recursion stack + O(|features|)
+
+    Args:
+        p: Root of the proof shape tree
+
+    Returns:
+        Set of axiom tag strings
+    """
+    if p.node_type == NodeType.AX:
+        return {p.tag} if p.tag else set()
+    result: Set[str] = set()
+    for child in p.children:
+        result |= extract_features(child)
+    return result
+
+
+def proof_size(p: ProofNode) -> int:
+    """
+    Compute structural size of a proof shape.
+
+    Time complexity: O(|p|)
+    """
+    if p.node_type == NodeType.AX:
+        return 1
+    return sum(proof_size(c) for c in p.children) + 1
+
+
+def proof_height(p: ProofNode) -> int:
+    """
+    Compute height (depth) of a proof shape.
+
+    Time complexity: O(|p|)
+    """
+    if p.node_type == NodeType.AX:
+        return 1
+    return max((proof_height(c) for c in p.children), default=0) + 1
+
+
+def significance_from_proof(w: Dict[str, int], p: ProofNode) -> int:
+    """
+    Compute significance directly from a proof shape.
+
+    Time complexity: O(|p|) for feature extraction + O(|features|) for summing
+    """
+    return compute_significance(w, extract_features(p))
+
+
+# ============================================================
+# Algorithm 4: Domain Coverage Analysis
+# ============================================================
+
+def domain_coverage(
+    tag: Dict[str, str],
+    K: Set[str]
+) -> Set[str]:
+    """
+    Compute the set of domains covered by a knowledge state.
 
     Time complexity: O(|K|)
 
-    >>> evaluate_quality_gate({0: 10, 1: 20, 2: 30}, 25, {0, 1})
-    True
-    >>> evaluate_quality_gate({0: 10, 1: 20, 2: 30}, 35, {0, 1})
-    False
+    Args:
+        tag: Maps atom names to domain names
+        K: Knowledge state
+
+    Returns:
+        Set of covered domain names
     """
-    return threshold <= compute_significance(weights, K)
+    return {tag[a] for a in K if a in tag}
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# 4. Package Depth
-# ═══════════════════════════════════════════════════════════════════════════
-
-def compute_package_depth(
-    proofs: dict[int, ProofTerm],
-    K: set[int]
-) -> int:
+def coverage_lower_bound_check(
+    w: Dict[str, int],
+    tag: Dict[str, str],
+    K: Set[str]
+) -> Tuple[int, int, bool]:
     """
-    Compute the package depth: maximum proof size across K.
+    Verify the domain coverage lower bound: |domains| ≤ σ(K).
 
-    depth(K) = max_{a ∈ K} size(π(a))
-
-    Time complexity: O(|K| · max_size)
-
-    >>> proofs = {0: AxiomTerm(0), 1: AppTerm(AxiomTerm(0), AxiomTerm(1))}
-    >>> compute_package_depth(proofs, {0, 1})
-    3
+    Returns (domain_count, significance, bound_holds).
     """
-    if not K:
-        return 0
-    return max(proof_size(proofs[a]) for a in K if a in proofs)
+    domains = domain_coverage(tag, K)
+    sig = compute_significance(w, K)
+    return len(domains), sig, len(domains) <= sig
 
 
-def is_master_class_contribution(
-    proofs: dict[int, ProofTerm],
-    K: set[int],
-    a: int
-) -> bool:
+# ============================================================
+# Algorithm 5: Triple Significance Evaluator
+# ============================================================
+
+@dataclass
+class TripleSignificanceResult:
+    """Breakdown of triple significance into components."""
+    depth: int
+    novelty: int
+    bridge: int
+    total: int
+    is_masterclass: bool
+    threshold: int
+
+
+def evaluate_triple_significance(
+    depth_w: Dict[str, int],
+    novelty_w: Dict[str, int],
+    bridge_w: Dict[str, int],
+    tau: int,
+    K: Set[str]
+) -> TripleSignificanceResult:
     """
-    Check if adding theorem a is a master-class contribution.
+    Evaluate triple significance and MasterClass status.
 
-    True iff size(π(a)) > depth(K), meaning the new theorem's proof
-    complexity exceeds all existing proofs.
-
-    >>> proofs = {0: AxiomTerm(0), 1: AppTerm(AxiomTerm(0), AxiomTerm(1)),
-    ...           2: PairTerm(AppTerm(AxiomTerm(0), AxiomTerm(1)), AxiomTerm(2))}
-    >>> is_master_class_contribution(proofs, {0, 1}, 2)
-    True
+    Time complexity: O(|K|)
     """
-    current_depth = compute_package_depth(proofs, K)
-    new_size = proof_size(proofs[a])
-    return new_size > current_depth
+    d = compute_significance(depth_w, K)
+    n = compute_significance(novelty_w, K)
+    b = compute_significance(bridge_w, K)
+    total = d + n + b
+    return TripleSignificanceResult(
+        depth=d, novelty=n, bridge=b,
+        total=total,
+        is_masterclass=tau <= total,
+        threshold=tau
+    )
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# 5. Strict Advancement Check
-# ═══════════════════════════════════════════════════════════════════════════
+# ============================================================
+# Algorithm 6: Greedy Significance Maximizer
+# ============================================================
 
-def check_strict_advancement(
-    weights: dict[int, int],
-    K1: set[int],
-    K2: set[int]
-) -> tuple[bool, str]:
+def greedy_maximize_significance(
+    w: Dict[str, int],
+    universe: Set[str],
+    budget: int
+) -> Tuple[Set[str], int]:
     """
-    Check if K2 strictly advances beyond K1.
+    Greedily select atoms to maximize significance within a budget.
 
-    Returns (is_strict_advancement, reason).
+    The budget limits the number of atoms that can be selected.
+    Since significance is modular (additive), the greedy algorithm
+    is optimal: select the highest-weight atoms first.
 
-    >>> check_strict_advancement({0: 5, 1: 3}, {0}, {0, 1})
-    (True, 'K1 ⊆ K2 and σ(K1)=5 < σ(K2)=8')
+    Time complexity: O(n log n) where n = |universe|
+    Space complexity: O(n)
+
+    Args:
+        w: Weight function
+        universe: Available atoms
+        budget: Maximum number of atoms to select
+
+    Returns:
+        (selected_set, total_significance)
+
+    Note: Optimality of greedy for modular functions is a consequence
+    of the valuation property proved in the formal theory.
     """
-    subset = K1.issubset(K2)
-    sig1 = compute_significance(weights, K1)
-    sig2 = compute_significance(weights, K2)
-    strict = sig1 < sig2
-
-    if subset and strict:
-        return True, f"K1 ⊆ K2 and σ(K1)={sig1} < σ(K2)={sig2}"
-    elif not subset:
-        return False, f"K1 ⊄ K2"
-    else:
-        return False, f"σ(K1)={sig1} = σ(K2)={sig2}, no strict increase"
+    sorted_atoms = sorted(universe, key=lambda a: w.get(a, 0), reverse=True)
+    selected = set(sorted_atoms[:budget])
+    return selected, compute_significance(w, selected)
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# 6. Closure Operators
-# ═══════════════════════════════════════════════════════════════════════════
-
-class ClosureOperator:
-    """
-    A closure operator on finite sets of integers.
-
-    Satisfies:
-    - Extensive: K ⊆ cl(K)
-    - Monotone: K1 ⊆ K2 → cl(K1) ⊆ cl(K2)
-    - Idempotent: cl(cl(K)) = cl(K)
-    """
-
-    def __init__(self, cl: Callable[[set[int]], set[int]]):
-        self._cl = cl
-
-    def close(self, K: set[int]) -> set[int]:
-        return self._cl(K)
-
-    def is_nonconservative(self, K: set[int], a: int) -> bool:
-        """Check if adding a to K is a nonconservative extension."""
-        cl_K = self.close(K)
-        cl_Ka = self.close(K | {a})
-        return cl_K < cl_Ka  # strict subset
-
-    def closure_significance(
-        self, weights: dict[int, int], K: set[int]
-    ) -> int:
-        """Compute closure-based significance: |cl(K)| + Σ_{cl(K)} w."""
-        cl_K = self.close(K)
-        return len(cl_K) + sum(weights.get(a, 0) for a in cl_K)
-
-
-def make_downward_closure() -> ClosureOperator:
-    """
-    Create a downward closure: cl(K) = {j : j ≤ max(K)}.
-
-    This models a system where knowing theorem i implies knowing all
-    prerequisites j < i.
-
-    >>> cl = make_downward_closure()
-    >>> sorted(cl.close({2, 5}))
-    [0, 1, 2, 3, 4, 5]
-    """
-    def cl(K: set[int]) -> set[int]:
-        if not K:
-            return set()
-        return set(range(max(K) + 1))
-    return ClosureOperator(cl)
-
-
-def make_dependency_closure(deps: dict[int, set[int]]) -> ClosureOperator:
-    """
-    Create a dependency-based closure operator.
-
-    deps[i] gives the set of theorems that i depends on.
-    cl(K) = K ∪ {all transitive dependencies of elements in K}.
-
-    >>> deps = {0: set(), 1: {0}, 2: {0, 1}, 3: {1}}
-    >>> cl = make_dependency_closure(deps)
-    >>> sorted(cl.close({2}))
-    [0, 1, 2]
-    """
-    def cl(K: set[int]) -> set[int]:
-        result = set(K)
-        queue = list(K)
-        while queue:
-            a = queue.pop()
-            for dep in deps.get(a, set()):
-                if dep not in result:
-                    result.add(dep)
-                    queue.append(dep)
-        return result
-    return ClosureOperator(cl)
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Example Usage
-# ═══════════════════════════════════════════════════════════════════════════
+# ============================================================
+# Example usage
+# ============================================================
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod(verbose=True)
+    print("=== Algorithm Demonstrations ===\n")
 
-    print("\n" + "=" * 60)
-    print("ALGORITHM EXAMPLES")
-    print("=" * 60)
+    # Setup
+    weights = {"A": 5, "B": 3, "C": 8, "D": 2, "E": 11, "F": 7}
 
-    # Proof terms
-    p0 = AxiomTerm(0)
-    p1 = AppTerm(AxiomTerm(0), AxiomTerm(1))
-    p2 = LamTerm(AppTerm(AxiomTerm(0), AxiomTerm(1)))
-    p3 = PairTerm(p1, p2)
-    p4 = AppTerm(p3, LamTerm(AxiomTerm(2)))
+    # Algorithm 1
+    K = {"A", "C", "E"}
+    print(f"Significance of {K}: {compute_significance(weights, K)}")
 
-    proofs = {0: p0, 1: p1, 2: p2, 3: p3, 4: p4}
-    print("\nProof terms:")
-    for i, p in proofs.items():
-        print(f"  Theorem {i}: size={proof_size(p)}, height={proof_height(p)}, "
-              f"height≤size: {proof_height(p) <= proof_size(p)}")
+    # Algorithm 2
+    result = quality_gate(weights, 15, {"A", "B"}, {"A", "B", "C", "E"})
+    print(f"\nQuality gate result:")
+    print(f"  Passes: {result.passes}")
+    print(f"  Advances field: {result.advances_field}")
+    print(f"  New atoms: {result.new_atoms}")
 
-    # Significance
-    weights = {i: proof_size(proofs[i]) for i in proofs}
-    K = {0, 1, 2}
-    print(f"\nSignificance of {sorted(K)}: {compute_significance(weights, K)}")
+    # Algorithm 3
+    proof = ProofNode.app(
+        ProofNode.lam(ProofNode.pair(ProofNode.ax("A"), ProofNode.ax("B"))),
+        ProofNode.ax("C")
+    )
+    print(f"\nProof features: {extract_features(proof)}")
+    print(f"Proof size: {proof_size(proof)}")
+    print(f"Proof significance: {significance_from_proof(weights, proof)}")
 
-    # Quality gate
-    print(f"Quality gate (τ=5): {evaluate_quality_gate(weights, 5, K)}")
-    print(f"Quality gate (τ=10): {evaluate_quality_gate(weights, 10, K)}")
-
-    # Package depth
-    print(f"Package depth of {sorted(K)}: {compute_package_depth(proofs, K)}")
-
-    # Master-class
-    print(f"Is theorem 4 a master-class contribution to {sorted(K)}? "
-          f"{is_master_class_contribution(proofs, K, 4)}")
-
-    # Closure
-    deps = {0: set(), 1: {0}, 2: {0, 1}, 3: {1}, 4: {2, 3}}
-    cl = make_dependency_closure(deps)
-    print(f"\nDependency closure of {{4}}: {sorted(cl.close({4}))}")
-    print(f"Nonconservative to add 4 to {{0,1}}? "
-          f"{cl.is_nonconservative({0, 1}, 4)}")
-    print(f"Nonconservative to add 0 to {{0,1}}? "
-          f"{cl.is_nonconservative({0, 1}, 0)}")
+    # Algorithm 6
+    selected, sig = greedy_maximize_significance(weights, set(weights.keys()), 3)
+    print(f"\nGreedy selection (budget=3): {selected}, significance={sig}")
