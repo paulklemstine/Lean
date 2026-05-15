@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.869875+00:00"
   },
   {
-    "id": "seed_076",
-    "title": "Master-Class Research via Conceptual Dependency Graphs and Critical Path Analysis",
-    "description": "Prove that the conceptual dependency graph of a mathematical theory has a critical path whose length bounds the minimum conceptual depth required to discover any result in that theory. Construct a Lean 4 formalization that extracts conceptual dependency graphs from proof terms, computes the critical path, and proves that results discovered by traversing the critical path are deeper than those discovered by shallow exploration. Show that Aether can use critical path analysis to guide research toward master-class results that require conceptual breakthroughs rather than incremental variations.",
-    "domains": [
-      "Meta",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.98,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "5cbb3f6f",
-    "timestamp": "2026-05-14T16:03:53.876807+00:00"
-  },
-  {
     "id": "seed_071",
     "title": "Research Package Quality via Certified Mathematical Significance Metrics",
     "description": "Define and formalize a mathematical significance metric that goes beyond correctness to measure the depth, novelty, and impact of a research result. Prove that the significance metric is a monotone function on the lattice of mathematical knowledge, and that results exceeding a significance threshold are guaranteed to advance the field. Show that this metric can be computed from the Lean 4 proof term structure alone, enabling fully automated quality gates that reject shallow work and elevate master-class contributions.",
@@ -1557,22 +1541,6 @@
     "timestamp": "2026-05-15T01:46:31.363546+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Evaporation theorem",
-    "description": ": Iterating small surgeries on horizon edges eventually destroys the horizon, producing a tropical analog of Hawking evaporation.\n\n### Proof Strategy\n- Use Mathlib's `SimpleGraph.Flow` and network flow machinery for the min-cut duality.\n- Stability follows from continuity of `tropicalDistance` in the weight matrix (uniform continuity on the finite graph).\n- Evaporation is an iterated application of the surgery distance bound theorem.\n\n### Cross-Domain Connections\n- **Information theory**: Horizon strength relates to channel capacity across the boundary.\n- **Network resilience**: Min-cut barriers model network partitions and failure cascades.\n\n---\n\n## Direction 3: Tropical Einstein–Maxwell Systems on Weighted Graphs\n\n### Motivation\nThe Einstein–Maxwell equations couple gravity (metric) with",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dc69d6dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:46:31.378404+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Charge-dependent surgery",
     "description": ": The surgery distance bound depends on the charge difference `|A u - A v|` at the wormhole endpoints.\n\n### Proof Strategy\n- Theorem 1 follows the same proof pattern as `tropicalDistance_bellman_le` with modified weights.\n- Gauge invariance is essentially definitional.\n- The charged surgery theorem extends `tropicalDistance_wormholeSurgery_le` with the modified weight matrix.\n\n### Cross-Domain Connections\n- **Electrical networks**: The gauge potential is an electric potential; charged distance models resistive flow.\n- **Optimal transport**: Charged distances relate to transport costs with source/sink terms.\n\n---\n\n## Direction 4: Categorical Functor from Graph Surgeries to Tropical Linear Operators\n\n### Motivation\nGraph surgeries (adding/removing/reweighting edges) form a category of transf",
@@ -1619,48 +1587,6 @@
     "source_exp_id": "dc69d6dd",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:46:31.410670+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "Document",
-    "description": "with both formal doc-strings and an updated research paper section",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e0e92b1c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:18:16.873789+00:00"
-  },
-  {
-    "id": "fd_0194",
-    "title": "Direction 1",
-    "description": "(Geometric gap conditions) — Highest mathematical payoff, most tractable in Lean.",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1b970ad9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:25:22.017524+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Direction 4",
-    "description": "(Verified search algorithm) — Most computationally concrete, enables experimental validation.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1b970ad9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:25:22.024200+00:00"
   },
   {
     "id": "fd_0196",
@@ -2157,10 +2083,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c26006e9",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4a96a94a",
     "timestamp": "2026-05-15T01:18:24.786465+00:00"
   },
   {
@@ -2242,39 +2168,6 @@
     "timestamp": "2026-05-15T01:59:02.281816+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Hypothesis",
-    "description": "The comparison theorem between tropical (min-plus) and classical (sum) sieves is an instance of a general phenomenon in idempotent semiring (dioid) theory: the idempotent semiring homomorphism from (ℝ, min, +) to (ℝ, +, ×) (via exponentiation) maps tropical sieve scores to classical multiplicative sieve weights.",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d8453b28",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:59:02.301853+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Priority Ranking",
-    "description": "| Direction | Difficulty | Impact | Recommended Order |\n|-----------|-----------|--------|-------------------|\n| 1. Parity barrier | Medium | Very High | First |\n| 4. Algorithmic search | Low | Medium | Second (parallel) |\n| 2. Tropical singular series | High | Very High | Third |\n| 5. Abstract dioid theory | Medium | High | Fourth |\n| 3. Circuit complexity | High | High | Fifth |\n\n**Recommended team allocation**: Directions 1 and 4 can proceed in parallel (one theoretical, one computational). Direction 2 should follow once the parity barrier formalization is complete. Directions 3 and 5 are more speculative but have high potential for cross-domain impact.",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d8453b28",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:59:02.314750+00:00"
-  },
-  {
     "id": "fd_0196",
     "title": "1. Automated Synthesis of Potential Functions via Tropical Linear Programming",
     "description": "**Hypothesis:** The set of valid potential functions for a given data structure forms a tropical polyhedron (defined by difference constraints of the form Φ(s) - Φ(s') ≤ w(s,s')), and optimal potential functions can be computed by solving a tropical linear feasibility problem—equivalently, a shortest-path problem in a constraint graph.\n\n**Proof Strategy:**\n- Formalize tropical polyhedra as solution sets of systems `Φ(s_i) - Φ(s_j) ≤ c_{ij}`.\n- Prove that the Bellman-Ford algorithm computes a feasible point (or detects infeasibility via a negative cycle) in this tropical polyhedron.\n- Show that the optimal amortized bound is the value of a dual tropical linear program.\n- Implement an automated potential-function synthesizer: given a state transition graph with edge costs, output a potential",
@@ -2342,5 +2235,116 @@
     "source_exp_id": "f4ff18da",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:17:18.128174+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Direction 1: Weighted Conceptual Depth and Novelty Costs",
+    "description": "**Goal**: Generalize uniform-depth to weighted depth, where each node carries a \"conceptual novelty\" weight `w : V → ℕ`. The weighted depth of a path is the sum of weights along it, and the weighted critical path bounds weighted discovery complexity.\n\n**Target theorem**:\n```\ntheorem weightedDepth_le_of_discoverable\n  (G : DepGraph V) (w : V → ℕ)\n  (S : Finset V) (hS : ∀ v ∈ S, G.isSource v) :\n  ∀ {n v}, v ∈ weightedDiscovered G w S n → weightedDepth G w v ≤ n\n```\n\n**Why it matters**: Uniform depth treats a routine lemma and a paradigm-shifting insight equally. Weighted depth would distinguish:\n- Long-but-routine dependency chains (low total weight)\n- Short-but-revolutionary conceptual jumps (high total weight)\n\nThis enables quantitative measurement of \"conceptual breakthroughs\" versus \"inc",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cbb3f6f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:32:03.193613+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Direction 2: Categorical/Functorial Transfer of Dependency Depth",
+    "description": "**Goal**: Define a morphism between dependency graphs (a functor between the corresponding partial orders) and prove that depth is preserved or bounded under structure-preserving maps.\n\n**Target theorem**:\n```\ntheorem depth_le_of_graph_morphism\n  (G₁ : DepGraph V₁) (G₂ : DepGraph V₂)\n  (f : V₁ → V₂) (hf : ∀ u v, u ∈ G₁.pred v → f u ∈ G₂.pred (f v)) :\n  ∀ v, G₁.depth v ≤ G₂.depth (f v)\n```\n\n**Why it matters**: This would enable *transfer theorems* — proving that if theory A embeds into theory B preserving dependency structure, then the conceptual depth of results in A is a lower bound for their images in B. This could formalize why certain mathematical translations (e.g., algebraization of topology) cannot simplify the conceptual landscape.\n\n**Proof strategy**: Induction on `G₁.wf`. The mor",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cbb3f6f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:32:03.203678+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Direction 3: Empirical Critical Path Extraction from Mathlib",
+    "description": "**Goal**: Build a meta-programming tool that extracts the dependency graph of declarations in a Mathlib module and computes critical paths.\n\n**Concrete deliverable**:\n- A Lean 4 metaprogram that, given a declaration name, traverses `Expr.getUsedConstants` to build `depOf : Name → Finset Name`.\n- Computation of `depth` and `criticalPathLength` for selected Mathlib subgraphs.\n- Identification of \"bottleneck theorems\" — declarations that lie on every long path.\n\n**Target analysis**:\n- Compare critical path lengths across Mathlib domains (algebra, analysis, topology, combinatorics).\n- Identify the \"deepest\" theorems in each domain.\n- Measure how much of the total dependency depth is concentrated in a small number of bottleneck lemmas.\n\n**Why it matters**: This converts the abstract theory into",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cbb3f6f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:32:03.212698+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Direction 4: Lower Bounds Under Branching-Factor Constraints",
+    "description": "**Goal**: Prove that if exploration is additionally constrained by a branching factor (each round discovers at most `b` new nodes), then discovery requires at least `⌈|V|/b⌉` rounds regardless of dependency structure.\n\n**Target theorem**:\n```\ntheorem rounds_ge_card_div_branching\n  (G : DepGraph V) (S : Finset V) (b : ℕ) (hb : 0 < b)\n  (bounded_discovery : ∀ n, (bounded_discovered G S b (n+1) \\ bounded_discovered G S b n).card ≤ b) :\n  ∀ v, v ∈ bounded_discovered G S b n → n ≥ (Fintype.card V - S.card) / b\n```\n\n**Why it matters**: Real research programs have finite bandwidth — a team can only absorb a bounded number of new concepts per unit time. This theorem shows that bandwidth limitations compound with dependency depth to create even stronger lower bounds on discovery time.\n\n**Proof stra",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cbb3f6f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:32:03.221140+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Direction 5: Comparison with Human Textbook Dependency Structure",
+    "description": "**Goal**: Formalize a comparison framework between the machine-extracted dependency graph and human-authored textbook prerequisite orderings.\n\n**Concrete approach**:\n1. Define a \"textbook ordering\" as a total order on theorems compatible with dependency (a topological sort).\n2. Define \"textbook depth\" as the chapter/section number assigned to each theorem.\n3. Prove that textbook depth is always an upper bound on graph-theoretic depth:\n   ```\n   theorem textbook_depth_ge_graph_depth\n     (G : DepGraph V) (σ : V → ℕ) (hσ : ∀ u v, u ∈ G.pred v → σ u < σ v) :\n     ∀ v, G.depth v ≤ σ v\n   ```\n4. Measure the *gap* between textbook depth and graph depth empirically.\n\n**Why it matters**: A large gap indicates \"unnecessary serialization\" — the textbook introduces concepts in a longer chain than the",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cbb3f6f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:32:03.231067+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Research Team Organization",
+    "description": "Each direction can be pursued semi-independently:\n\n| Direction | Prerequisites | Estimated Effort | Priority |\n|-----------|--------------|------------------|----------|\n| 1. Weighted depth | Current formalization | Medium | High |\n| 2. Functorial transfer | Direction 1 optional | Medium | Medium |\n| 3. Empirical extraction | Lean 4 metaprogramming | High | High |\n| 4. Branching bounds | Current formalization | Low | Medium |\n| 5. Textbook comparison | Direction 3 | Medium | High |\n\nDirections 1 and 4 can proceed immediately in parallel. Direction 3 should start concurrently as it provides the empirical backbone. Directions 2 and 5 build on earlier results.\n\n---",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cbb3f6f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:32:03.242458+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Long-Term Vision",
+    "description": "The ultimate goal is a **certified metamathematical complexity theory** where:\n- Every formal theorem has a computable \"conceptual depth\" score.\n- Research programs can be analyzed for their critical path structure.\n- AI theorem provers can use depth-aware search strategies.\n- Library architects can identify and resolve conceptual bottlenecks.\n\nThis creates a new bridge between proof theory, operations research, and AI — one grounded in machine-verified mathematics rather than informal analogy.",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cbb3f6f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:32:03.250598+00:00"
   }
 ]
