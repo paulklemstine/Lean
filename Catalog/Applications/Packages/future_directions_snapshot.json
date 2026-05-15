@@ -590,20 +590,6 @@
     "timestamp": "2026-05-14T16:16:22.737665+00:00"
   },
   {
-    "id": "fd_0089",
-    "title": "Lower bound via collision probability",
-    "description": ": Show that Pr[tropPow G (a₁·b₁) = tropPow G (a₂·b₂)] is small by analyzing when two different exponent products yield the same tropical power.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:22.739213+00:00"
-  },
-  {
     "id": "fd_0093",
     "title": "Low-rank attack",
     "description": ": If G has tropical rank r < n, then G can be written as a tropical product of an n×r and an r×n matrix. This decomposition reveals structural information about G^a, potentially allowing recovery of a.",
@@ -694,20 +680,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.129036+00:00"
-  },
-  {
-    "id": "fd_0143",
-    "title": "Rank-1 structure",
-    "description": ": A single wormhole surgery corresponds to a rank-1 tropical matrix update, enabling efficient recomputation of all-pairs shortest paths.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:24:30.133880+00:00"
   },
   {
     "id": "fd_0145",
@@ -802,20 +774,6 @@
     "timestamp": "2026-05-14T17:32:45.392105+00:00"
   },
   {
-    "id": "fd_0159",
-    "title": "Define the tropical eigenvalue",
-    "description": ": For a weight matrix $W$ on $n$ vertices, the tropical eigenvalue is $\\lambda(W) = \\min_{c \\text{ cycle}} \\text{cost}(c) / \\text{length}(c)$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "245e45a9",
-    "timestamp": "2026-05-14T17:33:00.474935+00:00"
-  },
-  {
     "id": "fd_0166",
     "title": "Apply to specific problems",
     "description": ": Show that certain functions (e.g., element distinctness, graph connectivity) require super-linear tropical cost in bounded-width branching programs.\n\n### Proof Strategy\n- Generalize the layered system framework from `Obstruction.lean`.\n- Use the block cost lemma within each layer.\n- Combine with the existing `layered_no_shortcut` theorem.\n\n### Cross-domain Impact\n- Circuit complexity (lower bounds for restricted circuits)\n- Streaming algorithms (space-bounded computation)\n- VLSI design (area-time tradeoffs)\n\n---\n\n## Direction 3: Tropical Communication Complexity via Min-Plus Protocol Cost\n\n### Goal\nDefine communication complexity over the min-plus semiring and prove direct-sum lower bounds using the cycle-gap framework.\n\n### Background\nIn classical communication complexity, Alice and Bob",
@@ -852,20 +810,6 @@
     "timestamp": "2026-05-14T17:33:00.512633+00:00"
   },
   {
-    "id": "fd_0183",
-    "title": "Build",
-    "description": "the required infrastructure (critical graph definitions, semigroup orbit sets, DES trajectories) as Lean definitions with `sorry`-ed properties.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c337fb05",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:35:20.582859+00:00"
-  },
-  {
     "id": "fd_0184",
     "title": "Existence",
     "description": ": Use Karp's algorithm to compute μ. Construct the \"critical graph\" (subgraph of edges lying on minimum-mean cycles). Show that the tropical CSR (Cyclicity-Saturation-Reduction) decomposition yields an eigenvector.",
@@ -878,23 +822,6 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
-  },
-  {
-    "id": "fd_0190",
-    "title": "Strategy = eigenvector",
-    "description": ": Prove that optimal positional strategies correspond to choices that realize the eigenvector equation.\n\n### Cross-Domain Connections\n- **Theoretical computer science**: Mean-payoff games are in NP ∩ coNP (unknown if in P)\n- **Verification**: Model checking of reactive systems\n- **Economics**: Repeated games with discounting → tropical limit\n- **Ecology**: Species as strategic agents; evolutionary game theory meets tropical algebra\n\n### Estimated Difficulty\nMedium-Hard. The game-theoretic formalization is conceptually clean but requires defining game trees, strategies, and payoffs formally.\n\n### Key References\n- Ehrenfeucht & Mycielski (1979), *Positional strategies for mean payoff games*\n- Zwick & Paterson (1996), *The complexity of mean payoff games on graphs*\n\n---\n\n## Direction 3: Tropi",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.148110+00:00"
   },
   {
     "id": "fd_0187",
@@ -911,24 +838,6 @@
     "timestamp": "2026-05-15T01:18:10.018444+00:00"
   },
   {
-    "id": "fd_0190",
-    "title": "Automata → logic direction",
-    "description": ": Programmatically build WMSO formulas from automaton structure using nested `existsSO` quantifiers for state predicates.\n\n### Expected Impact\n- First fully verified weighted MSO equivalence in any proof assistant\n- Reusable infrastructure for extended alphabet technique applicable to other equivalence theorems\n- Template for verifying weighted automata transformations\n\n### Cross-Domain Connections\n- **Software verification**: Certified compilation from specifications to automata\n- **Database theory**: Weighted query evaluation on string databases\n\n---\n\n## Direction 2: Tropical Büchi–Elgot for Infinite Words (ω-Automata)\n\n### Hypothesis\nThe tropical Büchi–Elgot theorem extends to infinite words using weighted Büchi automata, where the cost of an infinite run is defined via `liminf`, `limsu",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.040238+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Prove closure properties",
     "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
@@ -942,20 +851,6 @@
     "source_exp_id": "fafc44be",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:10.085978+00:00"
-  },
-  {
-    "id": "fd_0190",
-    "title": "Cone monotonicity under surgery",
-    "description": ": Wormhole surgery can only enlarge causal cones. If `W' = wormholeSurgery W u v τ`, then `tropicalLightCone W x r ⊆ tropicalLightCone W' x r`.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dc69d6dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:46:31.344260+00:00"
   },
   {
     "id": "fd_0191",
@@ -1183,10 +1078,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9ab661ec",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9cabdd3c",
     "timestamp": "2026-05-15T10:01:34.433557+00:00"
   },
   {
@@ -1205,39 +1100,6 @@
     "source_exp_id": "b751b05a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T11:01:19.706479+00:00"
-  },
-  {
-    "id": "fd_0227",
-    "title": "Cyclic tag systems",
-    "description": "are the simplest known Turing-complete computation model. Simulate them directly in the tropical CA.\n2. Alternatively, simulate a **reversible lattice gas** (Margolus partitioning CA) which is known to be universal.\n3. For each primitive operation of the simulated system, construct a tropical collision gadget.\n4. Prove the simulation is **faithful**: the encoding preserves computation steps exactly.",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b751b05a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:01:19.765509+00:00"
-  },
-  {
-    "id": "fd_0228",
-    "title": "Transfer Turing universality",
-    "description": "from the simulated system to the tropical CA.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b751b05a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:01:19.774503+00:00"
   },
   {
     "id": "fd_0220",
@@ -1480,21 +1342,6 @@
     "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
-    "id": "fd_0183",
-    "title": "Cross-Cutting Themes",
-    "description": "All five directions share a common architecture:\n- **Local-to-global principle**: compute locally, certify globally, diagnose obstructions topologically.\n- **Finite combinatorial models**: finite simplicial complexes, graph Laplacians, finite-dimensional cohomology.\n- **Quantitative topology**: not just existence/nonexistence of obstructions, but numerical bounds derived from cocycle norms.\n- **Formal verification**: all results are candidates for machine-checked proofs, extending the foundation established in this work.\n\nThe long-term vision is a **cohomological robustness calculus** — a systematic algebraic framework where robustness certificates are local-and-compositional, vulnerability diagnoses are topological invariants, and formal verification ensures correctness of safety-critical",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T18:36:13.866477+00:00"
-  },
-  {
     "id": "fd_0179",
     "title": "Phase 1 (Immediate, 1-2 weeks)",
     "description": "- **Team A:** Four-voice generalization (Direction 1). Extend all definitions, re-run proofs, compute database.\n- **Team B:** Computational exploration. Enumerate all triad/seventh-chord transitions, visualize cost landscapes, identify patterns.",
@@ -1537,23 +1384,6 @@
     "source_exp_id": "8fece6dc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:35:01.991565+00:00"
-  },
-  {
-    "id": "fd_0190",
-    "title": "Implementation Plan",
-    "description": "1. Formalize Karp's algorithm in Lean 4 with correctness proof.\n2. Define a `CertifiedTropicalGap` structure containing the computed gap and its proof of validity.\n3. Compose with the bridge theorem to produce a certified spectral/mixing bound.\n4. Extract the algorithm to executable code via Lean's code generation.",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad615ded",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:34:54.003639+00:00"
   },
   {
     "id": "fd_0197",
@@ -2206,5 +2036,92 @@
     "source_exp_id": "ebeb33e3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T11:04:31.808425+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "1. Tropical Collatz–Wielandt Theorem",
+    "description": "**Theorem Statement:**\nFor any `n > 0` and weight matrix `W : Matrix (Fin n) (Fin n) ℝ`,\n```\ntropicalEigenvalue W = sInf { μ : ℝ | ∃ x : Fin n → ℝ,\n  ∀ i, Finset.univ.inf' hn (fun j => W i j + x j) ≤ μ + x i }\n```\n\n**Why It Matters:**\nThis characterizes the min-plus spectral radius as a minimax value over \"tropical sub-eigenvectors.\" It is the min-plus analogue of the classical Collatz–Wielandt theorem for nonneg matrices (Perron–Frobenius theory). It provides a dual certificate for the minimum cycle mean: instead of finding an optimal cycle, one exhibits a potential function.\n\n**Proof Strategy:**\n- (≤) For any valid (μ, x), summing the inequality along any cycle of length k shows cycleMean ≥ μ. Hence tropicalEigenvalue ≥ μ.\n- (≥) Construct x from shortest-path potentials in the \"policy gr",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "245e45a9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:00:56.477485+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "2. Karp's Algorithm: Certified Computation of Minimum Cycle Mean",
+    "description": "**Theorem Statement:**\nDefine `d(k, v) = min cost of a walk of length exactly k ending at v`. Then:\n```\ntropicalEigenvalue W = min_v max_k (d(n, v) - d(k, v)) / (n - k)\n```\nwhere the max is over `k ∈ {0, …, n-1}`.\n\n**Why It Matters:**\nKarp's algorithm (1978) computes the minimum cycle mean in O(n·m) time. A certified implementation would be the first formally verified algorithm for this fundamental graph optimization problem. Combined with `tropicalEigenvalue_attained`, it provides a complete computational pipeline: compute the value, then extract the witness cycle.\n\n**Proof Strategy:**\n1. Define `d(k, v)` by dynamic programming: `d(0, v) = 0` for a fixed source, `d(k+1, v) = min_u (d(k, u) + W(u, v))`.\n2. Show that `max_k (d(n, v) - d(k, v)) / (n - k)` equals the minimum mean of cycles pa",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "245e45a9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:00:56.490313+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "3. Mean-Payoff Game Value = Tropical Eigenvalue",
+    "description": "**Theorem Statement:**\nFor a one-player (Min) deterministic mean-payoff game with transition matrix W:\n```\ngame_value W = tropicalEigenvalue W\n```\nFor two-player games, the value equals the saddle point of tropical eigenvalues over strategies.\n\n**Why It Matters:**\nMean-payoff games are central to verification, automata theory, and algorithmic game theory. The connection to tropical eigenvalues provides structural insight and algorithmic tools. Formalizing this in Lean would create a bridge between game theory and tropical algebra.\n\n**Proof Strategy:**\n- One-player case: the optimal strategy induces a policy graph. The long-run average cost equals the minimum cycle mean in this graph, which is the tropical eigenvalue.\n- Two-player case: use strategy iteration. Each fixed strategy pair yield",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "245e45a9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:00:56.503800+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "4. Full Bridge to Tropical Rayleigh Eigenvalue",
+    "description": "**Theorem Statement:**\nGiven a max-plus kernel operator `K : MaxPlusKernelOp (Fin n)` with kernel matrix W:\n```\n∃ ev phi, K.IsEigenpair ev phi →\n  ev = - tropicalEigenvalue (fun i j => - W j i)\n```\nThat is, the max-plus eigenvalue of K equals the negation of the min-plus eigenvalue of the transposed negated matrix.\n\n**Why It Matters:**\nThis bridges the existing `tropical_rayleigh_eigenvalue` theorem (max-plus variational principle) with the combinatorial cycle-mean theory. It unifies the analytic/spectral and combinatorial/graph-theoretic perspectives on tropical spectral theory.\n\n**Proof Strategy:**\n1. Show that negating all matrix entries converts min-plus to max-plus: `max_j (-W_{ij} + x_j) = -(min_j (W_{ij} - x_j))`.\n2. The max-plus eigenvalue equation becomes `max_j (K.kernel(j,i) + φ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "245e45a9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:00:56.515916+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "5. Tropical Characteristic Data from Cycle Structure",
+    "description": "**Theorem Statement:**\nIf the catalog's `tropical_eigenvalue_determines_char` establishes that a tropical spectral value determines a tropical character χ, then:\n```\n∀ W, ∀ χ determined by tropicalEigenvalue W,\n  χ is determined by the minimum cycle mean structure of W\n```\n\n**Why It Matters:**\nThis would show that purely combinatorial data (cycles and their means) determines arithmetic/tropical characters. It connects graph optimization to the tropical Langlands program, suggesting that representation-theoretic invariants can be computed from shortest-path data.\n\n**Proof Strategy:**\n1. Inspect `tropical_eigenvalue_determines_char` to extract the precise relationship between eigenvalue and character.\n2. Substitute `tropicalEigenvalue = min cycle mean` (our attainment theorem).\n3. Show the r",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "245e45a9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:00:56.530659+00:00"
   }
 ]

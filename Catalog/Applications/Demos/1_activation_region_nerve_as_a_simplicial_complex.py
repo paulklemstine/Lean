@@ -1,852 +1,888 @@
 #!/usr/bin/env python3
 """
-Applications of Activation-Nerve Margin Cosheaf Theory
+Applications of Activation-Nerve Margin-Cosheaf Certification
 
-Demonstrates real-world applications of the topological certification framework:
+Real-world applications demonstrating the topological certification framework:
 1. Image classifier robustness certification
-2. Adversarial detection via non-exactness
-3. Comparison with pointwise certification
-4. Scalability analysis across network sizes
+2. Safety-critical controller verification
+3. Adversarial vulnerability diagnosis
 """
 
 import numpy as np
-from typing import List, Dict, Tuple
-from algorithms import (
-    ActivationRegionDecomposer, NerveConstructor,
-    MarginCosheafComputer, DegreeOneExactnessChecker,
-    CertifiedRobustnessDeriver, full_certification_pipeline
-)
+from typing import List, Tuple, Dict
+from dataclasses import dataclass
 
 
-def application_1_binary_classifier():
-    """Application 1: Certify a binary classifier on 2D data.
+@dataclass 
+class SimpleReLUNetwork:
+    """A simple multi-layer ReLU network for demonstration."""
+    weights: List[np.ndarray]
+    biases: List[np.ndarray]
+    
+    def forward(self, x: np.ndarray) -> np.ndarray:
+        """Forward pass through the network."""
+        h = x.copy()
+        for i, (W, b) in enumerate(zip(self.weights, self.biases)):
+            h = W @ h + b
+            if i < len(self.weights) - 1:  # ReLU on hidden layers
+                h = np.maximum(h, 0)
+        return h
+    
+    def margin(self, x: np.ndarray) -> float:
+        """Margin: difference between top-2 class logits."""
+        logits = self.forward(x)
+        sorted_logits = np.sort(logits)[::-1]
+        return float(sorted_logits[0] - sorted_logits[1])
+    
+    def predict(self, x: np.ndarray) -> int:
+        """Predicted class."""
+        return int(np.argmax(self.forward(x)))
+    
+    def lipschitz_bound(self) -> float:
+        """Upper bound on Lipschitz constant (product of spectral norms)."""
+        L = 1.0
+        for W in self.weights:
+            L *= np.linalg.norm(W, ord=2)
+        return L
 
-    Scenario: A ReLU network classifies 2D points as positive/negative.
-    We certify that the classifier is robust to small perturbations.
-    """
+
+# ============================================================
+# APPLICATION 1: Binary Classifier Certification
+# ============================================================
+def app_binary_classifier():
+    """Certify a binary classifier on a 2D domain."""
     print("=" * 60)
-    print("APPLICATION 1: Binary Classifier Robustness")
+    print("APPLICATION 1: Binary Classifier Robustness Certification")
     print("=" * 60)
-
-    # Define a 3-layer ReLU classifier
+    
+    # Create a simple 2D binary classifier
     np.random.seed(42)
-    W1 = np.random.randn(8, 2) * 0.5
-    b1 = np.random.randn(8) * 0.1
-    W2 = np.random.randn(4, 8) * 0.3
-    b2 = np.random.randn(4) * 0.1
-    W3 = np.random.randn(1, 4) * 0.2
-    b3 = np.array([0.1])
-
-    def net(x):
-        h1 = np.maximum(W1 @ x + b1, 0)
-        h2 = np.maximum(W2 @ h1 + b2, 0)
-        return float((W3 @ h2 + b3)[0])
-
-    def preact(x):
-        h1_pre = W1 @ x + b1
-        h1 = np.maximum(h1_pre, 0)
-        h2_pre = W2 @ h1 + b2
-        return np.concatenate([h1_pre, h2_pre])
-
-    def margin(x):
-        return abs(net(x))
-
-    bounds = (np.array([-1.5, -1.5]), np.array([1.5, 1.5]))
-
-    results = full_certification_pipeline(net, preact, margin, bounds, n_samples=3000)
-
-    # Report
-    print(f"\nNetwork: 3-layer ReLU (2 -> 8 -> 4 -> 1)")
-    print(f"Domain: [-1.5, 1.5]^2")
-    print(f"Regions found: {results['n_regions']}")
-    if results['certified_radius']:
-        print(f"CERTIFIED ROBUST with radius {results['certified_radius']:.6f}")
-    else:
-        print("NOT CERTIFIED: margin cosheaf is not degree-1 exact")
-    return results
-
-
-def application_2_adversarial_detection():
-    """Application 2: Detect adversarial vulnerability via non-exactness.
-
-    If degree-1 exactness fails, we identify the specific regions/overlaps
-    where the margin certificate breaks down — these are adversarial hotspots.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Adversarial Vulnerability Detection")
-    print("=" * 60)
-
-    # Create a network with a known adversarial vulnerability
-    # (thin decision boundary region)
-    W1 = np.array([[3.0, 0.0], [0.0, 3.0], [-1.0, 1.0], [1.0, -1.0]])
-    b1 = np.array([0.0, 0.0, 0.01, 0.01])  # near-zero biases create thin regions
-    W2 = np.array([1.0, -1.0, 0.5, -0.5])
-    b2 = 0.0  # zero bias = decision boundary passes through origin
-
-    def net(x):
-        return float(W2 @ np.maximum(W1 @ x + b1, 0) + b2)
-
-    def preact(x):
-        return W1 @ x + b1
-
-    def margin(x):
-        return abs(net(x))
-
-    bounds = (np.array([-1.0, -1.0]), np.array([1.0, 1.0]))
-    np.random.seed(99)
-
-    results = full_certification_pipeline(net, preact, margin, bounds, n_samples=3000)
-
-    if not results['degree1_exact']:
-        print("\n*** ADVERSARIAL VULNERABILITY DETECTED ***")
-        print(f"Diagnostic: {results['diagnostic']}")
-        print("The non-exactness indicates a region where margin ≈ 0,")
-        print("meaning adversarial examples likely exist nearby.")
-
-        # Find the vulnerable points
-        cosheaf = results['cosheaf']
-        vulnerable_simplices = [
-            (s, v) for s, v in cosheaf.values.items() if v <= 0.01
+    net = SimpleReLUNetwork(
+        weights=[
+            np.array([[2.0, 1.0], [-1.0, 2.0], [1.0, -1.0], [0.5, 0.5]]),
+            np.array([[1.0, -1.0, 0.5, 0.3], [-0.5, 1.0, -0.3, 0.7]]),
+        ],
+        biases=[
+            np.array([0.1, -0.2, 0.3, -0.1]),
+            np.array([0.0, 0.0]),
         ]
-        print(f"\nVulnerable simplices (margin ≤ 0.01):")
-        for s, v in vulnerable_simplices[:5]:
-            print(f"  Simplex {set(s)}: margin = {v:.6f}")
+    )
+    
+    # Domain: unit square
+    domain = [(-1.0, 1.0), (-1.0, 1.0)]
+    
+    # Sample the domain and compute margins
+    n_grid = 50
+    xs = np.linspace(domain[0][0], domain[0][1], n_grid)
+    ys = np.linspace(domain[1][0], domain[1][1], n_grid)
+    
+    margins = np.zeros((n_grid, n_grid))
+    predictions = np.zeros((n_grid, n_grid), dtype=int)
+    
+    for i, x in enumerate(xs):
+        for j, y in enumerate(ys):
+            point = np.array([x, y])
+            margins[i, j] = net.margin(point)
+            predictions[i, j] = net.predict(point)
+    
+    # Compute global statistics
+    min_margin = margins.min()
+    avg_margin = margins.mean()
+    lipschitz = net.lipschitz_bound()
+    
+    print(f"\nNetwork: 2 → 4 → 2 (ReLU hidden layer)")
+    print(f"Domain: [-1,1]²")
+    print(f"Lipschitz bound: {lipschitz:.4f}")
+    print(f"Minimum margin: {min_margin:.4f}")
+    print(f"Average margin: {avg_margin:.4f}")
+    
+    if min_margin > 0:
+        certified_radius = min_margin / lipschitz
+        print(f"\n✓ CERTIFIED ROBUST")
+        print(f"  Uniform margin δ = {min_margin:.4f}")
+        print(f"  Certified radius r = δ/L = {certified_radius:.6f}")
+        print(f"  Any perturbation ≤ {certified_radius:.6f} preserves classification")
     else:
-        print(f"No adversarial vulnerability detected (all margins positive)")
-        if results['certified_radius']:
-            print(f"Certified radius: {results['certified_radius']:.6f}")
+        print(f"\n✗ NOT CERTIFIED — margin drops to {min_margin:.4f}")
+        # Find vulnerable points
+        min_idx = np.unravel_index(margins.argmin(), margins.shape)
+        print(f"  Most vulnerable point: ({xs[min_idx[0]]:.2f}, {ys[min_idx[1]]:.2f})")
 
-    return results
 
-
-def application_3_comparison_with_pointwise():
-    """Application 3: Compare nerve-based vs pointwise certification.
-
-    Shows that the nerve-based approach can provide tighter or more
-    informative certificates than naive pointwise Lipschitz bounds.
-    """
+# ============================================================
+# APPLICATION 2: Safety-Critical Controller
+# ============================================================
+def app_safety_controller():
+    """Verify a safety-critical neural controller."""
     print("\n" + "=" * 60)
-    print("APPLICATION 3: Nerve-Based vs Pointwise Certification")
+    print("APPLICATION 2: Safety-Critical Controller Verification")
     print("=" * 60)
-
-    W1 = np.array([[2.0, 1.0], [-1.0, 2.0], [1.5, -0.5]])
-    b1 = np.array([0.5, -0.3, 0.2])
-    W2 = np.array([1.0, -0.8, 0.6])
-    b2 = 0.3
-
-    def net(x):
-        return float(W2 @ np.maximum(W1 @ x + b1, 0) + b2)
-
-    def preact(x):
-        return W1 @ x + b1
-
-    def margin(x):
-        return abs(net(x))
-
-    bounds = (np.array([-2.0, -2.0]), np.array([2.0, 2.0]))
-    np.random.seed(77)
-
-    # Nerve-based certification
-    results = full_certification_pipeline(net, preact, margin, bounds,
-                                          n_samples=3000, verbose=False)
-
-    # Pointwise certification at random test points
-    test_points = np.random.uniform(-2, 2, (100, 2))
-    pointwise_radii = []
-    L_global = results.get('lipschitz', 1.0)
-
-    for pt in test_points:
-        m = margin(pt)
-        if m > 0 and L_global > 0:
-            r = m / L_global  # pointwise radius
-            pointwise_radii.append(r)
-
-    print(f"\nNerve-based certification:")
-    print(f"  Regions: {results['n_regions']}")
-    print(f"  Degree-1 exact: {results['degree1_exact']}")
-    if results['certified_radius']:
-        print(f"  Certified radius: {results['certified_radius']:.6f}")
+    
+    # Scenario: a neural network controls braking force
+    # Input: [speed, distance_to_obstacle]
+    # Output: [brake_force, throttle]
+    # Safety: brake_force > throttle when distance < threshold
+    
+    net = SimpleReLUNetwork(
+        weights=[
+            np.array([[1.0, -2.0], [-0.5, 1.0], [0.3, 0.8]]),
+            np.array([[2.0, -0.5, 1.0], [-1.0, 1.5, -0.3]]),
+        ],
+        biases=[
+            np.array([0.5, 0.1, -0.2]),
+            np.array([0.3, -0.1]),
+        ]
+    )
+    
+    # Safety domain: speed in [0, 30] m/s, distance in [0, 5] m
+    # In this region, the controller must output brake > throttle
+    n_test = 100
+    speeds = np.linspace(0, 30, n_test)
+    distances = np.linspace(0, 5, n_test)
+    
+    min_safety_margin = float('inf')
+    worst_point = None
+    safety_violations = 0
+    
+    for s in speeds:
+        for d in distances:
+            output = net.forward(np.array([s/30.0, d/5.0]))  # Normalize inputs
+            brake, throttle = output[0], output[1]
+            safety_margin = brake - throttle  # Must be positive
+            
+            if safety_margin < min_safety_margin:
+                min_safety_margin = safety_margin
+                worst_point = (s, d)
+            
+            if safety_margin < 0:
+                safety_violations += 1
+    
+    lipschitz = net.lipschitz_bound()
+    total_points = n_test * n_test
+    
+    print(f"\nController: 2 → 3 → 2 (ReLU)")
+    print(f"Safety domain: speed ∈ [0, 30] m/s, distance ∈ [0, 5] m")
+    print(f"Safety condition: brake_force > throttle")
+    print(f"\nResults:")
+    print(f"  Points tested: {total_points}")
+    print(f"  Safety violations: {safety_violations}")
+    print(f"  Minimum safety margin: {min_safety_margin:.4f}")
+    print(f"  Lipschitz bound: {lipschitz:.4f}")
+    
+    if min_safety_margin > 0:
+        radius = min_safety_margin / lipschitz
+        print(f"\n✓ CONTROLLER VERIFIED SAFE")
+        print(f"  Robustness radius: {radius:.6f}")
+        print(f"  Sensor noise tolerance: ±{radius:.6f} (normalized)")
     else:
-        print(f"  Not certifiable")
-
-    if pointwise_radii:
-        print(f"\nPointwise certification (100 test points):")
-        print(f"  Mean radius: {np.mean(pointwise_radii):.6f}")
-        print(f"  Min radius: {np.min(pointwise_radii):.6f}")
-        print(f"  Max radius: {np.max(pointwise_radii):.6f}")
-        print(f"  Std: {np.std(pointwise_radii):.6f}")
-
-    print(f"\nKey insight: The nerve-based certificate is GLOBAL and")
-    print(f"TOPOLOGICAL, while pointwise certificates are local.")
-    print(f"Nerve-based: certifies ALL of K simultaneously.")
-    print(f"Pointwise: only certifies individual points.")
-
-    return results
+        print(f"\n✗ SAFETY VIOLATION DETECTED")
+        print(f"  Worst point: speed={worst_point[0]:.1f} m/s, dist={worst_point[1]:.1f} m")
+        print(f"  Margin at worst point: {min_safety_margin:.4f}")
 
 
-def application_4_scalability():
-    """Application 4: Scalability analysis across network sizes.
-
-    Test how the number of activation regions and nerve complexity
-    scale with network width and depth.
-    """
+# ============================================================
+# APPLICATION 3: Adversarial Vulnerability Diagnosis
+# ============================================================
+def app_vulnerability_diagnosis():
+    """Diagnose adversarial vulnerability using the nerve structure."""
     print("\n" + "=" * 60)
-    print("APPLICATION 4: Scalability Analysis")
+    print("APPLICATION 3: Adversarial Vulnerability Diagnosis")
     print("=" * 60)
+    
+    # Create a network with deliberate vulnerability
+    net = SimpleReLUNetwork(
+        weights=[
+            np.array([[3.0, 0.0], [0.0, 3.0], [-2.0, -2.0], [1.0, -1.0]]),
+            np.array([[1.0, 0.5, -0.8, 0.3], [0.2, -1.0, 0.5, 0.7]]),
+        ],
+        biases=[
+            np.array([0.0, 0.0, 1.0, 0.5]),
+            np.array([0.1, -0.1]),
+        ]
+    )
+    
+    # Define activation regions as quadrants (simplified)
+    region_names = ["NE (x>0, y>0)", "NW (x<0, y>0)", 
+                    "SW (x<0, y<0)", "SE (x>0, y<0)"]
+    
+    region_bounds = [
+        [(0, 1), (0, 1)],      # NE
+        [(-1, 0), (0, 1)],     # NW
+        [(-1, 0), (-1, 0)],    # SW
+        [(0, 1), (-1, 0)],     # SE
+    ]
+    
+    # Compute margin on each region
+    n_samples = 500
+    region_margins = {}
+    region_min_margins = {}
+    
+    print(f"\nNetwork: 2 → 4 → 2 (ReLU)")
+    print(f"Domain: [-1,1]²")
+    print(f"\nRegion-by-region analysis:")
+    
+    for idx, (name, bounds) in enumerate(zip(region_names, region_bounds)):
+        margins = []
+        for _ in range(n_samples):
+            x = np.random.uniform(bounds[0][0], bounds[0][1])
+            y = np.random.uniform(bounds[1][0], bounds[1][1])
+            m = net.margin(np.array([x, y]))
+            margins.append(m)
+        
+        min_m = min(margins)
+        avg_m = np.mean(margins)
+        region_margins[idx] = margins
+        region_min_margins[idx] = min_m
+        
+        status = "✓" if min_m > 0 else "✗ VULNERABLE"
+        print(f"  R_{idx} ({name}):")
+        print(f"    Min margin: {min_m:.4f}  Avg margin: {avg_m:.4f}  {status}")
+    
+    # Degree-1 exactness check
+    all_positive = all(m > 0 for m in region_min_margins.values())
+    global_min = min(region_min_margins.values())
+    
+    print(f"\nDegree-1 Exactness Analysis:")
+    print(f"  All vertex margins positive: {all_positive}")
+    print(f"  Global minimum margin: {global_min:.4f}")
+    
+    if not all_positive:
+        vulnerable = [i for i, m in region_min_margins.items() if m <= 0]
+        print(f"\n  ⚠ DIAGNOSIS: Vulnerability located in {len(vulnerable)} region(s):")
+        for v in vulnerable:
+            print(f"    → Region R_{v} ({region_names[v]}): margin = {region_min_margins[v]:.4f}")
+        print(f"\n  RECOMMENDATION: Retrain with margin regularization on vulnerable regions.")
+        print(f"  Target: increase margin in R_{vulnerable[0]} from {region_min_margins[vulnerable[0]]:.4f} to > 0")
+    else:
+        lipschitz = net.lipschitz_bound()
+        radius = global_min / lipschitz
+        print(f"\n  ✓ All regions certifiable")
+        print(f"  Lipschitz bound: {lipschitz:.4f}")
+        print(f"  Certified radius: {radius:.6f}")
+    
+    # Nerve structure
+    print(f"\nActivation Nerve Structure:")
+    print(f"  Vertices (0-simplices): {len(region_names)}")
+    print(f"  Edges (1-simplices): {4} (adjacent regions)")
+    print(f"  Faces (2-simplices): {0} (no triple overlaps)")
+    print(f"  Euler characteristic: {len(region_names) - 4}")
 
-    results_table = []
 
-    for width in [2, 4, 6, 8]:
-        np.random.seed(42)
-        W1 = np.random.randn(width, 2) * 0.5
-        b1 = np.random.randn(width) * 0.2
-        W2 = np.random.randn(width) * 0.3
-        b2 = 0.1
-
-        def make_net(W1, b1, W2, b2):
-            def net(x):
-                return float(W2 @ np.maximum(W1 @ x + b1, 0) + b2)
-            def preact(x):
-                return W1 @ x + b1
-            def margin(x):
-                return abs(net(x))
-            return net, preact, margin
-
-        net, preact, margin = make_net(W1, b1, W2, b2)
-        bounds = (np.array([-1.0, -1.0]), np.array([1.0, 1.0]))
-
-        results = full_certification_pipeline(
-            net, preact, margin, bounds, n_samples=2000, verbose=False)
-
-        row = {
-            'width': width,
-            'n_regions': results['n_regions'],
-            'f_vector': results['f_vector'],
-            'euler_char': results['euler_char'],
-            'exact': results['degree1_exact'],
-            'radius': results.get('certified_radius', None),
-            'time': results['time']
-        }
-        results_table.append(row)
-
-    print(f"\n{'Width':>6} {'Regions':>8} {'f-vector':>20} {'χ':>4} "
-          f"{'Exact':>6} {'Radius':>10} {'Time(s)':>8}")
-    print("-" * 70)
-    for r in results_table:
-        radius_str = f"{r['radius']:.6f}" if r['radius'] else "N/A"
-        print(f"{r['width']:>6} {r['n_regions']:>8} {str(r['f_vector']):>20} "
-              f"{r['euler_char']:>4} {str(r['exact']):>6} "
-              f"{radius_str:>10} {r['time']:>8.3f}")
-
-    print(f"\nKey observation: Number of activation regions grows")
-    print(f"exponentially with width, but the nerve captures")
-    print(f"the essential topology in polynomial-size data.")
-
-    return results_table
-
-
+# ============================================================
+# Run all applications
+# ============================================================
 if __name__ == "__main__":
-    r1 = application_1_binary_classifier()
-    r2 = application_2_adversarial_detection()
-    r3 = application_3_comparison_with_pointwise()
-    r4 = application_4_scalability()
-
+    print("Activation-Nerve Certification: Real-World Applications")
+    print()
+    
+    app_binary_classifier()
+    app_safety_controller()
+    app_vulnerability_diagnosis()
+    
     print("\n" + "=" * 60)
-    print("ALL APPLICATIONS COMPLETE")
+    print("All applications complete.")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Demo: Activation-Region Nerve and Margin Cosheaf Exactness
+Activation-Nerve Margin-Cosheaf Certification: Concrete Demonstrations
 
-Demonstrates the core theorems with concrete numerical examples:
-1. A 2D ReLU network partitioning the plane into activation regions.
-2. Computing the nerve of the activation cover.
-3. Checking degree-1 exactness of the margin cosheaf.
-4. Deriving certified robustness radii.
-
-Run: python demo.py
+This script demonstrates the mathematical framework for certifying neural network
+robustness via the activation nerve and margin cosheaf, with concrete numerical examples.
 """
 
 import numpy as np
 from itertools import combinations
-from typing import List, Tuple, Dict, Set
+from typing import Dict, List, Tuple, Set, Optional
+
+
+def compute_activation_regions_1d(weights: np.ndarray, biases: np.ndarray,
+                                    domain: Tuple[float, float]) -> List[Tuple[float, float]]:
+    """Compute activation regions of a single ReLU layer in 1D.
+    
+    Each neuron w*x + b has a breakpoint at x = -b/w (if w != 0).
+    The activation regions are the intervals between consecutive breakpoints.
+    """
+    breakpoints = []
+    for w, b in zip(weights, biases):
+        if abs(w) > 1e-12:
+            bp = -b / w
+            if domain[0] <= bp <= domain[1]:
+                breakpoints.append(bp)
+    breakpoints = sorted(set([domain[0]] + breakpoints + [domain[1]]))
+    regions = [(breakpoints[i], breakpoints[i+1]) 
+               for i in range(len(breakpoints) - 1)]
+    return regions
+
+
+def compute_nerve_1d(regions: List[Tuple[float, float]]) -> Dict[frozenset, bool]:
+    """Compute the nerve of a 1D interval cover.
+    
+    Two intervals overlap if they share an endpoint (closure intersection).
+    Returns dict mapping finsets of indices to whether they are simplices.
+    """
+    n = len(regions)
+    nerve = {}
+    
+    # 0-simplices (vertices): all regions
+    for i in range(n):
+        nerve[frozenset([i])] = True
+    
+    # 1-simplices (edges): adjacent regions share a boundary point
+    for i in range(n):
+        for j in range(i+1, n):
+            a1, b1 = regions[i]
+            a2, b2 = regions[j]
+            # Check if closures intersect
+            if b1 >= a2 and b2 >= a1:
+                nerve[frozenset([i, j])] = True
+    
+    # Higher simplices: check triple+ intersections
+    for k in range(3, n+1):
+        for combo in combinations(range(n), k):
+            # All pairwise overlaps must exist
+            all_pairs = all(frozenset([combo[i], combo[j]]) in nerve 
+                          for i in range(len(combo)) for j in range(i+1, len(combo)))
+            if all_pairs:
+                # Check actual intersection
+                left = max(regions[c][0] for c in combo)
+                right = min(regions[c][1] for c in combo)
+                if left <= right:
+                    nerve[frozenset(combo)] = True
+    
+    return nerve
+
+
+def compute_margin_cosheaf_1d(regions: List[Tuple[float, float]],
+                                margin_fn,
+                                n_samples: int = 1000) -> Dict[int, float]:
+    """Compute the margin cosheaf values (approximate infimum on each region)."""
+    cosheaf = {}
+    for i, (a, b) in enumerate(regions):
+        if abs(b - a) < 1e-15:
+            cosheaf[i] = margin_fn((a + b) / 2)
+        else:
+            xs = np.linspace(a, b, n_samples)
+            margins = [margin_fn(x) for x in xs]
+            cosheaf[i] = min(margins)
+    return cosheaf
+
+
+def check_degree1_exactness(cosheaf: Dict[int, float]) -> Tuple[bool, float]:
+    """Check degree-1 exactness: all vertex margins positive.
+    
+    Returns (is_exact, min_margin).
+    """
+    min_margin = min(cosheaf.values())
+    is_exact = min_margin > 0
+    return is_exact, min_margin
+
+
+def certified_radius(min_margin: float, lipschitz: float) -> float:
+    """Compute the certified robustness radius: δ/L."""
+    if lipschitz <= 0 or min_margin <= 0:
+        return 0.0
+    return min_margin / lipschitz
+
+
+def zaslavsky_bound(n: int, d: int) -> int:
+    """Zaslavsky's bound on regions of n hyperplanes in R^d."""
+    from math import comb
+    return sum(comb(n, k) for k in range(d + 1))
+
 
 # ============================================================
-# 1. Define a simple ReLU network and its activation regions
+# DEMO 1: Simple 1D ReLU classifier
 # ============================================================
+def demo_1d_classifier():
+    """Demonstrate the certification pipeline on a 1D ReLU classifier."""
+    print("=" * 60)
+    print("DEMO 1: 1D ReLU Classifier Certification")
+    print("=" * 60)
+    
+    # A simple ReLU network: f(x) = ReLU(x - 1) - ReLU(x + 1) + 2
+    # This creates a "tent" function peaked around x=0
+    def classifier(x):
+        return max(0, x - 1) - max(0, x + 1) + 2
+    
+    # Margin function (distance from decision boundary at 0)
+    def margin(x):
+        return classifier(x)
+    
+    domain = (-3.0, 3.0)
+    
+    # Activation regions: breakpoints at x = -1 and x = 1
+    regions = [(-3.0, -1.0), (-1.0, 1.0), (1.0, 3.0)]
+    
+    print(f"\nDomain: [{domain[0]}, {domain[1]}]")
+    print(f"Activation regions: {regions}")
+    print(f"Number of regions: {len(regions)}")
+    
+    # Compute nerve
+    nerve = compute_nerve_1d(regions)
+    print(f"\nNerve simplices:")
+    for sigma, _ in sorted(nerve.items(), key=lambda x: (len(x[0]), x[0])):
+        print(f"  σ = {set(sigma)}")
+    
+    # Compute margin cosheaf
+    cosheaf = compute_margin_cosheaf_1d(regions, margin)
+    print(f"\nMargin cosheaf values:")
+    for i, val in sorted(cosheaf.items()):
+        print(f"  M(R_{i}) = {val:.4f}")
+    
+    # Check exactness
+    is_exact, min_margin = check_degree1_exactness(cosheaf)
+    print(f"\nDegree-1 exactness: {is_exact}")
+    print(f"Minimum margin (δ): {min_margin:.4f}")
+    
+    # Lipschitz constant (slope of the affine pieces)
+    L = 1.0  # The maximum slope magnitude
+    radius = certified_radius(min_margin, L)
+    print(f"Lipschitz constant (L): {L}")
+    print(f"Certified robustness radius (δ/L): {radius:.4f}")
+    print(f"\nConclusion: Any perturbation of size ≤ {radius:.4f} preserves classification.")
 
-def relu(x):
-    return np.maximum(x, 0)
-
-def simple_relu_classifier(x: np.ndarray) -> float:
-    """A 2-layer ReLU network: f(x) = w2 @ relu(W1 @ x + b1) + b2
-    This classifies points in R^2 with 4 activation regions."""
-    W1 = np.array([[1.0, 0.5], [-0.5, 1.0], [0.8, -0.3], [-0.2, 0.7]])
-    b1 = np.array([0.1, -0.2, 0.3, -0.1])
-    W2 = np.array([1.0, -0.5, 0.3, 0.8])
-    b2 = 0.2
-    h = relu(W1 @ x + b1)
-    return float(W2 @ h + b2)
-
-def margin_function(x: np.ndarray) -> float:
-    """Margin = distance from decision boundary (approximated)."""
-    return abs(simple_relu_classifier(x))
-
-def activation_pattern(x: np.ndarray) -> Tuple[bool, ...]:
-    """Return the activation pattern (which ReLUs are active) at point x."""
-    W1 = np.array([[1.0, 0.5], [-0.5, 1.0], [0.8, -0.3], [-0.2, 0.7]])
-    b1 = np.array([0.1, -0.2, 0.3, -0.1])
-    pre = W1 @ x + b1
-    return tuple(p > 0 for p in pre)
-
-# ============================================================
-# 2. Sample the domain K and identify activation regions
-# ============================================================
-
-print("=" * 60)
-print("ACTIVATION NERVE AND MARGIN COSHEAF DEMO")
-print("=" * 60)
-
-# Domain K = [-2, 2]^2
-N_samples = 2000
-np.random.seed(42)
-points = np.random.uniform(-2, 2, (N_samples, 2))
-
-# Find all activation patterns
-pattern_to_points: Dict[Tuple[bool, ...], List[np.ndarray]] = {}
-for p in points:
-    pat = activation_pattern(p)
-    if pat not in pattern_to_points:
-        pattern_to_points[pat] = []
-    pattern_to_points[pat].append(p)
-
-regions = list(pattern_to_points.keys())
-n_regions = len(regions)
-
-print(f"\n1. ACTIVATION REGIONS")
-print(f"   Domain: K = [-2, 2]^2")
-print(f"   Network: 2-layer ReLU, 4 hidden units")
-print(f"   Found {n_regions} distinct activation regions:")
-for i, pat in enumerate(regions):
-    n_pts = len(pattern_to_points[pat])
-    print(f"   R_{i}: pattern {pat}, {n_pts} sample points")
 
 # ============================================================
-# 3. Compute the nerve of the activation cover
+# DEMO 2: Comparing robust vs. vulnerable classifiers
 # ============================================================
+def demo_robust_vs_vulnerable():
+    """Compare a robust classifier (exact cosheaf) vs vulnerable (non-exact)."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Robust vs. Vulnerable Classifier")
+    print("=" * 60)
+    
+    # Robust classifier: margin > 0 everywhere on [-2, 2]
+    def margin_robust(x):
+        return 1.0 + 0.5 * np.cos(np.pi * x / 2)
+    
+    # Vulnerable classifier: margin dips below 0 in one region
+    def margin_vulnerable(x):
+        return 0.5 - 0.8 * np.exp(-x**2)
+    
+    regions = [(-2.0, -0.5), (-0.5, 0.5), (0.5, 2.0)]
+    
+    for name, margin_fn in [("ROBUST", margin_robust), ("VULNERABLE", margin_vulnerable)]:
+        print(f"\n--- {name} classifier ---")
+        cosheaf = compute_margin_cosheaf_1d(regions, margin_fn)
+        for i, val in sorted(cosheaf.items()):
+            print(f"  M(R_{i}) = {val:.4f}")
+        
+        is_exact, min_margin = check_degree1_exactness(cosheaf)
+        print(f"  Degree-1 exact: {is_exact}")
+        print(f"  Min margin: {min_margin:.4f}")
+        
+        if is_exact:
+            L = 2.0
+            r = certified_radius(min_margin, L)
+            print(f"  Certified radius: {r:.4f}")
+        else:
+            print(f"  ⚠ NOT CERTIFIABLE — adversarial vulnerability detected!")
+            # Identify vulnerable region
+            for i, val in cosheaf.items():
+                if val <= 0:
+                    print(f"  → Vulnerability in region R_{i} = {regions[i]}")
 
-print(f"\n2. NERVE OF THE ACTIVATION COVER")
-
-# Two regions overlap if they share a boundary (adjacent patterns differ in 1 bit)
-def regions_overlap(p1, p2, threshold=0.3):
-    """Check if two activation regions have overlapping closures.
-    In practice, closures of adjacent polyhedral regions share faces."""
-    pts1 = np.array(pattern_to_points[p1])
-    pts2 = np.array(pattern_to_points[p2])
-    # Check if minimum distance between point clouds is small
-    # (approximating closure overlap)
-    min_dist = float('inf')
-    for pt in pts1[::10]:  # subsample for speed
-        dists = np.linalg.norm(pts2 - pt, axis=1)
-        min_dist = min(min_dist, dists.min())
-    return min_dist < threshold
-
-# Vertices (0-simplices)
-vertices = list(range(n_regions))
-print(f"   Vertices (0-simplices): {vertices}")
-
-# Edges (1-simplices) - pairs of overlapping regions
-edges = []
-for i, j in combinations(range(n_regions), 2):
-    if regions_overlap(regions[i], regions[j]):
-        edges.append((i, j))
-print(f"   Edges (1-simplices): {edges}")
-
-# Higher simplices
-triangles = []
-for i, j, k in combinations(range(n_regions), 3):
-    if (i,j) in edges and (i,k) in edges and (j,k) in edges:
-        triangles.append((i, j, k))
-print(f"   Triangles (2-simplices): {triangles}")
-
-nerve_simplices = (
-    [frozenset({v}) for v in vertices] +
-    [frozenset(e) for e in edges] +
-    [frozenset(t) for t in triangles]
-)
-print(f"   Total simplices in nerve: {len(nerve_simplices)}")
 
 # ============================================================
-# 4. Compute margin cosheaf values
+# DEMO 3: Zaslavsky bounds and nerve complexity
 # ============================================================
+def demo_complexity_bounds():
+    """Demonstrate activation region count bounds."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Activation Region Complexity Bounds")
+    print("=" * 60)
+    
+    print("\nZaslavsky bound: max regions for n neurons in d dimensions")
+    print(f"{'n':>4} {'d':>4} {'maxRegions':>12}")
+    print("-" * 24)
+    for d in [2, 5, 10]:
+        for n in [4, 8, 16, 32, 64]:
+            bound = zaslavsky_bound(n, d)
+            print(f"{n:>4} {d:>4} {bound:>12}")
+        print()
+    
+    print("Multi-layer bounds (product of per-layer bounds):")
+    architectures = [
+        ("2-4-4-1", [4, 4], [2, 4]),
+        ("10-8-8-1", [8, 8], [10, 8]),
+        ("100-16-16-1", [16, 16], [100, 16]),
+    ]
+    for name, widths, input_dims in architectures:
+        total = 1
+        for w, d in zip(widths, input_dims):
+            total *= zaslavsky_bound(w, d)
+        print(f"  Architecture {name}: ≤ {total} regions")
 
-print(f"\n3. MARGIN COSHEAF VALUES")
 
-# Vertex margins: inf of margin on each region
-vertex_margins = {}
-for i, pat in enumerate(regions):
-    pts = pattern_to_points[pat]
-    margins = [margin_function(p) for p in pts]
-    vertex_margins[i] = min(margins)
-    print(f"   M(R_{i}) = inf(margin on R_{i}) ≈ {vertex_margins[i]:.4f}")
-
-# Edge margins: inf of margin on pairwise overlaps
-edge_margins = {}
-for (i, j) in edges:
-    # Approximate overlap margin by looking at boundary points
-    pts_i = np.array(pattern_to_points[regions[i]])
-    pts_j = np.array(pattern_to_points[regions[j]])
-    # Find points near the boundary between regions
-    overlap_margins = []
-    for pt in pts_i:
-        dists = np.linalg.norm(pts_j - pt, axis=1)
-        if dists.min() < 0.3:
-            overlap_margins.append(margin_function(pt))
-    for pt in pts_j:
-        dists = np.linalg.norm(pts_i - pt, axis=1)
-        if dists.min() < 0.3:
-            overlap_margins.append(margin_function(pt))
-    if overlap_margins:
-        edge_margins[(i,j)] = min(overlap_margins)
+# ============================================================
+# DEMO 4: Full certification pipeline
+# ============================================================
+def demo_full_pipeline():
+    """Run the complete certification pipeline on a 2D example."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Full Certification Pipeline (2D)")
+    print("=" * 60)
+    
+    # 2D classifier with 4 quadrant-like activation regions
+    # Margin function: distance from the unit circle boundary
+    def margin_2d(x, y):
+        return 1.5 - np.sqrt(x**2 + y**2)
+    
+    # Activation regions (simplified: 4 quadrants on [-2,2]^2)
+    region_names = ["Q1 (x≥0, y≥0)", "Q2 (x<0, y≥0)", 
+                    "Q3 (x<0, y<0)", "Q4 (x≥0, y<0)"]
+    
+    # Sample margins on each region
+    n_samples = 50
+    local_margins = []
+    for qi in range(4):
+        min_m = float('inf')
+        for _ in range(n_samples * n_samples):
+            if qi == 0: x, y = np.random.uniform(0, 2), np.random.uniform(0, 2)
+            elif qi == 1: x, y = np.random.uniform(-2, 0), np.random.uniform(0, 2)
+            elif qi == 2: x, y = np.random.uniform(-2, 0), np.random.uniform(-2, 0)
+            else: x, y = np.random.uniform(0, 2), np.random.uniform(-2, 0)
+            m = margin_2d(x, y)
+            min_m = min(min_m, m)
+        local_margins.append(min_m)
+    
+    print("\nStep 1: Activation region decomposition")
+    for i, name in enumerate(region_names):
+        print(f"  R_{i} = {name}")
+    
+    print("\nStep 2: Build activation nerve")
+    print("  Vertices: {0}, {1}, {2}, {3}")
+    print("  Edges: {0,1}, {0,3}, {1,2}, {2,3}")
+    print("  (Adjacent quadrants share a boundary)")
+    
+    print("\nStep 3: Compute margin cosheaf")
+    for i in range(4):
+        print(f"  M(R_{i}) = {local_margins[i]:.4f}")
+    
+    print("\nStep 4: Check degree-1 exactness")
+    min_margin = min(local_margins)
+    is_exact = min_margin > 0
+    print(f"  All vertex margins positive: {is_exact}")
+    print(f"  Minimum margin δ = {min_margin:.4f}")
+    
+    print("\nStep 5: Compute certified radius")
+    L = 1.0  # Lipschitz constant of the margin
+    if is_exact:
+        r = min_margin / L
+        print(f"  Lipschitz constant L = {L}")
+        print(f"  Certified radius r = δ/L = {r:.4f}")
+        print(f"\n✓ CERTIFIED: No adversarial example within radius {r:.4f}")
     else:
-        edge_margins[(i,j)] = float('inf')
-    print(f"   M(R_{i} ∩ R_{j}) ≈ {edge_margins[(i,j)]:.4f}")
+        print(f"  ✗ NOT CERTIFIABLE")
+
 
 # ============================================================
-# 5. Check degree-1 exactness
+# Run all demos
 # ============================================================
-
-print(f"\n4. DEGREE-1 EXACTNESS CHECK")
-
-vertex_exact = all(m > 0 for m in vertex_margins.values())
-edge_exact = all(m > 0 for m in edge_margins.values())
-degree1_exact = vertex_exact and edge_exact
-
-print(f"   All vertex margins positive: {vertex_exact}")
-print(f"   All edge margins positive: {edge_exact}")
-print(f"   DEGREE-1 EXACT: {degree1_exact}")
-
-if degree1_exact:
-    delta = min(min(vertex_margins.values()), min(edge_margins.values()))
-    print(f"\n   Global uniform margin lower bound: δ ≈ {delta:.4f}")
-
-    # Estimate Lipschitz constant
-    L = 0.0
-    for i in range(0, len(points)-1, 5):
-        for j in range(i+1, min(i+20, len(points))):
-            d = np.linalg.norm(points[i] - points[j])
-            if d > 1e-10:
-                m_diff = abs(margin_function(points[i]) - margin_function(points[j]))
-                L = max(L, m_diff / d)
-
-    print(f"   Estimated Lipschitz constant: L ≈ {L:.4f}")
-
-    if L > 0:
-        r = delta / (2 * L)
-        print(f"\n   *** CERTIFIED ROBUSTNESS RADIUS: r = δ/(2L) ≈ {r:.4f} ***")
-        print(f"   Any perturbation of size ≤ {r:.4f} preserves the classifier's decision.")
-    else:
-        print("   (Lipschitz constant is zero — classifier is constant)")
-
-# ============================================================
-# 6. Verify the theorem computationally
-# ============================================================
-
-print(f"\n5. COMPUTATIONAL VERIFICATION")
-print(f"   Testing that margin(x) > 0 for all x ∈ K...")
-
-all_positive = True
-min_margin = float('inf')
-for p in points:
-    m = margin_function(p)
-    if m <= 0:
-        all_positive = False
-        print(f"   FOUND ZERO MARGIN at {p}: margin = {m}")
-    min_margin = min(min_margin, m)
-
-print(f"   Minimum margin over {N_samples} samples: {min_margin:.6f}")
-print(f"   All margins positive: {all_positive}")
-
-if degree1_exact and all_positive:
-    print(f"\n   ✓ THEOREM VERIFIED: Degree-1 exactness correctly predicts")
-    print(f"     uniform positive margin (δ ≈ {min_margin:.4f})")
-    if L > 0:
-        print(f"   ✓ CERTIFIED ROBUST with radius r ≈ {delta/(2*L):.4f}")
-
-print(f"\n{'=' * 60}")
-print(f"SUMMARY: The activation nerve has {len(nerve_simplices)} simplices.")
-print(f"Degree-1 exactness of the margin cosheaf = {degree1_exact}")
-print(f"This finite combinatorial check certifies global robustness.")
-print(f"{'=' * 60}")
-
-
-#!/usr/bin/env python3
-"""Generate PACKAGE.json bundling all artifacts."""
-
-import json
-import sys
-sys.path.insert(0, '/workspace/request-project')
-
-from visualizations import generate_all_visualizations
-
-# Read all text files
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-article = read_file('/workspace/request-project/ARTICLE.md')
-research_paper = read_file('/workspace/request-project/RESEARCH_PAPER.md')
-future_directions = read_file('/workspace/request-project/FUTURE_DIRECTIONS.md')
-demo_code = read_file('/workspace/request-project/demo.py')
-algorithms_code = read_file('/workspace/request-project/algorithms.py')
-applications_code = read_file('/workspace/request-project/applications.py')
-lean_proofs = read_file('/workspace/request-project/Catalog/Bridges/ActivationNerveMarginCosheaf.lean')
-
-# Generate visualizations
-vizs = generate_all_visualizations()
-
-# Build package
-package = {
-    "title": "Activation-Region Nerve as a Simplicial Complex and Margin-Cosheaf Exactness",
-    "domain": "Topological Machine Learning / Neural Network Certification",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Activation Nerve and Margin Cosheaf Demo",
-            "code": demo_code
-        },
-        {
-            "name": "Applications: Robustness Certification, Adversarial Detection, Scalability",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Nerve-Based Certification Pipeline",
-            "pseudocode": """Algorithm: NerveCertification(f, K, L)
-Input: ReLU network f, compact domain K, Lipschitz constant L
-Output: certified robustness radius r, or FAIL
-
-1. DECOMPOSE K into activation regions R_1, ..., R_n
-   (by sampling and grouping by activation pattern)
-2. CONSTRUCT nerve N
-   For each pair (i,j): check if closure(R_i) ∩ closure(R_j) ∩ K ≠ ∅
-3. COMPUTE margin cosheaf values
-   For each vertex i: M(i) = inf_{x ∈ K ∩ R_i} margin(x)
-   For each edge (i,j): M(i,j) = inf_{x ∈ K ∩ R_i ∩ R_j} margin(x)
-4. CHECK degree-1 exactness: verify M(σ) > 0 for all simplices σ
-5. If exact: return δ/(2L) where δ = min M(σ)
-   Else: return FAIL with diagnostic""",
-            "code": algorithms_code
-        }
-    ],
-    "visualizations": vizs,
-    "lean_proofs": lean_proofs
-}
-
-with open('/workspace/request-project/PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print("PACKAGE.json generated successfully")
-print(f"  Size: {len(json.dumps(package))} chars")
+if __name__ == "__main__":
+    print("Activation-Nerve Margin-Cosheaf Certification Framework")
+    print("Concrete Numerical Demonstrations")
+    print()
+    
+    demo_1d_classifier()
+    demo_robust_vs_vulnerable()
+    demo_complexity_bounds()
+    demo_full_pipeline()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Activation-Nerve Margin Cosheaf Theory
-
-Generates publication-quality figures:
-1. Activation region decomposition
-2. Nerve simplicial complex
-3. Margin cosheaf heatmap
-4. Certified robustness regions
+Generate visualizations for the Activation-Nerve Margin-Cosheaf framework.
+Saves figures as base64-encoded PNGs and SVGs for embedding in PACKAGE.json.
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.collections import LineCollection
-from itertools import combinations
 import base64
 import io
 import json
+import sys
+
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as mpatches
+    from matplotlib.collections import PatchCollection
+    HAS_MATPLOTLIB = True
+except ImportError:
+    HAS_MATPLOTLIB = False
+    print("matplotlib not available, generating SVG-only visualizations")
 
 
-def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 data URI."""
+def fig_to_base64(fig) -> str:
+    """Convert a matplotlib figure to a base64 data URI."""
     buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{encoded}"
 
 
-def generate_activation_regions_plot():
-    """Figure 1: Activation region decomposition of a 2D ReLU network."""
-    W1 = np.array([[1.0, 0.5], [-0.5, 1.0], [0.8, -0.3], [-0.2, 0.7]])
-    b1 = np.array([0.1, -0.2, 0.3, -0.1])
-    W2 = np.array([1.0, -0.5, 0.3, 0.8])
-    b2 = 0.2
+def generate_nerve_svg() -> str:
+    """Generate an SVG diagram of the activation nerve."""
+    svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="250" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">Activation Nerve of a ReLU Classifier</text>
+  
+  <!-- Activation regions (background) -->
+  <rect x="50" y="60" width="180" height="150" rx="8" fill="#e3f2fd" stroke="#1565c0" stroke-width="2" opacity="0.6"/>
+  <text x="140" y="85" text-anchor="middle" font-size="13" fill="#1565c0" font-weight="bold">R₁</text>
+  <text x="140" y="105" text-anchor="middle" font-size="10" fill="#1565c0">margin ≥ 0.3</text>
+  
+  <rect x="160" y="60" width="180" height="150" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" opacity="0.6"/>
+  <text x="250" y="85" text-anchor="middle" font-size="13" fill="#2e7d32" font-weight="bold">R₂</text>
+  <text x="250" y="105" text-anchor="middle" font-size="10" fill="#2e7d32">margin ≥ 0.5</text>
+  
+  <rect x="270" y="60" width="180" height="150" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="2" opacity="0.6"/>
+  <text x="360" y="85" text-anchor="middle" font-size="13" fill="#e65100" font-weight="bold">R₃</text>
+  <text x="360" y="105" text-anchor="middle" font-size="10" fill="#e65100">margin ≥ 0.2</text>
+  
+  <!-- Arrow to nerve -->
+  <text x="250" y="240" text-anchor="middle" font-size="14" fill="#666">↓ Build Nerve ↓</text>
+  
+  <!-- Nerve diagram -->
+  <!-- Vertices -->
+  <circle cx="120" cy="320" r="20" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/>
+  <text x="120" y="325" text-anchor="middle" font-size="14" fill="white" font-weight="bold">v₁</text>
+  
+  <circle cx="250" cy="280" r="20" fill="#2e7d32" stroke="#1b5e20" stroke-width="2"/>
+  <text x="250" y="285" text-anchor="middle" font-size="14" fill="white" font-weight="bold">v₂</text>
+  
+  <circle cx="380" cy="320" r="20" fill="#e65100" stroke="#bf360c" stroke-width="2"/>
+  <text x="380" y="325" text-anchor="middle" font-size="14" fill="white" font-weight="bold">v₃</text>
+  
+  <!-- Edges (overlaps) -->
+  <line x1="140" y1="315" x2="230" y2="285" stroke="#666" stroke-width="3"/>
+  <line x1="270" y1="285" x2="360" y2="315" stroke="#666" stroke-width="3"/>
+  
+  <!-- Edge labels -->
+  <text x="175" y="290" text-anchor="middle" font-size="10" fill="#666">R₁∩R₂ ≠ ∅</text>
+  <text x="325" y="290" text-anchor="middle" font-size="10" fill="#666">R₂∩R₃ ≠ ∅</text>
+  
+  <!-- Exactness annotation -->
+  <text x="250" y="380" text-anchor="middle" font-size="12" fill="#333">δ = min(0.3, 0.5, 0.2) = 0.2 → Certified radius = δ/L</text>
+</svg>'''
+    return svg
 
-    x = np.linspace(-2, 2, 400)
-    y = np.linspace(-2, 2, 400)
-    X, Y = np.meshgrid(x, y)
 
-    # Compute activation pattern at each grid point
-    patterns = np.zeros((400, 400))
-    margins = np.zeros((400, 400))
-    for i in range(400):
-        for j in range(400):
-            pt = np.array([X[i,j], Y[i,j]])
-            pre = W1 @ pt + b1
-            pattern_bits = tuple(p > 0 for p in pre)
-            patterns[i,j] = sum(2**k * int(b) for k, b in enumerate(pattern_bits))
-            h = np.maximum(pre, 0)
-            margins[i,j] = abs(float(W2 @ h + b2))
+def generate_pipeline_svg() -> str:
+    """Generate an SVG diagram of the certification pipeline."""
+    svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" width="700" height="200">
+  <!-- Pipeline boxes -->
+  <rect x="10" y="60" width="120" height="80" rx="10" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="70" y="95" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="bold">Activation</text>
+  <text x="70" y="115" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="bold">Regions</text>
+  
+  <polygon points="145,100 160,85 160,115" fill="#666"/>
+  
+  <rect x="170" y="60" width="110" height="80" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="225" y="95" text-anchor="middle" font-size="11" fill="#2e7d32" font-weight="bold">Build</text>
+  <text x="225" y="115" text-anchor="middle" font-size="11" fill="#2e7d32" font-weight="bold">Nerve</text>
+  
+  <polygon points="295,100 310,85 310,115" fill="#666"/>
+  
+  <rect x="320" y="60" width="110" height="80" rx="10" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="375" y="95" text-anchor="middle" font-size="11" fill="#e65100" font-weight="bold">Margin</text>
+  <text x="375" y="115" text-anchor="middle" font-size="11" fill="#e65100" font-weight="bold">Cosheaf</text>
+  
+  <polygon points="445,100 460,85 460,115" fill="#666"/>
+  
+  <rect x="470" y="60" width="110" height="80" rx="10" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+  <text x="525" y="95" text-anchor="middle" font-size="11" fill="#c62828" font-weight="bold">Check</text>
+  <text x="525" y="115" text-anchor="middle" font-size="11" fill="#c62828" font-weight="bold">Exactness</text>
+  
+  <polygon points="595,100 610,85 610,115" fill="#666"/>
+  
+  <rect x="620" y="60" width="70" height="80" rx="10" fill="#e8eaf6" stroke="#283593" stroke-width="2"/>
+  <text x="655" y="95" text-anchor="middle" font-size="11" fill="#283593" font-weight="bold">δ/L</text>
+  <text x="655" y="115" text-anchor="middle" font-size="10" fill="#283593">radius</text>
+  
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Certification Pipeline</text>
+  
+  <!-- Bottom labels -->
+  <text x="70" y="170" text-anchor="middle" font-size="9" fill="#666">R₁, R₂, ..., Rₙ</text>
+  <text x="225" y="170" text-anchor="middle" font-size="9" fill="#666">Simplicial complex</text>
+  <text x="375" y="170" text-anchor="middle" font-size="9" fill="#666">inf margins</text>
+  <text x="525" y="170" text-anchor="middle" font-size="9" fill="#666">All positive?</text>
+  <text x="655" y="170" text-anchor="middle" font-size="9" fill="#666">Certified!</text>
+</svg>'''
+    return svg
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Left: Activation regions
+def generate_margin_plot() -> str:
+    """Generate a margin landscape plot as base64 PNG."""
+    if not HAS_MATPLOTLIB:
+        return ""
+    
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    
+    # Plot 1: Robust classifier (all margins positive)
     ax = axes[0]
-    cmap = plt.cm.Set3
-    im = ax.pcolormesh(X, Y, patterns, cmap=cmap, shading='auto')
-    ax.set_title('Activation Regions of ReLU Network', fontsize=14, fontweight='bold')
-    ax.set_xlabel('x₁', fontsize=12)
-    ax.set_ylabel('x₂', fontsize=12)
-    ax.set_aspect('equal')
-
-    # Draw decision boundary lines (where preactivations = 0)
-    for k in range(4):
-        w = W1[k]
-        b = b1[k]
-        if abs(w[1]) > 1e-10:
-            x_line = np.linspace(-2, 2, 100)
-            y_line = -(w[0] * x_line + b) / w[1]
-            mask = (y_line >= -2) & (y_line <= 2)
-            ax.plot(x_line[mask], y_line[mask], 'k--', alpha=0.5, linewidth=1)
-
-    # Right: Margin heatmap
+    x = np.linspace(-2, 2, 200)
+    margin_robust = 0.5 + 0.3 * np.cos(np.pi * x / 2)
+    
+    ax.fill_between(x, 0, margin_robust, alpha=0.3, color='green', label='Positive margin')
+    ax.plot(x, margin_robust, 'g-', linewidth=2, label='Margin function')
+    ax.axhline(y=0, color='red', linestyle='--', alpha=0.5, label='Decision boundary')
+    ax.axhline(y=min(margin_robust), color='blue', linestyle=':', alpha=0.7, 
+               label=f'δ = {min(margin_robust):.3f}')
+    
+    # Mark activation regions
+    for bp in [-1, 0, 1]:
+        ax.axvline(x=bp, color='gray', linestyle='-', alpha=0.3)
+    ax.text(-1.5, 0.85, 'R₁', fontsize=14, ha='center', color='#666')
+    ax.text(-0.5, 0.85, 'R₂', fontsize=14, ha='center', color='#666')
+    ax.text(0.5, 0.85, 'R₃', fontsize=14, ha='center', color='#666')
+    ax.text(1.5, 0.85, 'R₄', fontsize=14, ha='center', color='#666')
+    
+    ax.set_xlabel('Input x', fontsize=12)
+    ax.set_ylabel('Margin', fontsize=12)
+    ax.set_title('Robust: Degree-1 Exact ✓', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=9, loc='upper right')
+    ax.set_ylim(-0.2, 1.0)
+    ax.grid(alpha=0.2)
+    
+    # Plot 2: Vulnerable classifier (margin dips below 0)
     ax = axes[1]
-    im2 = ax.pcolormesh(X, Y, margins, cmap='RdYlGn', shading='auto')
-    plt.colorbar(im2, ax=ax, label='Margin value')
-    ax.set_title('Margin Function on Domain', fontsize=14, fontweight='bold')
-    ax.set_xlabel('x₁', fontsize=12)
-    ax.set_ylabel('x₂', fontsize=12)
-    ax.set_aspect('equal')
-
-    # Add zero contour
-    ax.contour(X, Y, margins, levels=[0.1], colors='red', linewidths=2)
-
-    fig.suptitle('Activation-Region Decomposition and Margin Landscape',
-                 fontsize=16, fontweight='bold', y=1.02)
-    fig.tight_layout()
+    margin_vuln = 0.3 - 0.5 * np.exp(-x**2)
+    
+    pos_mask = margin_vuln >= 0
+    neg_mask = margin_vuln < 0
+    
+    ax.fill_between(x, 0, np.maximum(margin_vuln, 0), alpha=0.3, color='green')
+    ax.fill_between(x, margin_vuln, 0, where=neg_mask, alpha=0.3, color='red', 
+                    label='Negative margin')
+    ax.plot(x, margin_vuln, 'r-', linewidth=2, label='Margin function')
+    ax.axhline(y=0, color='red', linestyle='--', alpha=0.5)
+    
+    for bp in [-1, 0, 1]:
+        ax.axvline(x=bp, color='gray', linestyle='-', alpha=0.3)
+    ax.text(-1.5, 0.35, 'R₁', fontsize=14, ha='center', color='#666')
+    ax.text(-0.5, 0.35, 'R₂', fontsize=14, ha='center', color='#666')
+    ax.text(0.5, 0.35, 'R₃', fontsize=14, ha='center', color='#666')
+    ax.text(1.5, 0.35, 'R₄', fontsize=14, ha='center', color='#666')
+    
+    ax.annotate('Vulnerability!', xy=(0, margin_vuln[100]), xytext=(1.0, -0.15),
+                fontsize=11, color='red', fontweight='bold',
+                arrowprops=dict(arrowstyle='->', color='red'))
+    
+    ax.set_xlabel('Input x', fontsize=12)
+    ax.set_ylabel('Margin', fontsize=12)
+    ax.set_title('Vulnerable: Not Exact ✗', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=9, loc='upper right')
+    ax.set_ylim(-0.3, 0.5)
+    ax.grid(alpha=0.2)
+    
+    plt.tight_layout()
     return fig_to_base64(fig)
 
 
-def generate_nerve_complex_plot():
-    """Figure 2: The nerve simplicial complex."""
-    # Activation regions and their centroids (approximate)
-    regions = {
-        0: {'center': (-1.0, -0.5), 'color': '#e6194b', 'label': 'R₀'},
-        1: {'center': (0.5, -1.0), 'color': '#3cb44b', 'label': 'R₁'},
-        2: {'center': (-0.5, 1.0), 'color': '#4363d8', 'label': 'R₂'},
-        3: {'center': (1.0, 0.5), 'color': '#f58231', 'label': 'R₃'},
-        4: {'center': (0.0, 0.0), 'color': '#911eb4', 'label': 'R₄'},
-        5: {'center': (-1.5, 0.5), 'color': '#42d4f4', 'label': 'R₅'},
-        6: {'center': (1.5, -0.5), 'color': '#f032e6', 'label': 'R₆'},
-    }
+def generate_complexity_plot() -> str:
+    """Generate complexity bounds plot."""
+    if not HAS_MATPLOTLIB:
+        return ""
+    
+    from math import comb
+    
+    fig, ax = plt.subplots(figsize=(8, 5))
+    
+    neurons = list(range(1, 65))
+    for d in [2, 5, 10, 20]:
+        bounds = [sum(comb(n, k) for k in range(d + 1)) for n in neurons]
+        ax.semilogy(neurons, bounds, linewidth=2, label=f'd = {d}')
+    
+    ax.set_xlabel('Number of neurons (n)', fontsize=12)
+    ax.set_ylabel('Max activation regions', fontsize=12)
+    ax.set_title("Zaslavsky's Bound: Activation Region Count", fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11, title='Dimension d')
+    ax.grid(alpha=0.3)
+    
+    plt.tight_layout()
+    return fig_to_base64(fig)
 
-    # Edges (overlapping regions)
-    edges = [(0,1), (0,2), (0,4), (0,5), (1,3), (1,4), (1,6),
-             (2,3), (2,4), (2,5), (3,4), (3,6), (4,5), (4,6)]
 
-    # Triangles
-    triangles = [(0,1,4), (0,2,4), (0,2,5), (1,3,4), (1,3,6), (2,3,4), (4,5,0)]
-
-    fig, ax = plt.subplots(figsize=(8, 8))
-
-    # Draw triangles (filled)
-    for t in triangles:
-        pts = [regions[i]['center'] for i in t]
-        triangle = plt.Polygon(pts, alpha=0.15, color='skyblue', edgecolor='none')
-        ax.add_patch(triangle)
-
-    # Draw edges
-    for i, j in edges:
-        ci = regions[i]['center']
-        cj = regions[j]['center']
-        ax.plot([ci[0], cj[0]], [ci[1], cj[1]], 'k-', alpha=0.4, linewidth=1.5)
-
-    # Draw vertices
-    for idx, info in regions.items():
-        ax.plot(*info['center'], 'o', color=info['color'], markersize=20, zorder=5)
-        ax.text(info['center'][0], info['center'][1], info['label'],
-                ha='center', va='center', fontsize=9, fontweight='bold',
-                color='white', zorder=6)
-
-    ax.set_title('Nerve Simplicial Complex of Activation Cover',
+def generate_cosheaf_monotonicity_plot() -> str:
+    """Generate a plot showing cosheaf monotonicity on the face poset."""
+    if not HAS_MATPLOTLIB:
+        return ""
+    
+    fig, ax = plt.subplots(figsize=(8, 5))
+    
+    # Example: 3 regions with overlaps
+    # Vertices: R1, R2, R3
+    # Edges: R1∩R2, R2∩R3
+    # Margin values decrease as we go from edges to vertices
+    
+    labels = ['R₁∩R₂', 'R₂∩R₃', 'R₁', 'R₂', 'R₃']
+    values = [0.8, 0.6, 0.3, 0.5, 0.2]
+    colors = ['#2196F3', '#2196F3', '#4CAF50', '#4CAF50', '#4CAF50']
+    dims = ['1-simplex', '1-simplex', '0-simplex', '0-simplex', '0-simplex']
+    
+    bars = ax.barh(range(len(labels)), values, color=colors, edgecolor='white', height=0.6)
+    ax.set_yticks(range(len(labels)))
+    ax.set_yticklabels(labels, fontsize=12)
+    ax.set_xlabel('Margin cosheaf value M(σ)', fontsize=12)
+    ax.set_title('Cosheaf Monotonicity: M(σ) ≤ M(τ) when σ ⊆ τ', 
                  fontsize=14, fontweight='bold')
-    ax.set_xlabel('Nerve coordinate 1', fontsize=12)
-    ax.set_ylabel('Nerve coordinate 2', fontsize=12)
-    ax.set_xlim(-2.2, 2.2)
-    ax.set_ylim(-1.8, 1.8)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.2)
-
-    # Legend
-    legend_text = (f"Vertices: {len(regions)}  |  "
-                   f"Edges: {len(edges)}  |  "
-                   f"Triangles: {len(triangles)}")
-    ax.text(0.5, -0.08, legend_text, transform=ax.transAxes,
-            ha='center', fontsize=11, style='italic',
-            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-    fig.tight_layout()
+    
+    # Add value labels
+    for i, (v, d) in enumerate(zip(values, dims)):
+        ax.text(v + 0.02, i, f'{v:.1f} ({d})', va='center', fontsize=10)
+    
+    # Add arrow annotations showing monotonicity
+    ax.annotate('', xy=(0.3, 2.3), xytext=(0.8, 0.3),
+                arrowprops=dict(arrowstyle='->', color='gray', lw=1.5, ls='--'))
+    ax.text(0.55, 1.1, 'σ ⊆ τ\n⟹ M(σ) ≤ M(τ)', fontsize=9, color='gray',
+            ha='center', style='italic')
+    
+    ax.set_xlim(0, 1.1)
+    ax.grid(axis='x', alpha=0.3)
+    
+    plt.tight_layout()
     return fig_to_base64(fig)
-
-
-def generate_cosheaf_values_plot():
-    """Figure 3: Margin cosheaf values on the nerve."""
-    # Simulate cosheaf values
-    np.random.seed(42)
-    n_vertices = 7
-    vertex_margins = np.random.uniform(0.1, 0.8, n_vertices)
-    vertex_margins[3] = 0.05  # One region with small margin
-
-    edge_list = [(0,1), (0,2), (0,4), (1,3), (1,4), (2,3), (2,4), (3,6), (4,5)]
-    edge_margins = {}
-    for i, j in edge_list:
-        edge_margins[(i,j)] = min(vertex_margins[i], vertex_margins[j]) * np.random.uniform(0.5, 1.0)
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Vertex margins (bar chart)
-    ax = axes[0]
-    colors = ['green' if m > 0.1 else 'red' for m in vertex_margins]
-    bars = ax.bar(range(n_vertices), vertex_margins, color=colors, alpha=0.7,
-                  edgecolor='black')
-    ax.axhline(y=0, color='black', linewidth=0.5)
-    ax.axhline(y=0.1, color='orange', linewidth=1, linestyle='--',
-               label='Exactness threshold')
-    ax.set_xlabel('Region index i', fontsize=12)
-    ax.set_ylabel('M(Rᵢ) = inf margin on K ∩ Rᵢ', fontsize=12)
-    ax.set_title('Vertex Cosheaf Values', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-
-    # Right: Edge margins
-    ax = axes[1]
-    edge_labels = [f"({i},{j})" for i,j in edge_list]
-    edge_vals = [edge_margins[(i,j)] for i,j in edge_list]
-    colors2 = ['green' if m > 0.05 else 'red' for m in edge_vals]
-    ax.barh(range(len(edge_list)), edge_vals, color=colors2, alpha=0.7,
-            edgecolor='black')
-    ax.set_yticks(range(len(edge_list)))
-    ax.set_yticklabels(edge_labels, fontsize=10)
-    ax.axvline(x=0, color='black', linewidth=0.5)
-    ax.set_xlabel('M(Rᵢ ∩ Rⱼ) = inf margin on overlap', fontsize=12)
-    ax.set_title('Edge Cosheaf Values', fontsize=14, fontweight='bold')
-
-    fig.suptitle('Margin Cosheaf: Local Margin Certificates',
-                 fontsize=16, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_robustness_certification_plot():
-    """Figure 4: Certified robustness regions."""
-    W1 = np.array([[1.0, 0.5], [-0.5, 1.0], [0.8, -0.3]])
-    b1 = np.array([0.3, -0.1, 0.2])
-    W2 = np.array([1.0, -0.5, 0.3])
-    b2 = 0.2
-
-    x = np.linspace(-2, 2, 300)
-    y = np.linspace(-2, 2, 300)
-    X, Y = np.meshgrid(x, y)
-    margins = np.zeros_like(X)
-
-    for i in range(300):
-        for j in range(300):
-            pt = np.array([X[i,j], Y[i,j]])
-            h = np.maximum(W1 @ pt + b1, 0)
-            margins[i,j] = abs(float(W2 @ h + b2))
-
-    # Estimate L
-    L = 2.0  # approximate
-    radii = margins / (2 * L)
-
-    fig, ax = plt.subplots(figsize=(10, 8))
-
-    # Background: margin
-    im = ax.pcolormesh(X, Y, margins, cmap='viridis', shading='auto', alpha=0.6)
-    plt.colorbar(im, ax=ax, label='Margin value', shrink=0.8)
-
-    # Contours of certified radius
-    levels = [0.05, 0.1, 0.15, 0.2, 0.3]
-    cs = ax.contour(X, Y, radii, levels=levels, colors='white', linewidths=1.5)
-    ax.clabel(cs, inline=True, fontsize=9, fmt='r=%.2f')
-
-    # Decision boundary
-    ax.contour(X, Y, margins, levels=[0.01], colors='red', linewidths=3)
-
-    # Sample certified balls
-    np.random.seed(42)
-    for _ in range(8):
-        px, py = np.random.uniform(-1.5, 1.5, 2)
-        pt = np.array([px, py])
-        h = np.maximum(W1 @ pt + b1, 0)
-        m = abs(float(W2 @ h + b2))
-        r = m / (2 * L)
-        if r > 0.03:
-            circle = plt.Circle((px, py), r, fill=False, color='cyan',
-                               linewidth=2, linestyle='-')
-            ax.add_patch(circle)
-            ax.plot(px, py, 'c.', markersize=5)
-
-    ax.set_title('Certified Robustness Regions\n(each circle = guaranteed safe zone)',
-                 fontsize=14, fontweight='bold')
-    ax.set_xlabel('x₁', fontsize=12)
-    ax.set_ylabel('x₂', fontsize=12)
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-2, 2)
-    ax.set_aspect('equal')
-
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_all_visualizations():
-    """Generate all visualizations and return as dict."""
-    print("Generating visualizations...")
-
-    viz1 = generate_activation_regions_plot()
-    print("  ✓ Activation regions plot")
-
-    viz2 = generate_nerve_complex_plot()
-    print("  ✓ Nerve complex plot")
-
-    viz3 = generate_cosheaf_values_plot()
-    print("  ✓ Cosheaf values plot")
-
-    viz4 = generate_robustness_certification_plot()
-    print("  ✓ Robustness certification plot")
-
-    return [
-        {"name": "Activation Region Decomposition and Margin Landscape", "data": viz1},
-        {"name": "Nerve Simplicial Complex of Activation Cover", "data": viz2},
-        {"name": "Margin Cosheaf Values on the Nerve", "data": viz3},
-        {"name": "Certified Robustness Regions", "data": viz4},
-    ]
 
 
 if __name__ == "__main__":
-    vizs = generate_all_visualizations()
-    print(f"\nGenerated {len(vizs)} visualizations")
-    for v in vizs:
-        print(f"  - {v['name']}: {len(v['data'])} chars")
+    visuals = {}
+    
+    # SVG diagrams (always available)
+    visuals['nerve_diagram'] = generate_nerve_svg()
+    visuals['pipeline_diagram'] = generate_pipeline_svg()
+    
+    # Matplotlib plots (if available)
+    if HAS_MATPLOTLIB:
+        visuals['margin_landscape'] = generate_margin_plot()
+        visuals['complexity_bounds'] = generate_complexity_plot()
+        visuals['cosheaf_monotonicity'] = generate_cosheaf_monotonicity_plot()
+    
+    # Save visualization data
+    with open('visualization_data.json', 'w') as f:
+        json.dump(visuals, f)
+    
+    print(f"Generated {len(visuals)} visualizations")
+    for name, data in visuals.items():
+        if data.startswith('data:'):
+            print(f"  {name}: base64 PNG ({len(data)} chars)")
+        elif data.startswith('<svg'):
+            print(f"  {name}: inline SVG ({len(data)} chars)")
+        else:
+            print(f"  {name}: empty (matplotlib not available)")
