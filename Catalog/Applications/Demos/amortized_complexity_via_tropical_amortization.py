@@ -1,568 +1,743 @@
 #!/usr/bin/env python3
 """
-Tropical Amortization: Real-World Applications
+Tropical Amortized Analysis: Real-World Applications
 
-Demonstrates how the tropical amortization framework applies to:
-1. Dynamic array (std::vector) performance analysis
-2. Network shortest paths via tropical matrix multiplication
-3. Sequence alignment (edit distance) as tropical convolution
-4. Job scheduling optimization via min-plus algebra
-"""
-
-from typing import List, Tuple
-import numpy as np
-
-
-# =============================================================================
-# Application 1: Dynamic Array Analysis
-# =============================================================================
-
-class AmortizedDynamicArray:
-    """
-    Dynamic array with verified amortized O(1) insertion.
-
-    Uses the potential method:
-    - Actual cost: 1 for normal insert, n+1 for resize
-    - Amortized cost: 3 per insert
-    - Potential: Phi(n) = 2*size - capacity
-
-    The tropical amortization framework guarantees:
-      total_cost <= 3n for all n
-    """
-
-    def __init__(self):
-        self.data = [None]
-        self.size = 0
-        self.capacity = 1
-        self.cost_log = []
-        self.potential_log = [0]  # Phi(0) = 2*0 - 1... but we adjust
-
-    def insert(self, value) -> int:
-        """Insert a value. Returns the actual cost of this operation."""
-        if self.size == self.capacity:
-            # Resize: O(n) copy
-            cost = self.capacity + 1
-            new_data = [None] * (2 * self.capacity)
-            for i in range(self.size):
-                new_data[i] = self.data[i]
-            self.data = new_data
-            self.capacity *= 2
-        else:
-            cost = 1
-
-        self.data[self.size] = value
-        self.size += 1
-        self.cost_log.append(cost)
-        # Potential: 2 * size - capacity
-        phi = 2 * self.size - self.capacity
-        self.potential_log.append(phi)
-        return cost
-
-    def verify_amortized_bound(self) -> bool:
-        """Verify that the amortized bound holds using Theorem 1."""
-        total_cost = sum(self.cost_log)
-        total_amortized = 3 * len(self.cost_log)
-        return total_cost <= total_amortized
-
-    def get_analysis(self) -> dict:
-        """Return detailed amortized analysis."""
-        n = len(self.cost_log)
-        return {
-            'n_operations': n,
-            'total_actual_cost': sum(self.cost_log),
-            'total_amortized_cost': 3 * n,
-            'amortized_ratio': sum(self.cost_log) / (3 * n) if n > 0 else 0,
-            'max_single_cost': max(self.cost_log) if self.cost_log else 0,
-            'final_potential': self.potential_log[-1],
-            'bound_holds': self.verify_amortized_bound(),
-        }
-
-
-# =============================================================================
-# Application 2: Tropical Matrix Multiplication for Shortest Paths
-# =============================================================================
-
-def tropical_matrix_mult(A: np.ndarray, B: np.ndarray) -> np.ndarray:
-    """
-    Tropical (min-plus) matrix multiplication.
-
-    (A ⊗ B)[i,j] = min_k (A[i,k] + B[k,j])
-
-    This computes shortest paths: if A encodes 1-hop distances and
-    B encodes m-hop distances, then A ⊗ B gives (m+1)-hop distances.
-
-    The connection to amortized analysis: the potential method's
-    telescoping theorem is the scalar (1×1 matrix) case of this operation.
-
-    Time complexity: O(n^3)
-    """
-    n = A.shape[0]
-    C = np.full((n, n), np.inf)
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                C[i, j] = min(C[i, j], A[i, k] + B[k, j])
-    return C
-
-
-def all_pairs_shortest_paths(adj: np.ndarray) -> np.ndarray:
-    """
-    All-pairs shortest paths via iterated tropical matrix multiplication.
-
-    Uses repeated squaring: D^(2^k) in O(n^3 log n) time.
-    This is the matrix-level analogue of iterated tropical convolution.
-    """
-    n = adj.shape[0]
-    D = adj.copy()
-    # Need log2(n) iterations for n vertices
-    steps = int(np.ceil(np.log2(n))) + 1
-    for _ in range(steps):
-        D = tropical_matrix_mult(D, D)
-    return D
-
-
-# =============================================================================
-# Application 3: Sequence Alignment as Tropical Convolution
-# =============================================================================
-
-def edit_distance_dp(s: str, t: str) -> Tuple[int, List[List[int]]]:
-    """
-    Edit distance via dynamic programming.
-
-    The DP recurrence is a tropical (min-plus) operation:
-      D[i,j] = min(D[i-1,j]+1, D[i,j-1]+1, D[i-1,j-1] + (0 if s[i]=t[j] else 1))
-
-    This is tropical matrix-vector multiplication in disguise.
-
-    Returns:
-        (distance, full DP table)
-    """
-    m, n = len(s), len(t)
-    D = [[0] * (n + 1) for _ in range(m + 1)]
-
-    for i in range(m + 1):
-        D[i][0] = i
-    for j in range(n + 1):
-        D[0][j] = j
-
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            cost = 0 if s[i - 1] == t[j - 1] else 1
-            D[i][j] = min(
-                D[i - 1][j] + 1,      # deletion
-                D[i][j - 1] + 1,      # insertion
-                D[i - 1][j - 1] + cost  # substitution
-            )
-
-    return D[m][n], D
-
-
-# =============================================================================
-# Application 4: Job Scheduling via Min-Plus Algebra
-# =============================================================================
-
-def optimal_job_schedule(
-    job_costs: List[List[int]],
-    n_total: int
-) -> Tuple[int, List[int]]:
-    """
-    Find the optimal way to split n_total tasks among multiple sequential phases.
-
-    Each phase i has cost function job_costs[i][k] = cost of processing k items.
-    The optimal total cost is the iterated tropical convolution:
-
-      optimal = (f_1 ⋆ f_2 ⋆ ... ⋆ f_m)(n_total)
-
-    By associativity (Theorem 6), the grouping doesn't matter.
-
-    Returns:
-        (optimal_cost, split_points)
-    """
-    m = len(job_costs)
-    if m == 0:
-        return 0, []
-
-    # DP: dp[i][n] = min cost to process n items using phases 0..i
-    max_n = n_total + 1
-    dp = [[float('inf')] * max_n for _ in range(m)]
-
-    # Base: first phase
-    for n in range(min(max_n, len(job_costs[0]))):
-        dp[0][n] = job_costs[0][n]
-
-    # Iterate: tropical convolution with each subsequent phase
-    for i in range(1, m):
-        for n in range(max_n):
-            for k in range(n + 1):
-                j = n - k
-                if k < len(dp[i - 1]) and j < len(job_costs[i]):
-                    dp[i][n] = min(dp[i][n], dp[i - 1][k] + job_costs[i][j])
-
-    # Backtrack to find split points
-    splits = []
-    remaining = n_total
-    for i in range(m - 1, 0, -1):
-        for k in range(remaining + 1):
-            j = remaining - k
-            if (k < len(dp[i - 1]) and j < len(job_costs[i]) and
-                    dp[i][remaining] == dp[i - 1][k] + job_costs[i][j]):
-                splits.append(j)
-                remaining = k
-                break
-    splits.append(remaining)
-    splits.reverse()
-
-    return dp[m - 1][n_total], splits
-
-
-# =============================================================================
-# Main: demonstrate all applications
-# =============================================================================
-
-if __name__ == "__main__":
-    print("=" * 70)
-    print("Application 1: Dynamic Array Amortized Analysis")
-    print("=" * 70)
-
-    arr = AmortizedDynamicArray()
-    for i in range(1000):
-        arr.insert(i)
-
-    analysis = arr.get_analysis()
-    for key, val in analysis.items():
-        print(f"  {key}: {val}")
-
-    print()
-    print("=" * 70)
-    print("Application 2: Shortest Paths via Tropical Matrix Multiplication")
-    print("=" * 70)
-
-    # Small graph example
-    INF = float('inf')
-    adj = np.array([
-        [0, 3, INF, 7],
-        [INF, 0, 1, INF],
-        [INF, INF, 0, 2],
-        [INF, INF, INF, 0]
-    ])
-    print("Adjacency matrix:")
-    print(adj)
-
-    D = all_pairs_shortest_paths(adj)
-    print("\nAll-pairs shortest paths:")
-    print(D)
-    print(f"\nShortest path 0→3: {D[0, 3]} (via 0→1→2→3: 3+1+2=6)")
-
-    print()
-    print("=" * 70)
-    print("Application 3: Edit Distance as Tropical Computation")
-    print("=" * 70)
-
-    s, t = "kitten", "sitting"
-    dist, table = edit_distance_dp(s, t)
-    print(f"Edit distance('{s}', '{t}') = {dist}")
-    print("DP table (each cell is a tropical min-plus computation):")
-    header = "    " + " ".join(f"{c:3}" for c in " " + t)
-    print(header)
-    for i, row in enumerate(table):
-        label = " " + s[i - 1] if i > 0 else " "
-        print(f"  {label} " + " ".join(f"{v:3}" for v in row))
-
-    print()
-    print("=" * 70)
-    print("Application 4: Job Scheduling via Min-Plus Convolution")
-    print("=" * 70)
-
-    # Three phases with different cost structures
-    # Phase 1: setup-heavy (quadratic startup)
-    phase1 = [k * k for k in range(11)]
-    # Phase 2: linear processing
-    phase2 = [2 * k for k in range(11)]
-    # Phase 3: finishing (diminishing returns)
-    phase3 = [int(10 * np.sqrt(k)) for k in range(11)]
-
-    n_total = 10
-    cost, splits = optimal_job_schedule([phase1, phase2, phase3], n_total)
-    print(f"Total items: {n_total}")
-    print(f"Phase costs: {phase1[:n_total + 1]}, {phase2[:n_total + 1]}, {phase3[:n_total + 1]}")
-    print(f"Optimal cost: {cost}")
-    print(f"Optimal split: {splits} (items per phase)")
-    print(f"Verification: {phase1[splits[0]]} + {phase2[splits[1]]} + {phase3[splits[2]]} = {phase1[splits[0]] + phase2[splits[1]] + phase3[splits[2]]}")
-
-
-#!/usr/bin/env python3
-"""
-Tropical Amortization: Demonstrations
-
-Concrete numerical examples illustrating the main theorems:
-1. Potential method telescoping
-2. Accounting-potential duality
-3. Min-plus convolution optimality
+Demonstrates practical applications of the tropical amortized framework:
+1. Dynamic array (ArrayList/vector) resizing analysis
+2. Splay tree rotation amortized cost
+3. Network routing with tropical shortest paths
+4. Job scheduling via min-plus algebra
 """
 
 import numpy as np
+from typing import List, Tuple, Optional
+from algorithms import (
+    compute_amortized_analysis,
+    tropical_convolution,
+    tropical_matrix_multiply,
+    TransitionSystem,
+    bellman_value_iteration,
+    optimal_potential_bellman_ford,
+)
 
 
-def demo_potential_method_telescoping():
+# ============================================================
+# Application 1: Dynamic Array Resizing
+# ============================================================
+
+def dynamic_array_analysis(n_operations: int) -> dict:
+    """Analyze dynamic array (vector/ArrayList) amortized cost.
+    
+    Operations: append elements to a dynamic array that doubles
+    capacity when full.
+    
+    Actual cost:
+    - Normal append: 1
+    - Append with resize: current_size + 1 (copy all elements + insert)
+    
+    Potential: Φ(s) = 2 * size - capacity
+    
+    Amortized cost is always ≤ 3.
     """
-    Demonstrate Theorem 1: Potential method telescoping.
-
-    Example: Dynamic array with doubling strategy.
-    - Actual cost c(i) = 1 normally, c(i) = k+1 when resizing (copying k elements).
-    - Amortized charge a(i) = 3 for every operation.
-    - Potential Phi(n) = 2*n - capacity(n).
-    """
-    print("=" * 70)
-    print("DEMO 1: Potential Method Telescoping (Dynamic Array)")
-    print("=" * 70)
-
-    n = 32  # number of insertions
-    capacity = 1
     size = 0
+    capacity = 1
+    
+    states = [(size, capacity)]
     costs = []
-    potentials = [0]  # Phi(0) = 0
-
-    for i in range(n):
+    potentials = [max(0, 2 * size - capacity)]
+    
+    for _ in range(n_operations):
         if size == capacity:
-            # Resize: copy all elements + insert new one
-            cost = capacity + 1
+            # Resize: double capacity
+            actual_cost = size + 1  # copy all elements + insert new
             capacity *= 2
         else:
-            cost = 1
+            actual_cost = 1
+        
         size += 1
-        costs.append(cost)
-        # Potential: 2 * size - capacity
-        phi = 2 * size - capacity
-        potentials.append(phi)
-
-    amortized_charge = 3
-    amortized = [amortized_charge] * n
-
-    # Verify step inequality: c(i) + Phi(i+1) - Phi(i) <= a(i)
-    print(f"\n{'i':>4} {'c(i)':>6} {'Phi(i)':>8} {'Phi(i+1)':>10} {'c+dPhi':>8} {'a(i)':>6} {'ok?':>5}")
-    print("-" * 55)
-    all_ok = True
-    for i in range(n):
-        c_i = costs[i]
-        phi_i = potentials[i]
-        phi_next = potentials[i + 1]
-        amort = c_i + phi_next - phi_i
-        ok = amort <= amortized[i]
-        all_ok = all_ok and ok
-        if i < 20 or i == n - 1:
-            print(f"{i:4d} {c_i:6d} {phi_i:8d} {phi_next:10d} {amort:8d} {amortized[i]:6d} {'  ✓' if ok else '  ✗':>5}")
-        elif i == 20:
-            print("  ...")
-
-    total_actual = sum(costs)
-    total_amortized = sum(amortized)
-    print(f"\nStep inequality holds everywhere: {all_ok}")
-    print(f"Total actual cost:    {total_actual}")
-    print(f"Total amortized cost: {total_amortized}")
-    print(f"Phi(0) = {potentials[0]}, Phi(n) = {potentials[n]}")
-    print(f"Bound from Theorem 1: sum(a) + Phi(0) - Phi(n) = {total_amortized + potentials[0] - potentials[n]}")
-    print(f"Theorem 1 verified: {total_actual} <= {total_amortized + potentials[0] - potentials[n]}: {total_actual <= total_amortized + potentials[0] - potentials[n]}")
-    print(f"Corollary (Phi >= 0): {total_actual} <= {total_amortized}: {total_actual <= total_amortized}")
-    print()
+        costs.append(actual_cost)
+        states.append((size, capacity))
+        potentials.append(max(0, 2 * size - capacity))
+    
+    analysis = compute_amortized_analysis(
+        [float(c) for c in costs],
+        [float(p) for p in potentials]
+    )
+    
+    return {
+        "n": n_operations,
+        "total_actual": analysis.total_actual,
+        "total_amortized": analysis.total_amortized,
+        "max_single_cost": max(costs),
+        "max_amortized": analysis.max_amortized,
+        "avg_actual": analysis.total_actual / n_operations,
+        "bound_3n": 3 * n_operations,
+        "costs": costs[:20],  # first 20 for display
+        "amortized": analysis.amortized_charges[:20],
+    }
 
 
-def demo_accounting_potential_duality():
+# ============================================================
+# Application 2: Network Routing (Tropical Shortest Paths)
+# ============================================================
+
+def network_routing_analysis(n_nodes: int, edges: List[Tuple[int, int, float]]) -> dict:
+    """Analyze network routing using tropical matrix algebra.
+    
+    Computes all-pairs shortest paths via repeated tropical matrix squaring.
+    This is the computational backbone of the Bellman perspective on
+    amortized analysis.
     """
-    Demonstrate Theorem 2: Accounting-potential duality.
+    INF = float('inf')
+    
+    # Build adjacency matrix
+    W = np.full((n_nodes, n_nodes), INF)
+    for i in range(n_nodes):
+        W[i][i] = 0
+    for u, v, w in edges:
+        W[u][v] = min(W[u][v], w)
+    
+    # Compute shortest paths by repeated squaring
+    D = W.copy()
+    steps = 0
+    while steps < n_nodes:
+        D_new = tropical_matrix_multiply(D, D)
+        if np.allclose(D_new, D):
+            break
+        D = D_new
+        steps += 1
+    
+    # Find optimal potential (shortest distances from node 0)
+    phi = D[0].copy()
+    
+    # Compute reduced costs
+    reduced = np.full((n_nodes, n_nodes), INF)
+    for u, v, w in edges:
+        if phi[u] < INF and phi[v] < INF:
+            reduced[u][v] = w + phi[v] - phi[u]
+    
+    return {
+        "n_nodes": n_nodes,
+        "n_edges": len(edges),
+        "shortest_paths": D,
+        "potential": phi,
+        "reduced_costs": reduced,
+        "max_reduced_cost": float(np.max(reduced[reduced < INF])) if np.any(reduced < INF) else INF,
+        "all_reduced_nonneg": bool(np.all(reduced[reduced < INF] >= -1e-10)),
+    }
 
-    Show that prefix domination <=> existence of nonneg potential.
-    Construct the canonical witness Phi(n) = sum(a) - sum(c).
+
+# ============================================================
+# Application 3: Job Scheduling via Min-Plus Algebra
+# ============================================================
+
+def job_scheduling_analysis(
+    phase_costs: List[List[float]]
+) -> dict:
+    """Analyze multi-phase job scheduling via min-plus convolution.
+    
+    Given k phases where phase j has cost profile f_j(t) for t time units,
+    find the optimal allocation of total time T across phases.
+    
+    Total cost = f_1 ⋆ f_2 ⋆ ... ⋆ f_k (min-plus convolution)
+    
+    Associativity of convolution guarantees the decomposition is well-defined.
     """
-    print("=" * 70)
-    print("DEMO 2: Accounting-Potential Duality")
-    print("=" * 70)
-
-    # Variable cost sequence
-    costs = [1, 1, 5, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 17, 1]
-    n = len(costs)
-    amortized_charge = 3
-    amortized = [amortized_charge] * n
-
-    # Check prefix domination (condition B)
-    print(f"\n{'n':>4} {'sum(c)':>8} {'sum(a)':>8} {'Phi(n)':>8} {'sum(c)<=sum(a)?':>16}")
-    print("-" * 50)
-    prefix_ok = True
-    canonical_phi = [0]
-    sum_c, sum_a = 0, 0
-    for i in range(n):
-        sum_c += costs[i]
-        sum_a += amortized[i]
-        phi = sum_a - sum_c
-        canonical_phi.append(phi)
-        ok = sum_c <= sum_a
-        prefix_ok = prefix_ok and ok
-        print(f"{i + 1:4d} {sum_c:8d} {sum_a:8d} {phi:8d} {'✓' if ok else '✗':>16}")
-
-    print(f"\nPrefix domination holds: {prefix_ok}")
-    print(f"\nCanonical potential Phi(n) = sum(a) - sum(c):")
-    print(f"  Phi = {canonical_phi}")
-    print(f"  Phi(0) = {canonical_phi[0]} (should be 0)")
-    print(f"  All Phi >= 0: {all(p >= 0 for p in canonical_phi)}")
-
-    # Verify step equality: c(i) + Phi(i+1) - Phi(i) = a(i)
-    print(f"\nStep equality verification:")
-    for i in range(n):
-        lhs = costs[i] + canonical_phi[i + 1] - canonical_phi[i]
-        print(f"  c({i}) + Phi({i + 1}) - Phi({i}) = {costs[i]} + {canonical_phi[i + 1]} - {canonical_phi[i]} = {lhs} = a({i}) = {amortized[i]}: {'✓' if lhs == amortized[i] else '✗'}")
-    print()
+    if not phase_costs:
+        return {"n_phases": 0, "optimal_costs": []}
+    
+    # Compute iterated convolution
+    result = phase_costs[0]
+    intermediate = [phase_costs[0]]
+    
+    for j in range(1, len(phase_costs)):
+        result = tropical_convolution(result, phase_costs[j])
+        intermediate.append(result[:])
+    
+    return {
+        "n_phases": len(phase_costs),
+        "phase_costs": phase_costs,
+        "optimal_total_costs": result,
+        "optimal_for_10_units": result[10] if len(result) > 10 else None,
+        "intermediate_results": intermediate,
+    }
 
 
-def tropical_conv(f, g, n):
-    """Compute min-plus convolution (f * g)(n) = min_{0<=k<=n} (f(k) + g(n-k))."""
-    return min(f(k) + g(n - k) for k in range(n + 1))
+# ============================================================
+# Application 4: Binary Counter with Potential Synthesis
+# ============================================================
 
-
-def demo_tropical_convolution():
+def binary_counter_potential_synthesis(n_bits: int) -> dict:
+    """Synthesize optimal potential for binary counter using Bellman-Ford.
+    
+    States: 0, 1, ..., 2^n_bits - 1 (counter values)
+    Transitions: increment with actual cost = number of bits flipped
     """
-    Demonstrate Theorem 3: Min-plus convolution properties.
-    """
-    print("=" * 70)
-    print("DEMO 3: Min-Plus (Tropical) Convolution")
-    print("=" * 70)
-
-    # Example: two quadratic cost functions
-    f = lambda k: k * k
-    g = lambda k: k * k
-
-    n = 10
-    conv_val = tropical_conv(f, g, n)
-    print(f"\nf(k) = k^2, g(k) = k^2, n = {n}")
-    print(f"\nSplit costs f(k) + g(n-k):")
-    for k in range(n + 1):
-        val = f(k) + g(n - k)
-        marker = " <-- min" if val == conv_val else ""
-        print(f"  k={k:2d}: f({k}) + g({n - k}) = {f(k):4d} + {g(n - k):4d} = {val:4d}{marker}")
-    print(f"\ntropicalConv(f, g, {n}) = {conv_val}")
-    print(f"Optimal split at k = {n // 2} (or {n - n // 2})")
-
-    # Verify Theorem 4: conv <= every split
-    print(f"\nTheorem 4 verification (conv <= every split):")
-    for k in range(n + 1):
-        ok = conv_val <= f(k) + g(n - k)
-        print(f"  tropicalConv <= f({k}) + g({n - k}) = {f(k) + g(n - k)}: {'✓' if ok else '✗'}")
-
-    # Verify Theorem 5: greatest lower bound
-    h_val = conv_val  # h(n) = conv_val is achievable
-    h_too_big = conv_val + 1
-    all_below = all(h_val <= f(k) + g(n - k) for k in range(n + 1))
-    not_all_below = all(h_too_big <= f(k) + g(n - k) for k in range(n + 1))
-    print(f"\nTheorem 5 verification:")
-    print(f"  h = {h_val} <= all splits: {all_below} (so h <= conv: {h_val <= conv_val} ✓)")
-    print(f"  h = {h_too_big} <= all splits: {not_all_below} (violated, cannot exceed conv)")
+    n_states = 2 ** n_bits
+    INF = float('inf')
+    
+    # Build transition matrix (only increment transitions)
+    W = np.full((n_states, n_states), INF)
+    
+    for s in range(n_states):
+        s_next = (s + 1) % n_states
+        # Cost = number of bits flipped
+        flipped = bin(s ^ s_next).count('1')
+        W[s][s_next] = flipped
+    
+    system = TransitionSystem(n_states, W)
+    phi, bound = optimal_potential_bellman_ford(system)
+    
+    # Compare with known potential (number of 1-bits)
+    known_phi = np.array([bin(s).count('1') for s in range(n_states)], dtype=float)
+    
+    return {
+        "n_bits": n_bits,
+        "n_states": n_states,
+        "optimal_potential": phi.tolist() if phi is not None else None,
+        "optimal_bound": bound,
+        "known_potential": known_phi.tolist(),
+        "known_max_amortized": max(
+            W[s][(s+1) % n_states] + known_phi[(s+1) % n_states] - known_phi[s]
+            for s in range(n_states)
+            if W[s][(s+1) % n_states] < INF
+        ),
+    }
 
 
-def demo_associativity():
-    """
-    Demonstrate the stretch theorem: associativity of tropical convolution.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 4: Associativity of Tropical Convolution")
-    print("=" * 70)
-
-    np.random.seed(42)
-    f_vals = np.random.randint(1, 20, size=15)
-    g_vals = np.random.randint(1, 20, size=15)
-    h_vals = np.random.randint(1, 20, size=15)
-
-    f = lambda k: int(f_vals[k]) if k < len(f_vals) else 10**9
-    g = lambda k: int(g_vals[k]) if k < len(g_vals) else 10**9
-    h = lambda k: int(h_vals[k]) if k < len(h_vals) else 10**9
-
-    fg = lambda n: tropical_conv(f, g, n)
-    gh = lambda n: tropical_conv(g, h, n)
-
-    print(f"\nf = {list(f_vals)}")
-    print(f"g = {list(g_vals)}")
-    print(f"h = {list(h_vals)}")
-    print(f"\n{'n':>4} {'(f*g)*h':>10} {'f*(g*h)':>10} {'equal?':>8}")
-    print("-" * 36)
-
-    all_equal = True
-    for n in range(12):
-        lhs = tropical_conv(fg, h, n)
-        rhs = tropical_conv(f, gh, n)
-        eq = lhs == rhs
-        all_equal = all_equal and eq
-        print(f"{n:4d} {lhs:10d} {rhs:10d} {'✓' if eq else '✗':>8}")
-
-    print(f"\nAssociativity holds for all tested n: {all_equal}")
-
-
-def demo_binary_counter():
-    """
-    Bonus demo: Binary counter amortized analysis.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 5: Binary Counter — Amortized Analysis via Potential Method")
-    print("=" * 70)
-
-    n = 32
-    costs = []
-    potentials = [0]  # Phi(0) = popcount(0) = 0
-
-    for i in range(n):
-        # Cost of incrementing i to i+1: 1 + number of trailing 1-bits of i
-        val = i
-        trailing_ones = 0
-        while val > 0 and val % 2 == 1:
-            trailing_ones += 1
-            val //= 2
-        cost = 1 + trailing_ones
-        costs.append(cost)
-
-        # Potential = popcount(i+1)
-        phi = bin(i + 1).count('1')
-        potentials.append(phi)
-
-    amortized_charge = 2
-    amortized = [amortized_charge] * n
-
-    print(f"\n{'i':>4} {'binary':>12} {'c(i)':>6} {'Phi(i)':>8} {'c+dPhi':>8} {'a(i)':>6}")
-    print("-" * 52)
-    for i in range(min(n, 20)):
-        c_i = costs[i]
-        dphi = potentials[i + 1] - potentials[i]
-        amort = c_i + dphi
-        print(f"{i:4d} {bin(i):>12} {c_i:6d} {potentials[i]:8d} {amort:8d} {amortized[i]:6d}")
-    if n > 20:
-        print("  ...")
-
-    total_actual = sum(costs)
-    total_amortized = sum(amortized)
-    print(f"\nTotal actual cost:    {total_actual}")
-    print(f"Total amortized cost: {total_amortized}")
-    print(f"Ratio: {total_actual / total_amortized:.3f}")
-    print(f"Amortized bound holds: {total_actual <= total_amortized}")
-
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
-    demo_potential_method_telescoping()
-    demo_accounting_potential_duality()
-    demo_tropical_convolution()
-    demo_associativity()
-    demo_binary_counter()
+    print("=" * 70)
+    print("TROPICAL AMORTIZED ANALYSIS: REAL-WORLD APPLICATIONS")
+    print("=" * 70)
+    
+    # Application 1: Dynamic Array
+    print("\n" + "=" * 70)
+    print("APPLICATION 1: Dynamic Array Resizing")
+    print("=" * 70)
+    
+    for n in [16, 100, 1000]:
+        result = dynamic_array_analysis(n)
+        print(f"\nn = {n} append operations:")
+        print(f"  Total actual cost:  {result['total_actual']:.0f}")
+        print(f"  Max single cost:    {result['max_single_cost']}")
+        print(f"  Max amortized cost: {result['max_amortized']:.0f}")
+        print(f"  Avg actual cost:    {result['avg_actual']:.4f}")
+        print(f"  Bound (3n):         {result['bound_3n']}")
+    
+    print(f"\nFirst 20 costs:     {dynamic_array_analysis(20)['costs']}")
+    print(f"First 20 amortized: {dynamic_array_analysis(20)['amortized']}")
+    
+    # Application 2: Network Routing
+    print("\n" + "=" * 70)
+    print("APPLICATION 2: Network Routing (Tropical Shortest Paths)")
+    print("=" * 70)
+    
+    edges = [
+        (0, 1, 4), (0, 2, 2),
+        (1, 2, 1), (1, 3, 5),
+        (2, 1, 1), (2, 3, 8), (2, 4, 10),
+        (3, 4, 2),
+        (4, 3, 1),
+    ]
+    result = network_routing_analysis(5, edges)
+    
+    print(f"\n{result['n_nodes']} nodes, {result['n_edges']} edges")
+    print(f"Potential (shortest from node 0): {result['potential']}")
+    print(f"All reduced costs nonneg: {result['all_reduced_nonneg']}")
+    print(f"Max reduced cost: {result['max_reduced_cost']:.1f}")
+    print(f"\nShortest path matrix:")
+    for i in range(5):
+        row = [f"{d:.0f}" if d < 1e10 else "∞" for d in result['shortest_paths'][i]]
+        print(f"  Node {i}: {row}")
+    
+    # Application 3: Job Scheduling
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Multi-Phase Job Scheduling")
+    print("=" * 70)
+    
+    # Three phases with different cost profiles
+    phase1 = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55]  # quadratic
+    phase2 = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]   # linear
+    phase3 = [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]    # high startup
+
+    result = job_scheduling_analysis([phase1, phase2, phase3])
+    
+    print(f"\nPhase 1 (quadratic): {phase1}")
+    print(f"Phase 2 (linear):    {phase2}")
+    print(f"Phase 3 (startup):   {phase3}")
+    print(f"\nOptimal total cost for T time units:")
+    for t in range(min(11, len(result['optimal_total_costs']))):
+        print(f"  T={t:2d}: {result['optimal_total_costs'][t]:.0f}")
+    
+    # Application 4: Binary Counter Potential Synthesis
+    print("\n" + "=" * 70)
+    print("APPLICATION 4: Binary Counter Potential Synthesis")
+    print("=" * 70)
+    
+    for bits in [2, 3, 4]:
+        result = binary_counter_potential_synthesis(bits)
+        print(f"\n{bits}-bit counter ({result['n_states']} states):")
+        print(f"  Known potential (1-bits): {result['known_potential']}")
+        print(f"  Known max amortized:     {result['known_max_amortized']:.0f}")
+        if result['optimal_potential']:
+            # Normalize: shift so minimum is 0
+            phi = np.array(result['optimal_potential'])
+            phi = phi - phi.min()
+            print(f"  Synthesized potential:    {phi.tolist()}")
+            print(f"  Optimal bound:           {result['optimal_bound']:.4f}")
+    
+    print("\n" + "=" * 70)
+    print("All applications completed successfully.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Tropical Amortization: Visualizations
+Tropical Amortized Analysis: Demonstrations
 
-Generates publication-quality figures illustrating the main concepts:
+Concrete numerical examples illustrating the theorems:
 1. Potential method telescoping
-2. Accounting-potential duality
-3. Tropical convolution landscape
-4. Associativity verification
+2. Accounting method with credit balance
+3. Binary counter amortized analysis
+4. Stack push/pop amortized analysis
+5. Min-plus convolution
 """
 
+import numpy as np
+from typing import List, Tuple, Callable
+
+
+def amortized_charges(costs: List[int], potentials: List[int]) -> List[int]:
+    """Compute amortized charges given actual costs and potential values.
+    
+    amortized[i] = cost[i] + potential[i+1] - potential[i]
+    
+    Args:
+        costs: Actual operation costs, length n
+        potentials: Potential values at each state, length n+1
+    
+    Returns:
+        List of amortized charges, length n
+    """
+    n = len(costs)
+    assert len(potentials) == n + 1
+    return [costs[i] + potentials[i+1] - potentials[i] for i in range(n)]
+
+
+def verify_telescoping(costs: List[int], potentials: List[int]) -> dict:
+    """Verify the telescoping identity: sum(amortized) = sum(costs) + Phi(n) - Phi(0).
+    
+    This is the core theorem of amortized analysis.
+    """
+    charges = amortized_charges(costs, potentials)
+    sum_amortized = sum(charges)
+    sum_actual = sum(costs)
+    potential_gap = potentials[-1] - potentials[0]
+    
+    return {
+        "costs": costs,
+        "potentials": potentials,
+        "amortized_charges": charges,
+        "sum_actual": sum_actual,
+        "sum_amortized": sum_amortized,
+        "potential_gap": potential_gap,
+        "identity_holds": sum_amortized == sum_actual + potential_gap,
+        "identity": f"sum(amortized) = {sum_amortized} = {sum_actual} + {potential_gap} = sum(costs) + Phi(n) - Phi(0)"
+    }
+
+
+def credit_balance(costs: List[int], assigned_charges: List[int]) -> List[int]:
+    """Compute the credit balance at each step.
+    
+    B[0] = 0
+    B[i+1] = B[i] + a[i] - c[i]
+    """
+    n = len(costs)
+    B = [0] * (n + 1)
+    for i in range(n):
+        B[i+1] = B[i] + assigned_charges[i] - costs[i]
+    return B
+
+
+# ============================================================
+# Demo 1: Binary Counter
+# ============================================================
+
+def binary_counter_simulation(n_increments: int) -> dict:
+    """Simulate binary counter increments and verify amortized analysis.
+    
+    State = number of 1-bits
+    Potential = number of 1-bits
+    Actual cost of increment = trailing_ones + 1
+    Amortized cost = 2 (always)
+    """
+    # Simulate the counter
+    counter = 0
+    n_bits = max(1, int(np.log2(n_increments + 1)) + 2)
+    
+    states = [0]  # number of 1-bits
+    costs = []
+    trailing_ones_list = []
+    
+    for _ in range(n_increments):
+        # Count trailing 1-bits
+        trailing_ones = 0
+        temp = counter
+        while temp & 1:
+            trailing_ones += 1
+            temp >>= 1
+        
+        actual_cost = trailing_ones + 1
+        costs.append(actual_cost)
+        trailing_ones_list.append(trailing_ones)
+        
+        counter += 1
+        ones = bin(counter).count('1')
+        states.append(ones)
+    
+    # Potential = number of 1-bits
+    potentials = states[:]
+    charges = amortized_charges(costs, potentials)
+    
+    return {
+        "n": n_increments,
+        "total_actual_cost": sum(costs),
+        "total_amortized_cost": sum(charges),
+        "bound_2n": 2 * n_increments,
+        "all_amortized_eq_2": all(c == 2 for c in charges),
+        "max_single_cost": max(costs) if costs else 0,
+        "avg_actual_cost": sum(costs) / n_increments if n_increments > 0 else 0,
+        "telescoping_check": verify_telescoping(costs, potentials)["identity_holds"],
+    }
+
+
+# ============================================================
+# Demo 2: Stack Push/Pop
+# ============================================================
+
+def stack_simulation(operations: List[str]) -> dict:
+    """Simulate stack operations and verify amortized analysis.
+    
+    Push: cost 1, stack size +1
+    Pop: cost 1, stack size -1
+    Potential = stack size
+    """
+    size = 0
+    states = [0]
+    costs = []
+    
+    for op in operations:
+        if op == "push":
+            costs.append(1)
+            size += 1
+        elif op == "pop" and size > 0:
+            costs.append(1)
+            size -= 1
+        else:
+            costs.append(0)
+        states.append(size)
+    
+    potentials = states[:]
+    charges = amortized_charges(costs, potentials)
+    
+    return {
+        "operations": operations,
+        "states": states,
+        "costs": costs,
+        "amortized_charges": charges,
+        "total_actual": sum(costs),
+        "total_amortized": sum(charges),
+        "max_amortized": max(charges) if charges else 0,
+        "bound_2n": 2 * len(operations),
+    }
+
+
+# ============================================================
+# Demo 3: Min-Plus Convolution
+# ============================================================
+
+def tropical_conv(f: List[int], g: List[int], n: int) -> int:
+    """Compute min-plus convolution (f * g)(n) = min_{k<=n} (f[k] + g[n-k])."""
+    return min(f[k] + g[n - k] for k in range(n + 1) if k < len(f) and n - k < len(g))
+
+
+def tropical_conv_full(f: List[int], g: List[int]) -> List[int]:
+    """Compute full min-plus convolution."""
+    n = len(f) + len(g) - 2
+    return [tropical_conv(f, g, i) for i in range(n + 1)]
+
+
+def verify_associativity(f: List[int], g: List[int], h: List[int]) -> dict:
+    """Verify (f * g) * h = f * (g * h) for min-plus convolution."""
+    fg = tropical_conv_full(f, g)
+    fg_h = tropical_conv_full(fg, h)
+    
+    gh = tropical_conv_full(g, h)
+    f_gh = tropical_conv_full(f, gh)
+    
+    # Compare up to the minimum length
+    min_len = min(len(fg_h), len(f_gh))
+    
+    return {
+        "f": f,
+        "g": g,
+        "h": h,
+        "fg": fg,
+        "gh": gh,
+        "fg_h": fg_h[:min_len],
+        "f_gh": f_gh[:min_len],
+        "associative": fg_h[:min_len] == f_gh[:min_len],
+    }
+
+
+# ============================================================
+# Demo 4: Bellman Equation
+# ============================================================
+
+def bellman_value_iteration(weights: np.ndarray, T: int) -> np.ndarray:
+    """Compute value function V[t][s] via Bellman iteration.
+    
+    V[0][s] = 0 for all s
+    V[t+1][s] = min_{s'} (w[s][s'] + V[t][s'])
+    
+    Args:
+        weights: n x n matrix of transition costs (inf for no edge)
+        T: number of time steps
+    
+    Returns:
+        V: (T+1) x n matrix of values
+    """
+    n = weights.shape[0]
+    V = np.zeros((T + 1, n))
+    
+    for t in range(T):
+        for s in range(n):
+            V[t + 1][s] = min(weights[s][sp] + V[t][sp] for sp in range(n))
+    
+    return V
+
+
+# ============================================================
+# Main
+# ============================================================
+
+if __name__ == "__main__":
+    print("=" * 70)
+    print("TROPICAL AMORTIZED ANALYSIS: DEMONSTRATIONS")
+    print("=" * 70)
+    
+    # Demo 1: Binary Counter
+    print("\n" + "=" * 70)
+    print("DEMO 1: Binary Counter Amortized Analysis")
+    print("=" * 70)
+    
+    for n in [10, 100, 1000]:
+        result = binary_counter_simulation(n)
+        print(f"\nn = {n} increments:")
+        print(f"  Total actual cost:    {result['total_actual_cost']}")
+        print(f"  Total amortized cost: {result['total_amortized_cost']}")
+        print(f"  Upper bound (2n):     {result['bound_2n']}")
+        print(f"  All amortized = 2:    {result['all_amortized_eq_2']}")
+        print(f"  Max single cost:      {result['max_single_cost']}")
+        print(f"  Avg actual cost:      {result['avg_actual_cost']:.4f}")
+        print(f"  Telescoping verified: {result['telescoping_check']}")
+    
+    # Demo 2: Stack
+    print("\n" + "=" * 70)
+    print("DEMO 2: Stack Push/Pop Amortized Analysis")
+    print("=" * 70)
+    
+    ops = ["push"] * 5 + ["pop"] * 3 + ["push"] * 2 + ["pop"] * 4
+    result = stack_simulation(ops)
+    print(f"\nOperations: {ops}")
+    print(f"States:     {result['states']}")
+    print(f"Costs:      {result['costs']}")
+    print(f"Amortized:  {result['amortized_charges']}")
+    print(f"Total actual:    {result['total_actual']}")
+    print(f"Total amortized: {result['total_amortized']}")
+    print(f"Bound (2n):      {result['bound_2n']}")
+    
+    # Demo 3: Telescoping Identity
+    print("\n" + "=" * 70)
+    print("DEMO 3: Telescoping Identity Verification")
+    print("=" * 70)
+    
+    costs = [3, 1, 4, 1, 5, 9, 2, 6]
+    potentials = [0, 2, 1, 5, 3, 7, 1, 8, 4]
+    result = verify_telescoping(costs, potentials)
+    print(f"\nCosts:      {result['costs']}")
+    print(f"Potentials: {result['potentials']}")
+    print(f"Amortized:  {result['amortized_charges']}")
+    print(f"Identity:   {result['identity']}")
+    print(f"Verified:   {result['identity_holds']}")
+    
+    # Demo 4: Min-Plus Convolution
+    print("\n" + "=" * 70)
+    print("DEMO 4: Min-Plus Convolution and Associativity")
+    print("=" * 70)
+    
+    f = [0, 3, 5, 8]
+    g = [0, 2, 7, 9]
+    h = [0, 1, 4, 6]
+    
+    conv_fg = tropical_conv_full(f, g)
+    print(f"\nf = {f}")
+    print(f"g = {g}")
+    print(f"h = {h}")
+    print(f"f ⋆ g = {conv_fg}")
+    
+    assoc = verify_associativity(f, g, h)
+    print(f"(f ⋆ g) ⋆ h = {assoc['fg_h']}")
+    print(f"f ⋆ (g ⋆ h) = {assoc['f_gh']}")
+    print(f"Associative:  {assoc['associative']}")
+    
+    # Demo 5: Bellman Value Iteration
+    print("\n" + "=" * 70)
+    print("DEMO 5: Bellman Value Iteration (Tropical DP)")
+    print("=" * 70)
+    
+    # 3-state system with transition costs
+    W = np.array([
+        [2, 3, float('inf')],
+        [float('inf'), 1, 4],
+        [5, float('inf'), 2]
+    ])
+    
+    V = bellman_value_iteration(W, 5)
+    print(f"\nTransition cost matrix W:")
+    for i in range(3):
+        print(f"  {['A', 'B', 'C'][i]}: {[f'{w:.0f}' if w < 1000 else '∞' for w in W[i]]}")
+    
+    print(f"\nValue function V[t][s]:")
+    for t in range(6):
+        print(f"  t={t}: {[f'{v:.0f}' for v in V[t]]}")
+    
+    # Check potential function
+    phi = np.array([0, -1, 1])  # candidate potential
+    print(f"\nPotential Φ = {phi.tolist()}")
+    print("Reduced costs (w[s][s'] + Φ[s'] - Φ[s]):")
+    for i in range(3):
+        reduced = [W[i][j] + phi[j] - phi[i] if W[i][j] < 1000 else float('inf')
+                   for j in range(3)]
+        print(f"  {['A', 'B', 'C'][i]}: {[f'{r:.0f}' if r < 1000 else '∞' for r in reduced]}")
+    
+    print("\n" + "=" * 70)
+    print("All demonstrations completed successfully.")
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all deliverable content."""
+
+import json
+import base64
+import os
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+def image_to_base64(path):
+    with open(path, 'rb') as f:
+        data = base64.b64encode(f.read()).decode('utf-8')
+    return f"data:image/png;base64,{data}"
+
+# Read all content
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+lean_main = read_file('Catalog/Computation/TropicalAmortized.lean')
+lean_examples = read_file('Catalog/Computation/TropicalAmortizedExamples.lean')
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+
+# Read visualization images
+viz_data = {}
+for name in ['binary_counter', 'potential_credit', 'tropical_conv',
+             'bellman_convergence', 'framework_overview']:
+    path = f"{name}.png"
+    if os.path.exists(path):
+        viz_data[name] = image_to_base64(path)
+
+package = {
+    "title": "Amortized Complexity via Tropical Algebra: A Formal Framework",
+    "domain": "Computation / Tropical Algebra / Algorithm Analysis",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Tropical Amortized Analysis Demonstrations",
+            "code": demo_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Optimal Potential via Bellman-Ford",
+            "pseudocode": """Algorithm: OptimalPotential(S, E, w)
+Input: State set S, edges E with costs w
+Output: Potential Phi : S -> Z and optimal amortized bound
+
+1. Binary search for optimal bound b*:
+   a. Construct constraint graph G with edge weights b - w(s,s')
+   b. Run Bellman-Ford to check feasibility
+   c. If feasible: upper bound <- b; extract Phi = -dist
+   d. If infeasible (negative cycle): lower bound <- b
+2. Return (Phi, b*)
+
+Complexity: O(|S|^2 * |E| * log(max_weight))""",
+            "code": algorithms_code
+        },
+        {
+            "name": "Min-Plus Convolution",
+            "pseudocode": """Algorithm: TropicalConvolution(f, g, n)
+Input: Cost profiles f[0..m], g[0..p]
+Output: (f * g)[0..m+p]
+
+For each target n = 0 to m+p:
+  result[n] = min over k = max(0,n-p) to min(m,n) of (f[k] + g[n-k])
+
+Complexity: O(m*p) time, O(m+p) space""",
+            "code": algorithms_code
+        }
+    ],
+    "visualizations": [
+        {"name": "Binary Counter Amortized Analysis", "data": viz_data.get('binary_counter', '')},
+        {"name": "Potential Function and Credit Balance", "data": viz_data.get('potential_credit', '')},
+        {"name": "Min-Plus Convolution", "data": viz_data.get('tropical_conv', '')},
+        {"name": "Bellman Value Iteration", "data": viz_data.get('bellman_convergence', '')},
+        {"name": "Framework Overview", "data": viz_data.get('framework_overview', '')},
+    ],
+    "lean_proofs": lean_main + "\n\n-- ============================================================\n-- Examples File\n-- ============================================================\n\n" + lean_examples
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print(f"PACKAGE.json generated ({os.path.getsize('PACKAGE.json')} bytes)")
+
+
+#!/usr/bin/env python3
+"""
+Tropical Amortized Analysis: Visualizations
+
+Generates publication-quality charts illustrating key concepts:
+1. Binary counter amortized analysis
+2. Potential function and credit balance
+3. Min-plus convolution
+4. Bellman value iteration convergence
+"""
+
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
+from matplotlib.patches import FancyBboxPatch
 import base64
 from io import BytesIO
 
@@ -570,239 +745,293 @@ from io import BytesIO
 def fig_to_base64(fig) -> str:
     """Convert matplotlib figure to base64 data URI."""
     buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{data}"
 
 
-def viz_potential_method():
-    """Visualize the potential method for a dynamic array."""
+def plot_binary_counter():
+    """Plot binary counter actual vs amortized costs."""
     n = 64
+    counter = 0
     costs = []
+    amortized = []
     potentials = [0]
-    cap = 1
-    sz = 0
-    for i in range(n):
-        if sz == cap:
-            costs.append(cap + 1)
-            cap *= 2
-        else:
-            costs.append(1)
-        sz += 1
-        potentials.append(2 * sz - cap)
-
-    cumulative_actual = np.cumsum([0] + costs)
-    cumulative_amortized = np.arange(n + 1) * 3
-
-    fig, axes = plt.subplots(2, 1, figsize=(12, 8), gridspec_kw={'height_ratios': [2, 1]})
-
-    # Top: cumulative costs
+    
+    for _ in range(n):
+        trailing = 0
+        temp = counter
+        while temp & 1:
+            trailing += 1
+            temp >>= 1
+        cost = trailing + 1
+        costs.append(cost)
+        counter += 1
+        ones = bin(counter).count('1')
+        potentials.append(ones)
+        amortized.append(cost + ones - potentials[-2])
+    
+    fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+    
+    # Top: actual vs amortized costs
     ax = axes[0]
-    ax.step(range(n + 1), cumulative_actual, where='post', color='#e74c3c', linewidth=2, label='Actual cumulative cost')
-    ax.plot(range(n + 1), cumulative_amortized, color='#2ecc71', linewidth=2, linestyle='--', label='Amortized bound (3n)')
-    ax.fill_between(range(n + 1), cumulative_actual, cumulative_amortized,
-                    alpha=0.15, color='#2ecc71')
+    x = range(1, n + 1)
+    ax.bar(x, costs, alpha=0.7, color='#e74c3c', label='Actual cost', width=0.8)
+    ax.axhline(y=2, color='#2ecc71', linewidth=2, linestyle='--', label='Amortized cost = 2')
+    ax.set_ylabel('Cost per operation', fontsize=12)
+    ax.set_title('Binary Counter: Actual vs Amortized Cost', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_ylim(0, max(costs) + 1)
+    
+    # Bottom: cumulative costs
+    ax = axes[1]
+    cum_actual = np.cumsum(costs)
+    cum_amortized = np.cumsum(amortized)
+    bound = 2 * np.arange(1, n + 1)
+    
+    ax.plot(x, cum_actual, 'o-', markersize=3, color='#e74c3c', label='Cumulative actual', linewidth=1.5)
+    ax.plot(x, bound, '--', color='#2ecc71', label='Upper bound (2n)', linewidth=2)
+    ax.fill_between(x, cum_actual, bound, alpha=0.15, color='#2ecc71')
     ax.set_xlabel('Number of operations', fontsize=12)
     ax.set_ylabel('Cumulative cost', fontsize=12)
-    ax.set_title('Potential Method Telescoping: Dynamic Array', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11, loc='upper left')
-    ax.grid(True, alpha=0.3)
-
-    # Bottom: potential function and per-operation costs
-    ax2 = axes[1]
-    bars = ax2.bar(range(n), costs, color=['#e74c3c' if c > 1 else '#3498db' for c in costs],
-                   alpha=0.7, label='Actual cost per operation')
-    ax2_twin = ax2.twinx()
-    ax2_twin.plot(range(n + 1), potentials, color='#9b59b6', linewidth=2, label='Potential Φ(n)')
-    ax2_twin.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
-    ax2.set_xlabel('Operation index', fontsize=12)
-    ax2.set_ylabel('Per-operation cost', fontsize=12, color='#3498db')
-    ax2_twin.set_ylabel('Potential Φ(n)', fontsize=12, color='#9b59b6')
-    ax2.legend(loc='upper left', fontsize=10)
-    ax2_twin.legend(loc='upper right', fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    fig.tight_layout()
-    fig.savefig('/workspace/request-project/viz_potential_method.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+    ax.set_title('Cumulative Cost vs Amortized Bound', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    
+    plt.tight_layout()
+    return fig
 
 
-def viz_duality():
-    """Visualize the accounting-potential duality."""
-    costs = [1, 1, 5, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 17, 1, 1, 1, 1, 1]
-    n = len(costs)
-    B = 3  # amortized charge
-
-    prefix_c = np.cumsum([0] + costs)
-    prefix_a = np.arange(n + 1) * B
-    phi = prefix_a - prefix_c  # canonical potential
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Left: prefix sums (condition B)
+def plot_potential_and_credit():
+    """Plot potential function and credit balance for stack operations."""
+    ops = ['push'] * 5 + ['pop'] * 3 + ['push'] * 4 + ['pop'] * 2 + ['push'] * 2 + ['pop'] * 4
+    n = len(ops)
+    
+    size = 0
+    states = [0]
+    costs = []
+    for op in ops:
+        if op == 'push':
+            costs.append(1)
+            size += 1
+        elif size > 0:
+            costs.append(1)
+            size -= 1
+        else:
+            costs.append(0)
+        states.append(size)
+    
+    potentials = states[:]
+    amortized = [costs[i] + potentials[i+1] - potentials[i] for i in range(n)]
+    credit = [0] * (n + 1)
+    for i in range(n):
+        credit[i+1] = credit[i] + amortized[i] - costs[i]
+    
+    fig, axes = plt.subplots(3, 1, figsize=(14, 10), sharex=True)
+    
+    x = range(n + 1)
+    
+    # Potential function
     ax = axes[0]
-    ax.step(range(n + 1), prefix_c, where='post', color='#e74c3c', linewidth=2, label='Σ c(i) (actual)')
-    ax.plot(range(n + 1), prefix_a, color='#2ecc71', linewidth=2, linestyle='--', label='Σ a(i) (amortized)')
-    ax.fill_between(range(n + 1), prefix_c, prefix_a, alpha=0.15, color='#2ecc71',
-                    where=prefix_a >= prefix_c)
-    ax.set_xlabel('Prefix length n', fontsize=12)
-    ax.set_ylabel('Cumulative cost', fontsize=12)
-    ax.set_title('Prefix Domination\n(Accounting View)', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Right: potential function (condition A)
+    ax.step(x, potentials, where='post', color='#3498db', linewidth=2)
+    ax.fill_between(x, 0, potentials, step='post', alpha=0.2, color='#3498db')
+    ax.set_ylabel('Φ (stack size)', fontsize=12)
+    ax.set_title('Potential Function Φ = Stack Size', fontsize=14, fontweight='bold')
+    
+    # Color operations
+    for i, op in enumerate(ops):
+        color = '#2ecc71' if op == 'push' else '#e74c3c'
+        ax.axvspan(i, i + 1, alpha=0.1, color=color)
+    
+    # Costs comparison
     ax = axes[1]
-    ax.fill_between(range(n + 1), 0, phi, alpha=0.3, color='#9b59b6')
-    ax.plot(range(n + 1), phi, color='#9b59b6', linewidth=2, marker='o', markersize=4,
-            label='Φ(n) = Σa − Σc')
-    ax.axhline(y=0, color='#e74c3c', linestyle='--', linewidth=1.5, label='Φ ≥ 0 boundary')
-    ax.set_xlabel('State n', fontsize=12)
-    ax.set_ylabel('Potential Φ(n)', fontsize=12)
-    ax.set_title('Nonneg Potential Certificate\n(Physicist View)', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    fig.suptitle('Accounting ↔ Potential Duality (Theorem 2)', fontsize=14, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    fig.savefig('/workspace/request-project/viz_duality.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def viz_tropical_convolution():
-    """Visualize the tropical convolution landscape."""
-    f = lambda k: k ** 2
-    g = lambda k: (k - 5) ** 2
-
-    n_vals = list(range(15))
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Left: convolution for a fixed n
-    n = 10
-    splits = list(range(n + 1))
-    split_costs = [f(k) + g(n - k) for k in splits]
-    conv_val = min(split_costs)
-    opt_k = split_costs.index(conv_val)
-
-    ax = axes[0]
-    ax.bar(splits, split_costs, color='#3498db', alpha=0.6, label='f(k) + g(n−k)')
-    ax.bar(opt_k, split_costs[opt_k], color='#e74c3c', alpha=0.9, label=f'Optimal split k={opt_k}')
-    ax.axhline(y=conv_val, color='#2ecc71', linestyle='--', linewidth=2, label=f'tropConv = {conv_val}')
-    ax.set_xlabel('Split point k', fontsize=12)
-    ax.set_ylabel('Split cost f(k) + g(n−k)', fontsize=12)
-    ax.set_title(f'Tropical Convolution at n={n}\nf(k)=k², g(k)=(k−5)²', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Right: convolution function over all n
-    conv_vals = []
-    for n in n_vals:
-        conv_vals.append(min(f(k) + g(n - k) for k in range(n + 1)))
-
-    f_vals = [f(n) for n in n_vals]
-    g_vals = [g(n) for n in n_vals]
-
-    ax = axes[1]
-    ax.plot(n_vals, f_vals, 'o-', color='#3498db', label='f(n) = n²', linewidth=1.5)
-    ax.plot(n_vals, g_vals, 's-', color='#e67e22', label='g(n) = (n−5)²', linewidth=1.5)
-    ax.plot(n_vals, conv_vals, 'D-', color='#e74c3c', linewidth=2.5, markersize=7,
-            label='(f ⋆ g)(n) = min-plus conv')
-    ax.set_xlabel('n', fontsize=12)
+    x_ops = range(n)
+    ax.bar([i - 0.15 for i in x_ops], costs, width=0.3, color='#e74c3c', alpha=0.8, label='Actual')
+    ax.bar([i + 0.15 for i in x_ops], amortized, width=0.3, color='#2ecc71', alpha=0.8, label='Amortized')
     ax.set_ylabel('Cost', fontsize=12)
-    ax.set_title('Min-Plus Convolution\nOptimal Compositional Cost', fontsize=13, fontweight='bold')
+    ax.set_title('Actual vs Amortized Cost per Operation', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    
+    # Credit balance
+    ax = axes[2]
+    ax.step(x, credit, where='post', color='#9b59b6', linewidth=2)
+    ax.fill_between(x, 0, credit, step='post', alpha=0.2, color='#9b59b6')
+    ax.axhline(y=0, color='black', linewidth=0.5, linestyle='-')
+    ax.set_ylabel('Credit balance', fontsize=12)
+    ax.set_xlabel('Operation index', fontsize=12)
+    ax.set_title('Credit Balance (Accounting Method)', fontsize=14, fontweight='bold')
+    
+    plt.tight_layout()
+    return fig
+
+
+def plot_tropical_convolution():
+    """Plot min-plus convolution and optimal split."""
+    # Two cost profiles
+    f = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55]  # quadratic
+    g = [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]    # linear after startup
+    
+    # Compute convolution
+    m, p = len(f) - 1, len(g) - 1
+    conv = []
+    optimal_splits = []
+    for n in range(m + p + 1):
+        best = float('inf')
+        best_k = 0
+        for k in range(max(0, n - p), min(m, n) + 1):
+            val = f[k] + g[n - k]
+            if val < best:
+                best = val
+                best_k = k
+        conv.append(best)
+        optimal_splits.append(best_k)
+    
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left: individual profiles and convolution
+    ax = axes[0]
+    ax.plot(range(len(f)), f, 'o-', color='#e74c3c', label='f (Phase 1: quadratic)', linewidth=2)
+    ax.plot(range(len(g)), g, 's-', color='#3498db', label='g (Phase 2: startup)', linewidth=2)
+    ax.plot(range(len(conv)), conv, 'D-', color='#2ecc71', label='f ⋆ g (optimal split)', linewidth=2, markersize=5)
+    ax.set_xlabel('Time units', fontsize=12)
+    ax.set_ylabel('Cost', fontsize=12)
+    ax.set_title('Min-Plus Convolution', fontsize=14, fontweight='bold')
     ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
+    
+    # Right: optimal split points
+    ax = axes[1]
+    T_range = range(len(conv))
+    ax.bar(T_range, optimal_splits, color='#9b59b6', alpha=0.7)
+    ax.set_xlabel('Total time T', fontsize=12)
+    ax.set_ylabel('Optimal split k* (Phase 1 time)', fontsize=12)
+    ax.set_title('Optimal Phase Split Points', fontsize=14, fontweight='bold')
+    ax.grid(True, alpha=0.3, axis='y')
+    
+    plt.tight_layout()
+    return fig
 
-    fig.tight_layout()
-    fig.savefig('/workspace/request-project/viz_tropical_conv.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
 
-
-def viz_associativity():
-    """Visualize associativity of tropical convolution."""
-    np.random.seed(42)
-    f = np.random.randint(1, 15, size=12).tolist()
-    g = np.random.randint(1, 15, size=12).tolist()
-    h = np.random.randint(1, 15, size=12).tolist()
-
-    def tconv(a, b):
-        n = len(a) + len(b) - 1
-        result = []
-        for i in range(n):
-            val = float('inf')
-            for k in range(min(i + 1, len(a))):
-                j = i - k
-                if 0 <= j < len(b):
-                    val = min(val, a[k] + b[j])
-            result.append(int(val))
-        return result
-
-    fg = tconv(f, g)
-    gh = tconv(g, h)
-    fg_h = tconv(fg, h)
-    f_gh = tconv(f, gh)
-
-    n_vals = list(range(len(fg_h)))
-
-    fig, ax = plt.subplots(figsize=(12, 5))
-
-    ax.plot(n_vals, fg_h, 'o-', color='#e74c3c', linewidth=2, markersize=8,
-            label='(f ⋆ g) ⋆ h', zorder=3)
-    ax.plot(n_vals, f_gh, 'x--', color='#2ecc71', linewidth=2, markersize=10,
-            label='f ⋆ (g ⋆ h)', zorder=4)
-
-    # Show they're equal
-    diffs = [abs(a - b) for a, b in zip(fg_h, f_gh)]
-    max_diff = max(diffs)
-
-    ax.set_xlabel('n', fontsize=12)
-    ax.set_ylabel('Convolution value', fontsize=12)
-    ax.set_title(f'Associativity of Tropical Convolution (max difference = {max_diff})',
-                 fontsize=14, fontweight='bold')
-    ax.legend(fontsize=12)
+def plot_bellman_convergence():
+    """Plot Bellman value iteration convergence."""
+    # 4-state transition system
+    INF = float('inf')
+    W = np.array([
+        [3, 1, INF, 5],
+        [INF, 2, 4, INF],
+        [1, INF, 3, 2],
+        [4, INF, INF, 1],
+    ])
+    
+    n = 4
+    T = 10
+    V = np.zeros((T + 1, n))
+    
+    for t in range(T):
+        for s in range(n):
+            V[t+1][s] = min(W[s][sp] + V[t][sp] for sp in range(n))
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
+    labels = ['State A', 'State B', 'State C', 'State D']
+    
+    for s in range(n):
+        ax.plot(range(T + 1), V[:, s], 'o-', color=colors[s], label=labels[s],
+                linewidth=2, markersize=5)
+    
+    ax.set_xlabel('Time horizon T', fontsize=12)
+    ax.set_ylabel('Optimal T-step cost V(T, s)', fontsize=12)
+    ax.set_title('Bellman Value Iteration: Tropical Dynamic Programming', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
+    
+    # Add growth rate annotation
+    for s in range(n):
+        rate = (V[T][s] - V[T-1][s])
+        ax.annotate(f'rate ≈ {rate:.1f}/step',
+                    xy=(T, V[T][s]),
+                    xytext=(T + 0.3, V[T][s]),
+                    fontsize=9, color=colors[s])
+    
+    plt.tight_layout()
+    return fig
 
-    # Inset showing the three functions
-    ax_inset = fig.add_axes([0.65, 0.55, 0.25, 0.35])
-    ax_inset.bar(range(len(f)), f, alpha=0.6, color='#3498db', label='f')
-    ax_inset.bar(range(len(g)), g, alpha=0.6, color='#e67e22', label='g')
-    ax_inset.bar(range(len(h)), h, alpha=0.6, color='#9b59b6', label='h')
-    ax_inset.set_title('Input functions', fontsize=9)
-    ax_inset.legend(fontsize=8)
-    ax_inset.set_xlabel('k', fontsize=8)
 
-    fig.savefig('/workspace/request-project/viz_associativity.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+def plot_framework_overview():
+    """Create a conceptual overview diagram of the framework."""
+    fig, ax = plt.subplots(figsize=(14, 8))
+    ax.set_xlim(0, 14)
+    ax.set_ylim(0, 8)
+    ax.axis('off')
+    
+    # Title
+    ax.text(7, 7.5, 'Tropical Amortized Analysis Framework',
+            fontsize=16, fontweight='bold', ha='center', va='center')
+    
+    boxes = [
+        (2, 5.5, 'Potential\nMethod', '#3498db'),
+        (5.5, 5.5, 'Accounting\nMethod', '#2ecc71'),
+        (9, 5.5, 'Tropical\nConvolution', '#e74c3c'),
+        (12, 5.5, 'Bellman\nEquation', '#f39c12'),
+        (3.75, 3, 'Equivalence\nTheorem', '#9b59b6'),
+        (10.5, 3, 'Associativity\n& Composition', '#e67e22'),
+        (7, 1, 'Unified Tropical Algebra\n(min, +) Semiring', '#1abc9c'),
+    ]
+    
+    for x, y, text, color in boxes:
+        bbox = FancyBboxPatch((x - 1.3, y - 0.6), 2.6, 1.2,
+                              boxstyle="round,pad=0.1",
+                              facecolor=color, alpha=0.3, edgecolor=color, linewidth=2)
+        ax.add_patch(bbox)
+        ax.text(x, y, text, fontsize=10, ha='center', va='center', fontweight='bold')
+    
+    # Arrows
+    arrows = [
+        (2, 4.9, 3.75, 3.6),
+        (5.5, 4.9, 3.75, 3.6),
+        (9, 4.9, 10.5, 3.6),
+        (12, 4.9, 10.5, 3.6),
+        (3.75, 2.4, 7, 1.6),
+        (10.5, 2.4, 7, 1.6),
+    ]
+    
+    for x1, y1, x2, y2 in arrows:
+        ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
+                    arrowprops=dict(arrowstyle='->', color='#555', lw=1.5))
+    
+    plt.tight_layout()
+    return fig
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-
-    b64_1 = viz_potential_method()
-    print(f"  viz_potential_method.png generated ({len(b64_1)} chars)")
-
-    b64_2 = viz_duality()
-    print(f"  viz_duality.png generated ({len(b64_2)} chars)")
-
-    b64_3 = viz_tropical_convolution()
-    print(f"  viz_tropical_conv.png generated ({len(b64_3)} chars)")
-
-    b64_4 = viz_associativity()
-    print(f"  viz_associativity.png generated ({len(b64_4)} chars)")
-
-    print("\nAll visualizations saved.")
-
-    # Save base64 strings for JSON package
-    import json
-    viz_data = {
-        "potential_method": b64_1,
-        "duality": b64_2,
-        "tropical_conv": b64_3,
-        "associativity": b64_4,
+    
+    # Generate all figures
+    figs = {
+        'binary_counter': plot_binary_counter(),
+        'potential_credit': plot_potential_and_credit(),
+        'tropical_conv': plot_tropical_convolution(),
+        'bellman_convergence': plot_bellman_convergence(),
+        'framework_overview': plot_framework_overview(),
     }
-    with open('/workspace/request-project/viz_data.json', 'w') as f:
-        json.dump(viz_data, f)
-    print("Base64 data saved to viz_data.json")
+    
+    # Save as PNG files
+    for name, fig in figs.items():
+        filename = f"{name}.png"
+        fig.savefig(filename, dpi=150, bbox_inches='tight',
+                    facecolor='white', edgecolor='none')
+        print(f"  Saved {filename}")
+        plt.close(fig)
+    
+    # Generate base64 versions for JSON package
+    print("\nGenerating base64 data URIs...")
+    for name in ['binary_counter', 'potential_credit', 'tropical_conv',
+                 'bellman_convergence', 'framework_overview']:
+        exec(f"fig_{name} = plot_{name}()")
+        uri = fig_to_base64(eval(f"fig_{name}"))
+        print(f"  {name}: {len(uri)} chars")
+    
+    print("\nAll visualizations generated successfully.")

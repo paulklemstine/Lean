@@ -271,21 +271,6 @@
     "timestamp": "2026-05-14T16:03:53.855963+00:00"
   },
   {
-    "id": "seed_009",
-    "title": "Twin Prime Conjecture via Tropical Sieve Methods",
-    "description": "Prove that the twin prime conjecture follows from a tropical sieve inequality: the min-plus residue of the sieve kernel at 2 bounds the gap distribution. Show that the tropical Brun sieve achieves a stronger bound than the classical Selberg sieve for twin primes, and that the tropical Hardy-Littlewood conjecture is a min-plus convolution identity.",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "priority_score": 0.89,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "d8453b28",
-    "timestamp": "2026-05-14T16:03:53.813394+00:00"
-  },
-  {
     "id": "seed_012",
     "title": "Tropical RSA: Min-Plus Public Key Cryptosystem with Provable Security",
     "description": "Construct a public-key cryptosystem based on the hardness of tropical matrix factorization, proving that recovering the private key from the public key reduces to the tropical shortest-path problem which is NP-hard in the min-plus semiring. Show that the min-plus analog of RSA has semantic security under a tropical decisional Diffie-Hellman assumption.",
@@ -1852,10 +1837,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "825001af",
     "timestamp": "2026-05-14T16:17:39.935956+00:00"
   },
   {
@@ -2316,5 +2301,66 @@
     "source_exp_id": "c6fcabd0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:25:37.124235+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Specific Goals",
+    "description": "1. Define a formal parity axiom: a tropical sieve functional `S` satisfies the parity barrier if `S(n) = S(n')` whenever n and n' differ only in the parity of their number of prime factors (within the sieve range).\n2. Prove that the tropical sieve score `trop(n; P, c)` satisfies this axiom for any symmetric cost function c.\n3. Show that breaking the parity barrier in the tropical framework requires costs that depend on the global factorization of n, not merely on local residues — formalizing why local sieve methods (tropical or classical) cannot detect prime parity.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d8453b28",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:59:02.274115+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Deliverables",
+    "description": "- Formal definition of `ParityBlind` predicate\n- Theorem: `tropicalSieveScore` is parity-blind\n- Theorem: any parity-blind functional cannot separate primes from semiprimes\n\n---",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d8453b28",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:59:02.281816+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Hypothesis",
+    "description": "The comparison theorem between tropical (min-plus) and classical (sum) sieves is an instance of a general phenomenon in idempotent semiring (dioid) theory: the idempotent semiring homomorphism from (ℝ, min, +) to (ℝ, +, ×) (via exponentiation) maps tropical sieve scores to classical multiplicative sieve weights.",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d8453b28",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:59:02.301853+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Priority Ranking",
+    "description": "| Direction | Difficulty | Impact | Recommended Order |\n|-----------|-----------|--------|-------------------|\n| 1. Parity barrier | Medium | Very High | First |\n| 4. Algorithmic search | Low | Medium | Second (parallel) |\n| 2. Tropical singular series | High | Very High | Third |\n| 5. Abstract dioid theory | Medium | High | Fourth |\n| 3. Circuit complexity | High | High | Fifth |\n\n**Recommended team allocation**: Directions 1 and 4 can proceed in parallel (one theoretical, one computational). Direction 2 should follow once the parity barrier formalization is complete. Directions 3 and 5 are more speculative but have high potential for cross-domain impact.",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Computation",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d8453b28",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:59:02.314750+00:00"
   }
 ]
