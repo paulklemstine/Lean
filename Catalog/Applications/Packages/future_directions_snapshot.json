@@ -1538,21 +1538,6 @@
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
   },
   {
-    "id": "fd_0186",
-    "title": "Formalization",
-    "description": ": Define irreducibility for Fin n → Fin n → ℝ matrices. Formalize Karp's algorithm and prove its correctness. State and prove the tropical Perron-Frobenius theorem.\n\n### Cross-Domain Connections\n- **Network science**: Eigenvector centrality in tropical networks\n- **Markov chains**: Tropical analogue of stationary distributions\n- **Control theory**: Tropical observability and controllability\n\n### Estimated Difficulty\nHard. Requires substantial graph theory infrastructure (strongly connected components, cycle enumeration, critical graph construction). Approximately 2000-3000 lines of formalized code.\n\n### Key References\n- Butkovič (2010), *Max-linear Systems*, Chapters 3-5\n- Gaubert & Gunawardena (2004), *The Perron-Frobenius theorem for homogeneous, monotone functions*\n\n---\n\n## Direction 2:",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.122342+00:00"
-  },
-  {
     "id": "fd_0190",
     "title": "Strategy = eigenvector",
     "description": ": Prove that optimal positional strategies correspond to choices that realize the eigenvector equation.\n\n### Cross-Domain Connections\n- **Theoretical computer science**: Mean-payoff games are in NP ∩ coNP (unknown if in P)\n- **Verification**: Model checking of reactive systems\n- **Economics**: Repeated games with discounting → tropical limit\n- **Ecology**: Species as strategic agents; evolutionary game theory meets tropical algebra\n\n### Estimated Difficulty\nMedium-Hard. The game-theoretic formalization is conceptually clean but requires defining game trees, strategies, and payoffs formally.\n\n### Key References\n- Ehrenfeucht & Mycielski (1979), *Positional strategies for mean payoff games*\n- Zwick & Paterson (1996), *The complexity of mean payoff games on graphs*\n\n---\n\n## Direction 3: Tropi",
@@ -1659,6 +1644,226 @@
     "source_exp_id": "79f73184",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:15:28.680284+00:00"
+  },
+  {
+    "id": "fd_0187",
+    "title": "Generalized inductive hypothesis",
+    "description": ": Prove that for every formula φ with free variables, the function `(annotated_word) ↦ φ.evalWith(decode(annotated_word))` is tropically recognizable over the extended alphabet.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.018444+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Encoding/decoding lemmas",
+    "description": ": Establish that valid encodings (exactly one position marker per FO variable, consistent set membership for SO variables) form a regular subset, and that projection over annotations corresponds to existential quantification.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.025018+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Automata → logic direction",
+    "description": ": Programmatically build WMSO formulas from automaton structure using nested `existsSO` quantifiers for state predicates.\n\n### Expected Impact\n- First fully verified weighted MSO equivalence in any proof assistant\n- Reusable infrastructure for extended alphabet technique applicable to other equivalence theorems\n- Template for verifying weighted automata transformations\n\n### Cross-Domain Connections\n- **Software verification**: Certified compilation from specifications to automata\n- **Database theory**: Weighted query evaluation on string databases\n\n---\n\n## Direction 2: Tropical Büchi–Elgot for Infinite Words (ω-Automata)\n\n### Hypothesis\nThe tropical Büchi–Elgot theorem extends to infinite words using weighted Büchi automata, where the cost of an infinite run is defined via `liminf`, `limsu",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.040238+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Address semantic challenges",
+    "description": ": The min-plus semiring lacks negation, so universal quantification cannot be defined via ¬∃¬. This requires either restricting to the existential fragment or introducing a dual (max-plus) component.\n\n### Expected Impact\n- Foundation for quantitative model checking of reactive systems\n- Connections to mean-payoff games and energy automata\n- Verification of liveness properties with quantitative bounds\n\n### Key Open Questions\n- Which cost aggregation functions (liminf, mean payoff, discounted) admit clean logical characterizations?\n- Can the Safra construction be tropicalized?\n\n### Cross-Domain Connections\n- **Reactive systems verification**: Quantitative properties of non-terminating programs\n- **Game theory**: Mean-payoff and energy games\n- **Control theory**: Optimal control with worst-ca",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.066795+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Define min-plus tree automata",
+    "description": ": Bottom-up automata on ranked trees with tropical transition weights.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.073149+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Prove closure properties",
+    "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
+    "domains": [
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.085978+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Leverage Courcelle's theorem",
+    "description": ": Connect to the classical result that MSO-definable properties of bounded-treewidth graphs are decidable in linear time.\n\n### Expected Impact\n- Quantitative Courcelle theorem: optimization over bounded-treewidth structures\n- Certified XML/JSON query optimization\n- Tropical parsing: minimum-cost parse trees\n\n### Cross-Domain Connections\n- **Natural language processing**: Weighted tree grammars and parsing\n- **Compiler optimization**: Minimum-cost code generation\n- **Graph algorithms**: Optimization on bounded-treewidth graphs\n\n---\n\n## Direction 4: Decidable Fragments and Complexity Bounds\n\n### Hypothesis\nRestricted fragments of weighted MSO (e.g., first-order tropical logic, bounded quantifier alternation, unambiguous formulas) correspond to natural subclasses of min-plus automata with bet",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.101596+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "First-order tropical logic",
+    "description": ": Show that FO-definable cost functions correspond to counter-free or aperiodic min-plus automata (tropical Schützenberger–McNaughton–Papert theorem).",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.108127+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Bounded ambiguity",
+    "description": ": Prove that finitely ambiguous min-plus automata have decidable equivalence (unlike the general case, which is undecidable).",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.114565+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Complexity hierarchy",
+    "description": ": Establish a quantitative analogue of the FO/MSO/SO complexity hierarchy, measuring logical resources needed for optimization problems.",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.120572+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Model checking complexity",
+    "description": ": Prove that evaluating a fixed weighted MSO formula on a given word can be done in polynomial time (data complexity), and characterize combined complexity.\n\n### Expected Impact\n- Practical model-checking algorithms for quantitative specifications\n- Understanding of which optimization problems are \"easy\" from a logical perspective\n- Connections to circuit complexity and algebraic automata theory\n\n### Cross-Domain Connections\n- **Descriptive complexity theory**: Quantitative Fagin theorem\n- **Parameterized complexity**: Fixed-parameter tractability of tropical optimization\n- **Algebraic automata theory**: Tropical syntactic semirings\n\n---\n\n## Direction 5: Tropical Geometry of MSO-Definable Cost Functions\n\n### Hypothesis\nWeighted MSO-definable cost functions on words of fixed length form tro",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.127701+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Tropical polyhedral decomposition",
+    "description": ": Show that MSO-definable cost functions are piecewise-linear (in the tropical sense) with finitely many pieces.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.140642+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "Geometric complexity measures",
+    "description": ": Relate the number of tropical polytope facets to the number of automaton states and formula size.",
+    "domains": [
+      "Tropical",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.147073+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Newton polytope connections",
+    "description": ": Connect the \"tropical hypersurface\" of a cost function (the set where the minimum is achieved by multiple terms) to automaton ambiguity.",
+    "domains": [
+      "Tropical",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fafc44be",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:10.154476+00:00"
   },
   {
     "id": "seed_078",
@@ -1986,21 +2191,6 @@
     "timestamp": "2026-05-14T19:35:01.991565+00:00"
   },
   {
-    "id": "fd_0186",
-    "title": "Direction 2: Tropical Minimax Theorem in Higher Dimensions",
-    "description": "**Goal.** Extend the interval characterization to $\\mathbb{R}^n$.\n\n**Conjecture.** For vectors $l, u \\in \\mathbb{R}^n$, the set of balanced states\n$$\\{x \\in \\mathbb{R}^n : \\forall i,\\; \\max(l_i, x_i) = x_i \\;\\wedge\\; \\min(u_i, x_i) = x_i\\}$$\nequals the box $[l, u] = \\prod_{i=1}^n [l_i, u_i]$. Uniqueness holds iff $l = u$ (componentwise).\n\nFor non-axis-aligned constraints — tropical halfspaces of the form $\\max(a_j + x_j : j) = x_i$ — the balanced set becomes a **tropical polytope**, and uniqueness corresponds to the polytope being a single point.\n\n**Proof strategy.** The componentwise case follows directly from the scalar theorem applied coordinate-by-coordinate (use `Pi.le_def` and `funext`). The tropical polytope case requires developing the theory of tropical halfspaces as sets of the f",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "918eb128",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:35:00.976272+00:00"
-  },
-  {
     "id": "fd_0194",
     "title": "1. Tropical Replicator Composition and Ecosystem Interaction Theorems",
     "description": "**Hypothesis:** If two tropical replicators R₁ and R₂ on the same finite lattice commute (R₁.step ∘ R₂.step = R₂.step ∘ R₁.step), their composition is again a tropical replicator. More generally, for a finite collection of pairwise commuting replicators, the composed system admits a global attractor that is the intersection of the individual attractor sets.\n\n**Proof Strategy:**\n- We proved `comp_idempotent_of_commuting` for the idempotent property. Extend this to monotonicity (composition of monotone maps is monotone) and inflationarity (under commutativity, the composition of inflationary maps is inflationary if they also commute with the order).\n- Define an \"ecosystem\" as a finite family of pairwise commuting TropicalReplicators. Prove that the set of fixed points of the composed system ",
@@ -2137,20 +2327,6 @@
     "timestamp": "2026-05-15T00:30:49.241321+00:00"
   },
   {
-    "id": "fd_0196",
-    "title": "Actionable Next Steps",
-    "description": "1. Formalize `tropicalRiskMulti` for k = 2 variables (width, depth).\n2. Prove the 2D analogue of unique_tropical_corner_crossing: under generic slopes, phase boundaries are line segments in ℕ².\n3. Implement computational enumeration of 2D tropical vertices.\n4. Connect to the existing `two_vertex_weight` graph-theoretic infrastructure.\n\n---",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "13b8af12",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:31:05.360997+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Phase 3 (Long-term): Directions 1 and 5",
     "description": "Require new definitions and significant infrastructure (multidimensional tropical geometry, graph theory).",
@@ -2213,20 +2389,6 @@
     "source_exp_id": "0d901ed3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:42:39.914831+00:00"
-  },
-  {
-    "id": "fd_0198",
-    "title": "Theorem Target",
-    "description": "```\ntheorem anisotropic_certified_robustness\n    (X : Set (E n)) (ι : Type*) [Fintype ι]\n    (U : ι → Set (E n))\n    (A : ι → (E n →L[ℝ] E n))\n    (margin : ι → E n → ℝ)\n    (pred : E n → α)\n    (hcover : X ⊆ ⋃ i, U i)\n    (hmargin_pos : ∀ i x, x ∈ X → x ∈ U i → 0 < margin i x)\n    (hlocal : ∀ i x, x ∈ X → x ∈ U i →\n      ∀ v, ‖A i v‖ < margin i x → pred (x + v) = pred x) :\n    ∀ x ∈ X, ∃ i, x ∈ U i ∧\n      ∀ v, ‖A i v‖ < margin i x → pred (x + v) = pred x\n```\n\nThe key is to retain the *ellipsoidal* perturbation set `{v : ‖A_i v‖ < m_i(x)}` instead of collapsing to the sphere `{v : ‖v‖ < m_i(x)/‖A_i‖}`. The volume ratio between the ellipsoid and the sphere is `∏ σ_max/σ_k` where `σ_k` are singular values, which can be exponentially large.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e4cd60b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:53:06.598217+00:00"
   },
   {
     "id": "fd_0199",
