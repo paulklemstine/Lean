@@ -479,22 +479,6 @@
     "timestamp": "2026-05-14T16:03:53.813831+00:00"
   },
   {
-    "id": "seed_019",
-    "title": "Semantic Compression via Tropical Information Geometry",
-    "description": "Prove that semantic compression—preserving meaning rather than bits—has a natural formulation as min-plus projection onto a tropical submanifold of the information geometry. Show that the tropical Fisher information metric bounds semantic distortion, and that the idempotent projection yields optimal semantic codes that compress by extracting the tropical skeleton of the source distribution.",
-    "domains": [
-      "MachineLearning",
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.82,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "14a8bd15",
-    "timestamp": "2026-05-14T16:03:53.821655+00:00"
-  },
-  {
     "id": "seed_030",
     "title": "Reversible Computing via Tropical Isomorphisms",
     "description": "Construct a reversible Turing machine model where each transition corresponds to a tropical semiring isomorphism, and prove that reversible tropical computation simulates classical computation with at most polynomial overhead. Show that the Landauer erasure cost in tropical entropy is exactly kT ln(2) per bit, formalizing thermodynamic computation bounds via min-plus algebra.",
@@ -849,20 +833,6 @@
     "timestamp": "2026-05-14T17:32:45.379046+00:00"
   },
   {
-    "id": "fd_0157",
-    "title": "Direction 2 (Category Theory)",
-    "description": "— Elegant mathematical framework. Important for understanding how curriculum complexity behaves under theory morphisms.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:32:45.388513+00:00"
-  },
-  {
     "id": "fd_0158",
     "title": "Direction 4 (Entropy)",
     "description": "— Most speculative but potentially most impactful. Opens connections to information theory and computational complexity.",
@@ -1213,20 +1183,6 @@
     "timestamp": "2026-05-15T08:03:37.270398+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "Wire gadget",
-    "description": ": Design a signal propagation pattern — a cell configuration where a \"1\" at an input position propagates to an output position after a fixed delay T. Candidate: a chain of blinkers acting as a delay line, or a glider-based signal.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:09.847352+00:00"
-  },
-  {
     "id": "fd_0227",
     "title": "Connection to statistical mechanics",
     "description": ": Interpret the still life count as a partition function and the entropy as a free energy, linking tropical CA to lattice statistical mechanics.\n\n**Key Formalization**: Define `stillLifeEntropy (m n : ℕ) := Real.log (Finset.card {c : Config m n | IsStillLife c}) / (m * n)` and prove it converges as m, n → ∞.\n\n**Cross-Domain Impact**: Connects tropical CA to ergodic theory, symbolic dynamics, and statistical mechanics. Positive entropy would mean the system has intrinsic unpredictability.\n\n---\n\n## Direction 3: Tropical Collision Logic and Glider Interactions\n\n**Status**: One glider family certified (5-cell, period 4, displacement (1,1)).\n\n**Hypothesis**: Collisions between tropical gliders produce computationally useful outputs — specifically, glider-glider collisions can function as logic ",
@@ -1384,34 +1340,6 @@
     "timestamp": "2026-05-15T09:04:10.051646+00:00"
   },
   {
-    "id": "fd_0215",
-    "title": "Week 3:",
-    "description": "Complete all proofs and verify with `#print axioms`. Clean up and document.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8505111b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:38:42.912645+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "Triangle inequality approach:",
-    "description": "Use $d(v, b) \\geq d(v, \\sigma) + d(\\sigma, b)$ for some $\\sigma$ on the path, combined with $d(\\sigma, b) \\geq d_{B^c}(\\sigma) \\geq d_B(\\sigma)$ by the shielding hypothesis.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9ab661ec",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:01:34.422728+00:00"
-  },
-  {
     "id": "fd_0218",
     "title": "Induction on path length:",
     "description": "Prove by induction that barriers propagate: if the first barrier vertex $\\sigma$ satisfies $d_{B^c}(\\sigma) \\leq d_B(\\sigma)$, then every vertex before $\\sigma$ on any path inherits the inequality.\n\n### Cross-Domain Significance\n\n- **Network security:** Separators model firewalls; the theorem certifies that data behind a firewall is invisible from certain probes.\n- **Causal inference:** In DAGs, separators correspond to d-separation; this tropical version gives a metric-aware separation criterion.\n- **Graph partitioning:** Barrier theorems provide quality guarantees for graph cuts.\n\n---\n\n## Direction 2: Tropical Ryu-Takayanagi Formula\n\n### Statement\n\nDefine a notion of **wedge boundary area** as the total weight of edges crossing from $\\mathrm{Wedge}(B)$ to $\\mathrm{bulk} \\setminus \\mathrm",
@@ -1425,20 +1353,6 @@
     "source_exp_id": "9ab661ec",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T10:01:34.433557+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "Injection argument:",
-    "description": "Map each wedge vertex with a unique witness to its witness in $B$; injectivity gives the cardinality bound.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9ab661ec",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:01:34.446146+00:00"
   },
   {
     "id": "fd_0220",
@@ -1489,20 +1403,6 @@
     "source_exp_id": "9ab661ec",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T10:01:34.501202+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "Reflection:",
-    "description": "Reduce to decidable finite comparisons over `ℚ` or `Float`.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9ab661ec",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:01:34.512426+00:00"
   },
   {
     "id": "seed_078",
@@ -2259,5 +2159,90 @@
     "source_exp_id": "7b109bab",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:19:36.858900+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Direction 1: Tropical Bregman Divergence and Pythagorean Theorem",
+    "description": "**Hypothesis**: There exists a tropical analogue of the Bregman divergence that satisfies a Pythagorean theorem for tropical projections onto min-closed codebooks.\n\n**Background**: Classical information geometry relies on the Bregman divergence (generalizing KL-divergence) and the associated Pythagorean theorem: for an exponential family E and a point p, the projection p* minimizes divergence and satisfies D(q, p) = D(q, p*) + D(p*, p) for all q in E. In the tropical setting, the natural candidate is:\n\n```\nD_trop(w, v) = max_a (w(a) - v(a)) - min_a (w(a) - v(a))\n```\n\nThis is the oscillation seminorm of the difference (already formalized as `tropicalFisherSeminorm`).\n\n**Concrete Next Steps**:\n1. Define `tropicalBregman w v = tropicalFisherSeminorm (fun a => w a - v a)`\n2. Prove the Pythagor",
+    "domains": [
+      "Tropical",
+      "Pythagorean",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14a8bd15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:03:13.219500+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Direction 2: Tropical Mutual Information and Data Processing Inequality",
+    "description": "**Hypothesis**: A tropical mutual information can be defined via min-plus convolution, and it satisfies a data processing inequality under tropical channels.\n\n**Background**: Mutual information I(X;Y) = H(X) + H(Y) - H(X,Y) quantifies shared information. In the tropical semiring (R ∪ {∞}, min, +), the natural entropy analogue is the min-entropy H_∞(w) = -min_a w(a), and tropical convolution replaces probabilistic marginalization.\n\n**Concrete Next Steps**:\n1. Define tropical entropy: `tropicalEntropy w = -(Finset.univ.inf' hne w)`\n2. Define tropical joint distributions as weight functions on product types\n3. Define tropical mutual information via min-plus marginalization\n4. Prove the data processing inequality: for any deterministic tropical channel f, `I_trop(X; f(X)) ≤ I_trop(X; X)`\n5. Co",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14a8bd15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:03:13.229619+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Direction 3: Semantic Rate-Distortion Function",
+    "description": "**Hypothesis**: The optimal tradeoff between codebook size and semantic distortion follows a tropical analogue of the rate-distortion function, and this function can be computed exactly for structured codebooks.\n\n**Background**: Shannon's rate-distortion function R(D) gives the minimum bits needed to compress a source with distortion ≤ D. Our `exists_optimal_semantic_code` gives existence of the optimizer for a fixed codebook. The next step is to optimize over codebooks of a given size.\n\n**Concrete Next Steps**:\n1. Define `semanticRateDistortion (n : ℕ) (w : α → ℝ) (D : ℝ) : Prop` as \"there exists a codebook of size ≤ n with semantic distortion ≤ D\"\n2. Prove monotonicity: larger codebooks achieve smaller distortion\n3. For min-closed codebooks, prove that the rate-distortion function is det",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14a8bd15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:03:13.239234+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Direction 4: Categorical Semantics of Tropical Projectors as Reflectors",
+    "description": "**Hypothesis**: The idempotent tropical projector defines a reflective subcategory in a suitable category of tropical modules, and this reflection is the categorical semantics of semantic compression.\n\n**Background**: Our `tropicalProj_idempotent` shows P² = P. In category theory, an idempotent endomorphism that splits gives a retraction/section pair, defining a reflective subcategory. The semantic compression pipeline is: source → project → code, and the fact that P² = P means the codebook is a retract of the ambient space.\n\n**Concrete Next Steps**:\n1. Define a category `TropMod` of tropical modules (weight functions with min-plus structure)\n2. Define morphisms as non-expansive maps (1-Lipschitz in semantic distance)\n3. Show that `tropicalProj` defines a functor from `TropMod` to the full",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14a8bd15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:03:13.249310+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Direction 5: Certified Tropical Autoencoders with Semantic Bottlenecks",
+    "description": "**Hypothesis**: A neural autoencoder whose bottleneck layer implements a tropical projection onto a learned min-closed codebook provably achieves idempotent reconstruction with certified distortion bounds.\n\n**Background**: Our theorems show that tropical projection is idempotent and Fisher-bounded. ReLU networks naturally compute tropical (piecewise-linear) functions. An autoencoder with a tropical bottleneck would have mathematically certified compression properties, unlike standard autoencoders which lack formal guarantees.\n\n**Concrete Next Steps**:\n1. Define a tropical autoencoder architecture: encoder (arbitrary), bottleneck (tropical projection onto learned codebook), decoder (identity or learned)\n2. Prove that the bottleneck satisfies `tropicalProj_idempotent`: passing through the bo",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14a8bd15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:03:13.258464+00:00"
   }
 ]
