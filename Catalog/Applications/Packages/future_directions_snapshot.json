@@ -280,10 +280,10 @@
       "Bridges"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9d761629",
     "timestamp": "2026-05-14T16:03:53.829231+00:00"
   },
   {
@@ -360,10 +360,10 @@
       "Computation"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e03a2df6",
     "timestamp": "2026-05-14T16:03:53.813831+00:00"
   },
   {
@@ -547,10 +547,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "adc29728",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7566736e",
     "timestamp": "2026-05-14T16:17:00.727665+00:00"
   },
   {
@@ -742,6 +742,20 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "3adde084",
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "a861b2f2",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
     "id": "fd_0187",
@@ -1003,20 +1017,6 @@
     "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:04:37.815985+00:00"
-  },
-  {
-    "id": "fd_0228",
-    "title": "Specification as fixed points",
-    "description": ": Show that a specification \"N(x) ∈ S for all x ∈ K\" is equivalent to K ⊆ N⁻¹(S), which for closure networks reduces to checking fixed-point inclusion.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "56b13d4c",
-    "consumed_by_exp_id": "62ac6dd0",
-    "timestamp": "2026-05-15T12:04:37.825030+00:00"
   },
   {
     "id": "fd_0230",
@@ -1285,6 +1285,63 @@
     "source_exp_id": "9cabdd3c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:05:09.705505+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Automatically discover",
+    "description": "which operators in a codebase are idempotent, contractive, or have unique fixed points.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "62ac6dd0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:41.513259+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Synthesize specifications",
+    "description": "from fixed-point structure: given `N`, compute `fixPts(N)` and generate the specification `∀ x, N(x) ∈ fixPts(N)` when applicable.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "62ac6dd0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:41.522074+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Compose specifications",
+    "description": "using the monad structure (Direction 3): if `N₁` and `N₂` both satisfy specifications, derive the specification for `N₁ ∘ N₂`.\n\nThis would create a fully automated verification pipeline where the fixed-point structure of mathematical operators is exploited to generate certified guarantees without human intervention.\n\n---\n\n## Priority Ranking",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "62ac6dd0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:41.530914+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Direction 4",
+    "description": "(Complexity/MDL) — most novel conceptual bridge",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "62ac6dd0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:41.543224+00:00"
   },
   {
     "id": "seed_079",
@@ -2044,10 +2101,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ef0cc9c1",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06519137",
     "timestamp": "2026-05-15T13:05:25.864975+00:00"
   },
   {
