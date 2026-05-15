@@ -562,20 +562,6 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Tactic engineer",
-    "description": ": Implements the syntax-to-semantics bridge and verified tactic (Direction 4).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "94c243f5",
-    "timestamp": "2026-05-15T03:03:37.382470+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -682,10 +668,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cf94957b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3c13f65f",
     "timestamp": "2026-05-15T20:38:19.025936+00:00"
   },
   {
@@ -733,76 +719,6 @@
     "timestamp": "2026-05-15T20:41:02.961649+00:00"
   },
   {
-    "id": "fd_0214",
-    "title": "Formalize",
-    "description": ": State the conjectures as Lean theorem statements.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54f0e2a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:41:02.971360+00:00"
-  },
-  {
-    "id": "fd_0215",
-    "title": "Test",
-    "description": ": Use computational experiments (Python) to validate or refute.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54f0e2a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:41:02.980995+00:00"
-  },
-  {
-    "id": "fd_0216",
-    "title": "Prove",
-    "description": ": Use the theorem proving infrastructure to verify.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54f0e2a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:41:02.991433+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "Publish",
-    "description": ": Document results and update the roadmap.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54f0e2a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:41:03.000682+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "Iterate",
-    "description": ": Feed new results back into hypothesis generation.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54f0e2a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:41:03.010569+00:00"
-  },
-  {
     "id": "fd_0219",
     "title": "Finite-dimensional spectral theorem",
     "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
@@ -815,20 +731,6 @@
     "source_exp_id": "9093673a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T20:42:44.426054+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Rooted tree combinatorics",
-    "description": ": Formalization of rooted trees with labeled leaves, LCA, height functions.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9093673a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:42:44.435899+00:00"
   },
   {
     "id": "fd_0224",
@@ -1462,183 +1364,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0220",
-    "title": "2. Convex-Complement Theorem: Unique Maximizer Regions",
-    "description": "**Theorem statement**:\n\n```lean\n/-- A region of unique maximizer: the set where monomial m strictly\n    dominates all others. -/\ndef StrictDominanceRegion {n : ℕ} (p : Finset (TropMonomial n))\n    (m : TropMonomial n) : Set (Fin n → ℝ) :=\n  {x | m ∈ p ∧ ∀ m' ∈ p, m' ≠ m → m'.eval x < m.eval x}\n\n/-- The complement of the tropical hypersurface is the union of\n    strict dominance regions. -/\ntheorem compl_tropHypersurface_eq_iUnion_strictDominance {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) :\n    (TropHypersurface p hp)ᶜ =\n      ⋃ m ∈ p, StrictDominanceRegion p m\n\n/-- Each strict dominance region is convex. -/\ntheorem convex_strictDominanceRegion {n : ℕ}\n    (p : Finset (TropMonomial n)) (m : TropMonomial n) :\n    Convex ℝ (StrictDominanceRegion p m)\n\n/-- Each strict dominanc",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7d5cf911",
-    "consumed_by_exp_id": "86db7d4d",
-    "timestamp": "2026-05-15T14:21:34.104744+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "Direction 2: Integrate Distributivity via Knuth–Bendix Completion",
-    "description": "**Goal:** Extend the normalizer to handle the distributive law `a + min(b, c) = min(a + b, a + c)`.\n\n**Key insight:** The current AC normalizer deliberately stops at the AC fragment. Distributivity introduces cross-operator interactions that require a fundamentally different normal form: tropical polynomials as sets of monomials (as in the existing `TropicalNF` module).\n\n**Proof strategy:**\n1. Define oriented rewrite rules: `add a (tmin b c) → tmin (add a b) (add a c)`.\n2. Show termination using a suitable measure (e.g., number of `add`-over-`tmin` patterns).\n3. Show confluence by verifying all critical pairs are joinable.\n4. Alternatively, bypass rewriting by directly normalizing to monomial support form.\n\n**Challenges:**\n- The distributive law is not terminating under naive orientation. ",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cccfadf1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:11.687262+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Direction 4: Certified Tropical Polynomial Normal Form",
-    "description": "**Goal:** Define a canonical representation for tropical polynomials (expressions modulo AC + distributivity) and prove it complete.\n\n**Key insight:** A tropical polynomial in `n` variables is a finite pointwise minimum of affine forms `c + w₁x₁ + ... + wₙxₙ`. The normal form is a `Finset` of `(ℝ × (Fin n → ℕ))` pairs. This is the Newton polytope representation.\n\n**Proof strategy:**\n1. Define `TropPolyNF` as `Finset (ℝ × (ℕ → ℕ))` (or `Fin n → ℕ`).\n2. Define normalization by expanding distributivity fully, then collecting monomials.\n3. Prove soundness: evaluation of the normal form equals evaluation of the original.\n4. Prove completeness: two expressions with the same evaluation for all σ have the same monomial support.\n\n**Challenges:**\n- Completeness requires proving that the tropical sem",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cccfadf1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:11.709801+00:00"
-  },
-  {
-    "id": "fd_0215",
-    "title": "1. Tropical Ternary Goldbach Formalization",
-    "description": "**Goal:** Formalize a support-level tropical theorem for threefold min-plus convolution and connect it to Vinogradov's theorem on odd-number decomposition.\n\n**Concrete steps:**\n- Define `minplusConv3 f g h n := ⨅ (a b c : ℕ) (_ : a + b + c = n), f a + g b + h c`.\n- Prove `minplusConv3_tropPredCost_eq_zero_iff`: the threefold convolution of `tropPredCost A` vanishes at n iff n lies in A + A + A.\n- State Vinogradov's theorem as a hypothesis and derive its tropical reformulation: every sufficiently large odd number has zero tropical ternary prime cost.\n- Implement a verified finite search certifying ternary Goldbach for small odd numbers.\n\n**Hypothesis:** The tropical threefold convolution framework will expose compositional structure (e.g., factoring threefold convolution through twofold plu",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fb3d214",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:13:29.120657+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "3. Verified Bounded Goldbach Engine in Lean",
-    "description": "**Goal:** Implement a certified finite search showing zero tropical cost for all even numbers up to a substantial bound (e.g., 10⁶).\n\n**Concrete steps:**\n- Define a `Decidable` instance for `∃ a b, a + b = n ∧ Nat.Prime a ∧ Nat.Prime b` restricted to `a ∈ Finset.range (n+1)`.\n- Prove that the finite search is equivalent to the infinite infimum: `minplusConv (tropPredCost Nat.Prime) (tropPredCost Nat.Prime) n = 0 ↔ (Finset.range (n+1)).∃ a, Nat.Prime a ∧ Nat.Prime (n - a)`.\n- Use `native_decide` to verify Goldbach up to large bounds.\n- Package as `goldbach_verified_to_bound : ∀ n, 4 ≤ n → n ≤ B → Even n → minplusConv (tropPredCost Nat.Prime) (tropPredCost Nat.Prime) n = 0`.\n- Combine with `goldbach_from_finite_check_and_cover` to maximize the range of the hybrid theorem.\n\n**Hypothesis:** Th",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fb3d214",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:13:29.142682+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "4. Tropical Sumset Growth Theorem (Basis Order Theory)",
-    "description": "**Goal:** Prove that repeated tropical self-convolution of positive-density support functions eventually vanishes on all sufficiently large integers, formalizing a tropical analogue of Schnirelmann's basis theorem.\n\n**Concrete steps:**\n- Define tropical lower covering density: `σ_trop(A) := inf_{n ≥ 1} |{a ∈ A : a ≤ n}| / n`.\n- Prove: if `σ_trop(A) > 0` and `1 ∈ A`, then repeated k-fold tropical convolution `tropPredCost A ⋆ₖ` eventually vanishes on all n ≥ N(k).\n- Formalize the tropical analogue of Schnirelmann's theorem: if `σ_trop(A) ≥ 1/2`, then the twofold convolution already covers all sufficiently large integers.\n- Prove monotonicity of tropical support under convolution: `supp(f ⋆ g) ⊇ supp(f) + supp(g)`.\n\n**Hypothesis:** The tropical formulation of basis order theory will yield sh",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fb3d214",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:13:29.153412+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Cross-Cutting Theme",
-    "description": "All five directions share a common mathematical core: **the interplay between optimization, probability, and information geometry through free energy functionals**. The formalized Gibbs variational principle serves as the seed crystal from which each of these directions grows naturally:\n\n- Direction 1 (Donsker–Varadhan) generalizes the variational representation\n- Direction 2 (Soft Bellman) applies it to sequential decision-making\n- Direction 3 (PAC-Bayes) applies it to statistical learning theory\n- Direction 4 (Tropical large deviations) extends it to continuous spaces\n- Direction 5 (Variational inference) applies it to approximate Bayesian computation\n\nTogether, they form a coherent program for **formally verified thermodynamic computation** — a new foundation for certified algorithms in",
-    "domains": [
-      "Tropical",
-      "MachineLearning",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0e91ddc3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:20:42.798281+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "Target Theorem",
-    "description": "```lean\ntheorem tropicalCapacity_upper_bound {n : ℕ} {Y : Type} [Fintype Y] [Nonempty Y]\n    (K : Fin n → Y → ℝ) :\n    tropicalMutualInformation K ≤\n      2 * (Finset.univ.sup' Finset.univ_nonempty (fun x =>\n        Finset.univ.sup' Finset.univ_nonempty (fun y => K x y)) -\n      Finset.univ.sup' Finset.univ_nonempty (fun x =>\n        Finset.univ.inf' Finset.univ_nonempty (fun y => K x y)))\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c133a545",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:29:13.515535+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "Significance",
-    "description": "This establishes TMI as a monotone invariant of the tropical Blackwell order, the natural preorder on statistical experiments in the max-plus world. It opens the door to tropical statistical decision theory: a channel is \"more informative\" precisely when it preserves more distinguishability.\n\n---",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c133a545",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:29:13.529355+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Target Theorem (Tensor Equality)",
-    "description": "```lean\ntheorem tropical_mutual_information_tensor_eq\n    {X₁ Y₁ X₂ Y₂ : Type}\n    [Fintype X₁] [Nonempty X₁] [Fintype Y₁] [Nonempty Y₁]\n    [Fintype X₂] [Nonempty X₂] [Fintype Y₂] [Nonempty Y₂]\n    (K₁ : X₁ → Y₁ → ℝ) (K₂ : X₂ → Y₂ → ℝ) :\n    tropicalMutualInformation (tensorChannel K₁ K₂) =\n      tropicalMutualInformation K₁ + tropicalMutualInformation K₂\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c133a545",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:29:13.549732+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Direction 2: Nondeterministic Branching Program Lower Bounds via Tropical Certif",
-    "description": "**Target Theorem.** *If f has tropical certificate complexity at least L (every tropical certificate for f has cost ≥ L), then every nondeterministic branching program for f has size at least 2^{L/C}.*\n\n**Why it matters.** Nondeterministic branching programs are a model of nondeterministic space, and lower bounds for them imply space lower bounds. Tropical certificates generalize classical certificates by assigning min-plus costs to input queries. This direction connects the tropical semiring to the central open problem of proving super-polynomial nondeterministic space lower bounds.\n\n**Proof strategy.**\n1. Define tropical certificate complexity as the minimum tropical cost of any certificate (a set of input positions whose values determine f, weighted by query costs).\n2. Show that every n",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60e1cc58",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:30:43.013515+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "1. Gauge Classification by Cycle Holonomy",
     "description": "**Conjecture.** Two charge fields `A₁, A₂ : V → V → ℝ` yield the same charged tropical distances (up to endpoint potentials) if and only if their difference `A₁ - A₂` has zero circulation on every cycle.\n\n**Proof Strategy.**\n- Define the *holonomy* of a charge field around a cycle as its circulation (already formalized as `circulation`).\n- Prove the forward direction: if `A₁ - A₂` is exact (i.e., equals `φ(j) - φ(i)` for some potential `φ`), then their charged distances differ only by endpoint terms (follows from current theorems).\n- Prove the reverse direction: if all cycle circulations of `A₁ - A₂` vanish, then `A₁ - A₂` is exact. This is the discrete Poincaré lemma for graphs and requires showing that vanishing holonomy implies existence of a global potential.\n- The key technical challe",
@@ -1895,5 +1620,194 @@
     "source_exp_id": "476ffddd",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:00:36.649982+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Direction 1: Reed–Muller Minimum Distance from Schwartz–Zippel",
+    "description": "**Hypothesis**: The minimum distance of the Reed–Muller code RM(d, n, q) equals q^n − d·q^{n−1}, and this follows directly from the Schwartz–Zippel bound.\n\n**Proof Strategy**:\n1. A codeword of RM(d, n, q) is the evaluation vector of a polynomial f of total degree ≤ d over F_q^n.\n2. The Hamming weight of a nonzero codeword = q^n − |Z(f)|.\n3. By `schwartz_zippel_succ`, |Z(f)| ≤ d · q^{n−1}.\n4. Therefore weight ≥ q^n − d · q^{n−1}.\n5. The bound is achieved by the product of d linear forms.\n\n**Key Lemma to Formalize**:\n```\ntheorem reed_muller_minimum_distance :\n    ∀ f : MvPolynomial (Fin n) (ZMod q), f ≠ 0 → f.totalDegree ≤ d →\n    q^n - Fintype.card {x | eval x f = 0} ≥ q^n - d * q^{n-1}\n```\n\n**Impact**: First certified coding-theoretic distance bound derived from algebraic geometry in any p",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.375173+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Direction 2: PIT Soundness for Algebraic Circuits",
+    "description": "**Hypothesis**: Combining `schwartz_zippel_succ` with `bounded_circuit_degree_bound` from `AlgebraicCircuitComplexity.lean` yields: a circuit of degree bound d computing a nonzero polynomial evaluates to zero on at most d/|K| fraction of inputs.\n\n**Proof Strategy**:\n1. Use `totalDegree_le_degreeBound` to get totalDegree(C.toMvPolynomial) ≤ C.degreeBound.\n2. Apply `schwartz_zippel_succ` with the degree bound.\n3. Derive the probability statement.\n\n**Key Theorem**:\n```\ntheorem circuit_pit_soundness (C : AlgCircuit K n) (hC : C.toMvPolynomial ≠ 0) :\n    Fintype.card {x | C.eval x = 0} ≤ C.degreeBound * (Fintype.card K)^(n-1)\n```\n\n**Impact**: Bridges syntactic circuit complexity to semantic evaluation bounds. Foundation for certified lower-bound arguments.\n\n**Cross-domain connections**: Algebra",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.387571+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Direction 3: Polynomial Fingerprinting and Streaming Verification",
+    "description": "**Hypothesis**: Polynomial fingerprinting provides communication-optimal equality testing for data streams, with error bounds certified via Schwartz–Zippel.\n\n**Proof Strategy**:\n1. Represent data as coefficients of a univariate polynomial.\n2. Random evaluation at a point r gives a fingerprint.\n3. By Schwartz–Zippel (univariate case), collision probability ≤ d/q.\n4. Formalize the communication protocol and its soundness.\n\n**Key Theorem**:\n```\ntheorem fingerprint_soundness (f g : Polynomial K) (hfg : f ≠ g) :\n    Fintype.card {r : K | f.eval r = g.eval r} ≤ max f.natDegree g.natDegree\n```\n\n**Impact**: First certified randomized communication protocol in a proof assistant. Template for formalizing interactive proofs, streaming algorithms, and property testing.\n\n**Cross-domain connections**: C",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.398477+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Direction 4: Low-Degree Testing over Finite Grids",
+    "description": "**Hypothesis**: The Schwartz–Zippel bound implies that low-degree polynomials are \"locally testable\" — one can distinguish a true low-degree polynomial from a function that is far from low-degree by checking a few random points.\n\n**Proof Strategy**:\n1. If f agrees with a degree-d polynomial on > d/|S| fraction of a random subset S, then f IS that polynomial (by Schwartz–Zippel contrapositive).\n2. Formalize the self-corrector: given an oracle that agrees with a low-degree polynomial on most inputs, construct the correct polynomial.\n3. Connect to locally decodable codes and PCPs.\n\n**Key Theorem**:\n```\ntheorem low_degree_test_soundness :\n    ∀ f : Fin n → K → K, (∃ p : MvPolynomial (Fin n) K, p.totalDegree ≤ d ∧\n    Fintype.card {x | eval x p = f x} > (1 - d/|K|) * |K|^n) →\n    ∀ x, eval x p ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.410388+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Direction 5: Derandomization via Hitting Set Generators",
+    "description": "**Hypothesis**: If explicit hitting set generators for degree-d polynomials exist, then PIT ∈ P. Schwartz–Zippel quantifies exactly what a hitting set must hit.\n\n**Proof Strategy**:\n1. Define: a hitting set H ⊆ K^n is a set where every nonzero polynomial of degree ≤ d has a nonzero evaluation.\n2. By Schwartz–Zippel, any set of size > d · |K|^{n-1} hit by random sampling is a hitting set with high probability.\n3. Formalize the Kabanets–Impagliazzo connection: explicit hitting sets ↔ circuit lower bounds.\n4. State the formal derandomization hypothesis.\n\n**Key Definition and Theorem**:\n```\ndef IsHittingSet (H : Finset (Fin n → K)) (d : ℕ) : Prop :=\n    ∀ f : MvPolynomial (Fin n) K, f ≠ 0 → f.totalDegree ≤ d →\n    ∃ x ∈ H, eval x f ≠ 0\n\ntheorem random_hitting_set :\n    Fintype.card K > d → ∃ x",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.422863+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Direction 6: Finite-Field Nullstellensatz and Incidence Geometry",
+    "description": "**Hypothesis**: The Schwartz–Zippel bound can be refined using the combinatorial Nullstellensatz (Alon 1999) to prove incidence geometry theorems over finite fields.\n\n**Proof Strategy**:\n1. Formalize the Combinatorial Nullstellensatz: if f has a monomial x₁^{d₁}···xₙ^{dₙ} with nonzero coefficient and |Sᵢ| > dᵢ, then f is nonzero on some point of S₁ × ··· × Sₙ.\n2. This strengthens Schwartz–Zippel for grid evaluations.\n3. Apply to prove the Chevalley–Warning theorem and finite-field Kakeya conjecture.\n\n**Key Theorem**:\n```\ntheorem combinatorial_nullstellensatz :\n    f.coeff (Finsupp.ofList vars degs) ≠ 0 →\n    (∀ i, (S i).card > degs i) →\n    ∃ x ∈ Fintype.piFinset S, eval x f ≠ 0\n```\n\n**Impact**: Extends the formalized polynomial method toolkit to additive combinatorics and incidence geomet",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.435105+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Direction 7: Certified Randomized Linear Algebra",
+    "description": "**Hypothesis**: Freivalds' algorithm generalizes to certified verification of other linear algebra operations: determinant, rank, matrix inverse, eigenvalues.\n\n**Proof Strategy**:\n1. Verify det(A) = d by checking A·adj(A) = d·I via Freivalds.\n2. Verify rank(A) = r by checking the kernel dimension via random projections.\n3. Verify A⁻¹ = B by checking A·B = I via Freivalds.\n4. Each reduces to matrix multiplication verification.\n\n**Key Theorem**:\n```\ntheorem verified_inverse (A B : Matrix (Fin n) (Fin n) K) (hAB : A * B ≠ 1) :\n    Fintype.card {r | (A * B).mulVec r = r} ≤ |K|^{n-1}\n```\n\n**Impact**: Complete certified randomized linear algebra toolkit. Applicable to verified numerical computation and certified symbolic algebra systems.\n\n**Cross-domain connections**: Numerical linear algebra, s",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.445949+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Phase 1 (Immediate, 1–2 months)",
+    "description": "- Direction 2: Circuit PIT soundness (builds directly on existing code)\n- Direction 3: Fingerprinting soundness (uses existing univariate root bound)\n- Direction 7: Inverse verification (trivial extension of Freivalds)",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.456785+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Phase 2 (Medium-term, 3–6 months)",
+    "description": "- Direction 1: Reed–Muller distance (requires Hamming weight formalization)\n- Direction 6: Combinatorial Nullstellensatz (independent but uses similar techniques)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.468128+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Phase 3 (Long-term, 6–12 months)",
+    "description": "- Direction 4: Low-degree testing (requires oracle/query model formalization)\n- Direction 5: Derandomization hypotheses (requires complexity class formalization)",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.479054+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Cross-cutting Infrastructure Needed",
+    "description": "- Formalized probability distributions over finite types\n- Randomized algorithm correctness framework\n- Communication complexity model\n- Algebraic circuit evaluation semantics (partially exists)\n\n---",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.487662+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Research Team Structure",
+    "description": "**Core team**:\n- Algebraic complexity: extend circuit formalization, prove PIT variants\n- Coding theory: Reed–Muller bounds, list decoding connections\n- Randomized algorithms: streaming, fingerprinting, verification protocols\n\n**Validation protocol**:\n1. State conjecture as a Lean theorem with `sorry`\n2. Test with concrete examples via `#eval`\n3. Decompose into ≤ 5 helper lemmas\n4. Prove helpers bottom-up\n5. Build clean API for downstream use\n\n**Knowledge base updates**:\n- After each proved theorem, add to the catalog with cross-references\n- Maintain a dependency graph of formalized results\n- Track which folklore implications are now certified",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94c243f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:09:09.499683+00:00"
   }
 ]

@@ -103,7 +103,7 @@ theorem residualLayer_det (f : Matrix (Fin n) (Fin n) ℝ) :
 -/
 theorem residualLayer_invertible_iff (f : Matrix (Fin n) (Fin n) ℝ) :
     IsUnit (residualLayer f) ↔ IsUnit (residualLayer f).det := by
-  exact?
+  exact isUnit_iff_isUnit_det (residualLayer f)
 
 /-
 Residual of the zero layer is the identity.
