@@ -1618,6 +1618,34 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
+    "id": "fd_0199",
+    "title": "Direction 1",
+    "description": "(Expander Hashing) provides the cryptographic *construction*.",
+    "domains": [
+      "Cryptography"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "92286879",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:34:27.099275+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Direction 4",
+    "description": "(Average-Case Hardness) provides the *reduction* to computational assumptions.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "92286879",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:34:27.111296+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -1786,10 +1814,10 @@
       "Bridges"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18915f0b",
     "timestamp": "2026-05-14T16:17:39.958244+00:00"
   },
   {
