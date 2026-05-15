@@ -495,22 +495,6 @@
     "timestamp": "2026-05-14T16:03:53.813831+00:00"
   },
   {
-    "id": "seed_055",
-    "title": "Tropical Time Travel: Min-Plus Closed Timelike Curves and Consistency",
-    "description": "Formulate time travel paradoxes as tropical fixed-point problems where Novikov consistency corresponds to the existence of a tropical fixed point. Prove that every tropical CTC has a unique consistent solution, and that the grandfather paradox is resolved by the idempotent property min(a,a)=a. Show that tropical chronology protection is equivalent to the tropical spectral radius being less than unity.",
-    "domains": [
-      "Speculative",
-      "Physics",
-      "Logic"
-    ],
-    "priority_score": 0.83,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "a25a82de",
-    "timestamp": "2026-05-14T16:03:53.849787+00:00"
-  },
-  {
     "id": "seed_019",
     "title": "Semantic Compression via Tropical Information Geometry",
     "description": "Prove that semantic compression—preserving meaning rather than bits—has a natural formulation as min-plus projection onto a tropical submanifold of the information geometry. Show that the tropical Fisher information metric bounds semantic distortion, and that the idempotent projection yields optimal semantic codes that compress by extracting the tropical skeleton of the source distribution.",
@@ -1353,10 +1337,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d9c105e5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c58d2658",
     "timestamp": "2026-05-15T05:04:31.233035+00:00"
   },
   {
@@ -1567,34 +1551,6 @@
     "timestamp": "2026-05-15T06:05:09.015646+00:00"
   },
   {
-    "id": "fd_0204",
-    "title": "Equalizers:",
-    "description": "For `f, g : T → U`, define `Eq(f,g)` as the subtheory of elements where `f(x) = g(x)`. Prove the universal property.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:09.023311+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Pullbacks:",
-    "description": "Construct as equalizers of products.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:09.030629+00:00"
-  },
-  {
     "id": "fd_0206",
     "title": "Colimits:",
     "description": "Pushouts via quotients of coproducts.\n\n**Impact:** Limits enable systematic combination of theories: given a shared interface (pullback), one can merge two domain theories into a composite. This is directly relevant to:\n- Modular program verification (combining module specs)\n- Ontology merging in knowledge representation\n- Multi-domain scientific modeling\n\n**Target theorem:**\n```\ntheorem product_is_universal (T U : ResearchTheory)\n    (V : ResearchTheory) (p₁ : TheoryHom V T) (p₂ : TheoryHom V U) :\n    ∃! h : TheoryHom V (T.prod U), ... = p₁ ∧ ... = p₂\n```\n\n---\n\n## Direction 4: Fixed-Point Semantics in the Bicategory\n\n**Hypothesis:** Define endomorphism theories `End(T) := TheoryHom T T` and prove that monotone endomorphisms on hom-preorders have least fixed points (by Knaster-Tarski).\n\n**",
@@ -1621,64 +1577,6 @@
     "source_exp_id": "8b1837b9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:05:09.046645+00:00"
-  },
-  {
-    "id": "fd_0210",
-    "title": "Apply",
-    "description": "to at least one domain per direction (program analysis, ML, knowledge representation)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:09.067102+00:00"
-  },
-  {
-    "id": "fd_0208",
-    "title": "Real-valued invariants",
-    "description": "(`α = ℝ`): Handle Lipschitz constants, entropy values, collision probabilities as native invariants rather than discretized ℕ versions.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "069b9159",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:28:23.469513+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "Vector-valued invariants",
-    "description": "(`α = ℝⁿ` with product order): Capture theories where objects have multiple independent quality measurements (e.g., both robustness AND efficiency).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "069b9159",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:28:23.476336+00:00"
-  },
-  {
-    "id": "fd_0210",
-    "title": "Lattice-valued invariants",
-    "description": "(`α = L` a complete lattice): Model information-ordering domains where invariants form a lattice of approximations.\n\n### Target Theorems\n\n```lean\ntheorem generalTheory_factorization {α : Type*} [Preorder α]\n    (T : GeneralTheory α) (P : T.Carrier → Prop) :\n    InvariantDetermined T P ↔ ∃ R : α → Prop, ∀ x, P x ↔ R (T.Inv x)\n\ntheorem generalTheory_transport {α : Type*} [Preorder α]\n    {T U : GeneralTheory α} (f : GeneralTheoryHom T U)\n    {P : T.Carrier → Prop} (hP : InvariantDetermined T P)\n    (hf : ∀ x, U.Inv (f.toFun x) = T.Inv x) :\n    ∃ R, (∀ x, P x ↔ R (T.Inv x)) ∧\n         TransferablePredicate f P (fun y => R (U.Inv y))\n```\n\n### Impact\n\nReal-valued invariants would immediately connect to the existing `lipschitz_composition_bound` and `ShellPartition.collisionProb_upper_bound` cat",
-    "domains": [
-      "Cryptography",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "069b9159",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:28:23.486683+00:00"
   },
   {
     "id": "fd_0211",
@@ -2168,20 +2066,6 @@
     "timestamp": "2026-05-15T04:35:31.644214+00:00"
   },
   {
-    "id": "fd_0205",
-    "title": "Theorem Statement",
-    "description": "```\ntheorem randomized_cycle_systolic_bound\n    {a b R n g : ℕ}\n    (hn : 0 < n)\n    (W : Matrix (Fin a) (Fin b) ℕ)\n    (hg : IsMinCycleCost W g)\n    (P : RandomizedProtocol a b n R)\n    (hcycle : ∀ ω, BlockProducesCycles W (P.realize ω)) :\n    g * (R / n) ≤ 𝔼[P.totalCost]\n```",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f5102ff5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:13:00.288210+00:00"
-  },
-  {
     "id": "fd_0206",
     "title": "Cross-Domain Significance",
     "description": "- **Probabilistic combinatorics**: Connects cycle-systolic bounds to probabilistic method lower bounds.\n- **Information theory**: Relates to Shannon's noisy channel coding theorem — randomization cannot reduce geometric cycle costs.\n- **Quantum computing**: Paves the way for quantum extensions via density-matrix-valued protocols.\n\n---",
@@ -2213,22 +2097,6 @@
     "source_exp_id": "f5102ff5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T05:13:00.318476+00:00"
-  },
-  {
-    "id": "fd_0210",
-    "title": "Implementation Strategy",
-    "description": "- **Step 1: Extraction.** Use abstract interpretation or symbolic execution to extract a finite-state model from imperative code. For data structures with bounded configurations (e.g., fixed-capacity buffers), the extraction is exact. For unbounded structures, use finite-state abstractions (e.g., truncate the state space at a threshold).\n- **Step 2: Matrix construction.** Build the min-plus transition matrix from the extracted model. This is a straightforward enumeration of states and transitions.\n- **Step 3: Spectral computation.** Apply Karp's algorithm to compute the maximum cycle mean ρ, then Bellman-Ford to compute the certifying potential φ.\n- **Step 4: Certificate generation.** Generate a Lean proof that instantiates the general theorems (Theorems B, C, D) with the concrete matrix, ",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a9cc9d1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:15:44.607440+00:00"
   },
   {
     "id": "fd_0212",
@@ -2317,5 +2185,107 @@
     "source_exp_id": "a021a156",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:05:26.839414+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Direction 1: Full Tropical Spectral Chronology Protection",
+    "description": "**Goal:** Formalize the minimum cycle mean in Lean and prove the equivalence:\n\n> A tropical affine system is chronology-protected if and only if the minimum cycle mean of its weight matrix is strictly positive.\n\n**Hypothesis:** For A ∈ ℝⁿˣⁿ with λ*(A) > 0, the tropical affine iteration F^k(x₀) converges to the unique fixed point for any x₀, and the convergence rate is determined by λ*(A).\n\n**Strategy:**\n1. Define `DirectedCycle` as a nonempty list of vertices forming a cycle in the weight graph.\n2. Define `cycleMean A c = (Σ_{edges in c} A_{ij}) / |c|`.\n3. Prove: if all cycle means > 0, then some power Aᵏ has all entries ≥ ε > 0, making the tropical iteration eventually contractive.\n4. Bridge to the existing `tropical_chronology_protection_existence` via the domination condition.\n\n**Cross-",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a25a82de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:01:52.984956+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "Direction 2: Tropical CTC — Meta-Oracle Bridge",
+    "description": "**Goal:** Prove a common fixed-point theorem that simultaneously instantiates to:\n- Tropical CTC consistency (this work)\n- Meta-oracle convergence (`meta_oracle_has_unique_fixed_point` in the catalog)\n- Semantic fixed points in recursive program semantics\n\n**Hypothesis:** There exists an abstract class `ContractiveIdempotentSystem` with the signature:\n\n```lean\nclass ContractiveIdempotentSystem (α : Type*) [MetricSpace α] [Nonempty α] where\n  evolve : α → α\n  contraction_factor : ℝ\n  hq_lt_one : contraction_factor < 1\n  hq_nonneg : 0 ≤ contraction_factor\n  h_contr : ∀ x y, dist (evolve x) (evolve y) ≤ contraction_factor * dist x y\n```\n\nsuch that:\n- `MetaOracleSystem` is an instance.\n- Discounted tropical affine maps are instances.\n- The unique fixed-point theorem follows from the class axio",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a25a82de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:01:52.994323+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "Direction 3: Entropy Bounds for Consistent Histories",
+    "description": "**Goal:** Derive entropy inequalities for consistent tropical CTC solutions using the thermodynamic closure framework (`fixed_point_entropy_upper_bound` in the catalog).\n\n**Hypothesis:** If a tropical CTC system (A, b) has consistent solution x*, and if we equip the state space with an entropy functional S, then:\n\n  S(x*) ≤ S_max(A, b)\n\nwhere S_max is computable from the system parameters. This gives an information-theoretic bound on how much \"information\" a self-consistent time-travel history can carry.\n\n**Strategy:**\n1. Define entropy on tropical state spaces as the log of the number of \"active\" constraints (coordinates where the bias b is binding).\n2. Prove that consistent solutions maximize entropy subject to the tropical affine constraint (an analogue of the maximum entropy principle)",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "EML",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a25a82de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:01:53.003453+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "Direction 4: Stochastic Tropical CTCs and Idempotent Markov Kernels",
+    "description": "**Goal:** Extend the theory from deterministic min-plus maps to stochastic/idempotent Markov kernels.\n\n**Hypothesis:** Replace the tropical semiring (ℝ, min, +) with the *idempotent probability monad* (Maslov dequantization). A stochastic CTC assigns not a single cost to each history, but a *tropical probability distribution* (idempotent measure) over histories. The fixed-point theory extends: idempotent Markov operators on finite spaces have fixed distributions.\n\n**Strategy:**\n1. Define tropical probability distributions as functions X → ℝ ∪ {+∞} with finite tropical integral.\n2. Define tropical Markov kernels as linear operators on tropical distributions.\n3. Prove a tropical analogue of the ergodic theorem: contractive tropical Markov chains converge to a unique stationary distribution.\n",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a25a82de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:01:53.012752+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "Direction 5: Certified Algorithms for Causal Graph Consistency",
+    "description": "**Goal:** Develop verified algorithms with complexity certificates for:\n1. Detecting whether a weighted causal graph admits a paradox-free (self-consistent) assignment.\n2. Computing the unique consistent assignment when it exists.\n3. Certifying chronology protection via cycle-mean computation.\n\n**Hypothesis:** All three problems reduce to tropical fixed-point computation and can be solved in polynomial time (O(n³) for cycle mean, O(n² log(1/ε)) for fixed-point iteration with contraction rate λ).\n\n**Strategy:**\n1. Implement Karp's algorithm for minimum cycle mean in Lean with a correctness proof.\n2. Implement the tropical fixed-point iteration with a convergence proof (geometric rate λᵏ).\n3. Package as a verified decision procedure: given (A, b, λ), output either a consistent solution or a ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a25a82de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:01:53.021884+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Summary",
+    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Spectral chronology protection | Medium-high | High | Graph cycle infrastructure |\n| 2. Meta-oracle bridge | Low-medium | Medium | Typeclass design |\n| 3. Entropy bounds | Medium | High | Thermodynamic lattice instantiation |\n| 4. Stochastic tropical CTCs | High | Very high | Tropical measure theory |\n| 5. Certified algorithms | Medium | High | Lean algorithm verification |\n\nEach direction is self-contained and can be pursued independently. Directions 1 and 5 are the most immediately executable. Direction 4 is the most ambitious and would constitute a significant contribution to both tropical mathematics and quantum information theory.",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a25a82de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:01:53.030552+00:00"
   }
 ]
