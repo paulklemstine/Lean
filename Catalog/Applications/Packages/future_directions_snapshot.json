@@ -758,10 +758,10 @@
       "Tropical"
     ],
     "priority_score": 0.8,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4ff18da",
     "timestamp": "2026-05-14T16:03:53.830456+00:00"
   },
   {
@@ -1195,20 +1195,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.119497+00:00"
-  },
-  {
-    "id": "fd_0139",
-    "title": "Charge-reversal symmetry",
-    "description": ": The tropical distance in `chargedWeight W A q` relates to that in `chargedWeight W A (-q)` via the transpose.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "be18c0b2",
-    "timestamp": "2026-05-14T16:24:30.122635+00:00"
   },
   {
     "id": "fd_0141",
@@ -1950,20 +1936,6 @@
     "timestamp": "2026-05-14T23:59:16.221426+00:00"
   },
   {
-    "id": "fd_0205",
-    "title": "Interdisciplinarity",
-    "description": ": Maintain bridges to control theory, game theory, network science, and statistical physics at every stage.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.247769+00:00"
-  },
-  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -2506,5 +2478,63 @@
     "source_exp_id": "181d8ba6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:07:21.695979+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Statement",
+    "description": "Prove that the tropical eigencones of `chargedWeight(W, A, q)` and `chargedWeight(W, A, -q)` correspond under transpose, when W is symmetric.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be18c0b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:25:49.781276+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Lean Type Signature",
+    "description": "```lean\ntheorem tropicalEigencone_charge_reversal\n    {n : ℕ} (W A : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) (q λ : ℝ)\n    (hW : W.IsSymm) (v : Fin (n+1) → ℝ)\n    (hv : ∀ i, Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩\n      (fun j => chargedWeight W A q i j + v j) = λ + v i) :\n    ∀ i, Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩\n      (fun j => chargedWeight W A (-q) j i + v i) = λ + v i\n```",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be18c0b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:25:49.787601+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Cross-Domain Significance",
+    "description": "- **Routing algorithms**: Bidirectional Dijkstra can exploit charge duality—search forward at charge q and backward at charge -q.\n- **Network flow**: Max-flow/min-cut duality in directed networks may connect to charge-reversal.\n- **Statistical mechanics**: Path integrals in tropical statistical mechanics would inherit time-reversal symmetry.\n\n---",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be18c0b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:25:49.883166+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Implementation Roadmap",
+    "description": "| Priority | Direction | Estimated Effort | Dependencies |\n|----------|-----------|-----------------|--------------|\n| High | Direction 4 (Noether) | 2-3 days | Current results |\n| High | Direction 2 (Geodesics) | 3-5 days | Path weight definition |\n| Medium | Direction 5 (Optimization) | 3-5 days | Tropical LP definitions |\n| Medium | Direction 1 (Eigencones) | 5-7 days | Tropical eigenvalue theory |\n| Low | Direction 3 (Category) | 5-10 days | Mathlib CategoryTheory |",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be18c0b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:25:49.905162+00:00"
   }
 ]
