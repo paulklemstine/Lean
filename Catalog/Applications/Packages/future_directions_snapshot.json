@@ -655,22 +655,6 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
-    "id": "fd_0240",
-    "title": "Quantum query lower bound",
-    "description": ": Use the collision entropy bound with quantum random oracle techniques to show that Grover-type attacks require Ω(3^{d/2}) queries.\n\n### Key Theorem Target (Lean)\n```lean\ntheorem berggren_key_exchange_security\n    (d : ℕ) (hd : 128 ≤ d * Real.log 3 / Real.log 2) :\n    SecurityLevel (berggrenKeyExchange d) ≥ 128\n```\n\n### Practical Impact\n- Concrete security parameter recommendations: d ≥ 117 for 128-bit security\n- Integration with existing post-quantum frameworks (NIST standards)\n- Hardware-friendly implementation (only integer matrix multiplication)\n\n---\n\n## Direction 4: Spectral Gap and Expansion for the Berggren Orbit Graph\n\n### Goal\nProve that the depth-bounded Berggren orbit graph G_D (with edges from Berggren generator applications) is a family of expander graphs with spectral gap bo",
-    "domains": [
-      "Physics",
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.457340+00:00"
-  },
-  {
     "id": "fd_0234",
     "title": "Connect to width collapse",
     "description": ": Show that the tropical eigenvector has width zero if and only if all cycle means are equal — the tropical analogue of a simple dominant eigenvalue.\n\n### Proof Strategy\n- Formalize directed graphs and cycle decompositions over Fin n.\n- Define irreducibility as strong connectivity of the associated graph.\n- Prove Karp's theorem: the minimum cycle mean equals lim_{k→∞} min_i (A^⊗k)_{ij}/k.\n- Use the Collatz–Wielandt characterization to establish bounds.\n\n### Cross-Domain Impact\n- **Optimization**: Tropical eigenvalues solve mean payoff games and scheduling problems.\n- **Dynamical systems**: Tropical eigenvectors are fixed points of the normalized tropical dynamics.\n- **RH connection**: The tropical eigenvalue could play the role of the \"spectral parameter\" in a tropical zeta function.\n\n### ",
@@ -686,38 +670,6 @@
     "source_exp_id": "cf94957b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T20:38:18.916506+00:00"
-  },
-  {
-    "id": "fd_0238",
-    "title": "Define tropical operators on ℓ∞",
-    "description": ": (Ty)(i) = inf_j(c(i,j) + w(j) + y(j)) with absolute summability conditions ensuring the infimum exists.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf94957b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:38:18.956303+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Establish compactness results",
-    "description": ": Under appropriate conditions, the tropical operator maps the unit ball of ℓ∞ into a compact subset.\n\n### Proof Strategy\n- Use Mathlib's `Filter.Tendsto` and `BoundedContinuousFunction` infrastructure.\n- Define the tropical operator as a map ℓ∞ → ℓ∞ using `iInf` with suitable boundedness hypotheses.\n- The width-constancy equivalence generalizes directly: if sup = inf over all naturals, the function is constant. The key subtlety is handling the possibility of the sup/inf not being attained.\n- For compactness, use an Arzelà–Ascoli type argument: if the cost kernel c(i,j) grows fast enough as |i-j| → ∞, the operator is compact.\n\n### Cross-Domain Impact\n- **Functional analysis**: Tropical analogues of compact operators and spectral theory.\n- **Statistical mechanics**: Countable-state transfer",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf94957b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:38:18.975803+00:00"
   },
   {
     "id": "fd_0245",
@@ -977,34 +929,6 @@
     "timestamp": "2026-05-15T21:10:09.071392+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "Direction 2",
-    "description": "(Categorical adjunction) — deepest conceptual contribution",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56f3642c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T21:10:09.083476+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Generalize",
-    "description": "the kernel-density theorem to abstract vector spaces (Direction 1)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c909ef",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T21:13:59.339034+00:00"
-  },
-  {
     "id": "fd_0234",
     "title": "Is tropical rank NP-hard to approximate within any constant factor?",
     "description": "Known: exact computation is NP-hard. Unknown: approximation complexity.",
@@ -1067,21 +991,6 @@
     "timestamp": "2026-05-15T21:34:31.393986+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "What is the relationship between tropical rank and Boolean rank for general (non-zero-top) matrices?",
-    "description": "Our bridge theorem covers {0,⊤} matrices. The general case is open and mathematically rich.",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ed53a6b6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T21:34:31.406708+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Proof theory",
     "description": "(automata, coding, compression)",
@@ -1139,6 +1048,50 @@
     "source_exp_id": "0db1bd89",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T22:01:06.662655+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Tropical eigenvector animator:",
+    "description": "Visualize tropical power iteration converging to the eigenvector.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bd33180",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:12:11.170879+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Cycle-mean explorer:",
+    "description": "Enumerate cycles and display their means, highlighting critical cycles.\n\n### Cross-Domain Collaborations",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bd33180",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:12:11.186389+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Algebraic geometry:",
+    "description": "Relate to tropical curves and divisors.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6bd33180",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:12:11.220894+00:00"
   },
   {
     "id": "seed_052",
@@ -1822,10 +1775,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "60e1cc58",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "476ffddd",
     "timestamp": "2026-05-15T17:30:43.053960+00:00"
   },
   {
@@ -1888,21 +1841,6 @@
     "timestamp": "2026-05-15T19:28:49.817683+00:00"
   },
   {
-    "id": "fd_0234",
-    "title": "Hypothesis",
-    "description": "Extend the lexical cost model from presence/absence to semantic distance: define $L(i)$ not as a scalar but as a point in a tropical module, representing the semantic position of lexical item $i$. Semantic drift is then a tropical translation in this module. The key conjecture:\n\n*Semantic change preserves tropical convexity: if a set of related meanings forms a tropically convex set in the ancestor language, its images under semantic drift remain tropically convex in descendant languages.*",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1cdf4e96",
-    "consumed_by_exp_id": "6bd33180",
-    "timestamp": "2026-05-15T20:09:21.809405+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "1. Gauge Classification by Cycle Holonomy",
     "description": "**Conjecture.** Two charge fields `A₁, A₂ : V → V → ℝ` yield the same charged tropical distances (up to endpoint potentials) if and only if their difference `A₁ - A₂` has zero circulation on every cycle.\n\n**Proof Strategy.**\n- Define the *holonomy* of a charge field around a cycle as its circulation (already formalized as `circulation`).\n- Prove the forward direction: if `A₁ - A₂` is exact (i.e., equals `φ(j) - φ(i)` for some potential `φ`), then their charged distances differ only by endpoint terms (follows from current theorems).\n- Prove the reverse direction: if all cycle circulations of `A₁ - A₂` vanish, then `A₁ - A₂` is exact. This is the discrete Poincaré lemma for graphs and requires showing that vanishing holonomy implies existence of a global potential.\n- The key technical challe",
@@ -1953,42 +1891,5 @@
     "source_exp_id": "169f3d7c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T22:03:46.255885+00:00"
-  },
-  {
-    "id": "fd_0238",
-    "title": "4. Cohomological Obstruction Theorem",
-    "description": "**Target.** Define a first tropical graph cohomology group `H¹_trop(G, ℝ)` classifying charge fields modulo exact ones, and prove that gauge triviality of a charge field is equivalent to its cohomology class being zero.\n\n**Proof Strategy.**\n- Define the space of 0-cochains as `C⁰ = V → ℝ` (potentials) and 1-cochains as `C¹ = V × V → ℝ` (charge fields).\n- Define the coboundary map `δ : C⁰ → C¹` by `δφ(i,j) = φ(j) - φ(i)`.\n- Define `H¹ = C¹ / im(δ)` (charge fields modulo exact ones).\n- Prove: `[A] = 0 in H¹` ⟺ `A` is exact ⟺ all circulations of `A` vanish ⟺ `d_{w+A}(s,t) = d_w(s,t) + φ(t) - φ(s)` for some potential `φ`.\n- Connect `H¹` to the cycle space of the graph: `H¹ ≅ ℝ^(|E| - |V| + components)`.\n\n**Cross-Domain Connections.** This establishes the tropical analogue of de Rham cohomology",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "169f3d7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:03:46.268326+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "5. Spectral/Tropical Bridge Theorem",
-    "description": "**Target.** Relate exact magnetic perturbations of graph Laplacians (in the classical spectral sense) to pure-gauge perturbations of tropical shortest-path operators, establishing a formal dictionary between the two theories.\n\n**Proof Strategy.**\n- Define the magnetic graph Laplacian `L_A` with entries `L_A(i,j) = -e^{iA(i,j)}` for adjacent `i,j`.\n- Show that when `A = δφ` is exact, `L_A` is unitarily equivalent to `L_0` (classical gauge invariance).\n- Formalize the tropical limit: as a temperature parameter `β → ∞`, the spectral theory of `e^{-βL_A}` converges to the tropical shortest-path theory with weights `w + A`.\n- Prove that gauge triviality is preserved in this limit: exact `A` in the spectral theory maps to exact `A` in the tropical theory.\n- State and prove a comparison theorem: ",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "169f3d7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:03:46.280376+00:00"
   }
 ]
