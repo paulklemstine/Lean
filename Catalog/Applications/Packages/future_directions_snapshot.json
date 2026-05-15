@@ -153,10 +153,10 @@
       "Algebra"
     ],
     "priority_score": 0.89,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef0cc9c1",
     "timestamp": "2026-05-14T16:03:53.851727+00:00"
   },
   {
@@ -173,22 +173,6 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.813170+00:00"
-  },
-  {
-    "id": "seed_013",
-    "title": "Post-Quantum Lattices from Pythagorean Triple Groupoids",
-    "description": "Prove that Berggren groupoid orbits generate lattice bases with worst-case to average-case reduction properties suitable for post-quantum cryptography. Show that the shortest vector problem on Pythagorean lattices is as hard as the general SVP, and construct a key exchange protocol whose security reduces to the hardness of finding primitive triples in high-dimensional Berggren lattices.",
-    "domains": [
-      "Cryptography",
-      "Pythagorean",
-      "Computation"
-    ],
-    "priority_score": 0.88,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "49977498",
-    "timestamp": "2026-05-14T16:03:53.818546+00:00"
   },
   {
     "id": "seed_016",
@@ -769,10 +753,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3adde084",
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
   },
   {
@@ -1089,10 +1073,10 @@
       "EML"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "56b13d4c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62ac6dd0",
     "timestamp": "2026-05-15T12:04:37.825030+00:00"
   },
   {
@@ -1125,6 +1109,96 @@
     "source_exp_id": "56b13d4c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:04:37.863500+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Spectral gap → expansion",
+    "description": ": proving the orbit graph is an expander, giving strong mixing properties for random walks.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "49977498",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:05:00.954804+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Ramanujan-type bounds",
+    "description": ": optimal spectral bounds would make Berggren lattices provably good for derandomization.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "49977498",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:05:00.964677+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "L-function connections",
+    "description": ": linking Berggren orbit statistics to analytic number theory.\n\nThis direction would create an unprecedented bridge between the Langlands program and post-quantum cryptography.\n\n**Dependencies:**\n- Berggren matrices as elements of O(2,1; ℤ) (current work)\n- Mathlib's spectral theory and representation theory infrastructure\n- Potentially: modular forms API in Mathlib\n\n**Estimated Difficulty:** Very hard (requires deep mathematical machinery). This is more of a long-term research program than a single theorem, but even partial results (e.g., spectral gap for the depth-bounded orbit graph) would be significant.\n\n**Task Type:** discover + formalize\n\n---\n\n### Direction 5: Practical Berggren Key Exchange Protocol\n\n**Exact Theorem Target:**\n```lean\nstructure BerggrenKeyExchange where\n  wordLen : ",
+    "domains": [
+      "Physics",
+      "Pythagorean",
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "49977498",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:05:00.975190+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Direction 2",
+    "description": "(collision resistance) — highest impact per effort, builds directly on current work",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "49977498",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:05:00.983714+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "Direction 1",
+    "description": "(higher dimensions) — essential for practical relevance",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "49977498",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:05:00.993647+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "Direction 4",
+    "description": "(automorphic forms) — deepest mathematical content, longest timeline",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "49977498",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:05:01.004685+00:00"
   },
   {
     "id": "seed_079",
@@ -1624,10 +1698,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "97644adb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6405e4c4",
     "timestamp": "2026-05-15T09:07:29.315833+00:00"
   },
   {
@@ -1759,10 +1833,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b8fe325",
     "timestamp": "2026-05-15T09:19:36.848982+00:00"
   },
   {
