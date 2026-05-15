@@ -152,10 +152,10 @@
       "Tropical"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fb3d214",
     "timestamp": "2026-05-14T16:03:53.813170+00:00"
   },
   {
@@ -900,20 +900,6 @@
     "timestamp": "2026-05-15T12:04:37.815985+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "Specification as fixed points",
-    "description": ": Show that a specification \"N(x) ∈ S for all x ∈ K\" is equivalent to K ⊆ N⁻¹(S), which for closure networks reduces to checking fixed-point inclusion.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "56b13d4c",
-    "consumed_by_exp_id": "0e91ddc3",
-    "timestamp": "2026-05-15T12:04:37.825030+00:00"
-  },
-  {
     "id": "fd_0204",
     "title": "Spectral gap → expansion",
     "description": ": proving the orbit graph is an expander, giving strong mixing properties for random walks.",
@@ -1065,20 +1051,6 @@
     "timestamp": "2026-05-15T13:04:44.664357+00:00"
   },
   {
-    "id": "fd_0221",
-    "title": "High impact (new theory):",
-    "description": "Tropical mutual information (#1), opening information-theoretic applications",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9cabdd3c",
-    "consumed_by_exp_id": "c133a545",
-    "timestamp": "2026-05-15T13:05:09.679343+00:00"
-  },
-  {
     "id": "fd_0224",
     "title": "Geometric (long-term):",
     "description": "Tropical varieties (#2), requiring significant tropical geometry infrastructure",
@@ -1093,35 +1065,6 @@
     "source_exp_id": "9cabdd3c",
     "consumed_by_exp_id": "7d5cf911",
     "timestamp": "2026-05-15T13:05:09.705505+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "Synthesize specifications",
-    "description": "from fixed-point structure: given `N`, compute `fixPts(N)` and generate the specification `∀ x, N(x) ∈ fixPts(N)` when applicable.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "62ac6dd0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:41.522074+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Direction 4",
-    "description": "(Complexity/MDL) — most novel conceptual bridge",
-    "domains": [
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "62ac6dd0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:41.543224+00:00"
   },
   {
     "id": "fd_0224",
@@ -1208,62 +1151,6 @@
     "timestamp": "2026-05-15T13:48:12.184795+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "Direction 3 (Tropical):",
-    "description": "Highest impact, moderate difficulty, strong application potential",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d761629",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:48:12.193812+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Direction 4 (Coalgebraic):",
-    "description": "Deep theoretical significance, connects to automata theory",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d761629",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:48:12.220249+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "Generate",
-    "description": "candidate theorems by instantiating general OT results to this specific lattice.",
-    "domains": [
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4b8fe325",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:01:02.522292+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Coding theory:",
-    "description": "Formalize the connection between hyperplane counting and minimum distance of linear codes. The dual Plotkin bound is a direct application.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a861b2f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:03:35.837789+00:00"
-  },
-  {
     "id": "fd_0224",
     "title": "Randomized linear algebra:",
     "description": "Extend to verification of matrix decompositions (LU, QR, eigenvalues) using similar random projection techniques.",
@@ -1323,21 +1210,6 @@
     "timestamp": "2026-05-15T14:03:35.872113+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "Verified cryptographic proof systems:",
-    "description": "Machine-verified soundness proofs for deployed SNARK/STARK systems, built on formalized Schwartz-Zippel and sum-check.",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a861b2f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:03:35.880813+00:00"
-  },
-  {
     "id": "fd_0229",
     "title": "Quantum-classical verification gaps:",
     "description": "Formalize the relationship between classical random verification (Freivalds) and quantum verification (BQP vs. MA) to understand the computational power of different verification paradigms.",
@@ -1350,6 +1222,113 @@
     "source_exp_id": "a861b2f2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T14:03:35.889619+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Direct tropical encoding",
+    "description": ": Alternatively, encode register machine computations directly as tropical formulas, bypassing the DPRM detour. The key gadgets needed:\n   - State-selection using min-based one-hot encoding\n   - Counter arithmetic using additive variables\n   - Zero-test via auxiliary Boolean variables with min(x, 1-x) = 0 gadget",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "06519137",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:07:33.242431+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Classification of tropically representable sets",
+    "description": ": Characterize which sets are representable by mul-free formulas (these should be exactly the semilinear sets, by the Presburger connection).\n\n### Cross-Domain Connections\n- **Algebraic geometry**: Tropical representability connects to tropical varieties and amoeba theory\n- **Computability theory**: Creates a new hierarchy: semilinear ⊂ Diophantine = tropically representable\n- **Number theory**: May yield new Diophantine representations via tropical techniques\n\n### Estimated Impact\nHigh. Would unify tropical geometry with classical computability theory and provide new tools for both fields.\n\n---\n\n## Direction 2: Decidability Classification for Restricted Fragments\n\n### Hypothesis\nThere exist natural intermediate fragments between mul-free and full polynomial tropical arithmetic where the d",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "06519137",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:07:33.253974+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Formalize tropical matrix multiplication",
+    "description": ": (A ⊗ B)_{ij} = min_k(A_{ik} + B_{kj}). This is mul-free and decidable.",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "06519137",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:07:33.265431+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Tropical matrix power",
+    "description": ": A^n for min-plus matrices. The Kleene star A* = ⊕_{n≥0} A^n computes all-pairs shortest paths. Decidable.",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "06519137",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:07:33.277485+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Connect to the tropical eigenpair theorem",
+    "description": ": Our existing `tropical_eigenpair_from_diagonal` result may provide structural lemmas about fixed points of tropical linear maps.\n\n### Applications\n- **Verification of timed automata**: Timed automata use min-plus matrices for clock semantics. Our decidability result guarantees that reachability in the linear fragment is decidable.\n- **Control theory**: Min-plus linear systems model discrete-event systems (manufacturing, traffic). Decidability of reachability enables certified controller synthesis.\n- **Weighted automata**: Weighted finite automata over the tropical semiring compute min-plus rational functions. Our threshold predicts which properties of weighted automata are decidable.\n\n### Estimated Impact\nHigh. Would connect tropical computability to automata theory and control theory, w",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "06519137",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:07:33.300413+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Transfer theorems",
+    "description": ": Any undecidability, incompleteness, or complexity result for arithmetic transfers to tropical-with-mul.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "06519137",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:07:33.333832+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Converse question",
+    "description": ": Does (ℤ, +, ×) interpret (ℤ, min, +, ×)? If yes, the theories are bi-interpretable and logically equivalent.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "06519137",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:07:33.343264+00:00"
   },
   {
     "id": "seed_079",
@@ -1962,22 +1941,6 @@
     "timestamp": "2026-05-15T13:05:25.838631+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "4. Categorical Tropical Recursion",
-    "description": "**Goal:** Recast the tropical fixed-point/diagonalization construction using traced monoidal categories or Lawvere fixed-point semantics in an idempotent-enriched category.\n\n**Background:** Lawvere's fixed-point theorem states: if there is a surjection `A × A → A` in a cartesian closed category, then every endomorphism of any object has a fixed point. Our tropical construction can be viewed as an instance of this in a category enriched over `(WithTop ℝ, min, +)`.\n\n**Conjecture (Lawvere-Tropical Fixed Point):**\n```\ntheorem lawvere_tropical_fixed_point\n  {C : Type*} [Category C]\n  (A B : C) (eval : A ⟶ B) (diag : A ⟶ A ⊗ A)\n  (repr : A ⊗ A ⟶ A)\n  (hsurj : ∀ f : A ⟶ B, ∃ a, eval ≫ ... = f) :\n  ∀ f : B ⟶ B, ∃ b, f b = b\n```\n\n**Proof Strategy:** Formalize the construction in Mathlib's category ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ef0cc9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:25.851145+00:00"
-  },
-  {
     "id": "fd_0226",
     "title": "Theorem Statement",
     "description": "For a finite set $s$ and function $f : s \\to \\mathbb{R}$, the log-sum-exp admits a variational characterization:\n\n$$\\frac{1}{\\beta} \\log \\sum_{i \\in s} e^{\\beta f(i)} = \\sup_{p \\in \\Delta_s} \\left( \\sum_{i \\in s} p_i f(i) + \\frac{1}{\\beta} H(p) \\right)$$\n\nwhere $\\Delta_s$ is the probability simplex over $s$ and $H(p) = -\\sum_i p_i \\log p_i$ is Shannon entropy.",
@@ -2004,21 +1967,6 @@
     "source_exp_id": "7566736e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T14:03:59.181259+00:00"
-  },
-  {
-    "id": "fd_0228",
-    "title": "Cross-Domain Significance",
-    "description": "This is the **free energy principle** from statistical mechanics: free energy = energy - temperature × entropy. It connects tropical optimization (zero temperature) to Bayesian inference (finite temperature) and provides a variational foundation for all subsequent directions.\n\n---",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7566736e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:03:59.190941+00:00"
   },
   {
     "id": "fd_0229",
