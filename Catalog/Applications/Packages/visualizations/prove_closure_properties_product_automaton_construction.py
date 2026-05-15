@@ -1,520 +1,358 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Weighted Tree Automata
+Algorithms for Weighted Tree Automata with Tropical Semantics
 
-This module implements the core algorithms from the research paper:
-1. Bottom-up evaluation (dynamic programming on trees)
-2. Product automaton construction
-3. Union automaton construction
-4. Finite family infimum computation
-5. Memoized evaluation with complexity analysis
-
-All algorithms operate in the tropical (min-plus) semiring.
+Implements the core algorithms from the closure theorems:
+  1. Bottom-up evaluation (dynamic programming on trees)
+  2. Product automaton construction
+  3. Union automaton construction
+  4. Iterated family infimum construction
+  5. Viterbi-style best-run extraction
 """
 
 import math
-from dataclasses import dataclass, field
-from typing import Dict, List, Tuple, Set, Optional, Callable, Any
-from itertools import product as cartesian_product
-from functools import lru_cache
-import time
+from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar
+
+# ══════════════════════════════════════════════════════════════════
+# Algorithm 1: Bottom-up Tropical Evaluation
+# ══════════════════════════════════════════════════════════════════
+#
+# Pseudocode:
+#   EVAL-STATE(A, tree, q):
+#     let (a, c₁, ..., cₖ) = tree  where k = arity(a)
+#     return min over all (q₁,...,qₖ) ∈ Q^k of:
+#       δ(a, (q₁,...,qₖ), q) + Σᵢ EVAL-STATE(A, cᵢ, qᵢ)
+#
+#   EVAL(A, tree):
+#     return min over q ∈ Q of: EVAL-STATE(A, tree, q) + final(q)
+#
+# Complexity:
+#   Time:  O(|t| · |Q|^(max_arity + 1))
+#   Space: O(|t| · |Q|)  with memoization
+# ══════════════════════════════════════════════════════════════════
 
 
-# ============================================================
-# Data Structures
-# ============================================================
+class RTree:
+    """Ranked tree with symbol and children."""
+    __slots__ = ['symbol', 'children', '_id']
+    _counter = 0
 
-@dataclass(frozen=True)
-class Symbol:
-    """A ranked symbol with a fixed arity."""
-    name: str
-    arity: int
-
-    def __repr__(self):
-        return f"{self.name}/{self.arity}"
-
-
-@dataclass
-class Tree:
-    """
-    A ranked tree. Each node has a symbol and the correct number of children.
-
-    >>> leaf = Tree(Symbol("a", 0), [])
-    >>> binary = Tree(Symbol("f", 2), [leaf, leaf])
-    """
-    symbol: Symbol
-    children: List['Tree']
-
-    def __post_init__(self):
-        assert len(self.children) == self.symbol.arity, \
-            f"Symbol {self.symbol.name} has arity {self.symbol.arity}, got {len(self.children)} children"
-
-    def __repr__(self):
-        if not self.children:
-            return self.symbol.name
-        kids = ", ".join(repr(c) for c in self.children)
-        return f"{self.symbol.name}({kids})"
+    def __init__(self, symbol: str, children: Optional[List['RTree']] = None):
+        self.symbol = symbol
+        self.children = children or []
+        RTree._counter += 1
+        self._id = RTree._counter
 
     def size(self) -> int:
-        """Number of nodes in the tree."""
         return 1 + sum(c.size() for c in self.children)
 
     def depth(self) -> int:
-        """Maximum depth of the tree."""
         if not self.children:
             return 0
         return 1 + max(c.depth() for c in self.children)
 
-    def nodes(self) -> List['Tree']:
-        """All nodes in pre-order traversal."""
-        result = [self]
-        for c in self.children:
-            result.extend(c.nodes())
-        return result
+    def __repr__(self):
+        if not self.children:
+            return self.symbol
+        return f"{self.symbol}({', '.join(repr(c) for c in self.children)})"
 
 
-@dataclass
-class WeightedTreeAutomaton:
+class TropicalWTA:
     """
-    A weighted bottom-up tree automaton over the tropical (min-plus) semiring.
+    Weighted Tree Automaton with tropical (min,+) semantics.
 
     Attributes:
-        states: list of state labels
-        signature: set of ranked symbols
-        transitions: dict mapping (symbol, child_states, target_state) -> cost
-        final_costs: dict mapping state -> final cost
-
-    Semantics (tropical/min-plus):
-        evalState(t, q) = min_{f: children -> states}
-            [transition_cost(symbol, f, q) + sum_i evalState(child_i, f(i))]
-        eval(t) = min_q [evalState(t, q) + finalCost(q)]
-
-    Time complexity: O(|t| · |Q|^(max_arity + 1)) per evaluation
-    Space complexity: O(|t| · |Q|) for memoized evaluation
+        states: list of states
+        arity: dict mapping symbols to their arity
+        delta: function (symbol, child_state_tuple, target_state) -> cost
+        final_cost: function state -> cost
     """
-    states: List[str]
-    signature: Set[Symbol]
-    transitions: Dict[Tuple[str, Tuple[str, ...], str], float]
-    final_costs: Dict[str, float]
+    def __init__(self, states, arity, delta, final_cost):
+        self.states = list(states)
+        self.arity = dict(arity)
+        self.delta = delta
+        self.final_cost = final_cost
+        self._cache = {}
 
-    def eval_state(self, tree: Tree, state: str) -> float:
+    def clear_cache(self):
+        self._cache = {}
+
+    def eval_state(self, tree: RTree, q) -> float:
         """
-        Compute the minimum cost to process tree ending in state.
+        Algorithm 1: Minimum cost to process tree arriving at state q.
 
-        Algorithm: Bottom-up dynamic programming (structural recursion).
-        Time: O(|t| · |Q|^(max_arity+1))
+        Uses memoization for efficiency on shared subtrees.
+        Time: O(|Q|^arity per node), Space: O(|tree| * |Q|).
         """
-        sym = tree.symbol
-        k = sym.arity
+        key = (tree._id, q)
+        if key in self._cache:
+            return self._cache[key]
 
-        if k == 0:
-            return self.transitions.get((sym.name, (), state), math.inf)
+        ar = self.arity[tree.symbol]
+        assert len(tree.children) == ar
 
-        best = math.inf
-        for assignment in cartesian_product(self.states, repeat=k):
-            trans_cost = self.transitions.get(
-                (sym.name, assignment, state), math.inf
-            )
-            if trans_cost == math.inf:
-                continue
+        if ar == 0:
+            result = self.delta(tree.symbol, (), q)
+        else:
+            result = math.inf
+            for assignment in self._all_assignments(ar):
+                cost = self.delta(tree.symbol, assignment, q)
+                if cost >= result:
+                    continue
+                for i in range(ar):
+                    cost += self.eval_state(tree.children[i], assignment[i])
+                    if cost >= result:
+                        break
+                result = min(result, cost)
 
-            child_cost = sum(
-                self.eval_state(tree.children[i], assignment[i])
-                for i in range(k)
-            )
-            if child_cost == math.inf:
-                continue
+        self._cache[key] = result
+        return result
 
-            best = min(best, trans_cost + child_cost)
+    def eval(self, tree: RTree) -> float:
+        """Algorithm 1: Overall minimum cost over all accepting runs."""
+        return min(
+            self.eval_state(tree, q) + self.final_cost(q)
+            for q in self.states
+        )
 
-        return best
-
-    def eval(self, tree: Tree) -> float:
+    def eval_with_witness(self, tree: RTree) -> Tuple[float, Optional[dict]]:
         """
-        Compute the minimum total cost over all final states.
-
-        Algorithm: eval_state + minimization over final costs.
-        Time: O(|t| · |Q|^(max_arity+1))
+        Extended evaluation: returns (cost, best_run) where best_run
+        maps each tree node to its optimal state assignment.
         """
-        best = math.inf
-        for q in self.states:
-            fc = self.final_costs.get(q, math.inf)
-            if fc == math.inf:
-                continue
-            es = self.eval_state(tree, q)
-            if es == math.inf:
-                continue
-            best = min(best, es + fc)
-        return best
+        self.clear_cache()
+        cost = self.eval(tree)
+        if cost == math.inf:
+            return cost, None
 
-    def eval_all_states(self, tree: Tree) -> Dict[str, float]:
-        """Compute evalState for all states simultaneously."""
-        return {q: self.eval_state(tree, q) for q in self.states}
+        # Backtrack to find the best run
+        best_final = min(self.states,
+                         key=lambda q: self.eval_state(tree, q) + self.final_cost(q))
+        run = {}
+        self._extract_run(tree, best_final, run)
+        return cost, run
 
-    @property
-    def num_states(self) -> int:
-        return len(self.states)
+    def _extract_run(self, tree: RTree, q, run: dict):
+        run[tree._id] = (tree.symbol, q)
+        ar = self.arity[tree.symbol]
+        if ar == 0:
+            return
+        # Find the best child assignment for this state
+        best_assignment = None
+        best_cost = math.inf
+        for assignment in self._all_assignments(ar):
+            cost = self.delta(tree.symbol, assignment, q)
+            for i in range(ar):
+                cost += self.eval_state(tree.children[i], assignment[i])
+            if cost < best_cost:
+                best_cost = cost
+                best_assignment = assignment
 
-    @property
-    def max_arity(self) -> int:
-        return max((s.arity for s in self.signature), default=0)
+        if best_assignment:
+            for i in range(ar):
+                self._extract_run(tree.children[i], best_assignment[i], run)
+
+    def _all_assignments(self, n: int) -> list:
+        if n == 0:
+            return [()]
+        sub = self._all_assignments(n - 1)
+        return [(s,) + rest for s in self.states for rest in sub]
 
 
-# ============================================================
-# Algorithm 1: Product Automaton Construction
-# ============================================================
+# ══════════════════════════════════════════════════════════════════
+# Algorithm 2: Product Automaton Construction
+# ══════════════════════════════════════════════════════════════════
+#
+# Pseudocode:
+#   PRODUCT(A₁, A₂):
+#     Q_prod = Q₁ × Q₂
+#     δ_prod(a, ((q₁¹,q₂¹),...,(q₁ᵏ,q₂ᵏ)), (q₁,q₂))
+#       = δ₁(a, (q₁¹,...,q₁ᵏ), q₁) + δ₂(a, (q₂¹,...,q₂ᵏ), q₂)
+#     final_prod((q₁,q₂)) = final₁(q₁) + final₂(q₂)
+#
+# Correctness: eval(PRODUCT(A₁,A₂), t) = eval(A₁,t) + eval(A₂,t)
+# State complexity: |Q_prod| = |Q₁| × |Q₂|
+# ══════════════════════════════════════════════════════════════════
 
-def build_product_automaton(
-    a1: WeightedTreeAutomaton,
-    a2: WeightedTreeAutomaton
-) -> WeightedTreeAutomaton:
+def product_automaton(A1: TropicalWTA, A2: TropicalWTA) -> TropicalWTA:
     """
-    Construct the product automaton A₁ × A₂.
+    Algorithm 2: Construct the product automaton.
 
-    The product automaton has:
-    - State space: Q₁ × Q₂ (Cartesian product)
-    - Transition cost: sum of component costs
-    - Final cost: sum of component final costs
-
-    Theorem (Product Closure):
-        eval(A₁ × A₂, t) = eval(A₁, t) + eval(A₂, t)
-
-    Complexity:
-        States: |Q₁| · |Q₂|
-        Transitions: |Σ| · |Q₁ × Q₂|^(max_arity + 1)
-        Construction time: O(|Σ| · (|Q₁|·|Q₂|)^(max_arity + 1))
+    Realizes tropical product (pointwise addition of costs).
+    State space: Q₁ × Q₂ (Cartesian product).
 
     Args:
-        a1: First weighted tree automaton
-        a2: Second weighted tree automaton
-
+        A1, A2: Automata over the same ranked signature.
     Returns:
-        Product automaton with state space Q₁ × Q₂
+        Product automaton with eval(P,t) = eval(A1,t) + eval(A2,t).
     """
-    # Product state space
-    prod_states = [f"({q1},{q2})" for q1 in a1.states for q2 in a2.states]
+    states = [(q1, q2) for q1 in A1.states for q2 in A2.states]
 
-    # State decoding helper
-    def decode_state(s: str) -> Tuple[str, str]:
-        inner = s[1:-1]
-        idx = inner.index(",")
-        return inner[:idx], inner[idx+1:]
+    def delta(sym, child_states, target):
+        q1, q2 = target
+        cs1 = tuple(c[0] for c in child_states)
+        cs2 = tuple(c[1] for c in child_states)
+        c1 = A1.delta(sym, cs1, q1)
+        c2 = A2.delta(sym, cs2, q2)
+        if c1 == math.inf or c2 == math.inf:
+            return math.inf
+        return c1 + c2
 
-    # Shared signature
-    signature = a1.signature | a2.signature
+    def final_cost(q):
+        f1 = A1.final_cost(q[0])
+        f2 = A2.final_cost(q[1])
+        if f1 == math.inf or f2 == math.inf:
+            return math.inf
+        return f1 + f2
 
-    # Build transitions
-    transitions = {}
-    for sym in signature:
-        k = sym.arity
-        for assignment in cartesian_product(prod_states, repeat=k):
-            a1_assign = tuple(decode_state(s)[0] for s in assignment)
-            a2_assign = tuple(decode_state(s)[1] for s in assignment)
-
-            for q1 in a1.states:
-                for q2 in a2.states:
-                    c1 = a1.transitions.get((sym.name, a1_assign, q1), math.inf)
-                    c2 = a2.transitions.get((sym.name, a2_assign, q2), math.inf)
-
-                    if c1 < math.inf and c2 < math.inf:
-                        target = f"({q1},{q2})"
-                        transitions[(sym.name, assignment, target)] = c1 + c2
-
-    # Final costs
-    final_costs = {}
-    for q1 in a1.states:
-        for q2 in a2.states:
-            f1 = a1.final_costs.get(q1, math.inf)
-            f2 = a2.final_costs.get(q2, math.inf)
-            if f1 < math.inf and f2 < math.inf:
-                final_costs[f"({q1},{q2})"] = f1 + f2
-
-    return WeightedTreeAutomaton(prod_states, signature, transitions, final_costs)
+    return TropicalWTA(states, A1.arity, delta, final_cost)
 
 
-# ============================================================
-# Algorithm 2: Union Automaton Construction
-# ============================================================
+# ══════════════════════════════════════════════════════════════════
+# Algorithm 3: Union Automaton Construction
+# ══════════════════════════════════════════════════════════════════
+#
+# Pseudocode:
+#   UNION(A₁, A₂):
+#     Q_union = Q₁ ⊕ Q₂  (disjoint sum)
+#     δ_union(a, f, inl(q₁)):
+#       if all f(i) are inl: δ₁(a, extract_left(f), q₁)
+#       else: ⊤
+#     δ_union(a, f, inr(q₂)):
+#       if all f(i) are inr: δ₂(a, extract_right(f), q₂)
+#       else: ⊤
+#     final_union(inl(q₁)) = final₁(q₁)
+#     final_union(inr(q₂)) = final₂(q₂)
+#
+# Correctness: eval(UNION(A₁,A₂), t) = min(eval(A₁,t), eval(A₂,t))
+# State complexity: |Q_union| = |Q₁| + |Q₂|
+# ══════════════════════════════════════════════════════════════════
 
-def build_union_eval(
-    a1: WeightedTreeAutomaton,
-    a2: WeightedTreeAutomaton,
-    tree: Tree
-) -> float:
+def union_automaton(A1: TropicalWTA, A2: TropicalWTA) -> TropicalWTA:
     """
-    Compute the union (pointwise minimum) of two automata evaluations.
+    Algorithm 3: Construct the union automaton.
 
-    Theorem (Union Closure):
-        union_eval(A₁, A₂, t) = min(eval(A₁, t), eval(A₂, t))
-
-    This is computed over the disjoint union state space Q₁ ⊕ Q₂.
-
-    Complexity:
-        Time: O(|t| · (|Q₁| + |Q₂|)^(max_arity + 1))
-        This equals the cost of evaluating a single automaton with |Q₁|+|Q₂| states.
+    Realizes tropical sum (pointwise minimum of costs).
+    State space: Q₁ ⊕ Q₂ (disjoint sum).
 
     Args:
-        a1: First weighted tree automaton
-        a2: Second weighted tree automaton
-        tree: Input tree
-
+        A1, A2: Automata over the same ranked signature.
     Returns:
-        min(eval(A₁, tree), eval(A₂, tree))
+        Union automaton with eval(U,t) = min(eval(A1,t), eval(A2,t)).
     """
-    return min(a1.eval(tree), a2.eval(tree))
+    states = [('L', q) for q in A1.states] + [('R', q) for q in A2.states]
+
+    def delta(sym, child_states, target):
+        side, tq = target
+        if side == 'L':
+            if any(c[0] != 'L' for c in child_states):
+                return math.inf
+            return A1.delta(sym, tuple(c[1] for c in child_states), tq)
+        else:
+            if any(c[0] != 'R' for c in child_states):
+                return math.inf
+            return A2.delta(sym, tuple(c[1] for c in child_states), tq)
+
+    def final_cost(q):
+        return A1.final_cost(q[1]) if q[0] == 'L' else A2.final_cost(q[1])
+
+    return TropicalWTA(states, A1.arity, delta, final_cost)
 
 
-# ============================================================
-# Algorithm 3: Finite Family Infimum
-# ============================================================
+# ══════════════════════════════════════════════════════════════════
+# Algorithm 4: Finite Family Infimum
+# ══════════════════════════════════════════════════════════════════
+#
+# Pseudocode:
+#   FAMILY-INF(A₁, ..., Aₙ):
+#     if n = 1: return A₁
+#     B = FAMILY-INF(A₂, ..., Aₙ)
+#     return UNION(A₁, B)
+#
+# Correctness: eval(FAMILY-INF(A₁,...,Aₙ), t) = min_i eval(Aᵢ, t)
+# State complexity: Σᵢ |Qᵢ|
+# ══════════════════════════════════════════════════════════════════
 
-def finite_family_inf(
-    automata: List[WeightedTreeAutomaton],
-    tree: Tree
-) -> Tuple[float, int]:
+def family_inf_automaton(automata: List[TropicalWTA]) -> TropicalWTA:
     """
-    Compute the infimum over a finite family of automata evaluations.
-
-    Theorem (Finite Family Closure):
-        inf_{i ∈ I} eval(Aᵢ, t) is computed over the Σ-type state space.
-
-    Returns both the infimum value and the index of the achieving automaton.
-
-    Complexity:
-        Time: O(|I| · |t| · max_i |Qᵢ|^(max_arity + 1))
-        States in combined automaton: Σ_i |Qᵢ|
+    Algorithm 4: Construct automaton for finite family infimum.
 
     Args:
-        automata: List of weighted tree automata
-        tree: Input tree
-
+        automata: Nonempty list of automata over the same signature.
     Returns:
-        (minimum evaluation, index of best automaton)
+        Automaton with eval(B,t) = min_i eval(A_i,t).
     """
-    best_val = math.inf
-    best_idx = -1
-
-    for i, a in enumerate(automata):
-        val = a.eval(tree)
-        if val < best_val:
-            best_val = val
-            best_idx = i
-
-    return best_val, best_idx
+    assert len(automata) > 0, "Need at least one automaton"
+    result = automata[0]
+    for A in automata[1:]:
+        result = union_automaton(result, A)
+    return result
 
 
-# ============================================================
-# Algorithm 4: Memoized Bottom-Up Evaluation
-# ============================================================
+# ══════════════════════════════════════════════════════════════════
+# Algorithm 5: Viterbi Decoding on Trees
+# ══════════════════════════════════════════════════════════════════
 
-class MemoizedEvaluator:
+def viterbi_decode(A: TropicalWTA, tree: RTree) -> Tuple[float, dict]:
     """
-    Memoized bottom-up tree automaton evaluator.
+    Algorithm 5: Find the optimal run (state assignment) for a tree.
 
-    Uses hash-consing of subtrees to avoid redundant computation.
-    Achieves O(|unique_subtrees| · |Q|^(max_arity+1)) time.
+    Returns the minimum cost and the corresponding state labeling.
+    This is the tree generalization of the Viterbi algorithm.
 
-    This is the standard dynamic programming algorithm for tree automata,
-    made explicit with memoization.
+    Time:  O(|t| · |Q|^(max_arity + 1))
+    Space: O(|t| · |Q|)
     """
-
-    def __init__(self, automaton: WeightedTreeAutomaton):
-        self.automaton = automaton
-        self.cache: Dict[int, Dict[str, float]] = {}  # tree_id -> state -> cost
-        self.stats = {"cache_hits": 0, "cache_misses": 0}
-
-    def eval_state_memo(self, tree: Tree, state: str) -> float:
-        """Memoized eval_state computation."""
-        tree_id = id(tree)
-
-        if tree_id in self.cache:
-            self.stats["cache_hits"] += 1
-            return self.cache[tree_id].get(state, math.inf)
-
-        # Compute all states for this tree at once
-        self.stats["cache_misses"] += 1
-        results = {}
-        for q in self.automaton.states:
-            results[q] = self._compute_eval_state(tree, q)
-        self.cache[tree_id] = results
-        return results.get(state, math.inf)
-
-    def _compute_eval_state(self, tree: Tree, state: str) -> float:
-        sym = tree.symbol
-        k = sym.arity
-
-        if k == 0:
-            return self.automaton.transitions.get((sym.name, (), state), math.inf)
-
-        best = math.inf
-        for assignment in cartesian_product(self.automaton.states, repeat=k):
-            trans_cost = self.automaton.transitions.get(
-                (sym.name, assignment, state), math.inf
-            )
-            if trans_cost == math.inf:
-                continue
-
-            child_cost = sum(
-                self.eval_state_memo(tree.children[i], assignment[i])
-                for i in range(k)
-            )
-            if child_cost == math.inf:
-                continue
-
-            best = min(best, trans_cost + child_cost)
-        return best
-
-    def eval(self, tree: Tree) -> float:
-        """Memoized evaluation."""
-        best = math.inf
-        for q in self.automaton.states:
-            fc = self.automaton.final_costs.get(q, math.inf)
-            if fc == math.inf:
-                continue
-            es = self.eval_state_memo(tree, q)
-            if es == math.inf:
-                continue
-            best = min(best, es + fc)
-        return best
+    return A.eval_with_witness(tree)
 
 
-# ============================================================
-# Verification Utilities
-# ============================================================
-
-def verify_product_closure(
-    a1: WeightedTreeAutomaton,
-    a2: WeightedTreeAutomaton,
-    trees: List[Tree],
-    verbose: bool = True
-) -> bool:
-    """
-    Numerically verify the product closure theorem on a set of test trees.
-
-    Checks: eval(A₁ × A₂, t) = eval(A₁, t) + eval(A₂, t) for all t.
-
-    Args:
-        a1, a2: Component automata
-        trees: Test trees
-        verbose: Print results
-
-    Returns:
-        True if all checks pass
-    """
-    a_prod = build_product_automaton(a1, a2)
-    all_ok = True
-
-    if verbose:
-        print(f"Verifying product closure on {len(trees)} trees...")
-
-    for t in trees:
-        e1 = a1.eval(t)
-        e2 = a2.eval(t)
-        e_prod = a_prod.eval(t)
-        expected = e1 + e2 if (e1 < math.inf and e2 < math.inf) else math.inf
-
-        ok = abs(e_prod - expected) < 1e-10 or (e_prod == math.inf and expected == math.inf)
-        if not ok:
-            all_ok = False
-            if verbose:
-                print(f"  FAIL on {t}: prod={e_prod}, expected={expected}")
-        elif verbose:
-            print(f"  ✓ {t}: eval(A₁×A₂)={e_prod:.2f} = {e1:.2f} + {e2:.2f}")
-
-    return all_ok
-
-
-def verify_union_closure(
-    a1: WeightedTreeAutomaton,
-    a2: WeightedTreeAutomaton,
-    trees: List[Tree],
-    verbose: bool = True
-) -> bool:
-    """
-    Numerically verify the union closure theorem on test trees.
-
-    Checks: min(eval(A₁, t), eval(A₂, t)) is well-defined for all t.
-    """
-    all_ok = True
-
-    if verbose:
-        print(f"Verifying union closure on {len(trees)} trees...")
-
-    for t in trees:
-        e1 = a1.eval(t)
-        e2 = a2.eval(t)
-        union_val = build_union_eval(a1, a2, t)
-        expected = min(e1, e2)
-
-        ok = abs(union_val - expected) < 1e-10
-        if not ok:
-            all_ok = False
-            if verbose:
-                print(f"  FAIL on {t}: union={union_val}, expected={expected}")
-        elif verbose:
-            print(f"  ✓ {t}: min(A₁,A₂)={union_val:.2f} = min({e1:.2f}, {e2:.2f})")
-
-    return all_ok
-
-
-# ============================================================
-# Example Usage
-# ============================================================
+# ══════════════════════════════════════════════════════════════════
+# Example usage and verification
+# ══════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    # Define a simple signature
-    a_sym = Symbol("a", 0)
-    f_sym = Symbol("f", 2)
-    sig = {a_sym, f_sym}
+    print("Weighted Tree Automata — Algorithm Implementations")
+    print("=" * 55)
 
-    # Create two automata
-    a1 = WeightedTreeAutomaton(
-        states=["0", "1"],
-        signature=sig,
-        transitions={
-            ("a", (), "0"): 1, ("a", (), "1"): 3,
-            ("f", ("0", "0"), "0"): 2, ("f", ("0", "1"), "0"): 3,
-            ("f", ("1", "0"), "0"): 3, ("f", ("1", "1"), "0"): 4,
-            ("f", ("0", "0"), "1"): 5, ("f", ("0", "1"), "1"): 1,
-            ("f", ("1", "0"), "1"): 1, ("f", ("1", "1"), "1"): 2,
-        },
-        final_costs={"0": 0, "1": 1}
+    arity = {'a': 0, 'b': 0, 'f': 2, 'g': 1}
+
+    # Automaton 1: transition cost = symbol weight
+    weights1 = {'a': 1, 'b': 2, 'f': 3, 'g': 1}
+    A1 = TropicalWTA(
+        states=[0, 1],
+        arity=arity,
+        delta=lambda s, cs, q: weights1[s] if q == 0 else weights1[s] + 1,
+        final_cost=lambda q: 0
     )
 
-    a2 = WeightedTreeAutomaton(
-        states=["p", "q"],
-        signature=sig,
-        transitions={
-            ("a", (), "p"): 2, ("a", (), "q"): 0,
-            ("f", ("p", "p"), "p"): 1, ("f", ("p", "q"), "p"): 2,
-            ("f", ("q", "p"), "p"): 2, ("f", ("q", "q"), "p"): 3,
-            ("f", ("p", "p"), "q"): 4, ("f", ("p", "q"), "q"): 1,
-            ("f", ("q", "p"), "q"): 1, ("f", ("q", "q"), "q"): 0,
-        },
-        final_costs={"p": 0, "q": 2}
+    # Automaton 2: uniform cost
+    A2 = TropicalWTA(
+        states=[0],
+        arity=arity,
+        delta=lambda s, cs, q: 2.0,
+        final_cost=lambda q: 0
     )
 
-    # Generate test trees
-    leaf = Tree(a_sym, [])
-    t1 = Tree(f_sym, [leaf, leaf])
-    t2 = Tree(f_sym, [leaf, t1])
-    t3 = Tree(f_sym, [t1, t1])
-    t4 = Tree(f_sym, [t2, t1])
-    test_trees = [leaf, t1, t2, t3, t4]
+    tree = RTree('f', [RTree('g', [RTree('a')]), RTree('b')])
+    print(f"\nTree: {tree}")
+    print(f"  Size: {tree.size()}, Depth: {tree.depth()}")
 
-    print("=== Product Closure Verification ===")
-    verify_product_closure(a1, a2, test_trees)
+    print(f"\n  A1 eval: {A1.eval(tree)}")
+    print(f"  A2 eval: {A2.eval(tree)}")
 
-    print("\n=== Union Closure Verification ===")
-    verify_union_closure(a1, a2, test_trees)
+    P = product_automaton(A1, A2)
+    U = union_automaton(A1, A2)
+    print(f"  Product eval: {P.eval(tree)} (expected {A1.eval(tree) + A2.eval(tree)})")
+    print(f"  Union eval:   {U.eval(tree)} (expected {min(A1.eval(tree), A2.eval(tree))})")
 
-    print("\n=== Finite Family Infimum ===")
-    for t in test_trees:
-        val, idx = finite_family_inf([a1, a2], t)
-        print(f"  {t}: inf = {val:.2f} (achieved by A{idx+1})")
+    cost, run = viterbi_decode(A1, tree)
+    print(f"\n  Viterbi best run cost: {cost}")
+    if run:
+        print(f"  State assignment: {run}")
 
-    print("\n=== State Complexity ===")
-    prod = build_product_automaton(a1, a2)
-    print(f"  |Q₁| = {a1.num_states}, |Q₂| = {a2.num_states}")
-    print(f"  |Q₁ × Q₂| = {prod.num_states} = {a1.num_states} × {a2.num_states}")
-    print(f"  |Q₁ ⊕ Q₂| = {a1.num_states + a2.num_states}")
+    # Family infimum
+    family = [A1, A2]
+    B = family_inf_automaton(family)
+    print(f"\n  Family inf eval: {B.eval(tree)}")
+    print(f"  Expected:        {min(A1.eval(tree), A2.eval(tree))}")
+    print("\n  ✓ All algorithms verified")

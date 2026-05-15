@@ -41,10 +41,10 @@
       "Speculative"
     ],
     "priority_score": 0.94,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cf94957b",
     "timestamp": "2026-05-14T16:03:53.810906+00:00"
   },
   {
@@ -142,22 +142,6 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.818879+00:00"
-  },
-  {
-    "id": "seed_056",
-    "title": "Tropical Curry-Howard: Proofs as Min-Plus Programs",
-    "description": "Establish a Curry-Howard correspondence for tropical logic where proofs are min-plus programs and propositions are tropical types. Prove that cut elimination corresponds to tropical normalization, and that the idempotent property of min-plus yields a canonical proof normalization strategy that is strongly normalizing and confluent.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Tropical"
-    ],
-    "priority_score": 0.87,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "0ea2e820",
-    "timestamp": "2026-05-14T16:03:53.850725+00:00"
   },
   {
     "id": "seed_063",
@@ -1017,6 +1001,49 @@
     "source_exp_id": "88d6f044",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T18:32:09.524354+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Min-depth",
+    "description": ": The maximum nesting depth of `tmin` in a term. Measures the \"branching complexity\" of a proof search.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ea2e820",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T19:51:40.825425+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Cut-rank",
+    "description": ": The maximum nesting depth of `cut` in a term. Measures the logical depth of the argument.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ea2e820",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T19:51:40.835514+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Tropical width",
+    "description": ": The number of distinct atoms reachable by expanding all `tmin` branches. Measures the \"search space size.\"",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ea2e820",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T19:51:40.844705+00:00"
   },
   {
     "id": "seed_079",
