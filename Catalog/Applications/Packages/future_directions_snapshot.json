@@ -1555,20 +1555,6 @@
     "timestamp": "2026-05-15T07:05:09.487641+00:00"
   },
   {
-    "id": "fd_0209",
-    "title": "Gauge symmetry:",
-    "description": "The additive gauge symmetry (GaugeEquivalent) appears everywhere as the fundamental redundancy that must be quotiented out to obtain finite-dimensional moduli.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09712312",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:09.495967+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Computability:",
     "description": "The finite, combinatorial nature of tropical origami mechanics means every theoretical result has an algorithmic shadow, making this framework immediately applicable to engineering and design.",
@@ -1582,6 +1568,78 @@
     "source_exp_id": "09712312",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:05:09.503948+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Tropical theta functions",
+    "description": "(piecewise linear functions, tropical Fourier analysis)",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "faba857f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:05:30.483935+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Tropical Jacobians",
+    "description": "(from tropical curves to abelian varieties)",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "faba857f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:05:30.491204+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Tropical heights",
+    "description": "(Néron–Tate pairings, Arakelov theory)",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "faba857f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:05:30.498500+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Tropical L-functions",
+    "description": "(zeta functions of tropical varieties)",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "faba857f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:05:30.506986+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Comparison theorems",
+    "description": "(tropical vs. classical vs. nonarchimedean)",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "faba857f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:05:30.514308+00:00"
   },
   {
     "id": "seed_078",
