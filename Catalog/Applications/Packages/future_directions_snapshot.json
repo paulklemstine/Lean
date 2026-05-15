@@ -232,10 +232,10 @@
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1b970ad9",
     "timestamp": "2026-05-14T16:03:53.813608+00:00"
   },
   {
@@ -279,10 +279,10 @@
       "Tropical"
     ],
     "priority_score": 0.89,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d8453b28",
     "timestamp": "2026-05-14T16:03:53.813394+00:00"
   },
   {
@@ -827,22 +827,6 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.838840+00:00"
-  },
-  {
-    "id": "seed_046",
-    "title": "Dyson Sphere Optimization: Tropical Light-Network Flow",
-    "description": "Formulate Dyson sphere energy collection as a tropical network flow problem on a min-plus graph surrounding a star. Prove that optimal panel placement is a tropical maximum-flow solution, and that the Berggren groupoid provides the optimal tiling for hexagonal panel arrangement. Show that the tropical energy capacity bounds the Kardashev scale classification.",
-    "domains": [
-      "Speculative",
-      "Tropical",
-      "Physics"
-    ],
-    "priority_score": 0.76,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "c26006e9",
-    "timestamp": "2026-05-14T16:03:53.841808+00:00"
   },
   {
     "id": "fd_0080",
@@ -1709,20 +1693,6 @@
     "timestamp": "2026-05-15T01:18:10.066795+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Define min-plus tree automata",
-    "description": ": Bottom-up automata on ranked trees with tropical transition weights.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.073149+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Prove closure properties",
     "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
@@ -2405,5 +2375,73 @@
     "source_exp_id": "e4cd60b9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:53:06.620725+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "2. Tropical Matrix Kleene Star for All-Pairs Shell Routing",
+    "description": "**Hypothesis**: The tropical adjacency matrix `W` of a shell network, raised to the Kleene star power `W* = I ⊕ W ⊕ W² ⊕ ...` in the min-plus semiring, computes all-pairs shortest distances and stabilizes in at most `|V|` steps under nonneg edge weights.\n\n**Proof Strategy**:\n- Represent edge weights as a `Matrix V V ℝ` (or `WithTop ℝ` for infinity).\n- Define tropical matrix multiplication using min for addition and + for multiplication.\n- Define Kleene star as the stabilized limit of tropical matrix powers.\n- Prove stabilization after `Fintype.card V` steps using the DP monotonicity theorem (`dpDist_mono`).\n- Show that the `(s,t)` entry of `W*` equals `tropicalDist w s t`.\n\n**Cross-Domain Impact**: Opens the door to tropical linear algebra over matrices, tropical eigenvalue theory (critica",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c26006e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:24.280041+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "3. Full Discrete Honeycomb Theorem on the Hex Lattice",
+    "description": "**Hypothesis**: Among all connected subsets of the hexagonal lattice with `n` cells, the regular hexagonal patch minimizes edge boundary. This is the discrete analogue of the honeycomb conjecture (proved by Hales in 2001 for continuous domains).\n\n**Proof Strategy**:\n- The current formalization proves exact boundary formulas for hex patches (`12r + 6`) and verifies the isoperimetric ratio is decreasing.\n- For the full optimality result, one approach is to use the edge-isoperimetric inequality on vertex-transitive graphs.\n- A more accessible intermediate result: prove optimality among \"convex\" hex regions (those equal to their hex-convex hull).\n- The general result may require adapting Harper's theorem or Bezrukov's edge-isoperimetric methods to the hex lattice.\n\n**Cross-Domain Impact**: Pro",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c26006e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:24.730051+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "4. Berggren-Generated Exact Arithmetic Shell Meshes",
+    "description": "**Hypothesis**: The Berggren tree of primitive Pythagorean triples can be used to generate integer-coordinate points on spherical shells that approximate a uniform distribution with exact rational arithmetic, enabling error-free computation of tropical distances.\n\n**Proof Strategy**:\n- The Berggren matrices `A, B, C` generate all primitive Pythagorean triples `(a, b, c)` with `a² + b² = c²` from the root triple `(3, 4, 5)`.\n- Points `(a/c, b/c)` on the unit circle lift to rational points on spheres.\n- Define a \"Berggren mesh\" as the set of rational sphere points generated by depth-`d` Berggren tree traversal.\n- Prove that Berggren meshes have exact symmetry properties (the tree has 3-fold branching with specific rotational symmetries).\n- Show that tropical distances on Berggren meshes can ",
+    "domains": [
+      "Tropical",
+      "Pythagorean",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c26006e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:24.786465+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "5. Tropical Entropy and Information-Loss Bounds for Civilization-Scale Energy Ne",
+    "description": "**Hypothesis**: There exists a \"tropical entropy\" functional on network flow distributions that bounds the information loss in energy routing, analogous to Shannon entropy bounding communication channel capacity. The Kardashev bound is then a consequence of a tropical channel coding theorem.\n\n**Proof Strategy**:\n- Define tropical entropy as `H_trop(x) = -min_i(x_i)` or the tropical analogue of the partition function.\n- Show that tropical entropy is subadditive under network composition (series/parallel combination of subnetworks).\n- Prove a \"tropical data processing inequality\": routing through intermediate nodes cannot increase tropical entropy.\n- Derive the Kardashev bound as a corollary: `K(P_opt) ≤ K(L · η)` follows from the entropy bound because `C_trop ≤ 1`.\n\n**Cross-Domain Impact**:",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c26006e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:18:24.843463+00:00"
   }
 ]
