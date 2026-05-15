@@ -550,20 +550,6 @@
   },
   {
     "id": "fd_0197",
-    "title": "Eigenvector perturbation",
-    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "89af9dca",
-    "timestamp": "2026-05-14T23:59:16.192013+00:00"
-  },
-  {
-    "id": "fd_0197",
     "title": "Prove closure properties",
     "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
     "domains": [
@@ -1046,6 +1032,49 @@
     "timestamp": "2026-05-15T19:51:40.844705+00:00"
   },
   {
+    "id": "fd_0230",
+    "title": "Direction 1",
+    "description": "(general semirings) — Foundational, enables directions 4",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "89af9dca",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T19:54:33.155151+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Direction 2",
+    "description": "(composition) — Enables compiler verification applications",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "89af9dca",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T19:54:33.166383+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Direction 4",
+    "description": "(logic characterization) — Deep theoretical result",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "89af9dca",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T19:54:33.176564+00:00"
+  },
+  {
     "id": "seed_079",
     "title": "Tropical Language Evolution: Min-Plus Phylogenetics and Glottochronology",
     "description": "Prove that language divergence follows a tropical diffusion process on the min-plus metric space of lexical items, and that the tropical distance between languages is an optimal phylogenetic distance. Show that glottochronological dating is recovered as tropical distance estimation, and that the tropical phylogenetic tree is the unique min-plus Steiner tree of the language family.",
@@ -1359,7 +1388,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "238a8453",
+    "consumed_by_exp_id": "2cbb4165",
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
