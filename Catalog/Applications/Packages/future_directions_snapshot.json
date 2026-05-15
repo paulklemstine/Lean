@@ -1219,21 +1219,6 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Proof complexity researcher",
-    "description": ": Develops the hardness hierarchy and complexity-theoretic aspects (Direction 3).",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "94b46897",
-    "timestamp": "2026-05-15T03:03:37.375693+00:00"
-  },
-  {
     "id": "fd_0201",
     "title": "Direction 1",
     "description": "(Tropical Hahn–Banach): Most natural next step. Directly extends the current theorem by weakening the hypothesis. High impact, moderate difficulty.",
@@ -1339,21 +1324,6 @@
     "timestamp": "2026-05-15T07:05:09.477655+00:00"
   },
   {
-    "id": "fd_0210",
-    "title": "Computability:",
-    "description": "The finite, combinatorial nature of tropical origami mechanics means every theoretical result has an algorithmic shadow, making this framework immediately applicable to engineering and design.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09712312",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:09.503948+00:00"
-  },
-  {
     "id": "fd_0212",
     "title": "Tropical Jacobians",
     "description": "(from tropical curves to abelian varieties)",
@@ -1367,35 +1337,6 @@
     "source_exp_id": "faba857f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:05:30.491204+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "Tropical heights",
-    "description": "(Néron–Tate pairings, Arakelov theory)",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "faba857f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:30.498500+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Tropical L-functions",
-    "description": "(zeta functions of tropical varieties)",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "faba857f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:30.506986+00:00"
   },
   {
     "id": "fd_0198",
@@ -1501,20 +1442,6 @@
     "timestamp": "2026-05-15T08:03:37.270398+00:00"
   },
   {
-    "id": "fd_0210",
-    "title": "Define the orbifold metric",
-    "description": "formally as the infimum of path lengths over all smooth (or piecewise-linear) paths in the quotient, using the standard Riemannian metric lifted from (ℝ/12ℤ)³.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.278918+00:00"
-  },
-  {
     "id": "fd_0212",
     "title": "Show that line segments in the sorted chamber are geodesics",
     "description": "by verifying the geodesic equation or using comparison geometry.",
@@ -1527,36 +1454,6 @@
     "source_exp_id": "c58d2658",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:03:37.295302+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "Handle singular strata",
-    "description": ": when a path crosses a wall {xᵢ = xⱼ}, the quotient identification may fold the path. Prove that for PLR endpoints, this folding does not increase path length.\n\n### Key Challenge\nThe singular strata require careful analysis. At walls where two coordinates coincide, the orbifold has a ℤ₂ singularity (locally a cone over ℝP¹). Geodesics passing through these points may \"refract.\"\n\n### Cross-Domain Connection\nThis connects directly to Alexandrov geometry (curvature bounds on quotient spaces) and to the theory of geodesics in Weyl chambers used in Lie theory and symmetric spaces.\n\n### Deliverables\n- Lean formalization of the continuous orbifold as a metric space\n- Proof of convexity of the sorted chamber\n- Geodesicity theorem for PLR in the continuous case\n\n---\n\n## Direction 3: The Tonnetz as",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.304314+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Identify the polyhedral structure",
-    "description": ": the sorted chamber in ℤ₁₂³ is a finite polyhedral complex. The quotient by S₃ gives a cell complex whose 0-cells are triads and whose 1-cells correspond to minimal voice leadings.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.312106+00:00"
   },
   {
     "id": "fd_0215",
@@ -1608,20 +1505,6 @@
     "timestamp": "2026-05-15T08:03:37.336202+00:00"
   },
   {
-    "id": "fd_0220",
-    "title": "Prove a quasi-isometry",
-    "description": ": show that the word metric on the PLR group is quasi-isometric to the voice-leading metric on chords, with explicit constants.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.361055+00:00"
-  },
-  {
     "id": "fd_0221",
     "title": "Generalize to higher cardinalities",
     "description": ": for n-note chords, determine the Coxeter-type structure of the generalized PLR group.\n\n### Key Challenge\nThe PLR group is not a standard Coxeter group because P, L, R are involutions but do not satisfy braid relations in general. The connection to Coxeter theory may require passing to a larger group or a quotient.\n\n### Cross-Domain Connection\n- Coxeter groups and reflection groups (Humphreys 1990)\n- Geometric group theory: quasi-isometry and Gromov hyperbolicity\n- Crystallographic groups and lattice symmetries\n\n### Deliverables\n- Lean formalization of the PLR group structure\n- Computation of the Cayley graph with voice-leading edge weights\n- Quasi-isometry constants between word metric and voice-leading metric\n\n---\n\n## Direction 5: Formally Verified Harmonic Analysis for MIR\n\n### Hypothe",
@@ -1653,20 +1536,6 @@
     "timestamp": "2026-05-15T08:03:37.409024+00:00"
   },
   {
-    "id": "fd_0211",
-    "title": "Upper bound:",
-    "description": "For all τ > 0, `τ log(∑ exp(xᵢ/τ)) ≤ max xᵢ + τ log n` (since each exp term ≤ exp(max/τ)).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9c509ddc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:00.986826+00:00"
-  },
-  {
     "id": "fd_0212",
     "title": "Lower bound:",
     "description": "`τ log(∑ exp(xᵢ/τ)) ≥ max xᵢ` (since the sum includes the maximizing term).\n3. Squeeze as τ → 0⁺.\n\n**Key Lemmas Needed:**\n- `lse_le_max_add_log_card`: τ * log Z ≤ max x + τ * log n\n- `max_le_lse`: max x ≤ τ * log Z\n- `Filter.Tendsto` statement for the limit\n\n**Cross-Domain Impact:**\n- Formalizes the dequantization map from probability to tropical geometry\n- Connects entropy-regularized optimization to combinatorial optimization\n- Enables formal study of simulated annealing convergence\n\n**Estimated Difficulty:** Medium. The analysis is elementary; the main challenge is managing Lean's filter/topology API for the limit statement.\n\n---\n\n## 2. Finite KL Divergence Theory\n\n**Theorem Targets:**\n- `kl_divergence_nonneg`: KL(p ∥ q) ≥ 0 for probability vectors p, q with q strictly positive\n- `kl_di",
@@ -1681,34 +1550,6 @@
     "source_exp_id": "9c509ddc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:04:00.995579+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "Probability simplex as a type:",
-    "description": "A bundled type `ProbVec n` with coercions, rather than the predicate `IsProbVec`. This enables cleaner API design.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9c509ddc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:01.002782+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Entropy API:",
-    "description": "A comprehensive `Shannon.lean` module with properties of entropy (concavity, bounds, conditioning, chain rule).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9c509ddc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:01.010534+00:00"
   },
   {
     "id": "fd_0215",
@@ -1751,20 +1592,6 @@
     "source_exp_id": "9c509ddc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:04:01.034330+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Cross-references",
-    "description": "with the existing formalization to maximize reuse of `scalar_kl_ineq`, `gibbs_inequality_finite`, and the softmax infrastructure",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9c509ddc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:01.056353+00:00"
   },
   {
     "id": "seed_078",
@@ -2253,5 +2080,100 @@
     "source_exp_id": "a015a16c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:01:09.762727+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "1. Quantitative Stabilization Hierarchy with Strict Separations",
+    "description": "**Goal:** Construct explicit function families with *exact* stabilization depth $k$ for each $k \\in \\{1, 2, 3, \\ldots\\}$, proving strict separations between stabilization levels.\n\n**Key Theorem Target:**\n```lean\ntheorem exact_stabilization_depth_k (k : ℕ) (hk : 1 ≤ k) :\n    ∃ f : (Fin (k + 1) → Bool) → (Fin (k + 1) → Bool),\n      StabilizesIn f k ∧ ¬ StabilizesIn f (k - 1) := by ...\n```\n\n**Construction:** For depth $k$, define a \"shift register\" function on $\\text{Fin}(k+1) \\to \\text{Bool}$ that shifts entries by one position:\n$$f(\\sigma)(i) = \\begin{cases} \\sigma(i+1) & \\text{if } i < k \\\\ \\sigma(0) & \\text{if } i = k \\end{cases}$$\nThis function stabilizes at depth $k$ (when the register becomes uniform) but not at depth $k-1$.\n\n**Impact:** Provides a complete classification of Boolean or",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94b46897",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:22.029937+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "2. Closure-Operator Proof Systems and Monotone Collapse",
+    "description": "**Goal:** Formalize monotone/extensive/idempotent (closure) operators as proof systems and prove that *all* closure-generated proof systems collapse to one-step proofs.\n\n**Key Theorem Target:**\n```lean\nstructure ClosureOperator (α : Type*) [PartialOrder α] where\n  cl : α → α\n  extensive : ∀ x, x ≤ cl x\n  monotone : ∀ x y, x ≤ y → cl x ≤ cl y\n  idempotent : ∀ x, cl (cl x) = cl x\n\ntheorem closure_proof_collapse {α : Type*} [PartialOrder α]\n    (C : ClosureOperator α) :\n    StabilizesIn C.cl 1 := by ...\n```\n\n**Extensions:**\n- Prove that Galois connections between proof systems preserve stabilization depth.\n- Show that non-closure proof operators (e.g., Heyting negation iteration) can witness arbitrary depth.\n- Connect to abstract interpretation in program analysis: widening operators that are",
+    "domains": [
+      "EML",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94b46897",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:22.041412+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "3. Regret-Complexity Equivalence",
+    "description": "**Goal:** Prove that nonzero asymptotic regret in online learning is *equivalent* to non-idempotent adaptive depth in the underlying update dynamics.\n\n**Key Theorem Target:**\n```lean\ndef AsymptoticRegretPositive (update : α → α) (loss : α → ℝ) : Prop :=\n  ∃ ε > 0, ∀ T, ∃ x, (∑ t in range T, loss (update^[t] x)) -\n    T * (⨅ y, loss y) ≥ ε * Real.sqrt T\n\ntheorem positive_regret_iff_nonidempotent\n    (update : α → α) (loss : α → ℝ) :\n    AsymptoticRegretPositive update loss ↔\n    ¬ ∀ x, update (update x) = update x := by ...\n```\n\n**Proof Strategy:**\n- Forward direction: if update is idempotent, the learner converges in one step, so regret is $O(1)$, not $\\Omega(\\sqrt{T})$.\n- Backward direction: construct an adversarial loss sequence that exploits non-stabilization to force $\\Omega(\\sqrt{T})$",
+    "domains": [
+      "EML",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94b46897",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:22.051070+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "5. Finite-Model Hierarchy Separation on Boolean Cubes",
+    "description": "**Goal:** On the Boolean cube $\\{0,1\\}^n$, construct explicit function families witnessing 1-step, 2-step, and 3-step stabilization gaps, and prove that these families are *complete* for their stabilization class.\n\n**Key Theorem Targets:**\n```lean\n-- Projection (depth 1): always stabilizes immediately\ntheorem projection_stabilizes_one (n : ℕ) (S : Finset (Fin n)) :\n    StabilizesIn (fun σ : Fin n → Bool => fun i =>\n      if i ∈ S then σ i else false) 1 := by ...\n\n-- Shift (depth n): requires n steps to stabilize\ntheorem shift_stabilizes_n (n : ℕ) (hn : 2 ≤ n) :\n    StabilizesIn (fun σ : Fin n → Bool => fun i =>\n      σ ⟨(i.val + 1) % n, Nat.mod_lt _ (by omega)⟩) n ∧\n    ¬ StabilizesIn (fun σ : Fin n → Bool => fun i =>\n      σ ⟨(i.val + 1) % n, Nat.mod_lt _ (by omega)⟩) (n - 1) := by ...\n\n-",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94b46897",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:22.072045+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Cross-Domain Connection Map",
+    "description": "| Direction | Logic | Complexity | Learning | Category Theory | Physics |\n|-----------|-------|------------|----------|-----------------|---------|\n| 1. Hierarchy | ✓ | ✓ | | | |\n| 2. Closure | ✓ | ✓ | | | |\n| 3. Regret | | ✓ | ✓ | | |\n| 4. Categorical | ✓ | | | ✓ | |\n| 5. Boolean | ✓ | ✓ | | | ✓ |",
+    "domains": [
+      "EML",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94b46897",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:22.080635+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Guiding Principle",
+    "description": "**Hardness is the failure of stabilization.** Every future direction should be evaluated by whether it deepens our understanding of *why* certain proof/computation processes resist convergence, and whether the stabilization depth can serve as a new complexity measure competitive with circuit depth, proof length, or communication complexity.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "94b46897",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:22.089082+00:00"
   }
 ]
