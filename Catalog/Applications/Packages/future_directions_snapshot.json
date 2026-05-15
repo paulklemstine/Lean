@@ -557,22 +557,6 @@
     "timestamp": "2026-05-14T16:03:53.826504+00:00"
   },
   {
-    "id": "seed_028",
-    "title": "Deep Double Descent as Tropical Phase Diagram",
-    "description": "Prove that the double descent phenomenon in overparameterized models is a tropical phase transition where the min-plus generalization error undergoes a corner crossing in the interpolation threshold. Show that the modern and classical regimes correspond to two tropical facets of the risk surface, and that the transition point is the tropical vertex where both facets are equally dominant.",
-    "domains": [
-      "MachineLearning",
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.85,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "13b8af12",
-    "timestamp": "2026-05-14T16:03:53.827592+00:00"
-  },
-  {
     "id": "seed_040",
     "title": "Dark Energy as Tropical Vacuum Pressure: Min-Plus Cosmological Constant",
     "description": "Prove that the observed dark energy density corresponds to the tropical vacuum expectation value of the cosmological constant in min-plus quantum field theory. Show that the 120-order-of-magnitude discrepancy between the predicted and observed values is resolved by the idempotent property: in tropical QFT, vacuum energy is min-dominated by the shortest Feynman diagram, yielding the correct order of magnitude.",
@@ -1677,10 +1661,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "00fcfe9a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d9c105e5",
     "timestamp": "2026-05-14T23:49:05.141334+00:00"
   },
   {
@@ -2453,10 +2437,69 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "102555eb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92286879",
     "timestamp": "2026-05-15T00:30:49.271363+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "Actionable Next Steps",
+    "description": "1. Formalize `tropicalRiskMulti` for k = 2 variables (width, depth).\n2. Prove the 2D analogue of unique_tropical_corner_crossing: under generic slopes, phase boundaries are line segments in ℕ².\n3. Implement computational enumeration of 2D tropical vertices.\n4. Connect to the existing `two_vertex_weight` graph-theoretic infrastructure.\n\n---",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "13b8af12",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:31:05.360997+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Phase 3 (Long-term): Directions 1 and 5",
+    "description": "Require new definitions and significant infrastructure (multidimensional tropical geometry, graph theory).",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "13b8af12",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:31:05.382198+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Cross-cutting Theme",
+    "description": "All five directions share a common algebraic substrate: the min-plus semiring and its order-theoretic properties. Building a clean Lean library for min-plus algebra (tropical semiring, tropical polynomials, tropical varieties) would accelerate all five directions simultaneously.\n\n---",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "13b8af12",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:31:05.388726+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Team Coordination",
+    "description": "- **Thread A (Theorem Proving)**: Focus on formalizing Directions 3-4 as immediate extensions of the current theorems. Target: 5-10 new lemmas per direction.\n- **Thread B (Counterexample Search)**: For each proposed lemma, generate counterexamples with random parameters before attempting formalization. Use `#eval` and `lean_run_code` extensively.\n- **Thread C (Geometric Interpretation)**: Develop visualizations of 2D tropical phase diagrams (Direction 1). Create interactive plots showing how phase boundaries move with parameters.\n- **Thread D (Catalog Integration)**: Connect new theorems to existing catalog infrastructure (`tropical_plus_distributes_over_min`, `fixed_point_error`, `two_vertex_weight`). Ensure all cross-references are documented.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "13b8af12",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:31:05.395436+00:00"
   }
 ]
