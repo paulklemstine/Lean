@@ -897,20 +897,6 @@
     "timestamp": "2026-05-14T23:59:16.148110+00:00"
   },
   {
-    "id": "fd_0197",
-    "title": "Eigenvector perturbation",
-    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "56f66752",
-    "timestamp": "2026-05-14T23:59:16.192013+00:00"
-  },
-  {
     "id": "fd_0187",
     "title": "Generalized inductive hypothesis",
     "description": ": Prove that for every formula φ with free variables, the function `(annotated_word) ↦ φ.evalWith(decode(annotated_word))` is tropically recognizable over the extended alphabet.",
@@ -1102,10 +1088,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50208fa8",
     "timestamp": "2026-05-15T08:03:37.270398+00:00"
   },
   {
@@ -1121,20 +1107,6 @@
     "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:04:09.945738+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Period-p fixed point equation",
-    "description": ": A configuration c has period p iff `(tropicalLifeStep)^[p] c = c`. Unfold this into a system of min-plus equations in the cell values.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:09.972272+00:00"
   },
   {
     "id": "fd_0236",
@@ -1266,6 +1238,52 @@
     "source_exp_id": "b751b05a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T11:01:19.774503+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Tropical semiring typeclass hierarchy",
+    "description": ": Formalize `TropicalSemiring`, `CompleteTropicalSemiring`, and their instances for `ℝ`, `ℝ≥0∞`, `WithTop ℝ`, `Tropical α`.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56f66752",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:09:57.070429+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Weighted automata over general semirings",
+    "description": ": Generalize WTA from `ℝ` to arbitrary semirings, recovering boolean, probabilistic, and tropical automata as instances.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56f66752",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:09:57.080170+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Functor between automata and algebras",
+    "description": ": Formalize the categorical equivalence between WTA and Σ-algebras in the tropical semiring, establishing automata as algebraic objects.",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56f66752",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:09:57.089636+00:00"
   },
   {
     "id": "seed_079",
