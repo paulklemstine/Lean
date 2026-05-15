@@ -1818,10 +1818,10 @@
       "Tropical"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cc175531",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6acfb91e",
     "timestamp": "2026-05-15T15:04:32.949550+00:00"
   },
   {
@@ -1979,5 +1979,21 @@
     "source_exp_id": "3fb3d214",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:13:29.163744+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Cross-Cutting Theme",
+    "description": "All five directions share a common mathematical core: **the interplay between optimization, probability, and information geometry through free energy functionals**. The formalized Gibbs variational principle serves as the seed crystal from which each of these directions grows naturally:\n\n- Direction 1 (Donsker–Varadhan) generalizes the variational representation\n- Direction 2 (Soft Bellman) applies it to sequential decision-making\n- Direction 3 (PAC-Bayes) applies it to statistical learning theory\n- Direction 4 (Tropical large deviations) extends it to continuous spaces\n- Direction 5 (Variational inference) applies it to approximate Bayesian computation\n\nTogether, they form a coherent program for **formally verified thermodynamic computation** — a new foundation for certified algorithms in",
+    "domains": [
+      "Tropical",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0e91ddc3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:20:42.798281+00:00"
   }
 ]

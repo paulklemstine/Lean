@@ -1,432 +1,367 @@
 #!/usr/bin/env python3
 """
-Algorithms for Category-Theoretic Neural Architecture Analysis
+Algorithms for Categorical Neural Architecture Composition
 
-Implements the core algorithms derived from the formal theorems:
-1. Residual stack analysis (composition, invertibility, spectral radius)
-2. Attention naturality measurement
-3. Architecture perturbation bound computation
-4. Čech coboundary complex and gluing verification
+Implements the core algorithms derived from the compositional architecture theory:
+
+1. Residual factorization via universal product construction
+2. Naturality-preserving attention composition
+3. Compositional complexity analysis for layer stacks
+4. Greedy architecture search with certified cost monotonicity
+
+All algorithms have proven correctness guarantees from the formal theory.
 """
 
 import numpy as np
-from typing import List, Tuple, Optional
+from typing import Callable, List, Tuple, Optional
+from dataclasses import dataclass
 
 
-# ============================================================
-# Algorithm 1: Residual Stack Analysis
-# ============================================================
+# ============================================================================
+# Core Types
+# ============================================================================
 
-def residual_layer(f: np.ndarray) -> np.ndarray:
-    """
-    Construct residual layer matrix I + f.
+@dataclass
+class BoundedArch:
+    """Architecture with certified complexity bound.
     
-    Parameters:
-        f: Square matrix representing the layer transformation
+    Corresponds to ArchCat.BoundedArch in the Lean formalization.
+    
+    Attributes:
+        weight: Weight matrix (n x m) defining the linear map
+        complexity: Certified upper bound on operator norm
+        name: Human-readable identifier
+    """
+    weight: np.ndarray
+    complexity: float
+    name: str = "unnamed"
+    
+    @classmethod
+    def from_matrix(cls, W: np.ndarray, name: str = "layer") -> 'BoundedArch':
+        """Create a BoundedArch with complexity = spectral norm."""
+        complexity = float(np.linalg.norm(W, ord=2))
+        return cls(weight=W, complexity=complexity, name=name)
+    
+    def apply(self, x: np.ndarray) -> np.ndarray:
+        """Apply the architecture to input."""
+        return self.weight @ x
+
+
+# ============================================================================
+# Algorithm 1: Residual Factorization
+# ============================================================================
+
+def residual_factorize(f: BoundedArch) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Factor a residual layer through the universal product construction.
+    
+    Given f : State n → State n, produces:
+      - pair_output: pairMap(id, f)(x) ∈ State(n+n)
+      - The property that sumMap(pair_output) = x + f(x)
+    
+    Complexity: O(n²) for matrix-vector multiply
+    Space: O(n) additional for the paired state
+    
+    Returns:
+        (identity_component, layer_component) — the two halves of the paired output
+    """
+    n = f.weight.shape[0]
+    I = np.eye(n)
+    
+    # The factorization: residual = sumMap ∘ pairMap(id, f)
+    # pairMap(id, f) produces [I; W] as a block matrix
+    pair_matrix = np.vstack([I, f.weight])
+    
+    # sumMap adds the two halves: [I + W]
+    residual_matrix = I + f.weight
+    
+    return pair_matrix, residual_matrix
+
+
+def compose_residuals(layers: List[BoundedArch]) -> Tuple[np.ndarray, float]:
+    """
+    Compose a stack of residual layers with certified complexity tracking.
+    
+    For layers f₁, ..., fₖ, computes:
+      res(fₖ) ∘ ... ∘ res(f₁)
+    
+    with certified complexity bound: ∏ᵢ (1 + Cᵢ)
+    
+    Complexity: O(k · n²) for k layers of dimension n
+    
+    Args:
+        layers: List of BoundedArch, each representing a layer
         
     Returns:
-        I + f as a numpy array
-        
-    Time complexity: O(n²) where n is the matrix dimension
-    Space complexity: O(n²)
+        (composed_matrix, complexity_bound)
     """
-    n = f.shape[0]
-    return np.eye(n) + f
+    if not layers:
+        n = 1
+        return np.eye(n), 1.0
+    
+    n = layers[0].weight.shape[0]
+    composed = np.eye(n)
+    complexity_bound = 1.0
+    
+    for layer in layers:
+        residual_matrix = np.eye(n) + layer.weight
+        composed = residual_matrix @ composed
+        complexity_bound *= (1 + layer.complexity)
+    
+    return composed, complexity_bound
 
 
-def compose_residual_stack(layers: List[np.ndarray]) -> np.ndarray:
-    """
-    Compose a stack of residual layers: ∏(I + f_i).
-    
-    Uses the algebraic identity (I+f)(I+g) = I + (f+g+fg) iteratively.
-    
-    Parameters:
-        layers: List of square matrices [f_1, ..., f_k]
-        
-    Returns:
-        Product matrix ∏(I + f_i)
-        
-    Time complexity: O(k·n³) for k layers of dimension n (matrix multiplication)
-    Space complexity: O(n²)
-    
-    Example:
-        >>> f = np.array([[0.1, 0.2], [-0.1, 0.3]])
-        >>> g = np.array([[0.2, -0.1], [0.1, 0.1]])
-        >>> result = compose_residual_stack([f, g])
-        >>> expected = (np.eye(2) + f) @ (np.eye(2) + g)
-        >>> np.allclose(result, expected)
-        True
-    """
-    n = layers[0].shape[0]
-    result = np.eye(n)
-    for f in layers:
-        result = result @ (np.eye(n) + f)
-    return result
+# ============================================================================
+# Algorithm 2: Naturality-Preserving Attention
+# ============================================================================
 
-
-def residual_stack_spectrum(layers: List[np.ndarray]) -> np.ndarray:
+def verify_attention_naturality(
+    attn: Callable[[np.ndarray], np.ndarray],
+    n: int,
+    n_perms: int = 100
+) -> Tuple[bool, float]:
     """
-    Compute eigenvalues of the composed residual stack.
+    Verify that an attention operator is natural (permutation-equivariant).
     
-    The spectral radius controls the stability of the network.
-    For stable networks, all eigenvalues should have modulus ≤ 1.
+    Tests: Attn ∘ reindex(σ) = reindex(σ) ∘ Attn
+    for random permutations σ and random inputs x.
     
-    Parameters:
-        layers: List of square layer matrices
+    Complexity: O(n_perms · n · T_attn) where T_attn is attention cost
+    
+    Args:
+        attn: Attention operator State n → State n
+        n: Dimension
+        n_perms: Number of random permutations to test
         
     Returns:
-        Array of eigenvalues (complex)
+        (is_natural, max_violation) — whether naturality holds approximately
+    """
+    max_violation = 0.0
+    
+    for _ in range(n_perms):
+        sigma = np.random.permutation(n)
+        x = np.random.randn(n)
         
-    Time complexity: O(k·n³ + n³) (composition + eigendecomposition)
-    """
-    composed = compose_residual_stack(layers)
-    return np.linalg.eigvals(composed)
-
-
-def check_residual_invertibility(f: np.ndarray, tol: float = 1e-10) -> Tuple[bool, float]:
-    """
-    Check if residual layer I + f is invertible via determinant.
-    
-    By Theorem 1d: residual layer is invertible ⟺ det(I + f) ≠ 0.
-    
-    Parameters:
-        f: Square matrix
-        tol: Threshold for near-zero determinant
+        # Left side: Attn(σ(x))
+        lhs = attn(x[sigma])
         
-    Returns:
-        (is_invertible, determinant)
-    """
-    det = np.linalg.det(np.eye(f.shape[0]) + f)
-    return (abs(det) > tol, det)
-
-
-# ============================================================
-# Algorithm 2: Attention Naturality Measurement
-# ============================================================
-
-def naturality_defect(W: np.ndarray, n_samples: int = 1000) -> float:
-    """
-    Measure how far an attention matrix W is from being a natural transformation.
-    
-    By Theorem 2c (Schur's lemma), W is natural ⟺ W = c·I for some scalar c.
-    The naturality defect is the supremum of ‖φW - Wφ‖ over unit-norm φ.
-    
-    We approximate this by sampling random matrices φ.
-    
-    Parameters:
-        W: Square attention matrix
-        n_samples: Number of random matrices to test
+        # Right side: σ(Attn(x))
+        rhs = attn(x)[sigma]
         
-    Returns:
-        Maximum observed ‖φW - Wφ‖_F (Frobenius norm)
-        
-    Time complexity: O(n_samples · n³)
+        violation = np.max(np.abs(lhs - rhs))
+        max_violation = max(max_violation, violation)
     
-    Example:
-        >>> n = 5
-        >>> W_natural = 3.0 * np.eye(n)  # scalar = natural
-        >>> naturality_defect(W_natural) < 1e-10
-        True
-    """
-    n = W.shape[0]
-    max_defect = 0.0
-    for _ in range(n_samples):
-        phi = np.random.randn(n, n)
-        phi /= np.linalg.norm(phi, 'fro')  # normalize
-        commutator = phi @ W - W @ phi
-        defect = np.linalg.norm(commutator, 'fro')
-        max_defect = max(max_defect, defect)
-    return max_defect
-
-
-def project_to_natural(W: np.ndarray) -> Tuple[np.ndarray, float]:
-    """
-    Project attention matrix to nearest natural transformation (scalar matrix).
-    
-    The nearest scalar matrix to W is (tr(W)/n) · I.
-    
-    Parameters:
-        W: Square attention matrix
-        
-    Returns:
-        (projected_matrix, scalar_value)
-        
-    Time complexity: O(n)
-    """
-    n = W.shape[0]
-    c = np.trace(W) / n
-    return c * np.eye(n), c
-
-
-def attention_equivariance_score(W: np.ndarray, n_samples: int = 1000) -> float:
-    """
-    Score how equivariant an attention matrix is (0 = not equivariant, 1 = perfectly equivariant).
-    
-    Score = 1 - (naturality_defect / ‖W‖_F), clamped to [0, 1].
-    
-    Parameters:
-        W: Square attention matrix
-        n_samples: Sampling count for defect estimation
-        
-    Returns:
-        Equivariance score in [0, 1]
-    """
-    W_norm = np.linalg.norm(W, 'fro')
-    if W_norm < 1e-15:
-        return 1.0  # zero matrix is trivially natural
-    defect = naturality_defect(W, n_samples)
-    return max(0.0, 1.0 - defect / W_norm)
-
-
-# ============================================================
-# Algorithm 3: Architecture Perturbation Bound
-# ============================================================
-
-def architecture_distance(a: np.ndarray, b: np.ndarray) -> float:
-    """
-    Compute L¹ architecture distance: d(a, b) = Σ|a_i - b_i|.
-    
-    Parameters:
-        a, b: Layer parameter vectors (1D arrays)
-        
-    Returns:
-        Non-negative distance
-        
-    Time complexity: O(k) where k is number of layers
-    """
-    return np.sum(np.abs(a - b))
-
-
-def composition_perturbation_bound_two(a1: float, a2: float, 
-                                        b1: float, b2: float) -> Tuple[float, float]:
-    """
-    Compute actual perturbation and theoretical bound for two-layer composition.
-    
-    Theorem 3a: |b₁b₂ - a₁a₂| ≤ |b₁-a₁|·|b₂| + |a₁|·|b₂-a₂|
-    
-    Parameters:
-        a1, a2: Original layer weights
-        b1, b2: Perturbed layer weights
-        
-    Returns:
-        (actual_perturbation, theoretical_bound)
-    """
-    actual = abs(b1*b2 - a1*a2)
-    bound = abs(b1-a1)*abs(b2) + abs(a1)*abs(b2-a2)
-    return actual, bound
-
-
-def composition_perturbation_bound_k(a: np.ndarray, b: np.ndarray) -> Tuple[float, float]:
-    """
-    Compute actual perturbation and telescoping bound for k-layer composition.
-    
-    General telescoping: |∏b_i - ∏a_i| ≤ Σ_i (∏_{j<i}|b_j|)·|b_i-a_i|·(∏_{j>i}|a_j|)
-    
-    Parameters:
-        a, b: Layer weight arrays of length k
-        
-    Returns:
-        (actual_perturbation, telescoping_bound)
-        
-    Time complexity: O(k²) (computing prefix and suffix products)
-    """
-    k = len(a)
-    actual = abs(np.prod(b) - np.prod(a))
-    
-    bound = 0.0
-    for i in range(k):
-        prefix = np.prod(np.abs(b[:i])) if i > 0 else 1.0
-        suffix = np.prod(np.abs(a[i+1:])) if i < k-1 else 1.0
-        bound += prefix * abs(b[i] - a[i]) * suffix
-    
-    return actual, bound
-
-
-def certified_architecture_search_radius(a: np.ndarray, 
-                                          max_error_increase: float) -> float:
-    """
-    Compute maximum per-layer perturbation ensuring error increase ≤ max_error_increase.
-    
-    Uses the perturbation bound to certify a search radius.
-    
-    Parameters:
-        a: Current architecture (layer weights)
-        max_error_increase: Maximum allowed increase in composition error
-        
-    Returns:
-        Maximum per-layer perturbation δ such that changing each layer by at most δ
-        increases composition error by at most max_error_increase
-        
-    Time complexity: O(k)
-    """
-    k = len(a)
-    # Bound: error ≤ Σ_i (∏_{j≠i} max(|a_j|, |a_j+δ|)) · δ
-    # ≈ k · max(|a|)^(k-1) · δ for small δ
-    max_weight = np.max(np.abs(a))
-    sensitivity = k * max(max_weight, 1.0) ** (k - 1)
-    if sensitivity < 1e-15:
-        return float('inf')
-    return max_error_increase / sensitivity
-
-
-# ============================================================
-# Algorithm 4: Čech Coboundary Complex and Gluing
-# ============================================================
-
-def compute_delta0(f: np.ndarray) -> np.ndarray:
-    """
-    Compute 0th coboundary: (δ⁰f)(i,j) = f(j) - f(i).
-    
-    Parameters:
-        f: 0-cochain (1D array of length m)
-        
-    Returns:
-        1-cochain (m×m matrix)
-        
-    Time complexity: O(m²)
-    """
-    m = len(f)
-    return np.subtract.outer(f, f).T  # delta0[i,j] = f[j] - f[i]
-
-
-def compute_delta1(g: np.ndarray) -> np.ndarray:
-    """
-    Compute 1st coboundary: (δ¹g)(i,j,k) = g(j,k) - g(i,k) + g(i,j).
-    
-    Parameters:
-        g: 1-cochain (m×m matrix)
-        
-    Returns:
-        2-cochain (m×m×m tensor)
-        
-    Time complexity: O(m³)
-    """
-    m = g.shape[0]
-    result = np.zeros((m, m, m))
-    for i in range(m):
-        for j in range(m):
-            for k in range(m):
-                result[i, j, k] = g[j, k] - g[i, k] + g[i, j]
-    return result
-
-
-def verify_cochain_complex(f: np.ndarray) -> float:
-    """
-    Verify δ¹ ∘ δ⁰ = 0 for a given 0-cochain.
-    
-    Parameters:
-        f: 0-cochain
-        
-    Returns:
-        Maximum absolute value of δ¹(δ⁰(f)), should be ≈ 0
-        
-    Time complexity: O(m³)
-    """
-    delta0 = compute_delta0(f)
-    delta1_delta0 = compute_delta1(delta0)
-    return np.max(np.abs(delta1_delta0))
-
-
-def check_cocycle_condition(g: np.ndarray) -> Tuple[bool, float]:
-    """
-    Check if a 1-cochain satisfies the cocycle condition δ¹g = 0.
-    
-    Parameters:
-        g: 1-cochain (m×m matrix)
-        
-    Returns:
-        (is_cocycle, max_violation)
-    """
-    delta1_g = compute_delta1(g)
-    max_violation = np.max(np.abs(delta1_g))
     return max_violation < 1e-10, max_violation
 
 
-def glue_from_cocycle(g: np.ndarray) -> Optional[np.ndarray]:
+def compose_natural_attentions(
+    attentions: List[Callable[[np.ndarray], np.ndarray]]
+) -> Callable[[np.ndarray], np.ndarray]:
     """
-    Given a 1-cocycle g (satisfying antisymmetry and cocycle condition),
-    reconstruct the global 0-cochain f such that δ⁰f = g.
+    Compose multiple natural attention operators.
     
-    By the gluing theorem: f(i) = g(0, i).
+    By the composition theorem (natural_attn_comp_natural), the result
+    is automatically natural if each component is.
     
-    Parameters:
-        g: 1-cochain satisfying cocycle condition
+    Complexity: O(k · T_attn) for k attention operators
+    
+    Args:
+        attentions: List of natural attention operators
         
     Returns:
-        0-cochain f such that f(j) - f(i) = g(i,j), or None if g is not a cocycle
-        
-    Time complexity: O(m)
+        Composed attention operator (also natural)
     """
-    is_cocycle, violation = check_cocycle_condition(g)
-    if not is_cocycle:
-        return None
-    return g[0, :]  # f(i) = g(0, i)
+    def composed(x: np.ndarray) -> np.ndarray:
+        result = x
+        for attn in attentions:
+            result = attn(result)
+        return result
+    return composed
 
 
-def check_gluing_consistency(g: np.ndarray) -> Tuple[bool, float]:
+# ============================================================================
+# Algorithm 3: Compositional Complexity Analysis
+# ============================================================================
+
+def analyze_stack_complexity(
+    layers: List[BoundedArch],
+    mode: str = "multiplicative"
+) -> dict:
     """
-    Check if local subnetwork parameters can be globally assembled.
+    Analyze complexity of a layered architecture stack.
     
-    Verifies the transitivity condition: g(i,k) = g(i,j) + g(j,k) for all i,j,k.
+    Implements the compositional complexity analysis from Theorem 3:
+    - Multiplicative: C(g∘f) ≤ C(g)·C(f), total ≤ ∏ Cᵢ
+    - Residual: C(res(f)) ≤ 1 + C(f), total ≤ ∏(1 + Cᵢ)
     
-    Parameters:
-        g: Pairwise discrepancy matrix (1-cochain)
+    Complexity: O(k) where k is the number of layers
+    
+    Args:
+        layers: List of BoundedArch with certified complexities
+        mode: "multiplicative" or "residual"
         
     Returns:
-        (can_glue, max_inconsistency)
-        
-    Time complexity: O(m³)
+        Dictionary with complexity analysis results
     """
-    m = g.shape[0]
-    max_inconsistency = 0.0
-    for i in range(m):
-        for j in range(m):
-            for k in range(m):
-                inconsistency = abs(g[i, k] - g[i, j] - g[j, k])
-                max_inconsistency = max(max_inconsistency, inconsistency)
-    return max_inconsistency < 1e-10, max_inconsistency
+    complexities = [l.complexity for l in layers]
+    
+    if mode == "multiplicative":
+        total_bound = np.prod(complexities)
+        cumulative = np.cumprod(complexities)
+    elif mode == "residual":
+        residual_complexities = [1 + c for c in complexities]
+        total_bound = np.prod(residual_complexities)
+        cumulative = np.cumprod(residual_complexities)
+    else:
+        raise ValueError(f"Unknown mode: {mode}")
+    
+    return {
+        "n_layers": len(layers),
+        "mode": mode,
+        "individual_complexities": complexities,
+        "total_bound": total_bound,
+        "cumulative_bounds": cumulative.tolist(),
+        "is_contractive": total_bound < 1.0,
+        "log_complexity": np.log(total_bound) if total_bound > 0 else float('-inf'),
+    }
 
 
-# ============================================================
-# Demonstration
-# ============================================================
+# ============================================================================
+# Algorithm 4: Greedy Architecture Search with Monotone Cost
+# ============================================================================
+
+@dataclass
+class ArchDiagram:
+    """Architecture diagram: assignment of bounded architectures to components.
+    
+    Corresponds to ArchCat.ArchDiagram in the Lean formalization.
+    """
+    components: List[BoundedArch]
+    
+    @property
+    def cost(self) -> float:
+        """Total diagram cost = sum of component complexities."""
+        return sum(c.complexity for c in self.components)
+    
+    def improve_component(self, index: int, new_arch: BoundedArch) -> 'ArchDiagram':
+        """
+        Replace one component with a cheaper alternative.
+        
+        By diagram_cost_improve_component, if C(new) ≤ C(old),
+        then Cost(new_diagram) ≤ Cost(old_diagram).
+        """
+        new_components = list(self.components)
+        new_components[index] = new_arch
+        return ArchDiagram(components=new_components)
+
+
+def greedy_architecture_search(
+    initial: ArchDiagram,
+    candidates: List[List[BoundedArch]],
+    max_iterations: int = 100
+) -> Tuple[ArchDiagram, List[float]]:
+    """
+    Greedy architecture search with certified cost monotonicity.
+    
+    At each step, finds the component where replacement gives the largest
+    cost reduction, and applies it. By diagram_cost_monotone, the cost
+    sequence is guaranteed to be non-increasing.
+    
+    Complexity: O(max_iterations · J · K) where J = #components, K = max #candidates
+    
+    Args:
+        initial: Starting architecture diagram
+        candidates: For each component, list of alternative architectures
+        max_iterations: Maximum search steps
+        
+    Returns:
+        (best_diagram, cost_history)
+    """
+    current = initial
+    cost_history = [current.cost]
+    
+    for _ in range(max_iterations):
+        best_improvement = 0.0
+        best_index = -1
+        best_candidate = None
+        
+        for j, component_candidates in enumerate(candidates):
+            current_complexity = current.components[j].complexity
+            for candidate in component_candidates:
+                if candidate.complexity < current_complexity:
+                    improvement = current_complexity - candidate.complexity
+                    if improvement > best_improvement:
+                        best_improvement = improvement
+                        best_index = j
+                        best_candidate = candidate
+        
+        if best_index == -1:
+            break  # No improving move found
+        
+        current = current.improve_component(best_index, best_candidate)
+        cost_history.append(current.cost)
+        
+        # Verify monotonicity (guaranteed by Theorem 4)
+        assert cost_history[-1] <= cost_history[-2] + 1e-10, \
+            "Cost monotonicity violation! (should never happen)"
+    
+    return current, cost_history
+
+
+# ============================================================================
+# Example Usage
+# ============================================================================
 
 if __name__ == "__main__":
     np.random.seed(42)
-    
-    print("=== Algorithm Demonstrations ===\n")
-    
-    # Residual stack
     n = 4
-    layers = [0.1 * np.random.randn(n, n) for _ in range(5)]
-    composed = compose_residual_stack(layers)
-    eigenvalues = residual_stack_spectrum(layers)
-    print(f"5-layer residual stack ({n}×{n}):")
-    print(f"  Spectral radius: {np.max(np.abs(eigenvalues)):.4f}")
-    print(f"  Invertible: {check_residual_invertibility(layers[0])}")
     
-    # Attention
-    W_test = np.random.randn(n, n)
-    W_proj, c = project_to_natural(W_test)
-    print(f"\nAttention matrix projection:")
-    print(f"  Original naturality defect: {naturality_defect(W_test, 500):.4f}")
-    print(f"  Projected (c={c:.4f})·I defect: {naturality_defect(W_proj, 500):.2e}")
-    print(f"  Equivariance score: {attention_equivariance_score(W_test, 500):.4f}")
+    print("Algorithm 1: Residual Factorization")
+    print("-" * 40)
+    W = np.random.randn(n, n) * 0.3
+    layer = BoundedArch.from_matrix(W, "layer1")
+    pair_mat, res_mat = residual_factorize(layer)
+    print(f"  Layer complexity: {layer.complexity:.4f}")
+    print(f"  Pair matrix shape: {pair_mat.shape}")
+    print(f"  Residual matrix = I + W, shape: {res_mat.shape}")
     
-    # Perturbation bounds
-    a = np.random.randn(6)
-    b = a + 0.05 * np.random.randn(6)
-    actual, bound = composition_perturbation_bound_k(a, b)
-    print(f"\n6-layer perturbation bound:")
-    print(f"  Actual: {actual:.6f}, Bound: {bound:.6f}, Ratio: {actual/bound:.4f}")
-    print(f"  Certified search radius (ε=0.01): {certified_architecture_search_radius(a, 0.01):.6f}")
+    layers = [BoundedArch.from_matrix(np.random.randn(n, n) * 0.2, f"L{i}") for i in range(4)]
+    composed, bound = compose_residuals(layers)
+    actual = np.linalg.norm(composed, ord=2)
+    print(f"  Composed residual norm: {actual:.4f} ≤ {bound:.4f} (certified bound)")
     
-    # Gluing
-    m = 5
-    f_true = np.random.randn(m)
-    g = compute_delta0(f_true)
-    f_reconstructed = glue_from_cocycle(g)
-    print(f"\nGluing verification (m={m}):")
-    print(f"  Cocycle check: {check_cocycle_condition(g)}")
-    print(f"  Gluing consistency: {check_gluing_consistency(g)}")
-    print(f"  Reconstruction error: {np.max(np.abs(compute_delta0(f_reconstructed) - g)):.2e}")
+    print("\nAlgorithm 2: Attention Naturality Verification")
+    print("-" * 40)
+    c = 0.5
+    uniform = lambda x: c * x
+    is_nat, viol = verify_attention_naturality(uniform, n=6)
+    print(f"  Uniform attention natural: {is_nat} (max violation: {viol:.2e})")
+    
+    tanh_attn = lambda x: np.tanh(x) * x
+    is_nat2, viol2 = verify_attention_naturality(tanh_attn, n=6)
+    print(f"  Componentwise (tanh) natural: {is_nat2} (max violation: {viol2:.2e})")
+    
+    print("\nAlgorithm 3: Complexity Analysis")
+    print("-" * 40)
+    analysis = analyze_stack_complexity(layers, mode="multiplicative")
+    print(f"  Multiplicative bound: {analysis['total_bound']:.4f}")
+    analysis_res = analyze_stack_complexity(layers, mode="residual")
+    print(f"  Residual bound: {analysis_res['total_bound']:.4f}")
+    print(f"  Contractive (mult): {analysis['is_contractive']}")
+    
+    print("\nAlgorithm 4: Architecture Search")
+    print("-" * 40)
+    initial_diagram = ArchDiagram([
+        BoundedArch.from_matrix(np.random.randn(n, n) * 0.5, f"comp{i}")
+        for i in range(5)
+    ])
+    candidates = [
+        [BoundedArch.from_matrix(np.random.randn(n, n) * s, f"alt{j}")
+         for j, s in enumerate([0.4, 0.3, 0.2])]
+        for _ in range(5)
+    ]
+    best, history = greedy_architecture_search(initial_diagram, candidates)
+    print(f"  Initial cost: {history[0]:.4f}")
+    print(f"  Final cost:   {history[-1]:.4f}")
+    print(f"  Steps: {len(history)-1}")
+    print(f"  Monotone: {all(history[i] >= history[i+1] - 1e-10 for i in range(len(history)-1))}")
