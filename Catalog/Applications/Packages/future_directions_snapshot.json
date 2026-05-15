@@ -694,10 +694,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a2e39b14",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0db1bd89",
     "timestamp": "2026-05-15T15:04:51.227861+00:00"
   },
   {
@@ -1022,6 +1022,48 @@
     "source_exp_id": "238a8453",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T21:00:44.698219+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Direction 1",
+    "description": "(Blahut-Arimoto) — most computationally useful, validates the theory",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56f3642c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T21:10:09.055700+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Direction 4",
+    "description": "(Optimal transport) — strongest cross-domain connection",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56f3642c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T21:10:09.071392+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Direction 2",
+    "description": "(Categorical adjunction) — deepest conceptual contribution",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56f3642c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T21:10:09.083476+00:00"
   },
   {
     "id": "seed_052",

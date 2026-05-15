@@ -1,284 +1,261 @@
 #!/usr/bin/env python3
 """
-Algorithms for Freivalds' Randomized Matrix Verification
+Algorithms for Finite-Field Verification and Hyperplane Counting
 
-Implements the core algorithms with full complexity analysis:
-1. Standard Freivalds checker
-2. Amplified Freivalds with configurable confidence
-3. Batch matrix product verification
-4. Streaming matrix verification
+Implements the algorithms described in the research paper:
+1. Freivalds' matrix product verification
+2. Hyperplane solution counting
+3. Repeated-trial amplification
+4. Streaming Freivalds verification
+
+All arithmetic is performed modulo a prime q (i.e., over GF(q)).
 """
 
-import random
 import numpy as np
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Generator
+import random
 
 
-class FreivaldsChecker:
-    """
-    Randomized matrix product verifier over Z/qZ.
-    
-    Given matrices A (m×n), B (n×p), and a claimed product K (m×p),
-    verifies whether K = A·B mod q using random vector sampling.
-    
-    Time complexity per check: O(mp + np) = O(n·max(m,p))
-    Space complexity: O(max(m, n, p))
-    
-    Soundness: If K ≠ A·B, each check detects the error with probability ≥ 1 - 1/q.
-    Completeness: If K = A·B, every check accepts.
-    """
+class GFq:
+    """Arithmetic over GF(q) for prime q."""
     
     def __init__(self, q: int):
-        """
-        Initialize with field size q (should be prime).
-        
-        Args:
-            q: Prime field characteristic
-        """
-        if q < 2:
-            raise ValueError(f"Field size must be ≥ 2, got {q}")
+        """Initialize GF(q). q must be prime."""
         self.q = q
     
-    def _random_vector(self, p: int) -> np.ndarray:
-        """Generate a uniformly random vector in (Z/qZ)^p."""
-        return np.array([random.randint(0, self.q - 1) for _ in range(p)])
+    def add(self, a: int, b: int) -> int:
+        return (a + b) % self.q
     
-    def single_check(self, A: np.ndarray, B: np.ndarray, 
-                      K: np.ndarray, r: Optional[np.ndarray] = None) -> bool:
-        """
-        Single Freivalds check.
-        
-        Computes K·r and A·(B·r) modulo q, returns True iff they match.
-        
-        Time: O(mp + np) — two matrix-vector products
-        Space: O(max(m, n, p)) — stores intermediate vectors
-        
-        Args:
-            A: m×n matrix over Z/qZ
-            B: n×p matrix over Z/qZ  
-            K: m×p claimed product matrix
-            r: Optional test vector; random if not provided
-            
-        Returns:
-            True if check passes, False if error detected
-        """
-        p = B.shape[1]
-        if r is None:
-            r = self._random_vector(p)
-        
-        # Compute B·r first (n-dimensional), then A·(B·r) (m-dimensional)
-        # This is O(np + mn) instead of O(mnp) for computing A·B directly
-        Br = (B @ r) % self.q
-        ABr = (A @ Br) % self.q
-        Kr = (K @ r) % self.q
-        
-        return np.array_equal(Kr, ABr)
+    def sub(self, a: int, b: int) -> int:
+        return (a - b) % self.q
     
-    def verify(self, A: np.ndarray, B: np.ndarray, K: np.ndarray,
-               num_trials: int = 1) -> Tuple[bool, float]:
-        """
-        Verify K = A·B with repeated independent trials.
-        
-        Time: O(t · (mp + np)) where t = num_trials
-        
-        Soundness guarantee: If K ≠ A·B, the probability of false acceptance
-        is at most (1/q)^t.
-        
-        Args:
-            A, B, K: Matrices over Z/qZ
-            num_trials: Number of independent random checks
-            
-        Returns:
-            (accepted, error_bound): Whether all checks passed, and the
-            theoretical upper bound on false acceptance probability.
-        """
-        p = B.shape[1]
-        for _ in range(num_trials):
-            r = self._random_vector(p)
-            if not self.single_check(A, B, K, r):
-                return False, 0.0
-        
-        error_bound = (1.0 / self.q) ** num_trials
-        return True, error_bound
+    def mul(self, a: int, b: int) -> int:
+        return (a * b) % self.q
     
-    def verify_with_confidence(self, A: np.ndarray, B: np.ndarray,
-                                K: np.ndarray, 
-                                target_error: float = 1e-10) -> Tuple[bool, int, float]:
-        """
-        Verify with adaptive trial count to achieve target error probability.
-        
-        Automatically determines the number of trials t such that
-        (1/q)^t ≤ target_error.
-        
-        Args:
-            A, B, K: Matrices over Z/qZ
-            target_error: Desired upper bound on false acceptance probability
-            
-        Returns:
-            (accepted, trials_used, actual_error_bound)
-        """
-        import math
-        t = max(1, math.ceil(-math.log(target_error) / math.log(self.q)))
-        accepted, error = self.verify(A, B, K, num_trials=t)
-        return accepted, t, error
+    def inv(self, a: int) -> int:
+        """Multiplicative inverse via Fermat's little theorem."""
+        assert a % self.q != 0, "Cannot invert zero"
+        return pow(a, self.q - 2, self.q)
+    
+    def div(self, a: int, b: int) -> int:
+        return self.mul(a, self.inv(b))
+    
+    def dot(self, u: np.ndarray, v: np.ndarray) -> int:
+        """Dot product over GF(q)."""
+        return int(np.sum(u * v)) % self.q
+    
+    def matvec(self, M: np.ndarray, v: np.ndarray) -> np.ndarray:
+        """Matrix-vector product over GF(q)."""
+        return (M @ v) % self.q
+    
+    def matmul(self, A: np.ndarray, B: np.ndarray) -> np.ndarray:
+        """Matrix multiplication over GF(q)."""
+        return (A @ B) % self.q
+    
+    def random_vector(self, n: int) -> np.ndarray:
+        """Uniformly random vector in GF(q)^n."""
+        return np.array([random.randint(0, self.q - 1) for _ in range(n)])
+    
+    def random_matrix(self, m: int, n: int) -> np.ndarray:
+        """Uniformly random matrix in GF(q)^{m x n}."""
+        return np.array([[random.randint(0, self.q - 1) for _ in range(n)] 
+                         for _ in range(m)])
 
 
-class BatchFreivaldsChecker(FreivaldsChecker):
+def freivalds_verify(
+    A: np.ndarray, B: np.ndarray, K: np.ndarray, 
+    q: int, num_trials: int = 1
+) -> Tuple[bool, float]:
     """
-    Batch verification of multiple matrix product claims.
+    Freivalds' randomized matrix product verification.
     
-    Given matrices A_1·B_1 = K_1, ..., A_s·B_s = K_s,
-    verifies all claims simultaneously using random linear combinations.
-    """
+    Checks whether K = A * B over GF(q) using random vector tests.
     
-    def verify_batch(self, claims: List[Tuple[np.ndarray, np.ndarray, np.ndarray]],
-                      num_trials: int = 1) -> Tuple[bool, float]:
-        """
-        Verify multiple product claims.
-        
-        Args:
-            claims: List of (A, B, K) triples to verify
-            num_trials: Independent trials per claim
-            
-        Returns:
-            (all_accepted, max_error_bound)
-        """
-        max_error = 0.0
-        for A, B, K in claims:
-            accepted, error = self.verify(A, B, K, num_trials)
-            if not accepted:
-                return False, 0.0
-            max_error = max(max_error, error)
-        return True, max_error
-
-
-class StreamingVerifier(FreivaldsChecker):
-    """
-    Streaming matrix product verification.
-    
-    Maintains a running fingerprint that allows verification
-    without storing the full matrices.
-    
-    This is the streaming/online variant of Freivalds' check,
-    useful when matrix entries arrive one at a time.
-    """
-    
-    def __init__(self, q: int, m: int, n: int, p: int, num_trials: int = 20):
-        super().__init__(q)
-        self.m = m
-        self.n = n
-        self.p = p
-        self.num_trials = num_trials
-        
-        # Pre-generate random test vectors
-        self.test_vectors = [self._random_vector(p) for _ in range(num_trials)]
-        
-        # Running fingerprints: A·(B·r) and K·r for each test vector
-        self.fingerprints_AB = [np.zeros(m, dtype=int) for _ in range(num_trials)]
-        self.fingerprints_K = [np.zeros(m, dtype=int) for _ in range(num_trials)]
-        
-        # Intermediate: B·r for each test vector
-        self.Br = [np.zeros(n, dtype=int) for _ in range(num_trials)]
-    
-    def update_B(self, i: int, j: int, val: int):
-        """Update B[i,j] = val and refresh fingerprints."""
-        for t in range(self.num_trials):
-            # B[i,j] contributes val * r[j] to (B·r)[i]
-            self.Br[t][i] = (self.Br[t][i] + val * self.test_vectors[t][j]) % self.q
-    
-    def update_K(self, i: int, j: int, val: int):
-        """Update K[i,j] = val and refresh fingerprints."""
-        for t in range(self.num_trials):
-            self.fingerprints_K[t][i] = (
-                self.fingerprints_K[t][i] + val * self.test_vectors[t][j]
-            ) % self.q
-    
-    def finalize_A(self, A: np.ndarray):
-        """After all B entries are set, compute A·(B·r) fingerprints."""
-        for t in range(self.num_trials):
-            self.fingerprints_AB[t] = (A @ self.Br[t]) % self.q
-    
-    def check(self) -> bool:
-        """Check if all fingerprints match."""
-        return all(
-            np.array_equal(self.fingerprints_AB[t], self.fingerprints_K[t])
-            for t in range(self.num_trials)
-        )
-
-
-def hyperplane_count(w: np.ndarray, b: int, q: int) -> int:
-    """
-    Count |{r ∈ (Z/qZ)^p : w·r = b}| by direct enumeration.
-    
-    Theoretical result: q^(p-1) when w ≠ 0.
+    Algorithm:
+        For each trial:
+            1. Sample r uniformly from GF(q)^p
+            2. Compute y1 = K * r mod q
+            3. Compute y2 = A * (B * r mod q) mod q
+            4. If y1 != y2, return (False, 0.0)
+        If all trials pass, return (True, 1/q^t)
     
     Args:
-        w: Nonzero weight vector of length p
-        b: Target value in Z/qZ
-        q: Field size (prime)
-        
+        A: m x n matrix (entries in {0, ..., q-1})
+        B: n x p matrix
+        K: m x p matrix (claimed product)
+        q: prime field size
+        num_trials: number of independent random tests
+    
     Returns:
-        Number of solutions
+        (accepted, error_bound): whether the check passed, and the
+        theoretical upper bound on false acceptance probability.
+    
+    Complexity:
+        Time: O(t * (mp + np)) field operations
+        Space: O(m + p) for the vectors
+        
+    Soundness:
+        If K != A*B, Pr[accept] <= (1/q)^num_trials
+    """
+    gf = GFq(q)
+    p = K.shape[1]
+    
+    for _ in range(num_trials):
+        r = gf.random_vector(p)
+        y1 = gf.matvec(K, r)
+        y2 = gf.matvec(A, gf.matvec(B, r))
+        if not np.array_equal(y1, y2):
+            return (False, 0.0)
+    
+    error_bound = (1.0 / q) ** num_trials
+    return (True, error_bound)
+
+
+def count_hyperplane_solutions_exact(
+    w: np.ndarray, b: int, q: int
+) -> int:
+    """
+    Count |{r in GF(q)^p : <w, r> = b}| by exhaustive enumeration.
+    
+    For small p and q only. Verifies the theorem that the count
+    is exactly q^(p-1) when w != 0.
+    
+    Args:
+        w: coefficient vector (nonzero)
+        b: target value
+        q: field size (prime)
+    
+    Returns:
+        Exact count of solutions.
+    
+    Complexity: O(q^p * p) — exponential, for verification only.
     """
     p = len(w)
     count = 0
     for code in range(q ** p):
         r = []
         val = code
-        for j in range(p):
+        for _ in range(p):
             r.append(val % q)
             val //= q
-        if sum(w[j] * r[j] for j in range(p)) % q == b % q:
+        if sum(w[i] * r[i] for i in range(p)) % q == b:
             count += 1
     return count
 
 
-def kernel_size(M: np.ndarray, q: int) -> int:
+def streaming_freivalds_verify(
+    matrix_stream: Generator[Tuple[str, int, int, int], None, None],
+    m: int, n: int, p: int, q: int
+) -> bool:
     """
-    Count |ker(M)| = |{r ∈ (Z/qZ)^p : M·r = 0}| by enumeration.
+    Streaming Freivalds verification.
     
-    Theoretical bound: ≤ q^(p-1) when M ≠ 0.
+    Processes matrix entries one at a time, maintaining only O(m + n + p) state.
+    
+    The stream yields tuples (matrix_name, row, col, value) where
+    matrix_name is 'A', 'B', or 'K'.
+    
+    Algorithm:
+        1. Pre-sample random r in GF(q)^p
+        2. Process B entries to compute s = B * r (accumulate in O(n) space)
+        3. Process A entries to compute t = A * s (accumulate in O(m) space) 
+        4. Process K entries to compute u = K * r (accumulate in O(m) space)
+        5. Accept iff t = u
+    
+    Note: This simplified version assumes entries arrive in matrix order
+    (all B entries, then all A entries, then all K entries).
+    
+    Args:
+        matrix_stream: generator of (name, i, j, value) tuples
+        m, n, p: matrix dimensions
+        q: field size
+    
+    Returns:
+        True if the check passes.
     """
-    _, p = M.shape
-    count = 0
-    for code in range(q ** p):
-        r = np.zeros(p, dtype=int)
-        val = code
-        for j in range(p):
-            r[j] = val % q
-            val //= q
-        if np.all((M @ r) % q == 0):
-            count += 1
-    return count
+    gf = GFq(q)
+    r = gf.random_vector(p)
+    
+    # Accumulators
+    Br = np.zeros(n, dtype=np.int64)  # B * r
+    ABr = np.zeros(m, dtype=np.int64)  # A * (B * r)
+    Kr = np.zeros(m, dtype=np.int64)   # K * r
+    
+    for name, i, j, val in matrix_stream:
+        if name == 'B':
+            # B[i,j] contributes val * r[j] to (B*r)[i]
+            Br[i] = (Br[i] + val * int(r[j])) % q
+        elif name == 'A':
+            # A[i,j] contributes val * (B*r)[j] to (A*B*r)[i]
+            ABr[i] = (ABr[i] + val * int(Br[j])) % q
+        elif name == 'K':
+            # K[i,j] contributes val * r[j] to (K*r)[i]
+            Kr[i] = (Kr[i] + val * int(r[j])) % q
+    
+    return np.array_equal(ABr % q, Kr % q)
 
 
+def hyperplane_density(q: int, p: int) -> float:
+    """
+    Compute the density of a hyperplane in GF(q)^p.
+    
+    density = q^(p-1) / q^p = 1/q
+    
+    This is the fundamental quantity controlling Freivalds' error probability.
+    """
+    return 1.0 / q
+
+
+def amplified_error_bound(q: int, t: int) -> float:
+    """
+    Error bound after t independent Freivalds trials.
+    
+    Pr[all t trials accept | K != A*B] <= (1/q)^t
+    """
+    return (1.0 / q) ** t
+
+
+def required_trials(q: int, target_error: float) -> int:
+    """
+    Minimum number of Freivalds trials to achieve target error probability.
+    
+    Returns smallest t such that (1/q)^t <= target_error.
+    """
+    import math
+    if target_error >= 1.0:
+        return 0
+    return int(math.ceil(-math.log(target_error) / math.log(q)))
+
+
+# ============================================================
+# Example usage
+# ============================================================
 if __name__ == "__main__":
-    random.seed(42)
+    print("Freivalds' Algorithm - Example Usage")
+    print("=" * 50)
     
-    print("=== Freivalds Checker Demo ===")
-    print()
+    q = 101  # Work over GF(101)
+    n = 10
+    gf = GFq(q)
     
-    q = 7
-    m, n, p = 4, 5, 4
-    checker = FreivaldsChecker(q)
-    
-    A = np.array([[random.randint(0, q-1) for _ in range(n)] for _ in range(m)])
-    B = np.array([[random.randint(0, q-1) for _ in range(p)] for _ in range(n)])
-    K_correct = (A @ B) % q
+    # Generate random matrices
+    A = gf.random_matrix(n, n)
+    B = gf.random_matrix(n, n)
+    K_correct = gf.matmul(A, B)
     K_wrong = K_correct.copy()
     K_wrong[0, 0] = (K_wrong[0, 0] + 1) % q
     
-    # Correct product
-    accepted, t, err = checker.verify_with_confidence(A, B, K_correct, target_error=1e-10)
-    print(f"Correct product: accepted={accepted}, trials={t}, error_bound={err:.2e}")
+    # Test correct product
+    result, bound = freivalds_verify(A, B, K_correct, q, num_trials=10)
+    print(f"Correct product: accepted={result}, error_bound={bound:.2e}")
     
-    # Wrong product  
-    accepted, t, err = checker.verify_with_confidence(A, B, K_wrong, target_error=1e-10)
-    print(f"Wrong product:   accepted={accepted}, trials={t}, error_bound={err:.2e}")
+    # Test incorrect product
+    result, bound = freivalds_verify(A, B, K_wrong, q, num_trials=10)
+    print(f"Wrong product:   accepted={result}, error_bound={bound:.2e}")
     
-    print()
-    print("=== Hyperplane Counting ===")
-    w = np.array([1, 0, 3, 2])
-    for b in range(min(q, 5)):
-        count = hyperplane_count(w, b, q)
-        print(f"  |{{r : dot({w}, r) = {b} mod {q}}}| = {count} (expected {q**(len(w)-1)})")
+    # Required trials for various error targets
+    print(f"\nTrials needed for target error over GF({q}):")
+    for target in [1e-3, 1e-6, 1e-9, 1e-12, 1e-20]:
+        t = required_trials(q, target)
+        actual = amplified_error_bound(q, t)
+        print(f"  target={target:.0e}: t={t}, actual bound={actual:.2e}")
