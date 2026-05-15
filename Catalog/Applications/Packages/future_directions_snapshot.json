@@ -377,22 +377,6 @@
     "timestamp": "2026-05-14T16:17:21.765666+00:00"
   },
   {
-    "id": "fd_0141",
-    "title": "Gauge invariance",
-    "description": ": Adding a \"pure gauge\" `A i j = φ j - φ i` does not change charged tropical distances.\n\n### Proof Strategy\nMost results reduce to properties of the standard tropical Einstein equation via the chargedWeight substitution. Gauge invariance follows from telescoping sums along paths.\n\n### Cross-Domain Connections\n- Electromagnetic geodesics in general relativity\n- Pricing with transaction costs in financial networks\n- Weighted routing with toll roads\n- Magnetic Laplacians on graphs\n\n---\n\n## Direction 4: Categorical Functor from Graph Surgeries to Tropical Linear Operators\n\n### Hypothesis\nGraph surgeries (edge insertions, deletions, weight modifications) form a category where objects are weighted graphs and morphisms are surgery operations. There exists a functor from this category to the categ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "169f3d7c",
-    "timestamp": "2026-05-14T16:24:30.129036+00:00"
-  },
-  {
     "id": "fd_0145",
     "title": "Idempotent convergence",
     "description": ": The sequence of tropical matrix powers `W, W², W³, ...` stabilizes at `W^(n-1)` for n-vertex graphs (Kleene star finiteness).\n\n### Proof Strategy\nUse the connection between tropical matrix multiplication and min-plus path composition. The rank-1 update formula is the tropical analogue of the Sherman–Morrison formula.\n\n### Cross-Domain Connections\n- Tropical linear algebra and the Kleene star\n- Dynamic graph algorithms (incremental shortest paths)\n- Operadic composition in higher algebra\n- Transfer matrix methods in statistical physics\n\n---\n\n## Direction 5: Tropical Holography via Boundary Distance Reconstruction\n\n### Hypothesis\nA weighted graph's internal structure can be reconstructed (up to isomorphism) from the boundary-to-boundary tropical distance matrix. This is a discrete analogue",
@@ -1021,20 +1005,6 @@
     "timestamp": "2026-05-15T21:13:59.339034+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Amplify",
-    "description": "soundness through independent repetition (Direction 2)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c909ef",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T21:13:59.348516+00:00"
-  },
-  {
     "id": "fd_0234",
     "title": "Is tropical rank NP-hard to approximate within any constant factor?",
     "description": "Known: exact computation is NP-hard. Unknown: approximation complexity.",
@@ -1112,20 +1082,6 @@
     "timestamp": "2026-05-15T21:34:31.406708+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Information theory",
-    "description": "(entropy, mutual information, rate-distortion)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0db1bd89",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:01:06.620954+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Proof theory",
     "description": "(automata, coding, compression)",
@@ -1149,10 +1105,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0db1bd89",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6fbf424c",
     "timestamp": "2026-05-15T22:01:06.641530+00:00"
   },
   {
@@ -1945,5 +1901,94 @@
     "source_exp_id": "1cdf4e96",
     "consumed_by_exp_id": "6bd33180",
     "timestamp": "2026-05-15T20:09:21.809405+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "1. Gauge Classification by Cycle Holonomy",
+    "description": "**Conjecture.** Two charge fields `A₁, A₂ : V → V → ℝ` yield the same charged tropical distances (up to endpoint potentials) if and only if their difference `A₁ - A₂` has zero circulation on every cycle.\n\n**Proof Strategy.**\n- Define the *holonomy* of a charge field around a cycle as its circulation (already formalized as `circulation`).\n- Prove the forward direction: if `A₁ - A₂` is exact (i.e., equals `φ(j) - φ(i)` for some potential `φ`), then their charged distances differ only by endpoint terms (follows from current theorems).\n- Prove the reverse direction: if all cycle circulations of `A₁ - A₂` vanish, then `A₁ - A₂` is exact. This is the discrete Poincaré lemma for graphs and requires showing that vanishing holonomy implies existence of a global potential.\n- The key technical challe",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "169f3d7c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:03:46.232289+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "2. Functoriality Under Graph Surgeries",
+    "description": "**Target.** Formalize how edge insertion, deletion, vertex contraction, and weight updates act on the charged tropical distance operator, and identify which graph transformations preserve gauge equivalence classes.\n\n**Proof Strategy.**\n- Define a category of weighted directed graphs with morphisms given by graph homomorphisms preserving edge weights.\n- Show that the charged tropical distance is functorial: a weight-preserving graph morphism `f : G → H` induces a map on distances satisfying `d_H(f(s), f(t)) ≤ d_G(s, t)`.\n- Prove that gauge classes are preserved under edge subdivision (inserting a vertex on an edge with appropriate weight splitting).\n- Show that vertex contraction may destroy gauge triviality and characterize exactly when it does.\n\n**Applications.** Network design and routin",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "169f3d7c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:03:46.244211+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "3. Tropical Magnetic Bellman Theory",
+    "description": "**Target.** Extend the Bellman operator conjugation theorem (`tropicalBellman_pureGauge_conjugation`) to the full min-plus transfer semigroup and deduce invariance of dynamic programming value functions.\n\n**Proof Strategy.**\n- Show that the conjugation identity `T_{w+A} f = T_w(f + φ) - φ` extends to all iterates: `T_{w+A}^n f = T_w^n(f + φ) - φ`.\n- Deduce that fixed points of the charged Bellman operator are exactly shifts of fixed points of the uncharged operator.\n- Prove that the optimal value function in a charged shortest-path dynamic program equals the uncharged optimal value plus the boundary potential difference.\n- Establish convergence of charged value iteration from the uncharged convergence theory.\n\n**Cross-Domain Connections.** This connects tropical gauge theory to dynamic pro",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "169f3d7c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:03:46.255885+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "4. Cohomological Obstruction Theorem",
+    "description": "**Target.** Define a first tropical graph cohomology group `H¹_trop(G, ℝ)` classifying charge fields modulo exact ones, and prove that gauge triviality of a charge field is equivalent to its cohomology class being zero.\n\n**Proof Strategy.**\n- Define the space of 0-cochains as `C⁰ = V → ℝ` (potentials) and 1-cochains as `C¹ = V × V → ℝ` (charge fields).\n- Define the coboundary map `δ : C⁰ → C¹` by `δφ(i,j) = φ(j) - φ(i)`.\n- Define `H¹ = C¹ / im(δ)` (charge fields modulo exact ones).\n- Prove: `[A] = 0 in H¹` ⟺ `A` is exact ⟺ all circulations of `A` vanish ⟺ `d_{w+A}(s,t) = d_w(s,t) + φ(t) - φ(s)` for some potential `φ`.\n- Connect `H¹` to the cycle space of the graph: `H¹ ≅ ℝ^(|E| - |V| + components)`.\n\n**Cross-Domain Connections.** This establishes the tropical analogue of de Rham cohomology",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "169f3d7c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:03:46.268326+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "5. Spectral/Tropical Bridge Theorem",
+    "description": "**Target.** Relate exact magnetic perturbations of graph Laplacians (in the classical spectral sense) to pure-gauge perturbations of tropical shortest-path operators, establishing a formal dictionary between the two theories.\n\n**Proof Strategy.**\n- Define the magnetic graph Laplacian `L_A` with entries `L_A(i,j) = -e^{iA(i,j)}` for adjacent `i,j`.\n- Show that when `A = δφ` is exact, `L_A` is unitarily equivalent to `L_0` (classical gauge invariance).\n- Formalize the tropical limit: as a temperature parameter `β → ∞`, the spectral theory of `e^{-βL_A}` converges to the tropical shortest-path theory with weights `w + A`.\n- Prove that gauge triviality is preserved in this limit: exact `A` in the spectral theory maps to exact `A` in the tropical theory.\n- State and prove a comparison theorem: ",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "169f3d7c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:03:46.280376+00:00"
   }
 ]
