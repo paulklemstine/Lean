@@ -700,21 +700,6 @@
     "timestamp": "2026-05-14T16:16:22.739213+00:00"
   },
   {
-    "id": "fd_0090",
-    "title": "Use tropical rank",
-    "description": ": The tropical rank of G^m grows with m (up to n), and matrices of high tropical rank have large image sets under tropical powering.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "6b0a3f6b",
-    "timestamp": "2026-05-14T16:16:22.740801+00:00"
-  },
-  {
     "id": "fd_0092",
     "title": "Apply the existing `post_quantum_key_security_from_minEntropy`",
     "description": "to convert the entropy lower bound into a semantic security statement.\n\n### Key Lemmas Needed\n- `tropical_collision_probability_bound`: Upper bound on Pr[G^a = G^b] for random a ≠ b.\n- `tropical_rank_growth`: tropRank(tropPow G m) is non-decreasing in m.\n- `tropical_orbit_size_lower_bound`: |{tropPow G m : 0 ≤ m ≤ T}| ≥ f(n, B, T).\n- `tropical_min_entropy_lower_bound`: The main entropy bound.\n- `tropical_hashed_key_security`: Applying LHL to derive a key with negligible statistical distance to uniform.\n\n### Candidate Lean Files\n- `Cryptography/TropicalEntropy.lean`\n- `Cryptography/TropicalRankTheory.lean`\n\n### Cross-Domain Connections\n- **Information Theory → Cryptography**: Min-entropy bounds provide quantitative security guarantees.\n- **Tropical Geometry → Entropy**: The geometry of trop",
@@ -1489,23 +1474,6 @@
     "timestamp": "2026-05-15T08:03:37.336202+00:00"
   },
   {
-    "id": "fd_0221",
-    "title": "Generalize to higher cardinalities",
-    "description": ": for n-note chords, determine the Coxeter-type structure of the generalized PLR group.\n\n### Key Challenge\nThe PLR group is not a standard Coxeter group because P, L, R are involutions but do not satisfy braid relations in general. The connection to Coxeter theory may require passing to a larger group or a quotient.\n\n### Cross-Domain Connection\n- Coxeter groups and reflection groups (Humphreys 1990)\n- Geometric group theory: quasi-isometry and Gromov hyperbolicity\n- Crystallographic groups and lattice symmetries\n\n### Deliverables\n- Lean formalization of the PLR group structure\n- Computation of the Cayley graph with voice-leading edge weights\n- Quasi-isometry constants between word metric and voice-leading metric\n\n---\n\n## Direction 5: Formally Verified Harmonic Analysis for MIR\n\n### Hypothe",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.371735+00:00"
-  },
-  {
     "id": "fd_0225",
     "title": "Prove convergence of clustering",
     "description": ": using the triangle inequality, prove that k-medoids clustering with chordDist converges and produces a valid partition.",
@@ -1576,6 +1544,20 @@
     "source_exp_id": "9c509ddc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:04:01.034330+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Proof decomposition",
+    "description": ": Break into 3–8 helper lemmas.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6b0a3f6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:04:57.280381+00:00"
   },
   {
     "id": "seed_078",
@@ -2078,87 +2060,6 @@
     "source_exp_id": "94b46897",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T08:04:22.029937+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "2. Closure-Operator Proof Systems and Monotone Collapse",
-    "description": "**Goal:** Formalize monotone/extensive/idempotent (closure) operators as proof systems and prove that *all* closure-generated proof systems collapse to one-step proofs.\n\n**Key Theorem Target:**\n```lean\nstructure ClosureOperator (α : Type*) [PartialOrder α] where\n  cl : α → α\n  extensive : ∀ x, x ≤ cl x\n  monotone : ∀ x y, x ≤ y → cl x ≤ cl y\n  idempotent : ∀ x, cl (cl x) = cl x\n\ntheorem closure_proof_collapse {α : Type*} [PartialOrder α]\n    (C : ClosureOperator α) :\n    StabilizesIn C.cl 1 := by ...\n```\n\n**Extensions:**\n- Prove that Galois connections between proof systems preserve stabilization depth.\n- Show that non-closure proof operators (e.g., Heyting negation iteration) can witness arbitrary depth.\n- Connect to abstract interpretation in program analysis: widening operators that are",
-    "domains": [
-      "EML",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94b46897",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:22.041412+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "3. Regret-Complexity Equivalence",
-    "description": "**Goal:** Prove that nonzero asymptotic regret in online learning is *equivalent* to non-idempotent adaptive depth in the underlying update dynamics.\n\n**Key Theorem Target:**\n```lean\ndef AsymptoticRegretPositive (update : α → α) (loss : α → ℝ) : Prop :=\n  ∃ ε > 0, ∀ T, ∃ x, (∑ t in range T, loss (update^[t] x)) -\n    T * (⨅ y, loss y) ≥ ε * Real.sqrt T\n\ntheorem positive_regret_iff_nonidempotent\n    (update : α → α) (loss : α → ℝ) :\n    AsymptoticRegretPositive update loss ↔\n    ¬ ∀ x, update (update x) = update x := by ...\n```\n\n**Proof Strategy:**\n- Forward direction: if update is idempotent, the learner converges in one step, so regret is $O(1)$, not $\\Omega(\\sqrt{T})$.\n- Backward direction: construct an adversarial loss sequence that exploits non-stabilization to force $\\Omega(\\sqrt{T})$",
-    "domains": [
-      "EML",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94b46897",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:22.051070+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "5. Finite-Model Hierarchy Separation on Boolean Cubes",
-    "description": "**Goal:** On the Boolean cube $\\{0,1\\}^n$, construct explicit function families witnessing 1-step, 2-step, and 3-step stabilization gaps, and prove that these families are *complete* for their stabilization class.\n\n**Key Theorem Targets:**\n```lean\n-- Projection (depth 1): always stabilizes immediately\ntheorem projection_stabilizes_one (n : ℕ) (S : Finset (Fin n)) :\n    StabilizesIn (fun σ : Fin n → Bool => fun i =>\n      if i ∈ S then σ i else false) 1 := by ...\n\n-- Shift (depth n): requires n steps to stabilize\ntheorem shift_stabilizes_n (n : ℕ) (hn : 2 ≤ n) :\n    StabilizesIn (fun σ : Fin n → Bool => fun i =>\n      σ ⟨(i.val + 1) % n, Nat.mod_lt _ (by omega)⟩) n ∧\n    ¬ StabilizesIn (fun σ : Fin n → Bool => fun i =>\n      σ ⟨(i.val + 1) % n, Nat.mod_lt _ (by omega)⟩) (n - 1) := by ...\n\n-",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94b46897",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:22.072045+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Cross-Domain Connection Map",
-    "description": "| Direction | Logic | Complexity | Learning | Category Theory | Physics |\n|-----------|-------|------------|----------|-----------------|---------|\n| 1. Hierarchy | ✓ | ✓ | | | |\n| 2. Closure | ✓ | ✓ | | | |\n| 3. Regret | | ✓ | ✓ | | |\n| 4. Categorical | ✓ | | | ✓ | |\n| 5. Boolean | ✓ | ✓ | | | ✓ |",
-    "domains": [
-      "EML",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94b46897",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:22.080635+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Guiding Principle",
-    "description": "**Hardness is the failure of stabilization.** Every future direction should be evaluated by whether it deepens our understanding of *why* certain proof/computation processes resist convergence, and whether the stabilization depth can serve as a new complexity measure competitive with circuit depth, proof length, or communication complexity.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94b46897",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:04:22.089082+00:00"
   },
   {
     "id": "fd_0212",
