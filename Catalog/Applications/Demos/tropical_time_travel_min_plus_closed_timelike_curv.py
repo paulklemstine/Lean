@@ -1,542 +1,412 @@
+#!/usr/bin/env python3
 """
-Tropical CTC Applications: Real-World Uses of Min-Plus Fixed-Point Theory
+Tropical Time Travel: Real-World Applications
 
-Demonstrates how the tropical CTC framework applies to practical problems
-in shortest paths, scheduling, recursive programs, and network analysis.
+Demonstrates how tropical CTC fixed-point theory applies to:
+  1. Network routing — shortest-path consistency
+  2. Scheduling — critical path in feedback systems
+  3. Program analysis — abstract interpretation fixed points
+  4. Game theory — min-plus equilibria in concurrent systems
 """
 
 import numpy as np
-from algorithms import tropical_fixed_point, certify_paradox_freedom
+from algorithms import (
+    tropical_fixed_point_iteration,
+    check_chronology_protection,
+    minimum_cycle_mean,
+    find_consistent_history,
+)
 
 
-# ============================================================
-# Application 1: Shortest Path Equilibria
-# ============================================================
-
-def app_shortest_paths():
+def app_network_routing():
     """
-    All-pairs shortest paths as a tropical fixed point.
-    
-    The Bellman-Ford equation d[i] = min_j(w[i,j] + d[j]) is exactly
-    the tropical linear map. A consistent solution is a shortest-path
-    distance vector.
+    Application 1: Self-Consistent Routing in Networks with Loops
+
+    In network routing, cycles appear naturally (e.g., routing loops,
+    backup paths). The tropical affine fixed point gives the shortest
+    self-consistent path costs through a network with feedback.
     """
     print("=" * 60)
-    print("APPLICATION 1: Shortest-Path Equilibria")
+    print("APPLICATION 1: Network Routing with Feedback Loops")
     print("=" * 60)
-    
-    # Network: 4 cities connected by roads with travel times
-    # Edge weights: A[i,j] = travel time from j to i
-    INF = 100.0  # Large number instead of infinity
+
+    # 5-node network with a cycle: 0→1→2→3→4→2
+    INF = 100.0  # Large penalty (no direct edge)
     A = np.array([
-        [0.0, 3.0, INF, 7.0],   # City 0
-        [3.0, 0.0, 2.0, INF],   # City 1
-        [INF, 2.0, 0.0, 1.0],   # City 2
-        [7.0, INF, 1.0, 0.0],   # City 3
-    ])
-    
-    # Source: city 0 (distance 0), others unconstrained
-    b = np.array([0.0, INF, INF, INF])
-    
-    print("\n  Travel time matrix (∞ = no direct road):")
-    print(f"  {A}")
-    print(f"\n  Source: City 0")
-    
-    result = tropical_fixed_point(A, b, np.zeros(4), lam=1.0)
-    print(f"\n  Shortest distances from City 0:")
-    for i in range(4):
-        print(f"    City {i}: {result.point[i]:.1f}")
-    print(f"\n  ✓ Tropical fixed point = shortest-path distance vector")
+        [INF,   1, INF, INF, INF],  # Node 0 → Node 1 (cost 1)
+        [INF, INF,   2, INF, INF],  # Node 1 → Node 2 (cost 2)
+        [INF, INF, INF,   1, INF],  # Node 2 → Node 3 (cost 1)
+        [INF, INF, INF, INF,   3],  # Node 3 → Node 4 (cost 3)
+        [INF, INF,   1, INF, INF],  # Node 4 → Node 2 (cost 1) — FEEDBACK
+    ], dtype=float)
 
+    # Boundary: source costs
+    b = np.array([0.0, 10.0, 10.0, 10.0, 10.0])
 
-# ============================================================
-# Application 2: Job Scheduling with Circular Dependencies
-# ============================================================
+    print("  Network: 0→1(1), 1→2(2), 2→3(1), 3→4(3), 4→2(1)")
+    print("  Cycle: 2→3→4→2 with total cost 1+3+1=5")
+
+    mcm = minimum_cycle_mean(A)
+    print(f"  Minimum cycle mean: {mcm:.2f}")
+
+    fp, iters, ok = tropical_fixed_point_iteration(A, b, lam=0.9, max_iter=100)
+    print(f"  Shortest consistent path costs (λ=0.9): {np.round(fp, 4)}")
+    print(f"  Converged in {iters} iterations: {ok}")
+
+    report = check_chronology_protection(A, b, lam=0.9)
+    print(f"  {report.explanation}")
+    print()
+
 
 def app_scheduling():
     """
-    Cyclic scheduling as a tropical CTC problem.
-    
-    When tasks have circular dependencies (like a feedback loop in 
-    manufacturing), finding a consistent schedule is exactly finding
-    a tropical fixed point.
+    Application 2: Critical-Path Scheduling with Feedback
+
+    In project management, some tasks depend on outputs of later tasks
+    (iterative design, testing feedback). The tropical fixed point gives
+    the stable schedule.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Cyclic Job Scheduling")
     print("=" * 60)
-    
-    # 3 tasks in a feedback loop:
-    # Task 0 depends on Task 2 (delay 2)
-    # Task 1 depends on Task 0 (delay 3)
-    # Task 2 depends on Task 1 (delay 1)
-    # Each task also has external input constraints (b)
-    
+    print("APPLICATION 2: Project Scheduling with Iterative Feedback")
+    print("=" * 60)
+
+    # 4 tasks: Design(0), Implement(1), Test(2), Review(3)
+    # Dependencies with durations (min-plus: earlier = better)
+    INF = 1000.0
     A = np.array([
-        [100., 100., 2.0],   # Task 0 ← Task 2
-        [3.0, 100., 100.],   # Task 1 ← Task 0
-        [100., 1.0, 100.],   # Task 2 ← Task 1
-    ])
-    b = np.array([0.0, 5.0, 3.0])  # External deadlines
-    
-    print("\n  Task dependencies (delay matrix):")
-    print(f"  Task 0 ← Task 2: delay 2")
-    print(f"  Task 1 ← Task 0: delay 3")
-    print(f"  Task 2 ← Task 1: delay 1")
-    print(f"  External deadlines: {b}")
-    
-    # Discounted version (tasks become slightly less dependent over time)
-    lam = 0.9
-    result = tropical_fixed_point(A, b, np.zeros(3), lam=lam)
-    
-    print(f"\n  Consistent schedule (λ={lam}):")
-    for i in range(3):
-        print(f"    Task {i} start time: {result.point[i]:.4f}")
-    print(f"  Converged in {result.iterations} iterations")
-    print(f"  ✓ Unique feasible schedule found via tropical contraction")
+        [INF,   2, INF,   1],  # Design depends on: Implement(+2), Review(+1)
+        [  3, INF, INF, INF],  # Implement depends on: Design(+3)
+        [INF,   2, INF, INF],  # Test depends on: Implement(+2)
+        [INF, INF,   1, INF],  # Review depends on: Test(+1)
+    ], dtype=float)
+
+    # External deadlines
+    b = np.array([0.0, 5.0, 8.0, 10.0])
+
+    print("  Tasks: Design→Implement→Test→Review")
+    print("  Feedback: Review→Design (iterative refinement)")
+
+    mcm = minimum_cycle_mean(A)
+    print(f"  Minimum cycle mean: {mcm:.2f}")
+    print(f"  (Positive ⟹ schedule stabilizes)")
+
+    fp, traj = find_consistent_history(A, b, lam=0.8)
+    print(f"  Stable schedule: {np.round(fp, 4)}")
+    print(f"  Converged in {len(traj)-1} iterations")
+    print()
 
 
-# ============================================================
-# Application 3: Recursive Program Semantics
-# ============================================================
-
-def app_recursive_programs():
+def app_program_analysis():
     """
-    Cost semantics of recursive/self-referential programs.
-    
-    A program with recursive calls has cost satisfying:
-        cost(f, input) = min over branches (overhead + cost(g, transformed_input))
-    
-    This is exactly a tropical affine fixed-point equation.
-    Well-definedness = existence of a consistent cost assignment.
+    Application 3: Abstract Interpretation for Program Analysis
+
+    In static analysis of programs with loops, the analysis state must
+    reach a fixed point. The tropical framework models this as a min-plus
+    system where "costs" represent abstract values (e.g., resource bounds).
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Recursive Program Cost Semantics")
     print("=" * 60)
-    
-    # 3 mutually recursive functions:
-    # f0 can call f1 (overhead 2) or f2 (overhead 5)
-    # f1 can call f0 (overhead 1) or f2 (overhead 3)
-    # f2 can call f0 (overhead 4) or f1 (overhead 1)
-    
+    print("APPLICATION 3: Program Analysis — Loop Invariant Discovery")
+    print("=" * 60)
+
+    # Simple loop: x = min(x + 1, 10) at program point 1
+    # Three program points with dependencies
     A = np.array([
-        [100., 2.0, 5.0],
-        [1.0, 100., 3.0],
-        [4.0, 1.0, 100.],
-    ])
-    
-    # Base case costs (minimum possible cost without recursion)
-    b = np.array([10.0, 8.0, 12.0])
-    
-    print("\n  Recursive call costs:")
-    print(f"  f0 → f1: 2,  f0 → f2: 5")
-    print(f"  f1 → f0: 1,  f1 → f2: 3")
-    print(f"  f2 → f0: 4,  f2 → f1: 1")
-    print(f"  Base case costs: {b}")
-    
-    # With memoization discount (each recursive call is slightly cheaper)
-    lam = 0.8
-    result = tropical_fixed_point(A, b, np.ones(3) * 20, lam=lam)
-    
-    print(f"\n  Semantic cost assignment (λ={lam}):")
-    for i in range(3):
-        print(f"    cost(f{i}) = {result.point[i]:.4f}")
-    
-    cert = certify_paradox_freedom(A, b, lam=lam)
-    print(f"\n  {cert.message}")
-    print(f"  ✓ Well-defined semantics guaranteed by contraction")
+        [100,   0, 100],  # Point 0: entry, no deps
+        [  1, 100, 100],  # Point 1: loop body, depends on Point 0 (+1)
+        [100,   0, 100],  # Point 2: exit, depends on Point 1 (+0)
+    ], dtype=float)
+
+    b = np.array([0.0, 10.0, 15.0])  # Initial abstract values
+
+    print("  Program: while (x < 10) { x = x + 1 }")
+    print("  Abstract domain: min-plus costs (lower = earlier)")
+
+    fp, iters, ok = tropical_fixed_point_iteration(A, b, lam=1.0, max_iter=50)
+    print(f"  Abstract fixed point: {np.round(fp, 4)}")
+    print(f"  Converged in {iters} iterations: {ok}")
+
+    # With widening (discount)
+    fp2, iters2, ok2 = tropical_fixed_point_iteration(A, b, lam=0.95, max_iter=50)
+    print(f"  With widening (λ=0.95): {np.round(fp2, 4)}")
+    print(f"  Converged in {iters2} iterations: {ok2}")
+    print()
 
 
-# ============================================================
-# Application 4: Network Resilience Analysis
-# ============================================================
-
-def app_network_resilience():
+def app_game_theory():
     """
-    Network resilience as tropical spectral condition.
-    
-    A communication network is resilient to feedback loops (no oscillation)
-    if and only if the minimum cycle mean of its delay matrix is positive.
+    Application 4: Min-Plus Equilibria in Concurrent Games
+
+    Two players make simultaneous choices; payoffs are combined via min-plus.
+    The fixed point represents a stable equilibrium where no player can
+    unilaterally improve their tropical payoff.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Network Resilience via Cycle Analysis")
     print("=" * 60)
-    
-    from algorithms import minimum_cycle_mean
-    
-    # Resilient network (all cycle means positive)
-    A_resilient = np.array([
-        [2.0, 1.0, 3.0],
-        [1.0, 2.0, 1.0],
-        [3.0, 1.0, 2.0],
-    ])
-    
-    # Fragile network (has a zero/negative cycle mean)
-    A_fragile = np.array([
-        [0.5, -0.5, 3.0],
-        [-0.5, 0.5, 1.0],
-        [3.0, 1.0, 0.5],
-    ])
-    
-    mcm_r, _ = minimum_cycle_mean(A_resilient)
-    mcm_f, _ = minimum_cycle_mean(A_fragile)
-    
-    print(f"\n  Resilient network:")
-    print(f"  A = \n{A_resilient}")
-    print(f"  Minimum cycle mean: {mcm_r:.4f}")
-    print(f"  Status: {'✓ RESILIENT' if mcm_r > 0 else '✗ FRAGILE'}")
-    
-    print(f"\n  Fragile network:")
-    print(f"  A = \n{A_fragile}")
-    print(f"  Minimum cycle mean: {mcm_f:.4f}")
-    print(f"  Status: {'✓ RESILIENT' if mcm_f > 0 else '✗ FRAGILE'}")
-    
-    print(f"\n  ✓ Positive cycle mean = no self-reinforcing oscillations")
-    print(f"  ✓ This is the 'chronology protection' condition for networks")
+    print("APPLICATION 4: Tropical Game Equilibrium")
+    print("=" * 60)
 
+    # 3-player game, each player has a strategy that affects others
+    # A[i,j] = impact of player j's strategy on player i's cost
+    A = np.array([
+        [0,  2,  3],   # Player 0's costs depend on others
+        [1,  0,  4],   # Player 1
+        [2,  1,  0],   # Player 2
+    ], dtype=float)
 
-# ============================================================
-# Main
-# ============================================================
+    # External constraints (budget limits)
+    b = np.array([5.0, 5.0, 5.0])
+
+    print("  3-player min-plus game")
+    print(f"  Impact matrix A:\n    {A.tolist()}")
+    print(f"  Budget constraints: {b.tolist()}")
+
+    report = check_chronology_protection(A, b, lam=0.7)
+    print(f"\n  Analysis:")
+    print(f"  {report.explanation}")
+
+    if report.fixed_point is not None:
+        print(f"\n  Equilibrium strategies: {np.round(report.fixed_point, 4)}")
+    print()
+
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║   Tropical CTC Framework: Real-World Applications          ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
-    
-    app_shortest_paths()
+    print("\n  TROPICAL TIME TRAVEL: REAL-WORLD APPLICATIONS\n")
+    app_network_routing()
     app_scheduling()
-    app_recursive_programs()
-    app_network_resilience()
-    
-    print("\n" + "=" * 60)
-    print("All applications demonstrated successfully.")
-    print("=" * 60)
+    app_program_analysis()
+    app_game_theory()
+    print("All applications completed.\n")
 
 
+#!/usr/bin/env python3
 """
-Tropical Time Travel: Min-Plus CTC Consistency — Interactive Demonstrations
+Tropical Time Travel: Min-Plus Closed Timelike Curves — Demonstrations
 
-This module demonstrates the key theorems from the tropical CTC framework:
-1. Existence of consistent timelines via fixed-point iteration
-2. Uniqueness under contraction (chronology protection)
-3. Paradox collapse by tropical idempotence
-4. Discounted contraction and convergence
-
-All examples use concrete numerical matrices and vectors.
+Concrete numerical examples illustrating the formally verified theorems:
+  1. Novikov consistency (fixed-point existence via idempotence)
+  2. Unique consistency for contractive tropical maps
+  3. Grandfather paradox collapse via min-idempotence
+  4. Chronology protection from acyclicity / discounting
 """
 
 import numpy as np
-from typing import Tuple, Optional
+from typing import Callable, Tuple, Optional
 
-# ============================================================
-# Core Tropical Operations
-# ============================================================
+# ─────────────────────────────────────────────────
+# Core: min-plus matrix-vector product and affine map
+# ─────────────────────────────────────────────────
 
-def trop_apply(A: np.ndarray, x: np.ndarray) -> np.ndarray:
-    """Tropical matrix-vector multiplication: (A ⊙ x)_i = min_j(A[i,j] + x[j])"""
+def tropical_matvec(A: np.ndarray, x: np.ndarray) -> np.ndarray:
+    """(A ⊗ x)_i = min_j (A[i,j] + x[j])"""
     n = A.shape[0]
-    result = np.zeros(n)
-    for i in range(n):
-        result[i] = np.min(A[i, :] + x)
-    return result
+    return np.array([np.min(A[i, :] + x) for i in range(n)])
 
 
-def trop_affine(A: np.ndarray, b: np.ndarray, x: np.ndarray) -> np.ndarray:
-    """Tropical affine map: F(x)_i = min((A ⊙ x)_i, b_i)"""
-    return np.minimum(trop_apply(A, x), b)
+def tropical_affine(A: np.ndarray, b: np.ndarray, x: np.ndarray) -> np.ndarray:
+    """F(x)_i = min( (A ⊗ x)_i, b_i )"""
+    return np.minimum(tropical_matvec(A, x), b)
 
 
-def trop_affine_discounted(A: np.ndarray, b: np.ndarray, lam: float, x: np.ndarray) -> np.ndarray:
-    """Discounted tropical affine: F_λ(x)_i = min(min_j(A[i,j] + λ·x[j]), b_i)"""
+def discounted_tropical_affine(A: np.ndarray, b: np.ndarray,
+                                lam: float, x: np.ndarray) -> np.ndarray:
+    """F_λ(x)_i = min( min_j(A[i,j] + λ·x[j]), b_i )"""
     n = A.shape[0]
-    result = np.zeros(n)
-    for i in range(n):
-        result[i] = np.min(A[i, :] + lam * x)
-    return np.minimum(result, b)
+    Tx = np.array([np.min(A[i, :] + lam * x) for i in range(n)])
+    return np.minimum(Tx, b)
 
 
-# ============================================================
-# Demo 1: Fixed-Point Iteration for CTC Consistency
-# ============================================================
+# ─────────────────────────────────────────────────
+# Demo 1: Novikov Consistency — Idempotent Fixed Point
+# ─────────────────────────────────────────────────
 
-def demo_fixed_point_iteration():
-    """
-    Demonstrate Theorem 1: Existence of a consistent tropical CTC state.
-    
-    We construct a tropical affine map that preserves the box [0, 10]^3,
-    then iterate to find a fixed point (consistent timeline).
-    """
-    print("=" * 70)
-    print("DEMO 1: Finding a Consistent Timeline via Fixed-Point Iteration")
-    print("=" * 70)
-    
-    # Causal weight matrix: A[i,j] = cost of information traveling from j to i
-    A = np.array([
-        [2.0, 1.0, 3.0],   # Timeline 0 receives from all timelines
-        [1.0, 2.0, 1.0],   # Timeline 1 receives from all timelines
-        [3.0, 1.0, 2.0],   # Timeline 2 receives from all timelines
-    ])
-    
-    # Boundary constraints
-    b = np.array([8.0, 7.0, 9.0])
-    
-    # Box bounds
-    lo = np.array([0.0, 0.0, 0.0])
-    hi = np.array([10.0, 10.0, 10.0])
-    
-    print(f"\nCausal weight matrix A:\n{A}")
-    print(f"Boundary constraints b: {b}")
-    print(f"Box: [{lo}] to [{hi}]")
-    
-    # Start from hi (top of box) — guaranteed to descend by monotonicity
-    x = hi.copy()
-    print(f"\nInitial state: {x}")
-    
-    print("\nIteration (Knaster-Tarski descent from top):")
-    for step in range(20):
-        x_new = trop_affine(A, b, x)
-        residual = np.max(np.abs(x_new - x))
-        print(f"  Step {step+1}: x = [{x_new[0]:.6f}, {x_new[1]:.6f}, {x_new[2]:.6f}]  "
-              f"residual = {residual:.2e}")
-        if residual < 1e-12:
-            print(f"\n  ✓ Converged after {step+1} iterations!")
-            break
-        x = x_new
-    
-    # Verify fixed point
-    Fx = trop_affine(A, b, x)
-    print(f"\nFixed point x* = {x}")
-    print(f"F(x*)        = {Fx}")
-    print(f"||F(x*) - x*||∞ = {np.max(np.abs(Fx - x)):.2e}")
-    print(f"In box [{lo}, {hi}]? {np.all(lo <= x) and np.all(x <= hi)}")
-    return x
+def demo_novikov():
+    """Demonstrate that an idempotent operator always has a fixed point."""
+    print("=" * 60)
+    print("DEMO 1: Novikov Consistency (Idempotent Fixed Point)")
+    print("=" * 60)
+
+    # Define a simple idempotent operator: projection onto min
+    # F(x)_i = min(x_0, x_1, ..., x_{n-1})  (constant output)
+    def F_idem(x: np.ndarray) -> np.ndarray:
+        return np.full_like(x, np.min(x))
+
+    # Verify idempotence: F(F(x)) = F(x)
+    x0 = np.array([3.0, 1.0, 4.0, 1.0, 5.0])
+    Fx = F_idem(x0)
+    FFx = F_idem(Fx)
+    print(f"  x₀     = {x0}")
+    print(f"  F(x₀)  = {Fx}")
+    print(f"  F²(x₀) = {FFx}")
+    print(f"  Idempotent: F²(x₀) == F(x₀)? {np.allclose(FFx, Fx)}")
+
+    # F(x₀) is already a fixed point
+    print(f"  Fixed point: F(x₀) is fixed? F(F(x₀)) == F(x₀)? {np.allclose(F_idem(Fx), Fx)}")
+
+    # A more interesting idempotent: tropical affine with A such that b dominates
+    n = 3
+    A = np.array([[0, 10, 10],
+                   [10, 0, 10],
+                   [10, 10, 0]], dtype=float)
+    b = np.array([-1.0, -2.0, -3.0])
+
+    # When all A[i,j] + b[j] >= b[i], the tropical affine map has b as fixed point
+    print(f"\n  Tropical affine system (n={n}):")
+    print(f"    A = {A.tolist()}")
+    print(f"    b = {b.tolist()}")
+    fp = tropical_affine(A, b, b)
+    print(f"    F(b) = {fp}")
+    print(f"    b is fixed point: {np.allclose(fp, b)}")
+    print()
 
 
-# ============================================================
-# Demo 2: Contraction and Chronology Protection
-# ============================================================
+# ─────────────────────────────────────────────────
+# Demo 2: Unique Consistency via Contraction
+# ─────────────────────────────────────────────────
 
 def demo_contraction_uniqueness():
-    """
-    Demonstrate Theorem 2: Uniqueness under contraction.
-    
-    A discounted tropical affine map (λ < 1) is a contraction.
-    Starting from ANY initial point, iteration converges to the SAME fixed point.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 2: Chronology Protection via Contraction (Discounted Map)")
-    print("=" * 70)
-    
-    A = np.array([
-        [1.0, 0.5],
-        [0.5, 1.0],
-    ])
-    b = np.array([5.0, 5.0])
-    lam = 0.5  # Discount factor < 1
-    
-    print(f"\nCausal matrix A:\n{A}")
-    print(f"Boundary b: {b}")
-    print(f"Discount factor λ = {lam}")
-    
-    # Try multiple starting points
-    starts = [
-        np.array([0.0, 0.0]),
-        np.array([100.0, -50.0]),
-        np.array([-100.0, 200.0]),
-        np.array([42.0, -17.0]),
-    ]
-    
-    fixed_points = []
-    for idx, x0 in enumerate(starts):
-        x = x0.copy()
-        for step in range(100):
-            x_new = trop_affine_discounted(A, b, lam, x)
-            if np.max(np.abs(x_new - x)) < 1e-12:
-                break
-            x = x_new
-        fixed_points.append(x.copy())
-        print(f"\n  Start {idx+1}: x₀ = {x0}")
-        print(f"  → Fixed point: x* = [{x[0]:.8f}, {x[1]:.8f}]  ({step+1} iterations)")
-    
-    # Verify all converge to the same point
-    diffs = [np.max(np.abs(fp - fixed_points[0])) for fp in fixed_points[1:]]
-    print(f"\n  Max difference between fixed points: {max(diffs):.2e}")
-    print(f"  ✓ All starting points converge to the SAME fixed point!")
-    print(f"  This is chronology protection: unique consistent history.")
-    
-    return fixed_points[0]
+    """Demonstrate convergence to a unique fixed point for contractive maps."""
+    print("=" * 60)
+    print("DEMO 2: Unique Consistency (Contraction Fixed Point)")
+    print("=" * 60)
+
+    n = 3
+    A = np.array([[0, 2, 5],
+                   [3, 0, 2],
+                   [4, 3, 0]], dtype=float)
+    b = np.array([1.0, 0.5, 2.0])
+    lam = 0.5  # discount factor
+
+    print(f"  Discount factor λ = {lam}")
+    print(f"  A = {A.tolist()}")
+    print(f"  b = {b.tolist()}")
+
+    # Iterate from two different starting points
+    x1 = np.array([100.0, -50.0, 0.0])
+    x2 = np.array([-100.0, 200.0, -300.0])
+
+    print(f"\n  Starting from x₁ = {x1.tolist()}")
+    for step in range(15):
+        x1 = discounted_tropical_affine(A, b, lam, x1)
+        if step < 5 or step >= 12:
+            print(f"    Iteration {step+1:2d}: {np.round(x1, 6).tolist()}")
+
+    print(f"\n  Starting from x₂ = {x2.tolist()}")
+    for step in range(15):
+        x2 = discounted_tropical_affine(A, b, lam, x2)
+        if step < 5 or step >= 12:
+            print(f"    Iteration {step+1:2d}: {np.round(x2, 6).tolist()}")
+
+    print(f"\n  Both converge to same point? {np.allclose(x1, x2, atol=1e-8)}")
+    print(f"  Fixed point: {np.round(x1, 8).tolist()}")
+
+    # Verify it's a fixed point
+    fp_check = discounted_tropical_affine(A, b, lam, x1)
+    print(f"  F(x*) = x*? {np.allclose(fp_check, x1, atol=1e-10)}")
+    print()
 
 
-# ============================================================
+# ─────────────────────────────────────────────────
 # Demo 3: Grandfather Paradox Collapse
-# ============================================================
+# ─────────────────────────────────────────────────
 
 def demo_paradox_collapse():
-    """
-    Demonstrate Theorem 3: Paradox resolution by tropical idempotence.
-    
-    Duplicating or weakening constraints cannot create paradoxes.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 3: Grandfather Paradox Collapse by Tropical Idempotence")
-    print("=" * 70)
-    
-    # Scenario: Two timeline branches produce the same constraint
-    u = np.array([3.0, 1.0, 4.0, 1.0, 5.0])
-    v = u.copy()  # Same constraint, duplicated
-    
-    print(f"\n  Branch 1 (u): {u}")
-    print(f"  Branch 2 (v): {v}")
-    print(f"  min(u, v):    {np.minimum(u, v)}")
-    print(f"  u == min(u,v)? {np.allclose(u, np.minimum(u, v))}")
-    print(f"  ✓ Idempotence: duplicating a constraint has no effect.")
-    
-    # Scenario: One branch is strictly weaker
-    f = np.array([1.0, 2.0, 3.0])
-    g = np.array([5.0, 7.0, 4.0])  # g ≥ f pointwise
-    g_dom = np.maximum(f, g)  # Ensure g ≥ f
-    
-    print(f"\n  Dominant branch (f):  {f}")
-    print(f"  Weaker branch (g≥f): {g_dom}")
-    print(f"  min(f, g):           {np.minimum(f, g_dom)}")
-    print(f"  f == min(f,g)?       {np.allclose(f, np.minimum(f, g_dom))}")
-    print(f"  ✓ Absorption: weaker branches are irrelevant.")
-    
-    # Operator-level absorption
-    A = np.array([[1.0, 2.0], [3.0, 1.0]])
-    x = np.array([2.0, 3.0])
-    Ax = trop_apply(A, x)
-    
-    print(f"\n  Tropical product A⊙x:      {Ax}")
-    print(f"  min(A⊙x, A⊙x):            {np.minimum(Ax, Ax)}")
-    print(f"  Same? {np.allclose(Ax, np.minimum(Ax, Ax))}")
-    print(f"  ✓ Operator-level idempotence: duplicate constraints are absorbed.")
+    """Demonstrate that min(a,a) = a resolves branch duplication."""
+    print("=" * 60)
+    print("DEMO 3: Grandfather Paradox Collapse (Idempotence of min)")
+    print("=" * 60)
+
+    # Scalar case
+    a = 42.0
+    print(f"  Scalar: min({a}, {a}) = {min(a, a)}  (== {a}? {min(a, a) == a})")
+
+    # Vector case: two identical timeline branches
+    branch1 = np.array([1.0, -2.5, 3.14, 0.0, -1.0])
+    branch2 = branch1.copy()
+    merged = np.minimum(branch1, branch2)
+    print(f"\n  Branch 1: {branch1.tolist()}")
+    print(f"  Branch 2: {branch2.tolist()}")
+    print(f"  Merged:   {merged.tolist()}")
+    print(f"  Collapse: merged == branch1? {np.array_equal(merged, branch1)}")
+
+    # Operator level: F and min(F, F)
+    A = np.array([[1, 3], [2, 1]], dtype=float)
+    b = np.array([0.0, 0.5])
+    x = np.array([5.0, -3.0])
+
+    Fx = tropical_affine(A, b, x)
+    merged_Fx = np.minimum(Fx, Fx)
+    print(f"\n  Operator: F(x) = {Fx.tolist()}")
+    print(f"  min(F(x), F(x)) = {merged_Fx.tolist()}")
+    print(f"  Collapse holds: {np.array_equal(merged_Fx, Fx)}")
+    print()
 
 
-# ============================================================
-# Demo 4: Convergence Rate and Discount Factor
-# ============================================================
+# ─────────────────────────────────────────────────
+# Demo 4: Chronology Protection
+# ─────────────────────────────────────────────────
 
-def demo_convergence_rate():
-    """
-    Demonstrate Theorem 4: The discount factor controls convergence rate.
-    
-    Shows how different values of λ affect convergence speed,
-    with λ < 1 guaranteeing contraction.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 4: Convergence Rate vs Discount Factor (Spectral Condition)")
-    print("=" * 70)
-    
-    A = np.array([
-        [0.5, 1.0, 0.3],
-        [0.8, 0.5, 0.7],
-        [0.3, 0.6, 0.5],
-    ])
-    b = np.array([10.0, 10.0, 10.0])
-    x0 = np.array([50.0, -30.0, 20.0])
-    
-    lambdas = [0.1, 0.3, 0.5, 0.7, 0.9, 0.99]
-    
-    print(f"\n  Starting point: x₀ = {x0}")
-    print(f"  {'λ':>6s}  {'Iterations to conv':>20s}  {'Contraction rate':>18s}")
-    print(f"  {'-'*6}  {'-'*20}  {'-'*18}")
-    
-    for lam in lambdas:
-        x = x0.copy()
-        for step in range(10000):
-            x_new = trop_affine_discounted(A, b, lam, x)
-            if np.max(np.abs(x_new - x)) < 1e-10:
-                break
-            x = x_new
-        
-        # Measure empirical contraction rate
-        y0 = np.array([0.0, 0.0, 0.0])
-        Fx0 = trop_affine_discounted(A, b, lam, x0)
-        Fy0 = trop_affine_discounted(A, b, lam, y0)
-        d_before = np.max(np.abs(x0 - y0))
-        d_after = np.max(np.abs(Fx0 - Fy0))
-        rate = d_after / d_before if d_before > 0 else 0
-        
-        print(f"  {lam:6.2f}  {step+1:>20d}  {rate:>18.6f}")
-    
-    print(f"\n  ✓ Smaller λ → faster convergence → stronger chronology protection.")
-    print(f"  ✓ Empirical contraction rate ≤ λ, confirming the theorem.")
+def demo_chronology_protection():
+    """Demonstrate fixed-point existence from domination / acyclicity."""
+    print("=" * 60)
+    print("DEMO 4: Chronology Protection (Acyclicity / Domination)")
+    print("=" * 60)
+
+    # Case 1: b dominates (A[i,j] + b[j] >= b[i] for all i,j)
+    n = 4
+    b = np.array([0.0, 1.0, 2.0, 3.0])
+    # Make A such that A[i,j] + b[j] >= b[i] always
+    A = np.array([[5, 4, 3, 2],
+                   [6, 5, 4, 3],
+                   [7, 6, 5, 4],
+                   [8, 7, 6, 5]], dtype=float)
+
+    print("  Case 1: Domination condition A[i,j] + b[j] >= b[i]")
+    dominated = all(A[i, j] + b[j] >= b[i] for i in range(n) for j in range(n))
+    print(f"    Domination holds: {dominated}")
+    fp = tropical_affine(A, b, b)
+    print(f"    b = {b.tolist()}")
+    print(f"    F(b) = {fp.tolist()}")
+    print(f"    b is fixed point: {np.allclose(fp, b)}")
+
+    # Case 2: Discounted map converges
+    print("\n  Case 2: Discounted tropical map (λ=0.3)")
+    A2 = np.array([[0, 1, 2],
+                    [2, 0, 1],
+                    [1, 2, 0]], dtype=float)
+    b2 = np.array([1.0, 1.0, 1.0])
+    lam = 0.3
+
+    x = np.zeros(3)
+    print(f"    Starting from x = {x.tolist()}")
+    for step in range(20):
+        x = discounted_tropical_affine(A2, b2, lam, x)
+    print(f"    After 20 iterations: {np.round(x, 8).tolist()}")
+    fp_check = discounted_tropical_affine(A2, b2, lam, x)
+    print(f"    Is fixed point: {np.allclose(fp_check, x, atol=1e-12)}")
+    print()
 
 
-# ============================================================
-# Demo 5: Graph / Cycle Interpretation
-# ============================================================
-
-def demo_cycle_interpretation():
-    """
-    Demonstrate the graph-theoretic interpretation.
-    
-    The causal matrix A defines a weighted digraph. Cycle weights
-    determine whether paradox-free solutions exist.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 5: Graph-Theoretic Interpretation (Cycle Weights)")
-    print("=" * 70)
-    
-    # Positive cycle weights: paradox-free
-    A_positive = np.array([
-        [2.0, 1.0],
-        [1.0, 2.0],
-    ])
-    
-    # Zero cycle weight: boundary case
-    A_zero = np.array([
-        [0.0, 1.0],
-        [-1.0, 0.0],
-    ])
-    
-    print("\n  Case 1: Positive cycle weights (paradox-free)")
-    print(f"  A = \n{A_positive}")
-    for i in range(2):
-        print(f"  Self-loop weight A[{i},{i}] = {A_positive[i,i]} > 0 ✓")
-    cycle_12 = A_positive[0,1] + A_positive[1,0]
-    print(f"  2-cycle weight: A[0,1] + A[1,0] = {cycle_12} > 0 ✓")
-    
-    print("\n  Case 2: Zero cycle weight (marginal)")
-    print(f"  A = \n{A_zero}")
-    cycle_12_zero = A_zero[0,1] + A_zero[1,0]
-    print(f"  2-cycle weight: A[0,1] + A[1,0] = {cycle_12_zero}")
-    print(f"  Zero cycle ⟹ gauge symmetry (solutions unique up to additive constant)")
-    
-    # Show fixed points for positive case with discounting
-    b = np.array([10.0, 10.0])
-    lam = 0.8
-    x = np.array([5.0, 5.0])
-    for _ in range(1000):
-        x = trop_affine_discounted(A_positive, b, lam, x)
-    print(f"\n  Fixed point (positive cycles, λ={lam}): x* = {x}")
-    print(f"  ✓ Unique fixed point confirms chronology protection.")
-
-
-# ============================================================
+# ─────────────────────────────────────────────────
 # Main
-# ============================================================
+# ─────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║   TROPICAL TIME TRAVEL: Min-Plus CTC Consistency Demonstrations    ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    
-    demo_fixed_point_iteration()
+    print("\n  TROPICAL TIME TRAVEL: MIN-PLUS CTC DEMONSTRATIONS\n")
+    demo_novikov()
     demo_contraction_uniqueness()
     demo_paradox_collapse()
-    demo_convergence_rate()
-    demo_cycle_interpretation()
-    
-    print("\n" + "=" * 70)
-    print("All demonstrations completed successfully.")
-    print("=" * 70)
+    demo_chronology_protection()
+    print("All demonstrations completed successfully.\n")
 
 
+#!/usr/bin/env python3
 """
-Tropical CTC Visualizations: Convergence, Phase Diagrams, and Contraction Maps
-Generates publication-quality figures for the research paper.
+Tropical Time Travel: Visualizations
+
+Generates publication-quality figures illustrating:
+  1. Contraction convergence to unique fixed point
+  2. Iteration trajectory in state space
+  3. Chronology protection phase diagram
+  4. Paradox collapse illustration
 """
 
 import numpy as np
@@ -544,277 +414,292 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch
-import os
-
-# Style
-plt.rcParams.update({
-    'font.size': 12,
-    'axes.labelsize': 14,
-    'axes.titlesize': 15,
-    'legend.fontsize': 11,
-    'figure.figsize': (8, 6),
-    'figure.dpi': 150,
-})
+import base64
+import io
 
 
-def trop_affine_discounted(A, b, lam, x):
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 data URI."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    buf.seek(0)
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{encoded}"
+
+
+def tropical_matvec(A, x):
     n = A.shape[0]
-    result = np.zeros(n)
-    for i in range(n):
-        result[i] = min(np.min(A[i, :] + lam * x), b[i])
-    return result
+    return np.array([np.min(A[i, :] + x) for i in range(n)])
 
 
-# ============================================================
-# Figure 1: Convergence Trajectories
-# ============================================================
+def discounted_tropical_affine(A, b, lam, x):
+    n = A.shape[0]
+    Tx = np.array([np.min(A[i, :] + lam * x) for i in range(n)])
+    return np.minimum(Tx, b)
 
-def fig_convergence_trajectories():
-    """Show how different starting points converge to the same fixed point."""
-    A = np.array([[1.0, 0.5], [0.5, 1.0]])
-    b = np.array([5.0, 5.0])
-    lam = 0.6
-    
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Left: trajectories in 2D state space
+
+# ─────────────────────────────────────────────────
+# Figure 1: Contraction Convergence
+# ─────────────────────────────────────────────────
+
+def plot_contraction_convergence():
+    """Show convergence from different starting points to unique fixed point."""
+    A = np.array([[0, 2, 5], [3, 0, 2], [4, 3, 0]], dtype=float)
+    b = np.array([1.0, 0.5, 2.0])
+    lam = 0.5
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Left: trajectories of each coordinate
     ax = axes[0]
+    colors_starts = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6']
     starts = [
-        np.array([0.0, 0.0]), np.array([8.0, 2.0]),
-        np.array([2.0, 8.0]), np.array([-3.0, -3.0]),
-        np.array([10.0, 10.0]), np.array([-5.0, 7.0]),
+        np.array([10.0, -5.0, 8.0]),
+        np.array([-8.0, 12.0, -3.0]),
+        np.array([0.0, 0.0, 0.0]),
+        np.array([5.0, 5.0, 5.0]),
     ]
-    colors = plt.cm.Set1(np.linspace(0, 1, len(starts)))
-    
-    for x0, c in zip(starts, colors):
-        traj_x, traj_y = [x0[0]], [x0[1]]
+
+    for si, x0 in enumerate(starts):
         x = x0.copy()
-        for _ in range(50):
-            x = trop_affine_discounted(A, b, lam, x)
-            traj_x.append(x[0])
-            traj_y.append(x[1])
-        ax.plot(traj_x, traj_y, '-o', color=c, markersize=3, alpha=0.7, linewidth=1.5)
-        ax.plot(traj_x[0], traj_y[0], 's', color=c, markersize=8)
-    
-    # Mark fixed point
-    fp = traj_x[-1], traj_y[-1]
-    ax.plot(*fp, '*', color='red', markersize=20, zorder=10, markeredgecolor='black')
-    ax.set_xlabel('$x_1$ (Timeline 1 state)')
-    ax.set_ylabel('$x_2$ (Timeline 2 state)')
-    ax.set_title(f'Convergence to Unique Fixed Point (λ={lam})')
+        traj = [x.copy()]
+        for _ in range(25):
+            x = discounted_tropical_affine(A, b, lam, x)
+            traj.append(x.copy())
+        traj = np.array(traj)
+
+        for ci in range(3):
+            label = f"Start {si+1}, x[{ci}]" if ci == 0 else None
+            ax.plot(traj[:, ci], color=colors_starts[si], alpha=0.6,
+                    linestyle=['-', '--', ':'][ci], linewidth=1.5)
+
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('State value', fontsize=12)
+    ax.set_title('Convergence to Unique Fixed Point (λ=0.5)', fontsize=13)
+    ax.axhline(y=0, color='gray', linestyle='-', alpha=0.3)
     ax.grid(True, alpha=0.3)
-    
-    # Right: residual vs iteration
+
+    # Right: sup-norm error vs iteration
     ax = axes[1]
-    for x0, c in zip(starts, colors):
-        residuals = []
+    # Find the fixed point
+    x_star = starts[0].copy()
+    for _ in range(200):
+        x_star = discounted_tropical_affine(A, b, lam, x_star)
+
+    for si, x0 in enumerate(starts):
         x = x0.copy()
-        for _ in range(30):
-            x_new = trop_affine_discounted(A, b, lam, x)
-            residuals.append(np.max(np.abs(x_new - x)))
-            x = x_new
-        ax.semilogy(range(1, len(residuals)+1), residuals, '-o', color=c,
-                    markersize=3, linewidth=1.5)
-    
-    ax.set_xlabel('Iteration')
-    ax.set_ylabel('Residual $\\|F(x_k) - x_k\\|_\\infty$')
-    ax.set_title('Exponential Convergence (Contraction)')
+        errors = [np.max(np.abs(x - x_star))]
+        for _ in range(25):
+            x = discounted_tropical_affine(A, b, lam, x)
+            errors.append(np.max(np.abs(x - x_star)))
+        ax.semilogy(errors, color=colors_starts[si], linewidth=2,
+                    label=f'Start {si+1}')
+
+    # Theoretical bound: q^k * d0
+    k_vals = np.arange(26)
+    ax.semilogy(k_vals, lam**k_vals * 20, 'k--', alpha=0.5,
+                label=f'Bound: λᵏ·d₀ (λ={lam})')
+
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('‖x - x*‖∞', fontsize=12)
+    ax.set_title('Exponential Convergence Rate', fontsize=13)
+    ax.legend(fontsize=9)
     ax.grid(True, alpha=0.3)
-    ax.set_ylim(bottom=1e-16)
-    
+
+    fig.suptitle('Tropical CTC: Contraction Maps Have Unique Consistent Solutions',
+                 fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('fig_convergence.png', bbox_inches='tight')
-    plt.close()
-    print("Saved fig_convergence.png")
+
+    fig.savefig('/workspace/request-project/fig_contraction.png',
+                dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
-# ============================================================
-# Figure 2: Contraction Rate vs Discount Factor
-# ============================================================
+# ─────────────────────────────────────────────────
+# Figure 2: Phase diagram — discount factor vs convergence
+# ─────────────────────────────────────────────────
 
-def fig_contraction_rate():
-    """Phase diagram: contraction rate as a function of discount factor."""
-    A = np.array([[0.5, 1.0, 0.3], [0.8, 0.5, 0.7], [0.3, 0.6, 0.5]])
-    b = np.array([10.0, 10.0, 10.0])
-    
-    lambdas = np.linspace(0.01, 0.99, 50)
-    empirical_rates = []
-    iterations_to_conv = []
-    
-    for lam in lambdas:
-        # Empirical rate
-        max_rate = 0
-        for _ in range(50):
-            x = np.random.randn(3) * 10
-            y = np.random.randn(3) * 10
-            d_in = np.max(np.abs(x - y))
-            if d_in < 1e-10: continue
-            Fx = trop_affine_discounted(A, b, lam, x)
-            Fy = trop_affine_discounted(A, b, lam, y)
-            d_out = np.max(np.abs(Fx - Fy))
-            max_rate = max(max_rate, d_out / d_in)
-        empirical_rates.append(max_rate)
-        
-        # Iterations to convergence
-        x = np.ones(3) * 50
-        for k in range(10000):
-            x_new = trop_affine_discounted(A, b, lam, x)
-            if np.max(np.abs(x_new - x)) < 1e-10:
+def plot_phase_diagram():
+    """Chronology protection: how discount factor affects convergence."""
+    A = np.array([[0, 1, 3], [2, 0, 1], [1, 3, 0]], dtype=float)
+    b = np.array([2.0, 1.0, 3.0])
+
+    lam_values = np.linspace(0.01, 0.99, 50)
+    convergence_iters = []
+    fp_norms = []
+
+    for lam in lam_values:
+        x = np.zeros(3)
+        for it in range(500):
+            x_new = discounted_tropical_affine(A, b, lam, x)
+            if np.max(np.abs(x_new - x)) < 1e-12:
+                convergence_iters.append(it + 1)
+                fp_norms.append(np.linalg.norm(x_new))
                 break
             x = x_new
-        iterations_to_conv.append(k + 1)
-    
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
+        else:
+            convergence_iters.append(500)
+            fp_norms.append(np.linalg.norm(x))
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
     ax = axes[0]
-    ax.plot(lambdas, empirical_rates, 'b-', linewidth=2, label='Empirical rate')
-    ax.plot(lambdas, lambdas, 'r--', linewidth=2, label='Theoretical bound (λ)')
-    ax.fill_between(lambdas, 0, lambdas, alpha=0.1, color='red')
-    ax.set_xlabel('Discount Factor λ')
-    ax.set_ylabel('Contraction Rate')
-    ax.set_title('Contraction Rate ≤ λ (Theorem 4)')
-    ax.legend()
+    ax.plot(lam_values, convergence_iters, 'b-', linewidth=2)
+    ax.fill_between(lam_values, convergence_iters, alpha=0.15, color='blue')
+    ax.set_xlabel('Discount Factor λ', fontsize=12)
+    ax.set_ylabel('Iterations to Convergence', fontsize=12)
+    ax.set_title('Convergence Speed vs. Damping', fontsize=13)
+    ax.axvline(x=1.0, color='red', linestyle='--', alpha=0.5, label='λ=1 (undamped)')
+    ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-    
+
     ax = axes[1]
-    ax.semilogy(lambdas, iterations_to_conv, 'g-', linewidth=2)
-    ax.axvline(x=1.0, color='red', linestyle='--', label='λ = 1 (no protection)')
-    ax.set_xlabel('Discount Factor λ')
-    ax.set_ylabel('Iterations to Convergence')
-    ax.set_title('Convergence Speed vs Dissipation')
-    ax.legend()
+    ax.plot(lam_values, fp_norms, 'r-', linewidth=2)
+    ax.set_xlabel('Discount Factor λ', fontsize=12)
+    ax.set_ylabel('‖x*‖₂ (Fixed Point Norm)', fontsize=12)
+    ax.set_title('Fixed Point Location vs. Damping', fontsize=13)
     ax.grid(True, alpha=0.3)
-    
+
+    fig.suptitle('Chronology Protection Phase Diagram',
+                 fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('fig_contraction_rate.png', bbox_inches='tight')
-    plt.close()
-    print("Saved fig_contraction_rate.png")
+
+    fig.savefig('/workspace/request-project/fig_phase_diagram.png',
+                dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
-# ============================================================
-# Figure 3: Paradox Collapse Illustration
-# ============================================================
+# ─────────────────────────────────────────────────
+# Figure 3: Paradox collapse illustration
+# ─────────────────────────────────────────────────
 
-def fig_paradox_collapse():
-    """Illustrate how min absorbs duplicate and weaker constraints."""
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-    
-    n = 5
-    x = np.arange(n)
-    
-    # Panel 1: Idempotence
+def plot_paradox_collapse():
+    """Illustrate how min(F(x), F(x)) = F(x) absorbs contradictions."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
+
+    # Panel 1: Scalar min(a, a) = a
     ax = axes[0]
-    u = np.array([3, 1, 4, 1, 5])
-    ax.bar(x - 0.15, u, 0.3, label='Branch u', color='steelblue', alpha=0.8)
-    ax.bar(x + 0.15, u, 0.3, label='Branch v = u', color='coral', alpha=0.8)
-    ax.plot(x, np.minimum(u, u), 'k*', markersize=15, label='min(u, v) = u')
-    ax.set_xlabel('Coordinate')
-    ax.set_ylabel('Value')
-    ax.set_title('Idempotence: min(u, u) = u')
-    ax.legend(fontsize=9)
-    ax.set_xticks(x)
-    
-    # Panel 2: Absorption
+    a_vals = np.linspace(-3, 3, 100)
+    ax.plot(a_vals, a_vals, 'b-', linewidth=2, label='a')
+    ax.plot(a_vals, np.minimum(a_vals, a_vals), 'r--', linewidth=3,
+            alpha=0.7, label='min(a, a)')
+    ax.set_xlabel('a', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Scalar Idempotence: min(a,a) = a', fontsize=12)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 2: Two branches merging
     ax = axes[1]
-    f = np.array([1, 2, 3, 2, 1])
-    g = np.array([5, 7, 4, 6, 8])
-    ax.bar(x - 0.15, f, 0.3, label='Dominant f', color='steelblue', alpha=0.8)
-    ax.bar(x + 0.15, g, 0.3, label='Weaker g ≥ f', color='coral', alpha=0.8)
-    ax.plot(x, np.minimum(f, g), 'k*', markersize=15, label='min(f, g) = f')
-    ax.set_xlabel('Coordinate')
-    ax.set_ylabel('Value')
-    ax.set_title('Absorption: f ≤ g ⟹ min(f, g) = f')
+    t = np.linspace(0, 2*np.pi, 100)
+    branch1 = np.sin(t) + 0.5
+    branch2 = np.sin(t) + 0.5  # Same branch
+    merged = np.minimum(branch1, branch2)
+
+    ax.plot(t, branch1, 'b-', linewidth=2, label='Branch 1 (F)')
+    ax.plot(t, branch2, 'r--', linewidth=3, alpha=0.5, label='Branch 2 (F)')
+    ax.plot(t, merged, 'g:', linewidth=2, label='min(F, F) = F')
+    ax.set_xlabel('State parameter', fontsize=12)
+    ax.set_ylabel('Timeline value', fontsize=12)
+    ax.set_title('Paradox Collapse: Identical Branches', fontsize=12)
     ax.legend(fontsize=9)
-    ax.set_xticks(x)
-    
-    # Panel 3: Operator absorption
+    ax.grid(True, alpha=0.3)
+
+    # Panel 3: Different branches (min selects lower)
     ax = axes[2]
-    A = np.array([[1, 2, 3, 1, 2], [2, 1, 1, 3, 1], [3, 2, 1, 2, 1],
-                  [1, 3, 2, 1, 3], [2, 1, 3, 2, 1]], dtype=float)
-    xv = np.array([2, 3, 1, 4, 2], dtype=float)
-    Ax = np.array([np.min(A[i] + xv) for i in range(5)])
-    ax.bar(x - 0.2, Ax, 0.2, label='A⊙x', color='steelblue', alpha=0.8)
-    ax.bar(x, Ax, 0.2, label='A⊙x (copy)', color='coral', alpha=0.8)
-    ax.bar(x + 0.2, np.minimum(Ax, Ax), 0.2, label='min(A⊙x, A⊙x)', color='gold', alpha=0.8)
-    ax.set_xlabel('Coordinate')
-    ax.set_ylabel('Value')
-    ax.set_title('Duplicate Absorption')
+    branch_a = np.sin(t) + 1
+    branch_b = np.cos(t) + 0.5
+    merged_ab = np.minimum(branch_a, branch_b)
+
+    ax.plot(t, branch_a, 'b-', linewidth=2, label='Branch A')
+    ax.plot(t, branch_b, 'r-', linewidth=2, label='Branch B')
+    ax.fill_between(t, merged_ab, alpha=0.2, color='green')
+    ax.plot(t, merged_ab, 'g-', linewidth=2.5, label='min(A, B) — optimal')
+    ax.set_xlabel('State parameter', fontsize=12)
+    ax.set_ylabel('Timeline value', fontsize=12)
+    ax.set_title('Branch Selection: min Picks Cheapest', fontsize=12)
     ax.legend(fontsize=9)
-    ax.set_xticks(x)
-    
-    plt.tight_layout()
-    plt.savefig('fig_paradox_collapse.png', bbox_inches='tight')
-    plt.close()
-    print("Saved fig_paradox_collapse.png")
-
-
-# ============================================================
-# Figure 4: Fixed Point Existence (Box Preservation)
-# ============================================================
-
-def fig_box_preservation():
-    """Show how a monotone map preserving a box must have a fixed point."""
-    fig, ax = plt.subplots(figsize=(8, 8))
-    
-    # 2D case
-    lo = np.array([0.0, 0.0])
-    hi = np.array([10.0, 10.0])
-    
-    A = np.array([[2.0, 1.0], [1.0, 2.0]])
-    b = np.array([8.0, 7.0])
-    lam = 0.7
-    
-    # Draw box
-    rect = plt.Rectangle(lo, hi[0]-lo[0], hi[1]-lo[1], fill=False,
-                         edgecolor='black', linewidth=2, linestyle='--')
-    ax.add_patch(rect)
-    
-    # Show F mapping on a grid of points
-    grid = np.linspace(0.5, 9.5, 8)
-    for xi in grid:
-        for yi in grid:
-            x = np.array([xi, yi])
-            Fx = trop_affine_discounted(A, b, lam, x)
-            dx, dy = Fx[0] - x[0], Fx[1] - x[1]
-            ax.arrow(x[0], x[1], dx*0.8, dy*0.8, head_width=0.15,
-                    head_length=0.1, fc='steelblue', ec='steelblue', alpha=0.5)
-    
-    # Show trajectory from corner
-    x = hi.copy()
-    traj = [x.copy()]
-    for _ in range(30):
-        x = trop_affine_discounted(A, b, lam, x)
-        traj.append(x.copy())
-    traj = np.array(traj)
-    ax.plot(traj[:, 0], traj[:, 1], 'r-o', markersize=4, linewidth=2, label='Iteration')
-    ax.plot(traj[-1, 0], traj[-1, 1], '*', color='red', markersize=20,
-           markeredgecolor='black', label='Fixed point')
-    
-    ax.set_xlim(-1, 11)
-    ax.set_ylim(-1, 11)
-    ax.set_xlabel('$x_1$')
-    ax.set_ylabel('$x_2$')
-    ax.set_title(f'Box-Preserving Map → Fixed Point (λ={lam})')
-    ax.legend(loc='upper left')
     ax.grid(True, alpha=0.3)
-    ax.set_aspect('equal')
-    
+
+    fig.suptitle('Grandfather Paradox Resolution via Tropical Idempotence',
+                 fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('fig_box_preservation.png', bbox_inches='tight')
-    plt.close()
-    print("Saved fig_box_preservation.png")
+
+    fig.savefig('/workspace/request-project/fig_paradox_collapse.png',
+                dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
-# ============================================================
-# Generate All Figures
-# ============================================================
+# ─────────────────────────────────────────────────
+# Figure 4: Iteration trajectory in 2D state space
+# ─────────────────────────────────────────────────
+
+def plot_trajectory_2d():
+    """Show iteration paths in 2D state space converging to fixed point."""
+    A = np.array([[0, 3], [2, 0]], dtype=float)
+    b = np.array([1.0, 1.5])
+    lam = 0.6
+
+    fig, ax = plt.subplots(1, 1, figsize=(8, 7))
+
+    # Find fixed point
+    x_star = np.zeros(2)
+    for _ in range(200):
+        x_star = discounted_tropical_affine(A, b, lam, x_star)
+
+    # Plot trajectories from different starts
+    starts = [
+        np.array([8.0, -4.0]),
+        np.array([-5.0, 10.0]),
+        np.array([6.0, 7.0]),
+        np.array([-3.0, -6.0]),
+        np.array([0.0, 12.0]),
+    ]
+    colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#f39c12']
+
+    for si, x0 in enumerate(starts):
+        x = x0.copy()
+        xs, ys = [x[0]], [x[1]]
+        for _ in range(30):
+            x = discounted_tropical_affine(A, b, lam, x)
+            xs.append(x[0])
+            ys.append(x[1])
+
+        ax.plot(xs, ys, '-o', color=colors[si], markersize=3,
+                linewidth=1.5, alpha=0.7, label=f'Start {si+1}')
+        ax.plot(xs[0], ys[0], 's', color=colors[si], markersize=10)
+
+    ax.plot(x_star[0], x_star[1], '*', color='black', markersize=20,
+            zorder=10, label='Fixed Point x*')
+
+    ax.set_xlabel('x[0]', fontsize=12)
+    ax.set_ylabel('x[1]', fontsize=12)
+    ax.set_title('Tropical CTC Iteration: All Paths Converge\nto the Unique Consistent History',
+                 fontsize=13, fontweight='bold')
+    ax.legend(fontsize=10, loc='upper right')
+    ax.grid(True, alpha=0.3)
+    ax.set_aspect('equal', adjustable='datalim')
+
+    fig.savefig('/workspace/request-project/fig_trajectory.png',
+                dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
+
+
+# ─────────────────────────────────────────────────
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-    fig_convergence_trajectories()
-    fig_contraction_rate()
-    fig_paradox_collapse()
-    fig_box_preservation()
-    print("\nAll figures generated successfully!")
+    b64_1 = plot_contraction_convergence()
+    print(f"  fig_contraction.png — {len(b64_1)} chars base64")
+    b64_2 = plot_phase_diagram()
+    print(f"  fig_phase_diagram.png — {len(b64_2)} chars base64")
+    b64_3 = plot_paradox_collapse()
+    print(f"  fig_paradox_collapse.png — {len(b64_3)} chars base64")
+    b64_4 = plot_trajectory_2d()
+    print(f"  fig_trajectory.png — {len(b64_4)} chars base64")
+    print("Done.")

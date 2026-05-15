@@ -1560,10 +1560,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a015a16c",
     "timestamp": "2026-05-15T06:05:09.015646+00:00"
   },
   {
@@ -1635,6 +1635,106 @@
     "source_exp_id": "8b1837b9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:05:09.067102+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "Real-valued invariants",
+    "description": "(`α = ℝ`): Handle Lipschitz constants, entropy values, collision probabilities as native invariants rather than discretized ℕ versions.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "069b9159",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:28:23.469513+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "Vector-valued invariants",
+    "description": "(`α = ℝⁿ` with product order): Capture theories where objects have multiple independent quality measurements (e.g., both robustness AND efficiency).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "069b9159",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:28:23.476336+00:00"
+  },
+  {
+    "id": "fd_0210",
+    "title": "Lattice-valued invariants",
+    "description": "(`α = L` a complete lattice): Model information-ordering domains where invariants form a lattice of approximations.\n\n### Target Theorems\n\n```lean\ntheorem generalTheory_factorization {α : Type*} [Preorder α]\n    (T : GeneralTheory α) (P : T.Carrier → Prop) :\n    InvariantDetermined T P ↔ ∃ R : α → Prop, ∀ x, P x ↔ R (T.Inv x)\n\ntheorem generalTheory_transport {α : Type*} [Preorder α]\n    {T U : GeneralTheory α} (f : GeneralTheoryHom T U)\n    {P : T.Carrier → Prop} (hP : InvariantDetermined T P)\n    (hf : ∀ x, U.Inv (f.toFun x) = T.Inv x) :\n    ∃ R, (∀ x, P x ↔ R (T.Inv x)) ∧\n         TransferablePredicate f P (fun y => R (U.Inv y))\n```\n\n### Impact\n\nReal-valued invariants would immediately connect to the existing `lipschitz_composition_bound` and `ShellPartition.collisionProb_upper_bound` cat",
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "069b9159",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:28:23.486683+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Pipeline registration DSL",
+    "description": ": A Lean macro for declaring pipeline stages as theory morphisms with auto-generated monotonicity obligations.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "069b9159",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:28:23.493776+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Certificate propagation tactic",
+    "description": ": A tactic that, given a proof of `∃ x, n ≤ T₁.Inv x` at the source, automatically constructs `∃ y, n ≤ T₄.Inv y` at the target by composing through the registered pipeline.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "069b9159",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:28:23.501083+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Reflexive verification",
+    "description": ": A decision procedure that checks whether a given function is a valid theory morphism by testing monotonicity on concrete inputs (a sound but incomplete check for infinite carriers, complete for finite ones).\n\n### Target Artifacts\n\n```lean\n/-- Register a compilation pass as a theory morphism. -/\nmacro \"register_pass\" name:ident source:ident target:ident fun_body:term : command\n\n/-- Automatically transport a certificate through a registered pipeline. -/\nmacro \"transport_certificate\" cert:term \"through\" pipeline:ident : tactic\n\n/-- Decision procedure for monotonicity on finite carriers. -/\ndef checkMonotonicity [DecidableEq α] [Fintype α] [LE β] [DecidableRel (· ≤ · : β → β → Prop)]\n    (T : GeneralTheory β) (U : GeneralTheory β)\n    (f : T.Carrier → U.Carrier) : Bool\n```\n\n### Impact\n\nThis ",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "069b9159",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:28:23.509285+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Direction 2",
+    "description": "(Lattice-valued): Highest practical value. Real-valued invariants unlock most catalog theorem instantiations.",
+    "domains": [
+      "Cryptography"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "069b9159",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:28:23.517399+00:00"
   },
   {
     "id": "seed_078",
@@ -1733,22 +1833,6 @@
     "source_exp_id": "ea1c2257",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:39.942722+00:00"
-  },
-  {
-    "id": "fd_0115",
-    "title": "Direction 3: Predicate and Structure Transport Beyond Lower Bounds",
-    "description": "**Hypothesis:** The current `SatisfiesLowerBound` transfer theorem can be generalized to transport arbitrary predicates `P : T.Carrier → Prop` along morphisms, provided the predicate is \"invariant-determined\" — i.e., depends only on the invariant value.\n\n**Proof Strategy:**\n1. Define `InvariantDetermined (P : T.Carrier → Prop)` as: `∀ x y, T.Inv x = T.Inv y → (P x ↔ P y)`.\n2. Define `TransferablePredicate (f : TheoryHom T U) (P : T.Carrier → Prop) (Q : U.Carrier → Prop)` as: `∀ x, P x → Q (f.toFun x)`.\n3. Prove that for invariant-determined predicates, the existence transfer generalizes: `(∃ x, P x) → (∃ y, Q y)`.\n4. Show that \"upper bound\" predicates `∀ x, T.Inv x ≤ n` also transfer (contravariantly, via pullback).\n5. Prove a \"functor on predicates\" theorem: composition of transferable pr",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "069b9159",
-    "timestamp": "2026-05-14T16:17:39.945939+00:00"
   },
   {
     "id": "fd_0117",
