@@ -671,22 +671,6 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
-    "id": "fd_0214",
-    "title": "Bridge to quantum",
-    "description": "(Direction 5): Requires connecting to the existing quantum-tropical bridge theorems.",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a2e39b14",
-    "consumed_by_exp_id": "0db1bd89",
-    "timestamp": "2026-05-15T15:04:51.227861+00:00"
-  },
-  {
     "id": "fd_0240",
     "title": "Quantum query lower bound",
     "description": ": Use the collision entropy bound with quantum random oracle techniques to show that Grover-type attacks require Ω(3^{d/2}) queries.\n\n### Key Theorem Target (Lean)\n```lean\ntheorem berggren_key_exchange_security\n    (d : ℕ) (hd : 128 ≤ d * Real.log 3 / Real.log 2) :\n    SecurityLevel (berggrenKeyExchange d) ≥ 128\n```\n\n### Practical Impact\n- Concrete security parameter recommendations: d ≥ 117 for 128-bit security\n- Integration with existing post-quantum frameworks (NIST standards)\n- Hardware-friendly implementation (only integer matrix multiplication)\n\n---\n\n## Direction 4: Spectral Gap and Expansion for the Berggren Orbit Graph\n\n### Goal\nProve that the depth-bounded Berggren orbit graph G_D (with edges from Berggren generator applications) is a family of expander graphs with spectral gap bo",
@@ -1128,6 +1112,79 @@
     "timestamp": "2026-05-15T21:34:31.406708+00:00"
   },
   {
+    "id": "fd_0230",
+    "title": "Information theory",
+    "description": "(entropy, mutual information, rate-distortion)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db1bd89",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:01:06.620954+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Proof theory",
+    "description": "(automata, coding, compression)",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db1bd89",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:01:06.632160+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Linear algebra",
+    "description": "(rank, factorization, tropical geometry)",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db1bd89",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:01:06.641530+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Machine learning",
+    "description": "(attention, transformers, neural capacity)",
+    "domains": [
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db1bd89",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:01:06.651798+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Computational complexity",
+    "description": "(circuit depth, Kolmogorov complexity)\n\nEach direction provides both theoretical insights and practical applications, with the formalized bridge theorems serving as the mathematical foundation for rigorous results across all five domains.\n\n### Recommended Priority Order",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db1bd89",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:01:06.662655+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1543,10 +1600,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "97644adb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da61b560",
     "timestamp": "2026-05-15T09:07:29.294580+00:00"
   },
   {

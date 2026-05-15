@@ -135,7 +135,7 @@ theorem constant_from_zero_coboundary
     ∀ i j, f i = f j := by
   -- By definition of delta0, we have delta0 f i j = f j - f i for all i, j.
   have h_delta0 : ∀ i j, delta0 f i j = f j - f i := by
-    exact?;
+    intro i j; rfl;
   exact fun i j => by linarith [ h i j, h_delta0 i j ] ;
 
 /-
