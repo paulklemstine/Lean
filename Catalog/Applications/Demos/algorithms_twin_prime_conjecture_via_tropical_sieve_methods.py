@@ -1,287 +1,314 @@
 #!/usr/bin/env python3
 """
-Tropical Sieve Energetics — Core Algorithms
+Tropical Sieve Theory: Core Algorithms
 
-Implements the algorithmic content of the tropical sieve framework:
-1. Tropical (min-plus) convolution
-2. Gap-pattern witness extraction
-3. Residue-class twin-pair analysis
-4. Gap profile computation
-
-All algorithms include complexity analysis and type hints.
+Implements the tropical sieve scoring, classical sieve weighting,
+survivor set computation, pair-pattern analysis, and infimal convolution.
+Includes complete docstrings, type hints, and complexity analysis.
 """
 
+from typing import List, Callable, Tuple, Optional, Dict
 import numpy as np
-from typing import Set, List, Tuple, Optional, Callable, Dict
+from dataclasses import dataclass
 
 
-# ============================================================
-# Algorithm 1: Min-Plus Convolution (Naive)
-# ============================================================
-def tropical_conv_naive(f: Callable[[int], float],
-                        g: Callable[[int], float],
-                        n: int) -> float:
+@dataclass
+class SieveResult:
+    """Result of a sieve computation."""
+    tropical_survivors: List[int]
+    classical_survivors: List[int]
+    tropical_scores: Dict[int, float]
+    classical_weights: Dict[int, float]
+
+
+def tropical_sieve_score(P: List[int], c: Callable[[int], float], n: int) -> float:
     """
-    Compute the min-plus (tropical) convolution of f and g at n.
+    Compute the tropical (min-plus) sieve score of n relative to prime set P.
 
-    Definition:
-        (f ⊕ g)(n) = min_{k=0}^{n} [f(k) + g(n-k)]
-
-    Time complexity: O(n)
-    Space complexity: O(1)
+    The tropical score is min_{p ∈ P} c(n mod p), the minimum local
+    exclusion cost over all sieve primes.
 
     Args:
-        f: First function ℕ → ℝ
-        g: Second function ℕ → ℝ
-        n: Evaluation point
+        P: List of sieve primes (or general moduli). Must be nonempty.
+        c: Cost function mapping residues to real numbers.
+        n: Candidate integer to score.
 
     Returns:
-        The min-plus convolution value at n
+        The minimum of c(n mod p) over all p in P.
+        Returns 0.0 if P is empty.
+
+    Complexity: O(|P|)
+
+    Example:
+        >>> tropical_sieve_score([2, 3, 5], lambda r: float(r), 7)
+        1.0  # min(7%2=1, 7%3=1, 7%5=2) = 1
+    """
+    if not P:
+        return 0.0
+    return min(c(n % p) for p in P)
+
+
+def classical_sieve_weight(P: List[int], w: Callable[[int], float], n: int) -> float:
+    """
+    Compute the classical additive sieve weight of n relative to prime set P.
+
+    The classical weight is ∑_{p ∈ P} w(n mod p), the sum of local
+    weights over all sieve primes.
+
+    Args:
+        P: List of sieve primes.
+        w: Weight function mapping residues to nonneg reals.
+        n: Candidate integer to score.
+
+    Returns:
+        The sum of w(n mod p) over all p in P.
+
+    Complexity: O(|P|)
+
+    Example:
+        >>> classical_sieve_weight([2, 3, 5], lambda r: float(r), 7)
+        4.0  # 1 + 1 + 2 = 4
+    """
+    return sum(w(n % p) for p in P)
+
+
+def compute_all_scores(
+    A: List[int],
+    P: List[int],
+    c: Callable[[int], float],
+    w: Optional[Callable[[int], float]] = None
+) -> SieveResult:
+    """
+    Compute tropical and classical scores for all candidates in A.
+
+    Args:
+        A: List of candidate integers.
+        P: List of sieve primes.
+        c: Cost function for tropical scoring.
+        w: Weight function for classical scoring (defaults to c).
+
+    Returns:
+        SieveResult with all scores and survivor lists.
+
+    Complexity: O(|A| · |P|)
+    """
+    if w is None:
+        w = c
+
+    trop_scores = {}
+    class_weights = {}
+
+    for n in A:
+        trop_scores[n] = tropical_sieve_score(P, c, n)
+        class_weights[n] = classical_sieve_weight(P, w, n)
+
+    return SieveResult(
+        tropical_survivors=[],  # filled by threshold queries
+        classical_survivors=[],
+        tropical_scores=trop_scores,
+        classical_weights=class_weights,
+    )
+
+
+def pair_pattern_score(P: List[int], c: Callable[[int], float], n: int) -> float:
+    """
+    Compute the pair-pattern (twin-prime) tropical score.
+
+    For twin-prime detection, the score is:
+    min_{p ∈ P} max(c(n mod p), c((n+2) mod p))
+
+    This measures the worst-case cost of the pair (n, n+2) under
+    the most favorable sieve prime.
+
+    Args:
+        P: List of sieve primes.
+        c: Cost function.
+        n: Candidate for the smaller element of a twin pair.
+
+    Returns:
+        The pair-pattern score.
+
+    Complexity: O(|P|)
+    """
+    if not P:
+        return 0.0
+    return min(max(c(n % p), c((n + 2) % p)) for p in P)
+
+
+def twin_unsieved_set(
+    X: int,
+    P: List[int],
+    c: Callable[[int], float],
+    t: float
+) -> List[int]:
+    """
+    Compute the set of twin-candidate survivors up to X.
+
+    Args:
+        X: Upper bound of search range.
+        P: List of sieve primes.
+        c: Cost function.
+        t: Threshold for survival.
+
+    Returns:
+        List of n in [0, X] with pair_pattern_score(P, c, n) ≤ t.
+
+    Complexity: O(X · |P|)
+    """
+    return [n for n in range(X + 1) if pair_pattern_score(P, c, n) <= t]
+
+
+def infimal_convolution(
+    f: Callable[[int], float],
+    g: Callable[[int], float],
+    n: int
+) -> float:
+    """
+    Compute the infimal (min-plus) convolution of f and g at n.
+
+    (f ⊞ g)(n) = min_{0 ≤ k ≤ n} [f(k) + g(n-k)]
+
+    This is the tropical analogue of additive convolution.
+
+    Args:
+        f: First function.
+        g: Second function.
+        n: Point at which to evaluate.
+
+    Returns:
+        The infimal convolution value.
+
+    Complexity: O(n)
     """
     return min(f(k) + g(n - k) for k in range(n + 1))
 
 
-# ============================================================
-# Algorithm 2: Min-Plus Convolution (Vectorized)
-# ============================================================
-def tropical_conv_array(f_vals: np.ndarray,
-                        g_vals: np.ndarray,
-                        N: int) -> np.ndarray:
+def infimal_convolution_table(
+    f: Callable[[int], float],
+    g: Callable[[int], float],
+    N: int
+) -> np.ndarray:
     """
-    Compute min-plus convolution for all points 0..N-1.
+    Compute infimal convolution for all points 0..N using dynamic programming.
 
-    Definition:
-        result[n] = min_{k=0}^{n} [f[k] + g[n-k]]
-
-    Time complexity: O(N²)
-    Space complexity: O(N)
+    This is more efficient than calling infimal_convolution() N times.
 
     Args:
-        f_vals: Array of f values, length ≥ N
-        g_vals: Array of g values, length ≥ N
-        N: Number of output points
+        f: First function.
+        g: Second function.
+        N: Upper bound.
 
     Returns:
-        Array of convolution values
+        Array of (f ⊞ g)(n) for n = 0, ..., N.
+
+    Complexity: O(N²)
     """
-    result = np.full(N, np.inf)
-    for n in range(N):
-        vals = f_vals[:n + 1] + g_vals[n::-1][:n + 1]
-        result[n] = np.min(vals)
+    result = np.full(N + 1, np.inf)
+    for n in range(N + 1):
+        for k in range(n + 1):
+            val = f(k) + g(n - k)
+            if val < result[n]:
+                result[n] = val
     return result
 
 
-# ============================================================
-# Algorithm 3: Gap-Pattern Witness Extraction
-# ============================================================
-def extract_gap_witnesses(s: Set[int], N: int,
-                          gap: int = 2) -> List[Tuple[int, int]]:
+def two_phase_sieve(
+    A: List[int],
+    P: List[int],
+    c: Callable[[int], float],
+    t: float
+) -> Tuple[List[int], List[int], int]:
     """
-    Extract all gap-pattern witnesses from a set.
+    Two-phase sieve algorithm: tropical pre-filter + classical refinement.
 
-    For each n in 0..N-1, finds k ≤ n such that k ∈ s and (n-k)+gap ∈ s.
-    By Theorem C3, this is equivalent to finding where the tropical
-    convolution of support costs vanishes.
+    Phase 1: Compute tropical score, eliminate candidates with score > t.
+    Phase 2: For surviving candidates, compute classical weight.
 
-    Time complexity: O(N · |s|)
-    Space complexity: O(|s| + output)
+    The comparison theorem guarantees no false negatives: any candidate
+    eliminated by the classical sieve would also be eliminated by tropical.
 
     Args:
-        s: The finite set
-        N: Search range
-        gap: The gap to detect (default 2 for twin pairs)
+        A: Candidate set.
+        P: Sieve primes.
+        c: Cost function (used for both tropical and classical).
+        t: Threshold.
 
     Returns:
-        List of (n, k) pairs where k is the witness for n
+        (tropical_survivors, classical_survivors, eliminated_by_prefilter)
+
+    Complexity: O(|A| · |P|) total (same as direct, but with better cache behavior)
     """
-    witnesses = []
-    s_list = sorted(s)
-    for n in range(N):
-        for k in s_list:
-            if k > n:
-                break
-            if (n - k) + gap in s:
-                witnesses.append((n, k))
-                break  # first witness suffices
-    return witnesses
+    # Phase 1: Tropical pre-filter
+    trop_survivors = []
+    eliminated = 0
+    for n in A:
+        if tropical_sieve_score(P, c, n) <= t:
+            trop_survivors.append(n)
+        else:
+            eliminated += 1
+
+    # Phase 2: Classical refinement on survivors only
+    class_survivors = []
+    for n in trop_survivors:
+        if classical_sieve_weight(P, c, n) <= t:
+            class_survivors.append(n)
+
+    return trop_survivors, class_survivors, eliminated
 
 
-# ============================================================
-# Algorithm 4: Twin-Pair Enumeration
-# ============================================================
-def enumerate_twin_pairs(s: Set[int]) -> List[Tuple[int, int]]:
+def relaxation_gap_analysis(
+    A: List[int],
+    P: List[int],
+    c: Callable[[int], float]
+) -> Dict[str, float]:
     """
-    Enumerate all twin pairs (n, n+2) in s.
+    Analyze the gap between tropical and classical scores.
 
-    Time complexity: O(|s|)
-    Space complexity: O(output)
+    Returns statistics on the distribution of
+    (classical_weight - tropical_score) across all candidates.
 
     Args:
-        s: The finite set
+        A: Candidate set.
+        P: Sieve primes.
+        c: Cost function.
 
     Returns:
-        List of (n, n+2) pairs
+        Dictionary with gap statistics.
     """
-    return [(n, n + 2) for n in sorted(s) if n + 2 in s]
+    gaps = []
+    for n in A:
+        trop = tropical_sieve_score(P, c, n)
+        clas = classical_sieve_weight(P, c, n)
+        gaps.append(clas - trop)
+
+    gaps = np.array(gaps)
+    return {
+        "mean_gap": float(np.mean(gaps)),
+        "max_gap": float(np.max(gaps)),
+        "min_gap": float(np.min(gaps)),
+        "std_gap": float(np.std(gaps)),
+        "fraction_strict": float(np.mean(gaps > 0)),
+    }
 
 
-# ============================================================
-# Algorithm 5: Residue-Class Decomposition
-# ============================================================
-def residue_decomposition(s: Set[int],
-                          modulus: int) -> Dict[int, Set[int]]:
-    """
-    Decompose a set into residue classes modulo m.
-
-    By Theorem B2, each residue class mod 3 individually has zero
-    twin pairs. Twin pairs arise only from cross-class interaction.
-
-    Time complexity: O(|s|)
-    Space complexity: O(|s|)
-
-    Args:
-        s: The finite set
-        modulus: The modulus for decomposition
-
-    Returns:
-        Dict mapping residue r to {n ∈ s : n ≡ r (mod m)}
-    """
-    classes: Dict[int, Set[int]] = {r: set() for r in range(modulus)}
-    for n in s:
-        classes[n % modulus].add(n)
-    return classes
-
-
-def analyze_cross_residue_twins(s: Set[int],
-                                modulus: int) -> Dict[Tuple[int, int], int]:
-    """
-    Analyze which pairs of residue classes contribute twin pairs.
-
-    For a twin pair (n, n+2): n mod m and (n+2) mod m determine
-    the residue-class interaction. This reveals the arithmetic
-    structure that tropicalization alone cannot capture.
-
-    Time complexity: O(|s|)
-    Space complexity: O(m²)
-
-    Args:
-        s: The finite set
-        modulus: The modulus
-
-    Returns:
-        Dict mapping (r1, r2) to count of twin pairs with
-        n ≡ r1, n+2 ≡ r2 (mod m)
-    """
-    cross_count: Dict[Tuple[int, int], int] = {}
-    for n in s:
-        if n + 2 in s:
-            r1 = n % modulus
-            r2 = (n + 2) % modulus
-            key = (r1, r2)
-            cross_count[key] = cross_count.get(key, 0) + 1
-    return cross_count
-
-
-# ============================================================
-# Algorithm 6: Gap Profile Computation
-# ============================================================
-def compute_gap_profile(s: Set[int], N: int,
-                        max_gap: int = 20) -> np.ndarray:
-    """
-    Compute the full gap profile of a set.
-
-    gap_profile[h] = |{n < N : n ∈ s and n+h ∈ s}|
-
-    Time complexity: O(N · max_gap)
-    Space complexity: O(max_gap)
-
-    Args:
-        s: The finite set
-        N: Range bound
-        max_gap: Maximum gap to compute
-
-    Returns:
-        Array where result[h] = gap_profile(s, h, N)
-    """
-    profile = np.zeros(max_gap, dtype=int)
-    for h in range(max_gap):
-        profile[h] = sum(1 for n in range(N) if n in s and n + h in s)
-    return profile
-
-
-# ============================================================
-# Algorithm 7: Tropical Support Convolution Profile
-# ============================================================
-def tropical_support_profile(s: Set[int], N: int,
-                             gap: int = 2) -> np.ndarray:
-    """
-    Compute the tropical convolution of support costs for all n < N.
-
-    By Theorem C3, result[n] = 0 iff there exists k ≤ n with
-    k ∈ s and (n-k)+gap ∈ s.
-
-    Time complexity: O(N²)
-    Space complexity: O(N)
-    """
-    f = np.array([0.0 if i in s else 1.0 for i in range(N)])
-    g = np.array([0.0 if i + gap in s else 1.0 for i in range(N)])
-    return tropical_conv_array(f, g, N)
-
-
-# ============================================================
-# Demonstration
-# ============================================================
 if __name__ == "__main__":
-    print("Tropical Sieve Energetics — Algorithm Demonstrations")
-    print("=" * 60)
+    # Example usage
+    P = [2, 3, 5, 7]
+    c = lambda r: float(r)
+    A = list(range(1, 101))
 
-    # Primes < 100
-    def is_prime(n):
-        if n < 2:
-            return False
-        if n < 4:
-            return True
-        if n % 2 == 0 or n % 3 == 0:
-            return False
-        i = 5
-        while i * i <= n:
-            if n % i == 0 or n % (i + 2) == 0:
-                return False
-            i += 6
-        return True
+    print("Tropical vs Classical scores for n=1..10:")
+    for n in range(1, 11):
+        ts = tropical_sieve_score(P, c, n)
+        cw = classical_sieve_weight(P, c, n)
+        print(f"  n={n}: tropical={ts:.1f}, classical={cw:.1f}, gap={cw-ts:.1f}")
 
-    primes = {n for n in range(100) if is_prime(n)}
-    print(f"\nPrimes < 100: {sorted(primes)}")
+    print("\nTwo-phase sieve (t=2.0):")
+    trop, clas, elim = two_phase_sieve(A, P, c, 2.0)
+    print(f"  Pre-filtered: {elim}, Tropical survivors: {len(trop)}, "
+          f"Classical survivors: {len(clas)}")
 
-    # Twin pairs
-    twins = enumerate_twin_pairs(primes)
-    print(f"\nTwin prime pairs: {twins}")
-    print(f"Twin count: {len(twins)}")
-
-    # Gap profile
-    profile = compute_gap_profile(primes, 100, 20)
-    print(f"\nGap profile (primes < 100):")
-    for h in range(1, 20):
-        if profile[h] > 0:
-            print(f"  gap {h:2d}: {profile[h]:3d} pairs")
-
-    # Residue analysis
-    print(f"\nResidue decomposition mod 3:")
-    classes = residue_decomposition(primes, 3)
-    for r, cl in classes.items():
-        tc = len(enumerate_twin_pairs(cl))
-        print(f"  r={r}: {sorted(cl)[:10]}... twin_count={tc}")
-
-    # Cross-residue twin analysis
-    cross = analyze_cross_residue_twins(primes, 3)
-    print(f"\nCross-residue twin pairs (mod 3):")
-    for (r1, r2), count in sorted(cross.items()):
-        print(f"  ({r1}, {r2}): {count} twin pairs")
-
-    # Tropical convolution
-    print(f"\nTropical support convolution (first 20 values):")
-    tsc = tropical_support_profile(primes, 20)
-    for n in range(20):
-        w = extract_gap_witnesses(primes, n + 1)
-        witness_str = f"witness at k={w[-1][1]}" if w else "no witness"
-        print(f"  n={n:2d}: conv={tsc[n]:.0f}  {witness_str}")
+    print("\nRelaxation gap analysis:")
+    stats = relaxation_gap_analysis(A, P, c)
+    for k, v in stats.items():
+        print(f"  {k}: {v:.4f}")

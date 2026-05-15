@@ -381,22 +381,6 @@
     "timestamp": "2026-05-14T16:03:53.823866+00:00"
   },
   {
-    "id": "seed_038",
-    "title": "Wormhole Topology via Tropical Surgery: Min-Plus Spacetime Bridging",
-    "description": "Prove that traversable wormholes in general relativity correspond to tropical surgery operations on the spacetime manifold, where the min-plus Ricci curvature determines the throat radius. Show that the Einstein field equations in the tropical shadow reduce to a shortest-path problem on the spacetime graph, and that tropical geodesics through the wormhole are computable in polynomial time.",
-    "domains": [
-      "Speculative",
-      "Physics",
-      "Tropical"
-    ],
-    "priority_score": 0.88,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "dc69d6dd",
-    "timestamp": "2026-05-14T16:03:53.834459+00:00"
-  },
-  {
     "id": "seed_014",
     "title": "Homomorphic Encryption over Tropical Semirings",
     "description": "Construct a fully homomorphic encryption scheme over min-plus arithmetic where addition and multiplication of ciphertexts correspond to tropical operations on plaintexts. Prove correctness and security against chosen-plaintext attacks, showing that the idempotent property of tropical addition enables bootstrapping without the noise growth that plagues classical FHE.",
@@ -1438,20 +1422,6 @@
     "timestamp": "2026-05-14T21:34:38.217919+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Direct generalization",
-    "description": ": The proof of `bounded_box_collision_yields_short_kernel_vector` works almost verbatim — replace the uniform `Icc (-B) B` by `Icc (-B i) (B i)` in the product finset. The cardinality becomes `∏ i, (2 * B i + 1)` instead of `(2B+1)^n`.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.244396+00:00"
-  },
-  {
     "id": "fd_0184",
     "title": "Existence",
     "description": ": Use Karp's algorithm to compute μ. Construct the \"critical graph\" (subgraph of edges lying on minimum-mean cycles). Show that the tropical CSR (Cyclicity-Saturation-Reduction) decomposition yields an eigenvector.",
@@ -1483,23 +1453,6 @@
     "timestamp": "2026-05-14T23:59:16.148110+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Ecological interpretation",
-    "description": ": Map each bifurcation type to a known ecological phenomenon (trophic cascade, competitive exclusion, mutualism breakdown).\n\n### Cross-Domain Connections\n- **Tropical geometry**: Tropical bifurcations correspond to non-smooth points of tropical hypersurfaces\n- **Catastrophe theory**: Tropical analogues of fold, cusp, swallowtail catastrophes\n- **Climate science**: Abrupt climate transitions as tropical bifurcations in Earth system models\n- **Economics**: Market regime shifts (bull/bear transitions)\n\n### Estimated Difficulty\nMedium. The 2×2 case is tractable by direct computation. The n×n generalization requires tropical convexity theory.\n\n---\n\n## Direction 4: Certified Resilience Bounds Under Parameter Perturbation\n\n### Goal\nProve quantitative bounds on how much the tropical eigenvalue and",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.172840+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Eigenvector perturbation",
     "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
@@ -1507,10 +1460,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c65fa1b5",
     "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
@@ -1592,23 +1545,6 @@
     "timestamp": "2026-05-15T01:18:10.040238+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Address semantic challenges",
-    "description": ": The min-plus semiring lacks negation, so universal quantification cannot be defined via ¬∃¬. This requires either restricting to the existential fragment or introducing a dual (max-plus) component.\n\n### Expected Impact\n- Foundation for quantitative model checking of reactive systems\n- Connections to mean-payoff games and energy automata\n- Verification of liveness properties with quantitative bounds\n\n### Key Open Questions\n- Which cost aggregation functions (liminf, mean payoff, discounted) admit clean logical characterizations?\n- Can the Safra construction be tropicalized?\n\n### Cross-Domain Connections\n- **Reactive systems verification**: Quantitative properties of non-terminating programs\n- **Game theory**: Mean-payoff and energy games\n- **Control theory**: Optimal control with worst-ca",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.066795+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Prove closure properties",
     "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
@@ -1639,21 +1575,6 @@
     "source_exp_id": "fafc44be",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:10.101596+00:00"
-  },
-  {
-    "id": "fd_0201",
-    "title": "Bounded ambiguity",
-    "description": ": Prove that finitely ambiguous min-plus automata have decidable equivalence (unlike the general case, which is undecidable).",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.114565+00:00"
   },
   {
     "id": "fd_0203",
@@ -1719,6 +1640,144 @@
     "source_exp_id": "fafc44be",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:10.154476+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Cone monotonicity under surgery",
+    "description": ": Wormhole surgery can only enlarge causal cones. If `W' = wormholeSurgery W u v τ`, then `tropicalLightCone W x r ⊆ tropicalLightCone W' x r`.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.344260+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Causal transitivity",
+    "description": ": The tropical causal ordering is transitive (follows from triangle inequality).",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.350359+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Surgery creates new causal connections",
+    "description": ": Under the surgery hypotheses of Theorem 1, vertices `s` and `t` that were causally disconnected (outside each other's cones) become causally connected.\n\n### Proof Strategy\n- Theorem 1 follows directly from `tropicalDistance_mono` (surgery decreases distances).\n- Theorem 2 follows from `tropicalDistance_triangle`.\n- Theorem 3 combines the surgery distance bound with the cone definition.\n\n### Cross-Domain Connections\n- **Causal set theory** (Sorkin): Tropical causal cones discretize the causal structure without assuming a manifold.\n- **Network epidemiology**: Causal reachability models information/disease spread through a network.\n\n---\n\n## Direction 2: Tropical Black Hole Horizons as Min-Cut Barriers\n\n### Motivation\nA black hole horizon is a causal boundary from which nothing can escape. I",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.357239+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Min-cut duality",
+    "description": ": The horizon strength equals the minimum cost of any path escaping `H` (a max-flow/min-cut theorem in the tropical setting).",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.363546+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Evaporation theorem",
+    "description": ": Iterating small surgeries on horizon edges eventually destroys the horizon, producing a tropical analog of Hawking evaporation.\n\n### Proof Strategy\n- Use Mathlib's `SimpleGraph.Flow` and network flow machinery for the min-cut duality.\n- Stability follows from continuity of `tropicalDistance` in the weight matrix (uniform continuity on the finite graph).\n- Evaporation is an iterated application of the surgery distance bound theorem.\n\n### Cross-Domain Connections\n- **Information theory**: Horizon strength relates to channel capacity across the boundary.\n- **Network resilience**: Min-cut barriers model network partitions and failure cascades.\n\n---\n\n## Direction 3: Tropical Einstein–Maxwell Systems on Weighted Graphs\n\n### Motivation\nThe Einstein–Maxwell equations couple gravity (metric) with",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.378404+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Charge-dependent surgery",
+    "description": ": The surgery distance bound depends on the charge difference `|A u - A v|` at the wormhole endpoints.\n\n### Proof Strategy\n- Theorem 1 follows the same proof pattern as `tropicalDistance_bellman_le` with modified weights.\n- Gauge invariance is essentially definitional.\n- The charged surgery theorem extends `tropicalDistance_wormholeSurgery_le` with the modified weight matrix.\n\n### Cross-Domain Connections\n- **Electrical networks**: The gauge potential is an electric potential; charged distance models resistive flow.\n- **Optimal transport**: Charged distances relate to transport costs with source/sink terms.\n\n---\n\n## Direction 4: Categorical Functor from Graph Surgeries to Tropical Linear Operators\n\n### Motivation\nGraph surgeries (adding/removing/reweighting edges) form a category of transf",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.394552+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Surgery as rank-1 tropical update",
+    "description": ": `wormholeSurgery` modifies at most 2 entries of the distance matrix, and the resulting distance change has bounded \"tropical rank.\"",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.402687+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Kleene star surgery formula",
+    "description": ": The new distance matrix after surgery can be expressed as a rank-2 correction to the old Kleene star.\n\n### Proof Strategy\n- Functoriality follows from monotonicity of `tropicalDistance` under composition of surgeries.\n- The rank characterization uses the structure of the distance update: only paths through the new bridge are affected.\n- The Kleene star formula uses the Woodbury-style identity for min-plus matrix inverses.\n\n### Cross-Domain Connections\n- **Tropical algebraic geometry**: The Kleene star is the tropical analog of the resolvent operator.\n- **Category theory in TDA**: Persistence diagrams as functors from filtrations to barcodes share structural similarities.\n\n---\n\n## Direction 5: Tropical Holography via Boundary Distance Reconstruction\n\n### Motivation\nThe holographic princip",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.410670+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Boundary determines bulk distances on trees",
+    "description": ": If the graph is a tree, `D_∂` uniquely determines all pairwise distances and hence the tree structure (up to Steiner points).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dc69d6dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:46:31.417958+00:00"
   },
   {
     "id": "seed_078",
@@ -2046,24 +2105,6 @@
     "timestamp": "2026-05-14T19:35:01.991565+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "1. Tropical Replicator Composition and Ecosystem Interaction Theorems",
-    "description": "**Hypothesis:** If two tropical replicators R₁ and R₂ on the same finite lattice commute (R₁.step ∘ R₂.step = R₂.step ∘ R₁.step), their composition is again a tropical replicator. More generally, for a finite collection of pairwise commuting replicators, the composed system admits a global attractor that is the intersection of the individual attractor sets.\n\n**Proof Strategy:**\n- We proved `comp_idempotent_of_commuting` for the idempotent property. Extend this to monotonicity (composition of monotone maps is monotone) and inflationarity (under commutativity, the composition of inflationary maps is inflationary if they also commute with the order).\n- Define an \"ecosystem\" as a finite family of pairwise commuting TropicalReplicators. Prove that the set of fixed points of the composed system ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51f002b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T22:34:47.493626+00:00"
-  },
-  {
     "id": "fd_0190",
     "title": "Implementation Plan",
     "description": "1. Formalize Karp's algorithm in Lean 4 with correctness proof.\n2. Define a `CertifiedTropicalGap` structure containing the computed gap and its proof of validity.\n3. Compose with the bridge theorem to produce a certified spectral/mixing bound.\n4. Extract the algorithm to executable code via Lean's code generation.",
@@ -2177,23 +2218,6 @@
     "timestamp": "2026-05-15T00:53:06.620725+00:00"
   },
   {
-    "id": "fd_0196",
-    "title": "2. Tropical Matrix Kleene Star for All-Pairs Shell Routing",
-    "description": "**Hypothesis**: The tropical adjacency matrix `W` of a shell network, raised to the Kleene star power `W* = I ⊕ W ⊕ W² ⊕ ...` in the min-plus semiring, computes all-pairs shortest distances and stabilizes in at most `|V|` steps under nonneg edge weights.\n\n**Proof Strategy**:\n- Represent edge weights as a `Matrix V V ℝ` (or `WithTop ℝ` for infinity).\n- Define tropical matrix multiplication using min for addition and + for multiplication.\n- Define Kleene star as the stabilized limit of tropical matrix powers.\n- Prove stabilization after `Fintype.card V` steps using the DP monotonicity theorem (`dpDist_mono`).\n- Show that the `(s,t)` entry of `W*` equals `tropicalDist w s t`.\n\n**Cross-Domain Impact**: Opens the door to tropical linear algebra over matrices, tropical eigenvalue theory (critica",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c26006e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:24.280041+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "3. Full Discrete Honeycomb Theorem on the Hex Lattice",
     "description": "**Hypothesis**: Among all connected subsets of the hexagonal lattice with `n` cells, the regular hexagonal patch minimizes edge boundary. This is the discrete analogue of the honeycomb conjecture (proved by Hales in 2001 for continuous domains).\n\n**Proof Strategy**:\n- The current formalization proves exact boundary formulas for hex patches (`12r + 6`) and verifies the isoperimetric ratio is decreasing.\n- For the full optimality result, one approach is to use the edge-isoperimetric inequality on vertex-transitive graphs.\n- A more accessible intermediate result: prove optimality among \"convex\" hex regions (those equal to their hex-convex hull).\n- The general result may require adapting Harper's theorem or Bezrukov's edge-isoperimetric methods to the hex lattice.\n\n**Cross-Domain Impact**: Pro",
@@ -2276,23 +2300,6 @@
     "source_exp_id": "c6fcabd0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:25:37.087666+00:00"
-  },
-  {
-    "id": "fd_0201",
-    "title": "4. Policy / Argmax Transfer Theorem",
-    "description": "**Statement.** The set of optimal transitions (argmax indices) for the Maxwell–Bellman operator at state `i` equals the set of optimal transitions for the charged Bellman operator at the same state.\n\n**Lean type signature:**\n```lean\ndef bellmanArgmax {n : ℕ} [NeZero n] (W : Matrix (Fin n) (Fin n) ℝ)\n    (Φ : Fin n → ℝ) (i : Fin n) : Set (Fin n) :=\n  { j | W i j + Φ j = bellmanOp W Φ i }\n\ndef maxwellBellmanArgmax {n : ℕ} [NeZero n]\n    (W A : Matrix (Fin n) (Fin n) ℝ) (q : ℝ) (Φ : Fin n → ℝ) (i : Fin n) : Set (Fin n) :=\n  { j | W i j + q * A i j + Φ j = maxwellBellmanOp W A q Φ i }\n\ntheorem argmax_transfer {n : ℕ} [NeZero n]\n    (W A : Matrix (Fin n) (Fin n) ℝ) (q : ℝ) (Φ : Fin n → ℝ) (i : Fin n) :\n    maxwellBellmanArgmax W A q Φ i = bellmanArgmax (chargedWeight W A q) Φ i\n```\n\n**Proof str",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c6fcabd0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:25:37.106566+00:00"
   },
   {
     "id": "fd_0203",

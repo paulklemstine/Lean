@@ -1,731 +1,780 @@
 #!/usr/bin/env python3
 """
-Tropical Sieve Energetics — Applications
+Tropical Sieve Theory: Applications
 
-Demonstrates connections to:
-1. Additive combinatorics (sumset gap patterns)
-2. Coding theory (minimum distance via tropical convolution)
-3. Shortest-path / optimization (tropical semiring structure)
-4. Statistical mechanics (ground-state energy interpretation)
+Demonstrates real-world applications of the tropical sieve comparison theorems:
+1. Cryptographic sieve pre-filtering for smoothness testing
+2. Twin-prime candidate screening
+3. Prime constellation search
 """
 
 import numpy as np
-from typing import Set, List, Tuple, Dict
-from algorithms import (tropical_conv_naive, tropical_conv_array,
-                        enumerate_twin_pairs, compute_gap_profile,
-                        residue_decomposition, analyze_cross_residue_twins)
+from typing import List, Tuple
+from sympy import isprime, factorint, primerange
 
 
 # ============================================================
-# Application 1: Additive Combinatorics — Sumset Gap Detection
+# Application 1: Cryptographic Smoothness Pre-filtering
 # ============================================================
-def generalized_gap_detection(s: Set[int], gaps: List[int], N: int) -> Dict[int, bool]:
+
+def smoothness_cost(n: int, factor_base: List[int]) -> float:
     """
-    For each gap h in the list, determine whether s supports any
-    pair (n, n+h) with both elements in s.
-
-    This generalizes twin-pair detection to arbitrary constellation
-    patterns, connecting to the Hardy-Littlewood k-tuple conjecture.
-
-    Application: Given a dense subset of {0,...,N-1}, which additive
-    patterns are present?
+    Classical smoothness cost: sum of p-adic valuations at primes outside factor base.
+    Cost = 0 iff n is smooth with respect to factor_base.
     """
-    results = {}
-    for h in gaps:
-        found = any(n in s and n + h in s for n in range(N))
-        results[h] = found
-    return results
+    if n <= 0:
+        return float('inf')
+    cost = 0.0
+    temp = n
+    for p in factor_base:
+        while temp % p == 0:
+            temp //= p
+    # Remaining part is the "unsmooth" residual
+    if temp > 1:
+        cost = np.log(temp)
+    return cost
 
 
-def sumset_gap_density(A: Set[int], B: Set[int], N: int) -> np.ndarray:
+def tropical_smoothness_prefilter(
+    candidates: List[int],
+    factor_base: List[int],
+    threshold: float = 0.0
+) -> Tuple[List[int], List[int]]:
     """
-    Compute the density of gaps in the sumset A + B.
+    Two-phase smoothness detection for quadratic sieve.
 
-    Uses the tropical convolution perspective: the sumset A+B
-    can be analyzed via min-plus convolution of indicator costs.
-    Where the convolution vanishes, elements exist.
+    Phase 1 (tropical): Quick check using min of residue costs.
+    Phase 2 (classical): Full smoothness test on survivors.
+
+    Returns (smooth_numbers, prefilter_survivors).
     """
-    f = np.array([0.0 if i in A else 1.0 for i in range(N)])
-    g = np.array([0.0 if i in B else 1.0 for i in range(N)])
-    return tropical_conv_array(f, g, N)
+    # Phase 1: Tropical pre-filter
+    # A number is B-smooth iff ALL its prime factors are in the factor base.
+    # Tropical score: min over factor base primes of (n mod p)
+    # If tropical score > 0 for all p, n might not be smooth.
+    prefilter_survivors = []
+    for n in candidates:
+        # Simple tropical heuristic: if n mod p = 0 for some p in base,
+        # n has that factor, which is a positive signal.
+        min_residue = min(abs(n % p) for p in factor_base) if factor_base else n
+        if min_residue <= threshold:
+            prefilter_survivors.append(n)
+
+    # Phase 2: Full smoothness test
+    smooth = [n for n in prefilter_survivors if smoothness_cost(n, factor_base) == 0.0]
+
+    return smooth, prefilter_survivors
 
 
-# ============================================================
-# Application 2: Coding Theory — Minimum Distance Detection
-# ============================================================
-def code_gap_analysis(codewords: Set[int], N: int) -> Dict[str, any]:
-    """
-    Analyze gap structure of a set of codeword positions.
-
-    In coding theory, the minimum distance between codewords
-    determines error-correction capability. The tropical convolution
-    framework detects which distances are realized.
-
-    The support cost encodes whether a position is a codeword.
-    The tropical convolution vanishing locus gives realized distances.
-    """
-    profile = compute_gap_profile(codewords, N, N)
-    min_dist = next((h for h in range(1, N) if profile[h] > 0), N)
-    realized_dists = [h for h in range(1, N) if profile[h] > 0]
-
-    return {
-        "codewords": sorted(codewords),
-        "min_distance": min_dist,
-        "realized_distances": realized_dists[:20],
-        "gap_profile": profile[:min(20, N)],
-    }
-
-
-# ============================================================
-# Application 3: Ground-State Energy (Statistical Mechanics)
-# ============================================================
-def ground_state_energy(positions: Set[int], N: int,
-                        interaction_range: int = 2) -> float:
-    """
-    Interpret the tropical convolution as ground-state energy.
-
-    Model: particles at positions in {0,...,N-1}.
-    Cost function: 0 for occupied positions, 1 for vacant.
-    Interaction: particles at distance `interaction_range` interact.
-
-    The min-plus convolution computes the minimum total cost
-    of placing a pair at separation `interaction_range`.
-    Zero cost = both positions occupied = interaction present.
-
-    This connects sieve energetics to zero-temperature
-    statistical mechanics of lattice gases.
-    """
-    f = np.array([0.0 if i in positions else 1.0 for i in range(N)])
-    g = np.array([0.0 if (i + interaction_range) in positions else 1.0
-                  for i in range(N)])
-    conv = tropical_conv_array(f, g, N)
-    # Ground state = global minimum of the convolution
-    return float(np.min(conv))
-
-
-def partition_function_tropical(positions: Set[int], N: int,
-                                max_range: int = 10) -> np.ndarray:
-    """
-    Compute tropical 'partition function' over interaction ranges.
-
-    Z(h) = min_{n} tropical_conv(support, shift_h(support))(n)
-
-    Z(h) = 0 iff there exist particles at separation h.
-    This gives a complete picture of which separations are
-    energetically accessible (zero cost).
-    """
-    Z = np.zeros(max_range)
-    for h in range(max_range):
-        f = np.array([0.0 if i in positions else 1.0 for i in range(N)])
-        g = np.array([0.0 if (i + h) in positions else 1.0
-                      for i in range(N)])
-        conv = tropical_conv_array(f, g, N)
-        Z[h] = float(np.min(conv))
-    return Z
-
-
-# ============================================================
-# Application 4: Sieve-Theoretic Density Bounds
-# ============================================================
-def sieve_density_analysis(N: int) -> Dict[str, any]:
-    """
-    Analyze how twin-pair density varies across residue-filtered sets.
-
-    Starting from {0,...,N-1}, progressively sieve by removing
-    residue classes and track how twin count changes.
-
-    This illustrates the arithmetic obstruction theorem:
-    sieving by congruences removes twin pairs selectively,
-    and the tropical framework detects which sieves are effective.
-    """
-    full = set(range(N))
-    results = []
-
-    # Start with full set
-    tc = len(enumerate_twin_pairs(full))
-    results.append({"sieve": "none", "size": len(full), "twins": tc})
-
-    # Remove multiples of 2 (keep odds)
-    s = {n for n in range(2, N) if n % 2 == 1}
-    tc = len(enumerate_twin_pairs(s))
-    results.append({"sieve": "remove even", "size": len(s), "twins": tc})
-
-    # Remove multiples of 3
-    s = {n for n in range(2, N) if n % 2 == 1 and n % 3 != 0}
-    tc = len(enumerate_twin_pairs(s))
-    results.append({"sieve": "remove 2,3-multiples", "size": len(s), "twins": tc})
-
-    # Remove multiples of 5
-    s = {n for n in range(2, N) if n % 2 == 1 and n % 3 != 0 and n % 5 != 0}
-    tc = len(enumerate_twin_pairs(s))
-    results.append({"sieve": "remove 2,3,5-multiples", "size": len(s), "twins": tc})
-
-    return results
-
-
-# ============================================================
-# Demonstrations
-# ============================================================
-if __name__ == "__main__":
-    print("Tropical Sieve Energetics — Applications")
+def demo_smoothness():
+    """Demonstrate tropical pre-filtering for smoothness detection."""
+    print("=" * 60)
+    print("APPLICATION 1: Cryptographic Smoothness Pre-filtering")
     print("=" * 60)
 
-    # --- Additive Combinatorics ---
-    print("\n1. ADDITIVE COMBINATORICS: Generalized Gap Detection")
-    print("-" * 50)
-    s = {n for n in range(100) if n % 6 == 1 or n % 6 == 5}
-    gaps_detected = generalized_gap_detection(s, [2, 4, 6, 8, 10, 12], 100)
-    print(f"  Set: numbers ≡ 1 or 5 (mod 6) in [0,100)")
-    print(f"  |s| = {len(s)}")
-    for gap, found in gaps_detected.items():
-        print(f"    gap {gap:2d}: {'present' if found else 'absent'}")
+    factor_base = list(primerange(2, 30))
+    print(f"Factor base: {factor_base}")
 
-    # --- Coding Theory ---
-    print("\n2. CODING THEORY: Code Gap Analysis")
-    print("-" * 50)
-    # Hamming-like code positions
-    code = {0, 3, 5, 6, 9, 10, 12, 15}
-    analysis = code_gap_analysis(code, 20)
-    print(f"  Codewords: {analysis['codewords']}")
-    print(f"  Min distance: {analysis['min_distance']}")
-    print(f"  Realized distances: {analysis['realized_distances']}")
+    # Generate QS-style candidates: x² - N for some N
+    N = 10007  # A semiprime-like number
+    candidates = [x * x - N for x in range(101, 201) if x * x > N]
 
-    # --- Statistical Mechanics ---
-    print("\n3. STATISTICAL MECHANICS: Ground-State Energy")
-    print("-" * 50)
-    primes = set()
-    for n in range(2, 50):
-        if all(n % d != 0 for d in range(2, int(n**0.5) + 1)):
-            primes.add(n)
+    smooth, prefiltered = tropical_smoothness_prefilter(
+        candidates, factor_base, threshold=0
+    )
 
-    for r in [2, 4, 6]:
-        E = ground_state_energy(primes, 50, r)
-        has_pair = any(p + r in primes for p in primes)
-        print(f"  Interaction range {r}: E = {E:.0f} "
-              f"({'pairs exist' if has_pair else 'no pairs'})")
+    total = len(candidates)
+    print(f"\nCandidates (x² - {N} for x in [101, 200]): {total}")
+    print(f"Pre-filter survivors: {len(prefiltered)} ({100*len(prefiltered)/total:.1f}%)")
+    print(f"Truly smooth: {len(smooth)} ({100*len(smooth)/total:.1f}%)")
+    if prefiltered:
+        print(f"Pre-filter elimination rate: {100*(total-len(prefiltered))/total:.1f}%")
 
-    Z = partition_function_tropical(primes, 50, 15)
-    print(f"\n  Tropical partition function Z(h) for primes < 50:")
-    for h in range(1, 15):
-        print(f"    h={h:2d}: Z={Z[h]:.0f} "
-              f"{'⟹ separation realized' if Z[h] == 0 else '⟹ no such pair'}")
 
-    # --- Sieve Analysis ---
-    print("\n4. SIEVE-THEORETIC DENSITY ANALYSIS (N=100)")
-    print("-" * 50)
-    sieve_results = sieve_density_analysis(100)
-    for r in sieve_results:
-        print(f"  {r['sieve']:25s}: |s|={r['size']:3d}, twins={r['twins']:3d}")
+# ============================================================
+# Application 2: Twin-Prime Candidate Screening
+# ============================================================
 
-    print("\n  Key insight: Progressive sieving reduces twin pairs,")
-    print("  but the relationship is NOT monotone in density.")
-    print("  Arithmetic structure (residue constraints) matters")
-    print("  more than cardinality alone — confirming the")
-    print("  obstruction theorem.")
+def screen_twin_candidates(X: int, sieve_primes: List[int]) -> Tuple[List[int], List[int]]:
+    """
+    Screen for twin-prime candidates using tropical pair-pattern scoring.
+
+    Returns (actual_twins, tropical_candidates).
+    """
+    # Tropical pair-pattern: for each prime p, check if the pair (n, n+2)
+    # avoids the "bad" residue class 0 mod p.
+    def pair_survives(n: int) -> bool:
+        for p in sieve_primes:
+            if n % p != 0 and (n + 2) % p != 0:
+                return True  # At least one prime doesn't eliminate either
+        return False
+
+    # More precise: the tropical version checks min over p of max(cost(n%p), cost((n+2)%p))
+    def tropical_pair_score(n: int) -> float:
+        c = lambda r: 0.0 if r != 0 else 1.0
+        if not sieve_primes:
+            return 0.0
+        return min(max(c(n % p), c((n + 2) % p)) for p in sieve_primes)
+
+    tropical_candidates = [n for n in range(2, X + 1) if tropical_pair_score(n) == 0.0]
+    actual_twins = [n for n in range(2, X + 1) if isprime(n) and isprime(n + 2)]
+
+    return actual_twins, tropical_candidates
+
+
+def demo_twin_screening():
+    """Demonstrate twin-prime candidate screening."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Twin-Prime Candidate Screening")
+    print("=" * 60)
+
+    sieve_primes = [3, 5, 7, 11, 13]
+    print(f"Sieve primes: {sieve_primes}")
+
+    for X in [100, 1000, 10000]:
+        twins, candidates = screen_twin_candidates(X, sieve_primes)
+        print(f"\nX = {X}:")
+        print(f"  Tropical candidates: {len(candidates)}")
+        print(f"  Actual twin primes: {len(twins)}")
+        if candidates:
+            precision = len(twins) / len(candidates) * 100
+            print(f"  Precision: {precision:.1f}%")
+        if twins:
+            recall = len([t for t in twins if t in candidates]) / len(twins) * 100
+            print(f"  Recall: {recall:.1f}%")
+
+
+# ============================================================
+# Application 3: Prime Constellation Search
+# ============================================================
+
+def constellation_score(
+    n: int,
+    pattern: List[int],
+    sieve_primes: List[int]
+) -> float:
+    """
+    Tropical score for a prime constellation pattern.
+
+    pattern = [0, h1, h2, ...] means we're looking for
+    (n, n+h1, n+h2, ...) all prime.
+
+    Score = min over sieve primes p of max over shifts h of cost((n+h) mod p).
+    """
+    c = lambda r: 0.0 if r != 0 else 1.0
+    if not sieve_primes:
+        return 0.0
+    return min(
+        max(c((n + h) % p) for h in pattern)
+        for p in sieve_primes
+    )
+
+
+def search_constellation(
+    X: int,
+    pattern: List[int],
+    sieve_primes: List[int]
+) -> Tuple[List[int], List[int]]:
+    """
+    Search for prime constellations up to X using tropical scoring.
+
+    Returns (verified_constellations, tropical_candidates).
+    """
+    candidates = [
+        n for n in range(2, X + 1)
+        if constellation_score(n, pattern, sieve_primes) == 0.0
+    ]
+
+    verified = [
+        n for n in candidates
+        if all(isprime(n + h) for h in pattern)
+    ]
+
+    return verified, candidates
+
+
+def demo_constellations():
+    """Demonstrate prime constellation search."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Prime Constellation Search")
+    print("=" * 60)
+
+    patterns = {
+        "Twin primes (p, p+2)": [0, 2],
+        "Cousin primes (p, p+4)": [0, 4],
+        "Sexy primes (p, p+6)": [0, 6],
+        "Prime triplet (p, p+2, p+6)": [0, 2, 6],
+        "Prime quadruplet (p, p+2, p+6, p+8)": [0, 2, 6, 8],
+    }
+
+    sieve_primes = [3, 5, 7, 11, 13]
+    X = 10000
+
+    print(f"Search range: [2, {X}]")
+    print(f"Sieve primes: {sieve_primes}")
+
+    for name, pattern in patterns.items():
+        verified, candidates = search_constellation(X, pattern, sieve_primes)
+        print(f"\n{name}:")
+        print(f"  Pattern: {pattern}")
+        print(f"  Tropical candidates: {len(candidates)}")
+        print(f"  Verified constellations: {len(verified)}")
+        if verified[:5]:
+            print(f"  First few: {verified[:5]}")
+
+
+if __name__ == "__main__":
+    demo_smoothness()
+    demo_twin_screening()
+    demo_constellations()
+
+    print("\n" + "=" * 60)
+    print("All applications demonstrated.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Tropical Sieve Energetics — Demonstrations
+Tropical Sieve Theory: Demonstration of Core Theorems
 
-Concrete numerical examples illustrating the theorems from the formal framework.
-Shows how min-plus convolution detects gap patterns in finite subsets of natural numbers.
+This module provides concrete numerical demonstrations of the comparison
+theorems between tropical (min-plus) and classical (additive weighted) sieves.
 """
 
 import numpy as np
-from typing import Set, Dict, List, Tuple
+from typing import List, Callable
 
 
-def support_cost(s: Set[int], n: int) -> float:
-    """Support cost: 0 if n ∈ s, 1 otherwise."""
-    return 0.0 if n in s else 1.0
+def tropical_sieve_score(P: List[int], c: Callable[[int], float], n: int) -> float:
+    """Tropical sieve score: min over primes p in P of c(n mod p)."""
+    if not P:
+        return 0.0
+    return min(c(n % p) for p in P)
 
 
-def tropical_conv(f, g, n: int) -> float:
-    """Min-plus convolution: inf_{k=0..n} (f(k) + g(n-k))."""
+def classical_sieve_weight(P: List[int], w: Callable[[int], float], n: int) -> float:
+    """Classical sieve weight: sum over primes p in P of w(n mod p)."""
+    return sum(w(n % p) for p in P)
+
+
+def tropical_survivors(A: List[int], P: List[int], c: Callable, t: float) -> List[int]:
+    """Elements of A with tropical score ≤ t."""
+    return [n for n in A if tropical_sieve_score(P, c, n) <= t]
+
+
+def classical_survivors(A: List[int], P: List[int], w: Callable, t: float) -> List[int]:
+    """Elements of A with classical weight ≤ t."""
+    return [n for n in A if classical_sieve_weight(P, w, n) <= t]
+
+
+def pair_pattern_score(P: List[int], c: Callable, n: int) -> float:
+    """Pair-pattern score for twin-prime candidates."""
+    if not P:
+        return 0.0
+    return min(max(c(n % p), c((n + 2) % p)) for p in P)
+
+
+def twin_unsieved(X: int, P: List[int], c: Callable, t: float) -> List[int]:
+    """Elements up to X with pair-pattern score ≤ t."""
+    return [n for n in range(X + 1) if pair_pattern_score(P, c, n) <= t]
+
+
+def infimal_convolution(f: Callable, g: Callable, n: int) -> float:
+    """Min-plus convolution: min_{0 ≤ k ≤ n} [f(k) + g(n-k)]."""
     return min(f(k) + g(n - k) for k in range(n + 1))
 
 
-def pair_indicator(s: Set[int], n: int) -> int:
-    """1 if n and n+2 both in s, else 0."""
-    return 1 if (n in s and n + 2 in s) else 0
+# ============================================================
+# Demo 1: Comparison Theorem (Tropical ≤ Classical)
+# ============================================================
+def demo_comparison():
+    """Demonstrate that tropical score ≤ classical weight pointwise."""
+    print("=" * 60)
+    print("DEMO 1: Comparison Theorem (Tropical ≤ Classical)")
+    print("=" * 60)
 
+    P = [2, 3, 5, 7]
+    c = lambda r: float(r)  # cost = residue value
+    w = c  # same function for both
 
-def twin_count(s: Set[int]) -> int:
-    """Count of twin pairs in s."""
-    return sum(pair_indicator(s, n) for n in s)
+    print(f"\nPrime set P = {P}")
+    print(f"Cost/weight function: c(r) = w(r) = r")
+    print(f"\n{'n':>5} | {'Tropical (min)':>15} | {'Classical (sum)':>15} | {'Trop ≤ Class?':>14}")
+    print("-" * 60)
 
+    violations = 0
+    for n in range(1, 31):
+        trop = tropical_sieve_score(P, c, n)
+        clas = classical_sieve_weight(P, w, n)
+        ok = "✓" if trop <= clas else "✗"
+        if trop > clas:
+            violations += 1
+        print(f"{n:5d} | {trop:15.1f} | {clas:15.1f} | {ok:>14}")
 
-def has_no_twin_pairs(s: Set[int]) -> bool:
-    """Check if s has no twin pairs."""
-    return all(n + 2 not in s for n in s)
-
-
-def gap_profile(s: Set[int], h: int, N: int) -> int:
-    """Count elements n < N with both n ∈ s and n+h ∈ s."""
-    return sum(1 for n in range(N) if n in s and n + h in s)
-
-
-def find_gap_witness(s: Set[int], n: int) -> Tuple[bool, int]:
-    """Find k ≤ n such that k ∈ s and (n-k)+2 ∈ s, if it exists."""
-    for k in range(n + 1):
-        if k in s and (n - k) + 2 in s:
-            return True, k
-    return False, -1
+    print(f"\nViolations of trop ≤ class: {violations} (should be 0)")
 
 
 # ============================================================
-# Example 1: Evens in [0, N)
+# Demo 2: Survivor Set Inclusion
 # ============================================================
-print("=" * 60)
-print("Example 1: Evens in [0, 20)")
-print("=" * 60)
-N = 20
-evens = {n for n in range(N) if n % 2 == 0}
-print(f"  s = {sorted(evens)}")
-print(f"  |s| = {len(evens)}")
-print(f"  twin_count = {twin_count(evens)}")
-print(f"  has_no_twin_pairs = {has_no_twin_pairs(evens)}")
-print(f"  Note: {0} and {2} are both even and form a twin pair!")
-print()
+def demo_survivors():
+    """Demonstrate classical survivors ⊆ tropical survivors."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Survivor Set Inclusion")
+    print("=" * 60)
 
-# ============================================================
-# Example 2: Odds in [0, N)
-# ============================================================
-print("=" * 60)
-print("Example 2: Odds in [0, 20)")
-print("=" * 60)
-odds = {n for n in range(N) if n % 2 == 1}
-print(f"  s = {sorted(odds)}")
-print(f"  |s| = {len(odds)}")
-print(f"  twin_count = {twin_count(odds)}")
-print(f"  has_no_twin_pairs = {has_no_twin_pairs(odds)}")
-print()
+    P = [2, 3, 5]
+    c = lambda r: float(r)
+    A = list(range(1, 101))
+
+    for t in [0.5, 1.0, 2.0, 3.0]:
+        trop = set(tropical_survivors(A, P, c, t))
+        clas = set(classical_survivors(A, P, c, t))
+        subset = clas.issubset(trop)
+        print(f"Threshold t={t:.1f}: "
+              f"|tropical|={len(trop):3d}, "
+              f"|classical|={len(clas):3d}, "
+              f"classical ⊆ tropical: {subset}")
+
 
 # ============================================================
-# Example 3: Residue class mod 3 — no twin pairs
+# Demo 3: Singleton Coincidence
 # ============================================================
-print("=" * 60)
-print("Example 3: Residue class 0 mod 3 in [0, 30)")
-print("=" * 60)
-mod3_class = {n for n in range(30) if n % 3 == 0}
-print(f"  s = {sorted(mod3_class)}")
-print(f"  |s| = {len(mod3_class)}")
-print(f"  twin_count = {twin_count(mod3_class)}")
-print(f"  has_no_twin_pairs = {has_no_twin_pairs(mod3_class)}")
-print(f"  Theorem B2 confirms: single residue class mod 3 ⟹ zero twin pairs")
-print()
+def demo_singleton():
+    """Demonstrate exact coincidence for singleton prime sets."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Singleton Coincidence (|P|=1)")
+    print("=" * 60)
 
-for r in range(3):
-    s_r = {n for n in range(30) if n % 3 == r}
-    print(f"  Residue class {r} mod 3: twin_count = {twin_count(s_r)}")
+    for p in [2, 3, 5, 7, 11]:
+        P = [p]
+        c = lambda r, p=p: float(r)
+        mismatches = 0
+        for n in range(1, 1001):
+            if tropical_sieve_score(P, c, n) != classical_sieve_weight(P, c, n):
+                mismatches += 1
+        print(f"P = {{{p}}}: mismatches in [1..1000] = {mismatches} (should be 0)")
 
-print()
-
-# ============================================================
-# Example 4: A small set with exactly one twin pair
-# ============================================================
-print("=" * 60)
-print("Example 4: Set with exactly one twin pair")
-print("=" * 60)
-s_one = {3, 5, 10}
-print(f"  s = {sorted(s_one)}")
-print(f"  twin_count = {twin_count(s_one)}")
-print(f"  Twin pair at n=3: {3} and {5} (3+2=5)")
-print()
 
 # ============================================================
-# Example 5: Tropical convolution witness detection
+# Demo 4: Strict Separation for |P| ≥ 2
 # ============================================================
-print("=" * 60)
-print("Example 5: Tropical convolution witness detection")
-print("=" * 60)
-s = {1, 4, 7, 9}
-print(f"  s = {sorted(s)}")
-print()
+def demo_strict_separation():
+    """Demonstrate strict inequality when |P| ≥ 2."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Strict Separation (|P| ≥ 2)")
+    print("=" * 60)
 
-f = lambda k: support_cost(s, k)
-g = lambda m: support_cost(s, m + 2)
+    P = [2, 3, 5]
+    c = lambda r: max(float(r), 0.1)  # strictly positive costs
 
-for n in range(15):
-    conv_val = tropical_conv(f, g, n)
-    found, k = find_gap_witness(s, n)
-    status = f"witness k={k}: {k}∈s, {n-k}+2={n-k+2}∈s" if found else "no witness"
-    print(f"  n={n:2d}: conv={conv_val:.0f}, {status}")
+    strict_count = 0
+    for n in range(1, 101):
+        trop = tropical_sieve_score(P, c, n)
+        clas = classical_sieve_weight(P, c, n)
+        if trop < clas:
+            strict_count += 1
 
-print()
-print("  Theorem C3 confirmed: conv=0 ⟺ witness exists")
-print()
+    print(f"P = {P}, c(r) = max(r, 0.1)")
+    print(f"Candidates with trop < class in [1..100]: {strict_count}/100")
+    print(f"(Strict separation occurs for most candidates)")
 
-# ============================================================
-# Example 6: Spacing ≥ 3 implies no twin pairs
-# ============================================================
-print("=" * 60)
-print("Example 6: Well-spaced sets")
-print("=" * 60)
-s_spaced = {0, 3, 6, 9, 12, 15}
-print(f"  s = {sorted(s_spaced)} (spacing = 3)")
-print(f"  twin_count = {twin_count(s_spaced)}")
-print(f"  has_no_twin_pairs = {has_no_twin_pairs(s_spaced)}")
-print()
-
-s_close = {0, 2, 5, 7, 10, 12}
-print(f"  s = {sorted(s_close)} (contains pairs with gap 2)")
-print(f"  twin_count = {twin_count(s_close)}")
-print(f"  Twin pairs: ", end="")
-print(", ".join(f"({n},{n+2})" for n in sorted(s_close) if n+2 in s_close))
-print()
 
 # ============================================================
-# Example 7: Gap profiles for various gaps
+# Demo 5: Twin-Candidate Growth
 # ============================================================
-print("=" * 60)
-print("Example 7: Gap profiles")
-print("=" * 60)
-primes_30 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
-print(f"  Primes < 30: {sorted(primes_30)}")
-for gap in [1, 2, 4, 6]:
-    gp = gap_profile(primes_30, gap, 30)
-    pairs = [(n, n+gap) for n in sorted(primes_30) if n+gap in primes_30 and n < 30]
-    print(f"  gap={gap}: count={gp}, pairs={pairs}")
+def demo_twin_growth():
+    """Demonstrate linear growth of twin-unsieved candidates."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Twin-Candidate Unsieved Growth")
+    print("=" * 60)
 
-print()
+    P = [3, 5, 7]
+    c = lambda r: 0.0 if r == 0 else 1.0
+    t = 0.5
+
+    print(f"P = {P}, c(r) = 0 if r=0, else 1, threshold t={t}")
+    print(f"\n{'X':>8} | {'|U(X)|':>8} | {'X/|U(X)|':>10} | {'|U(X)|/X':>10}")
+    print("-" * 45)
+
+    for X in [100, 500, 1000, 5000, 10000]:
+        U = twin_unsieved(X, P, c, t)
+        count = len(U)
+        ratio = X / count if count > 0 else float('inf')
+        density = count / X if X > 0 else 0
+        print(f"{X:8d} | {count:8d} | {ratio:10.3f} | {density:10.6f}")
+
 
 # ============================================================
-# Summary
+# Demo 6: Infimal Convolution
 # ============================================================
-print("=" * 60)
-print("SUMMARY OF KEY RESULTS")
-print("=" * 60)
-print("""
-  Theorem A: Empty set witnesses twin-free subset for any N, weight.
-             ⟹ Tropical/order data alone cannot force twin primes.
+def demo_infimal_convolution():
+    """Demonstrate infimal convolution properties."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Infimal Convolution (Min-Plus Convolution)")
+    print("=" * 60)
 
-  Theorem B2: Single residue class mod 3 ⟹ zero twin pairs.
-              Twin detection requires cross-residue interaction.
+    f = lambda k: float(k ** 2)
+    g = lambda k: float((k - 3) ** 2)
 
-  Theorem B3: Spacing ≥ 3 ⟹ no twin pairs.
+    print(f"f(k) = k², g(k) = (k-3)²")
+    print(f"\n{'n':>5} | {'(f ⊞ g)(n)':>12} | {'Achieved at k':>14} | {'f(k)+g(n-k)':>12}")
+    print("-" * 52)
 
-  Theorem C3: Tropical convolution vanishes ⟺ gap-2 witness exists.
-              This is the tropical pattern-detection theorem.
-""")
+    for n in range(10):
+        val = infimal_convolution(f, g, n)
+        # Find minimizer
+        best_k = min(range(n + 1), key=lambda k: f(k) + g(n - k))
+        print(f"{n:5d} | {val:12.1f} | {best_k:14d} | {f(best_k) + g(n - best_k):12.1f}")
+
+
+# ============================================================
+# Demo 7: Relaxation Gap vs. Number of Primes
+# ============================================================
+def demo_relaxation_gap():
+    """Show how the tropical-classical gap grows with |P|."""
+    print("\n" + "=" * 60)
+    print("DEMO 7: Relaxation Gap vs. Sieve Depth")
+    print("=" * 60)
+
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    c = lambda r: float(r)
+    A = list(range(1, 1001))
+    t = 2.0
+
+    print(f"A = [1..1000], c(r) = r, threshold t = {t}")
+    print(f"\n{'|P|':>5} | {'Trop surv':>10} | {'Class surv':>11} | {'Ratio':>7}")
+    print("-" * 42)
+
+    for k in range(1, len(primes) + 1):
+        P = primes[:k]
+        ts = len(tropical_survivors(A, P, c, t))
+        cs = len(classical_survivors(A, P, c, t))
+        ratio = ts / cs if cs > 0 else float('inf')
+        print(f"{k:5d} | {ts:10d} | {cs:11d} | {ratio:7.2f}")
+
 
 if __name__ == "__main__":
-    pass
+    demo_comparison()
+    demo_survivors()
+    demo_singleton()
+    demo_strict_separation()
+    demo_twin_growth()
+    demo_infimal_convolution()
+    demo_relaxation_gap()
+
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
-"""Generate PACKAGE.json with all artifacts."""
-import json
-import base64
+"""Generate PACKAGE.json bundling all artifacts."""
 
+import json
+import sys
+sys.path.insert(0, '.')
+from visualizations import generate_all
+
+# Generate visualization base64 data
+figs = generate_all()
+
+# Read files
 def read_file(path):
     with open(path, 'r') as f:
         return f.read()
 
-def read_binary_base64(path):
-    with open(path, 'rb') as f:
-        return "data:image/png;base64," + base64.b64encode(f.read()).decode()
-
-# Read all content
 article = read_file('ARTICLE.md')
 research_paper = read_file('RESEARCH_PAPER.md')
 future_directions = read_file('FUTURE_DIRECTIONS.md')
-lean_proofs = read_file('Tropical/SieveEnergetics.lean')
+lean_code = read_file('Tropical/TropicalSieveTheory.lean')
 demo_code = read_file('demo.py')
 algorithms_code = read_file('algorithms.py')
 applications_code = read_file('applications.py')
 
-# Read visualization images
-fig1 = read_binary_base64('fig_tropical_convolution.png')
-fig2 = read_binary_base64('fig_residue_decomposition.png')
-fig3 = read_binary_base64('fig_gap_profile.png')
-fig4 = read_binary_base64('fig_sieve_progression.png')
-
 package = {
-    "title": "Tropical Sieve Energetics: Gap-Pattern Detection via Min-Plus Convolution",
-    "domain": "Tropical Algebra / Additive Combinatorics / Number Theory",
+    "title": "Tropical Sieve Theory: Comparison Theorems and the Limits of Min-Plus Sieve Methods",
+    "domain": "Algebra / Number Theory / Tropical Mathematics",
     "article": article,
     "research_paper": research_paper,
     "future_directions": future_directions,
     "demos": [
         {
-            "name": "Tropical Sieve Energetics Demo",
+            "name": "Tropical vs Classical Sieve Comparison",
             "code": demo_code
         },
         {
-            "name": "Applications Demo",
+            "name": "Applications: Cryptography, Twin Primes, Constellations",
             "code": applications_code
         }
     ],
     "algorithms": [
         {
-            "name": "Tropical (Min-Plus) Convolution",
-            "pseudocode": "Input: f, g : {0,...,N-1} -> R, point n\nOutput: min_{k=0}^{n} [f(k) + g(n-k)]\n\nresult = +inf\nfor k = 0 to n:\n    result = min(result, f(k) + g(n-k))\nreturn result\n\nTime: O(n)  Space: O(1)",
+            "name": "Tropical Sieve Score",
+            "pseudocode": "Input: Prime set P, cost function c, candidate n\nOutput: min_{p in P} c(n mod p)\n\nscore ← +∞\nfor each p in P:\n    score ← min(score, c(n mod p))\nreturn score\n\nComplexity: O(|P|)",
             "code": algorithms_code
         },
         {
-            "name": "Gap-Pattern Witness Extraction",
-            "pseudocode": "Input: Set s, range N, gap h\nOutput: List of (n, k) witness pairs\n\nfor n = 0 to N-1:\n    for k in sorted(s):\n        if k > n: break\n        if (n-k)+h in s:\n            emit (n, k); break\n\nTime: O(N * |s|)  Space: O(|s|)",
-            "code": algorithms_code
+            "name": "Two-Phase Sieve (Tropical Pre-filter + Classical Refinement)",
+            "pseudocode": "Phase 1: For each n in A, if min_p c(n mod p) > t, eliminate n\nPhase 2: For surviving n, if sum_p w(n mod p) > t, eliminate n\nCorrectness: Comparison theorem guarantees no false negatives\nComplexity: O(|A| · |P|)",
+            "code": "# See algorithms.py two_phase_sieve function"
         }
     ],
     "visualizations": [
         {
-            "name": "Tropical Convolution Witness Detection",
-            "data": fig1
+            "name": "Tropical vs Classical Score Comparison",
+            "data": figs['comparison']
         },
         {
-            "name": "Residue Class Decomposition",
-            "data": fig2
+            "name": "Relaxation Gap vs Sieve Depth",
+            "data": figs['relaxation_gap']
         },
         {
-            "name": "Gap Profile of Primes",
-            "data": fig3
+            "name": "Survivor Count Comparison",
+            "data": figs['survivors']
         },
         {
-            "name": "Sieve Density Progression",
-            "data": fig4
+            "name": "Twin-Candidate Growth",
+            "data": figs['twin_growth']
+        },
+        {
+            "name": "Score Heatmap",
+            "data": figs['heatmap']
         }
     ],
-    "lean_proofs": lean_proofs
+    "lean_proofs": lean_code
 }
 
 with open('PACKAGE.json', 'w') as f:
     json.dump(package, f, indent=2, ensure_ascii=False)
 
-print(f"PACKAGE.json generated ({len(json.dumps(package))//1024} KB)")
+print(f"PACKAGE.json written ({len(json.dumps(package))} chars)")
 
 
 #!/usr/bin/env python3
 """
-Tropical Sieve Energetics — Visualizations
+Tropical Sieve Theory: Visualizations
 
-Generates publication-quality figures illustrating the key theorems.
+Generates publication-quality figures showing key mathematical structures.
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
 import base64
 from io import BytesIO
-from typing import Set
 
 
-def support_cost(s: Set[int], n: int) -> float:
-    return 0.0 if n in s else 1.0
+def tropical_sieve_score(P, c, n):
+    if not P:
+        return 0.0
+    return min(c(n % p) for p in P)
 
 
-def tropical_conv_val(s: Set[int], n: int, gap: int = 2) -> float:
-    return min(support_cost(s, k) + support_cost(s, (n - k) + gap)
-               for k in range(n + 1))
+def classical_sieve_weight(P, w, n):
+    return sum(w(n % p) for p in P)
 
 
-def fig_to_base64(fig) -> str:
+def pair_pattern_score(P, c, n):
+    if not P:
+        return 0.0
+    return min(max(c(n % p), c((n + 2) % p)) for p in P)
+
+
+def save_fig_base64(fig) -> str:
     buf = BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode()
-
-
-def is_prime(n):
-    if n < 2: return False
-    if n < 4: return True
-    if n % 2 == 0 or n % 3 == 0: return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0: return False
-        i += 6
-    return True
+    data = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{data}"
 
 
 # ============================================================
-# Figure 1: Tropical Convolution Witness Detection
+# Figure 1: Tropical vs Classical Scores
 # ============================================================
-def plot_tropical_convolution():
-    primes = {n for n in range(60) if is_prime(n)}
-    N = 40
+def fig_comparison():
+    P = [2, 3, 5, 7]
+    c = lambda r: float(r)
+    ns = list(range(1, 51))
+    trop = [tropical_sieve_score(P, c, n) for n in ns]
+    clas = [classical_sieve_weight(P, c, n) for n in ns]
 
-    conv_vals = [tropical_conv_val(primes, n) for n in range(N)]
-    witnesses = [n for n in range(N) if conv_vals[n] == 0]
-    non_witnesses = [n for n in range(N) if conv_vals[n] > 0]
-
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 6), sharex=True)
-
-    # Top: Prime membership
-    for n in range(N):
-        color = '#2196F3' if n in primes else '#E0E0E0'
-        ax1.bar(n, 1, color=color, edgecolor='white', linewidth=0.5)
-    ax1.set_ylabel('Membership', fontsize=12)
-    ax1.set_title('Tropical Convolution Detects Gap-2 Patterns in Primes',
-                   fontsize=14, fontweight='bold')
-    ax1.set_yticks([])
-
-    # Custom legend
-    from matplotlib.patches import Patch
-    ax1.legend([Patch(facecolor='#2196F3'), Patch(facecolor='#E0E0E0')],
-               ['Prime', 'Not prime'], loc='upper right', fontsize=10)
-
-    # Bottom: Convolution values
-    colors = ['#4CAF50' if v == 0 else '#FF5722' for v in conv_vals]
-    ax2.bar(range(N), conv_vals, color=colors, edgecolor='white', linewidth=0.5)
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel('Conv(n)', fontsize=12)
-    ax2.axhline(y=0, color='black', linewidth=0.5)
-
-    ax2.legend([Patch(facecolor='#4CAF50'), Patch(facecolor='#FF5722')],
-               ['Witness exists (conv=0)', 'No witness (conv>0)'],
-               loc='upper right', fontsize=10)
-
-    plt.tight_layout()
-    return fig
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(np.array(ns) - 0.2, trop, 0.4, label='Tropical (min)', color='#2196F3', alpha=0.8)
+    ax.bar(np.array(ns) + 0.2, clas, 0.4, label='Classical (sum)', color='#FF5722', alpha=0.8)
+    ax.set_xlabel('Candidate n', fontsize=12)
+    ax.set_ylabel('Score', fontsize=12)
+    ax.set_title('Tropical vs Classical Sieve Scores\n(P = {2,3,5,7}, c(r) = r)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_xlim(0, 51)
+    fig.tight_layout()
+    fig.savefig('fig_comparison.png', dpi=150, bbox_inches='tight')
+    return save_fig_base64(fig)
 
 
 # ============================================================
-# Figure 2: Residue Class Decomposition
+# Figure 2: Relaxation Gap Growth
 # ============================================================
-def plot_residue_decomposition():
-    N = 30
-    primes = {n for n in range(N) if is_prime(n)}
+def fig_relaxation_gap():
+    primes_list = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    c = lambda r: float(r)
+    A = list(range(1, 1001))
 
-    fig, axes = plt.subplots(1, 4, figsize=(16, 3))
+    depths = list(range(1, len(primes_list) + 1))
+    mean_gaps = []
+    max_gaps = []
 
-    # Full set
-    for n in range(N):
-        color = '#2196F3' if n in primes else '#E0E0E0'
-        axes[0].bar(n, 1, color=color, edgecolor='white', linewidth=0.5)
-    twins = [(n, n+2) for n in sorted(primes) if n+2 in primes]
-    for (a, b) in twins:
-        axes[0].annotate('', xy=(b, 1.05), xytext=(a, 1.05),
-                         arrowprops=dict(arrowstyle='<->', color='red', lw=2))
-    axes[0].set_title(f'All primes < {N}\n{len(twins)} twin pairs', fontsize=11)
-    axes[0].set_yticks([])
+    for k in depths:
+        P = primes_list[:k]
+        gaps = [classical_sieve_weight(P, c, n) - tropical_sieve_score(P, c, n) for n in A]
+        mean_gaps.append(np.mean(gaps))
+        max_gaps.append(np.max(gaps))
 
-    # Residue classes mod 3
-    for r in range(3):
-        ax = axes[r + 1]
-        s_r = {n for n in primes if n % 3 == r}
-        for n in range(N):
-            if n in s_r:
-                color = ['#FF9800', '#9C27B0', '#009688'][r]
-            else:
-                color = '#F5F5F5'
-            ax.bar(n, 1, color=color, edgecolor='white', linewidth=0.5)
-        tc = sum(1 for n in s_r if n + 2 in s_r)
-        ax.set_title(f'n ≡ {r} (mod 3)\n{tc} twin pairs', fontsize=11)
-        ax.set_yticks([])
-
-    fig.suptitle('Residue Decomposition: Single Class mod 3 → Zero Twin Pairs',
-                 fontsize=13, fontweight='bold', y=1.08)
-    plt.tight_layout()
-    return fig
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(depths, mean_gaps, 'o-', color='#2196F3', linewidth=2, markersize=8, label='Mean gap')
+    ax.plot(depths, max_gaps, 's-', color='#FF5722', linewidth=2, markersize=8, label='Max gap')
+    ax.fill_between(depths, 0, mean_gaps, alpha=0.15, color='#2196F3')
+    ax.set_xlabel('Number of sieve primes |P|', fontsize=12)
+    ax.set_ylabel('Classical − Tropical score', fontsize=12)
+    ax.set_title('Relaxation Gap: How Much Information\nTropicalization Loses', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    fig.savefig('fig_relaxation_gap.png', dpi=150, bbox_inches='tight')
+    return save_fig_base64(fig)
 
 
 # ============================================================
-# Figure 3: Gap Profile Heatmap
+# Figure 3: Survivor Count Comparison
 # ============================================================
-def plot_gap_profile():
-    N = 100
-    primes = {n for n in range(N) if is_prime(n)}
+def fig_survivors():
+    P = [2, 3, 5, 7, 11]
+    c = lambda r: float(r)
+    A = list(range(1, 501))
 
-    max_gap = 30
-    profile = np.zeros(max_gap)
-    for h in range(max_gap):
-        profile[h] = sum(1 for n in range(N) if n in primes and n + h in primes)
+    thresholds = np.linspace(0, 10, 50)
+    trop_counts = []
+    clas_counts = []
 
-    fig, ax = plt.subplots(figsize=(12, 4))
-    colors = ['#4CAF50' if profile[h] > 0 else '#FFCDD2' for h in range(max_gap)]
-    bars = ax.bar(range(max_gap), profile, color=colors, edgecolor='white')
+    for t in thresholds:
+        tc = sum(1 for n in A if tropical_sieve_score(P, c, n) <= t)
+        cc = sum(1 for n in A if classical_sieve_weight(P, c, n) <= t)
+        trop_counts.append(tc)
+        clas_counts.append(cc)
 
-    # Highlight gap 2 (twin primes)
-    if max_gap > 2:
-        bars[2].set_color('#F44336')
-        bars[2].set_edgecolor('#B71C1C')
-
-    ax.set_xlabel('Gap h', fontsize=12)
-    ax.set_ylabel('Count of pairs (n, n+h) in primes', fontsize=12)
-    ax.set_title(f'Gap Profile of Primes < {N}', fontsize=14, fontweight='bold')
-    ax.set_xticks(range(0, max_gap, 2))
-
-    # Annotate twin prime count
-    ax.annotate(f'Twin primes\n(gap 2): {int(profile[2])} pairs',
-                xy=(2, profile[2]), xytext=(8, profile[2] + 2),
-                arrowprops=dict(arrowstyle='->', color='#F44336'),
-                fontsize=10, color='#F44336', fontweight='bold')
-
-    plt.tight_layout()
-    return fig
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(thresholds, trop_counts, '-', color='#2196F3', linewidth=2.5, label='Tropical survivors')
+    ax.plot(thresholds, clas_counts, '-', color='#FF5722', linewidth=2.5, label='Classical survivors')
+    ax.fill_between(thresholds, clas_counts, trop_counts, alpha=0.2, color='#9C27B0',
+                     label='Gap (tropical − classical)')
+    ax.set_xlabel('Threshold t', fontsize=12)
+    ax.set_ylabel('Number of survivors', fontsize=12)
+    ax.set_title('Survivor Counts vs Threshold\n(Tropical always ≥ Classical)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    fig.savefig('fig_survivors.png', dpi=150, bbox_inches='tight')
+    return save_fig_base64(fig)
 
 
 # ============================================================
-# Figure 4: Sieve Density Progression
+# Figure 4: Twin-Candidate Growth
 # ============================================================
-def plot_sieve_progression():
-    N = 200
-    sieve_steps = []
+def fig_twin_growth():
+    P = [3, 5, 7]
+    c = lambda r: 0.0 if r == 0 else 1.0
+    t = 0.5
 
-    # Progressive sieve
-    s = set(range(2, N))
-    sieve_steps.append(("No sieve", len(s),
-                        sum(1 for n in s if n+2 in s)))
-
-    for p in [2, 3, 5, 7, 11, 13]:
-        # Remove one residue class mod p (the class containing 0)
-        s = {n for n in s if n % p != 0}
-        twins = sum(1 for n in s if n + 2 in s)
-        sieve_steps.append((f"Sieve ≤ {p}", len(s), twins))
+    Xs = list(range(10, 5001, 50))
+    counts = []
+    for X in Xs:
+        count = sum(1 for n in range(X + 1) if pair_pattern_score(P, c, n) <= t)
+        counts.append(count)
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-    labels = [step[0] for step in sieve_steps]
-    sizes = [step[1] for step in sieve_steps]
-    twins = [step[2] for step in sieve_steps]
+    ax1.plot(Xs, counts, '-', color='#4CAF50', linewidth=2)
+    ax1.set_xlabel('X', fontsize=12)
+    ax1.set_ylabel('|U(X)|', fontsize=12)
+    ax1.set_title('Twin-Unsieved Count Growth', fontsize=14)
+    ax1.grid(True, alpha=0.3)
 
-    x = range(len(labels))
-    ax1.bar(x, sizes, color='#2196F3', alpha=0.8)
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(labels, rotation=45, ha='right')
-    ax1.set_ylabel('Set size', fontsize=12)
-    ax1.set_title('Set Size After Sieving', fontsize=13, fontweight='bold')
+    densities = [c / X if X > 0 else 0 for c, X in zip(counts, Xs)]
+    ax2.plot(Xs, densities, '-', color='#FF9800', linewidth=2)
+    ax2.set_xlabel('X', fontsize=12)
+    ax2.set_ylabel('|U(X)| / X', fontsize=12)
+    ax2.set_title('Twin-Unsieved Density', fontsize=14)
+    ax2.grid(True, alpha=0.3)
 
-    ax2.bar(x, twins, color='#FF5722', alpha=0.8)
-    ax2.set_xticks(x)
-    ax2.set_xticklabels(labels, rotation=45, ha='right')
-    ax2.set_ylabel('Twin pair count', fontsize=12)
-    ax2.set_title('Twin Pairs After Sieving', fontsize=13, fontweight='bold')
-
-    # Add density ratio
-    for i, (s_val, t_val) in enumerate(zip(sizes, twins)):
-        if s_val > 0:
-            ratio = t_val / s_val
-            ax2.annotate(f'{ratio:.2f}', xy=(i, t_val), ha='center',
-                         va='bottom', fontsize=8, color='#333')
-
-    plt.tight_layout()
-    return fig
+    fig.tight_layout()
+    fig.savefig('fig_twin_growth.png', dpi=150, bbox_inches='tight')
+    return save_fig_base64(fig)
 
 
 # ============================================================
-# Generate all figures
+# Figure 5: Score Heatmap
 # ============================================================
+def fig_heatmap():
+    primes = [2, 3, 5, 7, 11]
+    c = lambda r: float(r)
+    ns = list(range(1, 61))
+
+    # Compute local costs for each (n, p)
+    data = np.zeros((len(primes), len(ns)))
+    for i, p in enumerate(primes):
+        for j, n in enumerate(ns):
+            data[i, j] = c(n % p)
+
+    fig, axes = plt.subplots(3, 1, figsize=(12, 10), gridspec_kw={'height_ratios': [3, 1, 1]})
+
+    # Heatmap of local costs
+    im = axes[0].imshow(data, aspect='auto', cmap='YlOrRd', interpolation='nearest')
+    axes[0].set_yticks(range(len(primes)))
+    axes[0].set_yticklabels([f'p={p}' for p in primes])
+    axes[0].set_xlabel('Candidate n')
+    axes[0].set_title('Local Residue Costs c(n mod p)', fontsize=14)
+    plt.colorbar(im, ax=axes[0], label='Cost')
+
+    # Tropical score (row-wise min)
+    trop = [tropical_sieve_score(primes, c, n) for n in ns]
+    axes[1].bar(range(len(ns)), trop, color='#2196F3', alpha=0.8)
+    axes[1].set_ylabel('Tropical\n(min)')
+    axes[1].set_xlim(-0.5, len(ns) - 0.5)
+
+    # Classical weight (column-wise sum)
+    clas = [classical_sieve_weight(primes, c, n) for n in ns]
+    axes[2].bar(range(len(ns)), clas, color='#FF5722', alpha=0.8)
+    axes[2].set_ylabel('Classical\n(sum)')
+    axes[2].set_xlabel('Candidate n')
+    axes[2].set_xlim(-0.5, len(ns) - 0.5)
+
+    fig.tight_layout()
+    fig.savefig('fig_heatmap.png', dpi=150, bbox_inches='tight')
+    return save_fig_base64(fig)
+
+
+def generate_all():
+    """Generate all figures and return base64 data."""
+    print("Generating figures...")
+    figs = {}
+    figs['comparison'] = fig_comparison()
+    print("  ✓ Comparison")
+    figs['relaxation_gap'] = fig_relaxation_gap()
+    print("  ✓ Relaxation gap")
+    figs['survivors'] = fig_survivors()
+    print("  ✓ Survivors")
+    figs['twin_growth'] = fig_twin_growth()
+    print("  ✓ Twin growth")
+    figs['heatmap'] = fig_heatmap()
+    print("  ✓ Heatmap")
+    print("All figures generated.")
+    return figs
+
+
 if __name__ == "__main__":
-    print("Generating visualizations...")
-
-    fig1 = plot_tropical_convolution()
-    fig1.savefig('fig_tropical_convolution.png', dpi=150, bbox_inches='tight')
-    print("  Saved fig_tropical_convolution.png")
-
-    fig2 = plot_residue_decomposition()
-    fig2.savefig('fig_residue_decomposition.png', dpi=150, bbox_inches='tight')
-    print("  Saved fig_residue_decomposition.png")
-
-    fig3 = plot_gap_profile()
-    fig3.savefig('fig_gap_profile.png', dpi=150, bbox_inches='tight')
-    print("  Saved fig_gap_profile.png")
-
-    fig4 = plot_sieve_progression()
-    fig4.savefig('fig_sieve_progression.png', dpi=150, bbox_inches='tight')
-    print("  Saved fig_sieve_progression.png")
-
-    print("Done!")
+    figs = generate_all()
+    for name, data in figs.items():
+        print(f"{name}: {len(data)} chars of base64")
