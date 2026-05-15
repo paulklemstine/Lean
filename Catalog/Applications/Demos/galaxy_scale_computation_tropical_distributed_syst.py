@@ -1,313 +1,347 @@
 #!/usr/bin/env python3
 """
-Tropical Distributed Systems: Real-World Applications
+applications.py — Real-World Applications of Tropical Distributed Systems
 
-Demonstrates how the tropical distributed systems theory applies to:
-1. Data center network optimization
-2. Interplanetary internet design
-3. CRDT-based distributed databases
-4. MapReduce barrier scheduling
+Demonstrates practical applications of the theoretical framework:
+1. Deep-space network optimization (NASA DSN-style)
+2. Content delivery network (CDN) cache propagation
+3. Distributed database consistency (CRDT-style)
+4. Multi-datacenter synchronization
 """
 
-import numpy as np
-from algorithms import (
-    floyd_warshall, compute_network_metrics, simulate_broadcast,
-    analyze_speedup, simulate_idempotent_aggregation, bellman_ford
-)
+import math
+from typing import List, Dict, Tuple
 
 INF = float('inf')
 
 
-def application_1_datacenter():
-    """
-    Application 1: Data Center Network Topology Analysis
+def floyd_warshall(w: List[List[float]]) -> List[List[float]]:
+    """All-pairs shortest paths."""
+    n = len(w)
+    d = [row[:] for row in w]
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if d[i][k] + d[k][j] < d[i][j]:
+                    d[i][j] = d[i][k] + d[k][j]
+    return d
 
-    Models a hierarchical data center with rack-level, pod-level,
-    and cross-pod communication latencies.
+
+# ═══════════════════════════════════════════════════════════════════
+# APPLICATION 1: Deep-Space Network Optimization
+# ═══════════════════════════════════════════════════════════════════
+
+def deep_space_network():
+    """
+    Model a deep-space communication network and analyze broadcast
+    latency using tropical diameter.
+
+    Scenario: A network of space probes and relay stations across
+    the solar system. Communication delays are determined by
+    light-travel time.
     """
     print("=" * 70)
-    print("APPLICATION 1: Data Center Network Topology")
+    print("APPLICATION 1: Deep-Space Network Optimization")
     print("=" * 70)
-    print()
 
-    # 8 nodes: 2 pods × 2 racks × 2 servers
-    # Latencies in microseconds
-    n = 8
-    w = np.full((n, n), INF)
-    np.fill_diagonal(w, 0)
+    # Nodes: Earth, ISS, Moon, Mars, Jupiter, DSN-Relay
+    nodes = ["Earth", "ISS", "Moon", "Mars", "Jupiter", "DSN-Relay"]
+    n = len(nodes)
 
-    # Same rack: 1 μs
-    for pod in range(2):
-        for rack in range(2):
-            i = pod * 4 + rack * 2
-            w[i][i+1] = w[i+1][i] = 1.0
-
-    # Same pod, different rack: 5 μs
-    for pod in range(2):
-        base = pod * 4
-        for i in range(4):
-            for j in range(4):
-                if w[base+i][base+j] == INF and i != j:
-                    w[base+i][base+j] = 5.0
-
-    # Cross-pod: 20 μs
-    for i in range(4):
-        for j in range(4, 8):
-            if w[i][j] == INF:
-                w[i][j] = w[j][i] = 20.0
-
-    metrics = compute_network_metrics(w)
-    labels = [f"P{p}R{r}S{s}" for p in range(2) for r in range(2) for s in range(2)]
-
-    print("Network topology (latency in μs):")
+    # Light-travel delays in minutes
+    w = [[INF] * n for _ in range(n)]
     for i in range(n):
-        ecc = metrics['eccentricities'][i]
-        print(f"  {labels[i]}: eccentricity = {ecc:.0f} μs")
+        w[i][i] = 0
 
-    print(f"\n  Tropical Diameter = {metrics['diameter']:.0f} μs")
-    print(f"  Tropical Radius   = {metrics['radius']:.0f} μs")
-    print(f"  Center nodes: {[labels[i] for i in metrics['center']]}")
-
-    # Speedup analysis for distributed training
-    print("\n  Distributed ML Training Analysis:")
-    print(f"  (1M FLOPS total work, 100 gradient sync barriers)")
-    analysis = analyze_speedup(
-        W=1e6, D=metrics['diameter'], B=100,
-        workers=[1, 2, 4, 8]
-    )
-    for k, S, eff in zip(analysis.workers, analysis.speedups, analysis.efficiencies):
-        print(f"    {k} workers: speedup = {S:.2f}, efficiency = {eff:.1%}")
-
-    return metrics
-
-
-def application_2_interplanetary():
-    """
-    Application 2: Interplanetary Internet
-
-    Models communication delays between planets/stations in the inner
-    solar system. Latencies are one-way light-travel times.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Interplanetary Internet")
-    print("=" * 70)
-    print()
-
-    # Average distances in light-minutes (one-way)
-    bodies = ["Earth", "Moon", "Mars", "Venus", "Mercury", "L2 Point"]
-    n = len(bodies)
-    w = np.full((n, n), INF)
-    np.fill_diagonal(w, 0)
-
-    # Earth-Moon: 1.3 seconds ≈ 0.02 light-minutes
-    w[0][1] = w[1][0] = 0.02
-    # Earth-Mars: 4-24 min, average ~12 min
-    w[0][2] = w[2][0] = 12.0
-    # Earth-Venus: 2-14 min, average ~6 min
-    w[0][3] = w[3][0] = 6.0
-    # Earth-Mercury: 5-12 min, average ~8 min
-    w[0][4] = w[4][0] = 8.0
-    # Earth-L2: ~0.08 light-minutes
-    w[0][5] = w[5][0] = 0.08
-    # Moon-L2: ~0.1 light-minutes
-    w[1][5] = w[5][1] = 0.1
-    # Mars-Venus: ~15 min average
-    w[2][3] = w[3][2] = 15.0
-    # Venus-Mercury: ~5 min
-    w[3][4] = w[4][3] = 5.0
-    # Mars-Mercury: ~13 min
-    w[2][4] = w[4][2] = 13.0
-
-    dist, _ = floyd_warshall(w)
-    metrics = compute_network_metrics(w)
-
-    print("Interplanetary shortest-path latencies (light-minutes):")
-    header = "          " + "  ".join(f"{b:>8}" for b in bodies)
-    print(header)
-    for i in range(n):
-        row = [f"{dist[i][j]:8.2f}" if dist[i][j] < INF else "     inf" for j in range(n)]
-        print(f"  {bodies[i]:>8}: {'  '.join(row)}")
-
-    print(f"\n  Tropical Diameter = {metrics['diameter']:.2f} light-minutes")
-    print(f"  Tropical Radius   = {metrics['radius']:.2f} light-minutes")
-    print(f"  Network center: {[bodies[i] for i in metrics['center']]}")
-
-    # Broadcast from Earth
-    result = simulate_broadcast(w, 0)
-    print(f"\n  Broadcast from Earth:")
-    for i, t in enumerate(result.delivery_times):
-        print(f"    → {bodies[i]:>10}: {t:.2f} light-minutes")
-    print(f"    Completion: {result.completion_time:.2f} light-minutes")
-
-    # What this means for distributed computation
-    print(f"\n  For a distributed computation with 50 sync barriers:")
-    W_total = 1e9
-    analysis = analyze_speedup(
-        W=W_total, D=metrics['diameter'], B=50,
-        workers=[1, 2, 3, 6]
-    )
-    for k, S, eff in zip(analysis.workers, analysis.speedups, analysis.efficiencies):
-        T = W_total / k + 50 * metrics['diameter']
-        print(f"    {k} stations: speedup = {S:.4f}, efficiency = {eff:.2%}")
-
-    return metrics
-
-
-def application_3_crdt():
-    """
-    Application 3: CRDT-based Distributed Database
-
-    Demonstrates that min/max-based CRDTs (conflict-free replicated data types)
-    converge without consensus, as proven in Theorem C.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: CRDT-based Distributed Database")
-    print("=" * 70)
-    print()
-
-    # 5 replicas with initial "last-writer-wins" timestamps
-    # Each replica tracks timestamps for 4 keys
-    print("Scenario: 5 database replicas tracking 4 keys")
-    print("Operation: LWW-Register (last-writer-wins via max timestamp)")
-    print()
-
-    initial_states = [
-        [10, 5, 3, 8],   # Replica 0
-        [7, 12, 1, 6],   # Replica 1
-        [3, 8, 9, 2],    # Replica 2
-        [11, 4, 7, 5],   # Replica 3
-        [6, 9, 2, 14],   # Replica 4
+    # Connections (bidirectional)
+    links = [
+        (0, 1, 0.001),   # Earth ↔ ISS (negligible)
+        (0, 2, 1.3),     # Earth ↔ Moon
+        (0, 3, 12.5),    # Earth ↔ Mars (average)
+        (0, 4, 43.2),    # Earth ↔ Jupiter (average)
+        (0, 5, 0.5),     # Earth ↔ DSN-Relay
+        (2, 5, 1.5),     # Moon ↔ DSN-Relay
+        (3, 5, 13.0),    # Mars ↔ DSN-Relay
+        (1, 2, 1.3),     # ISS ↔ Moon
     ]
 
-    print("Initial replica states (timestamps per key):")
-    for i, s in enumerate(initial_states):
-        print(f"  Replica {i}: keys = {s}")
+    for i, j, delay in links:
+        w[i][j] = delay
+        w[j][i] = delay
 
-    # True converged state (max over all replicas for each key)
-    converged = [max(initial_states[r][k] for r in range(5)) for k in range(4)]
-    print(f"\nExpected converged state: {converged}")
+    d = floyd_warshall(w)
 
-    # Three different exchange schedules (all should converge to same result)
-    schedules = [
-        # Schedule A: sequential ring
-        [(0,1), (1,2), (2,3), (3,4), (4,0), (0,1), (1,2), (2,3), (3,4)],
-        # Schedule B: random pairs
-        [(2,4), (0,3), (1,2), (3,4), (0,1), (2,3), (1,4), (0,2), (3,4)],
-        # Schedule C: star topology (all through node 0)
-        [(0,1), (0,2), (0,3), (0,4), (0,1), (0,2), (0,3), (0,4)],
-    ]
+    print("\nNetwork topology (light-travel delays in minutes):")
+    for i, j, delay in links:
+        print(f"  {nodes[i]} ↔ {nodes[j]}: {delay} min")
 
-    for name, schedule in zip(["A (ring)", "B (random)", "C (star)"], schedules):
-        result = simulate_idempotent_aggregation(initial_states, schedule, op=max)
-        all_match = all(result.final_states[r] == converged for r in range(5))
-        print(f"\n  Schedule {name}: {result.steps_to_converge} steps")
-        print(f"    Final states match expected: {all_match}")
-        if all_match:
-            print(f"    → Consensus achieved WITHOUT a consensus protocol! ✓")
+    print("\nShortest-path distances (minutes):")
+    print(f"{'':>12}", end="")
+    for name in nodes:
+        print(f"{name:>10}", end="")
+    print()
+    for i in range(n):
+        print(f"{nodes[i]:>12}", end="")
+        for j in range(n):
+            if d[i][j] >= INF:
+                print(f"{'∞':>10}", end="")
+            else:
+                print(f"{d[i][j]:>10.1f}", end="")
+        print()
 
-    print("\n  Key insight: The algebra (max = idempotent + commutative)")
-    print("  guarantees convergence regardless of schedule. No Paxos needed!")
+    # Compute eccentricities
+    eccentricities = [max(d[i]) for i in range(n)]
+    diameter = max(eccentricities)
+    radius = min(eccentricities)
+    center = eccentricities.index(radius)
+
+    print(f"\nTropical diameter: {diameter:.1f} minutes")
+    print(f"Tropical radius: {radius:.1f} minutes")
+    print(f"Network center: {nodes[center]}")
+
+    # Optimal broadcast source
+    print(f"\nOptimal broadcast source (minimizing completion time): {nodes[center]}")
+    print(f"  Broadcast from {nodes[center]} completes in {radius:.1f} min")
+    print(f"  Broadcast from worst source completes in {diameter:.1f} min")
+
+    # Speedup analysis for distributed computation
+    W_total = 10000  # computation units
+    print(f"\nSpeedup analysis (W={W_total}, B=5 barriers):")
+    for k in [2, 4, 6]:
+        denom = W_total / k + 5 * diameter
+        speedup = W_total / denom
+        print(f"  {k} probes: speedup = {speedup:.2f}x (ideal = {k}x)")
 
 
-def application_4_mapreduce():
+# ═══════════════════════════════════════════════════════════════════
+# APPLICATION 2: CDN Cache Propagation
+# ═══════════════════════════════════════════════════════════════════
+
+def cdn_cache_propagation():
     """
-    Application 4: MapReduce Barrier Scheduling
+    Analyze content propagation in a global CDN using tropical metrics.
 
-    Shows how tropical diameter governs the time between map and reduce
-    phases in a geographically distributed MapReduce cluster.
+    When content is updated at an origin server, the time for all
+    edge caches to receive the update is the eccentricity of the
+    origin in the tropical metric.
     """
     print("\n" + "=" * 70)
-    print("APPLICATION 4: MapReduce Barrier Scheduling")
+    print("APPLICATION 2: CDN Cache Propagation")
     print("=" * 70)
-    print()
 
-    # 6-node cluster spread across 3 data centers
-    # DC1 (nodes 0,1), DC2 (nodes 2,3), DC3 (nodes 4,5)
-    n = 6
-    w = np.full((n, n), INF)
-    np.fill_diagonal(w, 0)
+    # Global CDN nodes with network latencies (milliseconds)
+    nodes = ["US-West", "US-East", "Europe", "Asia", "S-America", "Africa"]
+    n = len(nodes)
 
-    # Within DC: 0.5 ms
-    for dc in range(3):
-        i = dc * 2
-        w[i][i+1] = w[i+1][i] = 0.5
-
-    # DC1-DC2: 30 ms (US East - US West)
-    for i in range(2):
-        for j in range(2, 4):
-            w[i][j] = w[j][i] = 30.0
-
-    # DC1-DC3: 100 ms (US - Europe)
-    for i in range(2):
-        for j in range(4, 6):
-            w[i][j] = w[j][i] = 100.0
-
-    # DC2-DC3: 120 ms (US West - Europe)
-    for i in range(2, 4):
-        for j in range(4, 6):
-            w[i][j] = w[j][i] = 120.0
-
-    metrics = compute_network_metrics(w)
-    dc_labels = ["DC1-S0", "DC1-S1", "DC2-S0", "DC2-S1", "DC3-S0", "DC3-S1"]
-
-    print("Geo-distributed MapReduce cluster:")
+    w = [[INF] * n for _ in range(n)]
     for i in range(n):
-        print(f"  {dc_labels[i]}: eccentricity = {metrics['eccentricities'][i]:.1f} ms")
+        w[i][i] = 0
 
-    D = metrics['diameter']
-    print(f"\n  Tropical Diameter = {D:.1f} ms")
-    print(f"  → Each shuffle/barrier phase takes at least {D:.1f} ms")
+    # Network latencies (ms)
+    links = [
+        (0, 1, 40),    # US-West ↔ US-East
+        (1, 2, 80),    # US-East ↔ Europe
+        (2, 3, 120),   # Europe ↔ Asia
+        (0, 3, 150),   # US-West ↔ Asia (transpacific)
+        (1, 4, 100),   # US-East ↔ S-America
+        (2, 5, 90),    # Europe ↔ Africa
+        (0, 4, 90),    # US-West ↔ S-America
+        (3, 5, 200),   # Asia ↔ Africa
+    ]
 
-    # MapReduce job analysis
-    total_data_gb = 100
-    map_time_per_gb = 10  # ms per GB per worker
-    reduce_time = 50  # ms
-    n_barriers = 3  # shuffle + sort + reduce
+    for i, j, delay in links:
+        w[i][j] = delay
+        w[j][i] = delay
 
-    W_total = total_data_gb * map_time_per_gb  # Total map work in ms
+    d = floyd_warshall(w)
+    eccentricities = [max(d[i]) for i in range(n)]
 
-    print(f"\n  MapReduce job: {total_data_gb} GB, {n_barriers} barriers")
-    print(f"  Total map work: {W_total} ms")
-    print(f"\n  {'Workers':>8} | {'Map time':>10} | {'Barrier cost':>13} | {'Total':>10} | {'Speedup':>8}")
-    print("  " + "-" * 60)
+    print("\nCDN topology (latencies in ms):")
+    for i, j, delay in links:
+        print(f"  {nodes[i]} ↔ {nodes[j]}: {delay} ms")
 
-    for k in [1, 2, 3, 6]:
-        map_t = W_total / k
-        barrier_t = n_barriers * D
-        total_t = map_t + barrier_t + reduce_time
-        spdup = (W_total + reduce_time) / total_t
-        print(f"  {k:>8} | {map_t:>8.1f} ms | {barrier_t:>11.1f} ms | {total_t:>8.1f} ms | {spdup:>8.2f}x")
+    print("\nCache update propagation times from each origin:")
+    for i in range(n):
+        max_time = eccentricities[i]
+        print(f"  Origin at {nodes[i]}: all caches updated in {max_time:.0f} ms")
 
-    # Critical ratio
-    critical_k = W_total / (n_barriers * D)
-    print(f"\n  Critical worker count (beyond which barriers dominate): {critical_k:.1f}")
-    print(f"  → Adding more than ~{int(critical_k)} workers gives diminishing returns")
+    best_origin = eccentricities.index(min(eccentricities))
+    print(f"\nOptimal origin server: {nodes[best_origin]}")
+    print(f"  Update propagation: {min(eccentricities):.0f} ms")
+    print(f"  Worst-case origin: {max(eccentricities):.0f} ms")
+
+    # CRDT-style convergence
+    print("\nCRDT consistency analysis:")
+    print("  Min-aggregation (e.g., 'earliest timestamp seen'):")
+    print("  → Converges without coordination in ≤ diameter rounds")
+    print(f"  → Tropical diameter = {max(max(row) for row in d):.0f} ms")
+    print("  → No consensus protocol needed for eventual consistency!")
 
 
-if __name__ == '__main__':
-    application_1_datacenter()
-    application_2_interplanetary()
-    application_3_crdt()
-    application_4_mapreduce()
+# ═══════════════════════════════════════════════════════════════════
+# APPLICATION 3: Distributed Database Consistency
+# ═══════════════════════════════════════════════════════════════════
+
+def distributed_database():
+    """
+    Model CRDT-style eventual consistency using idempotent aggregation.
+
+    Shows that for commutative idempotent merge operations, all
+    replicas converge regardless of message ordering or duplication.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Distributed Database — CRDT Convergence")
+    print("=" * 70)
+
+    # 5 database replicas
+    n = 5
+    replicas = [f"Replica-{i}" for i in range(n)]
+
+    # Each replica has observed different maximum timestamps
+    # Using max-aggregation (Last-Writer-Wins CRDT)
+    timestamps = [100, 250, 180, 300, 150]
+
+    print(f"\nInitial timestamps at each replica:")
+    for i in range(n):
+        print(f"  {replicas[i]}: t = {timestamps[i]}")
+
+    # Ring topology
+    adj = [[INF] * n for _ in range(n)]
+    for i in range(n):
+        adj[i][i] = 0
+        adj[i][(i+1) % n] = 1
+        adj[(i+1) % n][i] = 1
+
+    # Simulate max-aggregation (each node takes max of neighbors)
+    state = timestamps[:]
+    print(f"\nMax-aggregation rounds (ring topology):")
+    for t in range(5):
+        print(f"  Round {t}: {state}")
+        new_state = state[:]
+        for i in range(n):
+            for j in range(n):
+                if adj[i][j] < INF:
+                    new_state[i] = max(new_state[i], state[j])
+        if new_state == state:
+            print(f"  → CONVERGED at round {t}!")
+            break
+        state = new_state
+    else:
+        print(f"  Round 5: {state}")
+
+    print(f"\nFinal value at all replicas: {state[0]}")
+    print(f"Global max: {max(timestamps)}")
+    print(f"Agreement achieved WITHOUT consensus protocol")
+
+    # Demonstrate duplicate insensitivity
+    print("\nDuplicate insensitivity test:")
+    values_once = [100, 250, 180]
+    values_duped = [100, 250, 180, 100, 250, 100]
+    result_once = max(values_once)
+    result_duped = max(values_duped)
+    print(f"  max({values_once}) = {result_once}")
+    print(f"  max({values_duped}) = {result_duped}")
+    print(f"  Same? {result_once == result_duped} — duplicates are harmless!")
+
+
+# ═══════════════════════════════════════════════════════════════════
+# APPLICATION 4: Multi-Datacenter Synchronization
+# ═══════════════════════════════════════════════════════════════════
+
+def multi_datacenter():
+    """
+    Analyze synchronization costs for a geo-distributed system
+    using the tropical speedup bound.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 4: Multi-Datacenter Synchronization Costs")
+    print("=" * 70)
+
+    # 4 datacenters with inter-DC latencies (ms)
+    dcs = ["Virginia", "Oregon", "Frankfurt", "Tokyo"]
+    n = 4
+    w = [
+        [0, 60, 90, 150],
+        [60, 0, 120, 100],
+        [90, 120, 0, 200],
+        [150, 100, 200, 0]
+    ]
+
+    d = floyd_warshall(w)
+    diameter = max(max(row) for row in d)
+    radius = min(max(row) for row in range(n) if True for row in [d[i] for i in range(n)])
+    # Fix radius computation
+    eccs = [max(d[i]) for i in range(n)]
+    radius = min(eccs)
+    center_idx = eccs.index(radius)
+
+    print(f"\nDatacenter latencies (ms): tropical diameter = {diameter} ms")
+    print(f"Network center: {dcs[center_idx]} (eccentricity = {radius} ms)")
+
+    # Analyze MapReduce-style computation
+    W = 1_000_000  # total work units
+    print(f"\nMapReduce analysis (W = {W:,} work units):")
+    print(f"{'Workers':>10} {'Barriers':>10} {'Runtime':>12} {'Speedup':>10} {'Efficiency':>12}")
+    print("-" * 56)
+
+    for k in [4, 8, 16, 32, 64]:
+        for B in [5, 20]:
+            runtime = W / k + B * diameter
+            speedup = W / runtime
+            efficiency = speedup / k
+            print(f"{k:>10} {B:>10} {runtime:>12,.0f} {speedup:>10.2f}x {efficiency:>11.1%}")
+
+    print(f"\nKey insight: Even with {64} workers and diameter = {diameter} ms,")
+    print(f"20 barriers waste {(1 - W / (W/64 + 20*diameter) / 64) * 100:.0f}% of compute")
+    print(f"→ Tropical diameter is the fundamental bottleneck")
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Run all applications
+# ═══════════════════════════════════════════════════════════════════
+
+if __name__ == "__main__":
+    deep_space_network()
+    cdn_cache_propagation()
+    distributed_database()
+    multi_datacenter()
+
+    print("\n" + "=" * 70)
+    print("Summary: Tropical Geometry → Practical Systems Design")
+    print("=" * 70)
+    print("""
+Key practical takeaways:
+1. BROADCAST: Choose the network center as origin to minimize
+   global update latency (= tropical radius).
+2. SPEEDUP: The tropical diameter imposes a hard ceiling on
+   parallel speedup—adding workers beyond sqrt(W/(B·D)) is wasteful.
+3. CONSISTENCY: Use idempotent aggregation (min, max, union) for
+   eventual consistency WITHOUT consensus protocols—the algebra
+   guarantees convergence.
+4. PLACEMENT: Server/replica placement should minimize eccentricity,
+   which is exactly the tropical facility location problem.
+""")
 
 
 #!/usr/bin/env python3
 """
-Tropical Distributed Systems: Demonstrations
+demo.py — Tropical Distributed Systems: Concrete Numerical Demonstrations
 
-Concrete numerical examples demonstrating the theorems formalized in the
-Lean 4 development. Shows how min-plus (tropical) geometry governs
-distributed computation timing, speedup bounds, and aggregation convergence.
+Demonstrates the core theorems with concrete examples:
+1. Shortest-path distances, eccentricity, and tropical diameter on small networks
+2. Speedup bounds under communication latency
+3. Idempotent aggregation stabilization
+4. Duplicate/order insensitivity of min-fold
 """
 
 import numpy as np
-from itertools import product
+from typing import List, Tuple
 
 INF = float('inf')
 
 
 def floyd_warshall(w: np.ndarray) -> np.ndarray:
-    """Compute all-pairs shortest paths using Floyd-Warshall (min-plus closure)."""
+    """Compute all-pairs shortest paths via Floyd-Warshall (min-plus closure)."""
     n = w.shape[0]
     d = w.copy()
     for k in range(n):
@@ -318,522 +352,556 @@ def floyd_warshall(w: np.ndarray) -> np.ndarray:
     return d
 
 
-def eccentricity(d: np.ndarray, s: int) -> float:
-    """Eccentricity of node s: max shortest distance from s to any other node."""
-    return max(d[s])
+def eccentricity(d: np.ndarray, i: int) -> float:
+    """Eccentricity of node i: max shortest-path distance from i."""
+    return np.max(d[i])
 
 
 def tropical_diameter(d: np.ndarray) -> float:
     """Tropical diameter: max eccentricity over all nodes."""
     n = d.shape[0]
-    return max(eccentricity(d, s) for s in range(n))
+    return max(eccentricity(d, i) for i in range(n))
 
 
-def bellman_ford_steps(w: np.ndarray, s: int, steps: int) -> list:
-    """Run Bellman-Ford from source s, returning distance vectors at each step."""
-    n = w.shape[0]
-    history = []
-
-    # Initial: 0 at source, inf elsewhere
-    d = np.full(n, INF)
-    d[s] = 0
-    history.append(d.copy())
-
-    for _ in range(steps):
-        d_new = d.copy()
-        for j in range(n):
-            for i in range(n):
-                if d[i] + w[i][j] < d_new[j]:
-                    d_new[j] = d[i] + w[i][j]
-        d = d_new
-        history.append(d.copy())
-
-    return history
+def speedup(W: float, k: int, B: int, D: float) -> float:
+    """Compute speedup W / (W/k + B*D)."""
+    denom = W / k + B * D
+    if denom <= 0:
+        return float('inf')
+    return W / denom
 
 
-def speedup(W: float, k: float, B: float, D: float) -> float:
-    """Compute speedup = W / (W/k + B*D)."""
-    runtime = W / k + B * D
-    return W / runtime if runtime > 0 else INF
+def min_fold(seed: float, values: List[float]) -> float:
+    """Fold min over a list with a seed value."""
+    result = seed
+    for v in reversed(values):
+        result = min(v, result)
+    return result
 
 
-def min_aggregate(values: list) -> float:
-    """Tropical (min) aggregation over a list of values."""
-    return min(values) if values else INF
+def idempotent_iteration(f, x, rounds: int):
+    """Apply f repeatedly, tracking all intermediate states."""
+    states = [x]
+    current = x
+    for _ in range(rounds):
+        current = f(current)
+        states.append(current)
+    return states
 
 
-# ============================================================
-# Demo 1: Broadcast Time = Eccentricity on a Small Network
-# ============================================================
+# ─────────────────────────────────────────────────────────────────
+# DEMO 1: Galactic Network — Shortest Paths and Diameter
+# ─────────────────────────────────────────────────────────────────
 print("=" * 70)
-print("DEMO 1: Broadcast Time = Eccentricity")
+print("DEMO 1: Galactic Network — Tropical Distance & Diameter")
 print("=" * 70)
-print()
 
-# 5-node network with asymmetric latencies
-w = np.array([
-    [0,   3,   8, INF, INF],
-    [INF, 0,   2,   5, INF],
-    [INF, INF, 0,   1,   6],
-    [INF, INF, INF, 0,   4],
-    [INF, INF, INF, INF, 0],
-])
+# 5-node network representing "galactic" nodes with light-year delays
+# Nodes: Earth(0), Mars(1), Alpha Centauri(2), Sirius(3), Proxima(4)
+node_names = ["Earth", "Mars", "AlphaCen", "Sirius", "Proxima"]
+n = 5
 
-print("Weight matrix (edge delays):")
-for i in range(5):
-    row = [f"{w[i][j]:5.0f}" if w[i][j] < INF else "  inf" for j in range(5)]
-    print(f"  Node {i}: [{', '.join(row)}]")
-print()
+# Edge weights (communication delays in light-years)
+w = np.full((n, n), INF)
+for i in range(n):
+    w[i][i] = 0.0
 
-# Compute all-pairs shortest paths
+# Direct links
+w[0][1] = 0.1   # Earth → Mars
+w[1][0] = 0.1   # Mars → Earth
+w[0][2] = 4.37  # Earth → Alpha Centauri
+w[2][0] = 4.37  # Alpha Centauri → Earth
+w[2][4] = 0.05  # Alpha Centauri → Proxima
+w[4][2] = 0.05  # Proxima → Alpha Centauri
+w[0][3] = 8.6   # Earth → Sirius
+w[3][0] = 8.6   # Sirius → Earth
+w[1][3] = 9.0   # Mars → Sirius
+w[3][1] = 9.0   # Sirius → Mars
+
+print(f"\nNetwork: {n} nodes ({', '.join(node_names)})")
+print("Direct link delays (light-years):")
+for i in range(n):
+    for j in range(n):
+        if i != j and w[i][j] < INF:
+            print(f"  {node_names[i]} → {node_names[j]}: {w[i][j]:.2f} ly")
+
+# Compute shortest paths
 d = floyd_warshall(w)
-print("Shortest-path distance matrix:")
-for i in range(5):
-    row = [f"{d[i][j]:5.1f}" if d[i][j] < INF else "  inf" for j in range(5)]
-    print(f"  Node {i}: [{', '.join(row)}]")
-print()
 
-# Eccentricity and diameter
-for s in range(5):
-    ecc = eccentricity(d, s)
-    ecc_str = f"{ecc:.1f}" if ecc < INF else "inf"
-    print(f"  Eccentricity(node {s}) = {ecc_str}")
+print("\nAll-pairs shortest-path distances (tropical metric):")
+print(f"{'':>12}", end="")
+for name in node_names:
+    print(f"{name:>10}", end="")
+print()
+for i in range(n):
+    print(f"{node_names[i]:>12}", end="")
+    for j in range(n):
+        if d[i][j] == INF:
+            print(f"{'∞':>10}", end="")
+        else:
+            print(f"{d[i][j]:>10.2f}", end="")
+    print()
+
+print("\nEccentricities:")
+for i in range(n):
+    ecc = eccentricity(d, i)
+    if ecc == INF:
+        print(f"  {node_names[i]}: ∞")
+    else:
+        print(f"  {node_names[i]}: {ecc:.2f} ly")
 
 diam = tropical_diameter(d)
-diam_str = f"{diam:.1f}" if diam < INF else "inf"
-print(f"\n  Tropical Diameter = {diam_str}")
+print(f"\nTropical Diameter: {diam:.2f} light-years")
+print(f"→ Any global broadcast requires at least {diam:.2f} ly of propagation time")
 
-# Broadcast simulation
-print("\nBroadcast from node 0:")
-bf_history = bellman_ford_steps(w, 0, 5)
-for step, dist in enumerate(bf_history):
-    vals = [f"{v:5.1f}" if v < INF else "  inf" for v in dist]
-    print(f"  Step {step}: [{', '.join(vals)}]")
+# Verify eccentricity ≤ diameter for all nodes
+print("\nVerify eccentricity ≤ diameter (Theorem 1):")
+for i in range(n):
+    ecc = eccentricity(d, i)
+    print(f"  {node_names[i]}: ecc={ecc:.2f} ≤ diam={diam:.2f}: {ecc <= diam + 1e-10}")
 
-print(f"\n  Broadcast completion time from node 0 = {eccentricity(d, 0):.1f}")
-print(f"  = eccentricity(node 0) ✓")
 
-# ============================================================
-# Demo 2: Speedup Degradation with Network Diameter
-# ============================================================
+# ─────────────────────────────────────────────────────────────────
+# DEMO 2: Speedup Bounds Under Communication Latency
+# ─────────────────────────────────────────────────────────────────
 print("\n" + "=" * 70)
-print("DEMO 2: Parallel Speedup is Diameter-Limited")
+print("DEMO 2: Speedup Bounds — Latency Limits Parallelism")
 print("=" * 70)
+
+W = 1000.0  # Total work units
+D = diam    # Communication delay = tropical diameter
+barriers = [1, 5, 10, 20]
+workers = [1, 2, 4, 8, 16, 32, 64]
+
+print(f"\nTotal work W = {W}, Communication delay D = {D:.2f} ly")
+print(f"\nSpeedup S = W / (W/k + B*D):")
+print(f"{'k workers':>12}", end="")
+for B in barriers:
+    print(f"{'B=' + str(B):>12}", end="")
 print()
+print("-" * (12 + 12 * len(barriers)))
 
-W = 1000.0  # Total work
-B = 10.0    # Number of synchronization barriers
+for k in workers:
+    print(f"{k:>12}", end="")
+    for B in barriers:
+        s = speedup(W, k, B, D)
+        print(f"{s:>12.2f}", end="")
+    print()
 
-print(f"Total work W = {W}, Barriers B = {B}")
-print(f"{'Workers k':>12} | {'Diameter D':>12} | {'Runtime T(k)':>14} | {'Speedup':>10} | {'Gap':>10}")
-print("-" * 70)
+print(f"\nKey insight: With D = {D:.2f} ly and B = 10 barriers,")
+print(f"  64 workers achieve speedup = {speedup(W, 64, 10, D):.2f}x (not 64x)")
+print(f"  → Communication latency wastes {(1 - speedup(W, 64, 10, D)/64)*100:.1f}% of parallelism")
 
-for k in [2, 4, 8, 16, 32]:
-    for D in [0, 1, 5, 10, 50]:
-        T = W / k + B * D
-        S = speedup(W, k, B, D)
-        gap = k - S
-        print(f"  k={k:>4}      |   D={D:>5.0f}     |   T={T:>8.1f}    |   S={S:>6.2f}  |   {gap:>6.2f}")
-    print("-" * 70)
 
-# ============================================================
-# Demo 3: Idempotent Aggregation is Duplicate/Order-Insensitive
-# ============================================================
+# ─────────────────────────────────────────────────────────────────
+# DEMO 3: Idempotent Aggregation Stabilization
+# ─────────────────────────────────────────────────────────────────
 print("\n" + "=" * 70)
-print("DEMO 3: Idempotent Aggregation = Consensus-Free Computation")
+print("DEMO 3: Idempotent Aggregation — Convergence Without Consensus")
 print("=" * 70)
-print()
+
+# Tropical min-aggregation on a 4-node network
+n_small = 4
+initial_values = np.array([7.0, 3.0, 9.0, 1.0])
+
+# Simple adjacency (ring network)
+adj = np.full((n_small, n_small), INF)
+for i in range(n_small):
+    adj[i][i] = 0.0
+    adj[i][(i+1) % n_small] = 1.0
+    adj[(i+1) % n_small][i] = 1.0
+
+def tropical_min_update(state: np.ndarray) -> np.ndarray:
+    """Each node takes min of its value and all neighbor values."""
+    new_state = state.copy()
+    for i in range(len(state)):
+        for j in range(len(state)):
+            if adj[i][j] < INF:
+                new_state[i] = min(new_state[i], state[j])
+    return new_state
+
+print(f"\nInitial node values: {initial_values}")
+print(f"Network: {n_small}-node ring")
+print(f"Update rule: each node takes min of itself and neighbors")
+
+states = idempotent_iteration(tropical_min_update, initial_values, 5)
+for r, s in enumerate(states):
+    marker = " ← STABLE" if r > 0 and np.array_equal(s, states[r-1]) else ""
+    print(f"  Round {r}: {s}{marker}")
+
+global_min = np.min(initial_values)
+print(f"\nGlobal minimum: {global_min}")
+print(f"All nodes converge to global min after ≤ diameter rounds")
+print(f"No consensus protocol needed — idempotence guarantees convergence!")
+
+
+# ─────────────────────────────────────────────────────────────────
+# DEMO 4: Duplicate Insensitivity & Order Independence
+# ─────────────────────────────────────────────────────────────────
+print("\n" + "=" * 70)
+print("DEMO 4: Duplicate Insensitivity & Order Independence")
+print("=" * 70)
 
 import random
 random.seed(42)
 
-# Source values at 6 nodes
-values = [7.2, 3.1, 9.8, 1.5, 6.3, 4.7]
-print(f"Node values: {values}")
-print()
+values = [5.0, 2.0, 8.0, 1.0, 6.0]
+seed = 10.0
 
-# Different delivery orderings (simulating different network schedules)
-orderings = [
-    list(range(6)),
-    list(reversed(range(6))),
-    [3, 0, 5, 2, 1, 4],
-    [1, 4, 3, 0, 2, 5],
-]
+result_original = min_fold(seed, values)
+print(f"\nOriginal: foldr min {seed} {values} = {result_original}")
 
-# With duplicates
-orderings_with_dups = [
-    [0, 1, 2, 3, 4, 5, 0, 1, 2],
-    [3, 3, 3, 0, 1, 2, 4, 5, 5, 5],
-    [5, 4, 3, 2, 1, 0, 0, 1, 2, 3, 4, 5],
-]
+# Duplicate some elements
+duplicated = values + [values[0], values[2], values[0]]
+result_duplicated = min_fold(seed, duplicated)
+print(f"Duplicated: foldr min {seed} {duplicated} = {result_duplicated}")
+print(f"  Same result? {result_original == result_duplicated} ← Duplicate insensitivity!")
 
-print("Min-aggregation over different delivery orders:")
-for i, order in enumerate(orderings):
-    delivered = [values[idx] for idx in order]
-    result = min_aggregate(delivered)
-    print(f"  Order {order}: min = {result}")
+# Permute
+for trial in range(3):
+    shuffled = values.copy()
+    random.shuffle(shuffled)
+    result_shuffled = min_fold(seed, shuffled)
+    print(f"Permuted {trial+1}: foldr min {seed} {shuffled} = {result_shuffled}")
+    print(f"  Same result? {result_original == result_shuffled} ← Order independence!")
 
-print("\nMin-aggregation with duplicates:")
-for i, order in enumerate(orderings_with_dups):
-    delivered = [values[idx] for idx in order]
-    result = min_aggregate(delivered)
-    print(f"  Order {order}: min = {result}")
 
-print("\n  → All results identical! Order and duplicates don't matter. ✓")
-
-# ============================================================
-# Demo 4: Convergence of Pointwise-Min Network Updates
-# ============================================================
+# ─────────────────────────────────────────────────────────────────
+# DEMO 5: Broadcast Time = Eccentricity
+# ─────────────────────────────────────────────────────────────────
 print("\n" + "=" * 70)
-print("DEMO 4: Network State Convergence via Pointwise Min")
+print("DEMO 5: Optimal Broadcast Time = Eccentricity of Source")
 print("=" * 70)
-print()
 
-n_nodes = 4
-np.random.seed(42)
+# Use the galactic network from Demo 1
+source = 0  # Earth
+print(f"\nSource: {node_names[source]}")
+print(f"Eccentricity of {node_names[source]}: {eccentricity(d, source):.2f} ly")
+print(f"\nShortest-path delivery times from {node_names[source]}:")
+for j in range(n):
+    dist_val = d[source][j]
+    if dist_val == INF:
+        print(f"  → {node_names[j]}: ∞ (unreachable)")
+    else:
+        print(f"  → {node_names[j]}: {dist_val:.2f} ly")
 
-# Initial state: each node has its own "view" of the world
-states = [
-    [10.0, 5.0, 8.0, 3.0],   # Node 0's view
-    [7.0, 2.0, 9.0, 6.0],    # Node 1's view
-    [4.0, 8.0, 1.0, 7.0],    # Node 2's view
-    [6.0, 3.0, 5.0, 2.0],    # Node 3's view
-]
-
-print("Initial states (each row = one node's local view):")
-for i, s in enumerate(states):
-    print(f"  Node {i}: {s}")
-
-# Converged state = pointwise min over all views
-converged = [min(states[j][i] for j in range(n_nodes)) for i in range(n_nodes)]
-print(f"\nConverged state (pointwise min): {converged}")
-
-# Simulate random pairwise exchanges
-state_vectors = [list(s) for s in states]
-print("\nRandom pairwise exchange simulation:")
-for step in range(8):
-    a, b = random.sample(range(n_nodes), 2)
-    # Both nodes take pointwise min
-    new_a = [min(state_vectors[a][i], state_vectors[b][i]) for i in range(n_nodes)]
-    new_b = [min(state_vectors[a][i], state_vectors[b][i]) for i in range(n_nodes)]
-    state_vectors[a] = new_a
-    state_vectors[b] = new_b
-    all_converged = all(state_vectors[j] == converged for j in range(n_nodes))
-    marker = " ← CONVERGED!" if all_converged else ""
-    print(f"  Step {step+1}: Nodes {a}↔{b} exchange. States match converged: {all_converged}{marker}")
-
-print("\nFinal states:")
-for i, s in enumerate(state_vectors):
-    print(f"  Node {i}: {s}")
-
-# ============================================================
-# Demo 5: Galaxy-Scale Network Example
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 5: Galaxy-Scale Network — Interstellar Communication")
-print("=" * 70)
-print()
-
-# Distances in light-years between star systems
-stars = ["Sol", "Alpha Centauri", "Barnard's Star", "Wolf 359", "Sirius"]
-# Approximate distances (light-years, one-way communication delay)
-w_galaxy = np.array([
-    [0,    4.37, 5.96, 7.86, 8.60],
-    [4.37, 0,    5.12, 7.20, 9.53],
-    [5.96, 5.12, 0,    6.51, 10.1],
-    [7.86, 7.20, 6.51, 0,    8.82],
-    [8.60, 9.53, 10.1, 8.82, 0   ],
-])
-
-d_galaxy = floyd_warshall(w_galaxy)
-
-print("Star system network (distances in light-years):")
-for i in range(5):
-    print(f"  {stars[i]:>18}: ecc = {eccentricity(d_galaxy, i):.2f} ly")
-
-print(f"\n  Tropical Diameter = {tropical_diameter(d_galaxy):.2f} light-years")
-print(f"\n  → Any distributed computation across these stars requires")
-print(f"    at least {tropical_diameter(d_galaxy):.2f} years per synchronization barrier!")
-
-W_galaxy = 1e12  # Total computation (FLOPS)
-B_galaxy = 100   # Barriers
-D_galaxy = tropical_diameter(d_galaxy)
-k_galaxy = 5     # 5 star systems
-
-S_galaxy = speedup(W_galaxy, k_galaxy, B_galaxy, D_galaxy)
-print(f"\n  With {k_galaxy} star-system workers, {B_galaxy} barriers:")
-print(f"    Ideal speedup:  {k_galaxy}")
-print(f"    Actual speedup: {S_galaxy:.6f}")
-print(f"    Efficiency:     {S_galaxy/k_galaxy*100:.4f}%")
-print(f"\n  The universe's geometry dominates. Communication is computation.")
+print(f"\nOptimal broadcast completion time = max(delivery times)")
+print(f"  = eccentricity({node_names[source]}) = {eccentricity(d, source):.2f} ly")
+print(f"\nFor all-source broadcast: completion time = diameter = {diam:.2f} ly")
 
 print("\n" + "=" * 70)
-print("All demos complete. These examples demonstrate the theorems")
-print("proven in the formal Lean 4 development.")
+print("All demonstrations complete.")
+print("Key takeaway: Network geometry IS computational complexity.")
 print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Tropical Distributed Systems: Visualizations
+visualizations.py — Generate publication-quality figures for
+Tropical Distributed Systems research.
 
-Generates publication-quality figures demonstrating key concepts.
-All figures are saved as PNG files and can be embedded in the JSON package.
+Generates:
+1. Speedup curves showing latency degradation
+2. Aggregation convergence heatmap
+3. Network distance matrix visualization
+4. Tropical diameter vs. broadcast time comparison
 """
 
-import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from algorithms import floyd_warshall, compute_network_metrics, analyze_speedup
+import numpy as np
 import base64
-import io
+from io import BytesIO
 
 INF = float('inf')
 
+
 def fig_to_base64(fig) -> str:
     """Convert matplotlib figure to base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
-                facecolor='white', edgecolor='none')
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{data}"
+    return f"data:image/png;base64,{encoded}"
 
 
-def viz_1_speedup_curves():
-    """Speedup curves for different network diameters."""
+def floyd_warshall(w):
+    n = w.shape[0]
+    d = w.copy()
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if d[i][k] + d[k][j] < d[i][j]:
+                    d[i][j] = d[i][k] + d[k][j]
+    return d
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Figure 1: Speedup Curves Under Communication Latency
+# ═══════════════════════════════════════════════════════════════════
+
+def generate_speedup_curves():
+    """Show how tropical diameter limits parallel speedup."""
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    W = 1000.0
-    B = 10.0
-    workers = list(range(1, 65))
+    W = 1000
+    workers = np.arange(1, 65)
+    diameters = [0, 5, 10, 20, 50]
+    B = 10
 
-    # Left: Speedup curves
-    diameters = [0, 0.5, 1, 2, 5, 10, 20]
-    colors = plt.cm.viridis(np.linspace(0, 1, len(diameters)))
-
-    for D, color in zip(diameters, colors):
+    # Left: Speedup vs workers for different diameters
+    ax1.plot(workers, workers, 'k--', alpha=0.3, label='Linear (ideal)')
+    for D in diameters:
         speedups = [W / (W/k + B*D) for k in workers]
-        label = f"D={D}" if D > 0 else "D=0 (ideal)"
-        ls = '--' if D == 0 else '-'
-        ax1.plot(workers, speedups, color=color, linestyle=ls, linewidth=2, label=label)
+        label = f'D = {D}' + (' (no latency)' if D == 0 else '')
+        ax1.plot(workers, speedups, linewidth=2, label=label)
 
-    ax1.plot(workers, workers, 'k:', alpha=0.3, linewidth=1, label='Linear (ideal)')
-    ax1.set_xlabel('Number of Workers (k)', fontsize=13)
-    ax1.set_ylabel('Speedup S(k)', fontsize=13)
-    ax1.set_title('Speedup vs. Workers\n(W=1000, B=10 barriers)', fontsize=14)
-    ax1.legend(fontsize=10, loc='upper left')
+    ax1.set_xlabel('Number of Workers (k)', fontsize=12)
+    ax1.set_ylabel('Speedup S(k)', fontsize=12)
+    ax1.set_title('Speedup Bounded by Tropical Diameter', fontsize=14)
+    ax1.legend(fontsize=10)
     ax1.set_xlim(1, 64)
     ax1.set_ylim(0, 65)
     ax1.grid(True, alpha=0.3)
 
-    # Right: Efficiency curves
-    for D, color in zip(diameters, colors):
-        effs = [W / (W/k + B*D) / k * 100 for k in workers]
-        label = f"D={D}"
-        ls = '--' if D == 0 else '-'
-        ax2.plot(workers, effs, color=color, linestyle=ls, linewidth=2, label=label)
+    # Right: Efficiency (S/k) vs workers
+    for D in diameters:
+        if D == 0:
+            continue
+        efficiencies = [(W / (W/k + B*D)) / k * 100 for k in workers]
+        ax2.plot(workers, efficiencies, linewidth=2, label=f'D = {D}')
 
-    ax2.set_xlabel('Number of Workers (k)', fontsize=13)
-    ax2.set_ylabel('Efficiency (%)', fontsize=13)
-    ax2.set_title('Parallel Efficiency vs. Workers\n(Theorem B: efficiency → 0 as k → ∞)', fontsize=14)
+    ax2.set_xlabel('Number of Workers (k)', fontsize=12)
+    ax2.set_ylabel('Parallel Efficiency (%)', fontsize=12)
+    ax2.set_title('Efficiency Degrades with Network Diameter', fontsize=14)
     ax2.legend(fontsize=10)
     ax2.set_xlim(1, 64)
     ax2.set_ylim(0, 105)
+    ax2.axhline(y=50, color='r', linestyle=':', alpha=0.5)
     ax2.grid(True, alpha=0.3)
 
-    fig.tight_layout()
-    fig.savefig('speedup_curves.png', dpi=150, bbox_inches='tight')
+    fig.suptitle('Theorem B: Communication Latency Limits Parallelism',
+                 fontsize=16, fontweight='bold', y=1.02)
+    plt.tight_layout()
+
+    fig.savefig('/workspace/request-project/fig_speedup.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
 
-def viz_2_broadcast_wavefront():
-    """Broadcast wavefront propagation on a network."""
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+# ═══════════════════════════════════════════════════════════════════
+# Figure 2: Idempotent Aggregation Convergence
+# ═══════════════════════════════════════════════════════════════════
 
-    # Network layout
-    positions = {
-        0: (0, 0),
-        1: (2, 1),
-        2: (4, 0),
-        3: (1, -1.5),
-        4: (3, -1.5),
-    }
+def generate_convergence_heatmap():
+    """Visualize convergence of min-aggregation on a network."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-    edges = {
-        (0,1): 3, (0,3): 5,
-        (1,2): 2, (1,3): 4,
-        (2,4): 1,
-        (3,4): 3,
-    }
+    # 8-node ring network
+    n = 8
+    adj = np.full((n, n), np.inf)
+    for i in range(n):
+        adj[i][i] = 0
+        adj[i][(i+1) % n] = 1
+        adj[(i+1) % n][i] = 1
 
-    # Build weight matrix
-    n = 5
-    w = np.full((n, n), INF)
-    np.fill_diagonal(w, 0)
-    for (i,j), wt in edges.items():
-        w[i][j] = wt
-        w[j][i] = wt  # Undirected for visualization
+    # Initial values with one minimum
+    np.random.seed(42)
+    initial = np.array([15, 8, 22, 3, 19, 11, 25, 7], dtype=float)
 
-    dist, _ = floyd_warshall(w)
+    # Simulate min-aggregation
+    rounds = 6
+    states = np.zeros((rounds + 1, n))
+    states[0] = initial
+    state = initial.copy()
 
-    # Three snapshots of broadcast from node 0
-    source = 0
-    times = [0, 3, 6]
-    titles = ['t = 0 (source only)', 't = 3 (wavefront expanding)', 't = 6 (broadcast complete)']
+    for t in range(1, rounds + 1):
+        new_state = state.copy()
+        for i in range(n):
+            for j in range(n):
+                if adj[i][j] < np.inf:
+                    new_state[i] = min(new_state[i], state[j])
+        states[t] = new_state
+        state = new_state
 
-    for ax, t, title in zip(axes, times, titles):
-        # Draw edges
-        for (i,j), wt in edges.items():
-            xi, yi = positions[i]
-            xj, yj = positions[j]
-            ax.plot([xi, xj], [yi, yj], 'gray', linewidth=1, alpha=0.5)
-            mx, my = (xi+xj)/2, (yi+yj)/2
-            ax.text(mx, my+0.15, str(wt), ha='center', fontsize=9, color='gray')
+    # Heatmap
+    im = ax1.imshow(states.T, aspect='auto', cmap='viridis_r',
+                    interpolation='nearest')
+    ax1.set_xlabel('Round', fontsize=12)
+    ax1.set_ylabel('Node', fontsize=12)
+    ax1.set_title('Min-Aggregation Convergence', fontsize=14)
+    ax1.set_xticks(range(rounds + 1))
+    ax1.set_yticks(range(n))
+    ax1.set_yticklabels([f'Node {i}' for i in range(n)])
+    plt.colorbar(im, ax=ax1, label='Value')
 
-        # Draw nodes with color indicating reached/unreached
-        for node in range(n):
-            x, y = positions[node]
-            d = dist[source][node]
-            if d <= t:
-                color = '#2ecc71'  # Green: reached
-                alpha = 1.0
-            else:
-                color = '#e74c3c'  # Red: unreached
-                alpha = 0.5
+    # Add value annotations
+    for t in range(rounds + 1):
+        for i in range(n):
+            val = states[t][i]
+            color = 'white' if val > 10 else 'black'
+            ax1.text(t, i, f'{val:.0f}', ha='center', va='center',
+                    color=color, fontsize=8)
 
-            circle = plt.Circle((x, y), 0.3, color=color, alpha=alpha, zorder=5)
-            ax.add_patch(circle)
-            ax.text(x, y, str(node), ha='center', va='center', fontsize=12,
-                   fontweight='bold', color='white', zorder=6)
+    # Line plot showing convergence
+    for i in range(n):
+        ax2.plot(range(rounds + 1), states[:, i], 'o-',
+                label=f'Node {i}', markersize=4)
+    ax2.axhline(y=3, color='red', linestyle='--', linewidth=2,
+               label='Global min (3)')
+    ax2.set_xlabel('Round', fontsize=12)
+    ax2.set_ylabel('Node Value', fontsize=12)
+    ax2.set_title('All Nodes Converge to Global Minimum', fontsize=14)
+    ax2.legend(fontsize=8, ncol=3)
+    ax2.grid(True, alpha=0.3)
 
-            if d < INF:
-                ax.text(x, y-0.5, f'd={d:.0f}', ha='center', fontsize=9)
+    fig.suptitle('Theorem C: Idempotent Aggregation Stabilizes Without Consensus',
+                 fontsize=16, fontweight='bold', y=1.02)
+    plt.tight_layout()
 
-        ax.set_xlim(-1, 5)
-        ax.set_ylim(-2.5, 2)
-        ax.set_aspect('equal')
-        ax.set_title(title, fontsize=12)
-        ax.axis('off')
-
-    fig.suptitle('Broadcast Wavefront = Tropical Ball Expansion (Theorem A)',
-                fontsize=14, fontweight='bold')
-    fig.tight_layout()
-    fig.savefig('broadcast_wavefront.png', dpi=150, bbox_inches='tight')
+    fig.savefig('/workspace/request-project/fig_convergence.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
 
-def viz_3_convergence():
-    """Convergence of idempotent aggregation."""
+# ═══════════════════════════════════════════════════════════════════
+# Figure 3: Distance Matrix and Network Geometry
+# ═══════════════════════════════════════════════════════════════════
+
+def generate_distance_matrix():
+    """Visualize the tropical shortest-path distance matrix."""
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Simulate pointwise-min convergence
-    np.random.seed(42)
-    n_nodes = 5
-    n_keys = 3
+    # Galactic network
+    nodes = ["Earth", "Mars", "α Cen", "Sirius", "Proxima"]
+    n = 5
+    w = np.full((n, n), np.inf)
+    for i in range(n):
+        w[i][i] = 0
+    w[0][1] = w[1][0] = 0.1
+    w[0][2] = w[2][0] = 4.37
+    w[2][4] = w[4][2] = 0.05
+    w[0][3] = w[3][0] = 8.6
+    w[1][3] = w[3][1] = 9.0
 
-    states = np.random.randint(1, 20, (n_nodes, n_keys)).astype(float)
-    target = np.min(states, axis=0)
+    d = floyd_warshall(w)
 
-    history = [states.copy()]
-    step = 0
-    max_steps = 20
+    # Replace inf with NaN for visualization
+    d_vis = d.copy()
+    d_vis[d_vis == np.inf] = np.nan
 
-    import random
-    random.seed(42)
+    im = ax1.imshow(d_vis, cmap='YlOrRd', interpolation='nearest')
+    ax1.set_xticks(range(n))
+    ax1.set_yticks(range(n))
+    ax1.set_xticklabels(nodes, rotation=45, ha='right')
+    ax1.set_yticklabels(nodes)
+    ax1.set_title('Tropical Distance Matrix\n(Shortest-Path Delays, ly)', fontsize=13)
+    plt.colorbar(im, ax=ax1, label='Light-years')
 
-    while step < max_steps:
-        a, b = random.sample(range(n_nodes), 2)
-        merged = np.minimum(states[a], states[b])
-        states[a] = merged
-        states[b] = merged
-        history.append(states.copy())
-        step += 1
-        if np.all(states == target):
-            break
+    for i in range(n):
+        for j in range(n):
+            if not np.isnan(d_vis[i][j]):
+                ax1.text(j, i, f'{d_vis[i][j]:.1f}', ha='center', va='center',
+                        color='black' if d_vis[i][j] < 8 else 'white', fontsize=9)
 
-    # Left: state evolution for key 0
-    for node in range(n_nodes):
-        vals = [h[node, 0] for h in history]
-        ax1.plot(range(len(vals)), vals, '-o', markersize=4, label=f'Node {node}')
+    # Eccentricity bar chart
+    eccs = [np.max(d[i][d[i] < np.inf]) if np.any(d[i] < np.inf) else 0 for i in range(n)]
+    colors = ['#2ecc71' if e == min(eccs) else '#e74c3c' if e == max(eccs) else '#3498db'
+              for e in eccs]
 
-    ax1.axhline(y=target[0], color='k', linestyle='--', alpha=0.5, label='Converged')
-    ax1.set_xlabel('Exchange Step', fontsize=13)
-    ax1.set_ylabel('Value (Key 0)', fontsize=13)
-    ax1.set_title('Pointwise-Min Convergence\n(Theorem C: idempotent → consensus-free)', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
+    bars = ax2.bar(range(n), eccs, color=colors, edgecolor='black', linewidth=0.5)
+    ax2.set_xticks(range(n))
+    ax2.set_xticklabels(nodes, rotation=45, ha='right')
+    ax2.set_ylabel('Eccentricity (light-years)', fontsize=12)
+    ax2.set_title('Node Eccentricities\n(Green = Center, Red = Periphery)', fontsize=13)
 
-    # Right: distance from converged state
-    distances = []
-    for h in history:
-        d = np.max(np.abs(h - target))
-        distances.append(d)
+    diameter = max(eccs)
+    ax2.axhline(y=diameter, color='red', linestyle='--', linewidth=2,
+               label=f'Diameter = {diameter:.1f} ly')
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3, axis='y')
 
-    ax2.plot(range(len(distances)), distances, 'b-o', markersize=5, linewidth=2)
-    ax2.set_xlabel('Exchange Step', fontsize=13)
-    ax2.set_ylabel('Max Distance from Converged State', fontsize=13)
-    ax2.set_title('Convergence to Fixed Point\n(Without any consensus protocol)', fontsize=14)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(bottom=-0.5)
+    for bar, ecc in zip(bars, eccs):
+        ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.3,
+                f'{ecc:.1f}', ha='center', va='bottom', fontsize=10)
 
-    fig.tight_layout()
-    fig.savefig('convergence.png', dpi=150, bbox_inches='tight')
+    fig.suptitle('Theorem A: Network Geometry Determines Broadcast Time',
+                 fontsize=16, fontweight='bold', y=1.02)
+    plt.tight_layout()
+
+    fig.savefig('/workspace/request-project/fig_distance.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
 
-def viz_4_diameter_heatmap():
-    """Heatmap of speedup as function of workers and diameter."""
-    fig, ax = plt.subplots(figsize=(10, 7))
+# ═══════════════════════════════════════════════════════════════════
+# Figure 4: Broadcast Wavefront Propagation
+# ═══════════════════════════════════════════════════════════════════
 
-    W = 1000.0
-    B = 10.0
+def generate_broadcast_wavefront():
+    """Visualize broadcast propagation as a tropical wavefront."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
 
-    workers = np.arange(1, 33)
-    diameters = np.linspace(0, 20, 50)
+    # Timeline of broadcast from Earth
+    nodes = ["Earth", "Mars", "α Centauri", "Proxima", "Sirius"]
+    arrival_times = [0, 0.1, 4.37, 4.42, 8.6]
 
-    speedup_matrix = np.zeros((len(diameters), len(workers)))
-    for i, D in enumerate(diameters):
-        for j, k in enumerate(workers):
-            S = W / (W/k + B*D)
-            speedup_matrix[i, j] = S / k  # Efficiency
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(nodes)))
 
-    im = ax.imshow(speedup_matrix * 100, aspect='auto', origin='lower',
-                   extent=[0.5, 32.5, 0, 20],
-                   cmap='RdYlGn', vmin=0, vmax=100)
+    for i, (node, t) in enumerate(zip(nodes, arrival_times)):
+        ax.barh(i, t, color=colors[i], edgecolor='black', linewidth=0.5, height=0.6)
+        if t > 0:
+            ax.text(t + 0.1, i, f'{t:.2f} ly', va='center', fontsize=11)
+        else:
+            ax.text(0.1, i, f'{t:.2f} ly', va='center', fontsize=11)
 
-    cbar = plt.colorbar(im, ax=ax)
-    cbar.set_label('Parallel Efficiency (%)', fontsize=12)
+    ax.set_yticks(range(len(nodes)))
+    ax.set_yticklabels(nodes, fontsize=12)
+    ax.set_xlabel('Time (light-years)', fontsize=13)
+    ax.set_title('Broadcast Wavefront from Earth\n'
+                 '(Optimal broadcast time = eccentricity = 8.60 ly)',
+                 fontsize=14, fontweight='bold')
 
-    # Add contour lines
-    X, Y = np.meshgrid(workers, diameters)
-    contours = ax.contour(X, Y, speedup_matrix * 100,
-                         levels=[10, 25, 50, 75, 90],
-                         colors='black', linewidths=0.8, alpha=0.7)
-    ax.clabel(contours, inline=True, fontsize=9, fmt='%d%%')
+    # Mark eccentricity
+    ax.axvline(x=8.6, color='red', linestyle='--', linewidth=2,
+              label=f'Eccentricity = 8.60 ly')
+    ax.legend(fontsize=11, loc='lower right')
+    ax.grid(True, alpha=0.3, axis='x')
+    ax.set_xlim(-0.5, 10)
 
-    ax.set_xlabel('Number of Workers (k)', fontsize=13)
-    ax.set_ylabel('Network Diameter (D)', fontsize=13)
-    ax.set_title('Parallel Efficiency Phase Diagram\n'
-                'Theorem B: Diameter × Barriers controls scaling limit',
-                fontsize=14)
-
-    fig.tight_layout()
-    fig.savefig('diameter_heatmap.png', dpi=150, bbox_inches='tight')
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/fig_broadcast.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
 
-if __name__ == '__main__':
+# ═══════════════════════════════════════════════════════════════════
+# Generate all figures
+# ═══════════════════════════════════════════════════════════════════
+
+if __name__ == "__main__":
     print("Generating visualizations...")
-    viz_1_speedup_curves()
-    print("  ✓ speedup_curves.png")
-    viz_2_broadcast_wavefront()
-    print("  ✓ broadcast_wavefront.png")
-    viz_3_convergence()
-    print("  ✓ convergence.png")
-    viz_4_diameter_heatmap()
-    print("  ✓ diameter_heatmap.png")
-    print("All visualizations generated.")
+
+    b64_speedup = generate_speedup_curves()
+    print(f"  fig_speedup.png generated ({len(b64_speedup)} chars)")
+
+    b64_convergence = generate_convergence_heatmap()
+    print(f"  fig_convergence.png generated ({len(b64_convergence)} chars)")
+
+    b64_distance = generate_distance_matrix()
+    print(f"  fig_distance.png generated ({len(b64_distance)} chars)")
+
+    b64_broadcast = generate_broadcast_wavefront()
+    print(f"  fig_broadcast.png generated ({len(b64_broadcast)} chars)")
+
+    print("\nAll visualizations saved to project root.")
+
+    # Output base64 URIs for JSON package
+    import json
+    viz_data = {
+        "speedup": b64_speedup,
+        "convergence": b64_convergence,
+        "distance": b64_distance,
+        "broadcast": b64_broadcast,
+    }
+    with open('/workspace/request-project/viz_data.json', 'w') as f:
+        json.dump(viz_data, f)
+    print("Base64 data written to viz_data.json")

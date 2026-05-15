@@ -1,410 +1,429 @@
 #!/usr/bin/env python3
 """
-Tropical Distributed Systems: Core Algorithms
+algorithms.py — Tropical Distributed Systems: Core Algorithms
 
-Implements the key algorithms from the formal theory:
-1. Bellman-Ford (single-source shortest paths in min-plus semiring)
-2. Floyd-Warshall (all-pairs shortest paths / tropical matrix closure)
-3. Tropical broadcast simulation
-4. Idempotent aggregation convergence
-5. Speedup analysis under diameter constraints
+Implements the key algorithms from the research paper:
+1. Floyd-Warshall (min-plus matrix closure) for all-pairs shortest paths
+2. Tropical broadcast scheduling
+3. Idempotent aggregation simulation
+4. Speedup analysis under latency constraints
 
-All algorithms include type hints, docstrings, and complexity analysis.
+All algorithms include docstrings, type hints, and complexity analysis.
 """
 
-from __future__ import annotations
-import numpy as np
-from dataclasses import dataclass, field
-from typing import Optional
-import heapq
+from typing import List, Tuple, Optional, Dict
+import math
 
 INF = float('inf')
 
 
-# ============================================================
-# Algorithm 1: Bellman-Ford (Min-Plus Relaxation)
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 1: Floyd-Warshall (Min-Plus Matrix Closure)
+# ═══════════════════════════════════════════════════════════════════
 
-def bellman_ford(
-    w: np.ndarray,
-    source: int,
-    max_steps: Optional[int] = None
-) -> tuple[np.ndarray, np.ndarray]:
+def floyd_warshall(w: List[List[float]]) -> List[List[float]]:
     """
-    Single-source shortest paths via Bellman-Ford relaxation.
+    Compute all-pairs shortest paths via Floyd-Warshall.
 
-    This is the computational realization of the Bellman-Ford iteration
-    defined in the Lean formalization (bellmanFord/bfIter).
+    This is the min-plus matrix closure: given weight matrix W,
+    compute W* = I ⊕ W ⊕ W² ⊕ ... where ⊕ = min, ⊗ = +.
 
     Args:
-        w: n×n weight matrix with w[i][i] = 0 and w[i][j] ≥ 0.
-           INF = no edge.
-        source: Source node index.
-        max_steps: Maximum relaxation steps (default: n-1).
+        w: n×n weight matrix. w[i][j] = direct edge delay from i to j.
+           Use float('inf') for absent edges. w[i][i] should be 0.
 
     Returns:
-        (dist, parent): shortest distances and predecessor array.
-
-    Complexity:
-        Time:  O(n³) worst case, O(n²) per step × (n-1) steps
-        Space: O(n)
-
-    Convergence:
-        For non-negative weights, converges in at most n-1 steps.
-        Each step k computes shortest paths using at most k+1 edges.
-    """
-    n = w.shape[0]
-    if max_steps is None:
-        max_steps = n - 1
-
-    dist = np.full(n, INF)
-    dist[source] = 0.0
-    parent = np.full(n, -1, dtype=int)
-
-    for step in range(max_steps):
-        updated = False
-        for j in range(n):
-            for i in range(n):
-                if dist[i] + w[i][j] < dist[j]:
-                    dist[j] = dist[i] + w[i][j]
-                    parent[j] = i
-                    updated = True
-        if not updated:
-            break  # Early termination: already converged
-
-    return dist, parent
-
-
-# ============================================================
-# Algorithm 2: Floyd-Warshall (Tropical Matrix Closure)
-# ============================================================
-
-def floyd_warshall(w: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """
-    All-pairs shortest paths via Floyd-Warshall.
-
-    Computes the Kleene star (tropical closure) of the weight matrix:
-    W* = I ⊕ W ⊕ W² ⊕ W³ ⊕ ...
-    where ⊕ = min, ⊗ = + (min-plus semiring operations).
-
-    Args:
-        w: n×n weight matrix.
-
-    Returns:
-        (dist, next_hop): distance matrix and routing table.
+        n×n distance matrix d where d[i][j] = shortest path from i to j.
 
     Complexity:
         Time:  O(n³)
         Space: O(n²)
 
-    This is the min-plus analog of matrix inversion / Gaussian elimination.
+    Example:
+        >>> w = [[0, 1, INF], [INF, 0, 2], [3, INF, 0]]
+        >>> d = floyd_warshall(w)
+        >>> d[0][2]  # shortest path 0→1→2 = 3
+        3
     """
-    n = w.shape[0]
-    dist = w.copy()
-    next_hop = np.full((n, n), -1, dtype=int)
-
-    for i in range(n):
-        for j in range(n):
-            if w[i][j] < INF and i != j:
-                next_hop[i][j] = j
+    n = len(w)
+    d = [row[:] for row in w]  # deep copy
 
     for k in range(n):
         for i in range(n):
             for j in range(n):
-                if dist[i][k] + dist[k][j] < dist[i][j]:
-                    dist[i][j] = dist[i][k] + dist[k][j]
-                    next_hop[i][j] = next_hop[i][k]
+                if d[i][k] + d[k][j] < d[i][j]:
+                    d[i][j] = d[i][k] + d[k][j]
 
-    return dist, next_hop
-
-
-# ============================================================
-# Algorithm 3: Tropical Broadcast Simulation
-# ============================================================
-
-@dataclass
-class BroadcastResult:
-    """Result of a broadcast simulation."""
-    delivery_times: np.ndarray
-    delivery_order: list[int]
-    parent: np.ndarray
-    completion_time: float
-    eccentricity: float
-    is_optimal: bool
+    return d
 
 
-def simulate_broadcast(
-    w: np.ndarray,
-    source: int
-) -> BroadcastResult:
+def floyd_warshall_with_predecessors(
+    w: List[List[float]]
+) -> Tuple[List[List[float]], List[List[Optional[int]]]]:
     """
-    Simulate optimal (flooding) broadcast from a source node.
-
-    Uses Dijkstra's algorithm to compute the shortest-path tree,
-    which gives the optimal broadcast schedule (= eccentricity).
+    Floyd-Warshall with predecessor tracking for path reconstruction.
 
     Args:
         w: n×n weight matrix.
-        source: Source node.
 
     Returns:
-        BroadcastResult with delivery times, order, and optimality info.
+        (d, pred) where d[i][j] = shortest distance and
+        pred[i][j] = predecessor of j on shortest i→j path.
 
     Complexity:
-        Time:  O(n² log n) with binary heap, O(n²) with simple scan
-        Space: O(n)
-
-    The delivery time at each node equals shortestDist(source, node),
-    as proven in Theorem A of the formalization.
+        Time:  O(n³)
+        Space: O(n²)
     """
-    n = w.shape[0]
-    dist = np.full(n, INF)
-    dist[source] = 0.0
-    parent = np.full(n, -1, dtype=int)
-    visited = np.zeros(n, dtype=bool)
-    delivery_order = []
+    n = len(w)
+    d = [row[:] for row in w]
+    pred: List[List[Optional[int]]] = [[None] * n for _ in range(n)]
 
-    # Priority queue: (distance, node)
-    pq = [(0.0, source)]
+    for i in range(n):
+        for j in range(n):
+            if i != j and w[i][j] < INF:
+                pred[i][j] = i
 
-    while pq:
-        d, u = heapq.heappop(pq)
-        if visited[u]:
-            continue
-        visited[u] = True
-        delivery_order.append(u)
-        dist[u] = d
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if d[i][k] + d[k][j] < d[i][j]:
+                    d[i][j] = d[i][k] + d[k][j]
+                    pred[i][j] = pred[k][j]
 
-        for v in range(n):
-            if not visited[v] and d + w[u][v] < dist[v]:
-                dist[v] = d + w[u][v]
-                parent[v] = u
-                heapq.heappush(pq, (dist[v], v))
-
-    completion = max(dist[dist < INF]) if any(dist < INF) else INF
-
-    # Compute eccentricity for comparison
-    all_pairs, _ = floyd_warshall(w)
-    ecc = max(all_pairs[source])
-
-    return BroadcastResult(
-        delivery_times=dist,
-        delivery_order=delivery_order,
-        parent=parent,
-        completion_time=completion,
-        eccentricity=ecc,
-        is_optimal=abs(completion - ecc) < 1e-10
-    )
+    return d, pred
 
 
-# ============================================================
-# Algorithm 4: Idempotent Aggregation Convergence
-# ============================================================
-
-@dataclass
-class AggregationResult:
-    """Result of idempotent aggregation convergence simulation."""
-    initial_states: list[list[float]]
-    final_states: list[list[float]]
-    converged_state: list[float]
-    steps_to_converge: int
-    exchange_log: list[tuple[int, int]]
-
-
-def simulate_idempotent_aggregation(
-    initial_states: list[list[float]],
-    exchange_pairs: list[tuple[int, int]],
-    op=min
-) -> AggregationResult:
+def reconstruct_path(
+    pred: List[List[Optional[int]]], i: int, j: int
+) -> Optional[List[int]]:
     """
-    Simulate idempotent aggregation over a network.
+    Reconstruct shortest path from i to j using predecessor matrix.
 
-    Each step: two nodes exchange their state vectors and take
-    the pointwise min (or max, or any idempotent commutative operation).
+    Returns:
+        List of nodes from i to j, or None if no path exists.
+    """
+    if pred[i][j] is None and i != j:
+        return None
+    path = [j]
+    while path[-1] != i:
+        p = pred[i][path[-1]]
+        if p is None:
+            return None
+        path.append(p)
+    return list(reversed(path))
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 2: Tropical Eccentricity and Diameter
+# ═══════════════════════════════════════════════════════════════════
+
+def compute_eccentricity(d: List[List[float]], i: int) -> float:
+    """
+    Compute eccentricity of node i: max shortest-path distance from i.
 
     Args:
-        initial_states: List of state vectors, one per node.
-        exchange_pairs: Sequence of (node_a, node_b) exchanges.
-        op: Aggregation operation (default: min). Must be idempotent + commutative.
+        d: All-pairs shortest-path distance matrix.
+        i: Source node index.
 
     Returns:
-        AggregationResult with convergence information.
+        max_j d[i][j]
+
+    Complexity: O(n)
+    """
+    return max(d[i])
+
+
+def compute_tropical_diameter(d: List[List[float]]) -> float:
+    """
+    Compute tropical diameter: max eccentricity over all nodes.
+
+    Args:
+        d: All-pairs shortest-path distance matrix.
+
+    Returns:
+        max_i max_j d[i][j]
+
+    Complexity: O(n²)
+    """
+    n = len(d)
+    return max(compute_eccentricity(d, i) for i in range(n))
+
+
+def compute_radius(d: List[List[float]]) -> float:
+    """
+    Compute tropical radius: min eccentricity over all nodes.
+    The center of the network is the node achieving the radius.
+
+    Args:
+        d: All-pairs shortest-path distance matrix.
+
+    Returns:
+        min_i max_j d[i][j]
+
+    Complexity: O(n²)
+    """
+    n = len(d)
+    return min(compute_eccentricity(d, i) for i in range(n))
+
+
+def find_center(d: List[List[float]]) -> int:
+    """Find the center node (achieving minimum eccentricity)."""
+    n = len(d)
+    return min(range(n), key=lambda i: compute_eccentricity(d, i))
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 3: Optimal Broadcast Scheduling
+# ═══════════════════════════════════════════════════════════════════
+
+def optimal_broadcast(
+    w: List[List[float]], source: int
+) -> Tuple[List[float], Dict[int, int]]:
+    """
+    Compute optimal broadcast schedule from a source node.
+
+    The optimal strategy is to forward along shortest-path trees.
+    The delivery time at each node equals the shortest-path distance
+    from the source (Theorem A).
+
+    Args:
+        w: n×n weight matrix.
+        source: Index of the source node.
+
+    Returns:
+        (delivery_times, parent) where delivery_times[j] = optimal
+        time for node j to receive the broadcast, and parent[j] =
+        the node that forwards to j in the optimal schedule.
 
     Complexity:
-        Time:  O(K × n × d) where K = exchanges, n = nodes, d = state dimension
-        Space: O(n × d)
-
-    Convergence guarantee (Theorem C):
-        For idempotent commutative operations, the final state depends only
-        on the SET of initial states that have been "seen" by each node,
-        not on the order or multiplicity of exchanges.
+        Time:  O(n² log n) with Dijkstra, O(n³) with Floyd-Warshall
+        Space: O(n²)
     """
-    n = len(initial_states)
-    d = len(initial_states[0])
-    states = [list(s) for s in initial_states]
+    d, pred = floyd_warshall_with_predecessors(w)
+    delivery = d[source]
+    parent = {}
+    for j in range(len(w)):
+        if j != source:
+            p = pred[source][j]
+            if p is not None:
+                parent[j] = p
+    return delivery, parent
 
-    # Compute the true converged state (pointwise op over all)
-    converged = [
-        min(states[j][i] for j in range(n))  # Using min as default
-        for i in range(d)
+
+def broadcast_completion_time(
+    w: List[List[float]], source: int
+) -> float:
+    """
+    Compute optimal broadcast completion time from source.
+    This equals the eccentricity of the source.
+
+    Complexity: O(n³) via Floyd-Warshall
+    """
+    d = floyd_warshall(w)
+    return compute_eccentricity(d, source)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 4: Idempotent Aggregation Simulation
+# ═══════════════════════════════════════════════════════════════════
+
+def simulate_min_aggregation(
+    adj: List[List[float]],
+    initial_values: List[float],
+    max_rounds: int = 100
+) -> Tuple[List[List[float]], int]:
+    """
+    Simulate min-aggregation on a network until stabilization.
+
+    Each round, every node updates its value to the minimum of its
+    current value and all neighbor values. By idempotence + finiteness,
+    this converges within at most diameter rounds.
+
+    Args:
+        adj: Adjacency matrix (finite weight = connected).
+        initial_values: Initial value at each node.
+        max_rounds: Maximum rounds to simulate.
+
+    Returns:
+        (history, stabilization_round) where history[t] is the state
+        vector at round t, and stabilization_round is when convergence
+        occurred.
+
+    Complexity per round: O(n²)
+    Total: O(n² × diameter)
+
+    Example:
+        >>> adj = [[0, 1, INF, 1], [1, 0, 1, INF],
+        ...        [INF, 1, 0, 1], [1, INF, 1, 0]]
+        >>> vals = [7, 3, 9, 1]
+        >>> history, stable = simulate_min_aggregation(adj, vals)
+        >>> history[stable]  # [1, 1, 1, 1]
+    """
+    n = len(initial_values)
+    state = initial_values[:]
+    history = [state[:]]
+
+    for t in range(1, max_rounds + 1):
+        new_state = state[:]
+        for i in range(n):
+            for j in range(n):
+                if adj[i][j] < INF:
+                    new_state[i] = min(new_state[i], state[j])
+        history.append(new_state[:])
+        if new_state == state:
+            return history, t
+        state = new_state
+
+    return history, max_rounds
+
+
+def simulate_max_aggregation(
+    adj: List[List[float]],
+    initial_values: List[float],
+    max_rounds: int = 100
+) -> Tuple[List[List[float]], int]:
+    """
+    Simulate max-aggregation (dual of min-aggregation).
+    Same convergence guarantees by duality.
+    """
+    n = len(initial_values)
+    neg_vals = [-v for v in initial_values]
+    neg_adj = adj  # adjacency structure is the same
+    history, stable = simulate_min_aggregation(neg_adj, neg_vals, max_rounds)
+    pos_history = [[-v for v in state] for state in history]
+    return pos_history, stable
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 5: Speedup Analysis
+# ═══════════════════════════════════════════════════════════════════
+
+def compute_speedup(W: float, k: int, B: int, D: float) -> float:
+    """
+    Compute parallel speedup under the latency-aware model.
+
+    Model: T(k) = W/k + B × D
+    Speedup: S(k) = W / T(k) = W / (W/k + B × D)
+
+    Args:
+        W: Total work.
+        k: Number of workers.
+        B: Number of synchronization barriers.
+        D: Communication delay (tropical diameter).
+
+    Returns:
+        Speedup factor S(k).
+
+    Properties (proven in the formal development):
+        - S(k) ≤ k always (Theorem B, weak form)
+        - S(k) < k when D > 0 and B > 0 (Theorem B, strong form)
+    """
+    denom = W / k + B * D
+    if denom <= 0:
+        return float('inf')
+    return W / denom
+
+
+def optimal_worker_count(W: float, B: int, D: float) -> int:
+    """
+    Find the number of workers maximizing efficiency S(k)/k.
+
+    Beyond this point, adding workers gives diminishing returns.
+    The optimal count balances computation and communication.
+
+    Returns:
+        Optimal k (approximate).
+    """
+    if D <= 0 or B <= 0:
+        return 1  # No communication overhead
+
+    # At optimum, dS/dk = 0 gives k* = sqrt(W × k / (B × D))
+    # Simplified: k* ≈ sqrt(W / (B × D))
+    k_opt = max(1, int(math.sqrt(W / (B * D))))
+    return k_opt
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 6: Min-Plus Matrix Multiplication
+# ═══════════════════════════════════════════════════════════════════
+
+def minplus_matmul(
+    A: List[List[float]], B: List[List[float]]
+) -> List[List[float]]:
+    """
+    Min-plus (tropical) matrix multiplication.
+
+    (A ⊗ B)[i][j] = min_k (A[i][k] + B[k][j])
+
+    This is the fundamental operation of tropical linear algebra.
+    The k-th power W^⊗k gives best k-hop propagation times.
+
+    Complexity: O(n³)
+    """
+    n = len(A)
+    C = [[INF] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                val = A[i][k] + B[k][j]
+                if val < C[i][j]:
+                    C[i][j] = val
+    return C
+
+
+def minplus_closure(W: List[List[float]]) -> List[List[float]]:
+    """
+    Compute the min-plus (Kleene) closure W* = I ⊕ W ⊕ W² ⊕ ...
+
+    On finite graphs, this equals the all-pairs shortest-path matrix.
+    Equivalent to Floyd-Warshall but expressed algebraically.
+
+    Complexity: O(n⁴) via repeated squaring, O(n³) via Floyd-Warshall.
+    We use Floyd-Warshall internally.
+    """
+    return floyd_warshall(W)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Example usage
+# ═══════════════════════════════════════════════════════════════════
+
+if __name__ == "__main__":
+    print("Tropical Distributed Systems — Algorithm Suite")
+    print("=" * 60)
+
+    # Small example network
+    n = 4
+    w = [
+        [0, 2, INF, 7],
+        [2, 0, 3, INF],
+        [INF, 3, 0, 1],
+        [7, INF, 1, 0]
     ]
 
-    exchange_log = []
-    steps = 0
+    print("\n1. All-pairs shortest paths (Floyd-Warshall):")
+    d = floyd_warshall(w)
+    for row in d:
+        print(f"   {row}")
 
-    for a, b in exchange_pairs:
-        new_state = [op(states[a][i], states[b][i]) for i in range(d)]
-        states[a] = list(new_state)
-        states[b] = list(new_state)
-        exchange_log.append((a, b))
-        steps += 1
+    print(f"\n2. Tropical diameter: {compute_tropical_diameter(d)}")
+    print(f"   Tropical radius: {compute_radius(d)}")
+    print(f"   Center node: {find_center(d)}")
 
-        # Check convergence
-        if all(states[j] == converged for j in range(n)):
-            break
+    print("\n3. Optimal broadcast from node 0:")
+    times, parent = optimal_broadcast(w, 0)
+    print(f"   Delivery times: {times}")
+    print(f"   Completion: {max(times)}")
 
-    return AggregationResult(
-        initial_states=[list(s) for s in initial_states],
-        final_states=states,
-        converged_state=converged,
-        steps_to_converge=steps,
-        exchange_log=exchange_log
-    )
+    print("\n4. Min-aggregation simulation:")
+    adj = [[0 if i == j else (w[i][j] if w[i][j] < INF else INF) for j in range(n)] for i in range(n)]
+    history, stable = simulate_min_aggregation(adj, [10, 5, 8, 2])
+    for t, state in enumerate(history):
+        print(f"   Round {t}: {state}")
+    print(f"   Stabilized at round {stable}")
 
-
-# ============================================================
-# Algorithm 5: Speedup Analysis
-# ============================================================
-
-@dataclass
-class SpeedupAnalysis:
-    """Analysis of parallel speedup under diameter constraints."""
-    W: float  # Total work
-    D: float  # Network diameter
-    B: float  # Barrier count
-    workers: list[int]
-    runtimes: list[float]
-    speedups: list[float]
-    efficiencies: list[float]
-    gaps: list[float]
-
-
-def analyze_speedup(
-    W: float,
-    D: float,
-    B: float,
-    workers: list[int]
-) -> SpeedupAnalysis:
-    """
-    Analyze parallel speedup under diameter-induced latency.
-
-    Model: T(k) = W/k + B*D
-    Speedup: S(k) = W / T(k) = W / (W/k + B*D)
-    Gap: k - S(k) = k²BD / (W + kBD)   [proven exactly in Lean]
-
-    Args:
-        W: Total computation work.
-        D: Network tropical diameter.
-        B: Number of synchronization barriers.
-        workers: List of worker counts to analyze.
-
-    Returns:
-        SpeedupAnalysis with detailed metrics.
-
-    Key insight (Theorem B):
-        S(k) < k whenever D > 0 and B > 0.
-        The gap grows quadratically in k, making massive parallelism
-        futile when diameter is large relative to work per barrier.
-    """
-    runtimes = []
-    speedups = []
-    efficiencies = []
-    gaps = []
-
-    for k in workers:
-        T = W / k + B * D
-        S = W / T if T > 0 else INF
-        eff = S / k if k > 0 else 0
-        gap = k - S
-
-        runtimes.append(T)
-        speedups.append(S)
-        efficiencies.append(eff)
-        gaps.append(gap)
-
-    return SpeedupAnalysis(
-        W=W, D=D, B=B,
-        workers=workers,
-        runtimes=runtimes,
-        speedups=speedups,
-        efficiencies=efficiencies,
-        gaps=gaps
-    )
-
-
-# ============================================================
-# Algorithm 6: Tropical Network Metrics
-# ============================================================
-
-def compute_network_metrics(w: np.ndarray) -> dict:
-    """
-    Compute all tropical network metrics from a weight matrix.
-
-    Returns:
-        Dictionary with:
-        - dist: all-pairs shortest distance matrix
-        - eccentricities: eccentricity of each node
-        - diameter: tropical diameter
-        - radius: tropical radius (min eccentricity)
-        - center: set of nodes achieving minimum eccentricity
-        - periphery: set of nodes achieving maximum eccentricity
-    """
-    n = w.shape[0]
-    dist, next_hop = floyd_warshall(w)
-
-    eccentricities = [max(dist[i]) for i in range(n)]
-    diameter = max(eccentricities)
-    radius = min(e for e in eccentricities if e < INF) if any(e < INF for e in eccentricities) else INF
-
-    center = [i for i in range(n) if eccentricities[i] == radius]
-    periphery = [i for i in range(n) if eccentricities[i] == diameter]
-
-    return {
-        'dist': dist,
-        'next_hop': next_hop,
-        'eccentricities': eccentricities,
-        'diameter': diameter,
-        'radius': radius,
-        'center': center,
-        'periphery': periphery,
-    }
-
-
-if __name__ == '__main__':
-    # Example usage
-    w = np.array([
-        [0,   3,   8, INF, INF],
-        [INF, 0,   2,   5, INF],
-        [INF, INF, 0,   1,   6],
-        [INF, INF, INF, 0,   4],
-        [INF, INF, INF, INF, 0],
-    ])
-
-    print("=== Tropical Network Metrics ===")
-    metrics = compute_network_metrics(w)
-    print(f"Diameter: {metrics['diameter']}")
-    print(f"Radius:   {metrics['radius']}")
-    print(f"Center:   {metrics['center']}")
-    print(f"Periphery: {metrics['periphery']}")
-
-    print("\n=== Broadcast Simulation ===")
-    result = simulate_broadcast(w, 0)
-    print(f"Delivery times: {result.delivery_times}")
-    print(f"Completion time: {result.completion_time}")
-    print(f"Eccentricity:    {result.eccentricity}")
-    print(f"Is optimal:      {result.is_optimal}")
-
-    print("\n=== Speedup Analysis ===")
-    analysis = analyze_speedup(W=1000, D=metrics['diameter'], B=10, workers=[1,2,4,8,16,32])
-    for k, S, eff in zip(analysis.workers, analysis.speedups, analysis.efficiencies):
-        print(f"  k={k:>3}: speedup={S:.2f}, efficiency={eff:.1%}")
+    print("\n5. Speedup analysis (W=1000, D=5):")
+    for k in [1, 2, 4, 8, 16, 32]:
+        s = compute_speedup(1000, k, 10, 5)
+        print(f"   k={k:2d}: speedup = {s:.2f}x  (efficiency = {s/k:.1%})")
+    print(f"   Optimal workers: {optimal_worker_count(1000, 10, 5)}")

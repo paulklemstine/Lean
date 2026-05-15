@@ -1200,20 +1200,6 @@
     "timestamp": "2026-05-15T09:04:09.918976+00:00"
   },
   {
-    "id": "fd_0229",
-    "title": "Collision catalog",
-    "description": ": For each pair of glider types, simulate collisions at various relative positions and phases. Record outputs: (a) both gliders survive, (b) one survives, (c) both annihilate, (d) new glider produced, (e) still life produced.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:09.937000+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Logic gate identification",
     "description": ": Identify collision outcomes that correspond to Boolean operations. A collision producing a glider iff both inputs are present is an AND gate. A collision producing a glider iff at least one input is present is an OR gate.",
@@ -1562,25 +1548,6 @@
     "source_exp_id": "f37e592e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
-  },
-  {
-    "id": "fd_0179",
-    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
-    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "28ca9606",
-    "consumed_by_exp_id": "33bff7e2",
-    "timestamp": "2026-05-14T17:33:19.336802+00:00"
   },
   {
     "id": "fd_0179",
@@ -2244,5 +2211,51 @@
     "source_exp_id": "14a8bd15",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T10:03:13.258464+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Impact",
+    "description": "Would establish neural network certification as a chapter of tropical geometry, connecting to deep results in algebraic geometry and combinatorics. Could lead to polynomial-time certification algorithms via tropical linear programming.\n\n---",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33bff7e2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:03:37.272305+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Algorithmic Extraction",
+    "description": "All five directions suggest concrete algorithms:\n- Direction 1: Multiclass nerve construction + higher-degree exactness check\n- Direction 2: Filtration computation + persistent homology\n- Direction 3: Tropical vertex enumeration + min-plus linear algebra\n- Direction 4: Product nerve construction + modular exactness verification\n- Direction 5: Boundary operator computation + cycle detection",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33bff7e2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:03:37.285558+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Formal Verification Pipeline",
+    "description": "Each direction should culminate in machine-verified theorems, following the methodology established in this work:\n1. Define structures and properties in Lean 4\n2. State theorems precisely\n3. Prove with Mathlib-backed automation\n4. Verify axiom cleanliness with `#print axioms`\n\n---",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33bff7e2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:03:37.293849+00:00"
   }
 ]
