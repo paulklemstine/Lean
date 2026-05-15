@@ -1,21 +1,5 @@
 [
   {
-    "id": "seed_071",
-    "title": "Research Package Quality via Certified Mathematical Significance Metrics",
-    "description": "Define and formalize a mathematical significance metric that goes beyond correctness to measure the depth, novelty, and impact of a research result. Prove that the significance metric is a monotone function on the lattice of mathematical knowledge, and that results exceeding a significance threshold are guaranteed to advance the field. Show that this metric can be computed from the Lean 4 proof term structure alone, enabling fully automated quality gates that reject shallow work and elevate master-class contributions.",
-    "domains": [
-      "Meta",
-      "Logic",
-      "EML"
-    ],
-    "priority_score": 0.97,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "7529282b",
-    "timestamp": "2026-05-14T16:03:53.868250+00:00"
-  },
-  {
     "id": "seed_069",
     "title": "Research Depth Guarantees via Proof-Theoretic Ordinal Analysis",
     "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research, and construct a Lean 4 formalization that computes the proof-theoretic ordinal of each Aether output. Show that results exceeding a threshold ordinal depth are guaranteed to be non-trivial, and prove that the ordinal depth of a research cycle bounds the conceptual innovation of its output. Establish that cycles with depth below the threshold can be automatically rejected or escalated for deeper investigation.",
@@ -1116,22 +1100,6 @@
     "timestamp": "2026-05-15T11:09:57.080170+00:00"
   },
   {
-    "id": "fd_0222",
-    "title": "Functor between automata and algebras",
-    "description": ": Formalize the categorical equivalence between WTA and Σ-algebras in the tropical semiring, establishing automata as algebraic objects.",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56f66752",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:09:57.089636+00:00"
-  },
-  {
     "id": "fd_0217",
     "title": "Month 3-6",
     "description": ": Implement Direction 4 (algorithmic extraction) and benchmark on MNIST/CIFAR networks.",
@@ -1158,6 +1126,62 @@
     "source_exp_id": "5c0e9794",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:03:38.650264+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "Hypothesize",
+    "description": ": State the main conjecture formally in Lean with `sorry`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7529282b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:04:20.962278+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Decompose",
+    "description": ": Break into 3–8 helper lemmas.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7529282b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:04:20.975505+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Validate",
+    "description": ": Test with `#eval` on concrete examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7529282b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:04:20.984853+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Publish",
+    "description": ": Write up as a standalone module with documentation.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7529282b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T12:04:21.016723+00:00"
   },
   {
     "id": "seed_079",
@@ -1964,40 +1988,6 @@
     "timestamp": "2026-05-15T11:04:31.808425+00:00"
   },
   {
-    "id": "fd_0222",
-    "title": "1. Tropical Collatz–Wielandt Theorem",
-    "description": "**Theorem Statement:**\nFor any `n > 0` and weight matrix `W : Matrix (Fin n) (Fin n) ℝ`,\n```\ntropicalEigenvalue W = sInf { μ : ℝ | ∃ x : Fin n → ℝ,\n  ∀ i, Finset.univ.inf' hn (fun j => W i j + x j) ≤ μ + x i }\n```\n\n**Why It Matters:**\nThis characterizes the min-plus spectral radius as a minimax value over \"tropical sub-eigenvectors.\" It is the min-plus analogue of the classical Collatz–Wielandt theorem for nonneg matrices (Perron–Frobenius theory). It provides a dual certificate for the minimum cycle mean: instead of finding an optimal cycle, one exhibits a potential function.\n\n**Proof Strategy:**\n- (≤) For any valid (μ, x), summing the inequality along any cycle of length k shows cycleMean ≥ μ. Hence tropicalEigenvalue ≥ μ.\n- (≥) Construct x from shortest-path potentials in the \"policy gr",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "245e45a9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:00:56.477485+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "2. Karp's Algorithm: Certified Computation of Minimum Cycle Mean",
-    "description": "**Theorem Statement:**\nDefine `d(k, v) = min cost of a walk of length exactly k ending at v`. Then:\n```\ntropicalEigenvalue W = min_v max_k (d(n, v) - d(k, v)) / (n - k)\n```\nwhere the max is over `k ∈ {0, …, n-1}`.\n\n**Why It Matters:**\nKarp's algorithm (1978) computes the minimum cycle mean in O(n·m) time. A certified implementation would be the first formally verified algorithm for this fundamental graph optimization problem. Combined with `tropicalEigenvalue_attained`, it provides a complete computational pipeline: compute the value, then extract the witness cycle.\n\n**Proof Strategy:**\n1. Define `d(k, v)` by dynamic programming: `d(0, v) = 0` for a fixed source, `d(k+1, v) = min_u (d(k, u) + W(u, v))`.\n2. Show that `max_k (d(n, v) - d(k, v)) / (n - k)` equals the minimum mean of cycles pa",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "245e45a9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:00:56.490313+00:00"
-  },
-  {
     "id": "fd_0224",
     "title": "3. Mean-Payoff Game Value = Tropical Eigenvalue",
     "description": "**Theorem Statement:**\nFor a one-player (Min) deterministic mean-payoff game with transition matrix W:\n```\ngame_value W = tropicalEigenvalue W\n```\nFor two-player games, the value equals the saddle point of tropical eigenvalues over strategies.\n\n**Why It Matters:**\nMean-payoff games are central to verification, automata theory, and algorithmic game theory. The connection to tropical eigenvalues provides structural insight and algorithmic tools. Formalizing this in Lean would create a bridge between game theory and tropical algebra.\n\n**Proof Strategy:**\n- One-player case: the optimal strategy induces a policy graph. The long-run average cost equals the minimum cycle mean in this graph, which is the tropical eigenvalue.\n- Two-player case: use strategy iteration. Each fixed strategy pair yield",
@@ -2013,24 +2003,6 @@
     "source_exp_id": "245e45a9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:00:56.503800+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "4. Full Bridge to Tropical Rayleigh Eigenvalue",
-    "description": "**Theorem Statement:**\nGiven a max-plus kernel operator `K : MaxPlusKernelOp (Fin n)` with kernel matrix W:\n```\n∃ ev phi, K.IsEigenpair ev phi →\n  ev = - tropicalEigenvalue (fun i j => - W j i)\n```\nThat is, the max-plus eigenvalue of K equals the negation of the min-plus eigenvalue of the transposed negated matrix.\n\n**Why It Matters:**\nThis bridges the existing `tropical_rayleigh_eigenvalue` theorem (max-plus variational principle) with the combinatorial cycle-mean theory. It unifies the analytic/spectral and combinatorial/graph-theoretic perspectives on tropical spectral theory.\n\n**Proof Strategy:**\n1. Show that negating all matrix entries converts min-plus to max-plus: `max_j (-W_{ij} + x_j) = -(min_j (W_{ij} - x_j))`.\n2. The max-plus eigenvalue equation becomes `max_j (K.kernel(j,i) + φ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "245e45a9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:00:56.515916+00:00"
   },
   {
     "id": "fd_0226",
@@ -2082,41 +2054,6 @@
     "source_exp_id": "d45cf758",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:03:58.400236+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "3. Idempotent Black Hole Entropy via Counting Tropical Geodesics",
-    "description": "**Hypothesis**: The number of distinct tropical geodesics (min-cost paths) from the boundary to the horizon in a finite tropical spacetime provides a combinatorial entropy that scales like the horizon \"area\" (the number of horizon-adjacent vertices).\n\n**Proof Strategy**: On a layered graph with n shells and k angular vertices per shell, define the horizon as the fixed-point shell of radialUpdate. Count the number of distinct min-cost paths from the outermost shell to the horizon. Show this count equals k^(n_horizon) where n_horizon is the number of horizon vertices, giving S = n_horizon · log k, analogous to Bekenstein-Hawking entropy S = A/(4G).\n\n**Cross-Domain Connections**: Bekenstein-Hawking entropy, loop quantum gravity state counting, tropical enumerative geometry, polymer models of ",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d45cf758",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:58.411318+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "4. Tropical Einstein Constraint Equations as Min-Plus Feasibility",
-    "description": "**Hypothesis**: The initial data for the tropical Einstein evolution (a function u₀ : α → ℝ satisfying certain min-plus inequalities) can be characterized as solutions to a tropical linear programming problem. The constraint surface is a tropical polyhedron, and the moduli space of valid initial data is a tropical convex set.\n\n**Proof Strategy**: Define tropical constraint equations as inequalities of the form `tropicalEinsteinStep K u₀ ≤ u₀` (sub-solution condition) or `tropicalEinsteinStep K u₀ = u₀` (fixed-point condition). Show the set of sub-solutions is closed under tropical (min) superposition and under addition of nonneg constants. This makes it a tropical convex cone. Use the tropicalEvolution_nonincreasing theorem to show that sub-solutions generate convergent evolutions.\n\n**Cros",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d45cf758",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:03:58.422216+00:00"
   },
   {
     "id": "fd_0224",

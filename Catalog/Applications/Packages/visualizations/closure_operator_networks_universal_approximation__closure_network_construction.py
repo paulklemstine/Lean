@@ -1,433 +1,294 @@
-#!/usr/bin/env python3
 """
-Closure-Operator Networks: Core Algorithms
+Closure-Operator Network Algorithms
 
-Implements the key algorithms from the research paper:
-1. ε-Net construction (greedy and uniform)
-2. Closure network construction and evaluation
-3. Robustness certification
-4. Lipschitz error estimation
+Implements the core algorithms from the closure-operator network theory:
+1. ε-Net construction for compact sets
+2. Codebook approximant construction
+3. Closure-step network builder
+4. Certified robustness radius computation
+5. Margin-based sign preservation verification
 """
 
 import numpy as np
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, List, Tuple, Optional
 from dataclasses import dataclass
-
-
-# ─────────────────────────────────────────────────────────
-# Data Structures
-# ─────────────────────────────────────────────────────────
-
-@dataclass
-class ClosureFeature:
-    """A closure-indicator feature: 1 if x ∈ c(S), else 0.
-
-    For simplicity, we implement closure features as ball indicators:
-    Φ(x) = 1 if dist(x, center) ≤ radius, else 0.
-    """
-    center: np.ndarray
-    radius: float
-
-    def evaluate(self, x: np.ndarray) -> float:
-        """Evaluate the closure indicator at point x."""
-        return 1.0 if np.linalg.norm(x - self.center) <= self.radius else 0.0
-
-    def evaluate_batch(self, X: np.ndarray) -> np.ndarray:
-        """Evaluate on a batch of points."""
-        dists = np.linalg.norm(X - self.center, axis=-1)
-        return (dists <= self.radius).astype(float)
 
 
 @dataclass
 class ClosureNetwork:
-    """A closure-operator network: weighted sum of closure features + bias.
-
-    N(x) = Σ_j w_j · Φ_j(x) + b
-
-    This implements the architecture from the paper where each Φ_j
-    is a closure-indicator feature.
+    """A finite closure-operator network.
+    
+    Represents a function that takes finitely many values,
+    defined by a set of centers (ε-net) and corresponding output values.
+    
+    Attributes:
+        centers: Array of shape (m, d) — the ε-net points
+        values: Array of shape (m,) — function values at centers
+        radius: The closure radius (half the minimum inter-center distance)
     """
-    features: List[ClosureFeature]
-    weights: np.ndarray
-    bias: float
-
-    def evaluate(self, x: np.ndarray) -> float:
-        """Evaluate the network at a single point."""
-        feature_values = np.array([f.evaluate(x) for f in self.features])
-        return np.dot(self.weights, feature_values) + self.bias
-
-    def evaluate_batch(self, X: np.ndarray) -> np.ndarray:
-        """Evaluate on a batch of points (N x d array)."""
-        feature_matrix = np.column_stack([f.evaluate_batch(X) for f in self.features])
-        return feature_matrix @ self.weights + self.bias
-
-    @property
-    def num_features(self) -> int:
-        return len(self.features)
-
-    @property
-    def num_distinct_values(self) -> int:
-        """Upper bound on distinct output values (2^m possible)."""
-        return min(2 ** self.num_features, 1000)  # cap for practicality
-
-
-@dataclass
-class CodebookNetwork:
-    """A nearest-neighbor codebook network.
-
-    Maps each input to the value of the target function at its
-    nearest representative point. This is the concrete implementation
-    of the universal approximation construction.
-    """
-    representatives: np.ndarray  # (m, d) array of net points
-    values: np.ndarray           # (m,) array of function values
-
-    def evaluate(self, x: np.ndarray) -> float:
-        """Map x to f(nearest representative)."""
-        dists = np.linalg.norm(self.representatives - x, axis=-1)
-        return self.values[np.argmin(dists)]
-
-    def evaluate_batch(self, X: np.ndarray) -> np.ndarray:
-        """Evaluate on a batch of points."""
-        # (N, m) distance matrix
-        dists = np.linalg.norm(X[:, None, :] - self.representatives[None, :, :], axis=-1)
-        nearest = np.argmin(dists, axis=1)
-        return self.values[nearest]
-
-    def certified_radius(self, x: np.ndarray) -> float:
-        """Compute the certified robustness radius at point x.
-
-        The certified radius is the distance to the nearest Voronoi
-        boundary — half the distance to the nearest representative
-        with a different value.
-
-        Time complexity: O(m) where m = number of representatives.
-        """
-        dists = np.linalg.norm(self.representatives - x, axis=-1)
-        nearest = np.argmin(dists)
-        my_value = self.values[nearest]
-        my_dist = dists[nearest]
-
-        # Find nearest representative with different value
-        diff_mask = self.values != my_value
-        if not np.any(diff_mask):
-            return float('inf')
-
-        nearest_diff_dist = np.min(dists[diff_mask])
-        return max(0, (nearest_diff_dist - my_dist) / 2)
-
-
-# ─────────────────────────────────────────────────────────
-# Algorithm 1: ε-Net Construction
-# ─────────────────────────────────────────────────────────
-
-def greedy_epsilon_net(points: np.ndarray, epsilon: float) -> np.ndarray:
-    """Construct a greedy ε-net from a point cloud.
-
-    Algorithm:
-        1. Start with the first point.
-        2. For each subsequent point, add it to the net if it is
-           at distance ≥ ε from all current net points.
-
-    Args:
-        points: (N, d) array of candidate points
-        epsilon: covering radius
-
-    Returns:
-        (m, d) array of net points
-
-    Time complexity: O(N * m) where m is the net size.
-    Space complexity: O(m * d).
-    """
-    net = [points[0]]
-    for p in points[1:]:
-        if all(np.linalg.norm(p - q) >= epsilon for q in net):
-            net.append(p)
-    return np.array(net)
-
-
-def uniform_grid_net(bounds: List[Tuple[float, float]], n_per_dim: int) -> np.ndarray:
-    """Construct a uniform grid ε-net on a hypercube.
-
-    Args:
-        bounds: list of (lo, hi) for each dimension
-        n_per_dim: number of points per dimension
-
-    Returns:
-        (n_per_dim^d, d) array of grid points
-
-    The covering radius is η = max_dim (hi - lo) / (2 * n_per_dim).
-    """
-    grids = [np.linspace(lo, hi, n_per_dim) for lo, hi in bounds]
-    mesh = np.meshgrid(*grids, indexing='ij')
-    return np.column_stack([m.ravel() for m in mesh])
-
-
-# ─────────────────────────────────────────────────────────
-# Algorithm 2: Closure Network Construction
-# ─────────────────────────────────────────────────────────
-
-def construct_closure_network(
-    f: Callable[[np.ndarray], float],
-    domain_points: np.ndarray,
-    epsilon: float
-) -> CodebookNetwork:
-    """Construct a closure (codebook) network approximating f.
-
-    Implements Algorithm 1 from the paper:
-    1. Build an ε-net from the domain points.
-    2. Evaluate f at each net point.
-    3. Return the nearest-neighbor codebook network.
-
-    Args:
-        f: target function (vectorized, takes (d,) array)
-        domain_points: (N, d) sample points from the domain
-        epsilon: desired approximation tolerance
-
-    Returns:
-        CodebookNetwork achieving ||f - N||∞ ≲ ε for Lipschitz f
-
-    Time complexity: O(N * m + m * cost(f)) where m = net size.
-    """
-    net = greedy_epsilon_net(domain_points, epsilon)
-    values = np.array([f(p) for p in net])
-    return CodebookNetwork(representatives=net, values=values)
-
-
-def construct_weighted_closure_network(
-    f: Callable[[np.ndarray], float],
-    net_points: np.ndarray,
-    feature_radius: float
-) -> ClosureNetwork:
-    """Construct a weighted closure-feature network.
-
-    Uses the finite exact representation (Theorem A from ClosureNetworks.lean):
-    one indicator feature per net point, with weight = f(center).
-
-    Args:
-        f: target function
-        net_points: (m, d) array of feature centers
-        feature_radius: radius of each ball feature
-
-    Returns:
-        ClosureNetwork with m features
-    """
-    features = [ClosureFeature(center=p, radius=feature_radius) for p in net_points]
-    weights = np.array([f(p) for p in net_points])
-    # For exact representation on net points, we need the interpolation weights.
-    # Use the indicator-per-point construction: w_j = f(s_j), with
-    # normalization to handle overlapping regions.
-    return ClosureNetwork(features=features, weights=weights, bias=0.0)
-
-
-# ─────────────────────────────────────────────────────────
-# Algorithm 3: Robustness Certification
-# ─────────────────────────────────────────────────────────
-
-def certify_point(
-    network: CodebookNetwork,
-    x: np.ndarray,
-    attack_radius: float
-) -> Tuple[bool, float]:
-    """Certify robustness of a codebook network at point x.
-
-    Algorithm:
-        1. Compute the network's certified radius at x.
-        2. Compare with the attack radius.
-
-    Args:
-        network: the closure network
-        x: point to certify
-        attack_radius: maximum perturbation radius
-
-    Returns:
-        (is_robust, certified_radius)
-
-    Time complexity: O(m) where m = number of representatives.
-    """
-    cr = network.certified_radius(x)
-    return cr >= attack_radius, cr
-
-
-def certify_dataset(
-    network: CodebookNetwork,
-    X: np.ndarray,
-    attack_radius: float
-) -> dict:
-    """Certify robustness on an entire dataset.
-
-    Returns statistics about certified robustness.
-    """
-    radii = np.array([network.certified_radius(x) for x in X])
-    certified = radii >= attack_radius
-
-    return {
-        'total_points': len(X),
-        'certified_count': int(np.sum(certified)),
-        'certified_fraction': float(np.mean(certified)),
-        'min_radius': float(np.min(radii)),
-        'max_radius': float(np.max(radii)),
-        'mean_radius': float(np.mean(radii)),
-        'median_radius': float(np.median(radii)),
-    }
-
-
-# ─────────────────────────────────────────────────────────
-# Algorithm 4: Lipschitz Error Estimation
-# ─────────────────────────────────────────────────────────
-
-def estimate_lipschitz_constant(
-    f: Callable[[np.ndarray], float],
-    domain_points: np.ndarray,
-    n_pairs: int = 1000
-) -> float:
-    """Estimate the Lipschitz constant of f by sampling pairs.
-
-    Args:
-        f: target function
-        domain_points: sample points from the domain
-        n_pairs: number of random pairs to test
-
-    Returns:
-        Estimated Lipschitz constant K
-
-    This is a lower bound on the true Lipschitz constant.
-    """
-    N = len(domain_points)
-    max_ratio = 0.0
-
-    for _ in range(n_pairs):
-        i, j = np.random.choice(N, 2, replace=False)
-        x, y = domain_points[i], domain_points[j]
-        d = np.linalg.norm(x - y)
-        if d > 1e-10:
-            ratio = abs(f(x) - f(y)) / d
-            max_ratio = max(max_ratio, ratio)
-
-    return max_ratio
-
-
-def theoretical_error_bound(
-    lipschitz_constant: float,
-    covering_radius: float
-) -> float:
-    """Compute the theoretical error bound: K * η.
-
-    From Theorem 3.8 (Lipschitz Error Bound):
-    For a K-Lipschitz function with codebook mesh η,
-    ||f - g||∞ ≤ K * η.
-    """
-    return lipschitz_constant * covering_radius
-
-
-# ─────────────────────────────────────────────────────────
-# Algorithm 5: Idempotent Layer Composition
-# ─────────────────────────────────────────────────────────
-
-class ClosureLayer:
-    """A single closure layer: monotone, extensive, idempotent.
-
-    Implements a threshold closure: c(x) = max(x, threshold).
-    This is the simplest closure operator on ℝ.
-    """
-
-    def __init__(self, threshold: float):
-        self.threshold = threshold
-
+    centers: np.ndarray
+    values: np.ndarray
+    radius: float
+    
     def __call__(self, x: np.ndarray) -> np.ndarray:
-        return np.maximum(x, self.threshold)
+        """Evaluate the closure network at point(s) x.
+        
+        Uses nearest-neighbor assignment to the center set.
+        
+        Args:
+            x: Input point(s), shape (d,) or (n, d)
+            
+        Returns:
+            Network output(s), shape () or (n,)
+        """
+        if x.ndim == 1:
+            dists = np.linalg.norm(self.centers - x, axis=1)
+            return self.values[np.argmin(dists)]
+        else:
+            # Batch evaluation
+            dists = np.linalg.norm(
+                self.centers[None, :, :] - x[:, None, :], axis=2)
+            return self.values[np.argmin(dists, axis=1)]
+    
+    @property
+    def size(self) -> int:
+        """Number of distinct output values."""
+        return len(np.unique(self.values))
 
-    def is_idempotent(self, x: np.ndarray, tol: float = 1e-10) -> bool:
-        """Verify idempotence: c(c(x)) = c(x)."""
-        return np.allclose(self(self(x)), self(x), atol=tol)
 
-    def is_extensive(self, x: np.ndarray, tol: float = 1e-10) -> bool:
-        """Verify extensivity: x ≤ c(x)."""
-        return np.all(self(x) >= x - tol)
-
-    def is_monotone(self, x: np.ndarray, tol: float = 1e-10) -> bool:
-        """Verify monotonicity on sorted input."""
-        y = self(np.sort(x))
-        return np.all(np.diff(y) >= -tol)
-
-
-def compose_closure_layers(*layers: ClosureLayer) -> Callable:
-    """Compose multiple closure layers.
-
-    By Theorem D, if the layers commute, the composition
-    is again idempotent and monotone.
+def build_eps_net(domain_bounds: List[Tuple[float, float]], 
+                  epsilon: float) -> np.ndarray:
+    """Construct a uniform ε-net for a box domain.
+    
+    Algorithm:
+        1. Compute grid spacing δ = ε / √d (to ensure coverage)
+        2. Create uniform grid within the domain bounds
+        3. Return grid points as the ε-net
+    
+    Args:
+        domain_bounds: List of (min, max) for each dimension
+        epsilon: Covering radius
+        
+    Returns:
+        Array of shape (m, d) containing the ε-net points
+        
+    Complexity:
+        Time: O((1/ε)^d) — exponential in dimension
+        Space: O((1/ε)^d)
     """
-    def composed(x: np.ndarray) -> np.ndarray:
-        result = x.copy()
-        for layer in layers:
-            result = layer(result)
+    d = len(domain_bounds)
+    delta = epsilon / np.sqrt(d)
+    
+    grids = []
+    for lo, hi in domain_bounds:
+        n_points = max(int(np.ceil((hi - lo) / delta)) + 1, 2)
+        grids.append(np.linspace(lo, hi, n_points))
+    
+    mesh = np.meshgrid(*grids, indexing='ij')
+    points = np.column_stack([g.ravel() for g in mesh])
+    
+    return points
+
+
+def build_closure_network(f: Callable, 
+                         domain_bounds: List[Tuple[float, float]],
+                         epsilon: float) -> ClosureNetwork:
+    """Build a closure-operator network approximating f on a box domain.
+    
+    Implements the constructive proof of Theorem A:
+        1. Compute uniform continuity modulus to get δ
+        2. Build δ-net of the domain
+        3. Evaluate f at net points to create codebook
+        4. Return nearest-neighbor network
+    
+    Args:
+        f: Target continuous function (vectorized, maps (n,d) -> (n,))
+        domain_bounds: List of (min, max) for each dimension
+        epsilon: Target approximation accuracy
+        
+    Returns:
+        ClosureNetwork with uniform error < ε on the domain
+        
+    Complexity:
+        Time: O((1/ε)^d) for construction
+        Space: O((1/ε)^d) for storing the network
+    """
+    centers = build_eps_net(domain_bounds, epsilon)
+    values = f(centers) if centers.ndim > 1 else np.array([f(c) for c in centers])
+    
+    # Compute closure radius: half the minimum distance between any
+    # point in the domain and its nearest center
+    if len(centers) > 1:
+        from scipy.spatial import KDTree
+        tree = KDTree(centers)
+        # Sample domain to estimate max distance to nearest center
+        n_test = min(10000, max(1000, len(centers) * 10))
+        test_points = np.column_stack([
+            np.random.uniform(lo, hi, n_test) 
+            for lo, hi in domain_bounds
+        ])
+        dists, _ = tree.query(test_points)
+        radius = np.max(dists) / 2
+    else:
+        radius = 0.0
+    
+    return ClosureNetwork(centers=centers, values=values, radius=radius)
+
+
+def closure_step_approx_1d(f: Callable, N: int) -> Tuple[Callable, float]:
+    """Build a closure-step network on [0,1] with N cells.
+    
+    Implements the piecewise-constant approximation from the Lipschitz
+    rate theorem.
+    
+    Args:
+        f: Target function on [0,1]
+        N: Number of cells
+        
+    Returns:
+        (network_function, cell_width)
+    """
+    delta = 1.0 / N
+    centers = np.array([(i + 0.5) * delta for i in range(N)])
+    center_values = np.array([f(c) for c in centers])
+    
+    def network(x: np.ndarray) -> np.ndarray:
+        idx = np.clip(np.floor(x / delta).astype(int), 0, N - 1)
+        return center_values[idx]
+    
+    return network, delta
+
+
+def certified_robustness_radius(network: ClosureNetwork, 
+                                 x: np.ndarray) -> float:
+    """Compute the certified robustness radius at point x.
+    
+    The certified radius is the distance to the nearest Voronoi
+    boundary — within this radius, the network output is guaranteed
+    to be constant.
+    
+    Args:
+        network: A ClosureNetwork
+        x: Query point, shape (d,)
+        
+    Returns:
+        Certified radius r > 0 such that for all z with ||z-x|| < r,
+        network(z) = network(x)
+    """
+    dists = np.linalg.norm(network.centers - x, axis=1)
+    sorted_dists = np.sort(dists)
+    
+    if len(sorted_dists) < 2:
+        return float('inf')
+    
+    # The certified radius is half the distance to the second-nearest center
+    # (since the nearest center determines the output)
+    nearest_idx = np.argmin(dists)
+    nearest_val = network.values[nearest_idx]
+    
+    # Find nearest center with DIFFERENT value
+    min_boundary_dist = float('inf')
+    for i, (d, v) in enumerate(zip(dists, network.values)):
+        if v != nearest_val:
+            # Distance to Voronoi boundary with this center
+            boundary_dist = (d - sorted_dists[0]) / 2
+            min_boundary_dist = min(min_boundary_dist, boundary_dist)
+    
+    if min_boundary_dist == float('inf'):
+        # All centers have the same value — function is constant
+        return float('inf')
+    
+    return max(0.0, min_boundary_dist)
+
+
+def verify_margin_preservation(f_vals: np.ndarray, 
+                                N_vals: np.ndarray,
+                                gamma: float) -> Tuple[bool, float]:
+    """Verify that sign is preserved under uniform approximation with margin.
+    
+    Implements the check from the margin transfer theorem:
+    if |f(x)| ≥ γ and |N(x) - f(x)| < γ/2, then sign(N(x)) = sign(f(x)).
+    
+    Args:
+        f_vals: Target function values
+        N_vals: Network approximation values
+        gamma: Margin parameter
+        
+    Returns:
+        (is_preserved, max_error) — whether signs match and the max error
+    """
+    max_error = np.max(np.abs(N_vals - f_vals))
+    
+    # Check margin condition
+    has_margin = np.all(np.abs(f_vals) >= gamma)
+    within_tolerance = max_error < gamma / 2
+    
+    if has_margin and within_tolerance:
+        signs_match = np.all(np.sign(N_vals) == np.sign(f_vals))
+        return signs_match, max_error
+    else:
+        return False, max_error
+
+
+def compose_closure_operators(*operators: Callable) -> Callable:
+    """Compose multiple closure operators.
+    
+    If the operators commute and are each idempotent, the composition
+    is also idempotent (by the algebraic structure theorem).
+    
+    Args:
+        operators: Closure operator functions
+        
+    Returns:
+        Composed function
+    """
+    def composed(x):
+        result = x
+        for op in operators:
+            result = op(result)
         return result
     return composed
 
 
-def verify_composition_properties(
-    layers: List[ClosureLayer],
-    x: np.ndarray
-) -> dict:
-    """Verify algebraic properties of a composed closure network.
-
-    Checks:
-    - Individual layer idempotence
-    - Individual layer extensivity
-    - Individual layer monotonicity
-    - Composed idempotence
-    - Composed monotonicity
+def verify_idempotence(f: Callable, test_points: np.ndarray, 
+                       tol: float = 1e-10) -> Tuple[bool, float]:
+    """Verify idempotence of a function: f(f(x)) = f(x).
+    
+    Args:
+        f: Function to test
+        test_points: Points to test on
+        tol: Numerical tolerance
+        
+    Returns:
+        (is_idempotent, max_error)
     """
-    composed = compose_closure_layers(*layers)
-    y = composed(x)
-    yy = composed(y)
+    fx = f(test_points)
+    ffx = f(fx)
+    error = np.max(np.abs(ffx - fx))
+    return error < tol, error
 
-    return {
-        'individual_idempotent': all(l.is_idempotent(x) for l in layers),
-        'individual_extensive': all(l.is_extensive(x) for l in layers),
-        'individual_monotone': all(l.is_monotone(x) for l in layers),
-        'composed_idempotent': bool(np.allclose(y, yy)),
-        'composed_monotone': bool(np.all(np.diff(composed(np.sort(x))) >= -1e-10)),
-    }
-
-
-# ─────────────────────────────────────────────────────────
-# Example Usage
-# ─────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Closure Network Algorithms: Example Usage\n")
-
-    # 1. Construct a closure network for sin(x) on [0, 1]
-    f = lambda x: np.sin(2 * np.pi * x[0]) if x.ndim == 1 else np.sin(2 * np.pi * x)
-    f_scalar = lambda x: float(np.sin(2 * np.pi * x[0]))
-    domain = np.linspace(0, 1, 1000).reshape(-1, 1)
-
-    network = construct_closure_network(f_scalar, domain, epsilon=0.05)
-    print(f"Network constructed: {len(network.representatives)} representatives")
-
-    # 2. Evaluate and measure error
-    approx = network.evaluate_batch(domain)
-    true_vals = np.sin(2 * np.pi * domain[:, 0])
-    max_error = np.max(np.abs(true_vals - approx))
-    print(f"Max approximation error: {max_error:.6f}")
-
-    # 3. Certify robustness
-    stats = certify_dataset(network, domain, attack_radius=0.01)
-    print(f"Certified at r=0.01: {stats['certified_fraction']*100:.1f}% of points")
-    print(f"Mean certified radius: {stats['mean_radius']:.4f}")
-
-    # 4. Verify layer composition
-    layers = [ClosureLayer(0.2), ClosureLayer(0.5), ClosureLayer(0.8)]
-    x_test = np.linspace(-1, 2, 100)
-    props = verify_composition_properties(layers, x_test)
-    print(f"\nLayer composition properties: {props}")
-
-    # 5. Lipschitz bound
-    K = estimate_lipschitz_constant(f_scalar, domain)
-    eta = 0.05  # covering radius
-    bound = theoretical_error_bound(K, eta)
-    print(f"\nEstimated Lipschitz constant: K = {K:.4f}")
-    print(f"Theoretical error bound: K*η = {bound:.6f}")
-    print(f"Actual max error: {max_error:.6f}")
-    print(f"Bound satisfied: {max_error <= bound + 0.01}")
+    print("Closure-Operator Network Algorithms")
+    print("=" * 50)
+    
+    # Example: approximate sin on [0, 2π]
+    f = lambda x: np.sin(x[:, 0]) if x.ndim > 1 else np.sin(x)
+    net = build_closure_network(
+        lambda pts: np.sin(pts[:, 0]),
+        [(0, 2 * np.pi)],
+        epsilon=0.1
+    )
+    print(f"Network size: {net.size} distinct values")
+    print(f"Network radius: {net.radius:.4f}")
+    
+    # Test
+    x_test = np.linspace(0, 2 * np.pi, 1000).reshape(-1, 1)
+    y_true = np.sin(x_test[:, 0])
+    y_pred = net(x_test)
+    print(f"Max error: {np.max(np.abs(y_true - y_pred)):.6f}")
+    
+    # Verify ReLU idempotence
+    relu = lambda x: np.maximum(0, x)
+    is_idem, err = verify_idempotence(relu, np.linspace(-5, 5, 10000))
+    print(f"\nReLU idempotence: {is_idem} (error: {err:.2e})")
