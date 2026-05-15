@@ -335,22 +335,6 @@
     "timestamp": "2026-05-14T16:03:53.861507+00:00"
   },
   {
-    "id": "seed_011",
-    "title": "Tropical Quadratic Sieve: Min-Plus Factoring Algorithm",
-    "description": "Prove that tropical min-plus matrix multiplication yields a subexponential factoring algorithm by encoding the quadratic sieve as a tropical convolution. Show that the tropical sieve step computes smoothness via idempotent arithmetic, and establish complexity bounds matching classical QS with tropical arithmetic replacing ring arithmetic.",
-    "domains": [
-      "Cryptography",
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.83,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "e03a2df6",
-    "timestamp": "2026-05-14T16:03:53.813831+00:00"
-  },
-  {
     "id": "seed_030",
     "title": "Reversible Computing via Tropical Isomorphisms",
     "description": "Construct a reversible Turing machine model where each transition corresponds to a tropical semiring isomorphism, and prove that reversible tropical computation simulates classical computation with at most polynomial overhead. Show that the Landauer erasure cost in tropical entropy is exactly kT ln(2) per bit, formalizing thermodynamic computation bounds via min-plus algebra.",
@@ -978,20 +962,6 @@
     "timestamp": "2026-05-15T13:04:21.855624+00:00"
   },
   {
-    "id": "fd_0213",
-    "title": "Computational aspects",
-    "description": ": All constructions are algorithmically tractable (Bellman-Ford style). Efficient implementations could enable practical applications in network optimization with heterogeneous costs.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3c1c085d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:04:21.862388+00:00"
-  },
-  {
     "id": "fd_0216",
     "title": "Relationship to rate-distortion",
     "description": ": I_trop characterizes the gap between independent and joint variety, and controls the rate-distortion function via Fano-type inequalities.\n\n### Proof Strategy\n- Non-negativity follows from the set-theoretic identity |A| + |B| - |A × B projected to A ∪ B| ≥ 0, which needs care in formalization.\n- The data-processing inequality uses harmonicVariety_comp_le on the v-component.\n- Connection to R(D) requires bounding the variety loss of optimal codes.\n\n### Cross-Domain Impact\nA fully formal tropical mutual information with data-processing would be the combinatorial analogue of Shannon's foundational construction. It would apply to: DNA codon correlation analysis, musical voice-leading coherence, and deterministic secret sharing.\n\n---\n\n## Direction 3: Multi-Voice Contrapuntal Rate Region\n\n### H",
@@ -1037,34 +1007,6 @@
     "timestamp": "2026-05-15T13:04:44.664357+00:00"
   },
   {
-    "id": "fd_0224",
-    "title": "Immediate",
-    "description": "(builds on current code): Tropical XOR lemma via collision probability",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6405e4c4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:10:47.240990+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "Short-term",
-    "description": "(requires new definitions): Tropical seeded extractor construction",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6405e4c4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:10:47.250044+00:00"
-  },
-  {
     "id": "fd_0227",
     "title": "Long-term",
     "description": "(requires hardness assumptions): Tropical PRG and parallel repetition",
@@ -1079,34 +1021,6 @@
     "timestamp": "2026-05-15T13:10:47.268750+00:00"
   },
   {
-    "id": "fd_0224",
-    "title": "Mathematical Lead:",
-    "description": "Develops the informal proofs and identifies key lemmas",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d761629",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:48:12.152896+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "Formalization Lead:",
-    "description": "Translates proofs into machine-verified form",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d761629",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:48:12.163074+00:00"
-  },
-  {
     "id": "fd_0227",
     "title": "Integration Lead:",
     "description": "Connects results to existing theory and applications\n\nThe five directions are largely independent and can be pursued in parallel, with occasional synchronization at the interfaces (e.g., Direction 3 depends on Direction 1 for infinite-state extensions).\n\n---\n\n## Priority Ordering",
@@ -1119,34 +1033,6 @@
     "source_exp_id": "9d761629",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:48:12.184795+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Randomized linear algebra:",
-    "description": "Extend to verification of matrix decompositions (LU, QR, eigenvalues) using similar random projection techniques.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a861b2f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:03:35.845521+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "Streaming algorithms:",
-    "description": "Formalize the connection between Freivalds' fingerprinting and the AMS sketch for frequency moment estimation.\n\n### Medium-Term (Requiring New Infrastructure)",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a861b2f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:03:35.853399+00:00"
   },
   {
     "id": "fd_0226",
@@ -1192,37 +1078,6 @@
     "source_exp_id": "a861b2f2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T14:03:35.889619+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Direct tropical encoding",
-    "description": ": Alternatively, encode register machine computations directly as tropical formulas, bypassing the DPRM detour. The key gadgets needed:\n   - State-selection using min-based one-hot encoding\n   - Counter arithmetic using additive variables\n   - Zero-test via auxiliary Boolean variables with min(x, 1-x) = 0 gadget",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "06519137",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:07:33.242431+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "Classification of tropically representable sets",
-    "description": ": Characterize which sets are representable by mul-free formulas (these should be exactly the semilinear sets, by the Presburger connection).\n\n### Cross-Domain Connections\n- **Algebraic geometry**: Tropical representability connects to tropical varieties and amoeba theory\n- **Computability theory**: Creates a new hierarchy: semilinear ⊂ Diophantine = tropically representable\n- **Number theory**: May yield new Diophantine representations via tropical techniques\n\n### Estimated Impact\nHigh. Would unify tropical geometry with classical computability theory and provide new tools for both fields.\n\n---\n\n## Direction 2: Decidability Classification for Restricted Fragments\n\n### Hypothesis\nThere exist natural intermediate fragments between mul-free and full polynomial tropical arithmetic where the d",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "06519137",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:07:33.253974+00:00"
   },
   {
     "id": "fd_0226",
@@ -1613,7 +1468,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "cccfadf1",
+    "consumed_by_exp_id": "238a8453",
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
@@ -1858,23 +1713,6 @@
     "timestamp": "2026-05-15T09:19:36.858900+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "1. Tropical Löb Theorem",
-    "description": "**Goal:** Formalize a tropical provability modality induced by closure/fixed-point semantics and prove a Löb-style theorem.\n\n**Background:** In classical modal logic, Löb's theorem states: if a proof system proves \"if □P then P,\" then it already proves P. The classical proof uses the diagonal lemma to construct a sentence L asserting \"if □L then L,\" then exploits the Hilbert-Bernays derivability conditions.\n\n**Tropical Formulation:**\n\nDefine a tropical provability modality □ as a closure operator `c` on `Fin n → WithTop ℝ` satisfying:\n- Extensivity: `x ≤ c x` (soundness — provable bounds are at least as strong as actual)\n- Monotonicity: `x ≤ y → c x ≤ c y`\n- Idempotency: `c (c x) = c x`\n\n**Conjecture (Tropical Löb):**\n```\ntheorem tropical_loeb\n  {n : ℕ} [NeZero n]\n  (c : (Fin n → WithTop ℝ",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ef0cc9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:25.817101+00:00"
-  },
-  {
     "id": "fd_0227",
     "title": "3. MDL Lower Bounds for Self-Referential Tropical Sentences",
     "description": "**Goal:** Extend the closure-Kolmogorov duality to prove that diagonal tropical sentences have irreducible description length under any closure-complete coding.\n\n**Background:** The existing `closure_mdl_bound_via_fixed_point` theorem shows that closure operators provide canonical representatives with bounded code length. The question is: do self-referential fixed points (tropical Gödel sentences) have *provably higher* description complexity than non-self-referential ones?\n\n**Conjecture (Diagonal MDL Lower Bound):**\n```\ntheorem diagonal_mdl_lower_bound\n  {n : ℕ} [NeZero n]\n  (c : (Fin n → WithTop ℝ) → (Fin n → WithTop ℝ))\n  (hmono : Monotone c) (hext : ∀ x, x ≤ c x) (hidem : ∀ x, c (c x) = c x)\n  (complexity : (Fin n → WithTop ℝ) → ℕ)\n  (hcompress : ∀ x, complexity (c x) ≤ complexity x)\n ",
@@ -2024,36 +1862,6 @@
     "timestamp": "2026-05-15T14:21:34.138758+00:00"
   },
   {
-    "id": "fd_0224",
-    "title": "A. Tropical Convexity",
-    "description": "Develop a theory of tropical convex sets (closed under tropical linear combinations `max(a + x, b + y)`). Prove that tropical convex hulls are polyhedral. Connect to the existing formalization via the observation that each PairCell is a tropical halfspace.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d5cf911",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:21:34.149189+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "B. Max-Plus Spectral Theory",
-    "description": "Formalize the max-plus eigenvalue problem: given a matrix `A : Fin n → Fin n → ℝ`, find `λ` and `v` with `max_j (A_{ij} + v_j) = λ + v_i`. Connect the eigenspace geometry to tropical hypersurfaces of the characteristic polynomial.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d5cf911",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:21:34.159478+00:00"
-  },
-  {
     "id": "fd_0226",
     "title": "C. Tropical Intersection Theory",
     "description": "Define tropical intersection multiplicities via balancing conditions. Prove Bézout's theorem for tropical curves in the plane: two generic tropical curves of degrees `d₁` and `d₂` intersect in `d₁ · d₂` points (counted with multiplicity).",
@@ -2082,5 +1890,64 @@
     "source_exp_id": "7d5cf911",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T14:21:34.178972+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Target Theorem",
+    "description": "For a factor base `P` and a natural number `n` with exactly one prime factor `q ∉ P`, the score defect satisfies:\n\n```\nscoreDefect P n = log q\n```\n\nMore precisely: if `n = m · q` where `m` is P-smooth and `q` is prime with `q ∉ P`, then `scoreDefect P n = Real.log q`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e03a2df6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:02:24.517703+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Significance",
+    "description": "Relation merging in the large-prime variant composes partial relations by matching shared large primes. This is structurally identical to **path composition in a weighted graph**, which is exactly what min-plus matrix multiplication computes. Our `minPlusMatMul_assoc` theorem already provides the algebraic foundation.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e03a2df6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:02:24.534749+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Cross-Domain Connection",
+    "description": "This directly connects to **turbo codes, LDPC codes, and polar codes**. If sieving is decoding, then perhaps decoding techniques can be adapted for factoring — and conversely, cryptanalytic insights might improve decoder design.\n\n---",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e03a2df6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:02:24.555432+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Implementation Roadmap",
+    "description": "| Priority | Direction | Estimated Effort | Dependencies |\n|----------|-----------|-----------------|--------------|\n| 1 | Large-prime defect (Dir. 1) | 1-2 weeks | Current theorems |\n| 2 | Relation graph (Dir. 2) | 2-3 weeks | `minPlusMatMul_assoc` |\n| 3 | Belief propagation (Dir. 4) | 3-4 weeks | Dir. 1, factor graph formalization |\n| 4 | Dickman function (Dir. 3) | 4-8 weeks | Analysis formalization in Mathlib |\n| 5 | NFS extension (Dir. 5) | 6-12 weeks | Number field machinery in Mathlib |\n\nEach direction builds on the core theorems established in this work: the score defect characterization of smoothness, min-plus matrix associativity, and the idempotent boundary theorem.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e03a2df6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:02:24.572333+00:00"
   }
 ]
