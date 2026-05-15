@@ -728,20 +728,6 @@
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
   },
   {
-    "id": "fd_0197",
-    "title": "Eigenvector perturbation",
-    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "a861b2f2",
-    "timestamp": "2026-05-14T23:59:16.192013+00:00"
-  },
-  {
     "id": "fd_0187",
     "title": "Generalized inductive hypothesis",
     "description": ": Prove that for every formula φ with free variables, the function `(annotated_word) ↦ φ.evalWith(decode(annotated_word))` is tropically recognizable over the extended alphabet.",
@@ -1078,20 +1064,6 @@
     "timestamp": "2026-05-15T13:04:21.862388+00:00"
   },
   {
-    "id": "fd_0214",
-    "title": "Non-negativity",
-    "description": ": I_trop(u; v) ≥ 0 (by inclusion-exclusion / submodularity of image cardinality).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "50208fa8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:04:44.618415+00:00"
-  },
-  {
     "id": "fd_0216",
     "title": "Relationship to rate-distortion",
     "description": ": I_trop characterizes the gap between independent and joint variety, and controls the rate-distortion function via Fano-type inequalities.\n\n### Proof Strategy\n- Non-negativity follows from the set-theoretic identity |A| + |B| - |A × B projected to A ∪ B| ≥ 0, which needs care in formalization.\n- The data-processing inequality uses harmonicVariety_comp_le on the v-component.\n- Connection to R(D) requires bounding the variety loss of optimal codes.\n\n### Cross-Domain Impact\nA fully formal tropical mutual information with data-processing would be the combinatorial analogue of Shannon's foundational construction. It would apply to: DNA codon correlation analysis, musical voice-leading coherence, and deterministic secret sharing.\n\n---\n\n## Direction 3: Multi-Voice Contrapuntal Rate Region\n\n### H",
@@ -1207,20 +1179,6 @@
     "source_exp_id": "62ac6dd0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:05:41.522074+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Compose specifications",
-    "description": "using the monad structure (Direction 3): if `N₁` and `N₂` both satisfy specifications, derive the specification for `N₁ ∘ N₂`.\n\nThis would create a fully automated verification pipeline where the fixed-point structure of mathematical operators is exploited to generate certified guarantees without human intervention.\n\n---\n\n## Priority Ranking",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "62ac6dd0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:41.530914+00:00"
   },
   {
     "id": "fd_0223",
@@ -1379,18 +1337,106 @@
     "timestamp": "2026-05-15T14:01:02.522292+00:00"
   },
   {
-    "id": "fd_0222",
-    "title": "Test",
-    "description": "candidates computationally on musical examples.",
+    "id": "fd_0223",
+    "title": "Coding theory:",
+    "description": "Formalize the connection between hyperplane counting and minimum distance of linear codes. The dual Plotkin bound is a direct application.",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4b8fe325",
+    "source_exp_id": "a861b2f2",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:01:02.532221+00:00"
+    "timestamp": "2026-05-15T14:03:35.837789+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Randomized linear algebra:",
+    "description": "Extend to verification of matrix decompositions (LU, QR, eigenvalues) using similar random projection techniques.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a861b2f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:35.845521+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Streaming algorithms:",
+    "description": "Formalize the connection between Freivalds' fingerprinting and the AMS sketch for frequency moment estimation.\n\n### Medium-Term (Requiring New Infrastructure)",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a861b2f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:35.853399+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Algebraic complexity:",
+    "description": "Build toward formalized circuit lower bounds using the hardness-randomness connection (Impagliazzo-Wigderson).",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a861b2f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:35.863336+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Proof complexity:",
+    "description": "Connect Freivalds' verification to formalized algebraic proof systems (Nullstellensatz proofs, polynomial calculus).\n\n### Long-Term (Frontier Research)",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a861b2f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:35.872113+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Verified cryptographic proof systems:",
+    "description": "Machine-verified soundness proofs for deployed SNARK/STARK systems, built on formalized Schwartz-Zippel and sum-check.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a861b2f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:35.880813+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Quantum-classical verification gaps:",
+    "description": "Formalize the relationship between classical random verification (Freivalds) and quantum verification (BQP vs. MA) to understand the computational power of different verification paradigms.",
+    "domains": [
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a861b2f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:35.889619+00:00"
   },
   {
     "id": "seed_079",
@@ -1979,21 +2025,6 @@
     "source_exp_id": "7b109bab",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:19:36.858900+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Exact Theorem Statement",
-    "description": "```lean\ntheorem sumcheck_soundness\n    {F : Type*} [Field F] [Fintype F] [DecidableEq F]\n    {n : ℕ}\n    (p : MvPolynomial (Fin n) F)\n    (d : ℕ) (hdeg : p.totalDegree ≤ d)\n    (claimed_sum : F)\n    (hneq : (∑ x : Fin n → ({0, 1} : Finset F), MvPolynomial.eval (fun i => (x i : F)) p) ≠ claimed_sum) :\n    -- Probability that a cheating prover fools an honest verifier\n    -- is at most n·d / |F| per round\n    True -- placeholder for the probability bound\n```",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5592f3fa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:04:08.962272+00:00"
   },
   {
     "id": "fd_0225",
