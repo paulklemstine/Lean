@@ -144,22 +144,6 @@
     "timestamp": "2026-05-14T16:03:53.817937+00:00"
   },
   {
-    "id": "seed_057",
-    "title": "Self-Referential Proof Systems and Tropical Godel Sentences",
-    "description": "Prove that idempotent semiring fixpoints encode self-referential statements, and construct a Lean 4 formalization of a tropical Gödel sentence. Show that the tropical fixed-point combinator yields an undecidable proposition in min-plus arithmetic, establishing incompleteness for tropical proof systems and connecting diagonalization to idempotent closure operators.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Algebra"
-    ],
-    "priority_score": 0.89,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "ef0cc9c1",
-    "timestamp": "2026-05-14T16:03:53.851727+00:00"
-  },
-  {
     "id": "seed_008",
     "title": "Goldbach via Tropical Additive Combinatorics",
     "description": "Prove that every even number greater than 2 is the sum of two primes by reformulating Goldbach's conjecture as a tropical additive identity: the min-plus convolution of the prime indicator function with itself achieves its minimum at every even integer. Show that the tropical Goldbach function is bounded, and that the tropical Schnirelmann density of primes is 1/2 in the min-plus sense.",
@@ -991,36 +975,6 @@
     "timestamp": "2026-05-15T09:04:10.051646+00:00"
   },
   {
-    "id": "fd_0222",
-    "title": "Sparse functions",
-    "description": ": Show that functions depending on at most s of n variables can be approximated by closure networks of size O((1/ε)^s) regardless of n.\n\n### Formalization Target\n```lean\ntheorem closure_barron_approx\n    {n : ℕ} (K : Set (Fin n → ℝ)) (hK : IsCompact K)\n    (f : (Fin n → ℝ) → ℝ) (hf : BarronNorm f ≤ B) :\n    ∀ m : ℕ, ∃ N, IsFiniteClosureNetworkOfSize N m ∧\n      ∀ x ∈ K, |N x - f x| ≤ C * B / Real.sqrt m\n```\n\n### Impact\nThis would make closure networks practically competitive with deep learning on high-dimensional problems, not just theoretically universal.\n\n### Cross-Domain Connections\n- **Approximation theory**: Barron spaces, variation spaces\n- **High-dimensional probability**: Random features, Johnson-Lindenstrauss\n- **Compressed sensing**: Sparse recovery, restricted isometry\n\n---\n\n## ",
-    "domains": [
-      "EML",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56b13d4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:37.768787+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Binary base classifiers",
-    "description": ": Build K binary closure-network classifiers, each with certified radius r and margin γ.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56b13d4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:04:37.778076+00:00"
-  },
-  {
     "id": "fd_0226",
     "title": "Formal statement",
     "description": ": For perturbation within radius r, no binary classifier changes, so zero bits flip, which is below d_min/2.\n\n### Formalization Target\n```lean\ntheorem ecoc_closure_multiclass_robust\n    {X : Type*} [PseudoMetricSpace X] {K : ℕ} {m : ℕ}\n    (code : Fin K → Fin m → Bool)\n    (classifiers : Fin m → X → Bool)\n    (r : ℝ) (hr : 0 < r)\n    (hrobust : ∀ j, IsClosureClassifier (classifiers j) r)\n    (hd_min : ECOC_minDist code ≥ 3) :\n    ∀ x z, dist z x < r → ecocDecode code classifiers z = ecocDecode code classifiers x\n```\n\n### Impact\nThis extends certified robustness from binary to multi-class settings with explicit combinatorial guarantees.\n\n### Cross-Domain Connections\n- **Coding theory**: BCH codes, Reed-Solomon codes, minimum distance bounds\n- **Multi-class learning**: One-vs-all, output cod",
@@ -1172,20 +1126,6 @@
     "timestamp": "2026-05-15T12:05:00.993647+00:00"
   },
   {
-    "id": "fd_0209",
-    "title": "Direction 4",
-    "description": "(automorphic forms) — deepest mathematical content, longest timeline",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "49977498",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:05:01.004685+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Walk surgery lemmas",
     "description": ": Formalizing that optimal walks in nonneg-weight graphs use each wormhole at most once. This is needed for the perturbative comparison bound and extends to multi-wormhole settings.",
@@ -1258,20 +1198,6 @@
     "timestamp": "2026-05-15T13:04:44.618415+00:00"
   },
   {
-    "id": "fd_0215",
-    "title": "Data-processing inequality",
-    "description": ": For any T : β → β, I_trop(u; T∘v) ≤ I_trop(u; v).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "50208fa8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:04:44.626622+00:00"
-  },
-  {
     "id": "fd_0216",
     "title": "Relationship to rate-distortion",
     "description": ": I_trop characterizes the gap between independent and joint variety, and controls the rate-distortion function via Fano-type inequalities.\n\n### Proof Strategy\n- Non-negativity follows from the set-theoretic identity |A| + |B| - |A × B projected to A ∪ B| ≥ 0, which needs care in formalization.\n- The data-processing inequality uses harmonicVariety_comp_le on the v-component.\n- Connection to R(D) requires bounding the variety loss of optimal codes.\n\n### Cross-Domain Impact\nA fully formal tropical mutual information with data-processing would be the combinatorial analogue of Shannon's foundational construction. It would apply to: DNA codon correlation analysis, musical voice-leading coherence, and deterministic secret sharing.\n\n---\n\n## Direction 3: Multi-Voice Contrapuntal Rate Region\n\n### H",
@@ -1301,20 +1227,6 @@
     "source_exp_id": "50208fa8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:04:44.647629+00:00"
-  },
-  {
-    "id": "fd_0218",
-    "title": "Inversion equivariance",
-    "description": ": Under inversion-symmetric cost, R_{I∘u}(D) = R_u(D).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "50208fa8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:04:44.656204+00:00"
   },
   {
     "id": "fd_0219",
@@ -1357,34 +1269,6 @@
     "source_exp_id": "9cabdd3c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:05:09.679343+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Deep mathematics (connects to existing Mathlib):",
-    "description": "Idempotent measures (#4), connecting to measure theory and probability",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cabdd3c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:09.688621+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Applications (broadest impact):",
-    "description": "Bellman operators (#5), connecting to control theory and ML",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cabdd3c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:09.697174+00:00"
   },
   {
     "id": "fd_0224",
@@ -1991,23 +1875,6 @@
     "timestamp": "2026-05-15T09:19:36.820111+00:00"
   },
   {
-    "id": "fd_0209",
-    "title": "Direction 2: Tropical Rate-Distortion Theory for Harmonic Variety",
-    "description": "**Hypothesis**: There exists a tropical analogue of Shannon's rate-distortion theorem where: distortion = contrapuntal penalty (tropical metric), rate = harmonic variety (support-size entropy), and the rate-distortion function R(D) describes the maximum achievable variety at each penalty level.\n\n**Proof Strategy**:\n1. Define tropical entropy as H_trop(v) = |support(interval map)|, a combinatorial (non-probabilistic) measure.\n2. Define the rate-distortion function: R(D) = max{harmonicVariety(u, v) : totalCost(u, v) ≤ D} over all v in the pitch space.\n3. Prove R(D) is a non-decreasing, concave, step function (by finiteness of the pitch space).\n4. Establish a tropical data-processing inequality: for any pitch transformation T, harmonicVariety(u, T∘v) ≤ harmonicVariety(u, v). This means post-p",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:19:36.829854+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Direction 3: Categorical Composition Operators on Tropical Style Spaces",
     "description": "**Hypothesis**: Musical transformations (transposition, inversion, retrograde, augmentation) form a category where morphisms are tropical-cost-preserving maps, and style classes are isomorphism classes under this category.\n\n**Proof Strategy**:\n1. Define the category **TropCP** whose objects are (cantus, melody) pairs equipped with their cost vectors (vertical, melodic, parallel) and whose morphisms are pitch-space maps that preserve or bound cost change.\n2. Prove that transposition by k semitones is an isomorphism in **TropCP** (cost is transposition-invariant by definition).\n3. Prove that inversion is a cost-preserving morphism when consonance is symmetric (which it is by the |k| symmetry).\n4. Define a functor from **TropCP** to the category of weighted graphs, sending each voice-leading ",
@@ -2062,22 +1929,6 @@
     "timestamp": "2026-05-15T09:19:36.858900+00:00"
   },
   {
-    "id": "fd_0215",
-    "title": "1. Tropical Mutual Information and Capacity Theory",
-    "description": "**Hypothesis**: There exists a well-defined tropical mutual information quantity `I_trop(X;Y)` that is nonnegative and satisfies a min-plus data processing inequality under channel composition.\n\n**Precise program**:\n- Define tropical joint entropy `H_trop(X,Y) = min_{(a,b)} E(a,b)` and marginals.\n- Define `I_trop(X;Y) = H_trop(X) + H_trop(Y) - H_trop(X,Y)`.\n- Prove nonnegativity: `I_trop(X;Y) ≥ 0` when the joint energy landscape satisfies natural consistency conditions on marginals.\n- Prove data processing: for a Markov chain `X → Y → Z` modeled as composition of tropical channels, `I_trop(X;Z) ≤ I_trop(X;Y)`.\n- Define tropical channel capacity as `C_trop = min_{input distributions} max_{output} I_trop`.\n- Prove a tropical coding theorem: the capacity governs the extremal cost of reliable ",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a65f7038",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:14:43.271111+00:00"
-  },
-  {
     "id": "fd_0214",
     "title": "Exact Theorem Statement",
     "description": "```lean\ntheorem sumcheck_soundness\n    {F : Type*} [Field F] [Fintype F] [DecidableEq F]\n    {n : ℕ}\n    (p : MvPolynomial (Fin n) F)\n    (d : ℕ) (hdeg : p.totalDegree ≤ d)\n    (claimed_sum : F)\n    (hneq : (∑ x : Fin n → ({0, 1} : Finset F), MvPolynomial.eval (fun i => (x i : F)) p) ≠ claimed_sum) :\n    -- Probability that a cheating prover fools an honest verifier\n    -- is at most n·d / |F| per round\n    True -- placeholder for the probability bound\n```",
@@ -2091,21 +1942,6 @@
     "source_exp_id": "5592f3fa",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T11:04:08.962272+00:00"
-  },
-  {
-    "id": "fd_0215",
-    "title": "Why It Matters",
-    "description": "The sum-check protocol is the workhorse of interactive proof systems, from IP = PSPACE to modern SNARKs. Formalizing its soundness would create the first machine-verified foundation for algebraic proof systems. Our `freivalds_soundness_bound` already establishes the one-round, degree-1 special case; extending to multilinear polynomials over the Boolean hypercube is the natural next step.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5592f3fa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T11:04:08.973021+00:00"
   },
   {
     "id": "fd_0226",
@@ -2124,5 +1960,113 @@
     "source_exp_id": "245e45a9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:00:56.530659+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "1. Tropical Löb Theorem",
+    "description": "**Goal:** Formalize a tropical provability modality induced by closure/fixed-point semantics and prove a Löb-style theorem.\n\n**Background:** In classical modal logic, Löb's theorem states: if a proof system proves \"if □P then P,\" then it already proves P. The classical proof uses the diagonal lemma to construct a sentence L asserting \"if □L then L,\" then exploits the Hilbert-Bernays derivability conditions.\n\n**Tropical Formulation:**\n\nDefine a tropical provability modality □ as a closure operator `c` on `Fin n → WithTop ℝ` satisfying:\n- Extensivity: `x ≤ c x` (soundness — provable bounds are at least as strong as actual)\n- Monotonicity: `x ≤ y → c x ≤ c y`\n- Idempotency: `c (c x) = c x`\n\n**Conjecture (Tropical Löb):**\n```\ntheorem tropical_loeb\n  {n : ℕ} [NeZero n]\n  (c : (Fin n → WithTop ℝ",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef0cc9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:25.817101+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "2. Bellman–Gödel Barrier for Verification",
+    "description": "**Goal:** Show that tropical fixed points arising from shortest-path/Bellman operators admit self-referential specifications that cannot be both internally certified and complete.\n\n**Background:** The Bellman operator `T` in dynamic programming is defined by `T(v)(s) = min_a [c(s,a) + γ · v(s')]`. It is a contraction mapping on value functions, and its unique fixed point is the optimal value function. Crucially, `T` is monotone and, in the undiscounted case with finite state spaces, idempotent on the set of solutions.\n\n**Conjecture (Bellman–Gödel Barrier):**\n```\ntheorem bellman_godel_barrier\n  {S A : Type*} [Fintype S] [Fintype A]\n  (T : (S → WithTop ℝ) → (S → WithTop ℝ))\n  (hmono : Monotone T) (hidem : ∀ v, T (T v) = T v)\n  (Certifiable : (S → WithTop ℝ) → S → Prop)\n  (hdiag : ∃ s, ∀ v, T",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "EML",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef0cc9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:25.827621+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "3. MDL Lower Bounds for Self-Referential Tropical Sentences",
+    "description": "**Goal:** Extend the closure-Kolmogorov duality to prove that diagonal tropical sentences have irreducible description length under any closure-complete coding.\n\n**Background:** The existing `closure_mdl_bound_via_fixed_point` theorem shows that closure operators provide canonical representatives with bounded code length. The question is: do self-referential fixed points (tropical Gödel sentences) have *provably higher* description complexity than non-self-referential ones?\n\n**Conjecture (Diagonal MDL Lower Bound):**\n```\ntheorem diagonal_mdl_lower_bound\n  {n : ℕ} [NeZero n]\n  (c : (Fin n → WithTop ℝ) → (Fin n → WithTop ℝ))\n  (hmono : Monotone c) (hext : ∀ x, x ≤ c x) (hidem : ∀ x, c (c x) = c x)\n  (complexity : (Fin n → WithTop ℝ) → ℕ)\n  (hcompress : ∀ x, complexity (c x) ≤ complexity x)\n ",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef0cc9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:25.838631+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "4. Categorical Tropical Recursion",
+    "description": "**Goal:** Recast the tropical fixed-point/diagonalization construction using traced monoidal categories or Lawvere fixed-point semantics in an idempotent-enriched category.\n\n**Background:** Lawvere's fixed-point theorem states: if there is a surjection `A × A → A` in a cartesian closed category, then every endomorphism of any object has a fixed point. Our tropical construction can be viewed as an instance of this in a category enriched over `(WithTop ℝ, min, +)`.\n\n**Conjecture (Lawvere-Tropical Fixed Point):**\n```\ntheorem lawvere_tropical_fixed_point\n  {C : Type*} [Category C]\n  (A B : C) (eval : A ⟶ B) (diag : A ⟶ A ⊗ A)\n  (repr : A ⊗ A ⟶ A)\n  (hsurj : ∀ f : A ⟶ B, ∃ a, eval ≫ ... = f) :\n  ∀ f : B ⟶ B, ∃ b, f b = b\n```\n\n**Proof Strategy:** Formalize the construction in Mathlib's category ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef0cc9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:25.851145+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "5. Undecidability Thresholds in Min-Plus Proof Search",
+    "description": "**Goal:** Move from finite-state incompleteness schemas to explicit undecidability results for richer min-plus arithmetic fragments.\n\n**Background:** Our current results show that finite tropical proof systems with diagonal expressivity are incomplete. The natural question is: at what point does tropical arithmetic become undecidable? The theory of min-plus (tropical) arithmetic is known to be decidable for certain fragments (e.g., tropical polynomial identity testing), but the boundary is not well understood.\n\n**Conjecture (Tropical Arithmetic Undecidability Threshold):**\n```\n-- There exists a fragment of tropical arithmetic that is undecidable\ntheorem tropical_arithmetic_undecidability\n  -- Sentences are tropical polynomial equations and inequalities\n  (TropSentence : Type)\n  (TropSemant",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef0cc9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:25.864975+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Research Program Summary",
+    "description": "These five directions form a coherent research program in **tropical metamathematics**:\n\n| Direction | Core Technique | Connects To |\n|-----------|---------------|-------------|\n| Tropical Löb | Closure modality + fixed point | AI alignment, game theory |\n| Bellman–Gödel | DP operators + self-reference | Reinforcement learning, verification |\n| Diagonal MDL | Compression + fixed points | Information theory, Kolmogorov complexity |\n| Categorical | Lawvere + enriched categories | Topos theory, linear logic |\n| Undecidability | Turing reduction + tropical encoding | Computability theory, optimization |\n\nThe unifying theme: **incompleteness phenomena are native to idempotent/tropical mathematics**, not merely imported from classical arithmetic. This suggests that any sufficiently rich tropical",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef0cc9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:05:25.877619+00:00"
   }
 ]
