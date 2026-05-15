@@ -168,10 +168,10 @@
       "Physics"
     ],
     "priority_score": 0.93,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e0e92b1c",
     "timestamp": "2026-05-14T16:03:53.854964+00:00"
   },
   {
@@ -539,22 +539,6 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.852712+00:00"
-  },
-  {
-    "id": "seed_026",
-    "title": "Adversarial Training as Tropical Regularization: Provable Defense via Min-Plus",
-    "description": "Prove that adversarial training is equivalent to adding a tropical regularization penalty to the empirical risk, where the min-plus distance to the nearest adversarial example replaces the Lp norm. Show that the resulting tropical risk minimizer has certified robustness radius equal to the idempotent closure of the margin, yielding a constructive defense with provable guarantees.",
-    "domains": [
-      "MachineLearning",
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.85,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "79f73184",
-    "timestamp": "2026-05-14T16:03:53.826504+00:00"
   },
   {
     "id": "seed_040",
@@ -1484,21 +1468,6 @@
     "timestamp": "2026-05-14T17:33:00.515491+00:00"
   },
   {
-    "id": "fd_0210",
-    "title": "Is there a quantum tropical reflective operator?",
-    "description": "Replace min with a \"quantum min\" (superposition of paths) and study whether the fixed-point theorem survives decoherence.",
-    "domains": [
-      "Tropical",
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "a0c6f9fb",
-    "timestamp": "2026-05-14T19:34:44.354883+00:00"
-  },
-  {
     "id": "fd_0183",
     "title": "Build",
     "description": "the required infrastructure (critical graph definitions, semigroup orbit sets, DES trajectories) as Lean definitions with `sorry`-ed properties.",
@@ -1511,40 +1480,6 @@
     "source_exp_id": "c337fb05",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:35:20.582859+00:00"
-  },
-  {
-    "id": "fd_0207",
-    "title": "Formalize tropical circuits",
-    "description": ": a tropical attention layer as a max-plus affine map composed with a tropical projection.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.185020+00:00"
-  },
-  {
-    "id": "fd_0210",
-    "title": "Connect to VC dimension / Rademacher complexity",
-    "description": "of the resulting function class.\n\n### Cross-Domain Connections\n- **Tropical geometry**: Newton polytopes, tropical varieties, and their combinatorial complexity.\n- **Circuit complexity**: tropical circuits as algebraic circuits over the max-plus semiring; connections to VP and VNP.\n- **Deep learning theory**: depth separation results for ReLU networks via tropical geometry (Zhang et al., 2018).\n\n### Expected Impact\nThis would give the first tight expressivity characterization of transformer attention through tropical geometry, providing a mathematical foundation for architecture design decisions (depth vs. width vs. number of heads).\n\n---\n\n## Direction 5: Certified Pruning and Compression via Headwise Tropical Redundancy\n\n### Hypothesis\nTwo attention heads are \"tropically equivalent\" if th",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.199582+00:00"
   },
   {
     "id": "fd_0213",
@@ -1587,53 +1522,6 @@
     "source_exp_id": "9d04e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:35:13.244396+00:00"
-  },
-  {
-    "id": "fd_0201",
-    "title": "Singleton bound comparison",
-    "description": ": Compare the existence threshold `(2w+1)^n > q^m` with the classical q-ary Singleton and Plotkin bounds. Show that the SIS theorem recovers known distance bounds for random codes as a special case.\n\n### Cross-Domain Significance\n- **Coding theory**: Provides a unified lattice-geometric proof of minimum distance bounds for q-ary codes, complementing algebraic and probabilistic arguments.\n- **Cryptography**: The dual view — codes whose minimum distance is large correspond to hard SIS instances — is the foundation of code-based cryptography (McEliece, BIKE, Classic McEliece).\n- **Information theory**: Connects channel coding capacity to lattice packing density.\n\n---\n\n## Team Directive\n\nCreate a team to conduct research along these five directions. Each direction should:",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9d04e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:35:13.293278+00:00"
-  },
-  {
-    "id": "fd_0201",
-    "title": "Computational verification:",
-    "description": "For small corpora (50-200 chords), compute all-pairs shortest paths by Floyd-Warshall, verify the diameter computationally, and certify the result via `native_decide` or explicit witness construction.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "00fcfe9a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:49:05.160972+00:00"
-  },
-  {
-    "id": "fd_0207",
-    "title": "Direction 5",
-    "description": "(tropical composition) — novel cross-domain bridge",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "00fcfe9a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:49:05.202405+00:00"
   },
   {
     "id": "fd_0184",
@@ -1728,20 +1616,49 @@
     "timestamp": "2026-05-14T23:59:16.208103+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "Concentration",
-    "description": ": Prove concentration inequalities for the tropical Lyapunov exponent.\n\n### Cross-Domain Connections\n- **Random matrix theory**: Tropical random matrices (extreme value statistics replace Gaussian universality)\n- **Disordered systems**: Tropical Lyapunov exponents ↔ free energy in random media\n- **Population genetics**: Randomly fluctuating fitness landscapes\n- **Reliability engineering**: System failure under random component degradation\n\n### Estimated Difficulty\nVery Hard. Requires formalizing probability theory on tropical matrix spaces and the subadditive ergodic theorem. This is a multi-year research program.\n\n### Key References\n- Baccelli & Mairesse (1998), *Ergodic theory of stochastic Petri networks*\n- Merlet (2010), *Limit theorems for products of random matrices in the max-plus a",
+    "id": "fd_0200",
+    "title": "Formalization Lead",
+    "description": ": Extends Lean proofs to multiclass and deep network settings.",
     "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "9743e28c",
+    "source_exp_id": "79f73184",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.221426+00:00"
+    "timestamp": "2026-05-15T01:15:28.629944+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Algorithms Lead",
+    "description": ": Implements and benchmarks tropical training algorithms.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79f73184",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:15:28.641165+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "Ongoing",
+    "description": ": Run computational experiments validating theoretical predictions.\n\n### Success Metrics\n- Number of sorry-free formally verified theorems.\n- Tightness of generalization bounds on benchmark datasets.\n- Novel connections discovered between tropical geometry and machine learning.\n- Papers submitted to top venues (ICML, NeurIPS, JMLR, Annals of Mathematics).\n\n---\n\n## Priority Ordering",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79f73184",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:15:28.680284+00:00"
   },
   {
     "id": "seed_078",
@@ -2172,26 +2089,6 @@
     "timestamp": "2026-05-15T00:07:21.688174+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "5. Certified Stability for Tropical Neural ODEs",
-    "description": "**Goal.** Transfer the barrier theorem to min-plus recurrent neural network\ndynamics, giving provable no-explosion guarantees for tropical neural flows.\n\n**Hypothesis.** A tropical recurrent neural network evolves by\n`h_{n+1}(i) = min_j (W(i,j) + h_n(j))` where `W` is a weight matrix with\nnonneg entries. If `W(i,i) = 0`, the hidden state magnitude is nonincreasing.\nWith a contraction factor `λ < 1` (analogous to weight decay), the hidden\nstate decays exponentially.\n\n**Proof Strategy.**\n- Observe that the tropical RNN update is exactly `T_W(h_n)`.\n- Apply the barrier theorem directly: `fmax(h_n) ≤ λ^n · fmax(h_0)`.\n- For training stability, show that gradient-like updates preserve the\n  barrier structure when weight perturbations maintain `W ≥ 0` and `W(i,i) = 0`.\n- Extend to tropical atten",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "181d8ba6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:07:21.695979+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Lean Type Signature",
     "description": "```lean\ntheorem tropicalEigencone_charge_reversal\n    {n : ℕ} (W A : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) (q λ : ℝ)\n    (hW : W.IsSymm) (v : Fin (n+1) → ℝ)\n    (hv : ∀ i, Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩\n      (fun j => chargedWeight W A q i j + v j) = λ + v i) :\n    ∀ i, Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩\n      (fun j => chargedWeight W A (-q) j i + v i) = λ + v i\n```",
@@ -2222,36 +2119,6 @@
     "timestamp": "2026-05-15T00:25:49.883166+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "Implementation Roadmap",
-    "description": "| Priority | Direction | Estimated Effort | Dependencies |\n|----------|-----------|-----------------|--------------|\n| High | Direction 4 (Noether) | 2-3 days | Current results |\n| High | Direction 2 (Geodesics) | 3-5 days | Path weight definition |\n| Medium | Direction 5 (Optimization) | 3-5 days | Tropical LP definitions |\n| Medium | Direction 1 (Eigencones) | 5-7 days | Tropical eigenvalue theory |\n| Low | Direction 3 (Category) | 5-10 days | Mathlib CategoryTheory |",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be18c0b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:25:49.905162+00:00"
-  },
-  {
-    "id": "fd_0201",
-    "title": "Direction 1: Functorial Complexity Monotonicity",
-    "description": "**Hypothesis**: Morphisms between proof architectures (graph homomorphisms preserving edges) induce monotone maps on complexity invariants. Specifically, if `φ : A → B` is a digraph morphism, then the walk count of `A` at length `n` is bounded above by the walk count of `B` at length `n`.\n\n**Proof Strategy**:\n- Define a category `ProofArch` whose objects are finite digraphs `(V, E)` and whose morphisms are edge-preserving maps.\n- Show that a morphism `φ : (V₁, E₁) → (V₂, E₂)` induces an injection on walk spaces when `φ` is injective, or a surjection when `φ` is surjective.\n- Prove that the walk-count functional `W_n : ProofArch → ℕ` is a functor to the poset category `(ℕ, ≤)`.\n\n**Cross-Domain Connections**:\n- This connects to *Ramsey theory*: minor-monotone graph invariants are central to ",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "102555eb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:30:49.232606+00:00"
-  },
-  {
     "id": "fd_0202",
     "title": "Direction 2: Entropy Rates of Infinite Proof Systems via Finite Truncations",
     "description": "**Hypothesis**: For a countably infinite proof architecture (e.g., the full proof search tree of a formal system), the *topological entropy* — defined as the limit of `(1/n) · log(W_n)` — exists and characterizes the asymptotic growth rate of proof strategies.\n\n**Proof Strategy**:\n- Define truncated walk counts `W_n(E)` as in our current framework.\n- Show that `log W_n` is subadditive: `log W_{m+n} ≤ log W_m + log W_n` (by concatenation of walks).\n- Apply Fekete's lemma to conclude the limit `lim (1/n) log W_n` exists.\n- Relate this limit to the spectral radius of the adjacency matrix via the Perron-Frobenius theorem.\n\n**Cross-Domain Connections**:\n- Connects to *symbolic dynamics* and *topological entropy* in ergodic theory.\n- The spectral radius connection links proof complexity to linea",
@@ -2268,59 +2135,6 @@
     "source_exp_id": "102555eb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:30:49.241321+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Direction 3: Graph Minor Obstructions for Unavoidable Proof Explosion",
-    "description": "**Hypothesis**: Certain graph minors act as *obstructions* to low proof complexity. Specifically, if a proof architecture contains a complete bipartite minor `K_{2,n}`, then the walk count at length `ℓ` is at least `n^{ℓ/2}`.\n\n**Proof Strategy**:\n- Define graph minors for directed graphs via edge contraction and vertex deletion.\n- Show that `K_{2,n}` as a minor forces branching degree ≥ `n` at some vertex (or a subdivision thereof).\n- Use our branching lower bound theorem iteratively to obtain exponential walk-count lower bounds.\n- Prove that the set of \"low-complexity\" proof architectures is closed under minors.\n\n**Cross-Domain Connections**:\n- Robertson-Seymour well-quasi-ordering: the class of graphs excluding a fixed minor is well-quasi-ordered.\n- This could yield *finite characterizat",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "102555eb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:30:49.251502+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "Direction 4: Renormalization Operators on Proof Architectures",
-    "description": "**Hypothesis**: There exists a natural \"coarse-graining\" operation on proof architectures — collapsing strongly connected components into single nodes — that preserves asymptotic complexity while reducing architecture size. This is a *renormalization group* for proof search.\n\n**Proof Strategy**:\n- Define the *condensation* of a digraph: the DAG obtained by collapsing strongly connected components.\n- Prove that the condensation preserves topological entropy (Direction 2).\n- Show that iterating condensation + vertex merging produces a sequence of architectures converging to a \"fixed point\" — the minimal architecture with the same asymptotic complexity.\n- Formalize this as a functor `R : ProofArch → ProofArch` with `R ∘ R = R` (idempotent).\n\n**Cross-Domain Connections**:\n- *Renormalization gr",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "102555eb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:30:49.261795+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Direction 5: Cryptographic Extraction from Proof-Search Branching Invariants",
-    "description": "**Hypothesis**: The branching structure of a proof architecture can serve as a *one-way function candidate*: given a proof architecture with high branching entropy, the problem of finding a specific walk (proof) from source to target is computationally hard, while verifying a given walk is easy.\n\n**Proof Strategy**:\n- Define a \"proof-search problem\" as: given `(V, E, s, t, n)`, find a walk of length `n` from `s` to `t`.\n- Show that the number of candidate walks grows exponentially (our upper bound) but the number of valid walks may be sparse.\n- Formalize a combinatorial one-way property: the ratio of valid walks to all candidate walks decreases exponentially with branching obstruction count.\n- Connect to hash function constructions via expander-graph proof architectures.\n\n**Cross-Domain Co",
-    "domains": [
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "102555eb",
-    "consumed_by_exp_id": "92286879",
-    "timestamp": "2026-05-15T00:30:49.271363+00:00"
   },
   {
     "id": "fd_0196",
@@ -2384,23 +2198,6 @@
     "timestamp": "2026-05-15T00:42:39.895641+00:00"
   },
   {
-    "id": "fd_0201",
-    "title": "Direction 2: Berggren Action as a Tropical Dynamical System",
-    "description": "**Goal:** Formalize the three Berggren generators as rational self-maps of the tropical plane (τ₁, τ₂) ∈ ℝ²₊ and study their dynamics.\n\n**Specific Targets:**\n1. Derive explicit formulas for the tropical coordinates of A(a,b,c), B(a,b,c), C(a,b,c) in terms of the tropical coordinates of (a,b,c). These will be transcendental functions involving logarithms of rational functions.\n2. Identify fixed points and attractors of each generator on the tropical plane.\n3. Prove that the B-generator has an attracting fixed point at (0.5, 0.5) — corresponding to isosceles right triangles — and compute its basin of attraction.\n4. Study the orbit of the root point under random compositions of generators (random walk on the Berggren monoid) and prove equidistribution or clustering results.\n\n**Cross-Domain Co",
-    "domains": [
-      "Tropical",
-      "Pythagorean",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0d901ed3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:42:39.904581+00:00"
-  },
-  {
     "id": "fd_0202",
     "title": "Direction 3: Interval Network and Tonnetz Construction",
     "description": "**Goal:** Construct a finite graph whose vertices are interval classes generated by Pythagorean triples (up to octave equivalence) and whose edges represent Berggren generation steps. Compare this graph to the classical Tonnetz (the tone network of music theory).\n\n**Specific Targets:**\n1. Define octave equivalence classes of intervals: [r] = {r · 2ⁿ : n ∈ ℤ} ∩ [1, 2).\n2. For each Berggren triple, extract its three reduced interval classes.\n3. Build the adjacency graph: vertices are interval classes, edges connect classes that co-occur in the same triple.\n4. Compute graph-theoretic invariants (diameter, chromatic number, clustering coefficient) at each Berggren depth.\n5. Prove that the depth-0 graph on three vertices {[4/3], [5/4], [5/3]} is a triangle — the minimal Tonnetz cell.\n\n**Cross-D",
@@ -2416,41 +2213,6 @@
     "source_exp_id": "0d901ed3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:42:39.914831+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Direction 4: Entropy and Complexity Functionals on Triple Orbits",
-    "description": "**Goal:** Define and study information-theoretic complexity measures on Pythagorean triples, measured via their tropical harmonic coordinates.\n\n**Specific Targets:**\n1. Define the *harmonic entropy* of a triple: H(a,b,c) = -Σᵢ pᵢ log pᵢ where pᵢ are the normalized tropical coordinates (τ(a/c), τ(b/c), τ(a/c)+τ(b/c)) / Z.\n2. Define the *interval complexity*: the sum of numerator and denominator of the reduced side-ratios (already defined in the existing codebase as `intervalComplexity`).\n3. Prove that harmonic entropy increases monotonically along at least one Berggren path.\n4. Study the distribution of harmonic entropy across Berggren tree levels and prove concentration inequalities.\n5. Relate harmonic entropy to the Tenney height of the side-ratios, connecting to established consonance me",
-    "domains": [
-      "Tropical",
-      "Pythagorean",
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0d901ed3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:42:39.924117+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "Direction 5: Higher-Dimensional Pythagorean Lattices and Chordal Analogues",
-    "description": "**Goal:** Generalize the harmonic embedding from triples (a² + b² = c²) to quadruples (a² + b² + c² = d²) and study the resulting \"chordal\" interval spaces.\n\n**Specific Targets:**\n1. Define the tropical embedding for Pythagorean quadruples: Φ(a,b,c,d) = (τ(a/d), τ(b/d), τ(c/d)) ∈ ℝ³₊.\n2. Identify the analogue of the Berggren tree for primitive Pythagorean quadruples (known to exist, generated by 4×4 integer matrices).\n3. Extract musical \"chords\" from quadruples: each quadruple defines three frequency ratios that form a three-note chord.\n4. Classify which quadruples produce recognizable chords (major triad, minor triad, diminished, augmented).\n5. Study consonance density in the quadruple tree and compare with the triple case.\n\n**Cross-Domain Connection:** This extends the theory from interv",
-    "domains": [
-      "Tropical",
-      "Pythagorean",
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0d901ed3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:42:39.933027+00:00"
   },
   {
     "id": "fd_0198",
