@@ -462,22 +462,6 @@
     "timestamp": "2026-05-14T16:03:53.836541+00:00"
   },
   {
-    "id": "seed_064",
-    "title": "Pythagorean Prime Distribution via Tropical Zeta Functions",
-    "description": "Construct a tropical zeta function for the Berggren tree of Pythagorean triples and prove that its zeros encode the distribution of primes along hypotenuse lengths. Show that the tropical Euler product over primitive triples converges on the critical strip, and that the Berggren zeta function satisfies a functional equation connecting the tropical distributions of legs and hypotenuses.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Tropical"
-    ],
-    "priority_score": 0.85,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "1368feba",
-    "timestamp": "2026-05-14T16:03:53.859237+00:00"
-  },
-  {
     "id": "seed_034",
     "title": "Quantum Speedup via Tropical Dequantization",
     "description": "Prove that the dequantization of quantum algorithms—replacing quantum amplitude with tropical weights—preserves the speedup structure while eliminating quantum hardware requirements. Show that tropical dequantized algorithms achieve the same asymptotic complexity as their quantum counterparts for search and sampling problems, and that the min-plus interference pattern captures the essential quantum parallelism.",
@@ -1448,23 +1432,6 @@
     "timestamp": "2026-05-15T01:46:31.350359+00:00"
   },
   {
-    "id": "fd_0192",
-    "title": "Surgery creates new causal connections",
-    "description": ": Under the surgery hypotheses of Theorem 1, vertices `s` and `t` that were causally disconnected (outside each other's cones) become causally connected.\n\n### Proof Strategy\n- Theorem 1 follows directly from `tropicalDistance_mono` (surgery decreases distances).\n- Theorem 2 follows from `tropicalDistance_triangle`.\n- Theorem 3 combines the surgery distance bound with the cone definition.\n\n### Cross-Domain Connections\n- **Causal set theory** (Sorkin): Tropical causal cones discretize the causal structure without assuming a manifold.\n- **Network epidemiology**: Causal reachability models information/disease spread through a network.\n\n---\n\n## Direction 2: Tropical Black Hole Horizons as Min-Cut Barriers\n\n### Motivation\nA black hole horizon is a causal boundary from which nothing can escape. I",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dc69d6dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:46:31.357239+00:00"
-  },
-  {
     "id": "fd_0193",
     "title": "Min-cut duality",
     "description": ": The horizon strength equals the minimum cost of any path escaping `H` (a max-flow/min-cut theorem in the tropical setting).",
@@ -1509,20 +1476,6 @@
     "timestamp": "2026-05-15T01:46:31.402687+00:00"
   },
   {
-    "id": "fd_0196",
-    "title": "Direction 2",
-    "description": "(Orthogonal group embedding) — Foundational for the theory, connects to established mathematics.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1b970ad9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:25:22.030954+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Direction 5",
     "description": "(Quantum HSP) — Most speculative, requires careful formulation to avoid overclaiming.",
@@ -1536,20 +1489,6 @@
     "source_exp_id": "1b970ad9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
-  },
-  {
-    "id": "fd_0192",
-    "title": "Formalization lead",
-    "description": ": Maintains the growing certified refutation library, ensures all new theorems compile.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:03:37.360195+00:00"
   },
   {
     "id": "fd_0193",
@@ -1595,20 +1534,6 @@
     "timestamp": "2026-05-15T03:03:37.382470+00:00"
   },
   {
-    "id": "fd_0196",
-    "title": "Systems researcher",
-    "description": ": Benchmarks the pipeline on real conjecture ensembles and validates the dominance theorem (Direction 5).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:03:37.388621+00:00"
-  },
-  {
     "id": "fd_0201",
     "title": "Direction 1",
     "description": "(Tropical Hahn–Banach): Most natural next step. Directly extends the current theorem by weakening the hypothesis. High impact, moderate difficulty.",
@@ -1651,20 +1576,6 @@
     "source_exp_id": "4a96a94a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:18:29.497812+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "Formulate",
-    "description": "precise mathematical conjectures with Lean type signatures.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a96a94a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:18:29.506242+00:00"
   },
   {
     "id": "fd_0208",
@@ -2077,6 +1988,24 @@
   },
   {
     "id": "fd_0198",
+    "title": "4. Berggren-Generated Exact Arithmetic Shell Meshes",
+    "description": "**Hypothesis**: The Berggren tree of primitive Pythagorean triples can be used to generate integer-coordinate points on spherical shells that approximate a uniform distribution with exact rational arithmetic, enabling error-free computation of tropical distances.\n\n**Proof Strategy**:\n- The Berggren matrices `A, B, C` generate all primitive Pythagorean triples `(a, b, c)` with `a² + b² = c²` from the root triple `(3, 4, 5)`.\n- Points `(a/c, b/c)` on the unit circle lift to rational points on spheres.\n- Define a \"Berggren mesh\" as the set of rational sphere points generated by depth-`d` Berggren tree traversal.\n- Prove that Berggren meshes have exact symmetry properties (the tree has 3-fold branching with specific rotational symmetries).\n- Show that tropical distances on Berggren meshes can ",
+    "domains": [
+      "Tropical",
+      "Pythagorean",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "c26006e9",
+    "consumed_by_exp_id": "6a9cc9d1",
+    "timestamp": "2026-05-15T01:18:24.786465+00:00"
+  },
+  {
+    "id": "fd_0198",
     "title": "1. Charged Value Iteration Equivalence (Convergence)",
     "description": "**Statement.** If `Φ₀` is an initial value field and the sequence `Φₖ₊₁ = maxwellBellmanOp W A q Φₖ` converges pointwise, then the limit equals the limit of `Φₖ₊₁ = bellmanOp (chargedWeight W A q) Φₖ` with the same initial condition.\n\n**Lean type signature:**\n```lean\ntheorem charged_value_iteration_limit {n : ℕ}\n    (W A : Matrix (Fin n) (Fin n) ℝ) (q : ℝ)\n    (Φ₀ : Fin n → ℝ)\n    (hconv : ∀ i, Filter.Tendsto (fun k => ((maxwellBellmanOp W A q)^[k] Φ₀) i)\n      Filter.atTop (nhds (Φ_limit i))) :\n    ∀ i, Filter.Tendsto (fun k => ((bellmanOp (chargedWeight W A q))^[k] Φ₀) i)\n      Filter.atTop (nhds (Φ_limit i))\n```\n\n**Proof strategy.** This is an immediate corollary of `iterate_maxwellBellmanOp_eq`, which shows all iterates are literally equal. The limits are therefore identical by uniquen",
     "domains": [
@@ -2093,20 +2022,6 @@
     "timestamp": "2026-05-15T01:25:37.078676+00:00"
   },
   {
-    "id": "fd_0192",
-    "title": "Specific Goals",
-    "description": "1. Define a formal parity axiom: a tropical sieve functional `S` satisfies the parity barrier if `S(n) = S(n')` whenever n and n' differ only in the parity of their number of prime factors (within the sieve range).\n2. Prove that the tropical sieve score `trop(n; P, c)` satisfies this axiom for any symmetric cost function c.\n3. Show that breaking the parity barrier in the tropical framework requires costs that depend on the global factorization of n, not merely on local residues — formalizing why local sieve methods (tropical or classical) cannot detect prime parity.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d8453b28",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:59:02.274115+00:00"
-  },
-  {
     "id": "fd_0193",
     "title": "Deliverables",
     "description": "- Formal definition of `ParityBlind` predicate\n- Theorem: `tropicalSieveScore` is parity-blind\n- Theorem: any parity-blind functional cannot separate primes from semiprimes\n\n---",
@@ -2119,22 +2034,6 @@
     "source_exp_id": "d8453b28",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:59:02.281816+00:00"
-  },
-  {
-    "id": "fd_0196",
-    "title": "1. Automated Synthesis of Potential Functions via Tropical Linear Programming",
-    "description": "**Hypothesis:** The set of valid potential functions for a given data structure forms a tropical polyhedron (defined by difference constraints of the form Φ(s) - Φ(s') ≤ w(s,s')), and optimal potential functions can be computed by solving a tropical linear feasibility problem—equivalently, a shortest-path problem in a constraint graph.\n\n**Proof Strategy:**\n- Formalize tropical polyhedra as solution sets of systems `Φ(s_i) - Φ(s_j) ≤ c_{ij}`.\n- Prove that the Bellman-Ford algorithm computes a feasible point (or detects infeasibility via a negative cycle) in this tropical polyhedron.\n- Show that the optimal amortized bound is the value of a dual tropical linear program.\n- Implement an automated potential-function synthesizer: given a state transition graph with edge costs, output a potential",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4ff18da",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:17:18.103558+00:00"
   },
   {
     "id": "fd_0197",
@@ -2237,22 +2136,6 @@
     "timestamp": "2026-05-15T02:32:03.242458+00:00"
   },
   {
-    "id": "fd_0204",
-    "title": "Long-Term Vision",
-    "description": "The ultimate goal is a **certified metamathematical complexity theory** where:\n- Every formal theorem has a computable \"conceptual depth\" score.\n- Research programs can be analyzed for their critical path structure.\n- AI theorem provers can use depth-aware search strategies.\n- Library architects can identify and resolve conceptual bottlenecks.\n\nThis creates a new bridge between proof theory, operations research, and AI — one grounded in machine-verified mathematics rather than informal analogy.",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cbb3f6f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:32:03.250598+00:00"
-  },
-  {
     "id": "fd_0201",
     "title": "1. Category of Research Theories with Formal Laws",
     "description": "**Goal**: Elevate the `ResearchTheory`/`TheoryHom` framework into a fully certified category.\n\n**Concrete steps**:\n- Define `ResearchCategory` bundling identity, composition, and proofs of associativity and unit laws.\n- Prove that `TheoryHom.comp_assoc`, `TheoryHom.id_comp`, and `TheoryHom.comp_id` (already established) constitute a strict category.\n- Define *isomorphisms* of research theories: morphisms with two-sided inverses.\n- Prove that isomorphic theories have identical lower-bound spectra.\n- Investigate whether `TheoryDominates` forms a partial order modulo isomorphism.\n\n**Cross-domain connections**: Category-theoretic structure enables automated reasoning about which domains can borrow results from which others, establishing a formal \"knowledge graph\" of mathematical disciplines.",
@@ -2301,23 +2184,6 @@
     "source_exp_id": "825001af",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:01:17.480731+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "4. Invariant Compression and Minimality Under Transport",
-    "description": "**Goal**: Show that minimality notions (Nerode minimization, spectral rank compression, sheaf coarsening) are preserved or reflected by selected morphisms.\n\n**Concrete steps**:\n- Define `Minimal` objects: elements x such that no y with strictly smaller invariant maps to the same image under all morphisms.\n- Prove that surjective theory morphisms reflect minimality: if φ(x) is minimal in U, then x is minimal in T (under appropriate conditions).\n- Connect to the existing `HasBoundedDepth` / `no_morphism_from_gap` theorems to show that gap theorems obstruct compression below certain thresholds.\n- Instantiate with Myhill-Nerode minimization: show that the minimum-state automaton is preserved by morphisms respecting language equivalence.\n\n**Cross-domain connections**: Compression invariants uni",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "825001af",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:01:17.491678+00:00"
   },
   {
     "id": "fd_0197",
@@ -2376,5 +2242,95 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "1. Berggren Transfer Operator and Prime Equidistribution",
+    "description": "**Goal**: Define a weighted transfer operator on the Berggren tree and prove spectral bounds governing the density of hypotenuse primes.\n\n**Hypothesis**: The Berggren tree, viewed as a dynamical system on the Pythagorean cone, admits a transfer (Ruelle–Perron–Frobenius) operator whose spectral gap controls the equidistribution of primes ≡ 1 mod 4 among hypotenuse lengths up to N.\n\n**Proof Strategy**:\n- Define the transfer operator L_s acting on functions of Berggren tree nodes, weighted by c^{-s} where c is the hypotenuse.\n- Establish that the operator has a simple dominant eigenvalue at s = 1, with spectral gap determined by the three Berggren matrices' spectral radii.\n- Connect the spectral gap to error terms in the counting function #{c ≤ N : c is a primitive hypotenuse}.\n- Use existing",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1368feba",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:31:22.933233+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "2. Automorphic Shadow of the Tropical Berggren Zeta",
+    "description": "**Goal**: Relate the primitive-triple support series to modular symbols and Hecke eigenforms.\n\n**Hypothesis**: The generating function Z(s) = Σ A(n) n^{-s} (summing over primitive hypotenuses) is expressible in terms of the Dedekind zeta function of ℤ[i] and L-functions of Hecke characters, providing an automorphic interpretation of the Berggren zeta.\n\n**Proof Strategy**:\n- Use the Gaussian integer factorization: n = a² + b² ↔ n factors in ℤ[i] with specific norm constraints.\n- Show that Z(s) = ζ_{ℤ[i]}(s) / ζ(2s) up to finitely many Euler factors, relating the Berggren zeta to the Dedekind zeta of ℚ(i).\n- Formalize the connection between admissible hypotenuse primes (p ≡ 1 mod 4) and split primes in ℤ[i].\n- Build on `sum_two_coprime_squares_imp_admissible` for the arithmetic backbone.\n\n**",
+    "domains": [
+      "Tropical",
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1368feba",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:31:22.943644+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "3. Tropical Explicit Formula for Hypotenuse Prime Counting",
+    "description": "**Goal**: Replace classical zeros of L-functions with breakpoints/corners of a min-plus generating function, and prove a counting formula for hypotenuse primes.\n\n**Hypothesis**: The piecewise-linear structure of the tropical Berggren zeta (defined via min/max operations on tree levels) has \"tropical zeros\" — breakpoints where the slope changes — that encode the distribution of hypotenuse primes, analogous to how zeros of ζ(s) encode prime distribution in the classical explicit formula.\n\n**Proof Strategy**:\n- Define the tropical Berggren zeta as TropZ(t) = min_{(a,b,c) ∈ P, c ≤ N} (t·c - max(a,b)).\n- Identify the breakpoints of TropZ(t) as a function of t, and show they correspond to hypotenuse values where new primitive triples appear.\n- Prove that the number of breakpoints up to N equals ",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Pythagorean",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1368feba",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:31:22.952916+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "4. Entropy of Primitive Triple Generation",
+    "description": "**Goal**: Prove asymptotic growth rates for Berggren tree levels and compute the topological entropy of the Berggren dynamical system.\n\n**Hypothesis**: The Berggren tree has topological entropy h = log 3 (since each node has exactly 3 children), but the measure-theoretic entropy with respect to the natural measure (weighting by c^{-2}) is strictly less than log 3 and equals the entropy of the prime distribution in hypotenuse lengths.\n\n**Proof Strategy**:\n- Use `berggren_hypotenuse_growth` to bound the hypotenuse at level k: c_k ≥ 5 · (3/2)^k (approximate).\n- Count the number of Berggren nodes at level k: exactly 3^k.\n- Define the natural measure μ_s on the tree boundary (the \"Berggren shift space\") via the Dirichlet series weights.\n- Compute the measure-theoretic entropy h_μ(σ) of the shif",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1368feba",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:31:22.962310+00:00"
+  },
+  {
+    "id": "fd_0210",
+    "title": "5. Generalized Tropical Zeta Machines on Quadratic Form Trees",
+    "description": "**Goal**: Generalize from x² + y² = z² to other ternary quadratic form trees and define corresponding tropical zeta machines.\n\n**Hypothesis**: For any positive-definite binary quadratic form Q(x,y) = ax² + bxy + cy², there exists an analogous \"Berggren-type\" tree structure parametrizing primitive representations, and the tropical zeta machine detects the split primes of the associated quadratic field ℚ(√(b²-4ac)).\n\n**Proof Strategy**:\n- Classify binary quadratic forms by discriminant and connect to ideal class groups.\n- For each class, define the analogue of Berggren matrices preserving Q(x,y) - z² = 0.\n- Prove the tropical weight nonnegativity (generalized `berggren_tropical_weight_nonneg`) for each form.\n- Show the prime support theorem generalizes: p is in the support iff p splits or ra",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Pythagorean",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1368feba",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:31:22.971820+00:00"
   }
 ]
