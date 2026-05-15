@@ -999,21 +999,6 @@
     "timestamp": "2026-05-15T16:01:39.418538+00:00"
   },
   {
-    "id": "fd_0227",
-    "title": "Use the zero-cost characterization",
-    "description": "`vlCostN_eq_zero_iff` gives the exact condition for equivalence. The metric separation property follows from the definition.\n\n### Cross-Domain Connection\n\nThe quotient is the multiset of pitches—an unordered chord. This connects to the theory of orbifolds in Tymoczko's geometric music theory, where chord classes are points in $\\mathbb{R}^n / S_n$.\n\n---\n\n## Direction 3: Certified Optimal Matching Algorithm\n\n### Exact Theorem Statement\n\nDefine a computable function `sortedVLCost` that sorts both input chords and computes the identity matching cost. Prove it equals `vlCostN`.\n\n### Formalization Target\n\n```lean\ndef sortedVLCost {n : ℕ} (x y : ChordN n) : ℕ :=\n  let xs := (List.ofFn x).mergeSort (· ≤ ·)\n  let ys := (List.ofFn y).mergeSort (· ≤ ·)\n  (List.zipWith (fun a b => Int.natAbs (a - b)) ",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de9a421e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:01:39.438414+00:00"
-  },
-  {
     "id": "fd_0233",
     "title": "Embed into existing tropical algebra",
     "description": "Mathlib has `Tropical` type with min-plus structure. Define a homomorphism from progression costs into `Tropical ℕ`.",
@@ -1027,34 +1012,6 @@
     "source_exp_id": "de9a421e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T16:01:39.505662+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "Direction 4",
-    "description": "(Security duality) is most impactful for applications — it would connect the theoretical framework to practical network security certification.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "80ffadc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:05:16.095448+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Direction 2",
-    "description": "(Discrete RT) is most important for physics — it would establish the first rigorous discrete holographic theorem.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "80ffadc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:05:16.105226+00:00"
   },
   {
     "id": "fd_0223",
@@ -1071,6 +1028,157 @@
     "timestamp": "2026-05-15T16:05:16.115004+00:00"
   },
   {
+    "id": "fd_0224",
+    "title": "WMSO → Automata",
+    "description": ": By structural induction on formulas, using closure of recognizable series under min, +, and quantification (projection). The quantification step uses the finite powerset construction.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.670643+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Automata → WMSO",
+    "description": ": By encoding the DFA's run as an MSO formula. Each state is tracked by a second-order variable marking positions where the automaton is in that state.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.683198+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Key difficulty",
+    "description": ": The quantification step in the tropical setting requires showing that `inf_X` over finite position sets preserves recognizability — this is non-trivial for infinite semirings.\n\n### Cross-Domain Connections\n\n- **Database query languages**: WMSO over words corresponds to certain aggregate queries; the tropical version captures optimization queries (MIN-cost, shortest path).\n- **Program verification**: WMSO model checking is decidable on finite structures; tropical WMSO would enable automated verification of quantitative program properties.\n\n---\n\n## Direction 2: Minimization Algorithm for Formula Presentations\n\n### Precise Theorem Statement\n\n**Theorem (Formula Minimization).** Given a formula-definable tropical series `S` with `n` distinct derivatives, there exists a unique minimal formula ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.694536+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Express each derivative",
+    "description": "as a tropical linear combination of basis derivatives.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.713176+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Prove minimality",
+    "description": "by showing any formula must reference at least the basis derivatives.\n\n### Cross-Domain Connections\n\n- **Compiler optimization**: Minimal formula representations correspond to optimally simplified cost expressions in program analysis.\n- **Data compression**: Representing a cost function by its minimal formula is a form of algebraic compression.\n\n---\n\n## Direction 3: Separation Between Tropical Formulas and Tropical Circuits\n\n### Precise Theorem Statement\n\n**Conjecture (Formula-Circuit Separation).** There exists a family of tropically recognizable series `{S_n}` over alphabet `{0,1}` such that:\n- Each `S_n` is computable by a tropical circuit (DAG of min and + gates) of polynomial size\n- Any equivalent tropical formula requires exponential size\n\n### Why It Is Breakthrough-Level\n\nThis would",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.736436+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Candidate function",
+    "description": ": The tropical determinant `tropdet(M) = min_σ Σ M(i,σ(i))` of an n×n matrix encoded as a word.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.749027+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Upper bound",
+    "description": ": A tropical circuit of size O(n² × n!) computes this by dynamic programming over partial permutations.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.759664+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Lower bound",
+    "description": ": Adapt Nečiporuk's method or the Karchmer-Wigderson framework to the tropical setting. The key insight is that tropical formulas correspond to tree-like communication protocols, while circuits allow graph-like protocols.\n\n### Cross-Domain Connections\n\n- **Algebraic complexity**: Connects to Valiant's VP vs VNP problem via tropicalization.\n- **Optimization theory**: Separates \"symbolic\" (formula) from \"dynamic\" (circuit/automaton) optimization.\n\n---\n\n## Direction 4: Complexity Bounds on Formula Size from Nerode Rank\n\n### Precise Theorem Statement\n\n**Theorem (Size-Rank Bound).** If a tropical series `S` over alphabet `σ` has Nerode index `n` (i.e., `n` distinct derivatives), then:\n- If `S` is formula-definable, some formula of size at most `n × |σ| + n` defines `S`.\n- There exist series wit",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.773667+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Trees",
+    "description": ": Define tree derivatives (removing a subtree and replacing it with a variable). Prove derivative closure by structural induction on tree formulas. The main difficulty is the non-commutativity of tree composition.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.790614+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Timed words",
+    "description": ": Extend the derivative theory to handle continuous time. The key challenge is that timed derivatives form a potentially infinite family parameterized by time delays. Restrict to clock-bounded systems where the derivative family is still finite up to time rescaling.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6acfb91e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:47:43.802334+00:00"
+  },
+  {
     "id": "seed_079",
     "title": "Tropical Language Evolution: Min-Plus Phylogenetics and Glottochronology",
     "description": "Prove that language divergence follows a tropical diffusion process on the min-plus metric space of lexical items, and that the tropical distance between languages is an optimal phylogenetic distance. Show that glottochronological dating is recovered as tropical distance estimation, and that the tropical phylogenetic tree is the unique min-plus Steiner tree of the language family.",
@@ -1080,10 +1188,10 @@
       "Computation"
     ],
     "priority_score": 0.73,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1cdf4e96",
     "timestamp": "2026-05-14T16:03:53.881355+00:00"
   },
   {
@@ -1681,20 +1789,6 @@
     "timestamp": "2026-05-15T15:04:11.741098+00:00"
   },
   {
-    "id": "fd_0224",
-    "title": "Goal",
-    "description": "Characterize exactly which tropically recognizable series over annotated words are definable by tropical formulas, establishing a *converse* to the main compilation theorem.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "cc175531",
-    "consumed_by_exp_id": "6acfb91e",
-    "timestamp": "2026-05-15T15:04:32.949550+00:00"
-  },
-  {
     "id": "fd_0215",
     "title": "1. Tropical Ternary Goldbach Formalization",
     "description": "**Goal:** Formalize a support-level tropical theorem for threefold min-plus convolution and connect it to Vinogradov's theorem on odd-number decomposition.\n\n**Concrete steps:**\n- Define `minplusConv3 f g h n := ⨅ (a b c : ℕ) (_ : a + b + c = n), f a + g b + h c`.\n- Prove `minplusConv3_tropPredCost_eq_zero_iff`: the threefold convolution of `tropPredCost A` vanishes at n iff n lies in A + A + A.\n- State Vinogradov's theorem as a hypothesis and derive its tropical reformulation: every sufficiently large odd number has zero tropical ternary prime cost.\n- Implement a verified finite search certifying ternary Goldbach for small odd numbers.\n\n**Hypothesis:** The tropical threefold convolution framework will expose compositional structure (e.g., factoring threefold convolution through twofold plu",
@@ -1833,35 +1927,6 @@
     "timestamp": "2026-05-15T15:29:13.549732+00:00"
   },
   {
-    "id": "fd_0221",
-    "title": "Conjectured Theorem",
-    "description": "For convex `φ` with `φ(0) = 0`, the tropical f-divergence satisfies a data processing inequality under surjective post-processing, provided `φ` is monotone on `[0, ∞)`.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c133a545",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:29:13.561240+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "7. Tropical Markov Chains and Contraction Rates",
-    "description": "**Goal:** Define tropical Markov chains (iterated max-plus matrix multiplication) and prove geometric contraction of TMI under mixing conditions.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c133a545",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:29:13.569978+00:00"
-  },
-  {
     "id": "fd_0223",
     "title": "Summary Priority",
     "description": "| Priority | Direction | Difficulty | Impact |\n|----------|-----------|------------|--------|\n| 1 | Tensor equality (§5) | Low | Enables coding rates |\n| 2 | Blackwell order (§3) | Low | Decision theory bridge |\n| 3 | Spectral bound (§2) | Medium | Connects to Birkhoff theory |\n| 4 | Channel capacity (§1) | Medium | Coding theory foundation |\n| 5 | Compression theorem (§4) | Low | ML applications |\n| 6 | f-Divergences (§6) | High | Full divergence theory |\n| 7 | Markov contraction (§7) | High | Dynamical systems bridge |\n\nThe first five directions can be pursued immediately with the infrastructure established in this work. Directions 6 and 7 require additional mathematical development but would significantly expand the scope of tropical information theory.",
@@ -1876,21 +1941,6 @@
     "source_exp_id": "c133a545",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:29:13.582275+00:00"
-  },
-  {
-    "id": "fd_0227",
-    "title": "Hypothesis",
-    "description": "There exists a quantitative relationship between proof compression score and conceptual depth gap: highly compressible theorems (relative to a corpus) are necessarily derivative, but the converse fails. Specifically, for profiles with `compressionScore ≤ C · proofSize`, the depth gap is bounded by a function of `C` and the corpus geometry.",
-    "domains": [
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9f168b29",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:04:54.650878+00:00"
   },
   {
     "id": "fd_0228",
