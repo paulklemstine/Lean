@@ -592,6 +592,20 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
+    "id": "fd_0195",
+    "title": "Tactic engineer",
+    "description": ": Implements the syntax-to-semantics bridge and verified tactic (Direction 4).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "94c243f5",
+    "timestamp": "2026-05-15T03:03:37.382470+00:00"
+  },
+  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -910,6 +924,62 @@
     "source_exp_id": "54f0e2a0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T20:41:03.010569+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "Finite-dimensional spectral theorem",
+    "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9093673a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:42:44.426054+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Rooted tree combinatorics",
+    "description": ": Formalization of rooted trees with labeled leaves, LCA, height functions.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9093673a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:42:44.435899+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Gaussian process theory",
+    "description": ": Formal definition of GPs, covariance kernels, sample path regularity.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9093673a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:42:44.444103+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Rate-distortion theory",
+    "description": ": Formal coding bounds for metric spaces.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9093673a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:42:44.454171+00:00"
   },
   {
     "id": "seed_052",
