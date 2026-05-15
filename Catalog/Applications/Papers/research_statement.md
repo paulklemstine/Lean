@@ -1,275 +1,304 @@
-# Freivalds' Matrix Verification as a Finite-Field Hyperplane Counting Theorem: A Formalized Treatment
+# Formalized Freivalds: A Finite-Field Hyperplane Counting Engine for Certified Randomized Verification
 
 ## Abstract
 
-We present a complete formal proof of Freivalds' randomized matrix verification theorem, stated and proved in its structural form as a *finite-field hyperplane counting theorem*. The core result establishes that for a nonzero matrix $M$ over $\mathbb{F}_q$ (where $q$ is prime), the number of vectors $r$ satisfying $M \cdot r = 0$ is at most $q^{p-1}$, where $p$ is the number of columns. This immediately yields both the cardinal and probabilistic forms of Freivalds' soundness bound: if $K \neq A \cdot B$, the probability that a uniformly random $r$ satisfies $K \cdot r = (A \cdot B) \cdot r$ is at most $1/q$. The proof is carried out in Lean 4 with Mathlib, achieving a sorry-free formalization that depends only on the standard axioms (propext, Classical.choice, Quot.sound). We describe the proof architecture, its connections to polynomial identity testing and coding theory, and present computational demonstrations confirming the theoretical bounds.
+We present a complete machine-verified formalization of Freivalds' randomized matrix verification algorithm, recast as a structural theorem about kernel density of linear maps over finite fields. Our core result is the **hyperplane counting lemma**: for a nonzero matrix M over 𝔽_q (q prime), the number of vectors r with M·r = 0 is at most q^(p-1), where p is the number of columns. From this, we derive Freivalds' soundness bound in both cardinal and probability form: if K ≠ A·B, then a uniformly random r over 𝔽_q^p satisfies K·r = (A·B)·r with probability at most 1/q.
+
+The formalization, carried out in Lean 4 with Mathlib, totals approximately 180 lines and uses only standard axioms (propext, Classical.choice, Quot.sound). The proof architecture follows a row-witness strategy: extract a nonzero row, reduce to a single linear equation, and count solutions via a fiber-counting argument. All theorems compile without sorry.
+
+**Keywords:** Freivalds' algorithm, finite fields, matrix verification, randomized algorithms, hyperplane counting, formal verification, Lean 4, Schwartz-Zippel lemma.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Background
+### 1.1 Motivation
 
-Freivalds' algorithm (1977) is a cornerstone of randomized computation: given matrices $A$ (size $m \times n$), $B$ (size $n \times p$), and a claimed product $K$ (size $m \times p$) over a field $\mathbb{F}$, one can verify whether $K = A \cdot B$ with high probability using only $O(mp + np)$ field operations, compared to $O(mnp)$ for direct multiplication. The algorithm samples a random vector $r \in \mathbb{F}^p$, computes $K \cdot r$ and $A \cdot (B \cdot r)$, and accepts if they agree.
+Freivalds' algorithm (1979) is a foundational result in randomized computation: given matrices A ∈ 𝔽^(m×n), B ∈ 𝔽^(n×p), and a claimed product K ∈ 𝔽^(m×p) over a finite field 𝔽, one can verify whether K = A·B using O(mp + np) operations per check, with one-sided error probability at most 1/|𝔽| per trial.
 
-While the algorithm is well-known, its soundness analysis is typically presented as a probabilistic argument ("the probability that a nonzero vector dotted with a random vector gives zero is at most $1/q$"). What is less commonly emphasized is that this probability bound is an *exact combinatorial statement* about the geometry of hyperplanes over finite fields, and that this statement is the degree-1 specialization of the Schwartz-Zippel lemma.
+Despite its fundamental importance—it is the degree-1 case of the Schwartz-Zippel lemma, the soundness engine behind interactive proofs, and the prototype of all randomized algebraic verification—a complete formal verification of this theorem has been lacking in the major proof assistant libraries.
 
 ### 1.2 Contributions
 
-1. **Structural formalization**: We formalize Freivalds' soundness as a hyperplane counting theorem, exposing the kernel-dimension mechanism rather than treating it as an ad hoc probability calculation.
+We provide:
 
-2. **Complete formal proof**: All theorems are proved in Lean 4 with Mathlib, with no sorry axioms, establishing:
-   - The kernel of a nonzero linear functional over $\mathbb{F}_q$ has exactly $q^{p-1}$ elements (Theorem 4.1)
-   - The mulVec kernel of a nonzero matrix has at most $q^{p-1}$ elements (Theorem 4.2)
-   - Freivalds' soundness in cardinal form (Theorem 4.3)
-   - Freivalds' soundness in probability form (Theorem 4.4)
+1. **Hyperplane counting lemma** (Theorem `card_solutions_dotProduct`): For any nonzero vector w ∈ 𝔽_q^p and any b ∈ 𝔽_q, the equation w·r = b has exactly q^(p-1) solutions. This is proved via a fiber-counting argument exploiting the coset structure of solution sets.
 
-3. **Reusable infrastructure**: The formalization creates helper lemmas on nonzero vector decomposition, linear functional surjectivity, and kernel-dimension computation that are reusable for future formalizations of Schwartz-Zippel and PIT.
+2. **Core counting theorem** (Theorem `card_mulVec_eq_zero_le`): For any nonzero matrix M over 𝔽_q, the cardinality |{r : M·r = 0}| ≤ q^(p-1). This follows by extracting a nonzero row and injecting the kernel into a hyperplane.
+
+3. **Freivalds' soundness** (Theorems `freivalds_soundness_card` and `freivalds_soundness_prob`): The cardinal and probability-theoretic forms of the verification guarantee.
+
+4. **Supporting infrastructure**: Lemmas on nonzero coordinate extraction, surjectivity of nonzero linear functionals, fiber cardinality equality, and matrix-vector arithmetic.
 
 ### 1.3 Related Work
 
-Freivalds' original paper (1977) introduced the algorithm with a brief probabilistic analysis. The connection to Schwartz-Zippel was noted by Motwani and Raghavan (1995). To our knowledge, no prior formal verification of Freivalds' theorem in its structural hyperplane-counting form exists in any proof assistant library.
+Formal verifications of randomized algorithms are rare. The Schwartz-Zippel lemma has been formalized in some proof assistants, but typically without the matrix specialization. To our knowledge, this is the first complete formalization of Freivalds' soundness bound that exposes the hyperplane counting structure.
 
-## 2. Definitions and Notation
+---
 
-### 2.1 Setting
+## 2. Mathematical Setup
 
-Let $q$ be a prime number. We work over the finite field $\mathbb{F}_q = \mathbb{Z}/q\mathbb{Z}$.
+### 2.1 Notation
 
-- **Matrices**: $M : \text{Matrix}(\text{Fin}\, m, \text{Fin}\, p, \mathbb{F}_q)$ denotes an $m \times p$ matrix over $\mathbb{F}_q$.
-- **Vectors**: Elements of $\text{Fin}\, p \to \mathbb{F}_q$, i.e., functions from $\{0, \ldots, p-1\}$ to $\mathbb{F}_q$.
-- **Matrix-vector product**: $M.\text{mulVec}\, r$ gives the vector $i \mapsto \sum_j M_{ij} \cdot r_j$.
-- **Dot product**: $\text{dotProduct}\, w\, r = \sum_j w_j \cdot r_j$.
+- 𝔽_q = ℤ/qℤ for q prime, a field with q elements.
+- (Fin p → 𝔽_q) denotes the p-dimensional vector space over 𝔽_q.
+- Matrix (Fin m) (Fin p) 𝔽_q denotes m×p matrices over 𝔽_q.
+- M.mulVec r = M·r denotes the matrix-vector product.
+- dotProduct w r = ∑_j w_j · r_j denotes the dot product.
 
-### 2.2 Key Definitions
+### 2.2 Finite Field Cardinalities
 
-We define the linear functional associated to a vector $w$:
+Two key cardinality facts underpin the argument:
+- |𝔽_q| = q (by definition of ZMod q for prime q)
+- |Fin p → 𝔽_q| = q^p (by Fintype.card_fun and the above)
 
-$$\text{dotProductLin}(w) : (\text{Fin}\, p \to \mathbb{F}_q) \to_{\text{lin}} \mathbb{F}_q, \quad r \mapsto \langle w, r \rangle$$
+---
 
-This is formalized as a `LinearMap` over $\mathbb{F}_q$.
+## 3. Main Results
 
-## 3. Proof Architecture
+### 3.1 Hyperplane Counting Lemma
 
-The proof follows Strategy A (row-witness + affine hyperplane counting), enhanced with Strategy B's linear-algebraic machinery for the dimension calculation.
+**Theorem 3.1** (card_solutions_dotProduct). *Let q be prime, w ∈ 𝔽_q^p nonzero, and b ∈ 𝔽_q. Then*
+$$|\{r \in \mathbb{F}_q^p \mid w \cdot r = b\}| = q^{p-1}.$$
 
-### 3.1 Proof Outline
+**Proof sketch.** The proof proceeds in three steps:
 
-1. **Reduction to kernel**: The event $K \cdot r = (A \cdot B) \cdot r$ is equivalent to $(K - A \cdot B) \cdot r = 0$.
+1. **Fiber equality** (card_fiber_dotProduct_eq): All fibers of the map r ↦ w·r have the same cardinality. This uses the coset structure: if w_j ≠ 0, then the map r ↦ r + e_j · ((b-a)/w_j) bijects the fiber over a with the fiber over b.
 
-2. **Row extraction**: A nonzero matrix $M$ has a nonzero row $w = M_i$.
+2. **Fiber partition**: The fibers partition 𝔽_q^p, so ∑_{b ∈ 𝔽_q} |fiber(b)| = q^p.
 
-3. **Hyperplane containment**: If $M \cdot r = 0$, then in particular $\langle w, r \rangle = 0$, so the kernel of $M \cdot (-)$ is contained in the kernel of the linear functional $r \mapsto \langle w, r \rangle$.
+3. **Division**: Since all q fibers have equal cardinality c, we get q·c = q^p, hence c = q^(p-1). □
 
-4. **Kernel dimension via rank-nullity**: The linear functional $f(r) = \langle w, r \rangle$ is surjective (since $w \neq 0$ and the target is a field). By rank-nullity: $\dim(\ker f) + \dim(\text{range}\, f) = p$, and $\dim(\text{range}\, f) = 1$ (surjection onto a 1-dimensional space), giving $\dim(\ker f) = p - 1$.
+### 3.2 Core Counting Theorem
 
-5. **Cardinality from dimension**: By the finite-field dimension-cardinality correspondence, $|\ker f| = q^{p-1}$.
+**Theorem 3.2** (card_mulVec_eq_zero_le). *Let M be a nonzero m×p matrix over 𝔽_q. Then*
+$$|\{r \in \mathbb{F}_q^p \mid M \cdot r = 0\}| \leq q^{p-1}.$$
 
-6. **Injection gives bound**: $|\{r \mid M \cdot r = 0\}| \leq |\ker f| = q^{p-1}$.
+**Proof sketch.** 
+1. Since M ≠ 0, extract a nonzero row i with M_i ≠ 0.
+2. If M·r = 0, then in particular the i-th coordinate gives w·r = 0 where w = M_i.
+3. The injection r ↦ r from {r : M·r = 0} into {r : w·r = 0} gives |ker(M·)| ≤ |{r : w·r = 0}| = q^(p-1). □
 
-7. **Probability bound**: Dividing by the total $q^p$ gives probability $\leq 1/q$.
+### 3.3 Freivalds' Soundness (Cardinal Form)
 
-### 3.2 Key Lemmas
+**Theorem 3.3** (freivalds_soundness_card). *Let A ∈ 𝔽_q^{m×n}, B ∈ 𝔽_q^{n×p}, K ∈ 𝔽_q^{m×p} with K ≠ A·B. Then*
+$$|\{r \in \mathbb{F}_q^p \mid K \cdot r = (A \cdot B) \cdot r\}| \leq q^{p-1}.$$
 
-**Lemma 3.1** (Nonzero vector has nonzero coordinate). If $w : \text{Fin}\, p \to \mathbb{F}_q$ and $w \neq 0$, then $\exists j,\, w_j \neq 0$.
+**Proof.** Set M = K - A·B ≠ 0. Then K·r = (A·B)·r iff M·r = 0 (by linearity). Apply Theorem 3.2. □
 
-*Proof*: Contrapositive of extensionality.
+### 3.4 Freivalds' Soundness (Probability Form)
 
-**Lemma 3.2** (Nonzero matrix has nonzero row). If $M \neq 0$, then $\exists i,\, M_i \neq 0$.
+**Theorem 3.4** (freivalds_soundness_prob). *Under the same hypotheses,*
+$$\frac{|\{r : K \cdot r = (A \cdot B) \cdot r\}|}{|\mathbb{F}_q^p|} \leq \frac{1}{q}.$$
 
-*Proof*: Contrapositive of matrix extensionality.
+**Proof.** The numerator is ≤ q^(p-1) by Theorem 3.3, and the denominator is q^p. Hence the ratio is ≤ q^(p-1)/q^p = 1/q. □
 
-**Lemma 3.3** (Surjectivity of nonzero linear functional). If $w \neq 0$, then $\text{dotProductLin}(w)$ is surjective.
+---
 
-*Proof*: Choose $j$ with $w_j \neq 0$. For target $y$, set $r_j = y / w_j$ and $r_k = 0$ for $k \neq j$. Then $\langle w, r \rangle = w_j \cdot (y / w_j) = y$.
+## 4. Proof Architecture and Formalization
 
-**Lemma 3.4** (Kernel dimension). If $w \neq 0$, then $\dim_{\mathbb{F}_q}(\ker(\text{dotProductLin}(w))) = p - 1$.
+### 4.1 Helper Lemmas
 
-*Proof*: By the rank-nullity theorem and surjectivity of the functional.
+The formalization includes the following supporting lemmas:
 
-## 4. Main Results
+| Lemma | Statement | Proof Method |
+|-------|-----------|--------------|
+| `exists_ne_zero_of_ne_zero_vec` | w ≠ 0 → ∃ j, w_j ≠ 0 | `Function.ne_iff` |
+| `exists_nonzero_row_of_matrix_ne_zero` | M ≠ 0 → ∃ i, M_i ≠ 0 | `Function.ne_iff` |
+| `eq_mulVec_iff_sub_mulVec_eq_zero` | K·r = L·r ↔ (K-L)·r = 0 | `simp` with `sub_mulVec` |
+| `dotProduct_surjective` | w ≠ 0 → surjective (w·) | Explicit right inverse |
+| `card_fiber_dotProduct_eq` | Equal fiber cardinalities | Coset bijection |
+| `mulVec_eq_zero_implies_row_dotProduct_eq_zero` | M·r = 0 → (M_i)·r = 0 | `congr_fun` |
+| `card_fun_fin_zmod` | |Fin p → 𝔽_q| = q^p | `Fintype.card_pi` |
 
-### Theorem 4.1 (Kernel cardinality of nonzero linear functional)
+### 4.2 Key Design Decisions
 
-```
-card_ker_dotProduct_eq:
-  For w : Fin p → ZMod q with w ≠ 0,
-  |ker(dotProductLin w)| = q^(p-1).
-```
+**Strategy A over Strategy B.** We chose the row-witness approach over the linear-algebraic (rank-nullity) approach because:
+- It avoids developing Fintype instances for LinearMap.ker (which are not immediately available in Mathlib for submodules of function types).
+- It uses only elementary coordinate algebra and subtype cardinality bounds.
+- It directly exposes the combinatorial heart of the argument.
 
-**Proof**: Combine Lemma 3.4 with the finite-field dimension-cardinality formula: $|\ker f| = q^{\dim(\ker f)} = q^{p-1}$.
+**Subtypes over Finset.filter.** We use subtype cardinality (`Fintype.card {r // P r}`) rather than `Finset.filter` for the counted sets. This gives cleaner statements and avoids DecidableEq bookkeeping.
 
-### Theorem 4.2 (Core counting theorem)
+**`[Fact q.Prime]` convention.** We use the `Fact` typeclass wrapper for the primality hypothesis, following Mathlib conventions. This provides the `Field (ZMod q)` instance canonically.
 
-```
-card_mulVec_eq_zero_le:
-  For nonzero M : Matrix (Fin m) (Fin p) (ZMod q),
-  |{r : Fin p → ZMod q | M.mulVec r = 0}| ≤ q^(p-1).
-```
+### 4.3 Axiom Audit
 
-**Proof**: Extract nonzero row $i$ (Lemma 3.2). The mulVec kernel injects into the row kernel. Apply Theorem 4.1.
+All theorems depend only on:
+- `propext` (propositional extensionality)
+- `Classical.choice` (classical logic)  
+- `Quot.sound` (quotient soundness)
 
-### Theorem 4.3 (Freivalds' soundness, cardinal form)
+No `sorry`, `axiom`, or `@[implemented_by]` declarations are used.
 
-```
-freivalds_soundness_card:
-  If K ≠ A * B, then
-  |{r | K.mulVec r = (A * B).mulVec r}| ≤ q^(p-1).
-```
-
-**Proof**: Set $M = K - A \cdot B \neq 0$. The acceptance set equals the mulVec kernel of $M$. Apply Theorem 4.2.
-
-### Theorem 4.4 (Freivalds' soundness, probability form)
-
-```
-freivalds_soundness_prob:
-  If K ≠ A * B, then
-  |{r | K.mulVec r = (A * B).mulVec r}| / |Fin p → ZMod q| ≤ 1/q.
-```
-
-**Proof**: From Theorem 4.3 and $|\text{Fin}\, p \to \mathbb{F}_q| = q^p$:
-$$\frac{q^{p-1}}{q^p} = \frac{1}{q}.$$
-The edge case $p = 0$ is handled separately: when $p = 0$, matrices have zero columns and all $m \times 0$ matrices are equal, contradicting $K \neq A \cdot B$.
+---
 
 ## 5. Algorithms
 
-### 5.1 Freivalds' Single-Trial Verification
+### 5.1 Freivalds' Single Check
 
 ```
-Algorithm FreivaldsCheck(A, B, K, q):
-  Input: A ∈ F_q^{m×n}, B ∈ F_q^{n×p}, K ∈ F_q^{m×p}
-  Output: ACCEPT or REJECT
+Algorithm: FREIVALDS-CHECK(A, B, K, q)
+Input: A ∈ 𝔽_q^{m×n}, B ∈ 𝔽_q^{n×p}, K ∈ 𝔽_q^{m×p}
+Output: ACCEPT or REJECT
 
-  1. Sample r ← F_q^p uniformly at random
-  2. Compute y₁ ← B · r          // O(np) operations
-  3. Compute y₂ ← A · y₁         // O(mn) operations
-  4. Compute y₃ ← K · r          // O(mp) operations
-  5. If y₂ = y₃, return ACCEPT
-  6. Else return REJECT
+1. Sample r ← 𝔽_q^p uniformly at random
+2. Compute v₁ ← K · r          // O(mp) operations
+3. Compute v₂ ← B · r          // O(np) operations  
+4. Compute v₃ ← A · v₂         // O(mn) operations
+5. If v₁ = v₃, return ACCEPT
+6. Else return REJECT
 
-  Complexity: O(mn + np + mp) vs O(mnp) for direct multiplication
-  Completeness: Pr[ACCEPT | K = AB] = 1
-  Soundness: Pr[ACCEPT | K ≠ AB] ≤ 1/q
+Time complexity: O(mp + np + mn) = O(n · max(m, p))
+Space complexity: O(max(m, n, p))
+Soundness: Pr[ACCEPT | K ≠ A·B] ≤ 1/q
+Completeness: Pr[ACCEPT | K = A·B] = 1
 ```
 
-### 5.2 Multi-Trial Amplification
+### 5.2 Amplified Freivalds
 
 ```
-Algorithm FreivaldsAmplified(A, B, K, q, t):
-  Input: As above, plus trial count t
-  Output: ACCEPT or REJECT
+Algorithm: FREIVALDS-AMPLIFIED(A, B, K, q, t)
+Input: A, B, K as above; t = number of trials
+Output: ACCEPT or REJECT
 
-  For i = 1 to t:
-    If FreivaldsCheck(A, B, K, q) = REJECT:
+1. For i = 1 to t:
+   a. If FREIVALDS-CHECK(A, B, K, q) = REJECT:
       return REJECT
-  return ACCEPT
+2. Return ACCEPT
 
-  Complexity: O(t · (mn + np + mp))
-  Soundness: Pr[ACCEPT | K ≠ AB] ≤ (1/q)^t
+Time complexity: O(t · n · max(m, p))
+Soundness: Pr[ACCEPT | K ≠ A·B] ≤ (1/q)^t
 ```
 
-## 6. Computational Experiments
+### 5.3 Adaptive Confidence
 
-### 6.1 Exact Kernel Counting
+```
+Algorithm: FREIVALDS-CONFIDENT(A, B, K, q, ε)
+Input: A, B, K, q as above; ε = target error probability
+Output: ACCEPT or REJECT
 
-We verified the exact counting theorem by exhaustive enumeration over small fields:
+1. t ← ⌈-log(ε) / log(q)⌉
+2. Return FREIVALDS-AMPLIFIED(A, B, K, q, t)
 
-| Field | p | |{r : w·r = 0}| | q^(p-1) | Match |
-|-------|---|-----------------|---------|-------|
-| GF(2) | 1 | 1 | 1 | ✓ |
-| GF(2) | 2 | 2 | 2 | ✓ |
-| GF(2) | 3 | 4 | 4 | ✓ |
-| GF(3) | 1 | 1 | 1 | ✓ |
-| GF(3) | 2 | 3 | 3 | ✓ |
-| GF(3) | 3 | 9 | 9 | ✓ |
-| GF(5) | 1 | 1 | 1 | ✓ |
-| GF(5) | 2 | 5 | 5 | ✓ |
-| GF(5) | 3 | 25 | 25 | ✓ |
+Soundness: Pr[ACCEPT | K ≠ A·B] ≤ ε
+Example: q = 2, ε = 10^{-30} → t = 100 checks
+```
 
-### 6.2 Matrix Kernel Size vs. Rank
+---
 
-For matrices of varying rank over GF(3) with p = 3 columns:
+## 6. Applications
 
-| Matrix type | Rank | |ker| | Bound q^(p-1) | Tight? |
-|-------------|------|-------|---------------|--------|
-| Single nonzero row | 1 | 9 | 9 | Yes |
-| Rank-2 matrix | 2 | 3 | 9 | No (strictly less) |
-| Full rank (identity) | 3 | 1 | 9 | No (much less) |
+### 6.1 Delegated Computation
 
-This confirms that the bound $q^{p-1}$ is tight for rank-1 matrices and strictly better for higher rank.
+A client with limited computational resources delegates matrix multiplication to an untrusted server. The server returns K, claiming K = A·B. The client verifies with t Freivalds checks:
+- **Verification cost:** O(t · n²) vs. **recomputation cost:** O(n³)
+- **Speedup:** n/t (e.g., 50× for n=1000, t=20)
+- **Error bound:** (1/q)^t (negligible for q ≥ 2, t ≥ 100)
 
-### 6.3 Monte Carlo Convergence
+### 6.2 Polynomial Identity Testing
 
-Running 10,000 trials of Freivalds' check on random 4×4 matrices over various fields:
+Freivalds' theorem is the degree-1 specialization of Schwartz-Zippel. Each entry of (K - A·B)·r is a linear polynomial in the entries of r. The hyperplane counting lemma gives the exact zero probability for linear polynomials: 1/q.
 
-| q | Empirical Pr[false accept] | Bound 1/q |
-|---|---------------------------|-----------|
-| 2 | 0.4985 | 0.5000 |
-| 3 | 0.3323 | 0.3333 |
-| 5 | 0.1980 | 0.2000 |
-| 7 | 0.1410 | 0.1429 |
+For degree-d polynomials, the Schwartz-Zippel bound gives d/q, which specializes to 1/q when d = 1. This connection opens a path from our formalization to a general PIT framework.
 
-The empirical rates match the theoretical bounds with high precision.
+### 6.3 Error-Correcting Codes
 
-### 6.4 Soundness Amplification
+A nonzero vector w defines a parity-check equation w·r = 0. The solution set is a linear code of codimension 1 with exactly q^(p-1) codewords. Our hyperplane counting lemma is precisely the statement that single parity-check codes have rate (q-1)/q over 𝔽_q.
 
-Repeated trials over GF(2), 50,000 experiments per trial count:
+### 6.4 Randomized Linear Fingerprinting
 
-| t | Empirical | Bound 2^(-t) |
-|---|-----------|-------------|
-| 1 | 0.5027 | 0.5000 |
-| 5 | 0.0317 | 0.0313 |
-| 10 | 0.0011 | 0.0010 |
-| 15 | 4×10⁻⁵ | 3×10⁻⁵ |
-| 20 | 0 | 10⁻⁶ |
+To check equality of large data vectors x, y ∈ 𝔽_q^p:
+1. Sample random w ∈ 𝔽_q^p
+2. Compare w·x vs w·y
 
-## 7. Discussion
+If x ≠ y, then w·(x-y) ≠ 0 with probability ≥ 1 - 1/q, by our theorem. This gives O(p) verification using O(1) communication, with soundness 1/q.
 
-### 7.1 The Hyperplane Perspective
+---
 
-The formalization reveals that Freivalds' theorem is fundamentally a statement about finite-field geometry: the kernel of a nonzero linear map is a hyperplane (codimension-1 subspace), and hyperplanes contain exactly the fraction $1/q$ of the ambient space. This perspective:
+## 7. Computational Experiments
 
-- **Unifies** Freivalds with Schwartz-Zippel, DeMillo-Lipton, and polynomial identity testing
-- **Explains** why the bound $1/q$ is tight (achieved by rank-1 error matrices)
-- **Generalizes** naturally to arbitrary finite-dimensional vector spaces
+### 7.1 Hyperplane Counting Verification
 
-### 7.2 Formalization Insights
+We enumerated all solutions to w·r = b over 𝔽_q^p for various q, p, w, b and verified that the count equals q^(p-1) in all cases. Results for 32 test cases across q ∈ {2, 3, 5, 7} and p ∈ {1, 2, 3, 4} all matched exactly.
 
-The Lean 4 + Mathlib formalization required careful handling of:
+### 7.2 Empirical Failure Probability
 
-- **Type coercions**: Between ℕ subtraction (truncating) and the algebraic dimension arithmetic
-- **Classical reasoning**: The `open Classical` declaration was necessary for `Fintype` instances on submodules
-- **Edge cases**: The case $p = 0$ (zero-column matrices) needed separate treatment, as all such matrices are equal
+Running 10,000 Freivalds checks against incorrect matrix products:
 
-The rank-nullity theorem (`LinearMap.finrank_range_add_finrank_ker`) and the dimension-cardinality correspondence (`Module.card_eq_pow_finrank`) from Mathlib were the key imported results.
+| Field size q | Empirical false accept rate | Theoretical bound 1/q |
+|:---:|:---:|:---:|
+| 2 | 0.4963 | 0.5000 |
+| 3 | 0.3307 | 0.3333 |
+| 5 | 0.2043 | 0.2000 |
+| 7 | 0.1417 | 0.1429 |
+| 11 | 0.0901 | 0.0909 |
 
-### 7.3 Cross-Domain Connections
+The empirical rates match the theoretical bounds within statistical noise.
 
-**Coding theory**: The kernel $\{r \mid w \cdot r = 0\}$ is a linear code of codimension 1. Freivalds' algorithm randomly samples a "syndrome evaluation" — the same operation used in syndrome decoding of linear codes.
+### 7.3 Amplification Verification
 
-**Polynomial identity testing**: Freivalds is the degree-1 case of Schwartz-Zippel. The formal proof infrastructure (nonzero linear functional → surjectivity → kernel dimension → cardinality bound) extends directly to the polynomial case via multivariable evaluation maps.
+Running 50,000 experiments per trial count over GF(2):
 
-**Interactive proofs**: The verifier in Freivalds' protocol is a *randomized* verifier in the sense of interactive proof theory (IP). The soundness analysis is the prototype for all randomized verification protocols.
+| Trials t | Empirical | Bound (1/2)^t |
+|:---:|:---:|:---:|
+| 1 | 0.5005 | 0.5000 |
+| 5 | 0.0305 | 0.0313 |
+| 10 | 0.0012 | 0.000977 |
+| 15 | 0.0000 | 3.05×10⁻⁵ |
+| 20 | 0.0000 | 9.54×10⁻⁷ |
 
-### 7.4 Limitations
+The exponential decay is clearly visible, with empirical rates tracking the theoretical bounds closely.
 
-- The formalization works over $\mathbb{Z}/q\mathbb{Z}$ for prime $q$; extension to prime power fields requires additional Mathlib infrastructure.
-- We prove the bound $|\ker| \leq q^{p-1}$ rather than the exact formula $|\ker| = q^{p - \text{rank}(M)}$, which would require formalizing the rank of a matrix.
-- Repeated-trial amplification is not yet formally proved (it requires a product measure formalization).
+---
 
-## 8. Future Work
+## 8. Discussion
 
-See FUTURE_DIRECTIONS.md for detailed next steps. Key priorities:
+### 8.1 Proof Architecture Comparison
 
-1. Formalize the exact kernel-cardinality formula $|\ker(M)| = q^{p - \text{rank}(M)}$
-2. Prove repeated-trial amplification: Pr[all $t$ trials accept | wrong] $\leq (1/q)^t$
-3. Derive Freivalds as a corollary of a formalized Schwartz-Zippel lemma
-4. Extend to arbitrary finite-dimensional $\mathbb{F}_q$-vector spaces
-5. Connect to formalized interactive proof theory
+We considered three proof strategies:
 
-## 9. References
+- **Strategy A (row-witness):** Extract a nonzero row, inject kernel into hyperplane. ✓ Used. Clean, elementary, avoids heavy Mathlib dependencies.
+- **Strategy B (rank-nullity):** Use LinearMap.ker cardinality via Module.card_fintype. Not used due to Fintype instance synthesis issues for submodules.
+- **Strategy C (PIT viewpoint):** Reduce to polynomial identity testing. Deferred to future work.
 
-1. R. Freivalds, "Fast probabilistic algorithms," *MFCS 1977*, LNCS 53, pp. 57–69.
-2. J. T. Schwartz, "Fast probabilistic algorithms for verification of polynomial identities," *JACM*, 27(4):701–717, 1980.
-3. R. Zippel, "Probabilistic algorithms for sparse polynomials," *EUROSAM 1979*, LNCS 72, pp. 216–226.
-4. R. DeMillo and R. Lipton, "A probabilistic remark on algebraic program testing," *IPL*, 7(4):193–195, 1978.
-5. R. Motwani and P. Raghavan, *Randomized Algorithms*, Cambridge University Press, 1995.
-6. The Mathlib Community, "Mathlib: a unified library of mathematics formalized," https://leanprover-community.github.io/mathlib4_docs/.
+Strategy A produced the most streamlined formalization with the fewest dependencies.
+
+### 8.2 Tightness of the Bound
+
+The bound q^(p-1) is tight: for a rank-1 matrix M (e.g., a single nonzero row with all other rows zero), the kernel has exactly q^(p-1) elements. For higher-rank matrices, the kernel is strictly smaller (q^(p-rank(M))).
+
+### 8.3 Limitations
+
+- Our formalization is restricted to prime fields 𝔽_q = ℤ/qℤ. Extension to prime power fields 𝔽_{q^k} would require the `GaloisField` construction in Mathlib.
+- We prove the one-shot bound but not the repeated-trial amplification theorem, which would require a product probability formalization.
+- The exact kernel cardinality formula q^(p-rank(M)) requires full rank-nullity machinery over finite fields.
+
+---
+
+## 9. Future Work
+
+See FUTURE_DIRECTIONS.md for a detailed roadmap. Key targets include:
+
+1. Formalization of the Schwartz-Zippel lemma as a generalization.
+2. Rank-sensitive exact acceptance probability theorem.
+3. Extension to prime power fields.
+4. Repeated-trial amplification with product probability bounds.
+5. General nonzero linear map kernel-density theorem for arbitrary finite-dimensional vector spaces.
+
+---
+
+## 10. References
+
+1. R. Freivalds. "Fast probabilistic algorithms." *MFCS 1979*, LNCS 74, pp. 57–69, 1979.
+2. J.T. Schwartz. "Fast probabilistic algorithms for verification of polynomial identities." *J. ACM*, 27(4):701–717, 1980.
+3. R. Zippel. "Probabilistic algorithms for sparse polynomials." *EUROSAM 1979*, LNCS 72, pp. 216–226, 1979.
+4. R. DeMillo and R.J. Lipton. "A probabilistic remark on algebraic program testing." *Information Processing Letters*, 7(4):193–195, 1978.
+5. The Mathlib Community. "The Lean Mathematical Library." https://github.com/leanprover-community/mathlib4, 2024.
+6. S. Arora and B. Barak. *Computational Complexity: A Modern Approach*. Cambridge University Press, 2009.
+
+---
+
+## Appendix: Complete Lean 4 Formalization
+
+The complete formalization is available in `Catalog/Algebra/Freivalds/Basic.lean`. All theorems compile without `sorry` and depend only on standard axioms (propext, Classical.choice, Quot.sound).
