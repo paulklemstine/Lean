@@ -121,10 +121,10 @@
       "Speculative"
     ],
     "priority_score": 0.92,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d45cf758",
     "timestamp": "2026-05-14T16:03:53.831765+00:00"
   },
   {
@@ -634,20 +634,6 @@
     "timestamp": "2026-05-14T16:16:22.746644+00:00"
   },
   {
-    "id": "fd_0096",
-    "title": "Defend via parameter selection",
-    "description": ": Use the attack analysis to establish minimum parameter requirements (dimension, entry bound, tropical rank) for security.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:22.752502+00:00"
-  },
-  {
     "id": "fd_0102",
     "title": "Depth",
     "description": "(Direction 1): Understand vertical composition through tropical spectral theory.",
@@ -1078,20 +1064,6 @@
     "timestamp": "2026-05-15T07:05:09.477655+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "Spectral mixing bound",
-    "description": ": For symmetric row-stochastic `P` with spectral gap `γ`, standard spectral theory gives `(P^m)_{ij} ≤ 1/(n+1) + (1-γ)^m`.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:06:07.999806+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -1167,24 +1139,6 @@
     "timestamp": "2026-05-15T09:04:09.945738+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Universality proof",
-    "description": ": Combine gates to prove that glider-based collision logic is computationally universal.\n\n**Key Challenge**: Glider interactions on finite tori may differ from those on infinite grids due to wrapping. Use sufficiently large tori to isolate collision effects.\n\n**Cross-Domain Impact**: Would establish tropical CA as a collision-based computing medium, parallel to Adamatzky's work on reaction-diffusion computation and Rendell's Turing machine in Conway's Life.\n\n---\n\n## Direction 4: Periodic Orbit Classification via Tropical Fixed-Point Varieties\n\n**Status**: Fixed-point theory for still lifes established. Period-2 oscillator (blinker) certified.\n\n**Hypothesis**: The set of period-p configurations on an m×n torus forms a tropical algebraic variety — a piecewise-linear set defined by min-plus e",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "b751b05a",
-    "timestamp": "2026-05-15T09:04:09.964149+00:00"
-  },
-  {
     "id": "fd_0233",
     "title": "Period-p fixed point equation",
     "description": ": A configuration c has period p iff `(tropicalLifeStep)^[p] c = c`. Unfold this into a system of min-plus equations in the cell values.",
@@ -1197,20 +1151,6 @@
     "source_exp_id": "590e43ac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:04:09.972272+00:00"
-  },
-  {
-    "id": "fd_0234",
-    "title": "Tropical variety structure",
-    "description": ": Show that the solution set is a polyhedral complex — a finite union of convex polyhedra defined by linear inequalities.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:09.980189+00:00"
   },
   {
     "id": "fd_0236",
@@ -1294,12 +1234,47 @@
     "timestamp": "2026-05-15T10:01:34.433557+00:00"
   },
   {
-    "id": "fd_0220",
-    "title": "Tropical linear algebra:",
-    "description": "Express the observation map as a tropical matrix and bound its tropical rank.\n\n### Cross-Domain Significance\n\n- **Physics:** Direct analogue of the Ryu-Takayanagi entropy bound.\n- **Information theory:** Connects channel capacity to geometric boundary area.\n- **Complexity theory:** Graph cuts and communication complexity bounds.\n\n---\n\n## Direction 3: Dynamic Wedge Evolution Under Edge Weight Perturbation\n\n### Statement\n\nWhen edge weights change continuously (modeling network degradation or improvement), track how the wedge evolves. Prove that wedge membership changes occur only when the gap $\\delta_v$ crosses zero, and characterize the \"phase transitions\" of the wedge.\n\n### Exact Theorem Target\n\n```lean\ntheorem wedge_transition_at_zero_gap\n    {V : Type*} [DecidableEq V]\n    {bulk boundary",
+    "id": "fd_0221",
+    "title": "Certify",
+    "description": "the winning pattern in the formal framework by instantiating `BinaryGateGadget`.\n4. Extend to specific rules beyond von Neumann: Moore neighborhood, asymmetric rules, higher-dimensional tori.\n\n### Impact\nThis would convert our abstract universality theorem into a concrete, runnable universal computer. It would be the first rigorously verified collision-based universal CA in the tropical setting.\n\n### Cross-domain connections\n- **Experimental mathematics:** GPU-accelerated search over collision patterns\n- **Symmetry exploitation:** Rule symmetries reduce the search space\n- **Machine learning:** Train a classifier to predict which collision patterns realize which gates\n\n---\n\n## 2. Tropical Circuit Complexity Theory\n\n### Theorem Target\n```\ntheorem tropical_circuit_depth_lower_bound :\n    ∀ (f",
     "domains": [
       "Tropical",
       "Bridges",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b751b05a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:01:19.706479+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Composition",
+    "description": "= sequential connection via wire delays.\n5. Show the category is **symmetric monoidal closed**, with internal hom given by \"gadgets that transform one signal bundle into another.\"\n6. Prove a **faithful functor** from the category of Boolean circuits into the collision gadget category, making universality a categorical statement.\n\n### Impact\nThis would provide a compositional semantics for collision computing, connecting to the broader program of categorical quantum mechanics, string diagrams, and process theories. It would enable reasoning about circuits at a higher level of abstraction.\n\n---\n\n## 4. Tropical Zeta Functions for Periodic Orbit Counting\n\n### Theorem Target\n```\ntheorem tropical_zeta_rationality :\n    ∀ (F : MinPlusCA m n),\n      ∃ (P Q : Polynomial ℤ),\n        tropicalZeta F =",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b751b05a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:01:19.744922+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Connect to tropical geometry:",
+    "description": "The number of lattice points in the periodic prevariety `V_p` should be computable via Ehrhart theory if the prevariety is a rational polyhedron.\n4. Prove rationality or establish counterexamples for specific CA rules.\n5. Study the **tropical dynamical degree** = growth rate of `|Per_p(F)|^{1/p}` and its relationship to topological entropy.\n\n### Impact\nDynamical zeta functions are central objects in ergodic theory and number theory. A tropical version would connect CA dynamics to algebraic geometry in a quantitative way, with implications for understanding the complexity of long-term behavior.\n\n---\n\n## 5. Intrinsic Simulation of Tag Systems and Reversible Lattice Gases\n\n### Theorem Target\n```\ntheorem tropical_ca_simulates_cyclic_tag :\n    ∀ (T : CyclicTagSystem),\n      ∃ (m n : ℕ) (enc : T",
+    "domains": [
+      "Tropical",
+      "Cryptography",
       "Algebra",
       "Logic",
       "Computation",
@@ -1308,41 +1283,42 @@
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "9ab661ec",
+    "source_exp_id": "b751b05a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:01:34.457401+00:00"
+    "timestamp": "2026-05-15T11:01:19.756422+00:00"
   },
   {
-    "id": "fd_0222",
-    "title": "Piecewise-linear structure:",
-    "description": "If distances are piecewise linear in $t$, the gap function is also piecewise linear and zero-crossings are computable.\n\n### Cross-Domain Significance\n\n- **Network monitoring:** Predicting when a monitoring station loses coverage.\n- **Dynamical systems:** Phase transitions in optimization landscapes.\n- **Robustness engineering:** Worst-case analysis for network degradation.\n\n---\n\n## Direction 4: Multi-Subset Wedge Intersection and Covering Theorems\n\n### Statement\n\nGiven multiple boundary subsets $B_1, \\ldots, B_k$, prove structural theorems about wedge intersections $\\bigcap_i \\mathrm{Wedge}(B_i)$, unions $\\bigcup_i \\mathrm{Wedge}(B_i)$, and covering properties.\n\n### Exact Theorem Targets\n\n```lean\n-- Wedge of B ∪ B' contains wedge of B intersected with appropriate condition\ntheorem wedge_un",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9ab661ec",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:01:34.481631+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Necessity",
-    "description": ": Construct an adversarial execution showing that for non-idempotent operations (e.g., addition), different delivery schedules can produce different results.\n3. Formalize the FLP-style impossibility argument adapted to the tropical setting.\n\n### Significance\nThis would provide a complete classification of which distributed tasks require coordination and which do not, resolving a fundamental question in distributed computing theory.\n\n### Cross-Domain Connections\n- **Database theory**: Exactly characterizes which CRDT designs are possible.\n- **Concurrency theory**: Connects to linearizability and sequential consistency.\n- **Abstract algebra**: The classification is essentially about which semiring axioms enable confluence.\n\n---\n\n## Direction 3: Tropical Communication Complexity Lower Bounds\n",
+    "id": "fd_0227",
+    "title": "Cyclic tag systems",
+    "description": "are the simplest known Turing-complete computation model. Simulate them directly in the tropical CA.\n2. Alternatively, simulate a **reversible lattice gas** (Margolus partitioning CA) which is known to be universal.\n3. For each primitive operation of the simulated system, construct a tropical collision gadget.\n4. Prove the simulation is **faithful**: the encoding preserves computation steps exactly.",
     "domains": [
       "Tropical",
-      "Bridges",
+      "Cryptography",
       "Algebra",
       "Computation"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "3adfea25",
+    "source_exp_id": "b751b05a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:55.837594+00:00"
+    "timestamp": "2026-05-15T11:01:19.765509+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Transfer Turing universality",
+    "description": "from the simulated system to the tropical CA.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b751b05a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:01:19.774503+00:00"
   },
   {
     "id": "seed_079",
@@ -1486,6 +1462,25 @@
     "source_exp_id": "f37e592e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
+  },
+  {
+    "id": "fd_0179",
+    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
+    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "5c0e9794",
+    "timestamp": "2026-05-14T17:33:19.336802+00:00"
   },
   {
     "id": "fd_0179",
@@ -1811,20 +1806,6 @@
     "timestamp": "2026-05-15T09:04:35.009366+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "Infrastructure Needs",
-    "description": "All five directions benefit from:\n- Better `Fintype` instance automation for submodules of finite types\n- Formalized product measure / independent sampling for amplification arguments\n- MvPolynomial evaluation and degree bounds for PIT connections",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cb03e742",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:35.017323+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Connections to Active Research",
     "description": "- **Verifiable computation**: Directions 2 and 5 formalize the core of SNARK/STARK soundness arguments\n- **Algebraic complexity**: Direction 3 opens Schwartz-Zippel, the foundation of arithmetic circuit lower bounds\n- **Coding theory**: Direction 4 generalizes to arbitrary linear codes, connecting to minimum distance bounds\n- **Machine learning verification**: Streaming verification of matrix products is directly relevant to verifiable neural network inference",
@@ -2064,72 +2045,6 @@
     "source_exp_id": "7b109bab",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:19:36.858900+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Direction 1: Tropical Bregman Divergence and Pythagorean Theorem",
-    "description": "**Hypothesis**: There exists a tropical analogue of the Bregman divergence that satisfies a Pythagorean theorem for tropical projections onto min-closed codebooks.\n\n**Background**: Classical information geometry relies on the Bregman divergence (generalizing KL-divergence) and the associated Pythagorean theorem: for an exponential family E and a point p, the projection p* minimizes divergence and satisfies D(q, p) = D(q, p*) + D(p*, p) for all q in E. In the tropical setting, the natural candidate is:\n\n```\nD_trop(w, v) = max_a (w(a) - v(a)) - min_a (w(a) - v(a))\n```\n\nThis is the oscillation seminorm of the difference (already formalized as `tropicalFisherSeminorm`).\n\n**Concrete Next Steps**:\n1. Define `tropicalBregman w v = tropicalFisherSeminorm (fun a => w a - v a)`\n2. Prove the Pythagor",
-    "domains": [
-      "Tropical",
-      "Pythagorean",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14a8bd15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:13.219500+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Direction 3: Semantic Rate-Distortion Function",
-    "description": "**Hypothesis**: The optimal tradeoff between codebook size and semantic distortion follows a tropical analogue of the rate-distortion function, and this function can be computed exactly for structured codebooks.\n\n**Background**: Shannon's rate-distortion function R(D) gives the minimum bits needed to compress a source with distortion ≤ D. Our `exists_optimal_semantic_code` gives existence of the optimizer for a fixed codebook. The next step is to optimize over codebooks of a given size.\n\n**Concrete Next Steps**:\n1. Define `semanticRateDistortion (n : ℕ) (w : α → ℝ) (D : ℝ) : Prop` as \"there exists a codebook of size ≤ n with semantic distortion ≤ D\"\n2. Prove monotonicity: larger codebooks achieve smaller distortion\n3. For min-closed codebooks, prove that the rate-distortion function is det",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14a8bd15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:13.239234+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Impact",
-    "description": "Would establish neural network certification as a chapter of tropical geometry, connecting to deep results in algebraic geometry and combinatorics. Could lead to polynomial-time certification algorithms via tropical linear programming.\n\n---",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "33bff7e2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:37.272305+00:00"
-  },
-  {
-    "id": "fd_0222",
-    "title": "Formal Verification Pipeline",
-    "description": "Each direction should culminate in machine-verified theorems, following the methodology established in this work:\n1. Define structures and properties in Lean 4\n2. State theorems precisely\n3. Prove with Mathlib-backed automation\n4. Verify axiom cleanliness with `#print axioms`\n\n---",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "33bff7e2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:37.293849+00:00"
   },
   {
     "id": "fd_0215",
