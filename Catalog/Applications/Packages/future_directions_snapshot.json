@@ -1599,6 +1599,132 @@
     "timestamp": "2026-05-15T06:04:45.662969+00:00"
   },
   {
+    "id": "fd_0203",
+    "title": "Products:",
+    "description": "`T × U` with `Carrier := T.Carrier × U.Carrier` and `Inv := fun (x, y) => max (T.Inv x) (U.Inv y)` (or sum). Prove projection morphisms form a universal cone.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.015646+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Equalizers:",
+    "description": "For `f, g : T → U`, define `Eq(f,g)` as the subtheory of elements where `f(x) = g(x)`. Prove the universal property.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.023311+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Pullbacks:",
+    "description": "Construct as equalizers of products.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.030629+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "Colimits:",
+    "description": "Pushouts via quotients of coproducts.\n\n**Impact:** Limits enable systematic combination of theories: given a shared interface (pullback), one can merge two domain theories into a composite. This is directly relevant to:\n- Modular program verification (combining module specs)\n- Ontology merging in knowledge representation\n- Multi-domain scientific modeling\n\n**Target theorem:**\n```\ntheorem product_is_universal (T U : ResearchTheory)\n    (V : ResearchTheory) (p₁ : TheoryHom V T) (p₂ : TheoryHom V U) :\n    ∃! h : TheoryHom V (T.prod U), ... = p₁ ∧ ... = p₂\n```\n\n---\n\n## Direction 4: Fixed-Point Semantics in the Bicategory\n\n**Hypothesis:** Define endomorphism theories `End(T) := TheoryHom T T` and prove that monotone endomorphisms on hom-preorders have least fixed points (by Knaster-Tarski).\n\n**",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.039853+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Formalize",
+    "description": "each direction in Lean 4 with complete proofs",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.046645+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "Validate",
+    "description": "with computational experiments in Python",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.053311+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "Connect",
+    "description": "to existing Mathlib infrastructure (enriched categories, order theory)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.060098+00:00"
+  },
+  {
+    "id": "fd_0210",
+    "title": "Apply",
+    "description": "to at least one domain per direction (program analysis, ML, knowledge representation)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.067102+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Iterate",
+    "description": "— each proved theorem opens new hypotheses for the next cycle",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b1837b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:09.074811+00:00"
+  },
+  {
     "id": "seed_078",
     "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
     "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
@@ -1711,22 +1837,6 @@
     "source_exp_id": "ea1c2257",
     "consumed_by_exp_id": "069b9159",
     "timestamp": "2026-05-14T16:17:39.945939+00:00"
-  },
-  {
-    "id": "fd_0116",
-    "title": "Direction 4: A Bicategory of Theories, Interpretations, and Proof Transformation",
-    "description": "**Hypothesis:** Theory morphisms should be organized into a *bicategory* (or 2-category) where:\n- 0-cells are `ResearchTheory` objects\n- 1-cells are `TheoryHom` morphisms\n- 2-cells are \"proof transformations\" — natural transformations between morphisms that witness one translation being \"at least as good as\" another\n\n**Proof Strategy:**\n1. Define `TheoryHom2 (f g : TheoryHom T U)` as: `∀ x, U.Inv (f.toFun x) ≤ U.Inv (g.toFun x)` (pointwise invariant comparison).\n2. Prove that 2-cells compose vertically and horizontally.\n3. Prove interchange law and unit laws.\n4. Show that this bicategory has a *terminal object*: the theory with carrier `Unit` and invariant `fun _ => 0`, receiving a unique morphism from every theory.\n5. Prove that 2-cells induce a preorder on `TheoryHom T U`, and characteri",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "8b1837b9",
-    "timestamp": "2026-05-14T16:17:39.949505+00:00"
   },
   {
     "id": "fd_0117",
