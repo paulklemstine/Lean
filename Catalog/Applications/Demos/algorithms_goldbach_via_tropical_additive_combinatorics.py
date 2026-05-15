@@ -2,318 +2,418 @@
 """
 Tropical Additive Combinatorics: Algorithms
 
-Implements core algorithms from the research paper with full documentation,
-type hints, complexity analysis, and example usage.
+Implements the core algorithms from the research paper on tropical
+(min-plus) convolution methods for additive number theory.
 """
 
-from typing import Optional, Set, List, Tuple, Callable
 import math
+from typing import Callable, Dict, List, Optional, Tuple
+
+INF = float('inf')
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Algorithm 1: Tropical Convolution (Naive)
-# ═══════════════════════════════════════════════════════════════════════════
-
-def tropical_convolution_naive(
-    f: Callable[[int], Optional[int]],
-    g: Callable[[int], Optional[int]],
-    n: int
-) -> Optional[int]:
-    """
-    Compute the min-plus (tropical) convolution of f and g at n.
-
-    (f ⋆ₜ g)(n) = min_{a+b=n} (f(a) + g(b))
-
-    where addition with ∞ (None) gives ∞.
-
-    Time complexity: O(n)
-    Space complexity: O(1)
-
-    Args:
-        f: Cost function ℕ → WithTop ℕ (None represents ⊤)
-        g: Cost function ℕ → WithTop ℕ
-        n: Point at which to evaluate the convolution
-
-    Returns:
-        The minimum cost decomposition, or None if all decompositions cost ⊤.
-
-    Example:
-        >>> A = {1, 3, 5}
-        >>> f = lambda x: 0 if x in A else None
-        >>> g = f  # self-convolution
-        >>> tropical_convolution_naive(f, g, 4)  # 1+3 = 4
-        0
-        >>> tropical_convolution_naive(f, g, 3)  # no a+b=3 with both in A
-        None
-    """
-    result = None
-    for a in range(n + 1):
-        fa = f(a)
-        gb = g(n - a)
-        if fa is not None and gb is not None:
-            val = fa + gb
-            if result is None or val < result:
-                result = val
-    return result
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Algorithm 2: Tropical Convolution (Batch)
-# ═══════════════════════════════════════════════════════════════════════════
-
-def tropical_convolution_batch(
-    f: Callable[[int], Optional[int]],
-    g: Callable[[int], Optional[int]],
-    N: int
-) -> List[Optional[int]]:
-    """
-    Compute the tropical convolution at all points 0, 1, ..., N-1.
-
-    Time complexity: O(N²)
-    Space complexity: O(N)
-
-    Args:
-        f, g: Cost functions
-        N: Upper bound (exclusive)
-
-    Returns:
-        List where result[n] = (f ⋆ₜ g)(n) for n = 0, ..., N-1.
-
-    Example:
-        >>> primes = {2, 3, 5, 7, 11, 13}
-        >>> pc = lambda n: 0 if n in primes else None
-        >>> result = tropical_convolution_batch(pc, pc, 20)
-        >>> [n for n in range(20) if result[n] == 0]
-        [4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 16, 18]
-    """
-    result = [None] * N
-    for n in range(N):
-        for a in range(n + 1):
-            fa = f(a)
-            gb = g(n - a)
-            if fa is not None and gb is not None:
-                val = fa + gb
-                if result[n] is None or val < result[n]:
-                    result[n] = val
-    return result
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Algorithm 3: Goldbach Verification
-# ═══════════════════════════════════════════════════════════════════════════
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 1: Sieve of Eratosthenes (prime generation)
+# ═══════════════════════════════════════════════════════════════
 
 def sieve_of_eratosthenes(limit: int) -> List[bool]:
-    """Sieve of Eratosthenes returning boolean array."""
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
+    """
+    Generate a boolean sieve marking primes up to limit.
+
+    Time:  O(n log log n)
+    Space: O(n)
+
+    Args:
+        limit: Upper bound (inclusive).
+
+    Returns:
+        List where is_prime[i] is True iff i is prime.
+    """
+    is_prime = [False, False] + [True] * (limit - 1)
+    for i in range(2, int(math.isqrt(limit)) + 1):
         if is_prime[i]:
-            for j in range(i*i, limit + 1, i):
+            for j in range(i * i, limit + 1, i):
                 is_prime[j] = False
     return is_prime
 
 
-def goldbach_tropical_verify(N: int) -> Tuple[bool, List[int]]:
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 2: Tropical Cost Functions
+# ═══════════════════════════════════════════════════════════════
+
+def tropical_cost_array(predicate: List[bool]) -> List[float]:
     """
-    Verify Goldbach's conjecture tropically for all even n in [4, N].
+    Build tropical cost array from a boolean predicate array.
 
-    Computes goldbachTrop(n) for each even n and checks if it equals 0.
-    Returns the verification result and any counterexamples found.
+    c(n) = 0 if predicate[n] else ∞
 
-    Time complexity: O(N² / log N) using sieve
-    Space complexity: O(N)
+    Time:  O(n)
+    Space: O(n)
 
     Args:
-        N: Upper bound for verification
+        predicate: Boolean array where predicate[i] indicates membership.
 
     Returns:
-        (all_verified, counterexamples): Tuple of bool and list of
-        any even numbers where goldbachTrop ≠ 0.
+        Array of tropical costs.
+    """
+    return [0.0 if p else INF for p in predicate]
+
+
+def soft_cost_array(predicate: List[bool], K: float) -> List[float]:
+    """
+    Build soft tropical cost array.
+
+    c(n) = 0 if predicate[n] else K
+
+    Args:
+        predicate: Boolean array.
+        K: Penalty for non-membership.
+
+    Returns:
+        Array of soft tropical costs.
+    """
+    return [0.0 if p else K for p in predicate]
+
+
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 3: Min-Plus Convolution (naive)
+# ═══════════════════════════════════════════════════════════════
+
+def minplus_conv_naive(f: List[float], g: List[float], n: int) -> float:
+    """
+    Compute min-plus convolution at a single point n.
+
+    (f ⋆ g)(n) = min { f(a) + g(b) : a + b = n, 0 ≤ a,b }
+
+    Time:  O(n)
+    Space: O(1)
+
+    Args:
+        f: First cost function array.
+        g: Second cost function array.
+        n: Point at which to evaluate.
+
+    Returns:
+        The min-plus convolution value.
+    """
+    result = INF
+    for a in range(min(n + 1, len(f))):
+        b = n - a
+        if b < len(g):
+            val = f[a] + g[b]
+            if val < result:
+                result = val
+    return result
+
+
+def minplus_conv_full(f: List[float], g: List[float]) -> List[float]:
+    """
+    Compute the full min-plus convolution array.
+
+    Time:  O(n²) where n = len(f) + len(g)
+    Space: O(n)
+
+    Args:
+        f: First cost function array (length m).
+        g: Second cost function array (length k).
+
+    Returns:
+        Array of length m+k-1 with all convolution values.
+    """
+    m, k = len(f), len(g)
+    result = [INF] * (m + k - 1)
+    for a in range(m):
+        if f[a] == INF:
+            continue
+        for b in range(k):
+            if g[b] == INF:
+                continue
+            idx = a + b
+            val = f[a] + g[b]
+            if val < result[idx]:
+                result[idx] = val
+    return result
+
+
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 4: Goldbach Verification Engine
+# ═══════════════════════════════════════════════════════════════
+
+def verify_goldbach_range(limit: int) -> Tuple[bool, Optional[int], Dict[int, Tuple[int, int]]]:
+    """
+    Verify Goldbach's conjecture for all even numbers in [4, limit].
+
+    Uses sieve-based approach for efficiency.
+
+    Time:  O(n² / log n) expected (by prime density)
+    Space: O(n)
+
+    Args:
+        limit: Upper bound for verification.
+
+    Returns:
+        Tuple of (all_verified, first_failure, decompositions)
+        where decompositions maps each even n to a (p, q) pair.
 
     Example:
-        >>> verified, failures = goldbach_tropical_verify(10000)
-        >>> verified
+        >>> ok, fail, decomps = verify_goldbach_range(100)
+        >>> ok
         True
-        >>> failures
-        []
+        >>> decomps[10]
+        (3, 7)
     """
-    is_prime = sieve_of_eratosthenes(N)
-    counterexamples = []
+    sieve = sieve_of_eratosthenes(limit)
+    decompositions: Dict[int, Tuple[int, int]] = {}
 
-    for n in range(4, N + 1, 2):
+    for n in range(4, limit + 1, 2):
         found = False
-        for p in range(2, n):
-            if is_prime[p] and is_prime[n - p]:
+        for p in range(2, n // 2 + 1):
+            if sieve[p] and sieve[n - p]:
+                decompositions[n] = (p, n - p)
                 found = True
                 break
         if not found:
-            counterexamples.append(n)
+            return (False, n, decompositions)
 
-    return len(counterexamples) == 0, counterexamples
+    return (True, None, decompositions)
 
 
-def goldbach_representation_count(N: int) -> List[int]:
+def goldbach_representation_count(limit: int) -> List[int]:
     """
-    Count the number of Goldbach representations for each even n ≤ N.
+    Count Goldbach representations r₂(n) for even n in [0, limit].
 
-    r(n) = |{(p, q) : p ≤ q, p + q = n, both prime}|
+    r₂(n) = |{(p,q) : p ≤ q, p+q = n, p,q prime}|
 
-    This is the classical representation function whose positivity is
-    equivalent to goldbachTrop(n) = 0.
+    Time:  O(n² / log² n) expected
+    Space: O(n)
 
-    Time complexity: O(N² / log² N)
-    Space complexity: O(N)
+    Args:
+        limit: Upper bound.
+
+    Returns:
+        Array where result[n] = r₂(n) for even n, 0 for odd n.
 
     Example:
         >>> counts = goldbach_representation_count(20)
-        >>> [(n, counts[n]) for n in range(4, 21, 2)]
-        [(4, 1), (6, 1), (8, 1), (10, 2), (12, 1), (14, 2), (16, 2), (18, 2), (20, 2)]
+        >>> counts[10]  # 10 = 3+7 = 5+5
+        2
     """
-    is_prime = sieve_of_eratosthenes(N)
-    counts = [0] * (N + 1)
+    sieve = sieve_of_eratosthenes(limit)
+    counts = [0] * (limit + 1)
 
-    for n in range(4, N + 1, 2):
+    for n in range(4, limit + 1, 2):
         for p in range(2, n // 2 + 1):
-            if is_prime[p] and is_prime[n - p]:
+            if sieve[p] and sieve[n - p]:
                 counts[n] += 1
 
     return counts
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Algorithm 4: Cofinite Set Convolution Threshold
-# ═══════════════════════════════════════════════════════════════════════════
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 5: Tropical Support Analysis
+# ═══════════════════════════════════════════════════════════════
 
-def cofinite_convolution_threshold(exceptions: Set[int]) -> int:
+def tropical_support(costs: List[float]) -> List[int]:
     """
-    Compute the threshold N such that for all n ≥ N, the tropical
-    self-convolution of the cofinite set ℕ \\ exceptions vanishes.
+    Extract the support (zero locus) of a tropical cost function.
 
-    The theoretical bound is N = 2 * (max(exceptions) + 1).
+    supp(f) = {n : f(n) = 0}
 
-    Time complexity: O(|exceptions|)
-    Space complexity: O(1)
+    Time:  O(n)
+    Space: O(|supp|)
 
     Args:
-        exceptions: Finite set of excluded natural numbers
+        costs: Tropical cost array.
 
     Returns:
-        Threshold N such that tropConv(A, A)(n) = 0 for all n ≥ N.
+        Sorted list of indices where cost is 0.
+    """
+    return [i for i, c in enumerate(costs) if c == 0.0]
+
+
+def sumset(A: List[int], B: List[int], limit: int) -> List[int]:
+    """
+    Compute the sumset A + B = {a + b : a ∈ A, b ∈ B} up to limit.
+
+    Time:  O(|A| × |B|)
+    Space: O(limit)
+
+    Args:
+        A: First set (sorted list).
+        B: Second set (sorted list).
+        limit: Upper bound for elements.
+
+    Returns:
+        Sorted list of elements in A + B up to limit.
+    """
+    result_set = set()
+    for a in A:
+        for b in B:
+            s = a + b
+            if s <= limit:
+                result_set.add(s)
+            else:
+                break  # B is sorted, so all subsequent b give s > limit
+    return sorted(result_set)
+
+
+def tropical_covering_density(predicate: List[bool], n: int) -> float:
+    """
+    Compute the Schnirelmann-style density of a predicate up to n.
+
+    σ(A, n) = |{a ∈ A : a ≤ n}| / n  for n ≥ 1
+
+    Time:  O(n)
+    Space: O(1)
+
+    Args:
+        predicate: Boolean membership array.
+        n: Upper bound.
+
+    Returns:
+        The density value.
+    """
+    if n < 1:
+        return 0.0
+    count = sum(1 for i in range(1, n + 1) if i < len(predicate) and predicate[i])
+    return count / n
+
+
+def schnirelmann_density(predicate: List[bool], limit: int) -> float:
+    """
+    Compute the Schnirelmann density: inf_{n≥1} |A ∩ [1,n]| / n.
+
+    Time:  O(limit)
+    Space: O(1)
+
+    Args:
+        predicate: Boolean membership array.
+        limit: Upper bound for the infimum search.
+
+    Returns:
+        The Schnirelmann density.
+    """
+    min_density = 1.0
+    count = 0
+    for n in range(1, min(limit + 1, len(predicate))):
+        if predicate[n]:
+            count += 1
+        density = count / n
+        if density < min_density:
+            min_density = density
+    return min_density
+
+
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 6: Certificate Extraction
+# ═══════════════════════════════════════════════════════════════
+
+def extract_certificate(
+    costs: List[float],
+    n: int
+) -> Optional[Tuple[int, int]]:
+    """
+    Extract a witness (a, b) achieving the minimum in (f ⋆ f)(n).
+
+    If the convolution is 0, returns (a, b) with a+b=n and f(a)=f(b)=0.
+
+    Time:  O(n)
+    Space: O(1)
+
+    Args:
+        costs: Tropical cost array.
+        n: Target value.
+
+    Returns:
+        Witness tuple (a, b) or None if convolution is infinite.
 
     Example:
-        >>> cofinite_convolution_threshold({0, 1, 2, 3})
-        8
-        >>> cofinite_convolution_threshold({5, 10, 15})
-        32
+        >>> sieve = sieve_of_eratosthenes(100)
+        >>> costs = tropical_cost_array(sieve)
+        >>> extract_certificate(costs, 10)
+        (3, 7)
     """
-    if not exceptions:
-        return 0
-    M = max(exceptions) + 1
-    return 2 * M
+    best_val = INF
+    best_pair = None
+    for a in range(min(n + 1, len(costs))):
+        b = n - a
+        if b < len(costs):
+            val = costs[a] + costs[b]
+            if val < best_val:
+                best_val = val
+                best_pair = (a, b)
+    return best_pair if best_val < INF else None
 
 
-def verify_cofinite_threshold(exceptions: Set[int], test_range: int = 100) -> bool:
-    """
-    Verify the cofinite convolution threshold by testing.
-
-    Args:
-        exceptions: Finite set of excluded natural numbers
-        test_range: Number of values to test beyond the threshold
-
-    Returns:
-        True if all values at or above threshold have conv = 0.
-    """
-    threshold = cofinite_convolution_threshold(exceptions)
-    A = set(range(threshold + test_range + 1)) - exceptions
-
-    f_A = lambda n: 0 if n in A else None
-
-    for n in range(threshold, threshold + test_range):
-        if tropical_convolution_naive(f_A, f_A, n) != 0:
-            return False
-    return True
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Algorithm 5: Sumset via Tropical Convolution
-# ═══════════════════════════════════════════════════════════════════════════
-
-def sumset_via_tropical(A: Set[int], B: Set[int]) -> Set[int]:
-    """
-    Compute the Minkowski sum A + B using tropical convolution.
-
-    This demonstrates the equivalence: n ∈ A + B ↔ (tropInd(A) ⋆ₜ tropInd(B))(n) = 0.
-
-    Time complexity: O(N²) where N = max(A) + max(B)
-    Space complexity: O(N)
-
-    Args:
-        A, B: Finite sets of natural numbers
-
-    Returns:
-        The sumset A + B = {a + b : a ∈ A, b ∈ B}
-
-    Example:
-        >>> sumset_via_tropical({1, 2, 3}, {10, 20})
-        {11, 12, 13, 21, 22, 23}
-    """
-    if not A or not B:
-        return set()
-
-    N = max(A) + max(B) + 1
-    f_A = lambda n: 0 if n in A else None
-    f_B = lambda n: 0 if n in B else None
-
-    conv = tropical_convolution_batch(f_A, f_B, N + 1)
-    return {n for n in range(N + 1) if conv[n] == 0}
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Main: Run examples
-# ═══════════════════════════════════════════════════════════════════════════
+# ═══════════════════════════════════════════════════════════════
+# Main: Run all algorithms with example usage
+# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Algorithm Demonstrations")
+    LIMIT = 200
+
+    print("Tropical Additive Combinatorics — Algorithm Suite")
     print("=" * 60)
 
-    # Algorithm 1: Basic convolution
-    print("\n--- Tropical Convolution ---")
-    A = {2, 3, 5, 7}
-    f = lambda n: 0 if n in A else None
-    for n in range(15):
-        val = tropical_convolution_naive(f, f, n)
-        print(f"  (tropInd(A) ⋆ₜ tropInd(A))({n}) = {val if val is not None else '⊤'}")
+    # Generate primes
+    sieve = sieve_of_eratosthenes(LIMIT)
+    primes = [i for i, p in enumerate(sieve) if p]
+    print(f"\nPrimes up to {LIMIT}: {len(primes)} found")
+    print(f"First 20: {primes[:20]}")
 
-    # Algorithm 3: Goldbach verification
-    print("\n--- Goldbach Verification ---")
-    verified, failures = goldbach_tropical_verify(10000)
-    print(f"  Goldbach verified up to 10000: {verified}")
-    print(f"  Counterexamples: {failures}")
+    # Tropical costs
+    hard_costs = tropical_cost_array(sieve)
+    soft_costs = soft_cost_array(sieve, K=5)
+
+    # Full convolution
+    print(f"\nComputing min-plus self-convolution...")
+    conv_hard = minplus_conv_full(hard_costs)
+    conv_soft = minplus_conv_full(soft_costs)
+
+    # Verify support = sumset equivalence (Theorem A)
+    support_conv = set(tropical_support(conv_hard))
+    prime_sumset = set(sumset(primes, primes, 2 * LIMIT))
+
+    print(f"\nTheorem A verification:")
+    print(f"  Support of (π_trop ⋆ π_trop): {len(support_conv)} elements")
+    print(f"  Prime sumset P + P:            {len(prime_sumset)} elements")
+    print(f"  Sets equal: {support_conv == prime_sumset}")
+
+    # Goldbach verification
+    print(f"\nGoldbach verification up to {LIMIT}:")
+    ok, fail, decomps = verify_goldbach_range(LIMIT)
+    print(f"  All verified: {ok}")
+    if not ok:
+        print(f"  First failure: {fail}")
 
     # Representation counts
-    print("\n--- Goldbach Representation Counts ---")
-    counts = goldbach_representation_count(50)
-    for n in range(4, 51, 2):
-        print(f"  r({n}) = {counts[n]}")
+    counts = goldbach_representation_count(LIMIT)
+    max_reps = max(counts)
+    avg_reps = sum(counts[n] for n in range(4, LIMIT + 1, 2)) / ((LIMIT - 2) // 2)
+    print(f"\nGoldbach representation statistics:")
+    print(f"  Max r₂(n) for n ≤ {LIMIT}: {max_reps}")
+    print(f"  Average r₂(n): {avg_reps:.2f}")
 
-    # Algorithm 4: Cofinite threshold
-    print("\n--- Cofinite Set Threshold ---")
-    exc = {0, 1, 2, 7, 11}
-    threshold = cofinite_convolution_threshold(exc)
-    verified = verify_cofinite_threshold(exc)
-    print(f"  Exceptions: {exc}")
-    print(f"  Threshold: {threshold}")
-    print(f"  Verified: {verified}")
+    # Schnirelmann density
+    sd = schnirelmann_density(sieve, LIMIT)
+    print(f"\nSchnirelmann density of primes (up to {LIMIT}): {sd:.6f}")
 
-    # Algorithm 5: Sumset
-    print("\n--- Sumset via Tropical Convolution ---")
-    A = {1, 4, 7}
-    B = {2, 3, 8}
-    result = sumset_via_tropical(A, B)
-    expected = {a + b for a in A for b in B}
-    print(f"  A = {sorted(A)}")
-    print(f"  B = {sorted(B)}")
-    print(f"  A + B (tropical) = {sorted(result)}")
-    print(f"  A + B (direct)   = {sorted(expected)}")
-    print(f"  Match: {result == expected}")
+    # Certificate extraction
+    print(f"\nCertificate extraction examples:")
+    for n in [4, 6, 8, 10, 20, 100]:
+        cert = extract_certificate(hard_costs, n)
+        if cert:
+            print(f"  {n} = {cert[0]} + {cert[1]}")
+        else:
+            print(f"  {n}: no decomposition")
+
+    # Monotonicity check
+    print(f"\nMonotonicity (Theorem C) verification:")
+    violations = 0
+    for n in range(len(conv_hard)):
+        if n < len(conv_soft) and conv_soft[n] > conv_hard[n]:
+            violations += 1
+    print(f"  soft ⋆ soft ≤ hard ⋆ hard: "
+          f"{'✓' if violations == 0 else f'✗ ({violations} violations)'}")
+
+    print(f"\nAll algorithms completed successfully.")

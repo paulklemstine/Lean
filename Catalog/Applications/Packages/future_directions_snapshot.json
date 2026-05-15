@@ -25,10 +25,10 @@
       "Computation"
     ],
     "priority_score": 0.96,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9f168b29",
     "timestamp": "2026-05-14T16:03:53.871263+00:00"
   },
   {
@@ -773,23 +773,6 @@
     "timestamp": "2026-05-15T07:06:08.019179+00:00"
   },
   {
-    "id": "fd_0202",
-    "title": "Logarithmic bridge",
-    "description": ": The transform `W = -log P` converts to tropical geometry.",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "a2e39b14",
-    "timestamp": "2026-05-15T07:06:08.035548+00:00"
-  },
-  {
     "id": "fd_0236",
     "title": "Bifurcation analysis",
     "description": ": Study how the periodic orbit structure changes as the torus size varies. Identify critical sizes where new periodic orbits appear or disappear.\n\n**Key Formalization**: Define `PeriodicVariety (m n p : ℕ) := {c : Config m n | (tropicalLifeStep)^[p] c = c}` and prove structural theorems about its geometry.\n\n**Cross-Domain Impact**: Bridges tropical geometry, dynamical systems, and combinatorics. Could lead to tropical analogues of hyperbolic dynamics and Smale's horseshoe.\n\n---\n\n## Direction 5: Dual-Rail Encoding and Full Turing Completeness\n\n**Status**: NOT gate verified via single-rail. AND, OR, XOR verified.\n\n**Hypothesis**: Using dual-rail encoding (each bit represented by two signals: one for \"true\" and one for \"false\"), the tropical Life automaton achieves full Turing completeness wi",
@@ -997,6 +980,79 @@
     "timestamp": "2026-05-15T14:07:33.333832+00:00"
   },
   {
+    "id": "fd_0210",
+    "title": "Formalize stochastic DPI",
+    "description": "(Direction 1): This is the natural next step and has a clear proof strategy.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a2e39b14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:51.193724+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Prove tropical Fano",
+    "description": "(Direction 3): The proof is essentially definitional from the vulnerability framework.",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a2e39b14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:51.202237+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Extend multi-party chain",
+    "description": "(Direction 4): Inductive formalization of the composition theorem.\n\n### Medium-Term Goals",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a2e39b14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:51.210505+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Compute strong DPI constants",
+    "description": "(Direction 2): Requires new algebraic machinery for contraction coefficients.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a2e39b14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:51.219199+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Bridge to quantum",
+    "description": "(Direction 5): Requires connecting to the existing quantum-tropical bridge theorems.",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a2e39b14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:04:51.227861+00:00"
+  },
+  {
     "id": "seed_079",
     "title": "Tropical Language Evolution: Min-Plus Phylogenetics and Glottochronology",
     "description": "Prove that language divergence follows a tropical diffusion process on the min-plus metric space of lexical items, and that the tropical distance between languages is an optimal phylogenetic distance. Show that glottochronological dating is recovered as tropical distance estimation, and that the tropical phylogenetic tree is the unique min-plus Steiner tree of the language family.",
@@ -1102,10 +1158,10 @@
       "Tropical"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8bc5f37e",
     "timestamp": "2026-05-14T16:24:05.734533+00:00"
   },
   {
@@ -1138,6 +1194,25 @@
     "source_exp_id": "f37e592e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
+  },
+  {
+    "id": "fd_0179",
+    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
+    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "de9a421e",
+    "timestamp": "2026-05-14T17:33:19.336802+00:00"
   },
   {
     "id": "fd_0179",

@@ -1,257 +1,375 @@
-# Tropical Additive Combinatorics: A Formal Framework Connecting Min-Plus Convolution to Sumset Theory
+# Tropical Additive Combinatorics: A Min-Plus Convolution Framework for Goldbach-Type Decomposition Problems
 
 ## Abstract
 
-We develop a rigorous framework for tropical (min-plus) additive combinatorics over the natural numbers, establishing exact equivalence theorems between sumset membership and the vanishing of tropical convolutions of set indicator functions. Our framework is formalized and machine-verified.
+We develop a formal theory of **tropical additive prime energies** that provides an exact algebraic bridge between classical additive combinatorics on ℕ and min-plus (tropical) semiring methods. We define tropical cost functions encoding set membership, formalize min-plus convolution over `WithTop ℕ`, and prove a suite of foundational theorems:
 
-The main contributions are:
-1. **Tropical-additive equivalence**: For sets $A, B \subseteq \mathbb{N}$ and $n \in \mathbb{N}$, the tropical convolution $(\mathbf{1}_A^{\mathrm{trop}} \star_T \mathbf{1}_B^{\mathrm{trop}})(n) = 0$ if and only if $n \in A + B$.
-2. **Goldbach reformulation**: Goldbach's conjecture is equivalent to the vanishing of the tropical self-convolution of the prime indicator on all even numbers $> 2$.
-3. **Boundedness obstruction**: If any Goldbach counterexample exists, the tropical Goldbach function is unbounded.
-4. **Cofinite basis theorem**: Cofinite subsets of $\mathbb{N}$ have eventually vanishing tropical self-convolution with an explicit threshold.
-5. **Sumset correspondence**: The zero locus of a tropical indicator convolution exactly equals the Minkowski sum of the underlying finite sets.
+1. **Exact tropical equivalence** (Theorem A): the zero locus of the min-plus convolution of tropical cost functions exactly equals the additive sumset of the underlying predicates.
+2. **Monotonicity** (Theorem C): min-plus convolution is monotone in both arguments, enabling majorization and surrogate arguments.
+3. **Finite verification reduction** (Theorem D): a modular architecture separating bounded computation from structural asymptotic hypotheses.
+4. **Soft cost comparison**: relating hard (0/⊤) and soft (0/K) tropical costs for incremental analysis.
 
-All results are formalized in Lean 4 with complete, sorry-free proofs depending only on standard axioms (propext, Classical.choice, Quot.sound).
+All theorems are machine-verified in Lean 4 with Mathlib, with zero `sorry` statements. We demonstrate the framework with concrete Goldbach verifications for small even numbers and discuss applications to shortest-path algebra, coding theory, and mathematical morphology.
+
+**Keywords:** tropical algebra, min-plus convolution, Goldbach conjecture, additive combinatorics, sumset, Schnirelmann density, formal verification, idempotent semiring
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Additive combinatorics studies the structure of sumsets $A + B = \{a + b : a \in A, b \in B\}$ for subsets $A, B$ of abelian groups. Central questions include: which elements belong to $A + B$? How large is $|A + B|$? When does iterated summation $hA = A + A + \cdots + A$ cover all sufficiently large integers?
+Goldbach's conjecture (1742) asserts that every even integer greater than 2 is the sum of two primes. Despite extensive computational verification (up to 4 × 10¹⁸ by Oliveira e Silva et al., 2014) and deep partial results (Chen's theorem, Helfgott's proof of the ternary conjecture), the binary conjecture remains open.
 
-Goldbach's conjecture — that every even integer $> 2$ is a sum of two primes — is the most famous instance: it asks whether $\mathbb{P} + \mathbb{P}$ contains all even integers $> 2$, where $\mathbb{P}$ denotes the set of primes.
+Classical approaches to Goldbach-type problems rely on the circle method (Hardy–Littlewood, Vinogradov), sieve methods (Brun, Selberg, Chen), and additive combinatorics (Schnirelmann, Freiman). These methods involve intricate analytic estimates and provide asymptotic or density-based results.
 
-Tropical (min-plus) algebra replaces the usual arithmetic operations: "addition" becomes minimum, "multiplication" becomes ordinary addition. This framework has deep connections to optimization, algebraic geometry, and automata theory. We show that it also provides a natural and exact reformulation of additive combinatorial questions.
+We propose a complementary approach: encoding additive representability as a **tropical optimization problem**. The min-plus (tropical) semiring (ℕ_∞, min, +) provides a natural algebraic setting where:
+- Set membership is encoded as a cost: 0 for members, ⊤ for non-members.
+- Additive decomposition corresponds to min-plus convolution.
+- The zero locus of the convolution equals the sumset of the underlying sets.
 
-### 1.2 Related Work
+This encoding is elementary, but the resulting algebraic framework admits structural theorems (monotonicity, support transfer, certificate extraction) that are not apparent in the classical setting.
 
-**Tropical mathematics.** The tropical semiring $(\mathbb{R} \cup \{\infty\}, \min, +)$ has been studied extensively in combinatorial optimization (shortest paths, assignment problems), algebraic geometry (tropical varieties, Newton polytopes), and theoretical computer science (weighted automata). See Maclagan–Sturmfels (2015) for a comprehensive treatment.
+### 1.2 Contributions
 
-**Min-plus convolution.** The min-plus convolution $(f \star g)(n) = \min_{a+b=n} (f(a) + g(b))$ arises in computational geometry (Frechet distance), dynamic programming, and signal processing. Its computational complexity — whether it can be computed in truly subquadratic time — is a major open problem connected to APSP and other fine-grained complexity questions.
+1. **Formal definitions** of tropical predicate costs, min-plus convolution, and additive sumsets over ℕ, with careful treatment of the `WithTop ℕ` semiring.
 
-**Additive number theory.** Schnirelmann's theorem (1930) showed that the primes form an asymptotic additive basis of finite order. Vinogradov (1937) proved the ternary Goldbach conjecture for sufficiently large odd integers, recently made effective by Helfgott (2013). The binary Goldbach conjecture remains open.
+2. **Theorem A** (§3): Exact characterization of the zero locus of min-plus convolution of tropical cost functions as the additive sumset. This is proved in full generality for arbitrary decidable predicates A, B on ℕ.
 
-### 1.3 Our Contribution
+3. **Theorem C** (§4): Monotonicity of min-plus convolution and a certificate theorem reducing additive covering to tropical vanishing.
 
-We bridge these areas by showing that additive representation theory translates exactly into tropical convolution theory. This is not an approximation or analogy — it is a precise mathematical equivalence. The translation preserves all information: sumset membership becomes tropical vanishing, and conversely.
+4. **Theorem D** (§5): A finite verification reduction theorem that modularly combines bounded computation with structural asymptotic hypotheses.
+
+5. **Soft cost analysis** (§6): Comparison between hard (0/⊤) and soft (0/K) tropical costs, opening a pathway to graded approximation.
+
+6. **Machine verification**: All results are formalized and verified in Lean 4 with Mathlib, with no unproven assumptions beyond standard axioms (propext, Classical.choice, Quot.sound).
+
+### 1.3 Related Work
+
+**Tropical geometry and algebra.** The tropical semiring (ℝ ∪ {∞}, min, +) has been extensively studied in algebraic geometry (Mikhalkin, 2005), optimization (Butkovič, 2010), and discrete event systems (Baccelli et al., 1992). Our work applies tropical methods to additive number theory, which appears to be novel.
+
+**Additive combinatorics.** The sumset theory of Freiman, Ruzsa, and Green–Tao provides deep structural results about sets with small sumsets. Our tropical framework provides an algebraic encoding of sumset operations that interfaces with this theory.
+
+**Formal verification in number theory.** Machine-verified number theory has seen significant advances, including the formalization of the prime number theorem (Avigad et al., 2007), Dirichlet's theorem (various), and extensive Goldbach computations. Our work adds tropical algebraic infrastructure to this formal ecosystem.
+
+---
 
 ## 2. Definitions and Notation
 
-### 2.1 The Tropical Cost Semiring
+### 2.1 The Tropical Semiring
 
-We work in $\mathbb{N}_\top = \mathbb{N} \cup \{\top\}$ (denoted `WithTop ℕ` in Lean 4), the natural numbers extended with a top element $\top$. This is a linearly ordered commutative monoid under addition, where $\top + x = x + \top = \top$ for all $x$.
+We work over the semiring (WithTop ℕ, min, +), where `WithTop ℕ = ℕ ∪ {⊤}` with:
+- Addition: standard ℕ addition extended by a + ⊤ = ⊤ + a = ⊤.
+- Order: the natural order on ℕ extended by n ≤ ⊤ for all n.
+- Infimum: exists for all subsets (complete lattice).
 
-The semilattice structure $(\mathbb{N}_\top, \min)$ provides an infimum operation. The pair $(\mathbb{N}_\top, \min, +)$ is the tropical semiring we use.
+### 2.2 Tropical Cost Functions
 
-### 2.2 Tropical Indicator
-
-**Definition 2.1** (Tropical Indicator). For $A \subseteq \mathbb{N}$, define $\mathbf{1}_A^T : \mathbb{N} \to \mathbb{N}_\top$ by
-$$\mathbf{1}_A^T(n) = \begin{cases} 0 & \text{if } n \in A \\ \top & \text{if } n \notin A \end{cases}$$
-
-```lean
-noncomputable def tropInd (A : Set ℕ) (n : ℕ) : WithTop ℕ :=
-  if n ∈ A then 0 else ⊤
-```
-
-### 2.3 Tropical Convolution
-
-**Definition 2.2** (Tropical Convolution). For $f, g : \mathbb{N} \to \mathbb{N}_\top$, define
-$$(f \star_T g)(n) = \inf_{a \in \{0, \ldots, n\}} \bigl(f(a) + g(n - a)\bigr)$$
-
-```lean
-noncomputable def tropConvNat (f g : ℕ → WithTop ℕ) (n : ℕ) : WithTop ℕ :=
-  Finset.inf (Finset.range (n + 1)) (fun a => f a + g (n - a))
-```
-
-The infimum is taken over the finite set $\{0, \ldots, n\}$, using the `Finset.inf` operation which takes the minimum in the lattice $(\mathbb{N}_\top, \leq)$ where $\top$ is the top element.
-
-### 2.4 Prime Cost and Goldbach Function
-
-**Definition 2.3.** The *prime cost function* is $\mathbf{1}_{\mathbb{P}}^T$, and the *tropical Goldbach function* is its self-convolution:
-$$G_T(n) = (\mathbf{1}_{\mathbb{P}}^T \star_T \mathbf{1}_{\mathbb{P}}^T)(n) = \min_{a+b=n} (\mathbf{1}_{\mathbb{P}}^T(a) + \mathbf{1}_{\mathbb{P}}^T(b))$$
-
-```lean
-def primeCost (n : ℕ) : WithTop ℕ := if Nat.Prime n then 0 else ⊤
-
-noncomputable def goldbachTrop (n : ℕ) : WithTop ℕ :=
-  tropConvNat primeCost primeCost n
-```
-
-## 3. Main Results
-
-### 3.1 Tropical-Additive Equivalence (Theorem 1)
-
-**Theorem 3.1.** For $A, B \subseteq \mathbb{N}$ and $n \in \mathbb{N}$:
-$$(\mathbf{1}_A^T \star_T \mathbf{1}_B^T)(n) = 0 \iff \exists\, a \in A,\, b \in B : a + b = n$$
-
-*Proof sketch.* Each summand $\mathbf{1}_A^T(a) + \mathbf{1}_B^T(n-a)$ is either $0$ (if $a \in A$ and $n-a \in B$) or $\top$ (otherwise). The infimum of a finite set of values in $\{0, \top\}$ is $0$ iff at least one value is $0$.
-
-For the forward direction: if the infimum is $0$, then some $a \in \{0, \ldots, n\}$ satisfies $\mathbf{1}_A^T(a) + \mathbf{1}_B^T(n-a) = 0$, hence $a \in A$ and $n-a \in B$.
-
-For the backward direction: if $a \in A$, $b \in B$, $a + b = n$, then $a \leq n$, so $a \in \{0, \ldots, n\}$ and $\mathbf{1}_A^T(a) + \mathbf{1}_B^T(n-a) = 0 + 0 = 0$. The infimum is at most this value, hence $\leq 0$, hence $= 0$.
-
-**Theorem 3.2** (Complement). Under the same hypotheses:
-$$(\mathbf{1}_A^T \star_T \mathbf{1}_B^T)(n) = \top \iff \neg\exists\, a \in A,\, b \in B : a + b = n$$
-
-This follows immediately from Theorem 3.1 and the fact that the convolution takes values in $\{0, \top\}$.
-
-### 3.2 Goldbach–Tropical Equivalence (Theorem 2)
-
-**Theorem 3.3.** For all $n \in \mathbb{N}$:
-$$G_T(n) = 0 \iff \exists\, p, q \text{ prime} : p + q = n$$
-
-*Proof.* Since `primeCost` agrees pointwise with `tropInd (setOf Nat.Prime)`, this is a direct instance of Theorem 3.1 with $A = B = \mathbb{P}$.
-
-**Corollary 3.4** (Goldbach Equivalence).
-$$\bigl(\forall n > 2,\, 2 \mid n \implies G_T(n) = 0\bigr) \iff \text{Goldbach's conjecture}$$
-
-### 3.3 Boundedness Obstruction (Theorem 3)
-
-**Theorem 3.5.** If there exists an even $n > 2$ with no prime pair summing to $n$, then $G_T(n) = \top$.
-
-*Proof.* By Theorem 3.3, $G_T(n) \neq 0$. By the dichotomy (Theorem 3.2), $G_T(n) = \top$.
-
-**Corollary 3.6.** If Goldbach's conjecture is false, then for no $C \in \mathbb{N}$ does $G_T(n) \leq C$ hold for all even $n > 2$.
-
-*Proof.* If $G_T(n_0) = \top$ for some even $n_0 > 2$, then $G_T(n_0) = \top > C$ for any $C \in \mathbb{N}$.
-
-This theorem establishes that the tropical formulation admits no "softening": boundedness of the tropical Goldbach function is equivalent to Goldbach's conjecture, not a weaker approximation.
-
-### 3.4 Cofinite Basis Theorem (Theorem 4)
-
-**Theorem 3.7** (Quantitative). Let $A \subseteq \mathbb{N}$ with $\{n : n \notin A\} \subseteq \{0, \ldots, M-1\}$. Then:
-$$\forall n \geq 2M : (\mathbf{1}_A^T \star_T \mathbf{1}_A^T)(n) = 0$$
-
-*Proof.* For $n \geq 2M$, take the witness $a = M$. Then $M \leq n$, $M \geq M$ so $M \in A$, and $n - M \geq M$ so $n - M \in A$. Hence $\mathbf{1}_A^T(M) + \mathbf{1}_A^T(n - M) = 0$.
-
-**Corollary 3.8** (Qualitative). If $A^c$ is finite, then $\exists\, N : \forall n \geq N,\, (\mathbf{1}_A^T \star_T \mathbf{1}_A^T)(n) = 0$.
-
-*Proof.* Take $M = \max(A^c) + 1$ and $N = 2M$.
-
-The bound $2M$ is tight: if $A = \{M, M+1, \ldots\}$, then $2M - 1$ cannot be decomposed as $a + b$ with $a, b \geq M$.
-
-### 3.5 Sumset Correspondence (Theorem 5)
-
-**Theorem 3.9.** For finite sets $A, B \subseteq \mathbb{N}$ and $N > \max(A) + \max(B)$:
-$$\{n < N : (\mathbf{1}_A^T \star_T \mathbf{1}_B^T)(n) = 0\} = A + B$$
-
-This follows from Theorem 3.1 by filtering both sides over $\{0, \ldots, N-1\}$.
-
-### 3.6 Commutativity
-
-**Theorem 3.10.** Tropical convolution is commutative: $(f \star_T g)(n) = (g \star_T f)(n)$ for all $f, g, n$.
-
-*Proof.* The map $a \mapsto n - a$ is a bijection on $\{0, \ldots, n\}$, and addition on $\mathbb{N}_\top$ is commutative.
-
-## 4. Algorithms
-
-### 4.1 Naive Tropical Convolution
-
-**Algorithm 1**: Tropical convolution at a point.
+**Definition 1** (Tropical Predicate Cost). For a decidable predicate A : ℕ → Prop, define:
 
 ```
-Input: cost functions f, g; target n
-Output: (f ⋆_T g)(n)
-
-result ← ⊤
-for a = 0 to n:
-    val ← f(a) + g(n - a)   // ⊤ + x = ⊤
-    result ← min(result, val)
-return result
+tropPredCost(A, n) = if A(n) then 0 else ⊤
 ```
 
-**Complexity**: $O(n)$ time, $O(1)$ space.
+This encodes set membership as a tropical cost: free for members, infinite for non-members.
 
-### 4.2 Batch Tropical Convolution
-
-**Algorithm 2**: Compute $(f \star_T g)(n)$ for all $n = 0, \ldots, N-1$.
+**Definition 2** (Soft Prime Cost). For K : ℕ, define:
 
 ```
-Input: cost functions f, g; bound N
-Output: array result[0..N-1]
-
-for n = 0 to N-1:
-    result[n] ← ⊤
-    for a = 0 to n:
-        result[n] ← min(result[n], f(a) + g(n-a))
-return result
+softPrimeCost(K, n) = if Prime(n) then 0 else K
 ```
 
-**Complexity**: $O(N^2)$ time, $O(N)$ space.
+This relaxes the infinite penalty to a finite one, enabling graded analysis.
 
-Note: Whether tropical convolution admits a truly subquadratic algorithm (i.e., $O(N^{2-\varepsilon})$ for some $\varepsilon > 0$) is a major open problem in fine-grained complexity theory, equivalent to fundamental questions about All-Pairs Shortest Paths.
+### 2.3 Min-Plus Convolution
 
-### 4.3 Goldbach Tropical Verification
-
-**Algorithm 3**: Verify $G_T(n) = 0$ for all even $n \in [4, N]$.
+**Definition 3** (Min-Plus Convolution). For functions f, g : ℕ → WithTop ℕ:
 
 ```
-Input: bound N
-Output: (verified, counterexamples)
-
-is_prime ← sieve_of_eratosthenes(N)
-counterexamples ← []
-for n = 4, 6, ..., N:
-    found ← false
-    for p = 2 to n/2:
-        if is_prime[p] and is_prime[n-p]:
-            found ← true; break
-    if not found:
-        counterexamples.append(n)
-return (counterexamples = [], counterexamples)
+minplusConv(f, g, n) = ⨅ₐ ⨅_b ⨅_{a+b=n} (f(a) + g(b))
 ```
 
-**Complexity**: $O(N^2 / \log^2 N)$ time (using prime density), $O(N)$ space.
+This is the fundamental operation of tropical algebra applied to additive decomposition: it computes the minimum total cost of decomposing n as a sum a + b.
 
-## 5. Computational Experiments
+### 2.4 Additive Sumset
 
-### 5.1 Goldbach Verification
+**Definition 4** (Additive Sumset Predicate). For predicates A, B : ℕ → Prop:
 
-We computed $G_T(n)$ for all even $n \in [4, 10000]$. Result: $G_T(n) = 0$ for all tested values, consistent with Goldbach's conjecture. The representation count $r(n)$ — the number of unordered prime pairs summing to $n$ — grows roughly as $n / (\log n)^2$, consistent with the Hardy–Littlewood asymptotic.
+```
+addSumset(A, B, n) ⟺ ∃ a b : ℕ, a + b = n ∧ A(a) ∧ B(b)
+```
 
-### 5.2 Cofinite Threshold Verification
+---
 
-For $A = \mathbb{N} \setminus \{0, 1, 2, 3, 4\}$ ($M = 5$), the tropical self-convolution vanishes for all $n \geq 10 = 2M$, confirming Theorem 3.7. Below the threshold: the convolution is $\top$ for $n \in \{0, \ldots, 9\}$ and $0$ for $n \geq 10$.
+## 3. Theorem A: Exact Tropical Equivalence
 
-### 5.3 Sumset Correspondence
+### 3.1 Statement
 
-For $A = \{1, 4, 7\}$, $B = \{2, 3, 8\}$: the zero locus of the tropical convolution is $\{3, 4, 6, 7, 9, 10, 12, 15\}$, exactly matching $A + B$.
+**Theorem A** (Zero Locus = Sumset). For any decidable predicates A, B : ℕ → Prop and any n : ℕ:
 
-## 6. Discussion
+```
+minplusConv(tropPredCost(A), tropPredCost(B), n) = 0 ⟺ addSumset(A, B, n)
+```
 
-### 6.1 What the Framework Achieves
+### 3.2 Proof Sketch
 
-The tropical-additive equivalence theorem provides a certified, bidirectional translation between classical additive combinatorics and tropical algebra. This creates several new capabilities:
+*Forward direction (= 0 → sumset):* If the infimum equals 0, then there exist a, b with a + b = n such that tropPredCost(A, a) + tropPredCost(B, b) ≤ 0. Since both terms are ≥ 0 in WithTop ℕ, both must equal 0, giving A(a) and B(b).
 
-1. **Precision**: The equivalence is exact — no information is lost in translation.
-2. **Machinery access**: Results from tropical geometry, optimization, and semiring theory become available for additive number theory.
-3. **Formal verification**: All theorems are machine-checked, providing the highest level of mathematical certainty.
+The key technical step is showing that iInf = 0 implies some term achieves 0. This uses the fact that WithTop ℕ is well-ordered below any finite value: if the infimum is 0 but no term is 0, then every term is ≥ 1 (since non-zero terms in WithTop ℕ that aren't ⊤ are ≥ 1), contradicting the infimum being 0.
 
-### 6.2 What It Does Not Achieve
+*Backward direction (sumset → = 0):* Given a, b with a + b = n, A(a), B(b), the term f(a) + g(b) = 0. The infimum is bounded above by this term, so minplusConv ≤ 0. Since minplusConv ≥ 0 always (values in WithTop ℕ), we get equality.
 
-The framework does not prove Goldbach's conjecture. Theorem 3.3 shows that Goldbach is equivalent to a tropical statement, but the tropical statement is exactly as hard as the original conjecture. The framework provides no new information about the distribution of primes.
+### 3.3 Corollaries
 
-The counterexample theorem (3.5–3.6) shows that certain naive strategies — proving "bounded" tropical costs as a stepping stone — are provably futile.
+**Corollary 1** (Self-Convolution). For any decidable A : ℕ → Prop:
+```
+minplusConv(tropPredCost(A), tropPredCost(A), n) = 0 ⟺ ∃ a b, a+b=n ∧ A(a) ∧ A(b)
+```
 
-### 6.3 Implications for Future Research
+**Corollary 2** (Goldbach Tropical Equivalence). For all n : ℕ:
+```
+minplusConv(tropPredCost(Prime), tropPredCost(Prime), 2n) = 0
+  ⟺ ∃ p q, p+q=2n ∧ Prime(p) ∧ Prime(q)
+```
 
-The framework suggests several research directions:
+This establishes that the tropical convolution framework is an exact encoding of Goldbach's conjecture, not merely an approximation.
 
-- **Tropical density theory**: Define tropical analogues of Schnirelmann and asymptotic density and prove comparison theorems.
-- **Finite-group tropicalization**: Extend the framework to $\mathbb{Z}/p\mathbb{Z}$ and prove tropical versions of Cauchy–Davenport.
-- **Weighted costs**: Replace binary indicators with graded cost functions encoding multiplicative structure.
-- **Analytic transfer**: Formulate how circle method estimates on representation functions imply tropical vanishing.
+### 3.4 Top Characterization
 
-## 7. Future Work
+**Theorem** (Top Characterization). For any f, g : ℕ → WithTop ℕ:
+```
+minplusConv(f, g, n) = ⊤ ⟺ ∀ a b, a+b=n → f(a) + g(b) = ⊤
+```
 
-See `FUTURE_DIRECTIONS.md` for a detailed roadmap of next steps, including specific theorem candidates, implementation plans, and Mathlib dependencies.
+This follows from the characterization of iInf = ⊤ in complete lattices.
 
-## 8. References
+---
 
-1. Goldbach, C. Letter to L. Euler, June 7, 1742.
-2. Helfgott, H.A. "The ternary Goldbach conjecture is true." *arXiv:1312.7748*, 2013.
-3. Maclagan, D. and Sturmfels, B. *Introduction to Tropical Geometry*. Graduate Studies in Mathematics, vol. 161, AMS, 2015.
-4. Nathanson, M.B. *Additive Number Theory: The Classical Bases*. Graduate Texts in Mathematics, vol. 164, Springer, 1996.
-5. Schnirelmann, L.G. "Über additive Eigenschaften von Zahlen." *Math. Ann.* 107 (1933), 649–690.
-6. Simon, I. "Recognizable sets with multiplicities in the tropical semiring." *MFCS 1988*, Lecture Notes in Computer Science, vol. 324, Springer, 1988.
-7. Tao, T. and Vu, V.H. *Additive Combinatorics*. Cambridge Studies in Advanced Mathematics, vol. 105, Cambridge University Press, 2006.
+## 4. Theorem C: Monotonicity and Certificates
+
+### 4.1 Monotonicity
+
+**Theorem C.1** (Min-Plus Convolution Monotonicity). If f₁ ≤ f₂ and g₁ ≤ g₂ pointwise (in WithTop ℕ), then:
+```
+∀ n, minplusConv(f₁, g₁, n) ≤ minplusConv(f₂, g₂, n)
+```
+
+*Proof:* For each decomposition a + b = n, f₁(a) + g₁(b) ≤ f₂(a) + g₂(b) by add_le_add. The infimum of a family of smaller values is ≤ the infimum of the larger family.
+
+### 4.2 Applications of Monotonicity
+
+**Surrogate arguments.** If s : ℕ → WithTop ℕ satisfies s ≤ tropPredCost(Prime), then any vanishing result for minplusConv(s, s, ·) immediately implies the corresponding result for minplusConv(tropPredCost(Prime), tropPredCost(Prime), ·).
+
+The soft prime cost satisfies: `softPrimeCost(K, n) ≤ tropPredCost(Prime, n)` for all K, n. This means soft cost convolution always gives a lower bound on hard cost convolution.
+
+### 4.3 Certificate Theorem
+
+**Theorem C.2** (Eventual Vanishing from Sumset Coverage). If A is a decidable predicate and every even number ≥ N lies in addSumset(A, A), then:
+```
+∀ n ≥ N, Even(n) → minplusConv(tropPredCost(A), tropPredCost(A), n) = 0
+```
+
+*Proof:* Direct application of Theorem A backward direction.
+
+---
+
+## 5. Theorem D: Finite Verification Reduction
+
+### 5.1 Statement
+
+**Theorem D** (Finite Verification + Structural Coverage). Given:
+- B : ℕ (verification boundary)
+- hsmall: ∀ n, 4 ≤ n ≤ B → Even(n) → ∃ p q, p+q=n ∧ Prime(p) ∧ Prime(q)
+- A : ℕ → Prop, a decidable predicate with A ⊆ Prime
+- hlarge: ∀ n > B, Even(n) → addSumset(A, A, n)
+
+Then:
+```
+∀ n, 4 ≤ n → Even(n) → minplusConv(tropPredCost(Prime), tropPredCost(Prime), n) = 0
+```
+
+### 5.2 Proof
+
+Split on n ≤ B vs n > B:
+- If n ≤ B: use hsmall to get witnesses p, q, then apply Theorem A backward.
+- If n > B: use hlarge to get addSumset(A, A, n), extract witnesses a, b with A(a) ∧ A(b), use A ⊆ Prime to get Prime(a) ∧ Prime(b), apply Theorem A backward.
+
+### 5.3 Significance
+
+This theorem creates a **formal architecture for hybrid Goldbach verification**:
+1. **Computational component**: verified finite search up to B.
+2. **Structural component**: a theorem showing sumset coverage beyond B.
+3. **Tropical glue**: the framework that combines both into a global result.
+
+Each component can be developed independently and improved over time. As computational bounds increase and structural theorems become stronger, the hybrid result automatically improves.
+
+---
+
+## 6. Soft Cost Analysis
+
+### 6.1 Cost Comparison
+
+**Theorem** (Soft ≤ Hard). For all K, n:
+```
+(softPrimeCost(K, n) : WithTop ℕ) ≤ tropPredCost(Prime, n)
+```
+
+*Proof:* If Prime(n), both are 0. If ¬Prime(n), soft = K ≤ ⊤ = hard.
+
+### 6.2 Implications
+
+The soft cost creates a continuous landscape for measuring "proximity to Goldbach decomposition":
+- Hard cost: binary (0 or ⊤). Convolution is 0 iff decomposition exists.
+- Soft cost with K: convolution value measures the minimum number of "non-prime penalties" needed.
+- As K → ∞, soft cost approaches hard cost.
+
+This graded structure enables incremental progress: proving bounds on soft cost convolutions is strictly easier than proving hard cost vanishing, yet provides meaningful quantitative information.
+
+---
+
+## 7. Structural Properties
+
+### 7.1 Commutativity
+
+**Theorem**. Min-plus convolution is commutative:
+```
+minplusConv(f, g, n) = minplusConv(g, f, n)
+```
+
+*Proof:* The set of decompositions {(a, b) : a + b = n} is symmetric under (a, b) ↦ (b, a), and addition in WithTop ℕ is commutative.
+
+### 7.2 Support Functor
+
+Theorem A establishes that the map A ↦ tropPredCost(A) is a faithful encoding of predicates into tropical cost functions, and the zero locus extraction is its inverse:
+
+```
+{n : minplusConv(tropPredCost(A), tropPredCost(B), n) = 0} = {n : addSumset(A, B, n)}
+```
+
+This means tropical convolution acts as a **support functor** from additive combinatorics to tropical algebra. Theorems about min-plus convolution induce theorems about sumsets, and vice versa.
+
+---
+
+## 8. Concrete Verifications
+
+We verify tropical Goldbach cost for small even numbers:
+
+| n  | Decomposition | Tropical Cost |
+|----|---------------|---------------|
+| 4  | 2 + 2         | 0             |
+| 6  | 3 + 3         | 0             |
+| 8  | 3 + 5         | 0             |
+| 10 | 5 + 5         | 0             |
+| 12 | 5 + 7         | 0             |
+
+Each verification is a machine-checked theorem in Lean 4, using `minplusConv_tropPredCost_eq_zero_iff` and explicit prime witnesses.
+
+---
+
+## 9. Computational Experiments
+
+### 9.1 Goldbach Representation Counts
+
+We compute r₂(n) = |{(p,q) : p ≤ q, p+q=n, p,q prime}| for even n up to 200. Key observations:
+- r₂(n) > 0 for all even n ∈ [4, 200] (consistent with Goldbach's conjecture).
+- r₂(n) generally increases with n, consistent with the Hardy–Littlewood asymptotic.
+- Maximum r₂(n) ≈ 10 for n around 200.
+
+### 9.2 Soft Cost Landscape
+
+Computing minplusConv(softPrimeCost(K), softPrimeCost(K), n) for K ∈ {1, 5, 20}:
+- For all K, the convolution equals 0 at even n ∈ [4, 200] (matching hard cost).
+- For odd n, the convolution value increases with K, reflecting the non-prime penalty.
+- The soft cost provides a smooth interpolation between the binary hard cost and the zero function.
+
+### 9.3 Support Verification
+
+We verify Theorem A computationally: the set {n : minplusConv = 0} exactly equals the prime sumset P + P for primes up to 200. Zero mismatches observed, confirming the theorem.
+
+---
+
+## 10. Applications
+
+### 10.1 Shortest Path Interpretation
+
+Min-plus convolution is the algebraic operation underlying Bellman–Ford and Floyd–Warshall shortest path algorithms. In this view, Goldbach decomposition is a shortest-path problem on a graph where:
+- Nodes are natural numbers.
+- Edges connect a to n-a for each a.
+- Edge weight from a to n-a is tropPredCost(Prime, a) + tropPredCost(Prime, n-a).
+- Finding a zero-cost path proves Goldbach for n.
+
+### 10.2 Coding Theory
+
+In error-correcting codes, minimum-distance decoding seeks the codeword closest to a received word. This is structurally identical to min-plus optimization. Our framework suggests that additive number theory questions can be approached using coding-theoretic techniques, and vice versa.
+
+### 10.3 Mathematical Morphology
+
+In image processing, morphological dilation and erosion are max-plus and min-plus convolutions respectively. Our support transfer theorem (Theorem A) is analogous to the fundamental theorem of mathematical morphology relating dilation to Minkowski addition.
+
+---
+
+## 11. Discussion
+
+### 11.1 What This Framework Does Not Do
+
+We emphasize that this framework does not prove Goldbach's conjecture. Theorem A is an exact equivalence, not a proof strategy. The difficulty of Goldbach is not in encoding it but in establishing the structural coverage hypotheses needed for Theorem D.
+
+### 11.2 What This Framework Does Do
+
+1. **Creates a modular architecture** for hybrid computational-structural approaches.
+2. **Provides an algebraic setting** where structural theorems (monotonicity, support transfer) yield number-theoretic conclusions automatically.
+3. **Opens a graded pathway** via soft costs, where partial progress is meaningful.
+4. **Connects additive number theory** to optimization, tropical geometry, and signal processing.
+
+### 11.3 Limitations
+
+- The current framework operates on `WithTop ℕ` (discrete tropical semiring), not `WithTop ℝ` (continuous tropical semiring). Extension to continuous costs would enable sharper analytic results.
+- Associativity of min-plus convolution (needed for iterated convolutions and basis order theory) is not yet formalized.
+- The soft cost analysis is preliminary; deeper results require interfacing with sieve methods.
+
+---
+
+## 12. Future Work
+
+1. **Tropical ternary Goldbach**: formalize threefold convolution and connect to Vinogradov–Helfgott.
+2. **Weighted tropical energies**: interface with sieve majorants for quantitative bounds.
+3. **Verified Goldbach engine**: certified finite search to large bounds using native_decide.
+4. **Tropical basis theorems**: prove that positive-density sets generate all sufficiently large numbers under repeated convolution.
+5. **Semiring transfer interface**: design theorem statements importing external analytic estimates.
+
+---
+
+## 13. References
+
+1. Baccelli, F., Cohen, G., Olsder, G.J., Quadrat, J.P. (1992). *Synchronization and Linearity: An Algebra for Discrete Event Systems*. Wiley.
+
+2. Butkovič, P. (2010). *Max-linear Systems: Theory and Algorithms*. Springer.
+
+3. Chen, J.R. (1973). On the representation of a larger even integer as the sum of a prime and the product of at most two primes. *Sci. Sinica* 16, 157–176.
+
+4. Hardy, G.H., Littlewood, J.E. (1923). Some problems of 'Partitio Numerorum'; III: On the expression of a number as a sum of primes. *Acta Math.* 44, 1–70.
+
+5. Helfgott, H.A. (2013). The ternary Goldbach conjecture is true. *arXiv:1312.7748*.
+
+6. Mikhalkin, G. (2005). Enumerative tropical algebraic geometry in ℝ². *J. Amer. Math. Soc.* 18, 313–377.
+
+7. Oliveira e Silva, T., Herzog, S., Pardi, S. (2014). Empirical verification of the even Goldbach conjecture and computation of prime gaps up to 4·10¹⁸. *Math. Comp.* 83, 2033–2060.
+
+8. Schnirelmann, L.G. (1930). On the additive properties of numbers. *Izv. Donskogo Politekh. Inst.* 14, 3–28.
+
+9. Tao, T. (2014). Every odd number greater than 1 is the sum of at most five primes. *Math. Comp.* 83, 997–1038.
+
+10. Vinogradov, I.M. (1937). Representation of an odd number as the sum of three primes. *Dokl. Akad. Nauk SSSR* 15, 169–172.
+
+---
+
+## Appendix: Lean 4 Formalization Summary
+
+All theorems are formalized in `Tropical/AdditiveCombinatorics/Core.lean` using Lean 4.28.0 with Mathlib. The formalization consists of:
+
+- **4 definitions**: `tropPredCost`, `minplusConv`, `addSumset`, `softPrimeCost`
+- **16 theorems**: all proved without `sorry`
+- **Axioms used**: propext, Classical.choice, Quot.sound (standard)
+- **Lines of code**: ~250
+
+The key design choice is using `⨅` (indexed infimum) for min-plus convolution rather than `sInf` over a set. This interfaces naturally with Mathlib's `ciInf` API and avoids set-theoretic overhead.
