@@ -303,22 +303,6 @@
     "timestamp": "2026-05-14T16:03:53.822921+00:00"
   },
   {
-    "id": "seed_039",
-    "title": "Black Hole Thermodynamics as Tropical Information Theory",
-    "description": "Prove that black hole entropy is the tropical information content of the horizon microstates: the Bekenstein-Hawking formula S = kA/4 is the min-plus entropy of the horizon's tropical partition function. Show that Hawking radiation is tropical noise in the min-plus channel, and that the information paradox is resolved by the idempotent property of tropical entropy conservation.",
-    "domains": [
-      "Physics",
-      "Tropical",
-      "Speculative"
-    ],
-    "priority_score": 0.87,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "a65f7038",
-    "timestamp": "2026-05-14T16:03:53.835621+00:00"
-  },
-  {
     "id": "seed_056",
     "title": "Tropical Curry-Howard: Proofs as Min-Plus Programs",
     "description": "Establish a Curry-Howard correspondence for tropical logic where proofs are min-plus programs and propositions are tropical types. Prove that cut elimination corresponds to tropical normalization, and that the idempotent property of min-plus yields a canonical proof normalization strategy that is strongly normalizing and confluent.",
@@ -1705,7 +1689,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "5592f3fa",
+    "consumed_by_exp_id": "cccfadf1",
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
@@ -2146,5 +2130,91 @@
     "source_exp_id": "33bff7e2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T10:03:37.293849+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "1. Tropical Mutual Information and Capacity Theory",
+    "description": "**Hypothesis**: There exists a well-defined tropical mutual information quantity `I_trop(X;Y)` that is nonnegative and satisfies a min-plus data processing inequality under channel composition.\n\n**Precise program**:\n- Define tropical joint entropy `H_trop(X,Y) = min_{(a,b)} E(a,b)` and marginals.\n- Define `I_trop(X;Y) = H_trop(X) + H_trop(Y) - H_trop(X,Y)`.\n- Prove nonnegativity: `I_trop(X;Y) ≥ 0` when the joint energy landscape satisfies natural consistency conditions on marginals.\n- Prove data processing: for a Markov chain `X → Y → Z` modeled as composition of tropical channels, `I_trop(X;Z) ≤ I_trop(X;Y)`.\n- Define tropical channel capacity as `C_trop = min_{input distributions} max_{output} I_trop`.\n- Prove a tropical coding theorem: the capacity governs the extremal cost of reliable ",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a65f7038",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:14:43.271111+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "2. Tropical Free Energy as Zero-Temperature Limit",
+    "description": "**Hypothesis**: The tropical partition function `min_i E(i)` is the `β → ∞` limit of `-(1/β) log Σ_i exp(-β E(i))`, and convergence is monotone with explicit error bounds.\n\n**Precise program**:\n- Define the classical free energy `F(β) = -(1/β) log Σ_i exp(-β E(i))`.\n- Prove `lim_{β→∞} F(β) = min_i E(i) = tropicalPartition E`.\n- Establish the rate: `|F(β) - min E| ≤ (log |ι|) / β`.\n- Show monotonicity: `F(β)` is nondecreasing in `β`.\n- Generalize: prove the \"Maslov dequantization\" principle — replacing `(log, +, ×)` with `(id, min, +)` recovers tropical algebra as a limiting structure.\n\n**Key lemma targets**:\n```\ntheorem classical_free_energy_tendsto_tropical ...\ntheorem free_energy_error_bound ...\ntheorem maslov_dequantization_partition ...\n```\n\n**Cross-domain impact**: This is the rigorou",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a65f7038",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:14:43.281936+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "3. Tropical Detailed Balance and Reversible Radiation Channels",
+    "description": "**Hypothesis**: There exists a notion of tropical detailed balance for radiation channels `K : α → β → ℝ` that characterizes reversibility, and reversible channels preserve tropical entropy exactly.\n\n**Precise program**:\n- Define tropical detailed balance: `E(a) + K(a,b) = E'(b) + K^rev(b,a)` for some reverse kernel and output energy.\n- Prove that under tropical detailed balance, `tropicalPartition E = tropicalPartition E'` (entropy conservation).\n- Show that the composition of two balanced channels is balanced (closure under composition).\n- Characterize the extremal structure: in a balanced channel, the minimizing path is reversible.\n- Connect to the information paradox: if Hawking radiation satisfies tropical detailed balance, information is preserved in the extremal cost landscape.\n\n**K",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a65f7038",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:14:43.294148+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "4. Tropical Entropy from Compact Energy Landscapes via `sInf`",
+    "description": "**Hypothesis**: All finite-type results generalize to compact topological spaces with lower semicontinuous energy functions, using `sInf` in place of `Finset.inf'`.\n\n**Precise program**:\n- Define `tropicalPartitionCompact (X : Type*) [TopologicalSpace X] [CompactSpace X] (E : X → ℝ) (hE : LowerSemicontinuous E) : ℝ := sInf (Set.range E)`.\n- Prove the infimum is achieved (by compactness + lower semicontinuity).\n- Generalize all finite-type theorems: translation invariance, duplication invariance, data-processing inequality.\n- Define tropical channels on compact spaces and prove the data-processing inequality using the extreme value theorem.\n- Connect to tropical geometry: the energy landscape on a tropical variety is lower semicontinuous, so the framework applies.\n\n**Key lemma targets**:\n``",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a65f7038",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:14:43.304332+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "5. Tropical Spectral Theory and Horizon Eigenvalues",
+    "description": "**Hypothesis**: The tropical channel kernel `K : α → β → ℝ` has a well-defined tropical spectral theory when `α = β`, and the tropical eigenvalue governs the long-time behavior of iterated radiation.\n\n**Precise program**:\n- Define the tropical matrix power: `K^n(a,b) = min over paths of length n from a to b`.\n- Define the tropical eigenvalue: `λ_trop = lim_{n→∞} (1/n) min_a K^n(a,a)`.\n- Prove existence (via subadditivity / Fekete's lemma in the tropical setting).\n- Prove that `λ_trop` equals the minimum mean cycle weight (tropical Perron-Frobenius theorem).\n- Apply to iterated radiation: after `n` rounds of Hawking emission, the extremal cost grows as `n · λ_trop + o(n)`.\n- Connect to the horizon: `λ_trop` is the \"tropical surface gravity\" — the characteristic rate of extremal cost accumul",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a65f7038",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T10:14:43.316503+00:00"
   }
 ]
