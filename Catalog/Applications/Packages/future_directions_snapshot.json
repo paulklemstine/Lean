@@ -693,24 +693,6 @@
     "timestamp": "2026-05-15T07:06:08.019179+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "Bifurcation analysis",
-    "description": ": Study how the periodic orbit structure changes as the torus size varies. Identify critical sizes where new periodic orbits appear or disappear.\n\n**Key Formalization**: Define `PeriodicVariety (m n p : ℕ) := {c : Config m n | (tropicalLifeStep)^[p] c = c}` and prove structural theorems about its geometry.\n\n**Cross-Domain Impact**: Bridges tropical geometry, dynamical systems, and combinatorics. Could lead to tropical analogues of hyperbolic dynamics and Smale's horseshoe.\n\n---\n\n## Direction 5: Dual-Rail Encoding and Full Turing Completeness\n\n**Status**: NOT gate verified via single-rail. AND, OR, XOR verified.\n\n**Hypothesis**: Using dual-rail encoding (each bit represented by two signals: one for \"true\" and one for \"false\"), the tropical Life automaton achieves full Turing completeness wi",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "564eb5bd",
-    "timestamp": "2026-05-15T09:04:09.998632+00:00"
-  },
-  {
     "id": "fd_0241",
     "title": "Turing machine simulation",
     "description": ": Encode a Turing machine's tape as a sequence of dual-rail cells, the head position as a localized active pattern, and the transition function as a circuit applied at each step.",
@@ -1147,6 +1129,34 @@
     "source_exp_id": "6acfb91e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T16:47:43.802334+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Direction 2",
+    "description": "(Entropy) — Foundational for complexity analysis; uses pullback injectivity",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "564eb5bd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:08:31.597730+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Direction 4",
+    "description": "(Factor Maps) — Deepens the theoretical framework; connects to established fields",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "564eb5bd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:08:31.608685+00:00"
   },
   {
     "id": "seed_079",
@@ -1633,10 +1643,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "97644adb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "88d6f044",
     "timestamp": "2026-05-15T09:07:29.342835+00:00"
   },
   {
