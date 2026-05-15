@@ -112,21 +112,6 @@
     "timestamp": "2026-05-14T16:03:53.810906+00:00"
   },
   {
-    "id": "seed_004",
-    "title": "Birch-Swinnerton-Dyer via Tropical L-Function Specialization",
-    "description": "Formulate the BSD conjecture as a statement about the tropical specialization of L-functions at s=1, proving that the tropical rank of the Mordell-Weil group equals the order of vanishing of the tropical L-function. Construct a min-plus L-series whose idempotent residue captures the regulator and Tamagawa numbers in a single tropical invariant.",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "priority_score": 0.94,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "00930c08",
-    "timestamp": "2026-05-14T16:03:53.811453+00:00"
-  },
-  {
     "id": "seed_035",
     "title": "Quantum Gravity as Tropical Geometry: Min-Plus Spacetime at Planck Scale",
     "description": "Prove that at the Planck scale, spacetime geometry becomes tropical: the metric reduces to a min-plus distance function, and quantum superposition corresponds to the idempotent property of tropical addition. Show that the tropical Einstein equations yield a well-posed initial value problem, and that the tropical Schwarzschild solution has a horizon at the tropical fixed point of the radial coordinate.",
@@ -519,10 +504,10 @@
       "Logic"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a25a82de",
     "timestamp": "2026-05-14T16:03:53.849787+00:00"
   },
   {
@@ -1426,20 +1411,6 @@
     "timestamp": "2026-05-15T03:12:37.111041+00:00"
   },
   {
-    "id": "fd_0202",
-    "title": "Matrix multiplication",
-    "description": "→ algebraic infrastructure for multi-step costs",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "eb845453",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:34.434564+00:00"
-  },
-  {
     "id": "fd_0209",
     "title": "Compute the local isometry group",
     "description": "at each stratum.\n\n### Proof Strategy\n- Use `Equiv.Perm.stabilizer` from Mathlib to define isotropy groups.\n- Formalize the Weyl chamber as `{x : Fin n → ℤ | Monotone x}`.\n- Prove that the quotient metric restricted to the chamber equals the L¹ metric (already done; extend to path-level).\n\n### Cross-Domain Impact\n- **Crystallography**: fundamental domains for space groups.\n- **Eigenvalue theory**: Weyl chambers for symmetric matrices.\n- **Representation theory**: weight lattices and dominant weights.\n\n---\n\n## Direction 2: Finite Wasserstein Equivalence and Transport Geometry\n\n### Vision\nEstablish a formal bridge between the voice-leading metric and discrete optimal transport. Prove that `vlCostN` is precisely the Wasserstein-1 distance between empirical measures on $\\mathbb{Z}$, and develop",
@@ -1584,48 +1555,6 @@
     "source_exp_id": "d9c105e5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T05:04:31.335951+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "Upper bound:",
-    "description": "For any $\\epsilon > 0$ and large enough $\\beta$, the sum is dominated by the minimizer: $e^{-\\beta S_{\\min}} \\leq \\sum e^{-\\beta S_i} \\leq |s| \\cdot e^{-\\beta S_{\\min}}$.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1719df3c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:07:02.963673+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Squeeze:",
-    "description": "$S_{\\min} \\leq -\\frac{1}{\\beta}\\log\\sum e^{-\\beta S_i} \\leq S_{\\min} + \\frac{\\log|s|}{\\beta}$.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1719df3c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:07:02.970860+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "Limit:",
-    "description": "As $\\beta \\to \\infty$, the error term $\\frac{\\log|s|}{\\beta} \\to 0$.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1719df3c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:07:02.978185+00:00"
   },
   {
     "id": "seed_078",
@@ -2185,39 +2114,6 @@
     "timestamp": "2026-05-15T04:35:31.644214+00:00"
   },
   {
-    "id": "fd_0202",
-    "title": "3. Normalization with Ultrametric/Tropical Bounds Preservation",
-    "description": "**Precise statement:** Define a recursive upper bound function `ub : TropExpr → ℝ` using the tropical ultrametric structure (e.g., `ub (tmin a b) = min (ub a) (ub b)`, `ub (add a b) = ub a + ub b`, with base cases from a priori bounds). Prove:\n\n```\n∀ σ e, (∀ n, σ n ≤ bound n) → eval σ e ≤ ub e\n∀ σ e, (∀ n, σ n ≤ bound n) → eval σ (normalize e) ≤ ub e\n```\n\nThe second follows from the first + `normalize_preserves_semantics`, but the point is to show that normalization can be used as a certified preprocessing step for bound analysis.\n\n**Proof strategy:** The bound `ub` is defined by structural recursion and inherits monotonicity from `min` and `+`. Transport across normalization using the existing `normalize_preserves_semantics` theorem. This connects directly to `tropical_ultrametric_bounds_",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a40fd94",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:35:31.655272+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "4. Reflection Tactic: Reify and Discharge Tropical Goals",
-    "description": "**Precise statement:** Implement a tactic `tropical_norm` that:\n1. Reifies a goal of the form `min a (min b c) + d = min (a + d) (min b c + d)` into `TropExpr` terms `e₁`, `e₂`\n2. Computes `normalize e₁` and `normalize e₂`\n3. If equal, discharges the goal using `normalize_extensional_uniqueness`\n\nProve the reflection principle:\n```\n∀ e₁ e₂, normalize e₁ = normalize e₂ → ∀ σ, eval σ e₁ = eval σ e₂\n```\n(Already proved as `normalize_extensional_uniqueness`.)\n\n**Proof strategy:** The reflection principle is already established. The engineering challenge is the reification step (a Lean 4 macro/tactic that pattern-matches on goal expressions and constructs `TropExpr` syntax trees). The key insight is that our `eval` function is the semantic bridge: if `eval σ e = goal_lhs` and `eval σ e' = goal_",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a40fd94",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:35:31.664780+00:00"
-  },
-  {
     "id": "fd_0205",
     "title": "Summary of Priorities",
     "description": "| Priority | Direction | Difficulty | Impact |\n|----------|-----------|------------|--------|\n| 1 | Reflection tactic (#4) | Medium | Very High — immediate practical tool |\n| 2 | AC-normalization (#1) | Medium-High | High — decision procedure for tropical identities |\n| 3 | Bounds preservation (#3) | Low | Medium — certified optimization preprocessing |\n| 4 | Decision procedure (#2) | High | Very High — verified solver |\n| 5 | Closure abstraction (#5) | Medium | High — conceptual unification |\n\nEach direction builds on the verified normalizer established in this work and extends it toward practical automation and deeper mathematical connections.",
@@ -2324,5 +2220,101 @@
     "source_exp_id": "6a9cc9d1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T05:15:44.607440+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Direction 1: Tropical BSD for Newton Polygon Families",
+    "description": "**Target Theorem**: Extend the tropical order-equals-rank equality from finite-support models to piecewise-linear Newton polygon families, where the L-series arises as the lower envelope of a Newton polygon subdivision.\n\n**Construction**: Given a Newton polygon Δ in ℝ² with lattice points indexed by a finite set, define the tropical L-series as the support function of Δ. The tropical order of vanishing at a specified slope becomes the lattice width of the corresponding face, and the tropical rank corresponds to the dimension of the dual cell in the normal fan.\n\n**Target statement (Lean)**:\n```lean\ntheorem tropical_BSD_Newton_polygon\n    (Δ : Finset (ℤ × ℤ)) (slope : ℝ)\n    (hΔ : NewtonPolygonNondegenerate Δ)\n    (hcompat : NewtonBSDCompatible Δ slope) :\n    newtonFaceWidth Δ slope = tropic",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00930c08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:00:57.276284+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Direction 2: Tropical Regulators via Tropical Determinant Theory",
+    "description": "**Target Construction**: Formalize competing definitions of tropical determinant (tropical permanent, Speyer's tropical determinant, and the signed tropical determinant) and prove comparison theorems relating the resulting regulator invariants.\n\n**Key Questions**:\n- When do the tropical permanent and tropical determinant agree?\n- Under what conditions is the regulator invariant under different notions of tropical basis change?\n- Can one define a \"tropical height pairing\" whose tropical determinant gives the regulator?\n\n**Target statement (Lean)**:\n```lean\ntheorem tropical_regulator_comparison\n    (n : ℕ) (R : Matrix (Fin n) (Fin n) ℝ)\n    (hR : TropicalRegulatorMatrix R)\n    (hgeneric : GenericMatrix R) :\n    tropicalPermanent R = tropicalSignedDeterminant R\n```\n\n**Why it matters**: The cl",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00930c08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:00:57.286100+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Direction 3: Tropical Tate–Shafarevich Obstructions",
+    "description": "**Target Construction**: Define a tropical Shafarevich group as an obstruction to lifting tropical generators to a full tropical BSD equality, and show it controls the gap between the inequality and equality versions of tropical BSD.\n\n**Concept**: In classical BSD, the Tate–Shafarevich group Ш measures the failure of the local-global principle. In the tropical setting, define:\n- Local tropical rank: rank computed from restrictions to individual coordinates\n- Global tropical rank: rank of the full family\n- Tropical Ш: a finite abelian group whose order equals the discrepancy\n\n**Target statement (Lean)**:\n```lean\ntheorem tropical_Sha_controls_gap\n    (gens : Fin m → Fin k → ℝ)\n    (a w : ℕ → ℝ) (support : Finset ℕ) (hs : support.Nonempty)\n    (hineq : tropicalRank gens ≤ tropicalOrderAtOne a",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00930c08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:00:57.301464+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Direction 4: Tropical BSD for Higher-Dimensional Abelian Varieties",
+    "description": "**Target Theorem**: Extend tropical BSD from the 1-dimensional case (elliptic curves / rank-1 families) to higher-dimensional tropical abelian varieties, where the regulator becomes a tropical Gram matrix determinant and the Tamagawa numbers arise from a finite collection of local valuations.\n\n**Construction**: For a g-dimensional tropical abelian variety A (a real torus with an integral structure), define:\n- Tropical rank = dimension of the period lattice\n- Tropical L-series from the theta function / Riemann form\n- Tropical order = multiplicity of the zero of the tropical theta function\n\n**Target statement (Lean)**:\n```lean\ntheorem tropical_BSD_abelian_variety\n    (g : ℕ) (Ω : Matrix (Fin g) (Fin g) ℝ)\n    (hΩ : PositiveDefinite Ω) (hcompat : AbelianBSDCompatible Ω) :\n    tropicalThetaOrd",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "00930c08",
+    "consumed_by_exp_id": "faba857f",
+    "timestamp": "2026-05-15T06:00:57.314730+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Direction 5: Tropical Special Values and Information-Theoretic Entropy",
+    "description": "**Target Theorem**: Prove that the tropical residue at the critical point equals a tropical mutual information between the generator family and the L-data, establishing a formal connection between arithmetic special values and information theory.\n\n**Construction**: Define:\n- Tropical entropy H_trop(X) = log₂(|active set of X|) for a tropical random variable\n- Tropical mutual information I_trop(X; Y) = H_trop(X) + H_trop(Y) - H_trop(X, Y)\n- Show that the residue decomposes as: TropRes = I_trop(Generators; L-data) + correction\n\n**Target statement (Lean)**:\n```lean\ntheorem tropical_residue_information_decomposition\n    (gens : Fin m → Fin k → ℝ) (a w : ℕ → ℝ)\n    (support : Finset ℕ) (hs : support.Nonempty) :\n    tropicalResidueAdditive R c =\n      tropicalMutualInformation gens (a, w, suppor",
+    "domains": [
+      "Tropical",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00930c08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:00:57.326948+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "Cross-Cutting Research Program",
+    "description": "These five directions form a coherent research program:\n\n```\nDirection 1 (Newton Polygons) ←→ Direction 4 (Higher Dimension)\n         ↕                                ↕\nDirection 2 (Regulators) ←→ Direction 3 (Sha Obstructions)\n                   ↕\nDirection 5 (Information Theory)\n```\n\nEach direction is independently pursuable but strengthens the others. The common thread is the tropical BSD machine: a formal framework in which arithmetic invariants become finite, computable, and connected to optimization and information theory.\n\n**Immediate next step**: Direction 2 (tropical regulator comparison) is the most accessible and has the clearest path to completion, building directly on the permutation invariance theorem proved in this cycle.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00930c08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:00:57.336176+00:00"
   }
 ]
