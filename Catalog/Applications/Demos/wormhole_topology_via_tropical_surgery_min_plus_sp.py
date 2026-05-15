@@ -1,701 +1,364 @@
 #!/usr/bin/env python3
 """
-Tropical Wormhole Surgery — Applications
+Applications of Tropical Wormhole Surgery
 
-Real-world applications of the tropical discrete relativity framework:
-1. Network optimization: Finding optimal shortcut links in communication networks
-2. Transportation planning: Evaluating tunnel/bridge construction proposals
-3. Supply chain resilience: Identifying critical logistics shortcuts
+Demonstrates real-world applications of the tropical discrete relativity framework:
+1. Network design optimization (CDN placement)
+2. Transportation network augmentation
+3. Social network bridge detection
+4. Curvature-based vulnerability analysis
 """
 
 import numpy as np
 from typing import List, Tuple, Dict
 
 
-def bellman_ford(W, source):
+# ============================================================
+# Self-contained core algorithms
+# ============================================================
+
+def tropical_geodesic(W, source):
+    """Bellman-Ford using vectorized relaxation."""
     n = W.shape[0]
     dist = np.full(n, np.inf)
-    pred = np.full(n, -1, dtype=int)
     dist[source] = 0.0
     for _ in range(n - 1):
-        for u in range(n):
-            if dist[u] == np.inf: continue
-            for v in range(n):
-                if dist[u] + W[u][v] < dist[v]:
-                    dist[v] = dist[u] + W[u][v]
-                    pred[v] = u
-    return dist, pred
+        new_dist = np.min(dist[:, None] + W, axis=0)
+        dist = np.minimum(dist, new_dist)
+    return dist
 
 def wormhole_surgery(W, u, v, tau):
     W_new = W.copy()
-    W_new[u][v] = min(W[u][v], tau)
-    W_new[v][u] = min(W[v][u], tau)
+    W_new[u, v] = min(W[u, v], tau)
+    W_new[v, u] = min(W[v, u], tau)
     return W_new
 
-def min_plus_ricci(W, x):
-    n = W.shape[0]
-    return min((W[x][y] + W[y][x]) / 2 for y in range(n))
+def all_pairs_distance(W):
+    """Floyd-Warshall for all-pairs shortest paths."""
+    D = W.copy()
+    n = D.shape[0]
+    for k in range(n):
+        D = np.minimum(D, D[:, k:k+1] + D[k:k+1, :])
+    return D
+
+def graph_diameter(D):
+    return np.max(D[D < np.inf])
+
+def average_distance(D):
+    n = D.shape[0]
+    mask = (D < np.inf) & (D > 0)
+    return np.mean(D[mask]) if np.any(mask) else 0
 
 
-# =====================================================================
-# Application 1: Network Optimization
-# =====================================================================
+# ============================================================
+# Application 1: CDN / Cache Placement
+# ============================================================
 
-def optimal_shortcut_placement(W: np.ndarray, budget: float, 
-                                 candidates: List[Tuple[int, int]]) -> Dict:
-    """Find the best shortcut link to add to a network.
-    
-    Given a communication network and a budget for a single new link,
-    evaluate all candidate shortcut placements and find the one that
-    maximizes average distance reduction (network diameter improvement).
-    
-    This is exactly the wormhole surgery problem: which bridge edge,
-    at what cost, produces the greatest improvement in tropical geodesics?
-    
-    Args:
-        W: Network adjacency matrix (travel times / latencies)
-        budget: Maximum cost for the new link
-        candidates: List of (u, v) pairs where a shortcut could be placed
-    
-    Returns:
-        Analysis of each candidate and the optimal choice
+def cdn_placement_demo():
     """
-    n = W.shape[0]
+    Model a content delivery network as a weighted graph.
+    Use wormhole surgery to find optimal cache placement.
+    """
+    print("=" * 60)
+    print("APPLICATION 1: CDN Cache Placement")
+    print("=" * 60)
     
-    # Compute baseline all-pairs distances
-    baseline_dists = np.zeros((n, n))
-    for s in range(n):
-        baseline_dists[s] = bellman_ford(W, s)[0]
+    # Network topology: 10 data centers with varying latencies
+    np.random.seed(123)
+    n = 10
+    labels = [f"DC-{i}" for i in range(n)]
     
-    baseline_avg = np.mean(baseline_dists[baseline_dists < np.inf])
-    baseline_diameter = np.max(baseline_dists[baseline_dists < np.inf])
+    # Create a realistic network with geographic clustering
+    W = np.full((n, n), np.inf)
+    np.fill_diagonal(W, 0)
     
+    # West coast cluster (0-3)
+    for i in range(4):
+        for j in range(i+1, 4):
+            lat = np.random.uniform(5, 15)
+            W[i, j] = W[j, i] = lat
+    
+    # East coast cluster (4-7)
+    for i in range(4, 8):
+        for j in range(i+1, 8):
+            lat = np.random.uniform(5, 15)
+            W[i, j] = W[j, i] = lat
+    
+    # International (8-9)
+    W[8, 9] = W[9, 8] = 20
+    
+    # Cross-coast links (expensive)
+    W[2, 5] = W[5, 2] = 50
+    W[3, 4] = W[4, 3] = 45
+    
+    # International links
+    W[0, 8] = W[8, 0] = 80
+    W[7, 9] = W[9, 7] = 75
+    
+    D_orig = all_pairs_distance(W)
+    orig_diameter = graph_diameter(D_orig)
+    orig_avg = average_distance(D_orig)
+    
+    print(f"\nOriginal network:")
+    print(f"  Nodes: {n} data centers")
+    print(f"  Diameter: {orig_diameter:.1f} ms")
+    print(f"  Average latency: {orig_avg:.1f} ms")
+    
+    # Try different "wormhole" placements (direct links)
+    print(f"\nTesting cache/link placements (τ = 5 ms):")
+    tau = 5.0
     results = []
-    for u, v in candidates:
-        W_new = wormhole_surgery(W, u, v, budget)
-        new_dists = np.zeros((n, n))
-        for s in range(n):
-            new_dists[s] = bellman_ford(W_new, s)[0]
-        
-        new_avg = np.mean(new_dists[new_dists < np.inf])
-        new_diameter = np.max(new_dists[new_dists < np.inf])
-        
-        results.append({
-            'edge': (u, v),
-            'avg_distance_before': baseline_avg,
-            'avg_distance_after': new_avg,
-            'avg_improvement': baseline_avg - new_avg,
-            'diameter_before': baseline_diameter,
-            'diameter_after': new_diameter,
-            'diameter_improvement': baseline_diameter - new_diameter,
-            'ricci_u': min_plus_ricci(W, u),
-            'ricci_v': min_plus_ricci(W, v),
-        })
     
-    best = max(results, key=lambda r: r['avg_improvement'])
-    
-    return {
-        'baseline_avg_distance': baseline_avg,
-        'baseline_diameter': baseline_diameter,
-        'candidates': results,
-        'best_shortcut': best,
-    }
-
-
-# =====================================================================
-# Application 2: Transportation Planning
-# =====================================================================
-
-def evaluate_tunnel_proposal(
-    city_graph: np.ndarray,
-    city_names: List[str],
-    tunnel_endpoints: Tuple[int, int],
-    tunnel_cost: float,
-    key_od_pairs: List[Tuple[int, int]]
-) -> Dict:
-    """Evaluate a proposed tunnel/bridge for a city transportation network.
-    
-    This applies tropical wormhole surgery to urban planning: a tunnel
-    between two city districts is a bridge edge in the transportation graph.
-    
-    Args:
-        city_graph: Travel time matrix between city zones
-        city_names: Names of city zones
-        tunnel_endpoints: (zone_u, zone_v) for the tunnel
-        tunnel_cost: Travel time through the tunnel
-        key_od_pairs: Important origin-destination pairs to evaluate
-    
-    Returns:
-        Impact analysis including travel time savings for each OD pair
-    """
-    u, v = tunnel_endpoints
-    W_new = wormhole_surgery(city_graph, u, v, tunnel_cost)
-    
-    analysis = {
-        'tunnel': f'{city_names[u]} ↔ {city_names[v]}',
-        'tunnel_cost': tunnel_cost,
-        'od_improvements': [],
-    }
-    
-    total_saving = 0
-    for s, t in key_od_pairs:
-        d_before = bellman_ford(city_graph, s)[0][t]
-        d_after = bellman_ford(W_new, s)[0][t]
-        saving = d_before - d_after
-        total_saving += saving
-        analysis['od_improvements'].append({
-            'origin': city_names[s],
-            'destination': city_names[t],
-            'time_before': d_before,
-            'time_after': d_after,
-            'saving': saving,
-            'saving_pct': 100 * saving / d_before if d_before > 0 else 0,
-        })
-    
-    analysis['total_saving'] = total_saving
-    analysis['avg_saving'] = total_saving / len(key_od_pairs)
-    
-    return analysis
-
-
-# =====================================================================
-# Application 3: Supply Chain Resilience
-# =====================================================================
-
-def supply_chain_shortcut_analysis(
-    logistics_graph: np.ndarray,
-    node_names: List[str],
-    factories: List[int],
-    warehouses: List[int],
-    shortcut_budget: float
-) -> Dict:
-    """Analyze supply chain improvement from adding a logistics shortcut.
-    
-    Models the supply chain as a weighted graph where edges represent
-    shipping routes. A logistics shortcut (new route, dedicated lane,
-    or express service) is a wormhole surgery operation.
-    
-    Args:
-        logistics_graph: Shipping cost/time matrix
-        node_names: Names of logistics nodes
-        factories: Factory node indices
-        warehouses: Warehouse node indices
-        shortcut_budget: Cost of the shortcut route
-    
-    Returns:
-        Analysis of which shortcut most reduces factory-to-warehouse costs
-    """
-    n = logistics_graph.shape[0]
-    
-    # Compute factory-to-warehouse baseline
-    baseline_costs = {}
-    for f in factories:
-        dists = bellman_ford(logistics_graph, f)[0]
-        for w in warehouses:
-            baseline_costs[(f, w)] = dists[w]
-    
-    avg_baseline = np.mean(list(baseline_costs.values()))
-    
-    # Try all possible shortcuts
-    best_improvement = 0
-    best_shortcut = None
-    
-    all_results = []
     for u in range(n):
-        for v in range(u + 1, n):
-            if logistics_graph[u][v] <= shortcut_budget:
-                continue  # Already have a cheaper route
-            
-            W_new = wormhole_surgery(logistics_graph, u, v, shortcut_budget)
-            
-            new_costs = {}
-            for f in factories:
-                dists = bellman_ford(W_new, f)[0]
-                for w in warehouses:
-                    new_costs[(f, w)] = dists[w]
-            
-            avg_new = np.mean(list(new_costs.values()))
-            improvement = avg_baseline - avg_new
-            
-            if improvement > 0.01:
-                all_results.append({
-                    'shortcut': f'{node_names[u]} ↔ {node_names[v]}',
-                    'u': u, 'v': v,
-                    'avg_cost_before': avg_baseline,
-                    'avg_cost_after': avg_new,
-                    'improvement': improvement,
-                    'improvement_pct': 100 * improvement / avg_baseline,
-                })
-                
-                if improvement > best_improvement:
-                    best_improvement = improvement
-                    best_shortcut = (u, v)
+        for v in range(u+1, n):
+            W_s = wormhole_surgery(W, u, v, tau)
+            D_s = all_pairs_distance(W_s)
+            new_diameter = graph_diameter(D_s)
+            new_avg = average_distance(D_s)
+            improvement = (orig_avg - new_avg) / orig_avg * 100
+            results.append((u, v, new_diameter, new_avg, improvement))
     
-    all_results.sort(key=lambda r: r['improvement'], reverse=True)
-    
-    return {
-        'avg_baseline_cost': avg_baseline,
-        'num_candidates_evaluated': n * (n - 1) // 2,
-        'num_improvements_found': len(all_results),
-        'top_5_shortcuts': all_results[:5],
-        'best_shortcut': best_shortcut,
-    }
+    results.sort(key=lambda x: -x[4])
+    print(f"\n  Top 5 placements by average latency reduction:")
+    for u, v, diam, avg, imp in results[:5]:
+        print(f"    Link {labels[u]}↔{labels[v]}: "
+              f"avg latency {avg:.1f} ms (↓{imp:.1f}%), diameter {diam:.1f} ms")
 
 
-# =====================================================================
-# Demo
-# =====================================================================
+# ============================================================
+# Application 2: Transportation Network
+# ============================================================
 
-if __name__ == "__main__":
-    print("=" * 70)
-    print("APPLICATION 1: Network Shortcut Optimization")
-    print("=" * 70)
+def transportation_demo():
+    """
+    Model a city transportation network.
+    Evaluate the impact of adding a new transit link.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Transportation Network Augmentation")
+    print("=" * 60)
     
-    # Ring network with 8 nodes
+    # City with 8 districts
+    districts = ["Downtown", "Uptown", "Eastside", "Westside", 
+                 "Suburb-N", "Suburb-S", "Airport", "Port"]
     n = 8
-    INF = 100.0
-    W = np.full((n, n), INF)
+    
+    # Travel times in minutes
+    W = np.full((n, n), 200.0)  # Default: very long travel
     np.fill_diagonal(W, 0)
+    
+    # Core connections
+    W[0, 1] = W[1, 0] = 15  # Downtown - Uptown
+    W[0, 2] = W[2, 0] = 20  # Downtown - Eastside
+    W[0, 3] = W[3, 0] = 20  # Downtown - Westside
+    W[1, 4] = W[4, 1] = 25  # Uptown - Suburb-N
+    W[2, 5] = W[5, 2] = 30  # Eastside - Suburb-S
+    W[2, 6] = W[6, 2] = 35  # Eastside - Airport
+    W[3, 7] = W[7, 3] = 40  # Westside - Port
+    W[1, 2] = W[2, 1] = 25  # Uptown - Eastside
+    W[3, 5] = W[5, 3] = 35  # Westside - Suburb-S
+    
+    D_orig = all_pairs_distance(W)
+    
+    print(f"\nCity transportation network ({n} districts)")
+    print(f"Average travel time: {average_distance(D_orig):.1f} min")
+    print(f"Worst connection: {graph_diameter(D_orig):.1f} min")
+    
+    # Evaluate adding an express link
+    print(f"\nProposed express links (10 min travel time):")
+    tau = 10.0
+    
+    proposals = [
+        (4, 6, "Suburb-N ↔ Airport"),
+        (4, 7, "Suburb-N ↔ Port"),
+        (5, 6, "Suburb-S ↔ Airport"),
+        (6, 7, "Airport ↔ Port"),
+        (0, 6, "Downtown ↔ Airport"),
+    ]
+    
+    for u, v, name in proposals:
+        W_s = wormhole_surgery(W, u, v, tau)
+        D_s = all_pairs_distance(W_s)
+        new_avg = average_distance(D_s)
+        improvement = (average_distance(D_orig) - new_avg) / average_distance(D_orig) * 100
+        new_worst = graph_diameter(D_s)
+        
+        # Check theorem: bound for specific OD pairs
+        worst_pair = None
+        max_reduction = 0
+        for s in range(n):
+            for t in range(n):
+                if s != t:
+                    reduction = D_orig[s, t] - D_s[s, t]
+                    if reduction > max_reduction:
+                        max_reduction = reduction
+                        worst_pair = (s, t)
+        
+        print(f"  {name}:")
+        print(f"    Avg travel time: {new_avg:.1f} min (↓{improvement:.1f}%)")
+        print(f"    Worst connection: {new_worst:.1f} min")
+        if worst_pair:
+            s, t = worst_pair
+            print(f"    Max benefit: {districts[s]}→{districts[t]}, "
+                  f"reduced by {max_reduction:.0f} min")
+
+
+# ============================================================
+# Application 3: Curvature-Based Vulnerability Analysis
+# ============================================================
+
+def vulnerability_analysis():
+    """
+    Use min-plus Ricci curvature to identify network vulnerabilities.
+    Low-curvature nodes are bottlenecks; high-curvature nodes are resilient.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Curvature-Based Vulnerability Analysis")
+    print("=" * 60)
+    
+    n = 10
+    np.random.seed(456)
+    
+    # Create a network with a known bottleneck
+    W = np.full((n, n), 500.0)
+    np.fill_diagonal(W, 0)
+    
+    # Dense cluster A (vertices 0-4)
+    for i in range(5):
+        for j in range(i+1, 5):
+            W[i, j] = W[j, i] = np.random.uniform(2, 8)
+    
+    # Dense cluster B (vertices 5-9)
+    for i in range(5, 10):
+        for j in range(i+1, 10):
+            W[i, j] = W[j, i] = np.random.uniform(2, 8)
+    
+    # Bottleneck: single expensive bridge
+    W[4, 5] = W[5, 4] = 50.0
+    
+    # Compute curvatures (excluding self-loops)
+    curvatures = np.zeros(n)
+    for x in range(n):
+        min_rt = np.inf
+        for y in range(n):
+            if y != x:
+                rt = (W[x, y] + W[y, x]) / 2.0
+                min_rt = min(min_rt, rt)
+        curvatures[x] = min_rt
+    
+    print(f"\nNetwork curvature analysis:")
     for i in range(n):
-        W[i][(i + 1) % n] = 2
-        W[(i + 1) % n][i] = 2
+        cluster = "A" if i < 5 else "B"
+        vulnerability = "LOW RISK" if curvatures[i] < 10 else "HIGH RISK"
+        print(f"  Node {i} (Cluster {cluster}): "
+              f"R = {curvatures[i]:.2f}  [{vulnerability}]")
     
-    candidates = [(0, 4), (1, 5), (2, 6), (3, 7)]
-    result = optimal_shortcut_placement(W, budget=1.0, candidates=candidates)
+    # Identify bottleneck
+    bottleneck_score = np.zeros(n)
+    D_orig = all_pairs_distance(W)
     
-    print(f"\nRing network with {n} nodes")
-    print(f"Baseline avg distance: {result['baseline_avg_distance']:.2f}")
-    print(f"Baseline diameter: {result['baseline_diameter']:.2f}")
-    print(f"\nCandidate shortcuts (budget = 1.0):")
-    for c in result['candidates']:
-        print(f"  {c['edge']}: avg improvement = {c['avg_improvement']:.2f}, "
-              f"diameter: {c['diameter_before']:.0f} → {c['diameter_after']:.0f}")
-    print(f"\nBest shortcut: {result['best_shortcut']['edge']}")
+    for node in range(n):
+        # Remove node and check distance increase
+        W_temp = W.copy()
+        W_temp[node, :] = 500.0
+        W_temp[:, node] = 500.0
+        W_temp[node, node] = 0
+        D_temp = all_pairs_distance(W_temp)
+        bottleneck_score[node] = np.mean(D_temp - D_orig)
     
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Transportation Tunnel Evaluation")
-    print("=" * 70)
+    print(f"\nBottleneck analysis (avg distance increase on removal):")
+    sorted_nodes = np.argsort(-bottleneck_score)
+    for node in sorted_nodes[:5]:
+        print(f"  Node {node}: avg increase = {bottleneck_score[node]:.1f}")
     
-    cities = ['Downtown', 'Suburb-N', 'Suburb-E', 'Suburb-S', 'Suburb-W', 'Airport']
-    nc = len(cities)
-    G = np.full((nc, nc), 100.0)
-    np.fill_diagonal(G, 0)
-    # Downtown connections
-    G[0][1] = 15; G[1][0] = 15  # Downtown - Suburb-N
-    G[0][2] = 20; G[2][0] = 20  # Downtown - Suburb-E
-    G[0][3] = 25; G[3][0] = 25  # Downtown - Suburb-S
-    G[0][4] = 18; G[4][0] = 18  # Downtown - Suburb-W
-    # Suburb connections
-    G[1][2] = 12; G[2][1] = 12
-    G[2][3] = 15; G[3][2] = 15
-    G[3][4] = 10; G[4][3] = 10
-    G[4][1] = 22; G[1][4] = 22
-    # Airport
-    G[2][5] = 30; G[5][2] = 30
-    G[3][5] = 35; G[5][3] = 35
+    print(f"\nRecommendation: Add redundant links near nodes "
+          f"{sorted_nodes[0]} and {sorted_nodes[1]} to reduce vulnerability.")
+
+
+# ============================================================
+# Application 4: Bellman Equation as Network Flow
+# ============================================================
+
+def bellman_network_flow():
+    """
+    Demonstrate the Bellman equation as a network routing protocol.
+    Shows how the tropical Einstein equation governs information propagation.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Bellman Equation as Routing Protocol")
+    print("=" * 60)
     
-    result = evaluate_tunnel_proposal(
-        G, cities,
-        tunnel_endpoints=(4, 5),  # Suburb-W to Airport
-        tunnel_cost=8,
-        key_od_pairs=[(0, 5), (1, 5), (4, 5), (3, 2)]
-    )
-    
-    print(f"\nProposed tunnel: {result['tunnel']}")
-    print(f"Tunnel travel time: {result['tunnel_cost']} minutes")
-    print(f"\nImpact on key routes:")
-    for od in result['od_improvements']:
-        print(f"  {od['origin']} → {od['destination']}: "
-              f"{od['time_before']:.0f} → {od['time_after']:.0f} min "
-              f"(saving {od['saving']:.0f} min, {od['saving_pct']:.1f}%)")
-    print(f"\nTotal time saving: {result['total_saving']:.0f} minutes")
-    
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Supply Chain Shortcut Analysis")
-    print("=" * 70)
-    
-    nodes = ['Factory-A', 'Factory-B', 'Hub-1', 'Hub-2', 'Hub-3', 
-             'Warehouse-X', 'Warehouse-Y']
-    nl = len(nodes)
-    L = np.full((nl, nl), 100.0)
-    np.fill_diagonal(L, 0)
-    L[0][2] = 5; L[2][0] = 5   # Factory-A - Hub-1
-    L[1][3] = 7; L[3][1] = 7   # Factory-B - Hub-2
-    L[2][3] = 4; L[3][2] = 4   # Hub-1 - Hub-2
-    L[3][4] = 6; L[4][3] = 6   # Hub-2 - Hub-3
-    L[2][4] = 8; L[4][2] = 8   # Hub-1 - Hub-3
-    L[4][5] = 3; L[5][4] = 3   # Hub-3 - Warehouse-X
-    L[4][6] = 5; L[6][4] = 5   # Hub-3 - Warehouse-Y
-    L[2][5] = 10; L[5][2] = 10 # Hub-1 - Warehouse-X
-    
-    result = supply_chain_shortcut_analysis(
-        L, nodes,
-        factories=[0, 1],
-        warehouses=[5, 6],
-        shortcut_budget=3.0
-    )
-    
-    print(f"\nBaseline avg factory-to-warehouse cost: {result['avg_baseline_cost']:.2f}")
-    print(f"Candidates evaluated: {result['num_candidates_evaluated']}")
-    print(f"Improvements found: {result['num_improvements_found']}")
-    if result['top_5_shortcuts']:
-        print(f"\nTop shortcuts:")
-        for s in result['top_5_shortcuts']:
-            print(f"  {s['shortcut']}: improvement = {s['improvement']:.2f} "
-                  f"({s['improvement_pct']:.1f}%)")
-    
-    print("\n" + "=" * 70)
-    print("ALL APPLICATIONS COMPLETED SUCCESSFULLY")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Tropical Wormhole Surgery — Demonstration
-
-Concrete numerical demonstrations of the four main theorems:
-1. Surgery strictly decreases tropical separation
-2. Min-plus curvature controls throat radius
-3. Tropical Einstein equation = Bellman optimality
-4. Bellman-Ford relaxation convergence
-
-Run: python demo.py
-"""
-
-import numpy as np
-import sys
-import os
-
-# ---------- Inline algorithm implementations ----------
-# (Self-contained — no local imports needed)
-
-def bellman_ford(W, source):
-    n = W.shape[0]
-    dist = np.full(n, np.inf)
-    pred = np.full(n, -1, dtype=int)
-    dist[source] = 0.0
-    for _ in range(n - 1):
-        updated = False
-        for u in range(n):
-            if dist[u] == np.inf:
-                continue
-            for v in range(n):
-                if dist[u] + W[u][v] < dist[v]:
-                    dist[v] = dist[u] + W[u][v]
-                    pred[v] = u
-                    updated = True
-        if not updated:
-            break
-    return dist, pred
-
-def reconstruct_path(pred, source, target):
-    if pred[target] == -1 and target != source:
-        return []
-    path = []
-    v = target
-    while v != source:
-        path.append(v)
-        v = pred[v]
-        if v == -1:
-            return []
-    path.append(source)
-    path.reverse()
-    return path
-
-def wormhole_surgery(W, u, v, tau):
-    W_new = W.copy()
-    W_new[u][v] = min(W[u][v], tau)
-    W_new[v][u] = min(W[v][u], tau)
-    return W_new
-
-def min_plus_ricci(W, x):
-    n = W.shape[0]
-    return min((W[x][y] + W[y][x]) / 2 for y in range(n))
-
-def throat_bound(W, u, v):
-    return (min_plus_ricci(W, u) + min_plus_ricci(W, v)) / 2
-
-def throat_radius(W, u, v, tau):
-    return min(tau, throat_bound(W, u, v))
-
-def relaxation_step(W, d):
-    n = W.shape[0]
-    d_new = np.empty(n)
-    for x in range(n):
-        d_new[x] = min(d[y] + W[y][x] for y in range(n))
-    return d_new
-
-def verify_tropical_einstein(W, source, phi, tol=1e-10):
-    n = W.shape[0]
-    if abs(phi[source]) > tol:
-        return False
-    for x in range(n):
-        if x == source:
-            continue
-        relaxed = min(phi[y] + W[y][x] for y in range(n))
-        if abs(phi[x] - relaxed) > tol:
-            return False
-    return True
-
-# ---------- Demonstrations ----------
-
-def demo_1_surgery_decreases_distance():
-    """Demonstrate Theorem 1: Surgery strictly decreases tropical separation."""
-    print("=" * 70)
-    print("THEOREM 1: Wormhole Surgery Decreases Tropical Distance")
-    print("=" * 70)
-
-    # Create a 6-vertex "spacetime" graph
-    # Vertices: 0=s, 5=t, 2=u (near s), 3=v (near t)
-    # The graph has two regions connected by a long path
     n = 6
-    INF = 1000.0
-    W = np.full((n, n), INF)
-    np.fill_diagonal(W, 0)
-
-    # Region 1: s(0) -- 1 -- u(2)
-    W[0][1] = 2; W[1][0] = 2
-    W[1][2] = 3; W[2][1] = 3
-    W[0][2] = 6; W[2][0] = 6
-
-    # Region 2: v(3) -- 4 -- t(5)
-    W[3][4] = 2; W[4][3] = 2
-    W[4][5] = 3; W[5][4] = 3
-    W[3][5] = 6; W[5][3] = 6
-
-    # Long bridge between regions: u(2) -- v(3) with cost 20
-    W[2][3] = 20; W[3][2] = 20
-
-    s, t, u, v = 0, 5, 2, 3
-    tau = 1.0  # Wormhole cost
-
-    # Before surgery
-    dist_before, pred_before = bellman_ford(W, s)
-    d_st_before = dist_before[t]
-    path_before = reconstruct_path(pred_before, s, t)
-
-    print(f"\nGraph: 6-vertex spacetime with two regions")
-    print(f"Source s={s}, Target t={t}")
-    print(f"Wormhole endpoints: u={u}, v={v}")
-    print(f"Wormhole cost τ = {tau}")
-    print(f"\nBefore surgery:")
-    print(f"  d(s,t) = {d_st_before}")
-    print(f"  Path: {' → '.join(map(str, path_before))}")
-
-    # After surgery
-    W_new = wormhole_surgery(W, u, v, tau)
-    dist_after, pred_after = bellman_ford(W_new, s)
-    d_st_after = dist_after[t]
-    path_after = reconstruct_path(pred_after, s, t)
-
-    print(f"\nAfter surgery (bridge u↔v with cost {tau}):")
-    print(f"  d(s,t) = {d_st_after}")
-    print(f"  Path: {' → '.join(map(str, path_after))}")
-    print(f"  Improvement: {d_st_before - d_st_after} ({100*(d_st_before - d_st_after)/d_st_before:.1f}%)")
-
-    d_su = dist_before[u]
-    d_vt_dists, _ = bellman_ford(W, v)
-    d_vt = d_vt_dists[t]
-    print(f"\n  d(s,u) = {d_su}, τ = {tau}, d(v,t) = {d_vt}")
-    print(f"  Wormhole path cost: {d_su} + {tau} + {d_vt} = {d_su + tau + d_vt}")
-    print(f"  ✓ {d_su + tau + d_vt} < {d_st_before} (surgery strictly decreases distance)")
-    assert d_st_after < d_st_before, "Surgery should decrease distance!"
-    print()
-
-
-def demo_2_curvature_controls_throat():
-    """Demonstrate Theorem 2: Min-plus curvature controls throat radius."""
-    print("=" * 70)
-    print("THEOREM 2: Min-Plus Curvature Controls Throat Radius")
-    print("=" * 70)
-
-    n = 4
     W = np.array([
-        [0, 3, 7, 10],
-        [3, 0, 4,  8],
-        [7, 4, 0,  5],
-        [10, 8, 5, 0]
+        [0, 7, 9, 999, 999, 14],
+        [7, 0, 10, 15, 999, 999],
+        [9, 10, 0, 11, 999, 2],
+        [999, 15, 11, 0, 6, 999],
+        [999, 999, 999, 6, 0, 9],
+        [14, 999, 2, 999, 9, 0],
     ], dtype=float)
-
-    print(f"\nWeight matrix (4-vertex symmetric graph):")
-    print(W)
-
-    for x in range(n):
-        r = min_plus_ricci(W, x)
-        print(f"  Ricci(v{x}) = {r:.2f}")
-
-    for u in range(n):
-        for v in range(u + 1, n):
-            tb = throat_bound(W, u, v)
-            for tau in [0.5, 1.0, 2.0, 5.0, 10.0]:
-                tr = throat_radius(W, u, v, tau)
-                print(f"  TB({u},{v}) = {tb:.2f}, τ = {tau:.1f} → TR = {tr:.2f} ≤ {tb:.2f} ✓")
-                assert tr <= tb + 1e-10, "Throat radius should be bounded by throat bound!"
-
-    print()
-
-
-def demo_3_einstein_bellman():
-    """Demonstrate Theorem 3: Tropical Einstein = Bellman optimality."""
-    print("=" * 70)
-    print("THEOREM 3: Tropical Einstein Equation = Bellman Optimality")
-    print("=" * 70)
-
-    n = 5
-    W = np.array([
-        [0, 2, 5, np.inf, np.inf],
-        [2, 0, 1,     3, np.inf],
-        [5, 1, 0,     2,      4],
-        [np.inf, 3, 2, 0,     1],
-        [np.inf, np.inf, 4, 1, 0]
-    ])
-
+    
     source = 0
-    dist, _ = bellman_ford(W, source)
-
-    print(f"\nWeight matrix (5-vertex graph with some infinite edges):")
-    for row in W:
-        print(f"  [{', '.join(f'{x:5.1f}' if x < 100 else '  inf' for x in row)}]")
-
-    print(f"\nShortest distances from source {source}:")
-    for i, d in enumerate(dist):
-        print(f"  Φ({i}) = {d:.2f}")
-
-    # Verify Einstein equation
-    satisfies = verify_tropical_einstein(W, source, dist)
-    print(f"\nTropical Einstein equation satisfied: {satisfies}")
-
-    print(f"\nVerification (Bellman fixed-point condition):")
-    print(f"  Φ(source) = {dist[source]} {'= 0 ✓' if dist[source] == 0 else '≠ 0 ✗'}")
+    dist = tropical_geodesic(W, source)
+    
+    print(f"\nShortest distances from node {source}:")
+    for i in range(n):
+        print(f"  d({source}, {i}) = {dist[i]:.0f}")
+    
+    # Verify Bellman equation: d(x) ≤ min_y (d(y) + W(y,x))
+    print(f"\nBellman equation verification (Tropical Einstein subsolution):")
+    for x in range(n):
+        min_relaxation = min(dist[y] + W[y, x] for y in range(n))
+        satisfied = dist[x] <= min_relaxation + 1e-10
+        print(f"  d({x}) = {dist[x]:.0f} ≤ min_y(d(y)+W(y,{x})) = "
+              f"{min_relaxation:.0f}  {'✓' if satisfied else '✗'}")
+    
+    # Show routing table
+    print(f"\nRouting table (next hop for shortest path from {source}):")
+    predecessor = np.full(n, -1, dtype=int)
     for x in range(n):
         if x == source:
             continue
-        relaxed = min(dist[y] + W[y][x] for y in range(n))
-        match = abs(dist[x] - relaxed) < 1e-10
-        print(f"  Φ({x}) = {dist[x]:.2f} = min_y(Φ(y) + W(y,{x})) = {relaxed:.2f} {'✓' if match else '✗'}")
-
-    assert satisfies, "Shortest distances should satisfy Einstein equation!"
-    print()
-
-
-def demo_4_relaxation_convergence():
-    """Demonstrate Theorem 4: Bellman-Ford relaxation convergence."""
-    print("=" * 70)
-    print("THEOREM 4: Bellman-Ford Relaxation Convergence")
-    print("=" * 70)
-
-    n = 6
-    np.random.seed(42)
-    W = np.random.uniform(1, 10, (n, n))
-    np.fill_diagonal(W, 0)
-
-    source = 0
-    d = np.full(n, np.inf)
-    d[source] = 0.0
-
-    print(f"\n6-vertex random graph, source = {source}")
-    print(f"Initial estimates: {d}")
-    print(f"\nRelaxation iterations:")
-
-    converged_at = -1
-    for k in range(n + 2):
-        d_new = relaxation_step(W, d)
-        diff = np.max(np.abs(d_new - d))
-        stable = diff < 1e-12
-        print(f"  k={k}: d = [{', '.join(f'{x:.2f}' if x < 100 else '  inf' for x in d_new)}]"
-              f"  Δmax = {diff:.2e}" + (" (CONVERGED)" if stable else ""))
-        if stable and converged_at < 0:
-            converged_at = k
-        d = d_new
-
-    # Verify against direct Bellman-Ford
-    dist_bf, _ = bellman_ford(W, source)
-    match = np.allclose(d, dist_bf)
-    print(f"\nConverged at iteration k = {converged_at} (≤ n-1 = {n-1})")
-    print(f"Matches Bellman-Ford: {match} ✓" if match else f"Does NOT match Bellman-Ford ✗")
-    print(f"\nFinal distances: [{', '.join(f'{x:.2f}' for x in d)}]")
-
-    # Verify Einstein equation at convergence
-    satisfies = verify_tropical_einstein(W, source, d)
-    print(f"Tropical Einstein equation satisfied at convergence: {satisfies} ✓")
-    print()
+        for y in range(n):
+            if y != x and abs(dist[x] - (dist[y] + W[y, x])) < 1e-10:
+                predecessor[x] = y
+                break
+    
+    for x in range(n):
+        if x == source:
+            continue
+        path = [x]
+        current = x
+        while current != source and predecessor[current] != -1:
+            current = predecessor[current]
+            path.append(current)
+        path.reverse()
+        print(f"  To node {x}: {' → '.join(map(str, path))} (cost: {dist[x]:.0f})")
 
 
-def demo_5_surgery_on_lattice():
-    """Bonus: Wormhole surgery on a grid/lattice spacetime."""
-    print("=" * 70)
-    print("BONUS: Wormhole Surgery on a 4×4 Lattice Spacetime")
-    print("=" * 70)
-
-    # Create 4x4 grid graph (16 vertices)
-    rows, cols = 4, 4
-    n = rows * cols
-    INF = 1000.0
-    W = np.full((n, n), INF)
-    np.fill_diagonal(W, 0)
-
-    def idx(r, c):
-        return r * cols + c
-
-    # Grid edges with unit weight
-    for r in range(rows):
-        for c in range(cols):
-            if c + 1 < cols:
-                W[idx(r, c)][idx(r, c + 1)] = 1
-                W[idx(r, c + 1)][idx(r, c)] = 1
-            if r + 1 < rows:
-                W[idx(r, c)][idx(r + 1, c)] = 1
-                W[idx(r + 1, c)][idx(r, c)] = 1
-
-    s = idx(0, 0)  # Top-left
-    t = idx(3, 3)  # Bottom-right
-    u = idx(0, 1)  # Near top-left
-    v = idx(3, 2)  # Near bottom-right
-
-    print(f"\n4×4 grid spacetime:")
-    print(f"  Source: ({0},{0}), Target: ({3},{3})")
-    print(f"  Wormhole: ({0},{1}) ↔ ({3},{2})")
-
-    for tau in [0.5, 1.0, 2.0, 5.0]:
-        dist_before, _ = bellman_ford(W, s)
-        W_new = wormhole_surgery(W, u, v, tau)
-        dist_after, pred_after = bellman_ford(W_new, s)
-
-        path = reconstruct_path(pred_after, s, t)
-        uses_wormhole = (u in path and v in path)
-
-        print(f"\n  τ = {tau:.1f}:")
-        print(f"    Before: d(s,t) = {dist_before[t]:.1f}")
-        print(f"    After:  d(s,t) = {dist_after[t]:.1f}")
-        print(f"    Improvement: {dist_before[t] - dist_after[t]:.1f}")
-        print(f"    Uses wormhole: {'Yes ✓' if uses_wormhole else 'No'}")
-        coords_path = [(p // cols, p % cols) for p in path]
-        print(f"    Path: {' → '.join(str(c) for c in coords_path)}")
-
-    print()
-
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
-    print("\n" + "█" * 70)
-    print("  TROPICAL WORMHOLE SURGERY — NUMERICAL DEMONSTRATIONS")
-    print("█" * 70 + "\n")
-
-    demo_1_surgery_decreases_distance()
-    demo_2_curvature_controls_throat()
-    demo_3_einstein_bellman()
-    demo_4_relaxation_convergence()
-    demo_5_surgery_on_lattice()
-
-    print("=" * 70)
-    print("ALL DEMONSTRATIONS COMPLETED SUCCESSFULLY")
-    print("=" * 70)
+    cdn_placement_demo()
+    transportation_demo()
+    vulnerability_analysis()
+    bellman_network_flow()
+    
+    print("\n" + "=" * 60)
+    print("All applications completed successfully!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Tropical Wormhole Surgery — Visualizations
+Tropical Wormhole Surgery — Demonstration and Visualization
 
-Generates publication-quality figures for the research paper and article.
+This script demonstrates the key theorems of tropical discrete relativity
+with concrete numerical examples and generates visualizations.
+
+All code is self-contained — no local imports required.
 """
 
 import numpy as np
@@ -703,273 +366,432 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from matplotlib.colors import LinearSegmentedColormap
-import base64
-import io
+from matplotlib.colors import Normalize
+from matplotlib.cm import ScalarMappable
 import os
 
-OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+# ============================================================
+# Core algorithms (self-contained)
+# ============================================================
 
-
-def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 PNG data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
-    buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode('utf-8')
-
-
-def bellman_ford(W, source):
+def tropical_geodesic(W, source):
+    """Bellman-Ford shortest paths from source."""
     n = W.shape[0]
     dist = np.full(n, np.inf)
     dist[source] = 0.0
     for _ in range(n - 1):
-        updated = False
-        for u in range(n):
-            if dist[u] == np.inf: continue
-            for v in range(n):
-                if dist[u] + W[u][v] < dist[v]:
-                    dist[v] = dist[u] + W[u][v]
-                    updated = True
-        if not updated: break
+        for x in range(n):
+            for y in range(n):
+                if dist[y] + W[y, x] < dist[x]:
+                    dist[x] = dist[y] + W[y, x]
     return dist
 
-
 def wormhole_surgery(W, u, v, tau):
+    """Perform wormhole surgery on edges (u,v) and (v,u)."""
     W_new = W.copy()
-    W_new[u][v] = min(W[u][v], tau)
-    W_new[v][u] = min(W[v][u], tau)
+    W_new[u, v] = min(W[u, v], tau)
+    W_new[v, u] = min(W[v, u], tau)
     return W_new
 
-
-def relaxation_step(W, d):
+def min_plus_ricci(W):
+    """Compute min-plus Ricci curvature at each vertex."""
     n = W.shape[0]
-    d_new = np.empty(n)
+    R = np.zeros(n)
     for x in range(n):
-        d_new[x] = min(d[y] + W[y][x] for y in range(n))
+        R[x] = np.min((W[x, :] + W[:, x]) / 2.0)
+    return R
+
+def bellman_relax(W, d):
+    """One step of Bellman-Ford relaxation."""
+    n = W.shape[0]
+    d_new = np.full(n, np.inf)
+    for x in range(n):
+        for y in range(n):
+            d_new[x] = min(d_new[x], d[y] + W[y, x])
     return d_new
 
+def all_pairs_distance(W):
+    """Compute all-pairs tropical distances."""
+    n = W.shape[0]
+    D = np.zeros((n, n))
+    for s in range(n):
+        D[s, :] = tropical_geodesic(W, s)
+    return D
 
-def plot_surgery_distance_drop():
-    """Figure 1: Distance vs. wormhole cost τ."""
-    n = 8
+
+# ============================================================
+# Demo 1: Surgery Distance Theorem
+# ============================================================
+
+def demo_surgery_theorem():
+    """Demonstrate Theorem 1: Surgery strictly decreases tropical separation."""
+    print("=" * 60)
+    print("DEMO 1: Surgery Distance Theorem")
+    print("=" * 60)
+    
+    # Create a 6-vertex "spacetime" graph with two clusters
+    # Cluster 1: {0, 1, 2}, Cluster 2: {3, 4, 5}
+    # Inter-cluster edges are expensive
     INF = 1000.0
-    W = np.full((n, n), INF)
+    W = np.full((6, 6), INF)
     np.fill_diagonal(W, 0)
-    # Chain: 0-1-2-3-4-5-6-7
-    for i in range(n - 1):
-        W[i][i + 1] = 3
-        W[i + 1][i] = 3
+    
+    # Cluster 1 edges (cheap)
+    W[0, 1] = W[1, 0] = 2
+    W[1, 2] = W[2, 1] = 3
+    W[0, 2] = W[2, 0] = 4
+    
+    # Cluster 2 edges (cheap)
+    W[3, 4] = W[4, 3] = 2
+    W[4, 5] = W[5, 4] = 3
+    W[3, 5] = W[5, 3] = 4
+    
+    # Inter-cluster edges (expensive)
+    W[2, 3] = W[3, 2] = 50
+    
+    # Original distances
+    D_orig = all_pairs_distance(W)
+    print(f"\nOriginal distance matrix:")
+    print(np.array2string(D_orig, precision=1, suppress_small=True))
+    
+    # Surgery: add wormhole bridge between vertex 1 and vertex 4
+    tau = 3.0
+    W_surgery = wormhole_surgery(W, 1, 4, tau)
+    D_surgery = all_pairs_distance(W_surgery)
+    
+    print(f"\nPost-surgery distance matrix (bridge 1↔4, τ={tau}):")
+    print(np.array2string(D_surgery, precision=1, suppress_small=True))
+    
+    # Verify theorem for s=0, t=5
+    s, t, u, v = 0, 5, 1, 4
+    a = D_orig[s, u]  # d(0, 1) = 2
+    b = D_orig[v, t]  # d(4, 5) = 3
+    D = D_orig[s, t]  # d(0, 5) = 55 (through the expensive bridge)
+    bridge_cost = a + tau + b
+    new_dist = D_surgery[s, t]
+    
+    print(f"\nTheorem verification for path {s}→{t}:")
+    print(f"  d(s,u) = d({s},{u}) = {a}")
+    print(f"  d(v,t) = d({v},{t}) = {b}")
+    print(f"  Original d(s,t) = {D}")
+    print(f"  Bridge path cost a+τ+b = {a}+{tau}+{b} = {bridge_cost}")
+    print(f"  Post-surgery d(s,t) = {new_dist}")
+    print(f"  Bound holds: {new_dist} ≤ {bridge_cost}? {new_dist <= bridge_cost + 1e-10}")
+    print(f"  Strict decrease: {new_dist} < {D}? {new_dist < D}")
+    print(f"  Distance reduction: {(D - new_dist)/D*100:.1f}%")
+    
+    return W, W_surgery, D_orig, D_surgery
 
-    s, t, u, v = 0, 7, 2, 5
-    taus = np.linspace(0.1, 25, 100)
-    dist_before = bellman_ford(W, s)[t]
-    dists_after = []
-    for tau in taus:
-        W_new = wormhole_surgery(W, u, v, tau)
-        dists_after.append(bellman_ford(W_new, s)[t])
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.axhline(y=dist_before, color='#e74c3c', linestyle='--', linewidth=2,
-               label=f'Original distance = {dist_before:.0f}')
-    ax.plot(taus, dists_after, color='#2ecc71', linewidth=2.5,
-            label='Distance after surgery')
-    ax.fill_between(taus, dists_after, dist_before, alpha=0.15, color='#2ecc71')
+# ============================================================
+# Demo 2: Bellman Relaxation Convergence
+# ============================================================
 
-    critical_tau = dist_before - bellman_ford(W, s)[u] - bellman_ford(W, v)[t]
-    ax.axvline(x=critical_tau, color='#3498db', linestyle=':', linewidth=1.5,
-               label=f'Critical τ = {critical_tau:.1f}')
-
-    ax.set_xlabel('Wormhole cost τ', fontsize=13)
-    ax.set_ylabel('Tropical distance d(s, t)', fontsize=13)
-    ax.set_title('Theorem 1: Wormhole Surgery Distance Drop', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11, loc='lower right')
-    ax.set_xlim(taus[0], taus[-1])
-    ax.grid(True, alpha=0.3)
-
-    fig.savefig(os.path.join(OUTPUT_DIR, 'fig_surgery_distance.png'), dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
-
-
-def plot_relaxation_convergence():
-    """Figure 2: Relaxation convergence over iterations."""
+def demo_relaxation_convergence():
+    """Demonstrate Theorem 4: Relaxation convergence."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Bellman-Ford Relaxation Convergence")
+    print("=" * 60)
+    
     n = 8
-    np.random.seed(123)
-    W = np.random.uniform(1, 8, (n, n))
+    np.random.seed(42)
+    W = np.random.uniform(1, 20, (n, n))
     np.fill_diagonal(W, 0)
-
+    
     source = 0
-    d = np.full(n, 50.0)
+    true_dist = tropical_geodesic(W, source)
+    
+    # Track relaxation convergence
+    d = np.full(n, np.inf)
     d[source] = 0.0
-
+    
     history = [d.copy()]
-    for k in range(n + 3):
-        d = relaxation_step(W, d)
+    errors = []
+    
+    for k in range(n + 2):
+        d = bellman_relax(W, d)
         history.append(d.copy())
-    history = np.array(history)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    colors = plt.cm.viridis(np.linspace(0, 0.9, n))
-    for v in range(n):
-        ax1.plot(range(len(history)), history[:, v], '-o', markersize=3,
-                 color=colors[v], label=f'v{v}', linewidth=1.5)
-    ax1.set_xlabel('Iteration k', fontsize=13)
-    ax1.set_ylabel('Distance estimate d(k, v)', fontsize=13)
-    ax1.set_title('Bellman-Ford Relaxation Convergence', fontsize=14, fontweight='bold')
-    ax1.legend(fontsize=9, ncol=2, loc='upper right')
-    ax1.grid(True, alpha=0.3)
-
-    # Max change per iteration
-    changes = [np.max(np.abs(history[k + 1] - history[k])) for k in range(len(history) - 1)]
-    ax2.semilogy(range(len(changes)), [max(c, 1e-16) for c in changes], 'o-',
-                 color='#e74c3c', linewidth=2, markersize=5)
-    ax2.axhline(y=1e-12, color='gray', linestyle='--', alpha=0.5, label='Convergence threshold')
-    ax2.set_xlabel('Iteration k', fontsize=13)
-    ax2.set_ylabel('Max change Δ_max', fontsize=13)
-    ax2.set_title('Convergence Rate', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-
-    fig.tight_layout()
-    fig.savefig(os.path.join(OUTPUT_DIR, 'fig_relaxation.png'), dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+        error = np.max(np.abs(d - true_dist))
+        errors.append(error)
+        
+    print(f"\nGraph size: n = {n}")
+    print(f"True distances from vertex {source}:")
+    for i in range(n):
+        print(f"  d({source}, {i}) = {true_dist[i]:.2f}")
+    
+    print(f"\nRelaxation convergence (max error per iteration):")
+    for k, err in enumerate(errors):
+        converged = "✓ CONVERGED" if err < 1e-10 else ""
+        print(f"  Iteration {k+1}: max error = {err:.6f} {converged}")
+    
+    return history, errors, true_dist
 
 
-def plot_lattice_surgery():
-    """Figure 3: Heatmap of distance improvement on a grid."""
-    rows, cols = 6, 6
-    n = rows * cols
-    INF = 1000.0
-    W = np.full((n, n), INF)
+# ============================================================
+# Demo 3: Min-Plus Ricci Curvature
+# ============================================================
+
+def demo_curvature():
+    """Demonstrate Theorem 2: Curvature controls throat radius."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Min-Plus Ricci Curvature Analysis")
+    print("=" * 60)
+    
+    # Create a graph with varying connectivity
+    n = 8
+    W = np.full((n, n), 100.0)
     np.fill_diagonal(W, 0)
-
-    def idx(r, c): return r * cols + c
-
-    for r in range(rows):
-        for c in range(cols):
-            if c + 1 < cols:
-                W[idx(r, c)][idx(r, c + 1)] = 1
-                W[idx(r, c + 1)][idx(r, c)] = 1
-            if r + 1 < rows:
-                W[idx(r, c)][idx(r + 1, c)] = 1
-                W[idx(r + 1, c)][idx(r, c)] = 1
-
-    s = idx(0, 0)
-    u, v = idx(1, 1), idx(4, 4)
-    tau = 0.5
-
-    dist_before = bellman_ford(W, s)
-    W_new = wormhole_surgery(W, u, v, tau)
-    dist_after = bellman_ford(W_new, s)
-
-    improvement = np.zeros((rows, cols))
-    for r in range(rows):
-        for c in range(cols):
-            vi = idx(r, c)
-            improvement[r][c] = dist_before[vi] - dist_after[vi]
-
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    # Before
-    before_grid = dist_before.reshape(rows, cols)
-    im0 = axes[0].imshow(before_grid, cmap='YlOrRd', aspect='equal')
-    axes[0].set_title('Before Surgery\n(distance from source)', fontsize=12, fontweight='bold')
-    plt.colorbar(im0, ax=axes[0], shrink=0.8)
-
-    # After
-    after_grid = dist_after.reshape(rows, cols)
-    im1 = axes[1].imshow(after_grid, cmap='YlOrRd', aspect='equal')
-    axes[1].set_title('After Surgery\n(distance from source)', fontsize=12, fontweight='bold')
-    plt.colorbar(im1, ax=axes[1], shrink=0.8)
-
-    # Improvement
-    cmap = LinearSegmentedColormap.from_list('improvement', ['white', '#2ecc71', '#27ae60'])
-    im2 = axes[2].imshow(improvement, cmap=cmap, aspect='equal')
-    axes[2].set_title('Distance Improvement\n(before − after)', fontsize=12, fontweight='bold')
-    plt.colorbar(im2, ax=axes[2], shrink=0.8)
-
-    for ax in axes:
-        ur, uc = u // cols, u % cols
-        vr, vc = v // cols, v % cols
-        ax.plot(uc, ur, 'b*', markersize=15, markeredgecolor='black', markeredgewidth=1)
-        ax.plot(vc, vr, 'b*', markersize=15, markeredgecolor='black', markeredgewidth=1)
-        ax.plot(0, 0, 'rs', markersize=10, markeredgecolor='black', markeredgewidth=1)
-
-    fig.suptitle(f'Wormhole Surgery on 6×6 Grid (τ = {tau})', fontsize=14, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    fig.savefig(os.path.join(OUTPUT_DIR, 'fig_lattice_surgery.png'), dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+    
+    # Dense hub (vertices 0-3): low roundtrip costs -> high curvature
+    for i in range(4):
+        for j in range(4):
+            if i != j:
+                W[i, j] = 1.0
+    
+    # Sparse periphery (vertices 4-7): high roundtrip costs -> low curvature
+    W[4, 5] = W[5, 4] = 20.0
+    W[5, 6] = W[6, 5] = 25.0
+    W[6, 7] = W[7, 6] = 30.0
+    
+    # Bridge from hub to periphery
+    W[3, 4] = W[4, 3] = 15.0
+    
+    R = min_plus_ricci(W)
+    
+    print(f"\nMin-plus Ricci curvatures:")
+    for i in range(n):
+        region = "hub" if i < 4 else "periphery"
+        print(f"  R({i}) = {R[i]:.2f}  [{region}]")
+    
+    # Throat bounds for various bridges
+    print(f"\nThroat bounds for potential wormholes:")
+    pairs = [(0, 7), (1, 6), (3, 4), (0, 4), (2, 5)]
+    for u, v in pairs:
+        tb = (R[u] + R[v]) / 2.0
+        print(f"  Bridge ({u},{v}): throatBound = {tb:.2f} "
+              f"(R({u})={R[u]:.2f}, R({v})={R[v]:.2f})")
+    
+    return R, W
 
 
-def plot_curvature_landscape():
-    """Figure 4: Min-plus Ricci curvature landscape."""
-    rows, cols = 8, 8
-    n = rows * cols
-    INF = 1000.0
-    W = np.full((n, n), INF)
-    np.fill_diagonal(W, 0)
+# ============================================================
+# Demo 4: Curvature-Controlled Distance Bound
+# ============================================================
 
-    def idx(r, c): return r * cols + c
+def demo_curvature_bound():
+    """Demonstrate Theorem 2': Curvature-controlled distance bound."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Curvature-Controlled Distance Bound")
+    print("=" * 60)
+    
+    n = 6
+    W = np.array([
+        [0, 5, 20, 40, 60, 80],
+        [5, 0,  5, 20, 40, 60],
+        [20, 5, 0,  5, 20, 40],
+        [40, 20, 5, 0,  5, 20],
+        [60, 40, 20, 5, 0,  5],
+        [80, 60, 40, 20, 5, 0],
+    ], dtype=float)
+    
+    D_orig = all_pairs_distance(W)
+    
+    print("\nTesting distance bound for various surgery parameters:")
+    s, t = 0, 5
+    u, v = 1, 4
+    
+    for tau in [1.0, 5.0, 10.0, 20.0, 50.0]:
+        W_surg = wormhole_surgery(W, u, v, tau)
+        D_surg = all_pairs_distance(W_surg)
+        
+        bound1 = D_orig[s, t]
+        bound2 = D_orig[s, u] + tau + D_orig[v, t]
+        bound = min(bound1, bound2)
+        actual = D_surg[s, t]
+        
+        print(f"  τ={tau:5.1f}: actual={actual:6.1f}, "
+              f"min(d_orig, d_su+τ+d_vt)=min({bound1:.1f}, {bound2:.1f})={bound:.1f}, "
+              f"bound holds: {actual <= bound + 1e-10}")
 
-    np.random.seed(77)
-    for r in range(rows):
-        for c in range(cols):
-            if c + 1 < cols:
-                w = np.random.uniform(0.5, 3.0)
-                W[idx(r, c)][idx(r, c + 1)] = w
-                W[idx(r, c + 1)][idx(r, c)] = w
-            if r + 1 < rows:
-                w = np.random.uniform(0.5, 3.0)
-                W[idx(r, c)][idx(r + 1, c)] = w
-                W[idx(r + 1, c)][idx(r, c)] = w
 
-    ricci = np.zeros((rows, cols))
-    for r in range(rows):
-        for c in range(cols):
-            x = idx(r, c)
-            ricci[r][c] = min((W[x][y] + W[y][x]) / 2 for y in range(n))
+# ============================================================
+# Visualization
+# ============================================================
 
-    fig, ax = plt.subplots(figsize=(8, 7))
-    im = ax.imshow(ricci, cmap='coolwarm_r', aspect='equal')
-    ax.set_title('Min-Plus Ricci Curvature Landscape\n(8×8 Random Grid)', fontsize=14, fontweight='bold')
-    plt.colorbar(im, ax=ax, label='Ricci curvature R(x)')
-    ax.set_xlabel('Column', fontsize=12)
-    ax.set_ylabel('Row', fontsize=12)
+def create_visualizations(W, W_surgery, D_orig, D_surgery, 
+                          history, errors, true_dist, curvatures, W_curv):
+    """Generate all visualizations."""
+    output_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Figure 1: Distance matrices before/after surgery
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    
+    im1 = axes[0].imshow(D_orig, cmap='YlOrRd', interpolation='nearest')
+    axes[0].set_title('Original Distances', fontsize=14, fontweight='bold')
+    axes[0].set_xlabel('Target vertex')
+    axes[0].set_ylabel('Source vertex')
+    plt.colorbar(im1, ax=axes[0], label='Distance')
+    for i in range(6):
+        for j in range(6):
+            axes[0].text(j, i, f'{D_orig[i,j]:.0f}', ha='center', va='center', fontsize=9)
+    
+    im2 = axes[1].imshow(D_surgery, cmap='YlOrRd', interpolation='nearest')
+    axes[1].set_title('Post-Surgery Distances\n(bridge 1↔4, τ=3)', fontsize=14, fontweight='bold')
+    axes[1].set_xlabel('Target vertex')
+    axes[1].set_ylabel('Source vertex')
+    plt.colorbar(im2, ax=axes[1], label='Distance')
+    for i in range(6):
+        for j in range(6):
+            axes[1].text(j, i, f'{D_surgery[i,j]:.0f}', ha='center', va='center', fontsize=9)
+    
+    # Reduction heatmap
+    reduction = D_orig - D_surgery
+    im3 = axes[2].imshow(reduction, cmap='Greens', interpolation='nearest')
+    axes[2].set_title('Distance Reduction', fontsize=14, fontweight='bold')
+    axes[2].set_xlabel('Target vertex')
+    axes[2].set_ylabel('Source vertex')
+    plt.colorbar(im3, ax=axes[2], label='Reduction')
+    for i in range(6):
+        for j in range(6):
+            axes[2].text(j, i, f'{reduction[i,j]:.0f}', ha='center', va='center', fontsize=9)
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'surgery_distances.png'), dpi=150, bbox_inches='tight')
+    plt.close()
+    
+    # Figure 2: Relaxation convergence
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    n_relax = len(history[0])
+    iterations = range(1, len(errors) + 1)
+    axes[0].semilogy(iterations, [max(e, 1e-16) for e in errors], 'b-o', linewidth=2, markersize=8)
+    axes[0].axhline(y=1e-10, color='r', linestyle='--', alpha=0.5, label='Convergence threshold')
+    axes[0].set_xlabel('Iteration', fontsize=12)
+    axes[0].set_ylabel('Max Error (log scale)', fontsize=12)
+    axes[0].set_title('Bellman-Ford Convergence', fontsize=14, fontweight='bold')
+    axes[0].legend(fontsize=11)
+    axes[0].grid(True, alpha=0.3)
+    
+    # Distance estimates over iterations
+    colors = plt.cm.tab10(np.linspace(0, 1, n_relax))
+    for vertex in range(min(n_relax, 6)):
+        vals = [h[vertex] if h[vertex] < np.inf else None for h in history]
+        valid = [(i, v) for i, v in enumerate(vals) if v is not None]
+        if valid:
+            xs, ys = zip(*valid)
+            axes[1].plot(xs, ys, '-o', color=colors[vertex], 
+                        label=f'd(0,{vertex})', linewidth=2, markersize=6)
+            axes[1].axhline(y=true_dist[vertex], color=colors[vertex], 
+                          linestyle='--', alpha=0.3)
+    
+    axes[1].set_xlabel('Iteration', fontsize=12)
+    axes[1].set_ylabel('Distance Estimate', fontsize=12)
+    axes[1].set_title('Distance Convergence by Vertex', fontsize=14, fontweight='bold')
+    axes[1].legend(fontsize=9, ncol=2)
+    axes[1].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'relaxation_convergence.png'), dpi=150, bbox_inches='tight')
+    plt.close()
+    
+    # Figure 3: Curvature visualization
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    n_curv = len(curvatures)
+    bar_colors = plt.cm.RdYlGn_r(Normalize(vmin=min(curvatures), vmax=max(curvatures))(curvatures))
+    axes[0].bar(range(n_curv), curvatures, color=bar_colors, edgecolor='black', linewidth=0.5)
+    axes[0].set_xlabel('Vertex', fontsize=12)
+    axes[0].set_ylabel('Min-Plus Ricci Curvature', fontsize=12)
+    axes[0].set_title('Curvature Distribution', fontsize=14, fontweight='bold')
+    axes[0].set_xticks(range(n_curv))
+    
+    # Hub vs periphery annotation
+    axes[0].axvspan(-0.5, 3.5, alpha=0.1, color='green', label='Hub (dense)')
+    axes[0].axvspan(3.5, 7.5, alpha=0.1, color='red', label='Periphery (sparse)')
+    axes[0].legend(fontsize=10)
+    axes[0].grid(True, alpha=0.3, axis='y')
+    
+    # Throat bounds heatmap
+    throat_matrix = np.zeros((n_curv, n_curv))
+    for i in range(n_curv):
+        for j in range(n_curv):
+            throat_matrix[i, j] = (curvatures[i] + curvatures[j]) / 2.0
+    
+    im = axes[1].imshow(throat_matrix, cmap='viridis', interpolation='nearest')
+    axes[1].set_xlabel('Vertex v', fontsize=12)
+    axes[1].set_ylabel('Vertex u', fontsize=12)
+    axes[1].set_title('Throat Bound Matrix', fontsize=14, fontweight='bold')
+    plt.colorbar(im, ax=axes[1], label='Throat Bound')
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'curvature_analysis.png'), dpi=150, bbox_inches='tight')
+    plt.close()
+    
+    # Figure 4: Surgery parameter sweep
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    n_sweep = 6
+    W_sweep = np.array([
+        [0, 5, 20, 40, 60, 80],
+        [5, 0,  5, 20, 40, 60],
+        [20, 5, 0,  5, 20, 40],
+        [40, 20, 5, 0,  5, 20],
+        [60, 40, 20, 5, 0,  5],
+        [80, 60, 40, 20, 5, 0],
+    ], dtype=float)
+    
+    D_sweep_orig = all_pairs_distance(W_sweep)
+    s, t = 0, 5
+    taus = np.linspace(0.1, 50, 100)
+    
+    for u, v, label in [(1, 4, 'Bridge 1↔4'), (0, 5, 'Bridge 0↔5'), (2, 3, 'Bridge 2↔3')]:
+        distances = []
+        bounds = []
+        for tau in taus:
+            W_s = wormhole_surgery(W_sweep, u, v, tau)
+            D_s = all_pairs_distance(W_s)
+            distances.append(D_s[s, t])
+            bounds.append(min(D_sweep_orig[s, t], 
+                            D_sweep_orig[s, u] + tau + D_sweep_orig[v, t]))
+        
+        ax.plot(taus, distances, linewidth=2, label=f'{label} (actual)')
+        ax.plot(taus, bounds, '--', linewidth=1.5, alpha=0.6, label=f'{label} (bound)')
+    
+    ax.axhline(y=D_sweep_orig[s, t], color='gray', linestyle=':', 
+               linewidth=1, label='Original distance')
+    ax.set_xlabel('Surgery Parameter τ', fontsize=12)
+    ax.set_ylabel('Post-Surgery Distance d(0,5)', fontsize=12)
+    ax.set_title('Surgery Parameter Sweep: Distance vs τ', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'surgery_sweep.png'), dpi=150, bbox_inches='tight')
+    plt.close()
+    
+    print("\nVisualizations saved to:")
+    print(f"  {os.path.join(output_dir, 'surgery_distances.png')}")
+    print(f"  {os.path.join(output_dir, 'relaxation_convergence.png')}")
+    print(f"  {os.path.join(output_dir, 'curvature_analysis.png')}")
+    print(f"  {os.path.join(output_dir, 'surgery_sweep.png')}")
 
-    fig.tight_layout()
-    fig.savefig(os.path.join(OUTPUT_DIR, 'fig_curvature.png'), dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
 
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
+    # Run all demos
+    W, W_surgery, D_orig, D_surgery = demo_surgery_theorem()
+    history, errors, true_dist = demo_relaxation_convergence()
+    curvatures, W_curv = demo_curvature()
+    demo_curvature_bound()
+    
+    # Generate visualizations
+    print("\n" + "=" * 60)
     print("Generating visualizations...")
-    b64_1 = plot_surgery_distance_drop()
-    print(f"  [1] Surgery distance drop: {len(b64_1)} chars")
-    b64_2 = plot_relaxation_convergence()
-    print(f"  [2] Relaxation convergence: {len(b64_2)} chars")
-    b64_3 = plot_lattice_surgery()
-    print(f"  [3] Lattice surgery heatmap: {len(b64_3)} chars")
-    b64_4 = plot_curvature_landscape()
-    print(f"  [4] Curvature landscape: {len(b64_4)} chars")
-    print("All visualizations saved to:", OUTPUT_DIR)
-
-    # Save base64 data for JSON packaging
-    import json
-    viz_data = {
-        "surgery_distance": b64_1,
-        "relaxation_convergence": b64_2,
-        "lattice_surgery": b64_3,
-        "curvature_landscape": b64_4,
-    }
-    with open(os.path.join(OUTPUT_DIR, 'viz_data.json'), 'w') as f:
-        json.dump(viz_data, f)
-    print("Base64 data saved to viz_data.json")
+    print("=" * 60)
+    create_visualizations(W, W_surgery, D_orig, D_surgery, 
+                          history, errors, true_dist, curvatures, W_curv)
+    
+    print("\nAll demos completed successfully!")

@@ -25,10 +25,10 @@
       "Computation"
     ],
     "priority_score": 0.98,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5cbb3f6f",
     "timestamp": "2026-05-14T16:03:53.876807+00:00"
   },
   {
@@ -861,20 +861,6 @@
     "timestamp": "2026-05-14T16:16:22.727172+00:00"
   },
   {
-    "id": "fd_0083",
-    "title": "Define TropicalKEM",
-    "description": ": Encapsulate the tropical shared secret as a symmetric key, using a hash function for key derivation.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:16:22.728869+00:00"
-  },
-  {
     "id": "fd_0084",
     "title": "Apply FO Transform",
     "description": ": The standard FO transform (Hofheinz-Hövelmanns-Kiltz variant) converts CPA-secure PKE to CCA2-secure KEM. Verify that tropical ElGamal satisfies the required structural properties: correctness, γ-spreadness (the ciphertext has sufficient entropy).",
@@ -1070,20 +1056,6 @@
     "timestamp": "2026-05-14T16:17:21.772264+00:00"
   },
   {
-    "id": "fd_0111",
-    "title": "Iterates",
-    "description": "between formalization and mathematical insight, using failed proof attempts to refine conjectures.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b8bbbc75",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T16:17:21.774209+00:00"
-  },
-  {
     "id": "fd_0133",
     "title": "Chronological ordering",
     "description": ": Define a partial order from tropical distances and show it satisfies antisymmetry for nonneg-weight graphs with no negative cycles.\n\n### Proof Strategy\nUse the triangle inequality for tropical distance (which follows from path concatenation) and the surgery distance-drop theorem already proved.\n\n### Cross-Domain Connections\n- Causal set theory in quantum gravity\n- Reachability analysis in timed automata\n- Network influence propagation bounds\n\n---\n\n## Direction 2: Tropical Black Hole Horizons as Min-Cut Barriers\n\n### Hypothesis\nA \"tropical event horizon\" is a min-cut in the weighted spacetime graph separating an interior region from an exterior region. The horizon's \"area\" (total cut weight) controls the maximum information throughput, yielding a discrete analogue of the Bekenstein–Hawkin",
@@ -1117,20 +1089,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.116622+00:00"
-  },
-  {
-    "id": "fd_0138",
-    "title": "Reduction to standard Bellman",
-    "description": ": `TropicalEinsteinMaxwell W A s q Φ ↔ TropicalEinsteinEquation (chargedWeight W A q) s Φ`",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "c6fcabd0",
-    "timestamp": "2026-05-14T16:24:30.119497+00:00"
   },
   {
     "id": "fd_0141",
@@ -1282,20 +1240,6 @@
     "source_exp_id": "68311f72",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:32:45.381864+00:00"
-  },
-  {
-    "id": "fd_0156",
-    "title": "Direction 5 (Automated Extraction)",
-    "description": "— Most practical impact. Could be integrated into existing proof assistants as a library analysis tool.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T17:32:45.385066+00:00"
   },
   {
     "id": "fd_0157",
@@ -1585,34 +1529,6 @@
     "timestamp": "2026-05-14T23:59:16.208103+00:00"
   },
   {
-    "id": "fd_0200",
-    "title": "Formalization Lead",
-    "description": ": Extends Lean proofs to multiclass and deep network settings.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79f73184",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:15:28.629944+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "Algorithms Lead",
-    "description": ": Implements and benchmarks tropical training algorithms.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79f73184",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:15:28.641165+00:00"
-  },
-  {
     "id": "fd_0208",
     "title": "Ongoing",
     "description": ": Run computational experiments validating theoretical predictions.\n\n### Success Metrics\n- Number of sorry-free formally verified theorems.\n- Tightness of generalization bounds on benchmark datasets.\n- Novel connections discovered between tropical geometry and machine learning.\n- Papers submitted to top venues (ICML, NeurIPS, JMLR, Annals of Mathematics).\n\n---\n\n## Priority Ordering",
@@ -1725,21 +1641,6 @@
     "timestamp": "2026-05-15T01:18:10.101596+00:00"
   },
   {
-    "id": "fd_0200",
-    "title": "First-order tropical logic",
-    "description": ": Show that FO-definable cost functions correspond to counter-free or aperiodic min-plus automata (tropical Schützenberger–McNaughton–Papert theorem).",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.108127+00:00"
-  },
-  {
     "id": "fd_0201",
     "title": "Bounded ambiguity",
     "description": ": Prove that finitely ambiguous min-plus automata have decidable equivalence (unlike the general case, which is undecidable).",
@@ -1753,22 +1654,6 @@
     "source_exp_id": "fafc44be",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:10.114565+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "Complexity hierarchy",
-    "description": ": Establish a quantitative analogue of the FO/MSO/SO complexity hierarchy, measuring logical resources needed for optimization problems.",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.120572+00:00"
   },
   {
     "id": "fd_0203",
@@ -2232,23 +2117,6 @@
     "timestamp": "2026-05-15T00:07:21.678568+00:00"
   },
   {
-    "id": "fd_0200",
-    "title": "4. Tropical Energy–Entropy Theorem",
-    "description": "**Goal.** Define idempotent entropy for min-plus distributions and prove\ndissipation monotonicity under barrier updates, connecting to tropical\nLandauer principles and thermodynamic irreversibility.\n\n**Hypothesis.** Define tropical entropy as\n`S(u) = -fmin(u)` (negative of the ground state energy in the min-plus setting).\nUnder dissipative updates with `c ≤ 0`, entropy is nondecreasing:\n`S(Φ(u)) ≥ S(u)`. This is the tropical second law of thermodynamics.\n\nMore ambitiously, define tropical relative entropy\n`D(u ‖ v) = sup_i (u(i) - v(i)) - inf_i (u(i) - v(i))`\nand prove contraction: `D(T_K(u) ‖ T_K(v)) ≤ D(u ‖ v)`.\n\n**Proof Strategy.**\n- The entropy nondecreasing result follows directly from the minimum preservation\n  theorem: `fmin(Φ(u)) ≤ fmin(u)` and `c ≤ 0` implies the minimum decreases",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "181d8ba6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:07:21.688174+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Lean Type Signature",
     "description": "```lean\ntheorem tropicalEigencone_charge_reversal\n    {n : ℕ} (W A : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) (q λ : ℝ)\n    (hW : W.IsSymm) (v : Fin (n+1) → ℝ)\n    (hv : ∀ i, Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩\n      (fun j => chargedWeight W A q i j + v j) = λ + v i) :\n    ∀ i, Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩\n      (fun j => chargedWeight W A (-q) j i + v i) = λ + v i\n```",
@@ -2261,40 +2129,6 @@
     "source_exp_id": "be18c0b2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:25:49.787601+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Cross-Domain Significance",
-    "description": "- **Routing algorithms**: Bidirectional Dijkstra can exploit charge duality—search forward at charge q and backward at charge -q.\n- **Network flow**: Max-flow/min-cut duality in directed networks may connect to charge-reversal.\n- **Statistical mechanics**: Path integrals in tropical statistical mechanics would inherit time-reversal symmetry.\n\n---",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be18c0b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:25:49.883166+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "Direction 2: Entropy Rates of Infinite Proof Systems via Finite Truncations",
-    "description": "**Hypothesis**: For a countably infinite proof architecture (e.g., the full proof search tree of a formal system), the *topological entropy* — defined as the limit of `(1/n) · log(W_n)` — exists and characterizes the asymptotic growth rate of proof strategies.\n\n**Proof Strategy**:\n- Define truncated walk counts `W_n(E)` as in our current framework.\n- Show that `log W_n` is subadditive: `log W_{m+n} ≤ log W_m + log W_n` (by concatenation of walks).\n- Apply Fekete's lemma to conclude the limit `lim (1/n) log W_n` exists.\n- Relate this limit to the spectral radius of the adjacency matrix via the Perron-Frobenius theorem.\n\n**Cross-Domain Connections**:\n- Connects to *symbolic dynamics* and *topological entropy* in ergodic theory.\n- The spectral radius connection links proof complexity to linea",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "102555eb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:30:49.241321+00:00"
   },
   {
     "id": "fd_0197",
@@ -2325,40 +2159,6 @@
     "source_exp_id": "13b8af12",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:31:05.395436+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Direction 1: Prove the Consonance Isolation Conjecture",
-    "description": "**Hypothesis:** No Berggren descendant of depth ≥ 1 is simply consonant — that is, no triple generated by applying any sequence of generators A, B, C to (3,4,5) has a side-ratio in {1, 6/5, 5/4, 4/3, 3/2}.\n\n**Proof Strategy:**\n- For ratio c/a = 4/3: this forces 3c = 4a, i.e., 3|a and 4|c. Combined with a² + b² = c², derive mod-constraints showing gcd(a,b,c) > 1 for c > 5, contradicting primitivity.\n- For ratio b/a = 3/2: forces 2b = 3a. Substitute into a² + b² = c² to get 13a²/4 = c², forcing 2|c and contradicting primitivity for c > 5.\n- Systematically eliminate each target ratio using modular arithmetic and the explicit form of Berggren matrix products.\n\n**Cross-Domain Connection:** This would establish that consonance is a zero-density property in the Berggren tree, connecting to questi",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0d901ed3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:42:39.895641+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "Direction 3: Interval Network and Tonnetz Construction",
-    "description": "**Goal:** Construct a finite graph whose vertices are interval classes generated by Pythagorean triples (up to octave equivalence) and whose edges represent Berggren generation steps. Compare this graph to the classical Tonnetz (the tone network of music theory).\n\n**Specific Targets:**\n1. Define octave equivalence classes of intervals: [r] = {r · 2ⁿ : n ∈ ℤ} ∩ [1, 2).\n2. For each Berggren triple, extract its three reduced interval classes.\n3. Build the adjacency graph: vertices are interval classes, edges connect classes that co-occur in the same triple.\n4. Compute graph-theoretic invariants (diameter, chromatic number, clustering coefficient) at each Berggren depth.\n5. Prove that the depth-0 graph on three vertices {[4/3], [5/4], [5/3]} is a triangle — the minimal Tonnetz cell.\n\n**Cross-D",
-    "domains": [
-      "Pythagorean",
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0d901ed3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:42:39.914831+00:00"
   },
   {
     "id": "fd_0199",
@@ -2443,5 +2243,71 @@
     "source_exp_id": "c26006e9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:24.843463+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "1. Charged Value Iteration Equivalence (Convergence)",
+    "description": "**Statement.** If `Φ₀` is an initial value field and the sequence `Φₖ₊₁ = maxwellBellmanOp W A q Φₖ` converges pointwise, then the limit equals the limit of `Φₖ₊₁ = bellmanOp (chargedWeight W A q) Φₖ` with the same initial condition.\n\n**Lean type signature:**\n```lean\ntheorem charged_value_iteration_limit {n : ℕ}\n    (W A : Matrix (Fin n) (Fin n) ℝ) (q : ℝ)\n    (Φ₀ : Fin n → ℝ)\n    (hconv : ∀ i, Filter.Tendsto (fun k => ((maxwellBellmanOp W A q)^[k] Φ₀) i)\n      Filter.atTop (nhds (Φ_limit i))) :\n    ∀ i, Filter.Tendsto (fun k => ((bellmanOp (chargedWeight W A q))^[k] Φ₀) i)\n      Filter.atTop (nhds (Φ_limit i))\n```\n\n**Proof strategy.** This is an immediate corollary of `iterate_maxwellBellmanOp_eq`, which shows all iterates are literally equal. The limits are therefore identical by uniquen",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6fcabd0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:25:37.078676+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "2. Monotonicity of the Bellman Operator in Charge",
+    "description": "**Statement.** If `A(i,j) ≥ 0` for all `i, j` and `q₁ ≤ q₂`, then `bellmanOp (chargedWeight W A q₁) Φ i ≤ bellmanOp (chargedWeight W A q₂) Φ i` for all `i`.\n\n**Lean type signature:**\n```lean\ntheorem bellmanOp_charged_mono {n : ℕ} [NeZero n]\n    (W A : Matrix (Fin n) (Fin n) ℝ) (hA : ∀ i j, 0 ≤ A i j)\n    {q₁ q₂ : ℝ} (hq : q₁ ≤ q₂) (Φ : Fin n → ℝ) (i : Fin n) :\n    bellmanOp (chargedWeight W A q₁) Φ i ≤ bellmanOp (chargedWeight W A q₂) Φ i\n```\n\n**Proof strategy.** Use `ciSup_le_ciSup` with the bounding argument that for each `j`, `chargedWeight W A q₁ i j + Φ j ≤ chargedWeight W A q₂ i j + Φ j` via `chargedWeight_mono_charge` and `add_le_add_right`. Requires `BddAbove` which holds for finite types.\n\n**Cross-domain significance.**\n- *Response theory*: Establishes that increasing the coupling",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6fcabd0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:25:37.087666+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "4. Policy / Argmax Transfer Theorem",
+    "description": "**Statement.** The set of optimal transitions (argmax indices) for the Maxwell–Bellman operator at state `i` equals the set of optimal transitions for the charged Bellman operator at the same state.\n\n**Lean type signature:**\n```lean\ndef bellmanArgmax {n : ℕ} [NeZero n] (W : Matrix (Fin n) (Fin n) ℝ)\n    (Φ : Fin n → ℝ) (i : Fin n) : Set (Fin n) :=\n  { j | W i j + Φ j = bellmanOp W Φ i }\n\ndef maxwellBellmanArgmax {n : ℕ} [NeZero n]\n    (W A : Matrix (Fin n) (Fin n) ℝ) (q : ℝ) (Φ : Fin n → ℝ) (i : Fin n) : Set (Fin n) :=\n  { j | W i j + q * A i j + Φ j = maxwellBellmanOp W A q Φ i }\n\ntheorem argmax_transfer {n : ℕ} [NeZero n]\n    (W A : Matrix (Fin n) (Fin n) ℝ) (q : ℝ) (Φ : Fin n → ℝ) (i : Fin n) :\n    maxwellBellmanArgmax W A q Φ i = bellmanArgmax (chargedWeight W A q) Φ i\n```\n\n**Proof str",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6fcabd0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:25:37.106566+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Summary",
+    "description": "| # | Direction | Difficulty | Impact |\n|---|-----------|-----------|--------|\n| 1 | Value iteration convergence | Easy (corollary) | High — validates iterative solvers |\n| 2 | Monotonicity in charge | Medium | High — tropical response theory |\n| 3 | Eigenvalue reduction | Medium | High — spectral theory bridge |\n| 4 | Argmax/policy transfer | Easy–Medium | Very high — practical policy extraction |\n| 5 | Graph shortest-path | Medium | Very high — algorithmic applications |\n\nEach direction is independently pursuable and builds on the core `maxwellBellmanOp_eq_bellmanOp_charged` theorem as its foundation. Together, they constitute the beginning of a formal tropical gauge theory of Bellman dynamics.",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6fcabd0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T01:25:37.124235+00:00"
   }
 ]
