@@ -1226,25 +1226,11 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a021a156",
     "timestamp": "2026-05-14T21:34:38.213479+00:00"
-  },
-  {
-    "id": "fd_0214",
-    "title": "Define tropical head rank",
-    "description": "(number of distinct tropical patterns) and prove it lower-bounds the number of heads needed for exact tropical computation.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.217919+00:00"
   },
   {
     "id": "fd_0184",
@@ -1470,49 +1456,6 @@
     "timestamp": "2026-05-15T03:12:37.111041+00:00"
   },
   {
-    "id": "fd_0207",
-    "title": "Directions 3 and 5",
-    "description": "are more speculative but would open entirely new research areas.",
-    "domains": [
-      "Speculative"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a0c6f9fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:24:26.577448+00:00"
-  },
-  {
-    "id": "fd_0206",
-    "title": "Documentation",
-    "description": "(1 day): Write detailed docstrings explaining the mathematical significance.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c65fa1b5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:33:54.027482+00:00"
-  },
-  {
-    "id": "fd_0207",
-    "title": "Integration",
-    "description": "(1 day): Connect to the existing tropical path algebra infrastructure.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c65fa1b5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:33:54.034482+00:00"
-  },
-  {
     "id": "fd_0202",
     "title": "Matrix multiplication",
     "description": "→ algebraic infrastructure for multi-step costs",
@@ -1527,61 +1470,150 @@
     "timestamp": "2026-05-15T04:34:34.434564+00:00"
   },
   {
-    "id": "fd_0204",
-    "title": "Tropical rank",
-    "description": "→ entropy-free information measure",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "eb845453",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:34.447014+00:00"
-  },
-  {
-    "id": "fd_0206",
-    "title": "Bellman equation",
-    "description": "→ dynamic programming for proof/crypto search",
+    "id": "fd_0209",
+    "title": "Compute the local isometry group",
+    "description": "at each stratum.\n\n### Proof Strategy\n- Use `Equiv.Perm.stabilizer` from Mathlib to define isotropy groups.\n- Formalize the Weyl chamber as `{x : Fin n → ℤ | Monotone x}`.\n- Prove that the quotient metric restricted to the chamber equals the L¹ metric (already done; extend to path-level).\n\n### Cross-Domain Impact\n- **Crystallography**: fundamental domains for space groups.\n- **Eigenvalue theory**: Weyl chambers for symmetric matrices.\n- **Representation theory**: weight lattices and dominant weights.\n\n---\n\n## Direction 2: Finite Wasserstein Equivalence and Transport Geometry\n\n### Vision\nEstablish a formal bridge between the voice-leading metric and discrete optimal transport. Prove that `vlCostN` is precisely the Wasserstein-1 distance between empirical measures on $\\mathbb{Z}$, and develop",
     "domains": [
       "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9c105e5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:04:31.173316+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Prove the CDF characterization",
+    "description": ": $W_1(\\mu, \\nu) = \\sum_k |F_\\mu(k) - F_\\nu(k)|$ where $F$ is the cumulative distribution function.\n\n### Proof Strategy\n- Use Mathlib's `MeasureTheory.Measure` for the measure-theoretic formulation.\n- The CDF characterization can be proved by Abel summation / summation by parts.\n- The duality theorem for finite atomic measures is elementary and can be proved by linear programming duality.\n\n### Cross-Domain Impact\n- **Machine learning**: earth mover's distance for distributional comparison.\n- **Statistics**: quantile-based tests, Wasserstein barycenters.\n- **Economics**: optimal allocation and matching theory.\n\n---\n\n## Direction 3: Geodesics and Parsimonious Voice-Leading Paths\n\n### Vision\nClassify the geodesics (shortest paths) in the quotient metric on chord space. In music theory, these ",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
       "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "eb845453",
+    "source_exp_id": "d9c105e5",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:34.460917+00:00"
+    "timestamp": "2026-05-15T05:04:31.203929+00:00"
   },
   {
-    "id": "fd_0207",
-    "title": "Direction 2",
-    "description": "(Wall-crossing invariants) — High impact, moderate difficulty. The cell word construction is concrete and the kernel sequence theorem follows from existing cellwise constancy results.",
+    "id": "fd_0217",
+    "title": "Connect to neo-Riemannian theory",
+    "description": ": show that PLR transformations (parallel, leading-tone, relative) between major and minor triads are near-geodesic.\n\n### Proof Strategy\n- Use the sorted representation: geodesics in the sorted chamber are simply line segments.\n- The projection to the quotient may create \"folds\" at singular strata.\n- Enumerate geodesic-length progressions between common chord types computationally.\n\n### Cross-Domain Impact\n- **Algorithmic composition**: generate smooth voice leadings automatically.\n- **Music information retrieval**: measure harmonic distance in audio analysis.\n- **Path planning in robotics**: analogous to shortest paths in configuration spaces with symmetry.\n\n---\n\n## Direction 4: Tropical and Polyhedral Structure\n\n### Vision\nConnect the sorted-chamber model to tropical geometry and polyhed",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "35c9f8a7",
+    "source_exp_id": "d9c105e5",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:52.712040+00:00"
+    "timestamp": "2026-05-15T05:04:31.233035+00:00"
   },
   {
-    "id": "fd_0211",
-    "title": "Iterates on proof strategy",
-    "description": "(at least 3 attempts with different approaches before escalating).",
+    "id": "fd_0220",
+    "title": "Connect to tropical semirings",
+    "description": ": the voice-leading cost is a min-plus optimization, naturally expressed in the tropical semiring $(\\mathbb{Z} \\cup \\{\\infty\\}, \\min, +)$.",
     "domains": [
-      "Logic"
+      "Tropical",
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "63da6f3f",
+    "source_exp_id": "d9c105e5",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:35:14.110673+00:00"
+    "timestamp": "2026-05-15T05:04:31.253870+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Prove that the Voronoi cells",
+    "description": "(in the L¹ metric) around lattice points in the chamber are permutohedra or their faces.\n\n### Proof Strategy\n- Use Mathlib's `Polyhedron` or `Finset.conv` for polyhedral geometry.\n- The tropical connection follows from the min-plus formulation of `vlCostN`.\n- Voronoi cell structure can be proved by explicit computation for small $n$ and extended by induction.\n\n### Cross-Domain Impact\n- **Tropical algebraic geometry**: new examples of tropical varieties from music theory.\n- **Combinatorial optimization**: Monge matrices and totally monotone matrices.\n- **Computational geometry**: L¹ Voronoi diagrams.\n\n---\n\n## Direction 5: Extended Symmetry Groups — Transposition and Inversion\n\n### Vision\nExtend the theory from pure voice permutation ($S_n$ action) to the semidirect product $S_n \\ltimes \\mat",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9c105e5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:04:31.263289+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Define the extended group action",
+    "description": ": $S_n \\ltimes \\mathbb{Z}$ acts on $\\mathbb{Z}^n$ by $(\\sigma, t) \\cdot x = (x_{\\sigma(1)} + t, \\ldots, x_{\\sigma(n)} + t)$.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9c105e5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:04:31.271487+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Add inversion",
+    "description": ": $x \\mapsto -x$ (pitch-class inversion). The group becomes $S_n \\ltimes (\\mathbb{Z} \\times \\mathbb{Z}/2\\mathbb{Z})$. Identify the fundamental domain and prove metric computability.\n\n### Proof Strategy\n- Build on `vlCostN_perm_both` for the permutation part.\n- Transposition invariance: $\\mathrm{vlCostN}(x + c, y + c) = \\mathrm{vlCostN}(x, y)$ (straightforward).\n- Inversion requires a separate argument: $\\mathrm{vlCostN}(-x, -y) = \\mathrm{vlCostN}(x, y)$ by the symmetry $|(-a) - (-b)| = |a - b|$.\n- The combined fundamental domain is a simplicial cone.\n\n### Cross-Domain Impact\n- **Post-tonal music theory**: pitch-class set theory, the T/I group.\n- **Group actions in geometry**: orbifolds under semidirect product groups.\n- **Invariant theory**: computing invariant rings for finite group actio",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9c105e5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:04:31.294080+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Direction 4",
+    "description": "(tropical structure) — most speculative, but could yield surprising connections.\n\n---\n\n## Immediate Next Steps\n\nFor each direction, the first concrete task is:",
+    "domains": [
+      "Tropical",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9c105e5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:04:31.307136+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Tropical",
+    "description": ": Define `tropicalVLCost` using min-plus algebra and prove equivalence with `vlCostN`.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9c105e5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T05:04:31.335951+00:00"
   },
   {
     "id": "seed_078",
@@ -2123,76 +2155,6 @@
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
-    "id": "fd_0206",
-    "title": "1. Berggren Transfer Operator and Prime Equidistribution",
-    "description": "**Goal**: Define a weighted transfer operator on the Berggren tree and prove spectral bounds governing the density of hypotenuse primes.\n\n**Hypothesis**: The Berggren tree, viewed as a dynamical system on the Pythagorean cone, admits a transfer (Ruelle–Perron–Frobenius) operator whose spectral gap controls the equidistribution of primes ≡ 1 mod 4 among hypotenuse lengths up to N.\n\n**Proof Strategy**:\n- Define the transfer operator L_s acting on functions of Berggren tree nodes, weighted by c^{-s} where c is the hypotenuse.\n- Establish that the operator has a simple dominant eigenvalue at s = 1, with spectral gap determined by the three Berggren matrices' spectral radii.\n- Connect the spectral gap to error terms in the counting function #{c ≤ N : c is a primitive hypotenuse}.\n- Use existing",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1368feba",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:31:22.933233+00:00"
-  },
-  {
-    "id": "fd_0207",
-    "title": "2. Automorphic Shadow of the Tropical Berggren Zeta",
-    "description": "**Goal**: Relate the primitive-triple support series to modular symbols and Hecke eigenforms.\n\n**Hypothesis**: The generating function Z(s) = Σ A(n) n^{-s} (summing over primitive hypotenuses) is expressible in terms of the Dedekind zeta function of ℤ[i] and L-functions of Hecke characters, providing an automorphic interpretation of the Berggren zeta.\n\n**Proof Strategy**:\n- Use the Gaussian integer factorization: n = a² + b² ↔ n factors in ℤ[i] with specific norm constraints.\n- Show that Z(s) = ζ_{ℤ[i]}(s) / ζ(2s) up to finitely many Euler factors, relating the Berggren zeta to the Dedekind zeta of ℚ(i).\n- Formalize the connection between admissible hypotenuse primes (p ≡ 1 mod 4) and split primes in ℤ[i].\n- Build on `sum_two_coprime_squares_imp_admissible` for the arithmetic backbone.\n\n**",
-    "domains": [
-      "Tropical",
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1368feba",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:31:22.943644+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "4. Discrete Area-Throughput Inequality",
-    "description": "**Hypothesis:** For a tropical horizon (min-cut) `H` separating source `s` from sink `t` in a nonneg weighted digraph, prove the inequality:\n\n    d(s, t) ≥ min_{e ∈ H} w(e)\n\nand characterize when equality holds (analogous to the equality case in the isoperimetric inequality).\n\n**Strategy:** Any path from `s` to `t` must cross every cut, so its weight is at least the minimum edge weight in the cut. The tropical distance, being the minimum over all paths, inherits this bound. Equality characterization involves identifying \"tight\" paths that achieve the minimum on every cut edge.\n\n**Cross-domain connections:** This is a tropical analogue of the Bekenstein bound (entropy ≤ area/4) relating information capacity to geometric surface area. In network optimization, it quantifies the fundamental th",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "57002e63",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:11.219961+00:00"
-  },
-  {
-    "id": "fd_0212",
-    "title": "5. Tropical Causal Boundary for Infinite Graphs",
-    "description": "**Hypothesis:** For locally finite infinite weighted digraphs with nonneg weights and no zero-cost cycles, define the \"tropical causal boundary\" as the set of equivalence classes of chronologically inextendible future-directed rays (infinite paths with monotonically increasing vertices in the chronological order). Prove that this boundary, equipped with a suitable topology, is compact and that the chronological order extends continuously to the boundary.\n\n**Strategy:** Model this on the causal boundary construction in Lorentzian geometry (the Geroch-Kronheimer-Penrose construction). Use the nonneg distance to define a notion of \"ideal points at infinity\" via filters or ultrafilters on the vertex set. The compactness should follow from the finite branching (local finiteness) of the graph an",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "57002e63",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:34:11.227756+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "1. Confluence and Canonical Forms for Commutative-Associative Tropical Syntax",
     "description": "**Precise statement:** Extend `TropExpr` with associativity and commutativity normalization rules for `tmin` and `add`. Define `normalize_ca : TropExpr → TropExpr` that flattens nested `tmin`/`add` nodes into sorted lists of children (using a total order on `TropExpr`). Prove:\n\n```\n∀ e, eval σ (normalize_ca e) = eval σ e\n∀ e, normalize_ca (normalize_ca e) = normalize_ca e\n∀ e₁ e₂, (∀ σ, eval σ e₁ = eval σ e₂) → normalize_ca e₁ = normalize_ca e₂  -- on the AC fragment\n```\n\n**Proof strategy:** Define a canonical flattened representation (sorted lists of summands/minands). Show the flattening+sorting procedure preserves eval by commutativity and associativity of `min` and `+` over `ℝ`. Idempotence follows from the determinism of sorting. Completeness on the AC fragment requires showing that a",
@@ -2260,25 +2222,6 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.664780+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "5. Closure-Operator Abstraction and Connection to Stone Duality",
-    "description": "**Precise statement:** Define an abstract closure operator structure:\n\n```\nstructure ClosureOp (α : Type) where\n  cl : α → α\n  idempotent : ∀ x, cl (cl x) = cl x\n  extensive : ∀ x, ... -- or contractive, depending on direction\n```\n\nShow that `normalize` instantiates this structure (it is already idempotent). Connect to `closure_table_recovers_basis_and_spectrum`: show that the set of normal forms `{e | isNormalized e = true}` forms a \"basis\" for the space of tropical expressions modulo semantic equivalence, analogous to how a closure system's closed sets form a basis for a topology.\n\n**Proof strategy:** The idempotence theorem is already proved. For the abstract closure structure, additionally prove that normalize is \"contractive\" in a suitable sense (e.g., `size (normalize e) ≤ size e`, a",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5a40fd94",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:35:31.676378+00:00"
   },
   {
     "id": "fd_0205",
