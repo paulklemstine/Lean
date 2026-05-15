@@ -9,10 +9,10 @@
       "Algebra"
     ],
     "priority_score": 0.99,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0700908f",
     "timestamp": "2026-05-14T16:03:53.869875+00:00"
   },
   {
@@ -953,7 +953,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "fc1f2333",
+    "consumed_by_exp_id": "56f66752",
     "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
@@ -969,20 +969,6 @@
     "source_exp_id": "fafc44be",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T01:18:10.018444+00:00"
-  },
-  {
-    "id": "fd_0188",
-    "title": "Encoding/decoding lemmas",
-    "description": ": Establish that valid encodings (exactly one position marker per FO variable, consistent set membership for SO variables) form a regular subset, and that projection over annotations corresponds to existential quantification.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fafc44be",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T01:18:10.025018+00:00"
   },
   {
     "id": "fd_0190",
@@ -1183,23 +1169,6 @@
     "timestamp": "2026-05-15T08:03:37.270398+00:00"
   },
   {
-    "id": "fd_0227",
-    "title": "Connection to statistical mechanics",
-    "description": ": Interpret the still life count as a partition function and the entropy as a free energy, linking tropical CA to lattice statistical mechanics.\n\n**Key Formalization**: Define `stillLifeEntropy (m n : ℕ) := Real.log (Finset.card {c : Config m n | IsStillLife c}) / (m * n)` and prove it converges as m, n → ∞.\n\n**Cross-Domain Impact**: Connects tropical CA to ergodic theory, symbolic dynamics, and statistical mechanics. Positive entropy would mean the system has intrinsic unpredictability.\n\n---\n\n## Direction 3: Tropical Collision Logic and Glider Interactions\n\n**Status**: One glider family certified (5-cell, period 4, displacement (1,1)).\n\n**Hypothesis**: Collisions between tropical gliders produce computationally useful outputs — specifically, glider-glider collisions can function as logic ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:09.918976+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Logic gate identification",
     "description": ": Identify collision outcomes that correspond to Boolean operations. A collision producing a glider iff both inputs are present is an AND gate. A collision producing a glider iff at least one input is present is an OR gate.",
@@ -1375,36 +1344,21 @@
     "timestamp": "2026-05-15T10:01:34.481631+00:00"
   },
   {
-    "id": "fd_0224",
-    "title": "Voronoi duality:",
-    "description": "Each bulk vertex is nearest to at least one boundary vertex, which determines a singleton wedge containing it.\n\n### Cross-Domain Significance\n\n- **Distributed systems:** Multi-party monitoring and fault coverage guarantees.\n- **Quantum information:** Subregion duality and complementary recovery.\n- **Combinatorial optimization:** Covering and packing on metric spaces.\n\n---\n\n## Direction 5: Algorithmic Certification of Reconstruction Guarantees\n\n### Statement\n\nProduce a **verified algorithm** (certified in Lean) that, given a graph and boundary subset $B$, outputs:\n1. The wedge $\\mathrm{Wedge}(B)$\n2. A stability certificate (gap values for each wedge vertex)\n3. A reconstruction certificate (unique argmin witnesses, or a report of degeneracies)\n\n### Exact Theorem Target\n\n```lean\n-- A decision",
+    "id": "fd_0222",
+    "title": "Necessity",
+    "description": ": Construct an adversarial execution showing that for non-idempotent operations (e.g., addition), different delivery schedules can produce different results.\n3. Formalize the FLP-style impossibility argument adapted to the tropical setting.\n\n### Significance\nThis would provide a complete classification of which distributed tasks require coordination and which do not, resolving a fundamental question in distributed computing theory.\n\n### Cross-Domain Connections\n- **Database theory**: Exactly characterizes which CRDT designs are possible.\n- **Concurrency theory**: Connects to linearizability and sequential consistency.\n- **Abstract algebra**: The classification is essentially about which semiring axioms enable confluence.\n\n---\n\n## Direction 3: Tropical Communication Complexity Lower Bounds\n",
     "domains": [
-      "Physics",
+      "Tropical",
       "Bridges",
-      "Algebra"
+      "Algebra",
+      "Computation"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "9ab661ec",
+    "source_exp_id": "3adfea25",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:01:34.501202+00:00"
-  },
-  {
-    "id": "seed_078",
-    "title": "Galaxy-Scale Computation: Tropical Distributed Systems Across Light-Years",
-    "description": "Prove that distributed computation across galactic distances with lightspeed latency is optimally modeled as a tropical network flow where min-plus propagation delay replaces classical synchronization. Show that the tropical diameter of the galaxy-scale network determines the optimal parallel speedup, and that idempotent message aggregation eliminates the need for consensus protocols.",
-    "domains": [
-      "Speculative",
-      "Computation",
-      "Tropical"
-    ],
-    "priority_score": 0.74,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "3adfea25",
-    "timestamp": "2026-05-14T16:03:53.879861+00:00"
+    "timestamp": "2026-05-15T10:03:55.837594+00:00"
   },
   {
     "id": "seed_079",
@@ -1896,10 +1850,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cb03e742",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ebeb33e3",
     "timestamp": "2026-05-15T09:04:35.024761+00:00"
   },
   {
@@ -2147,23 +2101,6 @@
     "timestamp": "2026-05-15T10:03:13.219500+00:00"
   },
   {
-    "id": "fd_0221",
-    "title": "Direction 2: Tropical Mutual Information and Data Processing Inequality",
-    "description": "**Hypothesis**: A tropical mutual information can be defined via min-plus convolution, and it satisfies a data processing inequality under tropical channels.\n\n**Background**: Mutual information I(X;Y) = H(X) + H(Y) - H(X,Y) quantifies shared information. In the tropical semiring (R ∪ {∞}, min, +), the natural entropy analogue is the min-entropy H_∞(w) = -min_a w(a), and tropical convolution replaces probabilistic marginalization.\n\n**Concrete Next Steps**:\n1. Define tropical entropy: `tropicalEntropy w = -(Finset.univ.inf' hne w)`\n2. Define tropical joint distributions as weight functions on product types\n3. Define tropical mutual information via min-plus marginalization\n4. Prove the data processing inequality: for any deterministic tropical channel f, `I_trop(X; f(X)) ≤ I_trop(X; X)`\n5. Co",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14a8bd15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:13.229619+00:00"
-  },
-  {
     "id": "fd_0222",
     "title": "Direction 3: Semantic Rate-Distortion Function",
     "description": "**Hypothesis**: The optimal tradeoff between codebook size and semantic distortion follows a tropical analogue of the rate-distortion function, and this function can be computed exactly for structured codebooks.\n\n**Background**: Shannon's rate-distortion function R(D) gives the minimum bits needed to compress a source with distortion ≤ D. Our `exists_optimal_semantic_code` gives existence of the optimizer for a fixed codebook. The next step is to optimize over codebooks of a given size.\n\n**Concrete Next Steps**:\n1. Define `semanticRateDistortion (n : ℕ) (w : α → ℝ) (D : ℝ) : Prop` as \"there exists a codebook of size ≤ n with semantic distortion ≤ D\"\n2. Prove monotonicity: larger codebooks achieve smaller distortion\n3. For min-closed codebooks, prove that the rate-distortion function is det",
@@ -2178,39 +2115,6 @@
     "source_exp_id": "14a8bd15",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T10:03:13.239234+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Direction 4: Categorical Semantics of Tropical Projectors as Reflectors",
-    "description": "**Hypothesis**: The idempotent tropical projector defines a reflective subcategory in a suitable category of tropical modules, and this reflection is the categorical semantics of semantic compression.\n\n**Background**: Our `tropicalProj_idempotent` shows P² = P. In category theory, an idempotent endomorphism that splits gives a retraction/section pair, defining a reflective subcategory. The semantic compression pipeline is: source → project → code, and the fact that P² = P means the codebook is a retract of the ambient space.\n\n**Concrete Next Steps**:\n1. Define a category `TropMod` of tropical modules (weight functions with min-plus structure)\n2. Define morphisms as non-expansive maps (1-Lipschitz in semantic distance)\n3. Show that `tropicalProj` defines a functor from `TropMod` to the full",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14a8bd15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:13.249310+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Direction 5: Certified Tropical Autoencoders with Semantic Bottlenecks",
-    "description": "**Hypothesis**: A neural autoencoder whose bottleneck layer implements a tropical projection onto a learned min-closed codebook provably achieves idempotent reconstruction with certified distortion bounds.\n\n**Background**: Our theorems show that tropical projection is idempotent and Fisher-bounded. ReLU networks naturally compute tropical (piecewise-linear) functions. An autoencoder with a tropical bottleneck would have mathematically certified compression properties, unlike standard autoencoders which lack formal guarantees.\n\n**Concrete Next Steps**:\n1. Define a tropical autoencoder architecture: encoder (arbitrary), bottleneck (tropical projection onto learned codebook), decoder (identity or learned)\n2. Prove that the bottleneck satisfies `tropicalProj_idempotent`: passing through the bo",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14a8bd15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:13.258464+00:00"
   },
   {
     "id": "fd_0220",
@@ -2228,21 +2132,6 @@
     "source_exp_id": "33bff7e2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T10:03:37.272305+00:00"
-  },
-  {
-    "id": "fd_0221",
-    "title": "Algorithmic Extraction",
-    "description": "All five directions suggest concrete algorithms:\n- Direction 1: Multiclass nerve construction + higher-degree exactness check\n- Direction 2: Filtration computation + persistent homology\n- Direction 3: Tropical vertex enumeration + min-plus linear algebra\n- Direction 4: Product nerve construction + modular exactness verification\n- Direction 5: Boundary operator computation + cycle detection",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "33bff7e2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T10:03:37.285558+00:00"
   },
   {
     "id": "fd_0222",
