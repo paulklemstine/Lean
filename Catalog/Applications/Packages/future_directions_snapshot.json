@@ -1248,20 +1248,6 @@
     "timestamp": "2026-05-15T03:12:37.111041+00:00"
   },
   {
-    "id": "fd_0222",
-    "title": "Define the extended group action",
-    "description": ": $S_n \\ltimes \\mathbb{Z}$ acts on $\\mathbb{Z}^n$ by $(\\sigma, t) \\cdot x = (x_{\\sigma(1)} + t, \\ldots, x_{\\sigma(n)} + t)$.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d9c105e5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:04:31.271487+00:00"
-  },
-  {
     "id": "fd_0226",
     "title": "Direction 4",
     "description": "(tropical structure) — most speculative, but could yield surprising connections.\n\n---\n\n## Immediate Next Steps\n\nFor each direction, the first concrete task is:",
@@ -1306,38 +1292,6 @@
     "timestamp": "2026-05-15T06:04:45.556538+00:00"
   },
   {
-    "id": "fd_0222",
-    "title": "Depth-degree correspondence",
-    "description": ": A depth-d ReLU network computes a tropical polynomial of degree ≤ d (where degree = maximum total exponent in any monomial).",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.631012+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Exact robustness",
-    "description": ": The minimum margin over an ε-perturbation ball equals a linear program over the Newton polytope data.\n\n### Strategy\n1. Define `ReLUNetwork` as a sequence of weight matrices and bias vectors.\n2. Define `networkToTropExpr` converting a network to a tropical expression.\n3. Prove `eval(networkToTropExpr(N), x) = networkEval(N, x)`.\n4. Apply `normalize` to extract the monomial support.\n5. Prove that robustness = margin = gap between class polynomials.\n\n### Cross-Domain Connections\n- **Machine learning**: exact analysis of neural network decision boundaries\n- **Safety-critical systems**: certified robustness for autonomous driving, medical AI\n- **Complexity theory**: tropical degree as a measure of network expressiveness\n\n### Estimated Difficulty\nMedium-High. The basic correspondence is straig",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.639726+00:00"
-  },
-  {
     "id": "fd_0226",
     "title": "Tropical Gröbner basis",
     "description": ": a generating set G such that tropical division by G terminates with remainder 0 iff p ∈ ideal(G).\n\n### Proof Strategy\n- Formalize tropical division using the normal form representation\n- Prove termination via a well-founded order on monomial supports\n- Prove the Buchberger criterion: S-polynomials reduce to 0\n\n### Cross-Domain Connections\n- **Computational algebra**: extends classical Gröbner basis theory to tropical setting\n- **Algebraic geometry**: tropical varieties as computational objects\n- **Combinatorial optimization**: tropical ideal membership has applications in linear programming duality\n\n### Estimated Difficulty\nVery High. This is a substantial research project. An intermediate target: formalize tropical division for univariate polynomials.\n\n---\n\n## Priority Ordering",
@@ -1354,34 +1308,6 @@
     "source_exp_id": "ad86a7ea",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:04:45.662969+00:00"
-  },
-  {
-    "id": "fd_0206",
-    "title": "Colimits:",
-    "description": "Pushouts via quotients of coproducts.\n\n**Impact:** Limits enable systematic combination of theories: given a shared interface (pullback), one can merge two domain theories into a composite. This is directly relevant to:\n- Modular program verification (combining module specs)\n- Ontology merging in knowledge representation\n- Multi-domain scientific modeling\n\n**Target theorem:**\n```\ntheorem product_is_universal (T U : ResearchTheory)\n    (V : ResearchTheory) (p₁ : TheoryHom V T) (p₂ : TheoryHom V U) :\n    ∃! h : TheoryHom V (T.prod U), ... = p₁ ∧ ... = p₂\n```\n\n---\n\n## Direction 4: Fixed-Point Semantics in the Bicategory\n\n**Hypothesis:** Define endomorphism theories `End(T) := TheoryHom T T` and prove that monotone endomorphisms on hom-preorders have least fixed points (by Knaster-Tarski).\n\n**",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:09.039853+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "Pipeline registration DSL",
-    "description": ": A Lean macro for declaring pipeline stages as theory morphisms with auto-generated monotonicity obligations.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "069b9159",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:28:23.493776+00:00"
   },
   {
     "id": "fd_0212",
@@ -1413,20 +1339,6 @@
     "timestamp": "2026-05-15T07:05:09.477655+00:00"
   },
   {
-    "id": "fd_0208",
-    "title": "Duality:",
-    "description": "The stress–fold duality (Theorem B) propagates into every direction — as Maxwell–Cremona in Direction 2, as Farkas duality in Direction 3, as temperature duality in Direction 4, and as cell-complex duality in Direction 5.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09712312",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:09.487641+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Computability:",
     "description": "The finite, combinatorial nature of tropical origami mechanics means every theoretical result has an algorithmic shadow, making this framework immediately applicable to engineering and design.",
@@ -1440,20 +1352,6 @@
     "source_exp_id": "09712312",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:05:09.503948+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "Tropical theta functions",
-    "description": "(piecewise linear functions, tropical Fourier analysis)",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "faba857f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:30.483935+00:00"
   },
   {
     "id": "fd_0212",
@@ -1514,20 +1412,6 @@
     "timestamp": "2026-05-15T07:06:07.999806+00:00"
   },
   {
-    "id": "fd_0199",
-    "title": "Apply our framework",
-    "description": ": Feed the entrywise bound into `triangleCycleGap_logWeight_lower_bound` applied to `P^m`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:06:08.007527+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -1586,6 +1470,216 @@
     "source_exp_id": "5906278a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:06:08.042682+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Compute voice-leading distances",
+    "description": "by optimal transport over S₄ (24 permutations per pair). The space has ~48 chords (12 roots × 4+ qualities), giving ~2,304 pairs — still finite and decidable.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.253200+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "Prove geodesicity or near-geodesicity",
+    "description": "with an explicit constant C.\n\n### Key Challenge\nSeventh chords have more quality types and more complex interval structures. The analogue of the \"unique minimizer\" theorem may fail — there could be more than 2 geodesic quality-changing moves from a given chord.\n\n### Cross-Domain Connection\nThe 4-voice orbifold connects to the theory of 4-body configuration spaces in physics and chemistry (e.g., molecular geometry under bond permutation symmetry).\n\n### Deliverables\n- Classification of all \"parsimonious\" seventh chord moves\n- Lean formalization of geodesicity for the 4-voice case\n- Comparison with existing music-theoretic catalogues (Childs 1998, Douthett & Steinbach 1998)\n\n---\n\n## Direction 2: The Continuous Voice-Leading Orbifold\n\n### Hypothesis\nIn the continuous orbifold (ℝ/12ℤ)³/S₃, the ",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.270398+00:00"
+  },
+  {
+    "id": "fd_0210",
+    "title": "Define the orbifold metric",
+    "description": "formally as the infimum of path lengths over all smooth (or piecewise-linear) paths in the quotient, using the standard Riemannian metric lifted from (ℝ/12ℤ)³.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.278918+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Show that line segments in the sorted chamber are geodesics",
+    "description": "by verifying the geodesic equation or using comparison geometry.",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.295302+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Handle singular strata",
+    "description": ": when a path crosses a wall {xᵢ = xⱼ}, the quotient identification may fold the path. Prove that for PLR endpoints, this folding does not increase path length.\n\n### Key Challenge\nThe singular strata require careful analysis. At walls where two coordinates coincide, the orbifold has a ℤ₂ singularity (locally a cone over ℝP¹). Geodesics passing through these points may \"refract.\"\n\n### Cross-Domain Connection\nThis connects directly to Alexandrov geometry (curvature bounds on quotient spaces) and to the theory of geodesics in Weyl chambers used in Lie theory and symmetric spaces.\n\n### Deliverables\n- Lean formalization of the continuous orbifold as a metric space\n- Proof of convexity of the sorted chamber\n- Geodesicity theorem for PLR in the continuous case\n\n---\n\n## Direction 3: The Tonnetz as",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.304314+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Identify the polyhedral structure",
+    "description": ": the sorted chamber in ℤ₁₂³ is a finite polyhedral complex. The quotient by S₃ gives a cell complex whose 0-cells are triads and whose 1-cells correspond to minimal voice leadings.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.312106+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Define the tropical fan",
+    "description": ": use the min-plus algebra structure of sorted coordinates to define a tropical variety. The Tonnetz vertices correspond to lattice points in this fan.",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.319713+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "Prove isometric embedding",
+    "description": ": show that the shortest-path metric on the 1-skeleton of the tropical complex restricts to the voice-leading distance on PLR-adjacent vertices.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.326995+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "Connect to the tropical Grassmannian",
+    "description": ": the space of 3-note chords in ℤ₁₂ may relate to the tropical Grassmannian Gr(3, 12) studied in algebraic combinatorics.\n\n### Key Challenge\nDefining the right tropical complex requires choosing the correct polyhedral decomposition. The natural candidates are the secondary polytope of ℤ₁₂³ and the Weyl chamber decomposition.\n\n### Cross-Domain Connection\n- Tropical algebraic geometry (Maclagan & Sturmfels 2015)\n- Polyhedral combinatorics and fiber polytopes\n- Persistent homology of musical chord spaces\n\n### Deliverables\n- Definition of the tropical chord complex\n- Proof that PLR edges are 1-cells\n- Computation of the full face lattice\n\n---\n\n## Direction 4: PLR Dynamics and Coxeter Group Actions\n\n### Hypothesis\nThe PLR group, viewed as a subgroup of the symmetry group of the Tonnetz, has a n",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.336202+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "Identify the Coxeter structure",
+    "description": ": the PLR group is isomorphic to D₁₂ = ℤ₁₂ ⋊ ℤ₂. Determine whether this group arises as a Coxeter group with natural generators corresponding to geometric reflections.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.344226+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "Compute the word metric",
+    "description": ": the word metric on the PLR group (minimum number of P, L, R moves to reach a given group element) should relate to the voice-leading distance.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.352106+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Prove a quasi-isometry",
+    "description": ": show that the word metric on the PLR group is quasi-isometric to the voice-leading metric on chords, with explicit constants.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.361055+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Generalize to higher cardinalities",
+    "description": ": for n-note chords, determine the Coxeter-type structure of the generalized PLR group.\n\n### Key Challenge\nThe PLR group is not a standard Coxeter group because P, L, R are involutions but do not satisfy braid relations in general. The connection to Coxeter theory may require passing to a larger group or a quotient.\n\n### Cross-Domain Connection\n- Coxeter groups and reflection groups (Humphreys 1990)\n- Geometric group theory: quasi-isometry and Gromov hyperbolicity\n- Crystallographic groups and lattice symmetries\n\n### Deliverables\n- Lean formalization of the PLR group structure\n- Computation of the Cayley graph with voice-leading edge weights\n- Quasi-isometry constants between word metric and voice-leading metric\n\n---\n\n## Direction 5: Formally Verified Harmonic Analysis for MIR\n\n### Hypothe",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.371735+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Prove convergence of clustering",
+    "description": ": using the triangle inequality, prove that k-medoids clustering with chordDist converges and produces a valid partition.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c58d2658",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T08:03:37.409024+00:00"
   },
   {
     "id": "seed_078",
@@ -2017,22 +2111,6 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.644214+00:00"
-  },
-  {
-    "id": "fd_0206",
-    "title": "Cross-Domain Significance",
-    "description": "- **Probabilistic combinatorics**: Connects cycle-systolic bounds to probabilistic method lower bounds.\n- **Information theory**: Relates to Shannon's noisy channel coding theorem — randomization cannot reduce geometric cycle costs.\n- **Quantum computing**: Paves the way for quantum extensions via density-matrix-valued protocols.\n\n---",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f5102ff5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:13:00.295322+00:00"
   },
   {
     "id": "fd_0212",
