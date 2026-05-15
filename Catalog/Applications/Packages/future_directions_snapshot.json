@@ -903,10 +903,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "52442f6a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97c6ba31",
     "timestamp": "2026-05-15T22:35:47.036763+00:00"
   },
   {
@@ -923,6 +923,48 @@
     "source_exp_id": "da61b560",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T22:45:18.154706+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Verify examples",
+    "description": "computationally with `#eval` or Python.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cd76a6a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:22:05.156916+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Write applications",
+    "description": "that demonstrate the theorem's value.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cd76a6a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:22:05.167977+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Document",
+    "description": "with module-level docstrings and cross-references.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cd76a6a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:22:05.177402+00:00"
   },
   {
     "id": "seed_052",
@@ -1285,20 +1327,6 @@
     "source_exp_id": "cb03e742",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:04:34.989688+00:00"
-  },
-  {
-    "id": "fd_0196",
-    "title": "4. General Linear Map Kernel Density Theorem",
-    "description": "**Goal**: Generalize from matrices over `Fin` to arbitrary finite-dimensional vector spaces.\n\n**Theorem statement**:\n```lean\ntheorem nonzero_linear_map_kernel_density\n    {q : ℕ} [Fact q.Prime]\n    {V W : Type*} [AddCommGroup V] [Module (ZMod q) V]\n    [AddCommGroup W] [Module (ZMod q) W]\n    [FiniteDimensional (ZMod q) V] [FiniteDimensional (ZMod q) W]\n    [Fintype V] [Fintype W]\n    (f : V →ₗ[ZMod q] W) (hf : f ≠ 0) :\n    Fintype.card f.ker * q ≤ Fintype.card V\n```\n\n**Strategy**: Since $f \\neq 0$, the range has positive dimension, so $\\dim(\\ker f) \\leq \\dim(V) - 1$. Then $|\\ker f| = q^{\\dim(\\ker f)} \\leq q^{\\dim(V)-1} = |V|/q$.\n\n**Impact**: This is the truly general theorem, applicable to any finite-dimensional representation. It covers:\n- Matrix verification (current result)\n- Polynomia",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "cb03e742",
-    "consumed_by_exp_id": "cd76a6a7",
-    "timestamp": "2026-05-15T09:04:34.999218+00:00"
   },
   {
     "id": "fd_0197",
