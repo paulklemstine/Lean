@@ -632,10 +632,10 @@
       "Algebra"
     ],
     "priority_score": 0.77,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b109bab",
     "timestamp": "2026-05-14T16:03:53.843446+00:00"
   },
   {
@@ -786,10 +786,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2fbec27e",
     "timestamp": "2026-05-14T16:16:22.750444+00:00"
   },
   {
@@ -1125,10 +1125,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5906278a",
     "timestamp": "2026-05-14T17:33:00.515491+00:00"
   },
   {
@@ -1144,20 +1144,6 @@
     "source_exp_id": "c337fb05",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:35:20.582859+00:00"
-  },
-  {
-    "id": "fd_0213",
-    "title": "Bound the finite-temperature error",
-    "description": "from pruning: use the LSE-tropical bound to show that removing a redundant head changes the output by at most `τ · log n`.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "a021a156",
-    "timestamp": "2026-05-14T21:34:38.213479+00:00"
   },
   {
     "id": "fd_0184",
@@ -1341,24 +1327,6 @@
     "timestamp": "2026-05-15T03:12:37.111041+00:00"
   },
   {
-    "id": "fd_0209",
-    "title": "Compute the local isometry group",
-    "description": "at each stratum.\n\n### Proof Strategy\n- Use `Equiv.Perm.stabilizer` from Mathlib to define isotropy groups.\n- Formalize the Weyl chamber as `{x : Fin n → ℤ | Monotone x}`.\n- Prove that the quotient metric restricted to the chamber equals the L¹ metric (already done; extend to path-level).\n\n### Cross-Domain Impact\n- **Crystallography**: fundamental domains for space groups.\n- **Eigenvalue theory**: Weyl chambers for symmetric matrices.\n- **Representation theory**: weight lattices and dominant weights.\n\n---\n\n## Direction 2: Finite Wasserstein Equivalence and Transport Geometry\n\n### Vision\nEstablish a formal bridge between the voice-leading metric and discrete optimal transport. Prove that `vlCostN` is precisely the Wasserstein-1 distance between empirical measures on $\\mathbb{Z}$, and develop",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d9c105e5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:04:31.173316+00:00"
-  },
-  {
     "id": "fd_0213",
     "title": "Prove the CDF characterization",
     "description": ": $W_1(\\mu, \\nu) = \\sum_k |F_\\mu(k) - F_\\nu(k)|$ where $F$ is the cumulative distribution function.\n\n### Proof Strategy\n- Use Mathlib's `MeasureTheory.Measure` for the measure-theoretic formulation.\n- The CDF characterization can be proved by Abel summation / summation by parts.\n- The duality theorem for finite atomic measures is elementary and can be proved by linear programming duality.\n\n### Cross-Domain Impact\n- **Machine learning**: earth mover's distance for distributional comparison.\n- **Statistics**: quantile-based tests, Wasserstein barycenters.\n- **Economics**: optimal allocation and matching theory.\n\n---\n\n## Direction 3: Geodesics and Parsimonious Voice-Leading Paths\n\n### Vision\nClassify the geodesics (shortest paths) in the quotient metric on chord space. In music theory, these ",
@@ -1449,20 +1417,6 @@
     "source_exp_id": "d9c105e5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T05:04:31.335951+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "Separation lemma for affine forms",
-    "description": ": Given finitely many affine forms f₁, ..., fₖ on ℝⁿ with fᵢ ≠ f₁ for all i > 1, there exists x such that f₁(x) > max(f₂(x), ..., fₖ(x)). Prove this by induction on n, using the fact that distinct affine forms agree on at most a hyperplane.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad86a7ea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:04:45.549078+00:00"
   },
   {
     "id": "fd_0212",
@@ -1669,34 +1623,6 @@
     "timestamp": "2026-05-15T06:05:09.046645+00:00"
   },
   {
-    "id": "fd_0208",
-    "title": "Validate",
-    "description": "with computational experiments in Python",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:09.053311+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "Connect",
-    "description": "to existing Mathlib infrastructure (enriched categories, order theory)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:09.060098+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Apply",
     "description": "to at least one domain per direction (program analysis, ML, knowledge representation)",
@@ -1709,20 +1635,6 @@
     "source_exp_id": "8b1837b9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:05:09.067102+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "Iterate",
-    "description": "— each proved theorem opens new hypotheses for the next cycle",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b1837b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:05:09.074811+00:00"
   },
   {
     "id": "seed_078",
@@ -2219,35 +2131,6 @@
     "timestamp": "2026-05-15T05:13:00.318476+00:00"
   },
   {
-    "id": "fd_0208",
-    "title": "Hypothesis",
-    "description": "The gauge transformation theorem extends to nondeterministic (adversarial) and probabilistic (stochastic) weighted automata, where the tropical spectral radius is replaced by the *value* of a mean-payoff game or the *Lyapunov exponent* of a random tropical matrix product, respectively.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a9cc9d1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:15:44.577215+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "Key Theorems to Prove",
-    "description": "1. `adversarial_trace_cost_eq_game_value` — the worst-case average cost over all adversarial input sequences equals the value of the associated mean-payoff game.\n2. `stochastic_gauge_invariance` — the expected trace cost under gauge transformation satisfies the same telescoping identity.\n3. `lyapunov_exponent_bounds_average_cost` — the top Lyapunov exponent of the random tropical matrix product bounds the almost-sure average cost.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a9cc9d1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T05:15:44.587804+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Implementation Strategy",
     "description": "- **Step 1: Extraction.** Use abstract interpretation or symbolic execution to extract a finite-state model from imperative code. For data structures with bounded configurations (e.g., fixed-capacity buffers), the extraction is exact. For unbounded structures, use finite-state abstractions (e.g., truncate the state space at a threshold).\n- **Step 2: Matrix construction.** Build the min-plus transition matrix from the extracted model. This is a straightforward enumeration of states and transitions.\n- **Step 3: Spectral computation.** Apply Karp's algorithm to compute the maximum cycle mean ρ, then Bellman-Ford to compute the certifying potential φ.\n- **Step 4: Certificate generation.** Generate a Lean proof that instantiates the general theorems (Theorems B, C, D) with the concrete matrix, ",
@@ -2262,24 +2145,6 @@
     "source_exp_id": "6a9cc9d1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T05:15:44.607440+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "Direction 1: Tropical BSD for Newton Polygon Families",
-    "description": "**Target Theorem**: Extend the tropical order-equals-rank equality from finite-support models to piecewise-linear Newton polygon families, where the L-series arises as the lower envelope of a Newton polygon subdivision.\n\n**Construction**: Given a Newton polygon Δ in ℝ² with lattice points indexed by a finite set, define the tropical L-series as the support function of Δ. The tropical order of vanishing at a specified slope becomes the lattice width of the corresponding face, and the tropical rank corresponds to the dimension of the dual cell in the normal fan.\n\n**Target statement (Lean)**:\n```lean\ntheorem tropical_BSD_Newton_polygon\n    (Δ : Finset (ℤ × ℤ)) (slope : ℝ)\n    (hΔ : NewtonPolygonNondegenerate Δ)\n    (hcompat : NewtonBSDCompatible Δ slope) :\n    newtonFaceWidth Δ slope = tropic",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "00930c08",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T06:00:57.276284+00:00"
   },
   {
     "id": "fd_0212",
@@ -2311,5 +2176,62 @@
     "source_exp_id": "00930c08",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T06:00:57.301464+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Lean Target",
+    "description": "```lean\ntheorem lse_variational_formula\n    {n : ℕ} (hn : 0 < n) (τ : ℝ) (hτ : 0 < τ) (x : Fin n → ℝ) :\n    τ * Real.log (∑ i : Fin n, Real.exp (x i / τ)) =\n    ⨆ (p : Fin n → ℝ) (hp : (∀ i, 0 ≤ p i) ∧ ∑ i, p i = 1),\n      ∑ i, p i * x i + τ * (- ∑ i, if p i = 0 then 0 else p i * Real.log (p i))\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a021a156",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:26.795033+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Proof Route",
+    "description": "1. Show the Gibbs distribution $p_i^* = e^{x_i/\\tau}/Z$ achieves the supremum (Lagrange multipliers on the simplex constraint).\n2. Verify by direct substitution that the value equals $\\tau \\log Z$.\n3. Show concavity of the objective in $p$ (sum of linear and concave entropy terms).",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a021a156",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:26.802209+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Why Breakthrough",
+    "description": "This extends scalar pruning certificates to vector-valued outputs, directly applicable to transformer attention where each head produces a value vector. Combined with the free-energy pruning bound, it gives end-to-end output perturbation guarantees.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a021a156",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:26.812776+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Team Organization",
+    "description": "- **Theory team**: Directions 1 and 5 (variational formulas, asymptotics)\n- **Applications team**: Directions 2 and 4 (output maps, spectral structure)\n- **Foundations team**: Direction 3 (tropical information theory)\n\nEach team should validate conjectures computationally before attempting formalization, using the numerical infrastructure provided in `demo.py` and `algorithms.py`.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a021a156",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T06:05:26.839414+00:00"
   }
 ]
