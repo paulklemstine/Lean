@@ -911,21 +911,6 @@
     "timestamp": "2026-05-15T08:03:37.253200+00:00"
   },
   {
-    "id": "fd_0209",
-    "title": "Prove geodesicity or near-geodesicity",
-    "description": "with an explicit constant C.\n\n### Key Challenge\nSeventh chords have more quality types and more complex interval structures. The analogue of the \"unique minimizer\" theorem may fail — there could be more than 2 geodesic quality-changing moves from a given chord.\n\n### Cross-Domain Connection\nThe 4-voice orbifold connects to the theory of 4-body configuration spaces in physics and chemistry (e.g., molecular geometry under bond permutation symmetry).\n\n### Deliverables\n- Classification of all \"parsimonious\" seventh chord moves\n- Lean formalization of geodesicity for the 4-voice case\n- Comparison with existing music-theoretic catalogues (Childs 1998, Douthett & Steinbach 1998)\n\n---\n\n## Direction 2: The Continuous Voice-Leading Orbifold\n\n### Hypothesis\nIn the continuous orbifold (ℝ/12ℤ)³/S₃, the ",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "50208fa8",
-    "timestamp": "2026-05-15T08:03:37.270398+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Logic gate identification",
     "description": ": Identify collision outcomes that correspond to Boolean operations. A collision producing a glider iff both inputs are present is an AND gate. A collision producing a glider iff at least one input is present is an OR gate.",
@@ -1257,6 +1242,93 @@
     "source_exp_id": "3c1c085d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:04:21.862388+00:00"
+  },
+  {
+    "id": "fd_0214",
+    "title": "Non-negativity",
+    "description": ": I_trop(u; v) ≥ 0 (by inclusion-exclusion / submodularity of image cardinality).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "50208fa8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:44.618415+00:00"
+  },
+  {
+    "id": "fd_0215",
+    "title": "Data-processing inequality",
+    "description": ": For any T : β → β, I_trop(u; T∘v) ≤ I_trop(u; v).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "50208fa8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:44.626622+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "Relationship to rate-distortion",
+    "description": ": I_trop characterizes the gap between independent and joint variety, and controls the rate-distortion function via Fano-type inequalities.\n\n### Proof Strategy\n- Non-negativity follows from the set-theoretic identity |A| + |B| - |A × B projected to A ∪ B| ≥ 0, which needs care in formalization.\n- The data-processing inequality uses harmonicVariety_comp_le on the v-component.\n- Connection to R(D) requires bounding the variety loss of optimal codes.\n\n### Cross-Domain Impact\nA fully formal tropical mutual information with data-processing would be the combinatorial analogue of Shannon's foundational construction. It would apply to: DNA codon correlation analysis, musical voice-leading coherence, and deterministic secret sharing.\n\n---\n\n## Direction 3: Multi-Voice Contrapuntal Rate Region\n\n### H",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "50208fa8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:44.638325+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "Transposition invariance",
+    "description": ": If cost is translation-invariant (cost(a,b) = f(a-b mod 12)), then R_u(D) = R_{T_n∘u}(D) for all n. That is, the rate-distortion function depends only on the *pitch-class set* of u, not its absolute pitch level.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "50208fa8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:44.647629+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "Inversion equivariance",
+    "description": ": Under inversion-symmetric cost, R_{I∘u}(D) = R_u(D).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "50208fa8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:44.656204+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "Orbit structure",
+    "description": ": The rate-distortion function factors through the orbit space of the symmetry group action on the space of melodic lines.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "50208fa8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:44.664357+00:00"
   },
   {
     "id": "seed_079",
