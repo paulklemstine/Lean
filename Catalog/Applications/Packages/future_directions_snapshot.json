@@ -1005,22 +1005,6 @@
     "timestamp": "2026-05-15T22:01:06.632160+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Linear algebra",
-    "description": "(rank, factorization, tropical geometry)",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0db1bd89",
-    "consumed_by_exp_id": "6fbf424c",
-    "timestamp": "2026-05-15T22:01:06.641530+00:00"
-  },
-  {
     "id": "fd_0233",
     "title": "Machine learning",
     "description": "(attention, transformers, neural capacity)",
@@ -1463,10 +1447,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cb03e742",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd76a6a7",
     "timestamp": "2026-05-15T09:04:34.999218+00:00"
   },
   {
@@ -1891,5 +1875,91 @@
     "source_exp_id": "169f3d7c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T22:03:46.255885+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "1. Tropical Factor-Rank-1 Equivalence via Min-Plus",
+    "description": "**Goal:** Formalize the min-plus (or max-plus) rank-1 factorization predicate and prove its equivalence with additive separability.\n\n**Mathematical Statement:**\nA matrix `A : Fin n → Fin m → ℝ` has *min-plus rank 1* if there exist vectors `p : Fin n → ℝ` and `q : Fin m → ℝ` such that `A i j = p i + q j` (where `+` is ordinary addition, viewed as multiplication in the min-plus semiring). This is exactly additive separability.\n\nMore generally, define *min-plus rank ≤ k* as:\n```\nA(i,j) = min_{t ∈ Fin k} (U(i,t) + V(t,j))\n```\nand prove that rank ≤ 1 in this sense is equivalent to the 2×2 minor condition.\n\n**Lean Signature:**\n```lean\ndef MinPlusFactorRankLE (k : ℕ) {n m : ℕ} (A : Fin n → Fin m → ℝ) : Prop :=\n  ∃ U : Fin n → Fin k → ℝ, ∃ V : Fin k → Fin m → ℝ,\n    ∀ i j, A i j = Finset.univ.inf'",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6fbf424c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:33:29.188763+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "2. Tropical Rank-2 Decomposition Criteria",
+    "description": "**Goal:** Characterize matrices expressible as the min (or max) of two additively separable terms.\n\n**Mathematical Statement:**\n`A : Fin n → Fin m → ℝ` has min-plus rank ≤ 2 if and only if there exist `u₁, u₂ : Fin n → ℝ` and `v₁, v₂ : Fin m → ℝ` such that\n```\nA(i,j) = min(u₁(i) + v₁(j), u₂(i) + v₂(j)).\n```\n\nA necessary condition is the *tropical 3×3 minor condition*: for all 3×3 submatrices, the tropical determinant achieves its minimum at least twice among the six permutation terms.\n\n**Lean Signature:**\n```lean\ndef MinPlusRankLE2 {n m : ℕ} (A : Fin n → Fin m → ℝ) : Prop :=\n  ∃ u₁ u₂ : Fin n → ℝ, ∃ v₁ v₂ : Fin m → ℝ,\n    ∀ i j, A i j = min (u₁ i + v₁ j) (u₂ i + v₂ j)\n\ntheorem rank2_necessary_condition\n    {n m : ℕ} (A : Fin n → Fin m → ℝ) (h : MinPlusRankLE2 A) :\n    ∀ i₁ i₂ i₃ : Fin n, ∀",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6fbf424c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:33:29.201196+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "3. Neural Separability Theorem",
+    "description": "**Goal:** Use the rank-1 factorization theorem to identify conditions under which a ReLU neural network layer admits a verified tropical rank-1 decomposition, implying feature-channel decoupling.\n\n**Mathematical Statement:**\nGiven a ReLU layer `f(x) = max(Wx + b, 0)` with weight matrix `W : Fin m → Fin d → ℝ`, if the *effective tropical weight matrix* (defined via the max-plus semiring) satisfies all 2×2 tropical minor equalities, then the layer's output features are additively separable in input and channel indices.\n\n**Lean Signature:**\n```lean\ntheorem relu_tropical_rank1_separable\n    {d m : ℕ} (hd : 0 < d) (hm : 0 < m)\n    (W : Fin m → Fin d → ℝ)\n    (hminor : ∀ i₁ i₂ : Fin m, ∀ j₁ j₂ : Fin d,\n      W i₁ j₁ + W i₂ j₂ = W i₁ j₂ + W i₂ j₁) :\n    ∃ u : Fin m → ℝ, ∃ v : Fin d → ℝ,\n      ∀ i",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6fbf424c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:33:29.213852+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "4. Bipartite Cohomology Formulation",
+    "description": "**Goal:** Recast the tropical rank-1 factorization theorem as exactness of a discrete 1-cocycle on the complete bipartite graph K_{n,m}.\n\n**Mathematical Statement:**\nConsider the complete bipartite graph with vertex sets `Fin n` (left) and `Fin m` (right). A function `A : Fin n → Fin m → ℝ` assigns a weight to each edge. Define the *discrete coboundary operator* δ₀ mapping vertex potentials (u, v) to edge weights via `(δ₀(u,v))(i,j) = u(i) + v(j)`. Define the *rectangular curl* operator δ₁ mapping edge weights to face values via `(δ₁A)(i₁,i₂,j₁,j₂) = A(i₁,j₁) + A(i₂,j₂) - A(i₁,j₂) - A(i₂,j₁)`.\n\nThe rank-1 factorization theorem states: `ker(δ₁) = im(δ₀)`, i.e., the first cohomology group H¹(K_{n,m}; ℝ) vanishes.\n\n**Lean Signature:**\n```lean\ndef rectangular_curl {n m : ℕ} (A : Fin n → Fin m ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6fbf424c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:33:29.225775+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "5. Representation-Theoretic Rigidity Bridge",
+    "description": "**Goal:** Connect local tropical minor constraints to global injectivity/rigidity phenomena, inspired by `gl3_tropical_satake_injective_of_edge_rank2_marginals` in the catalog.\n\n**Mathematical Statement:**\nConsider the tropicalization of the Satake transform for GL_n. The catalog theorem shows that edge rank-2 marginal constraints force injectivity for GL_3. The rank-1 factorization theorem provides the base case: if a tropicalized representation matrix has all 2×2 minors vanishing, then it is completely determined by boundary data (one row and one column potential).\n\nConcretely: define the *tropical Satake fiber* over a point as the set of matrices with prescribed row and column sums (marginals). For rank-1 matrices, the fiber is either empty or a single gauge orbit.\n\n**Lean Signature:**\n",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6fbf424c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T22:33:29.237233+00:00"
   }
 ]
