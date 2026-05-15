@@ -1,285 +1,360 @@
 #!/usr/bin/env python3
 """
-Algorithms for Conceptual Dependency Critical Path Analysis
+Algorithms for Conceptual Dependency Critical Path Theory
 
-Implements:
-  - DepGraph: Finite directed acyclic graph with predecessor map
-  - compute_depth: O(V+E) topological depth computation
-  - layered_discovery: Iterative BFS-like discovery from seed set
-  - critical_path: Extract a longest path in the DAG
-  - weighted variants: WDepGraph, weighted_depth, weighted_critical_path
+Implements the core algorithms from the formalization:
+- DepGraph: finite directed acyclic graph with predecessor maps
+- depth computation via well-founded recursion
+- layered discovery process
+- critical path computation
+- topological sorting
+- bottleneck detection
+
+All algorithms include docstrings, type hints, and complexity analysis.
 """
 
 from __future__ import annotations
-from collections import defaultdict, deque
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Set, Optional, Tuple
+from functools import lru_cache
+from collections import deque
 
 
 class DepGraph:
     """
     A finite directed acyclic graph represented by a predecessor map.
 
-    Parameters
-    ----------
-    pred : dict mapping node -> list of predecessor nodes
+    Mirrors the Lean structure:
+        structure DepGraph (V : Type*) where
+          pred : V → Finset V
+          wf : WellFounded (fun u v => u ∈ pred v)
 
-    Examples
-    --------
-    >>> G = DepGraph({'a': [], 'b': ['a'], 'c': ['a', 'b']})
-    >>> G.nodes
-    {'a', 'b', 'c'}
-    >>> G.pred['c']
-    ['a', 'b']
+    Time complexity:
+        - Construction: O(|V| + |E|) where |E| = total predecessor count
+        - depth(v): O(|V| + |E|) with memoization
+        - source_set(): O(|V|)
+
+    Space complexity: O(|V| + |E|)
     """
 
-    def __init__(self, pred: Dict[Any, List[Any]]):
-        self.pred = {k: list(v) for k, v in pred.items()}
-        self.nodes = set(pred.keys())
-        # Build successor map
-        self.succ: Dict[Any, List[Any]] = defaultdict(list)
-        for v, preds in self.pred.items():
-            for u in preds:
-                self.succ[u].append(v)
-        # Verify acyclicity
-        self._verify_acyclic()
+    def __init__(self, nodes: List[str], pred: Dict[str, List[str]]):
+        """
+        Args:
+            nodes: List of node identifiers
+            pred: Map from node to list of immediate predecessors
+        """
+        self.nodes = list(nodes)
+        self.pred = {v: list(pred.get(v, [])) for v in nodes}
+        self._depth_cache: Dict[str, int] = {}
 
-    def _verify_acyclic(self):
-        """Verify the graph is acyclic using Kahn's algorithm."""
+        # Validate acyclicity
+        if not self._is_acyclic():
+            raise ValueError("Graph contains a cycle — not a valid dependency DAG")
+
+    def _is_acyclic(self) -> bool:
+        """Check acyclicity via topological sort (Kahn's algorithm). O(|V|+|E|)."""
         in_degree = {v: len(self.pred[v]) for v in self.nodes}
         queue = deque(v for v in self.nodes if in_degree[v] == 0)
         count = 0
+        temp_in = dict(in_degree)
+
+        # Build successor map
+        succ: Dict[str, List[str]] = {v: [] for v in self.nodes}
+        for v in self.nodes:
+            for u in self.pred[v]:
+                succ[u].append(v)
+
         while queue:
             v = queue.popleft()
             count += 1
-            for u in self.succ.get(v, []):
-                in_degree[u] -= 1
-                if in_degree[u] == 0:
-                    queue.append(u)
-        if count != len(self.nodes):
-            raise ValueError("Graph contains a cycle!")
+            for w in succ[v]:
+                temp_in[w] -= 1
+                if temp_in[w] == 0:
+                    queue.append(w)
 
-    def sources(self) -> Set[Any]:
-        """Return the set of source nodes (no predecessors)."""
-        return {v for v in self.nodes if not self.pred[v]}
+        return count == len(self.nodes)
 
-    def topological_order(self) -> List[Any]:
-        """Return a topological ordering of the nodes."""
+    def depth(self, v: str) -> int:
+        """
+        Compute the depth of node v.
+
+        Corresponds to:
+            noncomputable def depth (G : DepGraph V) : V → ℕ :=
+              G.wf.fix fun v ih =>
+                if h : G.pred v = ∅ then 0
+                else (G.pred v).attach.sup (fun ⟨u, hu⟩ => ih u hu) + 1
+
+        Returns:
+            0 if v has no predecessors, otherwise 1 + max(depth of predecessors)
+
+        Time: O(|V| + |E|) total with memoization
+        """
+        if v in self._depth_cache:
+            return self._depth_cache[v]
+
+        if not self.pred[v]:
+            self._depth_cache[v] = 0
+            return 0
+
+        d = 1 + max(self.depth(u) for u in self.pred[v])
+        self._depth_cache[v] = d
+        return d
+
+    def is_source(self, v: str) -> bool:
+        """Check if v is a source (no predecessors)."""
+        return len(self.pred[v]) == 0
+
+    def source_set(self) -> Set[str]:
+        """Return the set of all source nodes. O(|V|)."""
+        return {v for v in self.nodes if self.is_source(v)}
+
+    def successors(self, v: str) -> List[str]:
+        """Return nodes that have v as a predecessor. O(|V| + |E|)."""
+        return [w for w in self.nodes if v in self.pred[w]]
+
+    def topological_sort(self) -> List[str]:
+        """
+        Return a topological ordering of nodes. O(|V| + |E|).
+
+        Nodes appear before all their dependents.
+        """
         in_degree = {v: len(self.pred[v]) for v in self.nodes}
+        succ: Dict[str, List[str]] = {v: [] for v in self.nodes}
+        for v in self.nodes:
+            for u in self.pred[v]:
+                succ[u].append(v)
+
         queue = deque(v for v in self.nodes if in_degree[v] == 0)
-        order = []
+        result = []
+
         while queue:
             v = queue.popleft()
-            order.append(v)
-            for u in self.succ.get(v, []):
-                in_degree[u] -= 1
-                if in_degree[u] == 0:
-                    queue.append(u)
-        return order
+            result.append(v)
+            for w in succ[v]:
+                in_degree[w] -= 1
+                if in_degree[w] == 0:
+                    queue.append(w)
+
+        return result
+
+    def all_ancestors(self, v: str) -> Set[str]:
+        """Return all transitive predecessors of v (not including v). O(|V| + |E|)."""
+        visited: Set[str] = set()
+        stack = list(self.pred[v])
+        while stack:
+            u = stack.pop()
+            if u not in visited:
+                visited.add(u)
+                stack.extend(self.pred[u])
+        return visited
+
+    def critical_path(self, v: str) -> List[str]:
+        """
+        Return a longest path ending at v (witnesses the depth).
+        O(depth(v) * max_predecessors)
+        """
+        if not self.pred[v]:
+            return [v]
+
+        # Find predecessor with maximum depth
+        best_pred = max(self.pred[v], key=lambda u: self.depth(u))
+        return self.critical_path(best_pred) + [v]
+
+    def bottleneck_nodes(self) -> List[str]:
+        """
+        Find bottleneck nodes: nodes that lie on every longest path.
+        A node is a bottleneck if removing it would reduce the critical path length.
+        O(|V| * (|V| + |E|))
+        """
+        cpl = critical_path_length(self)
+        bottlenecks = []
+
+        for v in self.nodes:
+            # Create graph without v
+            remaining = [u for u in self.nodes if u != v]
+            new_pred = {}
+            for u in remaining:
+                new_pred[u] = [w for w in self.pred[u] if w != v]
+
+            if remaining:
+                try:
+                    G_minus_v = DepGraph(remaining, new_pred)
+                    new_cpl = critical_path_length(G_minus_v)
+                    if new_cpl < cpl:
+                        bottlenecks.append(v)
+                except ValueError:
+                    pass
+
+        return bottlenecks
 
 
-def compute_depth(G: DepGraph) -> Dict[Any, int]:
+def next_layer(G: DepGraph, discovered: Set[str]) -> Set[str]:
     """
-    Compute the conceptual depth of every node.
+    Compute the next layer of discoverable nodes.
 
-    depth(v) = 0 if v is a source
-    depth(v) = 1 + max(depth(u) for u in pred(v)) otherwise
+    Corresponds to:
+        def nextLayer (G : DepGraph V) (A : Finset V) : Finset V :=
+          Finset.univ.filter (fun v => v ∉ A ∧ ∀ u ∈ G.pred v, u ∈ A)
+
+    Args:
+        G: The dependency graph
+        discovered: Set of already-discovered nodes
+
+    Returns:
+        Set of newly discoverable nodes (predecessors all in `discovered`)
 
     Time: O(|V| + |E|)
-    Space: O(|V|)
-
-    Parameters
-    ----------
-    G : DepGraph
-
-    Returns
-    -------
-    dict mapping node -> depth (int)
-
-    Examples
-    --------
-    >>> G = DepGraph({'a': [], 'b': ['a'], 'c': ['b']})
-    >>> compute_depth(G)
-    {'a': 0, 'b': 1, 'c': 2}
     """
-    depth = {}
-    for v in G.topological_order():
-        if not G.pred[v]:
-            depth[v] = 0
-        else:
-            depth[v] = 1 + max(depth[u] for u in G.pred[v])
-    return depth
-
-
-def layered_discovery(G: DepGraph, seeds: Set[Any]) -> Dict[Any, int]:
-    """
-    Perform layered discovery from a seed set.
-
-    Round 0: discover seeds.
-    Round n+1: discover nodes whose predecessors are all discovered.
-
-    Parameters
-    ----------
-    G : DepGraph
-    seeds : set of seed nodes (should be sources for theorem guarantees)
-
-    Returns
-    -------
-    dict mapping node -> discovery round (int)
-
-    Examples
-    --------
-    >>> G = DepGraph({'a': [], 'b': ['a'], 'c': ['b']})
-    >>> layered_discovery(G, {'a'})
-    {'a': 0, 'b': 1, 'c': 2}
-    """
-    discovered = dict()
-    current = set(seeds)
-    for v in current:
-        discovered[v] = 0
-
-    round_num = 0
-    while len(discovered) < len(G.nodes):
-        round_num += 1
-        next_layer = set()
-        for v in G.nodes - set(discovered.keys()):
+    layer = set()
+    for v in G.nodes:
+        if v not in discovered:
             if all(u in discovered for u in G.pred[v]):
-                next_layer.add(v)
-        if not next_layer:
-            break  # remaining nodes unreachable from seeds
-        for v in next_layer:
-            discovered[v] = round_num
-        current = next_layer
-
-    return discovered
+                layer.add(v)
+    return layer
 
 
-def critical_path(G: DepGraph, depth: Optional[Dict[Any, int]] = None) -> List[Any]:
+def layered_discovery(G: DepGraph, seeds: Set[str], rounds: int) -> Set[str]:
     """
-    Extract a critical path (longest path from source to deepest node).
+    Perform layered discovery for a given number of rounds.
 
-    Parameters
-    ----------
-    G : DepGraph
-    depth : optional precomputed depth dict
+    Corresponds to:
+        def discovered (G : DepGraph V) (S : Finset V) : ℕ → Finset V
+          | 0 => S
+          | n + 1 => G.discovered S n ∪ G.nextLayer (G.discovered S n)
 
-    Returns
-    -------
-    list of nodes forming the critical path
+    Args:
+        G: The dependency graph
+        seeds: Initial seed set (should be sources)
+        rounds: Number of discovery rounds
 
-    Examples
-    --------
-    >>> G = DepGraph({'a': [], 'b': ['a'], 'c': ['b']})
-    >>> critical_path(G)
-    ['a', 'b', 'c']
+    Returns:
+        Set of all discovered nodes after `rounds` rounds
+
+    Time: O(rounds * (|V| + |E|))
     """
-    if depth is None:
-        depth = compute_depth(G)
-
-    # Find deepest node
-    target = max(depth, key=depth.get)
-
-    # Trace back from target
-    path = [target]
-    current = target
-    while depth[current] > 0:
-        # Find predecessor with depth = current depth - 1
-        for u in G.pred[current]:
-            if depth[u] == depth[current] - 1:
-                path.append(u)
-                current = u
-                break
-    path.reverse()
-    return path
+    disc = set(seeds)
+    for _ in range(rounds):
+        disc = disc | next_layer(G, disc)
+    return disc
 
 
 def critical_path_length(G: DepGraph) -> int:
-    """Compute the critical path length of the DAG."""
-    depth = compute_depth(G)
-    return max(depth.values()) if depth else 0
-
-
-# ============================================================
-# Weighted extensions
-# ============================================================
-
-class WDepGraph(DepGraph):
     """
-    A weighted dependency graph where each node has a conceptual novelty cost.
+    Compute the critical path length (maximum depth over all nodes).
 
-    Parameters
-    ----------
-    pred : dict mapping node -> list of predecessors
-    weight : dict mapping node -> weight (positive integer)
+    Corresponds to:
+        noncomputable def criticalPathLength (G : DepGraph V) : ℕ :=
+          Finset.univ.sup G.depth
+
+    Time: O(|V| + |E|) with memoized depth
     """
-
-    def __init__(self, pred: Dict[Any, List[Any]], weight: Dict[Any, int]):
-        super().__init__(pred)
-        self.weight = weight
-        for v in self.nodes:
-            assert weight.get(v, 1) >= 1, f"Weight of {v} must be positive"
+    if not G.nodes:
+        return 0
+    return max(G.depth(v) for v in G.nodes)
 
 
-def weighted_depth(G: WDepGraph) -> Dict[Any, int]:
+def find_all_critical_paths(G: DepGraph) -> List[List[str]]:
     """
-    Compute weighted depth: max sum of weights along any path to v.
+    Find all longest paths in the DAG.
 
-    wdepth(v) = w(v) if v is a source
-    wdepth(v) = w(v) + max(wdepth(u) for u in pred(v)) otherwise
+    Returns:
+        List of all paths achieving the critical path length.
 
-    Parameters
-    ----------
-    G : WDepGraph
-
-    Returns
-    -------
-    dict mapping node -> weighted depth
+    Time: O(|V| * |E|) worst case
     """
-    wdepth = {}
-    for v in G.topological_order():
-        if not G.pred[v]:
-            wdepth[v] = G.weight.get(v, 1)
-        else:
-            wdepth[v] = G.weight.get(v, 1) + max(wdepth[u] for u in G.pred[v])
-    return wdepth
+    cpl = critical_path_length(G)
+
+    def paths_to(v: str, target_len: int) -> List[List[str]]:
+        if target_len == 0:
+            return [[v]] if G.depth(v) == 0 else []
+        if G.depth(v) != target_len:
+            return []
+        result = []
+        for u in G.pred[v]:
+            for path in paths_to(u, target_len - 1):
+                result.append(path + [v])
+        return result
+
+    all_paths = []
+    for v in G.nodes:
+        if G.depth(v) == cpl:
+            all_paths.extend(paths_to(v, cpl))
+    return all_paths
 
 
-def weighted_critical_path(G: WDepGraph) -> Tuple[List[Any], int]:
+def verify_theorem_A1(G: DepGraph) -> bool:
     """
-    Extract the weighted critical path and its total weight.
+    Verify Theorem A1: for all v discovered by round n, depth(v) ≤ n.
 
-    Returns
-    -------
-    (path, total_weight) where path is a list of nodes
+    This is a computational verification of:
+        theorem mem_discovered_imp_depth_le
     """
-    wd = weighted_depth(G)
-    target = max(wd, key=wd.get)
-    total = wd[target]
+    sources = G.source_set()
+    cpl = critical_path_length(G)
 
-    path = [target]
-    current = target
-    while G.pred[current]:
-        best_pred = max(G.pred[current], key=lambda u: wd[u])
-        path.append(best_pred)
-        current = best_pred
-
-    path.reverse()
-    return path, total
+    for n in range(cpl + 2):
+        disc = layered_discovery(G, sources, n)
+        for v in disc:
+            if G.depth(v) > n:
+                return False
+    return True
 
 
-if __name__ == '__main__':
-    # Quick self-test
-    G = DepGraph({'a': [], 'b': [], 'c': ['a'], 'd': ['a', 'b'], 'e': ['c', 'd']})
-    d = compute_depth(G)
-    print("Depth:", d)
-    print("Critical path:", critical_path(G, d))
-    print("Discovery:", layered_discovery(G, G.sources()))
-    print("Critical path length:", critical_path_length(G))
+def verify_theorem_B2(G: DepGraph) -> bool:
+    """
+    Verify Theorem B2: for k < CPL, ∃ v not discovered in k rounds.
 
-    # Weighted example
-    WG = WDepGraph(
-        {'a': [], 'b': [], 'c': ['a'], 'd': ['a', 'b'], 'e': ['c', 'd']},
-        {'a': 1, 'b': 1, 'c': 3, 'd': 1, 'e': 2}
-    )
-    print("\nWeighted depth:", weighted_depth(WG))
-    wp, wt = weighted_critical_path(WG)
-    print(f"Weighted critical path: {wp} (total weight: {wt})")
+    This is a computational verification of:
+        theorem exists_not_mem_discovered_of_lt_criticalPath
+    """
+    sources = G.source_set()
+    cpl = critical_path_length(G)
+
+    for k in range(cpl):
+        disc = layered_discovery(G, sources, k)
+        if disc == set(G.nodes):
+            return False  # Should have missed something
+    return True
+
+
+def verify_theorem_C1(G: DepGraph) -> bool:
+    """
+    Verify Theorem C1: after CPL rounds from sources, all nodes discovered.
+
+    This is a computational verification of:
+        theorem discovered_eq_univ_at_criticalPath
+    """
+    sources = G.source_set()
+    cpl = critical_path_length(G)
+    disc = layered_discovery(G, sources, cpl)
+    return disc == set(G.nodes)
+
+
+# Example usage
+if __name__ == "__main__":
+    # Build a sample dependency graph
+    nodes = ["Axiom1", "Axiom2", "Lemma1", "Lemma2", "Lemma3", "Theorem1"]
+    pred = {
+        "Axiom1": [],
+        "Axiom2": [],
+        "Lemma1": ["Axiom1"],
+        "Lemma2": ["Axiom1", "Axiom2"],
+        "Lemma3": ["Lemma1", "Lemma2"],
+        "Theorem1": ["Lemma3"],
+    }
+
+    G = DepGraph(nodes, pred)
+    print("Dependency Graph:")
+    print(f"  Nodes: {G.nodes}")
+    print(f"  Sources: {G.source_set()}")
+    print(f"  Critical path length: {critical_path_length(G)}")
+    print(f"  Depths: {[(v, G.depth(v)) for v in nodes]}")
+    print(f"  Topological sort: {G.topological_sort()}")
+    print(f"  Critical path to Theorem1: {G.critical_path('Theorem1')}")
+    print(f"  Bottleneck nodes: {G.bottleneck_nodes()}")
+    print()
+
+    # Verify all theorems
+    print("Theorem verification:")
+    print(f"  A1 (depth lower bound):     {'✓' if verify_theorem_A1(G) else '✗'}")
+    print(f"  B2 (shallow search fails):  {'✓' if verify_theorem_B2(G) else '✗'}")
+    print(f"  C1 (guided completeness):   {'✓' if verify_theorem_C1(G) else '✗'}")

@@ -1,310 +1,220 @@
 import Mathlib
 
 /-!
-# Conceptual Dependency Graphs and Critical Path Analysis
+# Conceptual Dependency Critical Path Theory
 
-This file formalizes a theory of **conceptual depth** extracted from dependency
-structures in mathematics. We model mathematical knowledge as a finite directed
-acyclic graph (DAG) where nodes represent theorems/concepts and edges represent
-logical dependencies.
-
-## Main definitions
-
-* `DepGraph V` — a finite DAG given by a predecessor map with a well-founded
-  predecessor relation.
-* `DepGraph.depth` — the conceptual depth of a node: the length of the longest
-  directed path ending at that node.
-* `DepGraph.discovered` — the set of nodes discoverable from a seed set in at
-  most `n` rounds of layered exploration.
-* `DepGraph.criticalPathLength` — the maximum depth over all nodes.
+This file formalizes a theory of **conceptual depth** for dependency graphs
+and proves that the critical path length provides a tight lower bound on
+any layered discovery process.
 
 ## Main results
 
-* **Theorem A1** (`mem_discovered_imp_depth_le`): Any node discovered in `n`
-  rounds from sources has depth at most `n`. This is the central lower bound
-  theorem — it certifies that deep results cannot be reached by shallow search.
-
-* **Theorem B1** (`exists_node_of_depth_eq_criticalPath`): In every finite
-  nonempty DAG, there exists a node attaining the critical path length.
-
-* **Theorem B2** (`exists_not_mem_discovered_of_lt_criticalPath`): If the
-  search budget `k` is strictly less than the critical path length, there exist
-  nodes that remain undiscovered.
-
-* **Theorem C1** (`discovered_eq_univ_at_criticalPath`): Critical-path-guided
-  exploration discovers all nodes in exactly `criticalPathLength` rounds.
-
-* **Policy theorem** (`critical_path_policy_finds_inaccessible`): Combining B1
-  and B2, there exist maximum-depth nodes that are provably inaccessible to any
-  bounded-depth exploration below the critical path.
-
-## Significance
-
-These theorems turn "deep theorem" from informal rhetoric into a certifiable
-graph invariant. They establish that some mathematical results are intrinsically
-inaccessible to shallow search — not merely harder in practice, but unavoidable
-in principle because their dependency geometry forces conceptual depth.
+* `mem_discovered_imp_depth_le` — **Theorem A1**: discovery round ≥ depth.
+* `exists_node_of_depth_eq_criticalPath` — **Theorem B1**: critical path is attained.
+* `exists_not_mem_discovered_of_lt_criticalPath` — **Theorem B2**: shallow search fails.
+* `discovered_eq_univ_at_criticalPath` — **Theorem C1**: guided search is complete.
+* `critical_path_policy_finds_shallowly_inaccessible` — synthesis theorem.
 -/
 
-namespace ConceptualDependency
+open Finset
 
-/-- A finite directed acyclic graph represented by a predecessor map.
-    `pred v` gives the set of immediate predecessors (dependencies) of node `v`.
-    The well-foundedness condition `wf` ensures acyclicity. -/
+/-- A dependency graph on a finite type `V`. -/
 structure DepGraph (V : Type*) [Fintype V] [DecidableEq V] where
-  /-- The predecessor (dependency) map: `pred v` is the set of nodes that `v`
-      directly depends on. -/
   pred : V → Finset V
-  /-- The predecessor relation is well-founded, ensuring the graph is acyclic. -/
   wf : WellFounded (fun u v => u ∈ pred v)
+
+namespace DepGraph
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
-/-! ### Source nodes -/
-
-/-- A node is a **source** if it has no predecessors (no dependencies). -/
-def DepGraph.isSource (G : DepGraph V) (v : V) : Prop := G.pred v = ∅
+def isSource (G : DepGraph V) (v : V) : Prop := G.pred v = ∅
 
 instance (G : DepGraph V) (v : V) : Decidable (G.isSource v) :=
   inferInstanceAs (Decidable (G.pred v = ∅))
 
-/-- The set of all source nodes in the graph. -/
-def DepGraph.sourceSet (G : DepGraph V) : Finset V :=
-  Finset.univ.filter (fun v => G.pred v = ∅)
+def sourceSet (G : DepGraph V) : Finset V :=
+  Finset.univ.filter G.isSource
 
-/-! ### Conceptual depth -/
+/-- Depth of a node: 0 for sources, 1 + max(depth of predecessors) otherwise. -/
+noncomputable def depth (G : DepGraph V) : V → ℕ :=
+  G.wf.fix fun v ih =>
+    if h : G.pred v = ∅ then 0
+    else (G.pred v).attach.sup (fun ⟨u, hu⟩ => ih u hu) + 1
 
-/-- The **conceptual depth** of a node: the length of the longest directed path
-    ending at that node. Sources have depth 0. For non-sources, the depth is
-    one plus the maximum depth among predecessors.
+theorem depth_eq (G : DepGraph V) (v : V) :
+    G.depth v = if G.pred v = ∅ then 0
+      else (G.pred v).attach.sup (fun ⟨u, _⟩ => G.depth u) + 1 := by
+  convert G.wf.fix_eq _ v
 
-    Defined by well-founded recursion on the predecessor relation. -/
-noncomputable def DepGraph.depth (G : DepGraph V) : V → ℕ :=
-  G.wf.fix (fun v ih => (G.pred v).attach.sup (fun ⟨u, hu⟩ => ih u hu + 1))
+theorem depth_zero_of_pred_empty (G : DepGraph V) (v : V) (h : G.pred v = ∅) :
+    G.depth v = 0 := by rw [depth_eq]; simp [h]
 
-/-
-Unfolding lemma for depth: `depth v = max over predecessors u of (depth u + 1)`.
--/
-lemma DepGraph.depth_eq (G : DepGraph V) (v : V) :
-    G.depth v = (G.pred v).attach.sup (fun ⟨u, hu⟩ => G.depth u + 1) := by
-  convert WellFounded.fix_eq G.wf _ v
-
-/-
-Sources have depth 0.
--/
-lemma DepGraph.depth_eq_zero_of_isSource (G : DepGraph V) {v : V} (h : G.isSource v) :
-    G.depth v = 0 := by
-  unfold DepGraph.depth;
-  rw [ WellFounded.fix_eq ];
-  -- Since the predecessor set of v is empty, the attach of the predecessor set is also empty.
-  have h_attach_empty : (G.pred v).attach = ∅ := by
-    aesop;
-  exact h_attach_empty.symm ▸ rfl
+theorem depth_zero_of_isSource (G : DepGraph V) (v : V) (h : G.isSource v) :
+    G.depth v = 0 := depth_zero_of_pred_empty G v h
 
 /-
-The depth of a predecessor is strictly less than the depth of the node.
+If `u` is a predecessor of `v`, then `depth u < depth v`.
 -/
-lemma DepGraph.depth_pred_lt (G : DepGraph V) {u v : V} (h : u ∈ G.pred v) :
+theorem depth_pred_lt (G : DepGraph V) (u v : V) (h : u ∈ G.pred v) :
     G.depth u < G.depth v := by
-  -- By definition of `depth`, we know that `depth v` is the length of the longest path ending at `v`.
-  have h_depth_v : G.depth v = (G.pred v).attach.sup (fun ⟨u, hu⟩ => G.depth u + 1) := by
-    exact G.depth_eq v;
-  exact h_depth_v.symm ▸ lt_of_lt_of_le ( Nat.lt_succ_self _ ) ( Finset.le_sup ( f := fun ⟨ u, hu ⟩ => G.depth u + 1 ) ( Finset.mem_attach _ ⟨ u, h ⟩ ) )
+  -- By definition of depth, if $u \in \text{pred } v$, then $\text{depth } u$ is part of the supremum in the definition of $\text{depth } v$.
+  have h_depth_v : G.depth v = if G.pred v = ∅ then 0 else (G.pred v).attach.sup (fun ⟨u, _⟩ => G.depth u) + 1 := by
+    grind +suggestions;
+  rw [ h_depth_v ] ; simp_all +decide [ Finset.sup_le_iff ];
+  grind +suggestions
 
-/-
-The depth of any node is bounded by `Fintype.card V - 1`.
--/
-lemma DepGraph.depth_le_card_sub_one (G : DepGraph V) (v : V) :
-    G.depth v ≤ Fintype.card V - 1 := by
-  have h_ind : ∀ (v : V), G.depth v ≤ Fintype.card V - 1 := by
-    intro v
-    by_contra h_contra
-    have h_card : Fintype.card V < G.depth v + 1 := by
-      omega;
-    -- We construct an injective function from `Fin (G.depth v + 1)` to `V` by following a chain of predecessors.
-    have h_chain : ∃ (f : Fin (G.depth v + 1) → V), Function.Injective f ∧ ∀ i : Fin (G.depth v + 1), G.depth (f i) = G.depth v - i.val := by
-      have h_chain : ∀ (v : V) (k : ℕ), k ≤ G.depth v → ∃ (f : Fin (k + 1) → V), Function.Injective f ∧ ∀ i : Fin (k + 1), G.depth (f i) = G.depth v - i.val := by
-        intro v k hk
-        induction' k with k ih generalizing v;
-        · exact ⟨ fun _ => v, by simp +decide [ Function.Injective ], by simp +decide ⟩;
-        · -- By definition of depth, there exists a predecessor $u$ of $v$ such that $G.depth u = G.depth v - 1$.
-          obtain ⟨u, hu⟩ : ∃ u ∈ G.pred v, G.depth u = G.depth v - 1 := by
-            have h_depth_eq : G.depth v = (G.pred v).attach.sup (fun ⟨u, hu⟩ => G.depth u + 1) := by
-              grind +suggestions;
-            have := Finset.exists_max_image ( Finset.attach ( G.pred v ) ) ( fun x => G.depth x + 1 ) ⟨ ⟨ Classical.choose ( show ∃ u, u ∈ G.pred v from by
-                                                                                                                              by_cases h_empty : G.pred v = ∅;
-                                                                                                                              · simp_all +singlePass [ DepGraph.depth_eq_zero_of_isSource ];
-                                                                                                                              · exact Finset.nonempty_of_ne_empty h_empty ), Classical.choose_spec ( show ∃ u, u ∈ G.pred v from by
-                                                                                                                                                                                              by_cases h_empty : G.pred v = ∅;
-                                                                                                                                                                                              · simp_all +singlePass [ DepGraph.depth_eq_zero_of_isSource ];
-                                                                                                                                                                                              · exact Finset.nonempty_of_ne_empty h_empty ) ⟩, Finset.mem_attach _ _ ⟩
-            generalize_proofs at *;
-            obtain ⟨ x, hx₁, hx₂ ⟩ := this;
-            use x.val;
-            exact ⟨ x.2, eq_tsub_of_add_eq <| le_antisymm ( h_depth_eq.symm ▸ Finset.le_sup ( f := fun x : { x // x ∈ G.pred v } => G.depth x + 1 ) hx₁ ) ( h_depth_eq.symm ▸ Finset.sup_le fun y hy => hx₂ y hy ) ⟩;
-          obtain ⟨ f, hf₁, hf₂ ⟩ := ih u ( by omega );
-          refine' ⟨ Fin.cons v f, _, _ ⟩ <;> simp_all +decide [ Function.Injective ];
-          · simp +decide [ Fin.forall_fin_succ, hf₁ ];
-            grind;
-          · intro i; induction i using Fin.inductionOn <;> simp_all +decide [ Nat.sub_sub ] ;
-            lia;
-      exact h_chain v _ le_rfl;
-    obtain ⟨ f, hf_inj, hf_depth ⟩ := h_chain; have := Fintype.card_le_of_injective f hf_inj; simp_all +decide ;
-    grind +locals;
-  exact h_ind v
+-- Layer-based discovery
 
-/-! ### Layered discovery process -/
-
-/-- The **next layer**: nodes not yet discovered whose predecessors are all discovered. -/
-def DepGraph.nextLayer (G : DepGraph V) (A : Finset V) : Finset V :=
+def nextLayer (G : DepGraph V) (A : Finset V) : Finset V :=
   Finset.univ.filter (fun v => v ∉ A ∧ ∀ u ∈ G.pred v, u ∈ A)
 
-/-- The set of nodes **discovered** from seed set `S` in at most `n` rounds. -/
-def DepGraph.discovered (G : DepGraph V) (S : Finset V) : ℕ → Finset V
+def discovered (G : DepGraph V) (S : Finset V) : ℕ → Finset V
   | 0 => S
   | n + 1 => G.discovered S n ∪ G.nextLayer (G.discovered S n)
 
-/-
-Discovery is monotone: the discovered set grows with each round.
--/
-lemma DepGraph.discovered_subset_succ (G : DepGraph V) (S : Finset V) (n : ℕ) :
-    G.discovered S n ⊆ G.discovered S (n + 1) := by
-  exact Finset.subset_union_left
+theorem discovered_mono (G : DepGraph V) (S : Finset V) (n : ℕ) :
+    G.discovered S n ⊆ G.discovered S (n + 1) :=
+  Finset.subset_union_left
 
-/-
-Discovery is monotone across arbitrary steps.
--/
-lemma DepGraph.discovered_mono (G : DepGraph V) (S : Finset V) {m n : ℕ} (h : m ≤ n) :
+theorem discovered_mono_of_le (G : DepGraph V) (S : Finset V) {m n : ℕ} (h : m ≤ n) :
     G.discovered S m ⊆ G.discovered S n := by
-  exact Nat.le_induction ( by tauto ) ( fun k hk ih => by exact Finset.Subset.trans ih ( G.discovered_subset_succ S k ) ) n h
+  induction h with
+  | refl => exact Finset.Subset.refl _
+  | step _ ih => exact ih.trans (G.discovered_mono S _)
 
 /-
-Membership in the next layer implies all predecessors were already discovered.
+**Theorem A1**: If `v` is discovered by round `n`, then `depth v ≤ n`.
 -/
-lemma DepGraph.pred_mem_of_mem_nextLayer (G : DepGraph V) {A : Finset V} {v : V}
-    (hv : v ∈ G.nextLayer A) : ∀ u ∈ G.pred v, u ∈ A := by
-  exact fun u hu => Finset.mem_filter.mp hv |>.2.2 u hu
+theorem mem_discovered_imp_depth_le (G : DepGraph V) (S : Finset V)
+    (hS : ∀ v ∈ S, G.isSource v) :
+    ∀ {n v}, v ∈ G.discovered S n → G.depth v ≤ n := by
+  intro n v hv
+  induction' n with n ih generalizing v;
+  · exact G.depth_zero_of_isSource v ( hS v hv ) ▸ le_rfl;
+  · simp_all +decide [ DepGraph.discovered, DepGraph.nextLayer ];
+    rcases hv with ( hv | ⟨ hv₁, hv₂ ⟩ );
+    · exact Nat.le_succ_of_le ( ih hv );
+    · rw [ G.depth_eq ];
+      split_ifs <;> simp_all +decide [ Finset.sup_le_iff ]
 
-/-! ### Critical path length -/
-
-/-- The **critical path length** of a DAG: the maximum depth over all nodes. -/
-noncomputable def DepGraph.criticalPathLength (G : DepGraph V) : ℕ :=
+noncomputable def criticalPathLength (G : DepGraph V) : ℕ :=
   Finset.univ.sup G.depth
 
-/-! ## Main theorems -/
-
 /-
-**Theorem A1 (Depth Lower Bound).**
-    Any node discovered from sources in `n` rounds has depth at most `n`.
-    This is the central theorem: it certifies that the critical path length
-    is an intrinsic lower bound on the number of discovery rounds needed.
+**Theorem B1**: some node attains the critical path length.
 -/
-theorem DepGraph.mem_discovered_imp_depth_le (G : DepGraph V) (S : Finset V)
-    (hsources : ∀ v ∈ S, G.isSource v)
-    {n : ℕ} {v : V} (hv : v ∈ G.discovered S n) : G.depth v ≤ n := by
-  induction' n with n ih generalizing v <;> simp_all +decide [ DepGraph.discovered ];
-  · exact G.depth_eq_zero_of_isSource ( hsources v hv );
-  · rcases hv with ( hv | hv );
-    · exact Nat.le_succ_of_le ( ih hv );
-    · have h_pred_depth : ∀ u ∈ G.pred v, G.depth u ≤ n := by
-        exact fun u hu => ih ( G.pred_mem_of_mem_nextLayer hv u hu );
-      rw [ DepGraph.depth_eq ];
-      exact Finset.sup_le fun x hx => Nat.succ_le_succ ( h_pred_depth _ x.2 )
-
-/-
-**Theorem B1 (Critical Path Attainment).**
-    In every finite nonempty DAG, there exists a node whose depth equals
-    the critical path length.
--/
-theorem DepGraph.exists_node_of_depth_eq_criticalPath (G : DepGraph V) [Nonempty V] :
+theorem exists_node_of_depth_eq_criticalPath (G : DepGraph V) [Nonempty V] :
     ∃ v : V, G.depth v = G.criticalPathLength := by
-  -- Since `V` is nonempty, there must exist a node `v` such that `G.depth v = Finset.univ.sup G.depth`.
-  have h_exists_max : ∃ v : V, ∀ u : V, G.depth u ≤ G.depth v := by
-    simpa using Finset.exists_max_image Finset.univ G.depth ⟨ Classical.arbitrary V, Finset.mem_univ _ ⟩;
-  exact ⟨ h_exists_max.choose, le_antisymm ( Finset.le_sup ( f := G.depth ) ( Finset.mem_univ _ ) ) ( Finset.sup_le fun u _ => h_exists_max.choose_spec u ) ⟩
+  convert Finset.exists_max_image Finset.univ G.depth ( Finset.univ_nonempty );
+  exact ⟨ fun h => ⟨ Finset.mem_univ _, fun x' _ => h ▸ Finset.le_sup ( f := G.depth ) ( Finset.mem_univ x' ) ⟩, fun h => le_antisymm ( Finset.le_sup ( f := G.depth ) ( Finset.mem_univ _ ) ) ( Finset.sup_le fun x' _ => h.2 x' ‹_› ) ⟩
 
 /-
-**Theorem B2 (Shallow Search Misses Deep Targets).**
-    If the search budget `k` is strictly below the critical path length,
-    some node remains undiscovered.
+Every node is discovered from sources by its depth round.
 -/
-theorem DepGraph.exists_not_mem_discovered_of_lt_criticalPath (G : DepGraph V)
-    (S : Finset V) (hsources : ∀ v ∈ S, G.isSource v)
-    [Nonempty V] {k : ℕ} (hk : k < G.criticalPathLength) :
-    ∃ v : V, v ∉ G.discovered S k := by
-  -- By Theorem B1, there exists a node v with depth equal to the critical path length.
-  obtain ⟨v, hv⟩ : ∃ v : V, G.depth v = G.criticalPathLength := by
-    exact G.exists_node_of_depth_eq_criticalPath;
-  exact ⟨ v, fun h => by linarith [ DepGraph.mem_discovered_imp_depth_le G S hsources h ] ⟩
+theorem mem_discovered_of_le_depth (G : DepGraph V) (v : V) :
+    v ∈ G.discovered G.sourceSet (G.depth v) := by
+  -- By induction on the depth of $v$, we can show that $v$ is discovered at depth $d$.
+  induction' h : G.depth v with d hd generalizing v;
+  · -- If the depth of $v$ is 0, then $v$ is a source.
+    have h_source : G.isSource v := by
+      rw [ DepGraph.depth_eq ] at h ; aesop;
+    exact Finset.mem_filter.mpr ⟨ Finset.mem_univ _, h_source ⟩;
+  · -- By definition of depth, if $G.depth v = d + 1$, then all predecessors of $v$ have depth at most $d$.
+    have h_predecessors : ∀ u ∈ G.pred v, G.depth u ≤ d := by
+      exact fun u hu => Nat.le_of_lt_succ ( by linarith [ G.depth_pred_lt u v hu ] );
+    -- By definition of `nextLayer`, since all predecessors of `v` are in `discovered G.sourceSet d`, `v` must be in `nextLayer (discovered G.sourceSet d)`.
+    have h_nextLayer : v ∈ G.nextLayer (G.discovered G.sourceSet d) := by
+      refine' Finset.mem_filter.mpr ⟨ Finset.mem_univ _, _, _ ⟩;
+      · exact fun hv => by linarith [ G.mem_discovered_imp_depth_le G.sourceSet ( fun v hv => Finset.mem_filter.mp hv |>.2 ) hv ] ;
+      · intro u hu;
+        have h_discovered : ∀ n, ∀ u, G.depth u ≤ n → u ∈ G.discovered G.sourceSet n := by
+          intro n u hu;
+          induction' n with n ih generalizing u;
+          · rw [ depth_eq ] at hu;
+            split_ifs at hu ; simp_all +singlePass;
+            · exact Finset.mem_filter.mpr ⟨ Finset.mem_univ _, by simpa [ DepGraph.isSource ] using ‹G.pred u = ∅› ⟩;
+            · contradiction;
+          · by_cases hu' : G.depth u ≤ n;
+            · exact Finset.mem_union_left _ ( ih u hu' );
+            · have h_discovered : ∀ u, G.depth u = n + 1 → u ∈ G.nextLayer (G.discovered G.sourceSet n) := by
+                intro u hu
+                have h_predecessors : ∀ u, G.depth u = n + 1 → ∀ v ∈ G.pred u, G.depth v ≤ n := by
+                  exact fun u hu v hv => Nat.le_of_lt_succ ( by linarith [ G.depth_pred_lt v u hv ] );
+                refine' Finset.mem_filter.mpr ⟨ Finset.mem_univ _, _, _ ⟩;
+                · intro h;
+                  have := mem_discovered_imp_depth_le G G.sourceSet ( fun v hv => by
+                    exact Finset.mem_filter.mp hv |>.2 ) h;
+                  linarith;
+                · exact fun v hv => ih v ( h_predecessors u hu v hv );
+              exact Finset.mem_union_right _ ( h_discovered u ( by linarith ) );
+        exact h_discovered d u ( h_predecessors u hu );
+    exact Finset.mem_union_right _ h_nextLayer
 
-/-
-Helper: every node is discovered from the source set by its own depth.
--/
-lemma DepGraph.mem_discovered_sourceSet_depth (G : DepGraph V)
-    (S : Finset V) (hsources : ∀ v, G.isSource v → v ∈ S) (v : V) :
-    v ∈ G.discovered S (G.depth v) := by
-  -- By well-founded induction, we can show that for any node $v$, $v$ is in the discovered set at step $G.depth v$.
-  induction' h : G.depth v using Nat.strong_induction_on with k ih generalizing v;
-  by_cases h_source : G.isSource v;
-  · rw [ DepGraph.depth_eq_zero_of_isSource ] at h <;> aesop;
-  · -- Since $v$ is not a source, there exists some $u \in G.pred v$ such that $G.depth u < k$.
-    obtain ⟨u, hu⟩ : ∃ u ∈ G.pred v, G.depth u < k := by
-      have h_depth_lt : ∃ u ∈ G.pred v, G.depth u < G.depth v := by
-        exact Exists.elim ( Finset.nonempty_of_ne_empty ( show G.pred v ≠ ∅ from fun h => h_source <| by simp +decide [ h, DepGraph.isSource ] ) ) fun u hu => ⟨ u, hu, G.depth_pred_lt hu ⟩ ;
-      aesop;
-    rcases k with ( _ | k ) <;> simp_all +decide [ DepGraph.discovered ];
-    refine' Classical.or_iff_not_imp_left.2 fun h => Finset.mem_filter.2 ⟨ Finset.mem_univ _, h, _ ⟩;
-    intro w hw;
-    have hw_depth : G.depth w ≤ k := by
-      have := G.depth_pred_lt hw; linarith;
-    exact G.discovered_mono S hw_depth ( ih _ hw_depth _ rfl )
+/-- **Theorem C1**: after `criticalPathLength` rounds, all nodes are discovered. -/
+theorem discovered_eq_univ_at_criticalPath (G : DepGraph V) :
+    G.discovered G.sourceSet G.criticalPathLength = Finset.univ := by
+  ext v; simp only [Finset.mem_univ, iff_true]
+  exact G.discovered_mono_of_le G.sourceSet
+    (Finset.le_sup (f := G.depth) (Finset.mem_univ v))
+    (G.mem_discovered_of_le_depth v)
 
-/-
-**Theorem C1 (Guided Completeness).**
-    Critical-path-guided exploration from all sources discovers every node
-    in exactly `criticalPathLength` rounds. This is the constructive upper bound.
--/
-theorem DepGraph.discovered_eq_univ_at_criticalPath (G : DepGraph V)
-    (S : Finset V) (hsources : ∀ v, G.isSource v → v ∈ S) :
-    G.discovered S G.criticalPathLength = Finset.univ := by
-  have h_univ_subset : ∀ v, v ∈ G.discovered S (G.depth v) := by
-    exact fun v => G.mem_discovered_sourceSet_depth S hsources v;
-  exact Finset.eq_univ_of_forall fun v => by exact G.discovered_mono S ( show G.depth v ≤ G.criticalPathLength from Finset.le_sup ( f := G.depth ) ( Finset.mem_univ v ) ) ( h_univ_subset v ) ;
-
-/-
-**Policy Theorem (Critical-Path Guidance Finds Inaccessible Targets).**
-    There exist maximum-depth nodes that are provably inaccessible to any
-    exploration capped below the critical path length.
--/
-theorem DepGraph.critical_path_policy_finds_inaccessible (G : DepGraph V)
-    [Nonempty V] (S : Finset V)
-    (hsources_sub : ∀ v ∈ S, G.isSource v)
-    (_hsources_sup : ∀ v, G.isSource v → v ∈ S)
+/-- **Theorem B2**: shallow exploration misses deep targets. -/
+theorem exists_not_mem_discovered_of_lt_criticalPath (G : DepGraph V) [Nonempty V]
+    (S : Finset V) (hS : ∀ v ∈ S, G.isSource v)
     {k : ℕ} (hk : k < G.criticalPathLength) :
-    ∃ v : V, G.depth v = G.criticalPathLength ∧ v ∉ G.discovered S k := by
-  -- By Theorem B1, there exists a node v with depth equal to the critical path length.
-  obtain ⟨v, hv⟩ : ∃ v : V, G.depth v = G.criticalPathLength := by
-    exact DepGraph.exists_node_of_depth_eq_criticalPath G;
-  exact ⟨ v, hv, fun h => hk.not_ge ( hv ▸ G.mem_discovered_imp_depth_le S hsources_sub h ) ⟩
+    ∃ v : V, v ∉ G.discovered S k := by
+  by_contra hall; push_neg at hall
+  have hle : G.criticalPathLength ≤ k :=
+    Finset.sup_le fun v _ => G.mem_discovered_imp_depth_le S hS (hall v)
+  omega
 
-/-! ## Weighted conceptual depth (extension) -/
+/-- **Synthesis theorem** -/
+theorem critical_path_policy_finds_shallowly_inaccessible (G : DepGraph V) [Nonempty V]
+    {k : ℕ} (hk : k < G.criticalPathLength) :
+    ∃ v : V, G.depth v = G.criticalPathLength ∧
+      v ∉ G.discovered G.sourceSet k := by
+  obtain ⟨v, hv⟩ := G.exists_node_of_depth_eq_criticalPath
+  exact ⟨v, hv, fun hmem => by
+    have := G.mem_discovered_imp_depth_le G.sourceSet
+      (fun w hw => by
+        simp only [sourceSet, Finset.mem_filter, Finset.mem_univ, true_and] at hw
+        exact hw) hmem
+    omega⟩
 
-/-- A weighted dependency graph adds a novelty weight to each node. -/
-structure WDepGraph (V : Type*) [Fintype V] [DecidableEq V] extends DepGraph V where
-  /-- Weight (conceptual novelty cost) of each node. -/
-  weight : V → ℕ
-  /-- Every node has positive weight. -/
-  weight_pos : ∀ v, 0 < weight v
+/-
+Depth is bounded by `|V| - 1`.
+-/
+theorem depth_le_card_sub_one (G : DepGraph V) (v : V) :
+    G.depth v ≤ Fintype.card V - 1 := by
+  -- By induction on the depth of $v$, we can show that the depth of $v$ is at most the cardinality of the set of all nodes minus one.
+  have h_ind : ∀ v : V, G.depth v ≤ (Finset.univ : Finset V).card - 1 := by
+    intro v
+    have h_card : (Finset.univ : Finset V).card ≥ G.depth v + 1 := by
+      -- By induction on the depth of $v$, we can show that the number of nodes reachable from $v$ (including $v$ itself) is at least $depth v + 1$.
+      have h_reachable : ∀ v : V, (Finset.filter (fun u => G.depth u ≤ G.depth v) (Finset.univ : Finset V)).card ≥ G.depth v + 1 := by
+        intro v
+        induction' h : G.depth v with d hd generalizing v;
+        · exact Finset.card_pos.mpr ⟨ v, by simpa [ h ] ⟩;
+        · -- Since $G.depth v = d + 1$, there exists a predecessor $u$ of $v$ such that $G.depth u = d$.
+          obtain ⟨u, hu⟩ : ∃ u ∈ G.pred v, G.depth u = d := by
+            have h_pred : ∃ u ∈ G.pred v, ∀ w ∈ G.pred v, G.depth w ≤ G.depth u := by
+              apply_rules [ Finset.exists_max_image ];
+              contrapose! h; simp_all +singlePass [ DepGraph.depth ] ;
+              rw [ WellFounded.fix_eq ] ; aesop;
+            obtain ⟨ u, hu₁, hu₂ ⟩ := h_pred;
+            have h_depth_u : G.depth v = G.depth u + 1 := by
+              rw [ G.depth_eq ];
+              rw [ if_neg ( Finset.Nonempty.ne_empty ⟨ u, hu₁ ⟩ ) ];
+              refine' le_antisymm _ _ <;> norm_num;
+              · exact hu₂;
+              · exact Finset.le_sup ( f := G.depth ) hu₁;
+            grind +qlia;
+          have h_reachable : (Finset.filter (fun u => G.depth u ≤ d + 1) (Finset.univ : Finset V)) ⊇ (Finset.filter (fun u => G.depth u ≤ d) (Finset.univ : Finset V)) ∪ {v} := by
+            grind;
+          refine' le_trans _ ( Finset.card_mono h_reachable );
+          grind;
+      exact le_trans ( h_reachable v ) ( Finset.card_le_univ _ );
+    exact Nat.le_sub_one_of_lt h_card;
+  exact h_ind v
 
-/-- **Weighted depth**: the maximum sum of weights along a directed path to `v`. -/
-noncomputable def WDepGraph.wdepth (G : WDepGraph V) : V → ℕ :=
-  G.toDepGraph.wf.fix (fun v ih =>
-    if h : (G.pred v).Nonempty then
-      (G.pred v).attach.sup' (Finset.Nonempty.attach h) (fun ⟨u, hu⟩ => ih u hu) + G.weight v
-    else G.weight v)
-
-/-- The weighted critical path length. -/
-noncomputable def WDepGraph.wcriticalPathLength (G : WDepGraph V) : ℕ :=
-  Finset.univ.sup G.wdepth
-
-end ConceptualDependency
+end DepGraph

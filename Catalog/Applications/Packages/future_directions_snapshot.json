@@ -207,22 +207,6 @@
     "timestamp": "2026-05-14T16:03:53.833462+00:00"
   },
   {
-    "id": "seed_010",
-    "title": "Pythagorean Lattice Reduction for Integer Factoring",
-    "description": "Prove that factoring n reduces to finding short vectors in the Berggren Pythagorean triple lattice L_n, and construct a polynomial-time quantum algorithm via LLL reduction on L_n. Formalize the Berggren primitive triple generation as a groupoid action on SL(3,Z), then show that the shortest vector in L_n encodes a non-trivial factor of n.",
-    "domains": [
-      "Cryptography",
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.9,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "1b970ad9",
-    "timestamp": "2026-05-14T16:03:53.813608+00:00"
-  },
-  {
     "id": "seed_036",
     "title": "String Theory T-Duality as Tropical Duality: Min-Plus Mirror Symmetry",
     "description": "Prove that T-duality in string theory is precisely tropical duality in the min-plus semiring: compactification on a circle of radius R is dual to compactification on a circle of tropical radius 1/R. Show that mirror symmetry between Calabi-Yau manifolds is the tropical Legendre transform of their potential functions, and that the conifold transition is a tropical corner locus.",
@@ -819,10 +803,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d2a18598",
     "timestamp": "2026-05-14T16:16:22.734067+00:00"
   },
   {
@@ -1649,6 +1633,63 @@
     "source_exp_id": "e0e92b1c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:18:16.873789+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Direction 1",
+    "description": "(Geometric gap conditions) — Highest mathematical payoff, most tractable in Lean.",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1b970ad9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:25:22.017524+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Direction 4",
+    "description": "(Verified search algorithm) — Most computationally concrete, enables experimental validation.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1b970ad9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:25:22.024200+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "Direction 2",
+    "description": "(Orthogonal group embedding) — Foundational for the theory, connects to established mathematics.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1b970ad9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:25:22.030954+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Direction 5",
+    "description": "(Quantum HSP) — Most speculative, requires careful formulation to avoid overclaiming.",
+    "domains": [
+      "Physics",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1b970ad9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
     "id": "seed_078",

@@ -40,8 +40,8 @@ theorem area_law_square (n : ℕ) : Nat.sqrt (n * n) ≤ n * n := by
   exact Nat.sqrt_le_self _
 
 theorem area_law_compression {n : ℕ} (hn : 2 ≤ n) :
-    Nat.sqrt n < n :=
-  Nat.sqrt_lt_self hn
+    Nat.sqrt n < n := by
+  exact?
 
 /-- The bulk-boundary decomposition preserves total size. -/
 theorem bulk_boundary_decomposition (P : ModularProof) :
