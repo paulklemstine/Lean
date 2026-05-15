@@ -32,22 +32,6 @@
     "timestamp": "2026-05-14T16:03:53.810233+00:00"
   },
   {
-    "id": "seed_002",
-    "title": "Riemann Hypothesis via Tropical Spectral Transfer",
-    "description": "Formulate the Riemann Hypothesis as a statement about the spectrum of a tropical transfer operator on the critical strip. Prove that all non-trivial zeros lie on Re(s)=1/2 if and only if the tropical eigenvalue gap vanishes, connecting analytic number theory to tropical dynamics via a constructive spectral correspondence.",
-    "domains": [
-      "Algebra",
-      "Physics",
-      "Speculative"
-    ],
-    "priority_score": 0.94,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "cf94957b",
-    "timestamp": "2026-05-14T16:03:53.810906+00:00"
-  },
-  {
     "id": "seed_044",
     "title": "Quantum Pythagorean Teleportation: Berggren Orbits as Clifford Circuits",
     "description": "Prove that Berggren groupoid orbits on SL(3,Z) encode quantum teleportation circuits via a categorical equivalence between Pythagorean lattices and stabilizer subgroups of the Clifford group. Show that primitive triple matrices form universal quantum gates under tropical composition, and that the Berggren tree structure yields an optimal teleportation protocol.",
@@ -674,20 +658,6 @@
     "timestamp": "2026-05-15T13:04:21.848289+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "Orbit structure",
-    "description": ": The rate-distortion function factors through the orbit space of the symmetry group action on the space of melodic lines.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "50208fa8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:04:44.664357+00:00"
-  },
-  {
     "id": "fd_0211",
     "title": "Prove tropical Fano",
     "description": "(Direction 3): The proof is essentially definitional from the vulnerability framework.",
@@ -719,156 +689,6 @@
     "timestamp": "2026-05-15T15:04:51.227861+00:00"
   },
   {
-    "id": "fd_0224",
-    "title": "Coherence conditions",
-    "description": "— associativity, unit, and triangle axioms for the monoidal structure.\n\n### Proof Strategy\n\nStart with the explicit function-space model where internal hom is literally `State n → (State m → State k) ≅ State n → Arch m k`. The adjunction follows from currying of functions, which is already in Mathlib. The challenge is bookkeeping the `Fin` indexing through the product/hom correspondence.\n\n### Cross-Domain Connections\n\n- **Programming language semantics**: Monoidal closed categories are the categorical semantics of typed lambda calculus. This direction would establish a Curry-Howard-style correspondence between architecture types and computational guarantees.\n- **Hypernetworks**: The internal hom formalizes networks that produce networks, connecting to dynamic architecture generation and me",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.696815+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Induction on the number of inversions",
-    "description": "Define the inversion count of a permutation. Show that any transposition that uncrosses an inversion does not increase cost (using the uncrossing lemma). Since the identity has zero inversions, it is optimal among all permutations.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de9a421e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:01:39.408905+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "WMSO → Automata",
-    "description": ": By structural induction on formulas, using closure of recognizable series under min, +, and quantification (projection). The quantification step uses the finite powerset construction.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.670643+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Timed words",
-    "description": ": Extend the derivative theory to handle continuous time. The key challenge is that timed derivatives form a potentially infinite family parameterized by time delays. Restrict to clock-bounded systems where the derivative family is still finite up to time rescaling.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "ed53a6b6",
-    "timestamp": "2026-05-15T16:47:43.802334+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Key size analysis:",
-    "description": "Determine minimum `n, m, r` for λ-bit security.\n\n### Lean Target\n```lean\ntheorem tropical_owf_security :\n    NP_Hard_Average\n      (fun M : Matrix (Fin n) (Fin m) (WithTop ℤ) =>\n        HasTropFactorization r M)\n```\n\n### Cross-Domain Connections\n- **Post-quantum cryptography:** Alternative hardness assumption\n- **Lattice cryptography:** Tropical factorization as a \"min-plus lattice\" problem\n- **Network security:** Tropical one-way functions for lightweight IoT protocols\n\n---\n\n## Direction 4: Tropical SAT Correspondence\n\n### Statement\n**Theorem (target):** There is a polynomial-time reduction from CNF-SAT to tropical matrix factorization that preserves the satisfying assignment structure.\n\n### Why This Matters\nA direct SAT encoding would establish tropical factorization as a *universal* NP-",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5d0ee4d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:30:25.967806+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Immediate (1–2 weeks):",
-    "description": "Prove complexity-weighted optimization (Direction 3) — this is the most directly formalizable extension with clear practical applications.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4e85c80a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:53:49.331298+00:00"
-  },
-  {
-    "id": "fd_0227",
-    "title": "Long-term (6–12 months):",
-    "description": "Develop probabilistic extensions (Direction 1) and topological extensions (Direction 5) — these require significant new mathematical development.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4e85c80a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:53:49.380324+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Spectral gap",
-    "description": ": Use the Ruelle–Perron–Frobenius theorem: since the Berggren symbolic system has a finite alphabet and the potential φ is Hölder (it depends primarily on the first symbol), L_s has a spectral gap on Hölder spaces.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.337991+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Thin orbit refinements",
-    "description": ": Apply Kontorovich's thin-orbit local-global methods to handle the semigroup (rather than full group) orbit.\n\n### Key Objects to Formalize\n- The isometry Ψ : PSL₂(ℝ) → SO₀(2,1; ℝ) sending Möbius transformations to Lorentz boosts\n- The Berggren generators as elements of PSL₂(ℤ) via the parametrization (m, n) ↔ (m+ni)/(m-ni)\n- The Eisenstein series E(s, g) on Γ\\G and its meromorphic continuation\n\n### Expected Outcome\nAn asymptotic formula:\n```\nN(T) = c · T^{2/σ₀} + O(T^{2/σ₀ - δ})\n```\nwhere δ > 0 depends on the spectral gap for Γ\\G.\n\n---\n\n## Direction 3: Certified Post-Quantum Security from Orbit Hardness\n\n### Goal\nProve a security reduction showing that breaking the Berggren key exchange is at least as hard as a standard lattice/orbit problem, with quantitative security bounds derived from",
-    "domains": [
-      "Physics",
-      "Pythagorean",
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.403064+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "Lattice reduction barrier",
-    "description": ": Prove that the Berggren lattice (generated by the orbit vectors) has short vectors of length Ω(α^d), preventing BKZ-type attacks from recovering the word.",
-    "domains": [
-      "Pythagorean",
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.445037+00:00"
-  },
-  {
     "id": "fd_0240",
     "title": "Quantum query lower bound",
     "description": ": Use the collision entropy bound with quantum random oracle techniques to show that Grover-type attacks require Ω(3^{d/2}) queries.\n\n### Key Theorem Target (Lean)\n```lean\ntheorem berggren_key_exchange_security\n    (d : ℕ) (hd : 128 ≤ d * Real.log 3 / Real.log 2) :\n    SecurityLevel (berggrenKeyExchange d) ≥ 128\n```\n\n### Practical Impact\n- Concrete security parameter recommendations: d ≥ 117 for 128-bit security\n- Integration with existing post-quantum frameworks (NIST standards)\n- Hardware-friendly implementation (only integer matrix multiplication)\n\n---\n\n## Direction 4: Spectral Gap and Expansion for the Berggren Orbit Graph\n\n### Goal\nProve that the depth-bounded Berggren orbit graph G_D (with edges from Berggren generator applications) is a family of expander graphs with spectral gap bo",
@@ -885,106 +705,129 @@
     "timestamp": "2026-05-15T18:32:09.457340+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Bourgain–Gamburd method",
-    "description": ": Apply the sum-product estimate → spectral gap pipeline:\n   - Prove that the Berggren generators have no joint invariant subspace mod p for sufficiently large primes p\n   - Apply Helfgott-type growth estimates for the image of the Berggren semigroup in SL₂(𝔽_p)\n   - Lift to a spectral gap estimate via the Bourgain–Gamburd theorem",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.478980+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Property (τ)",
-    "description": ": Establish property (τ) for the Berggren semigroup relative to congruence subgroups",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.488872+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Rapid mixing",
-    "description": ": Conclude that random walks on G_D mix in O(log D) steps\n\n### Key Theorem Target (Lean)\n```lean\ntheorem berggren_spectral_gap :\n    ∃ c > 0, ∀ D : ℕ, D ≥ D₀ →\n      spectralGap (berggrenCayleyGraph D) ≥ c\n```\n\n### Applications\n- **Pseudorandom number generation**: Random Berggren walks produce outputs that are computationally indistinguishable from uniform\n- **Hash function collision resistance**: The spectral gap implies that the hash function based on Berggren tree walks has optimal collision resistance\n- **Derandomization**: Deterministic walks on the Berggren expander can replace random sampling in algorithms\n\n---\n\n## Direction 5: Prime Hypotenuse Distribution via Affine Sieve\n\n### Goal\nProve that infinitely many primitive Pythagorean triples in the Berggren orbit have prime hypotenus",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.501172+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Saturation number",
-    "description": ": Prove that the saturation number of the hypotenuse coordinate on the Berggren orbit is at most R (ideally R = 1, meaning primes appear; realistically R ≤ 6).",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.524354+00:00"
-  },
-  {
-    "id": "fd_0227",
-    "title": "Min-depth",
-    "description": ": The maximum nesting depth of `tmin` in a term. Measures the \"branching complexity\" of a proof search.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0ea2e820",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T19:51:40.825425+00:00"
-  },
-  {
-    "id": "fd_0228",
-    "title": "Cut-rank",
-    "description": ": The maximum nesting depth of `cut` in a term. Measures the logical depth of the argument.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0ea2e820",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T19:51:40.835514+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Tropical width",
-    "description": ": The number of distinct atoms reachable by expanding all `tmin` branches. Measures the \"search space size.\"",
+    "id": "fd_0232",
+    "title": "Define tropical eigenvalues",
+    "description": ": For a min-plus matrix A ∈ ℝⁿˣⁿ, the tropical eigenvalue λ is a scalar such that A ⊗ x = λ ⊕ x (i.e., min_j(A(i,j) + x(j)) = λ + x(i) for all i).",
     "domains": [
       "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "0ea2e820",
+    "source_exp_id": "cf94957b",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T19:51:40.844705+00:00"
+    "timestamp": "2026-05-15T20:38:18.895203+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Prove existence",
+    "description": ": Every irreducible min-plus matrix has a unique tropical eigenvalue equal to the minimum cycle mean: λ = min_{σ circuit} (1/|σ|) · Σ_{(i,j)∈σ} A(i,j).",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf94957b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:38:18.905435+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Connect to width collapse",
+    "description": ": Show that the tropical eigenvector has width zero if and only if all cycle means are equal — the tropical analogue of a simple dominant eigenvalue.\n\n### Proof Strategy\n- Formalize directed graphs and cycle decompositions over Fin n.\n- Define irreducibility as strong connectivity of the associated graph.\n- Prove Karp's theorem: the minimum cycle mean equals lim_{k→∞} min_i (A^⊗k)_{ij}/k.\n- Use the Collatz–Wielandt characterization to establish bounds.\n\n### Cross-Domain Impact\n- **Optimization**: Tropical eigenvalues solve mean payoff games and scheduling problems.\n- **Dynamical systems**: Tropical eigenvectors are fixed points of the normalized tropical dynamics.\n- **RH connection**: The tropical eigenvalue could play the role of the \"spectral parameter\" in a tropical zeta function.\n\n### ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf94957b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:38:18.916506+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Define tropical operators on ℓ∞",
+    "description": ": (Ty)(i) = inf_j(c(i,j) + w(j) + y(j)) with absolute summability conditions ensuring the infimum exists.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf94957b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:38:18.956303+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Establish compactness results",
+    "description": ": Under appropriate conditions, the tropical operator maps the unit ball of ℓ∞ into a compact subset.\n\n### Proof Strategy\n- Use Mathlib's `Filter.Tendsto` and `BoundedContinuousFunction` infrastructure.\n- Define the tropical operator as a map ℓ∞ → ℓ∞ using `iInf` with suitable boundedness hypotheses.\n- The width-constancy equivalence generalizes directly: if sup = inf over all naturals, the function is constant. The key subtlety is handling the possibility of the sup/inf not being attained.\n- For compactness, use an Arzelà–Ascoli type argument: if the cost kernel c(i,j) grows fast enough as |i-j| → ∞, the operator is compact.\n\n### Cross-Domain Impact\n- **Functional analysis**: Tropical analogues of compact operators and spectral theory.\n- **Statistical mechanics**: Countable-state transfer",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf94957b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:38:18.975803+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Prove a tropical functional equation",
+    "description": ": Under palindromic weight symmetry, D_w(s) and D_w(-s) are related by a simple transformation.\n\n### Proof Strategy\n- The tropical Dirichlet series is a piecewise-linear function of s, with breakpoints at s_* = (w(m) - w(n))/(log n - log m).\n- The \"zeros\" (width-collapse loci) are intervals of s where all terms w(n) + s·log n are equal — which occurs only at isolated points for generic w.\n- The palindromic symmetry w(n) = -w(N+1-n) implies that the set of breakpoints is symmetric about s = 0.\n- The tropical functional equation follows from the substitution n ↔ N+1-n.\n\n### Cross-Domain Impact\n- **Number theory**: First formally verified tropical zeta function.\n- **Tropical geometry**: The tropical curve defined by Z(s, t) = 0 is a tropical analogue of the Riemann surface.\n- **Computational ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf94957b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:38:19.025936+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Prove concentration of spectral width",
+    "description": ": For n × n random tropical matrices with i.i.d. entries, width(Tx) concentrates around a deterministic limit as n → ∞.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf94957b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:38:19.046704+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Connect to zero spacing",
+    "description": ": Compare the tropical spectral width distribution with the spacings of Riemann zeta zeros.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf94957b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:38:19.075691+00:00"
   },
   {
     "id": "seed_052",
@@ -1444,23 +1287,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "1. Closedness and Topological Properties of Tropical Hypersurfaces",
-    "description": "**Status**: ✅ Completed in this cycle (`isClosed_tropHypersurface`).\n\n**Next theorem targets**:\n\n```lean\n/-- The complement of a tropical hypersurface is open and dense\n    when the polynomial has at least two distinct monomials. -/\ntheorem isOpen_compl_tropHypersurface {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) :\n    IsOpen (TropHypersurface p hp)ᶜ\n\n/-- The tropical hypersurface has empty interior when the polynomial\n    has at least two monomials with distinct exponent vectors. -/\ntheorem interior_tropHypersurface_eq_empty {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty)\n    (hdist : ∃ m₁ ∈ p, ∃ m₂ ∈ p, m₁.exp ≠ m₂.exp) :\n    interior (TropHypersurface p hp) = ∅\n```\n\n**Proof strategy**: The complement is open directly from closedness. For empty interior, use t",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d5cf911",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:21:34.094249+00:00"
-  },
-  {
     "id": "fd_0220",
     "title": "2. Convex-Complement Theorem: Unique Maximizer Regions",
     "description": "**Theorem statement**:\n\n```lean\n/-- A region of unique maximizer: the set where monomial m strictly\n    dominates all others. -/\ndef StrictDominanceRegion {n : ℕ} (p : Finset (TropMonomial n))\n    (m : TropMonomial n) : Set (Fin n → ℝ) :=\n  {x | m ∈ p ∧ ∀ m' ∈ p, m' ≠ m → m'.eval x < m.eval x}\n\n/-- The complement of the tropical hypersurface is the union of\n    strict dominance regions. -/\ntheorem compl_tropHypersurface_eq_iUnion_strictDominance {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) :\n    (TropHypersurface p hp)ᶜ =\n      ⋃ m ∈ p, StrictDominanceRegion p m\n\n/-- Each strict dominance region is convex. -/\ntheorem convex_strictDominanceRegion {n : ℕ}\n    (p : Finset (TropMonomial n)) (m : TropMonomial n) :\n    Convex ℝ (StrictDominanceRegion p m)\n\n/-- Each strict dominanc",
@@ -1472,10 +1298,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7d5cf911",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8032c745",
     "timestamp": "2026-05-15T14:21:34.104744+00:00"
   },
   {
@@ -1493,22 +1319,6 @@
     "source_exp_id": "cccfadf1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:04:11.687262+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "Direction 3: Build a Reflection Tactic for Tropical Goals",
-    "description": "**Goal:** Use `normalize_ca` as the computational kernel of a proof-producing tactic that automatically closes tropical AC goals.\n\n**Key insight:** The completeness theorem `normalize_ca_complete` already provides the core logic: to prove `ACEquiv e₁ e₂`, compute `normalize_ca e₁` and `normalize_ca e₂` and check equality. The soundness theorem then certifies the result.\n\n**Implementation plan:**\n1. Make `normalize_ca` computable by replacing the `WellOrderingRel`-based `LinearOrder` with a concrete decidable comparison on `TropExpr`.\n2. Write a Lean 4 macro/tactic that:\n   a. Reifies a tropical expression goal into `TropExpr` syntax.\n   b. Calls `normalize_ca` on both sides.\n   c. Uses `native_decide` or `decide` to check syntactic equality.\n   d. Applies `eval_normalize_ca` to close the g",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cccfadf1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:11.698153+00:00"
   },
   {
     "id": "fd_0220",
@@ -1577,22 +1387,6 @@
     "timestamp": "2026-05-15T15:13:29.153412+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "5. Semiring Transfer Interface for Analytic Estimates",
-    "description": "**Goal:** Design a formal interface allowing external analytic number theory estimates (prime number theorem, Goldbach-type density results, Chen's theorem) to be imported as hypotheses yielding tropical vanishing conclusions.\n\n**Concrete steps:**\n- Define a `TropicalAnalyticInput` structure: a bundled collection of hypotheses about prime distribution that suffice to derive tropical vanishing on specified domains.\n- Prove: PNT + Bertrand's postulate → the set of primes has positive tropical covering density → (by the basis theorem) tropical self-convolution eventually vanishes.\n- Prove: Chen's theorem (every sufficiently large even number is the sum of a prime and a product of at most two primes) → a relaxed tropical vanishing statement for a modified cost function.\n- Create a modular arch",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fb3d214",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:13:29.163744+00:00"
-  },
-  {
     "id": "fd_0220",
     "title": "Cross-Cutting Theme",
     "description": "All five directions share a common mathematical core: **the interplay between optimization, probability, and information geometry through free energy functionals**. The formalized Gibbs variational principle serves as the seed crystal from which each of these directions grows naturally:\n\n- Direction 1 (Donsker–Varadhan) generalizes the variational representation\n- Direction 2 (Soft Bellman) applies it to sequential decision-making\n- Direction 3 (PAC-Bayes) applies it to statistical learning theory\n- Direction 4 (Tropical large deviations) extends it to continuous spaces\n- Direction 5 (Variational inference) applies it to approximate Bayesian computation\n\nTogether, they form a coherent program for **formally verified thermodynamic computation** — a new foundation for certified algorithms in",
@@ -1637,21 +1431,6 @@
     "timestamp": "2026-05-15T15:29:13.529355+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "4. Learning-Theoretic Compression Theorem",
-    "description": "**Goal:** Formalize tropical representation maps and prove information contraction under compression layers in max-plus neural networks.",
-    "domains": [
-      "Tropical",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c133a545",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:29:13.538136+00:00"
-  },
-  {
     "id": "fd_0220",
     "title": "Target Theorem (Tensor Equality)",
     "description": "```lean\ntheorem tropical_mutual_information_tensor_eq\n    {X₁ Y₁ X₂ Y₂ : Type}\n    [Fintype X₁] [Nonempty X₁] [Fintype Y₁] [Nonempty Y₁]\n    [Fintype X₂] [Nonempty X₂] [Fintype Y₂] [Nonempty Y₂]\n    (K₁ : X₁ → Y₁ → ℝ) (K₂ : X₂ → Y₂ → ℝ) :\n    tropicalMutualInformation (tensorChannel K₁ K₂) =\n      tropicalMutualInformation K₁ + tropicalMutualInformation K₂\n```",
@@ -1664,23 +1443,6 @@
     "source_exp_id": "c133a545",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:29:13.549732+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "Direction 1: Randomized Protocol Tropical Transfer Theorem",
-    "description": "**Target Theorem.** *For every Boolean function f, if every **randomized** communication protocol computing f with error ≤ 1/3 has expected tropical cost at least L, and every randomized branching program for f induces such a protocol with overhead at most C, then every such randomized branching program has expected size at least L/C.*\n\n**Why it matters.** Our current transfer theorem handles deterministic protocols. Extending to randomized protocols would capture the full power of communication complexity, since randomized communication lower bounds are strictly harder to prove and yield stronger consequences. The tropical cost of a randomized protocol is a random variable; the key technical challenge is showing that *expected* tropical cost lower bounds transfer to *expected* branching p",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60e1cc58",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:30:43.000569+00:00"
   },
   {
     "id": "fd_0220",
@@ -1787,20 +1549,6 @@
     "timestamp": "2026-05-15T18:46:29.403753+00:00"
   },
   {
-    "id": "fd_0224",
-    "title": "Research Program Summary",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|--------------|\n| 1. Tropical interlacing | Medium-Hard | High | Current work |\n| 2. Critical graph invariance | Medium | High | Current work |\n| 3. Sherman-Morrison | Hard | Very High | Direction 2 |\n| 4. Sensitivity certificates | Medium | High | Current work |\n| 5. Control synthesis | Hard | Very High | Directions 1, 4 |\n\nThe recommended order is: 2 → 4 → 1 → 3 → 5. Direction 2 (critical graph invariance) provides the conceptual foundation, Direction 4 (certificates) provides the algorithmic framework, and the remaining directions build on these.\n\n---",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b2af3cbf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:46:29.417925+00:00"
-  },
-  {
     "id": "fd_0225",
     "title": "Theorem Statement",
     "description": "Every symmetry of tropical factorization decomposes into a gauge shift and a permutation of intermediate indices. That is, if $(A', B')$ is another factorization of the same product $M = \\text{tropMul}\\ A\\ B$, then under genericity assumptions, there exists a permutation $\\sigma \\in S_k$ and a shift vector $c \\in \\mathbb{R}^k$ such that $A'_{i,t} = A_{i,\\sigma(t)} + c_{\\sigma(t)}$ and $B'_{t,j} = B_{\\sigma(t),j} - c_{\\sigma(t)}$.",
@@ -1856,34 +1604,6 @@
     "source_exp_id": "1cdf4e96",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T20:09:21.809405+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Dependencies",
-    "description": "- Directions 1 and 2 can proceed independently and in parallel.\n- Direction 3 requires Mathlib probability theory infrastructure.\n- Direction 4 builds on Direction 1 (tropical information measures).\n- Direction 5 requires Directions 1–3 as foundational results.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1cdf4e96",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:09:21.826814+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Precise Target",
-    "description": "Define `InvSystem.finCoprod` with injection morphisms `ι_i : X i ⟶ finCoprod X` satisfying the dual universal property: for any cocone `(f_i : X i ⟶ Y)`, there exists a unique `[f₁, ..., fₙ] : finCoprod X ⟶ Y`.\n\nProve the dual transfer theorem:\n```\nΦ(finCoprod X) ≥ min_i Φ(X_i)\n```\nfor superadditive invariants (Φ(X + Y) ≥ Φ(X) + Φ(Y) on coproducts).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "12cfcc70",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:16:56.370470+00:00"
   },
   {
     "id": "fd_0231",

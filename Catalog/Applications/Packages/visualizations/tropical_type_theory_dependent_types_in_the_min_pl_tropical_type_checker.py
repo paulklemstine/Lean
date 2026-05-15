@@ -1,29 +1,31 @@
 #!/usr/bin/env python3
 """
-Tropical Type Theory: Algorithms
+Tropical Type Theory — Algorithms
 
-Implements core algorithms arising from tropical type theory:
-1. Tropical type checker (finite constraint satisfaction)
-2. Tropical morphism composition with cost tracking
-3. Initial algebra recursion (Bellman-style)
-4. Universe code normalization
-5. Shortest-path type inference
+Implements the core algorithms from the research paper:
+1. TropicalTypeChecker: O(n) decidable type checking
+2. CostBoundedComposer: Cost-additive composition
+3. InitialAlgebraHomomorphism: Unique morphism from ℕ
+4. UniverseNormalizer: Idempotent code normalization
+5. TropicalMeetComputer: Greatest lower bound computation
+6. ShortestPathVerifier: Application to shortest-path verification
 """
 
-from typing import Callable, List, Dict, Tuple, Optional, Any
+from typing import Callable, Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
-import heapq
+import time
 
 
-# ─── Algorithm 1: Tropical Type Checker ──────────────────────────────────
+# =============================================================================
+# Algorithm 1: Tropical Type Checker
+# =============================================================================
 
 @dataclass
 class TypeCheckResult:
     """Result of tropical type checking."""
-    is_valid: bool
-    violations: List[dict]
-    max_slack: int  # Maximum slack needed to make it valid
-    certificate: List[dict]  # Full verification trace
+    accepted: bool
+    violations: List[Tuple[Any, int, int]]  # (element, B(f(x)), A(x))
+    cost_slack: Optional[int]  # minimum slack across all elements
 
 def tropical_type_check(
     domain: List[Any],
@@ -33,312 +35,342 @@ def tropical_type_check(
     cost_bound: int = 0
 ) -> TypeCheckResult:
     """
-    Decidable tropical type checking.
-
-    Checks whether f : A → B is a cost-c tropical homomorphism:
-      ∀ x ∈ domain, B(f(x)) ≤ A(x) + cost_bound
-
-    Complexity: O(|domain|) evaluations.
-
+    Decidable tropical type checking on finite domains.
+    
+    Checks whether f is a c-bounded tropical homomorphism from A to B:
+        ∀ x ∈ domain, B(f(x)) ≤ A(x) + cost_bound
+    
+    Time complexity: O(|domain|)
+    Space complexity: O(|violations|)
+    
     Args:
         domain: Finite enumeration of the base type
-        A: Cost function on domain
-        B: Cost function on codomain
+        A: Source tropical set (cost function)
+        B: Target tropical set (cost function)
         f: Function to type-check
-        cost_bound: Allowed cost slack (default 0 = strict)
-
+        cost_bound: Allowed cost overhead (default 0 = strict typing)
+    
     Returns:
-        TypeCheckResult with validity, violations, and certificate
+        TypeCheckResult with acceptance status and details
     """
     violations = []
-    certificate = []
-    max_slack_needed = 0
-
+    min_slack = float('inf')
+    
     for x in domain:
+        bfx = B(f(x))
         ax = A(x)
-        fx = f(x)
-        bfx = B(fx)
-        slack = bfx - ax
-        max_slack_needed = max(max_slack_needed, slack)
-
-        entry = {'x': x, 'A(x)': ax, 'f(x)': fx, 'B(f(x))': bfx,
-                 'slack': slack, 'valid': bfx <= ax + cost_bound}
-        certificate.append(entry)
-
+        slack = ax + cost_bound - bfx
+        
+        if slack < min_slack:
+            min_slack = slack
+        
         if bfx > ax + cost_bound:
-            violations.append(entry)
-
+            violations.append((x, bfx, ax))
+    
     return TypeCheckResult(
-        is_valid=len(violations) == 0,
+        accepted=len(violations) == 0,
         violations=violations,
-        max_slack=max(0, max_slack_needed),
-        certificate=certificate
+        cost_slack=int(min_slack) if min_slack != float('inf') else None
     )
 
 
-# ─── Algorithm 2: Tropical Morphism Composer ────────────────────────────
+# =============================================================================
+# Algorithm 2: Cost-Bounded Composer
+# =============================================================================
 
 @dataclass
-class CompositionResult:
-    """Result of composing tropical morphisms."""
-    total_cost: int
-    intermediate_costs: List[int]
-    is_valid: bool
+class TropicalMorphism:
+    """A cost-bounded tropical morphism."""
+    f: Callable
+    cost_bound: int
+    source_name: str = ""
+    target_name: str = ""
 
-def compose_tropical_morphisms(
-    domain: List[Any],
-    cost_fns: List[Callable],      # [A, B, C, ...]
-    morphisms: List[Callable],      # [f: A→B, g: B→C, ...]
-    cost_bounds: List[int]          # [c₁, c₂, ...]
-) -> CompositionResult:
+def compose_morphisms(
+    m1: TropicalMorphism,
+    m2: TropicalMorphism
+) -> TropicalMorphism:
     """
-    Compose a chain of cost-bounded tropical morphisms.
-
-    Given morphisms f₁, f₂, ..., fₙ with costs c₁, c₂, ..., cₙ,
-    verifies that the composition has cost ≤ c₁ + c₂ + ... + cₙ.
-
-    Complexity: O(|domain| × n) where n is the chain length.
-
-    Args:
-        domain: Finite base type
-        cost_fns: Cost functions [A₀, A₁, ..., Aₙ]
-        morphisms: Functions [f₁, f₂, ..., fₙ] where fᵢ : Aᵢ₋₁ → Aᵢ
-        cost_bounds: Cost bounds [c₁, c₂, ..., cₙ]
-
-    Returns:
-        CompositionResult with total cost bound and validity
+    Compose two cost-bounded tropical morphisms.
+    
+    Given m1: A →_{c₁} B and m2: B →_{c₂} C,
+    returns m2 ∘ m1: A →_{c₁+c₂} C.
+    
+    Time complexity: O(1) for the composition setup
+    The resulting function evaluates in O(T(m1) + T(m2)) per call.
+    
+    This implements the substitution lemma (TropHomC.comp).
     """
-    assert len(morphisms) == len(cost_bounds)
-    assert len(cost_fns) == len(morphisms) + 1
-
-    total_cost = sum(cost_bounds)
-    all_valid = True
-
-    for x in domain:
-        current = x
-        for i, (f, c) in enumerate(zip(morphisms, cost_bounds)):
-            ax = cost_fns[i](current)
-            current = f(current)
-            bfx = cost_fns[i + 1](current)
-            if bfx > ax + c:
-                all_valid = False
-
-    return CompositionResult(
-        total_cost=total_cost,
-        intermediate_costs=cost_bounds,
-        is_valid=all_valid
+    return TropicalMorphism(
+        f=lambda x: m2.f(m1.f(x)),
+        cost_bound=m1.cost_bound + m2.cost_bound,
+        source_name=m1.source_name,
+        target_name=m2.target_name
     )
 
-
-# ─── Algorithm 3: Initial Algebra Recursion ──────────────────────────────
-
-def initial_algebra_hom(
-    zero_val: Any,
-    succ_fn: Callable,
-    n: int
-) -> Any:
+def compose_pipeline(morphisms: List[TropicalMorphism]) -> TropicalMorphism:
     """
-    Compute the unique algebra homomorphism from ℕ to any algebra (A, str).
-
-    This is the tropical analogue of the recursion principle:
-      f(0) = str(None) = zero_val
-      f(n+1) = str(Some(f(n))) = succ_fn(f(n))
-
-    Complexity: O(n) applications of succ_fn.
-
-    Args:
-        zero_val: Image of 0 (= str(None))
-        succ_fn: Successor function (= str ∘ Some)
-        n: Natural number to map
-
-    Returns:
-        f(n) in the target algebra
+    Compose a pipeline of tropical morphisms.
+    Total cost bound is the sum of individual cost bounds.
+    
+    Time complexity: O(k) where k = number of morphisms
     """
-    result = zero_val
-    for _ in range(n):
-        result = succ_fn(result)
+    if not morphisms:
+        return TropicalMorphism(f=lambda x: x, cost_bound=0)
+    
+    result = morphisms[0]
+    for m in morphisms[1:]:
+        result = compose_morphisms(result, m)
+    
     return result
 
 
-def bellman_recursion(
-    costs: List[List[float]],
-    source: int = 0
-) -> List[float]:
+# =============================================================================
+# Algorithm 3: Initial Algebra Homomorphism
+# =============================================================================
+
+@dataclass
+class TropicalAlgebra:
+    """A tropical algebra for the Option (1 + X) functor."""
+    name: str
+    zero: Any           # str(None): the base element
+    succ: Callable      # str(Some(·)): the successor function
+
+def initial_algebra_hom(
+    algebra: TropicalAlgebra,
+    n: int
+) -> Any:
     """
-    Bellman-Ford shortest paths as initial algebra recursion.
-
-    Interprets shortest-path computation as recursive evaluation
-    in a tropical algebra where:
-    - The algebra is (ℝ∪{∞}, min, +)
-    - str(None) = source distances = [∞,...,0,...,∞]
-    - str(Some(d)) = relax all edges once
-
-    This connects tropical inductive types to dynamic programming.
-
-    Complexity: O(V × E) where V = |vertices|, E = |edges|.
-
-    Args:
-        costs: Adjacency matrix (∞ = no edge)
-        source: Source vertex index
-
-    Returns:
-        Shortest distances from source to all vertices
+    Compute the unique algebra homomorphism from ℕ to a tropical algebra.
+    
+    f(0) = algebra.zero
+    f(k+1) = algebra.succ(f(k))
+    
+    Time complexity: O(n)
+    Space complexity: O(1) (iterative)
+    
+    This implements the initiality theorem (nat_initial_tropAlg).
     """
-    n = len(costs)
-    INF = float('inf')
+    result = algebra.zero
+    for _ in range(n):
+        result = algebra.succ(result)
+    return result
 
-    # str(None): initial distances
-    dist = [INF] * n
-    dist[source] = 0
+def verify_homomorphism(
+    algebra: TropicalAlgebra,
+    max_n: int = 20
+) -> Tuple[bool, List[Tuple[int, Any]]]:
+    """
+    Verify the homomorphism property for the first max_n values.
+    
+    Checks: f(str(z)) = algebra.str(Option.map f z)
+    - z = None: f(0) = algebra.zero
+    - z = Some(n): f(n+1) = algebra.succ(f(n))
+    
+    Returns (all_ok, [(n, f(n))])
+    """
+    values = []
+    ok = True
+    
+    for n in range(max_n):
+        val = initial_algebra_hom(algebra, n)
+        values.append((n, val))
+        
+        if n == 0:
+            if val != algebra.zero:
+                ok = False
+        else:
+            prev = initial_algebra_hom(algebra, n - 1)
+            if val != algebra.succ(prev):
+                ok = False
+    
+    return ok, values
 
-    # str(Some(d)): relax all edges
-    for _ in range(n - 1):
-        new_dist = dist.copy()
-        for u in range(n):
-            for v in range(n):
-                if dist[u] + costs[u][v] < new_dist[v]:
-                    new_dist[v] = dist[u] + costs[u][v]
-        dist = new_dist
 
-    return dist
+# =============================================================================
+# Algorithm 4: Universe Normalizer
+# =============================================================================
 
-
-# ─── Algorithm 4: Universe Code Normalization ────────────────────────────
-
-def normalize_code(u: int, K: int) -> int:
+def normalize_code(K: int, u: int) -> int:
     """
     Normalize a tropical universe code.
-
+    
     normalizeCode(K, u) = min(u, K)
-
-    This is idempotent: normalize(normalize(u)) = normalize(u)
-    and rank-nonincreasing: normalize(u) ≤ u.
-
-    Args:
-        u: Universe code (natural number)
-        K: Complexity bound
-
-    Returns:
-        Normalized code
+    
+    Time complexity: O(1)
+    
+    Properties (proven in Lean):
+    - Idempotent: normalize(K, normalize(K, u)) = normalize(K, u)
+    - Rank-nonincreasing: normalize(K, u) ≤ u
     """
     return min(u, K)
 
+def verify_idempotency(K: int, test_range: int = 100) -> bool:
+    """Verify idempotency of normalization on a range of values."""
+    return all(
+        normalize_code(K, normalize_code(K, u)) == normalize_code(K, u)
+        for u in range(test_range)
+    )
 
-def universe_hierarchy(max_code: int, K: int) -> Dict[int, List[int]]:
+def normalized_codes(K: int) -> List[int]:
+    """Return all normalized codes (fixed points of normalization) up to K."""
+    return [u for u in range(K + 1) if normalize_code(K, u) == u]
+
+
+# =============================================================================
+# Algorithm 5: Tropical Meet Computer
+# =============================================================================
+
+def tropical_meet(
+    A: Callable[[int], int],
+    B: Callable[[int], int]
+) -> Callable[[int], int]:
     """
-    Compute the tropical universe hierarchy.
-
-    Groups codes by their normalized form, showing how
-    codes above K collapse to the same normal form.
-
-    Args:
-        max_code: Maximum code to consider
-        K: Complexity bound
-
-    Returns:
-        Dictionary mapping normalized codes to their equivalence classes
-    """
-    hierarchy = {}
-    for u in range(max_code + 1):
-        nu = normalize_code(u, K)
-        if nu not in hierarchy:
-            hierarchy[nu] = []
-        hierarchy[nu].append(u)
-    return hierarchy
-
-
-# ─── Algorithm 5: Tropical Type Inference ────────────────────────────────
-
-def infer_minimal_cost(
-    domain: List[Any],
-    B: Callable,
-    f: Callable
-) -> Callable:
-    """
-    Infer the minimal tropical set A such that f : A → B.
-
-    The minimal A is: A(x) = B(f(x)) for all x.
-
-    This is the principal type / tightest cost annotation.
-
-    Complexity: O(|domain|).
-
-    Args:
-        domain: Finite base type
-        B: Target cost function
-        f: Function to type
-
-    Returns:
-        Minimal cost function A
-    """
-    cost_map = {}
-    for x in domain:
-        cost_map[x] = B(f(x))
-    return lambda x: cost_map.get(x, 0)
-
-
-def tropical_meet(A: Callable, B: Callable) -> Callable:
-    """
-    Compute the tropical meet (intersection) of two cost functions.
-
+    Compute the tropical meet (intersection) of two tropical sets.
+    
     TropMeet(A, B)(x) = min(A(x), B(x))
-
-    This is the greatest lower bound in the tropical subtyping order.
-
-    Args:
-        A, B: Cost functions
-
-    Returns:
-        Meet cost function
+    
+    Properties (proven in Lean):
+    - sub_left: TropSub(A, TropMeet(A, B))
+    - sub_right: TropSub(B, TropMeet(A, B))
+    - greatest: if TropSub(A, C) and TropSub(B, C), then TropSub(TropMeet(A,B), C)
     """
     return lambda x: min(A(x), B(x))
 
+def verify_glb(
+    A: Callable, B: Callable, C: Callable,
+    domain: List[int]
+) -> Dict[str, bool]:
+    """Verify greatest lower bound properties of the tropical meet."""
+    meet = tropical_meet(A, B)
+    
+    sub_left = all(meet(x) <= A(x) for x in domain)
+    sub_right = all(meet(x) <= B(x) for x in domain)
+    
+    # Check if C is a lower bound of both A and B
+    c_below_a = all(C(x) <= A(x) for x in domain)
+    c_below_b = all(C(x) <= B(x) for x in domain)
+    
+    # If so, C should be below the meet
+    if c_below_a and c_below_b:
+        c_below_meet = all(C(x) <= meet(x) for x in domain)
+    else:
+        c_below_meet = None
+    
+    return {
+        "sub_left": sub_left,
+        "sub_right": sub_right,
+        "C_is_lower_bound": c_below_a and c_below_b,
+        "greatest_property": c_below_meet
+    }
 
-# ─── Demonstration ──────────────────────────────────────────────────────
+
+# =============================================================================
+# Algorithm 6: Shortest-Path Verifier
+# =============================================================================
+
+def verify_shortest_path(
+    graph: Dict[int, List[Tuple[int, int]]],  # adjacency list: node -> [(neighbor, weight)]
+    distances: Dict[int, int],                  # proposed distance function
+    source: int
+) -> TypeCheckResult:
+    """
+    Verify a proposed shortest-path solution using tropical type checking.
+    
+    The distance function d is a tropical set. The predecessor function
+    (implicit in the distances) must satisfy d(v) ≤ d(u) + w(u,v)
+    for all edges (u,v) with weight w(u,v).
+    
+    This is equivalent to checking that the distance function is a
+    tropical homomorphism from the "edge-relaxed" cost function to
+    the distance function itself.
+    
+    Time complexity: O(|E|) where E is the edge set
+    """
+    violations = []
+    min_slack = float('inf')
+    
+    for u in graph:
+        for (v, w) in graph[u]:
+            # Bellman condition: d(v) ≤ d(u) + w
+            if v in distances and u in distances:
+                slack = distances[u] + w - distances[v]
+                if slack < min_slack:
+                    min_slack = slack
+                if distances[v] > distances[u] + w:
+                    violations.append((f"edge ({u},{v},w={w})", distances[v], distances[u] + w))
+    
+    # Source must have distance 0
+    if distances.get(source, -1) != 0:
+        violations.append(("source", distances.get(source, -1), 0))
+    
+    return TypeCheckResult(
+        accepted=len(violations) == 0,
+        violations=violations,
+        cost_slack=int(min_slack) if min_slack != float('inf') else None
+    )
+
+
+# =============================================================================
+# Main — Example Usage
+# =============================================================================
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("ALGORITHM DEMONSTRATIONS")
-    print("=" * 60)
-
-    # Type checking
-    print("\n--- Tropical Type Checker ---")
-    domain = list(range(8))
+    print("Tropical Type Theory — Algorithms\n")
+    
+    # Algorithm 1: Type Checking
+    print("--- Algorithm 1: Type Checking ---")
+    domain = list(range(10))
     result = tropical_type_check(
         domain,
-        A=lambda x: 2 * x + 5,
-        B=lambda y: y + 1,
-        f=lambda x: x + 2,
+        A=lambda x: 3 * x,
+        B=lambda y: y,
+        f=lambda x: x,
         cost_bound=0
     )
-    print(f"Valid: {result.is_valid}")
-    print(f"Min slack needed: {result.max_slack}")
+    print(f"Type check result: {'ACCEPT' if result.accepted else 'REJECT'}")
+    print(f"Minimum slack: {result.cost_slack}")
+    
+    # Algorithm 2: Composition
+    print("\n--- Algorithm 2: Composition ---")
+    m1 = TropicalMorphism(f=lambda x: x + 1, cost_bound=2, source_name="A", target_name="B")
+    m2 = TropicalMorphism(f=lambda x: x * 2, cost_bound=3, source_name="B", target_name="C")
+    composed = compose_morphisms(m1, m2)
+    print(f"Composed cost bound: {composed.cost_bound} (= {m1.cost_bound} + {m2.cost_bound})")
+    print(f"Composed f(5) = {composed.f(5)}")
+    
+    # Algorithm 3: Initial Algebra
+    print("\n--- Algorithm 3: Initial Algebra Homomorphism ---")
+    alg = TropicalAlgebra(name="Doubling", zero=1, succ=lambda n: 2 * n + 1)
+    ok, values = verify_homomorphism(alg, max_n=8)
+    print(f"Algebra: zero=1, succ(n)=2n+1")
+    print(f"Homomorphism: {[v for _, v in values]}")
+    print(f"Verified: {'✓' if ok else '✗'}")
+    
+    # Algorithm 4: Normalization
+    print("\n--- Algorithm 4: Universe Normalization ---")
+    K = 5
+    print(f"Normalized codes for K={K}: {normalized_codes(K)}")
+    print(f"Idempotency verified: {'✓' if verify_idempotency(K) else '✗'}")
+    
+    # Algorithm 6: Shortest-Path Verification
+    print("\n--- Algorithm 6: Shortest-Path Verification ---")
+    graph = {
+        0: [(1, 4), (2, 1)],
+        1: [(3, 1)],
+        2: [(1, 2), (3, 5)],
+        3: []
+    }
+    # Correct distances
+    correct_distances = {0: 0, 1: 3, 2: 1, 3: 4}
+    result = verify_shortest_path(graph, correct_distances, source=0)
+    print(f"Correct distances: {correct_distances}")
+    print(f"Verification: {'ACCEPT' if result.accepted else 'REJECT'}")
+    
+    # Incorrect distances
+    wrong_distances = {0: 0, 1: 2, 2: 1, 3: 4}
+    result = verify_shortest_path(graph, wrong_distances, source=0)
+    print(f"\nWrong distances: {wrong_distances}")
+    print(f"Verification: {'ACCEPT' if result.accepted else 'REJECT'}")
     if result.violations:
-        print(f"Violations at: {[v['x'] for v in result.violations]}")
-
-    # Bellman-Ford as initial algebra
-    print("\n--- Bellman Shortest Paths (Initial Algebra) ---")
-    INF = float('inf')
-    graph = [
-        [0, 4, INF, INF, INF],
-        [INF, 0, 1, INF, INF],
-        [INF, INF, 0, 5, INF],
-        [INF, INF, INF, 0, 3],
-        [INF, INF, INF, INF, 0]
-    ]
-    dists = bellman_recursion(graph, source=0)
-    print(f"Distances from vertex 0: {dists}")
-
-    # Universe hierarchy
-    print("\n--- Universe Hierarchy (K=4) ---")
-    hierarchy = universe_hierarchy(10, K=4)
-    for level, codes in sorted(hierarchy.items()):
-        print(f"  Level {level}: codes {codes}")
-
-    # Type inference
-    print("\n--- Minimal Cost Inference ---")
-    B = lambda y: y * y
-    f = lambda x: x + 1
-    A_min = infer_minimal_cost(domain, B, f)
-    for x in domain:
-        print(f"  x={x}: minimal A(x) = {A_min(x)}, B(f(x)) = {B(f(x))}")
+        print(f"Violations: {result.violations}")

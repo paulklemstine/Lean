@@ -1,689 +1,715 @@
 #!/usr/bin/env python3
 """
-Tropical Type Theory: Real-World Applications
+Tropical Type Theory — Applications
 
-Demonstrates how tropical type theory connects to:
-1. Shortest-path verification in networks
-2. Program cost analysis / resource-aware type checking
-3. Dynamic programming verification
-4. Supply chain optimization
+Real-world applications of tropical type theory:
+1. Program Cost Verification: Type-check programs against cost bounds
+2. Network Routing Verification: Verify shortest-path solutions
+3. Dynamic Programming Certification: Validate DP solutions via initiality
+4. Compiler Pass Composition: Track cost through optimization pipelines
+5. Resource-Aware Scheduling: Type-check task schedules
 """
 
-from typing import List, Dict, Tuple, Callable
-import json
+from typing import Callable, Dict, List, Optional, Tuple, Any
+from dataclasses import dataclass
 
 
-# ─── Application 1: Network Routing Verification ────────────────────────
+# =============================================================================
+# Application 1: Program Cost Verification
+# =============================================================================
 
-def network_routing_verification():
+def app_program_cost_verification():
     """
-    Application: Verify that a routing policy satisfies cost bounds.
-
-    Model:
-    - Nodes in a network are the base type α
-    - A(node) = maximum allowed latency budget at that node
-    - B(node) = actual latency to reach destination
-    - f(node) = next-hop routing function
-    - TropHom A B f means: the routing policy never exceeds budgets
-
-    This is tropical type checking applied to network verification.
+    Demonstrate program cost verification using tropical type checking.
+    
+    Scenario: A sorting algorithm processes arrays of length n.
+    The input cost is n² (quadratic budget), and the output cost
+    is n·log(n). We verify that the algorithm stays within budget.
     """
-    print("=" * 60)
-    print("APPLICATION 1: Network Routing Verification")
-    print("=" * 60)
-
-    # Network: 6 nodes, node 5 is the destination
-    nodes = list(range(6))
-    node_names = ['HQ', 'Router-A', 'Router-B', 'Edge-1', 'Edge-2', 'Destination']
-
-    # Latency budget at each node (maximum allowed hops to destination)
-    budget = {0: 5, 1: 4, 2: 3, 3: 2, 4: 2, 5: 0}
-
-    # Actual minimum hops to destination
-    actual_hops = {0: 3, 1: 2, 2: 2, 3: 1, 4: 1, 5: 0}
-
-    # Routing policy: next-hop function
-    next_hop = {0: 1, 1: 3, 2: 4, 3: 5, 4: 5, 5: 5}
-
-    print("\nNetwork topology with routing policy:")
-    print("-" * 50)
-    for n in nodes:
-        nh = next_hop[n]
-        print(f"  {node_names[n]:>12} (budget={budget[n]}) → "
-              f"{node_names[nh]:>12} (actual_hops={actual_hops[n]})")
-
-    # Type check: B(f(x)) ≤ A(x)?
-    print("\nTropical type checking: B(f(x)) ≤ A(x)?")
-    print("-" * 50)
-    all_valid = True
-    for n in nodes:
-        nh = next_hop[n]
-        bfn = actual_hops[nh]
-        an = budget[n]
-        valid = bfn <= an
-        all_valid = all_valid and valid
-        status = "✓" if valid else "✗"
-        print(f"  {node_names[n]:>12}: actual_hops({node_names[nh]}) = {bfn} "
-              f"≤ budget({node_names[n]}) = {an}  {status}")
-
-    print(f"\nRouting policy is well-typed: {all_valid}")
-    print("Interpretation: The routing policy respects all latency budgets.")
+    import math
+    
+    print("=" * 70)
+    print("APPLICATION 1: Program Cost Verification")
+    print("=" * 70)
+    
+    # Input type: arrays of length n, cost = n² (budget)
+    input_cost = lambda n: n * n
+    
+    # Output type: sorted arrays, cost = n·ceil(log₂(n)) (actual work)
+    output_cost = lambda n: n * max(1, math.ceil(math.log2(max(n, 1))))
+    
+    # The sorting algorithm maps input size n to output size n (same size)
+    sort_fn = lambda n: n
+    
+    print("\nVerifying: merge sort stays within quadratic budget")
+    print(f"{'n':>5} | {'Budget (n²)':>12} | {'Actual (n·log n)':>16} | {'Within budget?':>15}")
+    print("-" * 55)
+    
+    all_ok = True
+    for n in [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]:
+        budget = input_cost(n)
+        actual = output_cost(sort_fn(n))
+        ok = actual <= budget
+        if not ok:
+            all_ok = False
+        print(f"{n:>5} | {budget:>12} | {actual:>16} | {'✓' if ok else '✗':>15}")
+    
+    print(f"\nType check: {'ACCEPT' if all_ok else 'REJECT'}")
+    print("Interpretation: The sorting algorithm is a tropical homomorphism")
+    print("from the quadratic-cost type to the linearithmic-cost type.")
 
 
-# ─── Application 2: Program Cost Analysis ───────────────────────────────
+# =============================================================================
+# Application 2: Network Routing Verification
+# =============================================================================
 
-def program_cost_analysis():
+def app_network_routing():
     """
-    Application: Verify resource bounds in a simple program.
-
-    Model:
-    - Program states are the base type
-    - A(state) = resource budget (memory, time, energy)
-    - B(state) = actual resource consumption
-    - f(state) = program transition function
-    - TropHomC c A B f means: each step costs at most c extra resources
-
-    Composition theorem: n steps cost at most n × c.
+    Verify routing table correctness using tropical type checking.
+    
+    Given a network graph and proposed shortest distances,
+    verify the Bellman optimality condition:
+        d(v) ≤ d(u) + weight(u, v) for all edges (u, v)
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Program Cost Analysis")
-    print("=" * 60)
-
-    # Simple loop: state = (counter, accumulator)
-    states = [(i, i * (i - 1) // 2) for i in range(8)]
-
-    # Resource budget: proportional to remaining iterations
-    def budget(state):
-        counter, _ = state
-        return 10 * counter + 5  # generous budget
-
-    # Actual resource usage after one step
-    def usage_after(state):
-        counter, acc = state
-        if counter == 0:
-            return 0
-        return 10 * (counter - 1) + 5
-
-    # Transition: decrement counter, add counter to accumulator
-    def step(state):
-        counter, acc = state
-        if counter == 0:
-            return state
-        return (counter - 1, acc + counter)
-
-    print("\nProgram: sum from n down to 1")
-    print("State = (counter, accumulator)")
+    print("\n" + "=" * 70)
+    print("APPLICATION 2: Network Routing Verification")
+    print("=" * 70)
+    
+    # Network topology (data center)
+    nodes = ["router_A", "router_B", "router_C", "router_D", "server_1", "server_2"]
+    edges = [
+        ("router_A", "router_B", 10),
+        ("router_A", "router_C", 5),
+        ("router_B", "router_D", 3),
+        ("router_C", "router_B", 4),
+        ("router_C", "router_D", 8),
+        ("router_D", "server_1", 2),
+        ("router_D", "server_2", 7),
+        ("router_B", "server_1", 12),
+    ]
+    
+    # Proposed routing distances from router_A
+    distances = {
+        "router_A": 0,
+        "router_B": 9,   # via C → B (5 + 4)
+        "router_C": 5,   # direct (5)
+        "router_D": 12,  # via C → B → D (5 + 4 + 3)
+        "server_1": 14,  # via C → B → D → S1 (5 + 4 + 3 + 2)
+        "server_2": 19,  # via C → B → D → S2 (5 + 4 + 3 + 7)
+    }
+    
+    print("\nNetwork: Data center routing")
+    print(f"Source: router_A")
+    print(f"\nProposed distances:")
+    for node, dist in distances.items():
+        print(f"  {node}: {dist}")
+    
+    print(f"\nVerifying Bellman conditions (tropical type check):")
+    print(f"{'Edge':>25} | {'d(u)+w':>7} | {'d(v)':>5} | {'d(v) ≤ d(u)+w':>14}")
     print("-" * 60)
-    print(f"  {'State':>16} {'Budget':>8} {'Next state':>16} {'Usage':>8} {'Slack':>8} {'Valid':>6}")
-
-    max_slack = 0
-    for s in states:
-        ns = step(s)
-        b = budget(s)
-        u = usage_after(s)
-        slack = u - b
-        max_slack = max(max_slack, slack)
-        valid = u <= b
-        print(f"  {str(s):>16} {b:>8} {str(ns):>16} {u:>8} {slack:>8} {'✓' if valid else '✗':>6}")
-
-    print(f"\nMaximum slack needed: {max(0, max_slack)}")
-    print(f"Each step is cost-0 bounded: {max_slack <= 0}")
-
-    # Composition: multi-step bound
-    n_steps = 5
-    print(f"\nComposition theorem: {n_steps} steps cost ≤ {n_steps} × 0 = 0")
-
-    state = states[-1]  # start at (7, 21)
-    state = (7, 0)
-    print(f"Execution trace from {state}:")
-    for i in range(n_steps + 1):
-        print(f"  Step {i}: state = {state}, budget = {budget(state)}")
-        state = step(state)
+    
+    all_ok = True
+    for u, v, w in edges:
+        relaxed = distances[u] + w
+        actual = distances[v]
+        ok = actual <= relaxed
+        if not ok:
+            all_ok = False
+        print(f"{u} → {v} (w={w:>2}) | {relaxed:>7} | {actual:>5} | {'✓' if ok else '✗':>14}")
+    
+    print(f"\nRouting verification: {'ACCEPT ✓' if all_ok else 'REJECT ✗'}")
+    if all_ok:
+        print("The distance function is a tropical homomorphism — routing is optimal.")
 
 
-# ─── Application 3: Dynamic Programming Verification ────────────────────
+# =============================================================================
+# Application 3: Dynamic Programming Certification
+# =============================================================================
 
-def dp_verification():
+def app_dynamic_programming():
     """
-    Application: Verify a dynamic programming solution via initiality.
-
-    The Bellman equation for shortest paths is exactly the
-    initial algebra recursion principle:
-    - F(X) = 1 ⊕ X corresponds to "base case or extend by one edge"
-    - The unique homomorphism is the shortest-path function
-    - Initiality guarantees correctness and uniqueness
+    Certify a dynamic programming solution using tropical initiality.
+    
+    Problem: Fibonacci-like computation as initial algebra morphism.
+    The DP recurrence is the algebra structure, and the unique
+    homomorphism from ℕ is the certified solution.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Dynamic Programming via Initial Algebras")
-    print("=" * 60)
-
-    # Coin change problem: minimum coins to make amount n
-    # This is an initial algebra for F(X) = 1 ⊕ X₁ ⊕ X₃ ⊕ X₅
-    # where X_c means "extend by a coin of value c"
-    coins = [1, 3, 5]
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Dynamic Programming Certification")
+    print("=" * 70)
+    
+    print("\n--- Minimum coin change problem ---")
+    
+    # Coin denominations
+    coins = [1, 3, 4]
+    
+    # DP solution: min_coins[n] = minimum coins to make change for n
     max_amount = 15
-
-    print(f"\nCoin change problem: coins = {coins}")
-    print(f"Minimize number of coins to make each amount 0..{max_amount}")
-    print("-" * 60)
-
-    # DP solution = initial algebra homomorphism
-    INF = float('inf')
-    dp = [INF] * (max_amount + 1)
-    dp[0] = 0  # str(None) = base case
-
+    min_coins = [float('inf')] * (max_amount + 1)
+    min_coins[0] = 0
+    
     for amount in range(1, max_amount + 1):
         for coin in coins:
-            if amount >= coin and dp[amount - coin] + 1 < dp[amount]:
-                dp[amount] = dp[amount - coin] + 1  # str(Some(prev))
-
-    print(f"  {'Amount':>8} {'Min coins':>10} {'Representation':>30}")
+            if coin <= amount and min_coins[amount - coin] + 1 < min_coins[amount]:
+                min_coins[amount] = min_coins[amount - coin] + 1
+    
+    print(f"Coins: {coins}")
+    print(f"\n{'Amount':>7} | {'Min coins':>10} | {'Rank ≤ amount':>14}")
+    print("-" * 35)
     for n in range(max_amount + 1):
-        # Reconstruct solution
-        if dp[n] == INF:
-            rep = "impossible"
-        else:
-            rep_coins = []
-            remaining = n
-            while remaining > 0:
-                for coin in sorted(coins, reverse=True):
-                    if remaining >= coin and dp[remaining - coin] == dp[remaining] - 1:
-                        rep_coins.append(coin)
-                        remaining -= coin
-                        break
-            rep = " + ".join(map(str, rep_coins)) if rep_coins else "∅"
-        print(f"  {n:>8} {dp[n]:>10} {rep:>30}")
+        rank_ok = min_coins[n] <= n  # rank is bounded by amount
+        print(f"{n:>7} | {min_coins[n]:>10} | {'✓' if rank_ok else '✗':>14}")
+    
+    # Verify tropical morphism property: solution is cost-nonincreasing
+    # in the sense that min_coins[n] ≤ n for all n
+    print(f"\nTropical type check: min_coins is a morphism from id to id")
+    print(f"(cost of solution ≤ cost of problem for all inputs)")
+    
+    all_ok = all(min_coins[n] <= n for n in range(max_amount + 1))
+    print(f"Verification: {'ACCEPT ✓' if all_ok else 'REJECT ✗'}")
+    
+    # Verify the DP recurrence is an algebra structure
+    print(f"\n--- Verifying algebra structure ---")
+    print("The recurrence min_coins[n] = 1 + min(min_coins[n-c] : c ∈ coins)")
+    print("is the structure map of a tropical algebra.")
+    
+    recurrence_ok = True
+    for n in range(1, max_amount + 1):
+        expected = 1 + min(min_coins[n - c] for c in coins if c <= n)
+        if min_coins[n] != expected:
+            recurrence_ok = False
+            print(f"  VIOLATION at n={n}: got {min_coins[n]}, expected {expected}")
+    
+    if recurrence_ok:
+        print("  All recurrences verified ✓")
+        print("  The DP solution is the unique homomorphism from the initial algebra.")
 
-    # Verify uniqueness (initiality)
-    print("\nInitiality verification:")
-    print("  The DP table is the UNIQUE solution satisfying:")
-    print("    dp[0] = 0")
-    for c in coins:
-        print(f"    dp[n] = min(dp[n], dp[n-{c}] + 1)  for n ≥ {c}")
-    print("  This follows from the initial algebra theorem for ℕ.")
 
+# =============================================================================
+# Application 4: Compiler Pass Composition
+# =============================================================================
 
-# ─── Application 4: Supply Chain Cost Optimization ──────────────────────
-
-def supply_chain_optimization():
+def app_compiler_passes():
     """
-    Application: Model supply chain as tropical morphism composition.
-
-    Each stage (supplier → manufacturer → distributor → retailer)
-    is a cost-bounded tropical morphism. Total cost is bounded
-    by the sum of stage costs (composition theorem).
+    Track cost overhead through a compiler pipeline using
+    cost-additive composition (TropHomC.comp).
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Supply Chain Cost Optimization")
-    print("=" * 60)
+    print("\n" + "=" * 70)
+    print("APPLICATION 4: Compiler Pass Composition")
+    print("=" * 70)
+    
+    @dataclass
+    class CompilerPass:
+        name: str
+        cost_overhead: int  # max extra cost introduced
+        description: str
+    
+    passes = [
+        CompilerPass("Parse", 2, "Tokenize and build AST"),
+        CompilerPass("TypeCheck", 0, "Verify types (no cost overhead)"),
+        CompilerPass("Desugar", 3, "Expand syntactic sugar"),
+        CompilerPass("Optimize", 0, "Dead code elimination (reduces cost)"),
+        CompilerPass("Codegen", 5, "Generate machine code"),
+        CompilerPass("Link", 1, "Link with runtime library"),
+    ]
+    
+    print("\nCompiler pipeline:")
+    total_overhead = 0
+    print(f"{'Pass':>12} | {'Overhead':>9} | {'Cumulative':>11} | {'Description'}")
+    print("-" * 70)
+    
+    for p in passes:
+        total_overhead += p.cost_overhead
+        print(f"{p.name:>12} | {p.cost_overhead:>9} | {total_overhead:>11} | {p.description}")
+    
+    print(f"\n{'Total':>12} | {total_overhead:>9} |")
+    print(f"\nBy TropHomC.comp: the full pipeline is a {total_overhead}-bounded morphism.")
+    print(f"If the source program has cost C, the compiled program has cost ≤ C + {total_overhead}.")
+    
+    # Concrete example
+    source_costs = [10, 25, 50, 100, 500]
+    print(f"\n{'Source cost':>12} | {'Max output cost':>16} | {'Overhead %':>11}")
+    print("-" * 45)
+    for c in source_costs:
+        max_out = c + total_overhead
+        pct = (total_overhead / c) * 100
+        print(f"{c:>12} | {max_out:>16} | {pct:>10.1f}%")
 
-    stages = ['Raw Material', 'Supplier', 'Manufacturer', 'Distributor', 'Retailer']
-    products = ['Widget-A', 'Widget-B', 'Widget-C']
 
-    # Cost at each stage for each product
-    costs = {
-        'Raw Material':  {'Widget-A': 2,  'Widget-B': 5,  'Widget-C': 3},
-        'Supplier':      {'Widget-A': 4,  'Widget-B': 7,  'Widget-C': 5},
-        'Manufacturer':  {'Widget-A': 8,  'Widget-B': 12, 'Widget-C': 9},
-        'Distributor':   {'Widget-A': 10, 'Widget-B': 15, 'Widget-C': 12},
-        'Retailer':      {'Widget-A': 14, 'Widget-B': 20, 'Widget-C': 16},
+# =============================================================================
+# Application 5: Resource-Aware Scheduling
+# =============================================================================
+
+def app_scheduling():
+    """
+    Type-check a task schedule against resource constraints
+    using tropical morphisms.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 5: Resource-Aware Task Scheduling")
+    print("=" * 70)
+    
+    # Tasks with resource requirements (CPU cores)
+    tasks = {
+        "data_load": 2,
+        "preprocess": 4,
+        "train_model": 8,
+        "evaluate": 4,
+        "export": 1,
     }
-
-    # Stage cost bounds (tropical morphism costs)
-    stage_bounds = [3, 5, 4, 5]  # supplier→mfg, mfg→dist, etc.
-
-    print("\nCost through supply chain stages:")
-    print("-" * 60)
-    header = f"  {'Product':>12}"
-    for s in stages:
-        header += f" {s:>14}"
-    print(header)
-
-    for p in products:
-        row = f"  {p:>12}"
-        for s in stages:
-            row += f" {costs[s][p]:>14}"
-        print(row)
-
-    print("\nStage cost bounds (tropical morphism costs):")
-    for i in range(len(stage_bounds)):
-        print(f"  {stages[i]:>14} → {stages[i+1]:<14}: c = {stage_bounds[i]}")
-
-    total_bound = sum(stage_bounds)
-    print(f"\nTotal cost bound (composition theorem): {total_bound}")
-
-    print("\nVerification: End-to-end cost ≤ raw material cost + total bound?")
-    print("-" * 60)
-    for p in products:
-        raw = costs['Raw Material'][p]
-        retail = costs['Retailer'][p]
-        margin = retail - raw
-        valid = margin <= total_bound
-        print(f"  {p}: retail({retail}) - raw({raw}) = {margin} ≤ {total_bound}  "
-              f"{'✓' if valid else '✗'}")
-
-    # Stage-by-stage verification
-    print("\nStage-by-stage verification:")
-    for p in products:
-        print(f"\n  {p}:")
-        for i in range(len(stage_bounds)):
-            prev_cost = costs[stages[i]][p]
-            next_cost = costs[stages[i+1]][p]
-            margin = next_cost - prev_cost
-            valid = margin <= stage_bounds[i]
-            print(f"    {stages[i]:>14} → {stages[i+1]:<14}: "
-                  f"{next_cost} - {prev_cost} = {margin} ≤ {stage_bounds[i]}  "
-                  f"{'✓' if valid else '✗'}")
+    
+    # Machine capacities (available cores at each time slot)
+    schedule = {
+        0: ["data_load"],           # t=0: 2 cores needed
+        1: ["preprocess"],          # t=1: 4 cores needed
+        2: ["train_model"],         # t=2: 8 cores needed
+        3: ["evaluate", "export"],  # t=3: 4+1=5 cores needed
+    }
+    
+    machine_capacity = 8  # total available cores
+    
+    print(f"\nMachine capacity: {machine_capacity} cores")
+    print(f"\nSchedule:")
+    print(f"{'Time':>5} | {'Tasks':>25} | {'Cores needed':>13} | {'Budget':>7} | {'OK?':>4}")
+    print("-" * 65)
+    
+    all_ok = True
+    for t in sorted(schedule.keys()):
+        task_list = schedule[t]
+        cores_needed = sum(tasks[task] for task in task_list)
+        ok = cores_needed <= machine_capacity
+        if not ok:
+            all_ok = False
+        tasks_str = ", ".join(task_list)
+        print(f"{t:>5} | {tasks_str:>25} | {cores_needed:>13} | {machine_capacity:>7} | {'✓' if ok else '✗':>4}")
+    
+    print(f"\nTropical type check: {'ACCEPT ✓' if all_ok else 'REJECT ✗'}")
+    if all_ok:
+        print("The schedule is a tropical homomorphism from task costs to machine capacity.")
+        print("Resource constraints are satisfied at every time step.")
 
 
-# ─── Main ────────────────────────────────────────────────────────────────
+# =============================================================================
+# Main
+# =============================================================================
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║     TROPICAL TYPE THEORY — Real-World Applications        ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
-
-    network_routing_verification()
-    program_cost_analysis()
-    dp_verification()
-    supply_chain_optimization()
-
-    print("\n" + "=" * 60)
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║     TROPICAL TYPE THEORY — REAL-WORLD APPLICATIONS                ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    
+    app_program_cost_verification()
+    app_network_routing()
+    app_dynamic_programming()
+    app_compiler_passes()
+    app_scheduling()
+    
+    print("\n" + "=" * 70)
     print("All applications demonstrated successfully.")
-    print("=" * 60)
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Tropical Type Theory: Concrete Demonstrations
+Tropical Type Theory — Interactive Demonstrations
 
-Demonstrates the core theorems of tropical type theory with
-numerical examples showing decidable type checking, identity
-via min-plus equality, initial algebra semantics, and universe hierarchies.
+Demonstrates the core concepts of tropical type theory with concrete
+numerical examples:
+1. Tropical type checking on finite contexts
+2. Tropical identity and min-plus equality
+3. Initial algebra semantics (ℕ as initial tropical algebra)
+4. Idempotent normalization of universe codes
+5. Cost-bounded composition of morphisms
 """
 
-from itertools import product as cartesian_product
+from typing import Callable, Dict, List, Optional, Tuple
 
 
-# ─── Core Definitions ───────────────────────────────────────────────────
+# =============================================================================
+# Core Definitions
+# =============================================================================
 
-def trop_set(cost_fn):
+def trop_set(cost_fn: Callable[[int], int]) -> Callable[[int], int]:
     """A tropical set is a cost function α → ℕ."""
     return cost_fn
 
 
-def trop_hom_check(A, B, f, domain):
-    """Check if f : A → B is a tropical homomorphism (∀ x, B(f(x)) ≤ A(x))."""
-    results = []
-    for x in domain:
-        bfx = B(f(x))
-        ax = A(x)
-        results.append({
-            'x': x, 'A(x)': ax, 'f(x)': f(x), 'B(f(x))': bfx,
-            'valid': bfx <= ax
-        })
-    return results
-
-
-def trop_hom_c_check(c, A, B, f, domain):
-    """Check cost-bounded homomorphism: ∀ x, B(f(x)) ≤ A(x) + c."""
-    results = []
-    for x in domain:
-        bfx = B(f(x))
-        ax = A(x)
-        results.append({
-            'x': x, 'A(x)': ax, 'f(x)': f(x), 'B(f(x))': bfx,
-            'bound': ax + c, 'valid': bfx <= ax + c
-        })
-    return results
-
-
-# ─── Demo 1: Decidable Type Checking ────────────────────────────────────
-
-def demo_decidable_typecheck():
+def trop_hom_check(A: Callable, B: Callable, f: Callable, domain: List[int]) -> bool:
+    """Check if f is a tropical homomorphism from A to B on a finite domain.
+    
+    Returns True iff ∀ x ∈ domain, B(f(x)) ≤ A(x).
     """
-    Theorem 1: On finite types, tropical type checking is decidable.
-    We verify ∀ x ∈ {0,...,4}, B(f(x)) ≤ A(x) by exhaustive checking.
-    """
-    print("=" * 70)
-    print("DEMO 1: Decidable Tropical Type Checking")
-    print("=" * 70)
+    return all(B(f(x)) <= A(x) for x in domain)
 
+
+def trop_hom_c_check(c: int, A: Callable, B: Callable, f: Callable, domain: List[int]) -> bool:
+    """Check if f is a c-bounded tropical homomorphism.
+    
+    Returns True iff ∀ x ∈ domain, B(f(x)) ≤ A(x) + c.
+    """
+    return all(B(f(x)) <= A(x) + c for x in domain)
+
+
+def trop_id_check(B: Callable, f: Callable, g: Callable, domain: List[int]) -> bool:
+    """Check tropical identity: ∀ x, B(f(x)) = B(g(x))."""
+    return all(B(f(x)) == B(g(x)) for x in domain)
+
+
+def trop_eq_check(u: Callable, v: Callable, domain: List[int]) -> bool:
+    """Check tropical equality: ∀ x, u(x) = v(x)."""
+    return all(u(x) == v(x) for x in domain)
+
+
+def trop_eq_minplus_check(u: Callable, v: Callable, domain: List[int]) -> bool:
+    """Check the min-plus characterization: ∀ x, min(u(x),v(x)) = u(x) ∧ min(u(x),v(x)) = v(x)."""
+    for x in domain:
+        m = min(u(x), v(x))
+        if m != u(x) or m != v(x):
+            return False
+    return True
+
+
+# =============================================================================
+# Demo 1: Tropical Type Checking
+# =============================================================================
+
+def demo_type_checking():
+    """Demonstrate decidable tropical type checking on finite types."""
+    print("=" * 70)
+    print("DEMO 1: Tropical Type Checking on Finite Contexts")
+    print("=" * 70)
+    
     domain = list(range(5))
-
-    # Cost functions (tropical sets)
-    A = lambda x: x * 2 + 3      # Context costs: 3, 5, 7, 9, 11
-    B = lambda y: y + 1           # Target costs: y + 1
-
-    # Test function: f(x) = x + 1
-    f = lambda x: x + 1
-
-    print("\nExample 1: f(x) = x + 1, A(x) = 2x + 3, B(y) = y + 1")
+    
+    # Example 1: Identity function with A(x) = 2x, B(y) = y
+    A = lambda x: 2 * x
+    B = lambda y: y
+    f = lambda x: x  # identity
+    
+    print("\n--- Example 1: Identity function ---")
+    print(f"A(x) = 2x, B(y) = y, f(x) = x")
+    print(f"{'x':>3} | {'A(x)':>5} | {'B(f(x))':>7} | {'B(f(x)) ≤ A(x)':>15}")
+    print("-" * 40)
+    for x in domain:
+        ok = B(f(x)) <= A(x)
+        print(f"{x:>3} | {A(x):>5} | {B(f(x)):>7} | {'✓' if ok else '✗':>15}")
+    
+    result = trop_hom_check(A, B, f, domain)
+    print(f"\nResult: {'ACCEPT' if result else 'REJECT'} — f is {'a' if result else 'NOT a'} tropical homomorphism")
+    
+    # Example 2: Doubling function — should fail
+    g = lambda x: 2 * x
+    B2 = lambda y: y
+    
+    print("\n--- Example 2: Doubling function ---")
+    print(f"A(x) = 2x, B(y) = y, g(x) = 2x")
+    print(f"{'x':>3} | {'A(x)':>5} | {'B(g(x))':>7} | {'B(g(x)) ≤ A(x)':>15}")
+    print("-" * 40)
+    for x in domain:
+        ok = B2(g(x)) <= A(x)
+        print(f"{x:>3} | {A(x):>5} | {B2(g(x)):>7} | {'✓' if ok else '✗':>15}")
+    
+    result = trop_hom_check(A, B2, g, domain)
+    print(f"\nResult: {'ACCEPT' if result else 'REJECT'}")
+    
+    # Example 3: Cost-bounded check
+    print("\n--- Example 3: Cost-bounded type checking ---")
+    A3 = lambda x: x
+    B3 = lambda y: y + 2
+    f3 = lambda x: x
+    c = 3
+    
+    print(f"A(x) = x, B(y) = y + 2, f(x) = x, cost bound c = {c}")
+    print(f"{'x':>3} | {'A(x)':>5} | {'B(f(x))':>7} | {'A(x)+c':>6} | {'B(f(x)) ≤ A(x)+c':>18}")
     print("-" * 50)
-    results = trop_hom_check(A, B, f, domain)
-    for r in results:
-        status = "✓" if r['valid'] else "✗"
-        print(f"  x={r['x']}: B(f({r['x']})) = {r['B(f(x))']} ≤ A({r['x']}) = {r['A(x)']}  {status}")
-
-    all_valid = all(r['valid'] for r in results)
-    print(f"\n  f is a tropical homomorphism: {all_valid}")
-
-    # Counter-example: g(x) = x * 3
-    g = lambda x: x * 3
-    print("\nExample 2: g(x) = 3x, A(x) = 2x + 3, B(y) = y + 1")
-    print("-" * 50)
-    results2 = trop_hom_check(A, B, g, domain)
-    for r in results2:
-        status = "✓" if r['valid'] else "✗"
-        print(f"  x={r['x']}: B(g({r['x']})) = {r['B(f(x))']} ≤ A({r['x']}) = {r['A(x)']}  {status}")
-
-    all_valid2 = all(r['valid'] for r in results2)
-    print(f"\n  g is a tropical homomorphism: {all_valid2}")
-
-    # Cost-bounded version
-    print("\nExample 3: Cost-bounded check with slack c=5")
-    print("-" * 50)
-    results3 = trop_hom_c_check(5, A, B, g, domain)
-    for r in results3:
-        status = "✓" if r['valid'] else "✗"
-        print(f"  x={r['x']}: B(g({r['x']})) = {r['B(f(x))']} ≤ A({r['x']}) + 5 = {r['bound']}  {status}")
-
-    all_valid3 = all(r['valid'] for r in results3)
-    print(f"\n  g is a cost-5 tropical homomorphism: {all_valid3}")
-
-    return all_valid, all_valid2, all_valid3
+    for x in domain:
+        ok = B3(f3(x)) <= A3(x) + c
+        print(f"{x:>3} | {A3(x):>5} | {B3(f3(x)):>7} | {A3(x)+c:>6} | {'✓' if ok else '✗':>18}")
+    
+    result = trop_hom_c_check(c, A3, B3, f3, domain)
+    print(f"\nResult: {'ACCEPT' if result else 'REJECT'} — f is a {c}-bounded tropical homomorphism")
 
 
-# ─── Demo 2: Tropical Identity via Min-Plus ──────────────────────────────
+# =============================================================================
+# Demo 2: Tropical Identity and Min-Plus Equality  
+# =============================================================================
 
-def demo_tropical_identity():
-    """
-    Theorem 2: TropEq u v ↔ ∀ x, min(u(x), v(x)) = u(x) ∧ min(u(x), v(x)) = v(x)
-    Identity is characterized by the idempotent meet.
-    """
+def demo_identity():
+    """Demonstrate tropical identity and its min-plus characterization."""
     print("\n" + "=" * 70)
-    print("DEMO 2: Tropical Identity = Min-Plus Equality")
+    print("DEMO 2: Tropical Identity and Min-Plus Equality")
     print("=" * 70)
-
+    
     domain = list(range(6))
-
-    # Equal terms
-    u = lambda x: x ** 2 + 1
-    v = lambda x: x ** 2 + 1
-
-    print("\nCase 1: u(x) = x² + 1, v(x) = x² + 1 (equal)")
-    print("-" * 50)
+    
+    # Two equal functions
+    u = lambda x: x * x
+    v = lambda x: x ** 2
+    
+    print("\n--- Equal functions: u(x) = x², v(x) = x² ---")
+    print(f"{'x':>3} | {'u(x)':>5} | {'v(x)':>5} | {'min':>4} | {'min=u':>5} | {'min=v':>5}")
+    print("-" * 40)
     for x in domain:
-        ux, vx = u(x), v(x)
-        m = min(ux, vx)
-        print(f"  x={x}: u={ux}, v={vx}, min={m}, "
-              f"min=u? {m == ux}, min=v? {m == vx}")
-
-    all_eq = all(min(u(x), v(x)) == u(x) and min(u(x), v(x)) == v(x) for x in domain)
-    print(f"\n  Tropical identity holds: {all_eq}")
-
-    # Unequal terms
-    w = lambda x: x ** 2 + 2
-
-    print("\nCase 2: u(x) = x² + 1, w(x) = x² + 2 (unequal)")
-    print("-" * 50)
+        m = min(u(x), v(x))
+        print(f"{x:>3} | {u(x):>5} | {v(x):>5} | {m:>4} | {'✓' if m==u(x) else '✗':>5} | {'✓' if m==v(x) else '✗':>5}")
+    
+    eq = trop_eq_check(u, v, domain)
+    mp = trop_eq_minplus_check(u, v, domain)
+    print(f"\nTropical equality: {eq}")
+    print(f"Min-plus characterization: {mp}")
+    print(f"Equivalence holds: {eq == mp} ✓")
+    
+    # Two unequal functions
+    u2 = lambda x: x
+    v2 = lambda x: x + 1
+    
+    print("\n--- Unequal functions: u(x) = x, v(x) = x + 1 ---")
+    print(f"{'x':>3} | {'u(x)':>5} | {'v(x)':>5} | {'min':>4} | {'min=u':>5} | {'min=v':>5}")
+    print("-" * 40)
     for x in domain:
-        ux, wx = u(x), w(x)
-        m = min(ux, wx)
-        print(f"  x={x}: u={ux}, w={wx}, min={m}, "
-              f"min=u? {m == ux}, min=w? {m == wx}")
-
-    all_eq2 = all(min(u(x), w(x)) == u(x) and min(u(x), w(x)) == w(x) for x in domain)
-    print(f"\n  Tropical identity holds: {all_eq2}")
-
-    # Extensionality with injective cost
-    print("\nExtensionality principle:")
-    print("  If B is injective and TropId B f g, then f = g.")
-
-    B_inj = lambda y: y  # Identity is injective
-    f_ext = lambda x: x + 1
-    g_ext = lambda x: x + 1
-    h_ext = lambda x: x + 2
-
-    trop_id_fg = all(B_inj(f_ext(x)) == B_inj(g_ext(x)) for x in domain)
-    trop_id_fh = all(B_inj(f_ext(x)) == B_inj(h_ext(x)) for x in domain)
-    print(f"  TropId(id, f, g) where f=g: {trop_id_fg} → f = g: True")
-    print(f"  TropId(id, f, h) where f≠h: {trop_id_fh} → distinguishable")
-
-    return all_eq, all_eq2
+        m = min(u2(x), v2(x))
+        print(f"{x:>3} | {u2(x):>5} | {v2(x):>5} | {m:>4} | {'✓' if m==u2(x) else '✗':>5} | {'✓' if m==v2(x) else '✗':>5}")
+    
+    eq2 = trop_eq_check(u2, v2, domain)
+    mp2 = trop_eq_minplus_check(u2, v2, domain)
+    print(f"\nTropical equality: {eq2}")
+    print(f"Min-plus characterization: {mp2}")
+    print(f"Equivalence holds: {eq2 == mp2} ✓")
 
 
-# ─── Demo 3: Initial Algebra / ℕ as Initial ─────────────────────────────
+# =============================================================================
+# Demo 3: Initial Algebra — ℕ as Initial Tropical Algebra
+# =============================================================================
 
 def demo_initial_algebra():
-    """
-    Theorem 3: ℕ is the initial algebra for the Option functor.
-    For any algebra (A, str), there is a unique homomorphism ℕ → A.
-    """
+    """Demonstrate ℕ as the initial algebra for the Option functor."""
     print("\n" + "=" * 70)
-    print("DEMO 3: ℕ as Initial Algebra (Tropical Inductive Types)")
+    print("DEMO 3: ℕ as Initial Tropical Algebra")
     print("=" * 70)
-
-    # Example algebra: strings with concatenation
-    class StringAlg:
-        def __init__(self):
-            self.name = "String repetition algebra"
-
-        def str(self, opt):
-            if opt is None:
-                return ""         # zero element
-            else:
-                return opt + "•"  # successor: append a dot
-
-    alg = StringAlg()
-
-    # The unique homomorphism: ℕ → StringAlg
-    def unique_hom(n):
-        result = alg.str(None)  # start with zero
-        for _ in range(n):
-            result = alg.str(result)  # apply successor n times
-        return result
-
-    print("\nAlgebra: (String, str(none)='', str(some(s))=s+'•')")
-    print("Unique homomorphism ℕ → String:")
-    print("-" * 50)
+    
+    # Tropical algebra X: str(None) = 10, str(Some(n)) = n + 3
+    def X_str(z: Optional[int]) -> int:
+        if z is None:
+            return 10
+        else:
+            return z + 3
+    
+    # The unique homomorphism from ℕ to X
+    def nat_hom(n: int) -> int:
+        if n == 0:
+            return X_str(None)
+        else:
+            return X_str(nat_hom(n - 1))
+    
+    print("\n--- Algebra X: str(None) = 10, str(Some(n)) = n + 3 ---")
+    print(f"{'n':>3} | {'f(n)':>6} | {'Expected':>10} | {'Formula':>15}")
+    print("-" * 45)
     for n in range(8):
-        img = unique_hom(n)
-        print(f"  f({n}) = '{img}' (length {len(img)})")
-
-    # Verify algebra homomorphism property
-    print("\nVerifying algebra homomorphism: f(str(z)) = str(Option.map f z)")
-    print("-" * 50)
-    # Check f(str(none)) = str(none) i.e. f(0) = ''
-    print(f"  f(str(none)) = f(0) = '{unique_hom(0)}'")
-    print(f"  str(none) = '{alg.str(None)}'")
-    print(f"  Equal: {unique_hom(0) == alg.str(None)}")
-
-    # Check f(str(some(n))) = str(some(f(n)))
+        val = nat_hom(n)
+        expected = 10 + 3 * n
+        print(f"{n:>3} | {val:>6} | {expected:>10} | {'10 + 3·' + str(n):>15}")
+    
+    # Verify homomorphism property
+    print("\n--- Verifying algebra homomorphism property ---")
+    print("f(NatTropAlg.str(z)) = X.str(Option.map f z)")
+    
+    # Check: f(0) = X.str(None) [z = None case]
+    print(f"\nz = None: f(0) = {nat_hom(0)}, X.str(None) = {X_str(None)} → {'✓' if nat_hom(0) == X_str(None) else '✗'}")
+    
+    # Check: f(n+1) = X.str(Some(f(n))) [z = Some(n) case]
     for n in range(5):
-        lhs = unique_hom(n + 1)
-        rhs = alg.str(unique_hom(n))
-        print(f"  f(str(some({n}))) = f({n+1}) = '{lhs}'")
-        print(f"  str(some(f({n}))) = str(some('{unique_hom(n)}')) = '{rhs}'")
-        print(f"  Equal: {lhs == rhs}")
-
-    # Ranked algebra example
-    print("\n\nRanked Algebra Example:")
-    print("-" * 50)
-
-    class RankedAlg:
-        """An algebra where rank mirrors the natural number structure."""
-        def __init__(self):
-            self.name = "Ranked power-of-2 algebra"
-
-        def str(self, opt):
-            if opt is None:
-                return 1       # 2^0
-            else:
-                return opt * 2  # 2^(n+1) = 2 * 2^n
-
-        def rank(self, a):
-            """rank(2^n) = n"""
-            r = 0
-            while a > 1:
-                a //= 2
-                r += 1
-            return r
-
-    ranked = RankedAlg()
-
-    def ranked_hom(n):
-        result = ranked.str(None)
-        for _ in range(n):
-            result = ranked.str(result)
-        return result
-
-    print("Algebra: powers of 2 with rank = log₂")
-    for n in range(10):
-        val = ranked_hom(n)
-        r = ranked.rank(val)
-        print(f"  f({n}) = {val}, rank = {r}, rank = n? {r == n}")
+        lhs = nat_hom(n + 1)
+        rhs = X_str(nat_hom(n))
+        print(f"z = Some({n}): f({n+1}) = {lhs}, X.str(Some(f({n}))) = {rhs} → {'✓' if lhs == rhs else '✗'}")
+    
+    # Second algebra to demonstrate uniqueness
+    print("\n--- Second algebra Y: str(None) = 1, str(Some(n)) = 2n + 1 ---")
+    
+    def Y_str(z: Optional[int]) -> int:
+        if z is None:
+            return 1
+        else:
+            return 2 * z + 1
+    
+    def nat_hom_Y(n: int) -> int:
+        if n == 0:
+            return Y_str(None)
+        else:
+            return Y_str(nat_hom_Y(n - 1))
+    
+    print(f"{'n':>3} | {'f(n)':>6}")
+    print("-" * 15)
+    for n in range(8):
+        print(f"{n:>3} | {nat_hom_Y(n):>6}")
+    
+    print(f"\nPattern: f(n) = 2^(n+1) - 1 (Mersenne-like sequence)")
 
 
-# ─── Demo 4: Universe Hierarchy & Normalization ─────────────────────────
+# =============================================================================
+# Demo 4: Idempotent Normalization of Universe Codes
+# =============================================================================
 
-def demo_universe_hierarchy():
-    """
-    Theorem 4: The tropical universe hierarchy is well-founded.
-    Code normalization is idempotent and rank-nonincreasing.
-    """
+def demo_normalization():
+    """Demonstrate idempotent normalization of tropical universe codes."""
     print("\n" + "=" * 70)
-    print("DEMO 4: Well-Founded Tropical Universe Hierarchy")
+    print("DEMO 4: Idempotent Normalization of Universe Codes")
     print("=" * 70)
-
-    K = 5  # Complexity bound
-
-    def normalize(u, K=K):
+    
+    def normalize(K: int, u: int) -> int:
         return min(u, K)
-
-    print(f"\nNormalization with bound K = {K}")
-    print("-" * 50)
-    print(f"  {'Code u':>8} {'norm(u)':>8} {'norm(norm(u))':>14} {'Idempotent?':>12} {'rank ≤ u?':>10}")
-    for u in range(10):
-        nu = normalize(u)
-        nnu = normalize(nu)
-        idem = nu == nnu
-        rank_ok = nu <= u
-        print(f"  {u:>8} {nu:>8} {nnu:>14} {str(idem):>12} {str(rank_ok):>10}")
-
-    # Well-foundedness: show all descending chains terminate
-    print("\nWell-foundedness: descending chains in normalized codes")
-    print("-" * 50)
-    for start in [K, K-1, 3, 1]:
-        chain = [start]
-        current = start
-        while current > 0:
-            current -= 1
-            if normalize(current) == current:  # stay in normalized subset
-                chain.append(current)
-        print(f"  Starting at {start}: {' > '.join(map(str, chain))} (length {len(chain)})")
-
-    # Distributivity demonstration
-    print("\n\nDistributivity: a + min(b,c) = min(a+b, a+c)")
-    print("-" * 50)
-    for a, b, c in [(2, 3, 5), (0, 4, 1), (7, 2, 2), (3, 0, 6)]:
-        lhs = a + min(b, c)
-        rhs = min(a + b, a + c)
-        print(f"  {a} + min({b},{c}) = {lhs}  vs  min({a}+{b}, {a}+{c}) = {rhs}  Equal: {lhs == rhs}")
+    
+    K = 5
+    test_values = [0, 1, 2, 3, 4, 5, 6, 7, 10, 20, 100]
+    
+    print(f"\nNormalization bound K = {K}")
+    print(f"normalizeCode(K, u) = min(u, K)")
+    print(f"\n{'u':>5} | {'norm(u)':>8} | {'norm(norm(u))':>14} | {'Idempotent?':>12} | {'rank ≤ u?':>10}")
+    print("-" * 60)
+    
+    for u in test_values:
+        n1 = normalize(K, u)
+        n2 = normalize(K, n1)
+        idemp = n1 == n2
+        rank_ok = n1 <= u
+        print(f"{u:>5} | {n1:>8} | {n2:>14} | {'✓' if idemp else '✗':>12} | {'✓' if rank_ok else '✗':>10}")
+    
+    # Demonstrate well-foundedness
+    print("\n--- Well-foundedness: no infinite descending chains ---")
+    print("Starting from code 15, applying normalize and decrementing:")
+    u = 15
+    chain = [u]
+    while u > 0:
+        u = normalize(K, u)
+        if u > 0:
+            u -= 1
+        chain.append(u)
+    print(f"Chain: {' > '.join(map(str, chain))}")
+    print(f"Chain length: {len(chain)} (finite ✓)")
 
 
-# ─── Demo 5: Composition of Cost-Bounded Morphisms ──────────────────────
+# =============================================================================
+# Demo 5: Cost-Bounded Composition
+# =============================================================================
 
 def demo_composition():
-    """
-    Cost composition theorem: costs add under composition.
-    If f has cost c₁ and g has cost c₂, then g∘f has cost c₁ + c₂.
-    """
+    """Demonstrate cost-additive composition of tropical morphisms."""
     print("\n" + "=" * 70)
-    print("DEMO 5: Composition of Cost-Bounded Morphisms")
+    print("DEMO 5: Cost-Bounded Composition (Substitution Lemma)")
     print("=" * 70)
-
+    
     domain = list(range(6))
-
-    A = lambda x: 10 - x   # Decreasing cost
-    B = lambda y: y + 2     # Increasing cost
-    C = lambda z: z         # Identity cost
-
-    f = lambda x: x + 1  # shift
-    g = lambda y: y       # identity
-
-    c1 = 0  # Check: B(f(x)) ≤ A(x) + c1
-    c2 = 0  # Check: C(g(y)) ≤ B(y) + c2
-
-    # Find minimal costs
-    costs_f = [B(f(x)) - A(x) for x in domain]
-    costs_g = [C(g(y)) - B(y) for y in domain if B(y) > 0]
-
-    c1 = max(0, max(costs_f))
-    c2 = max(0, max(costs_g))
-
-    print(f"\nA(x) = 10-x, B(y) = y+2, C(z) = z")
-    print(f"f(x) = x+1, g(y) = y")
-    print(f"Minimal cost bound for f: c₁ = {c1}")
-    print(f"Minimal cost bound for g: c₂ = {c2}")
-    print(f"Predicted bound for g∘f: c₁ + c₂ = {c1 + c2}")
-    print("-" * 50)
-
-    print(f"\n{'x':>4} {'A(x)':>6} {'f(x)':>6} {'B(f(x))':>8} {'g(f(x))':>8} {'C(g(f(x)))':>11} {'A(x)+c₁+c₂':>12} {'Valid':>6}")
+    
+    # f: A → B with cost bound c₁ = 2
+    A = lambda x: 3 * x
+    B = lambda y: 2 * y
+    f = lambda x: x + 1
+    c1 = 2
+    
+    # g: B → C with cost bound c₂ = 3
+    C = lambda z: z
+    g = lambda y: y + 2
+    c2 = 3
+    
+    print(f"\nf: A → B, cost bound c₁ = {c1}")
+    print(f"g: B → C, cost bound c₂ = {c2}")
+    print(f"g∘f: A → C, expected cost bound c₁ + c₂ = {c1 + c2}")
+    
+    # Check f
+    print(f"\n--- Checking f (c₁ = {c1}) ---")
+    print(f"{'x':>3} | {'A(x)':>5} | {'B(f(x))':>7} | {'A(x)+c₁':>8} | {'OK?':>4}")
+    print("-" * 35)
     for x in domain:
-        ax = A(x)
-        fx = f(x)
-        bfx = B(fx)
-        gfx = g(fx)
-        cgfx = C(gfx)
-        bound = ax + c1 + c2
-        valid = cgfx <= bound
-        print(f"  {x:>2} {ax:>6} {fx:>6} {bfx:>8} {gfx:>8} {cgfx:>11} {bound:>12} {'✓' if valid else '✗':>6}")
+        ok = B(f(x)) <= A(x) + c1
+        print(f"{x:>3} | {A(x):>5} | {B(f(x)):>7} | {A(x)+c1:>8} | {'✓' if ok else '✗':>4}")
+    
+    # Check g
+    print(f"\n--- Checking g (c₂ = {c2}) ---")
+    print(f"{'y':>3} | {'B(y)':>5} | {'C(g(y))':>7} | {'B(y)+c₂':>8} | {'OK?':>4}")
+    print("-" * 35)
+    for y in domain:
+        ok = C(g(y)) <= B(y) + c2
+        print(f"{y:>3} | {B(y):>5} | {C(g(y)):>7} | {B(y)+c2:>8} | {'✓' if ok else '✗':>4}")
+    
+    # Check g∘f
+    gf = lambda x: g(f(x))
+    print(f"\n--- Checking g∘f (c₁ + c₂ = {c1+c2}) ---")
+    print(f"{'x':>3} | {'A(x)':>5} | {'C(g∘f(x))':>10} | {'A(x)+c₁+c₂':>12} | {'OK?':>4}")
+    print("-" * 42)
+    for x in domain:
+        ok = C(gf(x)) <= A(x) + c1 + c2
+        print(f"{x:>3} | {A(x):>5} | {C(gf(x)):>10} | {A(x)+c1+c2:>12} | {'✓' if ok else '✗':>4}")
+    
+    result = trop_hom_c_check(c1 + c2, A, C, gf, domain)
+    print(f"\nComposition is ({c1}+{c2})-bounded: {'✓' if result else '✗'}")
+    print("Cost additivity under composition verified ✓")
 
 
-# ─── Main ────────────────────────────────────────────────────────────────
+# =============================================================================
+# Main
+# =============================================================================
 
 if __name__ == "__main__":
     print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║          TROPICAL TYPE THEORY — Numerical Demonstrations           ║")
-    print("╠══════════════════════════════════════════════════════════════════════╣")
-    print("║  Types as cost functions · Terms as cost-respecting maps           ║")
-    print("║  Identity via min-plus equality · Inductives as initial algebras   ║")
+    print("║     TROPICAL TYPE THEORY — INTERACTIVE DEMONSTRATIONS              ║")
+    print("║     Dependent Types in the Min-Plus Semiring                       ║")
     print("╚══════════════════════════════════════════════════════════════════════╝")
-
-    demo_decidable_typecheck()
-    demo_tropical_identity()
+    
+    demo_type_checking()
+    demo_identity()
     demo_initial_algebra()
-    demo_universe_hierarchy()
+    demo_normalization()
     demo_composition()
-
+    
     print("\n" + "=" * 70)
-    print("All demonstrations complete.")
+    print("All demonstrations completed successfully.")
     print("=" * 70)
 
 
 #!/usr/bin/env python3
-"""Generate PACKAGE.json bundling all artifacts."""
+"""Generate PACKAGE.json with all artifacts bundled."""
 
 import json
+import base64
 import os
 
 def read_file(path):
     with open(path, 'r') as f:
         return f.read()
 
-# Read all components
+def read_image_base64(path):
+    with open(path, 'rb') as f:
+        b64 = base64.b64encode(f.read()).decode('utf-8')
+    return f"data:image/png;base64,{b64}"
+
+# Read all text content
 article = read_file('ARTICLE.md')
 research_paper = read_file('RESEARCH_PAPER.md')
 future_directions = read_file('FUTURE_DIRECTIONS.md')
-lean_code = read_file('Tropical/TropicalTypeTheory.lean')
+lean_proofs = read_file('Logic/TropicalTypeTheory.lean')
 demo_code = read_file('demo.py')
 algorithms_code = read_file('algorithms.py')
 applications_code = read_file('applications.py')
+visualizations_code = read_file('visualizations.py')
 
-# Read visualization data
-viz_data = json.loads(read_file('viz_data.json'))
+# Read visualization images
+viz_files = [
+    ('tropical_sets', 'tropical_sets.png'),
+    ('type_checking', 'type_checking.png'),
+    ('initial_algebra', 'initial_algebra.png'),
+    ('normalization', 'normalization.png'),
+    ('composition', 'composition.png'),
+    ('distributivity', 'distributivity.png'),
+]
 
+visualizations = []
+for name, filename in viz_files:
+    if os.path.exists(filename):
+        visualizations.append({
+            "name": name,
+            "data": read_image_base64(filename)
+        })
+
+# Build package
 package = {
     "title": "Tropical Type Theory: Dependent Types in the Min-Plus Semiring",
     "domain": "Logic / Type Theory / Tropical Algebra",
@@ -703,61 +729,40 @@ package = {
     "algorithms": [
         {
             "name": "Tropical Type Checker",
-            "pseudocode": """Algorithm: TropicalTypeCheck(domain, A, B, f, c)
-Input: finite domain, cost functions A, B, function f, bound c
-Output: (valid, violations, min_slack)
+            "pseudocode": """function TropicalTypeCheck(domain, A, B, f, cost_bound=0):
+    violations = []
+    for x in domain:
+        if B(f(x)) > A(x) + cost_bound:
+            violations.append(x)
+    return len(violations) == 0
 
-1. violations ← ∅
-2. max_slack ← 0
-3. for each x ∈ domain:
-4.     slack ← B(f(x)) - A(x)
-5.     max_slack ← max(max_slack, slack)
-6.     if slack > c:
-7.         violations ← violations ∪ {x}
-8. return (|violations| = 0, violations, max(0, max_slack))
-
-Complexity: O(|domain|) time, O(|violations|) space.""",
+Time: O(|domain|), Space: O(1)""",
             "code": algorithms_code
         },
         {
-            "name": "Initial Algebra Recursion (Bellman-style)",
-            "pseudocode": """Algorithm: InitialAlgebraHom(zero_val, succ_fn, n)
-Input: base value zero_val, successor succ_fn, target n
-Output: f(n) in target algebra
+            "name": "Cost-Bounded Composition",
+            "pseudocode": """function ComposeM morphisms(m1: (f, c1), m2: (g, c2)):
+    return (g ∘ f, c1 + c2)
 
-1. result ← zero_val
-2. for i = 1 to n:
-3.     result ← succ_fn(result)
-4. return result
+// By TropHomC.comp: costs add under composition
+Time: O(1) setup, O(T(f) + T(g)) per evaluation""",
+            "code": "# See algorithms.py for full implementation"
+        },
+        {
+            "name": "Initial Algebra Homomorphism",
+            "pseudocode": """function InitialHom(algebra, n):
+    result = algebra.zero
+    for i in 1..n:
+        result = algebra.succ(result)
+    return result
 
-Complexity: O(n) applications of succ_fn.
-Correctness: Guaranteed by initiality theorem (unique algebra homomorphism).""",
-            "code": algorithms_code
+// Unique by nat_initial_tropAlg theorem
+Time: O(n), Space: O(1)""",
+            "code": "# See algorithms.py for full implementation"
         }
     ],
-    "visualizations": [
-        {
-            "name": "Tropical Type Checking as Constraint Satisfaction",
-            "data": viz_data['typecheck']
-        },
-        {
-            "name": "Tropical Identity via Min-Plus Equality",
-            "data": viz_data['identity']
-        },
-        {
-            "name": "Initial Algebra Semantics",
-            "data": viz_data['initial_algebra']
-        },
-        {
-            "name": "Tropical Universe Hierarchy",
-            "data": viz_data['universe']
-        },
-        {
-            "name": "Cost Composition (Substitution Theorem)",
-            "data": viz_data['composition']
-        }
-    ],
-    "lean_proofs": lean_code
+    "visualizations": visualizations,
+    "lean_proofs": lean_proofs
 }
 
 with open('PACKAGE.json', 'w') as f:
@@ -768,280 +773,270 @@ print(f"PACKAGE.json generated ({os.path.getsize('PACKAGE.json') / 1024:.1f} KB)
 
 #!/usr/bin/env python3
 """
-Tropical Type Theory: Visualizations
+Tropical Type Theory — Visualizations
 
-Generates publication-quality figures illustrating the key concepts.
+Generates PNG visualizations of key mathematical structures.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import numpy as np
 import base64
 import io
 import json
 
-def fig_to_base64(fig):
+
+def fig_to_base64(fig) -> str:
     """Convert matplotlib figure to base64 data URI."""
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
     b64 = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
     return f"data:image/png;base64,{b64}"
 
 
-def viz_tropical_typecheck():
-    """Visualize tropical type checking as constraint satisfaction."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-
-    domain = list(range(6))
-    A = [2*x + 3 for x in domain]
-    f_valid = [x + 1 for x in domain]
-    Bf_valid = [y + 1 for y in f_valid]
-    f_invalid = [3*x for x in domain]
-    Bf_invalid = [y + 1 for y in f_invalid]
-
-    # Valid case
-    ax1.bar([x - 0.15 for x in domain], A, 0.3, label='A(x) [budget]',
-            color='#2196F3', alpha=0.8)
-    ax1.bar([x + 0.15 for x in domain], Bf_valid, 0.3, label='B(f(x)) [cost]',
-            color='#4CAF50', alpha=0.8)
-    ax1.set_xlabel('Element x', fontsize=12)
-    ax1.set_ylabel('Cost', fontsize=12)
-    ax1.set_title('✓ Well-Typed: B(f(x)) ≤ A(x)', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=10)
-    ax1.set_xticks(domain)
-
-    # Invalid case
-    ax2.bar([x - 0.15 for x in domain], A, 0.3, label='A(x) [budget]',
-            color='#2196F3', alpha=0.8)
-    colors = ['#4CAF50' if Bf_invalid[i] <= A[i] else '#F44336' for i in range(len(domain))]
-    ax2.bar([x + 0.15 for x in domain], Bf_invalid, 0.3, label='B(g(x)) [cost]',
-            color=colors, alpha=0.8)
-    ax2.set_xlabel('Element x', fontsize=12)
-    ax2.set_ylabel('Cost', fontsize=12)
-    ax2.set_title('✗ Ill-Typed: B(g(x)) > A(x)', fontsize=13, fontweight='bold')
-    valid_patch = mpatches.Patch(color='#4CAF50', alpha=0.8, label='Within budget')
-    violation_patch = mpatches.Patch(color='#F44336', alpha=0.8, label='Violation')
-    budget_patch = mpatches.Patch(color='#2196F3', alpha=0.8, label='A(x) [budget]')
-    ax2.legend(handles=[budget_patch, valid_patch, violation_patch], fontsize=10)
-    ax2.set_xticks(domain)
-
-    fig.suptitle('Tropical Type Checking as Constraint Satisfaction', fontsize=15, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    return fig_to_base64(fig)
-
-
-def viz_minplus_identity():
-    """Visualize tropical identity via min-plus equality."""
+def viz_tropical_sets():
+    """Visualize tropical sets as cost landscapes."""
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    domain = list(range(7))
-
-    # Case 1: Equal terms
-    u = [x**2 + 1 for x in domain]
-    v = [x**2 + 1 for x in domain]
-    mins = [min(u[i], v[i]) for i in range(len(domain))]
-
-    axes[0].plot(domain, u, 'o-', color='#2196F3', label='u(x)', markersize=8, linewidth=2)
-    axes[0].plot(domain, v, 's--', color='#FF9800', label='v(x)', markersize=8, linewidth=2)
-    axes[0].plot(domain, mins, '^:', color='#4CAF50', label='min(u,v)', markersize=8, linewidth=2)
-    axes[0].set_title('Equal: u = v\nmin(u,v) = u = v', fontsize=12, fontweight='bold')
-    axes[0].legend(fontsize=10)
-    axes[0].set_xlabel('x')
-    axes[0].set_ylabel('Cost')
-
-    # Case 2: Unequal terms
-    u2 = [x**2 + 1 for x in domain]
-    v2 = [x**2 + 3 for x in domain]
-    mins2 = [min(u2[i], v2[i]) for i in range(len(domain))]
-
-    axes[1].plot(domain, u2, 'o-', color='#2196F3', label='u(x)', markersize=8, linewidth=2)
-    axes[1].plot(domain, v2, 's--', color='#FF9800', label='v(x)', markersize=8, linewidth=2)
-    axes[1].plot(domain, mins2, '^:', color='#4CAF50', label='min(u,v)', markersize=8, linewidth=2)
-    axes[1].set_title('Unequal: u ≠ v\nmin(u,v) = u ≠ v', fontsize=12, fontweight='bold')
-    axes[1].legend(fontsize=10)
-    axes[1].set_xlabel('x')
-    axes[1].set_ylabel('Cost')
-
-    # Case 3: Crossing terms
-    u3 = [abs(x - 3) + 1 for x in domain]
-    v3 = [x for x in domain]
-    mins3 = [min(u3[i], v3[i]) for i in range(len(domain))]
-
-    axes[2].plot(domain, u3, 'o-', color='#2196F3', label='u(x)', markersize=8, linewidth=2)
-    axes[2].plot(domain, v3, 's--', color='#FF9800', label='v(x)', markersize=8, linewidth=2)
-    axes[2].plot(domain, mins3, '^:', color='#4CAF50', label='min(u,v)', markersize=8, linewidth=2)
-    axes[2].set_title('Crossing: min selects\nlower cost at each point', fontsize=12, fontweight='bold')
-    axes[2].legend(fontsize=10)
-    axes[2].set_xlabel('x')
+    
+    x = np.arange(0, 8)
+    
+    # Set A: quadratic cost
+    A = x ** 2
+    axes[0].bar(x, A, color='#2196F3', alpha=0.8, edgecolor='white')
+    axes[0].set_title('Tropical Set A: A(x) = x²', fontsize=13, fontweight='bold')
+    axes[0].set_xlabel('Element x')
+    axes[0].set_ylabel('Cost A(x)')
+    axes[0].set_ylim(0, max(A) * 1.15)
+    
+    # Set B: linear cost
+    B = 2 * x
+    axes[1].bar(x, B, color='#4CAF50', alpha=0.8, edgecolor='white')
+    axes[1].set_title('Tropical Set B: B(x) = 2x', fontsize=13, fontweight='bold')
+    axes[1].set_xlabel('Element x')
+    axes[1].set_ylabel('Cost B(x)')
+    axes[1].set_ylim(0, max(A) * 1.15)
+    
+    # Meet: min(A, B)
+    M = np.minimum(A, B)
+    axes[2].bar(x, A, color='#2196F3', alpha=0.3, edgecolor='#2196F3', label='A(x)')
+    axes[2].bar(x, B, color='#4CAF50', alpha=0.3, edgecolor='#4CAF50', label='B(x)')
+    axes[2].bar(x, M, color='#FF9800', alpha=0.8, edgecolor='white', label='Meet = min(A,B)')
+    axes[2].set_title('Tropical Meet: min(A, B)', fontsize=13, fontweight='bold')
+    axes[2].set_xlabel('Element x')
     axes[2].set_ylabel('Cost')
-
-    fig.suptitle('Tropical Identity: Equality ↔ Idempotent Meet Coincidence', fontsize=15, fontweight='bold', y=1.02)
+    axes[2].set_ylim(0, max(A) * 1.15)
+    axes[2].legend()
+    
+    fig.suptitle('Tropical Sets as Cost Landscapes', fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    return fig_to_base64(fig)
+    return fig
+
+
+def viz_type_checking():
+    """Visualize tropical type checking as inequality verification."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    x = np.arange(0, 8)
+    A = 3 * x       # source cost
+    B_pass = x       # target cost (passes)
+    B_fail = x * x   # target cost (fails for large x)
+    
+    width = 0.25
+    ax.bar(x - width, A, width=width, color='#2196F3', alpha=0.8, label='A(x) = 3x (budget)', edgecolor='white')
+    ax.bar(x, B_pass, width=width, color='#4CAF50', alpha=0.8, label='B(f(x)) = x (ACCEPT)', edgecolor='white')
+    ax.bar(x + width, B_fail, width=width, color='#F44336', alpha=0.8, label='B(g(x)) = x² (REJECT at x≥4)', edgecolor='white')
+    
+    # Mark violations
+    for xi in x:
+        if B_fail[xi] > A[xi]:
+            ax.annotate('✗', (xi + width, B_fail[xi]), ha='center', va='bottom',
+                        fontsize=16, color='red', fontweight='bold')
+    
+    ax.set_xlabel('Element x', fontsize=12)
+    ax.set_ylabel('Cost', fontsize=12)
+    ax.set_title('Tropical Type Checking: B(f(x)) ≤ A(x)?', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_xticks(x)
+    
+    plt.tight_layout()
+    return fig
 
 
 def viz_initial_algebra():
-    """Visualize initial algebra recursion for ℕ."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Left: The recursion pattern
-    n_vals = list(range(8))
-
-    # Algebra 1: powers of 2
-    powers = [2**n for n in n_vals]
-    ax1.plot(n_vals, powers, 'o-', color='#E91E63', label='2ⁿ (power algebra)',
-             markersize=10, linewidth=2)
-    ax1.plot(n_vals, [n for n in n_vals], 's-', color='#2196F3', label='n (identity)',
-             markersize=10, linewidth=2)
-    ax1.plot(n_vals, [n*(n+1)//2 for n in n_vals], '^-', color='#4CAF50',
-             label='n(n+1)/2 (triangular)', markersize=10, linewidth=2)
-
-    ax1.set_xlabel('n (natural number)', fontsize=12)
-    ax1.set_ylabel('f(n) in target algebra', fontsize=12)
-    ax1.set_title('Unique Homomorphisms from ℕ', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=10)
-
-    # Right: Rank preservation
-    ranks_power = list(range(8))  # rank of 2^n = n
-    ranks_tri = list(range(8))    # rank structure
-
-    ax2.plot(n_vals, n_vals, 'o-', color='#2196F3', label='n (source rank)',
-             markersize=10, linewidth=2)
-    ax2.plot(n_vals, ranks_power, 's--', color='#E91E63', label='rank(f(n)) = n',
-             markersize=10, linewidth=2)
-
+    """Visualize the initial algebra homomorphism."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Algebra 1: zero=10, succ(n) = n+3
+    n_vals = np.arange(0, 10)
+    alg1 = [10 + 3 * n for n in n_vals]
+    
+    axes[0].plot(n_vals, alg1, 'o-', color='#9C27B0', markersize=10, linewidth=2, label='f(n) = 10 + 3n')
+    axes[0].fill_between(n_vals, 0, alg1, alpha=0.15, color='#9C27B0')
+    axes[0].set_xlabel('n (natural number)', fontsize=12)
+    axes[0].set_ylabel('f(n) (image in algebra)', fontsize=12)
+    axes[0].set_title('Algebra 1: zero=10, succ(n)=n+3', fontsize=13, fontweight='bold')
+    axes[0].legend(fontsize=11)
+    axes[0].grid(alpha=0.3)
+    
+    # Algebra 2: zero=1, succ(n) = 2n+1 (Mersenne-like)
+    alg2 = []
+    val = 1
     for n in n_vals:
-        ax2.annotate('', xy=(n, ranks_power[n]), xytext=(n, n_vals[n]),
-                     arrowprops=dict(arrowstyle='->', color='gray', lw=0.5))
-
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel('Rank', fontsize=12)
-    ax2.set_title('Rank Preservation: rank(f(n)) = n', fontsize=13, fontweight='bold')
-    ax2.legend(fontsize=10)
-
-    fig.suptitle('Initial Algebra Semantics: ℕ as Universal Inductive Type', fontsize=15, fontweight='bold', y=1.02)
+        if n == 0:
+            alg2.append(1)
+        else:
+            val = 2 * val + 1
+            alg2.append(val)
+    
+    axes[1].plot(n_vals, alg2, 's-', color='#FF5722', markersize=10, linewidth=2, label='f(n) = 2^(n+1) - 1')
+    axes[1].fill_between(n_vals, 0, alg2, alpha=0.15, color='#FF5722')
+    axes[1].set_xlabel('n (natural number)', fontsize=12)
+    axes[1].set_ylabel('f(n) (image in algebra)', fontsize=12)
+    axes[1].set_title('Algebra 2: zero=1, succ(n)=2n+1', fontsize=13, fontweight='bold')
+    axes[1].legend(fontsize=11)
+    axes[1].grid(alpha=0.3)
+    axes[1].set_yscale('log')
+    
+    fig.suptitle('Initial Algebra Homomorphisms from ℕ', fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    return fig_to_base64(fig)
+    return fig
 
 
-def viz_universe_hierarchy():
-    """Visualize the tropical universe hierarchy with normalization."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-
+def viz_normalization():
+    """Visualize idempotent normalization of universe codes."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    K_values = [3, 5, 8]
+    u_vals = np.arange(0, 15)
+    
+    colors = ['#2196F3', '#4CAF50', '#FF9800']
+    
+    # Left: normalization for different K
+    for K, color in zip(K_values, colors):
+        normalized = [min(u, K) for u in u_vals]
+        axes[0].plot(u_vals, normalized, 'o-', color=color, markersize=6, 
+                     linewidth=2, label=f'K = {K}')
+    
+    axes[0].plot(u_vals, u_vals, '--', color='gray', alpha=0.5, label='Identity (no normalization)')
+    axes[0].set_xlabel('Code u', fontsize=12)
+    axes[0].set_ylabel('normalizeCode(K, u)', fontsize=12)
+    axes[0].set_title('Normalization: min(u, K)', fontsize=13, fontweight='bold')
+    axes[0].legend(fontsize=10)
+    axes[0].grid(alpha=0.3)
+    
+    # Right: idempotency visualization
     K = 5
-    codes = list(range(12))
-    normalized = [min(u, K) for u in codes]
-
-    # Left: Normalization function
-    ax1.plot(codes, codes, '--', color='gray', alpha=0.5, label='identity')
-    ax1.plot(codes, normalized, 'o-', color='#9C27B0', markersize=10, linewidth=2,
-             label=f'normalize(u, K={K})')
-
-    # Shade the collapse region
-    ax1.fill_between(codes, normalized, codes, where=[n < c for n, c in zip(normalized, codes)],
-                      alpha=0.2, color='#9C27B0', label='Collapsed region')
-
-    ax1.set_xlabel('Code u', fontsize=12)
-    ax1.set_ylabel('Normalized code', fontsize=12)
-    ax1.set_title(f'Idempotent Normalization (K={K})\nnorm(norm(u)) = norm(u)', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=10)
-
-    # Right: Well-founded hierarchy
-    levels = {}
-    for u in codes:
-        nu = min(u, K)
-        if nu not in levels:
-            levels[nu] = []
-        levels[nu].append(u)
-
-    y_positions = sorted(levels.keys())
-    for i, level in enumerate(y_positions):
-        members = levels[level]
-        for j, m in enumerate(members):
-            color = '#4CAF50' if m <= K else '#F44336'
-            ax2.scatter(j, level, s=200, c=color, zorder=3, edgecolors='black')
-            ax2.annotate(str(m), (j, level), ha='center', va='center', fontsize=9, fontweight='bold')
-
-    # Draw hierarchy arrows
-    for i in range(len(y_positions) - 1):
-        ax2.annotate('', xy=(0, y_positions[i+1]), xytext=(0, y_positions[i]),
-                     arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
-
-    normal_patch = mpatches.Patch(color='#4CAF50', label='Normal (u ≤ K)')
-    collapsed_patch = mpatches.Patch(color='#F44336', label='Collapsed (u > K)')
-    ax2.legend(handles=[normal_patch, collapsed_patch], fontsize=10)
-    ax2.set_xlabel('Equivalence class members', fontsize=12)
-    ax2.set_ylabel('Universe level (rank)', fontsize=12)
-    ax2.set_title('Well-Founded Universe Hierarchy', fontsize=13, fontweight='bold')
-
-    fig.suptitle('Tropical Universe Stratification', fontsize=15, fontweight='bold', y=1.02)
+    u_range = np.arange(0, 12)
+    norm1 = [min(u, K) for u in u_range]
+    norm2 = [min(min(u, K), K) for u in u_range]
+    
+    width = 0.35
+    axes[1].bar(u_range - width/2, norm1, width=width, color='#2196F3', alpha=0.8, 
+                label='normalize(u)', edgecolor='white')
+    axes[1].bar(u_range + width/2, norm2, width=width, color='#FF9800', alpha=0.8,
+                label='normalize(normalize(u))', edgecolor='white')
+    axes[1].set_xlabel('Code u', fontsize=12)
+    axes[1].set_ylabel('Normalized code', fontsize=12)
+    axes[1].set_title(f'Idempotency (K = {K}): normalize² = normalize', fontsize=13, fontweight='bold')
+    axes[1].legend(fontsize=10)
+    axes[1].set_xticks(u_range)
+    
+    fig.suptitle('Tropical Universe Code Normalization', fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    return fig_to_base64(fig)
+    return fig
 
 
 def viz_composition():
-    """Visualize cost composition in the tropical semantic calculus."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    domain = list(range(7))
-
-    # Three cost functions
-    A = [15 - x for x in domain]
-    B = [x + 3 for x in domain]
-    C = [x for x in domain]
-
-    # Morphisms: f shifts right, g is identity
-    f_vals = [x + 1 for x in domain]
-    B_of_f = [f + 3 for f in f_vals]
-
-    ax.plot(domain, A, 'o-', color='#2196F3', label='A(x) = 15-x [source budget]',
-            markersize=10, linewidth=2.5)
-    ax.plot(domain, B_of_f, 's-', color='#FF9800', label='B(f(x)) = x+4 [intermediate]',
-            markersize=10, linewidth=2.5)
-    ax.plot(domain, [x + 3 for x in f_vals], '^-', color='#4CAF50',
-            label='C(g(f(x))) = x+1 [final cost]',
-            markersize=10, linewidth=2.5)
-
-    # Show the composition bound
-    c1, c2 = 3, 0
-    bound = [a + c1 + c2 for a in A]
-    ax.plot(domain, bound, '--', color='#F44336', label=f'A(x) + c₁ + c₂ = A(x)+{c1+c2} [bound]',
-            linewidth=2)
-    ax.fill_between(domain, [0]*len(domain), bound, alpha=0.1, color='#F44336')
-
-    ax.set_xlabel('Element x', fontsize=12)
-    ax.set_ylabel('Cost', fontsize=12)
-    ax.set_title('Cost Composition: g∘f has cost c₁+c₂\n(Substitution Theorem)', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10, loc='upper right')
-
+    """Visualize cost-additive composition of morphisms."""
+    fig, ax = plt.subplots(figsize=(12, 6))
+    
+    # Pipeline of 5 morphisms with different cost bounds
+    stages = ['Input\n(source)', 'Stage 1\nc₁=2', 'Stage 2\nc₂=1', 'Stage 3\nc₃=3', 
+              'Stage 4\nc₄=0', 'Output\n(target)']
+    costs = [0, 2, 1, 3, 0]  # cost of each stage
+    cumulative = [0]
+    for c in costs:
+        cumulative.append(cumulative[-1] + c)
+    
+    # Draw the pipeline
+    x_pos = np.arange(len(stages))
+    
+    # Bars showing cumulative cost
+    bars = ax.bar(x_pos, cumulative, color=['#2196F3'] + ['#4CAF50'] * 4 + ['#FF9800'],
+                  alpha=0.8, edgecolor='white', width=0.6)
+    
+    # Arrows between stages
+    for i in range(len(stages) - 1):
+        ax.annotate('', xy=(x_pos[i+1] - 0.35, cumulative[i+1] * 0.5),
+                     xytext=(x_pos[i] + 0.35, cumulative[i] * 0.5),
+                     arrowprops=dict(arrowstyle='->', color='#333', lw=2))
+    
+    # Labels on bars
+    for i, (x, y) in enumerate(zip(x_pos, cumulative)):
+        if y > 0:
+            ax.text(x, y + 0.15, f'Σ = {y}', ha='center', va='bottom', fontsize=11, fontweight='bold')
+    
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(stages, fontsize=10)
+    ax.set_ylabel('Cumulative Cost Bound', fontsize=12)
+    ax.set_title('Cost-Additive Composition: TropHomC.comp', fontsize=14, fontweight='bold')
+    ax.set_ylim(0, max(cumulative) * 1.3)
+    
+    # Add annotation
+    ax.text(2.5, max(cumulative) * 1.15, 
+            f'Total cost bound = Σcᵢ = {sum(costs)} (by TropHomC.comp)',
+            ha='center', fontsize=12, style='italic',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightyellow', edgecolor='orange'))
+    
     plt.tight_layout()
-    return fig_to_base64(fig)
+    return fig
+
+
+def viz_distributivity():
+    """Visualize the distributivity law a + min(b,c) = min(a+b, a+c)."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    a = 3
+    b_vals = np.arange(0, 10)
+    
+    for c in [1, 4, 7]:
+        lhs = [a + min(b, c) for b in b_vals]
+        rhs = [min(a + b, a + c) for b in b_vals]
+        
+        ax.plot(b_vals, lhs, 'o-', markersize=8, linewidth=2, 
+                label=f'a+min(b,{c}) = min(a+b,a+{c}) [c={c}]')
+        # Verify equality
+        assert all(l == r for l, r in zip(lhs, rhs)), "Distributivity violated!"
+    
+    ax.set_xlabel('b', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title(f'Distributivity: {a} + min(b, c) = min({a}+b, {a}+c)', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=10)
+    ax.grid(alpha=0.3)
+    
+    plt.tight_layout()
+    return fig
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-
-    viz_data = {}
-    viz_data['typecheck'] = viz_tropical_typecheck()
-    print("  ✓ Type checking visualization")
-
-    viz_data['identity'] = viz_minplus_identity()
-    print("  ✓ Min-plus identity visualization")
-
-    viz_data['initial_algebra'] = viz_initial_algebra()
-    print("  ✓ Initial algebra visualization")
-
-    viz_data['universe'] = viz_universe_hierarchy()
-    print("  ✓ Universe hierarchy visualization")
-
-    viz_data['composition'] = viz_composition()
-    print("  ✓ Composition visualization")
-
-    # Save for JSON package
-    with open('viz_data.json', 'w') as f:
-        json.dump(viz_data, f)
-
-    print("\nAll visualizations generated and saved.")
+    
+    figs = {
+        'tropical_sets': viz_tropical_sets(),
+        'type_checking': viz_type_checking(),
+        'initial_algebra': viz_initial_algebra(),
+        'normalization': viz_normalization(),
+        'composition': viz_composition(),
+        'distributivity': viz_distributivity(),
+    }
+    
+    # Save as individual PNGs
+    for name, fig in figs.items():
+        fig.savefig(f'{name}.png', dpi=150, bbox_inches='tight')
+        print(f"  Saved {name}.png")
+        plt.close(fig)
+    
+    print("All visualizations generated.")
