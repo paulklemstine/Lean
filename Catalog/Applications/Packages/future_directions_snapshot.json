@@ -1201,6 +1201,64 @@
     "timestamp": "2026-05-15T12:05:01.004685+00:00"
   },
   {
+    "id": "fd_0210",
+    "title": "Walk surgery lemmas",
+    "description": ": Formalizing that optimal walks in nonneg-weight graphs use each wormhole at most once. This is needed for the perturbative comparison bound and extends to multi-wormhole settings.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3c1c085d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:21.841373+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Tropical linear algebra",
+    "description": ": The surgery operation as a rank-2 min-plus matrix update. This connects to tropical eigenvalue theory and spectral bounds.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3c1c085d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:21.848289+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "Gauge-theoretic structure",
+    "description": ": The invariance under `A ↦ A + c` is the simplest gauge symmetry. Extensions to non-abelian gauge groups (matrix-valued potentials) and local gauge transformations would connect to tropical analogues of Yang-Mills theory.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3c1c085d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:21.855624+00:00"
+  },
+  {
+    "id": "fd_0213",
+    "title": "Computational aspects",
+    "description": ": All constructions are algorithmically tractable (Bellman-Ford style). Efficient implementations could enable practical applications in network optimization with heterogeneous costs.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3c1c085d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T13:04:21.862388+00:00"
+  },
+  {
     "id": "seed_079",
     "title": "Tropical Language Evolution: Min-Plus Phylogenetics and Glottochronology",
     "description": "Prove that language divergence follows a tropical diffusion process on the min-plus metric space of lexical items, and that the tropical distance between languages is an optimal phylogenetic distance. Show that glottochronological dating is recovered as tropical distance estimation, and that the tropical phylogenetic tree is the unique min-plus Steiner tree of the language family.",
