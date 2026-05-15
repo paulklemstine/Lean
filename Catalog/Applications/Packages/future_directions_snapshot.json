@@ -915,24 +915,6 @@
     "timestamp": "2026-05-14T16:17:21.772264+00:00"
   },
   {
-    "id": "fd_0133",
-    "title": "Chronological ordering",
-    "description": ": Define a partial order from tropical distances and show it satisfies antisymmetry for nonneg-weight graphs with no negative cycles.\n\n### Proof Strategy\nUse the triangle inequality for tropical distance (which follows from path concatenation) and the surgery distance-drop theorem already proved.\n\n### Cross-Domain Connections\n- Causal set theory in quantum gravity\n- Reachability analysis in timed automata\n- Network influence propagation bounds\n\n---\n\n## Direction 2: Tropical Black Hole Horizons as Min-Cut Barriers\n\n### Hypothesis\nA \"tropical event horizon\" is a min-cut in the weighted spacetime graph separating an interior region from an exterior region. The horizon's \"area\" (total cut weight) controls the maximum information throughput, yielding a discrete analogue of the Bekenstein–Hawkin",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "57002e63",
-    "timestamp": "2026-05-14T16:24:30.105861+00:00"
-  },
-  {
     "id": "fd_0137",
     "title": "Horizon stability",
     "description": ": Small perturbations of edge weights produce small changes in the horizon location (Lipschitz stability).\n\n### Proof Strategy\nLeverage Mathlib's existing graph theory for max-flow min-cut. The tropical entropy bound should follow from counting arguments and the min-cut structure.\n\n### Cross-Domain Connections\n- Bekenstein–Hawking entropy in black hole thermodynamics\n- Network reliability and fault tolerance\n- Information-theoretic security (wiretap channels)\n- Ryu–Takayanagi formula in holographic entanglement entropy\n\n---\n\n## Direction 3: Tropical Einstein–Maxwell Systems on Weighted Graphs\n\n### Hypothesis\nExtend the tropical Einstein equation to include a \"gauge field\" (a second weight matrix `A : Matrix (Fin n) (Fin n) ℝ` representing electromagnetic potential). The coupled system has ",
@@ -1534,36 +1516,6 @@
     "timestamp": "2026-05-15T03:12:37.111041+00:00"
   },
   {
-    "id": "fd_0202",
-    "title": "Direction 4",
-    "description": "(Residuated Duality): Provides the theoretical dual to the separation theorem. Creates infrastructure for impossibility results. Medium difficulty.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "18915f0b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:12:37.117669+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Conjecture 4.2",
-    "description": "The sequence of hypotenuses along any root-to-leaf path in the B-branch satisfies the Pell-like recurrence c_{n+2} = 6c_{n+1} − c_n.\n\n**Conjecture 4.3.** For any two Berggren points p₁, p₂ from the same depth-d mesh, the denominator of d_trop(p₁, p₂) in lowest terms divides c₁ · c₂, and equality holds generically.\n\n### Proof Strategy\n1. Use the matrix representation B₁, B₂, B₃ ∈ GL(3, ℤ) to track determinantal relations.\n2. Exploit the Lorentz form preservation B^T Q B = Q to constrain GCD structure.\n3. Apply p-adic valuation arguments to prove coprimality of hypotenuses.\n\n### Lean 4 Target\n```lean\ntheorem berggren_hyp_coprime (path₁ path₂ : List BerggrenStep)\n    (hne : path₁ ≠ path₂) :\n    let t₁ := applyPath path₁\n    let t₂ := applyPath path₂\n    Int.gcd t₁.2.2 t₂.2.2 = 1 := by sorry\n`",
-    "domains": [
-      "Physics",
-      "Pythagorean",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a96a94a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:18:29.497812+00:00"
-  },
-  {
     "id": "fd_0208",
     "title": "Iterate",
     "description": "— update conjectures based on computational evidence and proof attempts.",
@@ -1590,62 +1542,6 @@
     "source_exp_id": "a0c6f9fb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:24:26.577448+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "Formalize definitions",
-    "description": "(1–2 days): Write all type signatures and definitions with `sorry` proofs.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c65fa1b5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:33:53.999729+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Verify skeleton",
-    "description": "(1 day): Ensure the overall structure compiles.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c65fa1b5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:33:54.007259+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "Prove lemmas bottom-up",
-    "description": "(3–7 days): Start with the simplest supporting lemmas and work toward the main theorem.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c65fa1b5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:33:54.013795+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Computational validation",
-    "description": "(1 day): Write Python scripts verifying the theorem computationally on concrete examples.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c65fa1b5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T04:33:54.020964+00:00"
   },
   {
     "id": "fd_0206",
@@ -2176,37 +2072,6 @@
     "timestamp": "2026-05-15T02:32:03.221140+00:00"
   },
   {
-    "id": "fd_0202",
-    "title": "Direction 5: Comparison with Human Textbook Dependency Structure",
-    "description": "**Goal**: Formalize a comparison framework between the machine-extracted dependency graph and human-authored textbook prerequisite orderings.\n\n**Concrete approach**:\n1. Define a \"textbook ordering\" as a total order on theorems compatible with dependency (a topological sort).\n2. Define \"textbook depth\" as the chapter/section number assigned to each theorem.\n3. Prove that textbook depth is always an upper bound on graph-theoretic depth:\n   ```\n   theorem textbook_depth_ge_graph_depth\n     (G : DepGraph V) (σ : V → ℕ) (hσ : ∀ u v, u ∈ G.pred v → σ u < σ v) :\n     ∀ v, G.depth v ≤ σ v\n   ```\n4. Measure the *gap* between textbook depth and graph depth empirically.\n\n**Why it matters**: A large gap indicates \"unnecessary serialization\" — the textbook introduces concepts in a longer chain than the",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cbb3f6f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:32:03.231067+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "Research Team Organization",
-    "description": "Each direction can be pursued semi-independently:\n\n| Direction | Prerequisites | Estimated Effort | Priority |\n|-----------|--------------|------------------|----------|\n| 1. Weighted depth | Current formalization | Medium | High |\n| 2. Functorial transfer | Direction 1 optional | Medium | Medium |\n| 3. Empirical extraction | Lean 4 metaprogramming | High | High |\n| 4. Branching bounds | Current formalization | Low | Medium |\n| 5. Textbook comparison | Direction 3 | Medium | High |\n\nDirections 1 and 4 can proceed immediately in parallel. Direction 3 should start concurrently as it provides the empirical backbone. Directions 2 and 5 build on earlier results.\n\n---",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cbb3f6f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T02:32:03.242458+00:00"
-  },
-  {
     "id": "fd_0201",
     "title": "1. Category of Research Theories with Formal Laws",
     "description": "**Goal**: Elevate the `ResearchTheory`/`TheoryHom` framework into a fully certified category.\n\n**Concrete steps**:\n- Define `ResearchCategory` bundling identity, composition, and proofs of associativity and unit laws.\n- Prove that `TheoryHom.comp_assoc`, `TheoryHom.id_comp`, and `TheoryHom.comp_id` (already established) constitute a strict category.\n- Define *isomorphisms* of research theories: morphisms with two-sided inverses.\n- Prove that isomorphic theories have identical lower-bound spectra.\n- Investigate whether `TheoryDominates` forms a partial order modulo isomorphism.\n\n**Cross-domain connections**: Category-theoretic structure enables automated reasoning about which domains can borrow results from which others, establishing a formal \"knowledge graph\" of mathematical disciplines.",
@@ -2220,41 +2085,6 @@
     "source_exp_id": "825001af",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:01:17.457827+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "2. Adjoint Theorem Transport and Galois Connections",
-    "description": "**Goal**: Identify theory morphism pairs that form Galois connections (adjunctions), enabling bidirectional transfer.\n\n**Concrete steps**:\n- Define `TheoryAdjunction` as a pair of morphisms φ : T → U and ψ : U → T satisfying the adjunction inequality: `U.Inv (φ.toFun x) ≤ n ↔ T.Inv x ≤ ψ.toFun_inv_bound n` (or a suitable reformulation).\n- Prove that adjoint pairs enable *reflection* of upper bounds (not just preservation of lower bounds).\n- Instantiate with existing catalog bridges: does the height-to-cell bridge admit a right adjoint?\n- Connect to Galois insertions in Mathlib's order theory for lattice-valued invariants.\n\n**Cross-domain connections**: Adjunctions formalize the intuition that some domain translations are \"lossless\" — a robustness guarantee in learning theory might be *exac",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "825001af",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:01:17.469403+00:00"
-  },
-  {
-    "id": "fd_0203",
-    "title": "3. Automated Bridge Search and Compositional Proof Engines",
-    "description": "**Goal**: Formalize a graph of theories and morphisms, then prove correctness of algorithms that compose bridges to transfer theorems automatically.\n\n**Concrete steps**:\n- Define `TheoryGraph` as a finite directed graph where nodes are `ResearchTheory` instances and edges are `TheoryHom`s.\n- Implement a path-finding algorithm that, given source and target theories, finds a composable chain of morphisms.\n- Prove that any path in the graph yields a valid `CertifiedTransfer` via iterated composition.\n- Extend to weighted graphs where edge weights represent \"information loss\" (gap between source and target invariants).\n- Prove that shortest-path composition minimizes total information loss.\n\n**Cross-domain connections**: This would create the first formal \"theorem search engine\" — given a resu",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "825001af",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:01:17.480731+00:00"
   },
   {
     "id": "fd_0197",
@@ -2283,20 +2113,6 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.345097+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "Dependency",
-    "description": "Builds directly on `matrix_mul_eq_iff_rowwise` and `oneHotRow_mul_extracts_row`. The deterministic row-check theorem is the `q → ∞` limit of Freivalds' bound.\n\n---",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T03:04:56.353199+00:00"
   },
   {
     "id": "fd_0200",
@@ -2403,5 +2219,92 @@
     "source_exp_id": "1368feba",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:31:22.971820+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "1. Zero-Weight Cycle Characterization of Chronology Failure",
+    "description": "**Hypothesis:** For nonnegative weighted digraphs, two vertices `u` and `v` satisfy `d(u,v) = 0 ∧ d(v,u) = 0` if and only if there exists a zero-weight directed cycle passing through both.\n\n**Strategy:** Prove the forward direction by extracting zero-weight paths from the definition of tropical distance (as a min over path weights), concatenating them, and showing the resulting closed walk decomposes into simple cycles. Prove the reverse by showing any vertex on a zero-weight cycle has zero distance to and from every other vertex on the cycle (since sub-paths of a zero-weight path in a nonneg graph must themselves have zero weight).\n\n**Cross-domain connections:** This is the combinatorial analogue of the statement that chronology failure in Lorentzian geometry is equivalent to the existenc",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57002e63",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:11.194650+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "2. Tropical Alexandrov Intervals and Lattice Structure",
+    "description": "**Hypothesis:** Under the chronological partial order, the \"causal interval\" `[u, v] = {w : d(u,w) = 0 ∧ d(w,v) = 0}` is a finite distributive lattice when the graph is acyclic with nonneg weights.\n\n**Strategy:** Show these intervals are sublattices of the power set of paths from `u` to `v`, ordered by the chronological relation. Use Birkhoff's representation theorem for finite distributive lattices. The meet and join operations correspond to tropical (min-plus) and max-plus operations on distance vectors, connecting to the two tropical semirings.\n\n**Cross-domain connections:** Alexandrov intervals are fundamental in causal set theory (where they encode the \"volume\" of spacetime). A lattice structure would enable lattice-theoretic methods (Möbius inversion, zeta polynomials) for counting c",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57002e63",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:11.202584+00:00"
+  },
+  {
+    "id": "fd_0210",
+    "title": "3. Tropical Event Horizons as Min-Cut Separators",
+    "description": "**Hypothesis:** Define a \"tropical horizon\" as a minimum-weight vertex or edge cut separating two regions of the chronological order. Prove that these horizons are monotone with respect to the partial order and that their weight provides a lower bound on the minimal delay between causally separated regions.\n\n**Strategy:** Use max-flow/min-cut duality in the tropical setting. Relate the min-cut weight to the tropical distance between the two sides. Show that the horizon separates the vertex set into \"past\" and \"future\" components that respect the chronological order.\n\n**Cross-domain connections:** This is a discrete analogue of black hole horizons in general relativity, where the horizon is defined as the boundary of the causal past of future null infinity. In network security, it models fi",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57002e63",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:11.211138+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "4. Discrete Area-Throughput Inequality",
+    "description": "**Hypothesis:** For a tropical horizon (min-cut) `H` separating source `s` from sink `t` in a nonneg weighted digraph, prove the inequality:\n\n    d(s, t) ≥ min_{e ∈ H} w(e)\n\nand characterize when equality holds (analogous to the equality case in the isoperimetric inequality).\n\n**Strategy:** Any path from `s` to `t` must cross every cut, so its weight is at least the minimum edge weight in the cut. The tropical distance, being the minimum over all paths, inherits this bound. Equality characterization involves identifying \"tight\" paths that achieve the minimum on every cut edge.\n\n**Cross-domain connections:** This is a tropical analogue of the Bekenstein bound (entropy ≤ area/4) relating information capacity to geometric surface area. In network optimization, it quantifies the fundamental th",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57002e63",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:11.219961+00:00"
+  },
+  {
+    "id": "fd_0212",
+    "title": "5. Tropical Causal Boundary for Infinite Graphs",
+    "description": "**Hypothesis:** For locally finite infinite weighted digraphs with nonneg weights and no zero-cost cycles, define the \"tropical causal boundary\" as the set of equivalence classes of chronologically inextendible future-directed rays (infinite paths with monotonically increasing vertices in the chronological order). Prove that this boundary, equipped with a suitable topology, is compact and that the chronological order extends continuously to the boundary.\n\n**Strategy:** Model this on the causal boundary construction in Lorentzian geometry (the Geroch-Kronheimer-Penrose construction). Use the nonneg distance to define a notion of \"ideal points at infinity\" via filters or ultrafilters on the vertex set. The compactness should follow from the finite branching (local finiteness) of the graph an",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57002e63",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:34:11.227756+00:00"
   }
 ]
