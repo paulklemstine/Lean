@@ -41,10 +41,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.95,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4e85c80a",
     "timestamp": "2026-05-14T16:03:53.866556+00:00"
   },
   {
@@ -313,10 +313,10 @@
       "Cryptography"
     ],
     "priority_score": 0.81,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5d50bd1e",
     "timestamp": "2026-05-14T16:03:53.820235+00:00"
   },
   {
@@ -475,23 +475,6 @@
     "timestamp": "2026-05-14T16:17:21.765666+00:00"
   },
   {
-    "id": "fd_0137",
-    "title": "Horizon stability",
-    "description": ": Small perturbations of edge weights produce small changes in the horizon location (Lipschitz stability).\n\n### Proof Strategy\nLeverage Mathlib's existing graph theory for max-flow min-cut. The tropical entropy bound should follow from counting arguments and the min-cut structure.\n\n### Cross-Domain Connections\n- Bekenstein–Hawking entropy in black hole thermodynamics\n- Network reliability and fault tolerance\n- Information-theoretic security (wiretap channels)\n- Ryu–Takayanagi formula in holographic entanglement entropy\n\n---\n\n## Direction 3: Tropical Einstein–Maxwell Systems on Weighted Graphs\n\n### Hypothesis\nExtend the tropical Einstein equation to include a \"gauge field\" (a second weight matrix `A : Matrix (Fin n) (Fin n) ℝ` representing electromagnetic potential). The coupled system has ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "80ffadc6",
-    "timestamp": "2026-05-14T16:24:30.116622+00:00"
-  },
-  {
     "id": "fd_0141",
     "title": "Gauge invariance",
     "description": ": Adding a \"pure gauge\" `A i j = φ j - φ i` does not change charged tropical distances.\n\n### Proof Strategy\nMost results reduce to properties of the standard tropical Einstein equation via the chargedWeight substitution. Gauge invariance follows from telescoping sums along paths.\n\n### Cross-Domain Connections\n- Electromagnetic geodesics in general relativity\n- Pricing with transaction costs in financial networks\n- Weighted routing with toll roads\n- Magnetic Laplacians on graphs\n\n---\n\n## Direction 4: Categorical Functor from Graph Surgeries to Tropical Linear Operators\n\n### Hypothesis\nGraph surgeries (edge insertions, deletions, weight modifications) form a category where objects are weighted graphs and morphisms are surgery operations. There exists a functor from this category to the categ",
@@ -629,10 +612,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60e1cc58",
     "timestamp": "2026-05-14T17:33:00.512633+00:00"
   },
   {
@@ -643,10 +626,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "3adde084",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
   },
   {
@@ -1044,6 +1027,48 @@
     "source_exp_id": "de9a421e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T16:01:39.505662+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Direction 4",
+    "description": "(Security duality) is most impactful for applications — it would connect the theoretical framework to practical network security certification.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "80ffadc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:05:16.095448+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "Direction 2",
+    "description": "(Discrete RT) is most important for physics — it would establish the first rigorous discrete holographic theorem.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "80ffadc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:05:16.105226+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Direction 1",
+    "description": "(Tropical Penrose) is most ambitious mathematically — it requires identifying the correct graph-theoretic mass functional.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "80ffadc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T16:05:16.115004+00:00"
   },
   {
     "id": "seed_079",
@@ -1906,10 +1931,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9f168b29",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9093673a",
     "timestamp": "2026-05-15T16:04:54.716000+00:00"
   }
 ]
