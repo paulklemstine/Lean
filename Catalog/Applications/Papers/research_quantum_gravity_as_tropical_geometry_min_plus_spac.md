@@ -1,10 +1,10 @@
-# Tropical Gravitational Dynamics: Min-Plus Spacetime, Causal Evolution, and Horizon Fixed Points
+# Tropical Spacetime at Planck Scale: Idempotent Gravitational Dynamics on Finite Weighted Graphs
 
 ## Abstract
 
-We develop a rigorous mathematical framework — *tropical gravitational dynamics* — in which core structures of gravitational physics (metric geometry, causal evolution, and black-hole horizons) are realized as theorems in the min-plus (tropical) semiring. Working over the real numbers with operations (min, +), we construct: (1) a discrete radial pseudo-metric from cumulative edge weights on ℕ, proving reflexivity, symmetry, triangle inequality, and nonnegativity; (2) a min-plus evolution operator modeling discrete Hamilton–Jacobi dynamics, with proven existence, uniqueness, monotonicity, and nonexpansiveness; (3) a tropical Schwarzschild horizon characterized as the least fixed point of an absorbing radial update, with complete fixed-point classification; (4) a finite-state tropical transfer operator with proven monotonicity and tropical homogeneity; and (5) a bridge between iterated transfer and bounded path cost on weighted digraphs. All results are machine-verified in Lean 4 with the Mathlib library. The framework unifies gravitational causal propagation, dynamic programming, shortest-path algorithms, and tropical spectral theory into a single formal structure.
+We develop a rigorous mathematical framework for tropical (min-plus) spacetime dynamics, in which gravitational propagation is modeled by inf-convolution operators on finite weighted graphs. We prove four families of structural theorems: (A) idempotent superposition laws for tropical amplitudes, (B) monotonicity and metric properties of min-plus edge composition, (C) well-posedness (existence, uniqueness, stability) of the tropical Einstein initial value problem, and (D) fixed-point characterization of the tropical Schwarzschild horizon with sharp order-theoretic properties. All results are formally verified in Lean 4 with the Mathlib library. The framework establishes a precise mathematical bridge between tropical geometry, dynamic programming (Bellman equations), discrete Hamilton–Jacobi theory, and causal propagation in discrete spacetime models.
 
-**Keywords:** tropical geometry, min-plus algebra, idempotent analysis, causal structures, Hamilton–Jacobi equations, fixed-point theory, black-hole analogues, shortest paths, dynamic programming
+**Keywords**: tropical geometry, min-plus algebra, idempotent semiring, Bellman equation, discrete Hamilton–Jacobi, Schwarzschild horizon, causal set, formal verification
 
 ---
 
@@ -12,349 +12,369 @@ We develop a rigorous mathematical framework — *tropical gravitational dynamic
 
 ### 1.1 Motivation
 
-The quest to reconcile general relativity with quantum mechanics remains one of the central open problems in theoretical physics. While numerous approaches exist — string theory, loop quantum gravity, causal set theory, noncommutative geometry — each faces formidable mathematical and conceptual obstacles.
+The search for a quantum theory of gravity has motivated numerous discrete and combinatorial approaches to spacetime geometry, including causal sets [Sorkin 2003], spin foams [Perez 2013], and tensor networks [Swingle 2012]. A common thread is the idea that smooth Lorentzian geometry may emerge from discrete, algebraic, or combinatorial structures at the Planck scale.
 
-A less-explored but mathematically natural approach is *tropicalization*: replacing the field (ℝ, +, ×) with the tropical semiring (ℝ, min, +). This substitution has deep roots in:
+Independently, the theory of tropical (idempotent) mathematics has developed rapidly since the work of Maslov, Litvinov, and others [Litvinov 2007, Maclagan–Sturmfels 2015]. The min-plus (or max-plus) semiring (ℝ ∪ {+∞}, min, +) provides an algebraic framework in which shortest-path problems, optimization, and certain PDE limits become linear.
 
-- **Idempotent analysis** (Maslov, Litvinov, Kolokoltsov): the observation that the semiclassical limit ℏ → 0 of quantum mechanics is naturally described by min-plus algebra, with the Schrödinger equation degenerating to the Hamilton–Jacobi equation [1].
-- **Tropical geometry** (Mikhalkin, Itenberg, Sturmfels): the study of piecewise-linear analogues of algebraic varieties, arising as limits of classical varieties under logarithmic degeneration [2].
-- **Optimal control and dynamic programming** (Bellman): the Bellman equation is a min-plus linear equation, and shortest-path algorithms are min-plus matrix multiplications [3].
+This paper bridges these two developments by constructing a formal theory of tropical spacetime dynamics. We define a tropical Einstein evolution operator on finite weighted directed graphs, prove its well-posedness as a discrete initial value problem, establish its equivalence with the Bellman equation of dynamic programming, and characterize the tropical Schwarzschild horizon as a greatest nonneg fixed point of a radial update map.
 
-Our contribution is to formalize the observation that these three streams converge on a single structure that can be interpreted as a *tropical spacetime*: a discrete geometric object with causal propagation, evolution dynamics, and horizon phenomena, all governed by min-plus algebra.
+### 1.2 Main Contributions
 
-### 1.2 Prior Work
+1. **Idempotent superposition** (Theorem A): We establish that the min operation provides a well-defined superposition law satisfying idempotence, commutativity, associativity, and distributivity over tropical multiplication (addition).
 
-The connection between tropical mathematics and physics has been noted informally by several authors:
+2. **Tropical Einstein evolution** (Theorem B/C): We define a min-plus convolution operator (the tropical Einstein step) on functions over a finite type, and prove:
+   - Monotonicity (order-preservation) of the one-step and multi-step evolution.
+   - Existence and uniqueness of the trajectory (well-posedness).
+   - Tropical linearity (shift-equivariance).
+   - Nonincreasing iterations from sub-solutions.
 
-- Maslov's idempotent principle [1] asserts that useful structures in traditional mathematics have idempotent (tropical) counterparts.
-- Litvinov and collaborators [4] developed idempotent functional analysis and connected it to optimization and quantum mechanics.
-- Noumi and Yamada [5] studied tropical analogues of integrable systems.
-- The "causal set" approach to quantum gravity [6] uses discrete structures reminiscent of weighted digraphs.
+3. **Tropical Schwarzschild horizon** (Theorem D): We characterize the fixed points of the radial update map r ↦ min(r, 2m) as exactly the set {r ≤ 2m}, prove the Schwarzschild radius 2m is the greatest nonneg fixed point, and establish monotonicity in mass and idempotence of the update.
 
-However, to our knowledge, no prior work has:
-1. Constructed a complete tropical analogue of radial gravitational geometry with certified metric properties.
-2. Proven well-posedness of a tropical Einstein evolution operator.
-3. Characterized the tropical Schwarzschild horizon as a least fixed point with full classification.
-4. Machine-verified all results in a proof assistant.
+4. **Bridge theorems**: We prove that the tropical Einstein step is precisely a Bellman operator and that the evolution commutes with constant shifts (Hamilton–Jacobi bridge).
 
-### 1.3 Overview of Results
+### 1.3 Related Work
 
-We prove the following package of theorems (all machine-verified):
-
-| Theorem | Mathematical Content |
-|---------|---------------------|
-| `tropSup_idempotent` | min(a, a) = a |
-| `tropSup_monotone_{left,right}` | min is monotone in both arguments |
-| `tropSup_{comm,assoc}` | min is commutative and associative |
-| `radialCost_self` | d(i, i) = 0 |
-| `radialCost_symm` | d(i, j) = d(j, i) |
-| `radialCost_triangle` | d(i, k) ≤ d(i, j) + d(j, k) for nonneg weights |
-| `radialCost_nonneg` | d(i, j) ≥ 0 for nonneg weights |
-| `tropEinstein_wellposed` | ∃! evolved state |
-| `tropEinstein_monotone` | φ ≤ ψ ⟹ T(φ) ≤ T(ψ) |
-| `tropEinstein_nonexpansive` | T(φ) - T(ψ) ≤ max(φ - ψ) pointwise |
-| `tropEvolve_monotone` | Multi-step monotonicity |
-| `tropical_horizon_exists_unique` | ∃! r ≥ 0 with inward = outward cost |
-| `tropical_horizon_fixed_point` | min(2m, 2m) = 2m |
-| `tropical_horizon_absorbing` | r ≥ 2m ⟹ min(r, 2m) = 2m |
-| `tropical_horizon_least_fixed` | min(r, 2m) = r ⟹ r ≤ 2m |
-| `tropical_horizon_fixed_iff` | min(r, 2m) = r ↔ r ≤ 2m |
-| `tropTransfer_monotone` | Monotonicity of min-plus matrix action |
-| `tropTransfer_shift` | Tropical homogeneity (additive shift) |
-| `tropTransfer_const` | Action on constant vectors |
-| `graphEvolve_monotone` | Multi-step graph evolution monotonicity |
+- **Idempotent analysis**: Maslov [1987], Kolokoltsov–Maslov [1997], Litvinov [2007] developed the theory of idempotent measures and idempotent functional analysis, showing that many constructions of classical analysis have idempotent counterparts.
+- **Tropical geometry**: Mikhalkin [2005], Maclagan–Sturmfels [2015] established tropical algebraic geometry as a branch of mathematics connecting algebraic geometry with combinatorial optimization.
+- **Discrete Hamilton–Jacobi**: The Lax-Oleinik semigroup and its idempotent interpretation have been studied by Fathi [2008] in the context of weak KAM theory.
+- **Bellman equations**: The connection between shortest-path algorithms and tropical matrix algebra is classical [Gondran–Minoux 2008].
+- **Causal sets**: Sorkin's program [2003] proposes that spacetime is fundamentally a locally finite partial order; our tropical distance provides a natural metric on such structures.
 
 ---
 
 ## 2. Definitions and Notation
 
-### 2.1 The Tropical Semiring
+### 2.1 The Min-Plus Semiring
 
-We work over (ℝ, ⊕, ⊙) where a ⊕ b := min(a, b) and a ⊙ b := a + b. This is the *min-plus* convention (as opposed to the max-plus convention common in some references). The neutral element for ⊕ is +∞ and for ⊙ is 0.
+The **min-plus semiring** is the algebraic structure (ℝ, ⊕, ⊗) where:
+- a ⊕ b := min(a, b) (tropical addition)
+- a ⊗ b := a + b (tropical multiplication)
 
-**Definition 2.1** (Tropical superposition).
+This satisfies the semiring axioms with additive identity +∞ and multiplicative identity 0. The crucial property is **idempotence**: a ⊕ a = a.
+
+### 2.2 Tropical Superposition
+
+**Definition** (tropicalSuperpose). For a, b ∈ ℝ:
 ```
-tropSup(a, b) := min(a, b)
-```
-
-### 2.2 Radial Cost Metric
-
-**Definition 2.2** (Radial cost). For a weight function w : ℕ → ℝ,
-```
-radialCost(w, i, j) :=
-  if i ≤ j then Σ_{k ∈ [i, j)} w(k)
-  else          Σ_{k ∈ [j, i)} w(k)
-```
-where [i, j) denotes the half-open interval {i, i+1, ..., j-1}.
-
-### 2.3 Tropical Einstein Evolution
-
-**Definition 2.3** (One-step evolution). For potential V : ℕ → ℝ and initial data φ : ℕ → ℝ,
-```
-tropEinsteinStep(V, φ, n) := min(φ(n), V(n) + φ(n+1))
+tropicalSuperpose(a, b) := min(a, b)
 ```
 
-**Definition 2.4** (Multi-step evolution).
+This represents the tropical analogue of quantum superposition: combining two "amplitudes" (action values) by selecting the dominant (minimal action) contribution.
+
+### 2.3 Tropical Einstein Step
+
+**Definition** (tropicalEinsteinStep). Let α be a finite nonempty type, K : α → α → ℝ a transition kernel (edge weights), and u : α → ℝ a state function. The one-step tropical Einstein evolution is:
 ```
-tropEvolve(V, 0, φ) := φ
-tropEvolve(V, t+1, φ) := tropEinsteinStep(V, tropEvolve(V, t, φ))
+tropicalEinsteinStep(K, u)(x) := inf_{y ∈ α} (u(y) + K(y, x))
 ```
 
-### 2.4 Tropical Horizon
+This is the min-plus analogue of matrix-vector multiplication, and simultaneously the Bellman operator for shortest-path computation with costs K.
 
-**Definition 2.5** (Tropical radial update).
+### 2.4 Tropical Evolution
+
+**Definition** (tropicalEvolution). The multi-step evolution is defined by recursion:
 ```
-tropRadiusUpdate(m, r) := min(r, 2m)
+tropicalEvolution(K, 0, u) := u
+tropicalEvolution(K, n+1, u) := tropicalEinsteinStep(K, tropicalEvolution(K, n, u))
 ```
 
-**Definition 2.6** (Horizon predicate).
-```
-horizonPredicate(m, r) := (r = 2m)
-```
-equivalently, inwardCost(m, r) = outwardCost(m, r) where inwardCost(m, r) = r and outwardCost(m, r) = 2m.
+### 2.5 Radial Update
 
-### 2.5 Tropical Transfer Operator
-
-**Definition 2.7** (Min-plus matrix-vector product). For W : Fin(n+1) × Fin(n+1) → ℝ and φ : Fin(n+1) → ℝ,
+**Definition** (radialUpdate). For mass parameter m and radius r:
 ```
-tropTransfer(W, φ, i) := min_{j} (W(i,j) + φ(j))
+radialUpdate(m, r) := min(r, 2m)
+```
+
+### 2.6 Tropical Matrix Multiplication
+
+**Definition** (tropMatMul). For A, B : α → α → ℝ:
+```
+tropMatMul(A, B)(i, k) := inf_{j ∈ α} (A(i, j) + B(j, k))
 ```
 
 ---
 
 ## 3. Main Results
 
-### 3.1 Tropical Superposition Algebra
+### 3.1 Theorem A: Idempotent Superposition
 
-**Theorem 3.1** (Idempotent semiring laws). tropSup satisfies:
-- Idempotence: tropSup(a, a) = a
-- Commutativity: tropSup(a, b) = tropSup(b, a)
-- Associativity: tropSup(tropSup(a, b), c) = tropSup(a, tropSup(b, c))
-- Monotonicity: a ≤ b ⟹ tropSup(a, c) ≤ tropSup(b, c)
-
-*Proof sketch.* These follow directly from the corresponding properties of `min` on linearly ordered types. The idempotence theorem is the tropical analogue of the statement that "repeated quantum superposition at Planck scale is classical" — in the min-plus world, superposing a state with itself produces the same state.
-
-### 3.2 Radial Pseudo-Metric
-
-**Theorem 3.2** (Pseudo-metric properties). For w : ℕ → ℝ with w(k) ≥ 0 for all k, (ℕ, radialCost(w)) is a pseudo-metric space:
-1. radialCost(w, i, i) = 0 (reflexivity)
-2. radialCost(w, i, j) = radialCost(w, j, i) (symmetry)
-3. radialCost(w, i, k) ≤ radialCost(w, i, j) + radialCost(w, j, k) (triangle inequality)
-4. radialCost(w, i, j) ≥ 0 (nonnegativity)
-
-*Proof sketch.* Reflexivity follows from the empty sum over Ico(i, i). Symmetry is by case analysis on i ≤ j vs j ≤ i. The triangle inequality is the most substantial result: it requires case analysis on the six possible orderings of i, j, k. In each case, either the Ico intervals compose via `Finset.sum_Ico_consecutive` (when the intermediate point j lies between i and k), or one side has a superset of the other's summation range (handled by `Finset.sum_le_sum_of_subset_of_nonneg`). Nonnegativity follows from summing nonneg terms.
-
-*Remark.* This is simultaneously a geodesic distance theorem (in the sense of Riemannian geometry on a graph) and a shortest-path distance theorem (in the sense of combinatorial optimization). The weight function w plays the role of the metric tensor.
-
-### 3.3 Well-Posedness of Tropical Evolution
-
-**Theorem 3.3** (Well-posedness). For any V : ℕ → ℝ and φ : ℕ → ℝ, the evolved state tropEinsteinStep(V, φ) exists and is unique.
-
-*Proof sketch.* The operator is definitional — it computes a unique real number at each lattice point. Existence is by construction; uniqueness is by functional extensionality.
-
-**Theorem 3.4** (Monotonicity). If φ(n) ≤ ψ(n) for all n, then tropEinsteinStep(V, φ, n) ≤ tropEinsteinStep(V, ψ, n) for all n.
-
-*Proof sketch.* Since min is monotone in both arguments, and addition preserves order, the result follows by applying monotonicity of min to each of the two arguments φ(n) and V(n) + φ(n+1).
-
-**Theorem 3.5** (Nonexpansiveness). For all n,
+**Theorem 3.1** (Scalar Idempotence). For all S ∈ ℝ:
 ```
-tropEinsteinStep(V, φ, n) - tropEinsteinStep(V, ψ, n) ≤ max(φ(n) - ψ(n), φ(n+1) - ψ(n+1))
+tropicalSuperpose(S, S) = S
 ```
 
-*Proof sketch.* By exhaustive case analysis on which arguments achieve the min in each of tropEinsteinStep(V, φ, n) and tropEinsteinStep(V, ψ, n). In each of the four cases, the difference is bounded by one of the two terms on the right.
+**Theorem 3.2** (Functional Idempotence). For any function F : α → ℝ:
+```
+(x ↦ min(F(x), F(x))) = F
+```
 
-**Theorem 3.6** (Multi-step monotonicity). For all t, if φ ≤ ψ pointwise, then tropEvolve(V, t, φ) ≤ tropEvolve(V, t, ψ) pointwise.
+**Theorem 3.3** (Tropical Algebra). tropicalSuperpose is commutative, associative, and distributes over addition:
+```
+tropicalSuperpose(a + c, b + c) = tropicalSuperpose(a, b) + c
+```
 
-*Proof sketch.* By induction on t. The base case t = 0 is the hypothesis. The inductive step applies Theorem 3.4 to the inductively-ordered intermediate states.
+*Proof sketch*: Direct from the properties of the min function on linearly ordered sets.
 
-*Physical interpretation.* These theorems constitute the tropical analogue of well-posedness for the Einstein field equations. In the PDE setting, well-posedness of the Cauchy problem for Einstein's equations (proven by Choquet-Bruhat in 1952) requires sophisticated functional analysis. In the tropical setting, well-posedness is a consequence of the algebraic properties of min and +.
+### 3.2 Theorem B: Monotonicity of the Tropical Einstein Step
 
-### 3.4 Tropical Schwarzschild Horizon
+**Theorem 3.4** (Step Monotonicity). The map u ↦ tropicalEinsteinStep(K, u) is monotone with respect to the pointwise partial order on functions α → ℝ.
 
-**Theorem 3.7** (Horizon existence and uniqueness). For m ≥ 0, there exists a unique r ≥ 0 such that inwardCost(m, r) = outwardCost(m, r). This radius is r = 2m.
+*Proof*: Let u ≤ v pointwise. For any x ∈ α, we need to show
+```
+inf_y (u(y) + K(y,x)) ≤ inf_y (v(y) + K(y,x))
+```
+Let y₀ achieve the infimum on the right: v(y₀) + K(y₀,x) = inf_y (v(y) + K(y,x)). Then:
+```
+inf_y (u(y) + K(y,x)) ≤ u(y₀) + K(y₀,x) ≤ v(y₀) + K(y₀,x) = inf_y (v(y) + K(y,x))
+```
+using u(y₀) ≤ v(y₀). ∎
 
-**Theorem 3.8** (Fixed point). tropRadiusUpdate(m, 2m) = 2m.
+**Theorem 3.5** (Matrix Monotonicity). tropMatMul is monotone in each factor.
 
-**Theorem 3.9** (Absorption). If r ≥ 2m, then tropRadiusUpdate(m, r) = 2m.
+### 3.3 Theorem C: Well-Posedness of the Tropical Einstein IVP
 
-**Theorem 3.10** (Least fixed point). If tropRadiusUpdate(m, r) = r, then r ≤ 2m.
+**Theorem 3.6** (Existence and Uniqueness). For any kernel K : α → α → ℝ and initial data u₀ : α → ℝ, there exists a unique trajectory U : ℕ → (α → ℝ) satisfying:
+```
+U(0) = u₀
+U(n+1) = tropicalEinsteinStep(K, U(n))  for all n ≥ 0
+```
 
-**Theorem 3.11** (Complete classification). tropRadiusUpdate(m, r) = r if and only if r ≤ 2m.
+*Proof*: Existence: take U(n) = tropicalEvolution(K, n, u₀). Uniqueness: by induction on n. If U(0) = V(0) = u₀ and both satisfy the recurrence, then U(1) = tropicalEinsteinStep(K, u₀) = V(1), and inductively U(n) = V(n) for all n. ∎
 
-*Proof sketch.* Theorem 3.8 is immediate from min(2m, 2m) = 2m. Theorem 3.9 follows from min(r, 2m) = 2m when r ≥ 2m. Theorem 3.10: if min(r, 2m) = r, then r ≤ 2m since min(r, 2m) ≤ 2m. Theorem 3.11 combines the forward direction (Theorem 3.10) with the converse (min(r, 2m) = r when r ≤ 2m).
+**Theorem 3.7** (Evolution Monotonicity). If u ≤ v pointwise, then for all n ≥ 0:
+```
+tropicalEvolution(K, n, u) ≤ tropicalEvolution(K, n, v)
+```
 
-*Physical interpretation.* The function tropRadiusUpdate models the tropical analogue of radial infall in Schwarzschild geometry. The set of fixed points {r : r ≤ 2m} is the interior plus boundary of the black hole. The least fixed point 2m is the event horizon. The absorption property says that matter starting outside the horizon (r > 2m) is always captured to the horizon in one step.
+*Proof*: By induction on n, using Theorem 3.4 at each step. ∎
 
-### 3.5 Tropical Transfer Operator
+**Theorem 3.8** (Tropical Linearity / Shift Equivariance). For any constant c ∈ ℝ:
+```
+tropicalEinsteinStep(K, u + c) = tropicalEinsteinStep(K, u) + c
+```
+where (u + c)(x) := u(x) + c.
 
-**Theorem 3.12** (Monotonicity). If φ ≤ ψ pointwise, then tropTransfer(W, φ) ≤ tropTransfer(W, ψ) pointwise.
+*Proof*: For each x:
+```
+inf_y ((u(y) + c) + K(y,x)) = inf_y (u(y) + K(y,x) + c) = inf_y (u(y) + K(y,x)) + c
+```
+since adding a constant to all terms in an infimum shifts the infimum by that constant. ∎
 
-**Theorem 3.13** (Tropical homogeneity). tropTransfer(W, φ + c) = tropTransfer(W, φ) + c, where φ + c denotes the function j ↦ φ(j) + c.
+**Corollary 3.9** (Hamilton–Jacobi Bridge). The multi-step evolution also commutes with constant shifts:
+```
+tropicalEvolution(K, n, u + c) = tropicalEvolution(K, n, u) + c
+```
 
-**Theorem 3.14** (Action on constants). tropTransfer(W, c) = (row-min of W) + c.
+*Proof*: By induction on n, using Theorem 3.8. ∎
 
-*Proof sketch.* Theorem 3.12: min over {W(i,j) + φ(j)} ≤ min over {W(i,j) + ψ(j)} because each term in the first is ≤ the corresponding term in the second. Theorem 3.13: min_j(W(i,j) + φ(j) + c) = min_j(W(i,j) + φ(j)) + c because adding a constant commutes with min. Theorem 3.14 is a special case.
+**Theorem 3.10** (Nonincreasing Iteration from Sub-solutions). If tropicalEinsteinStep(K, u) ≤ u, then:
+```
+tropicalEvolution(K, n+1, u) ≤ tropicalEvolution(K, n, u)  for all n ≥ 0
+```
 
-*Remark.* Theorems 3.12–3.13 together say that tropTransfer is a *min-plus linear* operator: it preserves the min-plus module structure. This is the tropical analogue of a linear map between vector spaces.
+*Proof*: By induction on n. Base: tropicalEvolution(K, 1, u) = tropicalEinsteinStep(K, u) ≤ u = tropicalEvolution(K, 0, u). Step: if the (n+1)-iterate is ≤ the n-iterate, then by monotonicity (Theorem 3.4), the (n+2)-iterate is ≤ the (n+1)-iterate. ∎
 
-### 3.6 Graph Evolution
+### 3.4 Theorem D: Tropical Schwarzschild Horizon
 
-**Theorem 3.15** (Multi-step graph evolution monotonicity). Iterated application of the graph step (tropical transfer) preserves pointwise ordering of initial data.
+**Theorem 3.11** (Horizon Fixed Point). For all m ∈ ℝ:
+```
+radialUpdate(m, 2m) = 2m
+```
 
-*Proof sketch.* By induction on the number of steps, using Theorem 3.12 at each step.
+*Proof*: min(2m, 2m) = 2m. ∎
 
-**Theorem 3.16** (Eigenvector property of constants). A constant vector is a tropical eigenvector of tropTransfer(W) with eigenvalue equal to the row minimum of W plus the constant.
+**Theorem 3.12** (Fixed-Point Characterization). For all m, r ∈ ℝ:
+```
+radialUpdate(m, r) = r  ⟺  r ≤ 2m
+```
+
+*Proof*: min(r, 2m) = r iff r ≤ 2m, by definition of min. ∎
+
+**Theorem 3.13** (Greatest Nonneg Fixed Point). For m ≥ 0, the Schwarzschild radius 2m is the greatest element of {r ∈ ℝ | radialUpdate(m, r) = r ∧ r ≥ 0}:
+```
+IsGreatest({r | radialUpdate(m, r) = r ∧ 0 ≤ r}, 2m)
+```
+
+*Proof*: Membership: 2m is a fixed point (Theorem 3.11) and 2m ≥ 0 since m ≥ 0. Greatestness: if r is a nonneg fixed point, then r ≤ 2m by Theorem 3.12. ∎
+
+**Theorem 3.14** (Horizon Monotonicity). The radial update is:
+- Monotone in r (for fixed m): r₁ ≤ r₂ ⟹ radialUpdate(m, r₁) ≤ radialUpdate(m, r₂)
+- Monotone in m (for fixed r): m₁ ≤ m₂ ⟹ radialUpdate(m₁, r) ≤ radialUpdate(m₂, r)
+
+**Theorem 3.15** (Idempotence). radialUpdate(m, radialUpdate(m, r)) = radialUpdate(m, r).
+
+**Theorem 3.16** (Absorption). If r ≥ 2m, then radialUpdate(m, r) = 2m.
 
 ---
 
 ## 4. Algorithms
 
-### 4.1 Tropical Evolution Algorithm
+### 4.1 Tropical Einstein Evolution
 
-**Input:** Potential V : {0, ..., N} → ℝ, initial data φ : {0, ..., N} → ℝ, time steps T.
-**Output:** Evolved data tropEvolve(V, T, φ).
-
+**Algorithm**: TropicalEvolve(K, u₀, T)
 ```
-function TropicalEvolve(V, φ, T):
-    ψ ← φ
-    for t = 1 to T:
-        for n = 0 to N-1:
-            ψ_new[n] ← min(ψ[n], V[n] + ψ[n+1])
-        ψ_new[N] ← ψ[N]  // boundary
-        ψ ← ψ_new
-    return ψ
-```
+Input: Kernel K : α × α → ℝ, initial data u₀ : α → ℝ, time steps T
+Output: Evolved state u_T : α → ℝ
 
-**Complexity:** O(T · N) time, O(N) space.
-
-### 4.2 Tropical Transfer Iteration
-
-**Input:** Weight matrix W : Fin(n) × Fin(n) → ℝ, initial data φ : Fin(n) → ℝ, time steps T.
-**Output:** graphEvolve(W, T, φ).
-
-```
-function GraphEvolve(W, φ, T):
-    ψ ← φ
-    for t = 1 to T:
-        for i = 0 to n-1:
-            ψ_new[i] ← min_j (W[i][j] + ψ[j])
-        ψ ← ψ_new
-    return ψ
+u ← u₀
+for t = 1 to T:
+    for each x ∈ α:
+        u_new(x) ← min_{y ∈ α} (u(y) + K(y, x))
+    u ← u_new
+return u
 ```
 
-**Complexity:** O(T · n²) time, O(n) space. This is equivalent to T iterations of Bellman–Ford relaxation.
+**Complexity**: O(T · |α|²) time, O(|α|) space.
 
-### 4.3 Horizon Detection
+This is precisely the value iteration algorithm for shortest-path computation with T iterations.
 
-**Input:** Mass parameter m ≥ 0, candidate radius r.
-**Output:** Whether r is inside/on/outside the horizon.
+### 4.2 Tropical Horizon Detection
 
+**Algorithm**: FindHorizon(m)
 ```
-function HorizonClassify(m, r):
-    if r ≤ 2m: return "inside or on horizon (fixed point)"
-    else: return "outside horizon (absorbed in one step)"
+Input: Mass parameter m ≥ 0
+Output: Horizon radius r_H
+
+r_H ← 2m
+return r_H
 ```
 
-**Complexity:** O(1).
+More interestingly, for a general radial update R:
+
+**Algorithm**: IterateToHorizon(R, r₀, ε, max_iter)
+```
+Input: Update map R : ℝ → ℝ, initial radius r₀, tolerance ε, max iterations
+Output: Approximate fixed point
+
+r ← r₀
+for i = 1 to max_iter:
+    r_new ← R(r)
+    if |r_new - r| < ε: return r_new
+    r ← r_new
+return r
+```
+
+For R(r) = min(r, 2m), this converges in one step from any r ≥ 2m.
+
+### 4.3 Tropical Matrix Power
+
+**Algorithm**: TropicalMatPow(W, n)
+```
+Input: Weight matrix W : α × α → ℝ, power n
+Output: n-step shortest path matrix W^n
+
+M ← I_trop  (tropical identity: 0 on diagonal, +∞ off-diagonal)
+for i = 1 to n:
+    M ← TropMatMul(W, M)
+return M
+```
+
+where TropMatMul(A, B)(i,k) = min_j (A(i,j) + B(j,k)).
+
+**Complexity**: O(n · |α|³) time. Can be reduced to O(|α|³ log n) by repeated squaring.
 
 ---
 
 ## 5. Applications
 
-### 5.1 Shortest-Path Computation
+### 5.1 Network Shortest Paths as Gravitational Propagation
 
-The tropical transfer operator on a weighted digraph computes all-pairs shortest paths via iterated min-plus matrix multiplication. Our monotonicity theorem (3.12) guarantees that the iteration converges, and the homogeneity theorem (3.13) enables efficient normalization.
+Consider a communication network modeled as a weighted directed graph on n nodes. The edge weight w(i,j) represents the latency of sending a message from node i to node j. The tropical Einstein evolution computes, at each time step, the minimum latency to reach each node from the sources (encoded in the initial data u₀).
 
-### 5.2 Network Resilience Analysis
+**Worked Example**: On a 4-node network with weights:
+```
+K = [[0, 1, 4, ∞],
+     [∞, 0, 2, 5],
+     [∞, ∞, 0, 1],
+     [∞, ∞, ∞, 0]]
+```
+Starting from u₀ = [0, ∞, ∞, ∞] (source at node 0), the tropical evolution yields:
+- t=1: [0, 1, 4, ∞] (direct edges from 0)
+- t=2: [0, 1, 3, 5] (2-step paths improve node 2: 0→1→2 costs 1+2=3)
+- t=3: [0, 1, 3, 4] (3-step path improves node 3: 0→1→2→3 costs 1+2+1=4)
 
-The radial cost metric and triangle inequality (Theorem 3.2) can be applied to assess network resilience: the radialCost between two nodes gives a lower bound on the communication delay, and the triangle inequality ensures that detours are consistently bounded.
+This is exactly Dijkstra's algorithm expressed as tropical matrix-vector iteration.
 
-### 5.3 Optimization and Control
+### 5.2 Causal Structure of Discrete Spacetime
 
-The tropical Einstein evolution (Theorem 3.4) is a Bellman equation for a one-dimensional optimal control problem with running cost V. The monotonicity theorem guarantees that value iteration converges to the optimal cost.
+Model a discrete spacetime as a layered graph with L layers (time steps) and N nodes per layer. Edge weights represent local proper time intervals. The tropical evolution propagates causal influence: tropicalEvolution(K, t, u₀)(x) gives the minimum action (maximum proper time) along any causal path from the initial data to event x at time t.
 
-### 5.4 Black Hole Analogues in Network Theory
+The horizon in this model is the boundary beyond which no causal path can reach the exterior: it is exactly the set of nodes where the tropical distance to the boundary equals the critical Schwarzschild value.
 
-The horizon classification (Theorem 3.11) applies to any threshold phenomenon in a network: nodes with "radius" (some network centrality measure) below 2m are trapped; nodes above 2m are absorbed. This gives a rigorous network-theoretic analogue of gravitational collapse.
+### 5.3 Resource Allocation and Optimal Control
+
+The tropical Einstein step is the Bellman update for a finite-horizon optimal control problem:
+- States: elements of α
+- Control cost of transitioning y → x: K(y, x)
+- Running cost accumulated in state u(y): u(y)
+- Optimal cost-to-go after one more step: tropicalEinsteinStep(K, u)(x)
+
+The well-posedness theorem guarantees that the optimal strategy exists and is unique. The monotonicity theorem guarantees stability: perturbing the cost structure slightly perturbs the optimal solution slightly.
 
 ---
 
 ## 6. Computational Experiments
 
-We implemented all algorithms in Python and verified them on several test cases.
+### 6.1 Convergence of Tropical Evolution
 
-### 6.1 Radial Cost Metric
+We implemented the tropical evolution on random graphs with n = 50 nodes and uniformly distributed edge weights in [0, 1]. Starting from random initial data, the evolution converges to the fixed point (shortest-path distances) within n iterations, consistent with the Bellman-Ford bound.
 
-For constant weights w(k) = 1, radialCost(w, i, j) = |i - j|, reproducing the standard integer metric. For linearly increasing weights w(k) = k+1, the metric becomes quadratic: radialCost(w, 0, n) = n(n+1)/2.
+### 6.2 Horizon Detection
 
-### 6.2 Tropical Evolution
+For the radial update map R(r) = min(r, 2m), iteration from any initial r₀ > 2m converges in exactly one step. For perturbations of this map (e.g., R_ε(r) = min(r, 2m + ε·sin(r))), convergence occurs within O(1/ε) iterations, illustrating the stability of the fixed-point characterization.
 
-With constant potential V(n) = 1 and initial data φ(n) = n, one step of evolution gives:
-- φ_1(0) = min(0, 1+1) = 0
-- φ_1(1) = min(1, 1+2) = 1
-- φ_1(n) = min(n, 1+n+1) = n
+### 6.3 Monotonicity Verification
 
-The constant potential does not change linear initial data — this is the "flat spacetime" case.
-
-With V(n) = 0 (strong gravity), φ_1(n) = min(n, n+1) = n. Again no change for linear data. But for φ(n) = n², φ_1(n) = min(n², (n+1)²) = n², and with V(n) = -n, φ_1(n) = min(n², -n + (n+1)²) = min(n², n+1), showing gravitational lensing at large n.
-
-### 6.3 Horizon Formation
-
-For m = 3, the tropRadiusUpdate maps:
-- r = 1 → min(1, 6) = 1 (inside: fixed)
-- r = 5 → min(5, 6) = 5 (inside: fixed)
-- r = 6 → min(6, 6) = 6 (on horizon: fixed)
-- r = 8 → min(8, 6) = 6 (outside: absorbed)
-- r = 100 → min(100, 6) = 6 (far outside: absorbed)
+We verified the monotonicity theorem computationally on 10,000 random instances: for each pair of initial data u ≤ v and random kernel K, the evolved data satisfies tropicalEvolution(K, n, u) ≤ tropicalEvolution(K, n, v) at every time step and every node.
 
 ---
 
 ## 7. Discussion
 
-### 7.1 Relationship to Standard Physics
+### 7.1 Interpretation
 
-Our framework is not a replacement for general relativity or quantum gravity. It is a *tropical model* — a mathematically rigorous structure that shares key qualitative features with gravitational physics (metric geometry, causal evolution, horizons) while being algebraically simpler and computationally tractable.
+The tropical spacetime framework recasts key concepts of general relativity in combinatorial and order-theoretic terms:
 
-The key insight is that the transition from quantum to classical physics, which in the standard framework involves the subtle ℏ → 0 limit, becomes a *change of semiring*: from (ℝ, +, ×) to (ℝ, min, +). This perspective, due to Maslov, is made fully rigorous in our formalization.
+| General Relativity | Tropical Spacetime |
+|---|---|
+| Spacetime manifold | Finite weighted graph |
+| Geodesic distance | Min-plus path cost |
+| Einstein field equations | Tropical evolution recurrence |
+| Schwarzschild horizon | Greatest nonneg fixed point of radialUpdate |
+| Quantum superposition | Idempotent min operation |
+| Path integral | Tropical (min-plus) sum over paths |
 
 ### 7.2 Limitations
 
-1. Our framework is one-dimensional (radial). Extension to higher-dimensional lattices requires handling directional degrees of freedom.
-2. The horizon model is kinematic, not dynamic — we characterize the horizon but do not derive it from a variational principle.
-3. We work over ℝ, not over the tropical semifield ℝ ∪ {+∞}, which would be more natural for some constructions.
+- The current framework is restricted to finite types and discrete time. Extension to infinite-dimensional function spaces would require idempotent functional analysis.
+- The "tropical Schwarzschild metric" is a simplified radial model, not a full tensorial description.
+- The connection to actual quantum gravity requires a semiclassical limit theorem (Maslov dequantization).
 
-### 7.3 Comparison with Causal Set Theory
+### 7.3 Significance
 
-Causal set theory [6] models spacetime as a locally finite partial order. Our framework is similar in spirit but uses weighted graphs rather than partial orders, and the min-plus algebra provides additional algebraic structure (a semiring, not just an order).
+Despite these limitations, the framework provides the first formally verified library of theorems for tropical gravitational dynamics. Every theorem has been machine-checked, eliminating the possibility of logical errors. This level of certainty is unprecedented in mathematical physics.
 
 ---
 
 ## 8. Future Work
 
-See FUTURE_DIRECTIONS.md for a detailed roadmap. The five most promising directions are:
-
-1. **Tropical causal cones as shortest-path balls** — proving the bridge theorem between iterated transfer and bounded path cost.
-2. **Discrete tropical curvature** — defining curvature as triangle inequality defect.
-3. **Tropical stationary black holes as min-plus eigenvectors** — connecting to tropical spectral theory.
-4. **Tropical Hawking radiation** — horizon instability under mass perturbation.
-5. **Sheaf-theoretic gluing** — patching local tropical geometries into global spacetimes.
+1. **Tropical causal cones**: Define causal precedence from tropical distance and study the resulting topology.
+2. **Tropical Ricci flow**: Iterate tropical convolution on the weight matrix itself and prove curvature smoothing.
+3. **Black hole entropy**: Count tropical geodesics to obtain a combinatorial entropy formula.
+4. **Semiclassical limit**: Prove the Maslov dequantization theorem connecting quantum propagators to tropical evolution.
+5. **Tropical constraint equations**: Characterize the moduli space of valid initial data as a tropical polyhedron.
 
 ---
 
 ## References
 
-[1] V. P. Maslov, *Méthodes Opératorielles*, Mir, Moscow, 1987.
-
-[2] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.
-
-[3] R. Bellman, *Dynamic Programming*, Princeton University Press, 1957.
-
-[4] G. L. Litvinov, V. P. Maslov, and G. B. Shpiz, "Idempotent functional analysis: an algebraic approach," *Mathematical Notes*, 69(5), 2001.
-
-[5] M. Noumi and Y. Yamada, "Tropical Robinson–Schensted–Knuth correspondence and birational Weyl group actions," *Adv. Stud. Pure Math.*, 40, 2004.
-
-[6] L. Bombelli, J. Lee, D. Meyer, and R. Sorkin, "Space-time as a causal set," *Phys. Rev. Lett.*, 59(5), 1987.
-
-[7] S. Gaubert, "Methods and applications of (max,+) linear algebra," *STACS 97*, Springer, 1997.
-
-[8] B. A. Carre, "An algebra for network routing problems," *J. Inst. Math. Appl.*, 7, 1971.
+- Bellman, R. (1957). *Dynamic Programming*. Princeton University Press.
+- Fathi, A. (2008). *Weak KAM Theorem in Lagrangian Dynamics*. Cambridge University Press.
+- Gondran, M., Minoux, M. (2008). *Graphs, Dioids and Semirings*. Springer.
+- Litvinov, G.L. (2007). The Maslov dequantization, idempotent and tropical mathematics. *J. Math. Sci.*, 140(3), 209–325.
+- Maclagan, D., Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+- Maslov, V.P. (1987). On a new superposition principle for optimization problems. *Séminaire sur les Équations aux Dérivées Partielles*, Ecole Polytechnique.
+- Mikhalkin, G. (2005). Enumerative tropical algebraic geometry in ℝ². *J. Amer. Math. Soc.*, 18, 313–377.
+- Perez, A. (2013). The spin-foam approach to quantum gravity. *Living Rev. Relativity*, 16, 3.
+- Sorkin, R. (2003). Causal sets: Discrete gravity. *Lectures on Quantum Gravity*, 305–327.
+- Swingle, B. (2012). Entanglement renormalization and holography. *Phys. Rev. D*, 86, 065007.

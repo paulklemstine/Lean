@@ -1,307 +1,302 @@
 #!/usr/bin/env python3
 """
-Tropical Gravitational Dynamics — Algorithms
+algorithms.py — Core algorithms for tropical spacetime dynamics.
 
-Efficient implementations of the core tropical operators with full
-docstrings, type hints, and complexity analysis.
+Implements:
+1. Tropical Einstein evolution (Bellman operator)
+2. Tropical matrix multiplication and power
+3. Tropical shortest-path distance computation
+4. Radial horizon detection
+5. Convergence analysis
 """
 
 import numpy as np
 from typing import Optional
 
 
-def tropical_superposition(a: float, b: float) -> float:
-    """
-    Tropical superposition (min-plus addition).
-
-    In the tropical semiring (ℝ, min, +), this is the additive operation.
-
-    Properties (all formally verified):
-    - Idempotent: trop_sup(a, a) = a
-    - Commutative: trop_sup(a, b) = trop_sup(b, a)
-    - Associative: trop_sup(trop_sup(a, b), c) = trop_sup(a, trop_sup(b, c))
-    - Monotone: a ≤ b ⟹ trop_sup(a, c) ≤ trop_sup(b, c)
-
-    Time: O(1), Space: O(1)
-
-    Args:
-        a: First tropical amplitude
-        b: Second tropical amplitude
-
-    Returns:
-        min(a, b)
-    """
+def tropical_add(a: float, b: float) -> float:
+    """Tropical addition: min(a, b)."""
     return min(a, b)
 
 
-def radial_cost(w: list[float], i: int, j: int) -> float:
-    """
-    Cumulative cost on a weighted radial lattice.
+def tropical_mul(a: float, b: float) -> float:
+    """Tropical multiplication: a + b."""
+    return a + b
 
-    Computes the sum of edge weights between positions i and j.
-    When weights are nonnegative, this satisfies:
-    - radial_cost(w, i, i) = 0
-    - radial_cost(w, i, j) = radial_cost(w, j, i)
-    - radial_cost(w, i, k) ≤ radial_cost(w, i, j) + radial_cost(w, j, k)
-    - radial_cost(w, i, j) ≥ 0
 
-    Time: O(|i - j|), Space: O(1)
+def tropical_einstein_step(K: np.ndarray, u: np.ndarray) -> np.ndarray:
+    """One-step tropical Einstein evolution (Bellman update).
+
+    Computes: u_new[x] = min_y (u[y] + K[y, x]) for all x.
 
     Args:
-        w: Edge weight function (as list, index k = weight of edge k→k+1)
-        i: Start position
-        j: End position
+        K: Transition kernel, shape (n, n). K[y, x] = cost of y -> x.
+        u: Current state, shape (n,).
 
     Returns:
-        Sum of weights between i and j
+        Evolved state, shape (n,).
+
+    Time complexity: O(n^2)
+    Space complexity: O(n)
     """
-    if i <= j:
-        return sum(w[k] for k in range(i, j))
-    else:
-        return sum(w[k] for k in range(j, i))
+    n = len(u)
+    # Broadcasting: u[:, None] + K gives (n, n) matrix of u[y] + K[y, x]
+    return np.min(u[:, None] + K, axis=0)
 
 
-def tropical_einstein_step(
-    V: list[float], phi: list[float]
-) -> list[float]:
-    """
-    One step of tropical Einstein evolution.
-
-    Implements the min-plus update:
-        ψ(n) = min(φ(n), V(n) + φ(n+1))
-
-    This is the tropical analogue of a discrete Hamilton-Jacobi step,
-    and simultaneously a Bellman equation update.
-
-    Properties (all formally verified):
-    - Well-posed: unique output for any input
-    - Monotone: φ ≤ ψ ⟹ T(φ) ≤ T(ψ)
-    - Nonexpansive: |T(φ) - T(ψ)| ≤ max|φ - ψ|
-
-    Time: O(N), Space: O(N)
+def tropical_evolution(
+    K: np.ndarray,
+    u0: np.ndarray,
+    T: int,
+    return_trajectory: bool = False
+) -> np.ndarray | list[np.ndarray]:
+    """Multi-step tropical Einstein evolution.
 
     Args:
-        V: Potential function (length N)
-        phi: Initial data (length N)
+        K: Transition kernel, shape (n, n).
+        u0: Initial state, shape (n,).
+        T: Number of time steps.
+        return_trajectory: If True, return list [u0, u1, ..., uT].
 
     Returns:
-        Evolved data (length N)
+        Final state u_T (or full trajectory if return_trajectory=True).
+
+    Time complexity: O(T * n^2)
     """
-    N = len(phi)
-    result = [0.0] * N
-    for n in range(N - 1):
-        result[n] = min(phi[n], V[n] + phi[n + 1])
-    result[N - 1] = phi[N - 1]
+    trajectory = [u0.copy()] if return_trajectory else None
+    u = u0.copy()
+    for _ in range(T):
+        u = tropical_einstein_step(K, u)
+        if return_trajectory:
+            trajectory.append(u.copy())
+    return trajectory if return_trajectory else u
+
+
+def tropical_mat_mul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+    """Tropical matrix multiplication: C[i,k] = min_j (A[i,j] + B[j,k]).
+
+    Args:
+        A: Matrix, shape (m, p).
+        B: Matrix, shape (p, n).
+
+    Returns:
+        Product matrix, shape (m, n).
+
+    Time complexity: O(m * n * p)
+    """
+    m, p = A.shape
+    _, n = B.shape
+    # A[:, :, None] has shape (m, p, 1), B[None, :, :] has shape (1, p, n)
+    return np.min(A[:, :, None] + B[None, :, :], axis=1)
+
+
+def tropical_mat_pow(W: np.ndarray, n: int) -> np.ndarray:
+    """Tropical matrix power: n-step shortest path matrix.
+
+    Computes W^n in the tropical semiring using repeated multiplication.
+
+    Args:
+        W: Weight matrix, shape (k, k).
+        n: Power.
+
+    Returns:
+        n-step shortest path matrix, shape (k, k).
+
+    Time complexity: O(n * k^3). Use tropical_mat_pow_fast for O(k^3 log n).
+    """
+    k = W.shape[0]
+    # Tropical identity: 0 on diagonal, +inf off-diagonal
+    result = np.full((k, k), np.inf)
+    np.fill_diagonal(result, 0.0)
+    for _ in range(n):
+        result = tropical_mat_mul(W, result)
     return result
 
 
-def tropical_evolve(
-    V: list[float], phi: list[float], t: int
-) -> list[float]:
+def tropical_mat_pow_fast(W: np.ndarray, n: int) -> np.ndarray:
+    """Tropical matrix power by repeated squaring.
+
+    Time complexity: O(k^3 * log n)
     """
-    Multi-step tropical Einstein evolution.
+    k = W.shape[0]
+    result = np.full((k, k), np.inf)
+    np.fill_diagonal(result, 0.0)
+    base = W.copy()
+    while n > 0:
+        if n % 2 == 1:
+            result = tropical_mat_mul(base, result)
+        base = tropical_mat_mul(base, base)
+        n //= 2
+    return result
 
-    Iterates tropical_einstein_step t times.
-    Preserves monotonicity at each step (formally verified).
 
-    Time: O(t · N), Space: O(N)
+def tropical_shortest_paths(W: np.ndarray) -> np.ndarray:
+    """Compute all-pairs shortest paths (tropical closure).
+
+    This is the Floyd-Warshall algorithm, equivalent to computing
+    the tropical Kleene star W* = I ⊕ W ⊕ W^2 ⊕ ...
 
     Args:
-        V: Potential function
-        phi: Initial data
-        t: Number of time steps
+        W: Weight matrix, shape (n, n). W[i,j] = edge cost i -> j.
+            Use np.inf for non-edges.
 
     Returns:
-        Evolved data after t steps
+        Distance matrix D, shape (n, n). D[i,j] = shortest path cost i -> j.
+
+    Time complexity: O(n^3)
     """
-    psi = phi[:]
-    for _ in range(t):
-        psi = tropical_einstein_step(V, psi)
-    return psi
+    n = W.shape[0]
+    D = W.copy()
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if D[i, k] + D[k, j] < D[i, j]:
+                    D[i, j] = D[i, k] + D[k, j]
+    return D
 
 
-def tropical_radius_update(m: float, r: float) -> float:
-    """
-    Tropical radial update operator.
-
-    Models the tropical Schwarzschild geometry:
-        tropRadiusUpdate(m, r) = min(r, 2m)
-
-    Properties (all formally verified):
-    - Fixed point: tropRadiusUpdate(m, 2m) = 2m
-    - Absorbing: r ≥ 2m ⟹ tropRadiusUpdate(m, r) = 2m
-    - Least fixed point: tropRadiusUpdate(m, r) = r ⟹ r ≤ 2m
-    - Classification: tropRadiusUpdate(m, r) = r ↔ r ≤ 2m
-
-    Time: O(1), Space: O(1)
+def radial_update(m: float, r: float) -> float:
+    """Tropical radial update: min(r, 2m).
 
     Args:
-        m: Mass parameter (≥ 0)
-        r: Radial coordinate
+        m: Mass parameter.
+        r: Current radius.
 
     Returns:
-        min(r, 2m)
+        Updated radius.
     """
     return min(r, 2 * m)
 
 
-def horizon_classify(m: float, r: float) -> str:
-    """
-    Classify a radius relative to the tropical horizon.
+def find_horizon(m: float) -> float:
+    """Find the tropical Schwarzschild horizon radius.
+
+    The horizon is the greatest nonneg fixed point of radialUpdate(m, ·).
 
     Args:
-        m: Mass parameter
-        r: Radial coordinate
+        m: Mass parameter (must be ≥ 0).
 
     Returns:
-        "interior" if r < 2m, "horizon" if r = 2m, "exterior" if r > 2m
+        Horizon radius 2m.
     """
-    schwarzschild = 2 * m
-    if r < schwarzschild:
-        return "interior"
-    elif r == schwarzschild:
-        return "horizon"
-    else:
-        return "exterior"
+    assert m >= 0, "Mass must be nonneg"
+    return 2 * m
 
 
-def tropical_transfer(W: np.ndarray, phi: np.ndarray) -> np.ndarray:
-    """
-    Min-plus matrix-vector product (tropical transfer operator).
-
-    Computes:
-        (T φ)(i) = min_j (W[i,j] + φ[j])
-
-    This is the fundamental operation of tropical linear algebra.
-
-    Properties (all formally verified):
-    - Monotone: φ ≤ ψ ⟹ T(φ) ≤ T(ψ)
-    - Tropical homogeneous: T(φ + c) = T(φ) + c
-    - On constants: T(c·1) = (row-min of W) + c
-
-    Time: O(n²), Space: O(n)
+def iterate_to_fixed_point(
+    update_fn,
+    r0: float,
+    tol: float = 1e-12,
+    max_iter: int = 1000
+) -> tuple[float, int]:
+    """Iterate a map to its fixed point.
 
     Args:
-        W: Weight matrix (n × n)
-        phi: Input vector (length n)
+        update_fn: The update function r -> R(r).
+        r0: Initial value.
+        tol: Convergence tolerance.
+        max_iter: Maximum iterations.
 
     Returns:
-        Output vector (length n)
+        Tuple (fixed_point, num_iterations).
     """
-    n = len(phi)
-    result = np.zeros(n)
-    for i in range(n):
-        result[i] = min(W[i, j] + phi[j] for j in range(n))
-    return result
+    r = r0
+    for i in range(max_iter):
+        r_new = update_fn(r)
+        if abs(r_new - r) < tol:
+            return r_new, i + 1
+        r = r_new
+    return r, max_iter
 
 
-def graph_evolve(
-    W: np.ndarray, phi: np.ndarray, t: int
-) -> np.ndarray:
-    """
-    Multi-step tropical graph evolution.
-
-    Iterates the tropical transfer operator t times.
-    Computing shortest paths of length ≤ t.
-
-    Time: O(t · n²), Space: O(n)
+def verify_monotonicity(
+    K: np.ndarray,
+    u: np.ndarray,
+    v: np.ndarray,
+    T: int
+) -> bool:
+    """Verify monotonicity of tropical evolution: u ≤ v => evolve(u) ≤ evolve(v).
 
     Args:
-        W: Weight matrix
-        phi: Initial data
-        t: Number of steps
+        K: Transition kernel.
+        u, v: Initial data with u ≤ v pointwise.
+        T: Number of steps.
 
     Returns:
-        Evolved data after t steps
+        True if monotonicity holds at every step.
     """
-    psi = phi.copy()
-    for _ in range(t):
-        psi = tropical_transfer(W, psi)
-    return psi
+    assert np.all(u <= v), "Requires u ≤ v pointwise"
+    for _ in range(T):
+        u = tropical_einstein_step(K, u)
+        v = tropical_einstein_step(K, v)
+        if not np.all(u <= v + 1e-12):
+            return False
+    return True
 
 
-def bellman_ford_tropical(
-    W: np.ndarray, source: int
-) -> np.ndarray:
-    """
-    Shortest paths from source via tropical transfer iteration.
-
-    Equivalent to Bellman-Ford algorithm, implemented as
-    iterated tropical transfer on the indicator of the source.
-
-    Time: O(n³), Space: O(n)
+def verify_shift_equivariance(
+    K: np.ndarray,
+    u: np.ndarray,
+    c: float,
+    T: int
+) -> bool:
+    """Verify shift equivariance: evolve(u + c) = evolve(u) + c.
 
     Args:
-        W: Weight matrix (n × n), W[i][j] = cost of edge i→j
-        source: Source node index
+        K: Transition kernel.
+        u: Initial data.
+        c: Constant shift.
+        T: Number of steps.
 
     Returns:
-        Array of shortest distances from source to all nodes
+        True if equivariance holds at every step.
     """
-    n = W.shape[0]
-    # Indicator of source: 0 at source, +inf elsewhere
-    phi = np.full(n, np.inf)
-    phi[source] = 0.0
+    u1 = u.copy()
+    u2 = u.copy() + c
+    for _ in range(T):
+        u1 = tropical_einstein_step(K, u1)
+        u2 = tropical_einstein_step(K, u2)
+        if not np.allclose(u2, u1 + c):
+            return False
+    return True
 
-    # Iterate n-1 times (sufficient for shortest paths without negative cycles)
-    for _ in range(n - 1):
-        phi = tropical_transfer(W, phi)
-
-    return phi
-
-
-def tropical_evaporation(
-    m_initial: float, dm: float, steps: int
-) -> list[tuple[float, float, float]]:
-    """
-    Simulate tropical black hole evaporation.
-
-    The mass decreases by dm each step, shifting the horizon inward.
-    Points in the released region [2(m-dm), 2m] escape.
-
-    Args:
-        m_initial: Initial mass
-        dm: Mass loss per step
-        steps: Number of evaporation steps
-
-    Returns:
-        List of (time, mass, horizon_radius) tuples
-    """
-    history = []
-    m = m_initial
-    for t in range(steps + 1):
-        horizon = 2 * m
-        history.append((t, m, horizon))
-        m = max(0, m - dm)
-    return history
-
-
-# ─── Example usage ───
 
 if __name__ == "__main__":
-    print("=== Tropical Transfer: Shortest Paths ===")
-    W = np.array([
-        [0, 1, 5, 10],
-        [1, 0, 2,  8],
-        [5, 2, 0,  1],
-        [10, 8, 1, 0],
-    ], dtype=float)
+    # Quick self-test
+    print("Running algorithm self-tests...")
 
-    for src in range(4):
-        dists = bellman_ford_tropical(W, src)
-        print(f"  Shortest paths from node {src}: {dists}")
+    K = np.array([[0, 1, 4], [3, 0, 2], [1, 5, 0]], dtype=float)
+    u = np.array([0.0, np.inf, np.inf])
 
-    print("\n=== Tropical Evaporation ===")
-    history = tropical_evaporation(5.0, 0.5, 10)
-    for t, m, r_h in history:
-        print(f"  t={t:2d}: m={m:.1f}, horizon={r_h:.1f}")
+    # Test evolution
+    result = tropical_evolution(K, u, T=3)
+    print(f"Evolution result: {result}")
 
-    print("\n=== Multi-step Evolution ===")
-    V = [0.5, 0.3, 0.1, -0.2, -0.5, 0.0, 0.2, 0.4]
-    phi = [10, 8, 6, 4, 2, 0, 2, 4]
-    phi = [float(x) for x in phi]
-    print(f"  V = {V}")
-    print(f"  φ₀ = {phi}")
-    for t in range(1, 6):
-        phi = tropical_einstein_step(V, phi)
-        print(f"  φ_{t} = {[round(x, 2) for x in phi]}")
+    # Test matrix multiplication
+    W2 = tropical_mat_mul(K, K)
+    W2_fast = tropical_mat_pow_fast(K, 2)
+    assert np.allclose(W2, W2_fast), "Matrix power mismatch"
+    print(f"W^2 =\n{W2}")
+
+    # Test shortest paths
+    D = tropical_shortest_paths(K)
+    print(f"All-pairs shortest paths:\n{D}")
+
+    # Test horizon
+    for m in [1.0, 5.0, 10.0]:
+        h = find_horizon(m)
+        fp, iters = iterate_to_fixed_point(lambda r, m=m: radial_update(m, r), 100.0)
+        assert abs(fp - h) < 1e-10
+        print(f"m={m}: horizon={h}, iterated={fp} ({iters} iters)")
+
+    # Test monotonicity
+    u_lo = np.array([0.0, 1.0, 2.0])
+    u_hi = np.array([1.0, 2.0, 3.0])
+    assert verify_monotonicity(K, u_lo, u_hi, T=10)
+    print("Monotonicity: PASSED")
+
+    # Test shift equivariance
+    assert verify_shift_equivariance(K, u_lo, c=7.5, T=10)
+    print("Shift equivariance: PASSED")
+
+    print("\nAll self-tests passed!")
