@@ -32,22 +32,6 @@
     "timestamp": "2026-05-14T16:03:53.810233+00:00"
   },
   {
-    "id": "seed_070",
-    "title": "Aristotle Prompt Engineering: Category-Theoretic Prompt Optimization via Adjunction",
-    "description": "Prove that the space of research prompts forms a category where prompt quality is measured by the adjunction between the prompt functor and the output quality functor. Construct a universal property that characterizes optimal prompts as those that are left-adjoint to the evaluation functor, and show that this adjunction can be computed via a Galois connection between prompt features and output quality metrics. Formalize this in Lean 4 and prove that iteratively applying the adjunction converges to a fixed-point prompt that maximizes research depth.",
-    "domains": [
-      "Meta",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.95,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "4e85c80a",
-    "timestamp": "2026-05-14T16:03:53.866556+00:00"
-  },
-  {
     "id": "seed_002",
     "title": "Riemann Hypothesis via Tropical Spectral Transfer",
     "description": "Formulate the Riemann Hypothesis as a statement about the spectrum of a tropical transfer operator on the critical strip. Prove that all non-trivial zeros lie on Re(s)=1/2 if and only if the tropical eigenvalue gap vanishes, connecting analytic number theory to tropical dynamics via a constructive spectral correspondence.",
@@ -963,10 +947,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed53a6b6",
     "timestamp": "2026-05-15T16:47:43.802334+00:00"
   },
   {
@@ -1048,6 +1032,62 @@
     "source_exp_id": "e5d0ee4d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T17:30:26.004388+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Immediate (1–2 weeks):",
+    "description": "Prove complexity-weighted optimization (Direction 3) — this is the most directly formalizable extension with clear practical applications.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4e85c80a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:53:49.331298+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "Short-term (1–2 months):",
+    "description": "Implement FCA mining (Direction 4) — this connects the theory to empirical data and produces a usable tool.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4e85c80a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:53:49.345726+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Medium-term (3–6 months):",
+    "description": "Formalize categorical enrichment (Direction 2) — this is mathematically the richest direction and connects to the broader categorical program.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4e85c80a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:53:49.365315+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Long-term (6–12 months):",
+    "description": "Develop probabilistic extensions (Direction 1) and topological extensions (Direction 5) — these require significant new mathematical development.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4e85c80a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:53:49.380324+00:00"
   },
   {
     "id": "seed_079",
