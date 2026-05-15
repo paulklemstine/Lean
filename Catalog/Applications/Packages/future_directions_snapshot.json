@@ -185,10 +185,10 @@
       "Tropical"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54f0e2a0",
     "timestamp": "2026-05-14T16:03:53.852712+00:00"
   },
   {
@@ -762,21 +762,6 @@
     "timestamp": "2026-05-15T16:47:43.670643+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Upper bound",
-    "description": ": A tropical circuit of size O(n² × n!) computes this by dynamic programming over partial permutations.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.759664+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "Timed words",
     "description": ": Extend the derivative theory to handle continuous time. The key challenge is that timed derivatives form a potentially infinite family parameterized by time delays. Restrict to clock-bounded systems where the derivative family is still finite up to time rescaling.",
@@ -789,21 +774,6 @@
     "source_exp_id": "6acfb91e",
     "consumed_by_exp_id": "ed53a6b6",
     "timestamp": "2026-05-15T16:47:43.802334+00:00"
-  },
-  {
-    "id": "fd_0232",
-    "title": "Security analysis:",
-    "description": "Show that recovering `(A, B)` from `M` is as hard as general tropical factorization.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5d0ee4d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:30:25.932081+00:00"
   },
   {
     "id": "fd_0235",
@@ -864,21 +834,6 @@
     "source_exp_id": "88d6f044",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T18:32:09.337991+00:00"
-  },
-  {
-    "id": "fd_0232",
-    "title": "Poincaré series construction",
-    "description": ": Define Θ(s, g) = Σ_{γ ∈ Γ_B} H(γ · v₀)^{-s} · δ(γg) as a distribution on Γ\\G, where Γ_B is the Berggren semigroup.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88d6f044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T18:32:09.371130+00:00"
   },
   {
     "id": "fd_0235",
@@ -1045,50 +1000,6 @@
     "source_exp_id": "89af9dca",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T19:54:33.155151+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Direction 2",
-    "description": "(composition) — Enables compiler verification applications",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "89af9dca",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T19:54:33.166383+00:00"
-  },
-  {
-    "id": "fd_0232",
-    "title": "Direction 4",
-    "description": "(logic characterization) — Deep theoretical result",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "89af9dca",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T19:54:33.176564+00:00"
-  },
-  {
-    "id": "seed_079",
-    "title": "Tropical Language Evolution: Min-Plus Phylogenetics and Glottochronology",
-    "description": "Prove that language divergence follows a tropical diffusion process on the min-plus metric space of lexical items, and that the tropical distance between languages is an optimal phylogenetic distance. Show that glottochronological dating is recovered as tropical distance estimation, and that the tropical phylogenetic tree is the unique min-plus Steiner tree of the language family.",
-    "domains": [
-      "Bridges",
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.73,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "1cdf4e96",
-    "timestamp": "2026-05-14T16:03:53.881355+00:00"
   },
   {
     "id": "seed_052",
@@ -1785,21 +1696,6 @@
     "timestamp": "2026-05-15T15:29:13.549732+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Phase 3 (Long-term, 6-12 months)",
-    "description": "- Generalize to quadratic form orbits (Direction 6)\n- Investigate cryptographic hardness (Direction 3)\n- Develop the spectral theory of arithmetic CAs (Direction 4)\n\n---",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6ee9322",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:02:08.139954+00:00"
-  },
-  {
     "id": "fd_0219",
     "title": "Direction 1: Randomized Protocol Tropical Transfer Theorem",
     "description": "**Target Theorem.** *For every Boolean function f, if every **randomized** communication protocol computing f with error ≤ 1/3 has expected tropical cost at least L, and every randomized branching program for f induces such a protocol with overhead at most C, then every such randomized branching program has expected size at least L/C.*\n\n**Why it matters.** Our current transfer theorem handles deterministic protocols. Extending to randomized protocols would capture the full power of communication complexity, since randomized communication lower bounds are strictly harder to prove and yield stronger consequences. The tropical cost of a randomized protocol is a random variable; the key technical challenge is showing that *expected* tropical cost lower bounds transfer to *expected* branching p",
@@ -1961,5 +1857,48 @@
     "source_exp_id": "5b91f76e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T19:28:49.817683+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Team Tasks",
+    "description": "- Define tropical entropy and mutual information in Lean\n- Prove nonnegativity and data processing inequality\n- Test on Indo-European lexical data (Swadesh lists)\n- Connect to existing Mathlib information theory definitions\n\n---",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1cdf4e96",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:09:21.793743+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Hypothesis",
+    "description": "Extend the lexical cost model from presence/absence to semantic distance: define $L(i)$ not as a scalar but as a point in a tropical module, representing the semantic position of lexical item $i$. Semantic drift is then a tropical translation in this module. The key conjecture:\n\n*Semantic change preserves tropical convexity: if a set of related meanings forms a tropically convex set in the ancestor language, its images under semantic drift remain tropically convex in descendant languages.*",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1cdf4e96",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:09:21.809405+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Dependencies",
+    "description": "- Directions 1 and 2 can proceed independently and in parallel.\n- Direction 3 requires Mathlib probability theory infrastructure.\n- Direction 4 builds on Direction 1 (tropical information measures).\n- Direction 5 requires Directions 1–3 as foundational results.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1cdf4e96",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T20:09:21.826814+00:00"
   }
 ]
