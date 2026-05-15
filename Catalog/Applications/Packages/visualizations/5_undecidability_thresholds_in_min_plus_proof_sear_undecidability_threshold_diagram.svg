@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400">
+    <rect fill="#f5f5f5" width="500" height="400" rx="8"/>
+    <text x="250" y="30" text-anchor="middle" font-size="18" font-weight="bold">Undecidability Threshold</text>
+    <rect x="50" y="50" width="400" height="130" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+    <text x="250" y="100" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">DECIDABLE</text>
+    <text x="250" y="130" text-anchor="middle" font-size="14" fill="#2e7d32">min + add + const</text>
+    <text x="250" y="155" text-anchor="middle" font-size="11" fill="#4caf50">(piecewise-linear)</text>
+    <rect x="50" y="195" width="400" height="20" rx="4" fill="#fff3e0" stroke="#ff6f00" stroke-width="2"/>
+    <text x="250" y="210" text-anchor="middle" font-size="12" font-weight="bold" fill="#ff6f00">THRESHOLD: multiplication</text>
+    <rect x="50" y="230" width="400" height="130" rx="8" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+    <text x="250" y="280" text-anchor="middle" font-size="20" font-weight="bold" fill="#b71c1c">UNDECIDABLE</text>
+    <text x="250" y="310" text-anchor="middle" font-size="14" fill="#c62828">min + add + const + mul</text>
+    <text x="250" y="335" text-anchor="middle" font-size="11" fill="#e53935">(polynomial/Diophantine)</text>
+    </svg>

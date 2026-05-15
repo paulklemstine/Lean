@@ -523,21 +523,6 @@
     "timestamp": "2026-05-14T16:17:00.725031+00:00"
   },
   {
-    "id": "fd_0103",
-    "title": "Precision",
-    "description": "(Direction 2): Quantify the tropical approximation at operational temperatures.",
-    "domains": [
-      "Tropical",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "adc29728",
-    "consumed_by_exp_id": "7566736e",
-    "timestamp": "2026-05-14T16:17:00.727665+00:00"
-  },
-  {
     "id": "fd_0107",
     "title": "Formalizes definitions and conjectures",
     "description": "in Lean 4, building on the existing `TropicalCurryHoward` module.",
@@ -803,21 +788,6 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
-    "id": "fd_0207",
-    "title": "Tropical-classical correspondence:",
-    "description": "Each direction involves a passage from smooth/classical objects to their tropical (combinatorial, piecewise-linear) shadows, with the key property that feasibility/existence questions survive the tropicalization.",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09712312",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T07:05:09.477655+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -843,25 +813,11 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a2e39b14",
     "timestamp": "2026-05-15T07:06:08.035548+00:00"
-  },
-  {
-    "id": "fd_0207",
-    "title": "Compute voice-leading distances",
-    "description": "by optimal transport over S₄ (24 permutations per pair). The space has ~48 chords (12 roots × 4+ qualities), giving ~2,304 pairs — still finite and decidable.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c58d2658",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T08:03:37.253200+00:00"
   },
   {
     "id": "fd_0236",
@@ -944,6 +900,20 @@
     "timestamp": "2026-05-15T12:04:37.815985+00:00"
   },
   {
+    "id": "fd_0228",
+    "title": "Specification as fixed points",
+    "description": ": Show that a specification \"N(x) ∈ S for all x ∈ K\" is equivalent to K ⊆ N⁻¹(S), which for closure networks reduces to checking fixed-point inclusion.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "56b13d4c",
+    "consumed_by_exp_id": "0e91ddc3",
+    "timestamp": "2026-05-15T12:04:37.825030+00:00"
+  },
+  {
     "id": "fd_0204",
     "title": "Spectral gap → expansion",
     "description": ": proving the orbit graph is an expander, giving strong mixing properties for random walks.",
@@ -990,20 +960,6 @@
     "source_exp_id": "49977498",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T12:05:00.975190+00:00"
-  },
-  {
-    "id": "fd_0207",
-    "title": "Direction 2",
-    "description": "(collision resistance) — highest impact per effort, builds directly on current work",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "49977498",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T12:05:00.983714+00:00"
   },
   {
     "id": "fd_0210",
@@ -1109,20 +1065,6 @@
     "timestamp": "2026-05-15T13:04:44.664357+00:00"
   },
   {
-    "id": "fd_0220",
-    "title": "Immediate (builds directly on current work):",
-    "description": "Fiberwise minimization (#3), as it extends the data processing inequality to an equality",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cabdd3c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:09.669456+00:00"
-  },
-  {
     "id": "fd_0221",
     "title": "High impact (new theory):",
     "description": "Tropical mutual information (#1), opening information-theoretic applications",
@@ -1151,20 +1093,6 @@
     "source_exp_id": "9cabdd3c",
     "consumed_by_exp_id": "7d5cf911",
     "timestamp": "2026-05-15T13:05:09.705505+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Automatically discover",
-    "description": "which operators in a codebase are idempotent, contractive, or have unique fixed points.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "62ac6dd0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:05:41.513259+00:00"
   },
   {
     "id": "fd_0221",
@@ -1306,21 +1234,6 @@
     "source_exp_id": "9d761629",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:48:12.220249+00:00"
-  },
-  {
-    "id": "fd_0220",
-    "title": "Enumerate",
-    "description": "structural properties of the pitch lattice (total order, group structure, metric).",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4b8fe325",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:01:02.514087+00:00"
   },
   {
     "id": "fd_0221",
@@ -1976,20 +1889,6 @@
     "timestamp": "2026-05-15T09:07:29.342835+00:00"
   },
   {
-    "id": "fd_0207",
-    "title": "Compositional Security Framework",
-    "description": "Extend the semantic security theorem to a compositional framework (Universal Composability style) where tropical key derivation can be securely composed with arbitrary protocols. This requires formalizing ideal functionalities and simulation-based security in Lean 4.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97644adb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:07:29.350382+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Direction 3: Categorical Composition Operators on Tropical Style Spaces",
     "description": "**Hypothesis**: Musical transformations (transposition, inversion, retrograde, augmentation) form a category where morphisms are tropical-cost-preserving maps, and style classes are isomorphism classes under this category.\n\n**Proof Strategy**:\n1. Define the category **TropCP** whose objects are (cantus, melody) pairs equipped with their cost vectors (vertical, melodic, parallel) and whose morphisms are pitch-space maps that preserve or bound cost change.\n2. Prove that transposition by k semitones is an isomorphism in **TropCP** (cost is transposition-invariant by definition).\n3. Prove that inversion is a cost-preserving morphism when consonance is symmetric (which it is by the |k| symmetry).\n4. Define a functor from **TropCP** to the category of weighted graphs, sending each voice-leading ",
@@ -2077,5 +1976,62 @@
     "source_exp_id": "ef0cc9c1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:05:25.851145+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "Theorem Statement",
+    "description": "For a finite set $s$ and function $f : s \\to \\mathbb{R}$, the log-sum-exp admits a variational characterization:\n\n$$\\frac{1}{\\beta} \\log \\sum_{i \\in s} e^{\\beta f(i)} = \\sup_{p \\in \\Delta_s} \\left( \\sum_{i \\in s} p_i f(i) + \\frac{1}{\\beta} H(p) \\right)$$\n\nwhere $\\Delta_s$ is the probability simplex over $s$ and $H(p) = -\\sum_i p_i \\log p_i$ is Shannon entropy.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7566736e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:59.171403+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "Lean Definitions",
+    "description": "```lean\ndef shannonEntropy {α : Type*} (s : Finset α) (p : α → ℝ) : ℝ :=\n  -∑ i in s, p i * Real.log (p i)\n\ndef probabilitySimplex {α : Type*} (s : Finset α) : Set (α → ℝ) :=\n  {p | (∀ i ∈ s, 0 ≤ p i) ∧ ∑ i in s, p i = 1}\n\ntheorem gibbs_variational {α : Type*} [DecidableEq α]\n    (s : Finset α) (f : α → ℝ) {β : ℝ} (hβ : 0 < β) (hs : s.Nonempty) :\n    finsetLSE β s f = sSup {v | ∃ p ∈ probabilitySimplex s,\n      v = ∑ i in s, p i * f i + (1/β) * shannonEntropy s p}\n```",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7566736e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:59.181259+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Cross-Domain Significance",
+    "description": "This is the **free energy principle** from statistical mechanics: free energy = energy - temperature × entropy. It connects tropical optimization (zero temperature) to Bayesian inference (finite temperature) and provides a variational foundation for all subsequent directions.\n\n---",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7566736e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:59.190941+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Summary: The Temperature Axis",
+    "description": "These five directions together establish **temperature as a formal mathematical axis** connecting:\n\n| Zero temperature ($\\beta = \\infty$) | Finite temperature ($\\beta > 0$) |\n|---|---|\n| Tropical max | Log-sum-exp |\n| Shortest/longest paths | Free energy |\n| Tropical eigenvalues | Perron eigenvalues |\n| Hard optimization | Regularized optimization |\n| Deterministic control | Risk-sensitive control |\n\nThe breakthrough of the current work — proving explicit, sharp, compositional error bounds — makes this axis rigorous and computationally useful for the first time in formalized mathematics.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7566736e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:03:59.224575+00:00"
   }
 ]
