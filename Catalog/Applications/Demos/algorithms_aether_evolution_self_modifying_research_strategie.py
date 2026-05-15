@@ -1,242 +1,303 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core algorithms for reflective convergence analysis.
+Reflective Convergence Architecture — Algorithm Implementations
 
-Implements the improvement iteration, weakness descent, and convergence
-detection algorithms formalized in the Lean proofs.
+Implements the core algorithms from the research paper:
+1. Reflective iteration with stabilization detection
+2. Quality-maximizing selector over admissible moves
+3. Finite stabilization with score tracking
+4. Local optimality verification
+5. Grand composition: find locally optimal fixed points
 """
 
 from typing import (
-    TypeVar, Generic, Callable, Set, FrozenSet, List, Optional,
-    Tuple, Dict, Any
+    TypeVar, Generic, Callable, Optional, List, Dict, Set,
+    Tuple, NamedTuple
 )
 from dataclasses import dataclass, field
-import time
+import math
 
-T = TypeVar('T')
+S = TypeVar('S')
+
+
+# =============================================================================
+# Core Data Structures
+# =============================================================================
+
+@dataclass
+class ConvergenceResult(Generic[S]):
+    """Result of a reflective iteration run."""
+    trajectory: List[S]
+    qualities: List[float]
+    stabilized: bool
+    stabilization_step: Optional[int]
+    fixed_point: Optional[S]
+    limit_quality: Optional[float]
+    
+    @property
+    def num_steps(self) -> int:
+        return len(self.trajectory) - 1
 
 
 @dataclass
-class ConvergenceResult(Generic[T]):
-    """Result of running an improvement iteration to convergence."""
-    fixed_point: T
-    steps: int
-    trace: List[T]
-    rank_trace: Optional[List[int]] = None
-    weakness_trace: Optional[List[int]] = None
-    elapsed_seconds: float = 0.0
+class ResearchSystem(Generic[S]):
+    """
+    A research system with outcome-dependent strategy spaces.
+    
+    Attributes:
+        admissible: Maps each state to its set of admissible next states.
+        quality: Maps each state to a real-valued quality score.
+        score: Optional ℕ-valued score for strict progress tracking.
+    """
+    admissible: Callable[[S], List[S]]
+    quality: Callable[[S], float]
+    score: Optional[Callable[[S], int]] = None
 
-    def summary(self) -> str:
-        lines = [
-            f"Converged in {self.steps} steps",
-            f"Fixed point: {self.fixed_point}",
-        ]
-        if self.rank_trace:
-            lines.append(f"Rank progression: {self.rank_trace}")
-        if self.weakness_trace:
-            lines.append(f"Weakness card progression: {self.weakness_trace}")
-        lines.append(f"Time: {self.elapsed_seconds:.6f}s")
-        return "\n".join(lines)
 
+# =============================================================================
+# Algorithm 1: Reflective Iteration
+# =============================================================================
 
 def reflective_iterate(
-    improve: Callable[[T], T],
-    start: T,
-    rank: Optional[Callable[[T], int]] = None,
-    max_iter: int = 10_000,
-) -> ConvergenceResult[T]:
+    next_fn: Callable[[S], S],
+    s0: S,
+    quality: Optional[Callable[[S], float]] = None,
+    max_iter: int = 1000,
+) -> ConvergenceResult[S]:
     """
-    Iterate `improve` starting from `start` until a fixed point is found.
-
-    By the reflective convergence theorem, if `improve` is inflationary with
-    strictly increasing rank on non-fixed points, this always terminates
-    within |σ| steps (where |σ| is the size of the strategy space).
-
+    Iterate a reflective improvement operator until stabilization.
+    
+    This implements the core loop of Theorem 3.1 (convergence) and
+    Theorem 4.1 (stabilization).
+    
     Args:
-        improve: The improvement operator.
-        start: Initial strategy.
-        rank: Optional ranking function for tracking progress.
+        next_fn: The improvement operator s ↦ next(s).
+        s0: Initial state.
+        quality: Optional quality function for tracking convergence.
+        max_iter: Maximum number of iterations.
+    
+    Returns:
+        ConvergenceResult with trajectory, qualities, and stabilization info.
+    
+    Complexity: O(N * C_next) where N is stabilization step, C_next is cost of next_fn.
+    """
+    trajectory = [s0]
+    qualities = [quality(s0)] if quality else []
+    s = s0
+    
+    for i in range(1, max_iter + 1):
+        s_next = next_fn(s)
+        trajectory.append(s_next)
+        if quality:
+            qualities.append(quality(s_next))
+        
+        if s_next == s:
+            return ConvergenceResult(
+                trajectory=trajectory,
+                qualities=qualities,
+                stabilized=True,
+                stabilization_step=i,
+                fixed_point=s,
+                limit_quality=quality(s) if quality else None,
+            )
+        s = s_next
+    
+    return ConvergenceResult(
+        trajectory=trajectory,
+        qualities=qualities,
+        stabilized=False,
+        stabilization_step=None,
+        fixed_point=None,
+        limit_quality=qualities[-1] if qualities else None,
+    )
+
+
+# =============================================================================
+# Algorithm 2: Quality-Maximizing Selector
+# =============================================================================
+
+def argmax_selector(
+    admissible: Callable[[S], List[S]],
+    quality: Callable[[S], float],
+) -> Callable[[S], S]:
+    """
+    Construct a quality-maximizing selector over admissible moves.
+    
+    Given admissibility function A and quality q, returns a function
+    next(s) = argmax_{t ∈ A(s)} q(t).
+    
+    This implements the selector used in Theorem 5.1 (local optimality).
+    
+    Args:
+        admissible: Maps each state to its list of admissible successors.
+        quality: Quality function.
+    
+    Returns:
+        Selector function next : S → S.
+    
+    Complexity per call: O(|A(s)| * C_q)
+    """
+    def selector(s: S) -> S:
+        candidates = admissible(s)
+        if not candidates:
+            return s
+        return max(candidates, key=quality)
+    return selector
+
+
+# =============================================================================
+# Algorithm 3: Finite Stabilization with Score Tracking
+# =============================================================================
+
+def finite_stabilize(
+    update: Callable[[S], S],
+    score: Callable[[S], int],
+    s0: S,
+    max_iter: int = 10000,
+) -> Tuple[S, int, List[Tuple[S, int]]]:
+    """
+    Find the stabilization point of a finite reflective system.
+    
+    Implements Theorem 4.1: under strict progress (update(s) ≠ s ⟹ score(s) < score(update(s))),
+    the iteration must stabilize.
+    
+    Args:
+        update: The update function.
+        score: ℕ-valued score function.
+        s0: Initial state.
         max_iter: Safety bound on iterations.
-
+    
     Returns:
-        ConvergenceResult with the fixed point, trace, and diagnostics.
-
-    Complexity:
-        Time: O(n · C_improve) where n = steps to convergence, C_improve = cost of one improve call.
-        Space: O(n) for the trace.
+        (fixed_point, stabilization_step, history) where history is [(state, score)].
+    
+    Raises:
+        RuntimeError: If max_iter exceeded (shouldn't happen under theorem hypotheses).
     """
-    t0 = time.time()
-    trace = [start]
-    rank_trace = [rank(start)] if rank else None
-    current = start
-
-    for step in range(max_iter):
-        next_val = improve(current)
-        trace.append(next_val)
-        if rank_trace is not None:
-            rank_trace.append(rank(next_val))
-
-        if next_val == current:
-            elapsed = time.time() - t0
-            return ConvergenceResult(
-                fixed_point=current,
-                steps=step,
-                trace=trace,
-                rank_trace=rank_trace,
-                elapsed_seconds=elapsed,
-            )
-        current = next_val
-
-    raise RuntimeError(f"Did not converge within {max_iter} iterations")
+    history = [(s0, score(s0))]
+    s = s0
+    
+    for i in range(1, max_iter + 1):
+        s_next = update(s)
+        history.append((s_next, score(s_next)))
+        
+        if s_next == s:
+            return s, i, history
+        
+        # Verify strict progress (runtime check of theorem hypothesis)
+        assert score(s) < score(s_next), (
+            f"Strict progress violated: score({s}) = {score(s)} "
+            f"≥ score({s_next}) = {score(s_next)}"
+        )
+        s = s_next
+    
+    raise RuntimeError(f"Stabilization not achieved within {max_iter} steps")
 
 
-def weakness_descent_iterate(
-    improve: Callable[[T], T],
-    weakness: Callable[[T], FrozenSet],
-    start: T,
-    max_iter: int = 10_000,
-) -> ConvergenceResult[T]:
+# =============================================================================
+# Algorithm 4: Local Optimality Verification
+# =============================================================================
+
+def verify_local_optimality(
+    state: S,
+    admissible: Callable[[S], List[S]],
+    quality: Callable[[S], float],
+) -> Tuple[bool, Optional[S]]:
     """
-    Iterate `improve` tracking the weakness set until it stabilizes.
-
-    By the weakness descent theorem, if `weakness(improve(s)) ⊆ weakness(s)`
-    and strict decrease occurs when they differ, this always terminates
-    within |δ| steps (where |δ| is the defect universe size).
-
+    Verify that a state is locally optimal.
+    
+    Implements the check from Definition 2.3:
+    s is locally optimal iff ∀ t ∈ A(s), q(t) ≤ q(s).
+    
     Args:
-        improve: The improvement operator.
-        weakness: Extracts the current weakness/defect set.
-        start: Initial strategy.
-        max_iter: Safety bound.
-
+        state: The state to check.
+        admissible: Admissibility function.
+        quality: Quality function.
+    
     Returns:
-        ConvergenceResult with weakness trace information.
-
-    Complexity:
-        Time: O(|δ| · C_improve) where |δ| = max weakness cardinality.
-        Space: O(|δ|) for the trace.
+        (is_optimal, counterexample) where counterexample is a better
+        admissible state if not optimal, None otherwise.
     """
-    t0 = time.time()
-    trace = [start]
-    w_trace = [len(weakness(start))]
-    current = start
-
-    for step in range(max_iter):
-        next_val = improve(current)
-        w_curr = weakness(current)
-        w_next = weakness(next_val)
-        trace.append(next_val)
-        w_trace.append(len(w_next))
-
-        if w_next == w_curr:
-            elapsed = time.time() - t0
-            return ConvergenceResult(
-                fixed_point=current,
-                steps=step,
-                trace=trace,
-                weakness_trace=w_trace,
-                elapsed_seconds=elapsed,
-            )
-        current = next_val
-
-    raise RuntimeError(f"Weakness did not stabilize within {max_iter} iterations")
+    q_s = quality(state)
+    for t in admissible(state):
+        if quality(t) > q_s:
+            return False, t
+    return True, None
 
 
-def find_all_fixed_points(
-    improve: Callable[[T], T],
-    universe: List[T],
-) -> List[T]:
+# =============================================================================
+# Algorithm 5: Grand Composition
+# =============================================================================
+
+def find_local_optimum(
+    system: ResearchSystem[S],
+    s0: S,
+    max_iter: int = 10000,
+) -> ConvergenceResult[S]:
     """
-    Find all fixed points of `improve` in a finite universe by enumeration.
-
-    Complexity: O(|universe| · C_improve)
+    Find a locally optimal state by reflective iteration.
+    
+    Implements Theorem 6.1: given a finite reflective system with
+    quality-maximizing updates and strict progress, find the locally
+    optimal fixed point.
+    
+    Args:
+        system: A ResearchSystem with admissible, quality, and optionally score.
+        s0: Initial state.
+        max_iter: Maximum iterations.
+    
+    Returns:
+        ConvergenceResult with the locally optimal fixed point.
     """
-    return [x for x in universe if improve(x) == x]
+    selector = argmax_selector(system.admissible, system.quality)
+    result = reflective_iterate(
+        next_fn=selector,
+        s0=s0,
+        quality=system.quality,
+        max_iter=max_iter,
+    )
+    
+    if result.stabilized and result.fixed_point is not None:
+        is_optimal, _ = verify_local_optimality(
+            result.fixed_point, system.admissible, system.quality
+        )
+        assert is_optimal, "Fixed point should be locally optimal (Theorem 5.1)"
+    
+    return result
 
 
-def convergence_basin(
-    improve: Callable[[T], T],
-    universe: List[T],
-) -> Dict[T, List[T]]:
-    """
-    Compute the basin of attraction for each fixed point.
-
-    For each element in the universe, iterate `improve` to find which
-    fixed point it converges to. Group elements by their attractor.
-
-    Complexity: O(|universe|² · C_improve) worst case.
-    """
-    basins: Dict[T, List[T]] = {}
-
-    for x in universe:
-        current = x
-        seen = set()
-        while current not in seen:
-            seen.add(current)
-            next_val = improve(current)
-            if next_val == current:
-                break
-            current = next_val
-        # current is the fixed point
-        if current not in basins:
-            basins[current] = []
-        basins[current].append(x)
-
-    return basins
-
-
-def query_strategy_outcomes(
-    k: int,
-    decide: Callable[[Tuple[bool, ...]], Any],
-) -> Set:
-    """
-    Enumerate all possible outcomes of a k-query strategy.
-
-    By the query bound theorem, |outcomes| ≤ 2^k.
-
-    Complexity: O(2^k · C_decide)
-    """
-    import itertools
-    outcomes = set()
-    for bits in itertools.product([False, True], repeat=k):
-        outcomes.add(decide(bits))
-    return outcomes
-
-
-# ── Example usage ──
+# =============================================================================
+# Example Usage
+# =============================================================================
 
 if __name__ == "__main__":
-    print("=== Reflective Iteration ===")
-    result = reflective_iterate(
-        improve=lambda s: min(s + 1, 10),
-        start=0,
-        rank=lambda s: s,
+    print("=== Algorithm Demonstrations ===\n")
+    
+    # Example: 8-state system
+    n = 8
+    import random
+    random.seed(123)
+    
+    qs = {i: random.uniform(0, 10) for i in range(n)}
+    adj = {i: sorted(set([i] + random.sample(range(n), 3))) for i in range(n)}
+    
+    system = ResearchSystem(
+        admissible=lambda s: adj[s],
+        quality=lambda s: qs[s],
+        score=lambda s: int(qs[s] * 1000),
     )
-    print(result.summary())
+    
+    print("State qualities:", {k: f"{v:.2f}" for k, v in qs.items()})
+    print("Admissibility:", adj)
     print()
-
-    print("=== Weakness Descent ===")
-    result = weakness_descent_iterate(
-        improve=lambda s: s - {min(s)} if s else s,
-        weakness=lambda s: frozenset(s),
-        start=frozenset({0, 1, 2, 3, 4}),
-    )
-    print(result.summary())
-    print()
-
-    print("=== Fixed Points ===")
-    improve_mod = lambda x: min(x + 1, 5)
-    fps = find_all_fixed_points(improve_mod, list(range(10)))
-    print(f"Fixed points of min(x+1, 5) in {{0..9}}: {fps}")
-    print()
-
-    print("=== Convergence Basins ===")
-    basins = convergence_basin(improve_mod, list(range(10)))
-    for fp, basin in sorted(basins.items()):
-        print(f"  Fixed point {fp} ← {basin}")
-    print()
-
-    print("=== Query Strategy Bound ===")
-    for k in range(1, 6):
-        outcomes = query_strategy_outcomes(k, lambda bits: sum(bits) % 3)
-        print(f"  k={k}: {len(outcomes)} distinct outcomes ≤ {2**k}")
+    
+    for s0 in range(n):
+        result = find_local_optimum(system, s0)
+        opt_check, _ = verify_local_optimality(
+            result.fixed_point, system.admissible, system.quality
+        )
+        print(
+            f"Start={s0}: fixed_pt={result.fixed_point}, "
+            f"quality={system.quality(result.fixed_point):.2f}, "
+            f"steps={result.stabilization_step}, "
+            f"locally_optimal={opt_check}"
+        )

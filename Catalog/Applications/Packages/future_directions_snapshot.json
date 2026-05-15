@@ -1806,22 +1806,6 @@
     "timestamp": "2026-05-15T09:04:35.009366+00:00"
   },
   {
-    "id": "fd_0199",
-    "title": "Connections to Active Research",
-    "description": "- **Verifiable computation**: Directions 2 and 5 formalize the core of SNARK/STARK soundness arguments\n- **Algebraic complexity**: Direction 3 opens Schwartz-Zippel, the foundation of arithmetic circuit lower bounds\n- **Coding theory**: Direction 4 generalizes to arbitrary linear codes, connecting to minimum distance bounds\n- **Machine learning verification**: Streaming verification of matrix products is directly relevant to verifiable neural network inference",
-    "domains": [
-      "Algebra",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "cb03e742",
-    "consumed_by_exp_id": "ebeb33e3",
-    "timestamp": "2026-05-15T09:04:35.024761+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "Suggested Priority Order",
     "description": "1. Direction 2 (amplification) — highest impact, most straightforward\n2. Direction 4 (general linear maps) — high reusability, moderate difficulty\n3. Direction 1 (exact formula) — strengthens existing result, moderate difficulty\n4. Direction 5 (streaming) — practical impact, requires protocol formalization\n5. Direction 3 (Schwartz-Zippel) — most ambitious, highest long-term value",
@@ -2175,5 +2159,87 @@
     "source_exp_id": "5592f3fa",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T11:04:08.982218+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "1. Multivariate Schwartz–Zippel over Finite Grids",
+    "description": "**Hypothesis**: The full Schwartz–Zippel lemma for multivariate polynomials can be proved by induction on the number of variables, reducing each step to the univariate root bound.\n\n**Statement**: Let $p \\in F[x_1, \\ldots, x_n]$ be a nonzero polynomial of total degree $d$ over a finite field $F$, and let $S \\subseteq F$ be a finite evaluation set. Then\n$$\\Pr_{a \\in S^n}[p(a) = 0] \\le \\frac{d}{|S|}.$$\n\n**Proof Strategy**:\n1. View $p$ as a univariate polynomial in $x_n$ with coefficients in $F[x_1, \\ldots, x_{n-1}]$.\n2. The leading coefficient (as a polynomial in $x_1, \\ldots, x_{n-1}$) is nonzero and of degree $\\le d - \\deg_{x_n}(p)$.\n3. Apply the inductive hypothesis to the leading coefficient, then apply the univariate root bound to the specialization.\n4. Combine via a union bound.\n\n**Form",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ebeb33e3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:04:31.766943+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "2. Formal Reed–Solomon Minimum Distance and Decoding",
+    "description": "**Hypothesis**: The Reed–Solomon code $\\text{RS}[F, k]$ (evaluations of degree-$< k$ polynomials over all of $F$) has minimum distance $|F| - k + 1$, achieving the Singleton bound.\n\n**Statement**: For distinct codewords $c_1, c_2 \\in \\text{RS}[F, k]$, the Hamming distance satisfies $d_H(c_1, c_2) \\ge |F| - k + 1$.\n\n**Proof Strategy**: The difference $c_1 - c_2$ is the evaluation of a nonzero polynomial of degree $< k$, which has at most $k - 1$ roots by our root bound theorem.\n\n**Formalization Approach**:\n- Define `ReedSolomonCode (F : Type*) [Field F] [Fintype F] (k : ℕ) : Set (F → F)` as the image of the evaluation map restricted to polynomials of degree $< k$.\n- Prove the distance theorem using `card_roots_le_natDegree_filter`.\n- State the Singleton bound and show RS achieves it (MDS co",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ebeb33e3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:04:31.778244+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "3. Sumcheck Protocol Algebraic Core",
+    "description": "**Hypothesis**: The sumcheck protocol's soundness reduces to repeated application of the univariate root bound.\n\n**Statement**: In each round of the sumcheck protocol, the verifier checks that a claimed univariate polynomial is consistent with a partial sum. A cheating prover must produce a polynomial that agrees with the honest one on a random point, which fails with probability $\\le d/|F|$ per round.\n\n**Proof Strategy**:\n1. Formalize the sumcheck claim: $\\sum_{x \\in \\{0,1\\}^n} p(x) = v$.\n2. In round $i$, the prover sends a univariate polynomial $g_i$ of degree $\\le d_i$.\n3. The verifier checks $g_i(0) + g_i(1) = v_i$ and evaluates $g_i(r_i)$ at a random $r_i$.\n4. If the prover cheats, $g_i$ disagrees with the honest polynomial, so by our root bound, the verifier catches the cheat with pr",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ebeb33e3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:04:31.788380+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "4. Iterated Freivalds and Amplified Matrix Verification",
+    "description": "**Hypothesis**: Repeating Freivalds' test $t$ times independently reduces the error probability to $|F|^{-t}$.\n\n**Statement**: If $A \\cdot B \\neq C$ and we sample $r_1, \\ldots, r_t$ independently, then\n$$\\Pr[\\forall i,\\, (AB)r_i = C r_i] \\le |F|^{-t}.$$\n\n**Proof Strategy**: Each test is independent, so the probability of all tests passing is at most $(1/|F|)^t$. Formally, this requires:\n1. Defining the product probability space $(k \\to F)^t$.\n2. Showing that the events $\\{r_i : (AB)r_i = Cr_i\\}$ are independent.\n3. Applying the product bound from `freivalds_error_prob`.\n\n**Formalization Approach**: Use `Fintype.card` counting over the product type. Each \"bad\" vector independently has fraction $\\le 1/|F|$ of the space, so the product of bad sets has fraction $\\le 1/|F|^t$.\n\n**Applications**",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ebeb33e3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:04:31.798130+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "5. Low-Degree Testing for Affine Lines (Foundations for FRI)",
+    "description": "**Hypothesis**: A function $f : F \\to F$ that agrees with a degree-$d$ polynomial on a large fraction of evaluation points must be close to a unique low-degree polynomial. The proximity testing version: if $f$ passes the \"test on random affine line\" with high probability, then $f$ is close to a polynomial of degree $\\le d$.\n\n**Statement** (basic version): If $|\\{a \\in S : f(a) = p(a)\\}| > d$ for some polynomial $p$ of degree $\\le d$, then $p$ is the unique polynomial of degree $\\le d$ achieving this agreement.\n\n**Proof Strategy**: If two distinct polynomials $p, q$ of degree $\\le d$ both agreed with $f$ on more than $d$ points, then $p - q$ would have degree $\\le d$ and more than $d$ roots, contradicting the root bound (our `polynomial_identity_from_agreement`).\n\n**Formalization Approach**",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ebeb33e3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T11:04:31.808425+00:00"
   }
 ]
