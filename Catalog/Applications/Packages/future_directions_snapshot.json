@@ -550,10 +550,10 @@
       "EML"
     ],
     "priority_score": 0.85,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79f73184",
     "timestamp": "2026-05-14T16:03:53.826504+00:00"
   },
   {
@@ -763,22 +763,6 @@
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.842628+00:00"
-  },
-  {
-    "id": "seed_041",
-    "title": "Pythagorean Music Theory: Harmonic Ratios from Triple Lattices",
-    "description": "Prove that Berggren-generated Pythagorean triples map to harmonic frequency ratios via tropical logarithm, and formalize the musical intervals of primitive triples as consonance/dissonance classifications. Show that the (3,4,5) triple corresponds to a perfect fourth, and that the orbit structure of the Berggren tree encodes the circle of fifths in min-plus arithmetic.",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Physics"
-    ],
-    "priority_score": 0.79,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "0d901ed3",
-    "timestamp": "2026-05-14T16:03:53.837322+00:00"
   },
   {
     "id": "seed_051",
@@ -1500,21 +1484,6 @@
     "timestamp": "2026-05-14T17:33:00.515491+00:00"
   },
   {
-    "id": "fd_0209",
-    "title": "Can tropical reflective equilibrium be used as a loss function for training self-aware neural networks?",
-    "description": "The discrepancy `D(R, x)` is differentiable almost everywhere and could serve as a regularizer.",
-    "domains": [
-      "Tropical",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7dd46539",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T19:34:44.349729+00:00"
-  },
-  {
     "id": "fd_0210",
     "title": "Is there a quantum tropical reflective operator?",
     "description": "Replace min with a \"quantum min\" (superposition of paths) and study whether the fixed-point theorem survives decoherence.",
@@ -1557,20 +1526,6 @@
     "source_exp_id": "9b6e4e14",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T21:34:38.185020+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "Prove matching lower bounds",
-    "description": ": construct specific tropical attention networks that achieve n^L distinct linear regions.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b6e4e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T21:34:38.194311+00:00"
   },
   {
     "id": "fd_0210",
@@ -1650,22 +1605,6 @@
     "source_exp_id": "9d04e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:35:13.293278+00:00"
-  },
-  {
-    "id": "fd_0198",
-    "title": "Sorted representative:",
-    "description": "Define the canonical representative of a chord class as its sorted version. Show that vlCostN on sorted representatives equals vlCostN on the original chords, using permutation invariance and sorted optimality. This gives a concrete computational handle on the quotient.\n\n### Cross-Domain Connection\n\nThe quotient space {chord classes} with the induced metric is an **orbifold** in the sense of Tymoczko's geometric music theory. Formalizing this quotient construction bridges combinatorial group theory (permutation group actions) with metric geometry, and could connect to formalized orbifold theory.\n\n---\n\n## Direction 3: Certified Optimal Matching Algorithm\n\n### Theorem Target\n\n```lean\n-- A computable function that returns the optimal cost\ndef vlCostN_compute {n : ℕ} (x y : Fin n → ℤ) : ℕ :=\n ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "00fcfe9a",
-    "consumed_by_exp_id": "d9c105e5",
-    "timestamp": "2026-05-14T23:49:05.141334+00:00"
   },
   {
     "id": "fd_0201",
@@ -1772,20 +1711,6 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.192013+00:00"
-  },
-  {
-    "id": "fd_0198",
-    "title": "Subadditivity",
-    "description": ": The min-plus product norm (maximum entry) satisfies subadditivity, enabling application of Kingman's subadditive ergodic theorem.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.200775+00:00"
   },
   {
     "id": "fd_0199",
@@ -2227,23 +2152,6 @@
     "timestamp": "2026-05-15T00:07:21.661696+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "2. Graph Navier–Stokes Vorticity Theorem",
-    "description": "**Goal.** Define a discrete incompressible flow on a weighted graph and prove that\ntropical viscosity prevents sup-norm vorticity blowup.\n\n**Hypothesis.** For a graph Laplacian `Δ` on `(V, E)` with edge weights, define\ndiscrete vorticity `ω_n = curl(v_n)` where `v_n` is a discrete velocity field\nsatisfying an incompressibility constraint (divergence-free). If the vorticity\nupdate satisfies `ω_{n+1}(i) ≤ min(ω_n(i), T_K(ω_n)(i))` where `K` encodes\nthe graph metric, then `sup_i |ω_n(i)|` is uniformly bounded.\n\n**Proof Strategy.**\n- Define discrete exterior calculus on finite graphs (0-forms = node functions,\n  1-forms = edge functions, 2-forms = face functions).\n- Define discrete curl and divergence operators.\n- Show that the Biot–Savart law on graphs yields velocity fields whose\n  self-adve",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "181d8ba6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:07:21.669955+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "3. Hamilton–Jacobi / Fluid Duality",
     "description": "**Goal.** Prove that the tropical diffusion barriers correspond exactly to\nLax–Oleinik semigroup contraction on weighted graphs, establishing a formal\nduality between viscosity solutions and fluid regularity.\n\n**Hypothesis.** The tropical diffusion operator `T_K` is the one-step\nLax–Oleinik operator for a discrete Hamilton–Jacobi equation\n`u_{n+1}(i) = inf_j (u_n(j) + K(i,j))`. The barrier theorem then states\nthat solutions of this HJ equation cannot develop shocks (discontinuities\nin gradient) beyond the initial oscillation.\n\n**Proof Strategy.**\n- Define the discrete Hamilton–Jacobi equation on weighted graphs.\n- Show that `T_K^n` computes shortest-path distances in the `K`-weighted graph.\n- Prove that the Lax–Oleinik semigroup is a contraction in the sup norm\n  (already implied by our os",
@@ -2297,20 +2205,6 @@
     "source_exp_id": "181d8ba6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:07:21.695979+00:00"
-  },
-  {
-    "id": "fd_0198",
-    "title": "Statement",
-    "description": "Prove that the tropical eigencones of `chargedWeight(W, A, q)` and `chargedWeight(W, A, -q)` correspond under transpose, when W is symmetric.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be18c0b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:25:49.781276+00:00"
   },
   {
     "id": "fd_0199",
@@ -2473,21 +2367,6 @@
     "timestamp": "2026-05-15T00:31:05.382198+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "Cross-cutting Theme",
-    "description": "All five directions share a common algebraic substrate: the min-plus semiring and its order-theoretic properties. Building a clean Lean library for min-plus algebra (tropical semiring, tropical polynomials, tropical varieties) would accelerate all five directions simultaneously.\n\n---",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "13b8af12",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T00:31:05.388726+00:00"
-  },
-  {
     "id": "fd_0199",
     "title": "Team Coordination",
     "description": "- **Thread A (Theorem Proving)**: Focus on formalizing Directions 3-4 as immediate extensions of the current theorems. Target: 5-10 new lemmas per direction.\n- **Thread B (Counterexample Search)**: For each proposed lemma, generate counterexamples with random parameters before attempting formalization. Use `#eval` and `lean_run_code` extensively.\n- **Thread C (Geometric Interpretation)**: Develop visualizations of 2D tropical phase diagrams (Direction 1). Create interactive plots showing how phase boundaries move with parameters.\n- **Thread D (Catalog Integration)**: Connect new theorems to existing catalog infrastructure (`tropical_plus_distributes_over_min`, `fixed_point_error`, `two_vertex_weight`). Ensure all cross-references are documented.",
@@ -2501,5 +2380,91 @@
     "source_exp_id": "13b8af12",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:31:05.395436+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Direction 1: Prove the Consonance Isolation Conjecture",
+    "description": "**Hypothesis:** No Berggren descendant of depth ≥ 1 is simply consonant — that is, no triple generated by applying any sequence of generators A, B, C to (3,4,5) has a side-ratio in {1, 6/5, 5/4, 4/3, 3/2}.\n\n**Proof Strategy:**\n- For ratio c/a = 4/3: this forces 3c = 4a, i.e., 3|a and 4|c. Combined with a² + b² = c², derive mod-constraints showing gcd(a,b,c) > 1 for c > 5, contradicting primitivity.\n- For ratio b/a = 3/2: forces 2b = 3a. Substitute into a² + b² = c² to get 13a²/4 = c², forcing 2|c and contradicting primitivity for c > 5.\n- Systematically eliminate each target ratio using modular arithmetic and the explicit form of Berggren matrix products.\n\n**Cross-Domain Connection:** This would establish that consonance is a zero-density property in the Berggren tree, connecting to questi",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d901ed3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:42:39.895641+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Direction 2: Berggren Action as a Tropical Dynamical System",
+    "description": "**Goal:** Formalize the three Berggren generators as rational self-maps of the tropical plane (τ₁, τ₂) ∈ ℝ²₊ and study their dynamics.\n\n**Specific Targets:**\n1. Derive explicit formulas for the tropical coordinates of A(a,b,c), B(a,b,c), C(a,b,c) in terms of the tropical coordinates of (a,b,c). These will be transcendental functions involving logarithms of rational functions.\n2. Identify fixed points and attractors of each generator on the tropical plane.\n3. Prove that the B-generator has an attracting fixed point at (0.5, 0.5) — corresponding to isosceles right triangles — and compute its basin of attraction.\n4. Study the orbit of the root point under random compositions of generators (random walk on the Berggren monoid) and prove equidistribution or clustering results.\n\n**Cross-Domain Co",
+    "domains": [
+      "Tropical",
+      "Pythagorean",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d901ed3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:42:39.904581+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Direction 3: Interval Network and Tonnetz Construction",
+    "description": "**Goal:** Construct a finite graph whose vertices are interval classes generated by Pythagorean triples (up to octave equivalence) and whose edges represent Berggren generation steps. Compare this graph to the classical Tonnetz (the tone network of music theory).\n\n**Specific Targets:**\n1. Define octave equivalence classes of intervals: [r] = {r · 2ⁿ : n ∈ ℤ} ∩ [1, 2).\n2. For each Berggren triple, extract its three reduced interval classes.\n3. Build the adjacency graph: vertices are interval classes, edges connect classes that co-occur in the same triple.\n4. Compute graph-theoretic invariants (diameter, chromatic number, clustering coefficient) at each Berggren depth.\n5. Prove that the depth-0 graph on three vertices {[4/3], [5/4], [5/3]} is a triangle — the minimal Tonnetz cell.\n\n**Cross-D",
+    "domains": [
+      "Pythagorean",
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d901ed3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:42:39.914831+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Direction 4: Entropy and Complexity Functionals on Triple Orbits",
+    "description": "**Goal:** Define and study information-theoretic complexity measures on Pythagorean triples, measured via their tropical harmonic coordinates.\n\n**Specific Targets:**\n1. Define the *harmonic entropy* of a triple: H(a,b,c) = -Σᵢ pᵢ log pᵢ where pᵢ are the normalized tropical coordinates (τ(a/c), τ(b/c), τ(a/c)+τ(b/c)) / Z.\n2. Define the *interval complexity*: the sum of numerator and denominator of the reduced side-ratios (already defined in the existing codebase as `intervalComplexity`).\n3. Prove that harmonic entropy increases monotonically along at least one Berggren path.\n4. Study the distribution of harmonic entropy across Berggren tree levels and prove concentration inequalities.\n5. Relate harmonic entropy to the Tenney height of the side-ratios, connecting to established consonance me",
+    "domains": [
+      "Tropical",
+      "Pythagorean",
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d901ed3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:42:39.924117+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Direction 5: Higher-Dimensional Pythagorean Lattices and Chordal Analogues",
+    "description": "**Goal:** Generalize the harmonic embedding from triples (a² + b² = c²) to quadruples (a² + b² + c² = d²) and study the resulting \"chordal\" interval spaces.\n\n**Specific Targets:**\n1. Define the tropical embedding for Pythagorean quadruples: Φ(a,b,c,d) = (τ(a/d), τ(b/d), τ(c/d)) ∈ ℝ³₊.\n2. Identify the analogue of the Berggren tree for primitive Pythagorean quadruples (known to exist, generated by 4×4 integer matrices).\n3. Extract musical \"chords\" from quadruples: each quadruple defines three frequency ratios that form a three-note chord.\n4. Classify which quadruples produce recognizable chords (major triad, minor triad, diminished, augmented).\n5. Study consonance density in the quadruple tree and compare with the triple case.\n\n**Cross-Domain Connection:** This extends the theory from interv",
+    "domains": [
+      "Tropical",
+      "Pythagorean",
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d901ed3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:42:39.933027+00:00"
   }
 ]
