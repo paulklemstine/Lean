@@ -655,21 +655,6 @@
     "timestamp": "2026-05-15T07:06:08.019179+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Turing machine simulation",
-    "description": ": Encode a Turing machine's tape as a sequence of dual-rail cells, the head position as a localized active pattern, and the transition function as a circuit applied at each step.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "590e43ac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:04:10.041587+00:00"
-  },
-  {
     "id": "fd_0205",
     "title": "Ramanujan-type bounds",
     "description": ": optimal spectral bounds would make Berggren lattices provably good for derandomization.",
@@ -733,20 +718,6 @@
     "timestamp": "2026-05-15T13:04:44.664357+00:00"
   },
   {
-    "id": "fd_0210",
-    "title": "Formalize stochastic DPI",
-    "description": "(Direction 1): This is the natural next step and has a clear proof strategy.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a2e39b14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:51.193724+00:00"
-  },
-  {
     "id": "fd_0211",
     "title": "Prove tropical Fano",
     "description": "(Direction 3): The proof is essentially definitional from the vulnerability framework.",
@@ -793,36 +764,6 @@
     "timestamp": "2026-05-15T15:26:49.696815+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Denotational semantics",
-    "description": ": interpretation `⟦t⟧ : Arch n m` mapping terms to functions, and proof that rewriting preserves semantics.\n\n### Proof Strategy\n\nDefine a well-founded order on architecture terms (e.g., lexicographic on depth and size). Prove each rewrite rule decreases this order (termination). Prove local confluence by checking all critical pairs. Apply Newman's lemma.\n\n### Cross-Domain Connections\n\n- **Term rewriting theory**: The architecture rewriting system is a concrete instance of abstract rewriting, connecting to Knuth-Bendix completion and word problem decidability.\n- **Compiler optimization**: Architecture simplification is analogous to compiler optimization passes. A verified rewriting system is a verified architecture compiler.\n\n---\n\n## Direction 5: Neural ODE Connection via Residual Limits\n\n#",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.854243+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Euler method convergence",
-    "description": ": Mathlib may have basic ODE theory; otherwise, prove convergence of Euler's method for Lipschitz vector fields.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.885694+00:00"
-  },
-  {
     "id": "fd_0224",
     "title": "Induction on the number of inversions",
     "description": "Define the inversion count of a permutation. Show that any transposition that uncrosses an inversion does not increase cost (using the uncrossing lemma). Since the identity has zero inversions, it is optimal among all permutations.",
@@ -837,21 +778,6 @@
     "timestamp": "2026-05-15T16:01:39.408905+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "Bubble sort argument",
-    "description": "Show that applying adjacent transpositions to reduce inversions in $\\sigma$ produces a sequence of permutations with non-increasing cost. Since bubble sort terminates at the identity, the identity is optimal.\n\n### Cross-Domain Connection\n\nThis is a formal verification of the one-dimensional optimal transport theorem (Monge property). It connects directly to the theory of Monge matrices in combinatorial optimization and the rearrangement inequality in analysis.\n\n---\n\n## Direction 2: Quotient Geometry of Chord Classes\n\n### Exact Theorem Statement\n\nDefine the equivalence relation $x \\sim y$ iff $\\text{vlCostN}(x, y) = 0$ (i.e., $x$ and $y$ are rearrangements). The induced function on the quotient $\\text{vlCostQ} : (\\text{ChordN}\\, n / {\\sim}) \\times (\\text{ChordN}\\, n / {\\sim}) \\to \\mathbb{N}",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de9a421e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:01:39.418538+00:00"
-  },
-  {
     "id": "fd_0224",
     "title": "WMSO → Automata",
     "description": ": By structural induction on formulas, using closure of recognizable series under min, +, and quantification (projection). The quantification step uses the finite powerset construction.",
@@ -864,51 +790,6 @@
     "source_exp_id": "6acfb91e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T16:47:43.670643+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "Automata → WMSO",
-    "description": ": By encoding the DFA's run as an MSO formula. Each state is tracked by a second-order variable marking positions where the automaton is in that state.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.683198+00:00"
-  },
-  {
-    "id": "fd_0226",
-    "title": "Key difficulty",
-    "description": ": The quantification step in the tropical setting requires showing that `inf_X` over finite position sets preserves recognizability — this is non-trivial for infinite semirings.\n\n### Cross-Domain Connections\n\n- **Database query languages**: WMSO over words corresponds to certain aggregate queries; the tropical version captures optimization queries (MIN-cost, shortest path).\n- **Program verification**: WMSO model checking is decidable on finite structures; tropical WMSO would enable automated verification of quantitative program properties.\n\n---\n\n## Direction 2: Minimization Algorithm for Formula Presentations\n\n### Precise Theorem Statement\n\n**Theorem (Formula Minimization).** Given a formula-definable tropical series `S` with `n` distinct derivatives, there exists a unique minimal formula ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.694536+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Candidate function",
-    "description": ": The tropical determinant `tropdet(M) = min_σ Σ M(i,σ(i))` of an n×n matrix encoded as a word.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.749027+00:00"
   },
   {
     "id": "fd_0232",
@@ -926,20 +807,6 @@
     "timestamp": "2026-05-15T16:47:43.759664+00:00"
   },
   {
-    "id": "fd_0234",
-    "title": "Trees",
-    "description": ": Define tree derivatives (removing a subtree and replacing it with a variable). Prove derivative closure by structural induction on tree formulas. The main difficulty is the non-commutativity of tree composition.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.790614+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "Timed words",
     "description": ": Extend the derivative theory to handle continuous time. The key challenge is that timed derivatives form a potentially infinite family parameterized by time delays. Restrict to clock-bounded systems where the derivative family is still finite up to time rescaling.",
@@ -952,20 +819,6 @@
     "source_exp_id": "6acfb91e",
     "consumed_by_exp_id": "ed53a6b6",
     "timestamp": "2026-05-15T16:47:43.802334+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Direction 4",
-    "description": "(Factor Maps) — Deepens the theoretical framework; connects to established fields",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "564eb5bd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:08:31.608685+00:00"
   },
   {
     "id": "fd_0232",
@@ -981,21 +834,6 @@
     "source_exp_id": "e5d0ee4d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T17:30:25.932081+00:00"
-  },
-  {
-    "id": "fd_0234",
-    "title": "Quantum resistance:",
-    "description": "Analyze whether Shor-type algorithms apply to tropical factorization.",
-    "domains": [
-      "Tropical",
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5d0ee4d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:30:25.954880+00:00"
   },
   {
     "id": "fd_0235",
@@ -1015,25 +853,6 @@
     "timestamp": "2026-05-15T17:30:25.967806+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Transfer",
-    "description": "the NP-hardness result to the geometric setting.\n\n### Lean Target\n```lean\ntheorem tropical_secant_membership_NP_hard :\n    KarpNPHardRelative BoolMatFact\n      (fun p : TropicalPoint => p ∈ tropicalSecantVariety r (tropicalSegre n m))\n```\n\n### Cross-Domain Connections\n- **Algebraic geometry:** Computational complexity of secant varieties\n- **Convex optimization:** Hardness of tropical linear programming variants\n- **Phylogenetics:** Complexity of tree space decomposition (tropical Grassmannian)\n\n---\n\n## Implementation Priorities\n\n| Priority | Direction | Estimated Effort | Dependencies |\n|:--------:|:---------:|:----------------:|:------------:|\n| 1 | Fixed-rank hardness | 2-4 weeks | Graph coloring formalization |\n| 2 | Tropical crypto | 4-8 weeks | Average-case hardness theory |\n| 3 | Ap",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5d0ee4d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:30:26.004388+00:00"
-  },
-  {
     "id": "fd_0224",
     "title": "Immediate (1–2 weeks):",
     "description": "Prove complexity-weighted optimization (Direction 3) — this is the most directly formalizable extension with clear practical applications.",
@@ -1048,34 +867,6 @@
     "timestamp": "2026-05-15T17:53:49.331298+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "Short-term (1–2 months):",
-    "description": "Implement FCA mining (Direction 4) — this connects the theory to empirical data and produces a usable tool.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4e85c80a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:53:49.345726+00:00"
-  },
-  {
-    "id": "fd_0226",
-    "title": "Medium-term (3–6 months):",
-    "description": "Formalize categorical enrichment (Direction 2) — this is mathematically the richest direction and connects to the broader categorical program.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4e85c80a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:53:49.365315+00:00"
-  },
-  {
     "id": "fd_0227",
     "title": "Long-term (6–12 months):",
     "description": "Develop probabilistic extensions (Direction 1) and topological extensions (Direction 5) — these require significant new mathematical development.",
@@ -1088,6 +879,144 @@
     "source_exp_id": "4e85c80a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T17:53:49.380324+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Spectral gap",
+    "description": ": Use the Ruelle–Perron–Frobenius theorem: since the Berggren symbolic system has a finite alphabet and the potential φ is Hölder (it depends primarily on the first symbol), L_s has a spectral gap on Hölder spaces.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.337991+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Poincaré series construction",
+    "description": ": Define Θ(s, g) = Σ_{γ ∈ Γ_B} H(γ · v₀)^{-s} · δ(γg) as a distribution on Γ\\G, where Γ_B is the Berggren semigroup.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.371130+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Thin orbit refinements",
+    "description": ": Apply Kontorovich's thin-orbit local-global methods to handle the semigroup (rather than full group) orbit.\n\n### Key Objects to Formalize\n- The isometry Ψ : PSL₂(ℝ) → SO₀(2,1; ℝ) sending Möbius transformations to Lorentz boosts\n- The Berggren generators as elements of PSL₂(ℤ) via the parametrization (m, n) ↔ (m+ni)/(m-ni)\n- The Eisenstein series E(s, g) on Γ\\G and its meromorphic continuation\n\n### Expected Outcome\nAn asymptotic formula:\n```\nN(T) = c · T^{2/σ₀} + O(T^{2/σ₀ - δ})\n```\nwhere δ > 0 depends on the spectral gap for Γ\\G.\n\n---\n\n## Direction 3: Certified Post-Quantum Security from Orbit Hardness\n\n### Goal\nProve a security reduction showing that breaking the Berggren key exchange is at least as hard as a standard lattice/orbit problem, with quantitative security bounds derived from",
+    "domains": [
+      "Physics",
+      "Pythagorean",
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.403064+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Lattice reduction barrier",
+    "description": ": Prove that the Berggren lattice (generated by the orbit vectors) has short vectors of length Ω(α^d), preventing BKZ-type attacks from recovering the word.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.445037+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Quantum query lower bound",
+    "description": ": Use the collision entropy bound with quantum random oracle techniques to show that Grover-type attacks require Ω(3^{d/2}) queries.\n\n### Key Theorem Target (Lean)\n```lean\ntheorem berggren_key_exchange_security\n    (d : ℕ) (hd : 128 ≤ d * Real.log 3 / Real.log 2) :\n    SecurityLevel (berggrenKeyExchange d) ≥ 128\n```\n\n### Practical Impact\n- Concrete security parameter recommendations: d ≥ 117 for 128-bit security\n- Integration with existing post-quantum frameworks (NIST standards)\n- Hardware-friendly implementation (only integer matrix multiplication)\n\n---\n\n## Direction 4: Spectral Gap and Expansion for the Berggren Orbit Graph\n\n### Goal\nProve that the depth-bounded Berggren orbit graph G_D (with edges from Berggren generator applications) is a family of expander graphs with spectral gap bo",
+    "domains": [
+      "Physics",
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.457340+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Bourgain–Gamburd method",
+    "description": ": Apply the sum-product estimate → spectral gap pipeline:\n   - Prove that the Berggren generators have no joint invariant subspace mod p for sufficiently large primes p\n   - Apply Helfgott-type growth estimates for the image of the Berggren semigroup in SL₂(𝔽_p)\n   - Lift to a spectral gap estimate via the Bourgain–Gamburd theorem",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.478980+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Property (τ)",
+    "description": ": Establish property (τ) for the Berggren semigroup relative to congruence subgroups",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.488872+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Rapid mixing",
+    "description": ": Conclude that random walks on G_D mix in O(log D) steps\n\n### Key Theorem Target (Lean)\n```lean\ntheorem berggren_spectral_gap :\n    ∃ c > 0, ∀ D : ℕ, D ≥ D₀ →\n      spectralGap (berggrenCayleyGraph D) ≥ c\n```\n\n### Applications\n- **Pseudorandom number generation**: Random Berggren walks produce outputs that are computationally indistinguishable from uniform\n- **Hash function collision resistance**: The spectral gap implies that the hash function based on Berggren tree walks has optimal collision resistance\n- **Derandomization**: Deterministic walks on the Berggren expander can replace random sampling in algorithms\n\n---\n\n## Direction 5: Prime Hypotenuse Distribution via Affine Sieve\n\n### Goal\nProve that infinitely many primitive Pythagorean triples in the Berggren orbit have prime hypotenus",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.501172+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Saturation number",
+    "description": ": Prove that the saturation number of the hypotenuse coordinate on the Berggren orbit is at most R (ideally R = 1, meaning primes appear; realistically R ≤ 6).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88d6f044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T18:32:09.524354+00:00"
   },
   {
     "id": "seed_079",
@@ -1433,10 +1362,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a015a16c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12cfcc70",
     "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
@@ -1576,24 +1505,6 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
-  },
-  {
-    "id": "fd_0206",
-    "title": "Quantum Resistance Analysis",
-    "description": "Analyze the quantum query complexity of inverting tropical matrix powers. Unlike discrete logarithm (broken by Shor's algorithm), tropical exponentiation is not a group operation, so quantum period-finding does not directly apply. Formalize a lower bound on quantum query complexity using the collision lower bound and the polynomial method.",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "97644adb",
-    "consumed_by_exp_id": "88d6f044",
-    "timestamp": "2026-05-15T09:07:29.342835+00:00"
   },
   {
     "id": "fd_0211",
@@ -1848,20 +1759,6 @@
     "source_exp_id": "9f168b29",
     "consumed_by_exp_id": "9093673a",
     "timestamp": "2026-05-15T16:04:54.716000+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Phase 2 (Medium-term, 3-6 months)",
-    "description": "- Complete the parallel computation embedding (Direction 2)\n- Prove the Kolmogorov complexity bounds (Direction 5)\n- Submit paper on arithmetic universality classification",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6ee9322",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:02:08.129446+00:00"
   },
   {
     "id": "fd_0232",
